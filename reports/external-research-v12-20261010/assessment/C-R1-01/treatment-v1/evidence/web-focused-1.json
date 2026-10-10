@@ -1,0 +1,52 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://www.fhwa.dot.gov/Environment/noise/measurement/handbook.cfm"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/C-R1-01/treatment-v1/source-map.json",
+      "source_id": "E07",
+      "existing_authored_summary_fields": {
+        "version": "FHWA-HEP-18-065, Noise Measurement Handbook Final Report, 2018-06-01",
+        "conditions": "Geophones measure velocity and roll off below natural frequency; accelerometers measure acceleration, with conversion if velocity is needed. Highway prevalence, vertical-only guidance, radiation factors and numerical rules do not establish rehearsal-building limits or all structural routes."
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": "§§7.0, 7.1.2.2, 17.2.1; §§4.6 and 17.3.4 for background/calibration"
+    }
+  ],
+  "raw_sha256": "7786a4d69c57a67dd44c18333db003522f7cdd33899c8c9c6ceb287d48615de5",
+  "original_bytes": 37291,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/C-R1-01/treatment-v1/evidence/web-focused-1.json",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://www.fhwa.dot.gov/Environment/noise/measurement/handbook.cfm"
+  ],
+  "version": [
+    {
+      "version": "FHWA-HEP-18-065, Noise Measurement Handbook Final Report, 2018-06-01",
+      "conditions": "Geophones measure velocity and roll off below natural frequency; accelerometers measure acceleration, with conversion if velocity is needed. Highway prevalence, vertical-only guidance, radiation factors and numerical rules do not establish rehearsal-building limits or all structural routes."
+    }
+  ],
+  "selector": [
+    {
+      "locator": "§§7.0, 7.1.2.2, 17.2.1; §§4.6 and 17.3.4 for background/calibration"
+    }
+  ],
+  "conditions": [
+    {
+      "version": "FHWA-HEP-18-065, Noise Measurement Handbook Final Report, 2018-06-01",
+      "conditions": "Geophones measure velocity and roll off below natural frequency; accelerometers measure acceleration, with conversion if velocity is needed. Highway prevalence, vertical-only guidance, radiation factors and numerical rules do not establish rehearsal-building limits or all structural routes."
+    }
+  ],
+  "rawSHA256": "7786a4d69c57a67dd44c18333db003522f7cdd33899c8c9c6ceb287d48615de5"
+}

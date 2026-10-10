@@ -1,0 +1,69 @@
+# Independent critic review — C-R2-01-control
+
+## Scope and review basis
+
+I reviewed the mapped original brief, the complete released plan and plan-reveal record, investigator discovery, draft, source map, and carried source index. I treated the case as synthetic: the packet contains no specimen observations, material identities, environmental series, incident denominator, or performance data. I did not inspect other candidates, evaluations, campaign history, or unlisted inputs. This is a critique of the proposal and its evidence, not a replacement proposal or authorization to change practice.
+
+I checked the source index and independently opened S01, S02, both NARA specifications (S03–S04), and CCI humidity guidance (S05). Those sources support the draft’s conditional mechanisms and stated limitations. The MDPI article page for S07 was surfaced through an exact-title/DOI search, but a direct fetch returned HTTP 429; its detailed temperature result is therefore not fully independently verified here. The NMS page for S09 was returned in search with the Tyvek-tag guidance, while a direct fetch timed out. S06 and S08 remain carried-source-map context rather than independently reopened evidence in this review. None of those retrieval limits changes the draft’s core recommendation, which does not select a material or claim a tested result.
+
+## Overall assessment
+
+The draft preserves the case’s full scope and most of the revealed plan. It keeps dimensional stability, attachment reliability, and readability separate; does not blame adhesive alone; treats printing and supply changes conditionally; proposes a monitoring/retain-current option and nonadhesive mock-up alongside material changes; asks for implementation records; protects in-place labels and annotations; separates proposed work from executed desk review; and avoids a collection-wide fix, conservation-safety endorsement, lifetime claim, or unsupported conversion from accelerated exposure to storage years.
+
+I found no material factual error in the reviewed scientific claims or in the main recommendation. Two study-design details need more support before the proposal can be considered fully aligned with the plan: the proposed coupon matrix does not explicitly vary or stratify sleeve material/surface, and the 12-week screening duration is not justified by the cited evidence or paired with a duration/feasibility rule. One timing statement is not verifiable from the mapped packet and should remain explicitly unresolved.
+
+## Issues requiring attention
+
+| ID | Classification | Draft locator | Finding and evidence |
+|---|---|---|---|
+| I-1 | **Material incomplete** | § Bounded later study, Stage 2, factor list; compare discovery § Bounded later study, step 3 | The proposed 2×2×2×2 matrix varies material system, print setup, application, and exposure, but does not name sleeve polymer/grade, treatment, or sleeve lot as a factor or planned stratum. The brief’s Q3 and the plan’s mechanism opportunity call out interactions with sleeve material. The narrative correctly asks staff to identify sleeve composition and notes conditional interface behavior (S07), but identification alone will not distinguish substrate variation if more than one sleeve type or surface condition is present. The reviewer should require the design to state how relevant sleeve types/surface treatments enter the comparison, or explicitly record that the study is conditional on one verified sleeve stratum and leaves other substrates unresolved. This is a design gap, not evidence that sleeve material caused the failures. |
+| I-2 | **Material incomplete** | § Bounded later study, Stage 2 (“bounded 12-week exploratory coupon screen”); Stage 1 (“12 months”); released-plan validation opportunity | Twelve weeks is stated as a choice but no evidence or operational stopping rule explains why it is a useful duration for the proposed adhesive, sleeve, and process. S01 used four specified RH cycles with at least 24-hour holds on laboratory-made sheets from commercial pulps; S02 followed specific paper/model-ink behavior over one week. Neither supports 12 weeks as a discriminating duration for this label system. CCI’s full-year rationale supports seasonal context for monitoring, not label durability or the coupon-screen duration. The draft appropriately disclaims lifetime inference; retain that limitation, but justify the exploratory horizon and state what would trigger extension or an inconclusive result. The 16-cell/96-coupon maximum plus year-long monitoring is also potentially resource-heavy for a volunteer store; the draft names resources as an owner decision but gives no feasibility gate for staged factor selection. |
+| I-3 | **Honestly unresolved external input** | § Clause-by-clause disposition, R1 | The draft says the investigator stage had an absolute deadline of 2026-10-10T06:18:45.409Z and therefore cannot be represented as a full elapsed 60-minute session. The supplied critic input-map does not contain the investigator’s activation/start record or that stage’s timing envelope, so I cannot corroborate the timestamp or determine elapsed research time from this packet. The disclosure is candid and should not be silently removed; treat actual full-window compliance and the cited deadline as unverified external stage facts. The plan sizes the topic for a 60-minute research-and-proposal session, while the draft says its own session was shorter; this remains a real compliance dependency, not a science result. |
+| I-4 | **Minor locator/wording** | Discovery § Paper dimensions and curl; draft § Dimensional stability; S01 source-map locator | “Commercial pulp sheets” can be read as commercially manufactured finished sheets, while S01 prepared laboratory sheets from commercial pulps. The draft elsewhere correctly names the study materials and limits transfer. Prefer “laboratory sheets made from commercial pulps” for precision. No conclusion changes. |
+
+No **material wrong** issue was found in the evidence checked. No unsupported product recommendation or conservation-safety claim was found. No critique finding authorizes narrowing the original scope.
+
+## Obligation and exact-plan disposition audit
+
+| Brief / plan clause | Draft disposition | Critic finding |
+|---|---|---|
+| C1: printed paper labels on inert sleeves | § Proposal; § Attachment and interactions | Preserved; sleeve chemistry is not assumed. |
+| C2: a few batches curled or detached after months of variable humidity | § Proposal; § Records; Stage 0/1 | Correctly keeps curl and detachment distinct, asks for denominator and measured history, and does not infer humidity causation. |
+| C3: stock and printer changed around the same time | § Proposal; § Records; Stage 2 | Correctly treats as confounded and only crosses reconstructable histories. |
+| C4: handwriting must remain readable | § Readability; Stage 0; Independent outcomes | Preserves original labels and proposes linked images/transcriptions with owner permission; copy authority is left open. |
+| C5: proposal before collection-wide alteration | § Proposal; § Decision process | Preserved; bulk change is not recommended. |
+| C6: invented anecdote, no data | Scope and evidence state; § Executed desk analysis | Correctly states no case measurements or tests exist. |
+| R1: full 60-minute research window | R1 clause disposition | Candidly flags the window as shorter, but elapsed time and deadline are unverified in this packet (I-3). |
+| R2: mechanisms, alternatives, manufacturing/implementation history | Mechanisms; Alternatives; Records | Broadly covered and conditional; source applicability caveats are strong. |
+| R3: bounded later study and defensible decision, no bulk fix | Bounded later study; Decision process | Covered in structure; sleeve factor and duration/feasibility need attention (I-1, I-2). |
+| Q1: three distinct outcomes | Readability; Independent outcomes and recording | Clearly separated in measures and gates. |
+| Q2: compare stock/adhesive with useful alternative, including monitoring current materials | Alternatives 1–3 | Covered, including a reasonable nonadhesive mock-up and retaining current materials under monitoring. |
+| Q3: humidity, print, application, sleeve, concurrent changes | Mechanisms; Records; Stage 2 | Mechanistic discussion is covered; experimental matrix omits explicit sleeve factor/stratum (I-1). |
+| Q4: implementation history/specs; accelerated vs ordinary storage | Records; Stage 1 vs Stage 2 | Covered; no unsupported storage-life conversion. |
+| Q5: controls, duration, failure record, annotation protection, proposed vs executed | Stage 0–2; recording; executed-status section | Controls and records are detailed; duration rationale/feasibility is incomplete (I-2); validation is correctly marked proposed. |
+| B1: no solvents, heat, destructive sampling, or label removal | Proposal; Stage 0–2 | Respected; collection labels remain in place and tests are coupon-only. |
+| B2: no “archival” advertisement as sole safety basis | Attachment; alternatives; decision | Respected; no brand/chemistry chosen. |
+| B3: no lifetime promise or unsupported accelerated-to-life conversion | Stage 2; closing limitation | Respected. |
+| U1: material/process/environment/failure-rate unknowns | Records; Stage 0–1 | Visible and treated as prerequisites/unknowns. |
+| U2: replaceability and annotation-copy permission unknown | Readability; Stage 0; owner decisions | Visible and not presumed. |
+| U3: make dependencies visible | Owner decisions; decision gates | Covered. |
+| Plan: research question and incompleteness | Proposal; Records; Stage 0 | Addresses evidence needed to discriminate material, process, and environment, subject to I-1/I-2. |
+| Plan: alternatives and no predetermined winner | Alternatives; Decision process | Preserved; no winner is selected. |
+| Plan: layered mechanisms and stock/printer ambiguity | Mechanisms; Stage 2 | Mostly covered; explicit sleeve treatment in the experimental structure remains incomplete. |
+| Plan: manufacturing/implementation history and accelerated-test limits | Records; Stage 1–2 | Covered with clear provenance requests and transfer caveats. |
+| Plan: noncollection coupon study, repeated observations, batches, conditioning, handling | Stage 2; Independent outcomes | Covered, including lot distribution, randomization, repeated measures, and coupon-only handling; practical scale and horizon need justification. |
+| Plan: separate case authoring status from investigator work | Executed desk analysis versus proposed validation | Correctly distinguishes literature review/desk analysis from unperformed experiments and collection data work. |
+| Plan: preserve brief/plan and sealed inputs; no product build | Scope statement | Draft says it read only released plan and changed neither source; no product build is proposed. |
+
+## Source and method check
+
+- **S01, Springer, original research, 2023 online / 2024 volume:** direct article review confirmed the paper describes hygroexpansion, humidity cycles at 23°C, 50→20→90→50% RH repeated four times with ≥24-hour holds, and differing irreversible response by restrained/free drying. It is laboratory-made sheets from commercial pulps, not these labels. The draft’s bounded use is appropriate; see minor wording issue I-4.
+- **S02, Maass & Hirn, Materials & Design 237 (2024):** direct full-PDF review confirmed a 60 wt% glycerol/water model liquid, two office-paper grades, observation of curl and glycerol distribution over one week, and a proposed co-solvent-migration explanation. This is an inkjet/model-paper mechanism, not proof of this case’s process or label bond. The draft preserves that condition.
+- **S03–S04, NARA October 2015 procurement specifications:** direct PDF review confirmed the laser specification’s paper/acrylic system and explicit exclusion of direct application to documents/records; the thermal-transfer specification’s polyester/polypropylene face stock, acrylic adhesive, hard-resin ribbon compatibility, and curved-surface note; both include separate bond, print, and flatness/QC provisions. The draft correctly treats these as use-specific design references, not conservation-safe recommendations or case thresholds.
+- **S05, CCI humidity guidance:** direct page review supports local/time-dependent RH, recording near collections, seasonal monitoring, and caution against treating existing damage alone as proof of current climate causation or changing controls without evidence. The full-year recommendation in the draft is a reasonable seasonal-monitoring proposal, not a duration standard for adhesive testing.
+- **S07, MDPI primary study / PubMed record:** carried record and exact-title search support a specific modified acrylate-PSA/HDPE experiment; direct MDPI fetch was rate-limited. The draft uses it conditionally and does not recommend that adhesive. Do not treat its detailed temperature response as independently verified by this critic.
+- **S08–S09:** source index labels these as contextual conservation guidance, not case-specific performance evidence. S09’s retrieved page excerpt supports a Tyvek tag for fragile/loan objects; the draft appropriately calls it an analogy and requires a local mock-up.
+
+## Executed versus proposed work
+
+The investigator reports external literature/specification review, desk synthesis, and an administrative plan-release operation as executed. I verified a subset of the cited evidence independently. No specimen inspection, annotation transcription, logger deployment, failure census, laboratory/coupon/peel/curl/print/readability test, statistical analysis, implementation, or product validation is evidenced. The 12-week screen, 12-month monitoring, thresholds, and pilot remain proposals. Keep that distinction and the stated uncertainty intact.

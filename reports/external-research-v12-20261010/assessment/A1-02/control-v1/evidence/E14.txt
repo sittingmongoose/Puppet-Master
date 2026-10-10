@@ -1,0 +1,80 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://www.rfc-editor.org/rfc/rfc5546.txt"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A1-02/control-v1/source-map.json",
+      "source_id": "E14",
+      "existing_authored_summary_fields": {
+        "version_or_edition": "RFC 5546, December 2009, Standards Track (iTIP); supplemental comparator"
+      }
+    },
+    {
+      "authored_source_map": "assessment/A1-02/control-v1/evidence/retrievals.json",
+      "source_id": "E14",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A1-02/control-v1/evidence/E14-lines.txt"
+    },
+    {
+      "line_text_sha256": "b6b984a94767eb3ccb95b61dc4318f024b95502e5756deb02a7d75dbcaaf0ef8"
+    },
+    {
+      "line_count": 7584
+    },
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A1-02/control-v1/evidence/E14-lines.txt"
+    },
+    {
+      "line_text_sha256": "b6b984a94767eb3ccb95b61dc4318f024b95502e5756deb02a7d75dbcaaf0ef8"
+    },
+    {
+      "line_count": 7584
+    }
+  ],
+  "raw_sha256": "a7aad5fd02f4e226e09f5092f0e985131c66af530400b097a6c35bbba01b558a",
+  "original_bytes": 318143,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A1-02/control-v1/evidence/E14.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://www.rfc-editor.org/rfc/rfc5546.txt"
+  ],
+  "version": [
+    {
+      "version_or_edition": "RFC 5546, December 2009, Standards Track (iTIP); supplemental comparator"
+    }
+  ],
+  "selector": [
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A1-02/control-v1/evidence/E14-lines.txt"
+    },
+    {
+      "line_text_sha256": "b6b984a94767eb3ccb95b61dc4318f024b95502e5756deb02a7d75dbcaaf0ef8"
+    },
+    {
+      "line_count": 7584
+    },
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A1-02/control-v1/evidence/E14-lines.txt"
+    },
+    {
+      "line_text_sha256": "b6b984a94767eb3ccb95b61dc4318f024b95502e5756deb02a7d75dbcaaf0ef8"
+    },
+    {
+      "line_count": 7584
+    }
+  ],
+  "conditions": "UNKNOWN",
+  "rawSHA256": "a7aad5fd02f4e226e09f5092f0e985131c66af530400b097a6c35bbba01b558a"
+}

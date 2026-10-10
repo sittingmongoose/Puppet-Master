@@ -1,0 +1,50 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://api.github.com/repos/tus/tusd/releases/tags/v2.5.0"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A4-01/control-v1/source-map.json",
+      "source_id": "I-TUSD-RELEASE-API",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/A4-01/control-v1/evidence/supplementary-retrieval-manifest.json",
+      "source_id": "I-TUSD-RELEASE-API",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "text_lines": 1
+    },
+    {
+      "text_lines": 1
+    }
+  ],
+  "raw_sha256": "ad07245b3716abb75a537d32adc37c8b7d85dbc62f78a01836b785e1d0b1930a",
+  "original_bytes": 31448,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A4-01/control-v1/evidence/I-TUSD-RELEASE-API.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://api.github.com/repos/tus/tusd/releases/tags/v2.5.0"
+  ],
+  "version": "UNKNOWN",
+  "selector": [
+    {
+      "text_lines": 1
+    },
+    {
+      "text_lines": 1
+    }
+  ],
+  "conditions": "UNKNOWN",
+  "rawSHA256": "ad07245b3716abb75a537d32adc37c8b7d85dbc62f78a01836b785e1d0b1930a"
+}

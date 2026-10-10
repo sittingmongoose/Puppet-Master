@@ -1,0 +1,159 @@
+{
+  "prepared_at_utc": "2026-10-10T05:26:38.876Z",
+  "stage": "critic",
+  "stage_deadline_utc": "2026-10-10T05:38:38.876Z",
+  "whole_deadline_utc": "2026-10-10T05:51:12.545Z",
+  "stage_budget_s": 720,
+  "predecessors": [
+    {
+      "stage": "investigator",
+      "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A2-A2-02-treatment-investigator-topology-v1",
+      "statusPath": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/status.json",
+      "required_state": "original-active"
+    }
+  ],
+  "frozen_inputs": [
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/inputs/brief.md",
+      "sha256": "15ac2ec31efcc20dac85969b6855efaa85cfbe065d00df9031e32288b7fb3ca0",
+      "bytes": 3330
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/critic/assignment.md",
+      "sha256": "610e8fa156b3e977b39d60984412907a6a6e2c99f5c9abc5cacb04cf8f9e7570",
+      "bytes": 4370
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/critic/input-map.json",
+      "sha256": "6e3655cc85127ec7c97eae7550a5e55bf68f877f0a997e9bdfb11a6d2eca2911",
+      "bytes": 3986
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/inputs/brief.md",
+      "sha256": "15ac2ec31efcc20dac85969b6855efaa85cfbe065d00df9031e32288b7fb3ca0",
+      "bytes": 3330
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/discovery.md",
+      "sha256": "25c962b93672822b88cc92914254cf199304d48a0b04434268d87ee25e5593f7",
+      "bytes": 9189
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/draft.md",
+      "sha256": "bb20d8358546c63bb90377bb2c50ffcd3ce5af235c3a9fd93ff059f5112655d2",
+      "bytes": 17907
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/source-map.json",
+      "sha256": "f98f2e62aefc4afd46e1f47fec03e028eb28188c7c81592d9f804d1b269126cd",
+      "bytes": 14710
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/revealed-plan.md",
+      "sha256": "41c98c70681d7ab5e6534f387777df30ec06ff94ee93cdb071e124fe1a0c8ff6",
+      "bytes": 5932
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/plan-reveal.json",
+      "sha256": "74bfda863133564ed6e3aeacb5299be2369bd4049842429aa70000cf66d7c222",
+      "bytes": 428
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S01-presentation-api-v3.md",
+      "sha256": "fcad89742abe21601920072a3740f4c923852522fc7a2baae2c43c02e916ac5b",
+      "bytes": 1420
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S02-presentation-v3-changelog.md",
+      "sha256": "ac3a45e71a99731431536d8a179c22b812d62e805716dc96776c2cbf3a99e9ec",
+      "bytes": 955
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S03-canvas-coordinate-space.md",
+      "sha256": "963eeab80f5b0853b52292896ab2ac7b3a26fa7fe0e516f0c38a6e1c7db89db2",
+      "bytes": 1099
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S04-web-annotation-model.md",
+      "sha256": "651147ac6e65b0a28f74aaf86df9306778083f40a3b28ffe9e2246ebbe15ce4f",
+      "bytes": 1085
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S05-image-api-v3.md",
+      "sha256": "0e3e8ad3fde912ba230eaec681b2440d76f462c267647f797b482bd6f953f716",
+      "bytes": 1124
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S06-content-state-v1.md",
+      "sha256": "83cc057922c908709c79ec955c56ce74a36273018a314ac7412eb4f106c13a1f",
+      "bytes": 885
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S07-mirador-v4-breaking-change.md",
+      "sha256": "9f056d5f7bcc63d5cf4e2252a5ade87c2254929d191f643ac9db5780092883dd",
+      "bytes": 945
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S08-mirador-current-release.md",
+      "sha256": "56b27d67f873628b8eca2ff96657c78f434b59ac5238ee255b6ea0d41cf71e05",
+      "bytes": 755
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S09-mirador-annotations.md",
+      "sha256": "4a53867dc9a6bcf5de3197aa82be8cd97a290b56b53f7c2d39e07ce622b556fd",
+      "bytes": 978
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S10-plugin-install-issue-75.md",
+      "sha256": "50b1413874e32455958842c53946cf7f54d3dadc7aefd090ca8debb73d074dcc",
+      "bytes": 885
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S11-mae-compatibility.md",
+      "sha256": "14f996319b05aa07512b3f8612ea33f0b27b948d4458464d93b5ef94b5bc4e16",
+      "bytes": 1156
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S12-universal-viewer-config.md",
+      "sha256": "f827585df3d87c9bedbd174513b509c4537f5c27168d419baff31a5742e5e943",
+      "bytes": 960
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S13-universal-viewer-release.md",
+      "sha256": "3f3d3a38fd13ee622d99d6841f0d844b7b61bc2a2c1c1c45f3cefe585b101751",
+      "bytes": 871
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S14-iiif-viewer-guide.md",
+      "sha256": "e002706e091cf23544e3ef52684428358bd31481389d9357e17ecf6a0add2b27",
+      "bytes": 941
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/index.md",
+      "sha256": "834d9eae857d05b569eab0b6ff325ec276bac4075bc38d6dd24e91b56625b031",
+      "bytes": 2229
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/manifest.json",
+      "sha256": "6aa3c16ac2c74b0b9b5a944b0fed2f712fde89d809bf97d194a7bc7be3e3f09b",
+      "bytes": 10330
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/control/handoff-binding.json",
+      "sha256": "16878fd5c3e3788871252cdbf5f76393f9a2fc597afa5582aa07bff4021e858b",
+      "bytes": 112
+    }
+  ],
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "runtime_mode_requested": "full-access",
+  "native_goal_objective": "ER11 critic stage, run A2-02-treatment: execute ER12_RUNTIME/runs/A2-02/treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+  "native_goal_status": "UNKNOWN until directly observed",
+  "prospective_service_tier_revision": "user-standard-20261010-v1"
+}

@@ -1,0 +1,136 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://raw.githubusercontent.com/redis/redis/7.2.0/src/expire.c"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/B-APPL-G-01/treatment-v1/source-map.json",
+      "source_id": "P6-v720-expire-c",
+      "existing_authored_summary_fields": {
+        "version": "Redis Open Source 7.2.0 tagged upstream implementation/configuration"
+      }
+    },
+    {
+      "authored_source_map": "assessment/B-APPL-G-01/treatment-v1/evidence/retrievals.json",
+      "source_id": "P6-v720-expire-c",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locators": [
+        {
+          "start_line": 140,
+          "end_line": 159,
+          "section": "activeExpireCycle: configured effort",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P6-v720-expire-c.txt:140",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/expire.c#L140"
+        },
+        {
+          "start_line": 195,
+          "end_line": 275,
+          "section": "activeExpireCycle: time budget and incremental dictionary scanning",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P6-v720-expire-c.txt:195",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/expire.c#L195"
+        },
+        {
+          "start_line": 477,
+          "end_line": 483,
+          "section": "checkAlreadyExpired: primary/loading conditions",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P6-v720-expire-c.txt:477",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/expire.c#L477"
+        },
+        {
+          "start_line": 491,
+          "end_line": 532,
+          "section": "parseExtendedExpireArgumentsOrReply",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P6-v720-expire-c.txt:491",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/expire.c#L491"
+        },
+        {
+          "start_line": 549,
+          "end_line": 664,
+          "section": "expireGenericCommand: seconds, domain, conditions, del/expire events",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P6-v720-expire-c.txt:549",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/expire.c#L549"
+        },
+        {
+          "start_line": 687,
+          "end_line": 727,
+          "section": "ttlGenericCommand: rounding; TTL/PTTL/EXPIRETIME/PEXPIRETIME",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P6-v720-expire-c.txt:687",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/expire.c#L687"
+        }
+      ]
+    }
+  ],
+  "raw_sha256": "b3c7bb30c6bbc2cd99307fb81a917a9c3499d8749b27fdf7060e0da186d53d65",
+  "original_bytes": 30411,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/B-APPL-G-01/treatment-v1/evidence/P6-v720-expire-c.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://raw.githubusercontent.com/redis/redis/7.2.0/src/expire.c"
+  ],
+  "version": [
+    {
+      "version": "Redis Open Source 7.2.0 tagged upstream implementation/configuration"
+    }
+  ],
+  "selector": [
+    {
+      "locators": [
+        {
+          "start_line": 140,
+          "end_line": 159,
+          "section": "activeExpireCycle: configured effort",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P6-v720-expire-c.txt:140",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/expire.c#L140"
+        },
+        {
+          "start_line": 195,
+          "end_line": 275,
+          "section": "activeExpireCycle: time budget and incremental dictionary scanning",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P6-v720-expire-c.txt:195",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/expire.c#L195"
+        },
+        {
+          "start_line": 477,
+          "end_line": 483,
+          "section": "checkAlreadyExpired: primary/loading conditions",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P6-v720-expire-c.txt:477",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/expire.c#L477"
+        },
+        {
+          "start_line": 491,
+          "end_line": 532,
+          "section": "parseExtendedExpireArgumentsOrReply",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P6-v720-expire-c.txt:491",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/expire.c#L491"
+        },
+        {
+          "start_line": 549,
+          "end_line": 664,
+          "section": "expireGenericCommand: seconds, domain, conditions, del/expire events",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P6-v720-expire-c.txt:549",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/expire.c#L549"
+        },
+        {
+          "start_line": 687,
+          "end_line": 727,
+          "section": "ttlGenericCommand: rounding; TTL/PTTL/EXPIRETIME/PEXPIRETIME",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P6-v720-expire-c.txt:687",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/expire.c#L687"
+        }
+      ]
+    }
+  ],
+  "conditions": "UNKNOWN",
+  "rawSHA256": "b3c7bb30c6bbc2cd99307fb81a917a9c3499d8749b27fdf7060e0da186d53d65"
+}

@@ -1,0 +1,153 @@
+{
+  "schema": "er12.public-native-lifecycle.v1",
+  "target": {
+    "slot": "A3-02",
+    "arm": "control",
+    "stage": "critic",
+    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-02-control-critic-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-02-control-critic-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-02-control-critic-v1:ordinal:1",
+    "status": "completed",
+    "hasPendingChildRuns": false,
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "latestTerminalStatus": "completed",
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-02-control-critic-v1:ordinal:1",
+    "whitelist_index": 94
+  },
+  "original_capture_sha256": "41895f0f6e0b6db1d4019becb5bf7bb30ce7304159d24088853716c28ba9fbfa",
+  "private_archive_lineage": "publication-cohort4/private/originals/mechanics/native-observation-cohort3/host/context-017.json",
+  "observations": [
+    {
+      "phase": "messages",
+      "route": "mcp__t3_code__t3_thread_read",
+      "request": {
+        "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-02-control-critic-v1",
+        "view": "messages",
+        "limit": 1,
+        "maxCharsPerItem": 200,
+        "runLimit": 1
+      },
+      "started_at_utc": "2026-10-10T05:33:29.222Z",
+      "finished_at_utc": "2026-10-10T05:33:30.509Z",
+      "actual_lifecycle_metadata": [
+        {
+          "thread": {
+            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-02-control-critic-v1",
+            "status": "completed",
+            "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-02-control-critic-v1:ordinal:1",
+            "activeRunId": null,
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "gpt-6-luna",
+            "pendingRequestCount": 0,
+            "createdAt": "2026-10-10T05:05:03.631Z",
+            "updatedAt": "2026-10-10T05:17:19.441Z"
+          }
+        },
+        {
+          "thread": {
+            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-02-control-critic-v1",
+            "status": "completed",
+            "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-02-control-critic-v1:ordinal:1",
+            "activeRunId": null,
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "gpt-6-luna",
+            "pendingRequestCount": 0,
+            "createdAt": "2026-10-10T05:05:03.631Z",
+            "updatedAt": "2026-10-10T05:17:19.441Z"
+          }
+        }
+      ],
+      "omitted_activity_message_bodies": "UNKNOWN coverage; private original only"
+    },
+    {
+      "phase": "head",
+      "route": "mcp__t3_code__t3_thread_read",
+      "request": {
+        "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-02-control-critic-v1",
+        "view": "activity",
+        "limit": 12,
+        "maxCharsPerItem": 350,
+        "runLimit": 1
+      },
+      "started_at_utc": "2026-10-10T05:33:29.505Z",
+      "finished_at_utc": "2026-10-10T05:33:30.509Z",
+      "actual_lifecycle_metadata": [
+        {
+          "thread": {
+            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-02-control-critic-v1",
+            "status": "completed",
+            "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-02-control-critic-v1:ordinal:1",
+            "activeRunId": null,
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "gpt-6-luna",
+            "pendingRequestCount": 0,
+            "createdAt": "2026-10-10T05:05:03.631Z",
+            "updatedAt": "2026-10-10T05:17:19.441Z"
+          }
+        },
+        {
+          "thread": {
+            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-02-control-critic-v1",
+            "status": "completed",
+            "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-02-control-critic-v1:ordinal:1",
+            "activeRunId": null,
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "gpt-6-luna",
+            "pendingRequestCount": 0,
+            "createdAt": "2026-10-10T05:05:03.631Z",
+            "updatedAt": "2026-10-10T05:17:19.441Z"
+          }
+        }
+      ],
+      "omitted_activity_message_bodies": "UNKNOWN coverage; private original only"
+    },
+    {
+      "phase": "tail",
+      "route": "mcp__t3_code__t3_thread_read",
+      "request": {
+        "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-02-control-critic-v1",
+        "view": "activity",
+        "limit": 45,
+        "maxCharsPerItem": 350,
+        "runLimit": 1,
+        "afterPosition": 153
+      },
+      "started_at_utc": "2026-10-10T05:33:29.973Z",
+      "finished_at_utc": "2026-10-10T05:33:30.509Z",
+      "actual_lifecycle_metadata": [
+        {
+          "thread": {
+            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-02-control-critic-v1",
+            "status": "completed",
+            "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-02-control-critic-v1:ordinal:1",
+            "activeRunId": null,
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "gpt-6-luna",
+            "pendingRequestCount": 0,
+            "createdAt": "2026-10-10T05:05:03.631Z",
+            "updatedAt": "2026-10-10T05:17:19.441Z"
+          }
+        },
+        {
+          "thread": {
+            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-02-control-critic-v1",
+            "status": "completed",
+            "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-02-control-critic-v1:ordinal:1",
+            "activeRunId": null,
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "gpt-6-luna",
+            "pendingRequestCount": 0,
+            "createdAt": "2026-10-10T05:05:03.631Z",
+            "updatedAt": "2026-10-10T05:17:19.441Z"
+          }
+        }
+      ],
+      "omitted_activity_message_bodies": "UNKNOWN coverage; private original only"
+    }
+  ],
+  "actual_lifecycle_metadata": [],
+  "omission": "Full thread messages/activity bodies, raw meters and source captures private; independently captured focused native Goal receipts remain separately published. No new host read or inference.",
+  "source_body_coverage": "UNKNOWN"
+}

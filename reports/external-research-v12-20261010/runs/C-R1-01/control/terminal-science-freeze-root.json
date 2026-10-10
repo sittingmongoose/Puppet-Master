@@ -1,0 +1,88 @@
+{
+  "observed_at_utc": "2026-10-10T05:35:46.244487+00:00",
+  "basis": "root observed terminal final T3 task/no pending; separate from native proof",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/critic/critique.md",
+      "bytes": 11067,
+      "sha256": "52e5d974f16b2afa4ba64fec437d51a004762f5107eaca48793cfd648b4b2c44",
+      "mtime_ns": 1791609826050114423
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/critic/source-map.json",
+      "bytes": 16186,
+      "sha256": "7fabdfec112be560abd7dfb6b96d108ebdbd33d01946454b6e002f2872ecd442",
+      "mtime_ns": 1791609637262903936
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/investigator/discovery.md",
+      "bytes": 14920,
+      "sha256": "9fc94330a5d60c254a7f880a167142c5a825d4600d3913e113f9009fa8e45df0",
+      "mtime_ns": 1791608543890275677
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/investigator/draft.md",
+      "bytes": 24715,
+      "sha256": "66a00faa3e97fc708fd022e6f811a22fb87249f177a2070e449f38b0aa67a024",
+      "mtime_ns": 1791609029453662779
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/investigator/revealed-plan.md",
+      "bytes": 7137,
+      "sha256": "5f18fc6d7f9d8e4c30af8e806cf1d6c177fb058e94954326ee0343a5020a2e09",
+      "mtime_ns": 1791608600739318518
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/investigator/source-map.json",
+      "bytes": 17253,
+      "sha256": "977f26d6e2f261af26c4e9d0c52df06df5c1c4c6eb2d71700cc80af0c097ad29",
+      "mtime_ns": 1791609029454694063
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/investigator/sources/index.md",
+      "bytes": 2685,
+      "sha256": "50695a7b0cb737f0c65603616c1db84bc5faebecc4f878778458de740a9cde4c",
+      "mtime_ns": 1791608590326074124
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md",
+      "bytes": 27808,
+      "sha256": "91f1186fbd5ebf56429f66e8bb25a5bd26eccbb7824f8ef719117505252020e3",
+      "mtime_ns": 1791610506829320448
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/source-map.json",
+      "bytes": 18696,
+      "sha256": "acc52304e7ca182244421c8ae8de39b9caf73969fa6b0762f438bce6602d9622",
+      "mtime_ns": 1791610461597744673
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/sources/index.md",
+      "bytes": 5354,
+      "sha256": "633520f535d1c03ae576b28eb0c02f9c2cc77f454fcbdece6a51aa69c2eb76cb",
+      "mtime_ns": 1791610461560831642
+    }
+  ],
+  "final_stage_task": {
+    "slot": "C-R1-01",
+    "arm": "control",
+    "stage": "reviser",
+    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-01-control-reviser-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-01-control-reviser-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-01-control-reviser-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-01-control-reviser-v1",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-01-control-reviser-v1:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "Completed the assigned reviser stage. The single native Goal was activated with the exact objective and completed. Its activation and completion responses are preserved.\n\n- [Final proposal](<ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md>)\n- [Source map](<ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/source-map.json>) and [source index](<ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/sources/index.md>)\n- [Activation response](<ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/native-goal-activation-response.json>) and [completion response](<ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/native-goal-completion-response.json>)\n\nCI-01 was accepted and amended with a conditional specialist diagnostic; the proposal states its limits and that it was not performed. The independent primary-source checks are recorded in the source map ([S08](https://www.sciencedirect.com/science/article/pii/S0022460X17301207), [S09](https://www.sintef.no/en/publications/publication/1450011/)). No site measurements or interventions were executed.\n\nNative Goal usage: 119,773 tokens over 10 minutes 11 seconds.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-01-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:2be98ba9-a59e-43b5-983d-0a0ea664914d",
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "summary": "Completed the assigned reviser stage. The single native Goal was activated with the exact objective and completed. Its activation and completion responses are preserved.\n\n- [Final proposal](<ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md>)\n- [Source map](<ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/source-map.json>) and [source index](<ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/sources/index.md>)\n- [Activation response](<ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/native-goal-activation-response.json>) and [completion response](<ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/native-goal-completion-response.json>)\n\nCI-01 was accepted and amended with a conditional specialist diagnostic; the proposal states its limits and that it was not performed. The independent primary-source checks are recorded in the source map ([S08](https://www.sciencedirect.com/science/article/pii/S0022460X17301207), [S09](https://www.sintef.no/en/publications/publication/1450011/)). No site measurements or interventions were executed.\n\nNative Goal usage: 119,773 tokens over 10 minutes 11 seconds.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-01-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:2be98ba9-a59e-43b5-983d-0a0ea664914d",
+    "waitTimedOut": false
+  }
+}

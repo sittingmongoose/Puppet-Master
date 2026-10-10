@@ -1,0 +1,60 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://support.microsoft.com/en-us/outlook/import-or-subscribe-to-a-calendar-in-outlook-com-or-outlook-on-the-web"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A4-02/treatment-v1/retrieval-manifest.json",
+      "source_id": "R09",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/A4-02/treatment-v1/source-map.json",
+      "source_id": "R09",
+      "existing_authored_summary_fields": {
+        "released_version_or_commit": "Current Microsoft Support; service build UNKNOWN",
+        "governing_locator": "Personal account Subscribe/import distinction; Work/school corresponding sections",
+        "governing_conditions": "Outlook.com approximately3 hours; Outlook on the web approximately6 hours; both allow >24 hours. Import/upload is non-refreshing snapshot. Neither cadence is a maximum, universal-client rule or SLA."
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "governing_locator": "Personal account Subscribe/import distinction; Work/school corresponding sections"
+    }
+  ],
+  "raw_sha256": "6aa9284d6e1d602ac641212aa0d4fcb1c62715ca9fa2b2843655315ac3ebff9d",
+  "original_bytes": 10912,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A4-02/treatment-v1/evidence/R09.text.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://support.microsoft.com/en-us/outlook/import-or-subscribe-to-a-calendar-in-outlook-com-or-outlook-on-the-web"
+  ],
+  "version": [
+    {
+      "released_version_or_commit": "Current Microsoft Support; service build UNKNOWN",
+      "governing_locator": "Personal account Subscribe/import distinction; Work/school corresponding sections",
+      "governing_conditions": "Outlook.com approximately3 hours; Outlook on the web approximately6 hours; both allow >24 hours. Import/upload is non-refreshing snapshot. Neither cadence is a maximum, universal-client rule or SLA."
+    }
+  ],
+  "selector": [
+    {
+      "governing_locator": "Personal account Subscribe/import distinction; Work/school corresponding sections"
+    }
+  ],
+  "conditions": [
+    {
+      "released_version_or_commit": "Current Microsoft Support; service build UNKNOWN",
+      "governing_locator": "Personal account Subscribe/import distinction; Work/school corresponding sections",
+      "governing_conditions": "Outlook.com approximately3 hours; Outlook on the web approximately6 hours; both allow >24 hours. Import/upload is non-refreshing snapshot. Neither cadence is a maximum, universal-client rule or SLA."
+    }
+  ],
+  "rawSHA256": "6aa9284d6e1d602ac641212aa0d4fcb1c62715ca9fa2b2843655315ac3ebff9d"
+}

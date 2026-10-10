@@ -1,0 +1,231 @@
+{
+  "run_id": "C-R1-02-control",
+  "stage": "critic",
+  "case_id": "ER12-C-R1-02-FRESH",
+  "access_utc": "2026-10-10T05:09:29Z",
+  "evidence_policy": "Bounded source set; primary government, institutional, and original research sources. US rules are jurisdiction examples only because this synthetic case supplies no location. No source proves this workshop's water chemistry, legal status, or performance.",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "Optimization and economic evaluation of modified coagulation–flocculation process for enhanced treatment of ceramic-tile industry wastewater",
+      "url": "https://link.springer.com/article/10.1186/s13568-018-0702-4",
+      "publisher": "AMB Express / Springer Nature",
+      "version_or_release": "Original research article, 2018, volume 8, article 172; DOI 10.1186/s13568-018-0702-4.",
+      "access_utc": "2026-10-10T05:09:29Z",
+      "locator": "Sampling and methods; primary sedimentation results, article lines 91-106 and 126-136; discussion at 210-211.",
+      "observed_operation": "Composite factory wastewater considered work shifts; 1 L lab settling series at 10–120 min. Before any coagulant, 100 min sedimentation reduced TSS 15,750 to 9,400 mg/L (41.97%) and turbidity 10,500 to 6,310 NTU (39.9%); three repetitions are reported for the later experimental conditions.",
+      "governing_condition_default_exception": "The cited settling result is specific to ceramic-tile factory influent and a laboratory flask. The rest of the study adds PAC/polymer chemicals, whose higher removal is outside the brief. The paper discusses that simple settling may not provide water quality for all factory reuse uses.",
+      "applicability": "Direct mechanism evidence that settling can remove a material but incomplete share of suspended solids; supports measuring actual settleability and residual TSS.",
+      "limitations": "Industrial tile wastewater in Yazd, Iran; not a community workshop, no unknown glaze mix transfer, and no disposal permission for this case. Chemical-treatment findings are not recommendations here.",
+      "critic_review": {
+        "status": "verified",
+        "locator_checked": "Article methods lines 91-106; sedimentation results lines 127-130; discussion lines 209-211.",
+        "review": "The original article confirms composite sampling across production shifts, 1 L flask tests at 10-120 minutes, and the pre-coagulant 100-minute values (TSS 15,750 to 9,400 mg/L; turbidity 10,500 to 6,310 NTU). Factory/lab conditions and out-of-scope coagulation are accurately bounded."
+      }
+    },
+    {
+      "id": "S02",
+      "title": "Optimal Treatment of Ceramic Industrial Wastewater",
+      "url": "https://www.internationaljournalssrg.org/IJCE/2025/Volume12-Issue3/IJCE-V12I3P105.pdf",
+      "publisher": "SSRG International Journal of Civil Engineering",
+      "version_or_release": "Original research article, volume 12 issue 3, published 2025-03-29; DOI 10.14445/23488352/IJCE-V12I3P105.",
+      "access_utc": "2026-10-10T05:09:29Z",
+      "locator": "PDF pp. 47-49 (abstract, setup, feed); pp. 50-54 (daily TSS, results, conclusion, future work).",
+      "observed_operation": "One Egyptian factory pilot with three parallel lines (sedimentation+filtration, flotation+filtration, cyclone+filtration), a 250 L feed tank and constant-head tank; each line reported at 25 L/day and 6 h/day. Three sequential two-week stages: no chemical addition, ferric chloride, then anthracite substituted for sand. Reported first-stage influent TSS is about 20,700–23,600 mg/L; the sedimentation train reports about 102 mg/L at stage 1. Authors say physical-only stages did not meet their reuse pH target and list sludge reuse/disposal and cost as further work.",
+      "governing_condition_default_exception": "The result is a sedimentation-plus-filter train, not settling alone. Conditions, reuse target, and one factory's sewer discussion do not establish a local standard or permission. Stage order is sequential, not a randomized matched comparison.",
+      "applicability": "Useful flow-stabilization and combined-process example; informs transfer checklist and shows particle removal can leave another water-quality criterion unresolved.",
+      "limitations": "Single factory, high industrial TSS, small pilot, limited period and staged conditions; transfer evidence is weak. Do not adopt its discharge claims or chemical conditions.",
+      "critic_review": {
+        "status": "verified_with_internal_reporting_ambiguity",
+        "locator_checked": "Publisher article record/abstract; article PDF methods and results pp. 49-55.",
+        "review": "Confirms factory feed, 250 L tank and constant-head flow stabilization, 25 L/day per line and 6 h/day, three two-week treatment stages, and the 102 mg/L sedimentation-line result as a combined sedimentation/filtration train. The publisher abstract says four experimental runs while the body describes three two-week stages; preserve that reporting ambiguity. Draft correctly avoids attributing the train result to settling alone and treats reuse/sewer claims as non-transferable."
+      }
+    },
+    {
+      "id": "S03",
+      "title": "Effective treatment of the wastewater from ceramic industry using ceramic membranes",
+      "url": "https://publikationen.bibliothek.kit.edu/1000131147/109197328",
+      "publisher": "Karlsruhe Institute of Technology repository; Water Science and Technology / IWA Publishing",
+      "version_or_release": "Original research article, 2021, Water Science and Technology 83(5), pp. 1055–1071; DOI 10.2166/wst.2021.039; KIT record 1000131147, repository deposit 2021-04-12.",
+      "access_utc": "2026-10-10T05:09:29Z",
+      "locator": "PDF pp. 1055–1057 (scope, feed history and particle size), pp. 1061–1066 (fouling, cleaning, flux/energy), conclusions pp. 1068–1069.",
+      "observed_operation": "Compares ceramic MF (200 nm), UF (2,000 Da), NF (450/200 Da) singly and in stages using one German manufacturer's variable process wastewater, laboratory single-channel modules and 7/19/151-channel pilot modules. It reports submicron-to-coarse particle sizes, changing feed COD, declining permeability/irreversible fouling, chemical cleaning after blockage, and a short 7-day/100-hour long-term MF test with power evaluation.",
+      "governing_condition_default_exception": "Results depend on membrane morphology, feed concentration, process conditions and maintenance; single-stage short runs were not enough for long-term design. Multi-stage filtration was examined to extend runs/cover concentration variation.",
+      "applicability": "Primary evidence for size characterization, filter performance drift, and the operational burden of high-efficiency membrane treatment.",
+      "limitations": "Industrial continuous cross-flow equipment and feed; not a small workshop device. It does not validate ordinary cartridge performance or this stream.",
+      "critic_review": {
+        "status": "verified",
+        "locator_checked": "PDF pp. 1055-1057, 1061-1066, 1068-1069.",
+        "review": "Primary article confirms one German manufacturer feed, variable production wastewater, particle range and distribution, cross-flow lab/pilot membranes, pressure and fouling/cleaning effects. The proposal treats this as an industrial comparator, not a small-shop design."
+      }
+    },
+    {
+      "id": "S04",
+      "title": "Tertiary Granular Filtration: Problems and Remedies",
+      "url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=200045JL.TXT",
+      "publisher": "US Environmental Protection Agency",
+      "version_or_release": "EPA technical report dated August 1984.",
+      "access_utc": "2026-10-10T05:09:29Z",
+      "locator": "Summary and Table 1, pp. 1–2; common filtration-cycle problems and remedies, report lines 188–244; process/backwash description, lines 263–333.",
+      "observed_operation": "EPA evaluated municipal tertiary granular media filtration systems and catalogued clogging/head loss, hydraulic surges, poor effluent, downtime, maintenance/training issues, and backwash/media problems. Remedies include upstream solids reduction, flow stabilization/equalization, monitoring and maintenance.",
+      "governing_condition_default_exception": "The recommendations address engineered wastewater treatment-plant filter beds and backwashing; they are not specifications for a small replaceable filter.",
+      "applicability": "Failure-mode and maintenance evidence for including loading, flow, bypass, cleaning and labor in any filtration comparison.",
+      "limitations": "Dated municipal plant-scale report; use as a failure catalog, not current small-equipment design guidance.",
+      "critic_review": {
+        "status": "verified",
+        "locator_checked": "EPA report summary/Table 1; filtration-cycle discussion and remedies, lines 188-244.",
+        "review": "Confirms clogging/head loss, hydraulic surges, poor effluent, maintenance/training problems, and plant-scale remedies including equalization/upstream solids control. Proposal explicitly limits this old municipal report to failure-mode evidence."
+      }
+    },
+    {
+      "id": "S05",
+      "title": "Arts & Crafts Center — ceramic studio policies and procedures",
+      "url": "https://union.ufl.edu/artscraftscenter/",
+      "publisher": "University of Florida, Reitz Union Arts & Crafts Center",
+      "version_or_release": "Live institutional studio policy page; no revision date shown for the policy section (site copyright 2023).",
+      "access_utc": "2026-10-10T05:09:29Z",
+      "locator": "Ceramic Studio Policies, Throwing Room and Glazing Room, page lines 179–249.",
+      "observed_operation": "A teaching studio directs users to rinse glaze tools first in glaze-reclaim buckets, keep clay slurry/reclaim out of the sink, and send only water to the sink; it restricts outside glazes and identifies its own supplied clay/glazes.",
+      "governing_condition_default_exception": "These are that institution's operational practices, for its stated teaching studio and controlled materials.",
+      "applicability": "A concrete low-technology source-segregation/reclaim workflow to discuss with the workshop.",
+      "limitations": "Not an efficacy study, not a disposal authorization, and its lead-free glaze/controlled inventory context does not describe this case.",
+      "critic_review": {
+        "status": "verified",
+        "locator_checked": "Live UF Arts & Crafts Center page, Ceramic Studio Policies: Getting Started, Throwing Room, and Glazing Room.",
+        "review": "Current institutional page confirms supplied materials/controlled studio context, water-only sink direction, clay reclaim buckets, and rinsing glaze tools in reclaim buckets first. This is an operational precedent, not efficacy, classification, or local disposal authorization."
+      }
+    },
+    {
+      "id": "S06",
+      "title": "Laboratory Waste Management Plan",
+      "url": "https://www.wcu.edu/WebFiles/PDFs/SAFETYOFFICE-LaboratoryWasteManagementPlan.pdf",
+      "publisher": "Western Carolina University Safety & Risk Management",
+      "version_or_release": "Revision date April 2020; plan footer identifies Rev 4/15/2020.",
+      "access_utc": "2026-10-10T05:09:29Z",
+      "locator": "PDF p. 8, Waste Separation, Ceramic Glaze, lines 208–223.",
+      "observed_operation": "The institutional plan says many glazes contain metals treated as hazardous waste in its program; it uses a settling tank at glaze preparation/rinse sinks, requires frequent emptying, and routes collected solids under that institution's hazardous-waste management.",
+      "governing_condition_default_exception": "Explicitly a WCU laboratory plan within its safety and waste program; local waste handling is not universal.",
+      "applicability": "Demonstrates that particle capture requires a planned cleanout and solids route, not just a clearer overflow.",
+      "limitations": "Cannot determine this synthetic workshop's hazard class or disposal route.",
+      "critic_review": {
+        "status": "verified",
+        "locator_checked": "PDF p. 8, lines 219-223.",
+        "review": "WCU plan confirms its own glaze settling-tank practice, frequent emptying, and institution-specific hazardous-waste route. Proposal correctly does not transfer that route to the synthetic case."
+      }
+    },
+    {
+      "id": "S07",
+      "title": "Learn About Pollution Prevention",
+      "url": "https://www.epa.gov/p2/learn-about-pollution-prevention",
+      "publisher": "US Environmental Protection Agency",
+      "version_or_release": "Live EPA page; last updated 2026-08-12.",
+      "access_utc": "2026-10-10T05:09:29Z",
+      "locator": "What is P2 and specific approaches, lines 19–41.",
+      "observed_operation": "EPA places source reduction before reuse/recycling, treatment and disposal in its hierarchy and gives process modification, reduced waste generation and water/energy conservation as industrial prevention approaches.",
+      "governing_condition_default_exception": "General pollution-prevention hierarchy; it does not classify a specific rinse stream or prescribe a particular studio cleanup practice.",
+      "applicability": "Supports including source segregation/reduced rinse input as a non-treatment comparator.",
+      "limitations": "General US guidance, not a site-specific operating or legal determination.",
+      "critic_review": {
+        "status": "verified",
+        "locator_checked": "EPA page “What is P2?” and “Specific Pollution Prevention Approaches,” lines 19-41.",
+        "review": "Confirms the source-reduction hierarchy and general industrial prevention examples. The proposal uses it only to support considering prevention/source segregation, not as a studio-specific instruction."
+      }
+    },
+    {
+      "id": "S08",
+      "title": "Wastewater Sampling (FSBPROC-306-R7)",
+      "url": "https://www.epa.gov/sites/default/files/2017-07/documents/wastewater_sampling306_af.r4.pdf",
+      "publisher": "US Environmental Protection Agency, Region 4 Field Services Branch",
+      "version_or_release": "Controlled PDF is FSBPROC-306-R7, effective 2026-02-11, next review 2030-02-11. Website listing uses the older LSASD R7 label and a legacy-looking URL; PDF revision history says R7 replaces LSASDPROC-306-R6 and changed document-control ID.",
+      "access_utc": "2026-10-10T05:09:29Z",
+      "locator": "PDF §§3–4 (sample design/types), §5.2 conventional sampling incl. TSS, §9 supplementary records; revision history pp. 22–23.",
+      "observed_operation": "Procedure covers wastewater collection for field screening/lab analysis and stresses project-specific sampling design, site selection, representative composites, sample integrity, records and quality control. Revision history records the 2025 R6 archive and 2026 R7 administrative/document-control changes.",
+      "governing_condition_default_exception": "EPA Region 4's operating procedure for its staff and investigations; compliance locations/methods follow the actual permit and current applicable methods. It is guidance for a local partner, not this workshop's permit.",
+      "applicability": "Supports an approved, documented sampling plan, representative samples and chain-of-custody/QA; explicit revision lineage is useful for source currency.",
+      "limitations": "Not a substitute for the local lab's method, accreditation, analytical panel, or jurisdiction requirements.",
+      "critic_review": {
+        "status": "verified",
+        "locator_checked": "Controlled EPA Region 4 PDF cover/effective date; sampling design §§3-4, conventional sampling §5.2, records §9, revision history pp. 22-23.",
+        "review": "Confirms identifier FSBPROC-306-R7 and effective date 2026-02-11, project-specific sampling design, integrity/records, and the document-control change. It is a Region 4 procedure, not a local permit or universal method."
+      }
+    },
+    {
+      "id": "S09",
+      "title": "Industrial User Inspection and Sampling Manual for POTWs",
+      "url": "https://www.epa.gov/sites/default/files/2017-01/documents/iuinspect.pdf",
+      "publisher": "US Environmental Protection Agency, EPA-831-B-17-001 / OECA-MANL-2017-002-R1",
+      "version_or_release": "2017 revised manual, revision R1.",
+      "access_utc": "2026-10-10T05:09:29Z",
+      "locator": "Chapter 3, §§3.7.2.1–3.7.2.2, PDF pp. 90–92 (grab/composite selection).",
+      "observed_operation": "Defines grab conditions and composite averages; says composites are useful for highly variable wastewater, flow-proportional collection is preferred when flow/concentration/load varies irregularly, and grab samples characterize extremes; pH is among parameters sampled by grab under the referenced rules.",
+      "governing_condition_default_exception": "Permit/control mechanism or approving authority specifies compliance sample type; non-compliance research still needs representative design and approved methods.",
+      "applicability": "Supports matching sample type to intermittent flow and keeping pH/extreme-condition grabs separate from composites.",
+      "limitations": "US POTW user manual, not an assumed legal regime for the synthetic case.",
+      "critic_review": {
+        "status": "verified",
+        "locator_checked": "EPA manual ch. 3 §§3.7.2.1-3.7.2.2, PDF pp. 90-92.",
+        "review": "Confirms flow-proportional composites for variable loads and separate grab use for extremes/parameters governed by grab requirements. Draft appropriately makes actual sample type subject to lab/authority approval and does not assume POTW jurisdiction."
+      }
+    },
+    {
+      "id": "S10",
+      "title": "Metals",
+      "url": "https://www.epa.gov/caddis/metals",
+      "publisher": "US Environmental Protection Agency",
+      "version_or_release": "Live EPA technical page; no page revision date visible at cited section.",
+      "access_utc": "2026-10-10T05:09:29Z",
+      "locator": "Ways to Measure, lines 131–143.",
+      "observed_operation": "EPA notes metals generally require laboratory handling; the filtered fraction passing 0.45 µm is operationally called dissolved, retained metals are suspended, and unfiltered acid-extractable/total measures answer a different question.",
+      "governing_condition_default_exception": "Operational definitions and sampling/analysis methods depend on purpose and the applicable approved analytical method.",
+      "applicability": "Supports paired filtered/unfiltered analytical fractions for selected constituents rather than inferring dissolved risk from particle removal.",
+      "limitations": "Do not select analytes from this page alone; determine candidate elements from the real material inventory and partner/lab.",
+      "critic_review": {
+        "status": "verified_with_source_unit_rendering_issue",
+        "locator_checked": "EPA CADDIS “Ways to Measure,” lines 131-141.",
+        "review": "Confirms lab analysis and operational filtered/unfiltered fractions. The page text itself says “0.45 micromolar (uM)” and then “0.45 μM”; investigator map normalizes this as 0.45 µm without noting the page discrepancy. Draft does not specify this as a method and leaves method/units to the lab."
+      }
+    },
+    {
+      "id": "S11",
+      "title": "Frequent Questions About Implementing the Hazardous Waste Generator Improvements Final Rule",
+      "url": "https://www.epa.gov/hwgenerators/frequent-questions-about-implementing-hazardous-waste-generator-improvements-final",
+      "publisher": "US Environmental Protection Agency",
+      "version_or_release": "Live EPA FAQ describing 40 CFR 262.11 and the Generator Improvements Rule; state adoption can vary (FAQ lines 53, 61–85).",
+      "access_utc": "2026-10-10T05:09:29Z",
+      "locator": "Waste Determinations, lines 53–85.",
+      "observed_operation": "Explains that US generators determine each solid waste at generation before dilution/mixing, use process/material knowledge and characterization, test if knowledge is inadequate, and manage potentially hazardous waste under generator requirements while awaiting determination.",
+      "governing_condition_default_exception": "US RCRA framework; authorized states may adopt some rule changes differently. It does not classify this synthetic waste or apply outside that regime.",
+      "applicability": "Supports an explicit characterization and local waste-professional gate before choosing solids disposal or mixing streams.",
+      "limitations": "Illustrative US regulatory source only; this task states no location and no final waste route.",
+      "critic_review": {
+        "status": "verified",
+        "locator_checked": "EPA FAQ “Waste Determinations,” lines 61-82 and linked waiting-for-results question.",
+        "review": "Confirms waste-specific determination before dilution/mixing and the use of relevant material/process knowledge, with testing when knowledge is inadequate; US RCRA/state adoption caveats remain. Not used to classify this case."
+      }
+    },
+    {
+      "id": "S12",
+      "title": "Pretreatment Standards and Requirements—General and Specific Prohibitions",
+      "url": "https://www.epa.gov/npdes/pretreatment-standards-and-requirements-general-and-specific-prohibitions",
+      "publisher": "US Environmental Protection Agency",
+      "version_or_release": "Live EPA page; last updated 2026-08-31; describes 40 CFR Part 403.5.",
+      "access_utc": "2026-10-10T05:09:29Z",
+      "locator": "General and specific prohibitions, lines 14–34.",
+      "observed_operation": "For US discharges to a POTW, EPA says national prohibitions apply to nondomestic dischargers whether or not a local control mechanism/permit was issued; general pass-through/interference and specific categories include obstructive solids and pollutant flow/concentration causing interference.",
+      "governing_condition_default_exception": "Only relevant if the actual destination and jurisdiction trigger these rules; state/local requirements may be more specific or stringent.",
+      "applicability": "Supports checking the actual destination and obtaining local sewer-authority review rather than treating clarification as discharge approval.",
+      "limitations": "No US location or POTW destination is provided; not a determination that this stream may or may not be discharged.",
+      "critic_review": {
+        "status": "verified",
+        "locator_checked": "EPA page general and specific prohibitions, lines 5-28.",
+        "review": "Confirms POTW-specific national prohibitions apply to nondomestic discharges whether or not a control mechanism/permit issued, including obstructive solids/interference. Proposal makes no jurisdiction or discharge finding for this synthetic case."
+      }
+    }
+  ],
+  "source_map_basis": "Preserves investigator source IDs and complete source identity fields; independent critic checks and discrepancies are appended per ID. URLs and IDs were not rebound.",
+  "independent_access_window_utc": {
+    "start": "2026-10-10T05:18:14Z",
+    "end": "2026-10-10T05:25:39Z",
+    "note": "Primary/institutional pages and records were independently opened or checked in this window. Individual web subcalls did not expose per-call timestamps; original source access_utc fields below remain the investigator-recorded source access times."
+  }
+}

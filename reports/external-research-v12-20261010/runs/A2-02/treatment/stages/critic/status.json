@@ -1,0 +1,22 @@
+{
+  "slot": "A2-02",
+  "arm": "treatment",
+  "stage": "critic",
+  "helper": "ER12_RUNTIME/helpers/topology-v1",
+  "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A2-A2-02-treatment-critic-topology-v1",
+  "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A2-A2-02-treatment-critic-topology-v1",
+  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A2-A2-02-treatment-critic-topology-v1:ordinal:1",
+  "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A2-A2-02-treatment-critic-topology-v1",
+  "status": "completed",
+  "workState": "result_available",
+  "hasPendingChildRuns": false,
+  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A2-A2-02-treatment-critic-topology-v1:ordinal:1",
+  "latestTerminalStatus": "completed",
+  "latestTerminalSummary": "The single native Goal was activated with the exact frozen objective and completed. Its activation, precompletion, and completion receipts are saved in the critic stage. The input gate verified all 21 frozen members; that confirms bytes, not source truth or comprehension.\n\nThe review found no material wrong or materially incomplete treatment. Two minor source-context notes are indexed in the critique.\n\n- [Critique](<ER12_RUNTIME/runs/A2-02/treatment/stages/critic/critique.md>)\n- [Critique dispositions](<ER12_RUNTIME/runs/A2-02/treatment/stages/critic/critique-dispositions.json>)\n- [Source map](<ER12_RUNTIME/runs/A2-02/treatment/stages/critic/source-map.json>) and [source index](<ER12_RUNTIME/runs/A2-02/treatment/stages/critic/sources/index.md>)\n\nNo product or collection checks were run. The Goal receipt reports 150,290 tokens used and 367 seconds elapsed.",
+  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A2-A2-02-treatment-critic-topology-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:b702bbce-c392-4d4a-bfea-d55de2f56d88",
+  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+  "model": "gpt-6-luna",
+  "summary": "The single native Goal was activated with the exact frozen objective and completed. Its activation, precompletion, and completion receipts are saved in the critic stage. The input gate verified all 21 frozen members; that confirms bytes, not source truth or comprehension.\n\nThe review found no material wrong or materially incomplete treatment. Two minor source-context notes are indexed in the critique.\n\n- [Critique](<ER12_RUNTIME/runs/A2-02/treatment/stages/critic/critique.md>)\n- [Critique dispositions](<ER12_RUNTIME/runs/A2-02/treatment/stages/critic/critique-dispositions.json>)\n- [Source map](<ER12_RUNTIME/runs/A2-02/treatment/stages/critic/source-map.json>) and [source index](<ER12_RUNTIME/runs/A2-02/treatment/stages/critic/sources/index.md>)\n\nNo product or collection checks were run. The Goal receipt reports 150,290 tokens used and 367 seconds elapsed.",
+  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A2-A2-02-treatment-critic-topology-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:b702bbce-c392-4d4a-bfea-d55de2f56d88",
+  "waitTimedOut": false
+}

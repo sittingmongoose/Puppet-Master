@@ -1,0 +1,115 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://www.odoo.com/documentation/18.0/applications/inventory_and_mrp/barcode/setup/operation_types.html"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A5-02/treatment-v1/source-map.json",
+      "source_id": "E-O02",
+      "existing_authored_summary_fields": {
+        "candidate_version": "Versioned Odoo documentation: 18.0; product patch/build is not specified.",
+        "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+        "independently_verified_version_or_commit": "Odoo official versioned documentation 18.0",
+        "governing_condition_default_exception": "Operation availability depends on database configuration; VALIDATE is a separate command",
+        "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A5-02/treatment-v1/evidence/retrieval-manifest.json",
+      "source_id": "E-O02",
+      "existing_authored_summary_fields": {
+        "candidate_version": "Versioned Odoo documentation: 18.0; product patch/build is not specified."
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context."
+    },
+    {
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-O02.txt",
+          "line": 84,
+          "needle": "Receipts WHIN creates",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-O02.txt",
+          "line": 87,
+          "needle": "will not match an already scheduled order",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-O02.txt",
+          "line": 100,
+          "needle": "VALIDATE:",
+          "other_match_lines": []
+        }
+      ]
+    }
+  ],
+  "raw_sha256": "1b2322cbcb41fffc8d1ff5cdc12d461c5066168c63dfa1341133b4a2ba266874",
+  "original_bytes": 8011,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A5-02/treatment-v1/evidence/E-O02.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://www.odoo.com/documentation/18.0/applications/inventory_and_mrp/barcode/setup/operation_types.html"
+  ],
+  "version": [
+    {
+      "candidate_version": "Versioned Odoo documentation: 18.0; product patch/build is not specified.",
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "Odoo official versioned documentation 18.0",
+      "governing_condition_default_exception": "Operation availability depends on database configuration; VALIDATE is a separate command",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation."
+    },
+    {
+      "candidate_version": "Versioned Odoo documentation: 18.0; product patch/build is not specified."
+    }
+  ],
+  "selector": [
+    {
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context."
+    },
+    {
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-O02.txt",
+          "line": 84,
+          "needle": "Receipts WHIN creates",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-O02.txt",
+          "line": 87,
+          "needle": "will not match an already scheduled order",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-O02.txt",
+          "line": 100,
+          "needle": "VALIDATE:",
+          "other_match_lines": []
+        }
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "candidate_version": "Versioned Odoo documentation: 18.0; product patch/build is not specified.",
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "Odoo official versioned documentation 18.0",
+      "governing_condition_default_exception": "Operation availability depends on database configuration; VALIDATE is a separate command",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation."
+    }
+  ],
+  "rawSHA256": "1b2322cbcb41fffc8d1ff5cdc12d461c5066168c63dfa1341133b4a2ba266874"
+}

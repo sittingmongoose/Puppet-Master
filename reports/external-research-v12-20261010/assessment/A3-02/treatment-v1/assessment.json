@@ -1,0 +1,2106 @@
+{
+  "schema_version": 1,
+  "assessment_id": "ER12-A3-02-treatment-v1",
+  "assessor": "codex-er12-a3-02-treatment-review-v1",
+  "assignment": "Independent semantic assessment of ONE completed ER12 full pipeline A3-02 treatment",
+  "reviewed_at_utc": "2026-10-10T06:03:21.368760+00:00",
+  "review_envelope": {
+    "start_utc": "2026-10-10T05:35:05Z",
+    "deadline_utc": "2026-10-10T06:20:05Z",
+    "cap_minutes": 45,
+    "capped": false,
+    "unassessed_axes": []
+  },
+  "arm": {
+    "slot": "A3-02",
+    "arm": "treatment",
+    "ordinary_final": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+    "source_judgment": "PASS_WITH_LIMITATIONS",
+    "rationale": "No material remaining error/omission/unsupported consequential final decision found after all six axes. Wrong criticism and source-condition gaps remain bounded lineage/metadata limits; final gives conditional capabilities and honest implementation choices. Stage time contract separately fails.",
+    "qualifications": {
+      "delivery": "COMPLETE",
+      "source": "PASS_WITH_LIMITATIONS",
+      "coverage": "ALL_SIX_AXES_COMPLETE",
+      "native": "RECORDED_COMPLETIONS_WITH_PROVENANCE_LIMITS",
+      "protocol": "LIMITED_EVIDENCE; concealment/read chronology and full Goal exclusivity UNKNOWN",
+      "time": "FAIL_STAGE_TIME_CONTRACT",
+      "effective_service_tier": "UNKNOWN",
+      "billing": "UNKNOWN"
+    }
+  },
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "axis_coverage": [
+    {
+      "id": 1,
+      "name": "Original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "assessment": "All R1–R6 and original negatives are individually traced below, as are every operative clause of the released draft. Microphone/local/component scope survives; no fabricated test, automatic fallback, universal compatibility requirement or upload service introduced.",
+      "evidence": [
+        "E01",
+        "E02",
+        "E03",
+        "E12",
+        "E13"
+      ],
+      "material_remaining": []
+    },
+    {
+      "id": 2,
+      "name": "Consequential source claims and conditions",
+      "coverage": "COMPLETE",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "Primary governing API text, released browser history, original immutable Chromium source, library README/issues and independent version-pinned browser source inspected. Correct units, API operations, defaults, build/OS conditions and output-vs-hardware distinctions survive. Ogg and newer-codec exceptions are separately diagnosed; final promises remain bounded.",
+      "evidence": [
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E06",
+        "E07",
+        "E08",
+        "E09",
+        "E10",
+        "E11",
+        "E12",
+        "E13",
+        "E14",
+        "E15",
+        "E16",
+        "E17",
+        "E18",
+        "E19",
+        "E20"
+      ],
+      "material_remaining": []
+    },
+    {
+      "id": 3,
+      "name": "Useful discovery, alternatives, history and opportunity breadth",
+      "coverage": "COMPLETE",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "Substantive discovery goes beyond caution: native baseline, Worklet/worker/WAV, WebCodecs/muxing, established native-PCM/EBML analog, released format history, failure histories, buffer arithmetic and timer/visibility mechanism. Alternatives and conditions remain useful in final. Nonexhaustive OS/format coverage and unselected dependency/oracle are stated limits.",
+      "evidence": [
+        "E03",
+        "E05",
+        "E06",
+        "E07",
+        "E08",
+        "E09",
+        "E10",
+        "E11",
+        "E12",
+        "E13",
+        "E19"
+      ],
+      "material_remaining": []
+    },
+    {
+      "id": 4,
+      "name": "Wrong criticism/corrections/rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "All five findings independently adjudicated; F1/F2/F4/F5 are supported, F3 has an incorrect recording premise. Final acceptance of F3 is qualified to unconfirmed exploratory probes, so wrong criticism is retained as lineage rather than hidden. All exact plan clauses retained/corrected/qualified without lost scope; independently-playable chunks were falsely attributed as a user assumption.",
+      "evidence": [
+        "E05",
+        "E06",
+        "E11",
+        "E14",
+        "E15",
+        "E16",
+        "E17"
+      ],
+      "material_remaining": []
+    },
+    {
+      "id": 5,
+      "name": "Supported meaning across discovery/draft/critique/final",
+      "coverage": "COMPLETE",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "Lifecycle, local privacy, native/worklet comparison, resource bounds, assembly, capability uncertainty, histories and proposed-validation meaning are retained. Final adds truthful strict acceptance and current Safari target. Corrected draft defects remain visible; wrong Ogg criticism and stale metadata are not erased or mistaken for agreement-based proof.",
+      "evidence": [
+        "E01",
+        "E02",
+        "E03",
+        "E05",
+        "E07",
+        "E09",
+        "E10",
+        "E11",
+        "E12",
+        "E13",
+        "E14"
+      ],
+      "material_remaining": []
+    },
+    {
+      "id": 6,
+      "name": "Proposed/executed validation and oracle applicability",
+      "coverage": "COMPLETE",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "No browser/microphone/executable validation claimed; all six discriminating check groups remain proposals in a five-lane matrix. Header/channel/rate, actual MIME, complete playback/open, active-clock/event-order and byte/queue oracles are appropriate to their operations. Strict-duration accuracy still needs demonstrated per-format implementation; final explicitly rejects unverifiable output rather than certifying it.",
+      "evidence": [
+        "E01",
+        "E02",
+        "E03",
+        "E12",
+        "E13",
+        "E19"
+      ],
+      "material_remaining": []
+    }
+  ],
+  "material_findings": [],
+  "lineage_defects_and_corrections": [
+    {
+      "topic": "Safari target",
+      "discovery": "Safari26 proposed as selected/current test target",
+      "draft": "Safari26 explicitly current",
+      "critique": "F1 correct challenge using Safari27 release",
+      "final": "Safari27 target; Safari26 history only",
+      "status": "material draft defect corrected",
+      "evidence": [
+        "E06",
+        "E14"
+      ]
+    },
+    {
+      "topic": "Five-minute acceptance",
+      "discovery": "Timer alone insufficient; owner hard-limit choice open",
+      "draft": "Active clock and duration inspection but strict outcome open",
+      "critique": "F2 requires acceptance/over-limit disposition",
+      "final": "Strict 300000ms encoded ceiling recommended; refuse/unverifiable, discard on reset; trim unselected",
+      "status": "material draft omission closed by explicit recommendation/refusal; implementation choice honest",
+      "evidence": [
+        "E01",
+        "E12",
+        "E13"
+      ]
+    },
+    {
+      "topic": "Ogg operation",
+      "discovery": "Generic historical Ogg support listed without recorder-success claim",
+      "draft": "No Ogg candidate; historical wording ambiguous",
+      "critique": "F3 wrong Ogg-recording claim",
+      "final": "Exploratory strings only; no confirmed MediaRecorder claim",
+      "status": "lineage error preserved; final narrowed rather than expressly rejecting premise",
+      "evidence": [
+        "E05",
+        "E16",
+        "E17"
+      ]
+    },
+    {
+      "topic": "Issue692",
+      "discovery": "Symptom only; placeholders not facts; no verified fix",
+      "draft": "Same cautious but incomplete history",
+      "critique": "F5 correct context enrichment",
+      "final": "Actual diagnosis/advice/closure and later untried adapted advice",
+      "status": "supported caution preserved and useful history strengthened",
+      "evidence": [
+        "E11"
+      ]
+    },
+    {
+      "topic": "Negotiation probe",
+      "discovery": "Probe first; complete operations separated",
+      "draft": "Probe used as filter",
+      "critique": "Exception not challenged",
+      "final": "Independent operation gates; filter wording absent",
+      "status": "source exception remains unrecorded; no explicit final negative-probe prohibition",
+      "evidence": [
+        "E01",
+        "E18",
+        "E20"
+      ]
+    },
+    {
+      "topic": "Mechanism and scope",
+      "discovery": "Native vs Worklet/worker/container, WebCodecs and analog; math; local-only; optional refusal",
+      "draft": "Preserves comparison with concrete 2s/64MiB bounds",
+      "critique": "Retains rather than deletes alternatives; validates proposed status",
+      "final": "Preserves conditional capability, mechanisms and practical costs",
+      "status": "supported meaning retained; no scope collapse",
+      "evidence": [
+        "E02",
+        "E03",
+        "E08",
+        "E09",
+        "E10",
+        "E19"
+      ]
+    },
+    {
+      "topic": "Native chunk delivery",
+      "discovery": "Small timeslice language could imply a size bound",
+      "draft": "Explicit warning delayed blob not bounded",
+      "critique": "No new unsupported limit claim",
+      "final": "App-retention cap explicitly excludes UA internal memory/single large blob",
+      "status": "earlier imprecision corrected in final",
+      "evidence": [
+        "E01"
+      ]
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L1",
+      "title": "Wrong Ogg criticism accepted in lineage",
+      "remaining_material": false,
+      "evidence": [
+        "E05",
+        "E16",
+        "E17"
+      ],
+      "locations": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/critic/critique.md",
+          "lines": "15–17"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+          "lines": "57; 60; 127; 131"
+        }
+      ],
+      "assessment": "Critic F3 asserts a recording operation not announced by its source and calls its absence material. Final retains acceptance rhetoric but limits the candidates to exploratory unconfirmed strings. This is an unrejected lineage error and imprecise candidate provenance, not a final supported-export promise. Current Safari Ogg recording remains unobserved; pinned non-Safari source cannot establish a current binary denial."
+    },
+    {
+      "id": "L2",
+      "title": "Dated recording-draft probe exception omitted",
+      "remaining_material": false,
+      "evidence": [
+        "E01",
+        "E18",
+        "E20"
+      ],
+      "locations": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/draft.md",
+          "lines": "35"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/discovery.md",
+          "lines": "7; 11"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+          "lines": "41–50; 103; 114"
+        }
+      ],
+      "assessment": "Investigator explicitly uses isTypeSupported to filter candidates. The very dated source it cites deprecates this synchronous probe and distinguishes its newer-codec check from construction; ALAC/AAC/Vorbis identifiers fall outside its exposed list. Neither critique nor final map records that exception. Final removes the explicit filter, requires independent gates, says an operation failure cannot decide another operation, and makes no confirmed codec-support claim. Chrome155 source still uses a common support function for probe/constructor, so draft semantics are not claimed as observed current Chrome behavior. This leaves a useful source-condition limitation, not an established final lost-capability decision."
+    },
+    {
+      "id": "L3",
+      "title": "Inherited source-map wording remains stale",
+      "remaining_material": false,
+      "evidence": [
+        "E06",
+        "E11",
+        "E14"
+      ],
+      "locations": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/source-map.json",
+          "lines": "sources S06 applicability; S11 observed_operation plus rechecks"
+        }
+      ],
+      "assessment": "S06 inherited applicability still calls Safari26 current. S11 inherited observation says no maintainer resolution was exposed, while later rechecks enrich it. Final prose and explicit adjudications use Safari27 and fuller issue history. These are residual metadata contradictions, not final support conclusions."
+    },
+    {
+      "id": "L4",
+      "title": "One correction is attributed to the user without support",
+      "remaining_material": false,
+      "evidence": [],
+      "locations": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/draft.md",
+          "lines": "93"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+          "lines": "137"
+        }
+      ],
+      "assessment": "The original plan concatenates chunks; it never claims each chunk is independently playable. Final calls that a corrected draft assumption. R4 itself does require avoiding that claim, so the technical boundary is right but the attribution is inaccurate. No requested behavior is lost."
+    },
+    {
+      "id": "L5",
+      "title": "Bounded matrix is deliberately partial",
+      "remaining_material": false,
+      "evidence": [
+        "E04",
+        "E08",
+        "E14"
+      ],
+      "locations": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+          "lines": "58; 95; 97; 101; 107"
+        }
+      ],
+      "assessment": "Safari27 also ships on macOS27; final selects macOS26/15 lanes. October7 Chrome156 early-stable rollout coexists with the ordinary155 lane. The source snapshot/analog can form exact WebM PCM candidates, though final conservatively leaves PCM offerings unselected. These are opportunity/coverage limits; brief does not require all OS builds or every format, and final never claims exhaustive coverage."
+    },
+    {
+      "id": "L6",
+      "title": "Runtime acceptance oracles and optional implementation are unselected",
+      "remaining_material": false,
+      "evidence": [
+        "E01",
+        "E03",
+        "E19"
+      ],
+      "locations": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+          "lines": "79; 89; 114; 117; 141"
+        }
+      ],
+      "assessment": "Exact duration verifier, trim/remux, encoder/library, format/quality order and current binary MIME matrix remain open. Final specifies concrete discriminating cases and refuses unverifiable/noncompliant output; it does not replace actual validation with source agreement. A plan with those explicit external choices passes semantic scope, while no implementation or compatibility certification follows."
+    }
+  ],
+  "original_obligations": [
+    {
+      "id": "R1",
+      "exact_text": "Define permission, start/pause/resume/stop, track-ended, and cleanup behavior with an explicit error state.",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "15–37"
+      },
+      "judgment": "PASS",
+      "assessment": "Explicit seven-state model, pending-prompt cancellation, all controls, interrupted/end handling, no silent reacquisition, idempotent cleanup and persistent error. Mute and partial retention have stated owner decisions/defaults.",
+      "evidence": [
+        "E01",
+        "E02",
+        "E13"
+      ]
+    },
+    {
+      "id": "R2",
+      "exact_text": "Establish container/codec negotiation and fallback strategy, differentiating format support, successful construction, and successful capture/export.",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "39–62"
+      },
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "Six independent gates; exact MIME candidates, default experiment, complete-path testing, honest labels and refusal. No permission-denial fallback. L1/L2 concern lineage/source conditions; final removes the explicit draft filter and does not claim Ogg recording success.",
+      "evidence": [
+        "E01",
+        "E05",
+        "E06",
+        "E08",
+        "E17",
+        "E18"
+      ]
+    },
+    {
+      "id": "R3",
+      "exact_text": "Compare native recording with an AudioWorklet-based mechanism, including encoding responsibility, buffering, and scope/cost implications.",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "64–79"
+      },
+      "judgment": "PASS",
+      "assessment": "Native encoder/muxer versus Worklet PCM/worker/file writer; real-time budget, two-second queue, 64 MiB retained output, dependency/packaging and channel/rate verification. Worklet remains optional, not a free automatic fallback.",
+      "evidence": [
+        "E03",
+        "E08",
+        "E09",
+        "E10",
+        "E11",
+        "E19"
+      ]
+    },
+    {
+      "id": "R4",
+      "exact_text": "Explain data-chunk timing and assembly; do not treat callback frequency as a reliable clock or claim arbitrary chunks are independently playable.",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "81–91"
+      },
+      "judgment": "PASS",
+      "assessment": "Counter rejected; active monotonic segments, ordered complete assembly, final event ordering and retained actual MIME. Strict final-file ceiling is recommended with over-limit/unverifiable refusal; no timer guarantee.",
+      "evidence": [
+        "E01",
+        "E12",
+        "E13"
+      ]
+    },
+    {
+      "id": "R5",
+      "exact_text": "Include a relevant released implementation/history detail and bind positive or negative capability statements to browser, version, API, operation, and conditions.",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "93–103"
+      },
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "Safari 14.1/18.4/26 history, corrected current Safari 27 target, Chrome 155 rollout, immutable Chromium snapshot and library-specific histories. Full operation/version/OS conditions demanded. L1/L3/L5 retain minor source/coverage issues.",
+      "evidence": [
+        "E04",
+        "E05",
+        "E06",
+        "E07",
+        "E08",
+        "E10",
+        "E11",
+        "E14",
+        "E15"
+      ]
+    },
+    {
+      "id": "R6",
+      "exact_text": "Specify a bounded validation matrix and clearly distinguish proposed checks from executed browser observations; disclose unsupported combinations and remaining uncertainty.",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "105–119"
+      },
+      "judgment": "PASS",
+      "assessment": "At most five configurations; explicit API/format/lifecycle/duration/byte/header checks and exact build recording. All browser/audio checks unexecuted. Specific verifier, encoder and owner choices openly unselected.",
+      "evidence": [
+        "E01",
+        "E02",
+        "E03",
+        "E12",
+        "E13"
+      ]
+    }
+  ],
+  "negative_constraints": [
+    {
+      "id": "N1",
+      "exact_text": "no recording without user permission",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "17"
+      },
+      "judgment": "PASS",
+      "assessment": "Start-only permission; late stream on cancel is stopped."
+    },
+    {
+      "id": "N2",
+      "exact_text": "no uploading audio",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "7"
+      },
+      "judgment": "PASS",
+      "assessment": "Local-only output, no backend/network audio; reiterated 62/146."
+    },
+    {
+      "id": "N3",
+      "exact_text": "no background-surveillance feature",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "37"
+      },
+      "judgment": "PASS",
+      "assessment": "Hidden-page stop and release, with honest event-delay limit; alternative pause is unselected owner decision."
+    },
+    {
+      "id": "N4",
+      "exact_text": "no system-audio capture",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "17"
+      },
+      "judgment": "PASS",
+      "assessment": "One microphone audio track; video/display/system capture excluded."
+    },
+    {
+      "id": "N5",
+      "exact_text": "no five-minute promise based only on callback counts",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "83"
+      },
+      "judgment": "PASS",
+      "assessment": "Callback counter deleted; independent active clock plus final encoded-duration acceptance."
+    },
+    {
+      "id": "N6",
+      "exact_text": "no fabricated browser tests",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "11"
+      },
+      "judgment": "PASS",
+      "assessment": "All matrix checks clearly proposed; execution record none."
+    },
+    {
+      "id": "N7",
+      "exact_text": "no blanket capability denial from an old compatibility summary",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "99"
+      },
+      "judgment": "PASS",
+      "assessment": "Safari API/released recording history refutes old denial; no brand-wide restriction."
+    },
+    {
+      "id": "N8",
+      "exact_text": "no unbounded raw-audio buffering without a stated bound",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "71"
+      },
+      "judgment": "PASS",
+      "assessment": "Two-second handoff and 64 MiB output bounds; browser-internal native memory explicitly outside app cap."
+    }
+  ],
+  "exact_plan_clause_dispositions": [
+    {
+      "id": "P01",
+      "exact_text": "I want record, pause, stop, playback, and download controls.",
+      "disposition": "retained",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "7; 19–27"
+      },
+      "assessment": "Requested controls preserved; explicit Resume added as necessary counterpart."
+    },
+    {
+      "id": "P02a",
+      "exact_text": "obtains a microphone stream",
+      "disposition": "retained/qualified",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "17; 22"
+      },
+      "assessment": "Permission and user action now gate one microphone track."
+    },
+    {
+      "id": "P02b",
+      "exact_text": "constructs MediaRecorder with a single hard-coded WebM/Opus MIME string",
+      "disposition": "corrected",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "41–62"
+      },
+      "assessment": "Exact candidates replace fixed format; supported capabilities retained through separate operation gates."
+    },
+    {
+      "id": "P02c",
+      "exact_text": "requests a callback every second",
+      "disposition": "retained as experiment",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "83; 115"
+      },
+      "assessment": "One-second timeslice remains a proposed parameter; no schedule guarantee."
+    },
+    {
+      "id": "P02d",
+      "exact_text": "concatenates received chunks when stopped",
+      "disposition": "retained/qualified",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "85"
+      },
+      "assessment": "Ordered nonempty chunks assembled after final stop; no independent chunk-playability promise."
+    },
+    {
+      "id": "P03",
+      "exact_text": "It increments a duration counter on each callback and stops at 300 callbacks.",
+      "disposition": "rejected/corrected",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "83; 87–89"
+      },
+      "assessment": "Replace callback count with active monotonic timing plus strict final encoded-file verification/refusal."
+    },
+    {
+      "id": "P04a",
+      "exact_text": "On errors it currently just resets the controls",
+      "disposition": "rejected/corrected",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "27; 29"
+      },
+      "assessment": "Explicit error identifies operation and partial status; retry/discard controlled by user."
+    },
+    {
+      "id": "P04b",
+      "exact_text": "the permission/track cleanup path is missing",
+      "disposition": "corrected",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "22; 35"
+      },
+      "assessment": "Late permission resolution and all owned resources explicitly cleaned."
+    },
+    {
+      "id": "P05",
+      "exact_text": "I am carrying an old assumption that Safari cannot use MediaRecorder and therefore must always take a custom encoder path.",
+      "disposition": "rejected/corrected",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "99; 79"
+      },
+      "assessment": "Released API/recording history disproves blanket denial; native first, Worklet optional."
+    },
+    {
+      "id": "P06a",
+      "exact_text": "Web Audio produces WAV files automatically",
+      "disposition": "rejected/corrected",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "69; 79"
+      },
+      "assessment": "PCM processing requires a worker/encoder and complete file header/container."
+    },
+    {
+      "id": "P06b",
+      "exact_text": "choosing a sample rate guarantees the hardware records at that rate",
+      "disposition": "rejected/corrected",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "75"
+      },
+      "assessment": "Context processing rate distinguished from hardware rate; actual output/channel/rate validation required."
+    },
+    {
+      "id": "P06c",
+      "exact_text": "a MIME support probe proves recording will work",
+      "disposition": "rejected/corrected",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "43–50"
+      },
+      "assessment": "Probe, constructor, start, output, playback and download separated."
+    },
+    {
+      "id": "P07",
+      "exact_text": "These assumptions have not been verified against a selected released browser.",
+      "disposition": "preserved",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "11; 95; 119"
+      },
+      "assessment": "No installed browser observed; version strings are research targets."
+    },
+    {
+      "id": "P08",
+      "exact_text": "Please research them rather than treating them as required product restrictions.",
+      "disposition": "followed",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "39–103; 137"
+      },
+      "assessment": "Evidence challenges assumptions; does not freeze them as product requirements."
+    },
+    {
+      "id": "P09a",
+      "exact_text": "uses an AudioWorklet to collect raw samples",
+      "disposition": "retained as optional mechanism",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "69–71"
+      },
+      "assessment": "Worklet receives/processes PCM in bounded transfer blocks."
+    },
+    {
+      "id": "P09b",
+      "exact_text": "keeps all samples until stop",
+      "disposition": "rejected/corrected",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "71"
+      },
+      "assessment": "Continuous processing and two-second pending queue replace whole-memo raw retention."
+    },
+    {
+      "id": "P09c",
+      "exact_text": "then encodes a WAV download",
+      "disposition": "qualified/optional",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "69; 77; 79"
+      },
+      "assessment": "Custom WAV route requires selected implemented/validated encoder and header; no automatic fallback claim."
+    },
+    {
+      "id": "P10a",
+      "exact_text": "I have not budgeted memory for five minutes",
+      "disposition": "corrected",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "71; 73; 91"
+      },
+      "assessment": "Correct mono/stereo/Float32 arithmetic; distinct raw queue and retained-output bounds."
+    },
+    {
+      "id": "P10b",
+      "exact_text": "resolved channel layout",
+      "disposition": "investigated; implementation choice remains",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "75; 77; 117"
+      },
+      "assessment": "Explicit channel handling and issue-specific history motivate header/channel tests; no forced channel count invented."
+    },
+    {
+      "id": "P10c",
+      "exact_text": "chosen an encoder",
+      "disposition": "investigated; honest external choice",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "69; 77; 79; 141"
+      },
+      "assessment": "WAV writer/worker, WebCodecs plus muxing, established analog considered; optional path unselected."
+    },
+    {
+      "id": "P10d",
+      "exact_text": "addressed a page suspension",
+      "disposition": "corrected with scheduling limit",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "37; 87–89; 116"
+      },
+      "assessment": "Hidden-page stop is default; delayed handler risk closed by refusing over-limit/unverifiable final output."
+    },
+    {
+      "id": "P11a",
+      "exact_text": "A format fallback should preserve the user's capture capability where support exists",
+      "disposition": "preserved/qualified",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "60; 79"
+      },
+      "assessment": "Explicit candidates and UA-default experiment preserve native opportunities; optional fallback only after complete-path validation."
+    },
+    {
+      "id": "P11b",
+      "exact_text": "the page must honestly explain an unsupported operation",
+      "disposition": "retained",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "27; 60; 79; 103"
+      },
+      "assessment": "Operation-specific user-facing errors/refusal; no brand-wide denial."
+    },
+    {
+      "id": "P12",
+      "exact_text": "No new upload service is allowed.",
+      "disposition": "retained",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "7; 62; 146"
+      },
+      "assessment": "No backend or network audio path."
+    },
+    {
+      "id": "P13",
+      "exact_text": "Keep R1–R6 and the negative constraints binding.",
+      "disposition": "followed",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "15–119; 143–154"
+      },
+      "assessment": "All six obligations and eight original negative constraints separately assessed here."
+    },
+    {
+      "id": "P14a",
+      "exact_text": "explicit track cleanup",
+      "disposition": "corrected",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "35"
+      },
+      "assessment": "Idempotent owned-track/resource cleanup, including stop not emitting ended."
+    },
+    {
+      "id": "P14b",
+      "exact_text": "a truthful duration rule",
+      "disposition": "corrected; owner acceptance remains",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "87–89"
+      },
+      "assessment": "Strict 300000 ms final-file recommendation and explicit refusal/discard; no fictional executed verifier."
+    },
+    {
+      "id": "P14c",
+      "exact_text": "format selection with failure handling",
+      "disposition": "corrected",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "41–62; 27"
+      },
+      "assessment": "Independent format/operation gates and explicit errors/default experiment."
+    },
+    {
+      "id": "P14d",
+      "exact_text": "a bounded buffer/export policy",
+      "disposition": "corrected",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "71; 73; 89–91"
+      },
+      "assessment": "Two-second raw queue, 64 MiB retained output, strict duration acceptance and overflow refusal."
+    },
+    {
+      "id": "P15a",
+      "exact_text": "It may choose native capture for some combinations",
+      "disposition": "authorized option retained",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "68; 79"
+      },
+      "assessment": "Native baseline conditional on exact tested type."
+    },
+    {
+      "id": "P15b",
+      "exact_text": "a fallback or explicit refusal for others if the evidence justifies that boundary",
+      "disposition": "authorized option retained",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "79; 89"
+      },
+      "assessment": "Worklet route conditional on implementation/validation; truthful refusal permitted by original plan."
+    },
+    {
+      "id": "P16",
+      "exact_text": "No claim of identical audio quality or cross-browser file compatibility is required.",
+      "disposition": "preserved non-obligation",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "7; 103; 135"
+      },
+      "assessment": "No invented equal-quality or universal file-compatibility requirement."
+    },
+    {
+      "id": "P17a",
+      "exact_text": "Proposed validation only: denied permission",
+      "disposition": "retained; proposed",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "111; 119"
+      },
+      "assessment": "Deny included; not executed."
+    },
+    {
+      "id": "P17b",
+      "exact_text": "constructor/start failure despite a probe",
+      "disposition": "retained; proposed",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "29; 50; 113–114"
+      },
+      "assessment": "Catch failures; exact-format and recorder-error cases exercise separate gates. Positive-probe failure retained."
+    },
+    {
+      "id": "P17c",
+      "exact_text": "a track ending mid-memo",
+      "disposition": "retained; proposed",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "112"
+      },
+      "assessment": "External ending/partial acceptance/cleanup and final-event order."
+    },
+    {
+      "id": "P17d",
+      "exact_text": "backgrounding that delays callbacks",
+      "disposition": "retained; proposed",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "115–116"
+      },
+      "assessment": "Event-loop delay plus hidden/background and delayed-stop cases."
+    },
+    {
+      "id": "P17e",
+      "exact_text": "pause/resume",
+      "disposition": "retained; proposed",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "113; 115–116"
+      },
+      "assessment": "Controls, active-time exclusion and boundary cases."
+    },
+    {
+      "id": "P17f",
+      "exact_text": "stop with pending data",
+      "disposition": "retained; proposed",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "115"
+      },
+      "assessment": "Final event ordering and complete assembly."
+    },
+    {
+      "id": "P17g",
+      "exact_text": "playback and download for each selected format",
+      "disposition": "retained; proposed",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "114"
+      },
+      "assessment": "Per-type actual MIME, duration, playback, download label/open."
+    },
+    {
+      "id": "P17h",
+      "exact_text": "resource cleanup after cancel",
+      "disposition": "retained; proposed",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "111; 113"
+      },
+      "assessment": "Pending cancellation, dispose and second clean session."
+    },
+    {
+      "id": "P18",
+      "exact_text": "A small manual browser check would establish only the exact browser/version/operation exercised, not universal support.",
+      "disposition": "preserved",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "103; 107; 114"
+      },
+      "assessment": "Actual full build/OS/operation/conditions recorded; unavailable lanes untested."
+    },
+    {
+      "id": "P19",
+      "exact_text": "No browser has been opened and no audio has been recorded for this fixture.",
+      "disposition": "preserved",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "11; 119"
+      },
+      "assessment": "All runtime checks honestly unexecuted."
+    }
+  ],
+  "critique_dispositions": [
+    {
+      "id": "F1",
+      "candidate_disposition": "Accept",
+      "independent_judgment": "SUPPORTED correction",
+      "assessment": "Safari 26 was incorrectly called current. Official Safari 27 release predates the research date. Final corrects the release lane while treating 26 as history and silence about formats as non-evidence.",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "125; 95–101"
+      },
+      "evidence": [
+        "E14",
+        "E06"
+      ]
+    },
+    {
+      "id": "F2",
+      "candidate_disposition": "Accept and amend",
+      "independent_judgment": "SUPPORTED need for explicit acceptance boundary",
+      "assessment": "The draft left the five-minute interpretation/over-limit outcome open. Final supplies strict encoded-duration recommendation, reliable verification requirement and fail-closed outcome. Owner acceptance and implementation remain openly external; this is a plan, not a completed deployment.",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "126; 87–91"
+      },
+      "evidence": [
+        "E01",
+        "E12",
+        "E13"
+      ]
+    },
+    {
+      "id": "F3",
+      "candidate_disposition": "Accept",
+      "independent_judgment": "WRONG recording premise; final narrowed",
+      "assessment": "Critic says Safari 18.4 announced Ogg recording. Governing release pages announce generic Ogg media support separately from explicit WebM MediaRecorder support; pinned Cocoa recorder source also lacks Ogg. Final does not repeat Ogg-recording success: strings are exploratory and require all gates. The false criticism was not expressly rejected. Two extra exploratory probes do not impose a recording capability or remove a requested feature.",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "127; 57; 60; 99"
+      },
+      "evidence": [
+        "E05",
+        "E16",
+        "E17"
+      ]
+    },
+    {
+      "id": "F4",
+      "candidate_disposition": "Accept",
+      "independent_judgment": "SUPPORTED locator correction",
+      "assessment": "Safari 14.1 API history is true; original discovery/draft lacked the corresponding source ID. Final adds C02 and keeps it historical.",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "128; 99"
+      },
+      "evidence": [
+        "E15"
+      ]
+    },
+    {
+      "id": "F5",
+      "candidate_disposition": "Accept with amendment",
+      "independent_judgment": "SUPPORTED enrichment; no verified fix",
+      "assessment": "Original S11 omitted maintainer/reporter follow-up and closure. Final captures destination-stream/two-channel diagnosis, advice, closure and separate later report without claiming a general fix. The later reporter declined the adapted suggestion, not all possible fixes.",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "129; 77"
+      },
+      "evidence": [
+        "E11"
+      ]
+    }
+  ],
+  "useful_discoveries": [
+    {
+      "id": "D1",
+      "mechanism": "Independent recording/probe/playback/export operations and UA default",
+      "use": "Avoid brand-only MIME selection and preserve default native capability after explicit candidates fail.",
+      "evidence": [
+        "E01",
+        "E08"
+      ],
+      "retained": "final 41–62"
+    },
+    {
+      "id": "D2",
+      "mechanism": "Worklet PCM rendering plus worker encoder/file muxer",
+      "use": "Correct automatic-WAV premise and expose real-time, queue, channel, rate and packaging costs.",
+      "evidence": [
+        "E03",
+        "E19"
+      ],
+      "retained": "final 64–79"
+    },
+    {
+      "id": "D3",
+      "mechanism": "Established extendable recorder using Chrome native WebM/PCM + EBML extraction and other Web Audio paths",
+      "use": "Concrete competing/analog architecture without silently selecting a dependency.",
+      "evidence": [
+        "E09"
+      ],
+      "retained": "final 77; source map S09"
+    },
+    {
+      "id": "D4",
+      "mechanism": "Released Safari MediaRecorder, WebM and MP4/ALAC history; Chromium conditional AAC",
+      "use": "Refute old Safari denial and form multiple candidate probes with operation/build conditions.",
+      "evidence": [
+        "E05",
+        "E06",
+        "E08",
+        "E15"
+      ],
+      "retained": "final 52–60; 99–101"
+    },
+    {
+      "id": "D5",
+      "mechanism": "Chunked-WAV unknown header length and destination channel-count failure history",
+      "use": "Discriminating header/rate/channel/second-session regression checks, rather than generic compatibility caution.",
+      "evidence": [
+        "E10",
+        "E11",
+        "E07"
+      ],
+      "retained": "final 77; 113; 117"
+    },
+    {
+      "id": "D6",
+      "mechanism": "Independent monotonic clock with queued/throttled/frozen handlers",
+      "use": "Separate elapsed measurement from on-time Stop; final duration acceptance closes strict cap risk.",
+      "evidence": [
+        "E12",
+        "E13"
+      ],
+      "retained": "final 83–89; 116"
+    },
+    {
+      "id": "D7",
+      "mechanism": "Raw PCM queue versus retained encoded output versus browser internal memory",
+      "use": "Concrete 2-second/64MiB proposal with correct dimensional arithmetic and honest native cap applicability.",
+      "evidence": [
+        "E03",
+        "E01"
+      ],
+      "retained": "final 71–75; 91"
+    }
+  ],
+  "validation": {
+    "browser_executed": false,
+    "microphone_executed": false,
+    "executable_witness_executed": false,
+    "authored_source_review_executed": true,
+    "independent_assessor_source_review_executed": true,
+    "proposed_groups": [
+      {
+        "group": "Permission/state",
+        "proposed": "Fresh/existing allow, deny, pending cancellation, revocation; all control states and invalid/repeated actions.",
+        "oracle": "Visible state/error, late stream track.readyState, no unsolicited retry/input switch; microphone permission and recorder success separate.",
+        "final_lines": "111; 113",
+        "executed": false
+      },
+      {
+        "group": "Track/device/cleanup",
+        "proposed": "Missing/busy device, unplug/change, mute/unmute, ended/devicechange, cancel/dispose and second session.",
+        "oracle": "Track and recorder events plus owned resource lifecycle; explicit track.stop does not wait for ended; validated partial only.",
+        "final_lines": "112–113",
+        "executed": false
+      },
+      {
+        "group": "Exact MIME/export",
+        "proposed": "Each exact candidate + UA default + known unsupported MIME through probe/constructor/short capture/final output/playback/download/open.",
+        "oracle": "Actual MIME, nonempty completed file, verified labels/extension, playback and local open in the exact tested binary. Probe/constructor alone insufficient.",
+        "final_lines": "114",
+        "executed": false
+      },
+      {
+        "group": "Timing/assembly",
+        "proposed": "1s requested timeslice, delayed event loop, pause/resume, Stop with pending data and completed playback.",
+        "oracle": "Observed events/order and accumulated independent active time; complete assembled file rather than individual chunk playability.",
+        "final_lines": "115",
+        "executed": false
+      },
+      {
+        "group": "Duration/background",
+        "proposed": "Short configurable initial cap, real five-minute boundary, pause exclusion, delayed stop, hidden/return, just-over-limit output.",
+        "oracle": "Format-specific encoded-duration verifier with demonstrated accuracy; over300000ms or unverifiable output rejected. UI time/metadata without validated applicability is not accepted.",
+        "final_lines": "116; 89",
+        "executed": false
+      },
+      {
+        "group": "Resource/optional Worklet",
+        "proposed": "64MiB retained boundary, delayed native blob; if selected, 2s raw queue/backpressure, encoder/mux completion, WAV header/rate/channels/duration and teardown.",
+        "oracle": "Separate byte/frame/queue accounting, complete file structure plus playback/open, no truncated prefix labeled valid. UA internal allocation excluded; unimplemented path not applicable.",
+        "final_lines": "117",
+        "executed": false
+      }
+    ],
+    "source_reading_is_browser_validation": false,
+    "remaining_oracle_choice": "Per-format encoded-duration verifier accuracy must be demonstrated; no actual five-minute compliance observation exists."
+  },
+  "protocol": {
+    "delivery": "COMPLETE frozen original ordinary reviser final and required authored handoffs/maps/indexes are present and fully inspected.",
+    "source_judgment_independent_of_protocol": true,
+    "protocol_judgment": "LIMITED_EVIDENCE: no unauthorized scientific assistance established; concealment/read chronology and full native exclusivity UNKNOWN",
+    "method_qualification": "NOT_QUALIFIED_FIXED_STAGE_CAP_BREACH",
+    "time_judgment": "FAIL_STAGE_TIME_CONTRACT",
+    "time_material_finding": {
+      "id": "T1",
+      "stage": "critic",
+      "deadline_utc": "2026-10-10T05:06:53.818Z",
+      "critique_frozen_mtime_utc": "2026-10-10T05:18:32.146101522Z",
+      "overrun_seconds": 698.328101522,
+      "basis": "Critique Cutoff note explicitly says final artifact writing began after cutoff; frozen mtime and authored terminal native observation are consistent.",
+      "consequence": "12-minute critic cap was breached. Earlier whole-pipeline completion does not cure the fixed-stage-cap violation.",
+      "paths": [
+        "ER12_RUNTIME/runs/A3-02/treatment/stages/critic/assignment.md",
+        "ER12_RUNTIME/runs/A3-02/treatment/stages/critic/freeze.json",
+        "ER12_RUNTIME/runs/A3-02/treatment/stages/critic/critique.md",
+        "ER12_RUNTIME/runs/A3-02/treatment/terminal-science-freeze-root.json"
+      ]
+    },
+    "whole_terminal_observation_utc": "2026-10-10T05:34:47.140961+00:00",
+    "whole_deadline_utc": "2026-10-10T05:42:48.166Z",
+    "whole_deadline_comparison": "Recorded terminal science/task observation precedes nominal whole deadline. Queue/tool delivery timeline outside saved records UNKNOWN.",
+    "native_judgment": "RECORDED_COMPLETIONS_WITH_PROVENANCE_LIMITS",
+    "native_stage_records": [
+      {
+        "stage": "investigator",
+        "stage_budget_s": 1800,
+        "stage_deadline_utc": "2026-10-10T05:12:48.361Z",
+        "recorded_observations": {
+          "activation": {
+            "tool": "create_goal, then get_goal",
+            "goal": {
+              "threadId": "01a1241e-ef19-7141-bf44-659b736fcdc7",
+              "objective": "ER12 investigator stage, run A3-02-treatment: execute ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+              "status": "active",
+              "tokensUsed": 0,
+              "timeUsedSeconds": 0,
+              "createdAt": 1791607410,
+              "updatedAt": 1791607410
+            },
+            "remainingTokens": null,
+            "completionBudgetReport": null,
+            "additional_provenance_or_readable_timestamp": "UNKNOWN"
+          },
+          "terminal": {
+            "tool": "update_goal(status=complete), then get_goal",
+            "goal": {
+              "threadId": "01a1241e-ef19-7141-bf44-659b736fcdc7",
+              "objective": "ER12 investigator stage, run A3-02-treatment: execute ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+              "status": "complete",
+              "tokensUsed": 310726,
+              "timeUsedSeconds": 601,
+              "createdAt": 1791607410,
+              "updatedAt": 1791608011
+            },
+            "remainingTokens": null,
+            "completionBudgetReport_from_update": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language.",
+            "completionBudgetReport_from_get": null,
+            "additional_provenance_or_readable_timestamp": "UNKNOWN"
+          }
+        },
+        "primary_receipt_files": [],
+        "observation_limit": "Authored saved responses; no independent account/backend audit or full task trace."
+      },
+      {
+        "stage": "critic",
+        "stage_budget_s": 720,
+        "stage_deadline_utc": "2026-10-10T05:06:53.818Z",
+        "recorded_observations": {
+          "activation": {
+            "tool": "create_goal",
+            "goal": {
+              "threadId": "01a12429-fe7b-7e51-861e-8d533a10c5ac",
+              "objective": "ER12 critic stage, run A3-02-treatment: execute ER12_RUNTIME/runs/A3-02/treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+              "status": "active",
+              "tokensUsed": 0,
+              "timeUsedSeconds": 0,
+              "createdAt": 1791608130,
+              "updatedAt": 1791608130
+            },
+            "remainingTokens": null,
+            "completionBudgetReport": null,
+            "additional_provenance_or_readable_timestamp": "UNKNOWN"
+          },
+          "terminal": {
+            "update_goal_result": {
+              "goal": {
+                "threadId": "01a12429-fe7b-7e51-861e-8d533a10c5ac",
+                "objective": "ER12 critic stage, run A3-02-treatment: execute ER12_RUNTIME/runs/A3-02/treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+                "status": "complete",
+                "tokensUsed": 159659,
+                "timeUsedSeconds": 1381,
+                "createdAt": 1791608130,
+                "updatedAt": 1791609512
+              },
+              "remainingTokens": null,
+              "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+            },
+            "get_goal_after_completion": {
+              "goal": {
+                "threadId": "01a12429-fe7b-7e51-861e-8d533a10c5ac",
+                "objective": "ER12 critic stage, run A3-02-treatment: execute ER12_RUNTIME/runs/A3-02/treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+                "status": "complete",
+                "tokensUsed": 159659,
+                "timeUsedSeconds": 1381,
+                "createdAt": 1791608130,
+                "updatedAt": 1791609512
+              },
+              "remainingTokens": null,
+              "completionBudgetReport": null
+            },
+            "additional_provenance_or_readable_timestamp": "UNKNOWN"
+          }
+        },
+        "primary_receipt_files": [],
+        "observation_limit": "Authored saved responses; no independent account/backend audit or full task trace."
+      },
+      {
+        "stage": "reviser",
+        "stage_budget_s": 1080,
+        "stage_deadline_utc": "2026-10-10T05:37:03.324Z",
+        "recorded_observations": {
+          "activation_tool": "create_goal",
+          "activation_response_file": "native-goal-activation.json",
+          "activation_response": {
+            "goal": {
+              "threadId": "01a12440-1dd8-7a82-96d0-84e5b1981ece",
+              "objective": "ER12 reviser stage, run A3-02-treatment: execute ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+              "status": "active",
+              "tokensUsed": 0,
+              "timeUsedSeconds": 0,
+              "createdAt": 1791609565,
+              "updatedAt": 1791609565
+            },
+            "remainingTokens": null,
+            "completionBudgetReport": null
+          },
+          "activation_status": "active in the directly observed response",
+          "terminal_response_file": "native-goal-completion.json",
+          "additional_native_provenance_or_readable_timestamp": "UNKNOWN"
+        },
+        "primary_receipt_files": [
+          "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/native-goal-activation.json",
+          "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/native-goal-completion.json"
+        ],
+        "observation_limit": "Authored saved responses; no independent account/backend audit or full task trace."
+      }
+    ],
+    "native_limits": [
+      "Investigator and critic receipts embedded in authored source maps; no separate raw receipt file exposed for them. Reviser has separate activation/completion files.",
+      "One recorded activation/terminal thread per stage; absence of additional Goals cannot be authenticated without full native history.",
+      "T3 completed/no-pending observation is task delivery evidence, not native Goal evidence.",
+      "Native time/tokens are reported tool fields, not billing amounts or effective inference duration."
+    ],
+    "requested_provider": "AUTHORIZED_PROVIDER_INSTANCE",
+    "requested_model": "gpt-6-luna",
+    "requested_reasoning_effort": "max",
+    "requested_service_tier": "default",
+    "route_acknowledgment": "Each saved dispatch acknowledgment names AUTHORIZED_PROVIDER_INSTANCE/gpt-6-luna and running task; final frozen T3 observation reports completed/no pending.",
+    "service_tier_change": "Saved stage changes document prospective user-standard revision before dispatch. No account change performed by reviewer.",
+    "effective_provider": "UNKNOWN beyond saved T3 route acknowledgment",
+    "effective_model": "UNKNOWN beyond acknowledgment",
+    "effective_service_tier": "UNKNOWN",
+    "billing": "UNKNOWN",
+    "unauthorized_assistance": "No unauthorized scientific candidate feedback is evidenced in the bounded assignment/clarification records. Full hidden conversational history is outside scope and not authenticated.",
+    "clarification": "Reviser invocation backup/current assignment, request and clarification inspected. Added native Goal invocation mechanics, not scientific recommendations, before recorded dispatch.",
+    "discovery_release": "One plan-reveal receipt records substantive discovery frozen before exact original plan release; its discovery/plan hashes match inspected originals.",
+    "discovery_release_limits": "Initial pre-reveal source-map save/read chronology, actual unread concealment, exact reveal call count beyond the receipt and tools not captured in full history remain UNKNOWN.",
+    "paired_latency_or_savings": "NOT ASSESSED: only one assigned arm; no comparator/history read. No inference, billing, speed or savings conclusion."
+  },
+  "unknowns": [
+    "Installed current Chrome/Safari full binaries, devices and exact MIME/codec capture/playback/export outcomes: UNKNOWN (no runtime test).",
+    "Current Safari27 Ogg recorder capability: UNKNOWN; generic support history is not an export result.",
+    "Selected exact duration verifier/accuracy, trim/remux and optional encoder package/version: unselected external implementation choices.",
+    "Effective provider/model/service tier, billing, inference counts and internal UA allocation: UNKNOWN.",
+    "Complete native history, backend authentication and one-Goal exclusivity beyond saved receipts: UNKNOWN.",
+    "Exact per-source access UTC where tools do not expose it; initial source-map-before-reveal chronology and full delivery/queue timing: UNKNOWN."
+  ],
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A3-02/brief.md",
+      "bytes": 2869,
+      "sha256": "64d7c999cf74b0022f481d6e5412866fc4b9b63d05c1726ceef4658a0d8d712e",
+      "mtime_ns": 1791607368148297439,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A3-02/plan.md",
+      "bytes": 2470,
+      "sha256": "b977457667677faa27fe5256d090e48ec798eae592ffd7d860e4c3c239167b79",
+      "mtime_ns": 1791607368148446184,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/terminal-science-freeze-root.json",
+      "bytes": 7190,
+      "sha256": "edc9add3805df02e6e442a96345194b6858546679eaf91ae6adc2b3ce98d3384",
+      "mtime_ns": 1791610487141273328,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/inputs/brief.md",
+      "bytes": 2869,
+      "sha256": "64d7c999cf74b0022f481d6e5412866fc4b9b63d05c1726ceef4658a0d8d712e",
+      "mtime_ns": 1791607368361459075,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/assignment.md",
+      "bytes": 3720,
+      "sha256": "03491e760f4b262816343bc58727397aeee20673bdf2d4e3ab32fd1194a8c4b6",
+      "mtime_ns": 1791607368362290500,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/discovery.md",
+      "bytes": 10244,
+      "sha256": "510bcbb9f05eb883d1323caa2af5603ac1a6506b73cbd2fa0705e50702944069",
+      "mtime_ns": 1791607766809596936,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/dispatch.json",
+      "bytes": 4251,
+      "sha256": "c9ca5f4036b07716139e31b579e6c8d8e3c9f737756525003141e6e49bc4e4e4",
+      "mtime_ns": 1791607369533106168,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/draft.md",
+      "bytes": 21174,
+      "sha256": "4d80c59ff8763895427b97c1b066fd3afdd12ea1dd42029fd6ca3c853f00f6ef",
+      "mtime_ns": 1791607963189457834,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/freeze.json",
+      "bytes": 1731,
+      "sha256": "d868853dffb21ab0d3f6b6285dc6c9d8a54e663c22e12ba535c42cf5104e3992",
+      "mtime_ns": 1791607368535938169,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/input-map.json",
+      "bytes": 789,
+      "sha256": "89d4aa83995daa356da11cd7d8a21822be96d72bc3b947c836aa8be82eadbe40",
+      "mtime_ns": 1791607368535428769,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/plan-reveal.json",
+      "bytes": 429,
+      "sha256": "8034921bd15eb2279a069c4e71cf67ee6968c1e4bfbeccf1fea230ba1f1c0116",
+      "mtime_ns": 1791607775237325820,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/request.json",
+      "bytes": 921,
+      "sha256": "4fbc5dfbb19724090fcc6f4e6849993fa7a8415725da7e9cb42872afc0104e11",
+      "mtime_ns": 1791607368535605625,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 2470,
+      "sha256": "b977457667677faa27fe5256d090e48ec798eae592ffd7d860e4c3c239167b79",
+      "mtime_ns": 1791607775237200790,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/service-tier-change.json",
+      "bytes": 493,
+      "sha256": "b859999f07267335e92b50f195a1b6da2907a7e658a4abc06456b1df31feaea1",
+      "mtime_ns": 1791607368536050616,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/source-map.json",
+      "bytes": 16591,
+      "sha256": "56502caed4f390491f2bab25fa330fe3a4c620a9f738279b2e5f9a3c844c6c0b",
+      "mtime_ns": 1791608027809296038,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/sources/index.md",
+      "bytes": 8305,
+      "sha256": "fd0a668d5455405d6ed4831f392ca337328f1c7219cb55125cf2cd11d31b86af",
+      "mtime_ns": 1791607963189005404,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/critic/assignment.md",
+      "bytes": 3828,
+      "sha256": "ff25401a3d2ecaa11c3637827fa574d1b8a05b83b9bf8548ae57ec43b70db8c9",
+      "mtime_ns": 1791608093818601269,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/critic/critique.md",
+      "bytes": 7105,
+      "sha256": "e770ac9ce0819bf44ecdfc97cd2ff1d3652f12f3631ff7abf70e60fcda285e76",
+      "mtime_ns": 1791609512146101522,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/critic/dispatch.json",
+      "bytes": 4155,
+      "sha256": "20e9d929aecf7003e06e58f6135a414e058d7a039a3fcb82a3b033a358ebdbc7",
+      "mtime_ns": 1791608094489282553,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/critic/freeze.json",
+      "bytes": 3694,
+      "sha256": "fb369c85fe61a6fb51629f12d94ff4521d531e0666bfa0752ca67b65c96f1889",
+      "mtime_ns": 1791608093957649899,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/critic/input-map.json",
+      "bytes": 1477,
+      "sha256": "25c8dd9b38ab5f2e7e524d3fa4b38c7fea05b0500b80ce6f2e78758d0fef8419",
+      "mtime_ns": 1791608093956841874,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/critic/request.json",
+      "bytes": 897,
+      "sha256": "ec03120c9dee910bd12f528a13d55ea5f10736cff7930d453c3ebdb613606bf6",
+      "mtime_ns": 1791608093957046677,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/critic/service-tier-change.json",
+      "bytes": 481,
+      "sha256": "aa725e2af5663b6b5b92887403892ed71382f9f9035e6bfe44eb3f8372796cfa",
+      "mtime_ns": 1791608093957930500,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/critic/source-map.json",
+      "bytes": 11087,
+      "sha256": "f20bc262ec0fee4e15e9b4a16e2dc580603cc4d8d6b9733666e3ad8b507b5ac4",
+      "mtime_ns": 1791609512241102126,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/critic/sources/index.md",
+      "bytes": 2581,
+      "sha256": "dffea7b2594c53b823bc713824bea6aa63045fe5934bb9a79e5d220b4ef17cba",
+      "mtime_ns": 1791609121009874026,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/.invocation-backup-55ab5a23a90449b28acc55f4501e1e4a/assignment.md",
+      "bytes": 3808,
+      "sha256": "1c922614fb84f1d48276429346e5dde2f87f361bc6ae5dce4944bb95a5b7590e",
+      "mtime_ns": 1791609543683413679,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/.invocation-backup-55ab5a23a90449b28acc55f4501e1e4a/freeze.json",
+      "bytes": 4472,
+      "sha256": "45d87f751a1599d374fd328dd061979d11e690f3ff7d3d3243c4f168287baec9",
+      "mtime_ns": 1791609543683261789,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/.invocation-backup-55ab5a23a90449b28acc55f4501e1e4a/input-map.json",
+      "bytes": 1794,
+      "sha256": "9947941d9083c9864138dd67bfc4954f54dcc1fa5594e5d8268f59ec7c286d6e",
+      "mtime_ns": 1791609543683338775,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/.invocation-backup-55ab5a23a90449b28acc55f4501e1e4a/request.json",
+      "bytes": 901,
+      "sha256": "48d30910690ec70e02512f1433ba4a7c8073cf590831be763ccc2fb020d081f0",
+      "mtime_ns": 1791609543683156564,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/assignment.md",
+      "bytes": 4514,
+      "sha256": "206a7136de0a86949160fd3bd4be121a6ec6db68795e0b3d3188e3e3f9b6accd",
+      "mtime_ns": 1791609543684444725,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/dispatch.json",
+      "bytes": 4889,
+      "sha256": "906f0776107d1fd880cf8a3520f6c0762cd2a6564f931323ea707e2faf6878c0",
+      "mtime_ns": 1791609544344622128,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+      "bytes": 26085,
+      "sha256": "2f53d66742cbf31eb8c0a2497f2609360e7ba701d458a63eecbade5309f03bc9",
+      "mtime_ns": 1791610438248720922,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/freeze.json",
+      "bytes": 4536,
+      "sha256": "33dc13f38dece8953183477b5ee84d297be8979327fe70833d95b4424047afdd",
+      "mtime_ns": 1791609543684131290,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/input-map.json",
+      "bytes": 1794,
+      "sha256": "9947941d9083c9864138dd67bfc4954f54dcc1fa5594e5d8268f59ec7c286d6e",
+      "mtime_ns": 1791609543684286272,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/invocation-clarification.json",
+      "bytes": 3037,
+      "sha256": "7163f860da7ad4f11a3bacf0f4d93f868e524aa8650005f75878290e68582656",
+      "mtime_ns": 1791609543684655934,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/native-goal-activation.json",
+      "bytes": 470,
+      "sha256": "40df68ff9203a66aa36a9ed701118b6747c03f702dc0d39a6a765e7baa9ca144",
+      "mtime_ns": 1791609581737561160,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/native-goal-completion.json",
+      "bytes": 799,
+      "sha256": "263a97411684e65888bfdf566b5e5cad7900f2eac707c11d766cd34a1ab37a42",
+      "mtime_ns": 1791610455706806849,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/request.json",
+      "bytes": 1619,
+      "sha256": "5688912920c57b7f1e0f65d2c03f45dc88fa2979b34ff44ea5e3725cb3f2b611",
+      "mtime_ns": 1791609543683919889,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/service-tier-change.json",
+      "bytes": 483,
+      "sha256": "2f87886c7c6cf418a2e2827e59f4cdf28baaa10137b13106d265ca1be6501a49",
+      "mtime_ns": 1791609543480504991,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/source-map.json",
+      "bytes": 28971,
+      "sha256": "aea827bab33b904d493a005f0c50fa670f032c1f024651a33fa421525f91892d",
+      "mtime_ns": 1791610438249732913,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/sources/index.md",
+      "bytes": 5800,
+      "sha256": "e0db72c512794be41d7678391aaa48979c228bafda107ebaa915e67cbc2deff4",
+      "mtime_ns": 1791610438249120638,
+      "read_scope": "full original artifact inspected"
+    }
+  ],
+  "original_inspected_hashes": "original-inspected-hashes.json",
+  "freeze_integrity": [
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/critic/critique.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/critic/source-map.json",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/critic/sources/index.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/discovery.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/draft.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/revealed-plan.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/source-map.json",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/sources/index.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/source-map.json",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/sources/index.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    }
+  ],
+  "sources": [
+    {
+      "id": "E01",
+      "original_source_ids": [
+        "S01"
+      ],
+      "title": "MediaStream Recording",
+      "url": "https://www.w3.org/TR/2026/WD-mediastream-recording-20260316/",
+      "version": "Working Draft 2026-03-16",
+      "locator": "§2.1 constructor step 4; §2.3 start, stop, pause/resume, inactivate, isTypeSupported; §6.1",
+      "independent_review": true,
+      "judgment": "Lifecycle/chunk/default distinctions supported; important probe exception missing from authored maps.",
+      "governing_conditions": "Public probe passes false, constructor passes true to deferred-codec check. Only enumerated codec identifiers are synchronously exposed; newer identifiers can give a negative probe without the same constructor rejection. Empty MIME leaves UA choice. Normal stop yields final data before stop; completed concatenation rather than every chunk is the playable object. Resource exhaustion remains possible.",
+      "local_evidence": [
+        "recording-wd20260316.html",
+        "recording-wd20260316-readable.txt",
+        "recording-wd20260316-retrieval.json"
+      ],
+      "evidence_note": "evidence/index.md#e01",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    },
+    {
+      "id": "E02",
+      "original_source_ids": [
+        "S02"
+      ],
+      "title": "Media Capture and Streams",
+      "url": "https://www.w3.org/TR/2025/CRD-mediacapture-streams-20251009/",
+      "version": "Candidate Recommendation Draft 2025-10-09",
+      "locator": "§4.3.1 track lifecycle; §9–10 MediaDevices/getUserMedia; permissions integration",
+      "independent_review": true,
+      "judgment": "Permission, mute/end and owned-track cleanup claims supported.",
+      "governing_conditions": "Secure-context and permission requirements apply. Muted/disabled audio yields silence. External ending queues ended; application track.stop() does not. Revocation ends relevant live tracks. Devicechange is supplementary and may be coalesced; cause inference is limited.",
+      "local_evidence": [
+        "capture-crd20251009.html",
+        "capture-crd20251009-readable.txt",
+        "capture-crd20251009.html.retrieval.json"
+      ],
+      "evidence_note": "evidence/index.md#e02",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    },
+    {
+      "id": "E03",
+      "original_source_ids": [
+        "S03"
+      ],
+      "title": "Web Audio API 1.1",
+      "url": "https://www.w3.org/TR/2026/WD-webaudio-1.1-20260922/",
+      "version": "Working Draft 2026-09-22",
+      "locator": "§1.2.5 AudioContextOptions; §1.24 MediaStreamAudioSourceNode; §1.32 AudioWorklet; §2 rendering",
+      "independent_review": true,
+      "judgment": "PCM-processing/encoding distinction, quantum and sample-rate qualifications supported.",
+      "governing_conditions": "Default render quantum is 128 frames; renderSizeHint may request another size and may not be honored. Worklet processing has a rendering deadline. A stream source resamples to context rate; that processing rate is not proof of physical hardware rate. File encoding/header/muxing are separate responsibilities.",
+      "local_evidence": [
+        "webaudio-wd20260922.html",
+        "webaudio-wd20260922-readable.txt",
+        "webaudio-wd20260922.html.retrieval.json"
+      ],
+      "evidence_note": "evidence/index.md#e03",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    },
+    {
+      "id": "E04",
+      "original_source_ids": [
+        "S04"
+      ],
+      "title": "Chrome desktop release anchor",
+      "url": "https://chromereleases.googleblog.com/2026/10/?amp=1",
+      "version": "Official October 2026 archive: Stable desktop announcement 2026-10-06",
+      "locator": "Stable Channel Update for Desktop, Tuesday October 6; also October 7 Early Stable entry",
+      "independent_review": true,
+      "judgment": "155 stable announcement verified; direct article fetch failed, official archive and corresponding official Android entry corroborate builds.",
+      "governing_conditions": "155.0.8059.39/.40 Windows/Mac, .39 Linux; staged rollout. October 7 also introduces 156 early stable for a small Windows/Mac population. The selected 155 lane is a bounded ordinary-stable baseline, not all currently distributed binaries. No installed browser was observed.",
+      "local_evidence": [],
+      "evidence_note": "evidence/index.md#e04",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    },
+    {
+      "id": "E05",
+      "original_source_ids": [
+        "S05"
+      ],
+      "title": "WebKit Features in Safari 18.4",
+      "url": "https://webkit.org/blog/16574/webkit-features-in-safari-18-4/",
+      "version": "Safari 18.4; 2025-03-31",
+      "locator": "Media heading: WebM MediaRecorder paragraph versus following Ogg paragraph (web extraction lines 145–168)",
+      "independent_review": true,
+      "judgment": "WebM recording history supported; critic F3 conflates generic Ogg media support with recording.",
+      "governing_conditions": "WebM recording has explicit Opus/audio and VP8/VP9/video wording, with ALAC/PCM recording discussion. Ogg support is qualified to macOS Sequoia 15.4, iOS/iPadOS 18.4 and visionOS 2.4. The Ogg paragraph supplies neither an Ogg MediaRecorder recording claim nor exact audio-only recorder MIME strings.",
+      "local_evidence": [],
+      "evidence_note": "evidence/index.md#e05",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    },
+    {
+      "id": "E06",
+      "original_source_ids": [
+        "S06"
+      ],
+      "title": "WebKit Features in Safari 26.0",
+      "url": "https://webkit.org/blog/17333/webkit-features-in-safari-26-0/",
+      "version": "Safari 26.0; 2025-09-15",
+      "locator": "Media heading, lines 349–358 in web extraction",
+      "independent_review": true,
+      "judgment": "ALAC/PCM MediaRecorder history and audio/mp4 ALAC example supported.",
+      "governing_conditions": "Historical released example audio/mp4; codecs=alac is explicit. AudioEncoder/AudioDecoder additions are also announced. This does not prove exact current Safari 27 binary behavior or a universal PCM support table.",
+      "local_evidence": [],
+      "evidence_note": "evidence/index.md#e06",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    },
+    {
+      "id": "E07",
+      "original_source_ids": [
+        "S07"
+      ],
+      "title": "Safari Technology Preview 110 release notes",
+      "url": "https://webkit.org/blog/10929/release-notes-for-safari-technology-preview-110/",
+      "version": "2020-07-16; WebKit revisions 263214–263988",
+      "locator": "WebRTC entries: empty stop Blob after first use, ignored timeslice; changesets r263511/r263633/r263891 and r263565/r263651/r263892",
+      "independent_review": true,
+      "judgment": "Historical regression details accurately used as prospective checks.",
+      "governing_conditions": "STP 110 history is not a diagnosis of Safari 27. No current defect or current successful regression test follows from those entries.",
+      "local_evidence": [],
+      "evidence_note": "evidence/index.md#e07",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    },
+    {
+      "id": "E08",
+      "original_source_ids": [
+        "S08"
+      ],
+      "title": "Chromium authored implementation snapshot",
+      "url": "https://chromium.googlesource.com/chromium/src/third_party/+/19646947eb735f84c5ae91af1fe901273d67d4f7/blink/renderer/modules/mediarecorder/media_recorder_handler.cc",
+      "version": "Immutable 19646947eb735f84c5ae91af1fe901273d67d4f7 (2025 snapshot)",
+      "locator": "AudioStringToCodecId lines 155–175; CanSupportAudioType lines 180–186; CanSupportMimeType/codec lists lines 286–355",
+      "independent_review": true,
+      "judgment": "WebM/MP4, Opus/PCM and build-conditional AAC claims supported by direct decoded source.",
+      "governing_conditions": "USE_PROPRIETARY_CODECS conditions AAC mp4a.40.2. Source supports forming audio/webm with pcm candidates too, although the final declines guessed PCM offerings. Snapshot does not authenticate a current installed Chrome binary.",
+      "local_evidence": [
+        "chromium-2025-handler.cpp",
+        "chromium-2025-handler.cpp.retrieval.json"
+      ],
+      "evidence_note": "evidence/index.md#e08",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    },
+    {
+      "id": "E09",
+      "original_source_ids": [
+        "S09"
+      ],
+      "title": "extendable-media-recorder architecture analog",
+      "url": "https://github.com/chrisguttandin/extendable-media-recorder/blob/3107005ffdf1a4857c15f224438ef86fa35dd7d6/README.md",
+      "version": "Independent reviewer resolved master to 3107005ffdf1a4857c15f224438ef86fa35dd7d6 (committer 2026-09-02); candidate used mutable README",
+      "locator": "Using a custom encoder; Setting the sample rate; Inner Workings",
+      "independent_review": true,
+      "judgment": "Analog mechanism supported; candidate correctly does not select or claim a tested dependency release.",
+      "governing_conditions": "Native implementation used when possible. Custom audio encoding path in Chrome consumes native WebM/PCM and parses EBML; other browsers use Web Audio PCM. AudioContext resampling is described. This is an analog, not a native browser compatibility matrix.",
+      "local_evidence": [
+        "library-readme-pinned.txt",
+        "library-readme-pinned.txt.retrieval.json",
+        "library-readme-at-review.txt",
+        "library-master-ref.json",
+        "library-readme-at-review.txt.retrieval.json",
+        "library-master-ref.json.retrieval.json"
+      ],
+      "evidence_note": "evidence/index.md#e09",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    },
+    {
+      "id": "E10",
+      "original_source_ids": [
+        "S10"
+      ],
+      "title": "Recorder WAV timeslice issue 263",
+      "url": "https://github.com/chrisguttandin/extendable-media-recorder/issues/263",
+      "version": "Opened 2019-05-20; completed 2019-09-03 via 2fe86e8",
+      "locator": "Maintainer comments May 25 and September 3; closure entry",
+      "independent_review": true,
+      "judgment": "Sentinel-header and missing requestData history supported.",
+      "governing_conditions": "Library-specific WAV compromise for unknown length during chunking. The closure does not imply all native containers share it or that a present package behaves identically.",
+      "local_evidence": [],
+      "evidence_note": "evidence/index.md#e10",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    },
+    {
+      "id": "E11",
+      "original_source_ids": [
+        "S11"
+      ],
+      "title": "Recorder WAV doubled-speed issue 692",
+      "url": "https://github.com/chrisguttandin/extendable-media-recorder/issues/692",
+      "version": "2025-08-08 opening; 2025-08-12 reporter closure; 2026-04-14/15 follow-up",
+      "locator": "2025 reporter/owner comments and April 15 adapted destination-stream advice (web extraction lines 273–474)",
+      "independent_review": true,
+      "judgment": "Final expanded history is supported; inherited summary was incomplete.",
+      "governing_conditions": "2025 report clarified Windows-only reproduction and two-channel destination stream despite mono request. Owner proposed channel-count patching; reporter closed. Later reporter said a general patch failed, then did not try the adapted destination-stream suggestion and wrote a custom Worklet solution. Neither closure nor advice proves a verified general fix.",
+      "local_evidence": [],
+      "evidence_note": "evidence/index.md#e11",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    },
+    {
+      "id": "E12",
+      "original_source_ids": [
+        "S12"
+      ],
+      "title": "High Resolution Time 3",
+      "url": "https://www.w3.org/TR/2026/WD-hr-time-3-20260901/",
+      "version": "Working Draft 2026-09-01",
+      "locator": "§2.1 clocks and background timer paragraph; performance.now",
+      "independent_review": true,
+      "judgment": "Independent clock versus delayed handler distinction supported.",
+      "governing_conditions": "Monotonic time within the relevant origin is independent of system-clock adjustment. UA throttling/freezing of background callbacks does not turn the clock into a guarantee that a scheduled Stop executes promptly.",
+      "local_evidence": [
+        "hrtime-wd20260901.html",
+        "hrtime-wd20260901-readable.txt",
+        "hrtime-wd20260901.html.retrieval.json"
+      ],
+      "evidence_note": "evidence/index.md#e12",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    },
+    {
+      "id": "E13",
+      "original_source_ids": [
+        "S13"
+      ],
+      "title": "HTML page visibility",
+      "url": "https://html.spec.whatwg.org/multipage/interaction.html#page-visibility",
+      "version": "Living Standard retrieved 2026-10-10",
+      "locator": "§6.2 system visibility update, queued global task and visibilitychange",
+      "independent_review": true,
+      "judgment": "Hidden-page signal policy supported; instantaneous release explicitly disclaimed.",
+      "governing_conditions": "UA determines visibility and queues the update/event. Signal-driven application stopping is a policy with scheduling limitations, not a hard realtime bound.",
+      "local_evidence": [],
+      "evidence_note": "evidence/index.md#e13",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    },
+    {
+      "id": "E14",
+      "original_source_ids": [
+        "C01"
+      ],
+      "title": "WebKit Features for Safari 27.0",
+      "url": "https://webkit.org/blog/18325/webkit-features-for-safari-27-0/",
+      "version": "Safari 27.0; 2026-09-17",
+      "locator": "Updating to Safari 27; Media and resolved issues; web extraction line 1241 for OS availability",
+      "independent_review": true,
+      "judgment": "F1 stale Safari anchor correction supported.",
+      "governing_conditions": "Comes with macOS 27 Golden Gate and is separately available on macOS 26/15. Microphone AudioSession and OverconstrainedError fixes are listed. No MediaRecorder MIME change is announced; silence is not proof of persistence/regression. Final selects two older supported OS lanes rather than every current OS.",
+      "local_evidence": [],
+      "evidence_note": "evidence/index.md#e14",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    },
+    {
+      "id": "E15",
+      "original_source_ids": [
+        "C02"
+      ],
+      "title": "New WebKit Features in Safari 14.1",
+      "url": "https://webkit.org/blog/11648/new-webkit-features-in-safari-14-1/",
+      "version": "Safari 14.1; 2021-04-29",
+      "locator": "MediaRecorder API heading",
+      "independent_review": true,
+      "judgment": "F4 historical support and added locator are correct.",
+      "governing_conditions": "Historical API introduction refutes blanket denial. It supplies no complete current recording/playback format matrix.",
+      "local_evidence": [],
+      "evidence_note": "evidence/index.md#e15",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    },
+    {
+      "id": "E16",
+      "original_source_ids": [],
+      "title": "Apple Safari 18.4 release notes",
+      "url": "https://developer.apple.com/documentation/safari-release-notes/safari-18_4-release-notes",
+      "version": "Safari 18.4 released notes",
+      "locator": "Media New Features; official DocC JSON endpoint https://developer.apple.com/tutorials/data/documentation/safari-release-notes/safari-18_4-release-notes.json",
+      "independent_review": true,
+      "judgment": "Independent second primary source confirms Ogg/recording distinction.",
+      "governing_conditions": "Generic Ogg Opus/Vorbis support and explicit WebM MediaRecorder support are separate release bullets. This supplies no claim that Ogg is a recorder export container.",
+      "local_evidence": [
+        "apple-safari18.4.json",
+        "apple-safari18.4-retrieval.json"
+      ],
+      "evidence_note": "evidence/index.md#e16",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    },
+    {
+      "id": "E17",
+      "original_source_ids": [],
+      "title": "WebKit Cocoa recorder implementation",
+      "url": "https://github.com/WebKit/WebKit/blob/73f39d84ea9d4071994214373efbde3665402b05/Source/WebCore/platform/mediarecorder/MediaRecorderPrivateAVFImpl.cpp",
+      "version": "Immutable WPE 2.54.0 commit 73f39d84ea9d4071994214373efbde3665402b05; historical comparator webkitgtk-2.48.0",
+      "locator": "MediaRecorderPrivateAVFImpl::isTypeSupported, lines 53–99 in downloaded 2.54 source",
+      "independent_review": true,
+      "judgment": "Recorded source restricts this recorder implementation to MP4 and enabled WebM, not Ogg.",
+      "governing_conditions": "Cocoa source is a recorder operation check, not an observation of any installed Safari 27 binary. WebM has compile/settings conditions. An unrelated release tag identifies the source revision, not a tested Safari version.",
+      "local_evidence": [
+        "webkit-254-recorder.cpp",
+        "webkit-254-recorder-retrieval.json",
+        "webkit-248-recorder.cpp",
+        "webkit-248-recorder-retrieval.json",
+        "webkit-tags.json",
+        "webkit-tags-retrieval.json"
+      ],
+      "evidence_note": "evidence/index.md#e17",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    },
+    {
+      "id": "E18",
+      "original_source_ids": [],
+      "title": "Chrome 155 MediaRecorder implementation",
+      "url": "https://chromium.googlesource.com/chromium/src/+/refs/tags/155.0.8059.39/third_party/blink/renderer/modules/mediarecorder/media_recorder_handler.cc",
+      "version": "Chrome release tag 155.0.8059.39; companion media_recorder.cc same tag",
+      "locator": "CanSupportMimeType lines 218–254; codec lists 270–344; AAC runtime check 449–453; Initialize 469–471; recorder isTypeSupported 391–409",
+      "independent_review": true,
+      "judgment": "Implementation inspected to avoid treating the 2026 draft exception as observed current browser behavior.",
+      "governing_conditions": "Constructor and public probe use the same codec support function in this snapshot; caller distinguishes telemetry. AAC additionally requires a supported Mojo audio encoder. Build configuration and actual encoder resources still matter. No browser run was performed.",
+      "local_evidence": [
+        "chrome155-handler-cc.cpp",
+        "chrome155-handler-cc-retrieval.json",
+        "chrome155-recorder-cc.cpp",
+        "chrome155-recorder-cc-retrieval.json"
+      ],
+      "evidence_note": "evidence/index.md#e18",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    },
+    {
+      "id": "E19",
+      "original_source_ids": [],
+      "title": "WebCodecs",
+      "url": "https://www.w3.org/TR/2026/WD-webcodecs-20261007/",
+      "version": "Working Draft 2026-10-07",
+      "locator": "§5 AudioEncoder interface/support; §7.4 codec string; encoded audio chunks",
+      "independent_review": true,
+      "judgment": "Encoding-versus-container qualification supported.",
+      "governing_conditions": "WebCodecs exposes raw/encoded chunks and codec configuration checks; encoded media is not containerized. Selecting it still leaves file muxing, queues, resource lifecycle and output verification.",
+      "local_evidence": [
+        "webcodecs-wd20261007.html",
+        "webcodecs-wd20261007-readable.txt",
+        "webcodecs-wd20261007.html.retrieval.json"
+      ],
+      "evidence_note": "evidence/index.md#e19",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    },
+    {
+      "id": "E20",
+      "original_source_ids": [],
+      "title": "Media Capabilities",
+      "url": "https://www.w3.org/TR/2026/WD-media-capabilities-20260609/",
+      "version": "Working Draft 2026-06-09; independently retrieved 2026-10-10",
+      "locator": "§2.1.3 MediaEncodingType; encodingInfo algorithm",
+      "independent_review": true,
+      "judgment": "Independent lead for the newer-codec probe condition; no universal support promise.",
+      "governing_conditions": "type record addresses recording configurations rather than decoding; it is the alternative pointed to by the dated recording draft for precise/newer codecs. Implementations and exact profiles require testing.",
+      "local_evidence": [
+        "media-capabilities-wd20260609.html",
+        "media-capabilities-wd20260609-readable.txt",
+        "media-capabilities-wd20260609.html.retrieval.json"
+      ],
+      "evidence_note": "evidence/index.md#e20",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    }
+  ],
+  "reviewer_native_goal": {
+    "thread_id": "01a1244e-8417-7963-b124-eb75f8be9d34",
+    "created_at_utc": "2026-10-10T05:35:05Z",
+    "goal_objective_under_4000_chars": true,
+    "judgment_saved_before_completion": true,
+    "completion_receipt": "reviewer-native-goal-completion.json",
+    "note": "Receipt is added only after full judgment and evidence are saved; no completed state asserted in this pre-completion judgment.",
+    "active_observation": "reviewer-native-goal-active.json"
+  },
+  "boundaries": {
+    "no_nested_delegation": true,
+    "no_candidate_feedback_or_repair": true,
+    "no_account_changes": true,
+    "no_git_or_publication": true,
+    "no_other_arms_results_history_or_er11": true,
+    "own_inbox_only": true,
+    "original_sources_unchanged": true,
+    "saved_root_request_preserved_unread": true
+  },
+  "save_verification": "save-verification.json"
+}

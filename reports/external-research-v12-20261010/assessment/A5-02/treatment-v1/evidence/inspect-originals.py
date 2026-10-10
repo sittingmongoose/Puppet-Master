@@ -1,0 +1,21 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [],
+  "primary_url_status": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "2a2fd33791c0a0bab6dc855ee9b1f1d8c2393c8be44023d9b612a17ee3dcecbe",
+  "original_bytes": 2775,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A5-02/treatment-v1/evidence/inspect-originals.py",
+  "evidence_coverage": "UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": "UNKNOWN",
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "rawSHA256": "2a2fd33791c0a0bab6dc855ee9b1f1d8c2393c8be44023d9b612a17ee3dcecbe"
+}

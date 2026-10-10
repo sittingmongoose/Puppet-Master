@@ -1,0 +1,571 @@
+{
+  "assignment": "ER12 A3-02 control full-pipeline independent semantic review",
+  "evidence_index": "evidence/index.md",
+  "sources": [
+    {
+      "id": "E01",
+      "requested_url": "https://www.w3.org/TR/2026/WD-mediastream-recording-20260316/",
+      "access_started_utc": "2026-10-10T05:33:52.975968+00:00",
+      "operation": "independent HTTPS source retrieval; no source code execution",
+      "http_status": 200,
+      "resolved_url": "https://www.w3.org/TR/2026/WD-mediastream-recording-20260316/",
+      "content_type": "text/html; charset=utf-8",
+      "raw_file": "evidence/E01.html",
+      "bytes": 270465,
+      "sha256": "b9da30d58668525c133eb92b2f8bd80be62f31a57503f4a870990715dc7427de",
+      "text_file": "evidence/E01-text.txt",
+      "text_sha256": "ad42c49efe09599baa09bdc7021caa40190778700adecdb31d44d31a8dcf9531",
+      "access_completed_utc": "2026-10-10T05:33:53.152688+00:00",
+      "title": "MediaStream Recording",
+      "version_or_commit": "W3C Working Draft 2026-03-16",
+      "locator": "§2.1; §2.3 start, stop, pause/resume, isTypeSupported; §2.4",
+      "governing_conditions_defaults_exceptions": "Constructor MIME rejection and start failure differ; default format is UA-selected. A stopped/all-ended stream is inactive. Timing slices and queued events are distinct. Complete-recording assembly differs from an arbitrary chunk. Newer-codec synchronous exposure is restricted.",
+      "applicability": "Governs M1 and lifecycle/negotiation/chunk corrections; draft status does not prove runtime adoption.",
+      "inspected_text_ranges": [
+        {
+          "start_line": 136,
+          "end_line": 153
+        },
+        {
+          "start_line": 225,
+          "end_line": 243
+        },
+        {
+          "start_line": 350,
+          "end_line": 377
+        },
+        {
+          "start_line": 390,
+          "end_line": 443
+        },
+        {
+          "start_line": 444,
+          "end_line": 503
+        }
+      ],
+      "independent_retrieval": true,
+      "browser_execution": false
+    },
+    {
+      "id": "E02",
+      "requested_url": "https://www.w3.org/TR/mediacapture-streams/",
+      "access_started_utc": "2026-10-10T05:33:52.978327+00:00",
+      "operation": "independent HTTPS source retrieval; no source code execution",
+      "http_status": 200,
+      "resolved_url": "https://www.w3.org/TR/mediacapture-streams/",
+      "content_type": "text/html; charset=utf-8",
+      "raw_file": "evidence/E02.html",
+      "bytes": 1064169,
+      "sha256": "a5b825c2f691cb776575a25eddf24c78aa43b93d32c5eff1a749fff798383a27",
+      "text_file": "evidence/E02-text.txt",
+      "text_sha256": "e382c98806e305020e4c34e1f109b9396543626c2c6f215bc550e37c02135f2a",
+      "access_completed_utc": "2026-10-10T05:33:53.486625+00:00",
+      "title": "Media Capture and Streams",
+      "version_or_commit": "W3C Candidate Recommendation Draft 2025-10-09",
+      "locator": "§4.2 active stream; §4.3.1 track lifecycle/stop/getSettings; §10 getUserMedia; §11 constraints",
+      "governing_conditions_defaults_exceptions": "App stop ends a track; ended-only streams are inactive. App stop differs from the externally-ended event. Settings describe delivered track configuration, and ideal/exact constraints differ. Device changes are not a live-source-switch guarantee.",
+      "applicability": "Governs M1 and permission/cleanup/sample-rate/device corrections; no exact target-runtime observation.",
+      "inspected_text_ranges": [
+        {
+          "start_line": 391,
+          "end_line": 399
+        },
+        {
+          "start_line": 799,
+          "end_line": 838
+        },
+        {
+          "start_line": 913,
+          "end_line": 952
+        },
+        {
+          "start_line": 1535,
+          "end_line": 1545
+        },
+        {
+          "start_line": 2037,
+          "end_line": 2041
+        },
+        {
+          "start_line": 3130,
+          "end_line": 3154
+        }
+      ],
+      "independent_retrieval": true,
+      "browser_execution": false
+    },
+    {
+      "id": "E03",
+      "requested_url": "https://www.w3.org/TR/webaudio/",
+      "access_started_utc": "2026-10-10T05:33:52.979858+00:00",
+      "operation": "independent HTTPS source retrieval; no source code execution",
+      "http_status": 200,
+      "resolved_url": "https://www.w3.org/TR/webaudio/",
+      "content_type": "text/html; charset=utf-8",
+      "raw_file": "evidence/E03.html",
+      "bytes": 3087268,
+      "sha256": "8dbacf76c5a3f92900a5ff915a53ee7f1ac43a1c10257fc53df541d8e99588f1",
+      "text_file": "evidence/E03-text.txt",
+      "text_sha256": "9abb973435cb8f609ab9b0573f017b6dfb9745bb7c730a1ed0a21244c296eb87",
+      "access_completed_utc": "2026-10-10T05:33:54.075877+00:00",
+      "title": "Web Audio API 1.1",
+      "version_or_commit": "W3C Working Draft 2026-09-22",
+      "locator": "§1.24 MediaStreamAudioSourceNode; §1.32 AudioWorklet; §2.5–2.6 quantum/rendering",
+      "governing_conditions_defaults_exceptions": "Worklet processing uses Float32 sample buffers and audio-render-thread messaging. Graph rate can involve resampling; quantum defaults to 128 frames in this draft and is configurable. Processing and an exported encoding/container are separate responsibilities.",
+      "applicability": "Supports mechanism comparison and units; configurable-quantum runtime support remains feature-dependent.",
+      "inspected_text_ranges": [
+        {
+          "start_line": 6722,
+          "end_line": 6741
+        },
+        {
+          "start_line": 8127,
+          "end_line": 8133
+        },
+        {
+          "start_line": 8170,
+          "end_line": 8204
+        },
+        {
+          "start_line": 8736,
+          "end_line": 8754
+        },
+        {
+          "start_line": 9123,
+          "end_line": 9165
+        }
+      ],
+      "independent_retrieval": true,
+      "browser_execution": false
+    },
+    {
+      "id": "E04",
+      "requested_url": "https://www.w3.org/TR/media-capabilities/",
+      "access_started_utc": "2026-10-10T05:33:52.980869+00:00",
+      "operation": "independent HTTPS source retrieval; no source code execution",
+      "http_status": 200,
+      "resolved_url": "https://www.w3.org/TR/media-capabilities/",
+      "content_type": "text/html; charset=utf-8",
+      "raw_file": "evidence/E04.html",
+      "bytes": 345463,
+      "sha256": "849ad2aae83cb807a908611e6635f59be271e77dc2e9b697f1c296ad3bc62baf",
+      "text_file": "evidence/E04-text.txt",
+      "text_sha256": "0f24e7f6c56f1d46b9423918577dd615bc3f301843ff1398a79c67f6df8b660a",
+      "access_completed_utc": "2026-10-10T05:33:53.348585+00:00",
+      "title": "Media Capabilities",
+      "version_or_commit": "W3C Working Draft 2026-06-09",
+      "locator": "§2.1.3 MediaEncodingType; §2.1.8 AudioConfiguration",
+      "governing_conditions_defaults_exceptions": "record represents recording configurations; AudioConfiguration requires contentType, with configuration validation and optional other fields. This is an encoding preflight, not an executed recording/export.",
+      "applicability": "Supports the proposed query shape without a runtime availability guarantee.",
+      "inspected_text_ranges": [
+        {
+          "start_line": 168,
+          "end_line": 180
+        },
+        {
+          "start_line": 327,
+          "end_line": 354
+        }
+      ],
+      "independent_retrieval": true,
+      "browser_execution": false
+    },
+    {
+      "id": "E05",
+      "requested_url": "https://webkit.org/blog/11648/new-webkit-features-in-safari-14-1/",
+      "access_started_utc": "2026-10-10T05:33:52.981972+00:00",
+      "operation": "independent HTTPS source retrieval; no source code execution",
+      "http_status": 200,
+      "resolved_url": "https://webkit.org/blog/11648/new-webkit-features-in-safari-14-1/",
+      "content_type": "text/html; charset=UTF-8",
+      "raw_file": "evidence/E05.html",
+      "bytes": 48461,
+      "sha256": "ab6077488deebb221e3b6314c4bef560591197bc7484ae3aec4c7be9142c2230",
+      "text_file": "evidence/E05-text.txt",
+      "text_sha256": "28e6f2d26b7dee18fbd2fce22ced5ed1cd7c7fe19a6b9f0fb26ad324944ac817",
+      "access_completed_utc": "2026-10-10T05:33:53.885329+00:00",
+      "title": "New WebKit Features in Safari 14.1",
+      "version_or_commit": "Safari 14.1; article published 2021-04-29",
+      "locator": "MediaRecorder API; separate WebM Support headings",
+      "governing_conditions_defaults_exceptions": "MediaStream Recording is available with platform default encodings. The adjacent WebM support discussion concerns playback rather than recorder-output proof.",
+      "applicability": "Direct evidence against blanket Safari denial; no present exact-MIME guarantee.",
+      "inspected_text_ranges": [
+        {
+          "start_line": 35,
+          "end_line": 38
+        },
+        {
+          "start_line": 73,
+          "end_line": 78
+        }
+      ],
+      "independent_retrieval": true,
+      "browser_execution": false
+    },
+    {
+      "id": "E06",
+      "requested_url": "https://webkit.org/blog/16574/webkit-features-in-safari-18-4/",
+      "access_started_utc": "2026-10-10T05:33:52.983646+00:00",
+      "operation": "independent HTTPS source retrieval; no source code execution",
+      "http_status": 200,
+      "resolved_url": "https://webkit.org/blog/16574/webkit-features-in-safari-18-4/",
+      "content_type": "text/html; charset=UTF-8",
+      "raw_file": "evidence/E06.html",
+      "bytes": 122265,
+      "sha256": "6acbe75ab52a20f5ff9a3d94717a18fabc9a154f291c261a5b9e634a9b0b5710",
+      "text_file": "evidence/E06-text.txt",
+      "text_sha256": "b116ba4e348a9e69d6ace8335beef1787ceb084bfeac917e133be135a1880ee1",
+      "access_completed_utc": "2026-10-10T05:33:54.074969+00:00",
+      "title": "WebKit Features in Safari 18.4",
+      "version_or_commit": "Safari 18.4; 2025-03-31 article",
+      "locator": "Media section",
+      "governing_conditions_defaults_exceptions": "MediaRecorder WebM/Opus, fragmented MP4 and ALAC/PCM announcements are present. Ogg Opus/Vorbis container support is scoped to macOS Sequoia 15.4/iOS 18.4/iPadOS 18.4/visionOS 2.4; the Ogg sentence alone does not specify recorder output.",
+      "applicability": "Justifies bounded format candidates; exact audio-only strings and Ogg recording need runtime qualification.",
+      "inspected_text_ranges": [
+        {
+          "start_line": 130,
+          "end_line": 145
+        }
+      ],
+      "independent_retrieval": true,
+      "browser_execution": false
+    },
+    {
+      "id": "E07",
+      "requested_url": "https://webkit.org/blog/17333/webkit-features-in-safari-26-0/",
+      "access_started_utc": "2026-10-10T05:33:53.152887+00:00",
+      "operation": "independent HTTPS source retrieval; no source code execution",
+      "http_status": 200,
+      "resolved_url": "https://webkit.org/blog/17333/webkit-features-in-safari-26-0/",
+      "content_type": "text/html; charset=UTF-8",
+      "raw_file": "evidence/E07.html",
+      "bytes": 132975,
+      "sha256": "ebe0484c74dd22e1597d7d9713daebe2f493e177e8d93f1f4964c93cd8357b01",
+      "text_file": "evidence/E07-text.txt",
+      "text_sha256": "1791103cd9e3644e728c2d25450ec2f57997d82ecad5057c56e69da1f06212b1",
+      "access_completed_utc": "2026-10-10T05:33:54.135702+00:00",
+      "title": "WebKit Features in Safari 26.0",
+      "version_or_commit": "Safari 26.0; 2025-09-15 article",
+      "locator": "Media section",
+      "governing_conditions_defaults_exceptions": "Vendor gives an audio-only ALAC MediaRecorder construction example and adds AudioEncoder/AudioDecoder. Source repeats ALAC/PCM addition language also seen in 18.4.",
+      "applicability": "Supports the candidate and history, not a guarantee for unspecified current targets.",
+      "inspected_text_ranges": [
+        {
+          "start_line": 285,
+          "end_line": 293
+        }
+      ],
+      "independent_retrieval": true,
+      "browser_execution": false
+    },
+    {
+      "id": "E08",
+      "requested_url": "https://bugs.webkit.org/show_bug.cgi?id=258567",
+      "access_started_utc": "2026-10-10T05:33:53.348924+00:00",
+      "operation": "independent HTTPS source retrieval; no source code execution",
+      "http_status": 200,
+      "resolved_url": "https://bugs.webkit.org/show_bug.cgi?id=258567",
+      "content_type": "text/html; charset=UTF-8",
+      "raw_file": "evidence/E08.html",
+      "bytes": 46567,
+      "sha256": "e724b539f162aa2f89cae81e8c9b31dae11c3e27bce1201bf3f7b9cc1c60c02e",
+      "text_file": "evidence/E08-text.txt",
+      "text_sha256": "37af9e9fc70dc354d4bb6532af67f07ecddad232653076cca6d14938af263a65",
+      "access_completed_utc": "2026-10-10T05:33:54.223458+00:00",
+      "title": "WebKit issue 258567",
+      "version_or_commit": "Safari 16.4/16.5.1 incident; 266130@main (8c01a9fbfd35), 2023-07-18",
+      "locator": "Comments 4–13; issue status",
+      "governing_conditions_defaults_exceptions": "The reported failure involved M1/Ventura 13.4.1 and system OUTPUT 96 kHz; changing output to 48 kHz plus reload worked for the reporter. Another setup did not reproduce. A later comment also reports Safari 15/Intel. Issue is RESOLVED FIXED with the exact landed commit.",
+      "applicability": "Confirms F3 correction; reporter conditions are not universal causality or branded-release inclusion.",
+      "inspected_text_ranges": [
+        {
+          "start_line": 64,
+          "end_line": 86
+        },
+        {
+          "start_line": 127,
+          "end_line": 151
+        },
+        {
+          "start_line": 157,
+          "end_line": 173
+        }
+      ],
+      "independent_retrieval": true,
+      "browser_execution": false
+    },
+    {
+      "id": "E09",
+      "requested_url": "https://bugs.webkit.org/show_bug.cgi?id=243837",
+      "access_started_utc": "2026-10-10T05:33:53.487279+00:00",
+      "operation": "independent HTTPS source retrieval; no source code execution",
+      "http_status": 200,
+      "resolved_url": "https://bugs.webkit.org/show_bug.cgi?id=243837",
+      "content_type": "text/html; charset=UTF-8",
+      "raw_file": "evidence/E09.html",
+      "bytes": 39106,
+      "sha256": "6f16acea02ea6671456f9f38d3cc71ed49270069f4b9e4268e76ea7f1b02baf6",
+      "text_file": "evidence/E09-text.txt",
+      "text_sha256": "fbaabbadc1dbb49044e2bf3b191f2ab71b6a3af0c2ad66c6e3757ca66eca640a",
+      "access_completed_utc": "2026-10-10T05:33:54.154297+00:00",
+      "title": "WebKit issue 243837",
+      "version_or_commit": "iPad 8th generation/iOS 15.6; 253529@main (f2967879748b), 2022-08-17",
+      "locator": "Report; comments 2–5",
+      "governing_conditions_defaults_exceptions": "Report concerns start/pause/requestData/stop and truncated data. Maintainer explains in-flight encoding/writer flushing, and the landed change is recorded.",
+      "applicability": "Supports bounded final-flush history, not a defect asserted in current desktop microphone capture.",
+      "inspected_text_ranges": [
+        {
+          "start_line": 24,
+          "end_line": 34
+        },
+        {
+          "start_line": 45,
+          "end_line": 74
+        }
+      ],
+      "independent_retrieval": true,
+      "browser_execution": false
+    },
+    {
+      "id": "E10",
+      "requested_url": "https://developer.chrome.com/blog/mediarecorder",
+      "access_started_utc": "2026-10-10T05:33:53.885525+00:00",
+      "operation": "independent HTTPS source retrieval; no source code execution",
+      "http_status": 200,
+      "resolved_url": "https://developer.chrome.com/blog/mediarecorder",
+      "content_type": "text/html; charset=utf-8",
+      "raw_file": "evidence/E10.html",
+      "bytes": 120887,
+      "sha256": "88be18ad93f0ffe75f4fbbe2e6948f0235139fdfc368be0edd62d3244b3b546c",
+      "text_file": "evidence/E10-text.txt",
+      "text_sha256": "869cfec9390732bd1c50842db883eb51709438182cee6d6daafbdfbbf05cb45f",
+      "access_completed_utc": "2026-10-10T05:33:54.366687+00:00",
+      "title": "Chrome Developers MediaRecorder article",
+      "version_or_commit": "Historical article last updated 2016-01-30",
+      "locator": "Support note; Browser support",
+      "governing_conditions_defaults_exceptions": "Article distinguishes Chrome 47/48 flagged video-only from Chrome 49+ audio. Its examples and support list are historical.",
+      "applicability": "Supports released implementation history; no current exact-format result.",
+      "inspected_text_ranges": [
+        {
+          "start_line": 123,
+          "end_line": 130
+        },
+        {
+          "start_line": 206,
+          "end_line": 216
+        }
+      ],
+      "independent_retrieval": true,
+      "browser_execution": false
+    },
+    {
+      "id": "E11",
+      "requested_url": "https://developer.chrome.com/docs/web-platform/page-lifecycle-api",
+      "access_started_utc": "2026-10-10T05:33:54.075121+00:00",
+      "operation": "independent HTTPS source retrieval; no source code execution",
+      "http_status": 200,
+      "resolved_url": "https://developer.chrome.com/docs/web-platform/page-lifecycle-api",
+      "content_type": "text/html; charset=utf-8",
+      "raw_file": "evidence/E11.html",
+      "bytes": 204539,
+      "sha256": "12c6884eaec3a2c2f645d1f66a30e74d866d1973cc7c6fe21656323dc850762c",
+      "text_file": "evidence/E11-text.txt",
+      "text_sha256": "0ce6d848b9beff8d74dbe5c603f53fe728925e40ef8d08ea361301e913c544ff",
+      "access_completed_utc": "2026-10-10T05:33:54.440765+00:00",
+      "title": "Chrome Page Lifecycle API",
+      "version_or_commit": "Live official documentation retrieved 2026-10-10; Chrome 68 lifecycle additions",
+      "locator": "Frozen state; recommendations",
+      "governing_conditions_defaults_exceptions": "Frozen-page freezable tasks, including JavaScript timers, are suspended. This does not establish MediaRecorder continuation, capture interruption, or Safari behavior.",
+      "applicability": "Supports the qualified timer limitation as an inference, not a browser recording observation.",
+      "inspected_text_ranges": [
+        {
+          "start_line": 298,
+          "end_line": 323
+        },
+        {
+          "start_line": 604,
+          "end_line": 613
+        },
+        {
+          "start_line": 775,
+          "end_line": 780
+        }
+      ],
+      "independent_retrieval": true,
+      "browser_execution": false
+    },
+    {
+      "id": "E12",
+      "requested_url": "https://chromium.googlesource.com/chromium/src/media/+/042aaa189184e3d303c01946589eb84926d91000/muxers/README.md",
+      "access_started_utc": "2026-10-10T05:33:54.077258+00:00",
+      "operation": "independent HTTPS source retrieval; no source code execution",
+      "http_status": 200,
+      "resolved_url": "https://chromium.googlesource.com/chromium/src/media/+/042aaa189184e3d303c01946589eb84926d91000/muxers/README.md",
+      "content_type": "text/html; charset=utf-8",
+      "raw_file": "evidence/E12.html",
+      "bytes": 7416,
+      "sha256": "1a0f6473087a55a7acd8982f670b167f912ba05b1314938c701e5c88f3736b8a",
+      "text_file": "evidence/E12-text.txt",
+      "text_sha256": "8cc08a82910585fe9a728dcb47b8eae979fb84916b7ee5c4e05f497dfd20cfd2",
+      "access_completed_utc": "2026-10-10T05:33:54.444415+00:00",
+      "title": "Chromium muxer README",
+      "version_or_commit": "Commit 042aaa189184e3d303c01946589eb84926d91000",
+      "locator": "README codec list",
+      "governing_conditions_defaults_exceptions": "Pinned implementation documentation names MediaRecorder use and WebM Opus/MP4 Opus and AAC muxing. A muxer entry is not branded-browser API enablement.",
+      "applicability": "Implementation-level candidate evidence only.",
+      "inspected_text_ranges": [
+        {
+          "start_line": 1,
+          "end_line": 14
+        }
+      ],
+      "independent_retrieval": true,
+      "browser_execution": false
+    },
+    {
+      "id": "E13",
+      "requested_url": "https://raw.githubusercontent.com/kbumsik/opus-media-recorder/master/README.md",
+      "access_started_utc": "2026-10-10T05:33:54.135926+00:00",
+      "operation": "independent HTTPS source retrieval; no source code execution",
+      "http_status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/kbumsik/opus-media-recorder/master/README.md",
+      "content_type": "text/plain; charset=utf-8",
+      "raw_file": "evidence/E13.txt",
+      "bytes": 9430,
+      "sha256": "ae8cfd6d308c95933234310b9680d1317a9d2fffb72d81212fded04f1c6a15bc",
+      "text_file": "evidence/E13-text.txt",
+      "text_sha256": "ae8cfd6d308c95933234310b9680d1317a9d2fffb72d81212fded04f1c6a15bc",
+      "access_completed_utc": "2026-10-10T05:33:54.257244+00:00",
+      "title": "opus-media-recorder upstream README",
+      "version_or_commit": "Unpinned master at independent retrieval",
+      "locator": "Architecture, bundler setup, limitations",
+      "governing_conditions_defaults_exceptions": "WASM codec/muxer libraries and Worker assets are described; package WAV events are individually complete files with a non-concatenation warning. Old support table is inapplicable to current targets.",
+      "applicability": "Readable upstream cross-check; E16 is the version-bound governing analog.",
+      "inspected_text_ranges": [
+        {
+          "start_line": 6,
+          "end_line": 8
+        },
+        {
+          "start_line": 80,
+          "end_line": 99
+        },
+        {
+          "start_line": 199,
+          "end_line": 212
+        }
+      ],
+      "independent_retrieval": true,
+      "browser_execution": false
+    },
+    {
+      "id": "E14",
+      "requested_url": "https://registry.npmjs.org/opus-media-recorder/0.8.0",
+      "access_started_utc": "2026-10-10T05:33:54.154384+00:00",
+      "operation": "independent HTTPS source retrieval; no source code execution",
+      "http_status": 200,
+      "resolved_url": "https://registry.npmjs.org/opus-media-recorder/0.8.0",
+      "content_type": "application/json",
+      "raw_file": "evidence/E14.json",
+      "bytes": 3067,
+      "sha256": "2c01f36fa7a87a89fdd76bd399285932622dabe52bfa49d3cff941d8bfefe4d3",
+      "text_file": "evidence/E14-text.txt",
+      "text_sha256": "0f318599f7858c49b0357bf6f86287ceed967bb4a71dde78842e7e87b9598c21",
+      "access_completed_utc": "2026-10-10T05:33:54.367249+00:00",
+      "title": "npm registry opus-media-recorder",
+      "version_or_commit": "Release 0.8.0; gitHead dd2f1d1249f9b7a66678f9833f8c01521eb4a2d9",
+      "locator": "version, gitHead, repository fields",
+      "governing_conditions_defaults_exceptions": "Registry metadata establishes the named release and commit; it does not validate a runtime, current browser table, or quality claim.",
+      "applicability": "Version identity for the optional implementation analog.",
+      "inspected_text_ranges": [],
+      "independent_retrieval": true,
+      "browser_execution": false
+    },
+    {
+      "id": "E15",
+      "requested_url": "https://developer.apple.com/tutorials/data/documentation/safari-release-notes/safari-17_4-release-notes.json",
+      "access_started_utc": "2026-10-10T05:33:54.223581+00:00",
+      "operation": "independent HTTPS source retrieval; no source code execution",
+      "http_status": 200,
+      "resolved_url": "https://developer.apple.com/tutorials/data/documentation/safari-release-notes/safari-17_4-release-notes.json",
+      "content_type": "application/json",
+      "raw_file": "evidence/E15.json",
+      "bytes": 54339,
+      "sha256": "74cda1f52243dd55d643c621b207ce83d6984babaa7b1d62b7e74f6b77509beb",
+      "text_file": "evidence/E15-text.txt",
+      "text_sha256": "49b8d6befb23747d80938e2168b9dcf05fdf5bb0b7c308efd865d9381d9ba4ae",
+      "access_completed_utc": "2026-10-10T05:33:54.367520+00:00",
+      "title": "Apple Safari 17.4 Release Notes structured documentation",
+      "version_or_commit": "Safari 17.4 (19618.1.15), 2024-03-05",
+      "locator": "Media → Resolved Issues; issue 115979604",
+      "governing_conditions_defaults_exceptions": "Official DocC JSON contains the pause/timeslice resolved issue. Retrieval reads the publisher content directly, rather than relying on a search excerpt.",
+      "applicability": "Corroborates S7 release history only.",
+      "inspected_text_ranges": [
+        {
+          "start_line": 2135,
+          "end_line": 2150
+        }
+      ],
+      "independent_retrieval": true,
+      "browser_execution": false
+    },
+    {
+      "id": "E16",
+      "requested_url": "https://raw.githubusercontent.com/kbumsik/opus-media-recorder/dd2f1d1249f9b7a66678f9833f8c01521eb4a2d9/README.md",
+      "access_started_utc": "2026-10-10T05:36:19.170063+00:00",
+      "operation": "independent HTTPS source retrieval; no source code execution",
+      "http_status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/kbumsik/opus-media-recorder/dd2f1d1249f9b7a66678f9833f8c01521eb4a2d9/README.md",
+      "content_type": "text/plain; charset=utf-8",
+      "raw_file": "evidence/E16.txt",
+      "bytes": 9430,
+      "sha256": "ae8cfd6d308c95933234310b9680d1317a9d2fffb72d81212fded04f1c6a15bc",
+      "text_file": "evidence/E16-text.txt",
+      "text_sha256": "ae8cfd6d308c95933234310b9680d1317a9d2fffb72d81212fded04f1c6a15bc",
+      "access_completed_utc": "2026-10-10T05:36:19.323290+00:00",
+      "title": "opus-media-recorder version-bound README",
+      "version_or_commit": "npm 0.8.0 gitHead dd2f1d1249f9b7a66678f9833f8c01521eb4a2d9",
+      "locator": "Architecture; bundler; MIME and limitations",
+      "governing_conditions_defaults_exceptions": "Version-pinned README describes WASM libraries, Worker/binary packaging, and its WAV event limitation. It is an analogous encoder pipeline, not claimed to be the chosen Worklet implementation.",
+      "applicability": "Supports useful unfamiliar analog and costs while preserving the stale-table exclusion.",
+      "inspected_text_ranges": [
+        {
+          "start_line": 6,
+          "end_line": 8
+        },
+        {
+          "start_line": 80,
+          "end_line": 99
+        },
+        {
+          "start_line": 190,
+          "end_line": 212
+        }
+      ],
+      "independent_retrieval": true,
+      "browser_execution": false
+    }
+  ],
+  "candidate_source_id_mapping": {
+    "S1": "E01",
+    "S2": "E02",
+    "S3": "E03",
+    "S4": "E05",
+    "S5": "E06",
+    "S6": "E07",
+    "S7": "E15",
+    "S8": "E08",
+    "S9": "E09",
+    "S10": "E10",
+    "S11": "E12",
+    "S12": [
+      "E14",
+      "E16"
+    ],
+    "C1": "E04",
+    "C2": "E11"
+  },
+  "original_artifact_manifest": "evidence/original-inspected-hashes.json",
+  "integrity_before": "evidence/freeze-integrity-before.json",
+  "independence": "No candidate feedback, repair, delegation, other arm/result/roster/history reads, Git/publication, account changes, or runtime recording. Evidence retrieval is independent; hashes identify bytes only."
+}

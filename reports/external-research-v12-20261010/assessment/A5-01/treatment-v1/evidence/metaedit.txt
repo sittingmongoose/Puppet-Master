@@ -1,0 +1,60 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://mediaarea.net/BWFMetaEdit"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A5-01/treatment-v1/source-map.json",
+      "source_id": "IND-METAEDIT",
+      "existing_authored_summary_fields": {
+        "version_or_commit": "Live project page listed 26.08.1 at independent access",
+        "governing_meaning": "Official page documents BWF metadata import/edit/embed/export, CSV/XML extraction, construction reports and MD5 of the WAVE data chunk only. It lists multi-platform downloads. It does not establish GUI/CLI through those exact terms. The version label is a listing; no local binary or volunteer file was tested.",
+        "applicability": "Supports a realistic conditional tool candidate and the distinction between audio-only and full-file fixity."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A5-01/treatment-v1/evidence/retrieval-manifest.json",
+      "source_id": "IND-METAEDIT",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": "Purpose, download/platform list, BWF MetaEdit features; independent text lines 37–82"
+    }
+  ],
+  "raw_sha256": "e2952adf1634c128ed02b8b8777054efab8a27d3e4bc9406cffe18c4ae5a47b9",
+  "original_bytes": 2789,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A5-01/treatment-v1/evidence/metaedit.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://mediaarea.net/BWFMetaEdit"
+  ],
+  "version": [
+    {
+      "version_or_commit": "Live project page listed 26.08.1 at independent access",
+      "governing_meaning": "Official page documents BWF metadata import/edit/embed/export, CSV/XML extraction, construction reports and MD5 of the WAVE data chunk only. It lists multi-platform downloads. It does not establish GUI/CLI through those exact terms. The version label is a listing; no local binary or volunteer file was tested.",
+      "applicability": "Supports a realistic conditional tool candidate and the distinction between audio-only and full-file fixity."
+    }
+  ],
+  "selector": [
+    {
+      "locator": "Purpose, download/platform list, BWF MetaEdit features; independent text lines 37–82"
+    }
+  ],
+  "conditions": [
+    {
+      "version_or_commit": "Live project page listed 26.08.1 at independent access",
+      "governing_meaning": "Official page documents BWF metadata import/edit/embed/export, CSV/XML extraction, construction reports and MD5 of the WAVE data chunk only. It lists multi-platform downloads. It does not establish GUI/CLI through those exact terms. The version label is a listing; no local binary or volunteer file was tested.",
+      "applicability": "Supports a realistic conditional tool candidate and the distinction between audio-only and full-file fixity."
+    }
+  ],
+  "rawSHA256": "e2952adf1634c128ed02b8b8777054efab8a27d3e4bc9406cffe18c4ae5a47b9"
+}

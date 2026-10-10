@@ -1,0 +1,61 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://github.com/dpla/ingestion3/blob/698795ed19d8f1d8032f988e68123d39dd842413/README.md",
+    "https://raw.githubusercontent.com/dpla/ingestion3/698795ed19d8f1d8032f988e68123d39dd842413/README.md"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A6-02/control-v1/retrieval-manifest.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {
+        "candidate_version": "GitHub commit 698795ed19d8f1d8032f988e68123d39dd842413 (main HEAD observed at retrieval); commit date 2026-10-09T14:10:10Z"
+      }
+    },
+    {
+      "authored_source_map": "assessment/A6-02/control-v1/source-map.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {
+        "version_applicability": "GitHub commit 698795ed19d8f1d8032f988e68123d39dd842413 (main HEAD observed at retrieval); commit date 2026-10-09T14:10:10Z"
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "supported_locator": "README: Harvest L467-469; Mapping L474-527; validations/rights exception L565-627; original export retention L154-158"
+    }
+  ],
+  "raw_sha256": "ad7d528bf8b8105c6a00df197721f15339230a3ad7a22000bd8f778d675a9b18",
+  "original_bytes": 52345,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A6-02/control-v1/evidence/R-S01.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://github.com/dpla/ingestion3/blob/698795ed19d8f1d8032f988e68123d39dd842413/README.md",
+    "https://raw.githubusercontent.com/dpla/ingestion3/698795ed19d8f1d8032f988e68123d39dd842413/README.md"
+  ],
+  "version": [
+    {
+      "candidate_version": "GitHub commit 698795ed19d8f1d8032f988e68123d39dd842413 (main HEAD observed at retrieval); commit date 2026-10-09T14:10:10Z"
+    },
+    {
+      "version_applicability": "GitHub commit 698795ed19d8f1d8032f988e68123d39dd842413 (main HEAD observed at retrieval); commit date 2026-10-09T14:10:10Z"
+    }
+  ],
+  "selector": [
+    {
+      "supported_locator": "README: Harvest L467-469; Mapping L474-527; validations/rights exception L565-627; original export retention L154-158"
+    }
+  ],
+  "conditions": [
+    {
+      "version_applicability": "GitHub commit 698795ed19d8f1d8032f988e68123d39dd842413 (main HEAD observed at retrieval); commit date 2026-10-09T14:10:10Z"
+    }
+  ],
+  "rawSHA256": "ad7d528bf8b8105c6a00df197721f15339230a3ad7a22000bd8f778d675a9b18"
+}

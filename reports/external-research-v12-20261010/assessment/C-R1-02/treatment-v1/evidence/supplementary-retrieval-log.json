@@ -1,0 +1,33 @@
+[
+  {
+    "id": "S01-resolved",
+    "requested_url": "https://nepis.epa.gov/Exe/ZyNET.exe/9100XGMU.TXT?ZyActionD=ZyDocument&Client=EPA&Index=Prior+to+1976&Docs=&Query=&Time=&EndTime=&SearchMethod=1&TocRestrict=n&Toc=&TocEntry=&QField=&QFieldYear=&QFieldMonth=&QFieldDay=&IntQFieldOp=0&ExtQFieldOp=0&XmlQuery=&File=D%3A%5Czyfiles%5CIndex%20Data%5C70thru75%5CTxt%5C00000016%5C9100XGMU.txt&User=ANONYMOUS&Password=anonymous&SortMethod=h%7C-&MaximumDocuments=1&FuzzyDegree=0&ImageQuality=r75g8/r75g8/x150y150g16/i425&Display=hpfr&DefSeekPage=x&SearchBack=ZyActionL&Back=ZyActionS&BackDesc=Results%20page&MaximumPages=1&ZyEntry=1&SeekPage=x&ZyPURL",
+    "resolved_url": "https://nepis.epa.gov/Exe/ZyNET.exe/9100XGMU.TXT?ZyActionD=ZyDocument&Client=EPA&Index=Prior+to+1976&Docs=&Query=&Time=&EndTime=&SearchMethod=1&TocRestrict=n&Toc=&TocEntry=&QField=&QFieldYear=&QFieldMonth=&QFieldDay=&IntQFieldOp=0&ExtQFieldOp=0&XmlQuery=&File=D%3A%5Czyfiles%5CIndex%20Data%5C70thru75%5CTxt%5C00000016%5C9100XGMU.txt&User=ANONYMOUS&Password=anonymous&SortMethod=h%7C-&MaximumDocuments=1&FuzzyDegree=0&ImageQuality=r75g8/r75g8/x150y150g16/i425&Display=hpfr&DefSeekPage=x&SearchBack=ZyActionL&Back=ZyActionS&BackDesc=Results%20page&MaximumPages=1&ZyEntry=1&SeekPage=x&ZyPURL",
+    "access_utc": "2026-10-10T06:03:21.102359+00:00",
+    "http_status": 200,
+    "content_type": "text/html; charset=UTF-8",
+    "path": "ER12_RUNTIME/assessment/C-R1-02/treatment-v1/evidence/S01-resolved.html",
+    "bytes": 89398,
+    "sha256": "1ea72f78c8d8b99fc4a9216bd97b53d4ad712bd03d8097e1d0a4b78a7ab7e6a3",
+    "headers": {
+      "Date": "Sat, 10 Oct 2026 06:03:21 GMT",
+      "Server": "Apache",
+      "Strict-Transport-Security": "max-age=63072000; includeSubdomains;",
+      "Connection": "close",
+      "Transfer-Encoding": "chunked",
+      "Content-Type": "text/html; charset=UTF-8"
+    }
+  },
+  {
+    "id": "S02-api",
+    "url": "https://www.ecfr.gov/api/versioner/v1/full/2026-10-07/title-40.xml?part=403&section=403.5",
+    "access_utc": "2026-10-10T06:03:29.479778+00:00",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "id": "S04-api",
+    "url": "https://www.ecfr.gov/api/versioner/v1/full/2026-10-07/title-40.xml?part=262&section=262.11",
+    "access_utc": "2026-10-10T06:03:29.531384+00:00",
+    "error": "HTTP Error 406: Not Acceptable"
+  }
+]

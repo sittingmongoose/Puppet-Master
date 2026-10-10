@@ -1,0 +1,68 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://curl.se/libcurl/c/CURLOPT_RESUME_FROM.html"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "source_id": "E04",
+      "existing_authored_summary_fields": {
+        "version": "Live API page retrieved 2026-10-10; option introduced in curl 7.1; Last-Modified 2026-09-06"
+      }
+    },
+    {
+      "authored_source_map": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/retrievals.json",
+      "source_id": "E04",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locators": [
+        {
+          "section": "Synopsis, Description, Default, Availability",
+          "url": "https://curl.se/libcurl/c/CURLOPT_RESUME_FROM.html",
+          "text_lines": [
+            40,
+            79
+          ]
+        }
+      ]
+    }
+  ],
+  "raw_sha256": "9f67478ca2288b72a3328adda61ab22e66cec4b28d6e8b2937e638ee55b1b414",
+  "original_bytes": 2541,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E04.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://curl.se/libcurl/c/CURLOPT_RESUME_FROM.html"
+  ],
+  "version": [
+    {
+      "version": "Live API page retrieved 2026-10-10; option introduced in curl 7.1; Last-Modified 2026-09-06"
+    }
+  ],
+  "selector": [
+    {
+      "locators": [
+        {
+          "section": "Synopsis, Description, Default, Availability",
+          "url": "https://curl.se/libcurl/c/CURLOPT_RESUME_FROM.html",
+          "text_lines": [
+            40,
+            79
+          ]
+        }
+      ]
+    }
+  ],
+  "conditions": "UNKNOWN",
+  "rawSHA256": "9f67478ca2288b72a3328adda61ab22e66cec4b28d6e8b2937e638ee55b1b414"
+}

@@ -1,0 +1,265 @@
+{
+  "run_id": "A8-02-treatment",
+  "stage": "investigator",
+  "input_brief": "ER12_RUNTIME/runs/A8-02/treatment/inputs/brief.md",
+  "plan_status_at_discovery_freeze": "not released and not read",
+  "evidence_method": "read-only public primary documentation plus project-maintainer issue/release history; no downloaded code or product was executed",
+  "access_window_utc": "2026-10-10T04:59Z",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "MQTT Version 5.0",
+      "url": "https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html",
+      "released_version_or_commit": "OASIS Standard, MQTT Version 5.0, 2019-03-07 (versioned authoritative HTML; latest v5.0 URI is linked from document)",
+      "locator": "Abstract/overview (paras 56-75); §2.2.1 Packet Identifier; §3.1.2.11.2 Session Expiry Interval; §3.3.1.1 DUP; §3.3.1.2 QoS; §§4.1.1, 4.2, 4.3.1-4.3.3. Key web lines: 57-70, 1665-1709, 2299-2319, 2320-2334, 3699-3715, 3763-3785.",
+      "access_utc": "2026-10-10T04:59Z",
+      "observed_operation": "Read-only retrieval of the public, versioned OASIS standard; inspected the cited sections. No MQTT client, broker, radio or device was operated.",
+      "governing_condition_default_exception": "QoS 0 allows loss; QoS 1 is at least once and allows duplicates; QoS 2 is protocol-level exactly-once with extra exchanges. Packet identifiers are reusable after PUBACK; DUP flags a PUBLISH packet, not necessarily a repeated observation, and a repeated application message can arrive with DUP=0/new packet ID. MQTT 5 absent Session Expiry Interval means 0, ending session on disconnect; a positive interval requires storing state, but documented storage has implementation/admin/failure limits. MQTT requires an ordered lossless underlying stream; spec does not specify radio/gateway behavior.",
+      "applicability": "Normative MQTT v5 protocol semantics only. Conditional on actual station/gateway using MQTT v5; does not establish which protocol or hardware the club uses or guarantee sensor sampling/archive behavior.",
+      "bounded_evidence": "Paraphrase: low-bandwidth/constrained M2M/IoT rationale and small overhead are explicit; QoS and session claims/limits as summarized above."
+    },
+    {
+      "id": "S02",
+      "title": "Telegraf MQTT Consumer Input Plugin",
+      "url": "https://docs.influxdata.com/telegraf/v1/input-plugins/mqtt_consumer/",
+      "released_version_or_commit": "Telegraf v1 documentation (rolling, exact binary/release not pinned); page says plugin introduced in v0.10.3.",
+      "locator": "Plugin overview/tracking metric support and Configuration: QoS, reconnection, max undelivered messages, persistent_session/client_id: web lines 65-83, 120-167.",
+      "access_utc": "2026-10-10T04:59Z",
+      "observed_operation": "Read-only retrieval of official Telegraf plugin documentation/configuration; no plugin or broker was installed or run.",
+      "governing_condition_default_exception": "Plugin consumes MQTT broker topics. Tracking metrics can delay source acknowledgment until all outputs receive metrics. Docs show qos default 0 and persistent_session false; for offline messages use persistent session plus stable client_id and QoS 1/2 on both publish and subscribe sides. Documented default MQTT reconnect ceiling is 10 minutes; max undelivered buffer must be tuned relative to batch size.",
+      "applicability": "Potential gateway-to-ingestion adapter if the club's broker/payload format is compatible. The rolling v1 docs do not pin a release or prove the station payload/output/archive semantics.",
+      "bounded_evidence": "Paraphrase: an existing adapter can bridge MQTT directly and has an acknowledgment-after-output-tracking option; this is a useful alternative to custom broker ingestion, conditional on version/configuration review."
+    },
+    {
+      "id": "S03",
+      "title": "PostgreSQL 18 COPY",
+      "url": "https://www.postgresql.org/docs/18/sql-copy.html",
+      "released_version_or_commit": "PostgreSQL 18 versioned documentation; server minor release not selected.",
+      "locator": "§COPY Description; ON_ERROR parameter; CSV Format and Notes; psql \\copy note. Web lines 49-54, 145-152, 187-204, 238-251.",
+      "access_utc": "2026-10-10T04:59Z",
+      "observed_operation": "Read-only retrieval of PostgreSQL 18 manual; no database command was executed.",
+      "governing_condition_default_exception": "COPY FROM appends supplied rows. Conversion errors default to stop; `ignore` discards rows and may be unlimited without REJECT_LIMIT. CSV supports quoted embedded CR/LF, but CSV has no universal null/empty convention and quoted whitespace is significant. Server-side COPY file access requires a server-readable path/privilege; psql \\copy reads a client-side file via STDIN/STDOUT. COPY invokes triggers/constraints but not rules.",
+      "applicability": "Candidate staging/import mechanism for a PostgreSQL 18 pilot; exact selected server/client version and CSV producers are unknown, so behavior should be checked there.",
+      "bounded_evidence": "Paraphrase: staging COPY can efficiently append a batch, while defaults and CSV edge cases argue for explicit staging, row outcome review and preserving the original file."
+    },
+    {
+      "id": "S04",
+      "title": "PostgreSQL 18 Constraints",
+      "url": "https://www.postgresql.org/docs/18/ddl-constraints.html",
+      "released_version_or_commit": "PostgreSQL 18 versioned documentation; server minor release not selected.",
+      "locator": "§5.5.3 Unique Constraints / NULL treatment: web lines 156-213.",
+      "access_utc": "2026-10-10T04:59Z",
+      "observed_operation": "Read-only retrieval of PostgreSQL 18 manual, including compound uniqueness and NULL behavior.",
+      "governing_condition_default_exception": "A unique constraint applies to the listed column/group key. Default NULLS DISTINCT means multiple rows with NULL in a constrained column may coexist; NULLS NOT DISTINCT is an explicit alternative. Primary keys are unique and not null.",
+      "applicability": "Supports a local design for idempotent ingestion only after the device/CSV source provides a validated stable key. Does not establish an observation's identity or correction semantics.",
+      "bounded_evidence": "Paraphrase: transport packet IDs or nullable/inferred tuples are unsuitable as a guaranteed durable deduplication key; uniqueness should be scoped to a declared non-null source identity."
+    },
+    {
+      "id": "S05",
+      "title": "PostgreSQL 18 INSERT",
+      "url": "https://www.postgresql.org/docs/18/sql-insert.html",
+      "released_version_or_commit": "PostgreSQL 18 versioned documentation; server minor release not selected.",
+      "locator": "ON CONFLICT Clause: web lines 120-128 and 125, conflict outcomes.",
+      "access_utc": "2026-10-10T04:59Z",
+      "observed_operation": "Read-only retrieval of PostgreSQL 18 manual, conflict actions and atomic upsert conditions.",
+      "governing_condition_default_exception": "ON CONFLICT DO NOTHING suppresses insertion on conflict; DO UPDATE changes the conflicting row and guarantees an insert/update outcome under the stated no-independent-error condition. A target/arbiter constraint or index determines conflicts.",
+      "applicability": "Potential projection/idempotency mechanism only with a selected valid source key. Avoid using it to mutate/delete raw observation evidence; correction lineage is a separate local product choice.",
+      "bounded_evidence": "Paraphrase: a database upsert is not neutral replay handling; its explicit conflict target and action encode a product policy."
+    },
+    {
+      "id": "S06",
+      "title": "Apache Beam Window JavaDoc",
+      "url": "https://beam.apache.org/releases/javadoc/2.70.0/org/apache/beam/sdk/transforms/windowing/Window.html",
+      "released_version_or_commit": "Apache Beam Java SDK 2.70.0 versioned JavaDoc.",
+      "locator": "Windowing / Triggers overview and `withAllowedLateness` method: web lines 17-46 and 271-277; versioned page also lines 284-289.",
+      "access_utc": "2026-10-10T04:59Z",
+      "observed_operation": "Read-only retrieval of versioned Java API documentation; no Beam pipeline was built or run.",
+      "governing_condition_default_exception": "Windowing uses element event timestamps. Default trigger emits when watermark passes window end and on late arrival, according to docs. An explicitly configured allowed-lateness duration controls how long old windows accept elements/state; elements later than the boundary are dropped and state cleaned up. State/trigger/accumulation mode affect output behavior.",
+      "applicability": "Conceptual analogue for chart/event-time processing and finite late-update horizons only; Beam is not required/recommended for a ten-station pilot, and its late-data dropping must not be copied into the raw archive.",
+      "bounded_evidence": "Paraphrase: event-time grouping, watermark trigger, allowed lateness and cleanup are distinct controls; any pilot chart projection needs an explicit late-data policy."
+    },
+    {
+      "id": "S07",
+      "title": "Apache Beam issue #36470",
+      "url": "https://github.com/apache/beam/issues/36470",
+      "released_version_or_commit": "Apache Beam issue opened 2025-10-10; reports watermark caching/filtering added in Beam 2.67 as a contributing context; issue later says fixed in 2.69.0 but current issue milestone displays 2.70.0. No implementation commit was identified in the reviewed issue history.",
+      "locator": "Issue description and activity, especially cause and fix/release references: web lines 128-169, 224-282.",
+      "access_utc": "2026-10-10T04:59Z",
+      "observed_operation": "Read-only retrieval of Apache Beam maintainers' closed issue; no issue comment was authored and no source patch was executed.",
+      "governing_condition_default_exception": "Reported specifically for Spanner Change Stream partitions: possible reordering of metadata-table watermark updates; watermark caching/filtering added in 2.67 exacerbated it. Reported failure was a lower watermark hold than computed lower bound and stuck reading. Issue says milestone 2.70.0 while activity/release note state fix in 2.69.0.",
+      "applicability": "Bounded historical event-time/progress failure example only; it is not evidence of a defect in weather stations, MQTT, PostgreSQL or the club's devices. Source metadata discrepancy and lack of direct fix commit are retained, not resolved by inference.",
+      "bounded_evidence": "Paraphrase: asynchronous metadata updates can make a purported monotonic progress watermark regress and stall an ingestion reader."
+    },
+    {
+      "id": "S08",
+      "title": "Apache Beam 2.69.0 release",
+      "url": "https://github.com/apache/beam/releases/tag/v2.69.0",
+      "released_version_or_commit": "Apache Beam release v2.69.0, tag commit 2ca7d21, published 2025-10-17.",
+      "locator": "Release notes, Bugfixes: web lines 129, 150-162, 202-212; exact fix line 208.",
+      "access_utc": "2026-10-10T04:59Z",
+      "observed_operation": "Read-only retrieval of official Apache Beam release tag and notes.",
+      "governing_condition_default_exception": "The v2.69.0 release notes list a fix for Spanner Change Stream reading stuck due to a partition watermark moving backward, linked to issue #36470. Release note confirms a released fix, but does not describe patch mechanics.",
+      "applicability": "Version-bounded released issue/fix evidence for Beam's Spanner connector; use only as an analogy for explicit ordering/progress tests.",
+      "bounded_evidence": "Paraphrase: official release evidence says the identified Beam reader stall was addressed by 2.69.0; source-code change itself was not traced."
+    },
+    {
+      "id": "S09",
+      "title": "InfluxDB OSS v2 FAQ — duplicate points",
+      "url": "https://docs.influxdata.com/influxdb/v2/reference/faq/",
+      "released_version_or_commit": "InfluxDB OSS v2 rolling documentation (FAQ contains v2.9.x examples; exact build/commit not pinned). This is not evidence for InfluxDB 3.",
+      "locator": "Writing data > How does InfluxDB handle duplicate points? and Does timestamp precision matter?: web lines 375-392. Related Line Protocol reference is linked from FAQ.",
+      "access_utc": "2026-10-10T04:59Z",
+      "observed_operation": "Read-only retrieval of official InfluxDB OSS v2 FAQ; no InfluxDB instance or write was used.",
+      "governing_condition_default_exception": "A point is identified by measurement, tag set and timestamp. Same-key point writes union field sets; new values win field conflicts. Coarse timestamp precision can collide distinct observations; precision affects write performance.",
+      "applicability": "Useful alternative for time-series chart projection; documentation behavior is specific to OSS v2 docs and the target release would need confirmation. Not a row-level raw archive or correction-lineage guarantee.",
+      "bounded_evidence": "Paraphrase: efficient point storage has collision/merge semantics that may be wrong for distinct same-time readings or corrections unless raw events are separately preserved and point keys are deliberately designed."
+    },
+    {
+      "id": "S10",
+      "title": "The Things Stack MQTT Server",
+      "url": "https://www.thethingsindustries.com/docs/integrations/other-integrations/mqtt/",
+      "released_version_or_commit": "The Things Stack documentation landing identifies v3.36.2 at access; this individual docs URL is rolling and not versioned. Deployment type also affects tenant IDs/topics.",
+      "locator": "MQTT Server overview and note; Subscribing to Upstream Traffic example: page lines 19-34, 57-80, 107-157.",
+      "access_utc": "2026-10-10T05:02Z",
+      "observed_operation": "Read-only retrieval of official The Things Stack integration documentation; no account/key, service, MQTT client or uplink was used.",
+      "governing_condition_default_exception": "The Things Stack's MQTT server supports MQTT 3.1.1 and QoS 0 only. It publishes application uplink events on topics, and example payload contains device/gateway metadata. Hosted deployments include tenant ID in topic/user; Open Source does not.",
+      "applicability": "Conditional on the club actually using LoRaWAN and a compatible The Things Stack deployment/version. QoS 0 is lossy; this server cannot be treated as a QoS1/2 durable application queue. Payload and deployment behavior must be checked for the actual product edition.",
+      "bounded_evidence": "Paraphrase: TTS is a plausible LoRaWAN network-server lead but its MQTT integration is QoS 0 only; application archival must be handled elsewhere and gaps/replays must be evaluated."
+    },
+    {
+      "id": "S11",
+      "title": "The Things Stack Troubleshooting Console",
+      "url": "https://www.thethingsindustries.com/docs/concepts/features/console/troubleshooting/",
+      "released_version_or_commit": "The Things Stack documentation landing identifies v3.36.2 at access; individual page is rolling/unversioned.",
+      "locator": "Common Errors > Entity Not Found / Device Not Found and Duplicate Uplink: page lines 46-56.",
+      "access_utc": "2026-10-10T05:02Z",
+      "observed_operation": "Read-only retrieval of official The Things Stack Console troubleshooting page; no live device/gateway was inspected.",
+      "governing_condition_default_exception": "TTS docs say an ABP device reset of frame counters (commonly power cycle) can fail matching the session; OTAA avoids this particular case. A duplicate uplink is an uplink heard by multiple gateways where a late copy arrives outside the deduplication window and is dropped.",
+      "applicability": "LoRaWAN/TTS-specific network behavior only. Its deduplication is multiple-gateway reception handling, not general application replay/correction policy.",
+      "bounded_evidence": "Paraphrase: a network server's dedup window can remove a late radio copy without identifying or correcting an application-level weather observation."
+    },
+    {
+      "id": "S12",
+      "title": "The Things Stack Device Best Practices",
+      "url": "https://www.thethingsindustries.com/docs/hardware/devices/concepts/best-practices/",
+      "released_version_or_commit": "The Things Stack documentation landing identifies v3.36.2 at access; individual page is rolling/unversioned.",
+      "locator": "Limit Transmission Length/Payload Size/Duty Cycle; Expect Packet Loss; Power Cycles; Frame Counters: page lines 35-48 and 82-92.",
+      "access_utc": "2026-10-10T05:02Z",
+      "observed_operation": "Read-only retrieval of official device best-practices page; no hardware settings were changed.",
+      "governing_condition_default_exception": "For LoRaWAN devices in this product context, docs recommend minimizing transmission length/frequency, avoiding confirmed uplinks unless assurance is necessary, and expecting packet loss (docs say up to 10%). Devices should save session parameters, including FCnt, across normal power cycles; frame counters increment per uplink/downlink and 32-bit counters are recommended.",
+      "applicability": "Only if actual stations use LoRaWAN; not a blanket standard assertion for other radios. Does not establish the club devices' firmware, local storage or clock quality.",
+      "bounded_evidence": "Paraphrase: low-power design trades airtime/reliability, and counter continuity depends on device persistence; the steward must identify the actual protocol and reset behavior."
+    },
+    {
+      "id": "S13",
+      "title": "The Things Stack Storage Integration",
+      "url": "https://www.thethingsindustries.com/docs/integrations/storage/",
+      "released_version_or_commit": "The Things Stack documentation landing identifies v3.36.2 at access; individual page is rolling/unversioned. Storage retention differs by Cloud, Sandbox and Enterprise deployment.",
+      "locator": "How it works, retention and batch delay, message download/retrieval: page lines 17-35, 50-70, 79-83.",
+      "access_utc": "2026-10-10T05:02Z",
+      "observed_operation": "Read-only retrieval of official TTS Storage Integration docs; no data was written or retrieved from a service.",
+      "governing_condition_default_exception": "Configured upstream messages and relevant metadata are written to a persistent database. Retention is 30 days on Cloud, 24 hours on Sandbox, configurable on Enterprise; Cloud stores only uplinks. Writes occur in batches and may be delayed, and the docs say not to use it for realtime querying.",
+      "applicability": "Potential bounded buffer/retrieval aid under a chosen deployment, not the club's long-term archive or a freshness source without edition and latency validation.",
+      "bounded_evidence": "Paraphrase: TTS has a storage integration worth evaluating, but its version/edition-specific retention is shorter/configurable and its write timing is delayed."
+    },
+    {
+      "id": "S14",
+      "title": "The Things Stack issue #4502: ABP frame counter reset behaviour",
+      "url": "https://github.com/TheThingsNetwork/lorawan-stack/issues/4502",
+      "released_version_or_commit": "Maintainer repository issue opened 2021-08-08; reporter environment The Things Stack 3.14.0; closed as completed 2021-09-22. No release tag/implementation commit is linked in the reviewed issue, so this is not treated as a released fix chain.",
+      "locator": "Issue summary/environment; maintainer comments on duplicate FCnt/cooldown; closure: page lines 129-181, 198-229, 243-259, 276-301, 326-350.",
+      "access_utc": "2026-10-10T05:02Z",
+      "observed_operation": "Read-only retrieval of The Things Stack open-source maintainer issue/history; no test device or source code was run.",
+      "governing_condition_default_exception": "Reported ABP reboot with frame counter reset to 0 can have the repeated fcnt=0 treated as duplicate. Maintainer describes existing same-FCnt duplicate handling: default 200ms multi-gateway/peering deduplication window and 1s cooldown dropping duplicates, with later copies processed as retransmissions subject to protocol limits. Maintainer closed the proposed FCnt=0 exception as completed after explaining why behavior is intentional; no code fix/release is evidenced here.",
+      "applicability": "Useful TTS/LoRaWAN-specific case showing that network replay policy can discard a reset-counter frame and delayed duplicates; not a generic radio rule or approved behavior for this club. Distinct from the Beam released-fix chain in S07-S08.",
+      "bounded_evidence": "Paraphrase: receiver duplicate policy relies on protocol identity and bounded windows; repeated counter after reboot may be indistinguishable from replay under that protocol."
+    },
+    {
+      "id": "S15",
+      "title": "The Things Stack Data Formats",
+      "url": "https://www.thethingsindustries.com/docs/the-things-stack/concepts/data-formats/",
+      "released_version_or_commit": "The Things Stack documentation landing identifies v3.36.2 at access; individual page is rolling/unversioned. The page notes uplink device attributes support was added in v3.34.0.",
+      "locator": "Data Formats > uplink message JSON examples (`received_at`, nested `uplink_message.received_at`, `f_cnt`); primary page retrieval exposed zero text lines, but the official search extract showed these fields. Treat locator as heading-level and bounded evidence only.",
+      "access_utc": "2026-10-10T05:02Z",
+      "observed_operation": "Read-only retrieval/extract of the official data-format page; direct page parser exposed no lines, so exact field context remains to verify against the chosen v3.36.2 deployment.",
+      "governing_condition_default_exception": "Search extract defines outer `received_at` as Application Server receipt time and nested uplink `received_at` as Network Server receipt time; data format examples include `f_cnt`. Empty fields may be omitted per doc note.",
+      "applicability": "Could distinguish server receipt layers and LoRaWAN frame counters in TTS events; does not establish a station sensor's observation time, and field presence/version must be verified for the actual deployment.",
+      "bounded_evidence": "Paraphrase: TTS event formats expose receipt metadata, which is distinct from station observation time."
+    }
+  ],
+  "claim_links": {
+    "route_comparison_and_low_power": [
+      "S01",
+      "S02",
+      "S03"
+    ],
+    "csv_backfill_and_review": [
+      "S03",
+      "S04",
+      "S05"
+    ],
+    "observation_vs_arrival_and_qos_replay": [
+      "S01",
+      "S02",
+      "S06"
+    ],
+    "identity_duplicates_sequence_and_corrections": [
+      "S01",
+      "S04",
+      "S05",
+      "S09"
+    ],
+    "delivery_application_chart_boundaries": [
+      "S01",
+      "S02",
+      "S06",
+      "S09"
+    ],
+    "released_time_ordering_failure_fix_chain": [
+      "S06",
+      "S07",
+      "S08"
+    ],
+    "optional_csv_scope": [
+      "S03",
+      "S04",
+      "S05"
+    ],
+    "owner_and_negative_constraints": [],
+    "executed_product_validation": [],
+    "conditional_the_things_stack_route": [
+      "S10",
+      "S11",
+      "S12",
+      "S13",
+      "S15"
+    ],
+    "low_power_radio_specifics_if_lorawan": [
+      "S12"
+    ],
+    "network_dedup_and_counter_reset_if_tts": [
+      "S11",
+      "S14"
+    ],
+    "tts_receipt_time_vs_observation_time": [
+      "S10",
+      "S15"
+    ],
+    "tts_storage_retention_and_delay": [
+      "S13"
+    ]
+  },
+  "post_release_research": {
+    "plan_released_at_utc": "2026-10-10T05:02:07.551Z",
+    "plan_hint_sources": [
+      "S10",
+      "S11",
+      "S12",
+      "S13",
+      "S14",
+      "S15"
+    ],
+    "discovery_is_frozen": true,
+    "note": "These sources were added after exact-plan release solely to adjudicate the plan's named The Things Stack lead. discovery.md was not edited. S14 is issue history, not a claimed release fix."
+  }
+}

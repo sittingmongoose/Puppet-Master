@@ -1,0 +1,65 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://www.epa.gov/sites/default/files/2017-01/documents/iuinspect.pdf"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/C-R1-02/treatment-v1/source-map.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {
+        "version_or_release": "January 2017; EPA-831-B-17-001; OECA-MANL-2017-002-R1",
+        "governing_locator": "Chapter 3 §§3.7.1–3.7.3; printed pp. 69–74, PDF one-based pp. 90–95; Table 3-2",
+        "domain_conditions_defaults_exceptions": "EPA guidance for POTW inspections, not a regulation or a local permit; constituent-specific sampling/preservation requirements remain relevant."
+      }
+    },
+    {
+      "authored_source_map": "assessment/C-R1-02/treatment-v1/source-map.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/C-R1-02/treatment-v1/evidence/E13-retrieval.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "governing_locator": "Chapter 3 §§3.7.1–3.7.3; printed pp. 69–74, PDF one-based pp. 90–95; Table 3-2"
+    }
+  ],
+  "raw_sha256": "719287864fb1daf3dd34d45f74190092e08266543ed4a46b5016efd70c40b1d2",
+  "original_bytes": 6333705,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/C-R1-02/treatment-v1/evidence/E13-sampling.pdf",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://www.epa.gov/sites/default/files/2017-01/documents/iuinspect.pdf"
+  ],
+  "version": [
+    {
+      "version_or_release": "January 2017; EPA-831-B-17-001; OECA-MANL-2017-002-R1",
+      "governing_locator": "Chapter 3 §§3.7.1–3.7.3; printed pp. 69–74, PDF one-based pp. 90–95; Table 3-2",
+      "domain_conditions_defaults_exceptions": "EPA guidance for POTW inspections, not a regulation or a local permit; constituent-specific sampling/preservation requirements remain relevant."
+    }
+  ],
+  "selector": [
+    {
+      "governing_locator": "Chapter 3 §§3.7.1–3.7.3; printed pp. 69–74, PDF one-based pp. 90–95; Table 3-2"
+    }
+  ],
+  "conditions": [
+    {
+      "version_or_release": "January 2017; EPA-831-B-17-001; OECA-MANL-2017-002-R1",
+      "governing_locator": "Chapter 3 §§3.7.1–3.7.3; printed pp. 69–74, PDF one-based pp. 90–95; Table 3-2",
+      "domain_conditions_defaults_exceptions": "EPA guidance for POTW inspections, not a regulation or a local permit; constituent-specific sampling/preservation requirements remain relevant."
+    }
+  ],
+  "rawSHA256": "719287864fb1daf3dd34d45f74190092e08266543ed4a46b5016efd70c40b1d2"
+}

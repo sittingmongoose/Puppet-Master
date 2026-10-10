@@ -1,0 +1,153 @@
+{
+  "schema": "er12.public-native-lifecycle.v1",
+  "target": {
+    "slot": "B-DISC-G-01",
+    "arm": "treatment",
+    "stage": "role",
+    "helper": "ER12_RUNTIME/helpers/role-v2",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-01-treatment-role-v2",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-01-treatment-role-v2",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-DISC-G-01-treatment-role-v2:ordinal:1",
+    "status": "completed",
+    "hasPendingChildRuns": false,
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "muse-spark-1.3-contributor",
+    "latestTerminalStatus": "completed",
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-DISC-G-01-treatment-role-v2:ordinal:1",
+    "whitelist_index": 74
+  },
+  "original_capture_sha256": "0e3d8735652756b62ad154b0b016c2acfdf5c3d2af609dbfa372ed44b0bd2fdf",
+  "private_archive_lineage": "publication-cohort4/private/originals/mechanics/native-observation-cohort3/host/context-037.json",
+  "observations": [
+    {
+      "phase": "messages",
+      "route": "mcp__t3_code__t3_thread_read",
+      "request": {
+        "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-01-treatment-role-v2",
+        "view": "messages",
+        "limit": 1,
+        "maxCharsPerItem": 200,
+        "runLimit": 1
+      },
+      "started_at_utc": "2026-10-10T05:33:54.908Z",
+      "finished_at_utc": "2026-10-10T05:33:56.224Z",
+      "actual_lifecycle_metadata": [
+        {
+          "thread": {
+            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-01-treatment-role-v2",
+            "status": "completed",
+            "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-DISC-G-01-treatment-role-v2:ordinal:1",
+            "activeRunId": null,
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "muse-spark-1.3-contributor",
+            "pendingRequestCount": 0,
+            "createdAt": "2026-10-10T04:45:57.947Z",
+            "updatedAt": "2026-10-10T04:52:08.383Z"
+          }
+        },
+        {
+          "thread": {
+            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-01-treatment-role-v2",
+            "status": "completed",
+            "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-DISC-G-01-treatment-role-v2:ordinal:1",
+            "activeRunId": null,
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "muse-spark-1.3-contributor",
+            "pendingRequestCount": 0,
+            "createdAt": "2026-10-10T04:45:57.947Z",
+            "updatedAt": "2026-10-10T04:52:08.383Z"
+          }
+        }
+      ],
+      "omitted_activity_message_bodies": "UNKNOWN coverage; private original only"
+    },
+    {
+      "phase": "head",
+      "route": "mcp__t3_code__t3_thread_read",
+      "request": {
+        "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-01-treatment-role-v2",
+        "view": "activity",
+        "limit": 12,
+        "maxCharsPerItem": 350,
+        "runLimit": 1
+      },
+      "started_at_utc": "2026-10-10T05:33:56.607Z",
+      "finished_at_utc": "2026-10-10T05:33:56.779Z",
+      "actual_lifecycle_metadata": [
+        {
+          "thread": {
+            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-01-treatment-role-v2",
+            "status": "completed",
+            "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-DISC-G-01-treatment-role-v2:ordinal:1",
+            "activeRunId": null,
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "muse-spark-1.3-contributor",
+            "pendingRequestCount": 0,
+            "createdAt": "2026-10-10T04:45:57.947Z",
+            "updatedAt": "2026-10-10T04:52:08.383Z"
+          }
+        },
+        {
+          "thread": {
+            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-01-treatment-role-v2",
+            "status": "completed",
+            "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-DISC-G-01-treatment-role-v2:ordinal:1",
+            "activeRunId": null,
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "muse-spark-1.3-contributor",
+            "pendingRequestCount": 0,
+            "createdAt": "2026-10-10T04:45:57.947Z",
+            "updatedAt": "2026-10-10T04:52:08.383Z"
+          }
+        }
+      ],
+      "omitted_activity_message_bodies": "UNKNOWN coverage; private original only"
+    },
+    {
+      "phase": "tail",
+      "route": "mcp__t3_code__t3_thread_read",
+      "request": {
+        "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-01-treatment-role-v2",
+        "view": "activity",
+        "limit": 45,
+        "maxCharsPerItem": 350,
+        "runLimit": 1,
+        "afterPosition": 7
+      },
+      "started_at_utc": "2026-10-10T05:33:57.170Z",
+      "finished_at_utc": "2026-10-10T05:33:57.482Z",
+      "actual_lifecycle_metadata": [
+        {
+          "thread": {
+            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-01-treatment-role-v2",
+            "status": "completed",
+            "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-DISC-G-01-treatment-role-v2:ordinal:1",
+            "activeRunId": null,
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "muse-spark-1.3-contributor",
+            "pendingRequestCount": 0,
+            "createdAt": "2026-10-10T04:45:57.947Z",
+            "updatedAt": "2026-10-10T04:52:08.383Z"
+          }
+        },
+        {
+          "thread": {
+            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-01-treatment-role-v2",
+            "status": "completed",
+            "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-DISC-G-01-treatment-role-v2:ordinal:1",
+            "activeRunId": null,
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "muse-spark-1.3-contributor",
+            "pendingRequestCount": 0,
+            "createdAt": "2026-10-10T04:45:57.947Z",
+            "updatedAt": "2026-10-10T04:52:08.383Z"
+          }
+        }
+      ],
+      "omitted_activity_message_bodies": "UNKNOWN coverage; private original only"
+    }
+  ],
+  "actual_lifecycle_metadata": [],
+  "omission": "Full thread messages/activity bodies, raw meters and source captures private; independently captured focused native Goal receipts remain separately published. No new host read or inference.",
+  "source_body_coverage": "UNKNOWN"
+}

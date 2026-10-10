@@ -1,0 +1,85 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://git-scm.com/docs/git-merge-file"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/B-DISC-G-01/control-v1/source-map.json",
+      "source_id": "P7",
+      "existing_authored_summary_fields": {
+        "version": "Manual last updated in 2.54.0; selector 2.55.0-2.56.0 no changes; no deployed/local version observed.",
+        "conditions_exceptions": "Three inputs are current/base/other. Default output changes current; -p uses stdout. Line-segment conflicts normally leave markers unless ours/theirs/union is selected. diff3 is also a presentation option. Current diff algorithm is myers; histogram can avoid some matching-line mismerges.",
+        "subject_operation_domain": "Manual last updated in 2.54.0; selector includes 2.55.0-2.56.0 without changes. No local binary or selected deployment version verified."
+      }
+    },
+    {
+      "authored_source_map": "assessment/B-DISC-G-01/control-v1/primary/retrievals.json",
+      "source_id": "P7",
+      "existing_authored_summary_fields": {
+        "version": "UNKNOWN; current unversioned primary documentation, no deployed binary/version checked"
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "lines": 257
+    },
+    {
+      "primary_locator": {
+        "section": "Manual version selector; DESCRIPTION; OPTIONS",
+        "numbered_text_lines": "147-166,176-205,225-241",
+        "navigable_path": "primary/P7-evidence.html#L147"
+      }
+    },
+    {
+      "lines": 257
+    }
+  ],
+  "raw_sha256": "d44287834fc492d4c5535580cdb08bb3bed992c16ca99b43c405e4b5531bc0bf",
+  "original_bytes": 7584,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/B-DISC-G-01/control-v1/primary/P7.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://git-scm.com/docs/git-merge-file"
+  ],
+  "version": [
+    {
+      "version": "Manual last updated in 2.54.0; selector 2.55.0-2.56.0 no changes; no deployed/local version observed.",
+      "conditions_exceptions": "Three inputs are current/base/other. Default output changes current; -p uses stdout. Line-segment conflicts normally leave markers unless ours/theirs/union is selected. diff3 is also a presentation option. Current diff algorithm is myers; histogram can avoid some matching-line mismerges.",
+      "subject_operation_domain": "Manual last updated in 2.54.0; selector includes 2.55.0-2.56.0 without changes. No local binary or selected deployment version verified."
+    },
+    {
+      "version": "UNKNOWN; current unversioned primary documentation, no deployed binary/version checked"
+    }
+  ],
+  "selector": [
+    {
+      "lines": 257
+    },
+    {
+      "primary_locator": {
+        "section": "Manual version selector; DESCRIPTION; OPTIONS",
+        "numbered_text_lines": "147-166,176-205,225-241",
+        "navigable_path": "primary/P7-evidence.html#L147"
+      }
+    },
+    {
+      "lines": 257
+    }
+  ],
+  "conditions": [
+    {
+      "version": "Manual last updated in 2.54.0; selector 2.55.0-2.56.0 no changes; no deployed/local version observed.",
+      "conditions_exceptions": "Three inputs are current/base/other. Default output changes current; -p uses stdout. Line-segment conflicts normally leave markers unless ours/theirs/union is selected. diff3 is also a presentation option. Current diff algorithm is myers; histogram can avoid some matching-line mismerges.",
+      "subject_operation_domain": "Manual last updated in 2.54.0; selector includes 2.55.0-2.56.0 without changes. No local binary or selected deployment version verified."
+    }
+  ],
+  "rawSHA256": "d44287834fc492d4c5535580cdb08bb3bed992c16ca99b43c405e4b5531bc0bf"
+}

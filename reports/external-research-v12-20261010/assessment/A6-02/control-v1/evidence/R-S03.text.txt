@@ -1,0 +1,59 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://pro.dp.la/developers/field-reference"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A6-02/control-v1/retrieval-manifest.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {
+        "candidate_version": "Living documentation; search result states DPLA API currently implements MAP 3.1; separate official MAP page search result had 4.0/5.0 labels; not a coherent single release declaration"
+      }
+    },
+    {
+      "authored_source_map": "assessment/A6-02/control-v1/source-map.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {
+        "version_applicability": "Living documentation; search result states DPLA API currently implements MAP 3.1; separate official MAP page search result had 4.0/5.0 labels; not a coherent single release declaration"
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "supported_locator": "evidence-web-search7.json: official Field Reference, Metadata Application Profile and Definitions; official MAP page opening paragraphs"
+    }
+  ],
+  "raw_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+  "original_bytes": 1,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A6-02/control-v1/evidence/R-S03.text.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://pro.dp.la/developers/field-reference"
+  ],
+  "version": [
+    {
+      "candidate_version": "Living documentation; search result states DPLA API currently implements MAP 3.1; separate official MAP page search result had 4.0/5.0 labels; not a coherent single release declaration"
+    },
+    {
+      "version_applicability": "Living documentation; search result states DPLA API currently implements MAP 3.1; separate official MAP page search result had 4.0/5.0 labels; not a coherent single release declaration"
+    }
+  ],
+  "selector": [
+    {
+      "supported_locator": "evidence-web-search7.json: official Field Reference, Metadata Application Profile and Definitions; official MAP page opening paragraphs"
+    }
+  ],
+  "conditions": [
+    {
+      "version_applicability": "Living documentation; search result states DPLA API currently implements MAP 3.1; separate official MAP page search result had 4.0/5.0 labels; not a coherent single release declaration"
+    }
+  ],
+  "rawSHA256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+}

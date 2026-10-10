@@ -1,0 +1,358 @@
+{
+  "captured_utc": "2026-10-10T05:43:35.538886+00:00",
+  "note": "Original current single-pipeline inventory; semantic inspection status assigned in final assessment. Backups not inspected.",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/C-R1-02/brief.md",
+      "bytes": 2605,
+      "sha256": "cd101158fb000ba659dc80e39dbf9a447c64517554f5220be6e2b5bbe6b46113",
+      "mtime_ns": 1791608613740972783,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/C-R1-02/plan.md",
+      "bytes": 6794,
+      "sha256": "8e2247027ad8b2baa1338b77a5f4020d86ed2a926f102c618b802c618bd257c8",
+      "mtime_ns": 1791608613741127852,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/control/run.json",
+      "bytes": 582,
+      "sha256": "10856ce2afe475a4d9430e97d56e7448da374e7fc4c8761172f44e3596ea56ca",
+      "mtime_ns": 1791608615376721758,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/inputs/brief.md",
+      "bytes": 2605,
+      "sha256": "cd101158fb000ba659dc80e39dbf9a447c64517554f5220be6e2b5bbe6b46113",
+      "mtime_ns": 1791608615376472091,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/assignment.md",
+      "bytes": 4014,
+      "sha256": "f535a7d649bdcf1889a1973b335757f9fb09c9668ca2129e8371eef9309cc548",
+      "mtime_ns": 1791609444395192942,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/critique.md",
+      "bytes": 7056,
+      "sha256": "5ba9503b8107d90357f9ec55658b61c38cf2a6cfcc930572c17ad3391a7725c8",
+      "mtime_ns": 1791609935039784189,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/dispatch.json",
+      "bytes": 4871,
+      "sha256": "f338660b7c5ae780e409237a25b1edfb5c6d53c5e6db6bc71e9861723d81290a",
+      "mtime_ns": 1791609445261742634,
+      "unchanged_since_review_inventory": true,
+      "inspection": "STRUCTURED_METADATA_AND_RAW_RESPONSE_FIELDS"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/freeze.json",
+      "bytes": 3314,
+      "sha256": "1c2313d06af906be485b89a5a79154fa1b7a1a3fc36c0cd324889b3a188b945e",
+      "mtime_ns": 1791609444394876860,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/input-map.json",
+      "bytes": 1477,
+      "sha256": "d7eef975da82a3a2646cd9aac1a8bf161fff24bbe0a2b9c7960d66bc75c60693",
+      "mtime_ns": 1791609444395014048,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/invocation-clarification.json",
+      "bytes": 3030,
+      "sha256": "f08c10d285c9aca0e579271c2d64350aad09446d848f63a019e33378e4502309",
+      "mtime_ns": 1791609444395337670,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/native-goal-activation.json",
+      "bytes": 468,
+      "sha256": "856921cbce943dc01d87ec2e0d77e2b2ecd2bbee30fdeb545eca67833f9b53e3",
+      "mtime_ns": 1791609935046784232,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/native-goal-completion.json",
+      "bytes": 797,
+      "sha256": "4b9093e2f8c9a14c6839de412c66656ee26c657e2b5bdb907ccfec0f84d9f79c",
+      "mtime_ns": 1791610129905973465,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/request.json",
+      "bytes": 1613,
+      "sha256": "cb63b2217c40c16faec506ca1bc087ce5fd8f83fd5d1f41b51e55a7ce45e57f8",
+      "mtime_ns": 1791609444394644807,
+      "unchanged_since_review_inventory": true,
+      "inspection": "STAGE_REQUEST_AND_ARGUMENTS"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/service-tier-change.json",
+      "bytes": 481,
+      "sha256": "c2d0f91fd31ce13dd0cd1ef6f17be2edff6719a59e02dce1e88097206865be09",
+      "mtime_ns": 1791609444189775047,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/source-map.json",
+      "bytes": 23437,
+      "sha256": "a424dd49685be4c3426c9ae55a87c606100a5bedbc5df5d6ecfc373db378bea9",
+      "mtime_ns": 1791609956314225847,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/status.json",
+      "bytes": 3930,
+      "sha256": "32d1e7ce706b1cf9a55907a0cab0a67a653530ad46cfd04d77e943eba8e2cfa5",
+      "mtime_ns": 1791610285903916896,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/assignment.md",
+      "bytes": 3720,
+      "sha256": "a509b7f2b14faaa3e25899cef3f15733cb59cec362de497c5f778b406567cf84",
+      "mtime_ns": 1791608615377371321,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/discovery.md",
+      "bytes": 13256,
+      "sha256": "c8b0aa4e8f87e9823442601ea2312b401fe3da5bc601744c76d3e808d701663a",
+      "mtime_ns": 1791609076031320183,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/dispatch.json",
+      "bytes": 4251,
+      "sha256": "060399e1f6b28cce014fdaeadf1359e6b3480ae171f883ed2adff0ac6adae012",
+      "mtime_ns": 1791608618483853616,
+      "unchanged_since_review_inventory": true,
+      "inspection": "STRUCTURED_METADATA_AND_RAW_RESPONSE_FIELDS"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/draft.md",
+      "bytes": 17352,
+      "sha256": "3a40e9102121dcfd8d5907987a92fabf603f1de94e28e491422e7170c62ec758",
+      "mtime_ns": 1791609265356377103,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/freeze.json",
+      "bytes": 1731,
+      "sha256": "3adf02c9f9aa248146d11ae72891663e8c60f950f0122af80a39d1578bd5851a",
+      "mtime_ns": 1791608615722178613,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/input-map.json",
+      "bytes": 789,
+      "sha256": "e5cbb785e94f3509a20a944a23a587692758d6ced154c86f260d0448f5f80a25",
+      "mtime_ns": 1791608615721662007,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/native-goal-receipt.json",
+      "bytes": 2100,
+      "sha256": "53b8136750d3e3367b3d3445d841ca7941b0250bb09b81a3ce3870eb818fc418",
+      "mtime_ns": 1791609404762651630,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/plan-reveal.json",
+      "bytes": 431,
+      "sha256": "ce3349d3eaf80ab65e2d60919713e46b7d3eaaf1bbbdf526382a7a16c1ff38a4",
+      "mtime_ns": 1791609092699312400,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/request.json",
+      "bytes": 921,
+      "sha256": "bd90dd5cad1cbe36ce52c3e5a8cde1d067e786cb8e63d5a7d0951bbdd9a2efff",
+      "mtime_ns": 1791608615721864787,
+      "unchanged_since_review_inventory": true,
+      "inspection": "STAGE_REQUEST_AND_ARGUMENTS"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/revealed-plan.md",
+      "bytes": 6794,
+      "sha256": "8e2247027ad8b2baa1338b77a5f4020d86ed2a926f102c618b802c618bd257c8",
+      "mtime_ns": 1791609092699155499,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/service-tier-change.json",
+      "bytes": 493,
+      "sha256": "985d82290de83268055c0cd69602f2773fd12701ccc21512159224835749360c",
+      "mtime_ns": 1791608615722392609,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/source-map.json",
+      "bytes": 17320,
+      "sha256": "7f0b91dd5e76450d1b10513bd3d877bc4fd415eac4e958b765987f2a93df8a33",
+      "mtime_ns": 1791609076039319303,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/sources/index.md",
+      "bytes": 1703,
+      "sha256": "0ae32a479ea16a218da0268e22cb325ad8104b7cf5e81a63c1608df78e7998b1",
+      "mtime_ns": 1791609076046318534,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/status.json",
+      "bytes": 3822,
+      "sha256": "ebcc1f990b4fa6dce50399c50ff849fd97c280358074096e8d2e513774e09454",
+      "mtime_ns": 1791609443652983809,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/assignment.md",
+      "bytes": 3996,
+      "sha256": "9a3b2805c8d6df6e8793eb5b2965e6b35b6a52974fc9836f706486c1bc27c645",
+      "mtime_ns": 1791610286510318127,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/dispatch.json",
+      "bytes": 4889,
+      "sha256": "76727ae5351b30b5513d862fdb180e6d61ea78b2a8cb07cb8a0bf7f32a36762c",
+      "mtime_ns": 1791610287664393835,
+      "unchanged_since_review_inventory": true,
+      "inspection": "STRUCTURED_METADATA_AND_RAW_RESPONSE_FIELDS"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+      "bytes": 24960,
+      "sha256": "02f63d6e57d2055fc45f9632e41caa6a9872e66aae7859f766cd1215c0d36c8b",
+      "mtime_ns": 1791610781614370427,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/freeze.json",
+      "bytes": 4092,
+      "sha256": "aa773d9c86203df434f75b4708dd3454e08dc6b43d41bb07aec63dd780bead0f",
+      "mtime_ns": 1791610286510000069,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/input-map.json",
+      "bytes": 1794,
+      "sha256": "bdf8c6637a813b6eb6358d425ddddacbd33e626886ab7213b6f5aa9a11d06c4e",
+      "mtime_ns": 1791610286510168140,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/invocation-clarification.json",
+      "bytes": 3037,
+      "sha256": "c89f81bc68d8f2ca57d625777cd8d2792ee965aecec1f05caf0fcbc1a74bde5a",
+      "mtime_ns": 1791610286510510300,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/native-goal-activation.json",
+      "bytes": 470,
+      "sha256": "7a6d9f68ba23bff37881dc13e2e48ddf47beb7c82a85f908edf6ddbd4990afdd",
+      "mtime_ns": 1791610401237545825,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/native-goal-completion.json",
+      "bytes": 799,
+      "sha256": "c2df6fdd658741db21b768e21eb834a36947122ce602cf2d34a3f400f340b557",
+      "mtime_ns": 1791610821010228474,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/request.json",
+      "bytes": 1619,
+      "sha256": "05c12f39630fba1b99e785c429a81ef185a427bc1ed24c31271d01d61d41e26f",
+      "mtime_ns": 1791610286509772092,
+      "unchanged_since_review_inventory": true,
+      "inspection": "STAGE_REQUEST_AND_ARGUMENTS"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/service-tier-change.json",
+      "bytes": 483,
+      "sha256": "f0fcd9ab9f8d8018c47cb33089af7e19df496d45b22b218def9fe20a4df63757",
+      "mtime_ns": 1791610286349563816,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/source-map.json",
+      "bytes": 27083,
+      "sha256": "d5c1ee3347ffae6a612d5b6b69299b77e79a2cbac54b40161a47361eb79121c7",
+      "mtime_ns": 1791610706294481744,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/sources/index.md",
+      "bytes": 6382,
+      "sha256": "8e2142dcd6eb13e361f899dbea95e8008fae17eb029450a5c029fbf7f4484990",
+      "mtime_ns": 1791610706294890179,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/terminal-science-freeze-root.json",
+      "bytes": 7286,
+      "sha256": "d3101f961af9125224f0da89e13148cbec63cc2ce8eafb08f3454a1edceae9b6",
+      "mtime_ns": 1791610892186592077,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    }
+  ]
+}

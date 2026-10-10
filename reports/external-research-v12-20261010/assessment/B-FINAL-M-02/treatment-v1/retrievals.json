@@ -1,0 +1,30 @@
+[
+  {
+    "id": "P1",
+    "url": "https://www.postgresql.org/docs/17/sql-insert.html",
+    "final_url": "https://www.postgresql.org/docs/17/sql-insert.html",
+    "retrieved_at_utc": "2026-10-10T05:24:11.286517+00:00",
+    "operation": "HTTPS GET via Python standard-library urllib.request (documentation data only)",
+    "http_status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "bytes": 45611,
+    "sha256": "f18feb692580770ae7a17537db2b922a44fc0119be4dc4ff38537502307e2cba",
+    "file": "primary/P1.html",
+    "text_file": "primary/P1.txt",
+    "text_sha256": "c00520394f2d36f665a9adcfcce19084e024c2f6d1598eca5e2266c9aaccfc8d"
+  },
+  {
+    "id": "P2",
+    "url": "https://www.postgresql.org/docs/17/transaction-iso.html",
+    "final_url": "https://www.postgresql.org/docs/17/transaction-iso.html",
+    "retrieved_at_utc": "2026-10-10T05:24:11.808681+00:00",
+    "operation": "HTTPS GET via Python standard-library urllib.request (documentation data only)",
+    "http_status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "bytes": 47624,
+    "sha256": "b4c2f29cc4284f5fd860da91737055431dd7e742861b22218b1369e8933e6034",
+    "file": "primary/P2.html",
+    "text_file": "primary/P2.txt",
+    "text_sha256": "d36d2d4ab6674074f96507fc2d870bcdac0e05ba62f3187f0a8cf8cc458f0f96"
+  }
+]

@@ -1,0 +1,549 @@
+{
+  "observed_utc": "2026-10-10T05:47:40.999062+00:00",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791604608938287266
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A5-02/brief.md",
+      "bytes": 3394,
+      "sha256": "a6520dffb1ba50fd341f287ae6805fe99e8f14f159c53eb87668029014ba3589",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791608644962501459
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A5-02/plan.md",
+      "bytes": 6060,
+      "sha256": "b4cf16e079bff1eb16228453f99f8682a63d34ecd99e0f53ca1463416111931e",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791608644962626936
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/terminal-science-freeze-root.json",
+      "bytes": 7274,
+      "sha256": "ec45c5a231c5a689122810fb91312ac093fc44b3c87e3c608e2f0ef9c6346d3a",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610894688863129
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/inputs/brief.md",
+      "bytes": 3394,
+      "sha256": "a6520dffb1ba50fd341f287ae6805fe99e8f14f159c53eb87668029014ba3589",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791608646974788738
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/control/run.json",
+      "bytes": 580,
+      "sha256": "15c8f3f15d8b5e813ce4835f820339a306058e2c3519cb308b273479329f5fd3",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791608646975028923
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/assignment.md",
+      "bytes": 3712,
+      "sha256": "599e96a804efea9fff64d0a6951acf88a090f0af006c4970dd99d09acff812fe",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791608646975666250
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/input-map.json",
+      "bytes": 781,
+      "sha256": "9bdbbbde8717753ca7bf43caf818e5d5742c5ee670a7ae84de73716301991b94",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791608647127003129
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/freeze.json",
+      "bytes": 1721,
+      "sha256": "073c36adcdc359890415c7dc99ce5001431efc2900d63d6430af5e7afdc1b1bc",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791608647127425333
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/source-map.json",
+      "bytes": 18140,
+      "sha256": "27815f76afc49ec0a0d20e5ce70e0b62a432ce07998dc0971a5d20632e45979c",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609292215609690
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/sources/index.md",
+      "bytes": 4844,
+      "sha256": "ce4c0040855ac4654dbf62270003c49ee0aa586ec29eb3194826baef7f94d134",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609292215609690
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/request.json",
+      "bytes": 913,
+      "sha256": "c02a95105acf08a86ae58bc22e37a58723753b29bf9dfd017bbe77a0b36053cc",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791608647127161138
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/dispatch.json",
+      "bytes": 4219,
+      "sha256": "4285424ea3b9e59365c78cb797e671edd9a37d599923ecd9ff65e4b9738f792b",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791608647956872902
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/service-tier-change.json",
+      "bytes": 489,
+      "sha256": "5784abc30141439c1c3a0e101aa9fc6b0f7c65303dae69ee89c8e3cc285abc63",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791608647127585403
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/discovery.md",
+      "bytes": 13022,
+      "sha256": "b41b03f16f9707d36fb03fde84178c335dfc59069cbba4aed1d92c98b3b9b45e",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609292213609680
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/draft.md",
+      "bytes": 16811,
+      "sha256": "751e28236adb4cc707e611ccca7843d8b6c8fd165552cd157fa3f32960f7886f",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609411351416236
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/revealed-plan.md",
+      "bytes": 6060,
+      "sha256": "b4cf16e079bff1eb16228453f99f8682a63d34ecd99e0f53ca1463416111931e",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609303502371187
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/plan-reveal.json",
+      "bytes": 427,
+      "sha256": "175711d459dbca89770e8f95919bbee188c8e4353843a31f2499802b95b29422",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609303502526488
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/status.json",
+      "bytes": 4092,
+      "sha256": "1338ef368c7bd5b3f0611dd1185a393cc3e63bececd853b9eb13fc3a2ec0cee8",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609669338102906
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/assignment.md",
+      "bytes": 4006,
+      "sha256": "ed6d37f96bb3b4d522c21669899dfebf8eddacae425e8608b99b8afc5cc1198a",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609670064507493
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/input-map.json",
+      "bytes": 1457,
+      "sha256": "d3761089ee784702f403457c6a84900cfcf6b19cb7be91b29cffd0bcbf97da4f",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609670064212994
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/freeze.json",
+      "bytes": 3290,
+      "sha256": "fe4ae4bb4a4a10d4f5e104a8eb11e862868b2c69cbd6cae090e621a1d04a656a",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609670063922780
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/source-map.json",
+      "bytes": 24771,
+      "sha256": "413ce211e01dc9a1dd9d6cbc574bcade8764c666f64aabfbfce881cc1dccb4ab",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610167526473022
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/sources/index.md",
+      "bytes": 2657,
+      "sha256": "88d03f5e3a4c898ff90de625ff4430b30f045a40a998f742277fe557a45154b8",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610185482304935
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/request.json",
+      "bytes": 1601,
+      "sha256": "6ca010d930d952f3ac2f89490d12f7efbd8a97d9086ab4acfc6e9f30b99a27a9",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609670063563343
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/dispatch.json",
+      "bytes": 4835,
+      "sha256": "2a26f57aa3c9c8904f536807c881ef8f9d2d51376fdd1502251084665dea2962",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609670890124838
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/service-tier-change.json",
+      "bytes": 477,
+      "sha256": "e12bf475fa08bb8047d23a51c7a076e57b61da1d2860dfc25f70526cb3d3ff79",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609669854681151
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/critique.md",
+      "bytes": 8169,
+      "sha256": "d9ba8483f64403e7f2ad83da2f371b7e23367cc68ce5904334d11b99e1c89260",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610356437571557
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/status.json",
+      "bytes": 4054,
+      "sha256": "79c77262ed90cb5cf0d24d9a3e000b70aec9ee097a6d16feae0a19ca1f6fe0a2",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610396394245487
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/invocation-clarification.json",
+      "bytes": 3016,
+      "sha256": "5adb8188e8b628d6fb91e83e156569237c1ec371903223a6afadef5f30301a86",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609670064788481
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/native-goal-activation.json",
+      "bytes": 464,
+      "sha256": "df2b72cf1d1f5f2017901a7119112ea81668a74489bc219dbe0b04e2dda002e4",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609770428774838
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/native-goal-completion.json",
+      "bytes": 793,
+      "sha256": "1004bc68ee7e4d9a1881a059bd8c749a4cafcc638b4bdfbba36d22883125d3cf",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610376570413127
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/assignment.md",
+      "bytes": 3988,
+      "sha256": "9633c115cd6aff52a0a94130ae902302dc2b2971806ab6611280829877906e7a",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610397154310148
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/input-map.json",
+      "bytes": 1768,
+      "sha256": "2a8bcafc73a3c93f0f74653612079f90e86a0798927596b8e86f2fdedf3f319b",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610397154144860
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/freeze.json",
+      "bytes": 4060,
+      "sha256": "3516f465e5fd473ecb0125f4301c8ab147fb41b1f800c68999ce2c90222c7ac5",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610397153979782
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/source-map.json",
+      "bytes": 28706,
+      "sha256": "acf19e5ff39acec451a4d62511a2d39d7b17cab75ab101177f8685baa11daa00",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610810578461781
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/sources/index.md",
+      "bytes": 4825,
+      "sha256": "4b0512c993f9d9453051823cd26e17fbb4c56906cdf8806c0c1ec66949d4f7b3",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610810515184251
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/request.json",
+      "bytes": 1607,
+      "sha256": "400ac692ddfcd90d7c18670a8e16381187206ffcc34b0e99ec29a90b6d15e6db",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610397153756877
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/dispatch.json",
+      "bytes": 4853,
+      "sha256": "bb2b5acd2977f3f46e5a131ff9b070444a257aea2cb58be18cdfd07ad03e450f",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610398207202681
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/service-tier-change.json",
+      "bytes": 479,
+      "sha256": "abf953ec1cb0da846e06454dcfa0d65a00898b293120c4b6a998ebab57d92920",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610396936557406
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+      "bytes": 17385,
+      "sha256": "772a070ee5b7cc26759535256478dabf09a7564e4cb0b324233cff1c5949d90d",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610810522184280
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/invocation-clarification.json",
+      "bytes": 3023,
+      "sha256": "5d135ef93d9a49cbdce3658e9e04f8601c873aa551698be8a820a743b7cde284",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610397154471693
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/native-goal-activation.json",
+      "bytes": 466,
+      "sha256": "c346eead688a4e751a81cf72a69d66647e8ab3d1bb6cdcb9c427893ff2b9b9f9",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610447657772759
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/native-goal-completion.json",
+      "bytes": 795,
+      "sha256": "91d987611c3c3cec3679f3ef4c1d7c0159f3146d6ff9ffb54c848e78dcb5826b",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610862077401518
+    }
+  ],
+  "freeze_checks": [
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/critique.md",
+      "expected_sha256": "d9ba8483f64403e7f2ad83da2f371b7e23367cc68ce5904334d11b99e1c89260",
+      "actual_sha256": "d9ba8483f64403e7f2ad83da2f371b7e23367cc68ce5904334d11b99e1c89260",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/source-map.json",
+      "expected_sha256": "413ce211e01dc9a1dd9d6cbc574bcade8764c666f64aabfbfce881cc1dccb4ab",
+      "actual_sha256": "413ce211e01dc9a1dd9d6cbc574bcade8764c666f64aabfbfce881cc1dccb4ab",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/sources/index.md",
+      "expected_sha256": "88d03f5e3a4c898ff90de625ff4430b30f045a40a998f742277fe557a45154b8",
+      "actual_sha256": "88d03f5e3a4c898ff90de625ff4430b30f045a40a998f742277fe557a45154b8",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/discovery.md",
+      "expected_sha256": "b41b03f16f9707d36fb03fde84178c335dfc59069cbba4aed1d92c98b3b9b45e",
+      "actual_sha256": "b41b03f16f9707d36fb03fde84178c335dfc59069cbba4aed1d92c98b3b9b45e",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/draft.md",
+      "expected_sha256": "751e28236adb4cc707e611ccca7843d8b6c8fd165552cd157fa3f32960f7886f",
+      "actual_sha256": "751e28236adb4cc707e611ccca7843d8b6c8fd165552cd157fa3f32960f7886f",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/revealed-plan.md",
+      "expected_sha256": "b4cf16e079bff1eb16228453f99f8682a63d34ecd99e0f53ca1463416111931e",
+      "actual_sha256": "b4cf16e079bff1eb16228453f99f8682a63d34ecd99e0f53ca1463416111931e",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/source-map.json",
+      "expected_sha256": "27815f76afc49ec0a0d20e5ce70e0b62a432ce07998dc0971a5d20632e45979c",
+      "actual_sha256": "27815f76afc49ec0a0d20e5ce70e0b62a432ce07998dc0971a5d20632e45979c",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/sources/index.md",
+      "expected_sha256": "ce4c0040855ac4654dbf62270003c49ee0aa586ec29eb3194826baef7f94d134",
+      "actual_sha256": "ce4c0040855ac4654dbf62270003c49ee0aa586ec29eb3194826baef7f94d134",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+      "expected_sha256": "772a070ee5b7cc26759535256478dabf09a7564e4cb0b324233cff1c5949d90d",
+      "actual_sha256": "772a070ee5b7cc26759535256478dabf09a7564e4cb0b324233cff1c5949d90d",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/source-map.json",
+      "expected_sha256": "acf19e5ff39acec451a4d62511a2d39d7b17cab75ab101177f8685baa11daa00",
+      "actual_sha256": "acf19e5ff39acec451a4d62511a2d39d7b17cab75ab101177f8685baa11daa00",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/sources/index.md",
+      "expected_sha256": "4b0512c993f9d9453051823cd26e17fbb4c56906cdf8806c0c1ec66949d4f7b3",
+      "actual_sha256": "4b0512c993f9d9453051823cd26e17fbb4c56906cdf8806c0c1ec66949d4f7b3",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/inputs/brief.md",
+      "expected_sha256": "a6520dffb1ba50fd341f287ae6805fe99e8f14f159c53eb87668029014ba3589",
+      "actual_sha256": "a6520dffb1ba50fd341f287ae6805fe99e8f14f159c53eb87668029014ba3589",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/assignment.md",
+      "expected_sha256": "599e96a804efea9fff64d0a6951acf88a090f0af006c4970dd99d09acff812fe",
+      "actual_sha256": "599e96a804efea9fff64d0a6951acf88a090f0af006c4970dd99d09acff812fe",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/input-map.json",
+      "expected_sha256": "9bdbbbde8717753ca7bf43caf818e5d5742c5ee670a7ae84de73716301991b94",
+      "actual_sha256": "9bdbbbde8717753ca7bf43caf818e5d5742c5ee670a7ae84de73716301991b94",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/inputs/brief.md",
+      "expected_sha256": "a6520dffb1ba50fd341f287ae6805fe99e8f14f159c53eb87668029014ba3589",
+      "actual_sha256": "a6520dffb1ba50fd341f287ae6805fe99e8f14f159c53eb87668029014ba3589",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/assignment.md",
+      "expected_sha256": "ed6d37f96bb3b4d522c21669899dfebf8eddacae425e8608b99b8afc5cc1198a",
+      "actual_sha256": "ed6d37f96bb3b4d522c21669899dfebf8eddacae425e8608b99b8afc5cc1198a",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/input-map.json",
+      "expected_sha256": "d3761089ee784702f403457c6a84900cfcf6b19cb7be91b29cffd0bcbf97da4f",
+      "actual_sha256": "d3761089ee784702f403457c6a84900cfcf6b19cb7be91b29cffd0bcbf97da4f",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/discovery.md",
+      "expected_sha256": "b41b03f16f9707d36fb03fde84178c335dfc59069cbba4aed1d92c98b3b9b45e",
+      "actual_sha256": "b41b03f16f9707d36fb03fde84178c335dfc59069cbba4aed1d92c98b3b9b45e",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/draft.md",
+      "expected_sha256": "751e28236adb4cc707e611ccca7843d8b6c8fd165552cd157fa3f32960f7886f",
+      "actual_sha256": "751e28236adb4cc707e611ccca7843d8b6c8fd165552cd157fa3f32960f7886f",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/source-map.json",
+      "expected_sha256": "27815f76afc49ec0a0d20e5ce70e0b62a432ce07998dc0971a5d20632e45979c",
+      "actual_sha256": "27815f76afc49ec0a0d20e5ce70e0b62a432ce07998dc0971a5d20632e45979c",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/revealed-plan.md",
+      "expected_sha256": "b4cf16e079bff1eb16228453f99f8682a63d34ecd99e0f53ca1463416111931e",
+      "actual_sha256": "b4cf16e079bff1eb16228453f99f8682a63d34ecd99e0f53ca1463416111931e",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/plan-reveal.json",
+      "expected_sha256": "175711d459dbca89770e8f95919bbee188c8e4353843a31f2499802b95b29422",
+      "actual_sha256": "175711d459dbca89770e8f95919bbee188c8e4353843a31f2499802b95b29422",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/inputs/brief.md",
+      "expected_sha256": "a6520dffb1ba50fd341f287ae6805fe99e8f14f159c53eb87668029014ba3589",
+      "actual_sha256": "a6520dffb1ba50fd341f287ae6805fe99e8f14f159c53eb87668029014ba3589",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/assignment.md",
+      "expected_sha256": "9633c115cd6aff52a0a94130ae902302dc2b2971806ab6611280829877906e7a",
+      "actual_sha256": "9633c115cd6aff52a0a94130ae902302dc2b2971806ab6611280829877906e7a",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/input-map.json",
+      "expected_sha256": "2a8bcafc73a3c93f0f74653612079f90e86a0798927596b8e86f2fdedf3f319b",
+      "actual_sha256": "2a8bcafc73a3c93f0f74653612079f90e86a0798927596b8e86f2fdedf3f319b",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/discovery.md",
+      "expected_sha256": "b41b03f16f9707d36fb03fde84178c335dfc59069cbba4aed1d92c98b3b9b45e",
+      "actual_sha256": "b41b03f16f9707d36fb03fde84178c335dfc59069cbba4aed1d92c98b3b9b45e",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/draft.md",
+      "expected_sha256": "751e28236adb4cc707e611ccca7843d8b6c8fd165552cd157fa3f32960f7886f",
+      "actual_sha256": "751e28236adb4cc707e611ccca7843d8b6c8fd165552cd157fa3f32960f7886f",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/source-map.json",
+      "expected_sha256": "27815f76afc49ec0a0d20e5ce70e0b62a432ce07998dc0971a5d20632e45979c",
+      "actual_sha256": "27815f76afc49ec0a0d20e5ce70e0b62a432ce07998dc0971a5d20632e45979c",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/revealed-plan.md",
+      "expected_sha256": "b4cf16e079bff1eb16228453f99f8682a63d34ecd99e0f53ca1463416111931e",
+      "actual_sha256": "b4cf16e079bff1eb16228453f99f8682a63d34ecd99e0f53ca1463416111931e",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/plan-reveal.json",
+      "expected_sha256": "175711d459dbca89770e8f95919bbee188c8e4353843a31f2499802b95b29422",
+      "actual_sha256": "175711d459dbca89770e8f95919bbee188c8e4353843a31f2499802b95b29422",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/critique.md",
+      "expected_sha256": "d9ba8483f64403e7f2ad83da2f371b7e23367cc68ce5904334d11b99e1c89260",
+      "actual_sha256": "d9ba8483f64403e7f2ad83da2f371b7e23367cc68ce5904334d11b99e1c89260",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/source-map.json",
+      "expected_sha256": "413ce211e01dc9a1dd9d6cbc574bcade8764c666f64aabfbfce881cc1dccb4ab",
+      "actual_sha256": "413ce211e01dc9a1dd9d6cbc574bcade8764c666f64aabfbfce881cc1dccb4ab",
+      "matches": true
+    }
+  ],
+  "missing_expected_science_files": [],
+  "native_receipts_missing": [
+    "stages/investigator/native-goal-activation.json",
+    "stages/investigator/native-goal-completion.json"
+  ],
+  "notes": [
+    "Only actual mapped current-stage files inspected; invocation backup paths are mechanism backups, not mapped science inputs.",
+    "No standalone critique-disposition/check files exist in scoped inventory; dispositions and research checks are embedded in critique.md and reviser source-map.json/final.md.",
+    "Each authored sources directory contains only index.md: no raw retrieval captures were retained by candidates."
+  ]
+}

@@ -1,0 +1,41 @@
+[
+  {
+    "id": "C01",
+    "classification": "minor locator/wording",
+    "draft_locator": "draft.md — Viewer comparison and integration boundary; S14; Universal Viewer row",
+    "criticism": "The high-level UV view-oriented and Manifest handoff description rests on S14, a community IIIF guide rather than versioned first-party product documentation. The draft otherwise appropriately treats UV annotation rendering and persistence as unproven.",
+    "evidence": "S14, https://guides.iiif.io/using_iiif_resources/, directly opened: community guide calls UV more view-oriented, describes Manifest sharing/import, and notes theme-dependent controls. S12, https://github.com/UniversalViewer/universalviewer/blob/v4.4.4/manual/CONFIG.md, directly supports download configuration only.",
+    "requested_treatment": "Keep the guide attribution explicit and avoid generalizing its UI steps to all UV deployments; do not infer that UV lacks annotation capability without a direct check.",
+    "disposition": "amend",
+    "rationale": "Accept the attribution and locator qualification. The directly re-opened guide calls UV more view-oriented, describes Manifest sharing/import, and says themed UV may place or label controls differently. It is a community guide, not a first-party v4.4.4 capability statement. The reviewed evidence does not establish annotation absence, so the final leaves UV capability unproven pending a pilot test.",
+    "final_change": "Final table and prose identify S14 as community guidance, qualify UI examples as theme-dependent, and state that lack of UV annotation capability is not inferred. S12 is described only as configuration evidence for image downloads.",
+    "recheck": "Retained-author direct review of https://guides.iiif.io/using_iiif_resources/ and tag-pinned S12 configuration documentation; recorded review time 2026-10-10T05:35:34Z (per-page fetch timestamp not exposed).",
+    "locator": "final.md § Viewer comparison and integration boundary; final/sources/S14-iiif-viewer-guide.md and S12-universal-viewer-config.md",
+    "evidence_basis": "Directly re-opened S14 community guide: UV is described as more view-oriented, Manifest handoff examples are given, and theme may change UI labels/location; it does not say UV lacks annotation capability. S12 is pinned configuration evidence for download controls only.",
+    "criticism_id": "C01",
+    "final_locator": "final.md § Viewer comparison and integration boundary; final/sources/S14-iiif-viewer-guide.md and S12-universal-viewer-config.md",
+    "source_urls": [
+      "S14: https://guides.iiif.io/using_iiif_resources/ (community guide; notes theme-dependent UI)",
+      "S12: https://github.com/UniversalViewer/universalviewer/blob/v4.4.4/manual/CONFIG.md (download controls; not annotation authoring or persistence)"
+    ]
+  },
+  {
+    "id": "C02",
+    "classification": "minor locator/wording",
+    "draft_locator": "draft.md — Viewer comparison and integration boundary, Mirador issue #75 paragraph; S10",
+    "criticism": "The issue snapshot records the original install error but omits a 2023 follow-up saying then-current Mirador master may already address the errors and requesting testers. That comment is not proof of a released fix, so the draft’s caution is sound; the history summary can preserve this qualification.",
+    "evidence": "S10, https://github.com/ProjectMirador/mirador-annotations/issues/75, directly opened: issue body reports install-time peer dependency errors; the June 21, 2023 comment says then-current master may address errors and requests testers, without establishing a released fix.",
+    "requested_treatment": "Mention the unverified master-branch follow-up as such; retain exact-version validation and do not claim the issue was fixed.",
+    "disposition": "amend",
+    "rationale": "Accept the substantive qualification after directly re-opening the full issue thread. It contains a June 21, 2023 comment (not April 19, 2023 as the critic source-map states) that current-at-that-time Mirador master might address the errors and asks for testers before a release. Neither that comment nor the thread establishes a released fix.",
+    "final_change": "Final compatibility-history paragraph and S10 source note include the June 21, 2023 date, the tentative master-branch statement, and the absence of evidence for a released fix. Exact-version validation remains proposed.",
+    "recheck": "Retained-author direct review of https://github.com/ProjectMirador/mirador-annotations/issues/75 review recorded at 2026-10-10T05:35:34Z (per-page fetch timestamp not exposed).",
+    "locator": "final.md § Viewer comparison and integration boundary, Mirador compatibility paragraph; final/sources/S10-plugin-install-issue-75.md",
+    "evidence_basis": "Directly re-opened issue #75: reporter shows the 2023 install-time peer dependency conflict; a June 21, 2023 comment says then-current master may address it and asks for testers. No released fix is established.",
+    "criticism_id": "C02",
+    "final_locator": "final.md § Viewer comparison and integration boundary, Mirador compatibility paragraph; final/sources/S10-plugin-install-issue-75.md",
+    "source_urls": [
+      "https://github.com/ProjectMirador/mirador-annotations/issues/75 (issue body and follow-up comment)"
+    ]
+  }
+]

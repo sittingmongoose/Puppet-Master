@@ -1,0 +1,867 @@
+{
+  "schema": "er12-independent-semantic-assessment-v1",
+  "slot_id": "B-FINAL-M-02",
+  "case_id": "ER12-B-FINAL-M-02-FRESH",
+  "arm": "treatment",
+  "role": "Criticism adjudication and complete bounded finalization",
+  "reviewer": "codex-er12-bfinalm02-review",
+  "started_at_utc": "2026-10-10T05:23:15Z",
+  "judgment_saved_at_utc": "2026-10-10T05:29:03.188970+00:00",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "semantic_grade_scope": "Assigned bounded FINAL role only; not whole-pipeline qualification, paired comparison, other arm or ER11 rescore",
+  "summary": "O1-O6 and all six selected critique dispositions are correct. No supported material error, omission or consequential unsupported decision. L1 is a minor ancillary rationale overstatement; original constraints independently require the same rejection.",
+  "delivery": {
+    "status": "PASS",
+    "artifact": "final-section.md",
+    "section_words_whitespace": 523,
+    "entire_deliverable_words_whitespace": 767,
+    "required_word_bounds": {
+      "section_min": 400,
+      "section_max": 650,
+      "deliverable_less_than": 1100
+    },
+    "complete": true,
+    "missing_final": false
+  },
+  "coverage": {
+    "status": "COMPLETE_ASSIGNED_ROLE",
+    "axis_coverage": [
+      {
+        "id": "exact_obligations_and_negative_constraints",
+        "status": "PASS",
+        "coverage": "O1-O6 fully assessed; fixed policies and original bound preserved",
+        "evidence": "obligations"
+      },
+      {
+        "id": "factual_applicability_source_conditions",
+        "status": "PASS_WITH_LIMITATIONS",
+        "coverage": "Version, isolation/default, subject, SQL operation, arbiter restrictions, condition order, RETURNING, independent errors and concurrency reviewed",
+        "limitations": [
+          "L1"
+        ]
+      },
+      {
+        "id": "all_critique_dispositions",
+        "status": "PASS_WITH_LIMITATIONS",
+        "coverage": "All 6 adjudicated individually; all selected dispositions correct; item 2 ancillary rationale overstates source",
+        "evidence": "critique_dispositions"
+      },
+      {
+        "id": "supported_scope_preservation",
+        "status": "PASS",
+        "coverage": "Draft-supported batching/diagnostics/equal timestamp retention and prospective status retained; factual mistakes corrected without changing constraints"
+      },
+      {
+        "id": "proposed_vs_executed_checks",
+        "status": "PASS",
+        "coverage": "3 prospective acceptance groups with observable oracles; DB execution expressly absent; no implementation observation inferred"
+      },
+      {
+        "id": "bounded_alternatives_implementation_history",
+        "status": "PASS",
+        "coverage": "Critiqued alternatives assessed; remaining implementation evidence retained. Separate discovery inventory, release history and deployed code are not required by this FINAL assignment.",
+        "not_required": [
+          "DISC/APPL role axes",
+          "source-code history survey",
+          "nonexistent service or deployment tests",
+          "full-pipeline qualification"
+        ]
+      }
+    ],
+    "obligations": [
+      {
+        "id": "O1",
+        "status": "PASS",
+        "candidate": [
+          {
+            "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+            "line": 1
+          },
+          {
+            "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+            "line": 3
+          }
+        ],
+        "evidence": [
+          "P2-upsert"
+        ],
+        "finding": "Exact section title, PostgreSQL 17, Read Committed and one device-keyed table."
+      },
+      {
+        "id": "O2",
+        "status": "PASS",
+        "candidate": [
+          {
+            "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+            "line": 3
+          },
+          {
+            "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+            "line": 5
+          }
+        ],
+        "exact_tokens": [
+          "duplicate_policy=reject_batch",
+          "stale_policy=keep_newer",
+          "max_batch_rows=100"
+        ],
+        "finding": "Exact tokens preserved and 100 input rows per batch enforced."
+      },
+      {
+        "id": "O3",
+        "status": "PASS",
+        "candidate": [
+          {
+            "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+            "line": 5
+          },
+          {
+            "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+            "line": 13
+          }
+        ],
+        "evidence": [
+          "P1-deterministic"
+        ],
+        "finding": "Reject entire duplicate-key batch before INSERT; no silent duplicate winner."
+      },
+      {
+        "id": "O4",
+        "status": "PASS",
+        "candidate": [
+          {
+            "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+            "line": 7
+          },
+          {
+            "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+            "line": 9
+          }
+        ],
+        "evidence": [
+          "P1-condition",
+          "P1-returning"
+        ],
+        "finding": "Strict newer-only predicate, equal/older retention, locking and skipped RETURNING/accounting explained."
+      },
+      {
+        "id": "O5",
+        "status": "PASS",
+        "candidate": [
+          {
+            "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+            "line": 3
+          },
+          {
+            "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+            "line": 11
+          }
+        ],
+        "evidence": [
+          "P1-arbiter",
+          "P1-supported-arbiters",
+          "P1-errors",
+          "P1-index-maintenance",
+          "P2-upsert"
+        ],
+        "finding": "Unique arbiter/concurrency/error conditions preserved; no unconditional success claim."
+      },
+      {
+        "id": "O6",
+        "status": "PASS",
+        "candidate": [
+          {
+            "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+            "line": 13
+          },
+          {
+            "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+            "line": 24
+          }
+        ],
+        "finding": "Three prospective checks, diagnostics/no success counts on failed statement, unresolved implementation and no executed DB test claim."
+      }
+    ],
+    "critique_dispositions": [
+      {
+        "item": 1,
+        "candidate": "accept",
+        "independent": "accept",
+        "status": "PASS",
+        "candidate_locator": {
+          "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+          "line": 17
+        },
+        "primary": [
+          "P1-deterministic"
+        ],
+        "obligations": [
+          "O3"
+        ]
+      },
+      {
+        "item": 2,
+        "candidate": "reject",
+        "independent": "reject",
+        "status": "PASS_WITH_LIMITATIONS",
+        "candidate_locator": {
+          "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+          "line": 18
+        },
+        "primary": [
+          "P1-deterministic"
+        ],
+        "obligations": [
+          "O2",
+          "O3"
+        ],
+        "limitation": "L1"
+      },
+      {
+        "item": 3,
+        "candidate": "accept",
+        "independent": "accept",
+        "status": "PASS",
+        "candidate_locator": {
+          "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+          "line": 19
+        },
+        "primary": [
+          "P1-returning"
+        ],
+        "obligations": [
+          "O4"
+        ]
+      },
+      {
+        "item": 4,
+        "candidate": "reject",
+        "independent": "reject",
+        "status": "PASS",
+        "candidate_locator": {
+          "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+          "line": 20
+        },
+        "primary": [
+          "P1-condition"
+        ],
+        "obligations": [
+          "O4"
+        ]
+      },
+      {
+        "item": 5,
+        "candidate": "accept",
+        "independent": "accept",
+        "status": "PASS",
+        "candidate_locator": {
+          "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+          "line": 21
+        },
+        "primary": [
+          "P1-errors",
+          "P2-upsert"
+        ],
+        "obligations": [
+          "O5"
+        ]
+      },
+      {
+        "item": 6,
+        "candidate": "reject",
+        "independent": "reject",
+        "status": "PASS",
+        "candidate_locator": {
+          "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+          "line": 22
+        },
+        "primary": [
+          "P2-default",
+          "P2-upsert"
+        ],
+        "obligations": [
+          "O1"
+        ]
+      }
+    ]
+  },
+  "material_findings": [],
+  "limitations": [
+    {
+      "id": "L1",
+      "severity": "minor",
+      "material": false,
+      "axis": "critique_dispositions / source_subject_applicability",
+      "title": "Last-row-wins is not inherently a duplicate-key SQL statement",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+        "line": 18
+      },
+      "candidate_exact_quote": "would send arbiter duplicates that S1 forbids",
+      "additional_candidate_locator": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/source-map.json",
+        "json_pointer": "/applicability/S1_deterministic"
+      },
+      "primary_locators": [
+        "P1-deterministic"
+      ],
+      "finding": "The PostgreSQL restriction applies to rows actually proposed to INSERT. A caller could reduce its input to one last occurrence per key before SQL. The candidate overstates the technical objection to last_row_wins.",
+      "inference_label": "Application-side deduplication possibility is reviewer inference from the SQL-row subject of the documented restriction; no executed implementation is claimed.",
+      "why_nonmaterial": "The rejection is independently required by O2/O3 and the final enforces pre-SQL reject_batch. No selected disposition, product constraint, SQL behavior or consequential decision relies on the extra rationale.",
+      "disposition": "Nonmaterial wording/source-scope limitation; no candidate feedback or repair performed."
+    }
+  ],
+  "unknowns": [
+    {
+      "id": "U-native",
+      "domain": "native",
+      "value": "UNKNOWN",
+      "reason": "Frozen candidate-authored purported native response receipts are present, with provenance UNKNOWN; no independent provider-tool trace inspected. Actual invocation, exactly-one-Goal and activation-before-input ordering not independently proven."
+    },
+    {
+      "id": "U-effective",
+      "domain": "effective_runtime",
+      "value": "UNKNOWN",
+      "reason": "Requested/reported provider/model fields are not scoped evidence of effective model/runtime/account."
+    },
+    {
+      "id": "U-billing",
+      "domain": "billing",
+      "value": "UNKNOWN",
+      "reason": "No invoice or task-scoped provider telemetry. Receipt tokens_used value does not establish task consumption, billed tokens, cost or savings."
+    },
+    {
+      "id": "U-protocol",
+      "domain": "candidate_execution_protocol",
+      "value": "UNKNOWN for unobserved actions",
+      "reason": "No disqualifying violation observed; negative claims about assistance, accounts and cross-arm access are not independently certified from final artifacts."
+    },
+    {
+      "id": "U-db",
+      "domain": "implementation",
+      "value": "UNEXECUTED / UNKNOWN",
+      "reason": "No database test or deployed schema supplied. SQLSTATE mapping, contention/retry behavior, constraints and schema-specific key/timestamp handling remain unverified."
+    },
+    {
+      "id": "U-occupancy",
+      "domain": "time",
+      "value": "UNKNOWN",
+      "reason": "Frozen timestamps give intervals and deadline compliance; not exact active scientific occupancy, paired latency or billing savings."
+    }
+  ],
+  "native": {
+    "status": "UNKNOWN",
+    "independent_actual_native_proof": false,
+    "activation_artifact": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/native-goal-activation.json",
+    "completion_artifact": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/native-goal-completion.json",
+    "observed_activation_receipt": {
+      "activation_preserved_at_utc": "2026-10-10T05:19:40Z",
+      "native_activation_response": {
+        "goal": {
+          "created_at_ms": 1791609462374,
+          "current_work": null,
+          "goal_id": "goal-01a1243e-de66-7830-90b9-d690014bf472",
+          "last_progress_at_ms": null,
+          "next_work": null,
+          "objective": "ER12 B-FINAL-M-02/treatment: execute ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/assignment.md; save the complete bounded role output and source map before completing this actual native Goal.",
+          "percent_complete": 0,
+          "session_id": "01a1243e-a621-7000-b4fb-c2d0b7c79153",
+          "status": "active",
+          "token_budget": null,
+          "tokens_used": 0,
+          "updated_at_ms": 1791609462374
+        }
+      },
+      "objective": "ER12 B-FINAL-M-02/treatment: execute ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/assignment.md; save the complete bounded role output and source map before completing this actual native Goal.",
+      "provenance": "UNKNOWN",
+      "tool": "create_goal"
+    },
+    "observed_completion_receipt": {
+      "completion_preserved_at_utc": "2026-10-10T05:21:42Z",
+      "goal_id": "goal-01a1243e-de66-7830-90b9-d690014bf472",
+      "native_completion_response": {
+        "goal": {
+          "created_at_ms": 1791609462374,
+          "current_work": "All role artifacts saved and verified; completing native Goal",
+          "goal_id": "goal-01a1243e-de66-7830-90b9-d690014bf472",
+          "last_progress_at_ms": 1791609691271,
+          "next_work": "Complete native Goal and preserve completion receipt",
+          "objective": "ER12 B-FINAL-M-02/treatment: execute ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/assignment.md; save the complete bounded role output and source map before completing this actual native Goal.",
+          "percent_complete": 100,
+          "session_id": "01a1243e-a621-7000-b4fb-c2d0b7c79153",
+          "status": "complete",
+          "token_budget": null,
+          "tokens_used": 2128372,
+          "updated_at_ms": 1791609695791
+        }
+      },
+      "provenance": "UNKNOWN",
+      "tool": "update_goal"
+    },
+    "receipt_consistency": {
+      "same_goal_id": true,
+      "same_verbatim_assignment_objective": true,
+      "recorded_activation_utc": "2026-10-10T05:17:42.374Z",
+      "recorded_completion_utc": "2026-10-10T05:21:35.791Z",
+      "science_mtimes_before_recorded_completion": true
+    },
+    "caution": "Presence and consistency of frozen purported receipts are not independent provider trace verification; host T3 completion is not native Goal proof."
+  },
+  "protocol": {
+    "status": "NO_DISQUALIFYING_VIOLATION_OBSERVED; UNOBSERVED_EXECUTION_UNKNOWN",
+    "reviewer_compliance": {
+      "one_actual_native_goal_created": true,
+      "delegation": false,
+      "candidate_feedback_or_repair": false,
+      "accounts": false,
+      "git_or_publication": false,
+      "other_arms_or_history": false,
+      "roster_or_other_outcome_labels": false,
+      "only_own_mailbox_checked": true,
+      "write_root": "ER12_RUNTIME/assessment/B-FINAL-M-02/treatment-v1",
+      "judgment_saved_before_reviewer_native_completion": true
+    },
+    "candidate_claims_not_independently_verified": [
+      "exactly one actual native Goal",
+      "activation before input reads",
+      "no nested assistance/account switches/cross-arm contact",
+      "exact retrieval tool route"
+    ]
+  },
+  "effective": {
+    "status": "UNKNOWN",
+    "requested_route": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "muse-spark-1.3-contributor",
+      "options": {
+        "reasoningEffort": "max"
+      }
+    },
+    "root_terminal_reported_target": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "muse-spark-1.3-contributor"
+    },
+    "billing_identity": "UNKNOWN"
+  },
+  "billing": {
+    "status": "UNKNOWN",
+    "raw_completion_receipt_tokens_used": 2128372,
+    "task_scoped_usage": "UNKNOWN",
+    "cost": "UNKNOWN",
+    "savings": "UNKNOWN"
+  },
+  "time": {
+    "candidate_prepared_at_utc": "2026-10-10T05:17:25.520000+00:00",
+    "candidate_deadline_utc": "2026-10-10T05:32:25.520000+00:00",
+    "whole_arm_seconds": 900,
+    "root_terminal_observation_utc": "2026-10-10T05:22:51.502144+00:00",
+    "root_observed_t3_status": "completed",
+    "root_observed_pending_children": false,
+    "root_observation_seconds_after_preparation": 325.982144,
+    "delivery_within_deadline": true,
+    "active_scientific_occupancy": "UNKNOWN",
+    "paired_latency_or_speed_claim": null,
+    "reviewer_limit_seconds": 1500,
+    "reviewer_judgment_saved_within_limit": true
+  },
+  "freeze_integrity": {
+    "all_8_input_entries_match": true,
+    "terminal_science_freeze": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/terminal-science-freeze-root.json",
+    "science_checks": [
+      {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+        "sha256": "fe1b8e7e9f474f6cfa0a6368b76bdd00a705d2a4eb31341d99ed24e44930e992",
+        "root_sha256": "fe1b8e7e9f474f6cfa0a6368b76bdd00a705d2a4eb31341d99ed24e44930e992",
+        "sha256_match": true,
+        "bytes_match": true,
+        "mtime_ns_match": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/source-map.json",
+        "sha256": "4b5aaae299dbcb13dd2a7d63c85c7f2bbd8b90b13c3150d55c31677a2d294dd4",
+        "root_sha256": "4b5aaae299dbcb13dd2a7d63c85c7f2bbd8b90b13c3150d55c31677a2d294dd4",
+        "sha256_match": true,
+        "bytes_match": true,
+        "mtime_ns_match": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/sources/S1-excerpt.md",
+        "sha256": "8b162faa61c3eabeb29fce249280809119a619f573a8ea24a9291524636da3ce",
+        "root_sha256": "8b162faa61c3eabeb29fce249280809119a619f573a8ea24a9291524636da3ce",
+        "sha256_match": true,
+        "bytes_match": true,
+        "mtime_ns_match": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/sources/S2-excerpt.md",
+        "sha256": "712e462d06574383d6039b45daa0ac1ec3596b184e2fc4dfe480cc7e97d86e36",
+        "root_sha256": "712e462d06574383d6039b45daa0ac1ec3596b184e2fc4dfe480cc7e97d86e36",
+        "sha256_match": true,
+        "bytes_match": true,
+        "mtime_ns_match": true
+      }
+    ],
+    "semantic_judgment_not_based_on_hashes": true
+  },
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "bytes": 2790,
+      "mtime_ns": 1791604608938287266,
+      "terminal_hash_match": null,
+      "input_freeze_hash_match": null,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/input-map.json",
+      "sha256": "0e40e69aaa51103b418103e5e2eb88c5f7db18dc55f900ad9bed0360e4544392",
+      "bytes": 626,
+      "mtime_ns": 1791609446034586193,
+      "terminal_hash_match": true,
+      "input_freeze_hash_match": true,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/assignment.md",
+      "sha256": "81e9d2a081c411da64bf901e717d11a11ac51625841d8da01156057ce3b5f369",
+      "bytes": 3188,
+      "mtime_ns": 1791609446034718636,
+      "terminal_hash_match": true,
+      "input_freeze_hash_match": true,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/freeze.json",
+      "sha256": "3b90901cc3498057e14bc7c65a9f6b0eff101af5615b76c4496c28cf91003d83",
+      "bytes": 2872,
+      "mtime_ns": 1791609446034437349,
+      "terminal_hash_match": true,
+      "input_freeze_hash_match": null,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/inputs/assignment.md",
+      "sha256": "ff2b636fc14365864262cef1330454a807288fe456febf8f0660a142b9521f2f",
+      "bytes": 5079,
+      "mtime_ns": 1791609445820236482,
+      "terminal_hash_match": null,
+      "input_freeze_hash_match": true,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/inputs/fixture.json",
+      "sha256": "a6cccca9be12f21291c5c5d991e0355f8abaac1e675ae1372e5e7fac717142ca",
+      "bytes": 1649,
+      "mtime_ns": 1791609445820784482,
+      "terminal_hash_match": null,
+      "input_freeze_hash_match": true,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/inputs/manifest.json",
+      "sha256": "bb341175ce21f6a33a366bf78842e8057cc090642052f0bbdf469dcbf21b4cad",
+      "bytes": 624,
+      "mtime_ns": 1791609445820967341,
+      "terminal_hash_match": null,
+      "input_freeze_hash_match": true,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/inputs/corpus/S1.md",
+      "sha256": "abe9113df5303a6896c0efcffb0f053cef56cc5a6d0e2f3f8784a1ef5248cd0b",
+      "bytes": 891,
+      "mtime_ns": 1791609445820421772,
+      "terminal_hash_match": null,
+      "input_freeze_hash_match": true,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/inputs/corpus/S2.md",
+      "sha256": "82283c7ceb2bde2011bf62f375f02e452fdc66d7dbe9be299af2d18cb2e72cef",
+      "bytes": 937,
+      "mtime_ns": 1791609445820550789,
+      "terminal_hash_match": null,
+      "input_freeze_hash_match": true,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/inputs/corpus/index.json",
+      "sha256": "ba1dd888161f20c30b39b1019aac62a69750209beb91fbff93131b343d1b61b1",
+      "bytes": 1316,
+      "mtime_ns": 1791609445820686836,
+      "terminal_hash_match": null,
+      "input_freeze_hash_match": true,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+      "sha256": "fe1b8e7e9f474f6cfa0a6368b76bdd00a705d2a4eb31341d99ed24e44930e992",
+      "bytes": 5732,
+      "mtime_ns": 1791609645577954917,
+      "terminal_hash_match": true,
+      "input_freeze_hash_match": null,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/source-map.json",
+      "sha256": "4b5aaae299dbcb13dd2a7d63c85c7f2bbd8b90b13c3150d55c31677a2d294dd4",
+      "bytes": 4457,
+      "mtime_ns": 1791609664000077347,
+      "terminal_hash_match": true,
+      "input_freeze_hash_match": null,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/sources/S1-excerpt.md",
+      "sha256": "8b162faa61c3eabeb29fce249280809119a619f573a8ea24a9291524636da3ce",
+      "bytes": 1851,
+      "mtime_ns": 1791609606759716913,
+      "terminal_hash_match": true,
+      "input_freeze_hash_match": null,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/sources/S2-excerpt.md",
+      "sha256": "712e462d06574383d6039b45daa0ac1ec3596b184e2fc4dfe480cc7e97d86e36",
+      "bytes": 1444,
+      "mtime_ns": 1791609614719765718,
+      "terminal_hash_match": true,
+      "input_freeze_hash_match": null,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/native-goal-activation.json",
+      "sha256": "378e5b813274f2f85027a0246d9edef4e16616d9f2a9e22375112e34df4bd9f4",
+      "bytes": 950,
+      "mtime_ns": 1791609598644667159,
+      "terminal_hash_match": true,
+      "input_freeze_hash_match": null,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/native-goal-completion.json",
+      "sha256": "feb34b5fa4769e7a5be4c5362ed449389ccca38b92c96e34e8c7665cb4624e51",
+      "bytes": 878,
+      "mtime_ns": 1791609706842372674,
+      "terminal_hash_match": true,
+      "input_freeze_hash_match": null,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/terminal-science-freeze-root.json",
+      "sha256": "413d4349fde452605810ec792bd7e1764736772634839f543e55287aa5150251",
+      "bytes": 11782,
+      "mtime_ns": 1791609771502504683,
+      "terminal_hash_match": null,
+      "input_freeze_hash_match": null,
+      "read_full": true
+    }
+  ],
+  "primary_urls_versions": [
+    {
+      "id": "P1",
+      "url": "https://www.postgresql.org/docs/17/sql-insert.html",
+      "final_url": "https://www.postgresql.org/docs/17/sql-insert.html",
+      "retrieved_at_utc": "2026-10-10T05:24:11.286517+00:00",
+      "operation": "HTTPS GET via Python standard-library urllib.request (documentation data only)",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 45611,
+      "sha256": "f18feb692580770ae7a17537db2b922a44fc0119be4dc4ff38537502307e2cba",
+      "file": "primary/P1.html",
+      "text_file": "primary/P1.txt",
+      "text_sha256": "c00520394f2d36f665a9adcfcce19084e024c2f6d1598eca5e2266c9aaccfc8d",
+      "version": "PostgreSQL major version 17 documentation",
+      "governing_sections": [
+        "INSERT Description / RETURNING",
+        "ON CONFLICT Clause; conflict_target; condition; deterministic-statement restriction; concurrent-index warning"
+      ],
+      "locators": [
+        {
+          "id": "P1-returning",
+          "url": "https://www.postgresql.org/docs/17/sql-insert.html",
+          "snapshot": "primary/P1.html",
+          "text": "primary/P1.txt",
+          "line": 163,
+          "selector": "Description: paragraph beginning The optional RETURNING clause"
+        },
+        {
+          "id": "P1-arbiter",
+          "url": "https://www.postgresql.org/docs/17/sql-insert.html#SQL-ON-CONFLICT",
+          "snapshot": "primary/P1.html#SQL-ON-CONFLICT",
+          "text": "primary/P1.txt",
+          "line": 235,
+          "selector": "conflict_target unique-index inference and required conflict_target"
+        },
+        {
+          "id": "P1-condition",
+          "url": "https://www.postgresql.org/docs/17/sql-insert.html#SQL-ON-CONFLICT",
+          "snapshot": "primary/P1.html#SQL-ON-CONFLICT",
+          "text": "primary/P1.txt",
+          "line": 275,
+          "selector": "condition definition: evaluated last, true updates, all conflicts locked"
+        },
+        {
+          "id": "P1-supported-arbiters",
+          "url": "https://www.postgresql.org/docs/17/sql-insert.html#SQL-ON-CONFLICT",
+          "snapshot": "primary/P1.html#SQL-ON-CONFLICT",
+          "text": "primary/P1.txt",
+          "line": 277,
+          "selector": "supported arbiters: NOT DEFERRABLE constraints and unique indexes; exclusion not supported for DO UPDATE"
+        },
+        {
+          "id": "P1-deterministic",
+          "url": "https://www.postgresql.org/docs/17/sql-insert.html#SQL-ON-CONFLICT",
+          "snapshot": "primary/P1.html#SQL-ON-CONFLICT",
+          "text": "primary/P1.txt",
+          "line": 279,
+          "selector": "paragraph beginning INSERT with an ON CONFLICT DO UPDATE clause is a deterministic statement"
+        },
+        {
+          "id": "P1-errors",
+          "url": "https://www.postgresql.org/docs/17/sql-insert.html#SQL-ON-CONFLICT",
+          "snapshot": "primary/P1.html#SQL-ON-CONFLICT",
+          "text": "primary/P1.txt",
+          "line": 237,
+          "selector": "atomic INSERT or UPDATE: independent-error proviso"
+        },
+        {
+          "id": "P1-index-maintenance",
+          "url": "https://www.postgresql.org/docs/17/sql-insert.html#SQL-ON-CONFLICT",
+          "snapshot": "primary/P1.html#SQL-ON-CONFLICT",
+          "text": "primary/P1.txt",
+          "line": 289,
+          "selector": "Warning: CREATE INDEX CONCURRENTLY or REINDEX CONCURRENTLY unique violation"
+        },
+        {
+          "id": "P1-trigger-scope",
+          "url": "https://www.postgresql.org/docs/17/sql-insert.html#SQL-ON-CONFLICT",
+          "snapshot": "primary/P1.html#SQL-ON-CONFLICT",
+          "text": "primary/P1.txt",
+          "line": 247,
+          "selector": "BEFORE INSERT effects reflected in excluded"
+        }
+      ]
+    },
+    {
+      "id": "P2",
+      "url": "https://www.postgresql.org/docs/17/transaction-iso.html",
+      "final_url": "https://www.postgresql.org/docs/17/transaction-iso.html",
+      "retrieved_at_utc": "2026-10-10T05:24:11.808681+00:00",
+      "operation": "HTTPS GET via Python standard-library urllib.request (documentation data only)",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 47624,
+      "sha256": "b4c2f29cc4284f5fd860da91737055431dd7e742861b22218b1369e8933e6034",
+      "file": "primary/P2.html",
+      "text_file": "primary/P2.txt",
+      "text_sha256": "d36d2d4ab6674074f96507fc2d870bcdac0e05ba62f3187f0a8cf8cc458f0f96",
+      "version": "PostgreSQL major version 17 documentation",
+      "governing_sections": [
+        "13.2.1 Read Committed Isolation Level"
+      ],
+      "locators": [
+        {
+          "id": "P2-default",
+          "url": "https://www.postgresql.org/docs/17/transaction-iso.html#XACT-READ-COMMITTED",
+          "snapshot": "primary/P2.html#XACT-READ-COMMITTED",
+          "text": "primary/P2.txt",
+          "line": 198,
+          "selector": "Read Committed default / statement snapshots"
+        },
+        {
+          "id": "P2-concurrent-update",
+          "url": "https://www.postgresql.org/docs/17/transaction-iso.html#XACT-READ-COMMITTED",
+          "snapshot": "primary/P2.html#XACT-READ-COMMITTED",
+          "text": "primary/P2.txt",
+          "line": 200,
+          "selector": "UPDATE waiting and re-evaluating WHERE on updated version"
+        },
+        {
+          "id": "P2-upsert",
+          "url": "https://www.postgresql.org/docs/17/transaction-iso.html#XACT-READ-COMMITTED",
+          "snapshot": "primary/P2.html#XACT-READ-COMMITTED",
+          "text": "primary/P2.txt",
+          "line": 202,
+          "selector": "INSERT ON CONFLICT DO UPDATE at Read Committed, unrelated-error proviso, invisible conflicting version"
+        },
+        {
+          "id": "P2-merge-alternative",
+          "url": "https://www.postgresql.org/docs/17/transaction-iso.html#XACT-READ-COMMITTED",
+          "snapshot": "primary/P2.html#XACT-READ-COMMITTED",
+          "text": "primary/P2.txt",
+          "line": 206,
+          "selector": "MERGE differs from DO UPDATE outcome guarantee under concurrency"
+        }
+      ]
+    }
+  ],
+  "useful_discoveries": [
+    {
+      "id": "D1",
+      "finding": "Caller last-occurrence selection can avoid SQL duplicate rows, but violates O3 here",
+      "primary": [
+        "P1-deterministic"
+      ],
+      "kind": "reviewer inference / non-selected alternative"
+    },
+    {
+      "id": "D2",
+      "finding": "Concurrent index maintenance is a documented remaining unique-violation case",
+      "primary": [
+        "P1-index-maintenance"
+      ],
+      "kind": "primary source fact"
+    },
+    {
+      "id": "D3",
+      "finding": "MERGE at Read Committed is not interchangeable with the upsert outcome guarantee",
+      "primary": [
+        "P2-merge-alternative"
+      ],
+      "kind": "primary source fact"
+    },
+    {
+      "id": "D4",
+      "finding": "Conditional stale conflicts retain locks without RETURNING presence",
+      "primary": [
+        "P1-condition",
+        "P1-returning"
+      ],
+      "kind": "primary source fact"
+    }
+  ],
+  "proposed_vs_executed": {
+    "candidate_proposed": "3 acceptance groups; no DB test claimed",
+    "candidate_reported_retrievals": "two primary URLs, zero additional pages, zero DB probes; precise tool route not independently observed",
+    "reviewer_executed": [
+      "full frozen input/science reads",
+      "independent primary web opens and HTTPS GETs",
+      "JSON parse",
+      "exact-token / word-count checks",
+      "SHA-256, bytes, mtime comparisons",
+      "assessment save verification"
+    ],
+    "reviewer_database_execution": false
+  },
+  "remaining_implementation_evidence": [
+    "Exact schema SQLSTATE mapping",
+    "contention/retry behavior",
+    "unrelated-constraint failure taxonomy",
+    "actual DB acceptance results",
+    "deployment-specific key/timestamp preservation if applicable"
+  ],
+  "output_artifacts": [
+    "assessment.md",
+    "assessment.json",
+    "source-map.json",
+    "inspected-hashes.json",
+    "retrievals.json",
+    "primary/P1.html",
+    "primary/P1.txt",
+    "primary/P2.html",
+    "primary/P2.txt"
+  ],
+  "original_judgment_preservation": "This is the initial independent judgment. Later dispute dispositions must be separate; no candidate science edited."
+}

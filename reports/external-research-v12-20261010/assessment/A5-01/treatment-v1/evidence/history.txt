@@ -1,0 +1,94 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://github.com/MediaArea/BWFMetaEdit/blob/318d800d92c4a3cc8a814f6fdceba0ed8b3416ec/History_GUI.txt",
+    "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/318d800d92c4a3cc8a814f6fdceba0ed8b3416ec/History_GUI.txt",
+    "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/master/History_GUI.txt"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A5-01/treatment-v1/source-map.json",
+      "source_id": "IND-HISTORY",
+      "existing_authored_summary_fields": {
+        "version_or_commit": "Mutable master capture; also independently pinned to v26.08 commit 318d800d92c4a3cc8a814f6fdceba0ed8b3416ec",
+        "governing_meaning": "The cited CR/escaping/full-file-write, UNICODE=1 import, code-page/CSET and CORE fallback changes are present for the named releases. They justify version/path-specific prospective checks, not present universal compatibility. The same history records XML checks in 20.08 and an invalid-XML data-entry warning in 21.07. Those relevant entries were omitted from the proposal’s XML applicability discussion. The immutable v26.08 file has the same inspected history bytes; this is supporting provenance, not semantic proof.",
+        "applicability": "Supports the bounded historical example and independently exposes the unresolved source conflict in M1."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A5-01/treatment-v1/source-map.json",
+      "source_id": "release-26.08-history.txt",
+      "existing_authored_summary_fields": {
+        "version_or_commit": "v26.08 at 318d800d92c4a3cc8a814f6fdceba0ed8b3416ec",
+        "governing_meaning": "Released v26.08 history corroborates the XML check/warning changes and versioned encoding example, independently of moving master.",
+        "applicability": "Static public released-source evidence only; installed 26.08.1 binary behavior remains untested."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A5-01/treatment-v1/evidence/retrieval-manifest.json",
+      "source_id": "IND-HISTORY",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/A5-01/treatment-v1/evidence/supplemental-retrieval-manifest.json",
+      "source_id": "release-26.08-history.txt",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": "Version entries 0.2.2, 20.08, 21.07, 23.04 and 25.04; captured history lines 12–15, 47–50, 61–87, 99–104 and 293–301"
+    },
+    {
+      "locator": "Version 20.08/21.07 entries and named encoding releases"
+    }
+  ],
+  "raw_sha256": "88faeb6b107187959435d46c55a36f8538995bddea23953b62cc0b9b1a762b15",
+  "original_bytes": 15486,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A5-01/treatment-v1/evidence/history.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://github.com/MediaArea/BWFMetaEdit/blob/318d800d92c4a3cc8a814f6fdceba0ed8b3416ec/History_GUI.txt",
+    "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/318d800d92c4a3cc8a814f6fdceba0ed8b3416ec/History_GUI.txt",
+    "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/master/History_GUI.txt"
+  ],
+  "version": [
+    {
+      "version_or_commit": "Mutable master capture; also independently pinned to v26.08 commit 318d800d92c4a3cc8a814f6fdceba0ed8b3416ec",
+      "governing_meaning": "The cited CR/escaping/full-file-write, UNICODE=1 import, code-page/CSET and CORE fallback changes are present for the named releases. They justify version/path-specific prospective checks, not present universal compatibility. The same history records XML checks in 20.08 and an invalid-XML data-entry warning in 21.07. Those relevant entries were omitted from the proposal’s XML applicability discussion. The immutable v26.08 file has the same inspected history bytes; this is supporting provenance, not semantic proof.",
+      "applicability": "Supports the bounded historical example and independently exposes the unresolved source conflict in M1."
+    },
+    {
+      "version_or_commit": "v26.08 at 318d800d92c4a3cc8a814f6fdceba0ed8b3416ec",
+      "governing_meaning": "Released v26.08 history corroborates the XML check/warning changes and versioned encoding example, independently of moving master.",
+      "applicability": "Static public released-source evidence only; installed 26.08.1 binary behavior remains untested."
+    }
+  ],
+  "selector": [
+    {
+      "locator": "Version entries 0.2.2, 20.08, 21.07, 23.04 and 25.04; captured history lines 12–15, 47–50, 61–87, 99–104 and 293–301"
+    },
+    {
+      "locator": "Version 20.08/21.07 entries and named encoding releases"
+    }
+  ],
+  "conditions": [
+    {
+      "version_or_commit": "Mutable master capture; also independently pinned to v26.08 commit 318d800d92c4a3cc8a814f6fdceba0ed8b3416ec",
+      "governing_meaning": "The cited CR/escaping/full-file-write, UNICODE=1 import, code-page/CSET and CORE fallback changes are present for the named releases. They justify version/path-specific prospective checks, not present universal compatibility. The same history records XML checks in 20.08 and an invalid-XML data-entry warning in 21.07. Those relevant entries were omitted from the proposal’s XML applicability discussion. The immutable v26.08 file has the same inspected history bytes; this is supporting provenance, not semantic proof.",
+      "applicability": "Supports the bounded historical example and independently exposes the unresolved source conflict in M1."
+    },
+    {
+      "version_or_commit": "v26.08 at 318d800d92c4a3cc8a814f6fdceba0ed8b3416ec",
+      "governing_meaning": "Released v26.08 history corroborates the XML check/warning changes and versioned encoding example, independently of moving master.",
+      "applicability": "Static public released-source evidence only; installed 26.08.1 binary behavior remains untested."
+    }
+  ],
+  "rawSHA256": "88faeb6b107187959435d46c55a36f8538995bddea23953b62cc0b9b1a762b15"
+}

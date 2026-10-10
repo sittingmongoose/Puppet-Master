@@ -1,0 +1,59 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://github.com/IIIF/api/issues/1287"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A6-02/control-v1/retrieval-manifest.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {
+        "candidate_version": "Issue opened 2017-10-12; milestone Presentation 3.0 - RC1; closed per page"
+      }
+    },
+    {
+      "authored_source_map": "assessment/A6-02/control-v1/source-map.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {
+        "version_applicability": "Issue opened 2017-10-12; milestone Presentation 3.0 - RC1; closed per page"
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "supported_locator": "Issue #1287 opened 2017-10-12; extracted L113-129, L178-191"
+    }
+  ],
+  "raw_sha256": "56bd8cc46532cb4094b25393e3926cdf22664407f66052f563286cc6942426c5",
+  "original_bytes": 6960,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A6-02/control-v1/evidence/R-S12.text.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://github.com/IIIF/api/issues/1287"
+  ],
+  "version": [
+    {
+      "candidate_version": "Issue opened 2017-10-12; milestone Presentation 3.0 - RC1; closed per page"
+    },
+    {
+      "version_applicability": "Issue opened 2017-10-12; milestone Presentation 3.0 - RC1; closed per page"
+    }
+  ],
+  "selector": [
+    {
+      "supported_locator": "Issue #1287 opened 2017-10-12; extracted L113-129, L178-191"
+    }
+  ],
+  "conditions": [
+    {
+      "version_applicability": "Issue opened 2017-10-12; milestone Presentation 3.0 - RC1; closed per page"
+    }
+  ],
+  "rawSHA256": "56bd8cc46532cb4094b25393e3926cdf22664407f66052f563286cc6942426c5"
+}

@@ -1,0 +1,1052 @@
+{
+  "schema_version": "er12-independent-assessment-v1",
+  "slot": "A8-02",
+  "arm": "control",
+  "assessment_id": "A8-02/control-v1",
+  "reviewer": "codex-er12-a802-control-review-0535",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "remaining_material_findings": [],
+  "material_findings": [],
+  "summary": "All six axes and all exact plan clauses assessed. No remaining material factual error, omission or unsupported consequential decision substantiated. Minor connected-demo wording and implicit validation-priority presentation remain. Corrected discovery/draft defects are preserved separately.",
+  "delivery": {
+    "status": "COMPLETE_FINAL_PRESENT",
+    "final_artifact": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+    "final_sha256": "59bafb53a834012095b00ad1b9e91e083cbc1f248d6e3a78ce05225fc6e6deef",
+    "basis": "Original final fully read; terminal freeze agrees; content reviewed semantically."
+  },
+  "coverage": {
+    "axes_assigned": 6,
+    "axes_assessed": 6,
+    "unassessed_axes": [],
+    "exact_numbered_plan_clauses": 8,
+    "exact_clauses_assessed": 8,
+    "capped": false,
+    "complete_authored_stages": [
+      "investigator/discovery.md",
+      "investigator/draft.md",
+      "critic/critique.md",
+      "reviser/final.md"
+    ],
+    "all_stage_maps_assignments_input_maps_freezes_read": true,
+    "all_authored_source_evidence_present_read": true,
+    "critique_disposition_and_check_files": "Dispositions are in final.md; review/check descriptions are in critique.md/maps and validation tables. No separate authored product-check artifact exists in the mapped package."
+  },
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Original obligations and negative constraints",
+      "coverage": "ASSESSED_COMPLETE",
+      "judgment": "PASS",
+      "reason": "Both intake routes, the delayed-event analogy, observation/arrival distinction, reboot/replay identity, correction lineage, bounded released history, optional reviewed CSV, named owners, all exclusions and a complete proposal are substantively present. CSV remains authorized optional scope, with technical conditions rather than an assumed implementation. No missing prototype or deployment is invented as a requirement.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 25,
+          "section": "route comparison"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 37,
+          "section": "time/replay/corrections"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 56,
+          "section": "delivery boundary and analogy"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 68,
+          "section": "freshness"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 86,
+          "section": "all eight obligations"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 101,
+          "section": "owners"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 109,
+          "section": "validation"
+        }
+      ],
+      "evidence": [
+        "B",
+        "P",
+        "E01",
+        "E04",
+        "E06",
+        "E08",
+        "E11",
+        "E13",
+        "E14"
+      ],
+      "negative_constraints": {
+        "live_stations": "preserved; no connection is recommended",
+        "gateway_modifications": "preserved; proposed bench excludes changes",
+        "exactly_once": "explicitly refused as observation guarantee",
+        "late_raw_readings": "retained beyond any derived lateness policy",
+        "weather_safety": "historical/informational; no hazard/control advice",
+        "accounts_installs_live_writes": "none claimed or required in this research"
+      }
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source claims and exact applicability",
+      "coverage": "ASSESSED_COMPLETE",
+      "judgment": "PASS",
+      "reason": "Independent primary retrieval supports the checked TTS integration/default/retention claims, MQTT sender/receiver scope, LoRaWAN1.0.4 activation and retransmission conditions, PostgreSQL18 loader/constraint/transaction behavior, Beam versioned source/history and InfluxDB3Core duplicate semantics. Local archive/freshness choices are identified as choices/inference. No public document is used to certify the unknown station hardware. Detailed governing conditions and locators are E01\u2013E15.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 29,
+          "section": "radio conditions"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 33,
+          "section": "external behavior"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 48,
+          "section": "LoRaWAN applicability"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 52,
+          "section": "COPY and review boundary"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 64,
+          "section": "Beam source"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 66,
+          "section": "released history"
+        }
+      ],
+      "evidence": [
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E06",
+        "E07",
+        "E08",
+        "E09",
+        "E10",
+        "E11",
+        "E12",
+        "E13",
+        "E14",
+        "E15"
+      ],
+      "types_units_domains_reviewed": [
+        "transport frame counter versus application sample identity",
+        "LoRaWAN32-bit counters and16-bit transmitted FCnt under session/activation rules",
+        "TTS retention days/hours and Cloud/Sandbox/Enterprise scope",
+        "webhook total tries/seconds and enabled/configurable defaults",
+        "PostgreSQL FROM/text-or-CSV conversion errors versus general review workflow",
+        "Beam one-day allowed lateness and derived panes versus raw retention",
+        "InfluxDB3Core table/tag/time identity, not InfluxDB2 overwrite rules",
+        "rainfall cumulative/increment semantics and units remain unknown; no invented conversion"
+      ],
+      "remaining_material_error": false
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar discovery, alternatives, implementation/history and opportunity breadth",
+      "coverage": "ASSESSED_COMPLETE",
+      "judgment": "PASS",
+      "reason": "Discovery supplies useful mechanisms rather than vacuous caution: conditional LoRaWAN/TTS application stream, a reviewed PostgreSQL CSV staging route, bounded storage reconciliation, enabled webhook alternative, InfluxDB3Core projection with its overwrite hazard, and Beam event-time late panes. Released TriggerExample source and the Spanner watermark issue/release provide concrete implementation/history evidence. This is sufficient bounded breadth for ten stations; no exhaustive product catalogue or unrelated radio survey is required.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 17,
+          "section": "archive candidate and alternatives"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 25,
+          "section": "route tradeoffs"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 64,
+          "section": "released implementation analogy"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 66,
+          "section": "failure/fix history"
+        }
+      ],
+      "evidence": [
+        "E01",
+        "E03",
+        "E07",
+        "E08",
+        "E11",
+        "E12",
+        "E13",
+        "E14",
+        "E15"
+      ],
+      "limits": [
+        "Device-specific batching/power are not discoveries established about this club; their final qualification is necessary.",
+        "History is bounded to a Spanner connector analogue. It is not evidence that a radio-stack defect or deployed pilot failure occurred."
+      ]
+    },
+    {
+      "axis": 4,
+      "name": "Wrong criticism, corrections/rejections and exact plan dispositions",
+      "coverage": "ASSESSED_COMPLETE",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "reason": "Every numbered criticism and the critic's no-material-error/unresolved-input conclusions are explicitly adjudicated. Arrival-time substitution, late discard, assumed counter uniqueness, blanket network dedup and unchecked CSV appends are correctly corrected; supported optional scope and owner authority survive. I-02's severity was debatable because the draft already discussed both routes, but the requested explicit comparison is authorized and useful. The connected-demo language overreads the original phrase; the concrete final bench path prevents a material scope effect.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 74,
+          "section": "critic dispositions"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 86,
+          "section": "plan dispositions"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 93,
+          "section": "minor demo wording"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 119,
+          "section": "isolated bench retained"
+        }
+      ],
+      "evidence": [
+        "B",
+        "P",
+        "E01",
+        "E02",
+        "E04",
+        "E06",
+        "E08"
+      ],
+      "limitations": [
+        "L01"
+      ],
+      "all_critic_findings_disposed": true
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning preserved through discovery/draft/critique/final",
+      "coverage": "ASSESSED_COMPLETE",
+      "judgment": "PASS",
+      "reason": "Final is self-contained and preserves the supported two-route proposal, raw/correction ledger, clock and identity uncertainty, owner roles, TTS boundaries, Influx alternative, Beam implementation/history and research-only status. It adds explicit comparison/freshness detail instead of silently narrowing scope. Early overgeneral batching/power language is qualified in final, while the lineage record remains identified. The draft's detailed schema-field suggestions are compressed into traceability prose without losing their operative meaning.",
+      "lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/investigator/discovery.md",
+          "line": 17,
+          "section": "radio strengths"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/investigator/draft.md",
+          "line": 13,
+          "section": "complete recommendation"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/investigator/draft.md",
+          "line": 46,
+          "section": "data model"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/critic/critique.md",
+          "line": 15,
+          "section": "I-01"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 29,
+          "section": "conditional capability"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 52,
+          "section": "CSV and lineage"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 80,
+          "section": "I-01 disposition"
+        }
+      ],
+      "evidence": [
+        "B",
+        "P",
+        "E01",
+        "E06",
+        "E08",
+        "E15"
+      ],
+      "lineage_defects": [
+        "LD01",
+        "LD02"
+      ],
+      "remaining_material_loss": false
+    },
+    {
+      "axis": 6,
+      "name": "Proposed versus executed validation and oracle applicability",
+      "coverage": "ASSESSED_COMPLETE",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "reason": "Product checks are explicitly NOT_RUN or PROPOSED; document/code/history review is research only. Synthetic replay/equal-value distinct samples/reset IDs/late corrections, malformed and repeated CSV files, and event-versus-receipt freshness cases have meaningful expected observations. Device inventory and isolated bench tests are appropriately prerequisites for hardware-specific claims. No nonexistent deployment is demanded. Priority is conveyed by dependencies and order, without explicit ranks; product confidence remains appropriately limited.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 109,
+          "section": "validation register"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 119,
+          "section": "device characterization"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 120,
+          "section": "replay oracle"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 121,
+          "section": "CSV oracle"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 122,
+          "section": "freshness oracle"
+        }
+      ],
+      "evidence": [
+        "B",
+        "E02",
+        "E06",
+        "E08",
+        "E11",
+        "E12"
+      ],
+      "limitations": [
+        "L02"
+      ],
+      "actual_product_validation": "NOT_RUN",
+      "source_retrieval_execution_authenticity": "Original maps claim retrieval; no original raw retrieval logs provided. Independent reviewer rechecks substantiate semantics, not the original execution trace.",
+      "oracle_limits": [
+        "A synthetic archive oracle can check retained records and policy dispositions; it cannot prove multi-hour device buffer or RF delivery.",
+        "A file hash recognizes a byte-identical artifact, not semantic observation uniqueness or the correctness of its measurements.",
+        "Beam code/history illustrates a processing mechanism; neither is a product-validation oracle for this club.",
+        "An isolated protocol test must name actual firmware/activation/version; generic TTS docs do not establish it."
+      ]
+    }
+  ],
+  "plan_dispositions": [
+    {
+      "clause": 1,
+      "evaluator_disposition": "CORRECTED_AND_COMPLETED",
+      "assessment": "Gateway arrival is separated from sample time; late raw readings are retained; rebooted counters need a reliable generation/identity policy. Two routes and Beam analogy are compared.",
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 29,
+          "section": "route comparison"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 46,
+          "section": "observation time"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 48,
+          "section": "counter rules"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 54,
+          "section": "late retention"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 64,
+          "section": "analogy"
+        }
+      ],
+      "evidence": [
+        "B",
+        "E04",
+        "E06",
+        "E11",
+        "E12"
+      ],
+      "exact_original_obligation": "Compare two ingestion/archive routes and an analogous delayed-event processing mechanism, including low-power and CSV tradeoffs.",
+      "exact_original_plan_heading": "Compare two ingestion/archive routes and an analogous delayed-event processing mechanism, including low-power and CSV tradeoffs.",
+      "exact_original_plan_body": "Use gateway arrival time as observation time and discard anything older than the current chart point. A restarted device is presumed to retain globally unique sequence numbers."
+    },
+    {
+      "clause": 2,
+      "evaluator_disposition": "LEADS_RETAINED_BOUNDARY_COMPLETED",
+      "assessment": "TTS and MQTT remain candidates; radio, app-facing MQTT and archive replay are no longer conflated. Equal-value readings and counter reuse are considered separately.",
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 48,
+          "section": "identity"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 60,
+          "section": "delivery layers"
+        }
+      ],
+      "evidence": [
+        "E01",
+        "E02",
+        "E06"
+      ],
+      "exact_original_obligation": "Explain observation time versus arrival time, duplicate/replayed messages, rebooted sequence counters and correction lineage.",
+      "exact_original_plan_heading": "Explain observation time versus arrival time, duplicate/replayed messages, rebooted sequence counters and correction lineage.",
+      "exact_original_plan_body": "The Things Stack and a generic MQTT pipeline are named as possible routes. Network delivery and archive replay are not yet separated."
+    },
+    {
+      "clause": 3,
+      "evaluator_disposition": "UNSAFE_APPEND_AND_BLANKET_DEDUP_REJECTED",
+      "assessment": "CSV stays optional with staged validation and reviewed lineage; network dedup handles frames rather than all semantic sample replays.",
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 52,
+          "section": "CSV handling"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 60,
+          "section": "dedup boundary"
+        }
+      ],
+      "evidence": [
+        "B",
+        "E01",
+        "E06",
+        "E08"
+      ],
+      "exact_original_obligation": "Research the boundary between radio/network delivery behavior, application replay policy and historical-chart interpretation.",
+      "exact_original_plan_heading": "Research the boundary between radio/network delivery behavior, application replay policy and historical-chart interpretation.",
+      "exact_original_plan_body": "Keep the CSV backfill option as authorized scope, but append its rows without checking identity or marking corrections. Assume network deduplication removes all application duplicates."
+    },
+    {
+      "clause": 4,
+      "evaluator_disposition": "HISTORY_COMPLETED_DEMO_ASSUMPTION_BOUNDED",
+      "assessment": "Spanner issue36470 and release2.69.0 establish a relevant bounded chain; device behavior remains investigated through inventory and proposed bench. A connected demo has not been executed and cannot be assumed proof. The original did not necessarily mean live stations; L01 records the overreading.",
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 66,
+          "section": "history"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 93,
+          "section": "wording"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 103,
+          "section": "device inputs"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 119,
+          "section": "allowed bench"
+        }
+      ],
+      "evidence": [
+        "B",
+        "P",
+        "E13",
+        "E14"
+      ],
+      "limitations": [
+        "L01"
+      ],
+      "exact_original_obligation": "Investigate a relevant released ingestion/time-ordering failure or fix chain and identify what remains dependent on the club\u2019s actual devices.",
+      "exact_original_plan_heading": "Investigate a relevant released ingestion/time-ordering failure or fix chain and identify what remains dependent on the club\u2019s actual devices.",
+      "exact_original_plan_body": "No released replay/time-ordering history has been read. A future connected demo is expected to prove behavior during multi-hour outages."
+    },
+    {
+      "clause": 5,
+      "evaluator_disposition": "AUTHORIZED_OPTION_RETAINED_CONDITIONALLY",
+      "assessment": "Documented CSV backfill, staff duplicate/correction review and technical conditions are preserved. No exclusion or mandatory promotion occurs; COPY feasibility does not assert unknown club-format interoperability.",
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 30,
+          "section": "optional route"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 52,
+          "section": "conditions"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 94,
+          "section": "explicit disposition"
+        }
+      ],
+      "evidence": [
+        "B",
+        "P",
+        "E08",
+        "E09",
+        "E10"
+      ],
+      "exact_original_obligation": "Preserve and investigate this supported optional scope: a documented CSV backfill path with staff-reviewed duplicate and correction handling. It is an authorized option, not a mandatory feature or an established technical capability; recommend conditions, retain it when supported, and explain any evidence-based exclusion.",
+      "exact_original_plan_heading": "Preserve and investigate this supported optional scope: a documented CSV backfill path with staff-reviewed duplicate and correction handling. It is an authorized option, not a mandatory feature or an established technical capability; recommend conditions, retain it when supported, and explain any evidence-based exclusion.",
+      "exact_original_plan_body": "Retain a documented CSV backfill path with staff-reviewed duplicate and correction handling as supported owner-authorized optional scope. Support here means that the brief explicitly permits it; technical support, conditions and interoperability still need research. Do not remove it merely because the baseline route lacks it, or silently promote it to mandatory scope."
+    },
+    {
+      "clause": 6,
+      "evaluator_disposition": "NAMED_OWNER_AUTHORITIES_RETAINED",
+      "assessment": "Steward identity/clock, archive replay/backfill and editor freshness roles are preserved. No decisions are falsely reported as obtained; additional unspecified inputs stay unassigned pending owner allocation.",
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 70,
+          "section": "freshness inputs"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 103,
+          "section": "owner list"
+        }
+      ],
+      "evidence": [
+        "B",
+        "P"
+      ],
+      "exact_original_obligation": "Make owner decisions explicit: The station steward owns sensor identity and clock-quality declarations; the archive maintainer owns replay and backfill policy. The club editor chooses freshness wording without implying live measurements.",
+      "exact_original_plan_heading": "Make owner decisions explicit: The station steward owns sensor identity and clock-quality declarations; the archive maintainer owns replay and backfill policy. The club editor chooses freshness wording without implying live measurements.",
+      "exact_original_plan_body": "Owner authority is reserved as follows: The station steward owns sensor identity and clock-quality declarations; the archive maintainer owns replay and backfill policy. The club editor chooses freshness wording without implying live measurements. The draft has not obtained these decisions. Its tentative implementation assumptions cannot substitute for them."
+    },
+    {
+      "clause": 7,
+      "evaluator_disposition": "ALL_EXCLUSIONS_RETAINED_CONFLICTS_CORRECTED",
+      "assessment": "No live-station connections, gateway modifications, exactly-once observation guarantee, deletion of late raw readings, hazard warnings/control or weather-safety advice. Proposed checks remain future synthetic/isolated work.",
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 19,
+          "section": "raw preservation"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 60,
+          "section": "guarantee refusal"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 72,
+          "section": "wording"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 96,
+          "section": "binding constraints"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 118,
+          "section": "validation constraints"
+        }
+      ],
+      "evidence": [
+        "B",
+        "P",
+        "E02",
+        "E06"
+      ],
+      "exact_original_obligation": "Preserve negative constraints: Do not connect to live stations, modify gateways, assert guaranteed exactly-once observation delivery, discard raw readings merely because they arrive late, or provide weather-safety advice.",
+      "exact_original_plan_heading": "Preserve negative constraints: Do not connect to live stations, modify gateways, assert guaranteed exactly-once observation delivery, discard raw readings merely because they arrive late, or provide weather-safety advice.",
+      "exact_original_plan_body": "Binding exclusions: Do not connect to live stations, modify gateways, assert guaranteed exactly-once observation delivery, discard raw readings merely because they arrive late, or provide weather-safety advice. The draft has no complete trace showing that its assumptions comply; revise the proposal wherever necessary to preserve these exclusions."
+    },
+    {
+      "clause": 8,
+      "evaluator_disposition": "COMPLETE_RESEARCH_PROPOSAL_DELIVERED",
+      "assessment": "Final supplies recommendations, compact comparison, applicability, discoveries/history, owner inputs, all dispositions and a meaningful research/product validation separation. It is a complete proposal rather than patch list. Priority is implicit in dependencies/order (L02).",
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 5,
+          "section": "scope"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 25,
+          "section": "comparison"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 109,
+          "section": "validation"
+        }
+      ],
+      "evidence": [
+        "B",
+        "P",
+        "E01",
+        "E08",
+        "E12",
+        "E13",
+        "E14"
+      ],
+      "limitations": [
+        "L02"
+      ],
+      "exact_original_obligation": "Deliver one coherent evidence-backed research proposal covering obligations 1\u20138, with recommendations, source/version applicability, useful discoveries, unresolved owner inputs, and a validation table separating checks actually executed from checks merely proposed. Do not report research sources or future tests as executed product validation.",
+      "exact_original_plan_heading": "Deliver one coherent evidence-backed research proposal covering obligations 1\u20138, with recommendations, source/version applicability, useful discoveries, unresolved owner inputs, and a validation table separating checks actually executed from checks merely proposed. Do not report research sources or future tests as executed product validation.",
+      "exact_original_plan_body": "The draft currently contains no coherent evidence-backed final proposal. Its proposed demos are research/validation ideas only. A complete revision must preserve every obligation, disclose corrections and retained options, and not confuse documentation review with successful product operation."
+    }
+  ],
+  "criticism_dispositions": [
+    {
+      "id": "I-01",
+      "original_classification": "Unsupported, non-blocking",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/A8-02/control/stages/critic/critique.md",
+        "line": 15,
+        "section": "findings"
+      },
+      "final_disposition": "ACCEPT",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+        "line": 80,
+        "section": "disposition"
+      },
+      "independent_assessment": "Valid qualification of discovery's categorical capability phrasing. The brief establishes possible buffering but not a LoRaWAN implementation, batch payload or device battery budget. The draft already had qualifications; final makes them explicit in the table. This is corrected lineage, not a remaining material final defect.",
+      "evidence": [
+        "B",
+        "E01",
+        "E06"
+      ],
+      "lineage": "LD01"
+    },
+    {
+      "id": "I-02",
+      "original_classification": "Material incomplete, localized",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/A8-02/control/stages/critic/critique.md",
+        "line": 16,
+        "section": "findings"
+      },
+      "final_disposition": "ACCEPT_AND_AMEND",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+        "line": 81,
+        "section": "disposition"
+      },
+      "independent_assessment": "An explicit compact comparison is required and was more complete in discovery than draft. Draft was not devoid of tradeoffs, so the exact severity is judgmental. Final carries radio collection/dependency costs, CSV offline/staff/template costs and common archive convergence. No bad factual correction or scope reduction results.",
+      "evidence": [
+        "B",
+        "E01",
+        "E03",
+        "E07",
+        "E08"
+      ],
+      "lineage": "LD02"
+    },
+    {
+      "id": "I-03",
+      "original_classification": "Minor locator/wording",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/A8-02/control/stages/critic/critique.md",
+        "line": 17,
+        "section": "findings"
+      },
+      "final_disposition": "ACCEPT_AND_REFINE",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+        "line": 82,
+        "section": "disposition"
+      },
+      "independent_assessment": "Reasonable precision request. Final explicitly identifies freshness as age of trustworthy accepted observation, separates receipt and preserves unknown-clock state and owner threshold choices. This is a product rule, not a source-certified default.",
+      "evidence": [
+        "B",
+        "E04"
+      ]
+    },
+    {
+      "id": "critic_no_material_wrong",
+      "final_disposition": "RETAIN_AFTER_INDEPENDENT_CHECKS",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+        "line": 83,
+        "section": "disposition"
+      },
+      "independent_assessment": "Reviewer independently substantiated consequential semantics in E01\u2013E15. Agreement itself was not used as proof."
+    },
+    {
+      "id": "critic_honestly_unresolved",
+      "final_disposition": "RETAIN_UNRESOLVED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+        "line": 84,
+        "section": "disposition"
+      },
+      "independent_assessment": "Hardware/protocol/clock/CSV/units/rainfall/freshness/retry configuration inputs genuinely are absent. Publicly answerable general mechanisms were researched; uncertainty is neither a substitute for that investigation nor a material omission here."
+    }
+  ],
+  "lineage_defects": [
+    {
+      "id": "LD01",
+      "stage": "discovery",
+      "classification": "OVERGENERAL_CAPABILITY_WORDING",
+      "description": "Radio table's station batching/power strength wording exceeds evidence for unknown club equipment; overarching candidate qualification partly bounded it.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/runs/A8-02/control/stages/investigator/discovery.md",
+        "line": 17,
+        "section": "radio strengths"
+      },
+      "corrected_by": "I-01",
+      "final_qualification": {
+        "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+        "line": 29,
+        "section": "conditional batching/power"
+      },
+      "remaining_material_issue": false
+    },
+    {
+      "id": "LD02",
+      "stage": "draft",
+      "classification": "COMPARISON_INCOMPLETELY_CARRIED",
+      "description": "Discovery's compact comparison was reduced to separate route descriptions in draft. Those retained substantive risks and workflow details, but final made relative costs explicit after I-02.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/runs/A8-02/control/stages/investigator/draft.md",
+        "line": 17,
+        "section": "route descriptions"
+      },
+      "corrected_by": "I-02",
+      "final_qualification": {
+        "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+        "line": 25,
+        "section": "complete comparison"
+      },
+      "remaining_material_issue": false
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L01",
+      "severity": "MINOR_WORDING",
+      "remaining_in_final": true,
+      "material": false,
+      "description": "Final line93 treats a future connected demo as necessarily violating the live-station boundary. Original plan says connected without specifying live. Draft/critic also interpret it as live. Final line119 still expressly permits isolated bench characterization, so the overstatement does not exclude an authorized option or change the concrete validation scope.",
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/investigator/draft.md",
+          "line": 36,
+          "section": "demo correction"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/critic/critique.md",
+          "line": 36,
+          "section": "released-plan corrections"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 93,
+          "section": "clause4"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 119,
+          "section": "bench validation"
+        }
+      ],
+      "evidence": [
+        "B",
+        "P"
+      ]
+    },
+    {
+      "id": "L02",
+      "severity": "MINOR_PRESENTATION",
+      "remaining_in_final": true,
+      "material": false,
+      "description": "Brief asks for prioritized validation. Final puts inventory before bench and organizes synthetic policy/CSV/chart checks, but gives no explicit priority ranks. The causal prerequisites and useful discriminating cases are present, so this is limited precision of presentation rather than missing validation substance.",
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 103,
+          "section": "inventory inputs"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 119,
+          "section": "bench prerequisites"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+          "line": 120,
+          "section": "synthetic checks"
+        }
+      ],
+      "evidence": [
+        "B"
+      ]
+    },
+    {
+      "id": "L03",
+      "severity": "EVIDENCE_APPLICABILITY_LIMIT",
+      "remaining_in_final": true,
+      "material": false,
+      "description": "TTS, Beam guide and InfluxDB3Core documentation are mutable and do not pin a deployed server patch. Final acknowledges unknown deployment. No club devices or CSV examples were supplied; no product behavior is certified. Exact PostgreSQL18/LoRaWAN1.0.4/Beam release-source boundaries remain explicit.",
+      "evidence": [
+        "E01",
+        "E06",
+        "E08",
+        "E11",
+        "E12",
+        "E15"
+      ]
+    }
+  ],
+  "useful_discoveries": [
+    {
+      "id": "D01",
+      "description": "TTS app-facing MQTT QoS differs from RF frame replay/dedup; recovery may use conditional webhooks/storage, each with limits.",
+      "evidence": [
+        "E01",
+        "E02",
+        "E03",
+        "E07"
+      ],
+      "preserved_final_lines": [
+        29,
+        33,
+        60
+      ]
+    },
+    {
+      "id": "D02",
+      "description": "Reviewed CSV can converge with radio in a relational staging/correction ledger without claiming COPY supplies human review.",
+      "evidence": [
+        "E08",
+        "E09",
+        "E10"
+      ],
+      "preserved_final_lines": [
+        30,
+        52
+      ]
+    },
+    {
+      "id": "D03",
+      "description": "Separate per-sample time/identity from envelope receipt and protocol counters; unknown clock/identity receives explicit treatment.",
+      "evidence": [
+        "E04",
+        "E05",
+        "E06"
+      ],
+      "preserved_final_lines": [
+        46,
+        48,
+        50,
+        70
+      ]
+    },
+    {
+      "id": "D04",
+      "description": "InfluxDB3Core overwrite behavior makes an append-only correction authority a useful design alternative.",
+      "evidence": [
+        "E15"
+      ],
+      "preserved_final_lines": [
+        23,
+        31
+      ]
+    },
+    {
+      "id": "D05",
+      "description": "Released Beam late-pane source plus the Spanner issue/fix chain connects a delayed-event mechanism to concrete state-ordering history.",
+      "evidence": [
+        "E11",
+        "E12",
+        "E13",
+        "E14"
+      ],
+      "preserved_final_lines": [
+        64,
+        66
+      ]
+    }
+  ],
+  "alternatives": {
+    "ingestion": [
+      "Existing low-power radio; LoRaWAN/TTS conditional",
+      "Optional staff-reviewed CSV"
+    ],
+    "archive": [
+      "PostgreSQL18 relational raw/review ledger candidate",
+      "InfluxDB3Core derived chart projection alternative"
+    ],
+    "mechanism": "Beam watermarks/allowed lateness/late panes as analogy; not dependency",
+    "transport_subalternatives": [
+      "TTS MQTT",
+      "Enabled supported webhook retries",
+      "Enabled bounded Storage Integration reconciliation"
+    ],
+    "assessment": "Meaningful bounded breadth preserved; no arbitrary extra product or deployment obligation imposed."
+  },
+  "unknowns": [
+    "Actual devices, firmware, activation and radio/network server versions; batching, clocks, sample identities and payload limits.",
+    "Actual CSV schema, timezone/units and reviewer procedure; rainfall accumulation semantics.",
+    "Owner replay/backfill acceptance policy, freshness thresholds/copy and deployment recovery/retention targets.",
+    "Original source-retrieval tool execution trace: sources directories contain indexes only, without raw page/tool captures.",
+    "Investigator native terminal completion: no standalone raw completion receipt found in the mapped stage files.",
+    "Effective provider/model/reasoning/service-tier/billed inference for candidate stages is not proved by a T3 route or a native token counter."
+  ],
+  "native_and_protocol": {
+    "source_judgment_separate": true,
+    "investigator": {
+      "activation": "SELF_REPORTED_INLINE_EXACT_FIELDS_IN_DRAFT; no standalone raw receipt",
+      "thread_id": "01a1242b-10d0-76e3-a175-41b25c7cfd2e",
+      "terminal_status": "UNKNOWN_FROM_DIRECT_RECEIPT",
+      "native_provider_model": "UNKNOWN"
+    },
+    "critic": {
+      "evidence": "ER12_RUNTIME/runs/A8-02/control/stages/critic/native-goal-receipts.json",
+      "recorded_activation_status": "active",
+      "recorded_terminal_status": "complete",
+      "thread_id": "01a12438-cb19-7cc2-9686-9d9e9b706036",
+      "raw_tokensUsed": 147050,
+      "raw_timeUsedSeconds": 650,
+      "native_provider_model": "UNKNOWN"
+    },
+    "reviser": {
+      "activation_evidence": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/native-activation-response.json",
+      "completion_evidence": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/native-completion-response.json",
+      "recorded_activation_status": "active",
+      "recorded_terminal_status": "complete",
+      "thread_id": "01a12444-92d6-7f80-9c8e-d0fcabe91fb9",
+      "raw_tokensUsed": 106978,
+      "raw_timeUsedSeconds": 552,
+      "native_provider_model": "UNKNOWN"
+    },
+    "t3": {
+      "basis": "Three original dispatch responses expose providerInstanceId AUTHORIZED_PROVIDER_INSTANCE and model gpt-6-luna; terminal freeze reports reviser completed with no pending children.",
+      "reported_route": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      },
+      "final_terminal_observed_at": "2026-10-10T05:34:47.949665+00:00",
+      "effective_backend": "UNKNOWN",
+      "service_tier_requested": "default",
+      "effective_service_tier": "UNKNOWN"
+    },
+    "protocol": {
+      "status": "PARTIALLY_VERIFIABLE",
+      "basis": "Discovery hash at one-time plan reveal, current matching originals and mapped handoffs support preservation. Root mechanics clarifications and prospective tier revision are recorded, without science-feedback text. No full candidate trajectory supplied; hidden prior reads, actual number of Goal activations and tool-operation compliance cannot be exhaustively audited.",
+      "unauthorized_assistance": "NONE_OBSERVED_IN_INSPECTED_PACKAGE; broader trace UNKNOWN",
+      "reviewer_constraints": "No nested delegation, candidate contact/repair, accounts, Git/publication, other-arm/result/history or ER11 access; unique own mailbox only."
+    },
+    "billing": "UNKNOWN; native tokensUsed retained as raw telemetry only, not billed inference or savings"
+  },
+  "time": {
+    "review_started_utc": "2026-10-10T05:35:01Z",
+    "review_deadline_utc": "2026-10-10T06:20:01Z",
+    "envelope_minutes": 45,
+    "capped": false,
+    "candidate_whole_deadline_utc": "2026-10-10T05:56:00.524Z",
+    "candidate_reviser_stage_deadline_utc": "2026-10-10T05:41:55.320Z",
+    "candidate_final_mtime_utc": "2026-10-10T05:32:47.634365+00:00",
+    "candidate_native_reviser_terminal_epoch": 1791610419,
+    "candidate_root_terminal_utc": "2026-10-10T05:34:47.949665+00:00",
+    "interpretation": "Final and recorded reviser terminal are before stage/whole deadlines. Critic science mtime and recorded terminal are before its stage deadline. Full original occupancy/queue/inference timing and investigator native completion remain incompletely evidenced. No speed, effective-compute or billing inference."
+  },
+  "artifacts_inspected_manifest": "original-inspected.json",
+  "original_science_preserved": "evidence/integrity-checks.json; all32 initial freeze checks matched",
+  "independent_source_map": "source-map.json",
+  "independent_evidence": "evidence/primary-evidence.md",
+  "urls_versions": "source-map.json sources E01\u2013E15",
+  "assessment_saved_before_reviewer_native_completion": true,
+  "reviewer_goal": {
+    "thread_id": "01a1244e-8ca5-7592-a7ce-14284083baf5",
+    "activated": true,
+    "activation_observed_epoch": 1791610501,
+    "terminal_response_artifact": "native-completion-response.json (written after science save)",
+    "no_second_goal": true
+  },
+  "additional_exact_plan_sections": [
+    {
+      "section": "Access and status",
+      "assessment": "Fallible input status preserved. One-time reveal record supports release after saved discovery; actual earlier-read compliance cannot be proved without a full tool trajectory."
+    },
+    {
+      "section": "Pilot intent",
+      "assessment": "Ten-station informational historical chart, freshness, raw retention, outages/reboots/buffering and no equipment/hazard functions retained."
+    },
+    {
+      "section": "Investigation leads",
+      "assessment": "TTS, MQTT/time-series and store-and-forward/time-ordering leads retained as candidates. PostgreSQL, CSV and Beam alternative/mechanism investigation prevents an assumed winner."
+    },
+    {
+      "section": "Final handoff qualification",
+      "assessment": "Original document existence and NOT_RUN preparation are not technical feasibility or successful operation. Final is coherent complete proposal, with research separated from validation."
+    }
+  ],
+  "original_handoff_validation_dispositions": [
+    {
+      "exact_original_check": "External documentation/version review",
+      "exact_original_status": "NOT_RUN",
+      "exact_original_evidence_or_intended_observation": "Investigator must retrieve relevant public primary evidence.",
+      "evaluator_disposition": "Final reports public review as EXECUTED research only; source semantics independently corroborated, original raw tool trace unavailable."
+    },
+    {
+      "exact_original_check": "Product comparison and history investigation",
+      "exact_original_status": "NOT_RUN",
+      "exact_original_evidence_or_intended_observation": "No winner, applicability conclusion or failure-chain finding is supplied.",
+      "evaluator_disposition": "Final provides route comparison and bounded issue/release investigation; these are research results, not a deployed product."
+    },
+    {
+      "exact_original_check": "Pilot scenario walkthrough",
+      "exact_original_status": "PROPOSED",
+      "exact_original_evidence_or_intended_observation": "Walk through ordinary use, interruption, correction and incompatible/missing input.",
+      "evaluator_disposition": "Ordinary replay, interruption, correction and missing/incompatible inputs remain proposed synthetic/isolated checks with useful oracles."
+    },
+    {
+      "exact_original_check": "Optional-path compatibility",
+      "exact_original_status": "PROPOSED",
+      "exact_original_evidence_or_intended_observation": "Check the option on its own terms, with conditions and owner choices.",
+      "evaluator_disposition": "Optional CSV compatibility remains proposed and contingent on actual schema, review and owner policy; no CSV capability is falsely certified."
+    },
+    {
+      "exact_original_check": "End-to-end product operation",
+      "exact_original_status": "NOT_RUN",
+      "exact_original_evidence_or_intended_observation": "No installation, deployment or live system access is authorized by this fixture.",
+      "evaluator_disposition": "End-to-end operation remains NOT_RUN; no install/deployment/live station or gateway change was required."
+    }
+  ],
+  "science_saved_at_utc": "2026-10-10T05:45:11.315622+00:00",
+  "review_completed_utc": "2026-10-10T05:46:02.518417+00:00",
+  "consistency_evidence": "evidence/assessment-consistency-check.json"
+}

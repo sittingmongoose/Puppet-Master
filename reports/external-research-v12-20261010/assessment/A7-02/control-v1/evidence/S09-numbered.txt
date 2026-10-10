@@ -1,0 +1,77 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://docs.jabref.org/advanced/commandline"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A7-02/control-v1/retrieval-manifest.json",
+      "source_id": "S09",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/A7-02/control-v1/source-map.json",
+      "source_id": "R09",
+      "existing_authored_summary_fields": {
+        "version_or_commit": "Served docs say since 5.0; installed build not chosen",
+        "governing_conditions_defaults_types_units_exceptions": "File conversion can run without GUI. -o defaults to BibTeX unless a filter is named. Import precedes export; without -i, last successfully loaded file is exported. One -i/-o file; a same-name custom filter takes precedence.",
+        "applicability_judgment": "Final recommends a version-pinned conversion option, not a command run or beta CLI guarantee. No field/default/unit is overgeneralized."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A7-02/control-v1/source-map.json",
+      "source_id": "S09",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "lines": 200
+    },
+    {
+      "independent_locator": "Basics and Import/Export options; numbered capture 49 and 95–109"
+    },
+    {
+      "lines": 200
+    }
+  ],
+  "raw_sha256": "9cbdce93156b6a47ccffa493e5d6914eae9dcc714979446dc267b7132a584d15",
+  "original_bytes": 13248,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A7-02/control-v1/evidence/S09-numbered.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://docs.jabref.org/advanced/commandline"
+  ],
+  "version": [
+    {
+      "version_or_commit": "Served docs say since 5.0; installed build not chosen",
+      "governing_conditions_defaults_types_units_exceptions": "File conversion can run without GUI. -o defaults to BibTeX unless a filter is named. Import precedes export; without -i, last successfully loaded file is exported. One -i/-o file; a same-name custom filter takes precedence.",
+      "applicability_judgment": "Final recommends a version-pinned conversion option, not a command run or beta CLI guarantee. No field/default/unit is overgeneralized."
+    }
+  ],
+  "selector": [
+    {
+      "lines": 200
+    },
+    {
+      "independent_locator": "Basics and Import/Export options; numbered capture 49 and 95–109"
+    },
+    {
+      "lines": 200
+    }
+  ],
+  "conditions": [
+    {
+      "version_or_commit": "Served docs say since 5.0; installed build not chosen",
+      "governing_conditions_defaults_types_units_exceptions": "File conversion can run without GUI. -o defaults to BibTeX unless a filter is named. Import precedes export; without -i, last successfully loaded file is exported. One -i/-o file; a same-name custom filter takes precedence.",
+      "applicability_judgment": "Final recommends a version-pinned conversion option, not a command run or beta CLI guarantee. No field/default/unit is overgeneralized."
+    }
+  ],
+  "rawSHA256": "9cbdce93156b6a47ccffa493e5d6914eae9dcc714979446dc267b7132a584d15"
+}

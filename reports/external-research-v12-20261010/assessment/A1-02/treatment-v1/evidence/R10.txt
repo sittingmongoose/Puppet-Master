@@ -1,0 +1,71 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://docs.rs/crate/caldata/0.17.3"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A1-02/treatment-v1/source-map.json",
+      "source_id": "R10",
+      "existing_authored_summary_fields": {
+        "version_or_commit": "Pinned package 0.17.3, docs.rs release date 2026-09-20",
+        "governing_conditions": "The released metadata/README describes a divergent hard fork of archived ical-rs with strict validation, typed date-times and recurrence expansion. It includes a modified copy of rust-rrule to perform local-time calculations in UTC. Documentation coverage is 17.74%; chrono-tz is optional and vtimezones-rs is listed. The embedded install snippet still names 0.16, so the package URL/version is the pin.",
+        "applicability": "A real competing Rust candidate. README capabilities are not a measured opaque-property/DST/interoperability guarantee; final does not select the crate.",
+        "observation": "Independent read-only HTTP retrieval and semantic inspection of relevant surrounding primary context; no downloaded code executed."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A1-02/treatment-v1/evidence/retrievals.json",
+      "source_id": "R10",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locators": [
+        "Version list",
+        "caldata-rs owner notes",
+        "Dependency list and documentation coverage"
+      ]
+    }
+  ],
+  "raw_sha256": "8a035a8bc4749e8b49f6b63c48639e158ffebaa56130abf0027025058e4368d3",
+  "original_bytes": 9956,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A1-02/treatment-v1/evidence/R10.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://docs.rs/crate/caldata/0.17.3"
+  ],
+  "version": [
+    {
+      "version_or_commit": "Pinned package 0.17.3, docs.rs release date 2026-09-20",
+      "governing_conditions": "The released metadata/README describes a divergent hard fork of archived ical-rs with strict validation, typed date-times and recurrence expansion. It includes a modified copy of rust-rrule to perform local-time calculations in UTC. Documentation coverage is 17.74%; chrono-tz is optional and vtimezones-rs is listed. The embedded install snippet still names 0.16, so the package URL/version is the pin.",
+      "applicability": "A real competing Rust candidate. README capabilities are not a measured opaque-property/DST/interoperability guarantee; final does not select the crate.",
+      "observation": "Independent read-only HTTP retrieval and semantic inspection of relevant surrounding primary context; no downloaded code executed."
+    }
+  ],
+  "selector": [
+    {
+      "locators": [
+        "Version list",
+        "caldata-rs owner notes",
+        "Dependency list and documentation coverage"
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "version_or_commit": "Pinned package 0.17.3, docs.rs release date 2026-09-20",
+      "governing_conditions": "The released metadata/README describes a divergent hard fork of archived ical-rs with strict validation, typed date-times and recurrence expansion. It includes a modified copy of rust-rrule to perform local-time calculations in UTC. Documentation coverage is 17.74%; chrono-tz is optional and vtimezones-rs is listed. The embedded install snippet still names 0.16, so the package URL/version is the pin.",
+      "applicability": "A real competing Rust candidate. README capabilities are not a measured opaque-property/DST/interoperability guarantee; final does not select the crate.",
+      "observation": "Independent read-only HTTP retrieval and semantic inspection of relevant surrounding primary context; no downloaded code executed."
+    }
+  ],
+  "rawSHA256": "8a035a8bc4749e8b49f6b63c48639e158ffebaa56130abf0027025058e4368d3"
+}

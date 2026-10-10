@@ -1,0 +1,94 @@
+{
+  "observed_at_utc": "2026-10-10T05:48:41.957955+00:00",
+  "basis": "root observed terminal final T3 task/no pending; separate from native proof",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/critique.md",
+      "bytes": 9070,
+      "sha256": "8b47033aaebe7d18e6482e9ed5c4cf58f56250e972a093c583d526e105b0d18d",
+      "mtime_ns": 1791610074998639714
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/source-map.json",
+      "bytes": 24090,
+      "sha256": "3ec275cb952f973099d3ddf0dc53ba29796bde08d9d558fea56d22f1c44ed28c",
+      "mtime_ns": 1791610122488928381
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/sources/index.md",
+      "bytes": 4816,
+      "sha256": "75d50b11cc811564e74720b92a1273d9cf3648a5ee5596f3cf1424d0ad0d30f0",
+      "mtime_ns": 1791610075006639763
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/discovery.md",
+      "bytes": 15325,
+      "sha256": "46807c16ec3d360b4af0ec58d21123a7466f933cf4902136ab754b1a62ecdb68",
+      "mtime_ns": 1791609009215308843
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/draft.md",
+      "bytes": 21874,
+      "sha256": "f5b1ad4e86d9a70c72011724af890ca30b0ee3139c8f5f8d2a89e1c567d53d1a",
+      "mtime_ns": 1791609284014619078
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 5956,
+      "sha256": "0588e3e0686b6ccc9b5f3eafc56f3415d8565ac895c12ba6a84f572b46ccfe53",
+      "mtime_ns": 1791609029005199383
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/source-map.json",
+      "bytes": 20908,
+      "sha256": "cdfb19a3c12bed4397426a18c604879c257a24af53a62776962761f4ca9ec775",
+      "mtime_ns": 1791609009214578054
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/sources/index.md",
+      "bytes": 8893,
+      "sha256": "538021bc9c93ef4974e7e2798a5d0e4a777a2cbadfd726e7b356de01dc8bd2b4",
+      "mtime_ns": 1791609009214907320
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/final.md",
+      "bytes": 25460,
+      "sha256": "4115d20a6476642c4d4d02a2ee44c388af3baa812bb51551bee7d91c99599364",
+      "mtime_ns": 1791611170226606539
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/source-map.json",
+      "bytes": 31998,
+      "sha256": "3ad21682974e8f369fe06d05a7ce66dd576c89800c7329418f14f4f9f0f29f17",
+      "mtime_ns": 1791611170227738840
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/sources/index.md",
+      "bytes": 11546,
+      "sha256": "74b5ce89e0dedbb05f9f64071fbfcea639cce932be4afb4b94db1a58cfd40c3b",
+      "mtime_ns": 1791611014241627082
+    }
+  ],
+  "final_stage_task": {
+    "slot": "A4-02",
+    "arm": "treatment",
+    "stage": "reviser",
+    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-02-treatment-reviser-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-02-treatment-reviser-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-02-treatment-reviser-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-02-treatment-reviser-v1",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-02-treatment-reviser-v1:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "Completed the reviser stage. The full proposal covers all eight clauses and accepts both critic corrections, separating Outlook.com\u2019s approximately 3-hour guidance from Outlook on the web\u2019s approximately 6-hour guidance, and adding Apple\u2019s iPhone calendar-level Event Alerts control. Neither refresh cadence is a guarantee. ([Microsoft Support](https://support.microsoft.com/en-us/outlook/import-or-subscribe-to-a-calendar-in-outlook-com-or-outlook-on-the-web), [Apple iPhone User Guide](https://support.apple.com/guide/iphone/use-multiple-calendars-iph3d1110d4/ios))\n\n- [Complete proposal](<ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/final.md>)\n- [Source map](<ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/source-map.json>) and [source index](<ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/sources/index.md>)\n- [Native Goal lifecycle responses](<ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/native-goal-lifecycle.json>)\n\nThe single native Goal completed (ID `01a1244b-827b-7f53-9cc7-f9f839d61ad6`). Product and client validation remain **NOT_RUN**; no product operation was performed.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-02-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:296111f0-6509-4b19-825c-0b061510fbb3",
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "summary": "Completed the reviser stage. The full proposal covers all eight clauses and accepts both critic corrections, separating Outlook.com\u2019s approximately 3-hour guidance from Outlook on the web\u2019s approximately 6-hour guidance, and adding Apple\u2019s iPhone calendar-level Event Alerts control. Neither refresh cadence is a guarantee. ([Microsoft Support](https://support.microsoft.com/en-us/outlook/import-or-subscribe-to-a-calendar-in-outlook-com-or-outlook-on-the-web), [Apple iPhone User Guide](https://support.apple.com/guide/iphone/use-multiple-calendars-iph3d1110d4/ios))\n\n- [Complete proposal](<ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/final.md>)\n- [Source map](<ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/source-map.json>) and [source index](<ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/sources/index.md>)\n- [Native Goal lifecycle responses](<ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/native-goal-lifecycle.json>)\n\nThe single native Goal completed (ID `01a1244b-827b-7f53-9cc7-f9f839d61ad6`). Product and client validation remain **NOT_RUN**; no product operation was performed.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-02-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:296111f0-6509-4b19-825c-0b061510fbb3",
+    "waitTimedOut": false
+  }
+}

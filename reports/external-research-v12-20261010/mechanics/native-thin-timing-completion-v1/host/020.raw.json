@@ -1,0 +1,37 @@
+{
+  "schema": "er12.public-native-lifecycle.v1",
+  "target": null,
+  "original_capture_sha256": "242e09bfbda5310a15b17544e160361e062afd4a684c414fe082984947726fca",
+  "private_archive_lineage": "publication-cohort4/private/originals/mechanics/native-thin-timing-completion-v1/host/020.raw.json",
+  "observations": [],
+  "actual_lifecycle_metadata": [
+    {
+      "thread": {
+        "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A2-A2-02-treatment-investigator-topology-v1",
+        "status": "completed",
+        "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A2-A2-02-treatment-investigator-topology-v1:ordinal:1",
+        "activeRunId": null,
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "pendingRequestCount": 0,
+        "createdAt": "2026-10-10T05:08:31.451Z",
+        "updatedAt": "2026-10-10T05:41:29.370Z"
+      }
+    },
+    {
+      "thread": {
+        "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A2-A2-02-treatment-investigator-topology-v1",
+        "status": "completed",
+        "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A2-A2-02-treatment-investigator-topology-v1:ordinal:1",
+        "activeRunId": null,
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "pendingRequestCount": 0,
+        "createdAt": "2026-10-10T05:08:31.451Z",
+        "updatedAt": "2026-10-10T05:41:29.370Z"
+      }
+    }
+  ],
+  "omission": "Full thread messages/activity bodies, raw meters and source captures private; independently captured focused native Goal receipts remain separately published. No new host read or inference.",
+  "source_body_coverage": "UNKNOWN"
+}

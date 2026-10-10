@@ -1,0 +1,671 @@
+{
+  "schema": "er12.independent.assessment.source-map.v1",
+  "slot_id": "B-FINAL-G-02",
+  "arm": "treatment",
+  "assessment_edition": "treatment-v1",
+  "primary_sources": [
+    {
+      "id": "P1-sparse-v2.43.0",
+      "url": "https://raw.githubusercontent.com/git/git/v2.43.0/Documentation/git-sparse-checkout.txt",
+      "resolved_url": "https://raw.githubusercontent.com/git/git/v2.43.0/Documentation/git-sparse-checkout.txt",
+      "status": 200,
+      "retrieved_at_utc": "2026-10-10T05:24:53.262591+00:00",
+      "operation": "independent HTTPS GET; text inspection only",
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "21258",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"32ad8dea08a659816318d1fb51c9c7814513e99255e9e4fdfc41b76eb1e99637\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "2F94:DB2EA:356A11:567C2E:6AC9CC22",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Sat, 10 Oct 2026 05:24:53 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740040-EWR",
+        "X-Cache": "MISS",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791609893.331541,VS0,VE86",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "44b3e2c4e6403dc0a598f6ab12090a39f384d51a",
+        "Expires": "Sat, 10 Oct 2026 05:29:53 GMT",
+        "Source-Age": "0"
+      },
+      "sha256": "2da80aef5d32b727870fc0b1680186a82a6153cc185a50d1b7a72b34a5f83883",
+      "bytes": 21258,
+      "local_path": "ER12_RUNTIME/assessment/B-FINAL-G-02/treatment-v1/primary-evidence/P1-sparse-v2.43.0.txt",
+      "numbered_path": "ER12_RUNTIME/assessment/B-FINAL-G-02/treatment-v1/primary-evidence/P1-sparse-v2.43.0-numbered.txt"
+    },
+    {
+      "id": "P2-clone-v2.43.0",
+      "url": "https://raw.githubusercontent.com/git/git/v2.43.0/Documentation/git-clone.txt",
+      "resolved_url": "https://raw.githubusercontent.com/git/git/v2.43.0/Documentation/git-clone.txt",
+      "status": 200,
+      "retrieved_at_utc": "2026-10-10T05:24:53.265113+00:00",
+      "operation": "independent HTTPS GET; text inspection only",
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "14772",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"8ac8d2196d25cd2ba69ad12c16c7c487ca08dcb9def85698af419b5755a2024c\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "B142:EB35D:379171:58A684:6AC9CC25",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Sat, 10 Oct 2026 05:24:53 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740034-EWR",
+        "X-Cache": "MISS",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791609893.326602,VS0,VE71",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "62429bf82c1c26793a2b243e5a79c7e7a90b7124",
+        "Expires": "Sat, 10 Oct 2026 05:29:53 GMT",
+        "Source-Age": "0"
+      },
+      "sha256": "d12bac1e23309f25d64aebeec82437c335914e3e7c7d6326b6857959306a4667",
+      "bytes": 14772,
+      "local_path": "ER12_RUNTIME/assessment/B-FINAL-G-02/treatment-v1/primary-evidence/P2-clone-v2.43.0.txt",
+      "numbered_path": "ER12_RUNTIME/assessment/B-FINAL-G-02/treatment-v1/primary-evidence/P2-clone-v2.43.0-numbered.txt"
+    },
+    {
+      "id": "P3-sparse-target-manual",
+      "url": "https://git-scm.com/docs/git-sparse-checkout/2.43.0/",
+      "resolved_url": "https://git-scm.com/docs/git-sparse-checkout/2.43.0/",
+      "status": 200,
+      "retrieved_at_utc": "2026-10-10T05:24:53.266344+00:00",
+      "operation": "independent HTTPS GET; text inspection only",
+      "headers": {
+        "Date": "Sat, 10 Oct 2026 05:24:53 GMT",
+        "Content-Type": "text/html; charset=utf-8",
+        "Transfer-Encoding": "chunked",
+        "Connection": "close",
+        "Server": "cloudflare",
+        "x-origin-cache": "HIT",
+        "last-modified": "Thu, 08 Oct 2026 04:45:58 GMT",
+        "access-control-allow-origin": "*",
+        "etag": "W/\"6ac72006-272\"",
+        "expires": "Sat, 10 Oct 2026 05:34:53 GMT",
+        "Cache-Control": "max-age=14400",
+        "x-proxy-cache": "MISS",
+        "x-github-request-id": "9F50:5E23B:B0C5BF:D7ADF1:6AC9CC25",
+        "x-github-edge-region": "iad",
+        "Age": "0",
+        "via": "1.1 varnish",
+        "x-served-by": "cache-ewr-kewr1740040-EWR",
+        "x-cache": "MISS",
+        "x-cache-hits": "0",
+        "x-timer": "S1791609893.348163,VS0,VE18",
+        "vary": "Accept-Encoding",
+        "x-fastly-request-id": "73073ceaf0c62a8afddb142ef1c5edb5018ebe2f",
+        "cf-cache-status": "MISS",
+        "CF-RAY": "a483338959867285-EWR"
+      },
+      "sha256": "6947a66b0ed2200bc144f360c5afaec3bac2604779e38d5d7734f86560929df5",
+      "bytes": 626,
+      "local_path": "ER12_RUNTIME/assessment/B-FINAL-G-02/treatment-v1/primary-evidence/P3-sparse-target-manual.html",
+      "numbered_path": "ER12_RUNTIME/assessment/B-FINAL-G-02/treatment-v1/primary-evidence/P3-sparse-target-manual-text.txt"
+    },
+    {
+      "id": "P4-clone-target-manual",
+      "url": "https://git-scm.com/docs/git-clone/2.43.0",
+      "resolved_url": "https://git-scm.com/docs/git-clone/2.43.0",
+      "status": 200,
+      "retrieved_at_utc": "2026-10-10T05:24:53.267446+00:00",
+      "operation": "independent HTTPS GET; text inspection only",
+      "headers": {
+        "Date": "Sat, 10 Oct 2026 05:24:53 GMT",
+        "Content-Type": "text/html; charset=utf-8",
+        "Transfer-Encoding": "chunked",
+        "Connection": "close",
+        "Server": "cloudflare",
+        "last-modified": "Thu, 08 Oct 2026 04:45:55 GMT",
+        "access-control-allow-origin": "*",
+        "etag": "W/\"6ac72003-161db\"",
+        "expires": "Sat, 10 Oct 2026 05:34:53 GMT",
+        "Cache-Control": "max-age=14400",
+        "x-proxy-cache": "MISS",
+        "x-github-request-id": "9D98:3AE82F:C0EB08:E7CBAA:6AC9CC25",
+        "x-github-edge-region": "iad",
+        "Age": "0",
+        "via": "1.1 varnish",
+        "x-served-by": "cache-ewr-kewr1740049-EWR",
+        "x-cache": "MISS",
+        "x-cache-hits": "0",
+        "x-timer": "S1791609893.343640,VS0,VE22",
+        "vary": "Accept-Encoding",
+        "x-fastly-request-id": "2346de241467221de6aeb33a546e2ccb3271baf5",
+        "cf-cache-status": "EXPIRED",
+        "CF-RAY": "a48333895eb7c6e3-EWR"
+      },
+      "sha256": "9d05b1b2c60486582bc1c4261118fcf905d18ed47da05da6319a37c1234f8f54",
+      "bytes": 90587,
+      "local_path": "ER12_RUNTIME/assessment/B-FINAL-G-02/treatment-v1/primary-evidence/P4-clone-target-manual.html",
+      "numbered_path": "ER12_RUNTIME/assessment/B-FINAL-G-02/treatment-v1/primary-evidence/P4-clone-target-manual-text.txt"
+    },
+    {
+      "id": "P5-sparse-live",
+      "url": "https://git-scm.com/docs/git-sparse-checkout",
+      "resolved_url": "https://git-scm.com/docs/git-sparse-checkout",
+      "status": 200,
+      "retrieved_at_utc": "2026-10-10T05:25:51.711920+00:00",
+      "operation": "independent HTTPS GET; text inspection only",
+      "headers": {
+        "Date": "Sat, 10 Oct 2026 05:25:51 GMT",
+        "Content-Type": "text/html; charset=utf-8",
+        "Transfer-Encoding": "chunked",
+        "Connection": "close",
+        "Server": "cloudflare",
+        "last-modified": "Thu, 08 Oct 2026 04:45:51 GMT",
+        "access-control-allow-origin": "*",
+        "etag": "W/\"6ac71fff-11175\"",
+        "expires": "Sat, 10 Oct 2026 04:06:49 GMT",
+        "Cache-Control": "max-age=14400",
+        "x-proxy-cache": "MISS",
+        "x-github-request-id": "1700:2ECBAC:B78AE0:C26D23:6AC95F79",
+        "x-github-edge-region": "iad",
+        "Age": "5342",
+        "via": "1.1 varnish",
+        "x-served-by": "cache-ewr-kewr1740054-EWR",
+        "x-cache": "MISS",
+        "x-cache-hits": "0",
+        "x-timer": "S1791582073.203857,VS0,VE82",
+        "vary": "Accept-Encoding",
+        "x-fastly-request-id": "5fbdc140e42484e209b93951b0ee268ccb8af341",
+        "cf-cache-status": "HIT",
+        "CF-RAY": "a48334f699460c9b-EWR"
+      },
+      "sha256": "f159e5336c6dbd3cdcf55d3d5eda2dd4d1b24c2a75487d8b9a5b4b9207d51751",
+      "bytes": 70005,
+      "local_path": "ER12_RUNTIME/assessment/B-FINAL-G-02/treatment-v1/primary-evidence/P5-sparse-live.html",
+      "numbered_path": "ER12_RUNTIME/assessment/B-FINAL-G-02/treatment-v1/primary-evidence/P5-sparse-live-text.txt"
+    },
+    {
+      "id": "P6-clone-live",
+      "url": "https://git-scm.com/docs/git-clone",
+      "resolved_url": "https://git-scm.com/docs/git-clone",
+      "status": 200,
+      "retrieved_at_utc": "2026-10-10T05:25:51.713879+00:00",
+      "operation": "independent HTTPS GET; text inspection only",
+      "headers": {
+        "Date": "Sat, 10 Oct 2026 05:25:51 GMT",
+        "Content-Type": "text/html; charset=utf-8",
+        "Transfer-Encoding": "chunked",
+        "Connection": "close",
+        "Server": "cloudflare",
+        "x-origin-cache": "HIT",
+        "last-modified": "Thu, 08 Oct 2026 04:45:53 GMT",
+        "access-control-allow-origin": "*",
+        "etag": "W/\"6ac72001-1a4ea\"",
+        "expires": "Sat, 10 Oct 2026 04:00:53 GMT",
+        "Cache-Control": "max-age=14400",
+        "x-proxy-cache": "MISS",
+        "x-github-request-id": "5C9C:288C20:13C1604:1501755:6AC9B61D",
+        "x-github-edge-region": "iad",
+        "Age": "5697",
+        "via": "1.1 varnish",
+        "x-served-by": "cache-lga-kjfk8660048-LGA",
+        "x-cache": "MISS",
+        "x-cache-hits": "0",
+        "x-timer": "S1791604254.981988,VS0,VE25",
+        "vary": "Accept-Encoding",
+        "x-fastly-request-id": "0f83280e8da43da59224cbe4341cf6669f25dea8",
+        "cf-cache-status": "HIT",
+        "CF-RAY": "a48334f69dd8b17b-EWR"
+      },
+      "sha256": "a8bc056033714f2b411490d7166473b5b2ec6562b423820dddcf1f604240c573",
+      "bytes": 107754,
+      "local_path": "ER12_RUNTIME/assessment/B-FINAL-G-02/treatment-v1/primary-evidence/P6-clone-live.html",
+      "numbered_path": "ER12_RUNTIME/assessment/B-FINAL-G-02/treatment-v1/primary-evidence/P6-clone-live-text.txt"
+    }
+  ],
+  "claims": [
+    {
+      "id": "C1",
+      "claim": "Cone-mode directory input includes the selected subtree recursively and immediate files of its ancestors, including the root; empty selection still includes root files.",
+      "candidate": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/final-section.md",
+        "line": 5,
+        "exact_text": "every file at any depth under `packages/editor/`; (b) every file immediately under `packages/`; and (c) every file in the toplevel directory."
+      },
+      "primary": [
+        {
+          "source_id": "P1-sparse-v2.43.0",
+          "lines": [
+            63,
+            71
+          ],
+          "section": "set"
+        },
+        {
+          "source_id": "P1-sparse-v2.43.0",
+          "lines": [
+            308,
+            324
+          ],
+          "section": "CONE MODE HANDLING"
+        },
+        {
+          "source_id": "P1-sparse-v2.43.0",
+          "lines": [
+            377,
+            425
+          ],
+          "section": "CONE PATTERN SET"
+        }
+      ],
+      "conditions": "Git 2.43 cone directory selection; tracked superproject working-tree files. Parent patterns are nonrecursive; recursive patterns select the chosen subtree. Non-cone patterns have different semantics.",
+      "assessment": "SUPPORTED"
+    },
+    {
+      "id": "C2",
+      "claim": "Sparse checkout is working-tree scoping, distinct from partial-clone object filtering; neither cited definition proves a selected-file-size bound on total traffic.",
+      "candidate": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/final-section.md",
+        "line": 7,
+        "exact_text": "Sparse checkout selects which tracked files appear in the working tree; it does not by itself filter object transfer or bound total bytes."
+      },
+      "primary": [
+        {
+          "source_id": "P1-sparse-v2.43.0",
+          "lines": [
+            18,
+            31
+          ],
+          "section": "DESCRIPTION"
+        },
+        {
+          "source_id": "P1-sparse-v2.43.0",
+          "lines": [
+            201,
+            214
+          ],
+          "section": "SPARSE CHECKOUT internals"
+        },
+        {
+          "source_id": "P2-clone-v2.43.0",
+          "lines": [
+            174,
+            188
+          ],
+          "section": "--sparse; --filter"
+        }
+      ],
+      "conditions": "Object transfer versus worktree materialization are different operations. blob:none delays blobs until Git needs them. Network units are bytes transferred for a defined workload; no workload/server/protocol measurement exists. The no-bound conclusion is inference, not a quoted universal numerical limit.",
+      "assessment": "SUPPORTED"
+    },
+    {
+      "id": "C3",
+      "claim": "--depth=1 truncates commit history, so the full-history policy rejects it. Blob filtering and full-depth commits are compatible concepts.",
+      "candidate": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/final-section.md",
+        "line": 17,
+        "exact_text": "`--depth=1` creates a shallow clone with history truncated to one commit"
+      },
+      "primary": [
+        {
+          "source_id": "P2-clone-v2.43.0",
+          "lines": [
+            245,
+            268
+          ],
+          "section": "--depth; --shallow-since; --shallow-exclude; --single-branch"
+        },
+        {
+          "source_id": "P2-clone-v2.43.0",
+          "lines": [
+            25,
+            40
+          ],
+          "section": "default clone branch histories"
+        },
+        {
+          "source_id": "P2-clone-v2.43.0",
+          "lines": [
+            180,
+            188
+          ],
+          "section": "partial clone filter"
+        }
+      ],
+      "conditions": "Commit-graph depth, not present-tree completeness or all historical blob payloads. Full history is a product constraint for the intended clone, not a claim to retrieve unreachable/deleted commits or all independent submodule history. Source repositories may themselves be shallow (see P2 157–160).",
+      "assessment": "SUPPORTED"
+    },
+    {
+      "id": "C4",
+      "claim": "Merge/rebase and dirty/conflicted files can materialize or retain extra paths; reapply follows cleanup, and disable restores ordinary tracked working-tree coverage.",
+      "candidate": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/final-section.md",
+        "line": 9,
+        "exact_text": "the helper then runs `git sparse-checkout reapply` after the user resolves, commits, or undoes those changes"
+      },
+      "primary": [
+        {
+          "source_id": "P1-sparse-v2.43.0",
+          "lines": [
+            99,
+            116
+          ],
+          "section": "reapply; disable"
+        },
+        {
+          "source_id": "P1-sparse-v2.43.0",
+          "lines": [
+            174,
+            196
+          ],
+          "section": "EXAMPLES"
+        }
+      ],
+      "conditions": "reapply is not a promise to force away unresolved/modified files. inspect/preserve/stop is the helper product rule, not a Git guarantee; no reset/clean or destructive automatic recovery is prescribed. disable restores tracked superproject paths, not deleted local user data or uninitialized submodules.",
+      "assessment": "SUPPORTED"
+    },
+    {
+      "id": "C5",
+      "claim": "Sparse index is optional, default off, experimental, and concerns index size/performance rather than stopping network downloads.",
+      "candidate": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/final-section.md",
+        "line": 20,
+        "exact_text": "A sparse index is an optional, experimental, default-off index-size and performance feature"
+      },
+      "primary": [
+        {
+          "source_id": "P1-sparse-v2.43.0",
+          "lines": [
+            73,
+            91
+          ],
+          "section": "set --[no-]sparse-index"
+        }
+      ],
+      "conditions": "Git 2.43 documented default; cone supports the sparse-index option, non-cone does not. Benefits are command dependent; older Git/external tools can be incompatible. Candidate rejects it as mandatory network prevention, not as every possible future local optimization.",
+      "assessment": "SUPPORTED"
+    },
+    {
+      "id": "C6",
+      "claim": "Exactly three Git behavior checks are proposed; no Git test, clone, measurement, or deployment is asserted as executed.",
+      "candidate": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/final-section.md",
+        "line": 11,
+        "exact_text": "Three checks are planned and none has run; no Git command or test has run for this section and no real repository was altered"
+      },
+      "primary": [
+        {
+          "source_id": "P1-sparse-v2.43.0",
+          "lines": [
+            63,
+            71
+          ],
+          "section": "cone inclusion oracle"
+        },
+        {
+          "source_id": "P1-sparse-v2.43.0",
+          "lines": [
+            99,
+            116
+          ],
+          "section": "reapply and disable oracles"
+        }
+      ],
+      "conditions": "The manuals are prospective behavior oracles for Git 2.43; page reads and file-format validation are not runtime oracle execution. There is no provided real repository/deployment to test.",
+      "assessment": "HONEST_PROSPECTIVE_STATUS"
+    }
+  ],
+  "critique_dispositions": [
+    {
+      "item": 1,
+      "candidate_disposition": "accept",
+      "review": "CORRECT",
+      "candidate_line": 15,
+      "reason": "Cone includes immediate parent/root files.",
+      "claim_ids": [
+        "C1"
+      ]
+    },
+    {
+      "item": 2,
+      "candidate_disposition": "accept",
+      "review": "CORRECT",
+      "candidate_line": 16,
+      "reason": "Checkout scope is distinct from object filtering; demand fetch and no measured workload defeat the claimed strict byte bound.",
+      "claim_ids": [
+        "C2"
+      ]
+    },
+    {
+      "item": 3,
+      "candidate_disposition": "reject",
+      "review": "CORRECT",
+      "candidate_line": 17,
+      "reason": "Current-tree completeness is not full commit history; depth=1 violates O4.",
+      "claim_ids": [
+        "C3"
+      ]
+    },
+    {
+      "item": 4,
+      "candidate_disposition": "reject",
+      "review": "CORRECT",
+      "candidate_line": 18,
+      "reason": "The target manual explicitly permits extra materialized/dirty/conflicted paths and documents reapply. O5 also requires disable.",
+      "claim_ids": [
+        "C4"
+      ]
+    },
+    {
+      "item": 5,
+      "candidate_disposition": "accept",
+      "review": "CORRECT",
+      "candidate_line": 19,
+      "reason": "Remove shallow depth while preserving changes/stop and recovery.",
+      "claim_ids": [
+        "C3",
+        "C4"
+      ]
+    },
+    {
+      "item": 6,
+      "candidate_disposition": "reject",
+      "review": "CORRECT",
+      "candidate_line": 20,
+      "reason": "Sparse index is an optional index representation, not a mandatory no-download mechanism.",
+      "claim_ids": [
+        "C5"
+      ]
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L1",
+      "severity": "NONMATERIAL",
+      "category": "candidate_version_provenance",
+      "candidate": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/final-section.md",
+        "line": 22,
+        "exact_text": "version applicability rests on live manuals retrieved 2026-10-10 rather than a pinned Git 2.43 source"
+      },
+      "additional_candidate_locator": "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/source-map.json#/applicability/version_note",
+      "primary": [
+        {
+          "source_id": "P1-sparse-v2.43.0",
+          "lines": [
+            63,
+            116
+          ],
+          "section": "target-version cited controls"
+        },
+        {
+          "source_id": "P2-clone-v2.43.0",
+          "lines": [
+            174,
+            188
+          ],
+          "section": "target-version clone controls"
+        },
+        {
+          "source_id": "P2-clone-v2.43.0",
+          "lines": [
+            245,
+            258
+          ],
+          "section": "target-version history controls"
+        },
+        {
+          "source_id": "P5-sparse-live",
+          "lines": [
+            146,
+            160
+          ],
+          "section": "manual change history"
+        }
+      ],
+      "reason": "Candidate did not perform the indicated version/history check, and states that limitation honestly. Reviewer independently retrieved the tagged Git 2.43.0 sources and verified every consequential adopted/rejected control. Thus this is incomplete candidate citation provenance, with no remaining material false fact or unsupported consequential decision."
+    }
+  ],
+  "useful_discoveries": [
+    {
+      "id": "D1",
+      "origin": "independent_reviewer",
+      "topic": "Target-version continuity",
+      "primary": [
+        {
+          "source_id": "P5-sparse-live",
+          "lines": [
+            146,
+            160
+          ],
+          "section": "change history"
+        },
+        {
+          "source_id": "P1-sparse-v2.43.0",
+          "lines": [
+            63,
+            116
+          ],
+          "section": "target controls"
+        }
+      ],
+      "detail": "The 2.43 sparse manual URL is a meta-refresh redirect to 2.42.0; the live history says no changes from 2.42.1 through 2.51.1. Direct tagged v2.43.0 documentation avoids treating HTTP 200 on that redirect as the target manual. All candidate consequential claims also appear in that exact tag."
+    },
+    {
+      "id": "D2",
+      "origin": "independent_reviewer",
+      "topic": "Ignored-local-file hazard relevant to eventual O5 fixture",
+      "primary": [
+        {
+          "source_id": "P1-sparse-v2.43.0",
+          "lines": [
+            163,
+            172
+          ],
+          "section": "set example ignored-file deletion"
+        },
+        {
+          "source_id": "P1-sparse-v2.43.0",
+          "lines": [
+            326,
+            334
+          ],
+          "section": "cone change cleanup"
+        }
+      ],
+      "detail": "Selection changes can delete excluded directories containing only ignored untracked files; nonignored untracked files produce different retention/warnings. The broad preserve-or-stop helper requirement needs to cover valued ignored files in a future fixture. Candidate does not say normal status or Git itself guarantees safety; no specific unsafe scan or destructive implementation is proposed, so this is an implementation lead, not a supported material failure."
+    },
+    {
+      "id": "D3",
+      "origin": "independent_reviewer",
+      "topic": "Submodule and shallow-source scope",
+      "primary": [
+        {
+          "source_id": "P1-sparse-v2.43.0",
+          "lines": [
+            444,
+            472
+          ],
+          "section": "SUBMODULES"
+        },
+        {
+          "source_id": "P2-clone-v2.43.0",
+          "lines": [
+            157,
+            160
+          ],
+          "section": "reject-shallow"
+        },
+        {
+          "source_id": "P2-clone-v2.43.0",
+          "lines": [
+            282,
+            305
+          ],
+          "section": "submodule clone options"
+        }
+      ],
+      "detail": "Superproject tracked-file presence is distinct from submodule population; changing sparsity does not initialize/deinitialize submodules. A source can itself be shallow. No submodule/source repository was supplied or asserted as deployed. These delimit interpretation and future integration checks rather than create extra original obligations."
+    },
+    {
+      "id": "D4",
+      "origin": "candidate_preserved_and_reviewer_confirmed",
+      "topic": "Useful separate mechanisms and implementation/history",
+      "primary": [
+        {
+          "source_id": "P1-sparse-v2.43.0",
+          "lines": [
+            78,
+            91
+          ],
+          "section": "optional index feature and compatibility"
+        },
+        {
+          "source_id": "P1-sparse-v2.43.0",
+          "lines": [
+            119,
+            136
+          ],
+          "section": "historical init/set behavior"
+        },
+        {
+          "source_id": "P1-sparse-v2.43.0",
+          "lines": [
+            201,
+            214
+          ],
+          "section": "skip-worktree internals"
+        },
+        {
+          "source_id": "P1-sparse-v2.43.0",
+          "lines": [
+            377,
+            425
+          ],
+          "section": "recursive and parent pattern implementation"
+        }
+      ],
+      "detail": "Optional blob filtering and optional sparse index remain meaningful alternatives for object transfer and local index performance respectively; neither changes full-history policy or supplies a byte bound. Parent/recursive patterns explain the inclusion oracle. Modern set handles setup without requiring deprecated init; finalization does not invent a mandatory legacy setup sequence."
+    }
+  ],
+  "navigation_index": "ER12_RUNTIME/assessment/B-FINAL-G-02/treatment-v1/primary-evidence/index.md",
+  "candidate_source_map": {
+    "path": "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/source-map.json",
+    "sha256": "2e4ab7c983df62903f48888890f6a29f1eb2d3b654499a32b7d73e22ba29c23a",
+    "saved_sources_inspected": [
+      "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/sources/S1-excerpts.md",
+      "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/sources/S2-excerpts.md"
+    ]
+  },
+  "retrieval_caveat": "P3 is a redirect landing page, not substantive pinned evidence; P1/P2 exact tag source text governs the target. P4 corroborates clone target version; P5/P6 inspect live quoted claims/history. All HTTPS responses were saved; no downloaded code executed."
+}

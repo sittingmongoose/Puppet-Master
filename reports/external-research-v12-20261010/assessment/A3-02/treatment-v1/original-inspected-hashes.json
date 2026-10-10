@@ -1,0 +1,359 @@
+{
+  "captured_utc": "2026-10-10T05:38:42.794744+00:00",
+  "scope": "A3-02 treatment only; no roster, other arms or status files read",
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A3-02/brief.md",
+      "bytes": 2869,
+      "sha256": "64d7c999cf74b0022f481d6e5412866fc4b9b63d05c1726ceef4658a0d8d712e",
+      "mtime_ns": 1791607368148297439,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A3-02/plan.md",
+      "bytes": 2470,
+      "sha256": "b977457667677faa27fe5256d090e48ec798eae592ffd7d860e4c3c239167b79",
+      "mtime_ns": 1791607368148446184,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/terminal-science-freeze-root.json",
+      "bytes": 7190,
+      "sha256": "edc9add3805df02e6e442a96345194b6858546679eaf91ae6adc2b3ce98d3384",
+      "mtime_ns": 1791610487141273328,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/inputs/brief.md",
+      "bytes": 2869,
+      "sha256": "64d7c999cf74b0022f481d6e5412866fc4b9b63d05c1726ceef4658a0d8d712e",
+      "mtime_ns": 1791607368361459075,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/assignment.md",
+      "bytes": 3720,
+      "sha256": "03491e760f4b262816343bc58727397aeee20673bdf2d4e3ab32fd1194a8c4b6",
+      "mtime_ns": 1791607368362290500,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/discovery.md",
+      "bytes": 10244,
+      "sha256": "510bcbb9f05eb883d1323caa2af5603ac1a6506b73cbd2fa0705e50702944069",
+      "mtime_ns": 1791607766809596936,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/dispatch.json",
+      "bytes": 4251,
+      "sha256": "c9ca5f4036b07716139e31b579e6c8d8e3c9f737756525003141e6e49bc4e4e4",
+      "mtime_ns": 1791607369533106168,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/draft.md",
+      "bytes": 21174,
+      "sha256": "4d80c59ff8763895427b97c1b066fd3afdd12ea1dd42029fd6ca3c853f00f6ef",
+      "mtime_ns": 1791607963189457834,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/freeze.json",
+      "bytes": 1731,
+      "sha256": "d868853dffb21ab0d3f6b6285dc6c9d8a54e663c22e12ba535c42cf5104e3992",
+      "mtime_ns": 1791607368535938169,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/input-map.json",
+      "bytes": 789,
+      "sha256": "89d4aa83995daa356da11cd7d8a21822be96d72bc3b947c836aa8be82eadbe40",
+      "mtime_ns": 1791607368535428769,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/plan-reveal.json",
+      "bytes": 429,
+      "sha256": "8034921bd15eb2279a069c4e71cf67ee6968c1e4bfbeccf1fea230ba1f1c0116",
+      "mtime_ns": 1791607775237325820,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/request.json",
+      "bytes": 921,
+      "sha256": "4fbc5dfbb19724090fcc6f4e6849993fa7a8415725da7e9cb42872afc0104e11",
+      "mtime_ns": 1791607368535605625,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 2470,
+      "sha256": "b977457667677faa27fe5256d090e48ec798eae592ffd7d860e4c3c239167b79",
+      "mtime_ns": 1791607775237200790,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/service-tier-change.json",
+      "bytes": 493,
+      "sha256": "b859999f07267335e92b50f195a1b6da2907a7e658a4abc06456b1df31feaea1",
+      "mtime_ns": 1791607368536050616,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/source-map.json",
+      "bytes": 16591,
+      "sha256": "56502caed4f390491f2bab25fa330fe3a4c620a9f738279b2e5f9a3c844c6c0b",
+      "mtime_ns": 1791608027809296038,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/sources/index.md",
+      "bytes": 8305,
+      "sha256": "fd0a668d5455405d6ed4831f392ca337328f1c7219cb55125cf2cd11d31b86af",
+      "mtime_ns": 1791607963189005404,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/critic/assignment.md",
+      "bytes": 3828,
+      "sha256": "ff25401a3d2ecaa11c3637827fa574d1b8a05b83b9bf8548ae57ec43b70db8c9",
+      "mtime_ns": 1791608093818601269,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/critic/critique.md",
+      "bytes": 7105,
+      "sha256": "e770ac9ce0819bf44ecdfc97cd2ff1d3652f12f3631ff7abf70e60fcda285e76",
+      "mtime_ns": 1791609512146101522,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/critic/dispatch.json",
+      "bytes": 4155,
+      "sha256": "20e9d929aecf7003e06e58f6135a414e058d7a039a3fcb82a3b033a358ebdbc7",
+      "mtime_ns": 1791608094489282553,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/critic/freeze.json",
+      "bytes": 3694,
+      "sha256": "fb369c85fe61a6fb51629f12d94ff4521d531e0666bfa0752ca67b65c96f1889",
+      "mtime_ns": 1791608093957649899,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/critic/input-map.json",
+      "bytes": 1477,
+      "sha256": "25c8dd9b38ab5f2e7e524d3fa4b38c7fea05b0500b80ce6f2e78758d0fef8419",
+      "mtime_ns": 1791608093956841874,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/critic/request.json",
+      "bytes": 897,
+      "sha256": "ec03120c9dee910bd12f528a13d55ea5f10736cff7930d453c3ebdb613606bf6",
+      "mtime_ns": 1791608093957046677,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/critic/service-tier-change.json",
+      "bytes": 481,
+      "sha256": "aa725e2af5663b6b5b92887403892ed71382f9f9035e6bfe44eb3f8372796cfa",
+      "mtime_ns": 1791608093957930500,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/critic/source-map.json",
+      "bytes": 11087,
+      "sha256": "f20bc262ec0fee4e15e9b4a16e2dc580603cc4d8d6b9733666e3ad8b507b5ac4",
+      "mtime_ns": 1791609512241102126,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/critic/sources/index.md",
+      "bytes": 2581,
+      "sha256": "dffea7b2594c53b823bc713824bea6aa63045fe5934bb9a79e5d220b4ef17cba",
+      "mtime_ns": 1791609121009874026,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/.invocation-backup-55ab5a23a90449b28acc55f4501e1e4a/assignment.md",
+      "bytes": 3808,
+      "sha256": "1c922614fb84f1d48276429346e5dde2f87f361bc6ae5dce4944bb95a5b7590e",
+      "mtime_ns": 1791609543683413679,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/.invocation-backup-55ab5a23a90449b28acc55f4501e1e4a/freeze.json",
+      "bytes": 4472,
+      "sha256": "45d87f751a1599d374fd328dd061979d11e690f3ff7d3d3243c4f168287baec9",
+      "mtime_ns": 1791609543683261789,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/.invocation-backup-55ab5a23a90449b28acc55f4501e1e4a/input-map.json",
+      "bytes": 1794,
+      "sha256": "9947941d9083c9864138dd67bfc4954f54dcc1fa5594e5d8268f59ec7c286d6e",
+      "mtime_ns": 1791609543683338775,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/.invocation-backup-55ab5a23a90449b28acc55f4501e1e4a/request.json",
+      "bytes": 901,
+      "sha256": "48d30910690ec70e02512f1433ba4a7c8073cf590831be763ccc2fb020d081f0",
+      "mtime_ns": 1791609543683156564,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/assignment.md",
+      "bytes": 4514,
+      "sha256": "206a7136de0a86949160fd3bd4be121a6ec6db68795e0b3d3188e3e3f9b6accd",
+      "mtime_ns": 1791609543684444725,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/dispatch.json",
+      "bytes": 4889,
+      "sha256": "906f0776107d1fd880cf8a3520f6c0762cd2a6564f931323ea707e2faf6878c0",
+      "mtime_ns": 1791609544344622128,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+      "bytes": 26085,
+      "sha256": "2f53d66742cbf31eb8c0a2497f2609360e7ba701d458a63eecbade5309f03bc9",
+      "mtime_ns": 1791610438248720922,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/freeze.json",
+      "bytes": 4536,
+      "sha256": "33dc13f38dece8953183477b5ee84d297be8979327fe70833d95b4424047afdd",
+      "mtime_ns": 1791609543684131290,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/input-map.json",
+      "bytes": 1794,
+      "sha256": "9947941d9083c9864138dd67bfc4954f54dcc1fa5594e5d8268f59ec7c286d6e",
+      "mtime_ns": 1791609543684286272,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/invocation-clarification.json",
+      "bytes": 3037,
+      "sha256": "7163f860da7ad4f11a3bacf0f4d93f868e524aa8650005f75878290e68582656",
+      "mtime_ns": 1791609543684655934,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/native-goal-activation.json",
+      "bytes": 470,
+      "sha256": "40df68ff9203a66aa36a9ed701118b6747c03f702dc0d39a6a765e7baa9ca144",
+      "mtime_ns": 1791609581737561160,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/native-goal-completion.json",
+      "bytes": 799,
+      "sha256": "263a97411684e65888bfdf566b5e5cad7900f2eac707c11d766cd34a1ab37a42",
+      "mtime_ns": 1791610455706806849,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/request.json",
+      "bytes": 1619,
+      "sha256": "5688912920c57b7f1e0f65d2c03f45dc88fa2979b34ff44ea5e3725cb3f2b611",
+      "mtime_ns": 1791609543683919889,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/service-tier-change.json",
+      "bytes": 483,
+      "sha256": "2f87886c7c6cf418a2e2827e59f4cdf28baaa10137b13106d265ca1be6501a49",
+      "mtime_ns": 1791609543480504991,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/source-map.json",
+      "bytes": 28971,
+      "sha256": "aea827bab33b904d493a005f0c50fa670f032c1f024651a33fa421525f91892d",
+      "mtime_ns": 1791610438249732913,
+      "read_scope": "full original artifact inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/sources/index.md",
+      "bytes": 5800,
+      "sha256": "e0db72c512794be41d7678391aaa48979c228bafda107ebaa915e67cbc2deff4",
+      "mtime_ns": 1791610438249120638,
+      "read_scope": "full original artifact inspected"
+    }
+  ],
+  "terminal_freeze_checks": [
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/critic/critique.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/critic/source-map.json",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/critic/sources/index.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/discovery.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/draft.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/revealed-plan.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/source-map.json",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/sources/index.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/source-map.json",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/sources/index.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    }
+  ],
+  "brief_copy_matches_original": true,
+  "plan_copy_matches_original": true
+}

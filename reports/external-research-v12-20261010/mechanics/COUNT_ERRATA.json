@@ -1,0 +1,238 @@
+{
+  "errata": [
+    {
+      "recorded_at_utc": "2026-10-10T06:01:19.731576+00:00",
+      "incorrect_derived_tally": {
+        "B_pass": 10,
+        "B_fail": 14
+      },
+      "corrected_original_judgment_tally": {
+        "FAIL": 13,
+        "PASS_WITH_LIMITATIONS": 11
+      },
+      "type": "root arithmetic/summary error; no regrading",
+      "preserved_frozen_metadata": [
+        "methods/C-R2/RECIPE_LOCK.json: mixed_provider_alternative textual10pass14fail summary"
+      ],
+      "effect_on_selection": "C-R2 is Luna-only selected from own A1/A8 evidence; bounded B outcome narrative corrected separately; no source judgment or frozen selection changed",
+      "original_judgments": [
+        {
+          "slot": "B-DISC-M-01",
+          "arm": "treatment",
+          "source_judgment": "FAIL",
+          "path": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/assessment.json",
+          "sha256": "12ce8013bfd59a4a30c4339e995968d6aa224273025d4e6d176f51fab353f2ae",
+          "pointer": "/source_judgment",
+          "evaluator_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-DISC-M-01-treatment-v1"
+        },
+        {
+          "slot": "B-APPL-G-01",
+          "arm": "control",
+          "source_judgment": "PASS_WITH_LIMITATIONS",
+          "path": "ER12_RUNTIME/assessment/B-APPL-G-01/control-v1/assessment.json",
+          "sha256": "9e0463165f1767a9b337cfd16cb334827d5328fb347e63f24e02c3c551fce914",
+          "pointer": "/source_judgment",
+          "evaluator_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-APPL-G-01-control-v1"
+        },
+        {
+          "slot": "B-DISC-M-01",
+          "arm": "control",
+          "source_judgment": "FAIL",
+          "path": "ER12_RUNTIME/assessment/B-DISC-M-01/control-v1/assessment.json",
+          "sha256": "28baf2e858b94d2d8dc2c7d4b3218f779040fdf70d29668c8e2f9e0f0b3a83ac",
+          "pointer": "/source_judgment",
+          "evaluator_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-DISC-M-01-control-v1"
+        },
+        {
+          "slot": "B-APPL-M-01",
+          "arm": "control",
+          "source_judgment": "PASS_WITH_LIMITATIONS",
+          "path": "ER12_RUNTIME/assessment/B-APPL-M-01/control-v1/assessment.json",
+          "sha256": "e929e0c1ff3978e72c421b650fe73ad9962262476180681c3fdb18c5f92e4452",
+          "pointer": "/source_judgment",
+          "evaluator_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-APPL-M-01-control-v1"
+        },
+        {
+          "slot": "B-APPL-M-01",
+          "arm": "treatment",
+          "source_judgment": "FAIL",
+          "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/assessment.json",
+          "sha256": "122fe9751385c51d27000b2936d19bdc18a2ad55640b616ee13d4e5f245f883a",
+          "pointer": "/source_judgment",
+          "evaluator_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-APPL-M-01-treatment-v1"
+        },
+        {
+          "slot": "B-APPL-G-01",
+          "arm": "treatment",
+          "source_judgment": "FAIL",
+          "path": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/assessment.json",
+          "sha256": "e63d283ba10cff51468180cf2a3d464bc01c3883bdf3c285184dbcca2d95cd71",
+          "pointer": "/source_judgment",
+          "evaluator_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-APPL-G-01-treatment-v1"
+        },
+        {
+          "slot": "B-FINAL-G-01",
+          "arm": "treatment",
+          "source_judgment": "FAIL",
+          "path": "ER12_RUNTIME/assessment/B-FINAL-G-01/treatment-v1/assessment.json",
+          "sha256": "94c8e8ce21ee3b7b1adc028ea3e4c454b57a0d62898522784a428551405fedf0",
+          "pointer": "/source_judgment",
+          "evaluator_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-G-01-treatment-v1"
+        },
+        {
+          "slot": "B-FINAL-G-01",
+          "arm": "control",
+          "source_judgment": "PASS_WITH_LIMITATIONS",
+          "path": "ER12_RUNTIME/assessment/B-FINAL-G-01/control-v1/assessment.json",
+          "sha256": "b4475269b2b406fda3942b7850c07ea6f485168cf5b5278600bedcf382a3064f",
+          "pointer": "/source_judgment",
+          "evaluator_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-G-01-control-v1"
+        },
+        {
+          "slot": "B-APPL-M-02",
+          "arm": "control",
+          "source_judgment": "PASS_WITH_LIMITATIONS",
+          "path": "ER12_RUNTIME/assessment/B-APPL-M-02/control-v1/assessment.json",
+          "sha256": "4a3829336eb5f6b21564edae6d9f9ffd010537fdbeda4a881e29d9d63a26a1d5",
+          "pointer": "/source_judgment",
+          "evaluator_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-APPL-M-02-control-v1"
+        },
+        {
+          "slot": "B-APPL-M-02",
+          "arm": "treatment",
+          "source_judgment": "PASS_WITH_LIMITATIONS",
+          "path": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/assessment.json",
+          "sha256": "39e254132cd4bfe4c7cde3e6c4ef68f60bd0f82d479452d8840cd71585f76eb6",
+          "pointer": "/source_judgment",
+          "evaluator_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-APPL-M-02-treatment-v1"
+        },
+        {
+          "slot": "B-FINAL-M-01",
+          "arm": "treatment",
+          "source_judgment": "FAIL",
+          "path": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/assessment.json",
+          "sha256": "0c9b49e342128008e3f00d031ee7a87cdf46caeeac40624130666f61d5eb67f7",
+          "pointer": "/source_judgment",
+          "evaluator_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-M-01-treatment-v1"
+        },
+        {
+          "slot": "B-FINAL-M-01",
+          "arm": "control",
+          "source_judgment": "PASS_WITH_LIMITATIONS",
+          "path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/assessment.json",
+          "sha256": "92c6564d988c342d0d1fba8314365d36949931409890c2add08d48d6a8a8f090",
+          "pointer": "/source_judgment",
+          "evaluator_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-M-01-control-v1"
+        },
+        {
+          "slot": "B-DISC-M-02",
+          "arm": "treatment",
+          "source_judgment": "FAIL",
+          "path": "ER12_RUNTIME/assessment/B-DISC-M-02/treatment-v1/assessment.json",
+          "sha256": "0f73f07e4669b05ddbeb7b18a127740d6e75a4e9dcb92bd2823751e0840a1887",
+          "pointer": "/source_judgment",
+          "evaluator_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-DISC-M-02-treatment-v1"
+        },
+        {
+          "slot": "B-DISC-M-02",
+          "arm": "control",
+          "source_judgment": "PASS_WITH_LIMITATIONS",
+          "path": "ER12_RUNTIME/assessment/B-DISC-M-02/control-v1/assessment.json",
+          "sha256": "b2b6a9d4478e3659d354c99d676ff7f911f8c801070640d88dffb9c459418e9a",
+          "pointer": "/source_judgment",
+          "evaluator_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-DISC-M-02-control-v1"
+        },
+        {
+          "slot": "B-DISC-G-01",
+          "arm": "treatment",
+          "source_judgment": "FAIL",
+          "path": "ER12_RUNTIME/assessment/B-DISC-G-01/treatment-v1/assessment.json",
+          "sha256": "bf7e98facf5813922b8e778f749dc499ca9c5243fea76a47a97ffd9062026f04",
+          "pointer": "/source_judgment",
+          "evaluator_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-DISC-G-01-treatment-v1"
+        },
+        {
+          "slot": "B-DISC-G-01",
+          "arm": "control",
+          "source_judgment": "FAIL",
+          "path": "ER12_RUNTIME/assessment/B-DISC-G-01/control-v1/assessment.json",
+          "sha256": "428950d2fe194f7ce3f476646ace273e3f893ad5b8645196dd7e2b3b5197b9f6",
+          "pointer": "/source_judgment",
+          "evaluator_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-DISC-G-01-control-v1"
+        },
+        {
+          "slot": "B-DISC-G-02",
+          "arm": "treatment",
+          "source_judgment": "FAIL",
+          "path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/assessment.json",
+          "sha256": "6da2942eaedec9d0e0c6486eb46e2959ba9f95099c387fc69c7f71317688004b",
+          "pointer": "/source_judgment",
+          "evaluator_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-DISC-G-02-treatment-v1"
+        },
+        {
+          "slot": "B-DISC-G-02",
+          "arm": "control",
+          "source_judgment": "FAIL",
+          "path": "ER12_RUNTIME/assessment/B-DISC-G-02/control-v1/assessment.json",
+          "sha256": "7f2dc999c433787fc36a54da326f94265dbe806ab45e4a734eaec0e1216f9cd6",
+          "pointer": "/source_judgment",
+          "evaluator_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-DISC-G-02-control-v1"
+        },
+        {
+          "slot": "B-APPL-G-02",
+          "arm": "treatment",
+          "source_judgment": "FAIL",
+          "path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/assessment.json",
+          "sha256": "464f4f16295f5aebe768bcb1ef0bb99f3b4f99b1409655aa51e72e11e2b848d1",
+          "pointer": "/source_judgment",
+          "evaluator_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-APPL-G-02-treatment-v1"
+        },
+        {
+          "slot": "B-APPL-G-02",
+          "arm": "control",
+          "source_judgment": "PASS_WITH_LIMITATIONS",
+          "path": "ER12_RUNTIME/assessment/B-APPL-G-02/control-v1/assessment.json",
+          "sha256": "317a52883afd89bbb15ef85fc53847c4afc761e73e3e2dec4683e3281743b29d",
+          "pointer": "/source_judgment",
+          "evaluator_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-APPL-G-02-control-v1"
+        },
+        {
+          "slot": "B-FINAL-M-02",
+          "arm": "treatment",
+          "source_judgment": "PASS_WITH_LIMITATIONS",
+          "path": "ER12_RUNTIME/assessment/B-FINAL-M-02/treatment-v1/assessment.json",
+          "sha256": "c509eb0538228b151aab4f4743691a1fe1fd9e213a3543c726c88dfafcb6a1f5",
+          "pointer": "/source_judgment",
+          "evaluator_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-M-02-treatment-v1"
+        },
+        {
+          "slot": "B-FINAL-M-02",
+          "arm": "control",
+          "source_judgment": "PASS_WITH_LIMITATIONS",
+          "path": "ER12_RUNTIME/assessment/B-FINAL-M-02/control-v1/assessment.json",
+          "sha256": "08f5ad60d830c84f04f8aa1a0e4089a8af45bbeafaf375bf990f7721cb12fe1c",
+          "pointer": "/source_judgment",
+          "evaluator_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-M-02-control-v1"
+        },
+        {
+          "slot": "B-FINAL-G-02",
+          "arm": "treatment",
+          "source_judgment": "PASS_WITH_LIMITATIONS",
+          "path": "ER12_RUNTIME/assessment/B-FINAL-G-02/treatment-v1/assessment.json",
+          "sha256": "1fe1afb5a99637ec19ac33cb9e93a2506082b8f1426a85e0ed42ff45cd3f4ee7",
+          "pointer": "/source_judgment",
+          "evaluator_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-G-02-treatment-v1"
+        },
+        {
+          "slot": "B-FINAL-G-02",
+          "arm": "control",
+          "source_judgment": "FAIL",
+          "path": "ER12_RUNTIME/assessment/B-FINAL-G-02/control-v1/assessment.json",
+          "sha256": "5c83bc6a76f4ffa6392306430fc922f56d59da90dac183cbc1342c1edd50fb94",
+          "pointer": "/source_judgment",
+          "evaluator_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-G-02-control-v1"
+        }
+      ]
+    }
+  ]
+}

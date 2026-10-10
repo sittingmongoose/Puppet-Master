@@ -1,0 +1,44 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A8-01/treatment-v1/source-map.json",
+      "source_id": "E09-premis30",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/A8-01/treatment-v1/evidence/retrieval-index.json",
+      "source_id": "E09-premis30",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "text_locator_convention": "physical newline lines as counted by rg/sed; printed PDF page numbers also provided"
+    }
+  ],
+  "raw_sha256": "2e3e3fe001798f3f43d26b4aed03e8737310fa044ee001af2493f7c72517b0e0",
+  "original_bytes": 2176353,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A8-01/treatment-v1/evidence/E09-premis30.pdf",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf"
+  ],
+  "version": "UNKNOWN",
+  "selector": [
+    {
+      "text_locator_convention": "physical newline lines as counted by rg/sed; printed PDF page numbers also provided"
+    }
+  ],
+  "conditions": "UNKNOWN",
+  "rawSHA256": "2e3e3fe001798f3f43d26b4aed03e8737310fa044ee001af2493f7c72517b0e0"
+}

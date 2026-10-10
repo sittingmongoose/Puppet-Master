@@ -1,0 +1,90 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://support.apple.com/en-ie/102301"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A4-02/control-v1/source-map.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {
+        "version": "Apple Support published 2026-05-27; iOS/iPadOS 26+ and 18-or-earlier flows and Mac; app builds undisclosed",
+        "conditions": "Same Apple Account and iCloud location/account for all-device availability; no account migration is implied."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A4-02/control-v1/source-map.json",
+      "source_id": "S06",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/A4-02/control-v1/evidence/retrievals.json",
+      "source_id": "S06",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": "Add a subscription calendar on iPhone or iPad; Add a subscription calendar on Mac"
+    },
+    {
+      "text_lines": [
+        [
+          15,
+          43
+        ]
+      ]
+    },
+    {
+      "text_lines": 65
+    },
+    {
+      "text_lines": 65
+    }
+  ],
+  "raw_sha256": "8e9808650a527925fd7ab2fefcb1ff321e21723ff9996c58bedde5ff23697382",
+  "original_bytes": 2795,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A4-02/control-v1/evidence/S06.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://support.apple.com/en-ie/102301"
+  ],
+  "version": [
+    {
+      "version": "Apple Support published 2026-05-27; iOS/iPadOS 26+ and 18-or-earlier flows and Mac; app builds undisclosed",
+      "conditions": "Same Apple Account and iCloud location/account for all-device availability; no account migration is implied."
+    }
+  ],
+  "selector": [
+    {
+      "locator": "Add a subscription calendar on iPhone or iPad; Add a subscription calendar on Mac"
+    },
+    {
+      "text_lines": [
+        [
+          15,
+          43
+        ]
+      ]
+    },
+    {
+      "text_lines": 65
+    },
+    {
+      "text_lines": 65
+    }
+  ],
+  "conditions": [
+    {
+      "version": "Apple Support published 2026-05-27; iOS/iPadOS 26+ and 18-or-earlier flows and Mac; app builds undisclosed",
+      "conditions": "Same Apple Account and iCloud location/account for all-device availability; no account migration is implied."
+    }
+  ],
+  "rawSHA256": "8e9808650a527925fd7ab2fefcb1ff321e21723ff9996c58bedde5ff23697382"
+}

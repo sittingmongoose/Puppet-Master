@@ -1,0 +1,97 @@
+[
+  {
+    "id": "P01",
+    "original_line": 6,
+    "exact_text": "I want record, pause, stop, playback, and download controls."
+  },
+  {
+    "id": "P02",
+    "original_line": 6,
+    "exact_text": "My draft obtains a microphone stream, constructs MediaRecorder with a single hard-coded WebM/Opus MIME string, requests a callback every second, and concatenates received chunks when stopped."
+  },
+  {
+    "id": "P03",
+    "original_line": 6,
+    "exact_text": "It increments a duration counter on each callback and stops at 300 callbacks."
+  },
+  {
+    "id": "P04",
+    "original_line": 6,
+    "exact_text": "On errors it currently just resets the controls; the permission/track cleanup path is missing."
+  },
+  {
+    "id": "P05",
+    "original_line": 8,
+    "exact_text": "I am carrying an old assumption that Safari cannot use MediaRecorder and therefore must always take a custom encoder path."
+  },
+  {
+    "id": "P06",
+    "original_line": 8,
+    "exact_text": "I also assumed that Web Audio produces WAV files automatically, that choosing a sample rate guarantees the hardware records at that rate, and that a MIME support probe proves recording will work."
+  },
+  {
+    "id": "P07",
+    "original_line": 8,
+    "exact_text": "These assumptions have not been verified against a selected released browser."
+  },
+  {
+    "id": "P08",
+    "original_line": 8,
+    "exact_text": "Please research them rather than treating them as required product restrictions."
+  },
+  {
+    "id": "P09",
+    "original_line": 10,
+    "exact_text": "The fallback sketch uses an AudioWorklet to collect raw samples and keeps all samples until stop, then encodes a WAV download."
+  },
+  {
+    "id": "P10",
+    "original_line": 10,
+    "exact_text": "I have not budgeted memory for five minutes, resolved channel layout, chosen an encoder, or addressed a page suspension."
+  },
+  {
+    "id": "P11",
+    "original_line": 10,
+    "exact_text": "A format fallback should preserve the user's capture capability where support exists, but the page must honestly explain an unsupported operation."
+  },
+  {
+    "id": "P12",
+    "original_line": 10,
+    "exact_text": "No new upload service is allowed."
+  },
+  {
+    "id": "P13",
+    "original_line": 12,
+    "exact_text": "Keep R1–R6 and the negative constraints binding."
+  },
+  {
+    "id": "P14",
+    "original_line": 12,
+    "exact_text": "The revision needs explicit track cleanup, a truthful duration rule, format selection with failure handling, and a bounded buffer/export policy."
+  },
+  {
+    "id": "P15",
+    "original_line": 12,
+    "exact_text": "It may choose native capture for some combinations and a fallback or explicit refusal for others if the evidence justifies that boundary."
+  },
+  {
+    "id": "P16",
+    "original_line": 12,
+    "exact_text": "No claim of identical audio quality or cross-browser file compatibility is required."
+  },
+  {
+    "id": "P17",
+    "original_line": 14,
+    "exact_text": "Proposed validation only: denied permission; constructor/start failure despite a probe; a track ending mid-memo; backgrounding that delays callbacks; pause/resume; stop with pending data; playback and download for each selected format; resource cleanup after cancel."
+  },
+  {
+    "id": "P18",
+    "original_line": 14,
+    "exact_text": "A small manual browser check would establish only the exact browser/version/operation exercised, not universal support."
+  },
+  {
+    "id": "P19",
+    "original_line": 14,
+    "exact_text": "No browser has been opened and no audio has been recorded for this fixture."
+  }
+]

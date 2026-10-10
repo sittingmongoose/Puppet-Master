@@ -1,0 +1,145 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://uppy.io/docs/golden-retriever/"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A4-01/treatment-v1/source-map.json",
+      "source_id": "P08",
+      "existing_authored_summary_fields": {
+        "version_or_commit_observed": "Live unversioned Uppy Golden Retriever docs",
+        "conditions_defaults_units_types_exceptions": "Service-worker storage defaults false and temporary references do not survive browser crash/restart; recovery may require reselection. This is not a storage-service part limit.",
+        "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+        "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+      }
+    },
+    {
+      "authored_source_map": "assessment/A4-01/treatment-v1/evidence/retrieval-manifest.json",
+      "source_id": "P08",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "lines": 175
+    },
+    {
+      "locator": "Storage/recovery defaults"
+    },
+    {
+      "locators": [
+        {
+          "anchor": "10 MiB",
+          "text_lines": [],
+          "primary_heading_or_json_field": "Storage/recovery defaults"
+        },
+        {
+          "anchor": "restarts",
+          "text_lines": [
+            39
+          ],
+          "primary_heading_or_json_field": "Storage/recovery defaults"
+        },
+        {
+          "anchor": "Service Worker",
+          "text_lines": [
+            36,
+            37,
+            82,
+            84,
+            85,
+            87
+          ],
+          "primary_heading_or_json_field": "Storage/recovery defaults"
+        },
+        {
+          "anchor": "false",
+          "text_lines": [
+            135
+          ],
+          "primary_heading_or_json_field": "Storage/recovery defaults"
+        }
+      ]
+    },
+    {
+      "lines": 175
+    }
+  ],
+  "raw_sha256": "65a33ec7ef7580a28b838ca4636dde2550515973938de1274301e62e4ce4fdc0",
+  "original_bytes": 5445,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A4-01/treatment-v1/evidence/P08-text.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://uppy.io/docs/golden-retriever/"
+  ],
+  "version": [
+    {
+      "version_or_commit_observed": "Live unversioned Uppy Golden Retriever docs",
+      "conditions_defaults_units_types_exceptions": "Service-worker storage defaults false and temporary references do not survive browser crash/restart; recovery may require reselection. This is not a storage-service part limit.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    }
+  ],
+  "selector": [
+    {
+      "lines": 175
+    },
+    {
+      "locator": "Storage/recovery defaults"
+    },
+    {
+      "locators": [
+        {
+          "anchor": "10 MiB",
+          "text_lines": [],
+          "primary_heading_or_json_field": "Storage/recovery defaults"
+        },
+        {
+          "anchor": "restarts",
+          "text_lines": [
+            39
+          ],
+          "primary_heading_or_json_field": "Storage/recovery defaults"
+        },
+        {
+          "anchor": "Service Worker",
+          "text_lines": [
+            36,
+            37,
+            82,
+            84,
+            85,
+            87
+          ],
+          "primary_heading_or_json_field": "Storage/recovery defaults"
+        },
+        {
+          "anchor": "false",
+          "text_lines": [
+            135
+          ],
+          "primary_heading_or_json_field": "Storage/recovery defaults"
+        }
+      ]
+    },
+    {
+      "lines": 175
+    }
+  ],
+  "conditions": [
+    {
+      "version_or_commit_observed": "Live unversioned Uppy Golden Retriever docs",
+      "conditions_defaults_units_types_exceptions": "Service-worker storage defaults false and temporary references do not survive browser crash/restart; recovery may require reselection. This is not a storage-service part limit.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    }
+  ],
+  "rawSHA256": "65a33ec7ef7580a28b838ca4636dde2550515973938de1274301e62e4ce4fdc0"
+}

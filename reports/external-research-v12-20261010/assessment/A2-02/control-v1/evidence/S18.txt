@@ -1,0 +1,75 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://github.com/annotorious/annotorious/releases"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A2-02/control-v1/source-map.json",
+      "source_id": "R18",
+      "existing_authored_summary_fields": {
+        "version_or_commit_independently_checked": "Annotorious v3.4.0, 0dd99c4; published 2025-05-27",
+        "governing_subject_unit_type_default_domain_exceptions": "The release includes polygon-tool changes. At v3.4.0 both @annotorious/annotorious and @annotorious/openseadragon packages identify version 3.4.0; the latter declares OpenSeadragon ^3 || ^4 || ^5 peer compatibility. The moving guide is not a product-operation witness.",
+        "applicability_judgment": "The proposed version is a real applicable library release, not a mislabeled core-only version."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A2-02/control-v1/source-map.json",
+      "source_id": "S18",
+      "existing_authored_summary_fields": {
+        "candidate_version": "v3.4.0, commit 0dd99c4; latest release shown"
+      }
+    },
+    {
+      "authored_source_map": "assessment/A2-02/control-v1/evidence/retrievals.json",
+      "source_id": "S18",
+      "existing_authored_summary_fields": {
+        "candidate_version": "v3.4.0, commit 0dd99c4; latest release shown"
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "primary_locator": "Release metadata; E31/E32 package name/version/dependencies"
+    }
+  ],
+  "raw_sha256": "df2963a4f9cbb0a67bb0c946acec405d2dd536f0a61140ea51fb46635d508ac4",
+  "original_bytes": 9830,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A2-02/control-v1/evidence/S18.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://github.com/annotorious/annotorious/releases"
+  ],
+  "version": [
+    {
+      "version_or_commit_independently_checked": "Annotorious v3.4.0, 0dd99c4; published 2025-05-27",
+      "governing_subject_unit_type_default_domain_exceptions": "The release includes polygon-tool changes. At v3.4.0 both @annotorious/annotorious and @annotorious/openseadragon packages identify version 3.4.0; the latter declares OpenSeadragon ^3 || ^4 || ^5 peer compatibility. The moving guide is not a product-operation witness.",
+      "applicability_judgment": "The proposed version is a real applicable library release, not a mislabeled core-only version."
+    },
+    {
+      "candidate_version": "v3.4.0, commit 0dd99c4; latest release shown"
+    },
+    {
+      "candidate_version": "v3.4.0, commit 0dd99c4; latest release shown"
+    }
+  ],
+  "selector": [
+    {
+      "primary_locator": "Release metadata; E31/E32 package name/version/dependencies"
+    }
+  ],
+  "conditions": [
+    {
+      "version_or_commit_independently_checked": "Annotorious v3.4.0, 0dd99c4; published 2025-05-27",
+      "governing_subject_unit_type_default_domain_exceptions": "The release includes polygon-tool changes. At v3.4.0 both @annotorious/annotorious and @annotorious/openseadragon packages identify version 3.4.0; the latter declares OpenSeadragon ^3 || ^4 || ^5 peer compatibility. The moving guide is not a product-operation witness.",
+      "applicability_judgment": "The proposed version is a real applicable library release, not a mislabeled core-only version."
+    }
+  ],
+  "rawSHA256": "df2963a4f9cbb0a67bb0c946acec405d2dd536f0a61140ea51fb46635d508ac4"
+}

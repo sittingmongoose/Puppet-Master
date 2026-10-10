@@ -1,0 +1,132 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://raw.githubusercontent.com/in-toto/specification/v1.0/in-toto-spec.md"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/B-DISC-G-02/treatment-v1/primary-retrievals.json",
+      "source_id": "P09",
+      "existing_authored_summary_fields": {
+        "version": "in-toto specification v1.0"
+      }
+    },
+    {
+      "authored_source_map": "assessment/B-DISC-G-02/treatment-v1/source-map.json",
+      "source_id": "P09",
+      "existing_authored_summary_fields": {
+        "version": "in-toto specification v1.0",
+        "conditions_and_applicability": "Layout owner/key and functionary links must be trusted; artifact matching rules and inspections enforce content continuity. Commands are not proof of execution correctness. Implicit ALLOW and old unexpired-layout replay are boundaries."
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "text_lines": 2217
+    },
+    {
+      "text_lines": 2217
+    },
+    {
+      "locators": [
+        {
+          "section": "Scope/assumptions and old layout replay",
+          "text_start_line": 179,
+          "text_end_line": 225,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P09.view.html#L179",
+          "primary_url": "https://github.com/in-toto/specification/blob/v1.0/in-toto-spec.md#152-limitations"
+        },
+        {
+          "section": "Components and artifact-chain example",
+          "text_start_line": 462,
+          "text_end_line": 524,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P09.view.html#L462",
+          "primary_url": "https://github.com/in-toto/specification/blob/v1.0/in-toto-spec.md#22-in-toto-components"
+        },
+        {
+          "section": "Layout/steps/threshold/artifact rules",
+          "text_start_line": 683,
+          "text_end_line": 779,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P09.view.html#L683",
+          "primary_url": "https://github.com/in-toto/specification/blob/v1.0/in-toto-spec.md#43-file-formats-layout"
+        },
+        {
+          "section": "Rule defaults and MATCH",
+          "text_start_line": 888,
+          "text_end_line": 932,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P09.view.html#L888",
+          "primary_url": "https://github.com/in-toto/specification/blob/v1.0/in-toto-spec.md#4331-rule-processing"
+        }
+      ]
+    }
+  ],
+  "raw_sha256": "17d3326e4cf58234619dbfe821cdc5187e55e2c89f7b63f03699c46588322097",
+  "original_bytes": 87108,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/B-DISC-G-02/treatment-v1/primary/P09.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://raw.githubusercontent.com/in-toto/specification/v1.0/in-toto-spec.md"
+  ],
+  "version": [
+    {
+      "version": "in-toto specification v1.0"
+    },
+    {
+      "version": "in-toto specification v1.0",
+      "conditions_and_applicability": "Layout owner/key and functionary links must be trusted; artifact matching rules and inspections enforce content continuity. Commands are not proof of execution correctness. Implicit ALLOW and old unexpired-layout replay are boundaries."
+    }
+  ],
+  "selector": [
+    {
+      "text_lines": 2217
+    },
+    {
+      "text_lines": 2217
+    },
+    {
+      "locators": [
+        {
+          "section": "Scope/assumptions and old layout replay",
+          "text_start_line": 179,
+          "text_end_line": 225,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P09.view.html#L179",
+          "primary_url": "https://github.com/in-toto/specification/blob/v1.0/in-toto-spec.md#152-limitations"
+        },
+        {
+          "section": "Components and artifact-chain example",
+          "text_start_line": 462,
+          "text_end_line": 524,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P09.view.html#L462",
+          "primary_url": "https://github.com/in-toto/specification/blob/v1.0/in-toto-spec.md#22-in-toto-components"
+        },
+        {
+          "section": "Layout/steps/threshold/artifact rules",
+          "text_start_line": 683,
+          "text_end_line": 779,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P09.view.html#L683",
+          "primary_url": "https://github.com/in-toto/specification/blob/v1.0/in-toto-spec.md#43-file-formats-layout"
+        },
+        {
+          "section": "Rule defaults and MATCH",
+          "text_start_line": 888,
+          "text_end_line": 932,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P09.view.html#L888",
+          "primary_url": "https://github.com/in-toto/specification/blob/v1.0/in-toto-spec.md#4331-rule-processing"
+        }
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "version": "in-toto specification v1.0",
+      "conditions_and_applicability": "Layout owner/key and functionary links must be trusted; artifact matching rules and inspections enforce content continuity. Commands are not proof of execution correctness. Implicit ALLOW and old unexpired-layout replay are boundaries."
+    }
+  ],
+  "rawSHA256": "17d3326e4cf58234619dbfe821cdc5187e55e2c89f7b63f03699c46588322097"
+}

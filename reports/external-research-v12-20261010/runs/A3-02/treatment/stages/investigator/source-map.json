@@ -1,0 +1,209 @@
+{
+  "schema_version": 1,
+  "run_id": "A3-02-treatment",
+  "stage": "investigator",
+  "discovery_file": "discovery.md",
+  "evidence_index": "sources/index.md",
+  "discovery_status": "saved before plan release; do not edit after helper freezes its SHA-256",
+  "browser_execution": "not performed",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "MediaStream Recording",
+      "url": "https://www.w3.org/TR/2026/WD-mediastream-recording-20260316/",
+      "released_version_or_commit": "W3C Working Draft, 2026-03-16",
+      "locator": "§2.1-2.3 (constructor, MIME, events, start/stop/timeslice), §2.3 isTypeSupported, §6.1 resource exhaustion",
+      "access_utc": "2026-10-10T04:47:40Z",
+      "observed_operation": "Opened the fixed dated report and inspected algorithm text and surrounding context.",
+      "governing_condition_default_exception": "isTypeSupported=true signals format capability only and can still fail for resource reasons; unsupported constructor MIME throws NotSupportedError; the actual current MIME is exposed after start; timeslice events are queued after a UA minimum; all-track-ended stops recording; individual blobs need not be playable while the completed concatenation must be.",
+      "applicability": "Primary current working-draft API semantics for MediaRecorder lifecycle, negotiation, buffering, and assembly; not a browser/version support matrix.",
+      "evidence_file": "sources/index.md#s01"
+    },
+    {
+      "id": "S02",
+      "title": "Media Capture and Streams",
+      "url": "https://www.w3.org/TR/2025/CRD-mediacapture-streams-20251009/",
+      "released_version_or_commit": "W3C Candidate Recommendation Draft, 2025-10-09",
+      "locator": "§4.3.1.2 track life-cycle and mute/unmute/ended behavior; §8 event summary; §9.1 Navigator Interface Extensions and §9.2 MediaDevices secure-context IDL; §10.1 MediaDevices getUserMedia; §13 permissions integration",
+      "access_utc": "2026-10-10T04:47:40Z",
+      "observed_operation": "Opened fixed dated report; inspected secure-context IDL, permission rejection, track-end and devicechange algorithms.",
+      "governing_condition_default_exception": "Microphone-source end reasons beyond application stop are implementation-defined; external ending queues an ended event, while explicit track.stop() does not; permission failure rejects NotAllowedError; a muted or disabled track may yield silence; devicechange is an event on available-device-set changes and can be coalesced.",
+      "applicability": "Primary stream/permission lifecycle authority; use for app behavior and test design, with browser/OS observations still required.",
+      "evidence_file": "sources/index.md#s02"
+    },
+    {
+      "id": "S03",
+      "title": "Web Audio API 1.1",
+      "url": "https://www.w3.org/TR/2026/WD-webaudio-1.1-20260922/",
+      "released_version_or_commit": "W3C Working Draft, 2026-09-22",
+      "locator": "§1.32 AudioWorklet; §2.6 rendering an audio graph and render quantum",
+      "access_utc": "2026-10-10T04:47:40Z",
+      "observed_operation": "Opened fixed dated report; inspected worklet scope, rendering-thread operation, configurable quantum, and real-time callback budget context.",
+      "governing_condition_default_exception": "AudioWorkletProcessor runs in an audio rendering scope/thread; default render quantum is 128 frames but render size is configurable; work must meet real-time callback deadlines. The API supplies audio frames, not a finished encoded file/container.",
+      "applicability": "Primary design input for the custom processing alternative; exact browser worklet behavior and encoder/mux support remain test items.",
+      "evidence_file": "sources/index.md#s03"
+    },
+    {
+      "id": "S04",
+      "title": "Chrome Stable Channel Update for Desktop",
+      "url": "https://chromereleases.googleblog.com/2026/10/stable-channel-update-for-desktop_086471744.html",
+      "released_version_or_commit": "Chrome Stable desktop 155.0.8059.39/.40 (Windows/Mac), 155.0.8059.39 (Linux), released 2026-10-06",
+      "locator": "Stable Channel Update for Desktop heading/date and build line; official October 2026 archive search result",
+      "access_utc": "2026-10-10T04:48:07Z",
+      "observed_operation": "Searched official Chrome Releases and read the matching 2026-10-06 desktop Stable result; direct archive open was throttled.",
+      "governing_condition_default_exception": "Version identifies the stable target announced by the release channel; rollout may occur over days/weeks, so test must record the installed full build rather than assume all users have it.",
+      "applicability": "Version anchor for the proposed Chrome validation matrix only; release note does not establish MediaRecorder format support.",
+      "evidence_file": "sources/index.md#s04"
+    },
+    {
+      "id": "S05",
+      "title": "WebKit Features in Safari 18.4",
+      "url": "https://webkit.org/blog/16574/webkit-features-in-safari-18-4/",
+      "released_version_or_commit": "WebKit release notes for Safari 18.4, published 2025-03-31",
+      "locator": "Media section, approx. lines 145-168",
+      "access_utc": "2026-10-10T04:47:40Z",
+      "observed_operation": "Opened release article and read Media section and platform qualifiers.",
+      "governing_condition_default_exception": "Safari 18.4 release article describes WebM recording with Opus and ALAC/PCM audio tracks; its examples and wording do not specify a complete standalone audio-only MIME matrix. Ogg Opus/Vorbis is explicitly scoped to macOS Sequoia 15.4, iOS/iPadOS 18.4, and visionOS 2.4.",
+      "applicability": "Historical release evidence that Safari capability changed materially; candidate source for runtime probes only. Do not infer exact audio-only MIME strings or Safari 26 behavior from this paragraph.",
+      "evidence_file": "sources/index.md#s05"
+    },
+    {
+      "id": "S06",
+      "title": "WebKit Features in Safari 26.0 and Apple Safari 26.0 Release Notes",
+      "url": "https://webkit.org/blog/17333/webkit-features-in-safari-26-0/",
+      "released_version_or_commit": "Safari 26.0 feature announcement, 2025-09-15; Apple release note build 26 (20622.1.22)",
+      "locator": "WebKit Media section, lines 349-359; Apple Developer Safari 26.0 Release Notes, Media > New Features",
+      "access_utc": "2026-10-10T04:47:40Z",
+      "observed_operation": "Opened WebKit article and Apple release-note search result; read the announced MIME example and release build metadata.",
+      "governing_condition_default_exception": "Safari 26.0 adds ALAC and PCM audio in MediaRecorder; example is audio/mp4; codecs=alac. The article does not specify an exact PCM MIME string or guarantee every combination on every OS/hardware configuration.",
+      "applicability": "Current Safari version and released capability anchor; probe exact MIME on tested desktop Safari and separately test playback/export.",
+      "evidence_file": "sources/index.md#s06"
+    },
+    {
+      "id": "S07",
+      "title": "Safari Technology Preview 110 release notes",
+      "url": "https://webkit.org/blog/10929/release-notes-for-safari-technology-preview-110/",
+      "released_version_or_commit": "Safari Technology Preview 110, 2020-07-16; WebKit revisions 263214-263988",
+      "locator": "WebRTC > MediaRecorder fixes, lines 19-23; listed changesets r263511/r263633/r263891 and r263565/r263651/r263892",
+      "access_utc": "2026-10-10T04:47:40Z",
+      "observed_operation": "Opened historical release notes and inspected the explicit regression-fix entries.",
+      "governing_condition_default_exception": "Release notes fixed an empty stopRecorder Blob after first use and start() ignoring timeslice in that old STP range.",
+      "applicability": "Historical regression/fix detail for proposing lifecycle and timeslice regression tests; says nothing by itself about current Safari 26 behavior.",
+      "evidence_file": "sources/index.md#s07"
+    },
+    {
+      "id": "S08",
+      "title": "Chromium MediaRecorder handler source",
+      "url": "https://chromium.googlesource.com/chromium/src/third_party/+/19646947eb735f84c5ae91af1fe901273d67d4f7/blink/renderer/modules/mediarecorder/media_recorder_handler.cc",
+      "released_version_or_commit": "Immutable Chromium source commit 19646947eb735f84c5ae91af1fe901273d67d4f7, authored 2025-09-04; not mapped here to Chrome 155",
+      "locator": "AudioStringToCodecId(), CanSupportAudioType(), and MIME validation/codec branches in media_recorder_handler.cc",
+      "access_utc": "2026-10-10T04:48:29Z",
+      "observed_operation": "Retrieved the exact-commit source search result; direct file open was unavailable in the browser tool.",
+      "governing_condition_default_exception": "The source snapshot recognizes audio/webm and audio/mp4, maps Opus and PCM, and maps mp4a.40.2 AAC only under USE_PROPRIETARY_CODECS.",
+      "applicability": "An immutable implementation snapshot for forming Chrome probe candidates and noting build-flag variability; not proof of the Chrome 155 binary's exact support set.",
+      "evidence_file": "sources/index.md#s08"
+    },
+    {
+      "id": "S09",
+      "title": "extendable-media-recorder README",
+      "url": "https://github.com/chrisguttandin/extendable-media-recorder",
+      "released_version_or_commit": "Mutable master README as retrieved 2026-10-10; exact commit and current npm version not exposed in retrieved view",
+      "locator": "README: Usage, Using a custom encoder, Setting the sample rate, Inner Workings",
+      "access_utc": "2026-10-10T04:48:29Z",
+      "observed_operation": "Opened repository README; compared native path and custom encoder backend notes.",
+      "governing_condition_default_exception": "README says it uses native MediaRecorder when possible; custom audio encoders are supported; Chrome's custom path consumes MediaRecorder WebM/PCM and parses EBML, while other browsers use Web Audio PCM.",
+      "applicability": "Architecture analog only; mutable docs and unpinned library do not establish current browser support or justify selecting the dependency.",
+      "evidence_file": "sources/index.md#s09"
+    },
+    {
+      "id": "S10",
+      "title": "extendable-media-recorder issue 263: timeslice / requestData",
+      "url": "https://github.com/chrisguttandin/extendable-media-recorder/issues/263",
+      "released_version_or_commit": "Issue opened 2019-05-20; closed completed in commit 2fe86e8 on 2019-09-03",
+      "locator": "Issue discussion and maintainer closure comment, especially discussion of WAV length metadata and requestData",
+      "access_utc": "2026-10-10T04:47:40Z",
+      "observed_operation": "Opened issue and read maintainer discussion, resolution summary, and remaining requestData limitation.",
+      "governing_condition_default_exception": "For that WAV encoder, the maintainer reported using a maximum/sentinel file-size value for timesliced WAV output and said requestData() remained unimplemented at closure.",
+      "applicability": "Specific library history clarifying header assembly tradeoffs; not a limitation of native MediaRecorder containers.",
+      "evidence_file": "sources/index.md#s10"
+    },
+    {
+      "id": "S11",
+      "title": "extendable-media-recorder issue 692: doubled WAV speed / timeslice report",
+      "url": "https://github.com/chrisguttandin/extendable-media-recorder/issues/692",
+      "released_version_or_commit": "Issue opened 2025-08-08; closed status shown; library version and resolution commit unknown in retrieved page",
+      "locator": "Issue summary, environment fields, reproduction, and closure state",
+      "access_utc": "2026-10-10T04:48:29Z",
+      "observed_operation": "Opened issue and inspected symptom, example, environment, and visible activity; no maintainer resolution was exposed.",
+      "governing_condition_default_exception": "Reporter describes audio/wav playback near 2x and dataavailable intervals near twice the requested chunk interval; version is unfilled and environment examples are not confirmed facts.",
+      "applicability": "Library-specific uncertainty that motivates WAV sample-rate/header and event-timing checks; no inference about native browser behavior or verified fix.",
+      "evidence_file": "sources/index.md#s11"
+    },
+    {
+      "id": "S12",
+      "title": "High Resolution Time",
+      "url": "https://www.w3.org/TR/2026/WD-hr-time-3-20260901/",
+      "released_version_or_commit": "W3C Working Draft, 2026-09-01",
+      "locator": "§2.1 clocks; §7.1 Performance.now()",
+      "access_utc": "2026-10-10T04:52:20Z",
+      "observed_operation": "Opened the fixed dated report and inspected monotonic-clock and background-throttling conditions.",
+      "governing_condition_default_exception": "Performance.now values with the same time origin use a monotonic clock and do not decrease with system-clock changes; in backgrounded tabs the user agent may throttle timers and periodic callbacks or freeze them entirely, without affecting monotonic-clock accuracy.",
+      "applicability": "Primary timekeeping basis for elapsed active-time accounting; proves a reliable clock source, not that a scheduled stop callback runs at its deadline.",
+      "evidence_file": "sources/index.md#s12"
+    },
+    {
+      "id": "S13",
+      "title": "HTML Standard — Page visibility",
+      "url": "https://html.spec.whatwg.org/multipage/interaction.html#page-visibility",
+      "released_version_or_commit": "HTML Living Standard, last updated 2026-10-09; mutable living document",
+      "locator": "§6.2 Page visibility: system visibility state update and visibilitychange event steps",
+      "access_utc": "2026-10-10T04:52:20Z",
+      "observed_operation": "Opened the Page Visibility section of the current Living Standard and read the state, queued task, and event sequence.",
+      "governing_condition_default_exception": "The user agent determines system visibility; on change it queues a global task to update document visibility, then fires visibilitychange. Hidden/visible therefore signals a user-agent determination and handler execution is task-queued.",
+      "applicability": "Supports stop-on-hidden behavior as a signal-driven policy, not an instantaneous or hard real-time guarantee; exact Chrome/Safari behavior must be exercised.",
+      "evidence_file": "sources/index.md#s13"
+    }
+  ],
+  "release_receipt": {
+    "revealed_at_utc": "2026-10-10T04:49:35.236Z",
+    "discovery_sha256": "510bcbb9f05eb883d1323caa2af5603ac1a6506b73cbd2fa0705e50702944069",
+    "discovery_bytes": 10244,
+    "plan_sha256": "b977457667677faa27fe5256d090e48ec798eae592ffd7d860e4c3c239167b79",
+    "plan_bytes": 2470,
+    "plan_file": "revealed-plan.md",
+    "single_use": true
+  },
+  "native_goal_observations": {
+    "activation": {
+      "tool": "create_goal, then get_goal",
+      "goal": {
+        "threadId": "01a1241e-ef19-7141-bf44-659b736fcdc7",
+        "objective": "ER12 investigator stage, run A3-02-treatment: execute ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+        "status": "active",
+        "tokensUsed": 0,
+        "timeUsedSeconds": 0,
+        "createdAt": 1791607410,
+        "updatedAt": 1791607410
+      },
+      "remainingTokens": null,
+      "completionBudgetReport": null,
+      "additional_provenance_or_readable_timestamp": "UNKNOWN"
+    },
+    "terminal": {
+      "tool": "update_goal(status=complete), then get_goal",
+      "goal": {
+        "threadId": "01a1241e-ef19-7141-bf44-659b736fcdc7",
+        "objective": "ER12 investigator stage, run A3-02-treatment: execute ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+        "status": "complete",
+        "tokensUsed": 310726,
+        "timeUsedSeconds": 601,
+        "createdAt": 1791607410,
+        "updatedAt": 1791608011
+      },
+      "remainingTokens": null,
+      "completionBudgetReport_from_update": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language.",
+      "completionBudgetReport_from_get": null,
+      "additional_provenance_or_readable_timestamp": "UNKNOWN"
+    }
+  }
+}

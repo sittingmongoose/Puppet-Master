@@ -1,243 +1,71 @@
-// BWF MetaEdit GUI - A GUI for BWF MetaEdit
-//
-// This code was created in 2010 for the Library of Congress and the
-// other federal government agencies participating in the Federal Agencies
-// Digital Guidelines Initiative and it is in the public domain.
-//
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-//---------------------------------------------------------------------------
-#include "GUI/Qt/GUI_Main_xxxx_TextEditDialog.h"
-#include "Common/Core.h"
-#include "ZenLib/Ztring.h"
-#include "ZenLib/File.h"
-#include <QLabel>
-#include <QEvent>
-#include <QFont>
-#include <QVBoxLayout>
-#include <QPushButton>
-#include <QDialogButtonBox>
-#include <QTextEdit>
-#include <QLabel>
-#include <QFileDialog>
-#include <QMessageBox>
-//---------------------------------------------------------------------------
-
-//***************************************************************************
-// Constructor/Destructor
-//***************************************************************************
-
-//---------------------------------------------------------------------------
-GUI_Main_xxxx_TextEditDialog::GUI_Main_xxxx_TextEditDialog(Core* _C, const std::string &FileName_, const std::string &Field_, const QString &Value, bool ReadOnly_, QWidget* parent)
-: QDialog(parent)
 {
-    //Internal
-    C=_C;
-    FileName=FileName_;
-    Field=Field_;
-    ReadOnly=ReadOnly_;
-
-    //Configuration
-    setWindowFlags(windowFlags()&(~Qt::WindowContextHelpButtonHint));
-    setWindowTitle(QString::fromUtf8(Field.c_str()));
-    setWindowIcon (QIcon(":/Image/Logo/Logo.png"));
-
-    //Buttons
-    QDialogButtonBox::StandardButtons Buttons=QDialogButtonBox::Ok;
-    if (!ReadOnly)
-        Buttons|=QDialogButtonBox::Cancel;
-
-    Load=new QPushButton("&Import file...");
-    Save=new QPushButton("&Export file...");
-    Dialog=new QDialogButtonBox(Buttons, Qt::Horizontal, this);
-    if (!ReadOnly)
-        Dialog->addButton(Load, QDialogButtonBox::ResetRole);
-    if (!FileName.empty())
-        Dialog->addButton(Save, QDialogButtonBox::ResetRole);
-    connect(Dialog, SIGNAL(accepted()), this, SLOT(OnAccept()));
-    connect(Dialog, SIGNAL(rejected()), this, SLOT(reject()));
-    connect(Load, SIGNAL(clicked()), this, SLOT(OnMenu_Load()));
-    connect(Save, SIGNAL(clicked()), this, SLOT(OnMenu_Save()));
-
-    TextEdit=new QTextEdit(this);
-    connect(TextEdit, SIGNAL(textChanged()), this, SLOT(OnTextChanged()));
-
-    Label=new QLabel(this);
-    Label->setOpenExternalLinks(true);
-
-    BigMessage=new QLabel(this);
-
-    Message=new QLabel(this);
-    Message->setOpenExternalLinks(true);
-
-    QVBoxLayout* L=new QVBoxLayout();
-    L->addWidget(TextEdit);
-    L->addWidget(Label);
-    L->addWidget(BigMessage);
-    L->addWidget(Message);
-    L->addWidget(Dialog);
-
-    setLayout(L);
-
-    if (Field=="XMP")
-        Message->setText("<html><body>This tool does not validate the contents of the XML chunks against the rules for XMP.<br />Edit at your own risk. For more information see the <a href=\"http://www.adobe.com/products/xmp/\">Adobe XMP website</a><br />Edits to this chunk can not be undone</body></html>");
-    else if (Field=="aXML")
-        Message->setText("<html><body>This tool does not validate the contents of the XML chunks against the rules for aXML.<br />Edit at your own risk. For more information see the <a href=\"http://tech.ebu.ch/docs/tech/tech3285s5.pdf\">BWF aXML chunk specification</a><br />Edits to this chunk can not be undone</body></html>");
-    else if (Field=="iXML")
-        Message->setText("<html><body>This tool does not validate the contents of the XML chunks  against the rules for iXML.<br />Edit at your own risk. For more information see the <a href=\"http://www.gallery.co.uk/ixml/\">iXML Specification</a><br />Edits to this chunk can not be undone</body></html>");
-
-    Display(Value);
-    TextEdit->setFocus();
-
-}
-
-//***************************************************************************
-// Public functions
-//***************************************************************************
-
-//---------------------------------------------------------------------------
-QString GUI_Main_xxxx_TextEditDialog::Value() const
-{
-    return BigValue.isEmpty()?TextEdit->toPlainText():BigValue;
-}
-
-//***************************************************************************
-// Menu actions
-//***************************************************************************
-
-//---------------------------------------------------------------------------
-void GUI_Main_xxxx_TextEditDialog::OnAccept ()
-{
-    if (FileName.empty())
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://github.com/MediaArea/BWFMetaEdit/blob/318d800d92c4a3cc8a814f6fdceba0ed8b3416ec/Source/GUI/Qt/GUI_Main_xxxx_TextEditDialog.cpp",
+    "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/318d800d92c4a3cc8a814f6fdceba0ed8b3416ec/Source/GUI/Qt/GUI_Main_xxxx_TextEditDialog.cpp"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
     {
-        accept();
-        return;
-    }
-
-    std::string Value=(BigValue.isEmpty()?TextEdit->toPlainText():BigValue).toUtf8().data();
-    if (!C->IsValid(FileName, Field, Value, true))
+      "authored_source_map": "assessment/A5-01/treatment-v1/source-map.json",
+      "source_id": "GUI_Main_xxxx_TextEditDialog.cpp",
+      "existing_authored_summary_fields": {
+        "version": "v26.08",
+        "version_or_commit": "v26.08 at 318d800d92c4a3cc8a814f6fdceba0ed8b3416ec",
+        "governing_meaning": "The released GUI distinguishes absent format-specific validation and undo from the IsValid editing path. Text changes call IsValid and display LastWarning when no blocking error exists; acceptance can continue. This establishes relevance to entered XML, not merely file import.",
+        "applicability": "Static public released-source evidence only; installed 26.08.1 binary behavior remains untested."
+      }
+    },
     {
-        QMessageBox MessageBox;
-        MessageBox.setWindowTitle("BWF MetaEdit");
-        MessageBox.setText((string("Field does not conform to rules:\n")+C->IsValid_LastError(FileName)).c_str());
-        #if (QT_VERSION >= 0x040200)
-            MessageBox.setStandardButtons(QMessageBox::Ok);
-        #endif // (QT_VERSION >= 0x040200)
-        MessageBox.setIcon(QMessageBox::Warning);
-        MessageBox.setWindowIcon(QIcon(":/Image/Logo/Logo.png"));
-        MessageBox.exec();
-        return;
+      "authored_source_map": "assessment/A5-01/treatment-v1/evidence/supplemental-retrieval-manifest.json",
+      "source_id": "GUI_Main_xxxx_TextEditDialog.cpp",
+      "existing_authored_summary_fields": {
+        "version": "v26.08"
+      }
     }
-
-    C->Set(FileName, Field, Value);
-
-    accept();
-}
-
-//---------------------------------------------------------------------------
-void GUI_Main_xxxx_TextEditDialog::OnTextChanged ()
-{
-    std::string Value=(BigValue.isEmpty()?TextEdit->toPlainText():BigValue).toUtf8().data();
-    if (!C->IsValid(FileName, Field, Value, true))
+  ],
+  "original_capture_selectors": [
     {
-        Label->setText(QString::fromUtf8(C->IsValid_LastError(FileName).c_str()));
-        Dialog->button(QDialogButtonBox::Ok)->setEnabled(false);
+      "locator": "Lines 83–88 and 112–156"
     }
-    else
+  ],
+  "raw_sha256": "6820925b88a89bc91e1f238985c0020893c5cce5e64df7e080e37ccc9af9a0ad",
+  "original_bytes": 9517,
+  "private_archive_lineage": "publication-prior-code-capture-repair-v1/private/originals/assessment/A5-01/treatment-v1/evidence/release-26.08-GUI_Main_xxxx_TextEditDialog.cpp",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://github.com/MediaArea/BWFMetaEdit/blob/318d800d92c4a3cc8a814f6fdceba0ed8b3416ec/Source/GUI/Qt/GUI_Main_xxxx_TextEditDialog.cpp",
+    "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/318d800d92c4a3cc8a814f6fdceba0ed8b3416ec/Source/GUI/Qt/GUI_Main_xxxx_TextEditDialog.cpp"
+  ],
+  "version": [
     {
-        Label->setWordWrap(true);
-        Label->setText(C->IsValid_LastWarning(FileName).c_str());
-        Dialog->button(QDialogButtonBox::Ok)->setEnabled(true);
-    }
-}
-
-//---------------------------------------------------------------------------
-void GUI_Main_xxxx_TextEditDialog::OnMenu_Load()
-{
-    //User interaction
-    QString FileNamesQ = QFileDialog::getOpenFileName(  this,
-                                                        tr("Import file..."),
-                                                        QString::fromUtf8(C->OpenSaveFolder.c_str()),
-                                                        (Field=="XMP" || Field=="aXML" || Field=="iXML")?"XML files (*.xml);;All files (*.*)":"Text files (*.txt);;All files (*.*)");
-
-    if (FileNamesQ.isEmpty())
-        return;
-
-    File F;
-    if (!F.Open(ZenLib::Ztring().From_UTF8(FileNamesQ.toUtf8().data())))
-        return;
-    int64u F_Size=F.Size_Get();
-    if (F_Size>((size_t)-1)-1)
-        return;
-
-    //Creating buffer
-    int8u* Buffer=new int8u[(size_t)F_Size+1];
-    size_t Buffer_Offset=0;
-
-    //Reading the file
-    while(Buffer_Offset<F_Size)
+      "version": "v26.08",
+      "version_or_commit": "v26.08 at 318d800d92c4a3cc8a814f6fdceba0ed8b3416ec",
+      "governing_meaning": "The released GUI distinguishes absent format-specific validation and undo from the IsValid editing path. Text changes call IsValid and display LastWarning when no blocking error exists; acceptance can continue. This establishes relevance to entered XML, not merely file import.",
+      "applicability": "Static public released-source evidence only; installed 26.08.1 binary behavior remains untested."
+    },
     {
-        size_t BytesRead=F.Read(Buffer+Buffer_Offset, (size_t)F_Size-Buffer_Offset);
-        if (BytesRead==0)
-            break; //Read is finished
-        Buffer_Offset+=BytesRead;
+      "version": "v26.08"
     }
-    if (Buffer_Offset<F_Size)
-        return;
-
-    //Filling
-    string ModifiedContent((const char*)Buffer, Buffer_Offset);
-    delete[] Buffer;
-    AdaptEOL(ModifiedContent, adapt_n);
-    QString ModifiedContentQ=ModifiedContent.c_str();
-
-    Display(ModifiedContentQ);
-}
-
-//---------------------------------------------------------------------------
-void GUI_Main_xxxx_TextEditDialog::OnMenu_Save()
-{
-    //User interaction
-    QString FileNamesQ = QFileDialog::getSaveFileName(  this,
-                                                        tr("Export file..."),
-                                                        QString::fromUtf8(C->OpenSaveFolder.c_str()),
-                                                        (Field=="XMP" || Field=="aXML" || Field=="iXML")?"XML files (*.xml);;All files (*.*)":"Text files (*.txt);;All files (*.*)");
-
-    if (FileNamesQ.isEmpty())
-        return;
-
-    File F;
-    if (!F.Create(ZenLib::Ztring().From_UTF8(FileNamesQ.toUtf8().data())))
-        return;
-
-    //Filling
-    std::string Value=(BigValue.isEmpty()?TextEdit->toPlainText():BigValue).toUtf8().data();
-    F.Write((int8u*)Value.c_str(), Value.size());
-}
-
-//***************************************************************************
-// Menu actions
-//***************************************************************************
-
-//---------------------------------------------------------------------------
-void GUI_Main_xxxx_TextEditDialog::Display(const QString& Value)
-{
-    static const int MaxSize=0x100000;
-    if (Value.size()<MaxSize)
+  ],
+  "selector": [
     {
-        BigValue.clear();
-        BigMessage->setText(QString());
-        TextEdit->setReadOnly(ReadOnly);
-        TextEdit->setPlainText(Value);
-        QTextCursor Cursor=TextEdit->textCursor(); Cursor.setPosition(Value.length());
-        TextEdit->setTextCursor(Cursor);
+      "locator": "Lines 83–88 and 112–156"
     }
-    else
+  ],
+  "conditions": [
     {
-        BigValue=Value;
-        BigMessage->setText("The content is too large to be displayed in full here and can not be edited here.");
-        TextEdit->setReadOnly(true);
-        TextEdit->setPlainText(Value.mid(0, MaxSize>>4));
+      "version": "v26.08",
+      "version_or_commit": "v26.08 at 318d800d92c4a3cc8a814f6fdceba0ed8b3416ec",
+      "governing_meaning": "The released GUI distinguishes absent format-specific validation and undo from the IsValid editing path. Text changes call IsValid and display LastWarning when no blocking error exists; acceptance can continue. This establishes relevance to entered XML, not merely file import.",
+      "applicability": "Static public released-source evidence only; installed 26.08.1 binary behavior remains untested."
     }
+  ],
+  "rawSHA256": "6820925b88a89bc91e1f238985c0020893c5cce5e64df7e080e37ccc9af9a0ad",
+  "publication_correction": "prior-path guard skipped this fetched external capture; mechanical policy application only"
 }

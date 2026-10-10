@@ -1,0 +1,23 @@
+{
+  "observed_at_utc": "2026-10-10T05:59:13.400638+00:00",
+  "root_full_read": [
+    "materialize.py",
+    "README.md",
+    "checks.py",
+    "extra-checks.py"
+  ],
+  "manifest_counts": {
+    "bundle-manifest.json": 21,
+    "public-input-dependency-manifest.json": 14
+  },
+  "bad_hashes": [],
+  "privacy_violations": [],
+  "worker_offline_checks": 236,
+  "all_checks_passed": true,
+  "root_repeat_tests_performed": false,
+  "scratch_remaining": 0,
+  "historical_exact_replay": false,
+  "live_science_qualification": "not inferred from offline mechanics",
+  "actual_native_response_provenance_freshness_lifecycle": "UNKNOWN offline",
+  "private_self_receipts_excluded": true
+}

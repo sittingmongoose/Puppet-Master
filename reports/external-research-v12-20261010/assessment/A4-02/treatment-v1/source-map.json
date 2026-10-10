@@ -1,0 +1,1266 @@
+{
+  "schema": "er12-independent-review-source-map-v1",
+  "slot": "A4-02",
+  "arm": "treatment",
+  "reviewer": "codex-er12-a402-review-v1",
+  "created_utc": "2026-10-10T06:02:37.556613+00:00",
+  "source_id_policy": "Independent reviewer records. Familiar R IDs keep URL identity; suffixes distinguish retrieval routes and N IDs denote reviewer-only governing-source investigation. Original maps remain untouched.",
+  "sources": [
+    {
+      "id": "R01",
+      "url": "https://www.rfc-editor.org/rfc/rfc5545",
+      "final_url": "https://www.rfc-editor.org/info/rfc5545/",
+      "access_utc": "2026-10-10T05:50:36.300582+00:00",
+      "http_status": 200,
+      "raw_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R01.html",
+      "text_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R01.text.txt",
+      "sha256": "de43294251e878a814fbc3e8985bece6418491ff0b1f8b192f6c7a6d86bcd4c2",
+      "bytes": 1410043,
+      "released_version_or_commit": "RFC 5545 September 2009",
+      "governing_locator": "\u00a7\u00a73.2.19,3.3.5,3.3.10,3.6.5,3.8.4.4,3.8.4.7,3.8.5.1,3.8.5.3",
+      "governing_conditions": "Serialized VEVENT recurrence, original UID/instance identity, floating versus venue-zoned time, UTC UNTIL for TZID DTSTART and EXDATE exclusion. VTIMEZONE covers every recurrence instance. This proves format meaning, not client conformance or refresh.",
+      "independent_semantic_check": "SUPPORTED",
+      "inspection": "Governing surrounding primary text or definition/caller read; no downloaded code executed",
+      "text_sha256": "b8881735ce8058a9cd935e7e7ec5fa2a2e5758f600b0472ac218a648b0b722e0"
+    },
+    {
+      "id": "R02",
+      "url": "https://www.rfc-editor.org/rfc/rfc5546",
+      "final_url": "https://www.rfc-editor.org/info/rfc5546/",
+      "access_utc": "2026-10-10T05:50:36.302351+00:00",
+      "http_status": 200,
+      "raw_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R02.html",
+      "text_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R02.text.txt",
+      "sha256": "8f927a79f695f80fdb70807e30ff2af975dafa73fd0a140cea5b7da385c41aee",
+      "bytes": 1185624,
+      "released_version_or_commit": "RFC 5546 December 2009",
+      "governing_locator": "\u00a73.2.5 CANCEL",
+      "governing_conditions": "Organizer sends affected attendees a cancellation notice. Single-instance cancellation needs RECURRENCE-ID; whole-series cancellation omits it. This is a scheduling message, distinct from passive feed replacement.",
+      "independent_semantic_check": "SUPPORTED",
+      "inspection": "Governing surrounding primary text or definition/caller read; no downloaded code executed",
+      "text_sha256": "3ac2eeb6c90a67c3479dd0fc36663f42a25a5dae2bb574c87f1da1287cc3a1b0"
+    },
+    {
+      "id": "R03",
+      "url": "https://www.rfc-editor.org/rfc/rfc4791",
+      "final_url": "https://www.rfc-editor.org/info/rfc4791/",
+      "access_utc": "2026-10-10T05:50:36.303707+00:00",
+      "http_status": 200,
+      "raw_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R03.html",
+      "text_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R03.text.txt",
+      "sha256": "d8b97679de10acff40d5dc6c59ec76ebaed7329bc079a823a1100538588a9dbf",
+      "bytes": 900560,
+      "released_version_or_commit": "RFC 4791 March 2007",
+      "governing_locator": "\u00a78.2 especially \u00a78.2.1.3",
+      "governing_conditions": "CalDAV clients cache URI/ETag/data, compare server resources and fetch changes. CalDAV servers support ETags; client/server synchronization is a separate route from file/feed.",
+      "independent_semantic_check": "SUPPORTED",
+      "inspection": "Governing surrounding primary text or definition/caller read; no downloaded code executed",
+      "text_sha256": "99af825f781813c5c9865d1497de40c4b931d9ab963576d15200e11cc5aac7ef"
+    },
+    {
+      "id": "R04",
+      "url": "https://www.rfc-editor.org/rfc/rfc6578",
+      "final_url": "https://www.rfc-editor.org/info/rfc6578/",
+      "access_utc": "2026-10-10T05:50:36.304982+00:00",
+      "http_status": 200,
+      "raw_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R04.html",
+      "text_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R04.text.txt",
+      "sha256": "b6af08a68ed7b8bc5e5e98360773a66b9145f26fa03c3b8db46a2d57d756a908",
+      "bytes": 306409,
+      "released_version_or_commit": "RFC 6578 March 2012",
+      "governing_locator": "\u00a7\u00a73.5.1\u20133.5.2,6.1; Appendix A",
+      "governing_conditions": "DAV sync tokens under a supported extension report changed/remapped/removed members. Empty-token initial sync requests current members. Token validity, collection level and access conditions apply.",
+      "independent_semantic_check": "SUPPORTED",
+      "inspection": "Governing surrounding primary text or definition/caller read; no downloaded code executed",
+      "text_sha256": "0f791fa82637c8e455a53a29ad313497a4c07488a177e2878aaaa0360d3314ce"
+    },
+    {
+      "id": "R05",
+      "url": "https://support.google.com/calendar/answer/37083?hl=en",
+      "final_url": "https://support.google.com/calendar/answer/37083?hl=en",
+      "access_utc": "2026-10-10T05:50:36.305949+00:00",
+      "http_status": 200,
+      "raw_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R05.html",
+      "text_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R05.text.txt",
+      "sha256": "973b719cc91641a83dc18ca8f9ff1d40fb2ae3ad70af6536bb13a8ccc40b687f",
+      "bytes": 1610596,
+      "released_version_or_commit": "Current Google Calendar web Help; numeric service build UNKNOWN",
+      "governing_locator": "How public calendars work; Mark public; Share a link",
+      "governing_conditions": "Public calendar can be searchable if its containing site is searchable; details/free-busy and Workspace restrictions apply. Public iCal address works only for a public calendar. Publication/privacy choice is conditional.",
+      "independent_semantic_check": "SUPPORTED",
+      "inspection": "Governing surrounding primary text or definition/caller read; no downloaded code executed",
+      "text_sha256": "9db4cb6a0b789e2e2830080a826bbc5fa7e14dfea7e5b08eabe1f162faa70ec8"
+    },
+    {
+      "id": "R06",
+      "url": "https://support.google.com/calendar/answer/37100?hl=en",
+      "final_url": "https://support.google.com/calendar/answer/37100?hl=en",
+      "access_utc": "2026-10-10T05:50:36.306642+00:00",
+      "http_status": 200,
+      "raw_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R06.html",
+      "text_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R06.text.txt",
+      "sha256": "e3068f98a1fece711b169a1fbb25c6024b4b0469748ad92e5fa813c71d3e1734",
+      "bytes": 1613726,
+      "released_version_or_commit": "Current Google Calendar Computer Help; numeric service build UNKNOWN",
+      "governing_locator": "Opening setup note; Use a link to add a public calendar",
+      "governing_conditions": "New subscription setup requires a computer browser; From URL requires public source. The non-Google restriction is attached to a separate email/request Subscribe-to-calendar operation, not the From URL flow. Page supplies no refresh SLA.",
+      "independent_semantic_check": "SUPPORTED",
+      "inspection": "Governing surrounding primary text or definition/caller read; no downloaded code executed",
+      "text_sha256": "6da13feffbcfd26040bf04e157669276b732e3661ea7e488e806442e9dabad80"
+    },
+    {
+      "id": "R07",
+      "url": "https://support.google.com/calendar/answer/37118?hl=en",
+      "final_url": "https://support.google.com/calendar/answer/37118?hl=en",
+      "access_utc": "2026-10-10T05:50:36.730925+00:00",
+      "http_status": 200,
+      "raw_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R07.html",
+      "text_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R07.text.txt",
+      "sha256": "41f418ff9599666892bf9b3b78a3741cf8112a7468dd976a0dedaeec13685539",
+      "bytes": 1617089,
+      "released_version_or_commit": "Current Google Calendar Computer Help; numeric service build UNKNOWN",
+      "governing_locator": "Step 1 imported-sync tip; Step 2 file import; CSV repeat warning",
+      "governing_conditions": "ICS/CSV imports are static; default target is primary unless another chosen. CSV repeats may flatten into one-time events. This supports investigating an ICS snapshot, not universal mobile direct import or duplicate-free replacement.",
+      "independent_semantic_check": "SUPPORTED",
+      "inspection": "Governing surrounding primary text or definition/caller read; no downloaded code executed",
+      "text_sha256": "69098068bdd8670661a737bb0464717d76633ba8452769df83d2c307cdb73e67"
+    },
+    {
+      "id": "R08",
+      "url": "https://developers.google.com/workspace/calendar/api/v3/reference/events",
+      "final_url": "https://developers.google.com/workspace/calendar/api/v3/reference/events",
+      "access_utc": "2026-10-10T05:50:36.866646+00:00",
+      "http_status": 200,
+      "raw_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R08.html",
+      "text_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R08.text.txt",
+      "sha256": "796efe08a8920d70369f13cf0134f8a9f315bc5172cb4562db530f259d90d06f",
+      "bytes": 270518,
+      "released_version_or_commit": "Google Calendar API v3 Events resource",
+      "governing_locator": "start.timeZone;originalStartTime;recurringEventId;status;reminders",
+      "governing_conditions": "Recurring expansion requires IANA zone. Original start identifies a moved instance immutably. Cancelled recurring exceptions differ from deletions: list/get visibility and guaranteed identity fields have conditions. Reminders concern authenticated user. Not downstream feed proof.",
+      "independent_semantic_check": "SUPPORTED",
+      "inspection": "Governing surrounding primary text or definition/caller read; no downloaded code executed",
+      "text_sha256": "18914754e02259fe9bc609f871537c24ea4793422bbb26fe6564d6814c12d6b3"
+    },
+    {
+      "id": "R08b",
+      "url": "https://developers.google.com/workspace/calendar/api/guides/recurringevents",
+      "final_url": "https://developers.google.com/workspace/calendar/api/guides/recurringevents",
+      "access_utc": "2026-10-10T05:50:36.936174+00:00",
+      "http_status": 200,
+      "raw_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R08b.html",
+      "text_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R08b.text.txt",
+      "sha256": "5292a266b91171e12f8e894705f58cd89e1b2b087faa05b988b595c7ab0e4186",
+      "bytes": 190942,
+      "released_version_or_commit": "Google Calendar API v3 recurring events guide; updated2026-09-17 UTC",
+      "governing_locator": "Access instances; Modify or delete instances",
+      "governing_conditions": "Retrieve instance then authorized PUT/update of its instance resource; status=cancelled cancels it. Bulk series changes should not become many individual exceptions. Examples were read, not executed.",
+      "independent_semantic_check": "SUPPORTED",
+      "inspection": "Governing surrounding primary text or definition/caller read; no downloaded code executed",
+      "text_sha256": "b3bbe665cec165ea4289d93300a33acae9fb37f7bfca636744e076bacb82d7d5"
+    },
+    {
+      "id": "R09",
+      "url": "https://support.microsoft.com/en-us/outlook/import-or-subscribe-to-a-calendar-in-outlook-com-or-outlook-on-the-web",
+      "final_url": "https://support.microsoft.com/en-us/outlook/import-or-subscribe-to-a-calendar-in-outlook-com-or-outlook-on-the-web",
+      "access_utc": "2026-10-10T05:50:36.970581+00:00",
+      "http_status": 200,
+      "raw_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R09.html",
+      "text_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R09.text.txt",
+      "sha256": "a52d26d09ccc814556ddc24309621da8e375e078e0176fcb0efa3c381d549497",
+      "bytes": 119333,
+      "released_version_or_commit": "Current Microsoft Support; service build UNKNOWN",
+      "governing_locator": "Personal account Subscribe/import distinction; Work/school corresponding sections",
+      "governing_conditions": "Outlook.com approximately3 hours; Outlook on the web approximately6 hours; both allow >24 hours. Import/upload is non-refreshing snapshot. Neither cadence is a maximum, universal-client rule or SLA.",
+      "independent_semantic_check": "F1 VALID IN DRAFT; FINAL REPAIRED",
+      "inspection": "Governing surrounding primary text or definition/caller read; no downloaded code executed",
+      "text_sha256": "6aa9284d6e1d602ac641212aa0d4fcb1c62715ca9fa2b2843655315ac3ebff9d"
+    },
+    {
+      "id": "R10",
+      "url": "https://support.apple.com/guide/iphone/use-multiple-calendars-iph3d1110d4/ios",
+      "final_url": "https://support.apple.com/guide/iphone/use-multiple-calendars-iph3d1110d4/ios",
+      "access_utc": "2026-10-10T05:50:37.109872+00:00",
+      "http_status": 200,
+      "raw_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R10.html",
+      "text_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R10.text.txt",
+      "sha256": "7631fd7f514506a4dcc7f77544d5710a8922c76756a88e1a9bf161b11574a791",
+      "bytes": 1445514,
+      "released_version_or_commit": "Current iPhone User Guide; selector includes iOS27/26/18; installed build UNKNOWN",
+      "governing_locator": "Set up a calendar; Turn on calendar event alerts",
+      "governing_conditions": "External ICS subscription is read-only. Created/subscribed calendar has Event Alerts on/off. Calendar-level control does not prove custom per-event reminders or direct snapshot import.",
+      "independent_semantic_check": "F2 VALID; FINAL SUPPLEMENTED; EDITION LIMIT L2",
+      "inspection": "Governing surrounding primary text or definition/caller read; no downloaded code executed",
+      "text_sha256": "7c2b80e0ae22efa53678bed461eec06bba02f192eabc093c17d8842437a69f95"
+    },
+    {
+      "id": "R10b",
+      "url": "https://support.apple.com/en-il/guide/calendar/icl32362/mac",
+      "final_url": "https://support.apple.com/en-il/guide/calendar/icl32362/mac",
+      "access_utc": "2026-10-10T05:50:37.226864+00:00",
+      "http_status": 200,
+      "raw_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R10b.html",
+      "text_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R10b.text.txt",
+      "sha256": "b5ac115d74ebda42065906feae0f08dc6551f556e753c4619b51142a4a8c8485",
+      "bytes": 546861,
+      "released_version_or_commit": "Current Mac Calendar Guide; selector includes macOS27 Golden Gate/Tahoe26; installed build UNKNOWN",
+      "governing_locator": "Subscribe to calendars",
+      "governing_conditions": "Account/On My Mac, Remove options, Auto-refresh and Ignore alerts controls; provider controls uneditable subscribed events. No fixed universal-device cadence is specified.",
+      "independent_semantic_check": "SUPPORTED; EDITION LIMIT L2",
+      "inspection": "Governing surrounding primary text or definition/caller read; no downloaded code executed",
+      "text_sha256": "6562c4110475dc4591692edc3996fd10f19558e89ee0f7c4909dfecbba857297"
+    },
+    {
+      "id": "R11",
+      "url": "https://docs.nextcloud.com/server/stable/user_manual/en/groupware/calendar.html",
+      "final_url": "https://docs.nextcloud.com/server/stable/user_manual/en/groupware/calendar.html",
+      "access_utc": "2026-10-10T05:50:37.244073+00:00",
+      "http_status": 200,
+      "raw_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R11.html",
+      "text_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R11.text.txt",
+      "sha256": "600ae175ea04823367d060b806cb8c964ec4c77c724a698e4b892ddb09b1e626",
+      "bytes": 71854,
+      "released_version_or_commit": "Nextcloud Server35 User Manual edition; exact Calendar app release UNKNOWN",
+      "governing_locator": "Publishing a calendar; Subscribe to a Calendar; Set up reminders",
+      "governing_conditions": "Public read-only calendar has subscription/export links. Internal upstream feed subscription says weekly default/admin override. Notifications go to owners/write-sharees. No outside consumer interval follows.",
+      "independent_semantic_check": "PUBLISH/EXPORT SUPPORTED; DEFAULT/OPERATION LIMIT L1",
+      "inspection": "Governing surrounding primary text or definition/caller read; no downloaded code executed",
+      "text_sha256": "a833e32af8328220ce8dfb52d1293faff22223639269bf0fd9574e130330c248"
+    },
+    {
+      "id": "R12",
+      "url": "https://docs.nextcloud.com/server/stable/admin_manual/groupware/calendar.html",
+      "final_url": "https://docs.nextcloud.com/server/stable/admin_manual/groupware/calendar.html",
+      "access_utc": "2026-10-10T05:50:37.383614+00:00",
+      "http_status": 200,
+      "raw_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R12.html",
+      "text_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R12.text.txt",
+      "sha256": "f455fdae8ff36afafbc538d066a46733f99faa382f9ce2d2c2046843ba3ff51e",
+      "bytes": 42982,
+      "released_version_or_commit": "Nextcloud Server35 Administration Manual edition",
+      "governing_locator": "Subscriptions / Refresh rate",
+      "governing_conditions": "Server caches internal subscriptions, respects source interval, otherwise says one-day default, configurable dav calendarSubscriptionRefreshRate DateInterval. Manual viewpoint alone does not establish distinct user-app refresh operation.",
+      "independent_semantic_check": "DOC CONDITION SUPPORTED; DISTINCT-OPERATION CLAIM UNESTABLISHED",
+      "inspection": "Governing surrounding primary text or definition/caller read; no downloaded code executed",
+      "text_sha256": "d215d159083dcb1d54adf3522db7f0b3514383d56483a9d90e7bdf829ee83879"
+    },
+    {
+      "id": "R13",
+      "url": "https://www.w3.org/TR/websub/",
+      "final_url": "https://www.w3.org/TR/websub/",
+      "access_utc": "2026-10-10T05:50:37.405135+00:00",
+      "http_status": 200,
+      "raw_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R13.html",
+      "text_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R13.text.txt",
+      "sha256": "75ccd70af4323efa197503c4d923b7d553b949e42992531ca7ca476820dedaef",
+      "bytes": 130140,
+      "released_version_or_commit": "W3C WebSub Recommendation2026-06-02; dated URL https://www.w3.org/TR/2026/REC-websub-20260602/",
+      "governing_locator": "\u00a7\u00a72,5.1\u20135.3,6,7",
+      "governing_conditions": "Publisher notifies hub, verified reachable callback receives topic content; leases expire and require renewal. A protocol definition is no calendar-client adoption evidence.",
+      "independent_semantic_check": "BOUNDED ANALOGY SUPPORTED",
+      "inspection": "Governing surrounding primary text or definition/caller read; no downloaded code executed",
+      "text_sha256": "111476278c85d7b00fba01c7229eec4f45c63174bca2accb72624bfe21d46ed4"
+    },
+    {
+      "id": "R14",
+      "url": "https://bugzilla.mozilla.org/show_bug.cgi?id=1595332",
+      "final_url": "https://bugzilla.mozilla.org/show_bug.cgi?id=1595332",
+      "access_utc": "2026-10-10T05:50:37.448624+00:00",
+      "http_status": 200,
+      "raw_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R14.html",
+      "text_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R14.text.txt",
+      "sha256": "6e9b1dc6846e9501e4414eb393dee4ac38867754d1cd638526f782069f4c4fc7",
+      "bytes": 129487,
+      "released_version_or_commit": "Mozilla Bug1595332; TB68.2.1/Lightning68.2.0 report; TB91 fixed",
+      "governing_locator": "Reproduction;comments3/4/6;first landing/backout;later landing;91.0b4 uplift",
+      "governing_conditions": "Remote recurring description edit lost inherited LOCATION. Storage calendar exception after bug1664731; localICS also discussed. Initial fix failed recurrence/X-MOZ-GENERATION tests and was backed out; later fix/uplift recorded. No current-other-client generalization.",
+      "independent_semantic_check": "HISTORY SUPPORTED",
+      "inspection": "Governing surrounding primary text or definition/caller read; no downloaded code executed",
+      "text_sha256": "caabfb197e49022892d4cd23925b0198e7c803f27085059b60dd5d60f70098a7"
+    },
+    {
+      "id": "R15",
+      "url": "https://hg.mozilla.org/comm-central/raw-rev/3787e583daf7",
+      "final_url": "https://hg-edge.mozilla.org/comm-central/raw-rev/3787e583daf7",
+      "access_utc": "2026-10-10T05:50:37.510344+00:00",
+      "http_status": 200,
+      "raw_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R15.html",
+      "text_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R15.text.txt",
+      "sha256": "32ed63159c77e21ee19ca1b9aa3213ccf0218eb59539560b132a8e68ef0e18ea",
+      "bytes": 3038,
+      "released_version_or_commit": "Requested immutable node3787e583daf7d3026fa6fcc7bf08da03c4fcfb56",
+      "governing_locator": "Long-node raw-rev fetch",
+      "governing_conditions": "HTTP200 returned client-challenge HTML, not source. This response is not semantic source evidence. Short-node R15c returned the actual immutable node; identity is not silently rebound.",
+      "independent_semantic_check": "RETRIEVAL BLOCKED; USE R15c",
+      "inspection": "Governing surrounding primary text or definition/caller read; no downloaded code executed",
+      "text_sha256": "a3ebd40b680fdcc2bc049cc1ebc7c94fa05fd9b32a7736b4913bdd2a9ae1603e",
+      "retrieval_interpretation": "CLIENT_CHALLENGE; HTTP200 is not content success"
+    },
+    {
+      "id": "R16",
+      "url": "https://support.google.com/calendar/answer/37064?hl=en",
+      "final_url": "https://support.google.com/calendar/answer/37064?hl=en",
+      "access_utc": "2026-10-10T05:50:37.571715+00:00",
+      "http_status": 200,
+      "raw_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R16.html",
+      "text_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R16.text.txt",
+      "sha256": "a8d1a01f3bf26c9509b41f5bcf56f00df59a6ebeb78a396dbe070d15e71cc1d4",
+      "bytes": 1622394,
+      "released_version_or_commit": "Current Google Calendar Computer Help; numeric build UNKNOWN",
+      "governing_locator": "How Calendar uses time zones; Understand daylight saving time",
+      "governing_conditions": "Travel viewer sees local zone; past/future DST displays and civil-zone-rule updates have explicit caveats. This applies to Google Calendar, not all feed consumers.",
+      "independent_semantic_check": "SUPPORTED",
+      "inspection": "Governing surrounding primary text or definition/caller read; no downloaded code executed",
+      "text_sha256": "dc16c2f6e8932832f8050b220ae91fad871dc81177655f9c7caeffebb6054c27"
+    },
+    {
+      "id": "R15a",
+      "url": "https://bugzilla.mozilla.org/attachment.cgi?id=9231671",
+      "final_url": "https://phabricator.services.mozilla.com/D120122",
+      "http_status": 200,
+      "access_utc": "2026-10-10T05:51:37.095185+00:00",
+      "raw_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R15a.html",
+      "sha256": "aac073c16a5e4cdc254cd01df69bd4519c51ce46808279807579ba1018cba652",
+      "bytes": 106298,
+      "retrieval_interpretation": "Bugzilla attachment redirects to Mozilla Phabricator D120122 HTML, not a raw changeset; related review evidence.",
+      "released_version_or_commit": "Mozilla Phabricator D120122 via Bugzilla attachment9231671",
+      "governing_locator": "Attachment redirect / review page",
+      "governing_conditions": "Saved HTML is a linked source review page, not raw patch; relevant bug/fix identity only.",
+      "independent_semantic_check": "RELATED PRIMARY HISTORY",
+      "inspection": "Governing surrounding primary text or definition/caller read; no downloaded code executed"
+    },
+    {
+      "id": "R15b",
+      "url": "https://phabricator.services.mozilla.com/D120122?download=true",
+      "final_url": "https://mozphab-phabhost-cdn.devsvcprod.mozaws.net/file/data/7cnmqle2b3uuvo4nlfyp/PHID-FILE-aeu6lwbbp4umxvo3domi/D120122.1791697938.diff",
+      "http_status": 200,
+      "access_utc": "2026-10-10T05:52:18.403822+00:00",
+      "raw_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R15b.patch",
+      "sha256": "f6d39a380b518cc46ab0d04792504975f852928425f6fef74fc85a5bf14e6f01",
+      "bytes": 8804,
+      "released_version_or_commit": "Mozilla Phabricator D120122 raw diff",
+      "governing_locator": "Download Raw Diff; calItemBase.js;test_items.js;test_recur.js",
+      "governing_conditions": "Removes overriding properties accessor; adds proxy parameter fallback/inheritance tests. Exact immutable identity separately checked by R15c. Tests not run.",
+      "independent_semantic_check": "SUPPORTING DIFF",
+      "inspection": "Governing surrounding primary text or definition/caller read; no downloaded code executed"
+    },
+    {
+      "id": "N01",
+      "url": "https://raw.githubusercontent.com/nextcloud/server/v35.0.0/apps/dav/lib/BackgroundJob/RefreshWebcalJob.php",
+      "access_utc": "2026-10-10T05:52:52.971169+00:00",
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/nextcloud/server/v35.0.0/apps/dav/lib/BackgroundJob/RefreshWebcalJob.php",
+      "raw_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/N01.php.txt",
+      "text_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/N01.php.txt",
+      "sha256": "f8bd4e1c7eadea8c143c01ba58b4f4a2a95fff678be59f2816d78f87cd79e88a",
+      "bytes": 2896,
+      "released_version_or_commit": "Nextcloud Server v35.0.0 source tag",
+      "governing_locator": "RefreshWebcalJob::start/run",
+      "governing_conditions": "Internal subscription job calls cache service. Config fallback dav calendarSubscriptionRefreshRate=P1D; stored refreshrate can override; parse-duration/time gate applies. Not actual deployment setting or delivery maximum.",
+      "independent_semantic_check": "VERSIONED DEFAULT/CALLER CHECKED",
+      "inspection": "Governing surrounding primary text or definition/caller read; no downloaded code executed",
+      "text_sha256": "f8bd4e1c7eadea8c143c01ba58b4f4a2a95fff678be59f2816d78f87cd79e88a"
+    },
+    {
+      "id": "N02",
+      "url": "https://raw.githubusercontent.com/nextcloud/server/v35.0.0/apps/dav/lib/CalDAV/WebcalCaching/RefreshWebcalService.php",
+      "access_utc": "2026-10-10T05:52:52.973131+00:00",
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/nextcloud/server/v35.0.0/apps/dav/lib/CalDAV/WebcalCaching/RefreshWebcalService.php",
+      "raw_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/N02.php.txt",
+      "text_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/N02.php.txt",
+      "sha256": "3c09863d5edf81fd3b7fdd46bae2be4025ee1af657cf828bd908df19047f0f7c",
+      "bytes": 6787,
+      "released_version_or_commit": "Nextcloud Server v35.0.0 source tag",
+      "governing_locator": "RefreshWebcalService::refreshSubscription/getSubscription/updateRefreshRate",
+      "governing_conditions": "Queries upstream feed, imports by UID/etag/removes missing cache items; respects stored override; adopts valid REFRESH-INTERVAL/X-PUBLISHED-TTL only if none stored. Default alarm stripping concerns this cache route, not outside consumers.",
+      "independent_semantic_check": "GOVERNING SERVICE/CONDITIONS CHECKED",
+      "inspection": "Governing surrounding primary text or definition/caller read; no downloaded code executed",
+      "text_sha256": "3c09863d5edf81fd3b7fdd46bae2be4025ee1af657cf828bd908df19047f0f7c"
+    },
+    {
+      "id": "R15c",
+      "url": "https://hg.mozilla.org/comm-central/raw-rev/3787e583daf7",
+      "access_utc": "2026-10-10T05:54:16.861105+00:00",
+      "http_status": 200,
+      "final_url": "https://hg-edge.mozilla.org/comm-central/raw-rev/3787e583daf7",
+      "raw_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R15c.raw.txt",
+      "sha256": "fb21a4c4d751b6fdada33a980466d54fcf58ff1777be2fe65fc04d5ed03c1b95",
+      "bytes": 10183,
+      "retrieval_interpretation": "Actual source received; immutable identity/governing context inspected",
+      "released_version_or_commit": "Immutable HG node3787e583daf7d3026fa6fcc7bf08da03c4fcfb56, parent2665c70f83edb41eb7cca3df6cbcd8c8160db508",
+      "governing_locator": "Changeset header; calItemBase.js;test_items.js;test_recur.js",
+      "governing_conditions": "Actual immutable patch. doPropertiesTest compares inheritance, skips DTSTART/DTEND and checks explicit DESCRIPTION override with LOCATION in fixtures. Cannot be universal recurrence/DST oracle. No execution.",
+      "independent_semantic_check": "IMMUTABLE FIX AND ORACLE SUPPORTED",
+      "inspection": "Governing surrounding primary text or definition/caller read; no downloaded code executed"
+    },
+    {
+      "id": "R15d",
+      "url": "https://hg.mozilla.org/releases/comm-beta/raw-rev/3ed31b89f582",
+      "access_utc": "2026-10-10T05:54:16.862656+00:00",
+      "http_status": 200,
+      "final_url": "https://hg-edge.mozilla.org/releases/comm-beta/raw-rev/3ed31b89f582",
+      "raw_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R15d.raw.txt",
+      "sha256": "d7bd1f08c8ee5c76d739544a0a1b263fe6f476e66e3175310bcbd4b7992f6ffc",
+      "bytes": 10189,
+      "retrieval_interpretation": "Actual source received; immutable identity/governing context inspected",
+      "released_version_or_commit": "Immutable beta uplift node3ed31b89f582 (linked in Bug1595332)",
+      "governing_locator": "Changeset header / beta release-path patch",
+      "governing_conditions": "Separate beta changeset linked from bug91.0b4 comment. This is released-history path evidence, not current implementation validation.",
+      "independent_semantic_check": "UPLIFT CHAIN SUPPORTED",
+      "inspection": "Governing surrounding primary text or definition/caller read; no downloaded code executed"
+    },
+    {
+      "id": "R15e",
+      "url": "https://hg.mozilla.org/comm-central/raw-file/3787e583daf7/calendar/base/src/calItemBase.js",
+      "access_utc": "2026-10-10T05:54:26.390660+00:00",
+      "http_status": 200,
+      "final_url": "https://hg-edge.mozilla.org/comm-central/raw-file/3787e583daf7/calendar/base/src/calItemBase.js",
+      "raw_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R15e-calItemBase.js.txt",
+      "text_path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R15e-calItemBase.js.txt",
+      "sha256": "903d5b95212cecc6b3572dc2b65cbd97e40b3782d2ffb71d0e59571b8e48d121",
+      "bytes": 33681,
+      "retrieval_interpretation": "Actual source received; immutable identity/governing context inspected",
+      "released_version_or_commit": "calItemBase.js at immutable node3787e583daf7",
+      "governing_locator": "lines445\u2013468,551\u2013560; surrounding removed accessor",
+      "governing_conditions": "properties getter for mIsProxy merges parent then own Map (explicit overrides win). getProperty resolves local then parent; getParameterNames can fall back to parent. Tests call item.properties; removed overriding accessor unmasks real getter.",
+      "independent_semantic_check": "GOVERNING DEFINITION/CALLER SUPPORTED",
+      "inspection": "Governing surrounding primary text or definition/caller read; no downloaded code executed",
+      "text_sha256": "903d5b95212cecc6b3572dc2b65cbd97e40b3782d2ffb71d0e59571b8e48d121"
+    }
+  ],
+  "originals_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash",
+      "heading_locators": [
+        {
+          "line": 1,
+          "heading": "# ER12 independent rubric v1"
+        }
+      ]
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A4-02/brief.md",
+      "bytes": 3350,
+      "sha256": "20fcd49e3c924815b03c89b92fa9b0ede92f239eb777b4c4f6f3dbcabe88ba3e",
+      "mtime_ns": 1791608096133740839,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash",
+      "heading_locators": [
+        {
+          "line": 1,
+          "heading": "# Recurring rehearsal calendar distribution"
+        },
+        {
+          "line": 3,
+          "heading": "## Assignment"
+        },
+        {
+          "line": 9,
+          "heading": "## Exact numbered obligations"
+        },
+        {
+          "line": 20,
+          "heading": "## Research boundaries and deliverable"
+        }
+      ]
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A4-02/plan.md",
+      "bytes": 5956,
+      "sha256": "0588e3e0686b6ccc9b5f3eafc56f3415d8565ac895c12ba6a84f572b46ccfe53",
+      "mtime_ns": 1791608096134217942,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash",
+      "heading_locators": [
+        {
+          "line": 1,
+          "heading": "# Concealed draft plan \u2014 Recurring rehearsal calendar distribution"
+        },
+        {
+          "line": 3,
+          "heading": "## Access and status"
+        },
+        {
+          "line": 7,
+          "heading": "## Pilot intent"
+        },
+        {
+          "line": 13,
+          "heading": "## Exact obligations and current draft treatment"
+        },
+        {
+          "line": 15,
+          "heading": "### 1. Explain recurring series, moved or cancelled instances, stable identity and time-zone behavior for the pilot."
+        },
+        {
+          "line": 19,
+          "heading": "### 2. Compare two distribution products/routes and one analogous publish/subscribe mechanism; distinguish file import, feed subscription and server synchronization."
+        },
+        {
+          "line": 23,
+          "heading": "### 3. Bind recurrence and refresh claims to the exact client/server operation and versions investigated; identify remaining compatibility uncertainty."
+        },
+        {
+          "line": 27,
+          "heading": "### 4. Investigate a relevant recurrence/time-zone release or issue/fix chain and its consequences for a season update."
+        },
+        {
+          "line": 31,
+          "heading": "### 5. Preserve and investigate this supported optional scope: a downloadable one-season calendar snapshot for members who cannot subscribe. It is an authorized option, not a mandatory feature or an established technical capability; recommend conditions, retain it when supported, and explain any evidence-based exclusion."
+        },
+        {
+          "line": 35,
+          "heading": "### 6. Make owner decisions explicit: The secretary owns event identity and amendments; the orchestra manager decides whether room details are public. Local reminders belong to members and must not be overwritten by policy."
+        },
+        {
+          "line": 39,
+          "heading": "### 7. Preserve negative constraints: Do not access member calendars, require account migration, promise immediate refresh on every client, or conflate importing a file with maintaining a live subscription."
+        },
+        {
+          "line": 43,
+          "heading": "### 8. Deliver one coherent evidence-backed research proposal covering obligations 1\u20138, with recommendations, source/version applicability, useful discoveries, unresolved owner inputs, and a validation table separating checks actually executed from checks merely proposed. Do not report research sources or future tests as executed product validation."
+        },
+        {
+          "line": 47,
+          "heading": "## Validation status at handoff"
+        }
+      ]
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/terminal-science-freeze-root.json",
+      "bytes": 7701,
+      "sha256": "5e015ea037b176c187a35166d11301e2d9c51ac05ee0088717a3dad40222cb27",
+      "mtime_ns": 1791611321958264390,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/inputs/brief.md",
+      "bytes": 3350,
+      "sha256": "20fcd49e3c924815b03c89b92fa9b0ede92f239eb777b4c4f6f3dbcabe88ba3e",
+      "mtime_ns": 1791608096354792448,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash",
+      "heading_locators": [
+        {
+          "line": 1,
+          "heading": "# Recurring rehearsal calendar distribution"
+        },
+        {
+          "line": 3,
+          "heading": "## Assignment"
+        },
+        {
+          "line": 9,
+          "heading": "## Exact numbered obligations"
+        },
+        {
+          "line": 20,
+          "heading": "## Research boundaries and deliverable"
+        }
+      ]
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/assignment.md",
+      "bytes": 4136,
+      "sha256": "87e93c2fabb8ecfd9efd868a05c90e249c5a464cdf7782752e28f69523844552",
+      "mtime_ns": 1791608096355698488,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash",
+      "heading_locators": []
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/input-map.json",
+      "bytes": 789,
+      "sha256": "2105d71d3fc5030efb01b0f0583f0482ee9f3e7962d8805f204cd3a77194dbeb",
+      "mtime_ns": 1791608096515536636,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/freeze.json",
+      "bytes": 2073,
+      "sha256": "63114a400507af62786b1d0455f9fc8b9f0632a70c2f97a12576cc60e58090e3",
+      "mtime_ns": 1791608096516067644,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/source-map.json",
+      "bytes": 20908,
+      "sha256": "cdfb19a3c12bed4397426a18c604879c257a24af53a62776962761f4ca9ec775",
+      "mtime_ns": 1791609009214578054,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/sources/index.md",
+      "bytes": 8893,
+      "sha256": "538021bc9c93ef4974e7e2798a5d0e4a777a2cbadfd726e7b356de01dc8bd2b4",
+      "mtime_ns": 1791609009214907320,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash",
+      "heading_locators": [
+        {
+          "line": 1,
+          "heading": "# Investigator source index"
+        },
+        {
+          "line": 7,
+          "heading": "## Standards"
+        },
+        {
+          "line": 9,
+          "heading": "### R01 \u2014 [RFC 5545: iCalendar](https://www.rfc-editor.org/rfc/rfc5545)"
+        },
+        {
+          "line": 13,
+          "heading": "### R02 \u2014 [RFC 5546: iTIP](https://www.rfc-editor.org/rfc/rfc5546)"
+        },
+        {
+          "line": 17,
+          "heading": "### R03 \u2014 [RFC 4791: CalDAV](https://www.rfc-editor.org/rfc/rfc4791)"
+        },
+        {
+          "line": 21,
+          "heading": "### R04 \u2014 [RFC 6578: WebDAV Collection Synchronization](https://www.rfc-editor.org/rfc/rfc6578)"
+        },
+        {
+          "line": 25,
+          "heading": "## Product and service documentation"
+        },
+        {
+          "line": 27,
+          "heading": "### R05 \u2014 [Google Calendar: Create and manage a public calendar](https://support.google.com/calendar/answer/37083?hl=en)"
+        },
+        {
+          "line": 31,
+          "heading": "### R06 \u2014 [Google Calendar: Subscribe to someone else's calendar](https://support.google.com/calendar/answer/37100?hl=en)"
+        },
+        {
+          "line": 35,
+          "heading": "### R07 \u2014 [Google Calendar: Import events](https://support.google.com/calendar/answer/37118?hl=en)"
+        },
+        {
+          "line": 39,
+          "heading": "### R08 \u2014 [Google Calendar API v3: Events resource](https://developers.google.com/workspace/calendar/api/v3/reference/events) and [Recurring events guide](https://developers.google.com/workspace/calendar/api/guides/recurringevents)"
+        },
+        {
+          "line": 43,
+          "heading": "### R09 \u2014 [Microsoft Support: Import or subscribe to an Outlook.com calendar](https://support.microsoft.com/en-us/outlook/import-or-subscribe-to-a-calendar-in-outlook-com-or-outlook-on-the-web)"
+        },
+        {
+          "line": 47,
+          "heading": "### R10 \u2014 [Apple Support: Add a read-only subscription calendar on iPhone](https://support.apple.com/guide/iphone/use-multiple-calendars-iph3d1110d4/ios) and [Subscribe/manage alerts and refresh on Mac](https://support.apple.com/en-il/guide/calendar/icl32362/mac)"
+        },
+        {
+          "line": 51,
+          "heading": "### R11 \u2014 [Nextcloud 35 User Manual: Calendar](https://docs.nextcloud.com/server/stable/user_manual/en/groupware/calendar.html)"
+        },
+        {
+          "line": 55,
+          "heading": "### R12 \u2014 [Nextcloud 35 Administration Manual: Calendar/CalDAV](https://docs.nextcloud.com/server/stable/admin_manual/groupware/calendar.html)"
+        },
+        {
+          "line": 59,
+          "heading": "### R13 \u2014 [W3C WebSub Recommendation](https://www.w3.org/TR/websub/)"
+        },
+        {
+          "line": 63,
+          "heading": "## Public recurrence/fix history"
+        },
+        {
+          "line": 65,
+          "heading": "### R14 \u2014 [Mozilla Bugzilla 1595332: Location not preserved when modifying recurring event in remote calendar](https://bugzilla.mozilla.org/show_bug.cgi?id=1595332)"
+        },
+        {
+          "line": 69,
+          "heading": "### R15 \u2014 [Immutable Mozilla changeset 3787e583daf7](https://hg.mozilla.org/comm-central/raw-rev/3787e583daf7)"
+        },
+        {
+          "line": 73,
+          "heading": "### R16 \u2014 [Google Calendar: Use Google Calendar in different time zones](https://support.google.com/calendar/answer/37064?hl=en)"
+        }
+      ]
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/service-tier-change.json",
+      "bytes": 493,
+      "sha256": "ec7e683e6b6e743b83e55cf59a248dda70dc575cd751b5a836144510a313a55c",
+      "mtime_ns": 1791608096516263148,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/discovery.md",
+      "bytes": 15325,
+      "sha256": "46807c16ec3d360b4af0ec58d21123a7466f933cf4902136ab754b1a62ecdb68",
+      "mtime_ns": 1791609009215308843,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash",
+      "heading_locators": [
+        {
+          "line": 1,
+          "heading": "# Discovery record \u2014 recurring rehearsal calendar distribution"
+        },
+        {
+          "line": 7,
+          "heading": "## Scope and evidence status"
+        },
+        {
+          "line": 13,
+          "heading": "## Initial proposal and evidence"
+        },
+        {
+          "line": 15,
+          "heading": "### 1. Recurring series, moved/cancelled instances, identity, time zones"
+        },
+        {
+          "line": 23,
+          "heading": "### 2. Candidate distribution products/routes and the difference between file, feed, and sync"
+        },
+        {
+          "line": 35,
+          "heading": "### 3. Version/operation evidence and refresh bounds"
+        },
+        {
+          "line": 39,
+          "heading": "### 4. Relevant recurrence issue/fix chain and season-update consequence"
+        },
+        {
+          "line": 45,
+          "heading": "### 5. Supported optional scope: downloadable one-season snapshot"
+        },
+        {
+          "line": 49,
+          "heading": "### 6. Ownership, rooms, reminders, and constraints"
+        },
+        {
+          "line": 55,
+          "heading": "### 7. Validation status and priorities"
+        },
+        {
+          "line": 66,
+          "heading": "## Initial recommendation, subject to exact-plan review"
+        }
+      ]
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/draft.md",
+      "bytes": 21874,
+      "sha256": "f5b1ad4e86d9a70c72011724af890ca30b0ee3139c8f5f8d2a89e1c567d53d1a",
+      "mtime_ns": 1791609284014619078,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash",
+      "heading_locators": [
+        {
+          "line": 1,
+          "heading": "# Complete research proposal \u2014 recurring rehearsal calendar distribution"
+        },
+        {
+          "line": 8,
+          "heading": "## Recommendation"
+        },
+        {
+          "line": 18,
+          "heading": "## Exact clause dispositions"
+        },
+        {
+          "line": 20,
+          "heading": "### Clause 1 \u2014 series, moved/cancelled instances, stable identity, time zones"
+        },
+        {
+          "line": 30,
+          "heading": "### Clause 2 \u2014 two distribution routes and an analogous publish/subscribe mechanism"
+        },
+        {
+          "line": 44,
+          "heading": "### Clause 3 \u2014 bind recurrence/refresh to exact operations and versions"
+        },
+        {
+          "line": 59,
+          "heading": "### Clause 4 \u2014 recurrence/time-zone issue/fix chain and season-update consequence"
+        },
+        {
+          "line": 67,
+          "heading": "### Clause 5 \u2014 optional one-season downloadable snapshot"
+        },
+        {
+          "line": 75,
+          "heading": "### Clause 6 \u2014 owner decisions"
+        },
+        {
+          "line": 83,
+          "heading": "### Clause 7 \u2014 negative constraints"
+        },
+        {
+          "line": 87,
+          "heading": "### Clause 8 \u2014 coherent evidence-backed proposal and validation reporting"
+        },
+        {
+          "line": 91,
+          "heading": "## Validation table"
+        },
+        {
+          "line": 104,
+          "heading": "## Prioritized remaining inputs"
+        },
+        {
+          "line": 111,
+          "heading": "## Disposition of released plan assumptions"
+        }
+      ]
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 5956,
+      "sha256": "0588e3e0686b6ccc9b5f3eafc56f3415d8565ac895c12ba6a84f572b46ccfe53",
+      "mtime_ns": 1791609029005199383,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash",
+      "heading_locators": [
+        {
+          "line": 1,
+          "heading": "# Concealed draft plan \u2014 Recurring rehearsal calendar distribution"
+        },
+        {
+          "line": 3,
+          "heading": "## Access and status"
+        },
+        {
+          "line": 7,
+          "heading": "## Pilot intent"
+        },
+        {
+          "line": 13,
+          "heading": "## Exact obligations and current draft treatment"
+        },
+        {
+          "line": 15,
+          "heading": "### 1. Explain recurring series, moved or cancelled instances, stable identity and time-zone behavior for the pilot."
+        },
+        {
+          "line": 19,
+          "heading": "### 2. Compare two distribution products/routes and one analogous publish/subscribe mechanism; distinguish file import, feed subscription and server synchronization."
+        },
+        {
+          "line": 23,
+          "heading": "### 3. Bind recurrence and refresh claims to the exact client/server operation and versions investigated; identify remaining compatibility uncertainty."
+        },
+        {
+          "line": 27,
+          "heading": "### 4. Investigate a relevant recurrence/time-zone release or issue/fix chain and its consequences for a season update."
+        },
+        {
+          "line": 31,
+          "heading": "### 5. Preserve and investigate this supported optional scope: a downloadable one-season calendar snapshot for members who cannot subscribe. It is an authorized option, not a mandatory feature or an established technical capability; recommend conditions, retain it when supported, and explain any evidence-based exclusion."
+        },
+        {
+          "line": 35,
+          "heading": "### 6. Make owner decisions explicit: The secretary owns event identity and amendments; the orchestra manager decides whether room details are public. Local reminders belong to members and must not be overwritten by policy."
+        },
+        {
+          "line": 39,
+          "heading": "### 7. Preserve negative constraints: Do not access member calendars, require account migration, promise immediate refresh on every client, or conflate importing a file with maintaining a live subscription."
+        },
+        {
+          "line": 43,
+          "heading": "### 8. Deliver one coherent evidence-backed research proposal covering obligations 1\u20138, with recommendations, source/version applicability, useful discoveries, unresolved owner inputs, and a validation table separating checks actually executed from checks merely proposed. Do not report research sources or future tests as executed product validation."
+        },
+        {
+          "line": 47,
+          "heading": "## Validation status at handoff"
+        }
+      ]
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/plan-reveal.json",
+      "bytes": 429,
+      "sha256": "25ea8f2d7576f1c2d493ee0e86c1a19eb2fcb1c35a0209ac1896d76aa3c16e2f",
+      "mtime_ns": 1791609029005332975,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/assignment.md",
+      "bytes": 4430,
+      "sha256": "44b2d11ea71cc8dd184a28a93711fdc6fd20353984f9fc441bf2118057021fb7",
+      "mtime_ns": 1791609416367201966,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash",
+      "heading_locators": []
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/input-map.json",
+      "bytes": 1477,
+      "sha256": "12da2ebbf975b935aa93dda3b37aa76312211e55bf63e6b8276c4395b2b8092d",
+      "mtime_ns": 1791609416367030404,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/freeze.json",
+      "bytes": 3656,
+      "sha256": "132c0cbf850febc3baa38050694509a4844f942606078788958b54101814cdbb",
+      "mtime_ns": 1791609416366893691,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/source-map.json",
+      "bytes": 24090,
+      "sha256": "3ec275cb952f973099d3ddf0dc53ba29796bde08d9d558fea56d22f1c44ed28c",
+      "mtime_ns": 1791610122488928381,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/sources/index.md",
+      "bytes": 4816,
+      "sha256": "75d50b11cc811564e74720b92a1273d9cf3648a5ee5596f3cf1424d0ad0d30f0",
+      "mtime_ns": 1791610075006639763,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash",
+      "heading_locators": [
+        {
+          "line": 1,
+          "heading": "# Critic evidence index \u2014 A4-02-treatment"
+        },
+        {
+          "line": 7,
+          "heading": "## Independently checked sources"
+        },
+        {
+          "line": 26,
+          "heading": "## Scope and status"
+        }
+      ]
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/service-tier-change.json",
+      "bytes": 481,
+      "sha256": "9944733f58e5b05d4bc7277fc4a7046f826effa68ea9ef7e274436c24af21ade",
+      "mtime_ns": 1791609416162506299,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/critique.md",
+      "bytes": 9070,
+      "sha256": "8b47033aaebe7d18e6482e9ed5c4cf58f56250e972a093c583d526e105b0d18d",
+      "mtime_ns": 1791610074998639714,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash",
+      "heading_locators": [
+        {
+          "line": 1,
+          "heading": "# Independent critic review \u2014 A4-02-treatment"
+        },
+        {
+          "line": 6,
+          "heading": "## Review basis and limits"
+        },
+        {
+          "line": 12,
+          "heading": "## Findings requiring attention"
+        },
+        {
+          "line": 14,
+          "heading": "### F1 \u2014 Material incomplete: Outlook refresh guidance is not separated by web operation"
+        },
+        {
+          "line": 21,
+          "heading": "### F2 \u2014 Minor locator/wording: add the iPhone subscription-alert control to the reminder evidence"
+        },
+        {
+          "line": 28,
+          "heading": "## Obligation and plan-disposition review"
+        },
+        {
+          "line": 41,
+          "heading": "## Other source-boundary checks"
+        },
+        {
+          "line": 49,
+          "heading": "## Overall judgment"
+        }
+      ]
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/invocation-clarification.json",
+      "bytes": 3030,
+      "sha256": "2f8635f9a16a8aef868d9e2fa4d65d46ebbb689c0cd8b40e0cb468c4aa4921d0",
+      "mtime_ns": 1791609416367365241,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/native-goal-state.json",
+      "bytes": 530,
+      "sha256": "1436f0cf022a47d3204355183782954f00d781f85510e17843cc502c34ec891a",
+      "mtime_ns": 1791609528531207748,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/native-goal-completion.json",
+      "bytes": 855,
+      "sha256": "60ddf51a88624e4e3b183ac4b730948e411faa80648d97d339758ab1bb0fa448",
+      "mtime_ns": 1791610131846985264,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/native-goal-capture.md",
+      "bytes": 944,
+      "sha256": "9f7fe9fcb12e946cd41dd3d7f0ad4a924df0e32195cece8bb17626ff28ee86c6",
+      "mtime_ns": 1791610075012639799,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash",
+      "heading_locators": [
+        {
+          "line": 1,
+          "heading": "# Native Goal capture note"
+        }
+      ]
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/assignment.md",
+      "bytes": 4412,
+      "sha256": "99e029ca4ed8a2362a6592f658f11e448e1c12cb88b340580911851ab8c5c6b9",
+      "mtime_ns": 1791610289730580139,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash",
+      "heading_locators": []
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/input-map.json",
+      "bytes": 1794,
+      "sha256": "eba71b239ed62f6e88abce9aa31502dabf1f2f3e8fce6e681b148ca4ab140b42",
+      "mtime_ns": 1791610289730433514,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/freeze.json",
+      "bytes": 4434,
+      "sha256": "9fff06313f9a7cd8405015a542c998d18f306e174c9587055d54c4e8dc06f4f9",
+      "mtime_ns": 1791610289730225117,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/source-map.json",
+      "bytes": 31998,
+      "sha256": "3ad21682974e8f369fe06d05a7ce66dd576c89800c7329418f14f4f9f0f29f17",
+      "mtime_ns": 1791611170227738840,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/sources/index.md",
+      "bytes": 11546,
+      "sha256": "74b5ce89e0dedbb05f9f64071fbfcea639cce932be4afb4b94db1a58cfd40c3b",
+      "mtime_ns": 1791611014241627082,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash",
+      "heading_locators": [
+        {
+          "line": 1,
+          "heading": "# Reviser source index"
+        },
+        {
+          "line": 7,
+          "heading": "## Reviser primary-source rechecks \u2014 2026-10-10"
+        },
+        {
+          "line": 17,
+          "heading": "## Standards"
+        },
+        {
+          "line": 19,
+          "heading": "### R01 \u2014 [RFC 5545: iCalendar](https://www.rfc-editor.org/rfc/rfc5545)"
+        },
+        {
+          "line": 23,
+          "heading": "### R02 \u2014 [RFC 5546: iTIP](https://www.rfc-editor.org/rfc/rfc5546)"
+        },
+        {
+          "line": 27,
+          "heading": "### R03 \u2014 [RFC 4791: CalDAV](https://www.rfc-editor.org/rfc/rfc4791)"
+        },
+        {
+          "line": 31,
+          "heading": "### R04 \u2014 [RFC 6578: WebDAV Collection Synchronization](https://www.rfc-editor.org/rfc/rfc6578)"
+        },
+        {
+          "line": 35,
+          "heading": "## Product and service documentation"
+        },
+        {
+          "line": 37,
+          "heading": "### R05 \u2014 [Google Calendar: Create and manage a public calendar](https://support.google.com/calendar/answer/37083?hl=en)"
+        },
+        {
+          "line": 41,
+          "heading": "### R06 \u2014 [Google Calendar: Subscribe to someone else's calendar](https://support.google.com/calendar/answer/37100?hl=en)"
+        },
+        {
+          "line": 45,
+          "heading": "### R07 \u2014 [Google Calendar: Import events](https://support.google.com/calendar/answer/37118?hl=en)"
+        },
+        {
+          "line": 49,
+          "heading": "### R08 \u2014 [Google Calendar API v3: Events resource](https://developers.google.com/workspace/calendar/api/v3/reference/events) and [Recurring events guide](https://developers.google.com/workspace/calendar/api/guides/recurringevents)"
+        },
+        {
+          "line": 53,
+          "heading": "### R09 \u2014 [Microsoft Support: Import or subscribe to an Outlook.com calendar](https://support.microsoft.com/en-us/outlook/import-or-subscribe-to-a-calendar-in-outlook-com-or-outlook-on-the-web)"
+        },
+        {
+          "line": 57,
+          "heading": "### R10 \u2014 [Apple Support: Add a read-only subscription calendar on iPhone](https://support.apple.com/guide/iphone/use-multiple-calendars-iph3d1110d4/ios) and [Subscribe/manage alerts and refresh on Mac](https://support.apple.com/en-il/guide/calendar/icl32362/mac)"
+        },
+        {
+          "line": 61,
+          "heading": "### R11 \u2014 [Nextcloud 35 User Manual: Calendar](https://docs.nextcloud.com/server/stable/user_manual/en/groupware/calendar.html)"
+        },
+        {
+          "line": 65,
+          "heading": "### R12 \u2014 [Nextcloud 35 Administration Manual: Calendar/CalDAV](https://docs.nextcloud.com/server/stable/admin_manual/groupware/calendar.html)"
+        },
+        {
+          "line": 69,
+          "heading": "### R13 \u2014 [W3C WebSub Recommendation](https://www.w3.org/TR/websub/)"
+        },
+        {
+          "line": 73,
+          "heading": "## Public recurrence/fix history"
+        },
+        {
+          "line": 75,
+          "heading": "### R14 \u2014 [Mozilla Bugzilla 1595332: Location not preserved when modifying recurring event in remote calendar](https://bugzilla.mozilla.org/show_bug.cgi?id=1595332)"
+        },
+        {
+          "line": 79,
+          "heading": "### R15 \u2014 [Immutable Mozilla changeset 3787e583daf7](https://hg.mozilla.org/comm-central/raw-rev/3787e583daf7)"
+        },
+        {
+          "line": 83,
+          "heading": "### R16 \u2014 [Google Calendar: Use Google Calendar in different time zones](https://support.google.com/calendar/answer/37064?hl=en)"
+        }
+      ]
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/service-tier-change.json",
+      "bytes": 483,
+      "sha256": "18138f21db69a8d461c67a4973675c84f62046089972c93ede3685e0d1a348dc",
+      "mtime_ns": 1791610289530602253,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/final.md",
+      "bytes": 25460,
+      "sha256": "4115d20a6476642c4d4d02a2ee44c388af3baa812bb51551bee7d91c99599364",
+      "mtime_ns": 1791611170226606539,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash",
+      "heading_locators": [
+        {
+          "line": 1,
+          "heading": "# Complete research proposal \u2014 recurring rehearsal calendar distribution"
+        },
+        {
+          "line": 8,
+          "heading": "## Independent critique dispositions and source rechecks"
+        },
+        {
+          "line": 21,
+          "heading": "## Recommendation"
+        },
+        {
+          "line": 31,
+          "heading": "## Exact clause dispositions"
+        },
+        {
+          "line": 33,
+          "heading": "### Clause 1 \u2014 series, moved/cancelled instances, stable identity, time zones"
+        },
+        {
+          "line": 43,
+          "heading": "### Clause 2 \u2014 two distribution routes and an analogous publish/subscribe mechanism"
+        },
+        {
+          "line": 57,
+          "heading": "### Clause 3 \u2014 bind recurrence/refresh to exact operations and versions"
+        },
+        {
+          "line": 73,
+          "heading": "### Clause 4 \u2014 recurrence/time-zone issue/fix chain and season-update consequence"
+        },
+        {
+          "line": 81,
+          "heading": "### Clause 5 \u2014 optional one-season downloadable snapshot"
+        },
+        {
+          "line": 89,
+          "heading": "### Clause 6 \u2014 owner decisions"
+        },
+        {
+          "line": 97,
+          "heading": "### Clause 7 \u2014 negative constraints"
+        },
+        {
+          "line": 101,
+          "heading": "### Clause 8 \u2014 coherent evidence-backed proposal and validation reporting"
+        },
+        {
+          "line": 105,
+          "heading": "## Validation table"
+        },
+        {
+          "line": 118,
+          "heading": "## Prioritized remaining inputs"
+        },
+        {
+          "line": 125,
+          "heading": "## Disposition of released plan assumptions"
+        }
+      ]
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/invocation-clarification.json",
+      "bytes": 3037,
+      "sha256": "bd536c9a72b578d3858a7a3279cb2be9cdffddc2369330f7b0f01cbfb5cd9960",
+      "mtime_ns": 1791610289730738573,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/native-goal-lifecycle.json",
+      "bytes": 3050,
+      "sha256": "1fe9292033d0b2342688ed563374884c24ed56e7d7fe19e976f46184b14717b2",
+      "mtime_ns": 1791611240778337570,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    }
+  ],
+  "assessment_locators": {
+    "axes": "assessment.json#/axes",
+    "plan_clause_reviews": "assessment.json#/plan_clause_reviews",
+    "criticism_dispositions": "assessment.json#/criticism_dispositions",
+    "lineage_findings": "assessment.json#/lineage_findings",
+    "limitations": "assessment.json#/limitations",
+    "telemetry": "assessment.json#/telemetry"
+  },
+  "evidence_index": "evidence/index.md",
+  "original_hash_manifest": "original-inspected-manifest.json",
+  "integrity_only": "Hashes identify bytes and freeze preservation; not semantic proof."
+}

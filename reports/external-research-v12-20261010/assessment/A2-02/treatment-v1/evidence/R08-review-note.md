@@ -1,0 +1,49 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://github.com/ProjectMirador/mirador/releases/tag/v4.2.6"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A2-02/treatment-v1/source-map.json",
+      "source_id": "R08",
+      "existing_authored_summary_fields": {
+        "version_or_commit": "Mirador v4.2.6; a84ce284bd2146bbbf9cf2e702411cbd2bbdbf4c",
+        "governing_locator": "Pinned release title/commit; 4.2.x compatibility statement",
+        "independent_observation": "The official page identifies v4.2.6 as Latest at review retrieval and describes MUI compatibility for that release line. The final uses it as a candidate pin, not proof of MAE operation. Full commit identity is visible in the independently retrieved release HTML."
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "governing_locator": "Pinned release title/commit; 4.2.x compatibility statement"
+    }
+  ],
+  "raw_sha256": "25109bd59eb0a7a891c46915c38bb01eba8b73ed604d1d14aab87f4d94131fc3",
+  "original_bytes": 731,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A2-02/treatment-v1/evidence/R08-review-note.md",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://github.com/ProjectMirador/mirador/releases/tag/v4.2.6"
+  ],
+  "version": [
+    {
+      "version_or_commit": "Mirador v4.2.6; a84ce284bd2146bbbf9cf2e702411cbd2bbdbf4c",
+      "governing_locator": "Pinned release title/commit; 4.2.x compatibility statement",
+      "independent_observation": "The official page identifies v4.2.6 as Latest at review retrieval and describes MUI compatibility for that release line. The final uses it as a candidate pin, not proof of MAE operation. Full commit identity is visible in the independently retrieved release HTML."
+    }
+  ],
+  "selector": [
+    {
+      "governing_locator": "Pinned release title/commit; 4.2.x compatibility statement"
+    }
+  ],
+  "conditions": "UNKNOWN",
+  "rawSHA256": "25109bd59eb0a7a891c46915c38bb01eba8b73ed604d1d14aab87f4d94131fc3"
+}

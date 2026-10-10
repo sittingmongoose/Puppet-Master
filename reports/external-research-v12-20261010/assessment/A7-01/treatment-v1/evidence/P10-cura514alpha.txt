@@ -1,0 +1,52 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://github.com/Ultimaker/Cura/releases/tag/5.14.0-alpha.0"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A7-01/treatment-v1/source-map.json",
+      "source_id": "P10",
+      "existing_authored_summary_fields": {
+        "version_or_commit": "Prerelease 5.14.0-alpha.0; published 2026-06-25; candidate short commit 17e7b05",
+        "governing_conditions_and_applicability": "Confirms the critic addition concerns non-project 3MF positioning and is a prerelease. The final correctly does not equate it with stable acceptance or the exact #19456 correction."
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": "New features and improvements, non-project multi-model 3MF bullet"
+    }
+  ],
+  "raw_sha256": "5927348431b4dca4b469f41c6dece574eb50cbb0a625d8aa5cf9b8762420b662",
+  "original_bytes": 3676,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A7-01/treatment-v1/evidence/P10-cura514alpha.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://github.com/Ultimaker/Cura/releases/tag/5.14.0-alpha.0"
+  ],
+  "version": [
+    {
+      "version_or_commit": "Prerelease 5.14.0-alpha.0; published 2026-06-25; candidate short commit 17e7b05",
+      "governing_conditions_and_applicability": "Confirms the critic addition concerns non-project 3MF positioning and is a prerelease. The final correctly does not equate it with stable acceptance or the exact #19456 correction."
+    }
+  ],
+  "selector": [
+    {
+      "locator": "New features and improvements, non-project multi-model 3MF bullet"
+    }
+  ],
+  "conditions": [
+    {
+      "version_or_commit": "Prerelease 5.14.0-alpha.0; published 2026-06-25; candidate short commit 17e7b05",
+      "governing_conditions_and_applicability": "Confirms the critic addition concerns non-project 3MF positioning and is a prerelease. The final correctly does not equate it with stable acceptance or the exact #19456 correction."
+    }
+  ],
+  "rawSHA256": "5927348431b4dca4b469f41c6dece574eb50cbb0a625d8aa5cf9b8762420b662"
+}

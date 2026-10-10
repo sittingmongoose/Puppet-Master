@@ -1,0 +1,180 @@
+{
+  "checked_at_utc": "2026-10-10T05:44:45.022126+00:00",
+  "assessment_schema_checks": "PASS",
+  "navigable_local_links": "PASS",
+  "original_artifacts_unchanged": true,
+  "original_artifact_checks": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A3-02/brief.md",
+      "sha256": "64d7c999cf74b0022f481d6e5412866fc4b9b63d05c1726ceef4658a0d8d712e",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A3-02/plan.md",
+      "sha256": "b977457667677faa27fe5256d090e48ec798eae592ffd7d860e4c3c239167b79",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/terminal-science-freeze-root.json",
+      "sha256": "a5d94dfaa169cf5055c406b684e45c8d1e80b47008b0e906e4207999eff5b774",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/inputs/brief.md",
+      "sha256": "64d7c999cf74b0022f481d6e5412866fc4b9b63d05c1726ceef4658a0d8d712e",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/assignment.md",
+      "sha256": "b9ae49a8c0ca3cd91ed09343d8d9a599389d5762f1fea685743d33035fcca831",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/input-map.json",
+      "sha256": "3222507edaa1d81829677186b97361e8cd2cbfa6409a139f93eb7a57edb74f41",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/freeze.json",
+      "sha256": "a474766eb516c6875d300fec44453453f78a008fe9bfde9a61b2925d0464e3db",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/source-map.json",
+      "sha256": "5bde84fe10d40a6966477bebcd01c7246a88df3a254a543ebcc265ccb3f9111a",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/sources/index.md",
+      "sha256": "78948a42cacc262879c72af0bc079a8c65d23cdf2549c37201d093fac266443e",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/service-tier-change.json",
+      "sha256": "658559bfb8db74d07070225d40a17ad556002746f5f9bd3db7d076fe8686fe29",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/critic/assignment.md",
+      "sha256": "19b4dc6db6e4a6f66617cd769e134d41e15e8cf2c3210b87dfc0a968c3cd750a",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/critic/input-map.json",
+      "sha256": "5380d8cd68f220a9225a83e093d7f38602bc746bd4c7881a8dd6ecfb4d731304",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/critic/freeze.json",
+      "sha256": "2bf5bcf38af1f11a185cc6ed77bf293a65b316f70b4628f4e5c28e00e7dafce5",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/critic/source-map.json",
+      "sha256": "29d80fc8ece41075619eaec44fc7f49d9e1eb1183bb62eeb916996254ad80c98",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/critic/sources/index.md",
+      "sha256": "35cb4d6e17e0fe3d10004bb7a525f00605a95c1766b1989165ef01096e1fc5d6",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/critic/service-tier-change.json",
+      "sha256": "8e545d6822ba307a87d1e98b9168e356a65a3a43ff491bb8089f1e2f580cc583",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/assignment.md",
+      "sha256": "ebd5441f4db8b9cbf156ed6b9ba56de2b6b633133ebb48c02b8c6ee9b11641eb",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/input-map.json",
+      "sha256": "970566c8b0562793cfb5d73d8596a32e7d395368d3979f4b11a59a29e2503bfa",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/freeze.json",
+      "sha256": "b5acf71d7bab5130f8aed0ad2e57c59465d8c0475bb41256e7d0422e77db20e5",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/source-map.json",
+      "sha256": "ad6e879a6c626d2c55bed212f0422b2dbf7150aa9effe47148e95734453a493a",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/sources/index.md",
+      "sha256": "4847084d3ec643e13dcddf821bc324c27d87b3ac6f222c6019c1ced252ae49b4",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/service-tier-change.json",
+      "sha256": "f2e6252ce838d2ea52467bf71dc0f503ee4f2dcecb6bf9e92951342da09c880f",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/discovery.md",
+      "sha256": "756c86b1eaaf3c272ddda3f65fde869380a50351bd7d028edcb473b60c329734",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/draft.md",
+      "sha256": "1ae0b7ef68c5bd0f51f5470a28fb49f45da62ee16d36537350520eb685741b38",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/revealed-plan.md",
+      "sha256": "b977457667677faa27fe5256d090e48ec798eae592ffd7d860e4c3c239167b79",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/plan-reveal.json",
+      "sha256": "6618d8c2b92799b46c3ce00b3843795e49048538df2200832db165f7b95a681c",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/native-goal-record.json",
+      "sha256": "d926af9a85ac7835b38c34c1f972a5413d360401abc69b29dbc36f976165fb02",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/critic/critique.md",
+      "sha256": "65a8fe4685d55db2005e8cca8a94571a8d2e7733d81bef91e81fe3731ddaef5f",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+      "sha256": "a0bb1532e129d42e715f99fd51918814deffc3104f3d28e9863f7f3fcec6fc5b",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/native-goal-activation.json",
+      "sha256": "2c31182154dd0556701aec65e232d1c7b5ec6dd3ee119d4b60629d38feb10f83",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/native-goal-active-confirmation.json",
+      "sha256": "748940b72217e1551ea0e91dabb94407a612ef3f2b8a06cda110df480c578bdc",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/native-goal-completion.json",
+      "sha256": "5c9a6aece5c6f605694be2a51cdbb6ca872b80fdaef89dad9b91dba7be873703",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A3-02/control-v1/root-review-request.json",
+      "sha256": "84cab680febf6ca0377fce7735896259cd779934cd90d07c4deacfba074f96f2",
+      "unchanged": true
+    }
+  ],
+  "independent_evidence_integrity": "PASS",
+  "review_within_45minute_envelope": true
+}

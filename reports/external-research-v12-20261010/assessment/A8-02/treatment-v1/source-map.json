@@ -1,0 +1,1146 @@
+{
+  "schema_version": "ER12-independent-source-map-v1",
+  "scope": "A8-02 treatment-v1 only",
+  "method": "Independently reopened authentic primary pages with web and public HTTP GET, expanded governing surrounding context; source semantics adjudicated separately from hashes and mechanics. No downloaded source code or product executed.",
+  "sources": [
+    {
+      "id": "R01",
+      "candidate_source_id": "S01",
+      "title": "MQTT protocol delivery and durable identity",
+      "url": "https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html",
+      "retrieved_url": "https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html",
+      "version_applicability": "OASIS MQTT 5.0 Standard, 2019-03-07; v5 only",
+      "independent_retrieval": {
+        "id": "S01",
+        "requested_url": "https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html",
+        "access_started_utc": "2026-10-10T05:35:04.748431+00:00",
+        "operation": "Independent reviewer public HTTP GET; no product execution",
+        "status": 200,
+        "final_url": "https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html",
+        "content_type": "text/html",
+        "http_date": "Sat, 10 Oct 2026 05:35:04 GMT",
+        "raw_artifact": "evidence/S01.html",
+        "text_artifact": "evidence/S01.txt",
+        "sha256": "8b382adcb0104462ffcdff445c2e6c64247571ccfb8385b10c121adfdc9de6aa",
+        "bytes": 1436832,
+        "text_sha256": "913603e48e7cd25a5fb132723c7fc72bdccfed6e2513aa27cacc3fad4e166dea",
+        "text_lines": 8896,
+        "access_completed_utc": "2026-10-10T05:35:05.200555+00:00"
+      },
+      "governing_locators": [
+        {
+          "independent_source_id": "R01",
+          "carried_source_id": "S01",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S01.txt",
+          "lines": [
+            1565,
+            1588
+          ],
+          "governing_locator": "2.2.1 Packet Identifier"
+        },
+        {
+          "independent_source_id": "R01",
+          "carried_source_id": "S01",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S01.txt",
+          "lines": [
+            2372,
+            2394
+          ],
+          "governing_locator": "3.1.2.11.2 Session Expiry Interval"
+        },
+        {
+          "independent_source_id": "R01",
+          "carried_source_id": "S01",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S01.txt",
+          "lines": [
+            3500,
+            3526
+          ],
+          "governing_locator": "3.3.1.1 DUP"
+        },
+        {
+          "independent_source_id": "R01",
+          "carried_source_id": "S01",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S01.txt",
+          "lines": [
+            6237,
+            6306
+          ],
+          "governing_locator": "4.1.1 Stored state / 4.2 transport / 4.3 QoS"
+        },
+        {
+          "independent_source_id": "R01",
+          "carried_source_id": "S01",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S01.txt",
+          "lines": [
+            6326,
+            6386
+          ],
+          "governing_locator": "4.3.2-3 QoS"
+        },
+        {
+          "independent_source_id": "R01",
+          "carried_source_id": "S01",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S01.txt",
+          "lines": [
+            6468,
+            6475
+          ],
+          "governing_locator": "QoS 2 onward delivery note"
+        }
+      ],
+      "semantic_assessment": "QoS concerns one sender/receiver exchange, not sampling or archive durability. Packet IDs can be reused; DUP is packet-scoped. The absent CONNECT session-expiry default is 0 seconds; stored-state limits remain. These facts support distinct transport and observation identity, not an exactly-once observation promise.",
+      "relation": "SUPPORTED WITH STATED CONDITIONS",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 45
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 58
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 79
+        }
+      ]
+    },
+    {
+      "id": "R02",
+      "candidate_source_id": "S02",
+      "title": "Telegraf adapter defaults and acknowledgments",
+      "url": "https://docs.influxdata.com/telegraf/v1/input-plugins/mqtt_consumer/",
+      "retrieved_url": "https://docs.influxdata.com/telegraf/v1/input-plugins/mqtt_consumer/",
+      "version_applicability": "Rolling Telegraf v1 plugin docs; no selected binary",
+      "independent_retrieval": {
+        "id": "S02",
+        "requested_url": "https://docs.influxdata.com/telegraf/v1/input-plugins/mqtt_consumer/",
+        "access_started_utc": "2026-10-10T05:35:04.750515+00:00",
+        "operation": "Independent reviewer public HTTP GET; no product execution",
+        "status": 200,
+        "final_url": "https://docs.influxdata.com/telegraf/v1/input-plugins/mqtt_consumer/",
+        "content_type": "text/html; charset=utf-8",
+        "http_date": "Sat, 10 Oct 2026 05:35:05 GMT",
+        "raw_artifact": "evidence/S02.html",
+        "text_artifact": "evidence/S02.txt",
+        "sha256": "73191611e45b7c0a469b9cb99dbf4d24f6f40b602e64aaedd4adb6d053620123",
+        "bytes": 126251,
+        "text_sha256": "c3c0ca525b2326e17e87ca7be1436dd803f4baaf715943942135dc8c4714923b",
+        "text_lines": 842,
+        "access_completed_utc": "2026-10-10T05:35:05.022129+00:00",
+        "wire_artifact": "evidence/S02.response.gz",
+        "wire_sha256": "90830edadb4710b7468306e75d221cf8f81e6545071689b2de5913c541d4500a",
+        "wire_bytes": 21373,
+        "decoding_note": "Gzip wire response decoded with Python gzip before HTML text extraction; initial garbled extraction replaced, never used as semantic evidence"
+      },
+      "governing_locators": [
+        {
+          "independent_source_id": "R02",
+          "carried_source_id": "S02",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S02.txt",
+          "lines": [
+            532,
+            535
+          ],
+          "governing_locator": "Tracking metric support"
+        },
+        {
+          "independent_source_id": "R02",
+          "carried_source_id": "S02",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S02.txt",
+          "lines": [
+            574,
+            618
+          ],
+          "governing_locator": "Configuration: qos, undelivered messages, persistent_session, client_id"
+        }
+      ],
+      "semantic_assessment": "Tracking metrics report delivery to all outputs before acknowledgment. Config shows QoS 0 and persistent_session=false; offline reception needs stable client ID, persistent session and publisher/subscriber QoS 1/2. Persistent sessions retain initial topics. Output handling is not proof of durable club archival; final leaves configuration and testing open.",
+      "relation": "SUPPORTED WITH STATED CONDITIONS",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 52
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 79
+        }
+      ]
+    },
+    {
+      "id": "R03",
+      "candidate_source_id": "S03",
+      "title": "CSV staging and COPY behavior",
+      "url": "https://www.postgresql.org/docs/18/sql-copy.html",
+      "retrieved_url": "https://www.postgresql.org/docs/18/sql-copy.html",
+      "version_applicability": "PostgreSQL 18 versioned manual; minor/client unselected",
+      "independent_retrieval": {
+        "id": "S03",
+        "requested_url": "https://www.postgresql.org/docs/18/sql-copy.html",
+        "access_started_utc": "2026-10-10T05:35:04.751985+00:00",
+        "operation": "Independent reviewer public HTTP GET; no product execution",
+        "status": 200,
+        "final_url": "https://www.postgresql.org/docs/18/sql-copy.html",
+        "content_type": "text/html; charset=utf-8",
+        "http_date": "Sat, 10 Oct 2026 03:45:57 GMT",
+        "raw_artifact": "evidence/S03.html",
+        "text_artifact": "evidence/S03.txt",
+        "sha256": "863af226486bf2f4d3c8e78be71dc78ca8b6b9659da3c073219abe7c164e123a",
+        "bytes": 62496,
+        "text_sha256": "371a8e2468b454a26f7bccc2af7fe7b63702538a2e793701157581c4e95851b0",
+        "text_lines": 333,
+        "access_completed_utc": "2026-10-10T05:35:05.385780+00:00"
+      },
+      "governing_locators": [
+        {
+          "independent_source_id": "R03",
+          "carried_source_id": "S03",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S03.txt",
+          "lines": [
+            100,
+            105
+          ],
+          "governing_locator": "Description"
+        },
+        {
+          "independent_source_id": "R03",
+          "carried_source_id": "S03",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S03.txt",
+          "lines": [
+            150,
+            155
+          ],
+          "governing_locator": "ON_ERROR and REJECT_LIMIT"
+        },
+        {
+          "independent_source_id": "R03",
+          "carried_source_id": "S03",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S03.txt",
+          "lines": [
+            172,
+            185
+          ],
+          "governing_locator": "Notes: file access, privileges, RLS, triggers, date/encoding"
+        },
+        {
+          "independent_source_id": "R03",
+          "carried_source_id": "S03",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S03.txt",
+          "lines": [
+            217,
+            229
+          ],
+          "governing_locator": "CSV Format"
+        }
+      ],
+      "semantic_assessment": "COPY FROM appends. Conversion stop is default; ignore drops rows only in text/CSV. Client psql copy and server file access differ. CSV null/empty, whitespace and multiline records need declared parsing. These support staged optional import and preserved file/record lineage; they do not prove the club export works.",
+      "relation": "SUPPORTED WITH STATED CONDITIONS",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 43
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 58
+        }
+      ]
+    },
+    {
+      "id": "R04",
+      "candidate_source_id": "S04",
+      "title": "Database uniqueness is not physical observation identity",
+      "url": "https://www.postgresql.org/docs/18/ddl-constraints.html",
+      "retrieved_url": "https://www.postgresql.org/docs/18/ddl-constraints.html",
+      "version_applicability": "PostgreSQL 18, 5.5.3 Unique Constraints",
+      "independent_retrieval": {
+        "id": "S04",
+        "requested_url": "https://www.postgresql.org/docs/18/ddl-constraints.html",
+        "access_started_utc": "2026-10-10T05:35:04.753945+00:00",
+        "operation": "Independent reviewer public HTTP GET; no product execution",
+        "status": 200,
+        "final_url": "https://www.postgresql.org/docs/18/ddl-constraints.html",
+        "content_type": "text/html; charset=utf-8",
+        "http_date": "Sat, 10 Oct 2026 04:46:03 GMT",
+        "raw_artifact": "evidence/S04.html",
+        "text_artifact": "evidence/S04.txt",
+        "sha256": "016a3d09f5f2fb894b7e9025dd6fcdbf4cda552b4f0ea3ce5c438a3f82a68c6b",
+        "bytes": 46645,
+        "text_sha256": "aafd1f0596e0ee75b8e74f9652d552e82dfc934e742f299d6cbbc2c437d1bda0",
+        "text_lines": 374,
+        "access_completed_utc": "2026-10-10T05:35:05.362470+00:00"
+      },
+      "governing_locators": [
+        {
+          "independent_source_id": "R04",
+          "carried_source_id": "S04",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S04.txt",
+          "lines": [
+            179,
+            224
+          ],
+          "governing_locator": "Unique constraints, composite keys and NULLS DISTINCT / NOT DISTINCT"
+        }
+      ],
+      "semantic_assessment": "A constraint enforces its selected column key. NULLs are distinct by default, with an explicit NOT DISTINCT alternative. Requiring a validated non-null event key is a local ingestion design choice, not a claim that PostgreSQL lacks other uniqueness modes.",
+      "relation": "SUPPORTED WITH STATED CONDITIONS",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 32
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 58
+        }
+      ]
+    },
+    {
+      "id": "R05",
+      "candidate_source_id": "S05",
+      "title": "Conflict actions encode replay/correction policy",
+      "url": "https://www.postgresql.org/docs/18/sql-insert.html",
+      "retrieved_url": "https://www.postgresql.org/docs/18/sql-insert.html",
+      "version_applicability": "PostgreSQL 18 INSERT manual",
+      "independent_retrieval": {
+        "id": "S05",
+        "requested_url": "https://www.postgresql.org/docs/18/sql-insert.html",
+        "access_started_utc": "2026-10-10T05:35:04.755802+00:00",
+        "operation": "Independent reviewer public HTTP GET; no product execution",
+        "status": 200,
+        "final_url": "https://www.postgresql.org/docs/18/sql-insert.html",
+        "content_type": "text/html; charset=utf-8",
+        "http_date": "Sat, 10 Oct 2026 05:26:11 GMT",
+        "raw_artifact": "evidence/S05.html",
+        "text_artifact": "evidence/S05.txt",
+        "sha256": "0684801db086ef1e9eefea6b72c84d9290e5dc5ba3b6254bfc62b4dc0b92a234",
+        "bytes": 48147,
+        "text_sha256": "f6f450a71dc04c7eaeedda58c2a48a54fab1848171fe834a5e4bfa933dcf3289",
+        "text_lines": 263,
+        "access_completed_utc": "2026-10-10T05:35:05.336917+00:00"
+      },
+      "governing_locators": [
+        {
+          "independent_source_id": "R05",
+          "carried_source_id": "S05",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S05.txt",
+          "lines": [
+            139,
+            147
+          ],
+          "governing_locator": "ON CONFLICT Clause"
+        }
+      ],
+      "semantic_assessment": "DO NOTHING avoids conflicting insertion; DO UPDATE updates the conflicting row. Atomic upsert has an independent-error condition. Final correctly separates immutable raw evidence, logical observation and projection policy rather than using an upsert as a lineage guarantee.",
+      "relation": "SUPPORTED WITH STATED CONDITIONS",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 58
+        }
+      ]
+    },
+    {
+      "id": "R06",
+      "candidate_source_id": "S06",
+      "title": "Event-time analogy, triggers and lateness",
+      "url": "https://beam.apache.org/releases/javadoc/2.70.0/org/apache/beam/sdk/transforms/windowing/Window.html",
+      "retrieved_url": "https://beam.apache.org/releases/javadoc/2.70.0/org/apache/beam/sdk/transforms/windowing/Window.html",
+      "version_applicability": "Apache Beam Java SDK 2.70.0 Window JavaDoc",
+      "independent_retrieval": {
+        "id": "S06",
+        "requested_url": "https://beam.apache.org/releases/javadoc/2.70.0/org/apache/beam/sdk/transforms/windowing/Window.html",
+        "access_started_utc": "2026-10-10T05:35:04.761381+00:00",
+        "operation": "Independent reviewer public HTTP GET; no product execution",
+        "status": 200,
+        "final_url": "https://beam.apache.org/releases/javadoc/2.70.0/org/apache/beam/sdk/transforms/windowing/Window.html",
+        "content_type": "text/html",
+        "http_date": "Sat, 10 Oct 2026 05:35:05 GMT",
+        "raw_artifact": "evidence/S06.html",
+        "text_artifact": "evidence/S06.txt",
+        "sha256": "7e061e459caa2beff0e1a12c10427f5fc89c646933a7e8233ebdd9ec22581893",
+        "bytes": 55241,
+        "text_sha256": "220dafbae02202ce1add0fa1e31bada3cbec9b74ebe4149c9b1614bc6e9f92c9",
+        "text_lines": 307,
+        "access_completed_utc": "2026-10-10T05:35:05.216899+00:00"
+      },
+      "governing_locators": [
+        {
+          "independent_source_id": "R06",
+          "carried_source_id": "S06",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S06.txt",
+          "lines": [
+            38,
+            49
+          ],
+          "governing_locator": "Window transform and event-time windowing"
+        },
+        {
+          "independent_source_id": "R06",
+          "carried_source_id": "S06",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S06.txt",
+          "lines": [
+            67,
+            103
+          ],
+          "governing_locator": "Triggers, one-day and Duration.ZERO examples"
+        },
+        {
+          "independent_source_id": "R06",
+          "carried_source_id": "S06",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S06.txt",
+          "lines": [
+            207,
+            238
+          ],
+          "governing_locator": "triggering and withAllowedLateness"
+        }
+      ],
+      "semantic_assessment": "Event-time assignment and default trigger behavior are documented. Allowed lateness governs downstream acceptance/state at grouping and uses watermark progress; zero follows the same rule. Trigger/accumulation choices matter. The final restricts this to an analogy and explicitly prevents late-window dropping from deleting raw observations.",
+      "relation": "SUPPORTED WITH STATED CONDITIONS",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 79
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 95
+        }
+      ]
+    },
+    {
+      "id": "R07",
+      "candidate_source_id": "S07",
+      "title": "Reported watermark regression and issue history",
+      "url": "https://github.com/apache/beam/issues/36470",
+      "retrieved_url": "https://github.com/apache/beam/issues/36470",
+      "version_applicability": "Apache Beam issue 36470, opened 2025-10-10; reported context 2.67",
+      "independent_retrieval": {
+        "id": "S07",
+        "requested_url": "https://github.com/apache/beam/issues/36470",
+        "access_started_utc": "2026-10-10T05:35:05.022319+00:00",
+        "operation": "Independent reviewer public HTTP GET; no product execution",
+        "status": 200,
+        "final_url": "https://github.com/apache/beam/issues/36470",
+        "content_type": "text/html; charset=utf-8",
+        "http_date": "Sat, 10 Oct 2026 05:35:05 GMT",
+        "raw_artifact": "evidence/S07.html",
+        "text_artifact": "evidence/S07.txt",
+        "sha256": "1844e790af6989111e87e8c6537358cf833f91134ef3654e5ba2529e1ca14f01",
+        "bytes": 349557,
+        "text_sha256": "1166992eb5e36f0f3f07c9ac0a6780e177b1ed25215ff8fe4f004033022b1b88",
+        "text_lines": 229,
+        "access_completed_utc": "2026-10-10T05:35:05.832271+00:00"
+      },
+      "governing_locators": [
+        {
+          "independent_source_id": "R07",
+          "carried_source_id": "S07",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S07.txt",
+          "lines": [
+            119,
+            129
+          ],
+          "governing_locator": "Milestone and issue body"
+        },
+        {
+          "independent_source_id": "R07",
+          "carried_source_id": "S07",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S07.txt",
+          "lines": [
+            167,
+            197
+          ],
+          "governing_locator": "Changelog commits, release closure, milestone activity"
+        }
+      ],
+      "semantic_assessment": "The issue attributes a Spanner reader stall to possible reordered metadata watermark updates, exacerbated by 2.67 caching/filtering. Activity says fixed in 2.69.0; current milestone says 2.70.0. Visible referenced commits are changelog updates, not demonstrated patch mechanics. Final preserves this discrepancy and connector scope.",
+      "relation": "SUPPORTED WITH STATED CONDITIONS",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 89
+        }
+      ]
+    },
+    {
+      "id": "R08",
+      "candidate_source_id": "S08",
+      "title": "Released fix evidence",
+      "url": "https://github.com/apache/beam/releases/tag/v2.69.0",
+      "retrieved_url": "https://github.com/apache/beam/releases/tag/v2.69.0",
+      "version_applicability": "Apache Beam 2.69.0 official release, 2025-10-17; displayed tag commit 2ca7d21",
+      "independent_retrieval": {
+        "id": "S08",
+        "requested_url": "https://github.com/apache/beam/releases/tag/v2.69.0",
+        "access_started_utc": "2026-10-10T05:35:05.201806+00:00",
+        "operation": "Independent reviewer public HTTP GET; no product execution",
+        "status": 200,
+        "final_url": "https://github.com/apache/beam/releases/tag/v2.69.0",
+        "content_type": "text/html; charset=utf-8",
+        "http_date": "Sat, 10 Oct 2026 05:35:05 GMT",
+        "raw_artifact": "evidence/S08.html",
+        "text_artifact": "evidence/S08.txt",
+        "sha256": "abe1fd8398666d3bf590c91f32dc79936f7cb4d360425bf4646c3e9e1914eab9",
+        "bytes": 204628,
+        "text_sha256": "3494eebe94997eec554af466e33d283fb5d3edca73ed9e0a7f99e1b88e59ef6b",
+        "text_lines": 207,
+        "access_completed_utc": "2026-10-10T05:35:05.683750+00:00"
+      },
+      "governing_locators": [
+        {
+          "independent_source_id": "R08",
+          "carried_source_id": "S08",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S08.txt",
+          "lines": [
+            120,
+            129
+          ],
+          "governing_locator": "Release date/tag"
+        },
+        {
+          "independent_source_id": "R08",
+          "carried_source_id": "S08",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S08.txt",
+          "lines": [
+            169,
+            174
+          ],
+          "governing_locator": "Bugfixes"
+        }
+      ],
+      "semantic_assessment": "Official release notes list the Spanner partition-watermark reader-stall fix linked to issue 36470. This is sufficient for the bounded released incident example; it neither proves a local device defect nor identifies the implementation patch.",
+      "relation": "SUPPORTED WITH STATED CONDITIONS",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 89
+        }
+      ]
+    },
+    {
+      "id": "R09",
+      "candidate_source_id": "S09",
+      "title": "InfluxDB point identity and collisions",
+      "url": "https://docs.influxdata.com/influxdb/v2/reference/faq/",
+      "retrieved_url": "https://docs.influxdata.com/influxdb/v2/reference/faq/",
+      "version_applicability": "Rolling InfluxDB OSS v2 FAQ; no v3 inference",
+      "independent_retrieval": {
+        "id": "S09",
+        "requested_url": "https://docs.influxdata.com/influxdb/v2/reference/faq/",
+        "access_started_utc": "2026-10-10T05:35:05.217129+00:00",
+        "operation": "Independent reviewer public HTTP GET; no product execution",
+        "status": 200,
+        "final_url": "https://docs.influxdata.com/influxdb/v2/reference/faq/",
+        "content_type": "text/html; charset=utf-8",
+        "http_date": "Sat, 10 Oct 2026 05:35:06 GMT",
+        "raw_artifact": "evidence/S09.html",
+        "text_artifact": "evidence/S09.txt",
+        "sha256": "519abe41e36fcacba6d411fe4d0f0482bb162078c02bd100015980dac4e780be",
+        "bytes": 206570,
+        "text_sha256": "663b1f5a0f6884e629acf9e399ef4d2edd700c8e3a5a1e20124d2ed8717dad6c",
+        "text_lines": 1281,
+        "access_completed_utc": "2026-10-10T05:35:05.383908+00:00",
+        "wire_artifact": "evidence/S09.response.gz",
+        "wire_sha256": "ee77190aa53f858e2e1209f1615734228322134133388bc879e3f4ce44faa43c",
+        "wire_bytes": 32129,
+        "decoding_note": "Gzip wire response decoded with Python gzip before HTML text extraction; initial garbled extraction replaced, never used as semantic evidence"
+      },
+      "governing_locators": [
+        {
+          "independent_source_id": "R09",
+          "carried_source_id": "S09",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S09.txt",
+          "lines": [
+            835,
+            840
+          ],
+          "governing_locator": "How does InfluxDB handle duplicate points?"
+        },
+        {
+          "independent_source_id": "R09",
+          "carried_source_id": "S09",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S09.txt",
+          "lines": [
+            854,
+            860
+          ],
+          "governing_locator": "Does the precision of the timestamp matter?"
+        }
+      ],
+      "semantic_assessment": "Measurement, tag set and timestamp define a point. Same-key field sets merge, with submitted values winning ties; coarse precision can collide points. The final uses it only as a conditional chart projection and preserves a separate raw/correction archive.",
+      "relation": "SUPPORTED WITH STATED CONDITIONS",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 32
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 52
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 58
+        }
+      ]
+    },
+    {
+      "id": "R10",
+      "candidate_source_id": "S10",
+      "title": "Named TTS MQTT integration compatibility",
+      "url": "https://www.thethingsindustries.com/docs/integrations/other-integrations/mqtt/",
+      "retrieved_url": "https://www.thethingsindustries.com/docs/integrations/other-integrations/mqtt/",
+      "version_applicability": "Rolling TTS docs; candidate landing label v3.36.2 is not a pinned page/server build",
+      "independent_retrieval": {
+        "id": "S10",
+        "requested_url": "https://www.thethingsindustries.com/docs/integrations/other-integrations/mqtt/",
+        "access_started_utc": "2026-10-10T05:35:05.337129+00:00",
+        "operation": "Independent reviewer public HTTP GET; no product execution",
+        "status": 200,
+        "final_url": "https://www.thethingsindustries.com/docs/integrations/other-integrations/mqtt/",
+        "content_type": "text/html; charset=utf-8",
+        "http_date": "Sat, 10 Oct 2026 05:35:05 GMT",
+        "raw_artifact": "evidence/S10.html",
+        "text_artifact": "evidence/S10.txt",
+        "sha256": "d6a5571a45dea6cb4527e76eeb842f58aebde2403203167fd78ca5918f222d22",
+        "bytes": 38118,
+        "text_sha256": "707b60e484d6e5facd9aade05fca486820ca327f836769e0a121980dc145f352",
+        "text_lines": 227,
+        "access_completed_utc": "2026-10-10T05:35:05.535046+00:00"
+      },
+      "governing_locators": [
+        {
+          "independent_source_id": "R10",
+          "carried_source_id": "S10",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S10.txt",
+          "lines": [
+            26,
+            40
+          ],
+          "governing_locator": "MQTT Server protocol note and tenant-ID conditions"
+        }
+      ],
+      "semantic_assessment": "The named service specifies MQTT 3.1.1 and QoS 0 only. Hosted versus Open Source topic/tenant behavior differs. This supports C, contradicts the 5.0 substitution for this service, and does not restrict generic MQTT v5. Actual LoRaWAN/service selection remains unknown.",
+      "relation": "SUPPORTED WITH STATED CONDITIONS",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 32
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 43
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 95
+        }
+      ]
+    },
+    {
+      "id": "R11",
+      "candidate_source_id": "S11",
+      "title": "Network duplicates and ABP reset condition",
+      "url": "https://www.thethingsindustries.com/docs/concepts/features/console/troubleshooting/",
+      "retrieved_url": "https://www.thethingsindustries.com/docs/concepts/features/console/troubleshooting/",
+      "version_applicability": "Rolling TTS/LoRaWAN troubleshooting",
+      "independent_retrieval": {
+        "id": "S11",
+        "requested_url": "https://www.thethingsindustries.com/docs/concepts/features/console/troubleshooting/",
+        "access_started_utc": "2026-10-10T05:35:05.362652+00:00",
+        "operation": "Independent reviewer public HTTP GET; no product execution",
+        "status": 200,
+        "final_url": "https://www.thethingsindustries.com/docs/concepts/features/console/troubleshooting/",
+        "content_type": "text/html; charset=utf-8",
+        "http_date": "Sat, 10 Oct 2026 05:35:05 GMT",
+        "raw_artifact": "evidence/S11.html",
+        "text_artifact": "evidence/S11.txt",
+        "sha256": "cef5ab6ba8ed39b52b89aba0b82553aaef2828c19a5b27a3a6adab734ec4811b",
+        "bytes": 14792,
+        "text_sha256": "b23e2765791d9b839285b495eea88b2c1c1a41ae49791dca38300d3f5309faac",
+        "text_lines": 76,
+        "access_completed_utc": "2026-10-10T05:35:05.525398+00:00"
+      },
+      "governing_locators": [
+        {
+          "independent_source_id": "R11",
+          "carried_source_id": "S11",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S11.txt",
+          "lines": [
+            43,
+            54
+          ],
+          "governing_locator": "Common Errors: Entity/Device Not Found and Duplicate Uplink"
+        }
+      ],
+      "semantic_assessment": "ABP counter reset can cause a session matching problem. Duplicate Uplink describes multiple-gateway copies delayed beyond the network dedup window. This is not application replay after archival; it supports the final layer separation.",
+      "relation": "SUPPORTED WITH STATED CONDITIONS",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 58
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 79
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 95
+        }
+      ]
+    },
+    {
+      "id": "R12",
+      "candidate_source_id": "S12",
+      "title": "Low-power and counter persistence tradeoffs",
+      "url": "https://www.thethingsindustries.com/docs/hardware/devices/concepts/best-practices/",
+      "retrieved_url": "https://www.thethingsindustries.com/docs/hardware/devices/concepts/best-practices/",
+      "version_applicability": "Rolling TTS LoRaWAN Device Best Practices",
+      "independent_retrieval": {
+        "id": "S12",
+        "requested_url": "https://www.thethingsindustries.com/docs/hardware/devices/concepts/best-practices/",
+        "access_started_utc": "2026-10-10T05:35:05.384077+00:00",
+        "operation": "Independent reviewer public HTTP GET; no product execution",
+        "status": 200,
+        "final_url": "https://www.thethingsindustries.com/docs/hardware/devices/concepts/best-practices/",
+        "content_type": "text/html; charset=utf-8",
+        "http_date": "Sat, 10 Oct 2026 05:35:05 GMT",
+        "raw_artifact": "evidence/S12.html",
+        "text_artifact": "evidence/S12.txt",
+        "sha256": "fe272ec910cff6f21ad7b0fad75d061d16ed6e96984127c09be551bfe1ba1fd3",
+        "bytes": 21170,
+        "text_sha256": "5189f42567d7d924ef7831432ed61bd628312822ce3d918e4cf82b50691daed3",
+        "text_lines": 112,
+        "access_completed_utc": "2026-10-10T05:35:05.536178+00:00"
+      },
+      "governing_locators": [
+        {
+          "independent_source_id": "R12",
+          "carried_source_id": "S12",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S12.txt",
+          "lines": [
+            33,
+            45
+          ],
+          "governing_locator": "Joins, transmission length, duty cycle, packet loss"
+        },
+        {
+          "independent_source_id": "R12",
+          "carried_source_id": "S12",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S12.txt",
+          "lines": [
+            69,
+            75
+          ],
+          "governing_locator": "Power Cycles / Frame Counters"
+        }
+      ],
+      "semantic_assessment": "Guidance trades frequency/payload/airtime against loss and recommends retaining LoRaWAN session/counter state across ordinary power cycles. It does not demonstrate any club firmware behavior. The proposal appropriately retains actual radio/counter facts as steward inputs.",
+      "relation": "SUPPORTED WITH STATED CONDITIONS",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 79
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 145
+        }
+      ]
+    },
+    {
+      "id": "R13",
+      "candidate_source_id": "S13",
+      "title": "TTS bounded storage and necessary enablement",
+      "url": "https://www.thethingsindustries.com/docs/integrations/storage/",
+      "retrieved_url": "https://www.thethingsindustries.com/docs/integrations/storage/",
+      "version_applicability": "Rolling TTS Storage Integration; distribution-dependent",
+      "independent_retrieval": {
+        "id": "S13",
+        "requested_url": "https://www.thethingsindustries.com/docs/integrations/storage/",
+        "access_started_utc": "2026-10-10T05:35:05.386082+00:00",
+        "operation": "Independent reviewer public HTTP GET; no product execution",
+        "status": 200,
+        "final_url": "https://www.thethingsindustries.com/docs/integrations/storage/",
+        "content_type": "text/html; charset=utf-8",
+        "http_date": "Sat, 10 Oct 2026 05:35:05 GMT",
+        "raw_artifact": "evidence/S13.html",
+        "text_artifact": "evidence/S13.txt",
+        "sha256": "46c715f5bb259efda3bb1c694b02e17a9b446ae131c586581f7f9ae265c17418",
+        "bytes": 16805,
+        "text_sha256": "c980bdc82e267c3cb629a44bf1cc007eec8555be5ba1d04bfc71bff1094aa1e6",
+        "text_lines": 79,
+        "access_completed_utc": "2026-10-10T05:35:05.535637+00:00"
+      },
+      "governing_locators": [
+        {
+          "independent_source_id": "R13",
+          "carried_source_id": "S13",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S13.txt",
+          "lines": [
+            24,
+            34
+          ],
+          "governing_locator": "Overview, How it works, edition retention and batching"
+        },
+        {
+          "independent_source_id": "R13",
+          "carried_source_id": "S13",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S13.txt",
+          "lines": [
+            50,
+            58
+          ],
+          "governing_locator": "Configuration and enablement"
+        }
+      ],
+      "semantic_assessment": "Storage is configured per application/device. Cloud/Sandbox platform configuration does not replace application enablement; Enterprise needs provider configuration. Retention is Cloud 30 days, Sandbox 24 hours, Enterprise configurable; Cloud uplinks only and batch delay. Final explicitly adds these recovery-aid conditions, resolving OI-01.",
+      "relation": "SUPPORTED WITH STATED CONDITIONS",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 43
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 95
+        }
+      ]
+    },
+    {
+      "id": "R14",
+      "candidate_source_id": "S14",
+      "title": "Historical TTS receiver windows and reboot counter ambiguity",
+      "url": "https://github.com/TheThingsNetwork/lorawan-stack/issues/4502",
+      "retrieved_url": "https://github.com/TheThingsNetwork/lorawan-stack/issues/4502",
+      "version_applicability": "lorawan-stack issue 4502; reporter TTS 3.14.0; 2021 discussion",
+      "independent_retrieval": {
+        "id": "S14",
+        "requested_url": "https://github.com/TheThingsNetwork/lorawan-stack/issues/4502",
+        "access_started_utc": "2026-10-10T05:35:05.525539+00:00",
+        "operation": "Independent reviewer public HTTP GET; no product execution",
+        "status": 200,
+        "final_url": "https://github.com/TheThingsNetwork/lorawan-stack/issues/4502",
+        "content_type": "text/html; charset=utf-8",
+        "http_date": "Sat, 10 Oct 2026 05:35:06 GMT",
+        "raw_artifact": "evidence/S14.html",
+        "text_artifact": "evidence/S14.txt",
+        "sha256": "ffdd90b5a5a152f200cd46eb1beab3d8cdcd4012a41afca8bfd1dc3ccbf06f64",
+        "bytes": 436842,
+        "text_sha256": "1d089554b2ff2a95523e8cd2411357b2c06f37f6f22c55f5ebf7cad76776f3f5",
+        "text_lines": 275,
+        "access_completed_utc": "2026-10-10T05:35:06.373250+00:00"
+      },
+      "governing_locators": [
+        {
+          "independent_source_id": "R14",
+          "carried_source_id": "S14",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S14.txt",
+          "lines": [
+            120,
+            135
+          ],
+          "governing_locator": "Summary/environment"
+        },
+        {
+          "independent_source_id": "R14",
+          "carried_source_id": "S14",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S14.txt",
+          "lines": [
+            159,
+            177
+          ],
+          "governing_locator": "Maintainer existing handling/default windows"
+        },
+        {
+          "independent_source_id": "R14",
+          "carried_source_id": "S14",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S14.txt",
+          "lines": [
+            193,
+            201
+          ],
+          "governing_locator": "Closure explanation"
+        },
+        {
+          "independent_source_id": "R14",
+          "carried_source_id": "S14",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S14.txt",
+          "lines": [
+            226,
+            230
+          ],
+          "governing_locator": "Later retransmission limits and confirmed-uplink exception"
+        }
+      ],
+      "semantic_assessment": "The maintainer describes a default 200 ms dedup window and 1 second cooldown in that historical implementation. Later retransmissions have protocol limits (NbTrans, with a pre-1.0.4 confirmed-uplink exception). It is behavior history, not a released fix or guaranteed replay recovery. Final states historical scope and claims no local behavior.",
+      "relation": "SUPPORTED WITH STATED CONDITIONS",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 58
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 89
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 95
+        }
+      ]
+    },
+    {
+      "id": "R15",
+      "candidate_source_id": "S15",
+      "title": "TTS service receipt fields and format applicability",
+      "url": "https://www.thethingsindustries.com/docs/integrations/data-formats/",
+      "candidate_original_requested_url": "https://www.thethingsindustries.com/docs/the-things-stack/concepts/data-formats/",
+      "retrieved_url": "https://www.thethingsindustries.com/docs/integrations/data-formats/",
+      "version_applicability": "Rolling TTS event-format example; v3.34.0 attributes note is not a pinned current server contract",
+      "independent_retrieval": {
+        "id": "S15-current",
+        "requested_url": "https://www.thethingsindustries.com/docs/integrations/data-formats/",
+        "access_started_utc": "2026-10-10T05:35:05.535753+00:00",
+        "operation": "Independent reviewer public HTTP GET; no product execution",
+        "status": 200,
+        "final_url": "https://www.thethingsindustries.com/docs/integrations/data-formats/",
+        "content_type": "text/html; charset=utf-8",
+        "http_date": "Sat, 10 Oct 2026 05:35:05 GMT",
+        "raw_artifact": "evidence/S15-current.html",
+        "text_artifact": "evidence/S15-current.txt",
+        "sha256": "802381a66f905208b1e144e55790b7d79dbb3def96a1af5fd3d29b61ee713e77",
+        "bytes": 75071,
+        "text_sha256": "27261e37555f0881ef974b1d08212effbea680064b7295da6ff0bf72a297726f",
+        "text_lines": 408,
+        "access_completed_utc": "2026-10-10T05:35:05.730885+00:00"
+      },
+      "original_requested_response": {
+        "id": "S15",
+        "requested_url": "https://www.thethingsindustries.com/docs/the-things-stack/concepts/data-formats/",
+        "access_started_utc": "2026-10-10T05:35:05.535212+00:00",
+        "operation": "Independent reviewer public HTTP GET; no product execution",
+        "status": 200,
+        "final_url": "https://www.thethingsindustries.com/docs/the-things-stack/concepts/data-formats/",
+        "content_type": "text/html; charset=utf-8",
+        "http_date": "Sat, 10 Oct 2026 05:35:05 GMT",
+        "raw_artifact": "evidence/S15.html",
+        "text_artifact": "evidence/S15.txt",
+        "sha256": "a8ab97ae2f7e9ce4550d4f796146c937789c166fd4520cc4717d1f6c671d9a27",
+        "bytes": 439,
+        "text_sha256": "e4473563ea0f83870b10923cc993b8dc1db2decf1d69f380f491fd85c8268932",
+        "text_lines": 1,
+        "access_completed_utc": "2026-10-10T05:35:05.683126+00:00"
+      },
+      "governing_locators": [
+        {
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S15-current.txt",
+          "lines": [
+            24,
+            27
+          ],
+          "governing_locator": "Empty fields / attributes version note"
+        },
+        {
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S15-current.txt",
+          "lines": [
+            79,
+            132
+          ],
+          "governing_locator": "Uplink Messages: outer received_at, rx_metadata.time, nested uplink_message.received_at"
+        }
+      ],
+      "semantic_assessment": "Outer receipt is Application Server UTC; nested receipt is Network Server UTC; metadata time is gateway receipt. Empty fields are omitted. Original S15 URL returns a meta-refresh/canonical page, independently explaining the failed extraction; the current linked page supplies full context. Final distinction and locator repair are supported, without assuming sensor measurement time or actual field presence.",
+      "relation": "SUPPORTED WITH STATED CONDITIONS",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 58
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 95
+        }
+      ]
+    }
+  ],
+  "retrieval_manifest": "evidence/retrieval-manifest.json",
+  "original_inspected_manifest": "original-inspected-hashes.json",
+  "claim_to_axes": {
+    "R01": [
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "R02": [
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "R03": [
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "R04": [
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "R05": [
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "R06": [
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "R07": [
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "R08": [
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "R09": [
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "R10": [
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "R11": [
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "R12": [
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "R13": [
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "R14": [
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "R15": [
+      2,
+      3,
+      4,
+      5,
+      6
+    ]
+  },
+  "limitations": [
+    {
+      "id": "L01",
+      "type": "bounded implementation/history depth",
+      "material": false,
+      "finding": "The original proposal traces a relevant released issue/release-note chain but does not identify or inspect the implementation patch. Its milestone discrepancy and patch mechanics stay unresolved.",
+      "why_nonmaterial": "Beam is an analogy, not a selected dependency, and no decision depends on unverified patch behavior. The brief asks for a bounded released failure or fix chain, which issue and release evidence supply.",
+      "sources": [
+        "R07",
+        "R08"
+      ],
+      "locator": {
+        "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+        "line": 89
+      }
+    },
+    {
+      "id": "L02",
+      "type": "rolling documentation / external applicability",
+      "material": false,
+      "finding": "TTS, Telegraf and InfluxDB v2 pages are rolling; no actual club device, selected build/edition/configuration or CSV schema has been established.",
+      "why_nonmaterial": "Final conditions selection on those facts, distinguishes v2 from v3, and leaves specific owner choices honestly open after researching publicly answerable behavior. No working deployment is claimed.",
+      "sources": [
+        "R02",
+        "R09",
+        "R10",
+        "R12",
+        "R13",
+        "R15"
+      ],
+      "locator": {
+        "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+        "line": 145
+      }
+    },
+    {
+      "id": "L03",
+      "type": "plan-disposition wording",
+      "material": false,
+      "finding": "The final says a connected demo requirement conflicts with the live-system constraint. The exact plan says connected demo, which could also describe a synthetic/non-live sandbox.",
+      "why_nonmaterial": "Removing a demo requirement is justified by the planning-only brief. Offline synthetic scenario validation remains proposed; no authorized substantive backfill/route option is discarded. Do not interpret this as evidence that all connected non-live tests are forbidden.",
+      "sources": [],
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/A8-02/plan.md",
+      "locator": {
+        "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+        "line": 109
+      }
+    },
+    {
+      "id": "L04",
+      "type": "critique-disposition wording",
+      "material": false,
+      "finding": "Final phrases such as proposed 5.0 reading and reject C* as a correction can suggest that the critic advocated the diagnostic alternatives. The critic protocol explicitly says C* is not automatically a recommendation.",
+      "why_nonmaterial": "Actual technical dispositions retain supported originals; no false correction or scope removal results. Assessment treats C* as diagnostics, not wrong critic demands.",
+      "sources": [
+        "R10"
+      ],
+      "critic_assignment_path": "ER12_RUNTIME/runs/A8-02/treatment/stages/critic/assignment.md",
+      "locator": {
+        "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+        "line": 95
+      }
+    }
+  ],
+  "navigable_index": "evidence/index.md"
+}

@@ -1,0 +1,200 @@
+{
+  "run_id": "C-R2-01-control",
+  "stage": "reviser",
+  "basis": "Stable S01-S09 identities carried from the investigator map and critic map; disputed material, timing and monitoring statements reviewed against the supplied brief/plan and directly reopened primary or official sources where accessible.",
+  "source_id_policy": "S01-S09 are carried without rebinding. Original identity, release, URL, access time, locator, operation, condition and applicability fields remain in each source record. Reviser review is additive.",
+  "reviser_web_access_window_utc": "2026-10-10T06:17:00Z",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "Changes in the macro and nano-structure of paper during moisture cycling",
+      "creators": "Per Tomas Larsson et al.",
+      "exact_url": "https://link.springer.com/article/10.1007/s10570-023-05626-6",
+      "version_or_release": "Original research; published online 2023-12-20; Cellulose 31, 2743–2764 (2024); DOI 10.1007/s10570-023-05626-6.",
+      "accessed_at_utc": "2026-10-10T05:53:59Z",
+      "locator": "Abstract; Background; Methods lines 109–127; Results lines 156–171.",
+      "observed_operation": "Laboratory pulp sheets of differing furnish/processing and restrained/free drying were measured before/after four 50→20→90→50% RH cycles at 23°C, held at least 24 h per RH step; ≥5 strain specimens per paper.",
+      "governing_condition_default_exception": "Reported test conditions and measured material behavior only; no collection storage default or universal paper behavior. Initial-cycle response and irreversible change differed with sheet preparation/restraint.",
+      "applicability": "Primary evidence for paper hygroexpansion/cycling and the need to control sheet identity and drying restraint. Laboratory pulp sheets are not these printed, adhesive-backed labels; the study cycle is not a recommended case test envelope.",
+      "evidence_used": "Conditional mechanism and choice of separate dimensional endpoint; proposed controls and limitations.",
+      "reviser_review": {
+        "accessed_at_utc": "2026-10-10T06:17:00Z",
+        "observed_operation": "Opened the publisher article and reviewed the abstract, background, experimental method and results, including source lines 45-49, 75-82, 86-105, 119-127 and 156-171. Confirmed that commercial pulps were used to make laboratory sheets; the four-cycle RH protocol and restraint-dependent results apply to those sheets.",
+        "governing_condition_default_exception": "Primary laboratory evidence only. It does not establish a default for these labels or a suitable case test cycle.",
+        "applicability": "Supports a conditional paper-dimensional-change mechanism and separate measurement. It does not diagnose the collection labels."
+      },
+      "critic_retrieval_status": "Direct primary article access; verified.",
+      "critic_retrieval_observed_operation": "Directly opened article and reviewed abstract, methods, and results. Four commercial pulp types were used to make laboratory sheets; the RH cycle 50→20→90→50% at 23°C was repeated four times, with ≥24-hour holds; restrained and freely dried sheets differed."
+    },
+    {
+      "id": "S02",
+      "title": "Long term curl of printing paper due to ink solvent migration",
+      "creators": "Alexander Maass and Ulrich Hirn",
+      "exact_url": "https://tugraz.elsevierpure.com/ws/portalfiles/portal/79063769/1-s2.0-S0264127523010092-main.pdf",
+      "record_url": "https://doi.org/10.1016/j.matdes.2023.112593",
+      "version_or_release": "Published article version; Materials & Design 237 (2024), article 112593; DOI 10.1016/j.matdes.2023.112593.",
+      "accessed_at_utc": "2026-10-10T05:53:59Z",
+      "locator": "PDF pp. 4–9, especially §1.3.2–1.4, §2.1–2.2; pp. 5–6 lines 284–328 and pp. 7–9 lines 393–438 in indexed full text.",
+      "observed_operation": "Primary laboratory study applied a 60 wt% glycerol/water model ink to two office paper grades, monitored curl and glycerol migration over a one-week storage interval, and examined the role of paper and print/drying process.",
+      "governing_condition_default_exception": "Mechanism is conditional on tested paper and water-based model ink; the study is not a general default for every printer technology or label.",
+      "applicability": "Supports asking about ink/toner/ribbon, stock, one-sided wetting and drying only if actual printing process matches. Does not establish the case's process or sleeve-label attachment behavior.",
+      "evidence_used": "Conditional print-related curl hypothesis and explicit one-week evidence scope.",
+      "reviser_review": {
+        "accessed_at_utc": "2026-10-10T06:17:00Z",
+        "observed_operation": "Opened the 16-page published PDF and checked the model-liquid method and findings (PDF pp. 6-7, 10-13; source lines 360-365, 401-404, 652-662 and 664-665). Confirmed two office-paper grades, one-sided 60 wt% glycerol/water model liquid, monitored curl and glycerol distribution through one week, and continuing change in the study.",
+        "governing_condition_default_exception": "The demonstrated result is specific to the studied paper and model ink; not a general printing or sleeve-label default.",
+        "applicability": "Supports asking about process and media conditionally; does not prove this case used inkjet or identify the cause."
+      },
+      "critic_retrieval_status": "Direct full-PDF access; verified.",
+      "critic_retrieval_observed_operation": "Directly opened full PDF. It describes two office-paper grades, a 60 wt% glycerol/water model liquid, curl observations and glycerol-distribution work over one week, and proposes nonvolatile co-solvent migration as a mechanism."
+    },
+    {
+      "id": "S03",
+      "title": "RXC Specification for Pressure Sensitive Adhesive Labels for Laser Printing",
+      "creators": "National Archives and Records Administration",
+      "exact_url": "https://www.archives.gov/files/preservation/storage/pdf/label-stock-laser-printer.pdf",
+      "version_or_release": "October 2015 specification; labels for archival housings/storage furniture; PDF says new specification as of 2015.",
+      "accessed_at_utc": "2026-10-10T05:53:59Z",
+      "locator": "PDF pp. 1–3, §§ I–II, bond strength, print/readability, workmanship and QC table; indexed lines 1–16, 45–75, 82–101.",
+      "observed_operation": "Specifies paper face stock with acrylic PSA for the stated laser application; calls for a 90° peel method modified from ASTM D2860/D2860M-04 and a 1×2.5 in coupon supporting 200 g for 10 minutes; separately specifies legibility/scanner and flatness/ooze; lot-level QA.",
+      "governing_condition_default_exception": "Applies to labels on paper/board/plastic/metal housings and metal furniture; explicitly not suitable for direct application to documents or records. Printer/toner, dimensions and label configuration are specified by procurement.",
+      "applicability": "A dated institutional procurement specification and test-design lead, not a collection-wide conservation standard or evidence that its permanent adhesive is safe/reversible on a particular sleeve.",
+      "evidence_used": "System-level records request, test endpoints and limitations; no NARA product recommended.",
+      "reviser_review": {
+        "accessed_at_utc": "2026-10-10T06:17:00Z",
+        "observed_operation": "Opened the official NARA October 2015 PDF, pp. 1-3, including scope, composition, permanence, peel, readability, flatness and QC provisions (source lines 1-16, 33-61, 65-78, 82-101).",
+        "governing_condition_default_exception": "Applies to specified housing/storage-furniture use and procurement-selected printer/toner/configuration; explicitly unsuitable for direct application to documents or records. Permanent adhesive is difficult to remove.",
+        "applicability": "A system-record and endpoint example only; not a sleeve-specific safety endorsement or case threshold."
+      },
+      "critic_retrieval_status": "Direct official PDF access; verified.",
+      "critic_retrieval_observed_operation": "Directly opened NARA PDF. Confirmed paper face stock with acrylic adhesive for laser-printing use, permanent adhesive language, 90° peel test, separate print/readability and flatness properties, and explicit exclusion of direct application to documents or records."
+    },
+    {
+      "id": "S04",
+      "title": "RXC Specification for Pressure Sensitive Adhesive Labels for Thermal Transfer Printers",
+      "creators": "National Archives and Records Administration",
+      "exact_url": "https://www.archives.gov/files/preservation/storage/pdf/label-stock-thermal-transfer.pdf",
+      "version_or_release": "October 2015 revision; revision note says revised from May 2013, previously reformatted September 2010.",
+      "accessed_at_utc": "2026-10-10T05:53:59Z",
+      "locator": "PDF pp. 1–3, §§ I–II and QC table; indexed lines 1–18, 26–51, 67–81.",
+      "observed_operation": "Specifies polyester or polypropylene film face stock bearing acrylic PSA, hard-resin thermal transfer ribbon, no wax or wax/resin ribbon; notes polypropylene preferred for curved substrate; includes a 90° peel coupon test and separate print/flatness checks.",
+      "governing_condition_default_exception": "Applies to housing/furniture labels for the stated thermal transfer configuration; exact printer/ribbon and dimensions are procurement-selected. Not a default for unidentified materials or handwritten annotations.",
+      "applicability": "Useful comparison for process/material compatibility and version history, but neither a performance guarantee for this sleeve nor proof of archival safety.",
+      "evidence_used": "Implementation-history fields and conditional test matrix; no stock or adhesive recommendation.",
+      "reviser_review": {
+        "accessed_at_utc": "2026-10-10T06:17:00Z",
+        "observed_operation": "Opened the official NARA October 2015 revision PDF, pp. 1-3, including scope, face stock, adhesive, ribbon, curved-surface note, peel/readability and QC provisions (source lines 1-18, 26-48, 52-65, 69-80).",
+        "governing_condition_default_exception": "Applies to the specified thermal-transfer system and housing/furniture applications; not a default for unidentified sleeve materials or handwriting.",
+        "applicability": "Shows why product, printer/ribbon and substrate records matter; not a recommendation or performance guarantee for this case."
+      },
+      "critic_retrieval_status": "Direct official PDF access; verified.",
+      "critic_retrieval_observed_operation": "Directly opened NARA PDF. Confirmed polyester or polypropylene face stock, acrylic adhesive, hard-resin ribbon compatibility, preference for polypropylene on curved substrates, and separate peel/print/flatness provisions."
+    },
+    {
+      "id": "S05",
+      "title": "Incorrect relative humidity",
+      "creators": "Canadian Conservation Institute, Government of Canada",
+      "exact_url": "https://www.canada.ca/en/conservation-institute/services/agents-deterioration/humidity.html",
+      "version_or_release": "Current online guidance; no dated edition/version displayed on the accessed page.",
+      "accessed_at_utc": "2026-10-10T05:53:59Z",
+      "locator": "Sections on measuring RH, monitoring buildings/rooms and cases; indexed lines 300–315; also lines 337–342 on evidence before control changes.",
+      "observed_operation": "Guidance explains RH locality/time dependence, favors recording instruments near collections, advises multiple locations where conditions differ, and says a full year may be needed to see seasonal case behavior.",
+      "governing_condition_default_exception": "Monitoring period and positions depend on whether question is local temperature/RH variability or seasonal transmission; page warns against changing historic climate control without evidence.",
+      "applicability": "Supports the proposed observation-first environmental alternative and causal caution; does not supply room data or authorize an RH setpoint for this case.",
+      "evidence_used": "12-month monitor proposal, local logger placement and caution against inferring cause from anecdotal damage.",
+      "reviser_review": {
+        "accessed_at_utc": "2026-10-10T06:17:00Z",
+        "observed_operation": "Opened the current CCI RH guidance and reviewed Detect/monitoring and response sections (lines 297-315 and 337-342). Confirmed locality/time dependence, recorded readings near collections, full-year preference for seasonal case transmission, and caution about unsupported control changes.",
+        "governing_condition_default_exception": "The full-year period is for seasonal RH transmission questions, not adhesive durability; placement and duration depend on the monitoring question.",
+        "applicability": "Supports proposed local monitoring and causal caution only; supplies no case environment or target."
+      },
+      "critic_retrieval_status": "Direct official page access; verified.",
+      "critic_retrieval_observed_operation": "Directly opened current guidance. Confirmed RH is local and time-dependent, recording instruments near collections are useful, full-year observation may be needed for seasonal transmission in cases/cabinets, and existing damage does not alone establish current RH causation."
+    },
+    {
+      "id": "S06",
+      "title": "Caring for paper objects — Preventive conservation guidelines for collections",
+      "creators": "Canadian Conservation Institute, Government of Canada",
+      "exact_url": "https://www.canada.ca/en/conservation-institute/services/preventive-conservation/guidelines-collections/paper-objects.html",
+      "version_or_release": "Undated current online guidance; no edition/version date displayed on the accessed page.",
+      "accessed_at_utc": "2026-10-10T05:53:59Z",
+      "locator": "§ Incorrect relative humidity, indexed lines 500–540; especially dimensional changes and restraint lines 500–521 and monitoring/enclosure recommendations lines 531–540.",
+      "observed_operation": "Guidance describes paper moisture absorption/desorption and dimensional change, differential response of joined materials and constraints, plus measuring instruments and enclosure practices.",
+      "governing_condition_default_exception": "Guidance conditions recommendations on paper-object sensitivity and assembly; it distinguishes single sheets from restrained or layered objects.",
+      "applicability": "Conservation context for the collected paper labels/annotations and possible enclosures; does not test labels adhered to synthetic sleeves or diagnose this store.",
+      "evidence_used": "Independent dimensional endpoint and restraint/interactions rationale.",
+      "reviser_review": {
+        "accessed_at_utc": null,
+        "observed_operation": "Carried only from the investigator source-map in this reviser stage; not reopened or independently relied on for a decisive claim.",
+        "governing_condition_default_exception": "The carried entry describes conditional paper-object conservation guidance; it does not test an adhesive label on a synthetic sleeve.",
+        "applicability": "Context only; no new conclusion in this proposal depends on S06."
+      },
+      "critic_retrieval_status": "Not independently reopened; no new claim based on it.",
+      "critic_retrieval_observed_operation": "Carried from investigator source-map; not independently reopened or used as a decisive basis in this critique."
+    },
+    {
+      "id": "S07",
+      "title": "Modified Acrylate Pressure-Sensitive Adhesives for Low-Surface-Energy Substrate and Adhesion Mechanism Models",
+      "creators": "Primary study indexed by NCBI PubMed; DOI 10.3390/polym17091130",
+      "exact_url": "https://pubmed.ncbi.nlm.nih.gov/40362914/",
+      "record_url": "https://doi.org/10.3390/polym17091130",
+      "version_or_release": "2025 research article, Polymers 17(9), article 1130; PMID 40362914.",
+      "accessed_at_utc": "2026-10-10T05:50:04Z",
+      "locator": "Abstract and conflict-of-interest statement; PubMed lines 227–251 in opened record.",
+      "observed_operation": "Abstract reports modified acrylate PSA tests on HDPE, including 24-hour peel/tack at 20°C, and reduced peel strength as temperature rose; one author was employed by the collaborating adhesive company.",
+      "governing_condition_default_exception": "Specific experimental adhesive and HDPE model; reported result does not generalize to untreated/treatment-unknown PE/PP sleeves, other adhesives, long-term storage or conservation safety.",
+      "applicability": "Conditional lead if sleeve polymer and adhesive identity support it; use to justify substrate/product identification, not to select a product.",
+      "evidence_used": "Low-surface-energy interface hypothesis and explicit generalizability/conflict limitation.",
+      "reviser_review": {
+        "accessed_at_utc": "2026-10-10T06:17:00Z",
+        "observed_operation": "Searched the exact PubMed record and opened its result. The direct page exposed only one line; the result excerpt identified the study and its model focus but did not permit verification of the detailed temperature finding. No temperature-specific conclusion is used.",
+        "governing_condition_default_exception": "A specific modified adhesive/HDPE model is not generalizable to the unknown sleeve, adhesive, storage period or conservation safety.",
+        "applicability": "Conditional source lead only; detailed temperature effect remains uncertain and is not a basis for a recommendation."
+      },
+      "critic_retrieval_status": "Partial search-result access; full methods/results not verified.",
+      "critic_retrieval_observed_operation": "Direct PubMed open returned an internal fetch error. Exact-title search surfaced the MDPI article page and described a specific modified acrylate PSA tested on HDPE; direct MDPI fetch was rate-limited. The detailed temperature result was not fully independently checked."
+    },
+    {
+      "id": "S08",
+      "title": "Labeling Natural History Collections",
+      "creators": "Erika Range, Luci Cipera and Carolyn Leckie; Society for the Preservation of Natural History Collections",
+      "exact_url": "https://spnhc.org/labeling-natural-history-collections/",
+      "version_or_release": "Published 2025-03-26.",
+      "accessed_at_utc": "2026-10-10T05:53:59Z",
+      "locator": "Sections 4.3 Adhesive Attachment, 4.4 Outstanding Materials Questions, Decision Making and Future Research; indexed lines 269–296 and 313–330.",
+      "observed_operation": "Professional field review distinguishes attachment modes and summarizes competing label material standards; it records questions and testing gaps, including plastic substrates, adhesive aging, and print adhesion.",
+      "governing_condition_default_exception": "Natural-history collection context; guidance and a literature/standards synthesis, not primary comparative data or controlling requirements for this invented volunteer-store case.",
+      "applicability": "Useful map of unfamiliar label/attachment approaches and unresolved evidence; avoid relying on its summaries as primary authority.",
+      "evidence_used": "Component decomposition, unknowns and an explicit reason to require supplier specs and local testing.",
+      "reviser_review": {
+        "accessed_at_utc": null,
+        "observed_operation": "Carried only from the investigator and critic source maps/indexes in this reviser stage; not reopened.",
+        "governing_condition_default_exception": "Contextual natural-history field review, not primary comparative performance evidence or a controlling case requirement.",
+        "applicability": "General attachment-mode and research-gap context only."
+      },
+      "critic_retrieval_status": "Search excerpt plus carried map; not independently opened in full.",
+      "critic_retrieval_observed_operation": "Carried source-map and source index consulted; search excerpt confirms component framing and stated testing gaps. Not primary performance evidence."
+    },
+    {
+      "id": "S09",
+      "title": "Object labelling",
+      "creators": "National Museums Scotland",
+      "exact_url": "https://www.nms.ac.uk/our-impact/national-work/training-and-guidance-for-museums/collections-care/object-labelling",
+      "version_or_release": "Current institutional training page; publication/update date not displayed; ©2026.",
+      "accessed_at_utc": "2026-10-10T05:53:59Z",
+      "locator": "Sections Adding a label and When not to label; indexed lines 68–95 and 114–120.",
+      "observed_operation": "Guidance asks for secure, reversible, safe, visible identification and suggests a simple Tyvek tag for a fragile or loan object.",
+      "governing_condition_default_exception": "Institutional guidance for object labelling; tag use is a context-specific option and not a validated design for this store's sleeve.",
+      "applicability": "Analog for a nonadhesive mock-up that avoids contact with the collection object; test snagging, visibility and retrieval locally.",
+      "evidence_used": "Alternative approach only; no product endorsement.",
+      "reviser_review": {
+        "accessed_at_utc": null,
+        "observed_operation": "Carried only from the investigator and critic source maps/indexes in this reviser stage; not reopened.",
+        "governing_condition_default_exception": "Institutional guidance for other collection-labelling contexts; a tag suggestion is not a validated design for these sleeves.",
+        "applicability": "Analogy only; any nonadhesive method requires a local mock-up."
+      },
+      "critic_retrieval_status": "Search excerpt; full page not independently reopened.",
+      "critic_retrieval_observed_operation": "Search result excerpt supports a simple Tyvek tag for a fragile or loan object; direct page open timed out. This is not a validated design for the store’s sleeves."
+    }
+  ]
+}

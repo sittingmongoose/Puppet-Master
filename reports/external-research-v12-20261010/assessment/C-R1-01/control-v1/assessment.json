@@ -1,0 +1,1924 @@
+{
+  "schema_version": "ER12-independent-assessment-v1",
+  "slot": "C-R1-01",
+  "arm": "control",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "judgment_basis": "All six axes independently assessed. No remaining material error/omission/unsupported consequential decision in completed final. Corrected draft defect and nonmaterial limits preserved. Hashes/counts/agreements/time/runtime labels are not semantic proof.",
+  "reviewer_identity": "codex-er12-c-r1-01-control-review-v1",
+  "review_started_at_utc": "2026-10-10T05:35:56Z",
+  "review_deadline_utc": "2026-10-10T06:20:56Z",
+  "saved_at_utc": "2026-10-10T05:53:28.830351+00:00",
+  "selected_final": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md",
+  "rubric": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+  "scope": {
+    "ordinary_control_final": true,
+    "other_arms_results_history_read": false,
+    "ER11_rescored": false,
+    "shared_roster_read": false,
+    "nested_delegation": false,
+    "candidate_feedback_or_repair": false,
+    "account_changes": false,
+    "git_or_publication": false,
+    "original_source_freeze_changed": false
+  },
+  "axis_coverage": [
+    {
+      "axis": 1,
+      "name": "Original obligations and negative constraints",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS",
+      "semantic_analysis": "The final keeps rehearsal-room sound/decay/comfort separate from courtyard sound and the residents' experience. Its action criterion requires a repeatable receiver change; neither an indoor recording nor room reverberation can establish courtyard benefit. The published room/insulation/environmental standards have different subjects and do not provide a resident-defined universal threshold. See final lines 32–45 and 102–106; independent sources S01, S05 and S06.\n\nIt compares a source-output or agreed scheduling option with separate movable-panel, layout/source-position and specialist path-study options. Existing source controls, panels and a log-only fallback provide useful low-cost choices. A source inventory precedes selecting an amp control: the anecdote is not taken as proof that an amplifier exists. Scheduling changes exposure timing, not sound level. No construction, permanent installation, landlord enforcement, invented building material, complaint count, measurement or verified cause is recommended or asserted. Historical construction is described as comparator evidence, with its limits, rather than as the proposed intervention.\n\nThe main source A–B–A experiment is an outcome screen. It can establish whether a repeatable operating change helps the receiver under tested conditions; it cannot uniquely identify a physical route. The final accepts the draft's missing path-sensitive comparison and adds a conditional specialist branch with airborne-dominant and contact/impact-dominant excitation, source/receiver pressure and structural vibration observations. It expressly permits mixed paths and unresolved attribution. That meets the prospective observation obligation without inventing a dominant site path. The original design question does not require a measured or guaranteed diagnosis from hypothetical facts.\n\nReal implementation histories and old-room-arrangement research opportunities are included. The final gives concrete questions for protocols, drawings, before/after evidence and receiver selection, with source/building/use/scale differences. A small omission of explicit historical operating-hour and concurrent-repair questions is recorded below; no historical causal improvement is claimed. The exact original plan appendix covers each prose/bullet clause, including authoring/release metadata without converting those into invented product obligations.",
+      "source_ids": [
+        "S01",
+        "S05",
+        "S06",
+        "S08",
+        "S09",
+        "S10",
+        "S12",
+        "S13",
+        "S14",
+        "IR15"
+      ]
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source claims and applicability",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "semantic_analysis": "I independently retrieved the governing primary records for all carried source identities S01–S14. The [independent source map](source-map.json) records exact URLs, versions, subjects/operations, units, domain limits, exceptions, candidate locators, access depth and navigable local evidence. S01–S06 were checked against official ISO public scopes/lifecycle or OBP preview. S07/S08 use publisher abstracts; S09/S12 author-institution records; S10 the complete EAA PDF text; S11 publisher-indexed paper text; S13/S14 complete first-party implementation pages. The original maps supplied identities, not proof. Direct HTTP failures are preserved separately from successful web/index retrievals.\n\nThe final's units and domains are correct: ISO 16283-1/-3 airborne insulation ranges are 50–5,000 Hz for intended 10–250 m³ rooms; S07's spatial variation is in dB, S11's absorber thickness in mm and room volume in m³. Environmental sound levels, room RT, airborne insulation, impact-source insulation and structural vibration remain distinct. No software/API default or value type is claimed. ISO 10052's survey method has higher uncertainty, a 150 m³ dwelling/comparable-room limit, octave-band insulation and special impact/service-equipment outputs; it does not make an improvised borrowed-meter test compliant. ISO 23591 covers differentiated music-rehearsal room acoustics/size, excludes insulation criteria and specialized concert/recording venues, and has a 2025 Gugak amendment. The final does not apply an out-of-scope numeric criterion.\n\nLøvholt's 10–100 Hz wall/window model and laboratory comparisons support coupled air/structure behavior; the 15–30 Hz window and 30–100 Hz wall statements stay tied to those assemblies and source context. SINTEF's aircraft/lightweight-building record supports sound-induced floor vibration. Neither licenses a building-specific treatment, numerical benefit or route diagnosis from correlation. The final observes these conditions.\n\nThe residential-basement EAA paper explicitly excludes verification of proposed installed solutions, notwithstanding its later modeled objective-verification language. The final correctly treats it as a workflow analogue. The airbed record is a real lab-to-installation, before/after room-RT precedent, not a neighbor-noise experiment. UBC and Clore are real first-party implementation records, not independent performance trials; their public pages do not supply numeric after-results. Clore separately links BS4142 to plant noise and uses its baseline to set music-egress limits; the final does not misapply the plant rule to all music.\n\nS11's carried URL now fails, and the accessible publisher-indexed alternative supplied the relevant substantive paper text. Its live alternative also fails. This is a locator/access limitation, not an unsupported substantive claim: the text explicitly supports the completed wind-band case, 1,600 m³ room, 40 mm prior absorbers, dry/imbalanced responses and overplaying. The candidate DOI was not independently exposed in the publisher text obtained, so its bibliographic confirmation remains limited. Full paywalled standards and most full journal papers were not read; public governing scopes/abstracts are sufficient for the bounded claims actually made, not for a future compliance test.",
+      "source_ids": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S07",
+        "S08",
+        "S09",
+        "S10",
+        "S11",
+        "S12",
+        "S13",
+        "S14",
+        "IR15"
+      ]
+    },
+    {
+      "axis": 3,
+      "name": "Discovery, alternatives, analogues and history",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS",
+      "semantic_analysis": "The discovery contains useful unfamiliar findings rather than generic caution. Henry Wood Hall's lab-selected airbeds offer a flexible low-frequency room-decay precedent with installation and before/after measurement. The wind-band history shows that reducing room strength can coexist with overplaying and poor mutual hearing. Air-induced floor motion explains why vibration correlation can mislead path attribution. Low-frequency position effects motivate repeatable spatial sampling. The residential-basement bass/guitar/drum case supplies a close source-profile workflow while explicitly lacking installed-solution verification. UBC and Clore supply real measurement-to-design histories, project constraints and questions for commissioning evidence.\n\nCompeting options have different mechanisms and decision roles: source reduction changes excitation entering available routes; timing changes overlap with sensitive hours; relocation may change both radiation and contact; panels target reflections/decay; logs and quiet controls address source/event association; a specialist study can address path attribution when justified. Isolation/absorption concepts appear as histories or conditional diagnostics, with permanent work outside the proposal. No commercial product, new purchase or renovation design is required by the brief.\n\nRoom rearrangement remains an investigation opportunity: obtain dated records, plans, inventories and old/current user accounts, label recollection confidence, and avoid treating a new prospective pilot as an undocumented historical baseline. Follow-up asks about measurement positions, installation/use details, receiver objectives and before/after records. Differences between institutional/new-build/large-ensemble examples and the unknown small rehearsal building remain explicit. These are substantive leads with discriminating checks, not vacuous caveats.",
+      "source_ids": [
+        "S07",
+        "S08",
+        "S09",
+        "S10",
+        "S11",
+        "S12",
+        "S13",
+        "S14"
+      ]
+    },
+    {
+      "axis": 4,
+      "name": "Criticism, corrections, rejections and dispositions",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS",
+      "semantic_analysis": "**CI-01 was a real material incompleteness in the investigator draft and is corrected in the final.** The draft called R3 preserved, but lowering a source changes excitation to all paths. Sound and floor motion can be correlated because airborne pressure excites surfaces. S08/S09 independently support the critic's objection. The final accepts it, preserves the original screen, and adds a proposed dominant-input contrast with synchronized observations and explicit limitations (final line 91 onward). It does not rewrite the lineage as already complete.\n\nI also checked the added contrast independently against the official [ISO 16283-2:2020 scope](https://www.iso.org/standard/77436.html): impact-source pressure measurements are a distinct measurement concept from airborne room-to-room insulation. This corroborates the conceptual input distinction. It does not certify the candidate's improvised test, provide a courtyard route oracle, or guarantee clean path separation. The final's conditional specialist framing, spectrum documentation and mixed-path cautions are appropriate to those limits.\n\nNo wrong consequential correction, invented defect, false rejection or unanswered criticism was found. The critic's satisfied clause findings remain supported after independent checking. The critic's statement that no material wrong/unsupported claim remained is consistent with this review; its absence of a locator concern is qualified by the newly observed S11 access limitation. All nine categories of honestly unresolved external input remain in the final, including sensor/source-control access and musician acceptability. Detailed criticism dispositions are in assessment.json and the appendix.",
+      "source_ids": [
+        "S08",
+        "S09",
+        "IR15"
+      ]
+    },
+    {
+      "axis": 5,
+      "name": "Meaning preservation across the pipeline",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "semantic_analysis": "The final is self-contained. It preserves the original hypothetical facts, separate outcomes, coupled mechanisms, standards' scopes, source-transfer limits, main alternatives, real histories, owner/resident decisions, confounders, thresholds conditioned on measured variation, and distinction between desk work and proposed field checks. The disputed R3 wording is changed for an explicit reason, not silently discarded. It neither replaces the proposal with predecessor identifiers nor claims the literature settles the building.\n\nSome nonmaterial detail was compressed or dropped. Discovery's optional direct/headphone-monitoring example using equipment already on hand, including the warning that pad/pedal impacts remain, disappears. The exact repeated 20-second EAA illustration and airbed inflation dependency are not repeated in the final. Historical operating-hour changes and simultaneous repairs are not explicit old-arrangement interview questions. These are real lineage/detail losses, not repairs I made or new obligations I invented. They do not remove a required option family, alter the supported provisional recommendation, produce an unsupported purchase or create a false historical conclusion. Source/schedule choices, repeated passages, history requests and the anti-attribution boundary remain meaningful.",
+      "source_ids": [
+        "S10",
+        "S12"
+      ]
+    },
+    {
+      "axis": 6,
+      "name": "Proposed/executed validation and oracles",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "semantic_analysis": "The proposed pilot specifies usual A, one-control B, repeated A–B–A blocks, quiet/no-rehearsal conditions, source inventory, separate indoor/outdoor records, calibration/settings/bandwidth checks, confounders and a receiver-tied reversible decision. If only the room improves, no courtyard benefit is claimed. The resident's audibility/disturbance/time concern and musicians' usable-room judgment are independent outcomes; pressure and vibration observations are evidence, not interchangeable proxies. No arbitrary universal numeric threshold or unperformed acoustic calculation is used.\n\nDesk discovery/review and standards/version checks are reported as executed. The reviser specifically reports primary S08/S09 rechecks and its direct-open limitation. All interviews, complaint/event logging, inventory, source playback, calibration, measurements, panel/source tests, vibration observations, specialist diagnostics and standards-compliance checks are explicitly proposed or unexecuted. No field deployment, performance certification or successful intervention is invented. Original raw browser histories were not inspected; the assessment distinguishes authored execution claims and preserved maps from independently evidenced reviewer retrievals.\n\nOne basic meter plus a qualitative recorder cannot itself establish simultaneous calibrated observations at both sites and multiple interior positions. A sufficient multichannel or multi-instrument arrangement, sensor interface, access, response and repetitions must be specified when equipment is known. The final makes suitable equipment/access prerequisites and permits a log, screening or scoped specialist result, so it does not falsely assert current feasibility. The conditional contact/airborne contrast also requires safe comparable source states and appropriate sensors/analysis; it does not purport to create pure inputs. Honest unresolved external choices can pass at this proposal stage.",
+      "source_ids": [
+        "S01",
+        "S04",
+        "S05",
+        "S06",
+        "S07",
+        "S08",
+        "S09",
+        "S10",
+        "IR15"
+      ]
+    }
+  ],
+  "unassessed_axes": [],
+  "remaining_material_findings": [],
+  "corrected_lineage_findings": [
+    {
+      "id": "LD-CI-01",
+      "stage": "investigator draft",
+      "classification": "MATERIAL_INCOMPLETE_CORRECTED",
+      "draft_locator": "ER12_RUNTIME/runs/C-R1-01/control/stages/investigator/draft.md:108",
+      "reason": "R3 marked preserved but no path-sensitive excitation contrast, only generic source A/B and correlated vibration. Critic finds real gap, final explicitly accepts/amends.",
+      "sources": [
+        "S08",
+        "S09",
+        "IR15"
+      ],
+      "remaining_material_issue": false
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L01",
+      "kind": "minor locator/access",
+      "material": false,
+      "description": "S11 carried and alternate live URLs fail; indexed publisher text supports relevant §3.1 claims. DOI not independently exposed in obtained publisher text.",
+      "sources": [
+        "S11"
+      ]
+    },
+    {
+      "id": "L02",
+      "kind": "minor meaning/detail compression",
+      "material": false,
+      "description": "Optional already-on-hand direct/headphone alternative and residual pedal/pad warning disappear; exact repeated 20-second illustration and airbed inflation detail compressed. Meaningful source/schedule choices, repeatable conditions and core precedents survive.",
+      "original_locator": "ER12_RUNTIME/runs/C-R1-01/control/stages/investigator/discovery.md:28",
+      "sources": [
+        "S10",
+        "S12"
+      ]
+    },
+    {
+      "id": "L03",
+      "kind": "minor exact-plan detail loss",
+      "material": false,
+      "description": "Changed historical operating hours and simultaneous repairs not explicit old-arrangement interview questions. General historical accounts/time/HVAC confounders and refusal of causal attribution remain.",
+      "original_locator": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md:67",
+      "final_locator": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:78"
+    },
+    {
+      "id": "L04",
+      "kind": "honest pilot feasibility",
+      "material": false,
+      "description": "One basic meter and qualitative recorder do not establish calibrated synchronized multi-position/outdoor capability. Final makes suitable equipment/access conditional and allows screening/log/specialist results; later instruments/channels, sensor interface and repetitions needed.",
+      "sources": [
+        "S01",
+        "S04",
+        "S07"
+      ],
+      "final_locator": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:85"
+    },
+    {
+      "id": "L05",
+      "kind": "evidence-depth/navigation",
+      "material": false,
+      "description": "Original indices preserve references rather than raw captures; declared critic source directory absent but actual map points to carried investigator index. Public scopes/abstracts and retrieved primary text support narrow claims, not formal future compliance. Exact successful web timestamps unavailable; windows and HTTP-attempt times saved.",
+      "sources": [
+        "source-map.json"
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "item": "Site dominant route, measured benefit and resident target",
+      "status": "UNKNOWN",
+      "reason": "Hypothetical facts, unknown metric and no field measurements; not a deployed/validated building."
+    },
+    {
+      "item": "Formal standards applicability/compliance and exact pilot instrumentation",
+      "status": "UNKNOWN",
+      "reason": "Geometry/construction/instrument models/access remain unspecified."
+    },
+    {
+      "item": "Exactly one native activation, exclusive pre-reveal access and no hidden scientific assistance",
+      "status": "UNKNOWN",
+      "reason": "Bounded saved receipts/assignments/reveal only; candidate histories not accessed. No unauthorized scientific assistance observed."
+    },
+    {
+      "item": "Investigator native receipt authenticity",
+      "status": "REPORTED_IN_AUTHORED_RECORD",
+      "reason": "Observed native fields transcribed into authored record; raw create/completion responses absent."
+    },
+    {
+      "item": "Critic save-before-completion subsecond order",
+      "status": "UNKNOWN",
+      "reason": "Critique mtime and native completion share an integer-timestamp second; do not infer violation from precision mismatch."
+    },
+    {
+      "item": "Provider effective model/effort/service tier, billing/rates/inference usage",
+      "status": "UNKNOWN",
+      "reason": "Requested route and saved T3 returned model do not supply provider API/invoice telemetry. Native tokensUsed not treated as billed tokens."
+    },
+    {
+      "item": "Global recipe/seal protocol prerequisites",
+      "status": "UNKNOWN",
+      "reason": "Other arms/history not inspected; this bounded pipeline cannot certify global release conditions."
+    }
+  ],
+  "exact_plan_clause_dispositions": [
+    {
+      "id": "P009",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 9,
+      "exact_text": "Keep this file outside the candidate-facing research packet. It preserves the authored request and open design opportunities. It is not a completed research proposal, a source list, a result, or an evaluation answer key. Nothing here selects an eventual research method. No empirical validation has been executed in authoring this case.",
+      "disposition": "PROVENANCE_ONLY",
+      "semantic_reason": "Not an answer key or measurement. Saved controlled plan reveal is present; exclusive pre-reveal access is not proven by a complete history audit.",
+      "final_locator": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md",
+      "sentence_clauses": [
+        {
+          "id": "P009.01",
+          "exact_text": "Keep this file outside the candidate-facing research packet.",
+          "disposition": "PROVENANCE_ONLY",
+          "semantic_reason": "Not an answer key or measurement. Saved controlled plan reveal is present; exclusive pre-reveal access is not proven by a complete history audit."
+        },
+        {
+          "id": "P009.02",
+          "exact_text": "It preserves the authored request and open design opportunities.",
+          "disposition": "PROVENANCE_ONLY",
+          "semantic_reason": "Not an answer key or measurement. Saved controlled plan reveal is present; exclusive pre-reveal access is not proven by a complete history audit."
+        },
+        {
+          "id": "P009.03",
+          "exact_text": "It is not a completed research proposal, a source list, a result, or an evaluation answer key.",
+          "disposition": "PROVENANCE_ONLY",
+          "semantic_reason": "Not an answer key or measurement. Saved controlled plan reveal is present; exclusive pre-reveal access is not proven by a complete history audit."
+        },
+        {
+          "id": "P009.04",
+          "exact_text": "Nothing here selects an eventual research method.",
+          "disposition": "PROVENANCE_ONLY",
+          "semantic_reason": "Not an answer key or measurement. Saved controlled plan reveal is present; exclusive pre-reveal access is not proven by a complete history audit."
+        },
+        {
+          "id": "P009.05",
+          "exact_text": "No empirical validation has been executed in authoring this case.",
+          "disposition": "PROVENANCE_ONLY",
+          "semantic_reason": "Not an answer key or measurement. Saved controlled plan reveal is present; exclusive pre-reveal access is not proven by a complete history audit."
+        }
+      ]
+    },
+    {
+      "id": "P013",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 13,
+      "exact_text": "The original brief follows verbatim between the delimiters. These bytes define the original obligations; later clarification must not silently replace them.",
+      "disposition": "PRESERVED",
+      "semantic_reason": "Original frozen plan equals the released copy. Original wording governs this semantic review; equal bytes alone do not prove compliance.",
+      "final_locator": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:119",
+      "sentence_clauses": [
+        {
+          "id": "P013.01",
+          "exact_text": "The original brief follows verbatim between the delimiters.",
+          "disposition": "PRESERVED",
+          "semantic_reason": "Original frozen plan equals the released copy. Original wording governs this semantic review; equal bytes alone do not prove compliance."
+        },
+        {
+          "id": "P013.02",
+          "exact_text": "These bytes define the original obligations; later clarification must not silently replace them.",
+          "disposition": "PRESERVED",
+          "semantic_reason": "Original frozen plan equals the released copy. Original wording governs this semantic review; equal bytes alone do not prove compliance."
+        }
+      ]
+    },
+    {
+      "id": "P025",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 25,
+      "exact_text": "We run a small rehearsal building beside a residential courtyard. The bass complaints are intermittent: some happen during drum sessions, but one tenant says the worst evenings include no drumming. Rooms were rearranged last winter; nobody kept a reliable before-and-after log. We can borrow a recorder and a basic sound meter for a later pilot, and we can temporarily move freestanding panels. The building manager wants a defensible investigation before spending money on more treatment. These are hypothetical project facts, not measurements.",
+      "disposition": "SATISFIED",
+      "semantic_reason": "All hypothetical situation details remain; no count/material/dimension/verified cause invented. Drum and no-drum reports inform source inventory and background hypotheses.",
+      "final_locator": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:16",
+      "sentence_clauses": [
+        {
+          "id": "P025.01",
+          "exact_text": "We run a small rehearsal building beside a residential courtyard.",
+          "disposition": "SATISFIED",
+          "semantic_reason": "All hypothetical situation details remain; no count/material/dimension/verified cause invented. Drum and no-drum reports inform source inventory and background hypotheses."
+        },
+        {
+          "id": "P025.02",
+          "exact_text": "The bass complaints are intermittent: some happen during drum sessions, but one tenant says the worst evenings include no drumming.",
+          "disposition": "SATISFIED",
+          "semantic_reason": "All hypothetical situation details remain; no count/material/dimension/verified cause invented. Drum and no-drum reports inform source inventory and background hypotheses."
+        },
+        {
+          "id": "P025.03",
+          "exact_text": "Rooms were rearranged last winter; nobody kept a reliable before-and-after log.",
+          "disposition": "SATISFIED",
+          "semantic_reason": "All hypothetical situation details remain; no count/material/dimension/verified cause invented. Drum and no-drum reports inform source inventory and background hypotheses."
+        },
+        {
+          "id": "P025.04",
+          "exact_text": "We can borrow a recorder and a basic sound meter for a later pilot, and we can temporarily move freestanding panels.",
+          "disposition": "SATISFIED",
+          "semantic_reason": "All hypothetical situation details remain; no count/material/dimension/verified cause invented. Drum and no-drum reports inform source inventory and background hypotheses."
+        },
+        {
+          "id": "P025.05",
+          "exact_text": "The building manager wants a defensible investigation before spending money on more treatment.",
+          "disposition": "SATISFIED",
+          "semantic_reason": "All hypothetical situation details remain; no count/material/dimension/verified cause invented. Drum and no-drum reports inform source inventory and background hypotheses."
+        },
+        {
+          "id": "P025.06",
+          "exact_text": "These are hypothetical project facts, not measurements.",
+          "disposition": "SATISFIED",
+          "semantic_reason": "All hypothetical situation details remain; no count/material/dimension/verified cause invented. Drum and no-drum reports inform source inventory and background hypotheses."
+        }
+      ]
+    },
+    {
+      "id": "P029",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 29,
+      "exact_text": "Use the available 60-minute research window to prepare a research proposal that distinguishes plausible transmission paths and identifies a useful first pilot. Explain what existing research can and cannot tell us about this particular building, the mechanism behind each serious option, what implementation details or earlier installations would be worth investigating, and what would change the recommendation. A diagram or simple model is welcome if it clarifies the investigation; we need no renovation design.",
+      "disposition": "SATISFIED",
+      "semantic_reason": "Proposal supplies paths, useful first log/pilot, evidence limits, mechanisms, implementation questions and recommendation redirects. Sketch is conceptual; no renovation design. Recorded delivery within allowed 60-minute envelope.",
+      "final_locator": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:8",
+      "sentence_clauses": [
+        {
+          "id": "P029.01",
+          "exact_text": "Use the available 60-minute research window to prepare a research proposal that distinguishes plausible transmission paths and identifies a useful first pilot.",
+          "disposition": "SATISFIED",
+          "semantic_reason": "Proposal supplies paths, useful first log/pilot, evidence limits, mechanisms, implementation questions and recommendation redirects. Sketch is conceptual; no renovation design. Recorded delivery within allowed 60-minute envelope."
+        },
+        {
+          "id": "P029.02",
+          "exact_text": "Explain what existing research can and cannot tell us about this particular building, the mechanism behind each serious option, what implementation details or earlier installations would be worth investigating, and what would change the recommendation.",
+          "disposition": "SATISFIED",
+          "semantic_reason": "Proposal supplies paths, useful first log/pilot, evidence limits, mechanisms, implementation questions and recommendation redirects. Sketch is conceptual; no renovation design. Recorded delivery within allowed 60-minute envelope."
+        },
+        {
+          "id": "P029.03",
+          "exact_text": "A diagram or simple model is welcome if it clarifies the investigation; we need no renovation design.",
+          "disposition": "SATISFIED",
+          "semantic_reason": "Proposal supplies paths, useful first log/pilot, evidence limits, mechanisms, implementation questions and recommendation redirects. Sketch is conceptual; no renovation design. Recorded delivery within allowed 60-minute envelope."
+        }
+      ]
+    },
+    {
+      "id": "P033",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 33,
+      "exact_text": "- Keep courtyard disturbance and sound inside the rehearsal rooms as separate outcomes; a quieter recording indoors is not evidence of reduced disturbance outside.",
+      "disposition": "SATISFIED",
+      "semantic_reason": "Separate indoor decay/comfort and courtyard/resident records; outside benefit requires its own receiver evidence.",
+      "final_locator": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:32",
+      "sentence_clauses": [
+        {
+          "id": "P033.01",
+          "exact_text": "- Keep courtyard disturbance and sound inside the rehearsal rooms as separate outcomes; a quieter recording indoors is not evidence of reduced disturbance outside.",
+          "disposition": "SATISFIED",
+          "semantic_reason": "Separate indoor decay/comfort and courtyard/resident records; outside benefit requires its own receiver evidence."
+        }
+      ]
+    },
+    {
+      "id": "P034",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 34,
+      "exact_text": "- Compare at least one source or scheduling intervention with at least one path or room intervention, including a useful low-cost option if expensive treatment is unsupported.",
+      "disposition": "SATISFIED",
+      "semantic_reason": "Source setting/schedule compared with panels/layout, source position and conditional path study; existing resources and log-only fallback are meaningful low-cost options.",
+      "final_locator": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:66",
+      "sentence_clauses": [
+        {
+          "id": "P034.01",
+          "exact_text": "- Compare at least one source or scheduling intervention with at least one path or room intervention, including a useful low-cost option if expensive treatment is unsupported.",
+          "disposition": "SATISFIED",
+          "semantic_reason": "Source setting/schedule compared with panels/layout, source position and conditional path study; existing resources and log-only fallback are meaningful low-cost options."
+        }
+      ]
+    },
+    {
+      "id": "P035",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 35,
+      "exact_text": "- Explain how an observation plan could distinguish airborne transmission, structural coupling, and unrelated background events without assuming only one is present.",
+      "disposition": "SATISFIED_AFTER_CORRECTED_LINEAGE_DEFECT",
+      "semantic_reason": "Quiet controls/logs address unrelated events; source comparisons screen outside outcomes; conditional dominant-excitation sound/vibration contrast addresses air/contact routes without presuming purity. Draft CI-01 remains recorded as a repaired defect.",
+      "final_locator": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:91",
+      "sentence_clauses": [
+        {
+          "id": "P035.01",
+          "exact_text": "- Explain how an observation plan could distinguish airborne transmission, structural coupling, and unrelated background events without assuming only one is present.",
+          "disposition": "SATISFIED_AFTER_CORRECTED_LINEAGE_DEFECT",
+          "semantic_reason": "Quiet controls/logs address unrelated events; source comparisons screen outside outcomes; conditional dominant-excitation sound/vibration contrast addresses air/contact routes without presuming purity. Draft CI-01 remains recorded as a repaired defect."
+        }
+      ]
+    },
+    {
+      "id": "P036",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 36,
+      "exact_text": "- Include the changed room arrangement and the history of a real comparable implementation as research opportunities, with the relevant differences stated.",
+      "disposition": "SATISFIED",
+      "semantic_reason": "Prospective old/current arrangement reconstruction and real UBC/Clore/airbed/wind-band histories with use/scale/outcome/measurement differences.",
+      "final_locator": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:55",
+      "sentence_clauses": [
+        {
+          "id": "P036.01",
+          "exact_text": "- Include the changed room arrangement and the history of a real comparable implementation as research opportunities, with the relevant differences stated.",
+          "disposition": "SATISFIED",
+          "semantic_reason": "Prospective old/current arrangement reconstruction and real UBC/Clore/airbed/wind-band histories with use/scale/outcome/measurement differences."
+        }
+      ]
+    },
+    {
+      "id": "P037",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 37,
+      "exact_text": "- Specify a proposed pilot, its comparison condition, likely confounders, and a decision that could be made from it; label proposed checks separately from any checks actually executed during research.",
+      "disposition": "SATISFIED_WITH_FEASIBILITY_LIMIT",
+      "semantic_reason": "A/B, repeated A–B–A, quiet controls, nuisance variables and receiver-linked action are supplied. Field work remains proposed; exact instrumentation and repeat count require actual equipment/variation.",
+      "final_locator": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:76",
+      "sentence_clauses": [
+        {
+          "id": "P037.01",
+          "exact_text": "- Specify a proposed pilot, its comparison condition, likely confounders, and a decision that could be made from it; label proposed checks separately from any checks actually executed during research.",
+          "disposition": "SATISFIED_WITH_FEASIBILITY_LIMIT",
+          "semantic_reason": "A/B, repeated A–B–A, quiet controls, nuisance variables and receiver-linked action are supplied. Field work remains proposed; exact instrumentation and repeat count require actual equipment/variation."
+        }
+      ]
+    },
+    {
+      "id": "P041",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 41,
+      "exact_text": "- Do not recommend structural alterations, landlord enforcement, permanent installations, or construction as part of this assignment.",
+      "disposition": "SATISFIED",
+      "semantic_reason": "No structural alterations, enforcement, permanent installations or construction recommended. Historical structural work is comparator data only.",
+      "final_locator": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:10",
+      "sentence_clauses": [
+        {
+          "id": "P041.01",
+          "exact_text": "- Do not recommend structural alterations, landlord enforcement, permanent installations, or construction as part of this assignment.",
+          "disposition": "SATISFIED",
+          "semantic_reason": "No structural alterations, enforcement, permanent installations or construction recommended. Historical structural work is comparator data only."
+        }
+      ]
+    },
+    {
+      "id": "P042",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 42,
+      "exact_text": "- Do not invent complaint counts, acoustic measurements, building materials, or a verified cause from the anecdote.",
+      "disposition": "SATISFIED",
+      "semantic_reason": "No invented site counts, measurements, materials or cause; numeric source facts stay attached to published cases.",
+      "final_locator": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:18",
+      "sentence_clauses": [
+        {
+          "id": "P042.01",
+          "exact_text": "- Do not invent complaint counts, acoustic measurements, building materials, or a verified cause from the anecdote.",
+          "disposition": "SATISFIED",
+          "semantic_reason": "No invented site counts, measurements, materials or cause; numeric source facts stay attached to published cases."
+        }
+      ]
+    },
+    {
+      "id": "P043",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 43,
+      "exact_text": "- Do not treat a phone recording or a manufacturer absorption claim as a validated prediction of courtyard benefit.",
+      "disposition": "SATISFIED",
+      "semantic_reason": "Phone/recorder audio qualitative unless full calibrated chain known; no manufacturer absorption claim predicts courtyard benefit.",
+      "final_locator": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:37",
+      "sentence_clauses": [
+        {
+          "id": "P043.01",
+          "exact_text": "- Do not treat a phone recording or a manufacturer absorption claim as a validated prediction of courtyard benefit.",
+          "disposition": "SATISFIED",
+          "semantic_reason": "Phone/recorder audio qualitative unless full calibrated chain known; no manufacturer absorption claim predicts courtyard benefit."
+        }
+      ]
+    },
+    {
+      "id": "P047",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 47,
+      "exact_text": "We have not supplied a floor plan, dimensions, construction details, access permissions, complaint timestamps, or the noise metric the neighbors care about. State the consequences of these gaps and any reversible assumptions rather than completing the building by imagination.",
+      "disposition": "HONEST_EXTERNAL_INPUTS_PRESERVED",
+      "semantic_reason": "Each named missing input has a consequence; mapping/history/logging/permission/metric steps are conditional and reversible, not fictional site completion.",
+      "final_locator": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:142",
+      "sentence_clauses": [
+        {
+          "id": "P047.01",
+          "exact_text": "We have not supplied a floor plan, dimensions, construction details, access permissions, complaint timestamps, or the noise metric the neighbors care about.",
+          "disposition": "HONEST_EXTERNAL_INPUTS_PRESERVED",
+          "semantic_reason": "Each named missing input has a consequence; mapping/history/logging/permission/metric steps are conditional and reversible, not fictional site completion."
+        },
+        {
+          "id": "P047.02",
+          "exact_text": "State the consequences of these gaps and any reversible assumptions rather than completing the building by imagination.",
+          "disposition": "HONEST_EXTERNAL_INPUTS_PRESERVED",
+          "semantic_reason": "Each named missing input has a consequence; mapping/history/logging/permission/metric steps are conditional and reversible, not fictional site completion."
+        }
+      ]
+    },
+    {
+      "id": "P053",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 53,
+      "exact_text": "Can a modest observational and reversible-intervention study identify whether there is an actionable transmission path before a building-specific engineering survey is commissioned?",
+      "disposition": "ADDRESSED_OPEN_RESEARCH_QUESTION",
+      "semantic_reason": "Modest log/source comparison can reveal practical operating response. Dominant physical path is not established from anecdotes; specialist attribution branch remains conditional.",
+      "final_locator": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:123",
+      "sentence_clauses": [
+        {
+          "id": "P053.01",
+          "exact_text": "Can a modest observational and reversible-intervention study identify whether there is an actionable transmission path before a building-specific engineering survey is commissioned?",
+          "disposition": "ADDRESSED_OPEN_RESEARCH_QUESTION",
+          "semantic_reason": "Modest log/source comparison can reveal practical operating response. Dominant physical path is not established from anecdotes; specialist attribution branch remains conditional."
+        }
+      ]
+    },
+    {
+      "id": "P055",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 55,
+      "exact_text": "The requested observation permissions, relevant frequency range, tolerable interference with sessions, and budget remain open. The proposal may prioritize one discriminating first study while retaining alternatives and explaining what new evidence would redirect it. It is not expected to identify a verified dominant path from the supplied anecdote.",
+      "disposition": "HONEST_EXTERNAL_INPUTS_PRESERVED",
+      "semantic_reason": "Permissions, relevant bands, acceptable rehearsal changes and budget remain open. First study is prioritized with alternatives and redirects; no verified dominant cause claimed.",
+      "final_locator": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:76",
+      "sentence_clauses": [
+        {
+          "id": "P055.01",
+          "exact_text": "The requested observation permissions, relevant frequency range, tolerable interference with sessions, and budget remain open.",
+          "disposition": "HONEST_EXTERNAL_INPUTS_PRESERVED",
+          "semantic_reason": "Permissions, relevant bands, acceptable rehearsal changes and budget remain open. First study is prioritized with alternatives and redirects; no verified dominant cause claimed."
+        },
+        {
+          "id": "P055.02",
+          "exact_text": "The proposal may prioritize one discriminating first study while retaining alternatives and explaining what new evidence would redirect it.",
+          "disposition": "HONEST_EXTERNAL_INPUTS_PRESERVED",
+          "semantic_reason": "Permissions, relevant bands, acceptable rehearsal changes and budget remain open. First study is prioritized with alternatives and redirects; no verified dominant cause claimed."
+        },
+        {
+          "id": "P055.03",
+          "exact_text": "It is not expected to identify a verified dominant path from the supplied anecdote.",
+          "disposition": "HONEST_EXTERNAL_INPUTS_PRESERVED",
+          "semantic_reason": "Permissions, relevant bands, acceptable rehearsal changes and budget remain open. First study is prioritized with alternatives and redirects; no verified dominant cause claimed."
+        }
+      ]
+    },
+    {
+      "id": "P059",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 59,
+      "exact_text": "Investigate quieter source practice or time coordination, moving equipment away from possible coupling points, reversible room-layout changes, and targeted isolation or absorption concepts. Each has a useful role only under particular conditions. A documented complaint-and-session log may itself be the appropriate first deliverable if events cannot be attributed. Investigate the possibility that a background source explains some events. No option is preselected.",
+      "disposition": "SATISFIED",
+      "semantic_reason": "Source/schedule, relocation, room layout/panels, log/background and specialist opportunities are preserved conditionally. Isolation concepts appear in histories and low-coupling diagnostic; absorption has separate room outcome and unfamiliar airbed precedent.",
+      "final_locator": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:66",
+      "sentence_clauses": [
+        {
+          "id": "P059.01",
+          "exact_text": "Investigate quieter source practice or time coordination, moving equipment away from possible coupling points, reversible room-layout changes, and targeted isolation or absorption concepts.",
+          "disposition": "SATISFIED",
+          "semantic_reason": "Source/schedule, relocation, room layout/panels, log/background and specialist opportunities are preserved conditionally. Isolation concepts appear in histories and low-coupling diagnostic; absorption has separate room outcome and unfamiliar airbed precedent."
+        },
+        {
+          "id": "P059.02",
+          "exact_text": "Each has a useful role only under particular conditions.",
+          "disposition": "SATISFIED",
+          "semantic_reason": "Source/schedule, relocation, room layout/panels, log/background and specialist opportunities are preserved conditionally. Isolation concepts appear in histories and low-coupling diagnostic; absorption has separate room outcome and unfamiliar airbed precedent."
+        },
+        {
+          "id": "P059.03",
+          "exact_text": "A documented complaint-and-session log may itself be the appropriate first deliverable if events cannot be attributed.",
+          "disposition": "SATISFIED",
+          "semantic_reason": "Source/schedule, relocation, room layout/panels, log/background and specialist opportunities are preserved conditionally. Isolation concepts appear in histories and low-coupling diagnostic; absorption has separate room outcome and unfamiliar airbed precedent."
+        },
+        {
+          "id": "P059.04",
+          "exact_text": "Investigate the possibility that a background source explains some events.",
+          "disposition": "SATISFIED",
+          "semantic_reason": "Source/schedule, relocation, room layout/panels, log/background and specialist opportunities are preserved conditionally. Isolation concepts appear in histories and low-coupling diagnostic; absorption has separate room outcome and unfamiliar airbed precedent."
+        },
+        {
+          "id": "P059.05",
+          "exact_text": "No option is preselected.",
+          "disposition": "SATISFIED",
+          "semantic_reason": "Source/schedule, relocation, room layout/panels, log/background and specialist opportunities are preserved conditionally. Isolation concepts appear in histories and low-coupling diagnostic; absorption has separate room outcome and unfamiliar airbed precedent."
+        }
+      ]
+    },
+    {
+      "id": "P063",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 63,
+      "exact_text": "Seek a causal account connecting excitation, transmission, receiver location, frequency, and perception. Differentiate reducing room reverberation from changing energy transmitted to another space. Possible structural coupling and airborne leakage are research hypotheses, not established properties of this building. Ask which measurements or interventions would discriminate between them and where a simple model would cease to be credible.",
+      "disposition": "SATISFIED",
+      "semantic_reason": "Excitation/transmission/receiver/frequency/perception are linked conceptually; reverberation differs from exterior energy transmission. Geometry/data limits forbid a predictive model; mixed paths and diagnostic limits explicit.",
+      "final_locator": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:24",
+      "sentence_clauses": [
+        {
+          "id": "P063.01",
+          "exact_text": "Seek a causal account connecting excitation, transmission, receiver location, frequency, and perception.",
+          "disposition": "SATISFIED",
+          "semantic_reason": "Excitation/transmission/receiver/frequency/perception are linked conceptually; reverberation differs from exterior energy transmission. Geometry/data limits forbid a predictive model; mixed paths and diagnostic limits explicit."
+        },
+        {
+          "id": "P063.02",
+          "exact_text": "Differentiate reducing room reverberation from changing energy transmitted to another space.",
+          "disposition": "SATISFIED",
+          "semantic_reason": "Excitation/transmission/receiver/frequency/perception are linked conceptually; reverberation differs from exterior energy transmission. Geometry/data limits forbid a predictive model; mixed paths and diagnostic limits explicit."
+        },
+        {
+          "id": "P063.03",
+          "exact_text": "Possible structural coupling and airborne leakage are research hypotheses, not established properties of this building.",
+          "disposition": "SATISFIED",
+          "semantic_reason": "Excitation/transmission/receiver/frequency/perception are linked conceptually; reverberation differs from exterior energy transmission. Geometry/data limits forbid a predictive model; mixed paths and diagnostic limits explicit."
+        },
+        {
+          "id": "P063.04",
+          "exact_text": "Ask which measurements or interventions would discriminate between them and where a simple model would cease to be credible.",
+          "disposition": "SATISFIED",
+          "semantic_reason": "Excitation/transmission/receiver/frequency/perception are linked conceptually; reverberation differs from exterior energy transmission. Geometry/data limits forbid a predictive model; mixed paths and diagnostic limits explicit."
+        }
+      ]
+    },
+    {
+      "id": "P067",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 67,
+      "exact_text": "Look for accessible implementation reports with enough description to understand installation, room use, measurement position, and before-and-after comparisons. A panel purchase story without receiver measurements has limited relevance. Investigate the previous room arrangement through future records or interviews, and identify whether moving sources, changing operating hours, or simultaneous repairs could explain apparent improvement. This assignment supplies neither a named successful installation nor an answer-bearing source.",
+      "disposition": "ADDRESSED_WITH_MINOR_DETAIL_LOSS",
+      "semantic_reason": "Real implementation histories and protocol/drawing/before-after requests retained. Moving sources and old/current arrangement records explicit. Historical operating-hour changes and simultaneous repairs are not explicit interview questions; general accounts/time/HVAC confounders remain and no historical causal improvement is asserted.",
+      "final_locator": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:78",
+      "sentence_clauses": [
+        {
+          "id": "P067.01",
+          "exact_text": "Look for accessible implementation reports with enough description to understand installation, room use, measurement position, and before-and-after comparisons.",
+          "disposition": "ADDRESSED_WITH_MINOR_DETAIL_LOSS",
+          "semantic_reason": "Real implementation histories and protocol/drawing/before-after requests retained. Moving sources and old/current arrangement records explicit. Historical operating-hour changes and simultaneous repairs are not explicit interview questions; general accounts/time/HVAC confounders remain and no historical causal improvement is asserted."
+        },
+        {
+          "id": "P067.02",
+          "exact_text": "A panel purchase story without receiver measurements has limited relevance.",
+          "disposition": "ADDRESSED_WITH_MINOR_DETAIL_LOSS",
+          "semantic_reason": "Real implementation histories and protocol/drawing/before-after requests retained. Moving sources and old/current arrangement records explicit. Historical operating-hour changes and simultaneous repairs are not explicit interview questions; general accounts/time/HVAC confounders remain and no historical causal improvement is asserted."
+        },
+        {
+          "id": "P067.03",
+          "exact_text": "Investigate the previous room arrangement through future records or interviews, and identify whether moving sources, changing operating hours, or simultaneous repairs could explain apparent improvement.",
+          "disposition": "ADDRESSED_WITH_MINOR_DETAIL_LOSS",
+          "semantic_reason": "Real implementation histories and protocol/drawing/before-after requests retained. Moving sources and old/current arrangement records explicit. Historical operating-hour changes and simultaneous repairs are not explicit interview questions; general accounts/time/HVAC confounders remain and no historical causal improvement is asserted."
+        },
+        {
+          "id": "P067.04",
+          "exact_text": "This assignment supplies neither a named successful installation nor an answer-bearing source.",
+          "disposition": "ADDRESSED_WITH_MINOR_DETAIL_LOSS",
+          "semantic_reason": "Real implementation histories and protocol/drawing/before-after requests retained. Moving sources and old/current arrangement records explicit. Historical operating-hour changes and simultaneous repairs are not explicit interview questions; general accounts/time/HVAC confounders remain and no historical causal improvement is asserted."
+        }
+      ]
+    },
+    {
+      "id": "P071",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 71,
+      "exact_text": "A future pilot could pair session timestamps, background periods, repeatable source conditions, and inside/outside observations, then test a reversible change while recording room use and weather or courtyard activity where relevant. The proposal must explain feasibility, sensor limitations, repeatability, and a criterion tied to the receiver outcome rather than nominate an arbitrary universal threshold. Any calculations or synthetic examples executed in the research hour must identify their assumed inputs and cannot certify actual acoustic performance.",
+      "disposition": "SATISFIED_WITH_FEASIBILITY_LIMIT",
+      "semantic_reason": "Timestamps, quiet periods, repeated source conditions, both outcomes, reversible change and weather/activity logs supplied. Instrument limits and variation constrain a receiver-tied criterion. No calculation/synthetic example or building performance certification claimed.",
+      "final_locator": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:82",
+      "sentence_clauses": [
+        {
+          "id": "P071.01",
+          "exact_text": "A future pilot could pair session timestamps, background periods, repeatable source conditions, and inside/outside observations, then test a reversible change while recording room use and weather or courtyard activity where relevant.",
+          "disposition": "SATISFIED_WITH_FEASIBILITY_LIMIT",
+          "semantic_reason": "Timestamps, quiet periods, repeated source conditions, both outcomes, reversible change and weather/activity logs supplied. Instrument limits and variation constrain a receiver-tied criterion. No calculation/synthetic example or building performance certification claimed."
+        },
+        {
+          "id": "P071.02",
+          "exact_text": "The proposal must explain feasibility, sensor limitations, repeatability, and a criterion tied to the receiver outcome rather than nominate an arbitrary universal threshold.",
+          "disposition": "SATISFIED_WITH_FEASIBILITY_LIMIT",
+          "semantic_reason": "Timestamps, quiet periods, repeated source conditions, both outcomes, reversible change and weather/activity logs supplied. Instrument limits and variation constrain a receiver-tied criterion. No calculation/synthetic example or building performance certification claimed."
+        },
+        {
+          "id": "P071.03",
+          "exact_text": "Any calculations or synthetic examples executed in the research hour must identify their assumed inputs and cannot certify actual acoustic performance.",
+          "disposition": "SATISFIED_WITH_FEASIBILITY_LIMIT",
+          "semantic_reason": "Timestamps, quiet periods, repeated source conditions, both outcomes, reversible change and weather/activity logs supplied. Instrument limits and variation constrain a receiver-tied criterion. No calculation/synthetic example or building performance certification claimed."
+        }
+      ]
+    },
+    {
+      "id": "P073",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 73,
+      "exact_text": "Authoring status: only synthetic input files have been prepared. No scientific search, pilot, experiment, data collection, implementation, or performance validation has been performed for this case. Future researchers must state the actual extent of any work they execute.",
+      "disposition": "PRESERVED_VALIDATION_STATUS",
+      "semantic_reason": "Synthetic authoring not empirical; candidate separates own desk work from unexecuted field/implementation validation. Raw candidate tool history uninspected; no invented empirical result.",
+      "final_locator": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:159",
+      "sentence_clauses": [
+        {
+          "id": "P073.01",
+          "exact_text": "Authoring status: only synthetic input files have been prepared.",
+          "disposition": "PRESERVED_VALIDATION_STATUS",
+          "semantic_reason": "Synthetic authoring not empirical; candidate separates own desk work from unexecuted field/implementation validation. Raw candidate tool history uninspected; no invented empirical result."
+        },
+        {
+          "id": "P073.02",
+          "exact_text": "No scientific search, pilot, experiment, data collection, implementation, or performance validation has been performed for this case.",
+          "disposition": "PRESERVED_VALIDATION_STATUS",
+          "semantic_reason": "Synthetic authoring not empirical; candidate separates own desk work from unexecuted field/implementation validation. Raw candidate tool history uninspected; no invented empirical result."
+        },
+        {
+          "id": "P073.03",
+          "exact_text": "Future researchers must state the actual extent of any work they execute.",
+          "disposition": "PRESERVED_VALIDATION_STATUS",
+          "semantic_reason": "Synthetic authoring not empirical; candidate separates own desk work from unexecuted field/implementation validation. Raw candidate tool history uninspected; no invented empirical result."
+        }
+      ]
+    },
+    {
+      "id": "P077",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 77,
+      "exact_text": "The topic is sized for a full 60-minute research-and-proposal session: substantive evidence discovery, causal reasoning, comparison of useful alternatives, implementation/history investigation, and a coherent later validation design. The proposal may contain reasoned provisional choices, but the case provides no predetermined winner. It requests no product build. Preserve brief.md and plan.md exactly for later paired freezes. C inputs remain sealed until the recipe freeze. Input readiness does not assert that those release conditions have been satisfied.",
+      "disposition": "SEMANTIC_SCOPE_PRESERVED_PROTOCOL_PARTLY_UNKNOWN",
+      "semantic_reason": "Substantive discovery/causal reasoning/alternatives/histories/later validation delivered; choices provisional, no product build. Frozen inputs unchanged and reveal record present. Global recipe/seal and exclusive pre-reveal access unavailable within bounded review; not inferred from other arms.",
+      "final_locator": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:119",
+      "sentence_clauses": [
+        {
+          "id": "P077.01",
+          "exact_text": "The topic is sized for a full 60-minute research-and-proposal session: substantive evidence discovery, causal reasoning, comparison of useful alternatives, implementation/history investigation, and a coherent later validation design.",
+          "disposition": "SEMANTIC_SCOPE_PRESERVED_PROTOCOL_PARTLY_UNKNOWN",
+          "semantic_reason": "Substantive discovery/causal reasoning/alternatives/histories/later validation delivered; choices provisional, no product build. Frozen inputs unchanged and reveal record present. Global recipe/seal and exclusive pre-reveal access unavailable within bounded review; not inferred from other arms."
+        },
+        {
+          "id": "P077.02",
+          "exact_text": "The proposal may contain reasoned provisional choices, but the case provides no predetermined winner.",
+          "disposition": "SEMANTIC_SCOPE_PRESERVED_PROTOCOL_PARTLY_UNKNOWN",
+          "semantic_reason": "Substantive discovery/causal reasoning/alternatives/histories/later validation delivered; choices provisional, no product build. Frozen inputs unchanged and reveal record present. Global recipe/seal and exclusive pre-reveal access unavailable within bounded review; not inferred from other arms."
+        },
+        {
+          "id": "P077.03",
+          "exact_text": "It requests no product build.",
+          "disposition": "SEMANTIC_SCOPE_PRESERVED_PROTOCOL_PARTLY_UNKNOWN",
+          "semantic_reason": "Substantive discovery/causal reasoning/alternatives/histories/later validation delivered; choices provisional, no product build. Frozen inputs unchanged and reveal record present. Global recipe/seal and exclusive pre-reveal access unavailable within bounded review; not inferred from other arms."
+        },
+        {
+          "id": "P077.04",
+          "exact_text": "Preserve brief.md and plan.md exactly for later paired freezes.",
+          "disposition": "SEMANTIC_SCOPE_PRESERVED_PROTOCOL_PARTLY_UNKNOWN",
+          "semantic_reason": "Substantive discovery/causal reasoning/alternatives/histories/later validation delivered; choices provisional, no product build. Frozen inputs unchanged and reveal record present. Global recipe/seal and exclusive pre-reveal access unavailable within bounded review; not inferred from other arms."
+        },
+        {
+          "id": "P077.05",
+          "exact_text": "C inputs remain sealed until the recipe freeze.",
+          "disposition": "SEMANTIC_SCOPE_PRESERVED_PROTOCOL_PARTLY_UNKNOWN",
+          "semantic_reason": "Substantive discovery/causal reasoning/alternatives/histories/later validation delivered; choices provisional, no product build. Frozen inputs unchanged and reveal record present. Global recipe/seal and exclusive pre-reveal access unavailable within bounded review; not inferred from other arms."
+        },
+        {
+          "id": "P077.06",
+          "exact_text": "Input readiness does not assert that those release conditions have been satisfied.",
+          "disposition": "SEMANTIC_SCOPE_PRESERVED_PROTOCOL_PARTLY_UNKNOWN",
+          "semantic_reason": "Substantive discovery/causal reasoning/alternatives/histories/later validation delivered; choices provisional, no product build. Frozen inputs unchanged and reveal record present. Global recipe/seal and exclusive pre-reveal access unavailable within bounded review; not inferred from other arms."
+        }
+      ]
+    }
+  ],
+  "criticism_dispositions": [
+    {
+      "id": "CI-01",
+      "original_classification": "MATERIAL_INCOMPLETE",
+      "critic_locator": "ER12_RUNTIME/runs/C-R1-01/control/stages/critic/critique.md:29",
+      "candidate_disposition": "ACCEPT_AND_AMEND",
+      "final_locator": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:91",
+      "independent_disposition": "CORRECT_CRITICISM; BOUNDED_AMENDMENT_SUFFICIENT",
+      "reason": "Source-level A/B changes all paths; airborne sound can excite structure. Added dominant-input contrast explicitly preserves mixed paths, sensor/spectrum/access limits and unresolved attribution. No guaranteed or executed route diagnosis is invented.",
+      "sources": [
+        "S08",
+        "S09",
+        "IR15"
+      ],
+      "remaining_material_issue": false
+    },
+    {
+      "id": "satisfied-clause-findings",
+      "candidate_disposition": "RETAIN",
+      "independent_disposition": "SUPPORTED",
+      "items": [
+        "separate outcomes",
+        "source/schedule versus room/path and low-cost option",
+        "changed layout and real histories",
+        "pilot/comparison/confounders/decision/status",
+        "all original negative boundaries"
+      ],
+      "final_locator": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:155",
+      "reason": "Original exact clauses and primary sources independently checked; critic agreement was not semantic proof."
+    },
+    {
+      "id": "no-material-wrong-or-unsupported",
+      "candidate_disposition": "RETAIN",
+      "independent_disposition": "MATERIAL_CONCLUSION_SUPPORTED; MINOR_ACCESS_LIMIT_ADDED",
+      "final_locator": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:157",
+      "reason": "No remaining material source error found; reviewer qualifies the critic's no-minor-issue statement with S11 live locator failure."
+    },
+    {
+      "id": "critic-external-01",
+      "item": "floor plan/dimensions",
+      "candidate_disposition": "RETAIN_UNCERTAINTY",
+      "independent_disposition": "SUPPORTED_HONEST_EXTERNAL_INPUT",
+      "final_locator": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:142",
+      "reason": "Explicit consequence and conditional investigation/owner choice remain; no input is invented."
+    },
+    {
+      "id": "critic-external-02",
+      "item": "construction/junction details",
+      "candidate_disposition": "RETAIN_UNCERTAINTY",
+      "independent_disposition": "SUPPORTED_HONEST_EXTERNAL_INPUT",
+      "final_locator": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:142",
+      "reason": "Explicit consequence and conditional investigation/owner choice remain; no input is invented."
+    },
+    {
+      "id": "critic-external-03",
+      "item": "building/resident/courtyard access",
+      "candidate_disposition": "RETAIN_UNCERTAINTY",
+      "independent_disposition": "SUPPORTED_HONEST_EXTERNAL_INPUT",
+      "final_locator": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:142",
+      "reason": "Explicit consequence and conditional investigation/owner choice remain; no input is invented."
+    },
+    {
+      "id": "critic-external-04",
+      "item": "historical complaint timestamps",
+      "candidate_disposition": "RETAIN_UNCERTAINTY",
+      "independent_disposition": "SUPPORTED_HONEST_EXTERNAL_INPUT",
+      "final_locator": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:142",
+      "reason": "Explicit consequence and conditional investigation/owner choice remain; no input is invented."
+    },
+    {
+      "id": "critic-external-05",
+      "item": "resident outcome/metric/time",
+      "candidate_disposition": "RETAIN_UNCERTAINTY",
+      "independent_disposition": "SUPPORTED_HONEST_EXTERNAL_INPUT",
+      "final_locator": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:142",
+      "reason": "Explicit consequence and conditional investigation/owner choice remain; no input is invented."
+    },
+    {
+      "id": "critic-external-06",
+      "item": "old arrangement records",
+      "candidate_disposition": "RETAIN_UNCERTAINTY",
+      "independent_disposition": "SUPPORTED_HONEST_EXTERNAL_INPUT",
+      "final_locator": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:142",
+      "reason": "Explicit consequence and conditional investigation/owner choice remain; no input is invented."
+    },
+    {
+      "id": "critic-external-07",
+      "item": "meter/recorder bandwidth/calibration/range/synchronization",
+      "candidate_disposition": "RETAIN_UNCERTAINTY",
+      "independent_disposition": "SUPPORTED_HONEST_EXTERNAL_INPUT",
+      "final_locator": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:142",
+      "reason": "Explicit consequence and conditional investigation/owner choice remain; no input is invented."
+    },
+    {
+      "id": "critic-external-08",
+      "item": "accelerometer/source-control permission/availability",
+      "candidate_disposition": "RETAIN_UNCERTAINTY",
+      "independent_disposition": "SUPPORTED_HONEST_EXTERNAL_INPUT",
+      "final_locator": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:142",
+      "reason": "Explicit consequence and conditional investigation/owner choice remain; no input is invented."
+    },
+    {
+      "id": "critic-external-09",
+      "item": "musician acceptable room outcome",
+      "candidate_disposition": "RETAIN_UNCERTAINTY",
+      "independent_disposition": "SUPPORTED_HONEST_EXTERNAL_INPUT",
+      "final_locator": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:142",
+      "reason": "Explicit consequence and conditional investigation/owner choice remain; no input is invented."
+    }
+  ],
+  "useful_discoveries": [
+    {
+      "finding": "Lab-selected inflatable airbeds implemented at Henry Wood Hall",
+      "mechanism_and_use": "Flexible room RT reduction with before/after measurements; investigate inflation/setup/session changes, not exterior isolation.",
+      "sources": [
+        "S12"
+      ],
+      "final_preservation": "Core precedent retained; inflation detail compressed."
+    },
+    {
+      "finding": "Damped wind-band room associated with poor hearing/overplaying",
+      "mechanism_and_use": "Separate room acceptability and listening tradeoffs; inspect absorption/reflector layout and subjective/measurement pairing.",
+      "sources": [
+        "S11"
+      ],
+      "final_preservation": "Retained with different scale/ensemble/outcome."
+    },
+    {
+      "finding": "Airborne low-frequency sound can excite floor vibration",
+      "mechanism_and_use": "Prevent vibration correlation from becoming structural-route proof; use bounded dominant-input contrasts.",
+      "sources": [
+        "S08",
+        "S09",
+        "IR15"
+      ],
+      "final_preservation": "Retained and used in CI-01 correction."
+    },
+    {
+      "finding": "Close residential bass/guitar/drum design workflow",
+      "mechanism_and_use": "Source characterization, repeated music and enclosure measurements precede modeling; no installed verification.",
+      "sources": [
+        "S10"
+      ],
+      "final_preservation": "Retained; exact 20-second detail compressed."
+    },
+    {
+      "finding": "Real UBC and Clore measurement-to-design histories",
+      "mechanism_and_use": "Request protocols, receiver definitions, drawings, constraints and commissioning data; construction not transferred.",
+      "sources": [
+        "S13",
+        "S14"
+      ],
+      "final_preservation": "Retained with scope/performance limits."
+    },
+    {
+      "finding": "Position effects and standards have bounded domains",
+      "mechanism_and_use": "Repeatable spatial sampling and separate sound/vibration/RT/receiver oracles; no manufacturer/phone proxy.",
+      "sources": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S07"
+      ],
+      "final_preservation": "Retained with units and no numeric compliance assertion."
+    }
+  ],
+  "source_records": [
+    {
+      "source_id": "S01",
+      "title": "ISO 1996-2:2017 — Determination of environmental sound pressure levels",
+      "exact_url": "https://www.iso.org/standard/59766.html",
+      "released_version": "ISO 1996-2:2017, edition 3; official record confirmed 2026; lifecycle also contains revision entries.",
+      "reviewer_retrieval": "Independent web open/search plus separate HTTP retrieval attempt; see captures/HTTP logs",
+      "evidence_depth": "Official public abstract/lifecycle",
+      "local_evidence_path": "ER12_RUNTIME/assessment/C-R1-01/control-v1/evidence/web_iso.txt",
+      "local_evidence_sha256": "3a1cbe3ceac7a81f511e986eca2f7029629b32f758ad2d10875231c463b0c2b2",
+      "locator": "ISO 1996-2 abstract L45–47; confirmation L24 and lifecycle L139–147",
+      "exact_subject_operation_units_domain": "Environmental sound-pressure determination, principally outdoors, with uncertainty tied to chosen measurement effort.",
+      "conditions_exceptions_applicability": "No maximum uncertainty or resident target is imposed; some indoor guidance also exists. A courtyard comparison is an appropriate use of the framework, not proof of site cause or legal compliance.",
+      "default": "Not applicable: no API/configuration default claimed",
+      "semantic_verdict": "SUPPORTED_WITH_STATED_SCOPE",
+      "candidate_locators": [
+        "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:43"
+      ],
+      "capture_saved_at_utc": "2026-10-10T05:44:23.606980+00:00",
+      "access_utc": "2026-10-10T05:38:32.436722+00:00",
+      "access_time_basis": "HTTP attempt start where present (including failed direct attempts). Exact successful web retrieval timestamp not exposed; web operation occurred after reviewer start and before local capture save. See retrieval logs for outcome and evidence_depth for successful route.",
+      "web_retrieval_window_utc": {
+        "not_before": "2026-10-10T05:35:56Z",
+        "not_after": "2026-10-10T05:44:23.606980+00:00"
+      }
+    },
+    {
+      "source_id": "S02",
+      "title": "ISO 16283-1:2014 — Airborne sound insulation between rooms",
+      "exact_url": "https://www.iso.org/standard/55997.html",
+      "released_version": "ISO 16283-1:2014, edition 1; Amendment 1:2017; confirmed 2025.",
+      "reviewer_retrieval": "Independent web open/search plus separate HTTP retrieval attempt; see captures/HTTP logs",
+      "evidence_depth": "Official public abstract/lifecycle",
+      "local_evidence_path": "ER12_RUNTIME/assessment/C-R1-01/control-v1/evidence/web_iso.txt",
+      "local_evidence_sha256": "3a1cbe3ceac7a81f511e986eca2f7029629b32f758ad2d10875231c463b0c2b2",
+      "locator": "ISO 16283-1 abstract L50–51; amendment L87–89; confirmation L24",
+      "exact_subject_operation_units_domain": "Airborne room-to-room insulation by pressure measurements; 10–250 m³ and 50–5000 Hz.",
+      "conditions_exceptions_applicability": "Insulation is frequency-dependent; furnished/unfurnished and non-diffuse fields are contemplated. It is not a vibration measurement, a courtyard ambient metric or universal coverage of sub-50-Hz bass.",
+      "default": "Not applicable: no API/configuration default claimed",
+      "semantic_verdict": "SUPPORTED_WITH_STATED_SCOPE",
+      "candidate_locators": [
+        "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:43"
+      ],
+      "capture_saved_at_utc": "2026-10-10T05:44:23.606980+00:00",
+      "access_utc": "2026-10-10T05:38:32.438212+00:00",
+      "access_time_basis": "HTTP attempt start where present (including failed direct attempts). Exact successful web retrieval timestamp not exposed; web operation occurred after reviewer start and before local capture save. See retrieval logs for outcome and evidence_depth for successful route.",
+      "web_retrieval_window_utc": {
+        "not_before": "2026-10-10T05:35:56Z",
+        "not_after": "2026-10-10T05:44:23.606980+00:00"
+      }
+    },
+    {
+      "source_id": "S03",
+      "title": "ISO 16283-3:2016 — Façade sound insulation",
+      "exact_url": "https://www.iso.org/standard/59748.html",
+      "released_version": "ISO 16283-3:2016, edition 1; published, to be revised; ISO/CD successor under development.",
+      "reviewer_retrieval": "Independent web open/search plus separate HTTP retrieval attempt; see captures/HTTP logs",
+      "evidence_depth": "Official public abstract/lifecycle",
+      "local_evidence_path": "ER12_RUNTIME/assessment/C-R1-01/control-v1/evidence/web_iso.txt",
+      "local_evidence_sha256": "3a1cbe3ceac7a81f511e986eca2f7029629b32f758ad2d10875231c463b0c2b2",
+      "locator": "ISO 16283-3 abstract L48–49; lifecycle L62,143,155",
+      "exact_subject_operation_units_domain": "Façade-element/whole-façade airborne insulation; 10–250 m³ and 50–5000 Hz.",
+      "conditions_exceptions_applicability": "The operative measurement is building insulation, not general courtyard disturbance. Revision status is not a withdrawal. Candidate preserves the frequency and subject limits.",
+      "default": "Not applicable: no API/configuration default claimed",
+      "semantic_verdict": "SUPPORTED_WITH_STATED_SCOPE",
+      "candidate_locators": [
+        "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:43"
+      ],
+      "capture_saved_at_utc": "2026-10-10T05:44:23.606980+00:00",
+      "access_utc": "2026-10-10T05:38:32.443936+00:00",
+      "access_time_basis": "HTTP attempt start where present (including failed direct attempts). Exact successful web retrieval timestamp not exposed; web operation occurred after reviewer start and before local capture save. See retrieval logs for outcome and evidence_depth for successful route.",
+      "web_retrieval_window_utc": {
+        "not_before": "2026-10-10T05:35:56Z",
+        "not_after": "2026-10-10T05:44:23.606980+00:00"
+      }
+    },
+    {
+      "source_id": "S04",
+      "title": "ISO 10052:2021 — Survey method for airborne/impact insulation and service-equipment sound",
+      "exact_url": "https://www.iso.org/obp/ui?_escaped_fragment_=iso%3Astd%3Aiso%3A10052%3Aed-2%3Av1%3Aen",
+      "released_version": "ISO 10052:2021, edition 2, English official OBP preview.",
+      "reviewer_retrieval": "Independent web open/search plus separate HTTP retrieval attempt; see captures/HTTP logs",
+      "evidence_depth": "Official OBP introduction/scope preview",
+      "local_evidence_path": "ER12_RUNTIME/assessment/C-R1-01/control-v1/evidence/web_conditions.txt",
+      "local_evidence_sha256": "ab75bc2404d3d62d5d8e8a2b007b04aca7dabd2d7909342a650d886256d2f306",
+      "locator": "ISO 10052 introduction L88–94; scope L97–109",
+      "exact_subject_operation_units_domain": "Simplified survey: handheld instrument/manual sweep, greater uncertainty than engineering methods.",
+      "conditions_exceptions_applicability": "Dwelling/comparable rooms at most 150 m³; octave-band insulation, A/C service-equipment levels and a heavy/soft-impact exception. Annex operating cycles yield to national rules. No improvised pilot is thereby standards compliant.",
+      "default": "Not applicable: no API/configuration default claimed",
+      "semantic_verdict": "SUPPORTED_WITH_STATED_SCOPE",
+      "candidate_locators": [
+        "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:43"
+      ],
+      "capture_saved_at_utc": "2026-10-10T05:44:23.602479+00:00",
+      "access_utc": "2026-10-10T05:38:32.446052+00:00",
+      "access_time_basis": "HTTP attempt start where present (including failed direct attempts). Exact successful web retrieval timestamp not exposed; web operation occurred after reviewer start and before local capture save. See retrieval logs for outcome and evidence_depth for successful route.",
+      "web_retrieval_window_utc": {
+        "not_before": "2026-10-10T05:35:56Z",
+        "not_after": "2026-10-10T05:44:23.602479+00:00"
+      }
+    },
+    {
+      "source_id": "S05",
+      "title": "ISO 3382-2:2008 — Reverberation time in ordinary rooms",
+      "exact_url": "https://www.iso.org/standard/36201.html",
+      "released_version": "ISO 3382-2:2008, edition 1; Cor 1:2009; confirmed 2022.",
+      "reviewer_retrieval": "Independent web open/search plus separate HTTP retrieval attempt; see captures/HTTP logs",
+      "evidence_depth": "Official public abstract/lifecycle",
+      "local_evidence_path": "ER12_RUNTIME/assessment/C-R1-01/control-v1/evidence/web_version_tail.txt",
+      "local_evidence_sha256": "aaff9c996b6ce14bb75425b6f6f80a2b876e8107ae40ec018793decaba45a2e2",
+      "locator": "ISO 3382-2 L24,50–51,162",
+      "exact_subject_operation_units_domain": "Ordinary-room reverberation-time method, including apparatus, positions and reporting.",
+      "conditions_exceptions_applicability": "RT can correct other acoustic measurements; RT alone is not a courtyard outcome. No numeric RT target or compliance claim is asserted.",
+      "default": "Not applicable: no API/configuration default claimed",
+      "semantic_verdict": "SUPPORTED_WITH_STATED_SCOPE",
+      "candidate_locators": [
+        "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:45"
+      ],
+      "capture_saved_at_utc": "2026-10-10T05:44:23.608667+00:00",
+      "access_utc": "2026-10-10T05:38:32.447627+00:00",
+      "access_time_basis": "HTTP attempt start where present (including failed direct attempts). Exact successful web retrieval timestamp not exposed; web operation occurred after reviewer start and before local capture save. See retrieval logs for outcome and evidence_depth for successful route.",
+      "web_retrieval_window_utc": {
+        "not_before": "2026-10-10T05:35:56Z",
+        "not_after": "2026-10-10T05:44:23.608667+00:00"
+      }
+    },
+    {
+      "source_id": "S06",
+      "title": "ISO 23591:2021 — Acoustic quality criteria for music rehearsal rooms and spaces",
+      "exact_url": "https://www.iso.org/standard/76335.html",
+      "released_version": "ISO 23591:2021, edition 1; Amd 1:2025 (Gugak); under systematic review.",
+      "reviewer_retrieval": "Independent web open/search plus separate HTTP retrieval attempt; see captures/HTTP logs",
+      "evidence_depth": "Official public abstract/lifecycle",
+      "local_evidence_path": "ER12_RUNTIME/assessment/C-R1-01/control-v1/evidence/web_final_conditions.txt",
+      "local_evidence_sha256": "88fa2fc05409925d50f27978c231f91e06e77283420018fe817d6aeaeaaacb1f",
+      "locator": "ISO 23591 L49–55,68,91–94,186",
+      "exact_subject_operation_units_domain": "Room acoustics/size criteria differentiated for amplified, quiet-acoustic and loud-acoustic rehearsal.",
+      "conditions_exceptions_applicability": "Excludes sound-insulation criteria and specialized performance/recording venues. Existing-space assessment is allowed. Unknown room geometry/music type prevents applying a numeric criterion here.",
+      "default": "Not applicable: no API/configuration default claimed",
+      "semantic_verdict": "SUPPORTED_WITH_STATED_SCOPE",
+      "candidate_locators": [
+        "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:45"
+      ],
+      "capture_saved_at_utc": "2026-10-10T05:44:23.603685+00:00",
+      "access_utc": "2026-10-10T05:38:32.449264+00:00",
+      "access_time_basis": "HTTP attempt start where present (including failed direct attempts). Exact successful web retrieval timestamp not exposed; web operation occurred after reviewer start and before local capture save. See retrieval logs for outcome and evidence_depth for successful route.",
+      "web_retrieval_window_utc": {
+        "not_before": "2026-10-10T05:35:56Z",
+        "not_after": "2026-10-10T05:44:23.603685+00:00"
+      }
+    },
+    {
+      "source_id": "S07",
+      "title": "Pedersen, Møller & Persson Waye (2007), Indoor Measurements of Noise at Low Frequencies — Problems and Solutions",
+      "exact_url": "https://journals.sagepub.com/doi/10.1260/026309207783571389",
+      "released_version": "Pedersen, Møller & Persson Waye 2007, 26(4):249–270; DOI 10.1260/026309207783571389.",
+      "reviewer_retrieval": "Independent web open/search plus separate HTTP retrieval attempt; see captures/HTTP logs",
+      "evidence_depth": "Publisher abstract",
+      "local_evidence_path": "ER12_RUNTIME/assessment/C-R1-01/control-v1/evidence/web_primary1.txt",
+      "local_evidence_sha256": "dba1c3b713785d5a4223c93752d99336d20082cabb4b81ade901f441d5047e59",
+      "locator": "SAGE article abstract L30–33; metadata L178–182",
+      "exact_subject_operation_units_domain": "Low-frequency standing waves can produce 20–30 dB spatial variation; simulations and three-room measurements examine position methods.",
+      "conditions_exceptions_applicability": "The abstract warns that high-level locations can be missed, including problems with C-weighted scanning. Multiple marked positions are a justified inference; the reported range is not this site's measurement.",
+      "default": "Not applicable: no API/configuration default claimed",
+      "semantic_verdict": "SUPPORTED_WITH_STATED_SCOPE",
+      "candidate_locators": [
+        "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:45"
+      ],
+      "capture_saved_at_utc": "2026-10-10T05:44:23.607808+00:00",
+      "access_utc": "2026-10-10T05:38:32.517697+00:00",
+      "access_time_basis": "HTTP attempt start where present (including failed direct attempts). Exact successful web retrieval timestamp not exposed; web operation occurred after reviewer start and before local capture save. See retrieval logs for outcome and evidence_depth for successful route.",
+      "web_retrieval_window_utc": {
+        "not_before": "2026-10-10T05:35:56Z",
+        "not_after": "2026-10-10T05:44:23.607808+00:00"
+      }
+    },
+    {
+      "source_id": "S08",
+      "title": "Løvholt et al. (2017), Simulating low frequency sound transmission through walls and windows by a two-way coupled fluid-structure interaction model",
+      "exact_url": "https://www.sciencedirect.com/science/article/pii/S0022460X17301207",
+      "released_version": "Løvholt et al. 2017, Journal of Sound and Vibration 396:203–216; DOI 10.1016/j.jsv.2017.02.026.",
+      "reviewer_retrieval": "Independent web open/search plus separate HTTP retrieval attempt; see captures/HTTP logs",
+      "evidence_depth": "Publisher-hosted indexed abstract; direct 403",
+      "local_evidence_path": "ER12_RUNTIME/assessment/C-R1-01/control-v1/evidence/web_follow1.txt",
+      "local_evidence_sha256": "c6ee4a4f8cc83ade37471f549ad2ad05879b11a273d4cee2a3b84095b818a067",
+      "locator": "ScienceDirect exact-title search result, Abstract",
+      "exact_subject_operation_units_domain": "Two-way fluid–structure model compared with lab walls/windows over 10–100 Hz; structural connections matter.",
+      "conditions_exceptions_applicability": "Publisher abstract gives window dominance 15–30 Hz and wall dominance 30–100 Hz in tested assemblies, in aircraft/blast context. This supports coupled hypotheses, not site predictions or vibration-correlation route proof.",
+      "default": "Not applicable: no API/configuration default claimed",
+      "semantic_verdict": "SUPPORTED_WITH_STATED_SCOPE",
+      "candidate_locators": [
+        "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:49"
+      ],
+      "capture_saved_at_utc": "2026-10-10T05:44:23.604574+00:00",
+      "access_utc": "2026-10-10T05:38:32.519381+00:00",
+      "access_time_basis": "HTTP attempt start where present (including failed direct attempts). Exact successful web retrieval timestamp not exposed; web operation occurred after reviewer start and before local capture save. See retrieval logs for outcome and evidence_depth for successful route.",
+      "web_retrieval_window_utc": {
+        "not_before": "2026-10-10T05:35:56Z",
+        "not_after": "2026-10-10T05:44:23.604574+00:00"
+      }
+    },
+    {
+      "source_id": "S09",
+      "title": "Norén-Cosgriff et al. (2016), Countermeasures against noise and vibrations in lightweight wooden buildings caused by outdoor sources with strong low-frequency components",
+      "exact_url": "https://www.sintef.no/en/publications/publication/1450011/",
+      "released_version": "Norén-Cosgriff et al. 2016, Noise Control Engineering Journal 64(6):737–752; DOI 10.3397/1/376416.",
+      "reviewer_retrieval": "Independent web open/search plus separate HTTP retrieval attempt; see captures/HTTP logs",
+      "evidence_depth": "Author-institution abstract retrieved directly",
+      "local_evidence_path": "ER12_RUNTIME/assessment/C-R1-01/control-v1/evidence/S09.txt",
+      "local_evidence_sha256": "d7510244b1d1d1df7f431c9c5a408a06201153c909a1bdaac97b7326674bde5d",
+      "locator": "Abstract, beginning Low frequency sound may contribute; Year/DOI",
+      "exact_subject_operation_units_domain": "Lab/model/full-scale Norwegian wooden-building program; sound-induced floor vibration under F-16 aircraft noise.",
+      "conditions_exceptions_applicability": "Reported benefits belong to combined structural/window/ventilation countermeasures in that building. Candidate correctly avoids transferring their numerical reductions or recommending those structural measures.",
+      "default": "Not applicable: no API/configuration default claimed",
+      "semantic_verdict": "SUPPORTED_WITH_STATED_SCOPE",
+      "candidate_locators": [
+        "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:51"
+      ],
+      "capture_saved_at_utc": "2026-10-10T05:38:32.821773+00:00",
+      "access_utc": "2026-10-10T05:38:32.526596+00:00",
+      "access_time_basis": "HTTP attempt start where present (including failed direct attempts). Exact successful web retrieval timestamp not exposed; web operation occurred after reviewer start and before local capture save. See retrieval logs for outcome and evidence_depth for successful route.",
+      "web_retrieval_window_utc": {
+        "not_before": "2026-10-10T05:35:56Z",
+        "not_after": "2026-10-10T05:38:32.821773+00:00"
+      }
+    },
+    {
+      "source_id": "S10",
+      "title": "Vargas Vera, San Millán-Castillo & Swerdlow (2019), Sound insulation design methodology: case study on a music rehearsal room",
+      "exact_url": "https://euracoustics.org/documents/9/02_Sound_insulation.pdf",
+      "released_version": "Vargas Vera et al. 2019, Acoustics in Practice 7(1), 10-page EAA paper.",
+      "reviewer_retrieval": "Independent web open/search plus separate HTTP retrieval attempt; see captures/HTTP logs",
+      "evidence_depth": "Complete EAA PDF text read",
+      "local_evidence_path": "ER12_RUNTIME/assessment/C-R1-01/control-v1/evidence/S10.txt",
+      "local_evidence_sha256": "5dc89d021d66f04697898c417306e512bbb19808e07ebfcfd6e287ec8214cf22",
+      "locator": "PDF pp.1–2 abstract/scope and §2.1; pp.4–6 §2.3–2.4; pp.8–9 modeling/conclusions",
+      "exact_subject_operation_units_domain": "Residential-basement design workflow; bass/guitar/drums, repeated 20-second passages, enclosure measurements and modeling.",
+      "conditions_exceptions_applicability": "Paper explicitly excludes installed-solution verification despite later modeled objective-verification language. The candidate distinguishes a workflow analogue from an implemented success. Flanking/model and geometric limitations further constrain transfer.",
+      "default": "Not applicable: no API/configuration default claimed",
+      "semantic_verdict": "SUPPORTED_WITH_STATED_SCOPE",
+      "candidate_locators": [
+        "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:57"
+      ],
+      "capture_saved_at_utc": "2026-10-10T05:38:33.869777+00:00",
+      "access_utc": "2026-10-10T05:38:32.531767+00:00",
+      "access_time_basis": "HTTP attempt start where present (including failed direct attempts). Exact successful web retrieval timestamp not exposed; web operation occurred after reviewer start and before local capture save. See retrieval logs for outcome and evidence_depth for successful route.",
+      "web_retrieval_window_utc": {
+        "not_before": "2026-10-10T05:35:56Z",
+        "not_after": "2026-10-10T05:38:33.869777+00:00"
+      }
+    },
+    {
+      "source_id": "S11",
+      "title": "Støfringsdal & Bolstad (2023), Optimizing (too) small ensemble rehearsal rooms for acoustic loud music",
+      "exact_url": "https://www.ioa.org.uk/system/files/proceedings/b_stofringsdal_e_bolstad_optimizing_too_small_ensemble_rehearsal_rooms_for_acoustic_loud_music_0.pdf",
+      "released_version": "Støfringsdal & Bolstad 2023, Proceedings of the Institute of Acoustics 45(2); candidate DOI 10.25144/16014; publisher text identifies title/authors/year, DOI not exposed in retrieved publisher text.",
+      "reviewer_retrieval": "Independent web open/search plus separate HTTP retrieval attempt; see captures/HTTP logs",
+      "evidence_depth": "Publisher-indexed PDF text; live URLs 404; full paper tail not retrieved",
+      "local_evidence_path": "ER12_RUNTIME/assessment/C-R1-01/control-v1/evidence/web_follow3.txt",
+      "local_evidence_sha256": "26a7f4af5dfe94e7090d6ced398039c69ec28eeb34246b6cb0af10777f6219b1",
+      "locator": "Publisher-hosted PDF, pp.2–5 §3.1/3.1.1/3.1.2/3.1.3, original web lines 91–229",
+      "exact_subject_operation_units_domain": "Completed 1600 m³ professional wind-band redesign; prior 40 mm absorbers reduced strength but survey found dry/imbalanced acoustics and overplaying.",
+      "conditions_exceptions_applicability": "Internal-acoustics case only. The later redesign trades listening support against loudness and still has limits. Candidate's caution is supported; it does not claim courtyard isolation or universal superiority.",
+      "default": "Not applicable: no API/configuration default claimed",
+      "semantic_verdict": "SUPPORTED_WITH_STATED_SCOPE",
+      "candidate_locators": [
+        "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:64"
+      ],
+      "capture_saved_at_utc": "2026-10-10T05:44:23.606216+00:00",
+      "access_utc": "2026-10-10T05:38:32.535803+00:00",
+      "access_time_basis": "HTTP attempt start where present (including failed direct attempts). Exact successful web retrieval timestamp not exposed; web operation occurred after reviewer start and before local capture save. See retrieval logs for outcome and evidence_depth for successful route.",
+      "web_retrieval_window_utc": {
+        "not_before": "2026-10-10T05:35:56Z",
+        "not_after": "2026-10-10T05:44:23.606216+00:00"
+      }
+    },
+    {
+      "source_id": "S12",
+      "title": "Shearer et al. (2021), Flexible control of acoustic conditions in a music rehearsal space using airbeds",
+      "exact_url": "https://researchportal.lsbu.ac.uk/en/publications/flexible-control-of-acoustic-conditions-in-a-music-rehearsal-spac-3/",
+      "released_version": "Shearer et al. 2021, Applied Acoustics 173:107708; DOI 10.1016/j.apacoust.2020.107708.",
+      "reviewer_retrieval": "Independent web open/search plus separate HTTP retrieval attempt; see captures/HTTP logs",
+      "evidence_depth": "Author-university abstract retrieved directly",
+      "local_evidence_path": "ER12_RUNTIME/assessment/C-R1-01/control-v1/evidence/S12.txt",
+      "local_evidence_sha256": "3bd937397d760b87e6aeaf92e25704a7c8e0b437edf0d3d7077418d94ff5106a",
+      "locator": "Abstract; DOI/publication-status metadata",
+      "exact_subject_operation_units_domain": "Henry Wood Hall: lab-selected inflated consumer airbed, inflation dependence, installation and before/after low-band RT measurements.",
+      "conditions_exceptions_applicability": "Modest-budget flexibility sought for smaller ensembles/voice in a former church. It is a useful unusual room-decay precedent, not a measured neighbor-noise or isolation result.",
+      "default": "Not applicable: no API/configuration default claimed",
+      "semantic_verdict": "SUPPORTED_WITH_STATED_SCOPE",
+      "candidate_locators": [
+        "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:63"
+      ],
+      "capture_saved_at_utc": "2026-10-10T05:38:33.144480+00:00",
+      "access_utc": "2026-10-10T05:38:32.575303+00:00",
+      "access_time_basis": "HTTP attempt start where present (including failed direct attempts). Exact successful web retrieval timestamp not exposed; web operation occurred after reviewer start and before local capture save. See retrieval logs for outcome and evidence_depth for successful route.",
+      "web_retrieval_window_utc": {
+        "not_before": "2026-10-10T05:35:56Z",
+        "not_after": "2026-10-10T05:38:33.144480+00:00"
+      }
+    },
+    {
+      "source_id": "S13",
+      "title": "BKL Consultants, UBC Music Building Renovations case record",
+      "exact_url": "https://bkl.ca/projects/ubc-music-building-renovations/",
+      "released_version": "BKL first-party UBC Music Building renovation record; completed 2022; no page revision ID.",
+      "reviewer_retrieval": "Independent web open/search plus separate HTTP retrieval attempt; see captures/HTTP logs",
+      "evidence_depth": "Complete first-party case page read",
+      "local_evidence_path": "ER12_RUNTIME/assessment/C-R1-01/control-v1/evidence/S13.txt",
+      "local_evidence_sha256": "134258d1524e4e5eeb0eb39b195cce6ad24e991aef01c3414a44bca2944bb296",
+      "locator": "About This Project; Scope of Services; Acoustical Challenges; Project Benefits; Capital Cost",
+      "exact_subject_operation_units_domain": "Real multi-floor UBC renovation: pre-project instrument/floor/practice-room checks and construction inspection; structural transmission concern.",
+      "conditions_exceptions_applicability": "First-party page reports $2.8 million capital cost and objectives met, but no raw/numeric after-results. Its institutional scale and permanent renovation are explicitly outside the candidate's proposed intervention scope.",
+      "default": "Not applicable: no API/configuration default claimed",
+      "semantic_verdict": "SUPPORTED_WITH_STATED_SCOPE",
+      "candidate_locators": [
+        "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:61"
+      ],
+      "capture_saved_at_utc": "2026-10-10T05:38:33.978795+00:00",
+      "access_utc": "2026-10-10T05:38:32.583390+00:00",
+      "access_time_basis": "HTTP attempt start where present (including failed direct attempts). Exact successful web retrieval timestamp not exposed; web operation occurred after reviewer start and before local capture save. See retrieval logs for outcome and evidence_depth for successful route.",
+      "web_retrieval_window_utc": {
+        "not_before": "2026-10-10T05:35:56Z",
+        "not_after": "2026-10-10T05:38:33.978795+00:00"
+      }
+    },
+    {
+      "source_id": "S14",
+      "title": "Sandy Brown, Clore Music Studios, New College, University of Oxford case record",
+      "exact_url": "https://www.sandybrown.com/case-study/clore-music-studios-new-college-university-of-oxford/",
+      "released_version": "Sandy Brown first-party Clore Music Studios record; completed/opened 2019; no page revision ID.",
+      "reviewer_retrieval": "Independent web open/search plus separate HTTP retrieval attempt; see captures/HTTP logs",
+      "evidence_depth": "Complete first-party case page read",
+      "local_evidence_path": "ER12_RUNTIME/assessment/C-R1-01/control-v1/evidence/S14.txt",
+      "local_evidence_sha256": "68f274a0680343dd97d535c309162761fe32b7beb3183f0a0e679c74346d49bd",
+      "locator": "Project summary; survey/music-egress paragraphs; box-in-box paragraph",
+      "exact_subject_operation_units_domain": "Environmental baseline used to set music-egress limits outside nearest sensitive premises; independent envelope, floated floors and room finishes.",
+      "conditions_exceptions_applicability": "The page separately applies BS4142 to plant noise; it does not apply that rule indiscriminately to music. Purpose-built college facility differs. No numeric post-opening result or retrofit performance is claimed by the candidate.",
+      "default": "Not applicable: no API/configuration default claimed",
+      "semantic_verdict": "SUPPORTED_WITH_STATED_SCOPE",
+      "candidate_locators": [
+        "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:62"
+      ],
+      "capture_saved_at_utc": "2026-10-10T05:38:33.681351+00:00",
+      "access_utc": "2026-10-10T05:38:32.645459+00:00",
+      "access_time_basis": "HTTP attempt start where present (including failed direct attempts). Exact successful web retrieval timestamp not exposed; web operation occurred after reviewer start and before local capture save. See retrieval logs for outcome and evidence_depth for successful route.",
+      "web_retrieval_window_utc": {
+        "not_before": "2026-10-10T05:35:56Z",
+        "not_after": "2026-10-10T05:38:33.681351+00:00"
+      }
+    },
+    {
+      "source_id": "IR15",
+      "title": "ISO 16283-2:2020 — Impact sound insulation (independent reviewer cross-check)",
+      "exact_url": "https://www.iso.org/standard/77436.html",
+      "released_version": "Edition 3, July 2020, confirmed 2025",
+      "local_evidence_path": "ER12_RUNTIME/assessment/C-R1-01/control-v1/evidence/web_final_conditions.txt",
+      "locator": "ISO 16283-2 abstract L49; confirmation L24",
+      "evidence_depth": "Official public abstract",
+      "exact_subject_operation_units_domain": "Pressure measurement under an impact source on floor/stairs; 10–250 m³, 50–5000 Hz",
+      "conditions_exceptions_applicability": "Supports distinction between controlled airborne and impact excitation as measurement concepts. It does not validate the candidate's improvised diagnostic or courtyard applicability; those remain conditional.",
+      "default": "Not applicable",
+      "semantic_verdict": "SUPPORTS_BOUNDED_CRITIQUE_DISPOSITION",
+      "capture_saved_at_utc": "2026-10-10T05:44:23.603685+00:00",
+      "access_utc": null,
+      "access_time_basis": "HTTP attempt start where present (including failed direct attempts). Exact successful web retrieval timestamp not exposed; web operation occurred after reviewer start and before local capture save. See retrieval logs for outcome and evidence_depth for successful route.",
+      "web_retrieval_window_utc": {
+        "not_before": "2026-10-10T05:35:56Z",
+        "not_after": "2026-10-10T05:44:23.603685+00:00"
+      },
+      "local_evidence_sha256": "88fa2fc05409925d50f27978c231f91e06e77283420018fe817d6aeaeaaacb1f"
+    }
+  ],
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/C-R1-01/brief.md",
+      "bytes": 2797,
+      "sha256": "3216664e3d2ff638002c3593b14ce460dae7d67daa1a65215e860d5118d4e598",
+      "mtime_ns": 1791608285326827734,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "bytes": 7137,
+      "sha256": "5f18fc6d7f9d8e4c30af8e806cf1d6c177fb058e94954326ee0343a5020a2e09",
+      "mtime_ns": 1791608285326994401,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/control/run.json",
+      "bytes": 582,
+      "sha256": "2bbb706123552849f97353b10ba19b263866ad3dc69effd3e45576915513d736",
+      "mtime_ns": 1791608285539789664,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/inputs/brief.md",
+      "bytes": 2797,
+      "sha256": "3216664e3d2ff638002c3593b14ce460dae7d67daa1a65215e860d5118d4e598",
+      "mtime_ns": 1791608285539512153,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/critic/.invocation-backup-c5f9766ab4954f3285c10397db890d7a/assignment.md",
+      "bytes": 3310,
+      "sha256": "1ed1dd21de54d751565ee82c42525f1fc8858dfca70d7228dcb3d1479a328fab",
+      "mtime_ns": 1791609155032515633,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/critic/.invocation-backup-c5f9766ab4954f3285c10397db890d7a/freeze.json",
+      "bytes": 3226,
+      "sha256": "0f69c1c49ca27064156511760a616700922f5f218a3a7e725657909dda044947",
+      "mtime_ns": 1791609155032326504,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/critic/.invocation-backup-c5f9766ab4954f3285c10397db890d7a/input-map.json",
+      "bytes": 1477,
+      "sha256": "b3adecfc0cd89f9f95f0b183f0e2b171118b1750480ede8e35fe9daf7b7e2e82",
+      "mtime_ns": 1791609155032413302,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/critic/.invocation-backup-c5f9766ab4954f3285c10397db890d7a/request.json",
+      "bytes": 897,
+      "sha256": "680f02bcba40cbb0787400a655e01560a6bbb1c028746298043f06c6d5e66384",
+      "mtime_ns": 1791609155032187911,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/critic/assignment.md",
+      "bytes": 4014,
+      "sha256": "247fe02318558a21c3f9834f92fb55d2f8938f74adeb1f188117b42934df9cf2",
+      "mtime_ns": 1791609155033655940,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/critic/critique.md",
+      "bytes": 11067,
+      "sha256": "52e5d974f16b2afa4ba64fec437d51a004762f5107eaca48793cfd648b4b2c44",
+      "mtime_ns": 1791609826050114423,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/critic/dispatch.json",
+      "bytes": 4871,
+      "sha256": "44618fee6706af393ff00b3ea42586866c6f160cfa8c1d0c49ebe2edaa4558b4",
+      "mtime_ns": 1791609155640814192,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/critic/freeze.json",
+      "bytes": 3314,
+      "sha256": "978d2cb3408545f113f506b2e3f35f324a4ee10afb530fb5e153d723c354e8e7",
+      "mtime_ns": 1791609155033329015,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/critic/input-map.json",
+      "bytes": 1477,
+      "sha256": "b3adecfc0cd89f9f95f0b183f0e2b171118b1750480ede8e35fe9daf7b7e2e82",
+      "mtime_ns": 1791609155033496670,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/critic/invocation-clarification.json",
+      "bytes": 3030,
+      "sha256": "a4b54ca0c641f907d8a33fc8b7d142926660183f5908f8ffd27aab49c268025f",
+      "mtime_ns": 1791609155033843955,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/critic/native-goal-activation-response.json",
+      "bytes": 468,
+      "sha256": "627590656b4bad1545373d0efd407e03ab7502ce84e0ea9b01fbd9f33bf9d172",
+      "mtime_ns": 1791609399275327605,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/critic/native-goal-completion-response.json",
+      "bytes": 797,
+      "sha256": "9edc48fbf2d01a354912d10a30f9e38f2c257f79c77d80126554e0fe9053b3d6",
+      "mtime_ns": 1791609826148115019,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/critic/request.json",
+      "bytes": 1613,
+      "sha256": "85af561c74a2732780d8d0519078ec3473c61ce584f68feefe2fede87b2a4a24",
+      "mtime_ns": 1791609155033047614,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/critic/service-tier-change.json",
+      "bytes": 481,
+      "sha256": "a3631c7d67bd4fc8fddc2d2f5b9189eb7a2abd44357a2dc657c5b5c7b223f491",
+      "mtime_ns": 1791609154811038665,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/critic/source-map.json",
+      "bytes": 16186,
+      "sha256": "7fabdfec112be560abd7dfb6b96d108ebdbd33d01946454b6e002f2872ecd442",
+      "mtime_ns": 1791609637262903936,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/critic/status.json",
+      "bytes": 4222,
+      "sha256": "fd2c65fb6a660b59cbd79845188690b76294de3eceaaa703f5ed63b5004cfe8e",
+      "mtime_ns": 1791609882698915757,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/investigator/assignment.md",
+      "bytes": 3720,
+      "sha256": "1220e6a62619eb04dfcd19b4276b9a90cf256724e7317b5523ba18994da6223a",
+      "mtime_ns": 1791608285540539406,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/investigator/discovery.md",
+      "bytes": 14920,
+      "sha256": "9fc94330a5d60c254a7f880a167142c5a825d4600d3913e113f9009fa8e45df0",
+      "mtime_ns": 1791608543890275677,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/investigator/dispatch.json",
+      "bytes": 4251,
+      "sha256": "a10bc4bd824bb0c186362675e4e59a71d50742a05e735c7141ce768129ee8156",
+      "mtime_ns": 1791608287309840897,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/investigator/draft.md",
+      "bytes": 24715,
+      "sha256": "66a00faa3e97fc708fd022e6f811a22fb87249f177a2070e449f38b0aa67a024",
+      "mtime_ns": 1791609029453662779,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/investigator/freeze.json",
+      "bytes": 1731,
+      "sha256": "e0f40b60dad9961de07383b95c37dafb3cd355d6fba9954b6448a45d60869b20",
+      "mtime_ns": 1791608285710415617,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/investigator/input-map.json",
+      "bytes": 789,
+      "sha256": "8203f1762b3175ff33669d4d92b1ae0c5be1e4caeb48c6d2b4d97d0f5120653f",
+      "mtime_ns": 1791608285709726565,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/investigator/native-goal-record.json",
+      "bytes": 2492,
+      "sha256": "5d015b13c8add7a62d0f2d1dc2c4e67ff2a48cfb7751154f2ecea07292598ce9",
+      "mtime_ns": 1791609110773355340,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/investigator/plan-reveal.json",
+      "bytes": 431,
+      "sha256": "802ead1fcd00094d877959f10003c44b4064e806143e911afb2adeb34c098c53",
+      "mtime_ns": 1791608600740214665,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/investigator/request.json",
+      "bytes": 921,
+      "sha256": "4b4ac44a38f4f4934ce6ed9fe9213854aa0ffbfc379d6e30608bd812b60a3866",
+      "mtime_ns": 1791608285709994057,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/investigator/revealed-plan.md",
+      "bytes": 7137,
+      "sha256": "5f18fc6d7f9d8e4c30af8e806cf1d6c177fb058e94954326ee0343a5020a2e09",
+      "mtime_ns": 1791608600739318518,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/investigator/service-tier-change.json",
+      "bytes": 493,
+      "sha256": "e50abb1ac27a6d8801fb1cc10ad44e3667805a2b520c8232bec883efca36329a",
+      "mtime_ns": 1791608285710673066,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/investigator/source-map.json",
+      "bytes": 17253,
+      "sha256": "977f26d6e2f261af26c4e9d0c52df06df5c1c4c6eb2d71700cc80af0c097ad29",
+      "mtime_ns": 1791609029454694063,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/investigator/sources/index.md",
+      "bytes": 2685,
+      "sha256": "50695a7b0cb737f0c65603616c1db84bc5faebecc4f878778458de740a9cde4c",
+      "mtime_ns": 1791608590326074124,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/investigator/status.json",
+      "bytes": 4574,
+      "sha256": "15504bc4c833d541c34e3322626eb2a7b9d785d70c2197683b88192824bf5610",
+      "mtime_ns": 1791609154315488431,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/.invocation-backup-05fd1756fad8424992da848552df6f07/assignment.md",
+      "bytes": 3290,
+      "sha256": "f64b352c2a935bf8c4344ce9da05ad1e067d2272648ea7b150ffa5254f21b8f2",
+      "mtime_ns": 1791609883432542332,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/.invocation-backup-05fd1756fad8424992da848552df6f07/freeze.json",
+      "bytes": 4005,
+      "sha256": "77e369fa5b6ae68802807966db030a3fc1fdaef15ba8892cb25e39b82279fd48",
+      "mtime_ns": 1791609883432362999,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/.invocation-backup-05fd1756fad8424992da848552df6f07/input-map.json",
+      "bytes": 1794,
+      "sha256": "749bb613107f458202b3ccc81f3cf3c5cf5e931f3a6697073434866f4b8d620f",
+      "mtime_ns": 1791609883432476464,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/.invocation-backup-05fd1756fad8424992da848552df6f07/request.json",
+      "bytes": 901,
+      "sha256": "93c49f5384de3d18743dfe167dbe7243e6badecdaa18ba592babea96048c89e3",
+      "mtime_ns": 1791609883432254015,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/assignment.md",
+      "bytes": 3996,
+      "sha256": "7fff24f06cabb3f38915a4987c5eb85ed704142eb9e85627118b4b1ff93c4e08",
+      "mtime_ns": 1791609883433632581,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/dispatch.json",
+      "bytes": 4889,
+      "sha256": "0565974a705d0fc390aa89275dd2939c29fabaa38a1fadc6da4e607193296415",
+      "mtime_ns": 1791609885064708356,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md",
+      "bytes": 27808,
+      "sha256": "91f1186fbd5ebf56429f66e8bb25a5bd26eccbb7824f8ef719117505252020e3",
+      "mtime_ns": 1791610506829320448,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/freeze.json",
+      "bytes": 4093,
+      "sha256": "68d2f5708e981156780eaa545ad19fafa54ce87a6f282da704c5e38de2a635ba",
+      "mtime_ns": 1791609883433345259,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/input-map.json",
+      "bytes": 1794,
+      "sha256": "749bb613107f458202b3ccc81f3cf3c5cf5e931f3a6697073434866f4b8d620f",
+      "mtime_ns": 1791609883433492745,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/invocation-clarification.json",
+      "bytes": 3037,
+      "sha256": "6e795e782468e60da2211cbdd93eaedde315e27753c58dca71abdd99c37fd3bd",
+      "mtime_ns": 1791609883433796951,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/native-goal-activation-response.json",
+      "bytes": 470,
+      "sha256": "f82656e26ad880c381299f73e508ab6abc21317d894acdb694dcf7fea746ca21",
+      "mtime_ns": 1791610002950201585,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/native-goal-completion-response.json",
+      "bytes": 799,
+      "sha256": "d0915673f31a7c0cc5b29d88097aef6af2084c87f8c5065ee7035906adfb88ac",
+      "mtime_ns": 1791610513394051169,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/request.json",
+      "bytes": 1619,
+      "sha256": "0a5d252a3b55fe95e6f97e39be966e7b2633436b1e108912b6cacadd717fd827",
+      "mtime_ns": 1791609883433112160,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/service-tier-change.json",
+      "bytes": 483,
+      "sha256": "b48385595216aee4496c3bce8d2999142cab798de2e6c21a3e446f852191c031",
+      "mtime_ns": 1791609883226610895,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/source-map.json",
+      "bytes": 18696,
+      "sha256": "acc52304e7ca182244421c8ae8de39b9caf73969fa6b0762f438bce6602d9622",
+      "mtime_ns": 1791610461597744673,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/sources/index.md",
+      "bytes": 5354,
+      "sha256": "633520f535d1c03ae576b28eb0c02f9c2cc77f454fcbdece6a51aa69c2eb76cb",
+      "mtime_ns": 1791610461560831642,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/control/terminal-science-freeze-root.json",
+      "bytes": 7501,
+      "sha256": "5743b43eea922a1d5a0ab9e526ed686a5d26243e1af9ebaabe65a3cb70168a89",
+      "mtime_ns": 1791610546244781292,
+      "inspection": "FULL_CONTENT",
+      "scope": "assigned C-R1-01 control package or original rubric/input"
+    }
+  ],
+  "missing_or_incomplete": {
+    "critic_sources_directory": "input-map declares stages/critic/sources but directory absent; actual critic source-map points to investigator source index",
+    "raw_original_source_captures": "No raw snapshots/PDFs in original source directories; source indices explicitly say bounded references rather than downloaded captures. Independent retrievals saved here.",
+    "S11_current_url": "Candidate _0.pdf and alternative publisher .pdf URLs currently fail; publisher-indexed substantive text was independently retrieved. No claim of live full-text accessibility."
+  },
+  "delivery": {
+    "status": "COMPLETE_FINAL_PRESENT",
+    "root_observation_at_utc": "2026-10-10T05:35:46.244487+00:00",
+    "t3_terminal_status": "completed",
+    "has_pending_child_runs": false,
+    "science_hashes_match_terminal_freeze": true
+  },
+  "native": {
+    "status": "SAVED_COMPLETION_EVIDENCE_WITH_INVESTIGATOR_PROVENANCE_LIMIT",
+    "stages": [
+      {
+        "stage": "investigator",
+        "prepared_at_utc": "2026-10-10T04:58:05.540Z",
+        "deadline_utc": "2026-10-10T05:28:05.540Z",
+        "native_goal_fields": {
+          "threadId": "01a1242c-f093-7bd1-a6a6-e975ea4b2997",
+          "objective": "ER12 investigator stage, run C-R1-01-control: execute ER12_RUNTIME/runs/C-R1-01/control/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "complete",
+          "tokensUsed": 209761,
+          "timeUsedSeconds": 765,
+          "createdAt": 1791608320,
+          "updatedAt": 1791609085
+        },
+        "native_proof_basis": "Authored native observation record; raw create/completion responses absent",
+        "requested_route": {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna",
+          "options": {
+            "reasoningEffort": "max",
+            "serviceTier": "default"
+          }
+        },
+        "t3_returned_provider": "AUTHORIZED_PROVIDER_INSTANCE",
+        "t3_returned_model": "gpt-6-luna",
+        "effective_provider_api_model": "UNKNOWN",
+        "effective_service_tier": "UNKNOWN",
+        "recorded_completion_within_stage_deadline": true
+      },
+      {
+        "stage": "critic",
+        "prepared_at_utc": "2026-10-10T05:12:34.628Z",
+        "deadline_utc": "2026-10-10T05:24:34.628Z",
+        "native_goal_fields": {
+          "threadId": "01a1243a-2faf-7ba2-b158-31dd1c0cfd00",
+          "objective": "ER12 critic stage, run C-R1-01-control: execute ER12_RUNTIME/runs/C-R1-01/control/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "complete",
+          "tokensUsed": 141816,
+          "timeUsedSeconds": 661,
+          "createdAt": 1791609164,
+          "updatedAt": 1791609826
+        },
+        "native_proof_basis": "Saved activation/completion response bytes; no independent live history authentication",
+        "requested_route": {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna",
+          "options": {
+            "reasoningEffort": "max",
+            "serviceTier": "default"
+          }
+        },
+        "t3_returned_provider": "AUTHORIZED_PROVIDER_INSTANCE",
+        "t3_returned_model": "gpt-6-luna",
+        "effective_provider_api_model": "UNKNOWN",
+        "effective_service_tier": "UNKNOWN",
+        "recorded_completion_within_stage_deadline": true
+      },
+      {
+        "stage": "reviser",
+        "prepared_at_utc": "2026-10-10T05:24:43.062Z",
+        "deadline_utc": "2026-10-10T05:42:43.062Z",
+        "native_goal_fields": {
+          "threadId": "01a12445-558d-7843-a1a6-f7690b3cef1c",
+          "objective": "ER12 reviser stage, run C-R1-01-control: execute ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "complete",
+          "tokensUsed": 119773,
+          "timeUsedSeconds": 611,
+          "createdAt": 1791609902,
+          "updatedAt": 1791610513
+        },
+        "native_proof_basis": "Saved activation/completion response bytes; no independent live history authentication",
+        "requested_route": {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna",
+          "options": {
+            "reasoningEffort": "max",
+            "serviceTier": "default"
+          }
+        },
+        "t3_returned_provider": "AUTHORIZED_PROVIDER_INSTANCE",
+        "t3_returned_model": "gpt-6-luna",
+        "effective_provider_api_model": "UNKNOWN",
+        "effective_service_tier": "UNKNOWN",
+        "recorded_completion_within_stage_deadline": true
+      }
+    ],
+    "t3_completion_is_native_proof": false,
+    "reviewer_goal_id": "01a1244f-6aad-76f1-b2b9-dbbb1169d483",
+    "reviewer_goal_count_created": 1,
+    "reviewer_goal_completed_only_after_full_save": true,
+    "reviewer_goal_status_at_full_judgment_save": "active; actual completion follows validation",
+    "reviewer_goal_precompletion_evidence": "ER12_RUNTIME/assessment/C-R1-01/control-v1/evidence/reviewer-native-goal-before-completion.json",
+    "reviewer_goal_completion_observation": {
+      "threadId": "01a1244f-6aad-76f1-b2b9-dbbb1169d483",
+      "objective": "Independently assess only the completed ER12 C-R1-01 control full pipeline under RUBRIC-v1 within a finite 45-minute envelope starting 2026-10-10 05:35:56 UTC. Read the full original frozen brief, plan, terminal science freeze, authored discovery/draft/critique/final, actual stage maps, assignments/input maps/freezes, critique dispositions/checks and authored source evidence. Inspect all six rubric axes and every exact plan clause; independently retrieve governing primary evidence for consequential claims, recommendations, corrections and source conditions. Distinguish corrected lineage defects from remaining final issues. Require source-backed FAIL for remaining material issues; use PASS_WITH_LIMITATIONS only without material issues; mark missing/unassessed rather than guess. Record native/protocol/time/effective/billing evidence separately or UNKNOWN. Do not delegate, provide candidate feedback/repair, change accounts, use Git/publication, read other arms/results/history or rescore ER11. Check only unique reviewer mailbox. Preserve original freeze unchanged. Save complete assessment.md, assessment.json and navigable independent source-map/evidence only in ER12_RUNTIME/assessment/C-R1-01/control-v1 before completing this native Goal, then report result and paths.",
+      "status": "complete",
+      "tokensUsed": 252464,
+      "timeUsedSeconds": 1091,
+      "createdAt": 1791610565,
+      "updatedAt": 1791611657
+    },
+    "reviewer_completion_evidence": "ER12_RUNTIME/assessment/C-R1-01/control-v1/evidence/reviewer-native-goal-completion-observation.json"
+  },
+  "protocol": {
+    "status": "NO_OBSERVED_SCIENTIFIC_ASSISTANCE_OR_SCOPE_VIOLATION; FULL_COMPLIANCE_UNKNOWN",
+    "exactly_one_per_stage": "UNKNOWN beyond saved receipts",
+    "plan_reveal": "Discovery hash and exact plan recorded; current discovery unchanged. Initial source-map bytes and exclusive pre-reveal access not proven.",
+    "mechanics_clarification": "Appended native-activation mechanics only; original and appended packages inspected."
+  },
+  "time": {
+    "status": "RECORDED_TIMESTAMPS_WITHIN_ENVELOPE",
+    "arm_initialized_at_utc": "2026-10-10T04:58:05.539000+00:00",
+    "root_terminal_observed_at_utc": "2026-10-10T05:35:46.244487+00:00",
+    "observed_interval_seconds": 2260.705487,
+    "basis": "Saved initialization to saved root terminal observation; not effective inference/occupancy/billing or exact user-facing latency.",
+    "whole_deadline_utc": "2026-10-10T05:58:05.343Z"
+  },
+  "effective_runtime": {
+    "saved_t3_returned_model": "AUTHORIZED_PROVIDER_INSTANCE / gpt-6-luna",
+    "requested_stage_options": "max effort/default service tier after documented prospective revision; initial run retains priority",
+    "provider_api_effective_options": "UNKNOWN"
+  },
+  "billing": {
+    "status": "UNKNOWN",
+    "native_token_counters_are_billed_tokens": false,
+    "paired_latency_speed_or_savings_claim": "NONE"
+  },
+  "validation": {
+    "reported_executed": "Desk discovery/review, source-scope/version checks and reviser S08/S09 rechecks only. No field measurement/interview/intervention/calculation or executable acoustic witness.",
+    "independently_evidenced": "Reviewer primary retrievals and frozen-byte checks; original authored records and maps inspected, raw candidate browsing histories not accessed.",
+    "proposed_only": [
+      "permissions and resident metric",
+      "history interviews/records",
+      "prospective log",
+      "inventory/calibration",
+      "A–B–A and quiet controls",
+      "panel/source-position tests",
+      "vibration observations",
+      "specialist path diagnostic"
+    ],
+    "oracle_applicability": "Courtyard/resident outcome for exterior benefit; indoor RT/comfort separate; sources are method/case leads, not site-performance oracles."
+  },
+  "output_paths": {
+    "assessment_md": "ER12_RUNTIME/assessment/C-R1-01/control-v1/assessment.md",
+    "assessment_json": "ER12_RUNTIME/assessment/C-R1-01/control-v1/assessment.json",
+    "source_map": "ER12_RUNTIME/assessment/C-R1-01/control-v1/source-map.json",
+    "evidence_index": "ER12_RUNTIME/assessment/C-R1-01/control-v1/evidence/index.md"
+  },
+  "case_id": "ER12-C-R1-01-FRESH",
+  "contextual_non_science_read": {
+    "path": "ER12_RUNTIME/repository/Plans/00-plans-index.md",
+    "basis": "Provided AGENTS instructions require reading Plans index first; large output was truncated; unrelated repository context not used as experimental/source/outcome evidence."
+  },
+  "review_finished_at_utc": "2026-10-10T05:54:17+00:00",
+  "review_envelope_status": "FINISHED_EARLY_WITH_ALL_DECLARED_AXES_ASSESSED"
+}

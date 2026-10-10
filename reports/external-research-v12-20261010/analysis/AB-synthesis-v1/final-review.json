@@ -1,0 +1,34 @@
+{
+  "at_utc": "2026-10-10T06:16:18.651669+00:00",
+  "review_type": "Root synthesis self-review of scope, extraction, citation identity and arithmetic; no additional independent scientific adjudication",
+  "frozen_judgment_hashes_rechecked": 56,
+  "matches": 56,
+  "A": {
+    "total": 32,
+    "PASS_WITH_LIMITATIONS": 24,
+    "FAIL": 8
+  },
+  "B": {
+    "total": 24,
+    "PASS_WITH_LIMITATIONS": 11,
+    "FAIL": 13
+  },
+  "all_A_techniques": 8,
+  "all_B_labels_and_dispatch_routes": 24,
+  "passing_original_discoveries": 8,
+  "all_discovery_primary_URLs_present_in_original_assessment_package": true,
+  "source_map_and_candidate_recorded_hash_mismatches": [],
+  "same_arm_hash_edges": 4276,
+  "same_arm_hash_checks": 3966,
+  "both_source_pass_complete_accounting_pairs": 9,
+  "no_pair_or_metric_averages": true,
+  "missing_complete_timing": [
+    "A2-02/control",
+    "A4-02/treatment"
+  ],
+  "root_final_review_publication": "PENDING_ROOT",
+  "own_goal_receipts_separate": true,
+  "no_science_repair": true,
+  "C_D": "Outside bounded phase; no candidate C/D artifact followed and no outcome/selection inferred",
+  "required_checks": "Artifact JSON parsing, population arithmetic, frozen hash matches, exact primary URL identity, same-arm reference hashes, complete-accounting/passing-pair conditions, actual dispatch extraction."
+}

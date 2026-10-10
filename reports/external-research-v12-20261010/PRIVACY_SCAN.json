@@ -1,11 +1,5 @@
 {
   "status": "PASS",
-  "scanned_files": 2895,
-  "complete_parse_checks": {
-    "json": 1852,
-    "python": 35,
-    "javascript": 27
-  },
   "scan_categories": [
     "email",
     "machine_path",
@@ -15,11 +9,30 @@
     "machine_prefix"
   ],
   "findings": [],
-  "empty_original_json_placeholders": [
-    "runs/B-APPL-G-01/treatment/stages/role/goal_activation.json"
+  "parse": {
+    "json": 2693,
+    "typed_capsules": 1980,
+    "python": 50,
+    "javascript": 35
+  },
+  "documented_JSON_exceptions": [
+    {
+      "path": "runs/B-APPL-G-01/treatment/stages/role/goal_activation.json",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "parse_error": "Expecting value: line 1 column 1 (char 0)",
+      "kind": "actual zero-byte failed native-activation diagnostic; preserved unchanged",
+      "native_goal_proof": false
+    },
+    {
+      "path": "runs/A3-02/control/stages/reviser/native-goal-active-confirmation.json",
+      "bytes": 429,
+      "sha256": "841f9305457f7ab06f41d04b732cd0f7eb5f32415cef5cb0367b7598d0fd07c0",
+      "parse_error": "Extra data: line 1 column 428 (char 427)",
+      "kind": "actual authored/native diagnostic contains extra JSON data; original structure preserved with sanitation only",
+      "native_goal_proof": "Not inferred from malformed JSON"
+    }
   ],
-  "malformed_original_json_diagnostics": [
-    "runs/A3-02/control/stages/reviser/native-goal-active-confirmation.json"
-  ],
-  "scope": "Exact all-public content scan after source-body repair v1, including provenance, inventories and generated checks; original documented JSON diagnostics preserved."
+  "scope": "all current public bytes; prior five code-capture repair edition",
+  "publication_correction_checks": "validation/PRIOR_CODE_CAPTURE_REPAIR_CHECKS.json"
 }

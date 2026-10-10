@@ -1,0 +1,60 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://datatracker.ietf.org/doc/html/rfc8493"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A5-01/treatment-v1/source-map.json",
+      "source_id": "IND-BAGIT",
+      "existing_authored_summary_fields": {
+        "version_or_commit": "RFC 8493, BagIt v1.0, October 2018; Informational",
+        "governing_meaning": "Payload is opaque. Each bag needs at least one payload manifest; each manifest lists every payload file once. Tag manifests are optional, must list payload manifests, and must not list other tag manifests or payload files. bagit.txt is UTF-8 without BOM; remaining tag encoding should be UTF-8 but may differ for compatibility. A valid bag is complete with all manifest checksums verified. Tools must support SHA-256/SHA-512 and should default to SHA-512. The proposed SHA-256 choice is allowed. Fixity does not secure against active attacks.",
+        "applicability": "Confirms CR-4 and the analogous transfer mechanism. No completed bag, implementation conformance or audio semantics are established."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A5-01/treatment-v1/evidence/retrieval-manifest.json",
+      "source_id": "IND-BAGIT",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": "§§1.3, 2.1.1–2.1.3, 2.2.1, 2.4, 3 and 5.4"
+    }
+  ],
+  "raw_sha256": "b5ce8efb81b3623f0527385d03d4ff17c580dd00739e1b3f657c0593cf9ac895",
+  "original_bytes": 47516,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A5-01/treatment-v1/evidence/bagit.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://datatracker.ietf.org/doc/html/rfc8493"
+  ],
+  "version": [
+    {
+      "version_or_commit": "RFC 8493, BagIt v1.0, October 2018; Informational",
+      "governing_meaning": "Payload is opaque. Each bag needs at least one payload manifest; each manifest lists every payload file once. Tag manifests are optional, must list payload manifests, and must not list other tag manifests or payload files. bagit.txt is UTF-8 without BOM; remaining tag encoding should be UTF-8 but may differ for compatibility. A valid bag is complete with all manifest checksums verified. Tools must support SHA-256/SHA-512 and should default to SHA-512. The proposed SHA-256 choice is allowed. Fixity does not secure against active attacks.",
+      "applicability": "Confirms CR-4 and the analogous transfer mechanism. No completed bag, implementation conformance or audio semantics are established."
+    }
+  ],
+  "selector": [
+    {
+      "locator": "§§1.3, 2.1.1–2.1.3, 2.2.1, 2.4, 3 and 5.4"
+    }
+  ],
+  "conditions": [
+    {
+      "version_or_commit": "RFC 8493, BagIt v1.0, October 2018; Informational",
+      "governing_meaning": "Payload is opaque. Each bag needs at least one payload manifest; each manifest lists every payload file once. Tag manifests are optional, must list payload manifests, and must not list other tag manifests or payload files. bagit.txt is UTF-8 without BOM; remaining tag encoding should be UTF-8 but may differ for compatibility. A valid bag is complete with all manifest checksums verified. Tools must support SHA-256/SHA-512 and should default to SHA-512. The proposed SHA-256 choice is allowed. Fixity does not secure against active attacks.",
+      "applicability": "Confirms CR-4 and the analogous transfer mechanism. No completed bag, implementation conformance or audio semantics are established."
+    }
+  ],
+  "rawSHA256": "b5ce8efb81b3623f0527385d03d4ff17c580dd00739e1b3f657c0593cf9ac895"
+}

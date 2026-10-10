@@ -1,0 +1,140 @@
+{
+  "verified_at_utc": "2026-10-10T05:44:50.652761+00:00",
+  "verification": "artifact completeness, exact clause preservation, source-ID/local locator bindings and original/source hash integrity only; semantic judgment is in assessment.md/json",
+  "result": "PASS",
+  "issues": [],
+  "axes": 6,
+  "exact_plan_clauses": 8,
+  "criticism_dispositions": 5,
+  "handoff_validation_dispositions": 5,
+  "originals_rechecked": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A6-02/brief.md",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A6-02/plan.md",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/terminal-science-freeze-root.json",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/investigator/assignment.md",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/investigator/input-map.json",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/investigator/freeze.json",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/critic/assignment.md",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/critic/input-map.json",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/critic/freeze.json",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/assignment.md",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/input-map.json",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/freeze.json",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/inputs/brief.md",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/investigator/plan-reveal.json",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/investigator/revealed-plan.md",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/investigator/discovery.md",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/investigator/draft.md",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/critic/critique.md",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/critic/source-map.json",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/investigator/source-map.json",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/source-map.json",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/investigator/sources/index.md",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/critic/sources/index.md",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/sources/index.md",
+      "sha256_unchanged": true
+    }
+  ],
+  "independent_primary_entries": 39,
+  "judgment_saved_before_native_completion": true,
+  "saved_artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/A6-02/control-v1/assessment.md",
+      "sha256": "0633f59011152854206917f8dead88b14986c92b83185d5ea49b02e747cb2094",
+      "bytes": 70612
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A6-02/control-v1/assessment.json",
+      "sha256": "8426823cefe95aa30bc58213d6142d24297cb70b276f31973b9c8e6a7b18caea",
+      "bytes": 101759
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A6-02/control-v1/source-map.json",
+      "sha256": "a5d74603726e9ba2b4eb800adffb2015a89aa4147d04dc801e31a595708a072a",
+      "bytes": 59223
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A6-02/control-v1/evidence/index.md",
+      "sha256": "cd85993b841c3671ae3836d2db10786c72f3abd10c99bd1fe657ed5211b9ad1b",
+      "bytes": 35847
+    }
+  ]
+}

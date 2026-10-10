@@ -1,0 +1,76 @@
+[
+  {
+    "source_id": "P1",
+    "requested_url": "https://git-scm.com/docs/git-sparse-checkout/2.42.0",
+    "retrieved_at_utc": "2026-10-10T05:27:07.130570+00:00",
+    "resolved_url": "https://git-scm.com/docs/git-sparse-checkout/2.42.0",
+    "http_status": 200,
+    "operation": "HTTPS GET via Python urllib; response saved before optional extraction failed",
+    "file": "primary/git-sparse-checkout-2.42.0.html",
+    "bytes": 67024,
+    "sha256": "2bcf49af27a500672925ef983d84b7f5fd97c567eab5bc5bfb6af34ae10eac81",
+    "readable_file": "primary/git-sparse-checkout-2.42.0.html.txt",
+    "local_extraction_initial_error": "ModuleNotFoundError(\"No module named 'bs4'\")",
+    "local_extraction_recovery": "stdlib HTMLParser from saved bytes; no additional network request",
+    "content_type": "text/html; charset=utf-8",
+    "transport_metadata_confirmation": {
+      "retrieved_at_utc": "2026-10-10T05:32:00.986558+00:00",
+      "operation": "HTTPS GET to directly recapture transport metadata after prior optional extraction failure",
+      "resolved_url": "https://git-scm.com/docs/git-sparse-checkout/2.42.0",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 67024,
+      "sha256": "2bcf49af27a500672925ef983d84b7f5fd97c567eab5bc5bfb6af34ae10eac81",
+      "matches_saved_bytes": true
+    }
+  },
+  {
+    "source_id": "P2",
+    "requested_url": "https://git-scm.com/docs/git-clone/2.43.0",
+    "retrieved_at_utc": "2026-10-10T05:27:07.132520+00:00",
+    "resolved_url": "https://git-scm.com/docs/git-clone/2.43.0",
+    "http_status": 200,
+    "operation": "HTTPS GET via Python urllib; response saved before optional extraction failed",
+    "file": "primary/git-clone-2.43.0.html",
+    "bytes": 90587,
+    "sha256": "9d05b1b2c60486582bc1c4261118fcf905d18ed47da05da6319a37c1234f8f54",
+    "readable_file": "primary/git-clone-2.43.0.html.txt",
+    "local_extraction_initial_error": "ModuleNotFoundError(\"No module named 'bs4'\")",
+    "local_extraction_recovery": "stdlib HTMLParser from saved bytes; no additional network request",
+    "content_type": "text/html; charset=utf-8",
+    "transport_metadata_confirmation": {
+      "retrieved_at_utc": "2026-10-10T05:32:01.036838+00:00",
+      "operation": "HTTPS GET to directly recapture transport metadata after prior optional extraction failure",
+      "resolved_url": "https://git-scm.com/docs/git-clone/2.43.0",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 90587,
+      "sha256": "9d05b1b2c60486582bc1c4261118fcf905d18ed47da05da6319a37c1234f8f54",
+      "matches_saved_bytes": true
+    }
+  },
+  {
+    "source_id": "P3",
+    "requested_url": "https://raw.githubusercontent.com/git/git/v2.43.0/Documentation/git-sparse-checkout.txt",
+    "resolved_url": "https://raw.githubusercontent.com/git/git/v2.43.0/Documentation/git-sparse-checkout.txt",
+    "http_status": 200,
+    "retrieved_at_utc": "2026-10-10T05:27:07.133582+00:00",
+    "operation": "HTTPS GET via Python urllib; data only, no downloaded-code execution",
+    "file": "primary/git-sparse-checkout-v2.43.0.txt",
+    "bytes": 21258,
+    "sha256": "2da80aef5d32b727870fc0b1680186a82a6153cc185a50d1b7a72b34a5f83883",
+    "content_type": "text/plain; charset=utf-8"
+  },
+  {
+    "source_id": "P4",
+    "requested_url": "https://raw.githubusercontent.com/git/git/v2.43.0/Documentation/git-clone.txt",
+    "resolved_url": "https://raw.githubusercontent.com/git/git/v2.43.0/Documentation/git-clone.txt",
+    "http_status": 200,
+    "retrieved_at_utc": "2026-10-10T05:27:07.138954+00:00",
+    "operation": "HTTPS GET via Python urllib; data only, no downloaded-code execution",
+    "file": "primary/git-clone-v2.43.0.txt",
+    "bytes": 14772,
+    "sha256": "d12bac1e23309f25d64aebeec82437c335914e3e7c7d6326b6857959306a4667",
+    "content_type": "text/plain; charset=utf-8"
+  }
+]

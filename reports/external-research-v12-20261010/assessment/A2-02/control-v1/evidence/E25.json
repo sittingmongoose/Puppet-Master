@@ -1,0 +1,49 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://api.github.com/repos/ProjectMirador/mirador/releases/tags/v4.2.4"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A2-02/control-v1/source-map.json",
+      "source_id": "R25",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/A2-02/control-v1/source-map.json",
+      "source_id": "E25",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/A2-02/control-v1/evidence/supplemental-retrievals.json",
+      "source_id": "E25",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "primary_locator": "tag_name/created_at/published_at/body"
+    }
+  ],
+  "raw_sha256": "714406bc9a89fd42f97a401caf1085e70290a55beeac3ffed893fd380db85b42",
+  "original_bytes": 6395,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A2-02/control-v1/evidence/E25.json",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://api.github.com/repos/ProjectMirador/mirador/releases/tags/v4.2.4"
+  ],
+  "version": "UNKNOWN",
+  "selector": [
+    {
+      "primary_locator": "tag_name/created_at/published_at/body"
+    }
+  ],
+  "conditions": "UNKNOWN",
+  "rawSHA256": "714406bc9a89fd42f97a401caf1085e70290a55beeac3ffed893fd380db85b42"
+}

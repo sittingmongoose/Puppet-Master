@@ -1,0 +1,2159 @@
+{
+  "schema": "er12-independent-semantic-assessment-v1",
+  "assessment_id": "A5-02/control-v1",
+  "reviewer": "codex-er12-a502-review-v1",
+  "assignment": "ONE completed ER12 A5-02 control full pipeline; no other arm/result/history inspected",
+  "rubric_path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "judgment_basis": "No remaining material error, omission or unsupported consequential decision in the final proposal. Governing primary sources independently verified; lineage/source-record imprecision remains explicit. No product validation or deployment is claimed or required.",
+  "material_findings": [],
+  "axis_coverage": [
+    {
+      "axis": 1,
+      "name": "Original obligations and negative constraints",
+      "coverage": "FULLY_ASSESSED",
+      "judgment": "PASS",
+      "reason": "All eight original obligations are substantively met; payment/food safety excluded. Readable offline identity, QR optionality, distinct keys, owners and all four exclusions survive. No extra deployment/prototype obligation imposed.",
+      "evidence_ids": [
+        "E02",
+        "E07",
+        "E08",
+        "E09",
+        "E10",
+        "E11",
+        "E12",
+        "E13",
+        "E14",
+        "E17"
+      ],
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+          "line": 31,
+          "heading": "### 1. Compare two workflows and an analogous identifier/resolver mechanism"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+          "line": 37,
+          "heading": "### 2. Keep four identities distinct"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+          "line": 46,
+          "heading": "### 3. Optional QR/resolver links, decoding, redirection, and label replacement"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+          "line": 56,
+          "heading": "### 4. Parsing/format migration and released behavior changes"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+          "line": 64,
+          "heading": "### 5. Preserve the authorized optional public-care QR"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+          "line": 68,
+          "heading": "### 6. Preserve owner authority and the shipment invariant"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+          "line": 77,
+          "heading": "### 7. Binding negative constraints"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+          "line": 81,
+          "heading": "### 8. Complete proposal and validation boundary"
+        }
+      ]
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source claims: subject, operation, version, default, unit/type/domain and exceptions",
+      "coverage": "FULLY_ASSESSED",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "reason": "Governing primary material supports the final consequential recommendations and correction. Historical discovery payload overreach and internal property naming are preserved as lineage/source-record limitations. No selected GS1 or vendor implementation is claimed compatible or validated.",
+      "evidence_ids": [
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E06",
+        "E07",
+        "E08",
+        "E09",
+        "E10",
+        "E11",
+        "E12",
+        "E13",
+        "E14",
+        "E15",
+        "E16",
+        "E17",
+        "E18",
+        "E19"
+      ],
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+          "line": 31,
+          "heading": "### 1. Compare two workflows and an analogous identifier/resolver mechanism"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+          "line": 46,
+          "heading": "### 3. Optional QR/resolver links, decoding, redirection, and label replacement"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+          "line": 56,
+          "heading": "### 4. Parsing/format migration and released behavior changes"
+        }
+      ]
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar discovery, alternatives, analogy, implementation/history and opportunity breadth",
+      "coverage": "FULLY_ASSESSED",
+      "judgment": "PASS",
+      "reason": "Odoo package/packaging distinction, WHIN trap, Snipe-IT asset identity/custody caveat, Sortly phone/snapshot alternative, GRAI analogy, redirect persistence and real migration/parser histories form useful bounded discovery. It is neither only caution nor an exhaustive-catalogue requirement.",
+      "evidence_ids": [
+        "E02",
+        "E03",
+        "E05",
+        "E06",
+        "E08",
+        "E09",
+        "E10",
+        "E12",
+        "E14",
+        "E15"
+      ],
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/discovery.md",
+          "line": 11,
+          "heading": "## Workflow comparison and useful alternatives"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/discovery.md",
+          "line": 42,
+          "heading": "## Format history and applicability"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+          "line": 31,
+          "heading": "### 1. Compare two workflows and an analogous identifier/resolver mechanism"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+          "line": 56,
+          "heading": "### 4. Parsing/format migration and released behavior changes"
+        }
+      ]
+    },
+    {
+      "axis": 4,
+      "name": "Wrong criticism/corrections/rejections and exact plan dispositions",
+      "coverage": "FULLY_ASSESSED",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "reason": "C-01 is substantively supported, accepted and correctly re-located; C-02 is honest owner uncertainty. Shipment-ID substitution and scan-equals-receipt are valid rejections. Critic missed the title/payload lineage overstatement, but did not introduce a material final correction. Exact clause crosswalk includes the two-label visual-test disposition.",
+      "evidence_ids": [
+        "E05",
+        "E08",
+        "E14",
+        "E18"
+      ],
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/critique.md",
+          "line": 9,
+          "heading": "### Findings"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+          "line": 99,
+          "heading": "## Critique dispositions"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+          "line": 31,
+          "heading": "### 1. Compare two workflows and an analogous identifier/resolver mechanism"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+          "line": 37,
+          "heading": "### 2. Keep four identities distinct"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+          "line": 46,
+          "heading": "### 3. Optional QR/resolver links, decoding, redirection, and label replacement"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+          "line": 56,
+          "heading": "### 4. Parsing/format migration and released behavior changes"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+          "line": 64,
+          "heading": "### 5. Preserve the authorized optional public-care QR"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+          "line": 68,
+          "heading": "### 6. Preserve owner authority and the shipment invariant"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+          "line": 77,
+          "heading": "### 7. Binding negative constraints"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+          "line": 81,
+          "heading": "### 8. Complete proposal and validation boundary"
+        }
+      ]
+    },
+    {
+      "axis": 5,
+      "name": "Supported discovery/draft/critique/final meaning preserved",
+      "coverage": "FULLY_ASSESSED",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "reason": "Local durable ID, separate shipment/event semantics, all alternatives and owner uncertainties, generic-care option, replacement rule and validation statuses survive. Final narrows the unsupported QR-payload symptom to actual field/title migration and corrects query normativity; original S04/S05 records still retain imprecise historical language. No supported optional capability is silently removed.",
+      "evidence_ids": [
+        "E04",
+        "E05",
+        "E10",
+        "E12",
+        "E14",
+        "E18"
+      ],
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/discovery.md",
+          "line": 5,
+          "heading": "## Preliminary recommendation"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/draft.md",
+          "line": 5,
+          "heading": "## Recommendation"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+          "line": 46,
+          "heading": "### 3. Optional QR/resolver links, decoding, redirection, and label replacement"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+          "line": 56,
+          "heading": "### 4. Parsing/format migration and released behavior changes"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+          "line": 64,
+          "heading": "### 5. Preserve the authorized optional public-care QR"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+          "line": 68,
+          "heading": "### 6. Preserve owner authority and the shipment invariant"
+        }
+      ]
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed versus executed validation and oracle applicability",
+      "coverage": "FULLY_ASSESSED",
+      "judgment": "PASS",
+      "reason": "Research retrieval/reconciliation are explicitly executed research only. Product/hardware/parser/resolver/offline operations remain NOT_RUN. Scenario, identity, replay and care-route checks have discriminating expected observations, appropriate to a planning deliverable. No prototype or production validation was required.",
+      "evidence_ids": [
+        "E08",
+        "E09",
+        "E10",
+        "E11",
+        "E12",
+        "E14",
+        "E17"
+      ],
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+          "line": 81,
+          "heading": "### 8. Complete proposal and validation boundary"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/draft.md",
+          "line": 97,
+          "heading": "### 8. Deliver the coherent evidence-backed proposal and validation table"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/critique.md",
+          "line": 33,
+          "heading": "## Evidence and validation boundary"
+        }
+      ]
+    }
+  ],
+  "unassessed_axes": [],
+  "original_obligations": [
+    {
+      "number": 1,
+      "exact_original_obligation": "Compare two receiving/asset-label workflows and an analogous identifier/resolver mechanism, including offline and low-cost scanner tradeoffs.",
+      "assessment": "MET. Compare Odoo receiving/packages with Snipe-IT asset labels, Sortly phone/offline alternative and GRAI/Digital Link resolver analogy. Low-cost means readable text/available phone versus separate reader; no invented price or free-tier claim.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+        "line": 31,
+        "heading": "### 1. Compare two workflows and an analogous identifier/resolver mechanism"
+      },
+      "draft_locator": {
+        "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/draft.md",
+        "line": 15,
+        "heading": "### 1. Compare two receiving/asset-label workflows and an analogous identifier/resolver mechanism"
+      },
+      "evidence_ids": [
+        "E02",
+        "E07",
+        "E08",
+        "E09",
+        "E10",
+        "E11",
+        "E12",
+        "E13",
+        "E14",
+        "E17"
+      ]
+    },
+    {
+      "number": 2,
+      "exact_original_obligation": "Distinguish reusable crate identity, shipment identity, product identity and receipt event identity.",
+      "assessment": "MET. crate_id is a persistent physical instance; shipment_id groups transfers; product_id is cargo; receipt_event_id identifies one accepted action. Optional type ID is not an instance. Staff confirmation and pending/accepted separation are local recommendations.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+        "line": 37,
+        "heading": "### 2. Keep four identities distinct"
+      },
+      "draft_locator": {
+        "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/draft.md",
+        "line": 31,
+        "heading": "### 2. Distinguish crate, shipment, product and receipt-event identity"
+      },
+      "evidence_ids": [
+        "E08",
+        "E09",
+        "E12"
+      ]
+    },
+    {
+      "number": 3,
+      "exact_original_obligation": "Research optional QR/resolver links alongside readable identifiers, including supported decoding paths, redirection and label replacement.",
+      "assessment": "MET. Distinguishes readable/1D lookup, 2D/phone QR decode, network retrieval, requested/default redirect and label replacement using the same crate ID. It rejects universal offline handheld use without denying offline URL decoding.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+        "line": 46,
+        "heading": "### 3. Optional QR/resolver links, decoding, redirection, and label replacement"
+      },
+      "draft_locator": {
+        "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/draft.md",
+        "line": 42,
+        "heading": "### 3. Research optional QR/resolver links, decoding, redirection and label replacement"
+      },
+      "evidence_ids": [
+        "E02",
+        "E11",
+        "E13",
+        "E14",
+        "E17"
+      ]
+    },
+    {
+      "number": 4,
+      "exact_original_obligation": "Investigate a relevant parsing/format migration or released scanner behavior change and bound its applicability.",
+      "assessment": "MET. Bounded Snipe-IT field/title migration plus Resolver 1.2.1 AI erratum and released Syntax Engine 1.4.1 parser fix. No universal scanner failure or verified deployed fix is asserted.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+        "line": 56,
+        "heading": "### 4. Parsing/format migration and released behavior changes"
+      },
+      "draft_locator": {
+        "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/draft.md",
+        "line": 57,
+        "heading": "### 4. Investigate parsing/format migration or released scanner behavior change"
+      },
+      "evidence_ids": [
+        "E04",
+        "E05",
+        "E06",
+        "E14",
+        "E15"
+      ]
+    },
+    {
+      "number": 5,
+      "exact_original_obligation": "Preserve and investigate this supported optional scope: a QR link to a public crate-care page in addition to the staff-readable inventory identifier. It is an authorized option, not a mandatory feature or an established technical capability; recommend conditions, retain it when supported, and explain any evidence-based exclusion.",
+      "assessment": "MET. Authorized public-care QR remains optional, with shared generic URL, owner/availability/privacy conditions and no present evidence-based exclusion. An unknown cooperative route is not falsely claimed deployed.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+        "line": 64,
+        "heading": "### 5. Preserve the authorized optional public-care QR"
+      },
+      "draft_locator": {
+        "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/draft.md",
+        "line": 67,
+        "heading": "### 5. Retain the optional public crate-care QR"
+      },
+      "evidence_ids": [
+        "E02",
+        "E13",
+        "E14"
+      ]
+    },
+    {
+      "number": 6,
+      "exact_original_obligation": "Make owner decisions explicit: The inventory steward selects the identifier namespace; depot managers decide whether scans can queue offline. The web owner governs resolver redirects, while a shipment number cannot silently replace a crate ID.",
+      "assessment": "MET. Inventory steward chooses namespace, depot managers decide offline queueing, web owner controls redirects. No owner decision is fabricated; shipment remains a reference and cannot replace crate ID.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+        "line": 68,
+        "heading": "### 6. Preserve owner authority and the shipment invariant"
+      },
+      "draft_locator": {
+        "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/draft.md",
+        "line": 75,
+        "heading": "### 6. Make owner decisions explicit"
+      },
+      "evidence_ids": [
+        "E10",
+        "E14"
+      ]
+    },
+    {
+      "number": 7,
+      "exact_original_obligation": "Preserve negative constraints: Do not buy identifier allocations, print production labels, claim that any QR scan is a verified receipt, or publish depot movement history through the public care link.",
+      "assessment": "MET. No allocation purchase, production printing, scan-as-verified-receipt, or public movement-history publication is recommended as an authorized action or claimed executed.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+        "line": 77,
+        "heading": "### 7. Binding negative constraints"
+      },
+      "draft_locator": {
+        "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/draft.md",
+        "line": 86,
+        "heading": "### 7. Preserve negative constraints"
+      },
+      "evidence_ids": []
+    },
+    {
+      "number": 8,
+      "exact_original_obligation": "Deliver one coherent evidence-backed research proposal covering obligations 1–8, with recommendations, source/version applicability, useful discoveries, unresolved owner inputs, and a validation table separating checks actually executed from checks merely proposed. Do not report research sources or future tests as executed product validation.",
+      "assessment": "MET. One complete proposal with evidence, alternatives, bounded versions, local inference, owners and validation table. Research is distinct from product operation; next owner decisions establish the practical order of work.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+        "line": 81,
+        "heading": "### 8. Complete proposal and validation boundary"
+      },
+      "draft_locator": {
+        "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/draft.md",
+        "line": 97,
+        "heading": "### 8. Deliver the coherent evidence-backed proposal and validation table"
+      },
+      "evidence_ids": [
+        "E02",
+        "E07",
+        "E08",
+        "E09",
+        "E10",
+        "E11",
+        "E12",
+        "E13",
+        "E14",
+        "E17"
+      ]
+    }
+  ],
+  "exact_plan_clause_assessments": [
+    {
+      "id": "P01",
+      "section": "Access and status",
+      "exact_source_text": "ROOT-STAGED PLAN INPUT. Withhold this document, its product hints and this fixture's index entry from the brief-only investigator until discovery has been saved. This is a fallible, realistically incomplete sandbox draft to compare against research, not an assessor key. All external behavior claims below are unverified draft assumptions. No implementation, source inspection or product validation has been executed in preparing the draft.",
+      "assessment": "RETAIN fallible-input/unverified-assumption status. Reveal record freezes discovery before plan release and exact plan bytes match. Full early-access transcript is unavailable, so concealed-input protocol is only partially observed; no premature access is inferred.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/draft.md",
+        "line": 13,
+        "heading": "## Per-clause reconciliation with the released plan"
+      },
+      "evidence_ids": []
+    },
+    {
+      "id": "P02",
+      "section": "Pilot intent",
+      "exact_source_text": "A food cooperative loans reusable delivery crates among three depots. Staff scan a crate label to see its inventory identity and record a receipt or return; a damaged label can be replaced. The cooperative wants readable printed identifiers even when a scanner is offline. Its legacy sheet records crate identity separately from each shipment. This research is about identifiers and scanning workflows, not payment or food-safety decisions.",
+      "assessment": "RETAIN the cooperative pilot context and research boundaries. Investigated GS1/Snipe leads without choosing a winner; independently included Odoo and Sortly, not only the plan hints.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+        "line": 5,
+        "heading": "## Recommendation"
+      },
+      "evidence_ids": [
+        "E02",
+        "E07",
+        "E10",
+        "E12"
+      ]
+    },
+    {
+      "id": "P03",
+      "section": "Pilot intent",
+      "exact_source_text": "The team has tentatively discussed GS1-oriented label workflows or Snipe-IT-style asset tracking. These are investigation leads, not selected winners. The mechanism needing investigation is barcode/QR identifiers, resolver URLs and reusable-asset identity; a useful historical inquiry concerns scanner parsing, identifier-format or resolver migration history. Do not let these leads prevent discovery of a better fit or an analogous mechanism.",
+      "assessment": "RETAIN the cooperative pilot context and research boundaries. Investigated GS1/Snipe leads without choosing a winner; independently included Odoo and Sortly, not only the plan hints.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+        "line": 5,
+        "heading": "## Recommendation"
+      },
+      "evidence_ids": [
+        "E02",
+        "E07",
+        "E10",
+        "E12"
+      ]
+    },
+    {
+      "id": "P04",
+      "section": "1. Compare two receiving/asset-label workflows and an analogous identifier/resolver mechanism, including offline and low-cost scanner tradeoffs.",
+      "exact_source_text": "Put the current shipment number in the barcode and reuse that label for future trips. Any successful scan is treated as a receipt.",
+      "assessment": "CORRECT/REJECT shipment-number barcode reuse as crate identity and scan-equals-receipt. Retain stable crate label reuse through trips. Final §1 explains the identity/event failure; §2 gives separate keys.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+        "line": 31,
+        "heading": "### 1. Compare two workflows and an analogous identifier/resolver mechanism"
+      },
+      "evidence_ids": [
+        "E02",
+        "E07",
+        "E08",
+        "E09",
+        "E10",
+        "E11",
+        "E12",
+        "E13",
+        "E14",
+        "E17"
+      ]
+    },
+    {
+      "id": "P05",
+      "section": "2. Distinguish reusable crate identity, shipment identity, product identity and receipt event identity.",
+      "exact_source_text": "A GS1-style encoding is a tentative option; Snipe-IT is an analogy to investigate rather than a confirmed fit.",
+      "assessment": "RETAIN INVESTIGATION LEADS. GS1 is a standards analogy/future option, Snipe-IT an asset-label pattern. Neither becomes selected winner or confirmed cooperative fit.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+        "line": 37,
+        "heading": "### 2. Keep four identities distinct"
+      },
+      "evidence_ids": [
+        "E08",
+        "E09",
+        "E12"
+      ]
+    },
+    {
+      "id": "P06",
+      "section": "3. Research optional QR/resolver links alongside readable identifiers, including supported decoding paths, redirection and label replacement.",
+      "exact_source_text": "The care-page QR option is retained as brief-authorized scope. The draft assumes every handheld parser can use the same QR payload offline, with no namespace or replacement rule.",
+      "assessment": "RETAIN care-page authorization; REJECT every-handheld/offline generalization; AMEND absent namespace/replacement rules. Separate decode from network access, and retain same crate key on replacement.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+        "line": 46,
+        "heading": "### 3. Optional QR/resolver links, decoding, redirection, and label replacement"
+      },
+      "evidence_ids": [
+        "E02",
+        "E11",
+        "E13",
+        "E14",
+        "E17"
+      ]
+    },
+    {
+      "id": "P07",
+      "section": "4. Investigate a relevant parsing/format migration or released scanner behavior change and bound its applicability.",
+      "exact_source_text": "No parser/version history has been investigated. Staff will visually inspect two sample labels in a future test.",
+      "assessment": "UPDATE no-history-investigated status to executed bounded research. AMEND proposed two-label visual inspection into meaningful identity, decoding, worn-label and workflow checks. The exact count of two is a fallible test idea, not a mandatory product obligation. No proposed inspection is reported executed.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+        "line": 56,
+        "heading": "### 4. Parsing/format migration and released behavior changes"
+      },
+      "evidence_ids": [
+        "E04",
+        "E05",
+        "E06",
+        "E14",
+        "E15"
+      ]
+    },
+    {
+      "id": "P08",
+      "section": "5. Preserve and investigate this supported optional scope: a QR link to a public crate-care page in addition to the staff-readable inventory identifier. It is an authorized option, not a mandatory feature or an established technical capability; recommend conditions, retain it when supported, and explain any evidence-based exclusion.",
+      "exact_source_text": "Retain a QR link to a public crate-care page in addition to the staff-readable inventory identifier as supported owner-authorized optional scope. Support here means that the brief explicitly permits it; technical support, conditions and interoperability still need research. Do not remove it merely because the baseline route lacks it, or silently promote it to mandatory scope.",
+      "assessment": "RETAIN optional authorized scope and investigate technical conditions. Shared generic URL and privacy/ownership/reachability conditions are recommended; no unsupported exclusion or mandatory promotion.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+        "line": 64,
+        "heading": "### 5. Preserve the authorized optional public-care QR"
+      },
+      "evidence_ids": [
+        "E02",
+        "E13",
+        "E14"
+      ]
+    },
+    {
+      "id": "P09",
+      "section": "6. Make owner decisions explicit: The inventory steward selects the identifier namespace; depot managers decide whether scans can queue offline. The web owner governs resolver redirects, while a shipment number cannot silently replace a crate ID.",
+      "exact_source_text": "Owner authority is reserved as follows: The inventory steward selects the identifier namespace; depot managers decide whether scans can queue offline. The web owner governs resolver redirects, while a shipment number cannot silently replace a crate ID. The draft has not obtained these decisions. Its tentative implementation assumptions cannot substitute for them.",
+      "assessment": "RETAIN all three owner authorities and shipment invariant; retain no-decisions-obtained status. Local namespace/offline proposals are recommendations awaiting the named decisions.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+        "line": 68,
+        "heading": "### 6. Preserve owner authority and the shipment invariant"
+      },
+      "evidence_ids": [
+        "E10",
+        "E14"
+      ]
+    },
+    {
+      "id": "P10",
+      "section": "7. Preserve negative constraints: Do not buy identifier allocations, print production labels, claim that any QR scan is a verified receipt, or publish depot movement history through the public care link.",
+      "exact_source_text": "Binding exclusions: Do not buy identifier allocations, print production labels, claim that any QR scan is a verified receipt, or publish depot movement history through the public care link. The draft has no complete trace showing that its assumptions comply; revise the proposal wherever necessary to preserve these exclusions.",
+      "assessment": "RETAIN all binding exclusions. Plain local ID, unprinted concepts, separate staff-confirmed events and generic care route preserve them; no prohibited act is claimed run.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+        "line": 77,
+        "heading": "### 7. Binding negative constraints"
+      },
+      "evidence_ids": []
+    },
+    {
+      "id": "P11",
+      "section": "8. Deliver one coherent evidence-backed research proposal covering obligations 1–8, with recommendations, source/version applicability, useful discoveries, unresolved owner inputs, and a validation table separating checks actually executed from checks merely proposed. Do not report research sources or future tests as executed product validation.",
+      "exact_source_text": "The draft currently contains no coherent evidence-backed final proposal. Its proposed demos are research/validation ideas only. A complete revision must preserve every obligation, disclose corrections and retained options, and not confuse documentation review with successful product operation.",
+      "assessment": "COMPLETE the coherent research proposal; RETAIN future-demo status as prospective and separate from product validation. Final is self-contained rather than a patch-only response.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+        "line": 81,
+        "heading": "### 8. Complete proposal and validation boundary"
+      },
+      "evidence_ids": [
+        "E02",
+        "E07",
+        "E08",
+        "E09",
+        "E10",
+        "E11",
+        "E12",
+        "E13",
+        "E14",
+        "E17"
+      ]
+    },
+    {
+      "id": "P12",
+      "section": "Validation status at handoff",
+      "exact_source_text": "| External documentation/version review | NOT_RUN | Investigator must retrieve relevant public primary evidence. |",
+      "assessment": "UPDATE input NOT_RUN to executed public-source research, never successful product validation. No winner or operated failure-chain experiment is invented.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+        "line": 81,
+        "heading": "### 8. Complete proposal and validation boundary"
+      },
+      "evidence_ids": [
+        "E08",
+        "E10",
+        "E14"
+      ]
+    },
+    {
+      "id": "P13",
+      "section": "Validation status at handoff",
+      "exact_source_text": "| Product comparison and history investigation | NOT_RUN | No winner, applicability conclusion or failure-chain finding is supplied. |",
+      "assessment": "UPDATE input NOT_RUN to executed public-source research, never successful product validation. No winner or operated failure-chain experiment is invented.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+        "line": 81,
+        "heading": "### 8. Complete proposal and validation boundary"
+      },
+      "evidence_ids": [
+        "E08",
+        "E10",
+        "E14"
+      ]
+    },
+    {
+      "id": "P14",
+      "section": "Validation status at handoff",
+      "exact_source_text": "| Pilot scenario walkthrough | PROPOSED | Walk through ordinary use, interruption, correction and incompatible/missing input. |",
+      "assessment": "RETAIN PROPOSED/NOT_RUN; expand into the final conditional scenario/care-route checks, preserving the option on its own terms.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+        "line": 81,
+        "heading": "### 8. Complete proposal and validation boundary"
+      },
+      "evidence_ids": [
+        "E08",
+        "E10",
+        "E14"
+      ]
+    },
+    {
+      "id": "P15",
+      "section": "Validation status at handoff",
+      "exact_source_text": "| Optional-path compatibility | PROPOSED | Check the option on its own terms, with conditions and owner choices. |",
+      "assessment": "RETAIN PROPOSED/NOT_RUN; expand into the final conditional scenario/care-route checks, preserving the option on its own terms.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+        "line": 81,
+        "heading": "### 8. Complete proposal and validation boundary"
+      },
+      "evidence_ids": [
+        "E08",
+        "E10",
+        "E14"
+      ]
+    },
+    {
+      "id": "P16",
+      "section": "Validation status at handoff",
+      "exact_source_text": "| End-to-end product operation | NOT_RUN | No installation, deployment or live system access is authorized by this fixture. |",
+      "assessment": "RETAIN NOT_RUN. No installation/deployment/live product operation was authorized or needed.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+        "line": 81,
+        "heading": "### 8. Complete proposal and validation boundary"
+      },
+      "evidence_ids": [
+        "E08",
+        "E10",
+        "E14"
+      ]
+    },
+    {
+      "id": "P17",
+      "section": "Validation status at handoff",
+      "exact_source_text": "The local existence of this document is input preparation only. It establishes neither the truth of its draft claims nor feasibility of the proposed system. Reconcile research with the draft in the complete final; do not deliver only a critique or patch list.",
+      "assessment": "RETAIN input-preparation-versus-evidence distinction. Source-backed research supersedes the incomplete sandbox assumptions; final is a full proposal, not critique only.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+        "line": 81,
+        "heading": "### 8. Complete proposal and validation boundary"
+      },
+      "evidence_ids": [
+        "E05",
+        "E08",
+        "E14"
+      ]
+    }
+  ],
+  "criticism_dispositions": [
+    {
+      "criticism_id": "C-01",
+      "original_classification": "Minor locator/wording",
+      "original_claim": "Resolver 1.2.1 normatively forwards incoming query pairs; draft by-default wording understates this; critic gives change-log §9.3 locator.",
+      "candidate_final_disposition": "accept_and_amend; correct change-log locator to §9.2/version 1.2.0",
+      "independent_disposition": "Substance ACCEPTED; change-log locator AMENDED correctly. Conformance §5 item 19 resolves any ambiguity in §2.12 by-default phrasing. Care route must not contain sensitive values. No generic static URL is made a GS1 resolver by this correction.",
+      "evidence_ids": [
+        "E14"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+        "line": 46,
+        "heading": "### 3. Optional QR/resolver links, decoding, redirection, and label replacement"
+      },
+      "remaining_material_issue": false
+    },
+    {
+      "criticism_id": "C-02",
+      "original_classification": "Honestly unresolved external input, not defect",
+      "original_claim": "Steward namespace, manager offline policy and web-owner route/redirect decisions remain unmade.",
+      "candidate_final_disposition": "retain_uncertainty",
+      "independent_disposition": "SUPPORTED. These are real named owner choices after useful public investigation, not vacuous caution or excuses to skip research.",
+      "evidence_ids": [
+        "E10",
+        "E14"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+        "line": 68,
+        "heading": "### 6. Preserve owner authority and the shipment invariant"
+      },
+      "remaining_material_issue": false
+    }
+  ],
+  "lineage_findings_and_limitations": [
+    {
+      "id": "L01",
+      "scope": "LINEAGE_SOURCE_ERROR; no material final decision depends on it",
+      "severity_in_final": "nonmaterial limitation",
+      "title": "QR Code Text/title migration was overstated as QR payload failure",
+      "original_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/discovery.md",
+          "line": 42,
+          "heading": "## Format history and applicability"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/source-map.json",
+          "source_id": "S04",
+          "field": "observed_operation"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/source-map.json",
+          "source_id": "S05",
+          "field": "locator"
+        }
+      ],
+      "finding": "Discovery says the transition could leave the label QR blank and S04 says no QR payload. Source shows a title-setting migration, with encoded QR target computed separately. S05 also names qr_code_text although code uses qr_text. Critic did not identify this distinction.",
+      "final_qualification": "Final §4 accurately says the legacy field is lost and copied into the new label title; it does not repeat a blank encoded payload assertion. Carried source maps preserve the inaccurate original S04/S05 language without an explicit correction addendum for it. Record both facts; do not manufacture a deployed scanner defect.",
+      "evidence_ids": [
+        "E04",
+        "E05",
+        "E18"
+      ],
+      "remaining_material_issue": false
+    },
+    {
+      "id": "L02",
+      "scope": "CORRECTED_DISCOVERY_DRAFT/CRITIC_PRECISION",
+      "severity_in_final": "resolved",
+      "title": "Query-forwarding rule and change-log locator",
+      "finding": "Discovery/draft only said forwarded by default. Critic correctly identified required transmission but linked the removal to §9.3/1.2.1. Final says SHALL, removes omission ambiguity and puts the change under 1.2.0; 1.2.1 is the AI erratum.",
+      "final_qualification": "Resolved substantively in final §3 and critique dispositions; original source records remain historical.",
+      "evidence_ids": [
+        "E14"
+      ],
+      "remaining_material_issue": false
+    },
+    {
+      "id": "L03",
+      "scope": "BOUNDED_RESEARCH_LIMIT",
+      "severity_in_final": "nonmaterial limitation",
+      "title": "Candidate did not establish Snipe-IT release ancestry",
+      "finding": "Final explicitly leaves the fix ancestry into v8.8.0 unverified. Independent release notes include #19633, so the history can be made more specific. This is not a false claim that the fix is absent; no product/release was selected for deployment.",
+      "evidence_ids": [
+        "E05",
+        "E06"
+      ],
+      "remaining_material_issue": false
+    },
+    {
+      "id": "L04",
+      "scope": "FUTURE_APPLICABILITY_BOUNDARY",
+      "severity_in_final": "nonmaterial limitation",
+      "title": "GRAI Digital Link carriers and Odoo reusable settings have additional conditions",
+      "finding": "GS1 26.0 p142 requires Digital Link QR/Data Matrix as an additional carrier in open environments. Odoo 18 Package Use defaults to Disposable and Reusable is a cluster-picking context. Final makes a future GS1 analogy and conditional Odoo package-model comparison, selects neither implementation and disclaims GS1 pilot conformity; these omitted implementation details do not invalidate a remaining selected decision.",
+      "evidence_ids": [
+        "E12",
+        "E19"
+      ],
+      "remaining_material_issue": false
+    },
+    {
+      "id": "L05",
+      "scope": "EVIDENCE_REPRODUCIBILITY_LIMIT",
+      "severity_in_final": "nonmaterial limitation",
+      "title": "Authored source evidence is indexes/maps, not raw captures",
+      "finding": "Each stage sources directory contains index.md only. All authored evidence was read; source maps disclose indexed Odoo/GS1 access limitations. Independent official RST and GS1 PDF retrieval confirm governing claims, but original web operations/complete external context cannot be authenticated from these indexes alone.",
+      "evidence_ids": [
+        "E07",
+        "E08",
+        "E09",
+        "E12"
+      ],
+      "remaining_material_issue": false
+    }
+  ],
+  "supported_scope_lineage": [
+    {
+      "topic": "Identity and acceptance",
+      "discovery": "Durable crate key plus separate shipment/product/event; scan candidate then staff confirmation.",
+      "draft": "Reject shipment-label reuse and scan-equals-receipt; add correction links and replay discipline.",
+      "critic": "Affirms obligations 1–2 and separate identities.",
+      "final": "Preserved §§1–2, including conditional client key and pending/accepted state.",
+      "assessment": "Supported core meaning preserved; local event schema is a recommendation, not external product behavior."
+    },
+    {
+      "topic": "Optional public-care QR",
+      "discovery": "Shared generic care URL alongside readable/1D key; optional and owner-conditioned.",
+      "draft": "Explicitly retain original optional authorization; no evidence-based exclusion now.",
+      "critic": "Correctly rejects removing/promoting the option.",
+      "final": "Preserved §§3,5; route/privacy conditions and readable fallback remain.",
+      "assessment": "No supported optional scope lost; unconfirmed public route remains a legitimate owner input."
+    },
+    {
+      "topic": "Alternatives and practical scanning",
+      "discovery": "Odoo packages vs packaging, Snipe asset/custody pattern, Sortly snapshot/phone alternative, GRAI analogy.",
+      "draft": "Full comparison and low-cost/1D/2D/network distinction.",
+      "critic": "Affirms comparison but direct Odoo reads limited.",
+      "final": "Preserved Evidence/inference/local-choice section and §1; no winner.",
+      "assessment": "Useful supported breadth retained; independent source retrieval resolves Odoo context access for this assessment."
+    },
+    {
+      "topic": "Historical mechanism",
+      "discovery": "Snipe migration overstates blank QR payload; correct resolver/engine version histories.",
+      "draft": "More precise QR-text-to-title transition; commit/tag uncertainty remains.",
+      "critic": "Affirms history; misses title versus payload overreach.",
+      "final": "Field/title migration and parser/standard history preserved, no general scanner defect.",
+      "assessment": "Final qualification is narrower and supported; original unsupported symptom and metadata naming remain separately recorded in L01."
+    },
+    {
+      "topic": "Resolver correction",
+      "discovery": "Query pass-through by default; missing requested type 404.",
+      "draft": "Same wording with privacy condition.",
+      "critic": "C-01 normativity correction, wrong change-log locator.",
+      "final": "SHALL transmit; removal in 1.2.0, serial erratum 1.2.1; privacy condition strengthened.",
+      "assessment": "Substantive correction supported, critic locator properly amended; no material scope reduction."
+    },
+    {
+      "topic": "Owners, exclusions and validation",
+      "discovery": "Named unresolved owners, four exclusions, research executed and product checks prospective.",
+      "draft": "Exact owner/negative-constraint sections, complete proposed table.",
+      "critic": "C-02 retains owner uncertainty and validation boundary.",
+      "final": "Same ownership/invariants/exclusions and NOT_RUN product status.",
+      "assessment": "No unrun test, purchase, print, receipt verification or public movement history is invented."
+    }
+  ],
+  "validation_and_oracle_assessments": [
+    {
+      "check": "Public source retrieval and brief/plan reconciliation",
+      "candidate_status": "EXECUTED research only",
+      "review_status": "Primary semantic claims independently checked; original tool execution traces not fully retained",
+      "oracle": "Documentation/source establish externally documented mechanisms, not cooperative operation",
+      "applicability": "Appropriate research evidence; no product-pass inference."
+    },
+    {
+      "check": "Legacy namespace reconciliation",
+      "candidate_status": "PROPOSED/NOT_RUN",
+      "oracle": "Leading zeros preserved; duplicates/invalid/retired keys resolved by steward; replacement retains same physical-crate ID",
+      "applicability": "Discriminates identity collisions before label production. Requires actual legacy data and owner namespace choice."
+    },
+    {
+      "check": "Receipt/return scenario",
+      "candidate_status": "PROPOSED/NOT_RUN",
+      "oracle": "Partial receipt, repeated cycles, duplicate/wrong-depot/mismatch scans create no automatic accepted receipt; staff confirmation produces a separate event; corrections preserve original",
+      "applicability": "Meaningful local workflow oracle, not equivalent to a documented Odoo picking record or successful decode."
+    },
+    {
+      "check": "Readability and actual hardware paths",
+      "candidate_status": "PROPOSED/NOT_RUN",
+      "oracle": "Readable text and selected Code 128 ID match; phone/2D QR decode expected URL; dirty/worn/offline conditions distinguish decoder capability from web fetch",
+      "applicability": "Selected symbology/namespace/device required; viewing two labels alone cannot prove these properties."
+    },
+    {
+      "check": "Offline queue if authorized",
+      "candidate_status": "PROPOSED/NOT_RUN",
+      "oracle": "Stable client event key; pending versus accepted; stale/concurrent edits reconciled; retries produce no duplicate accepted event; ordering/correction handled",
+      "applicability": "Tests receipt semantics missing from Sortly snapshot documentation; honest manager decision first."
+    },
+    {
+      "check": "Optional public-care URL",
+      "candidate_status": "PROPOSED/NOT_RUN",
+      "oracle": "Care-only public content; web-owned stable route; approved redirects; missing/outage behavior; complete query propagation/logging reveals no sensitive movement data; readable ID remains useful on failure",
+      "applicability": "Static route checks are not automatically GS1-conformance tests; actual web service needed only in an authorized future pilot."
+    },
+    {
+      "check": "Future GS1 parser/resolver",
+      "candidate_status": "PROPOSED/NOT_RUN",
+      "oracle": "Pin standards/library; verify chosen AI 8003/GRAI inputs, supported key/type, requested missing-type 404 and redirects; respect no allocation/conformance claim now",
+      "applicability": "Applicable only if selected later; GTIN AI 21 erratum is not a GRAI serial change. Carrier conditions from E12 and support declaration from E14 matter then."
+    }
+  ],
+  "useful_discoveries": [
+    {
+      "discovery": "Odoo unique physical package versus repeated product packaging",
+      "evidence_ids": [
+        "E09"
+      ]
+    },
+    {
+      "discovery": "WHIN creates a new receipt, not a scheduled picking lookup",
+      "evidence_ids": [
+        "E08"
+      ]
+    },
+    {
+      "discovery": "Snipe-IT persistent tags and location-custody accountability caveat",
+      "evidence_ids": [
+        "E01",
+        "E02",
+        "E03"
+      ]
+    },
+    {
+      "discovery": "Sortly camera plus snapshot/manual sync as a competing offline approach",
+      "evidence_ids": [
+        "E10",
+        "E11"
+      ]
+    },
+    {
+      "discovery": "GRAI type-plus-serial models returnable crates without confusing cargo",
+      "evidence_ids": [
+        "E12"
+      ]
+    },
+    {
+      "discovery": "Shared static care URL can avoid per-crate public resolver data; stable redirects decouple page moves from label key",
+      "evidence_ids": [
+        "E14"
+      ]
+    },
+    {
+      "discovery": "Specific label-title migration and released parser/AI errata motivate bounded format checks",
+      "evidence_ids": [
+        "E04",
+        "E05",
+        "E14",
+        "E15"
+      ]
+    }
+  ],
+  "independent_additional_opportunities": [
+    {
+      "finding": "Pinned new label engine can encode a raw asset tag as QR, potentially decodable offline. Not investigated in the candidate but no exhaustive catalogue was required; not a proven receipt queue or public-care route.",
+      "evidence_ids": [
+        "E18"
+      ]
+    },
+    {
+      "finding": "Official release notes link Snipe-IT #19633; future GRAI carrier and Odoo cluster-use conditions are now explicit in independent evidence.",
+      "evidence_ids": [
+        "E06",
+        "E12",
+        "E19"
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "id": "U01",
+      "subject": "Inventory steward namespace",
+      "status": "HONEST_UNRESOLVED_OWNER_INPUT",
+      "impact": "Select compatible namespace/uniqueness rules before pilot implementation; public mechanisms have been investigated."
+    },
+    {
+      "id": "U02",
+      "subject": "Depot offline queue permission",
+      "status": "HONEST_UNRESOLVED_OWNER_INPUT",
+      "impact": "Decides whether pending capture/replay design is needed; no existing offline receipt capability established."
+    },
+    {
+      "id": "U03",
+      "subject": "Web-owner care route and redirects",
+      "status": "HONEST_UNRESOLVED_OWNER_INPUT",
+      "impact": "Optional feature condition, not evidence-based exclusion or deployed capability."
+    },
+    {
+      "id": "U04",
+      "subject": "Actual device/vendor/parser/cooperative operation",
+      "status": "NOT_RUN",
+      "impact": "The assignment is planning only; no invented implementation test requirement."
+    },
+    {
+      "id": "U05",
+      "subject": "Investigator native activation/completion",
+      "status": "UNKNOWN_DIRECT_PROOF",
+      "impact": "Terminal task summary claims a Goal, but no activation/completion response files exist in the mapped stage. Native completion is not inferred from T3 completion."
+    },
+    {
+      "id": "U06",
+      "subject": "Full candidate access/delegation/assistance trace",
+      "status": "UNKNOWN_COMPLETE_PROTOCOL",
+      "impact": "Freeze/reveal and scoped assignments support observed method. No unauthorized assistance observed; transcript-level exclusivity and exactly-one-Goal counts are not proven."
+    },
+    {
+      "id": "U07",
+      "subject": "Effective model/tier, billing and inference savings",
+      "status": "UNKNOWN",
+      "impact": "Requested gpt-6-luna/default and native counters are not effective-route or billed-token proof. No paired comparison or savings estimate permitted."
+    }
+  ],
+  "mechanics_separate_from_source": {
+    "delivery": {
+      "status": "COMPLETE_MAPPED_SCIENCE",
+      "terminal_root_record": "ER12_RUNTIME/runs/A5-02/control/terminal-science-freeze-root.json",
+      "root_basis": "root observed terminal final T3 task/no pending; separate from native proof",
+      "final_path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+      "root_terminal_task_status": "completed",
+      "pending_child_runs": false
+    },
+    "source_judgment": "PASS_WITH_LIMITATIONS",
+    "native": {
+      "critic": {
+        "evidence": "Saved actual native response artifacts, inspected in full; live backend authenticity not independently re-queried",
+        "activation": {
+          "threadId": "01a12442-0c95-7643-b270-e68f2dd0f28e",
+          "objective": "ER12 critic stage, run A5-02-control: execute ER12_RUNTIME/runs/A5-02/control/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "active",
+          "tokensUsed": 0,
+          "timeUsedSeconds": 0,
+          "createdAt": 1791609756,
+          "updatedAt": 1791609756
+        },
+        "completion": {
+          "threadId": "01a12442-0c95-7643-b270-e68f2dd0f28e",
+          "objective": "ER12 critic stage, run A5-02-control: execute ER12_RUNTIME/runs/A5-02/control/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "complete",
+          "tokensUsed": 137455,
+          "timeUsedSeconds": 610,
+          "createdAt": 1791609756,
+          "updatedAt": 1791610366
+        },
+        "separate_goal_id": "UNKNOWN_NOT_EXPOSED",
+        "science_saved_before_recorded_completion": true
+      },
+      "reviser": {
+        "evidence": "Saved actual native response artifacts, inspected in full; live backend authenticity not independently re-queried",
+        "activation": {
+          "threadId": "01a1244d-25ce-7263-8471-ebfc62ba2528",
+          "objective": "ER12 reviser stage, run A5-02-control: execute ER12_RUNTIME/runs/A5-02/control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "active",
+          "tokensUsed": 0,
+          "timeUsedSeconds": 0,
+          "createdAt": 1791610409,
+          "updatedAt": 1791610409
+        },
+        "completion": {
+          "threadId": "01a1244d-25ce-7263-8471-ebfc62ba2528",
+          "objective": "ER12 reviser stage, run A5-02-control: execute ER12_RUNTIME/runs/A5-02/control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "complete",
+          "tokensUsed": 116120,
+          "timeUsedSeconds": 452,
+          "createdAt": 1791610409,
+          "updatedAt": 1791610862
+        },
+        "separate_goal_id": "UNKNOWN_NOT_EXPOSED",
+        "science_saved_before_recorded_completion": true
+      },
+      "investigator": {
+        "status": "UNKNOWN_DIRECT_PROOF",
+        "available_evidence": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/status.json",
+        "terminal_summary_claim": {
+          "thread_id": "01a12432-706e-7f22-ae67-33d5853ef7c3",
+          "createdAt": 1791608680,
+          "updatedAt": 1791609623,
+          "elapsed_seconds": 942
+        },
+        "note": "Claim retained as a summary claim only; missing actual activation/completion responses prevent direct native qualification."
+      }
+    },
+    "protocol": {
+      "status": "PARTIALLY_OBSERVED_NO_UNAUTHORIZED_ASSISTANCE_DETECTED",
+      "evidence": [
+        "Each stage assignment/input-map/freeze",
+        "Single-use reveal record freezes exact discovery and revealed plan bytes",
+        "Mechanics-only invocation clarifications for critic/reviser"
+      ],
+      "limits": [
+        "No complete original event/transcript trace; early plan access and extra goals/children cannot be proven absent.",
+        "No protocol invalidation inferred merely from missing telemetry.",
+        "Root clarification is bounded native-Goal mechanics, not observed candidate source feedback."
+      ]
+    },
+    "time": {
+      "initialized_at_utc": "2026-10-10T05:04:06.974Z",
+      "dispatch_captured_at_utc": "2026-10-10T05:04:07.956Z",
+      "root_terminal_freeze_at_utc": "2026-10-10T05:41:34.688501+00:00",
+      "observed_initialization_to_terminal_freeze_seconds": 2247.714501,
+      "observed_dispatch_to_terminal_freeze_seconds": 2246.732501,
+      "whole_deadline_utc": "2026-10-10T06:04:04.979Z",
+      "root_terminal_freeze_before_deadline": true,
+      "science_mtimes_before_each_stage_deadline": true,
+      "interpretation": "Observed occupancy includes setup, queue/handoff and root capture. Native elapsed counters cover only receipt-reported Goals; not total provider inference or billing."
+    },
+    "route": {
+      "requested_provider": "AUTHORIZED_PROVIDER_INSTANCE",
+      "requested_model": "gpt-6-luna",
+      "initial_run_requested_service_tier": "priority",
+      "all_dispatched_stage_requested_service_tier": "default",
+      "revision_evidence": "Per-stage service-tier-change.json records prospective user revision before dispatch; current request/input maps/freeze confirm default.",
+      "effective_model": "UNKNOWN",
+      "effective_service_tier": "UNKNOWN"
+    },
+    "billing": {
+      "status": "UNKNOWN",
+      "native_counters_not_billing_proof": true,
+      "no_speed_or_savings_claim": true
+    }
+  },
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791604608938287266
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A5-02/brief.md",
+      "bytes": 3394,
+      "sha256": "a6520dffb1ba50fd341f287ae6805fe99e8f14f159c53eb87668029014ba3589",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791608644962501459
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A5-02/plan.md",
+      "bytes": 6060,
+      "sha256": "b4cf16e079bff1eb16228453f99f8682a63d34ecd99e0f53ca1463416111931e",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791608644962626936
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/terminal-science-freeze-root.json",
+      "bytes": 7274,
+      "sha256": "ec45c5a231c5a689122810fb91312ac093fc44b3c87e3c608e2f0ef9c6346d3a",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610894688863129
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/inputs/brief.md",
+      "bytes": 3394,
+      "sha256": "a6520dffb1ba50fd341f287ae6805fe99e8f14f159c53eb87668029014ba3589",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791608646974788738
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/control/run.json",
+      "bytes": 580,
+      "sha256": "15c8f3f15d8b5e813ce4835f820339a306058e2c3519cb308b273479329f5fd3",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791608646975028923
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/assignment.md",
+      "bytes": 3712,
+      "sha256": "599e96a804efea9fff64d0a6951acf88a090f0af006c4970dd99d09acff812fe",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791608646975666250
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/input-map.json",
+      "bytes": 781,
+      "sha256": "9bdbbbde8717753ca7bf43caf818e5d5742c5ee670a7ae84de73716301991b94",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791608647127003129
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/freeze.json",
+      "bytes": 1721,
+      "sha256": "073c36adcdc359890415c7dc99ce5001431efc2900d63d6430af5e7afdc1b1bc",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791608647127425333
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/source-map.json",
+      "bytes": 18140,
+      "sha256": "27815f76afc49ec0a0d20e5ce70e0b62a432ce07998dc0971a5d20632e45979c",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609292215609690
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/sources/index.md",
+      "bytes": 4844,
+      "sha256": "ce4c0040855ac4654dbf62270003c49ee0aa586ec29eb3194826baef7f94d134",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609292215609690
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/request.json",
+      "bytes": 913,
+      "sha256": "c02a95105acf08a86ae58bc22e37a58723753b29bf9dfd017bbe77a0b36053cc",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791608647127161138
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/dispatch.json",
+      "bytes": 4219,
+      "sha256": "4285424ea3b9e59365c78cb797e671edd9a37d599923ecd9ff65e4b9738f792b",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791608647956872902
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/service-tier-change.json",
+      "bytes": 489,
+      "sha256": "5784abc30141439c1c3a0e101aa9fc6b0f7c65303dae69ee89c8e3cc285abc63",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791608647127585403
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/discovery.md",
+      "bytes": 13022,
+      "sha256": "b41b03f16f9707d36fb03fde84178c335dfc59069cbba4aed1d92c98b3b9b45e",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609292213609680
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/draft.md",
+      "bytes": 16811,
+      "sha256": "751e28236adb4cc707e611ccca7843d8b6c8fd165552cd157fa3f32960f7886f",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609411351416236
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/revealed-plan.md",
+      "bytes": 6060,
+      "sha256": "b4cf16e079bff1eb16228453f99f8682a63d34ecd99e0f53ca1463416111931e",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609303502371187
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/plan-reveal.json",
+      "bytes": 427,
+      "sha256": "175711d459dbca89770e8f95919bbee188c8e4353843a31f2499802b95b29422",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609303502526488
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/status.json",
+      "bytes": 4092,
+      "sha256": "1338ef368c7bd5b3f0611dd1185a393cc3e63bececd853b9eb13fc3a2ec0cee8",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609669338102906
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/assignment.md",
+      "bytes": 4006,
+      "sha256": "ed6d37f96bb3b4d522c21669899dfebf8eddacae425e8608b99b8afc5cc1198a",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609670064507493
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/input-map.json",
+      "bytes": 1457,
+      "sha256": "d3761089ee784702f403457c6a84900cfcf6b19cb7be91b29cffd0bcbf97da4f",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609670064212994
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/freeze.json",
+      "bytes": 3290,
+      "sha256": "fe4ae4bb4a4a10d4f5e104a8eb11e862868b2c69cbd6cae090e621a1d04a656a",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609670063922780
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/source-map.json",
+      "bytes": 24771,
+      "sha256": "413ce211e01dc9a1dd9d6cbc574bcade8764c666f64aabfbfce881cc1dccb4ab",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610167526473022
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/sources/index.md",
+      "bytes": 2657,
+      "sha256": "88d03f5e3a4c898ff90de625ff4430b30f045a40a998f742277fe557a45154b8",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610185482304935
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/request.json",
+      "bytes": 1601,
+      "sha256": "6ca010d930d952f3ac2f89490d12f7efbd8a97d9086ab4acfc6e9f30b99a27a9",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609670063563343
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/dispatch.json",
+      "bytes": 4835,
+      "sha256": "2a26f57aa3c9c8904f536807c881ef8f9d2d51376fdd1502251084665dea2962",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609670890124838
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/service-tier-change.json",
+      "bytes": 477,
+      "sha256": "e12bf475fa08bb8047d23a51c7a076e57b61da1d2860dfc25f70526cb3d3ff79",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609669854681151
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/critique.md",
+      "bytes": 8169,
+      "sha256": "d9ba8483f64403e7f2ad83da2f371b7e23367cc68ce5904334d11b99e1c89260",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610356437571557
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/status.json",
+      "bytes": 4054,
+      "sha256": "79c77262ed90cb5cf0d24d9a3e000b70aec9ee097a6d16feae0a19ca1f6fe0a2",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610396394245487
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/invocation-clarification.json",
+      "bytes": 3016,
+      "sha256": "5adb8188e8b628d6fb91e83e156569237c1ec371903223a6afadef5f30301a86",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609670064788481
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/native-goal-activation.json",
+      "bytes": 464,
+      "sha256": "df2b72cf1d1f5f2017901a7119112ea81668a74489bc219dbe0b04e2dda002e4",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609770428774838
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/native-goal-completion.json",
+      "bytes": 793,
+      "sha256": "1004bc68ee7e4d9a1881a059bd8c749a4cafcc638b4bdfbba36d22883125d3cf",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610376570413127
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/assignment.md",
+      "bytes": 3988,
+      "sha256": "9633c115cd6aff52a0a94130ae902302dc2b2971806ab6611280829877906e7a",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610397154310148
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/input-map.json",
+      "bytes": 1768,
+      "sha256": "2a8bcafc73a3c93f0f74653612079f90e86a0798927596b8e86f2fdedf3f319b",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610397154144860
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/freeze.json",
+      "bytes": 4060,
+      "sha256": "3516f465e5fd473ecb0125f4301c8ab147fb41b1f800c68999ce2c90222c7ac5",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610397153979782
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/source-map.json",
+      "bytes": 28706,
+      "sha256": "acf19e5ff39acec451a4d62511a2d39d7b17cab75ab101177f8685baa11daa00",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610810578461781
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/sources/index.md",
+      "bytes": 4825,
+      "sha256": "4b0512c993f9d9453051823cd26e17fbb4c56906cdf8806c0c1ec66949d4f7b3",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610810515184251
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/request.json",
+      "bytes": 1607,
+      "sha256": "400ac692ddfcd90d7c18670a8e16381187206ffcc34b0e99ec29a90b6d15e6db",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610397153756877
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/dispatch.json",
+      "bytes": 4853,
+      "sha256": "bb2b5acd2977f3f46e5a131ff9b070444a257aea2cb58be18cdfd07ad03e450f",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610398207202681
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/service-tier-change.json",
+      "bytes": 479,
+      "sha256": "abf953ec1cb0da846e06454dcfa0d65a00898b293120c4b6a998ebab57d92920",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610396936557406
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+      "bytes": 17385,
+      "sha256": "772a070ee5b7cc26759535256478dabf09a7564e4cb0b324233cff1c5949d90d",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610810522184280
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/invocation-clarification.json",
+      "bytes": 3023,
+      "sha256": "5d135ef93d9a49cbdce3658e9e04f8601c873aa551698be8a820a743b7cde284",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610397154471693
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/native-goal-activation.json",
+      "bytes": 466,
+      "sha256": "c346eead688a4e751a81cf72a69d66647e8ab3d1bb6cdcb9c427893ff2b9b9f9",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610447657772759
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/native-goal-completion.json",
+      "bytes": 795,
+      "sha256": "91d987611c3c3cec3679f3ef4c1d7c0159f3146d6ff9ffb54c848e78dcb5826b",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610862077401518
+    }
+  ],
+  "original_freeze_integrity_checks": [
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/critique.md",
+      "expected_sha256": "d9ba8483f64403e7f2ad83da2f371b7e23367cc68ce5904334d11b99e1c89260",
+      "actual_sha256": "d9ba8483f64403e7f2ad83da2f371b7e23367cc68ce5904334d11b99e1c89260",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/source-map.json",
+      "expected_sha256": "413ce211e01dc9a1dd9d6cbc574bcade8764c666f64aabfbfce881cc1dccb4ab",
+      "actual_sha256": "413ce211e01dc9a1dd9d6cbc574bcade8764c666f64aabfbfce881cc1dccb4ab",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/sources/index.md",
+      "expected_sha256": "88d03f5e3a4c898ff90de625ff4430b30f045a40a998f742277fe557a45154b8",
+      "actual_sha256": "88d03f5e3a4c898ff90de625ff4430b30f045a40a998f742277fe557a45154b8",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/discovery.md",
+      "expected_sha256": "b41b03f16f9707d36fb03fde84178c335dfc59069cbba4aed1d92c98b3b9b45e",
+      "actual_sha256": "b41b03f16f9707d36fb03fde84178c335dfc59069cbba4aed1d92c98b3b9b45e",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/draft.md",
+      "expected_sha256": "751e28236adb4cc707e611ccca7843d8b6c8fd165552cd157fa3f32960f7886f",
+      "actual_sha256": "751e28236adb4cc707e611ccca7843d8b6c8fd165552cd157fa3f32960f7886f",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/revealed-plan.md",
+      "expected_sha256": "b4cf16e079bff1eb16228453f99f8682a63d34ecd99e0f53ca1463416111931e",
+      "actual_sha256": "b4cf16e079bff1eb16228453f99f8682a63d34ecd99e0f53ca1463416111931e",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/source-map.json",
+      "expected_sha256": "27815f76afc49ec0a0d20e5ce70e0b62a432ce07998dc0971a5d20632e45979c",
+      "actual_sha256": "27815f76afc49ec0a0d20e5ce70e0b62a432ce07998dc0971a5d20632e45979c",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/sources/index.md",
+      "expected_sha256": "ce4c0040855ac4654dbf62270003c49ee0aa586ec29eb3194826baef7f94d134",
+      "actual_sha256": "ce4c0040855ac4654dbf62270003c49ee0aa586ec29eb3194826baef7f94d134",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+      "expected_sha256": "772a070ee5b7cc26759535256478dabf09a7564e4cb0b324233cff1c5949d90d",
+      "actual_sha256": "772a070ee5b7cc26759535256478dabf09a7564e4cb0b324233cff1c5949d90d",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/source-map.json",
+      "expected_sha256": "acf19e5ff39acec451a4d62511a2d39d7b17cab75ab101177f8685baa11daa00",
+      "actual_sha256": "acf19e5ff39acec451a4d62511a2d39d7b17cab75ab101177f8685baa11daa00",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/sources/index.md",
+      "expected_sha256": "4b0512c993f9d9453051823cd26e17fbb4c56906cdf8806c0c1ec66949d4f7b3",
+      "actual_sha256": "4b0512c993f9d9453051823cd26e17fbb4c56906cdf8806c0c1ec66949d4f7b3",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/inputs/brief.md",
+      "expected_sha256": "a6520dffb1ba50fd341f287ae6805fe99e8f14f159c53eb87668029014ba3589",
+      "actual_sha256": "a6520dffb1ba50fd341f287ae6805fe99e8f14f159c53eb87668029014ba3589",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/assignment.md",
+      "expected_sha256": "599e96a804efea9fff64d0a6951acf88a090f0af006c4970dd99d09acff812fe",
+      "actual_sha256": "599e96a804efea9fff64d0a6951acf88a090f0af006c4970dd99d09acff812fe",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/input-map.json",
+      "expected_sha256": "9bdbbbde8717753ca7bf43caf818e5d5742c5ee670a7ae84de73716301991b94",
+      "actual_sha256": "9bdbbbde8717753ca7bf43caf818e5d5742c5ee670a7ae84de73716301991b94",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/inputs/brief.md",
+      "expected_sha256": "a6520dffb1ba50fd341f287ae6805fe99e8f14f159c53eb87668029014ba3589",
+      "actual_sha256": "a6520dffb1ba50fd341f287ae6805fe99e8f14f159c53eb87668029014ba3589",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/assignment.md",
+      "expected_sha256": "ed6d37f96bb3b4d522c21669899dfebf8eddacae425e8608b99b8afc5cc1198a",
+      "actual_sha256": "ed6d37f96bb3b4d522c21669899dfebf8eddacae425e8608b99b8afc5cc1198a",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/input-map.json",
+      "expected_sha256": "d3761089ee784702f403457c6a84900cfcf6b19cb7be91b29cffd0bcbf97da4f",
+      "actual_sha256": "d3761089ee784702f403457c6a84900cfcf6b19cb7be91b29cffd0bcbf97da4f",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/discovery.md",
+      "expected_sha256": "b41b03f16f9707d36fb03fde84178c335dfc59069cbba4aed1d92c98b3b9b45e",
+      "actual_sha256": "b41b03f16f9707d36fb03fde84178c335dfc59069cbba4aed1d92c98b3b9b45e",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/draft.md",
+      "expected_sha256": "751e28236adb4cc707e611ccca7843d8b6c8fd165552cd157fa3f32960f7886f",
+      "actual_sha256": "751e28236adb4cc707e611ccca7843d8b6c8fd165552cd157fa3f32960f7886f",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/source-map.json",
+      "expected_sha256": "27815f76afc49ec0a0d20e5ce70e0b62a432ce07998dc0971a5d20632e45979c",
+      "actual_sha256": "27815f76afc49ec0a0d20e5ce70e0b62a432ce07998dc0971a5d20632e45979c",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/revealed-plan.md",
+      "expected_sha256": "b4cf16e079bff1eb16228453f99f8682a63d34ecd99e0f53ca1463416111931e",
+      "actual_sha256": "b4cf16e079bff1eb16228453f99f8682a63d34ecd99e0f53ca1463416111931e",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/plan-reveal.json",
+      "expected_sha256": "175711d459dbca89770e8f95919bbee188c8e4353843a31f2499802b95b29422",
+      "actual_sha256": "175711d459dbca89770e8f95919bbee188c8e4353843a31f2499802b95b29422",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/inputs/brief.md",
+      "expected_sha256": "a6520dffb1ba50fd341f287ae6805fe99e8f14f159c53eb87668029014ba3589",
+      "actual_sha256": "a6520dffb1ba50fd341f287ae6805fe99e8f14f159c53eb87668029014ba3589",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/assignment.md",
+      "expected_sha256": "9633c115cd6aff52a0a94130ae902302dc2b2971806ab6611280829877906e7a",
+      "actual_sha256": "9633c115cd6aff52a0a94130ae902302dc2b2971806ab6611280829877906e7a",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/input-map.json",
+      "expected_sha256": "2a8bcafc73a3c93f0f74653612079f90e86a0798927596b8e86f2fdedf3f319b",
+      "actual_sha256": "2a8bcafc73a3c93f0f74653612079f90e86a0798927596b8e86f2fdedf3f319b",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/discovery.md",
+      "expected_sha256": "b41b03f16f9707d36fb03fde84178c335dfc59069cbba4aed1d92c98b3b9b45e",
+      "actual_sha256": "b41b03f16f9707d36fb03fde84178c335dfc59069cbba4aed1d92c98b3b9b45e",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/draft.md",
+      "expected_sha256": "751e28236adb4cc707e611ccca7843d8b6c8fd165552cd157fa3f32960f7886f",
+      "actual_sha256": "751e28236adb4cc707e611ccca7843d8b6c8fd165552cd157fa3f32960f7886f",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/source-map.json",
+      "expected_sha256": "27815f76afc49ec0a0d20e5ce70e0b62a432ce07998dc0971a5d20632e45979c",
+      "actual_sha256": "27815f76afc49ec0a0d20e5ce70e0b62a432ce07998dc0971a5d20632e45979c",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/revealed-plan.md",
+      "expected_sha256": "b4cf16e079bff1eb16228453f99f8682a63d34ecd99e0f53ca1463416111931e",
+      "actual_sha256": "b4cf16e079bff1eb16228453f99f8682a63d34ecd99e0f53ca1463416111931e",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/plan-reveal.json",
+      "expected_sha256": "175711d459dbca89770e8f95919bbee188c8e4353843a31f2499802b95b29422",
+      "actual_sha256": "175711d459dbca89770e8f95919bbee188c8e4353843a31f2499802b95b29422",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/critique.md",
+      "expected_sha256": "d9ba8483f64403e7f2ad83da2f371b7e23367cc68ce5904334d11b99e1c89260",
+      "actual_sha256": "d9ba8483f64403e7f2ad83da2f371b7e23367cc68ce5904334d11b99e1c89260",
+      "matches": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/source-map.json",
+      "expected_sha256": "413ce211e01dc9a1dd9d6cbc574bcade8764c666f64aabfbfce881cc1dccb4ab",
+      "actual_sha256": "413ce211e01dc9a1dd9d6cbc574bcade8764c666f64aabfbfce881cc1dccb4ab",
+      "matches": true
+    }
+  ],
+  "primary_sources": [
+    {
+      "id": "E01",
+      "candidate_source_ids": [
+        "S01"
+      ],
+      "url": "https://snipe-it.readme.io/docs/asset-tags",
+      "version_or_commit": "Live documentation retrieved 2026-10-10; no deployed version established",
+      "governing_locator": "Asset Tags; Generate Auto-Incrementing IDs; Next auto-increment; Length of Asset Tags",
+      "local_evidence": [
+        "evidence/snipe-tag-md.txt",
+        "evidence/web-retrieval-4.txt"
+      ],
+      "semantic_result": "System uniqueness is correctly distinguished from a steward-selected local namespace.",
+      "conditions_defaults_exceptions": "Auto-increment is optional; alphanumeric imports can distort numeric incrementing; changing tag length does not rewrite existing tags.",
+      "access_window_utc": {
+        "start": "2026-10-10T05:41:53+00:00",
+        "end": "2026-10-10T05:57:04.381052+00:00"
+      },
+      "access_precision": "Conservative independently observed review window; exact HTTP retrieval timestamps also appear in HTTP manifests.",
+      "operation": "Read-only public primary documentation/source/release retrieval and semantic reading; no product execution."
+    },
+    {
+      "id": "E02",
+      "candidate_source_ids": [
+        "S02"
+      ],
+      "url": "https://snipe-it.readme.io/docs/asset-labels",
+      "version_or_commit": "Live documentation; exact deployed release not selected",
+      "governing_locator": "Asset Labels: 1D search versus 2D asset-page QR; barcode enablement",
+      "local_evidence": [
+        "evidence/snipe-label-md.txt",
+        "evidence/web-retrieval-4.txt"
+      ],
+      "semantic_result": "Supports the documented dual-path asset-label pattern. Host reachability applies to asset-page retrieval, not decoding.",
+      "conditions_defaults_exceptions": "Barcode generation must be enabled. This describes an asset-page QR path, not every possible new-engine QR target. E18 shows configurable raw-value targets.",
+      "access_window_utc": {
+        "start": "2026-10-10T05:41:53+00:00",
+        "end": "2026-10-10T05:57:04.381052+00:00"
+      },
+      "access_precision": "Conservative independently observed review window; exact HTTP retrieval timestamps also appear in HTTP manifests.",
+      "operation": "Read-only public primary documentation/source/release retrieval and semantic reading; no product execution."
+    },
+    {
+      "id": "E03",
+      "candidate_source_ids": [
+        "S03"
+      ],
+      "url": "https://snipe-it.readme.io/docs/managing-assets",
+      "version_or_commit": "Live documentation",
+      "governing_locator": "Managing Assets > Best Practices > Checking out assets to non-people",
+      "local_evidence": [
+        "evidence/web-retrieval-4.txt"
+      ],
+      "semantic_result": "Location checkout is possible but discouraged for accountability; final correctly presents a workflow mismatch, not a prohibited capability.",
+      "conditions_defaults_exceptions": "Guidance recommends an accountable person; it does not prove all depot custody designs are impossible.",
+      "access_window_utc": {
+        "start": "2026-10-10T05:41:53+00:00",
+        "end": "2026-10-10T05:57:04.381052+00:00"
+      },
+      "access_precision": "Conservative independently observed review window; exact HTTP retrieval timestamps also appear in HTTP manifests.",
+      "operation": "Read-only public primary documentation/source/release retrieval and semantic reading; no product execution."
+    },
+    {
+      "id": "E04",
+      "candidate_source_ids": [
+        "S04"
+      ],
+      "url": "https://github.com/grokability/snipe-it/issues/19515",
+      "version_or_commit": "Reporter v8.7.1; opened 2026-08-18; closure 2026-09-23 referencing c1d1cd1",
+      "governing_locator": "Issue description, What happened?, version, linked PR and closure activity",
+      "local_evidence": [
+        "evidence/web-retrieval-4.txt"
+      ],
+      "semantic_result": "Confirms a legacy QR Code Text/new-engine title migration report. Discovery/source-map overreach about a missing encoded QR payload is not established by this report or the source. Final history narrows to the field/title migration.",
+      "conditions_defaults_exceptions": "A user report, not independently executed reproduction. QR Code Text is a displayed-title setting in the inspected source; blank title is not proof of blank encoded URL.",
+      "access_window_utc": {
+        "start": "2026-10-10T05:41:53+00:00",
+        "end": "2026-10-10T05:57:04.381052+00:00"
+      },
+      "access_precision": "Conservative independently observed review window; exact HTTP retrieval timestamps also appear in HTTP manifests.",
+      "operation": "Read-only public primary documentation/source/release retrieval and semantic reading; no product execution."
+    },
+    {
+      "id": "E05",
+      "candidate_source_ids": [
+        "S05"
+      ],
+      "url": "https://github.com/grokability/snipe-it/pull/19633",
+      "version_or_commit": "Head commit 1e0fc8c; merge c1d1cd1; develop merge 2026-09-17",
+      "governing_locator": "app/Http/Controllers/SettingsController.php postLabels; resources/views/partials/labels-new-engine.blade.php removed fallback help",
+      "local_evidence": [
+        "evidence/snipe-pr-diff.txt",
+        "evidence/snipe-pr-api.txt",
+        "evidence/web-retrieval-5.txt"
+      ],
+      "semantic_result": "The actual source copies qr_text into label2_title on a legacy-to-new enable transition. The final describes that bounded operation accurately.",
+      "conditions_defaults_exceptions": "Conditional !$wasLabel2Enabled && request boolean label2_enable; not each render or arbitrary scanner parsing. Original maps call the field qr_code_text, but the source property is qr_text.",
+      "access_window_utc": {
+        "start": "2026-10-10T05:41:53+00:00",
+        "end": "2026-10-10T05:57:04.381052+00:00"
+      },
+      "access_precision": "Conservative independently observed review window; exact HTTP retrieval timestamps also appear in HTTP manifests.",
+      "operation": "Read-only public primary documentation/source/release retrieval and semantic reading; no product execution."
+    },
+    {
+      "id": "E06",
+      "candidate_source_ids": [
+        "S06"
+      ],
+      "url": "https://github.com/grokability/snipe-it/releases/tag/v8.8.0",
+      "version_or_commit": "v8.8.0 / 2c466fa; published 2026-09-30",
+      "governing_locator": "Release header and What's Changed entry linking #19515/#19633",
+      "local_evidence": [
+        "evidence/snipe-release-api.txt",
+        "evidence/web-retrieval-5.txt"
+      ],
+      "semantic_result": "Release existence/date are confirmed. Release notes explicitly include #19633; candidate did not verify ancestry and correctly did not assert inclusion as a proven tested deployment fact.",
+      "conditions_defaults_exceptions": "Independent review establishes the released-note linkage, not an operated deployment. No Git ancestry command was run. This limited open historical check is not needed for the local-ID recommendation.",
+      "access_window_utc": {
+        "start": "2026-10-10T05:41:53+00:00",
+        "end": "2026-10-10T05:57:04.381052+00:00"
+      },
+      "access_precision": "Conservative independently observed review window; exact HTTP retrieval timestamps also appear in HTTP manifests.",
+      "operation": "Read-only public primary documentation/source/release retrieval and semantic reading; no product execution."
+    },
+    {
+      "id": "E07",
+      "candidate_source_ids": [
+        "S07"
+      ],
+      "url": "https://www.odoo.com/documentation/18.0/applications/inventory_and_mrp/barcode/operations/receipts_deliveries.html",
+      "version_or_commit": "Odoo documentation branch 18.0; independent official repository RST retrieved",
+      "governing_locator": "Enable Barcode app; Scan barcodes for receipts; Validating the transfer",
+      "local_evidence": [
+        "evidence/odoo-receipts-rst.txt",
+        "evidence/web-retrieval-3.txt"
+      ],
+      "semantic_result": "Confirms real-time receipt operations, selecting the outstanding receipt, scanning product/packaging and explicit validation. Documentation review is not a receipt run.",
+      "conditions_defaults_exceptions": "Barcode feature/app enablement is necessary. Default Nomenclature and Default GS1 Nomenclature differ; UPC/EAN conversion is described. No offline queue guarantee is given. Public-page timeout was resolved for this review via official 18.0 documentation source.",
+      "access_window_utc": {
+        "start": "2026-10-10T05:41:53+00:00",
+        "end": "2026-10-10T05:57:04.381052+00:00"
+      },
+      "access_precision": "Conservative independently observed review window; exact HTTP retrieval timestamps also appear in HTTP manifests.",
+      "operation": "Read-only public primary documentation/source/release retrieval and semantic reading; no product execution."
+    },
+    {
+      "id": "E08",
+      "candidate_source_ids": [
+        "S08"
+      ],
+      "url": "https://www.odoo.com/documentation/18.0/applications/inventory_and_mrp/barcode/setup/operation_types.html",
+      "version_or_commit": "Official Odoo 18.0 documentation source",
+      "governing_locator": "Use barcodes > Operations > WHIN warning; Commands > VALIDATE / PRINT PICKING OPERATION",
+      "local_evidence": [
+        "evidence/odoo-operations-rst.txt",
+        "evidence/web-retrieval-6.txt"
+      ],
+      "semantic_result": "WHIN starts a new receipt order; a particular picking reference finds a scheduled operation. Supports separating command/operation from physical-crate and local event identity.",
+      "conditions_defaults_exceptions": "Generic WHIN does not match a scheduled receipt even with equal contents. VALIDATE can itself be invoked by a command barcode; the local staff-confirmation choice is not a claim that Odoo requires only a screen click.",
+      "access_window_utc": {
+        "start": "2026-10-10T05:41:53+00:00",
+        "end": "2026-10-10T05:57:04.381052+00:00"
+      },
+      "access_precision": "Conservative independently observed review window; exact HTTP retrieval timestamps also appear in HTTP manifests.",
+      "operation": "Read-only public primary documentation/source/release retrieval and semantic reading; no product execution."
+    },
+    {
+      "id": "E09",
+      "candidate_source_ids": [
+        "S09"
+      ],
+      "url": "https://www.odoo.com/documentation/18.0/applications/inventory_and_mrp/inventory/product_management/configure.html",
+      "version_or_commit": "Official Odoo 18.0 documentation source",
+      "governing_locator": "Comparison: Packages versus Packaging; unique codes, inventory tracking, reusability, Smooth barcode operations",
+      "local_evidence": [
+        "evidence/odoo-configure-rst.txt",
+        "evidence/web-retrieval-6.txt"
+      ],
+      "semantic_result": "Individual physical packages and repeated type/quantity packaging are correctly distinguished. Closest researched fit is labeled inference, not proven depot suitability.",
+      "conditions_defaults_exceptions": "Package reception may require both package and individual-item scans. Move Entire Packages affects contents locations. Package Use context/default restrictions are in E19; product lot/serial tracking is not a crate instance ID.",
+      "access_window_utc": {
+        "start": "2026-10-10T05:41:53+00:00",
+        "end": "2026-10-10T05:57:04.381052+00:00"
+      },
+      "access_precision": "Conservative independently observed review window; exact HTTP retrieval timestamps also appear in HTTP manifests.",
+      "operation": "Read-only public primary documentation/source/release retrieval and semantic reading; no product execution."
+    },
+    {
+      "id": "E10",
+      "candidate_source_ids": [
+        "S10"
+      ],
+      "url": "https://help.sortly.com/can-i-use-sortly-in-offline-mode",
+      "version_or_commit": "Live vendor help, 2026-10-10; app build not selected",
+      "governing_locator": "How to Enable Offline Mode; FAQ snapshot and sync behavior",
+      "local_evidence": [
+        "evidence/web-retrieval-1.txt",
+        "evidence/web-retrieval-2.txt"
+      ],
+      "semantic_result": "Mobile-only disable-sync inventory edits and later synchronization are confirmed. Final does not promote this to a verified receipt-event queue.",
+      "conditions_defaults_exceptions": "Android/iOS only; web not offline. Disable Sync leaves a device snapshot; vendor advises full sync first. Conflict ordering/idempotency across depots are not established.",
+      "access_window_utc": {
+        "start": "2026-10-10T05:41:53+00:00",
+        "end": "2026-10-10T05:57:04.381052+00:00"
+      },
+      "access_precision": "Conservative independently observed review window; exact HTTP retrieval timestamps also appear in HTTP manifests.",
+      "operation": "Read-only public primary documentation/source/release retrieval and semantic reading; no product execution."
+    },
+    {
+      "id": "E11",
+      "candidate_source_ids": [
+        "S11"
+      ],
+      "url": "https://help.sortly.com/what-kind-of-scanners-can-i-use-with-sortly",
+      "version_or_commit": "Live vendor help; no app build or hardware selected",
+      "governing_locator": "Mobile App; web limits; FAQ Bluetooth plans, 1D/QR, smart-scanner camera and Android version",
+      "local_evidence": [
+        "evidence/web-retrieval-4.txt"
+      ],
+      "semantic_result": "Phone camera is a no-extra-reader route; QR needs 2D capability; web scan check-in/out is unsupported. Low-cost argument is qualitative, not a price/free-tier promise.",
+      "conditions_defaults_exceptions": "Bluetooth integration requires Ultra/Premium/Enterprise; tested hardware differs from unguaranteed alternatives. Smart scanner uses app camera by default and requires Android 12+. Final defers actual hardware suitability to a proposed check.",
+      "access_window_utc": {
+        "start": "2026-10-10T05:41:53+00:00",
+        "end": "2026-10-10T05:57:04.381052+00:00"
+      },
+      "access_precision": "Conservative independently observed review window; exact HTTP retrieval timestamps also appear in HTTP manifests.",
+      "operation": "Read-only public primary documentation/source/release retrieval and semantic reading; no product execution."
+    },
+    {
+      "id": "E12",
+      "candidate_source_ids": [
+        "S12"
+      ],
+      "url": "https://ref.gs1.org/standards/genspecs/26.0.0/",
+      "version_or_commit": "GS1 General Specifications release 26.0, ratified January 2026",
+      "governing_locator": "§2.3 and §2.3.1; physical/printed pages 140–142; header and footers visually inspected",
+      "local_evidence": [
+        "evidence/gs1-genspecs-26.pdf",
+        "evidence/gs1-genspecs-26.txt",
+        "evidence/gs1-genspecs-26-header.txt"
+      ],
+      "semantic_result": "Confirms crates, issuing Company Prefix, asset type plus optional individual serial, and prohibition on treating carried goods as AI 8003 assets.",
+      "conditions_defaults_exceptions": "For individual crate tracking, type alone is insufficient; serial distinguishes instances. In open environments, Digital Link QR/Data Matrix are additional to the listed GS1 carriers; p142 gives symbol-quality and multiple-carrier conditions. Final selects no GS1 label/deployment and disclaims GS1 conformity for the pilot. Original S12 mirror identity is preserved separately, not rebound.",
+      "access_window_utc": {
+        "start": "2026-10-10T05:41:53+00:00",
+        "end": "2026-10-10T05:57:04.381052+00:00"
+      },
+      "access_precision": "Conservative independently observed review window; exact HTTP retrieval timestamps also appear in HTTP manifests.",
+      "operation": "Read-only public primary documentation/source/release retrieval and semantic reading; no product execution."
+    },
+    {
+      "id": "E13",
+      "candidate_source_ids": [
+        "S13"
+      ],
+      "url": "https://ref.gs1.org/standards/digital-link/uri-syntax/1.7.0/",
+      "version_or_commit": "Release 1.7.0, ratified August 2026",
+      "governing_locator": "Header: Release 1.7.0, Ratified Aug 2026; §2 conformance; §4.3–4.5 primary keys/value grammar; §6.1 recognition; GRAI AI 8003.",
+      "local_evidence": [
+        "evidence/web-retrieval-7.txt",
+        "evidence/web-retrieval-8.txt",
+        "evidence/web-retrieval-10.txt"
+      ],
+      "semantic_result": "URL-shaped Digital Link can be treated as an ordinary URL; syntactic recognition and receiving-application validation are separate.",
+      "conditions_defaults_exceptions": "GRAI value is 13 digits plus optional 1–16-character serial under the defined character set; GTIN serial AI 21 has different grammar. Domain/stem and compressed/uncompressed processing matter. No concrete GS1 URI is proposed as an implemented crate label.",
+      "access_window_utc": {
+        "start": "2026-10-10T05:41:53+00:00",
+        "end": "2026-10-10T05:57:04.381052+00:00"
+      },
+      "access_precision": "Conservative independently observed review window; exact HTTP retrieval timestamps also appear in HTTP manifests.",
+      "operation": "Read-only public primary documentation/source/release retrieval and semantic reading; no product execution.",
+      "final_recheck_utc": "2026-10-10T05:59:04Z"
+    },
+    {
+      "id": "E14",
+      "candidate_source_ids": [
+        "S14"
+      ],
+      "url": "https://ref.gs1.org/standards/resolver/",
+      "version_or_commit": "Release 1.2.1, ratified August 2026",
+      "governing_locator": "§§1.1,2.1,2.2,2.5.10,2.6.2,2.12; conformance §5 item 19; change log §§9.2–9.3",
+      "local_evidence": [
+        "evidence/web-retrieval-2.txt",
+        "evidence/web-retrieval-8.txt",
+        "evidence/web-retrieval-9.txt"
+      ],
+      "semantic_result": "C-01 substance is correct: query pass-through is required on redirect. Final fixes the change-log version locator to 1.2.0; 1.2.1 corrects GTIN-hierarchy serial AI 17 to 21.",
+      "conditions_defaults_exceptions": "Missing requested link type gives 404; selection among multiple matching links may give 300 and default linkset is an optional mode. Resolver may support a subset of primary keys, so future GRAI support is a selection check. General one-to-one redirect needs no specialized resolver. Full query transmission applies when redirecting, not to offline decode or every generic web service.",
+      "access_window_utc": {
+        "start": "2026-10-10T05:41:53+00:00",
+        "end": "2026-10-10T05:57:04.381052+00:00"
+      },
+      "access_precision": "Conservative independently observed review window; exact HTTP retrieval timestamps also appear in HTTP manifests.",
+      "operation": "Read-only public primary documentation/source/release retrieval and semantic reading; no product execution."
+    },
+    {
+      "id": "E15",
+      "candidate_source_ids": [
+        "S15"
+      ],
+      "url": "https://github.com/gs1/gs1-syntax-engine/releases/tag/1.4.1",
+      "version_or_commit": "1.4.1 / ec595ff; release May 28, 2026",
+      "governing_locator": "Release notes; official 1.4.1 README architecture/bindings",
+      "local_evidence": [
+        "evidence/web-retrieval-7.txt",
+        "evidence/gs1-engine-readme.txt",
+        "evidence/gs1-engine-release-api.json",
+        "evidence/gs1-engine-release-retrieval.json"
+      ],
+      "semantic_result": "Very-long-Digital-Link-stem overflow fix is real versioned parser history. It is not a general hardware scanner fault.",
+      "conditions_defaults_exceptions": "C native library with C++ wrapper and other bindings. Not installed or executed. Short URL recommendation is a local practical choice; shortness is not a proof of parser security or resolver conformity.",
+      "access_window_utc": {
+        "start": "2026-10-10T05:41:53+00:00",
+        "end": "2026-10-10T05:57:04.381052+00:00"
+      },
+      "access_precision": "Conservative independently observed review window; exact HTTP retrieval timestamps also appear in HTTP manifests.",
+      "operation": "Read-only public primary documentation/source/release retrieval and semantic reading; no product execution.",
+      "final_recheck_utc": "2026-10-10T06:01:31.677441+00:00"
+    },
+    {
+      "id": "E16",
+      "candidate_source_ids": [
+        "S16"
+      ],
+      "url": "https://ref.gs1.org/architecture/system-architecture/",
+      "version_or_commit": "Live official architecture page; immutable edition not established",
+      "governing_locator": "2D Symbol (GS1 Digital Link URI) Specific Workflow; smartphone paths then HTTP(S) services",
+      "local_evidence": [
+        "evidence/web-retrieval-7.txt"
+      ],
+      "semantic_result": "Supports separation of decoding, URI recognition and web retrieval. Generic care-page QR is a local design, not an existing cooperative service.",
+      "conditions_defaults_exceptions": "Native camera/browser/generic/dedicated apps are potential paths; actual device support needs verification. These pages do not make any scan a confirmed receipt.",
+      "access_window_utc": {
+        "start": "2026-10-10T05:41:53+00:00",
+        "end": "2026-10-10T05:57:04.381052+00:00"
+      },
+      "access_precision": "Conservative independently observed review window; exact HTTP retrieval timestamps also appear in HTTP manifests.",
+      "operation": "Read-only public primary documentation/source/release retrieval and semantic reading; no product execution."
+    },
+    {
+      "id": "E17",
+      "candidate_source_ids": [
+        "S17"
+      ],
+      "url": "https://snipe-it.readme.io/v8.3.6/docs/barcodes",
+      "version_or_commit": "Explicit v8.3.6 documentation; not a tested later release",
+      "governing_locator": "Supported 1D Barcodes; QR Codes; Changing your URL",
+      "local_evidence": [
+        "evidence/snipe-barcode-md.txt"
+      ],
+      "semantic_result": "Supports Code 128 for ASCII/alphanumeric IDs and the historical APP_URL/cache regeneration workflow. Final correctly bounds that behavior to the cited version.",
+      "conditions_defaults_exceptions": "Symbology must match tag characters/length. Changing APP_URL plus regenerating images does not change already printed labels. Direct URL versus stable redirect remains a local choice; no cache-clearing command was executed.",
+      "access_window_utc": {
+        "start": "2026-10-10T05:41:53+00:00",
+        "end": "2026-10-10T05:57:04.381052+00:00"
+      },
+      "access_precision": "Conservative independently observed review window; exact HTTP retrieval timestamps also appear in HTTP manifests.",
+      "operation": "Read-only public primary documentation/source/release retrieval and semantic reading; no product execution."
+    },
+    {
+      "id": "E18",
+      "candidate_source_ids": [],
+      "url": "https://raw.githubusercontent.com/grokability/snipe-it/1e0fc8c/app/View/Label.php",
+      "version_or_commit": "Pinned Snipe-IT head commit 1e0fc8c",
+      "governing_locator": "render: title data block versus barcode2d target switch; DefaultLabel.php title/barcode rendering blocks",
+      "local_evidence": [
+        "evidence/snipe-label-view.txt",
+        "evidence/snipe-label-view-retrieval.json",
+        "evidence/snipe-default-label.txt"
+      ],
+      "semantic_result": "Independent source evidence distinguishes displayed label title from encoded QR content. It also exposes raw asset-tag/ID targets as a possible offline decoding opportunity.",
+      "conditions_defaults_exceptions": "2D output depends on template support/type and label2_2d_target, not label2_title. hardware_id is the default switch path, while plain_asset_tag and other targets exist. No PHP, label generator or scanner was run. This extra opportunity is not a new mandatory obligation or evidence of public-care customization.",
+      "access_window_utc": {
+        "start": "2026-10-10T05:41:53+00:00",
+        "end": "2026-10-10T05:57:04.381052+00:00"
+      },
+      "access_precision": "Conservative independently observed review window; exact HTTP retrieval timestamps also appear in HTTP manifests.",
+      "operation": "Read-only public primary documentation/source/release retrieval and semantic reading; no product execution."
+    },
+    {
+      "id": "E19",
+      "candidate_source_ids": [],
+      "url": "https://raw.githubusercontent.com/odoo/documentation/18.0/content/applications/inventory_and_mrp/inventory/product_management/configure/package.rst",
+      "version_or_commit": "Official Odoo documentation 18.0",
+      "governing_locator": "Package Use introduction; Cluster packages",
+      "local_evidence": [
+        "evidence/odoo-packages-rst.txt"
+      ],
+      "semantic_result": "Expands E09 to the actual default/context: the reusable selector is a cluster-picking setting. Final makes only a conditional package-model comparison.",
+      "conditions_defaults_exceptions": "Package Use becomes visible with Packages and Batch Transfers; default is Disposable Box; change to Reusable Box only for cluster picking. This is not an independently demonstrated inter-depot reusable-crate lifecycle.",
+      "access_window_utc": {
+        "start": "2026-10-10T05:41:53+00:00",
+        "end": "2026-10-10T05:57:04.381052+00:00"
+      },
+      "access_precision": "Conservative independently observed review window; exact HTTP retrieval timestamps also appear in HTTP manifests.",
+      "operation": "Read-only public primary documentation/source/release retrieval and semantic reading; no product execution."
+    }
+  ],
+  "review_envelope": {
+    "started_utc": "2026-10-10T05:41:53+00:00",
+    "deadline_utc": "2026-10-10T06:26:53+00:00",
+    "full_judgment_saved_utc": "2026-10-10T05:57:04.381052+00:00",
+    "elapsed_seconds_at_save": 911.381052,
+    "capped": false,
+    "scope_complete": true,
+    "final_evidence_and_index_saved_utc": "2026-10-10T06:02:28.682331+00:00",
+    "elapsed_seconds_at_final_evidence_save": 1235.682331
+  },
+  "reviewer_native_goal": {
+    "active_receipt": "reviewer-native-goal-active.json",
+    "terminal_receipt_to_be_saved_after_judgment": "reviewer-native-goal-completion.json",
+    "objective_length_under_4000": true,
+    "exactly_one_created": true,
+    "completion_order": "Full assessment and source/evidence files saved before native completion."
+  },
+  "source_freeze_preserved": true,
+  "scope_restrictions": {
+    "no_delegation": true,
+    "no_candidate_feedback_or_repair": true,
+    "no_account_or_service_change": true,
+    "no_git_or_publication": true,
+    "no_other_arm_results_history_or_er11": true,
+    "no_shared_roster_read": true,
+    "mailbox": "Unique identity registered; only own inbox checked."
+  }
+}

@@ -1,0 +1,2115 @@
+{
+  "assessment_id": "A5-02-treatment-v1",
+  "created_at_utc": "2026-10-10T05:53:35.605250+00:00",
+  "scope": "One A5-02 treatment only",
+  "independence": "All primary captures under evidence are reviewer retrievals, not copied candidate source conclusions. Candidate IDs are retained only as explicit aliases. Hashes identify bytes, never justify semantic grading.",
+  "original_artifacts_manifest": "original-inspected.json",
+  "sources": [
+    {
+      "id": "E-O01",
+      "url": "https://www.odoo.com/documentation/18.0/applications/inventory_and_mrp/barcode/operations/receipts_deliveries.html",
+      "candidate_aliases": [
+        "O01",
+        "C01",
+        "R01"
+      ],
+      "candidate_version": "Versioned Odoo documentation: 18.0; product patch/build is not specified on page.",
+      "requested_at_utc": "2026-10-10T05:42:02.290069+00:00",
+      "status": 200,
+      "final_url": "https://www.odoo.com/documentation/18.0/applications/inventory_and_mrp/barcode/operations/receipts_deliveries.html",
+      "content_type": "text/html",
+      "retrieved_at_utc": "2026-10-10T05:42:02.818366+00:00",
+      "raw_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-O01.html",
+      "raw_sha256": "a44d39a553f8706ded4f7c45c4b4ebcffe3ab46399efcec95b45bb9d685b4149",
+      "raw_bytes": 397203,
+      "text_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-O01.txt",
+      "text_sha256": "661c3e063324d47c6ff4ce801e2014f12a987753ea00321aac6f5e551fd13a58",
+      "independent_semantic_check": "18.0 versioned docs: enable Barcode; scheduled picking and final Validate; WHIN new-instance exception; custom internal strings/GTIN allocation/opt-in lookup; optional lot/serial scan; first matching nomenclature rule and no automatic custom-field mapping; IoT/keyboard/default US QWERTY/ENTER keycode 28 conditions. No guaranteed offline queue. No numeric inventory unit/weight decision is made by the proposal.",
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context.",
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "Odoo official versioned documentation 18.0",
+      "observed_operation": "Select an outstanding receipt, scan products/packaging, then Validate the transfer",
+      "governing_condition_default_exception": "Barcode feature enabled; docs describe real-time operation, not verified offline queue",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-O01.txt",
+          "line": 31,
+          "needle": "Scan barcodes for receipts",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-O01.txt",
+          "line": 75,
+          "needle": "Validating the transfer",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "id": "E-O02",
+      "url": "https://www.odoo.com/documentation/18.0/applications/inventory_and_mrp/barcode/setup/operation_types.html",
+      "candidate_aliases": [
+        "O02",
+        "C02",
+        "R02"
+      ],
+      "candidate_version": "Versioned Odoo documentation: 18.0; product patch/build is not specified.",
+      "requested_at_utc": "2026-10-10T05:42:02.291680+00:00",
+      "status": 200,
+      "final_url": "https://www.odoo.com/documentation/18.0/applications/inventory_and_mrp/barcode/setup/operation_types.html",
+      "content_type": "text/html",
+      "retrieved_at_utc": "2026-10-10T05:42:02.769707+00:00",
+      "raw_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-O02.html",
+      "raw_sha256": "0fcd01ab88d54249bac477178bae4e931d4096a822a1c26678ba1ca608ac2d2c",
+      "raw_bytes": 401476,
+      "text_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-O02.txt",
+      "text_sha256": "1b2322cbcb41fffc8d1ff5cdc12d461c5066168c63dfa1341133b4a2ba266874",
+      "independent_semantic_check": "18.0 versioned docs: enable Barcode; scheduled picking and final Validate; WHIN new-instance exception; custom internal strings/GTIN allocation/opt-in lookup; optional lot/serial scan; first matching nomenclature rule and no automatic custom-field mapping; IoT/keyboard/default US QWERTY/ENTER keycode 28 conditions. No guaranteed offline queue. No numeric inventory unit/weight decision is made by the proposal.",
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context.",
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "Odoo official versioned documentation 18.0",
+      "observed_operation": "Generic WHIN creates a new receipt; specific picking barcode opens the existing operation",
+      "governing_condition_default_exception": "Operation availability depends on database configuration; VALIDATE is a separate command",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-O02.txt",
+          "line": 84,
+          "needle": "Receipts WHIN creates",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-O02.txt",
+          "line": 87,
+          "needle": "will not match an already scheduled order",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-O02.txt",
+          "line": 100,
+          "needle": "VALIDATE:",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "id": "E-O03",
+      "url": "https://www.odoo.com/documentation/18.0/applications/inventory_and_mrp/barcode/setup/software.html",
+      "candidate_aliases": [
+        "O03"
+      ],
+      "candidate_version": "Versioned Odoo documentation: 18.0; product patch/build is not specified.",
+      "requested_at_utc": "2026-10-10T05:42:02.297453+00:00",
+      "status": 200,
+      "final_url": "https://www.odoo.com/documentation/18.0/applications/inventory_and_mrp/barcode/setup/software.html",
+      "content_type": "text/html",
+      "retrieved_at_utc": "2026-10-10T05:42:02.811989+00:00",
+      "raw_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-O03.html",
+      "raw_sha256": "abcff22792b39d929e5347579894355c9e9277a0e20cdb31519bb453b173fdbc",
+      "raw_bytes": 395988,
+      "text_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-O03.txt",
+      "text_sha256": "7a03eb4c141c7029ea6d256530c4e22f76285d92b388deeb0efabfb5a7d0410e",
+      "independent_semantic_check": "18.0 versioned docs: enable Barcode; scheduled picking and final Validate; WHIN new-instance exception; custom internal strings/GTIN allocation/opt-in lookup; optional lot/serial scan; first matching nomenclature rule and no automatic custom-field mapping; IoT/keyboard/default US QWERTY/ENTER keycode 28 conditions. No guaranteed offline queue. No numeric inventory unit/weight decision is made by the proposal.",
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context.",
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "Odoo official versioned documentation 18.0",
+      "observed_operation": "Internal barcode references can be arbitrary strings; product/packaging/location values are configured separately",
+      "governing_condition_default_exception": "New GTIN requires GS1 company prefix; UPC/EAN/ISBN lookup is opt-in, not crate identity",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-O03.txt",
+          "line": 15,
+          "needle": "Odoo supports using any string",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-O03.txt",
+          "line": 24,
+          "needle": "To enable automatic barcode look-up",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-O03.txt",
+          "line": 58,
+          "needle": "product variants",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "id": "E-O04",
+      "url": "https://www.odoo.com/documentation/18.0/applications/inventory_and_mrp/barcode/setup/serial_numbers_lots.html",
+      "candidate_aliases": [
+        "O04"
+      ],
+      "candidate_version": "Versioned Odoo documentation: 18.0; product patch/build is not specified.",
+      "requested_at_utc": "2026-10-10T05:42:02.301471+00:00",
+      "status": 200,
+      "final_url": "https://www.odoo.com/documentation/18.0/applications/inventory_and_mrp/barcode/setup/serial_numbers_lots.html",
+      "content_type": "text/html",
+      "retrieved_at_utc": "2026-10-10T05:42:02.771969+00:00",
+      "raw_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-O04.html",
+      "raw_sha256": "dc70e3d5ee81552f2e2f7fa500bdec2e01469aaa812e2405b64bb6c980ad4522",
+      "raw_bytes": 392711,
+      "text_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-O04.txt",
+      "text_sha256": "e772117adaa615922f501b2bf8245d60239b13bd94b4d40953e84dcd65dcd9c3",
+      "independent_semantic_check": "18.0 versioned docs: enable Barcode; scheduled picking and final Validate; WHIN new-instance exception; custom internal strings/GTIN allocation/opt-in lookup; optional lot/serial scan; first matching nomenclature rule and no automatic custom-field mapping; IoT/keyboard/default US QWERTY/ENTER keycode 28 conditions. No guaranteed offline queue. No numeric inventory unit/weight decision is made by the proposal.",
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context.",
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "Odoo official versioned documentation 18.0",
+      "observed_operation": "Mandatory versus optional lot/serial scanning; manual-entry fallback for damaged supplier labels",
+      "governing_condition_default_exception": "Per-operation settings; applies to lot/serial tracking, not a deployed cooperative crate workflow",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-O04.txt",
+          "line": 18,
+          "needle": "Mandatory and optional scanning",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-O04.txt",
+          "line": 16,
+          "needle": "GS1 lot and serial number barcodes require",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-O04.txt",
+          "line": 40,
+          "needle": "damaged in transit",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "id": "E-O05",
+      "url": "https://www.odoo.com/documentation/18.0/applications/inventory_and_mrp/barcode/operations/barcode_nomenclature.html",
+      "candidate_aliases": [
+        "O05"
+      ],
+      "candidate_version": "Versioned Odoo documentation: 18.0; product patch/build is not specified.",
+      "requested_at_utc": "2026-10-10T05:42:02.303387+00:00",
+      "status": 200,
+      "final_url": "https://www.odoo.com/documentation/18.0/applications/inventory_and_mrp/barcode/operations/barcode_nomenclature.html",
+      "content_type": "text/html",
+      "retrieved_at_utc": "2026-10-10T05:42:02.809169+00:00",
+      "raw_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-O05.html",
+      "raw_sha256": "657ae8f41be574a9be3e9a457d4c62bea9338a37bc3e48cdaf046d40265c0fbf",
+      "raw_bytes": 398960,
+      "text_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-O05.txt",
+      "text_sha256": "706700aea1a630ba1083b09d647670c0e7998c6568bd9884fb477cf52d541772",
+      "independent_semantic_check": "18.0 versioned docs: enable Barcode; scheduled picking and final Validate; WHIN new-instance exception; custom internal strings/GTIN allocation/opt-in lookup; optional lot/serial scan; first matching nomenclature rule and no automatic custom-field mapping; IoT/keyboard/default US QWERTY/ENTER keycode 28 conditions. No guaranteed offline queue. No numeric inventory unit/weight decision is made by the proposal.",
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context.",
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "Odoo official versioned documentation 18.0",
+      "observed_operation": "First matching nomenclature rule wins; internal patterns possible",
+      "governing_condition_default_exception": "Custom rules do not auto-populate custom fields; custom development required; UPC/EAN conversion default Always",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-O05.txt",
+          "line": 3,
+          "needle": "first rule with a matching pattern",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-O05.txt",
+          "line": 68,
+          "needle": "Odoo fields do not auto-populate",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-O05.txt",
+          "line": 76,
+          "needle": "Always (the",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "id": "E-O06",
+      "url": "https://www.odoo.com/documentation/18.0/applications/general/iot/devices/printer.html",
+      "candidate_aliases": [
+        "O06",
+        "C03"
+      ],
+      "candidate_version": "Versioned Odoo documentation: 18.0; product patch/build is not specified.",
+      "requested_at_utc": "2026-10-10T05:42:02.304897+00:00",
+      "status": 200,
+      "final_url": "https://www.odoo.com/documentation/18.0/applications/general/iot/devices/printer.html",
+      "content_type": "text/html",
+      "retrieved_at_utc": "2026-10-10T05:42:02.810843+00:00",
+      "raw_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-O06.html",
+      "raw_sha256": "65fa9ed7c8f5824c08f9f49456903e265ee3de8a1634a4de3c27c8f45c54eea2",
+      "raw_bytes": 430447,
+      "text_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-O06.txt",
+      "text_sha256": "9b94f0e010c0d11bb61523b493850f8ca4ce3c0d8e72c2bf962774edd3294434",
+      "independent_semantic_check": "18.0 versioned docs: enable Barcode; scheduled picking and final Validate; WHIN new-instance exception; custom internal strings/GTIN allocation/opt-in lookup; optional lot/serial scan; first matching nomenclature rule and no automatic custom-field mapping; IoT/keyboard/default US QWERTY/ENTER keycode 28 conditions. No guaranteed offline queue. No numeric inventory unit/weight decision is made by the proposal.",
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context.",
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "Odoo official versioned documentation 18.0",
+      "observed_operation": "Keyboard layout, ENTER terminator, scanner-as-keyboard and mobile/IoT per-character input conditions",
+      "governing_condition_default_exception": "Most scanners default US QWERTY; ENTER keycode 28; setup-specific exceptions, not universal scanner guarantee",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-O06.txt",
+          "line": 275,
+          "needle": "Barcode scanner issues",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-O06.txt",
+          "line": 277,
+          "needle": "US QWERTY",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-O06.txt",
+          "line": 286,
+          "needle": "keycode 28",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-O06.txt",
+          "line": 289,
+          "needle": "identified as USB keyboards",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-O06.txt",
+          "line": 295,
+          "needle": "separate",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "id": "E-S01",
+      "url": "https://snipe-it.readme.io/docs/asset-tags",
+      "candidate_aliases": [
+        "S01"
+      ],
+      "candidate_version": "Rolling official documentation; page has no release binding. Current repository release context is v8.8.0 (commit 2c466fa), separately recorded as S04.",
+      "requested_at_utc": "2026-10-10T05:42:02.796523+00:00",
+      "status": 200,
+      "final_url": "https://snipe-it.readme.io/docs/asset-tags",
+      "content_type": "text/html; charset=utf-8",
+      "retrieved_at_utc": "2026-10-10T05:42:02.941193+00:00",
+      "raw_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S01.html",
+      "raw_sha256": "56f114cb63063efb0b8899bb00560f26b93a26545c8cb31a811733c4a8d961a7",
+      "raw_bytes": 208542,
+      "text_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S01.txt",
+      "text_sha256": "77ebad66523581bf97c1c2236460bee85537ee4756e9d15a2f57343fcba20fa8",
+      "independent_semantic_check": "Rolling tag/label/import/custody docs support their stated path and guidance; v8.8.0 release date, beta app/sync and one Zebra template claim supported. Default QR path is not complete released capability (F1). qr_text \u2192 label2_title transition supported, QR symbol suppression not established (L1). Version tag resolved to exact commit.",
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context.",
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "Official rolling Snipe-IT Asset Tags docs, independently retrieved 2026-10-10; no release binding",
+      "observed_operation": "Unique asset tags, optional prefix and zero-fill length setting",
+      "governing_condition_default_exception": "Changing length does not update existing tags; numeric auto-increment caveat for alphanumeric tags",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S01.txt",
+          "line": 2,
+          "needle": "No two assets",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S01.txt",
+          "line": 12,
+          "needle": "will not update existing asset tags",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "id": "E-S02",
+      "url": "https://snipe-it.readme.io/docs/asset-labels",
+      "candidate_aliases": [
+        "S02",
+        "C04"
+      ],
+      "candidate_version": "Rolling official documentation; no release version shown. Page indicates an update six months before access; current release context Snipe-IT v8.8.0 is separately S04.",
+      "requested_at_utc": "2026-10-10T05:42:02.804110+00:00",
+      "status": 200,
+      "final_url": "https://snipe-it.readme.io/docs/asset-labels",
+      "content_type": "text/html; charset=utf-8",
+      "retrieved_at_utc": "2026-10-10T05:42:03.504148+00:00",
+      "raw_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S02.html",
+      "raw_sha256": "ec6eae8cfaf58824fed75ec0b06e6a0ca73dc677740453229518928ae5051006",
+      "raw_bytes": 206332,
+      "text_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S02.txt",
+      "text_sha256": "3ac1b883170b7b3779d0c1d90046f109bf60e760f4c299cc9ea3abf00ed425ae",
+      "independent_semantic_check": "Rolling tag/label/import/custody docs support their stated path and guidance; v8.8.0 release date, beta app/sync and one Zebra template claim supported. Default QR path is not complete released capability (F1). qr_text \u2192 label2_title transition supported, QR symbol suppression not established (L1). Version tag resolved to exact commit.",
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context.",
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "Official rolling Snipe-IT Asset Labels docs, independently retrieved 2026-10-10; no release binding",
+      "observed_operation": "Describes internal QR link and 1D asset-tag search via USB/Bluetooth",
+      "governing_condition_default_exception": "Barcodes must be enabled; this documented path does not enumerate the released New Label Engine target/prefix exceptions (F1)",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S02.txt",
+          "line": 4,
+          "needle": "QR code will provide",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S02.txt",
+          "line": 5,
+          "needle": "bottom barcode",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S02.txt",
+          "line": 6,
+          "needle": "must have barcodes enabled",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "id": "E-S03",
+      "url": "https://snipe-it.readme.io/docs/importing-assets",
+      "candidate_aliases": [
+        "S03"
+      ],
+      "candidate_version": "Rolling official documentation; no release version shown.",
+      "requested_at_utc": "2026-10-10T05:42:02.862643+00:00",
+      "status": 200,
+      "final_url": "https://snipe-it.readme.io/docs/importing-assets",
+      "content_type": "text/html; charset=utf-8",
+      "retrieved_at_utc": "2026-10-10T05:42:03.820592+00:00",
+      "raw_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S03.html",
+      "raw_sha256": "722d000b99bfa9bd941f6ad3aca7555c5b468ef1ed658858bccc158fe0a196ec",
+      "raw_bytes": 258411,
+      "text_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S03.txt",
+      "text_sha256": "5c8fd9627c2d34f6680abddc179c460009bf70d7edf539fb7e727c70760b4aa5",
+      "independent_semantic_check": "Rolling tag/label/import/custody docs support their stated path and guidance; v8.8.0 release date, beta app/sync and one Zebra template claim supported. Default QR path is not complete released capability (F1). qr_text \u2192 label2_title transition supported, QR symbol suppression not established (L1). Version tag resolved to exact commit.",
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context.",
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "Official rolling Snipe-IT Importing Assets docs, independently retrieved 2026-10-10; no release binding",
+      "observed_operation": "Import match by tag versus internal ID; serial remains separate",
+      "governing_condition_default_exception": "ID supersedes tag when present; auto-increment permits omitted tag on creation; import audit dates do not trigger audit events",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S03.txt",
+          "line": 5,
+          "needle": "ID is only required",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S03.txt",
+          "line": 7,
+          "needle": "will supersede the asset tag",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S03.txt",
+          "line": 10,
+          "needle": "Serial number for the specific device",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "id": "E-S04",
+      "url": "https://github.com/grokability/snipe-it/releases/tag/v8.8.0",
+      "candidate_aliases": [
+        "S04",
+        "C08",
+        "R07"
+      ],
+      "candidate_version": "Snipe-IT v8.8.0, tag commit 2c466fa; released 2026-09-30.",
+      "requested_at_utc": "2026-10-10T05:42:02.872384+00:00",
+      "status": 200,
+      "final_url": "https://github.com/grokability/snipe-it/releases/tag/v8.8.0",
+      "content_type": "text/html; charset=utf-8",
+      "retrieved_at_utc": "2026-10-10T05:42:03.757625+00:00",
+      "raw_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S04.html",
+      "raw_sha256": "e1d4a19029c9304962fb1d68f16094a0c56b305d375710f9ca9578693b885067",
+      "raw_bytes": 309659,
+      "text_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S04.txt",
+      "text_sha256": "9e6fad680bddff743e6a205070fba495471309fcc0eb1820796b04fdaaa62241",
+      "independent_semantic_check": "Rolling tag/label/import/custody docs support their stated path and guidance; v8.8.0 release date, beta app/sync and one Zebra template claim supported. Default QR path is not complete released capability (F1). qr_text \u2192 label2_title transition supported, QR symbol suppression not established (L1). Version tag resolved to exact commit.",
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context.",
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "Snipe-IT v8.8.0, 2c466fa8a5a68525439bf1bbbc24470d6670c516; published 2026-09-30T19:14:30Z",
+      "observed_operation": "Release includes #19633 title migration and #19679 one Zebra template 1D addition",
+      "governing_condition_default_exception": "Mobile app and MDM/RMM sync adapters beta; not offline crate event queue; docs updating",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S04.txt",
+          "line": 1,
+          "needle": "v8.8.0",
+          "other_match_lines": [
+            108,
+            109,
+            129,
+            329
+          ]
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S04.txt",
+          "line": 272,
+          "needle": "19633",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S04.txt",
+          "line": 280,
+          "needle": "19679",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S04.txt",
+          "line": 135,
+          "needle": "Sync adapters",
+          "other_match_lines": [
+            161
+          ]
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S04.txt",
+          "line": 216,
+          "needle": "updating",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "id": "E-S05",
+      "url": "https://github.com/grokability/snipe-it/issues/19515",
+      "candidate_aliases": [
+        "S05",
+        "C06",
+        "R05"
+      ],
+      "candidate_version": "Issue reports Snipe-IT v8.7.1; opened 2026-08-18; closed 2026-09-23 after fix commit c1d1cd1.",
+      "requested_at_utc": "2026-10-10T05:42:02.879687+00:00",
+      "status": 200,
+      "final_url": "https://github.com/grokability/snipe-it/issues/19515",
+      "content_type": "text/html; charset=utf-8",
+      "retrieved_at_utc": "2026-10-10T05:42:03.619391+00:00",
+      "raw_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S05.html",
+      "raw_sha256": "c59f57e576f815b0810c065c35fd2c0aad6b6f5d97e7c1901b2a70c9a2fd715d",
+      "raw_bytes": 325382,
+      "text_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S05.txt",
+      "text_sha256": "74681b0b941c480ebb91cc7dc50a977b6d19c2cae92fa9ec3356f2bbaf2361f2",
+      "independent_semantic_check": "Rolling tag/label/import/custody docs support their stated path and guidance; v8.8.0 release date, beta app/sync and one Zebra template claim supported. Default QR path is not complete released capability (F1). qr_text \u2192 label2_title transition supported, QR symbol suppression not established (L1). Version tag resolved to exact commit.",
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context.",
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "Snipe-IT issue #19515 reports v8.7.1, opened 2026-08-18",
+      "observed_operation": "User report of hidden legacy QR Code Text/title field on New Label Engine",
+      "governing_condition_default_exception": "Reporter context is demo/engine transition; no proven QR symbol suppression (L1)",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S05.txt",
+          "line": 1,
+          "needle": "QR Code Text",
+          "other_match_lines": [
+            107,
+            114,
+            135,
+            163
+          ]
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S05.txt",
+          "line": 126,
+          "needle": "v8.7.1",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "id": "E-S06",
+      "url": "https://github.com/grokability/snipe-it/pull/19633/files",
+      "candidate_aliases": [
+        "S06",
+        "C07",
+        "R06"
+      ],
+      "candidate_version": "Commit 1e0fc8c (change), merged commit c1d1cd1 on 2026-09-17 into develop; fix appears in v8.8.0.",
+      "requested_at_utc": "2026-10-10T05:42:02.883325+00:00",
+      "status": 200,
+      "final_url": "https://github.com/grokability/snipe-it/pull/19633/files",
+      "content_type": "text/html; charset=utf-8",
+      "retrieved_at_utc": "2026-10-10T05:42:03.617484+00:00",
+      "raw_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S06.html",
+      "raw_sha256": "1ccc545753d83a3f19e00a6dd8b003361be31bd7b8192a3867fafa2fa00b46a2",
+      "raw_bytes": 340211,
+      "text_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S06.txt",
+      "text_sha256": "765899971a8f649e12c78d9777e524a19d9a793b1ae0745f31f9e207d43456ab",
+      "independent_semantic_check": "Rolling tag/label/import/custody docs support their stated path and guidance; v8.8.0 release date, beta app/sync and one Zebra template claim supported. Default QR path is not complete released capability (F1). qr_text \u2192 label2_title transition supported, QR symbol suppression not established (L1). Version tag resolved to exact commit.",
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context.",
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "PR #19633, change 1e0fc8c, merge c1d1cd1075f5b91b3c90132bbad0b2b034644952, 2026-09-17",
+      "observed_operation": "Copies old qr_text into label2_title on disabled-to-enabled transition",
+      "governing_condition_default_exception": "Title/settings change, not all-field migration or executed label/decoder test",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S06.txt",
+          "line": 265,
+          "needle": "label2_title",
+          "other_match_lines": [
+            287
+          ]
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S06.txt",
+          "line": 264,
+          "needle": "wasLabel2Enabled",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "id": "E-S07",
+      "url": "https://github.com/grokability/snipe-it/pull/19679",
+      "candidate_aliases": [
+        "S07"
+      ],
+      "candidate_version": "Commit df2c3d8, merged 2026-09-23 into develop; included in v8.8.0 release notes.",
+      "requested_at_utc": "2026-10-10T05:42:02.953762+00:00",
+      "status": 200,
+      "final_url": "https://github.com/grokability/snipe-it/pull/19679",
+      "content_type": "text/html; charset=utf-8",
+      "retrieved_at_utc": "2026-10-10T05:42:03.503445+00:00",
+      "raw_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S07.html",
+      "raw_sha256": "2159daca06fe128eb3a7820cc14556d8dd30b8e6fec10c7813630bc321686be3",
+      "raw_bytes": 313748,
+      "text_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S07.txt",
+      "text_sha256": "f51c768c4009cbf7d1a0925f7c433085d1e5cae20b116b5974964dba38d93d24",
+      "independent_semantic_check": "Rolling tag/label/import/custody docs support their stated path and guidance; v8.8.0 release date, beta app/sync and one Zebra template claim supported. Default QR path is not complete released capability (F1). qr_text \u2192 label2_title transition supported, QR symbol suppression not established (L1). Version tag resolved to exact commit.",
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context.",
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "PR #19679 merge df2c3d8be3b19542594400c051847de43b418f3c, 2026-09-23; included v8.8.0",
+      "observed_operation": "Adds 1D barcode to Zebra 18939 template",
+      "governing_condition_default_exception": "Template-specific, not all printers/templates",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S07.txt",
+          "line": 125,
+          "needle": "18939 zebra label template",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "id": "E-G01",
+      "url": "https://ref.gs1.org/docs/2024/digital-link-quick-start-guide",
+      "candidate_aliases": [
+        "G01",
+        "C09",
+        "R03"
+      ],
+      "candidate_version": "Official GS1 guide dated by URL/publication as 2024; no point version shown.",
+      "requested_at_utc": "2026-10-10T05:42:03.545246+00:00",
+      "status": 200,
+      "final_url": "https://ref.gs1.org/docs/2024/digital-link-quick-start-guide",
+      "content_type": "application/pdf",
+      "retrieved_at_utc": "2026-10-10T05:42:04.599422+00:00",
+      "raw_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-G01.pdf",
+      "raw_sha256": "1e9fed42b9786fb42bc34df1b039aaae6f598a9d1805f15b6996e45a01226ca4",
+      "raw_bytes": 2462169,
+      "text_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-G01.txt",
+      "text_sha256": "536f604089a8eb53c91570d0edd28c257fd9a0b358440f958478c2faece363a4",
+      "independent_semantic_check": "2024 guide supports structured IDs parsed offline vs URL retrieval, GTIN plus defined qualifiers, and other possible GS1 primary keys. 2024 redirect advice/303 scoped to Digital Link, not ordinary QR; analytics discussion not claim all shorteners track. Resolver 1.2.0 ratified Jan 2026 does not require identical linksets/targets and scopes supported keys. General Specs 23.0 page 317 defines ]Q3 for leading-FNC1 AI element strings, not every Digital Link URL QR.",
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context.",
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "Official GS1 Digital Link Quick Start Guide, 2024",
+      "observed_operation": "Structured GS1 identifiers can be interpreted locally; URI can also be followed as URL",
+      "governing_condition_default_exception": "Defined AI keys/types/hierarchy; GS1 syntax distinct from arbitrary URL QR and ordinary cooperative namespace",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-G01.txt",
+          "line": 42,
+          "needle": "without an online lookup",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-G01.txt",
+          "line": 78,
+          "needle": "The syntax basics",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-G01.txt",
+          "line": 302,
+          "needle": "8003 (GRAI)",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "id": "E-G02",
+      "url": "https://ref.gs1.org/docs/2024/redirection-from-scan-to-content",
+      "candidate_aliases": [
+        "G02",
+        "C10",
+        "R04"
+      ],
+      "candidate_version": "Official GS1 guidance, copyright 2024; no point version shown.",
+      "requested_at_utc": "2026-10-10T05:42:03.610225+00:00",
+      "status": 200,
+      "final_url": "https://ref.gs1.org/docs/2024/redirection-from-scan-to-content",
+      "content_type": "application/pdf",
+      "retrieved_at_utc": "2026-10-10T05:42:04.516443+00:00",
+      "raw_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-G02.pdf",
+      "raw_sha256": "3ddd24900a4d5ee96c478f28bd8dae92c8fd8bccd84c96ed32f9c89bad6b9f28",
+      "raw_bytes": 789324,
+      "text_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-G02.txt",
+      "text_sha256": "3539e5decd0104a6fc6473c7e042da5b590f7e90e5640be5c609cc816d644f49",
+      "independent_semantic_check": "2024 guide supports structured IDs parsed offline vs URL retrieval, GTIN plus defined qualifiers, and other possible GS1 primary keys. 2024 redirect advice/303 scoped to Digital Link, not ordinary QR; analytics discussion not claim all shorteners track. Resolver 1.2.0 ratified Jan 2026 does not require identical linksets/targets and scopes supported keys. General Specs 23.0 page 317 defines ]Q3 for leading-FNC1 AI element strings, not every Digital Link URL QR.",
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context.",
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "Official GS1 Redirection from scan to content guide, 2024",
+      "observed_operation": "Identity/content separation, organisational redirect management and scan analytics",
+      "governing_condition_default_exception": "303 recommendation scoped to Digital Link; not all URL shorteners track; ordinary URL/web route owner remains local choice",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-G02.txt",
+          "line": 3,
+          "needle": "This document assumes",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-G02.txt",
+          "line": 146,
+          "needle": "temporary redirect code 303",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-G02.txt",
+          "line": 150,
+          "needle": "does not gather any data",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "id": "E-G03",
+      "url": "https://ref.gs1.org/standards/resolver/1.2.0/GS1_Conformant_Resolver_standard_i1.2-r-2026-01-19",
+      "candidate_aliases": [
+        "G03"
+      ],
+      "candidate_version": "Release 1.2.0, ratified January 2026.",
+      "requested_at_utc": "2026-10-10T05:42:03.748687+00:00",
+      "status": 200,
+      "final_url": "https://ref.gs1.org/standards/resolver/1.2.0/GS1_Conformant_Resolver_standard_i1.2-r-2026-01-19",
+      "content_type": "application/pdf",
+      "retrieved_at_utc": "2026-10-10T05:42:04.554090+00:00",
+      "raw_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-G03.pdf",
+      "raw_sha256": "7f887987bc32721cbf8df82557f599b61bfe4cf8b35d717368c416ae4510bc52",
+      "raw_bytes": 625089,
+      "text_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-G03.txt",
+      "text_sha256": "80c56590b78264bff8eade0cb2ec675e3a94d6b04ef5f46c3c27bcb3a3d9f602",
+      "independent_semantic_check": "2024 guide supports structured IDs parsed offline vs URL retrieval, GTIN plus defined qualifiers, and other possible GS1 primary keys. 2024 redirect advice/303 scoped to Digital Link, not ordinary QR; analytics discussion not claim all shorteners track. Resolver 1.2.0 ratified Jan 2026 does not require identical linksets/targets and scopes supported keys. General Specs 23.0 page 317 defines ]Q3 for leading-FNC1 AI element strings, not every Digital Link URL QR.",
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context.",
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "GS1-Conformant Resolver Standard 1.2.0, ratified January 2026",
+      "observed_operation": "Defined resolver protocol; sovereign URI space need not return identical resources/linksets",
+      "governing_condition_default_exception": "GS1 supported-key subset, HTTP/TLS/CORS and no-entity-info 404 conditions apply to conformant resolver, not ordinary care-page requirement",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-G03.txt",
+          "line": 246,
+          "needle": "Support for GS1 identifiers",
+          "other_match_lines": [
+            418
+          ]
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-G03.txt",
+          "line": 428,
+          "needle": "SHALL support HTTP over TLS",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-G03.txt",
+          "line": 1765,
+          "needle": "resolvers are not required or expected to redirect",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-G03.txt",
+          "line": 698,
+          "needle": "return a simple 404",
+          "other_match_lines": [
+            1799
+          ]
+        }
+      ]
+    },
+    {
+      "id": "E-G04",
+      "url": "https://ref.gs1.org/standards/genspecs/23.0.0/",
+      "candidate_aliases": [
+        "G04"
+      ],
+      "candidate_version": "GS1 General Specifications release 23.0.0.",
+      "requested_at_utc": "2026-10-10T05:42:03.752686+00:00",
+      "status": 200,
+      "final_url": "https://ref.gs1.org/standards/genspecs/23.0.0/",
+      "content_type": "application/pdf",
+      "retrieved_at_utc": "2026-10-10T05:42:04.952227+00:00",
+      "raw_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-G04.pdf",
+      "raw_sha256": "8649f320971efcd36a7e4277a59052fcd2aef33d81341e4c47d9d5af130e4c4f",
+      "raw_bytes": 9108506,
+      "text_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-G04.txt",
+      "text_sha256": "3d35e0cb654de70216e597ff5b732cab62570a38757982a07822e26e61cd4641",
+      "independent_semantic_check": "2024 guide supports structured IDs parsed offline vs URL retrieval, GTIN plus defined qualifiers, and other possible GS1 primary keys. 2024 redirect advice/303 scoped to Digital Link, not ordinary QR; analytics discussion not claim all shorteners track. Resolver 1.2.0 ratified Jan 2026 does not require identical linksets/targets and scopes supported keys. General Specs 23.0 page 317 defines ]Q3 for leading-FNC1 AI element strings, not every Digital Link URL QR.",
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context.",
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "GS1 General Specifications 23.0, ratified January 2023",
+      "observed_operation": "Leading-FNC1 GS1 QR carries ]Q3 symbology identifier and AI element strings",
+      "governing_condition_default_exception": "Not a universal marker requirement for every Digital Link URI or ordinary URL QR; section 5.7.4.3 printed page 317",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-G04.txt",
+          "line": 18156,
+          "needle": "5.7.4.3 Data transmission",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-G04.txt",
+          "line": 17772,
+          "needle": "GS1 system compliant symbols that have a leading FNC1",
+          "other_match_lines": [
+            18158
+          ]
+        }
+      ]
+    },
+    {
+      "id": "E-Z01",
+      "url": "https://github.com/zxing/zxing/pull/1681",
+      "candidate_aliases": [
+        "Z01",
+        "C11",
+        "R08"
+      ],
+      "candidate_version": "Commit 557b5fc; merged 2023-09-04; milestone 3.5.3.",
+      "requested_at_utc": "2026-10-10T05:42:03.817613+00:00",
+      "status": 200,
+      "final_url": "https://github.com/zxing/zxing/pull/1681",
+      "content_type": "text/html; charset=utf-8",
+      "retrieved_at_utc": "2026-10-10T05:42:04.455956+00:00",
+      "raw_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z01.html",
+      "raw_sha256": "a8b8206cc03f528d1d495f5f93ee1c197395c6d4363fbe639aa204f8003349f4",
+      "raw_bytes": 300694,
+      "text_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z01.txt",
+      "text_sha256": "97009839d1a424cea77f60c6c9c97fe12f129aba7c5b1085e2c0ef3992a9e7f5",
+      "independent_semantic_check": "PR #1681 merge 557b5fcf0e22a6cf2541a54bd830116712fec51d changes RSS Expanded decoders/FieldParser.java; increased lengths plus legacy reduced/removed cases, shipped in 3.5.3 f0f1a94439db0300ff0c4618f4e0a41aa630aeac. PR #1839 change commit 34588d8, merge 8944e607789b0847625f9962e90aab9901c731cd adds symbology metadata in QRCodeMultiReader, shipped in 3.5.4 f651b0a0375676e47144f73397dddff8868b0e4c. No selected cooperative runtime or universal QR/GS1 parser capability inferred.",
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context.",
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "ZXing PR #1681, merge 557b5fcf0e22a6cf2541a54bd830116712fec51d, 2023-09-04",
+      "observed_operation": "Update RSS Expanded FieldParser AI lengths per 2023 specification",
+      "governing_condition_default_exception": "Increases updated; reductions/removals retained with legacy comments; not all QR/GS1 parsers",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z01.txt",
+          "line": 125,
+          "needle": "Where existing AI data lengths",
+          "other_match_lines": [
+            126
+          ]
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z01.txt",
+          "line": 126,
+          "needle": "backwards-incompatible",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "id": "E-Z02",
+      "url": "https://github.com/zxing/zxing/releases/tag/zxing-3.5.3",
+      "candidate_aliases": [
+        "Z02",
+        "R09"
+      ],
+      "candidate_version": "ZXing 3.5.3, tag commit f0f1a94.",
+      "requested_at_utc": "2026-10-10T05:42:03.832050+00:00",
+      "status": 200,
+      "final_url": "https://github.com/zxing/zxing/releases/tag/zxing-3.5.3",
+      "content_type": "text/html; charset=utf-8",
+      "retrieved_at_utc": "2026-10-10T05:42:04.370431+00:00",
+      "raw_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z02.html",
+      "raw_sha256": "de6a495c6d868675b7a026937a7b994c93d5f7f579db803c4ee288d869075633",
+      "raw_bytes": 203242,
+      "text_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z02.txt",
+      "text_sha256": "d1531d6eddbc1423b0d3e0c5d44c3ca6087e74d8c7786423ed651a71afd6f3af",
+      "independent_semantic_check": "PR #1681 merge 557b5fcf0e22a6cf2541a54bd830116712fec51d changes RSS Expanded decoders/FieldParser.java; increased lengths plus legacy reduced/removed cases, shipped in 3.5.3 f0f1a94439db0300ff0c4618f4e0a41aa630aeac. PR #1839 change commit 34588d8, merge 8944e607789b0847625f9962e90aab9901c731cd adds symbology metadata in QRCodeMultiReader, shipped in 3.5.4 f651b0a0375676e47144f73397dddff8868b0e4c. No selected cooperative runtime or universal QR/GS1 parser capability inferred.",
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context.",
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "ZXing Java 3.5.3, f0f1a94439db0300ff0c4618f4e0a41aa630aeac, published 2024-01-31",
+      "observed_operation": "Release ships PR #1681",
+      "governing_condition_default_exception": "Does not identify cooperative selected decoder/runtime",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z02.txt",
+          "line": 132,
+          "needle": "1681",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "id": "E-Z03",
+      "url": "https://github.com/zxing/zxing/pull/1839",
+      "candidate_aliases": [
+        "Z03"
+      ],
+      "candidate_version": "Commit 34588d8; merged 2024-08-02.",
+      "requested_at_utc": "2026-10-10T05:42:04.407729+00:00",
+      "status": 200,
+      "final_url": "https://github.com/zxing/zxing/pull/1839",
+      "content_type": "text/html; charset=utf-8",
+      "retrieved_at_utc": "2026-10-10T05:42:05.139306+00:00",
+      "raw_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z03.html",
+      "raw_sha256": "cb4edecb2f92e60607f8077e7f2cf719ba7631a2da73c48a949d0ef0151fa9c0",
+      "raw_bytes": 343901,
+      "text_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z03.txt",
+      "text_sha256": "2f08f5f762d946526cd9fe94eb7a78e43b738304b4eb63d2173076c92c76e6a3",
+      "independent_semantic_check": "PR #1681 merge 557b5fcf0e22a6cf2541a54bd830116712fec51d changes RSS Expanded decoders/FieldParser.java; increased lengths plus legacy reduced/removed cases, shipped in 3.5.3 f0f1a94439db0300ff0c4618f4e0a41aa630aeac. PR #1839 change commit 34588d8, merge 8944e607789b0847625f9962e90aab9901c731cd adds symbology metadata in QRCodeMultiReader, shipped in 3.5.4 f651b0a0375676e47144f73397dddff8868b0e4c. No selected cooperative runtime or universal QR/GS1 parser capability inferred.",
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context.",
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "ZXing PR #1839, change 34588d8, merge 8944e607789b0847625f9962e90aab9901c731cd, 2024-08-02",
+      "observed_operation": "Add SYMBOLOGY_IDENTIFIER result metadata to QRCodeMultiReader",
+      "governing_condition_default_exception": "Multi-reader decode path and downstream metadata consumers, not universal reader behavior",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z03.txt",
+          "line": 1,
+          "needle": "QRCodeMultiReader",
+          "other_match_lines": [
+            106,
+            113,
+            130,
+            132,
+            136,
+            146,
+            197
+          ]
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z03.txt",
+          "line": 1,
+          "needle": "SYMBOLOGY_IDENTIFIER",
+          "other_match_lines": [
+            106,
+            113,
+            130,
+            132,
+            134,
+            135,
+            138
+          ]
+        }
+      ]
+    },
+    {
+      "id": "E-Z04",
+      "url": "https://github.com/zxing/zxing/releases/tag/zxing-3.5.4",
+      "candidate_aliases": [
+        "Z04"
+      ],
+      "candidate_version": "ZXing 3.5.4, tag commit f651b0a.",
+      "requested_at_utc": "2026-10-10T05:42:04.506658+00:00",
+      "status": 200,
+      "final_url": "https://github.com/zxing/zxing/releases/tag/zxing-3.5.4",
+      "content_type": "text/html; charset=utf-8",
+      "retrieved_at_utc": "2026-10-10T05:42:04.857523+00:00",
+      "raw_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z04.html",
+      "raw_sha256": "09a9fcb7e52892c5d3c829cf168be79f78efdd25b1855d510e0d686e4152889f",
+      "raw_bytes": 205633,
+      "text_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z04.txt",
+      "text_sha256": "7d294f942de7b284d47f727be69054a0150bf5a5177808e59ce6919ac9891be3",
+      "independent_semantic_check": "PR #1681 merge 557b5fcf0e22a6cf2541a54bd830116712fec51d changes RSS Expanded decoders/FieldParser.java; increased lengths plus legacy reduced/removed cases, shipped in 3.5.3 f0f1a94439db0300ff0c4618f4e0a41aa630aeac. PR #1839 change commit 34588d8, merge 8944e607789b0847625f9962e90aab9901c731cd adds symbology metadata in QRCodeMultiReader, shipped in 3.5.4 f651b0a0375676e47144f73397dddff8868b0e4c. No selected cooperative runtime or universal QR/GS1 parser capability inferred.",
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context.",
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "ZXing Java 3.5.4, f651b0a0375676e47144f73397dddff8868b0e4c, published 2025-11-11",
+      "observed_operation": "Release ships PR #1839",
+      "governing_condition_default_exception": "Does not identify cooperative runtime or prove printed-label compatibility",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z04.txt",
+          "line": 132,
+          "needle": "1839",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "id": "E-S08",
+      "url": "https://snipe-it.readme.io/docs/managing-assets",
+      "candidate_aliases": [
+        "S08",
+        "C05"
+      ],
+      "candidate_version": "Rolling official documentation; no release version shown; accessed 2026-10-10.",
+      "requested_at_utc": "2026-10-10T05:42:04.584762+00:00",
+      "status": 200,
+      "final_url": "https://snipe-it.readme.io/docs/managing-assets",
+      "content_type": "text/html; charset=utf-8",
+      "retrieved_at_utc": "2026-10-10T05:42:05.350817+00:00",
+      "raw_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S08.html",
+      "raw_sha256": "807bf1aef8c321183d4376b5ca76ea0e346f578f8da630ab9902088a5148b82f",
+      "raw_bytes": 205009,
+      "text_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S08.txt",
+      "text_sha256": "0ef80b5b6b7a945dfa7efbad1b29966ab8bc947079f15155dc2c41bacaec5094",
+      "independent_semantic_check": "Rolling tag/label/import/custody docs support their stated path and guidance; v8.8.0 release date, beta app/sync and one Zebra template claim supported. Default QR path is not complete released capability (F1). qr_text \u2192 label2_title transition supported, QR symbol suppression not established (L1). Version tag resolved to exact commit.",
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context.",
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "Official rolling Snipe-IT Managing Assets docs, independently retrieved 2026-10-10",
+      "observed_operation": "Location and other-asset checkouts are technically possible",
+      "governing_condition_default_exception": "Non-person targets discouraged for accountability, not prohibited",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S08.txt",
+          "line": 7,
+          "needle": "checking an asset out to a location",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S08.txt",
+          "line": 7,
+          "needle": "discourage this practice",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "id": "E-S09",
+      "url": "https://snipe-it.readme.io/docs/overview",
+      "candidate_aliases": [
+        "S09"
+      ],
+      "candidate_version": "Rolling official documentation; no release version shown; accessed 2026-10-10.",
+      "requested_at_utc": "2026-10-10T05:42:04.663486+00:00",
+      "status": 200,
+      "final_url": "https://snipe-it.readme.io/docs/overview",
+      "content_type": "text/html; charset=utf-8",
+      "retrieved_at_utc": "2026-10-10T05:42:04.773188+00:00",
+      "raw_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S09.html",
+      "raw_sha256": "ba0a831750cdd8b2d8a07c92c5497b5aa590d3a4d6e13030c1510fa6d8e1b3eb",
+      "raw_bytes": 233407,
+      "text_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S09.txt",
+      "text_sha256": "7b07fe2050bafd1146bee96cfbeac70101ed462595fedad9cb284e5f18e94a3c",
+      "independent_semantic_check": "Rolling tag/label/import/custody docs support their stated path and guidance; v8.8.0 release date, beta app/sync and one Zebra template claim supported. Default QR path is not complete released capability (F1). qr_text \u2192 label2_title transition supported, QR symbol suppression not established (L1). Version tag resolved to exact commit.",
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context.",
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "Official rolling Snipe-IT Overview docs, independently retrieved 2026-10-10",
+      "observed_operation": "Unique asset-tag and checkin/checkout custody workflow",
+      "governing_condition_default_exception": "Checkout prevents double-booking until checkin; crate receipt/event model is a local analogy",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S09.txt",
+          "line": 6,
+          "needle": "unique asset tag",
+          "other_match_lines": [
+            10
+          ]
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S09.txt",
+          "line": 11,
+          "needle": "Checkin/Checkout",
+          "other_match_lines": [
+            48
+          ]
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S09.txt",
+          "line": 12,
+          "needle": "double-booking",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "id": "E-C12",
+      "url": "https://github.com/zxing/zxing/commit/557b5fc",
+      "candidate_aliases": [
+        "C12"
+      ],
+      "candidate_version": "Commit 557b5fc references PR #1681.",
+      "requested_at_utc": "2026-10-10T05:42:04.760392+00:00",
+      "status": 200,
+      "final_url": "https://github.com/zxing/zxing/commit/557b5fc",
+      "content_type": "text/html; charset=utf-8",
+      "retrieved_at_utc": "2026-10-10T05:42:05.209525+00:00",
+      "raw_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-C12.html",
+      "raw_sha256": "bfc13a054fab38a98cb1a323f0d86c97fd42274f38c18b8ef7eee508ba62ba9c",
+      "raw_bytes": 570694,
+      "text_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-C12.txt",
+      "text_sha256": "c86bcc424112ab8efcc98866732567da3290190f896792742314227d960c2be0",
+      "independent_semantic_check": "PR #1681 merge 557b5fcf0e22a6cf2541a54bd830116712fec51d changes RSS Expanded decoders/FieldParser.java; increased lengths plus legacy reduced/removed cases, shipped in 3.5.3 f0f1a94439db0300ff0c4618f4e0a41aa630aeac. PR #1839 change commit 34588d8, merge 8944e607789b0847625f9962e90aab9901c731cd adds symbology metadata in QRCodeMultiReader, shipped in 3.5.4 f651b0a0375676e47144f73397dddff8868b0e4c. No selected cooperative runtime or universal QR/GS1 parser capability inferred.",
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context.",
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "ZXing commit 557b5fcf0e22a6cf2541a54bd830116712fec51d",
+      "observed_operation": "FieldParser implementation length changes and legacy comments",
+      "governing_condition_default_exception": "RSS Expanded decoders scope; current conformity separate from legacy acceptance",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-C12.txt",
+          "line": 119,
+          "needle": "FieldParser.java",
+          "other_match_lines": [
+            123
+          ]
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-C12.txt",
+          "line": 144,
+          "needle": "limited to 20",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-C12.txt",
+          "line": 408,
+          "needle": "removed from latest",
+          "other_match_lines": [
+            410,
+            412
+          ]
+        }
+      ]
+    },
+    {
+      "id": "E-S05-api",
+      "url": "https://api.github.com/repos/grokability/snipe-it/issues/19515",
+      "candidate_aliases": [],
+      "requested_at_utc": "2026-10-10T05:42:04.788273+00:00",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/grokability/snipe-it/issues/19515",
+      "content_type": "application/json; charset=utf-8",
+      "retrieved_at_utc": "2026-10-10T05:42:05.020950+00:00",
+      "raw_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S05-api.json",
+      "raw_sha256": "68d70b01ef75a5eada31310a621ae4f789d9ed28b3950aa0f326eb66fcf161a4",
+      "raw_bytes": 8801,
+      "text_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S05-api.txt",
+      "text_sha256": "6a049fecfbed209631a43cb921f4edabebd223bdf18d76f95a75dea7ad836a4d",
+      "independent_semantic_check": "Rolling tag/label/import/custody docs support their stated path and guidance; v8.8.0 release date, beta app/sync and one Zebra template claim supported. Default QR path is not complete released capability (F1). qr_text \u2192 label2_title transition supported, QR symbol suppression not established (L1). Version tag resolved to exact commit.",
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context.",
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "Snipe-IT issue #19515 reports v8.7.1, opened 2026-08-18",
+      "observed_operation": "User report of hidden legacy QR Code Text/title field on New Label Engine",
+      "governing_condition_default_exception": "Reporter context is demo/engine transition; no proven QR symbol suppression (L1)",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S05-api.txt",
+          "line": 11,
+          "needle": "QR Code Text",
+          "other_match_lines": [
+            146
+          ]
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S05-api.txt",
+          "line": 146,
+          "needle": "v8.7.1",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "id": "E-S06-api",
+      "url": "https://api.github.com/repos/grokability/snipe-it/pulls/19633",
+      "candidate_aliases": [],
+      "requested_at_utc": "2026-10-10T05:42:04.877529+00:00",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/grokability/snipe-it/pulls/19633",
+      "content_type": "application/json; charset=utf-8",
+      "retrieved_at_utc": "2026-10-10T05:42:05.119276+00:00",
+      "raw_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S06-api.json",
+      "raw_sha256": "e2984b338ca1f25e40903195be0c5e49516e3783041da4082bb32a9fc2f373f3",
+      "raw_bytes": 18671,
+      "text_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S06-api.txt",
+      "text_sha256": "736b73c12931272587ee847123755c3dcde670ddc2d7fea80c0f14facc30ff67",
+      "independent_semantic_check": "Rolling tag/label/import/custody docs support their stated path and guidance; v8.8.0 release date, beta app/sync and one Zebra template claim supported. Default QR path is not complete released capability (F1). qr_text \u2192 label2_title transition supported, QR symbol suppression not established (L1). Version tag resolved to exact commit.",
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context.",
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "PR #19633, change 1e0fc8c, merge c1d1cd1075f5b91b3c90132bbad0b2b034644952, 2026-09-17",
+      "observed_operation": "Copies old qr_text into label2_title on disabled-to-enabled transition",
+      "governing_condition_default_exception": "Title/settings change, not all-field migration or executed label/decoder test",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S06-api.txt",
+          "line": 39,
+          "needle": "label2_title",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "id": "E-S06-files",
+      "url": "https://api.github.com/repos/grokability/snipe-it/pulls/19633/files",
+      "candidate_aliases": [],
+      "requested_at_utc": "2026-10-10T05:42:05.025238+00:00",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/grokability/snipe-it/pulls/19633/files",
+      "content_type": "application/json; charset=utf-8",
+      "retrieved_at_utc": "2026-10-10T05:42:05.305688+00:00",
+      "raw_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S06-files.json",
+      "raw_sha256": "1b35927039a30274db6c42b9ba9acf2ec5eabfb3927cf15e096d65fc7a7fe349",
+      "raw_bytes": 5115,
+      "text_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S06-files.txt",
+      "text_sha256": "829df4f20860af22c908b2d57e0a0b86bd81b7c7354b2847cb8bfdb812d1e774",
+      "independent_semantic_check": "Rolling tag/label/import/custody docs support their stated path and guidance; v8.8.0 release date, beta app/sync and one Zebra template claim supported. Default QR path is not complete released capability (F1). qr_text \u2192 label2_title transition supported, QR symbol suppression not established (L1). Version tag resolved to exact commit.",
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context.",
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "PR #19633, change 1e0fc8c, merge c1d1cd1075f5b91b3c90132bbad0b2b034644952, 2026-09-17",
+      "observed_operation": "Copies old qr_text into label2_title on disabled-to-enabled transition",
+      "governing_condition_default_exception": "Title/settings change, not all-field migration or executed label/decoder test",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S06-files.txt",
+          "line": 11,
+          "needle": "label2_title",
+          "other_match_lines": [
+            24
+          ]
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S06-files.txt",
+          "line": 11,
+          "needle": "wasLabel2Enabled",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "id": "E-S04-api",
+      "url": "https://api.github.com/repos/grokability/snipe-it/releases/tags/v8.8.0",
+      "candidate_aliases": [],
+      "requested_at_utc": "2026-10-10T05:42:05.122566+00:00",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/grokability/snipe-it/releases/tags/v8.8.0",
+      "content_type": "application/json; charset=utf-8",
+      "retrieved_at_utc": "2026-10-10T05:42:05.305422+00:00",
+      "raw_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S04-api.json",
+      "raw_sha256": "7f1d766edb5d9b75f7e3752b4fd8cdf469925dc396429ff6470e4d2a4a8b11ea",
+      "raw_bytes": 33808,
+      "text_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S04-api.txt",
+      "text_sha256": "f04d4782b53a188c273a5f8cffc232f5779467de4e7d13c152deabf7157ae92b",
+      "independent_semantic_check": "Rolling tag/label/import/custody docs support their stated path and guidance; v8.8.0 release date, beta app/sync and one Zebra template claim supported. Default QR path is not complete released capability (F1). qr_text \u2192 label2_title transition supported, QR symbol suppression not established (L1). Version tag resolved to exact commit.",
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context.",
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "Snipe-IT v8.8.0, 2c466fa8a5a68525439bf1bbbc24470d6670c516; published 2026-09-30T19:14:30Z",
+      "observed_operation": "Release includes #19633 title migration and #19679 one Zebra template 1D addition",
+      "governing_condition_default_exception": "Mobile app and MDM/RMM sync adapters beta; not offline crate event queue; docs updating",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S04-api.txt",
+          "line": 5,
+          "needle": "v8.8.0",
+          "other_match_lines": [
+            29,
+            31,
+            39,
+            40,
+            41
+          ]
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S04-api.txt",
+          "line": 41,
+          "needle": "19633",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S04-api.txt",
+          "line": 41,
+          "needle": "19679",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S04-api.txt",
+          "line": 41,
+          "needle": "Sync adapters",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S04-api.txt",
+          "line": 41,
+          "needle": "updating",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "id": "E-S07-api",
+      "url": "https://api.github.com/repos/grokability/snipe-it/pulls/19679",
+      "candidate_aliases": [],
+      "requested_at_utc": "2026-10-10T05:42:05.194364+00:00",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/grokability/snipe-it/pulls/19679",
+      "content_type": "application/json; charset=utf-8",
+      "retrieved_at_utc": "2026-10-10T05:42:05.480855+00:00",
+      "raw_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S07-api.json",
+      "raw_sha256": "7ebcdcc01d17ee6dbc17c595c02e2c592abeef192068fac98fd8b066cf19a35c",
+      "raw_bytes": 18518,
+      "text_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S07-api.txt",
+      "text_sha256": "ce1558d4b65cca8fd8e758328ea567f26a1da1ffc30fe452a75f925ac2fed32c",
+      "independent_semantic_check": "Rolling tag/label/import/custody docs support their stated path and guidance; v8.8.0 release date, beta app/sync and one Zebra template claim supported. Default QR path is not complete released capability (F1). qr_text \u2192 label2_title transition supported, QR symbol suppression not established (L1). Version tag resolved to exact commit.",
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context.",
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "PR #19679 merge df2c3d8be3b19542594400c051847de43b418f3c, 2026-09-23; included v8.8.0",
+      "observed_operation": "Adds 1D barcode to Zebra 18939 template",
+      "governing_condition_default_exception": "Template-specific, not all printers/templates",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S07-api.txt",
+          "line": 39,
+          "needle": "18939 zebra label template",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "id": "E-Z01-api",
+      "url": "https://api.github.com/repos/zxing/zxing/pulls/1681",
+      "candidate_aliases": [],
+      "requested_at_utc": "2026-10-10T05:42:05.302498+00:00",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/zxing/zxing/pulls/1681",
+      "content_type": "application/json; charset=utf-8",
+      "retrieved_at_utc": "2026-10-10T05:42:05.810554+00:00",
+      "raw_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z01-api.json",
+      "raw_sha256": "e79641b74fdd962dad08c4bf0030a313f243c556727f394ef168d1d1e4d88f53",
+      "raw_bytes": 20007,
+      "text_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z01-api.txt",
+      "text_sha256": "44d5249190787753becc3a76fe1b609475c89adcdca9fe2e942de1bff301e20a",
+      "independent_semantic_check": "PR #1681 merge 557b5fcf0e22a6cf2541a54bd830116712fec51d changes RSS Expanded decoders/FieldParser.java; increased lengths plus legacy reduced/removed cases, shipped in 3.5.3 f0f1a94439db0300ff0c4618f4e0a41aa630aeac. PR #1839 change commit 34588d8, merge 8944e607789b0847625f9962e90aab9901c731cd adds symbology metadata in QRCodeMultiReader, shipped in 3.5.4 f651b0a0375676e47144f73397dddff8868b0e4c. No selected cooperative runtime or universal QR/GS1 parser capability inferred.",
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context.",
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "ZXing PR #1681, merge 557b5fcf0e22a6cf2541a54bd830116712fec51d, 2023-09-04",
+      "observed_operation": "Update RSS Expanded FieldParser AI lengths per 2023 specification",
+      "governing_condition_default_exception": "Increases updated; reductions/removals retained with legacy comments; not all QR/GS1 parsers",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z01-api.txt",
+          "line": 39,
+          "needle": "Where existing AI data lengths",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z01-api.txt",
+          "line": 39,
+          "needle": "backwards-incompatible",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "id": "E-Z01-files",
+      "url": "https://api.github.com/repos/zxing/zxing/pulls/1681/files",
+      "candidate_aliases": [],
+      "requested_at_utc": "2026-10-10T05:42:05.309017+00:00",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/zxing/zxing/pulls/1681/files",
+      "content_type": "application/json; charset=utf-8",
+      "retrieved_at_utc": "2026-10-10T05:42:05.780333+00:00",
+      "raw_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z01-files.json",
+      "raw_sha256": "fcfe4f94892b6845a6301f42f1d11d2e254c752bf780125c1ea81edf165a14d8",
+      "raw_bytes": 10588,
+      "text_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z01-files.txt",
+      "text_sha256": "647ede7eeb5236592adf725c1ba00287e509fabd9fd6978b313424b94d47b317",
+      "independent_semantic_check": "PR #1681 merge 557b5fcf0e22a6cf2541a54bd830116712fec51d changes RSS Expanded decoders/FieldParser.java; increased lengths plus legacy reduced/removed cases, shipped in 3.5.3 f0f1a94439db0300ff0c4618f4e0a41aa630aeac. PR #1839 change commit 34588d8, merge 8944e607789b0847625f9962e90aab9901c731cd adds symbology metadata in QRCodeMultiReader, shipped in 3.5.4 f651b0a0375676e47144f73397dddff8868b0e4c. No selected cooperative runtime or universal QR/GS1 parser capability inferred.",
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context.",
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "ZXing PR #1681, merge 557b5fcf0e22a6cf2541a54bd830116712fec51d, 2023-09-04",
+      "observed_operation": "Update RSS Expanded FieldParser AI lengths per 2023 specification",
+      "governing_condition_default_exception": "Increases updated; reductions/removals retained with legacy comments; not all QR/GS1 parsers",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z01-files.txt",
+          "locator": "JSON fields/body/patch or repository tree listed in semantic claim group; no guessed text line"
+        }
+      ]
+    },
+    {
+      "id": "E-Z02-api",
+      "url": "https://api.github.com/repos/zxing/zxing/releases/tags/zxing-3.5.3",
+      "candidate_aliases": [],
+      "requested_at_utc": "2026-10-10T05:42:05.311803+00:00",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/zxing/zxing/releases/tags/zxing-3.5.3",
+      "content_type": "application/json; charset=utf-8",
+      "retrieved_at_utc": "2026-10-10T05:42:05.490673+00:00",
+      "raw_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z02-api.json",
+      "raw_sha256": "0898600df9d0e5834a710e92a2438d7f2c7b76c9f301ccf62c0ecab598d507e2",
+      "raw_bytes": 3185,
+      "text_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z02-api.txt",
+      "text_sha256": "121ec9a8c59a8044a273c6100319352df7cd02664b4be3cc887fe0210fd589c3",
+      "independent_semantic_check": "PR #1681 merge 557b5fcf0e22a6cf2541a54bd830116712fec51d changes RSS Expanded decoders/FieldParser.java; increased lengths plus legacy reduced/removed cases, shipped in 3.5.3 f0f1a94439db0300ff0c4618f4e0a41aa630aeac. PR #1839 change commit 34588d8, merge 8944e607789b0847625f9962e90aab9901c731cd adds symbology metadata in QRCodeMultiReader, shipped in 3.5.4 f651b0a0375676e47144f73397dddff8868b0e4c. No selected cooperative runtime or universal QR/GS1 parser capability inferred.",
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context.",
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "ZXing Java 3.5.3, f0f1a94439db0300ff0c4618f4e0a41aa630aeac, published 2024-01-31",
+      "observed_operation": "Release ships PR #1681",
+      "governing_condition_default_exception": "Does not identify cooperative selected decoder/runtime",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z02-api.txt",
+          "line": 41,
+          "needle": "1681",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "id": "E-Z03-api",
+      "url": "https://api.github.com/repos/zxing/zxing/pulls/1839",
+      "candidate_aliases": [],
+      "requested_at_utc": "2026-10-10T05:42:05.358724+00:00",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/zxing/zxing/pulls/1839",
+      "content_type": "application/json; charset=utf-8",
+      "retrieved_at_utc": "2026-10-10T05:42:05.812547+00:00",
+      "raw_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z03-api.json",
+      "raw_sha256": "db287107d2afbb668a01d7ad2dca98f2a27068afb4a62edf70fe5ea11bcc3856",
+      "raw_bytes": 21223,
+      "text_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z03-api.txt",
+      "text_sha256": "e5909252c7de29c2ee14e8daadd9b560f0279e494ff661ace4bfe27ca7aa5958",
+      "independent_semantic_check": "PR #1681 merge 557b5fcf0e22a6cf2541a54bd830116712fec51d changes RSS Expanded decoders/FieldParser.java; increased lengths plus legacy reduced/removed cases, shipped in 3.5.3 f0f1a94439db0300ff0c4618f4e0a41aa630aeac. PR #1839 change commit 34588d8, merge 8944e607789b0847625f9962e90aab9901c731cd adds symbology metadata in QRCodeMultiReader, shipped in 3.5.4 f651b0a0375676e47144f73397dddff8868b0e4c. No selected cooperative runtime or universal QR/GS1 parser capability inferred.",
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context.",
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "ZXing PR #1839, change 34588d8, merge 8944e607789b0847625f9962e90aab9901c731cd, 2024-08-02",
+      "observed_operation": "Add SYMBOLOGY_IDENTIFIER result metadata to QRCodeMultiReader",
+      "governing_condition_default_exception": "Multi-reader decode path and downstream metadata consumers, not universal reader behavior",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z03-api.txt",
+          "line": 17,
+          "needle": "QRCodeMultiReader",
+          "other_match_lines": [
+            39
+          ]
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z03-api.txt",
+          "line": 17,
+          "needle": "SYMBOLOGY_IDENTIFIER",
+          "other_match_lines": [
+            39
+          ]
+        }
+      ]
+    },
+    {
+      "id": "E-Z03-files",
+      "url": "https://api.github.com/repos/zxing/zxing/pulls/1839/files",
+      "candidate_aliases": [],
+      "requested_at_utc": "2026-10-10T05:42:05.485334+00:00",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/zxing/zxing/pulls/1839/files",
+      "content_type": "application/json; charset=utf-8",
+      "retrieved_at_utc": "2026-10-10T05:42:05.789063+00:00",
+      "raw_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z03-files.json",
+      "raw_sha256": "5104187503e17fe121eb8bd55bcac47bfc7e53c3fb04736a8a249b1641a54712",
+      "raw_bytes": 1316,
+      "text_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z03-files.txt",
+      "text_sha256": "08a3af5b0837bd428a8076cb3cbecb6e2f2e3931585857fb36b3346c5068657f",
+      "independent_semantic_check": "PR #1681 merge 557b5fcf0e22a6cf2541a54bd830116712fec51d changes RSS Expanded decoders/FieldParser.java; increased lengths plus legacy reduced/removed cases, shipped in 3.5.3 f0f1a94439db0300ff0c4618f4e0a41aa630aeac. PR #1839 change commit 34588d8, merge 8944e607789b0847625f9962e90aab9901c731cd adds symbology metadata in QRCodeMultiReader, shipped in 3.5.4 f651b0a0375676e47144f73397dddff8868b0e4c. No selected cooperative runtime or universal QR/GS1 parser capability inferred.",
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context.",
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "ZXing PR #1839, change 34588d8, merge 8944e607789b0847625f9962e90aab9901c731cd, 2024-08-02",
+      "observed_operation": "Add SYMBOLOGY_IDENTIFIER result metadata to QRCodeMultiReader",
+      "governing_condition_default_exception": "Multi-reader decode path and downstream metadata consumers, not universal reader behavior",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z03-files.txt",
+          "line": 3,
+          "needle": "QRCodeMultiReader",
+          "other_match_lines": [
+            8,
+            9,
+            10,
+            11
+          ]
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z03-files.txt",
+          "line": 11,
+          "needle": "SYMBOLOGY_IDENTIFIER",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "id": "E-Z04-api",
+      "url": "https://api.github.com/repos/zxing/zxing/releases/tags/zxing-3.5.4",
+      "candidate_aliases": [],
+      "requested_at_utc": "2026-10-10T05:42:05.493028+00:00",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/zxing/zxing/releases/tags/zxing-3.5.4",
+      "content_type": "application/json; charset=utf-8",
+      "retrieved_at_utc": "2026-10-10T05:42:05.643551+00:00",
+      "raw_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z04-api.json",
+      "raw_sha256": "9cc315f600c3a7b8be34f4122b5459584b09d00942e76ba487dcf2017c7a2516",
+      "raw_bytes": 3387,
+      "text_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z04-api.txt",
+      "text_sha256": "faef4f39b6b18d96c272df3ee4109bbc0779eb145b5669e8372aa712dff20e29",
+      "independent_semantic_check": "PR #1681 merge 557b5fcf0e22a6cf2541a54bd830116712fec51d changes RSS Expanded decoders/FieldParser.java; increased lengths plus legacy reduced/removed cases, shipped in 3.5.3 f0f1a94439db0300ff0c4618f4e0a41aa630aeac. PR #1839 change commit 34588d8, merge 8944e607789b0847625f9962e90aab9901c731cd adds symbology metadata in QRCodeMultiReader, shipped in 3.5.4 f651b0a0375676e47144f73397dddff8868b0e4c. No selected cooperative runtime or universal QR/GS1 parser capability inferred.",
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context.",
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "ZXing Java 3.5.4, f651b0a0375676e47144f73397dddff8868b0e4c, published 2025-11-11",
+      "observed_operation": "Release ships PR #1839",
+      "governing_condition_default_exception": "Does not identify cooperative runtime or prove printed-label compatibility",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z04-api.txt",
+          "line": 41,
+          "needle": "1839",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "id": "E-S10-label",
+      "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.7.1/app/Models/Labels/Label.php",
+      "status": 200,
+      "at_utc": "2026-10-10T05:43:39.745518+00:00",
+      "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S10-label.txt",
+      "sha256": "028cc5c356fb3dd4a8522074ab1240014f9707a6d5ea49f7e675e0b01aae99bf",
+      "independent_semantic_check": "Rolling tag/label/import/custody docs support their stated path and guidance; v8.8.0 release date, beta app/sync and one Zebra template claim supported. Default QR path is not complete released capability (F1). qr_text \u2192 label2_title transition supported, QR symbol suppression not established (L1). Version tag resolved to exact commit.",
+      "source_locator_status": "Relevant cited code/metadata reviewed; not executed",
+      "independently_verified_version_or_commit": "Pinned Snipe-IT v8.7.1 label implementation; independently retrieved original bytes",
+      "observed_operation": "Abstract template support contract and independent barcode writer operations",
+      "governing_condition_default_exception": "Relevant static source only; no code executed; broader file/tree not entirely semantically assessed",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S10-label.txt",
+          "locator": "JSON fields/body/patch or repository tree listed in semantic claim group; no guessed text line"
+        }
+      ]
+    },
+    {
+      "id": "E-S10-default",
+      "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.7.1/app/Models/Labels/DefaultLabel.php",
+      "status": 200,
+      "at_utc": "2026-10-10T05:43:39.745937+00:00",
+      "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S10-default.txt",
+      "sha256": "01f4a66f43bbfccac472fb1e0e14c1fe1e45032ddc63956c018ffbda49cc6b15",
+      "independent_semantic_check": "Rolling tag/label/import/custody docs support their stated path and guidance; v8.8.0 release date, beta app/sync and one Zebra template claim supported. Default QR path is not complete released capability (F1). qr_text \u2192 label2_title transition supported, QR symbol suppression not established (L1). Version tag resolved to exact commit.",
+      "source_locator_status": "Relevant cited code/metadata reviewed; not executed",
+      "independently_verified_version_or_commit": "Pinned Snipe-IT v8.7.1 label implementation; independently retrieved original bytes",
+      "observed_operation": "Renders barcode2d independently from title in DefaultLabel.write()",
+      "governing_condition_default_exception": "Relevant static source only; no code executed; broader file/tree not entirely semantically assessed",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S10-default.txt",
+          "line": 218,
+          "needle": "barcode2d",
+          "other_match_lines": [
+            220
+          ]
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S10-default.txt",
+          "line": 239,
+          "needle": "// Title",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S10-default.txt",
+          "line": 217,
+          "needle": "// 2D Barcode",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "id": "E-S10-controller",
+      "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.7.1/app/Http/Controllers/LabelsController.php",
+      "status": 200,
+      "at_utc": "2026-10-10T05:43:39.747622+00:00",
+      "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S10-controller.txt",
+      "sha256": "bc4362a942ba7d4e19f0674e4a213507c199b3f21204e8bd266d4bfb1aa2d0c8",
+      "independent_semantic_check": "Rolling tag/label/import/custody docs support their stated path and guidance; v8.8.0 release date, beta app/sync and one Zebra template claim supported. Default QR path is not complete released capability (F1). qr_text \u2192 label2_title transition supported, QR symbol suppression not established (L1). Version tag resolved to exact commit.",
+      "source_locator_status": "Relevant cited code/metadata reviewed; not executed",
+      "independently_verified_version_or_commit": "Pinned Snipe-IT v8.7.1 label implementation; independently retrieved original bytes",
+      "observed_operation": "Constructs label-preview example asset and passes settings/template to LabelView; not production execution",
+      "governing_condition_default_exception": "Relevant static source only; no code executed; broader file/tree not entirely semantically assessed",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S10-controller.txt",
+          "locator": "JSON fields/body/patch or repository tree listed in semantic claim group; no guessed text line"
+        }
+      ]
+    },
+    {
+      "id": "E-S11-controller",
+      "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/app/Http/Controllers/SettingsController.php",
+      "status": 200,
+      "at_utc": "2026-10-10T05:43:39.752860+00:00",
+      "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-controller.txt",
+      "sha256": "c13532096f6eb4253a54b977cd8b28037ae3f852b8050ef03f400defeee14fa9",
+      "independent_semantic_check": "Rolling tag/label/import/custody docs support their stated path and guidance; v8.8.0 release date, beta app/sync and one Zebra template claim supported. Default QR path is not complete released capability (F1). qr_text \u2192 label2_title transition supported, QR symbol suppression not established (L1). Version tag resolved to exact commit.",
+      "source_locator_status": "Relevant cited code/metadata reviewed; not executed",
+      "independently_verified_version_or_commit": "Pinned Snipe-IT v8.8.0 / 2c466fa8a5a68525439bf1bbbc24470d6670c516",
+      "observed_operation": "Persists prefix/target settings and copies qr_text to label2_title on engine enable transition",
+      "governing_condition_default_exception": "New Label Engine; selected template/type support; plain target for prefix path; escaped prefix; no established cooperative endpoint (F1/L1)",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-controller.txt",
+          "line": 628,
+          "needle": "label2_2d_prefix",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-controller.txt",
+          "line": 624,
+          "needle": "label2_title",
+          "other_match_lines": [
+            685
+          ]
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-controller.txt",
+          "line": 621,
+          "needle": "wasLabel2Enabled",
+          "other_match_lines": [
+            632,
+            684
+          ]
+        }
+      ]
+    },
+    {
+      "id": "E-S11-default",
+      "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/app/Models/Labels/DefaultLabel.php",
+      "status": 200,
+      "at_utc": "2026-10-10T05:43:39.732933+00:00",
+      "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-default.txt",
+      "sha256": "9ce38f06ae35d7d010275a67c33d78847744db175f1c4d28b940de0d004404ec",
+      "independent_semantic_check": "Rolling tag/label/import/custody docs support their stated path and guidance; v8.8.0 release date, beta app/sync and one Zebra template claim supported. Default QR path is not complete released capability (F1). qr_text \u2192 label2_title transition supported, QR symbol suppression not established (L1). Version tag resolved to exact commit.",
+      "source_locator_status": "Relevant cited code/metadata reviewed; not executed",
+      "independently_verified_version_or_commit": "Pinned Snipe-IT v8.8.0 / 2c466fa8a5a68525439bf1bbbc24470d6670c516",
+      "observed_operation": "Renders 2D barcode and title separately in DefaultLabel.write()",
+      "governing_condition_default_exception": "New Label Engine; selected template/type support; plain target for prefix path; escaped prefix; no established cooperative endpoint (F1/L1)",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-default.txt",
+          "locator": "JSON fields/body/patch or repository tree listed in semantic claim group; no guessed text line"
+        }
+      ]
+    },
+    {
+      "id": "E-S10-view",
+      "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.7.1/app/View/Label.php",
+      "status": 200,
+      "at_utc": "2026-10-10T05:43:58.029211+00:00",
+      "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S10-view.txt",
+      "sha256": "302eec8071e8a1b68004988441e83e734f7e49cb688791cf17a58cf4aca6a22f",
+      "independent_semantic_check": "Rolling tag/label/import/custody docs support their stated path and guidance; v8.8.0 release date, beta app/sync and one Zebra template claim supported. Default QR path is not complete released capability (F1). qr_text \u2192 label2_title transition supported, QR symbol suppression not established (L1). Version tag resolved to exact commit.",
+      "source_locator_status": "Relevant cited code/metadata reviewed; not executed",
+      "independently_verified_version_or_commit": "Pinned Snipe-IT v8.7.1 label implementation; independently retrieved original bytes",
+      "observed_operation": "Prepares title independently from 2D target/payload in LabelView",
+      "governing_condition_default_exception": "Relevant static source only; no code executed; broader file/tree not entirely semantically assessed",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S10-view.txt",
+          "line": 100,
+          "needle": "label2_title",
+          "other_match_lines": [
+            101
+          ]
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S10-view.txt",
+          "line": 176,
+          "needle": "barcode2d",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "id": "E-S11-view",
+      "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/app/View/Label.php",
+      "status": 200,
+      "at_utc": "2026-10-10T05:44:34.498156+00:00",
+      "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-view.txt",
+      "sha256": "302eec8071e8a1b68004988441e83e734f7e49cb688791cf17a58cf4aca6a22f",
+      "independent_semantic_check": "Rolling tag/label/import/custody docs support their stated path and guidance; v8.8.0 release date, beta app/sync and one Zebra template claim supported. Default QR path is not complete released capability (F1). qr_text \u2192 label2_title transition supported, QR symbol suppression not established (L1). Version tag resolved to exact commit.",
+      "source_locator_status": "Relevant cited code/metadata reviewed; not executed",
+      "independently_verified_version_or_commit": "Pinned Snipe-IT v8.8.0 / 2c466fa8a5a68525439bf1bbbc24470d6670c516",
+      "observed_operation": "Checks template/type support; concatenates escaped prefix with plain asset tag; internal hardware route is separate default",
+      "governing_condition_default_exception": "New Label Engine; selected template/type support; plain target for prefix path; escaped prefix; no established cooperative endpoint (F1/L1)",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-view.txt",
+          "line": 148,
+          "needle": "plain_asset_tag",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-view.txt",
+          "line": 140,
+          "needle": "label2_2d_prefix",
+          "other_match_lines": [
+            146,
+            149,
+            152,
+            155,
+            158,
+            161,
+            164
+          ]
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-view.txt",
+          "line": 100,
+          "needle": "label2_title",
+          "other_match_lines": [
+            101
+          ]
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-view.txt",
+          "line": 171,
+          "needle": "hardware_id",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "id": "E-S11-ui",
+      "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/resources/views/partials/labels-new-engine.blade.php",
+      "status": 200,
+      "at_utc": "2026-10-10T05:44:34.524080+00:00",
+      "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-ui.txt",
+      "sha256": "2d8fda8ed58a66b47df15db8e3adfd6e043a36fa7a95ffa419cfa88a8e23c708",
+      "independent_semantic_check": "Rolling tag/label/import/custody docs support their stated path and guidance; v8.8.0 release date, beta app/sync and one Zebra template claim supported. Default QR path is not complete released capability (F1). qr_text \u2192 label2_title transition supported, QR symbol suppression not established (L1). Version tag resolved to exact commit.",
+      "source_locator_status": "Relevant cited code/metadata reviewed; not executed",
+      "independently_verified_version_or_commit": "Pinned Snipe-IT v8.8.0 / 2c466fa8a5a68525439bf1bbbc24470d6670c516",
+      "observed_operation": "Exposes QRCODE type, prefix input and alternative content targets; hardware route labeled default",
+      "governing_condition_default_exception": "New Label Engine; selected template/type support; plain target for prefix path; escaped prefix; no established cooperative endpoint (F1/L1)",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-ui.txt",
+          "line": 169,
+          "needle": "plain_asset_tag",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-ui.txt",
+          "line": 144,
+          "needle": "label2_2d_prefix",
+          "other_match_lines": [
+            146,
+            149,
+            150,
+            151
+          ]
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-ui.txt",
+          "line": 53,
+          "needle": "label2_title",
+          "other_match_lines": [
+            55,
+            58,
+            59,
+            60,
+            62
+          ]
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-ui.txt",
+          "line": 123,
+          "needle": "QRCODE",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-ui.txt",
+          "line": 165,
+          "needle": "hardware_id",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "id": "E-S11-settings-validation",
+      "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/app/Http/Requests/StoreLabelSettings.php",
+      "status": 200,
+      "at_utc": "2026-10-10T05:44:34.524236+00:00",
+      "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-settings-validation.txt",
+      "sha256": "274f4f568c2c45aeb8d82c3dd15fb5bea39104c91d4802f99ff4f38d6c3c0add",
+      "independent_semantic_check": "Rolling tag/label/import/custody docs support their stated path and guidance; v8.8.0 release date, beta app/sync and one Zebra template claim supported. Default QR path is not complete released capability (F1). qr_text \u2192 label2_title transition supported, QR symbol suppression not established (L1). Version tag resolved to exact commit.",
+      "source_locator_status": "Relevant cited code/metadata reviewed; not executed",
+      "independently_verified_version_or_commit": "Pinned Snipe-IT v8.8.0 / 2c466fa8a5a68525439bf1bbbc24470d6670c516",
+      "observed_operation": "Validates label2_2d_prefix as nullable with max length 191; does not validate endpoint existence",
+      "governing_condition_default_exception": "New Label Engine; selected template/type support; plain target for prefix path; escaped prefix; no established cooperative endpoint (F1/L1)",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-settings-validation.txt",
+          "line": 52,
+          "needle": "label2_2d_prefix",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "id": "E-S11-prefix-history",
+      "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/database/migrations/2025_11_04_173713_add_2d_label_prefix.php",
+      "status": 200,
+      "at_utc": "2026-10-10T05:44:34.530553+00:00",
+      "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-prefix-history.txt",
+      "sha256": "086a901c1bfe84854cbaad7ae4f2a7fa4435cda7e16c3b34630ddf98a0d7cd64",
+      "independent_semantic_check": "Rolling tag/label/import/custody docs support their stated path and guidance; v8.8.0 release date, beta app/sync and one Zebra template claim supported. Default QR path is not complete released capability (F1). qr_text \u2192 label2_title transition supported, QR symbol suppression not established (L1). Version tag resolved to exact commit.",
+      "source_locator_status": "Relevant cited code/metadata reviewed; not executed",
+      "independently_verified_version_or_commit": "Pinned Snipe-IT v8.8.0 / 2c466fa8a5a68525439bf1bbbc24470d6670c516",
+      "observed_operation": "Released schema migration adds nullable label2_2d_prefix column; this file does not prove rendered URL behavior",
+      "governing_condition_default_exception": "New Label Engine; selected template/type support; plain target for prefix path; escaped prefix; no established cooperative endpoint (F1/L1)",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-prefix-history.txt",
+          "line": 15,
+          "needle": "label2_2d_prefix",
+          "other_match_lines": [
+            16,
+            27,
+            28
+          ]
+        }
+      ]
+    },
+    {
+      "id": "E-S11-language",
+      "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/resources/lang/en-US/admin/settings/general.php",
+      "status": 200,
+      "at_utc": "2026-10-10T05:45:20.820862+00:00",
+      "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-language.txt",
+      "sha256": "9a9f8f5c4d901feff5302b371042eebf076291c1fe06a8e2dc725a7f487d2ee9",
+      "independent_semantic_check": "Rolling tag/label/import/custody docs support their stated path and guidance; v8.8.0 release date, beta app/sync and one Zebra template claim supported. Default QR path is not complete released capability (F1). qr_text \u2192 label2_title transition supported, QR symbol suppression not established (L1). Version tag resolved to exact commit.",
+      "source_locator_status": "Relevant cited code/metadata reviewed; not executed",
+      "independently_verified_version_or_commit": "Pinned Snipe-IT v8.8.0 / 2c466fa8a5a68525439bf1bbbc24470d6670c516",
+      "observed_operation": "Released UI help explicitly describes external URL prefix and linked versus non-linked target values",
+      "governing_condition_default_exception": "New Label Engine; selected template/type support; plain target for prefix path; escaped prefix; no established cooperative endpoint (F1/L1)",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-language.txt",
+          "line": 520,
+          "needle": "label2_2d_prefix",
+          "other_match_lines": [
+            521
+          ]
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-language.txt",
+          "line": 521,
+          "needle": "external URL",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-language.txt",
+          "line": 511,
+          "needle": "label2_title",
+          "other_match_lines": [
+            512,
+            513
+          ]
+        }
+      ]
+    },
+    {
+      "id": "E-S11-ref",
+      "url": "https://api.github.com/repos/grokability/snipe-it/git/ref/tags/v8.8.0",
+      "status": 200,
+      "at_utc": "2026-10-10T05:45:20.832768+00:00",
+      "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-ref.txt",
+      "sha256": "ba049a3a24863e215552b037eb38929665b04825a25bfb4ee0ad1a1c18bd6361",
+      "independent_semantic_check": "Rolling tag/label/import/custody docs support their stated path and guidance; v8.8.0 release date, beta app/sync and one Zebra template claim supported. Default QR path is not complete released capability (F1). qr_text \u2192 label2_title transition supported, QR symbol suppression not established (L1). Version tag resolved to exact commit.",
+      "source_locator_status": "Relevant cited code/metadata reviewed; not executed",
+      "independently_verified_version_or_commit": "Pinned Snipe-IT v8.8.0 / 2c466fa8a5a68525439bf1bbbc24470d6670c516",
+      "observed_operation": "Official v8.8.0 reference resolves to 2c466fa8a5a68525439bf1bbbc24470d6670c516; identity metadata only",
+      "governing_condition_default_exception": "Tag source identity only; behavior proved separately from released implementation/UI",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-ref.txt",
+          "locator": "JSON fields/body/patch or repository tree listed in semantic claim group; no guessed text line"
+        }
+      ]
+    },
+    {
+      "id": "E-Z02-ref",
+      "url": "https://api.github.com/repos/zxing/zxing/git/ref/tags/zxing-3.5.3",
+      "status": 200,
+      "at_utc": "2026-10-10T05:45:20.841763+00:00",
+      "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z02-ref.txt",
+      "sha256": "c98db32865f6589264a92f975e8fa5c5fc99d2f44e797c129c8d4a3ce25f54a8",
+      "independent_semantic_check": "PR #1681 merge 557b5fcf0e22a6cf2541a54bd830116712fec51d changes RSS Expanded decoders/FieldParser.java; increased lengths plus legacy reduced/removed cases, shipped in 3.5.3 f0f1a94439db0300ff0c4618f4e0a41aa630aeac. PR #1839 change commit 34588d8, merge 8944e607789b0847625f9962e90aab9901c731cd adds symbology metadata in QRCodeMultiReader, shipped in 3.5.4 f651b0a0375676e47144f73397dddff8868b0e4c. No selected cooperative runtime or universal QR/GS1 parser capability inferred.",
+      "source_locator_status": "Relevant cited code/metadata reviewed; not executed",
+      "independently_verified_version_or_commit": "Official tag/reference target metadata for ZXing 3.5.3/3.5.4",
+      "observed_operation": "Resolve annotated tag to exact shipped commit",
+      "governing_condition_default_exception": "Tag metadata proves source identity, not compatibility or semantic correctness",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z02-ref.txt",
+          "line": 1,
+          "needle": "sha",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z02-ref.txt",
+          "line": 1,
+          "needle": "object",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "id": "E-Z04-ref",
+      "url": "https://api.github.com/repos/zxing/zxing/git/ref/tags/zxing-3.5.4",
+      "status": 200,
+      "at_utc": "2026-10-10T05:45:20.845082+00:00",
+      "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z04-ref.txt",
+      "sha256": "eeb7fcaab8a3a00a86cffc3a65fa8149f0594792e5322502171e0f0b448876b4",
+      "independent_semantic_check": "PR #1681 merge 557b5fcf0e22a6cf2541a54bd830116712fec51d changes RSS Expanded decoders/FieldParser.java; increased lengths plus legacy reduced/removed cases, shipped in 3.5.3 f0f1a94439db0300ff0c4618f4e0a41aa630aeac. PR #1839 change commit 34588d8, merge 8944e607789b0847625f9962e90aab9901c731cd adds symbology metadata in QRCodeMultiReader, shipped in 3.5.4 f651b0a0375676e47144f73397dddff8868b0e4c. No selected cooperative runtime or universal QR/GS1 parser capability inferred.",
+      "source_locator_status": "Relevant cited code/metadata reviewed; not executed",
+      "independently_verified_version_or_commit": "Official tag/reference target metadata for ZXing 3.5.3/3.5.4",
+      "observed_operation": "Resolve annotated tag to exact shipped commit",
+      "governing_condition_default_exception": "Tag metadata proves source identity, not compatibility or semantic correctness",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z04-ref.txt",
+          "line": 1,
+          "needle": "sha",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z04-ref.txt",
+          "line": 1,
+          "needle": "object",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "id": "E-Z02-ref-target",
+      "url": "https://api.github.com/repos/zxing/zxing/git/tags/2d608639c944a5b17363706fe5e9055bab0d6c2f",
+      "status": 200,
+      "at_utc": "2026-10-10T05:46:56.089326+00:00",
+      "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z02-ref-target.txt",
+      "sha256": "2a7a123b6aba4d9fc491743ae94ea124cef0477cd83c69165003dd67005f0fae",
+      "independent_semantic_check": "PR #1681 merge 557b5fcf0e22a6cf2541a54bd830116712fec51d changes RSS Expanded decoders/FieldParser.java; increased lengths plus legacy reduced/removed cases, shipped in 3.5.3 f0f1a94439db0300ff0c4618f4e0a41aa630aeac. PR #1839 change commit 34588d8, merge 8944e607789b0847625f9962e90aab9901c731cd adds symbology metadata in QRCodeMultiReader, shipped in 3.5.4 f651b0a0375676e47144f73397dddff8868b0e4c. No selected cooperative runtime or universal QR/GS1 parser capability inferred.",
+      "source_locator_status": "Relevant cited code/metadata reviewed; not executed",
+      "independently_verified_version_or_commit": "Official tag/reference target metadata for ZXing 3.5.3/3.5.4",
+      "observed_operation": "Resolve annotated tag to exact shipped commit",
+      "governing_condition_default_exception": "Tag metadata proves source identity, not compatibility or semantic correctness",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z02-ref-target.txt",
+          "line": 1,
+          "needle": "sha",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z02-ref-target.txt",
+          "line": 1,
+          "needle": "object",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "id": "E-Z04-ref-target",
+      "url": "https://api.github.com/repos/zxing/zxing/git/tags/3116a1970d66973475352d8161f2c42bf0a0ea7f",
+      "status": 200,
+      "at_utc": "2026-10-10T05:46:56.260747+00:00",
+      "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z04-ref-target.txt",
+      "sha256": "4ec554106e89eae35cb6a0175b3da4e3f34083f68414591cef5bb0ffb361214c",
+      "independent_semantic_check": "PR #1681 merge 557b5fcf0e22a6cf2541a54bd830116712fec51d changes RSS Expanded decoders/FieldParser.java; increased lengths plus legacy reduced/removed cases, shipped in 3.5.3 f0f1a94439db0300ff0c4618f4e0a41aa630aeac. PR #1839 change commit 34588d8, merge 8944e607789b0847625f9962e90aab9901c731cd adds symbology metadata in QRCodeMultiReader, shipped in 3.5.4 f651b0a0375676e47144f73397dddff8868b0e4c. No selected cooperative runtime or universal QR/GS1 parser capability inferred.",
+      "source_locator_status": "Relevant cited code/metadata reviewed; not executed",
+      "independently_verified_version_or_commit": "Official tag/reference target metadata for ZXing 3.5.3/3.5.4",
+      "observed_operation": "Resolve annotated tag to exact shipped commit",
+      "governing_condition_default_exception": "Tag metadata proves source identity, not compatibility or semantic correctness",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z04-ref-target.txt",
+          "line": 1,
+          "needle": "sha",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z04-ref-target.txt",
+          "line": 1,
+          "needle": "object",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "id": "E-S10-tree",
+      "url": "https://api.github.com/repos/grokability/snipe-it/git/trees/v8.7.1?recursive=1",
+      "at_utc": "2026-10-10T05:43:14.527916+00:00",
+      "raw_path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S10-tree.json",
+      "raw_sha256": "af31f20959f4178ae009f20eb2074f554bf09157e087a208abcc151483c03da7",
+      "status": 200,
+      "independent_semantic_check": "Scoped repository-tree navigation to released label implementation, not a semantic audit of the repository.",
+      "independently_verified_version_or_commit": "Pinned Snipe-IT v8.7.1 label implementation; independently retrieved original bytes",
+      "observed_operation": "Scoped released-tree navigation to label source paths; tree is not source behavior proof",
+      "governing_condition_default_exception": "Navigation metadata only; no repository-wide semantic audit or behavior proof",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation.",
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S10-tree.json",
+          "locator": "JSON fields/body/patch or repository tree listed in semantic claim group; no guessed text line"
+        }
+      ]
+    }
+  ],
+  "semantic_claim_groups": {
+    "odoo": "18.0 versioned docs: enable Barcode; scheduled picking and final Validate; WHIN new-instance exception; custom internal strings/GTIN allocation/opt-in lookup; optional lot/serial scan; first matching nomenclature rule and no automatic custom-field mapping; IoT/keyboard/default US QWERTY/ENTER keycode 28 conditions. No guaranteed offline queue. No numeric inventory unit/weight decision is made by the proposal.",
+    "snipe": "Rolling tag/label/import/custody docs support their stated path and guidance; v8.8.0 release date, beta app/sync and one Zebra template claim supported. Default QR path is not complete released capability (F1). qr_text \u2192 label2_title transition supported, QR symbol suppression not established (L1). Version tag resolved to exact commit.",
+    "gs1": "2024 guide supports structured IDs parsed offline vs URL retrieval, GTIN plus defined qualifiers, and other possible GS1 primary keys. 2024 redirect advice/303 scoped to Digital Link, not ordinary QR; analytics discussion not claim all shorteners track. Resolver 1.2.0 ratified Jan 2026 does not require identical linksets/targets and scopes supported keys. General Specs 23.0 page 317 defines ]Q3 for leading-FNC1 AI element strings, not every Digital Link URL QR.",
+    "zxing": "PR #1681 merge 557b5fcf0e22a6cf2541a54bd830116712fec51d changes RSS Expanded decoders/FieldParser.java; increased lengths plus legacy reduced/removed cases, shipped in 3.5.3 f0f1a94439db0300ff0c4618f4e0a41aa630aeac. PR #1839 change commit 34588d8, merge 8944e607789b0847625f9962e90aab9901c731cd adds symbology metadata in QRCodeMultiReader, shipped in 3.5.4 f651b0a0375676e47144f73397dddff8868b0e4c. No selected cooperative runtime or universal QR/GS1 parser capability inferred.",
+    "supplement": "Independently retrieved pinned primary source/metadata. Only locators cited in findings/claim checks inspected semantically; broader file/tree bytes archived for navigation, not claimed fully assessed as an implementation."
+  },
+  "finding_evidence": [
+    {
+      "id": "F1",
+      "severity": "MATERIAL",
+      "classification": "materially incomplete governing source conditions / unsupported categorical product-fit limitation",
+      "remaining_in_final": true,
+      "title": "Snipe-IT default QR destination is treated as the built-in capability boundary",
+      "candidate_claim": "Its built-in QR leads to the private asset page, not the public care page.",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/reviser/final.md",
+        "line": 65,
+        "needle": "Its built-in QR leads"
+      },
+      "independent_finding": "The rolling Asset Labels page describes an in-system QR path, but the release actually discussed, v8.8.0 (2c466fa8a5a68525439bf1bbbc24470d6670c516), exposes configurable 2D content and a prefix explicitly described as supporting an external URL. In app/View/Label.php, plain_asset_tag content is the escaped configured prefix concatenated with the asset tag, whereas hardware_id/default selects the internal asset route. The UI labels the hardware route as the default and offers the plain target separately. Thus the documented default is not the complete built-in QR capability boundary.",
+      "materiality": "The proposal uses the private destination as a fit distinction for one of its two principal workflow candidates in research specifically requiring investigation of the optional public crate-care QR. Omitting the released configurable external URL path can misdirect the reader toward excluding that integrated label path or adding a separate label-generation mechanism. This publicly answerable exception belongs in the product comparison even though selection, ownership, deployment, and validation legitimately remain open.",
+      "conditions_and_limits": "New Label Engine; selected template must support 2D output; QRCODE must be selected rather than none/null; use a supported plain target with an approved prefix and compatible tag grammar. The implementation HTML-escapes the prefix, so this is not proof of arbitrary URL/query compatibility. A prefix plus tag can form a public URL; a cooperative-owned endpoint, redirects, privacy, phones, and actual printed output remain NOT_RUN/UNKNOWN. Nothing here asserts an existing care page or requires selecting Snipe-IT. The final retains the public QR option overall; the finding concerns a material product-specific capability exception, not total scope erasure.",
+      "charitable_reading": "The statement is true for the default path described in the rolling docs. The final does not identify its private-page statement as only that default or disclose the released external-prefix exception, and the source conditions repeat the restricted account. This makes it a material incomplete comparison rather than merely a missing exhaustive catalogue entry.",
+      "primary_evidence_ids": [
+        "E-S11-ref",
+        "E-S11-ui",
+        "E-S11-language",
+        "E-S11-view",
+        "E-S11-controller",
+        "E-S11-settings-validation"
+      ],
+      "primary_locators": [
+        "v8.8.0 resources/views/partials/labels-new-engine.blade.php lines 118\u2013180: QRCODE choice, prefix control, hardware_id labeled default, plain targets",
+        "v8.8.0 resources/lang/en-US/admin/settings/general.php lines 518\u2013523: prefix help expressly permits external URL; content help distinguishes linked and non-linked values",
+        "v8.8.0 app/View/Label.php lines 126\u2013180: independent 1D tag content, template/type guards, prefix/plain_asset_tag branch, hardware route default",
+        "v8.8.0 SettingsController.php lines 611\u2013630: settings persisted; StoreLabelSettings.php line 52: nullable prefix max 191"
+      ],
+      "lineage": "Present in investigator discovery, carried into draft, endorsed as adequate by critic, and repeated in final. Not corrected in this pipeline.",
+      "axes": [
+        2,
+        3,
+        4
+      ],
+      "affected_plan_clauses": [
+        1,
+        3,
+        5
+      ],
+      "candidate_feedback": "None. Review diagnostic only; candidate files unchanged."
+    },
+    {
+      "id": "L1",
+      "severity": "NONMATERIAL",
+      "classification": "unsupported exact output characterization",
+      "title": "QR Code Text/title migration is described as missing QR symbol output",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/reviser/final.md",
+        "line": 89,
+        "needle": "risking blank QR output"
+      },
+      "finding": "Issue #19515 is a v8.7.1 reporter account about a hidden legacy QR Code Text/title field. Its phrase about nothing being printed does not identify QR symbol suppression. PR #19633 copies qr_text into label2_title on the disabled-to-enabled engine transition. Released rendering prepares title separately from barcode2d and writes the 2D code independently of whether title is present. The stage maps and final therefore overstate the reported problem as no/blank QR output.",
+      "materiality_reason": "The concrete title/configuration migration, merge and release inclusion are genuine, the final names the correct fields, and the recommendation to inspect saved settings and decoded output remains sensible. Neither selected-reader compatibility nor a product rejection is based on title absence. This historical output wording does not add a second material decision defect.",
+      "primary_evidence_ids": [
+        "E-S05-api",
+        "E-S06-api",
+        "E-S06-files",
+        "E-S10-view",
+        "E-S10-default",
+        "E-S11-view",
+        "E-S11-default"
+      ],
+      "locators": [
+        "Issue body What happened; PR body",
+        "v8.7.1 and v8.8.0 app/View/Label.php lines 100\u2013103 versus 136\u2013180",
+        "DefaultLabel.php write(): barcode2d and title separate branches"
+      ],
+      "lineage": "Discovery \u2192 draft \u2192 critique summaries \u2192 final; remains unqualified. The accurate transition and fields are also preserved."
+    },
+    {
+      "id": "L2",
+      "severity": "NONMATERIAL",
+      "classification": "metadata/attribution",
+      "title": "Critic map retains investigator stage header",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/critic/source-map.json",
+        "line": 3,
+        "needle": "\"stage\": \"investigator\""
+      },
+      "finding": "The critic source map top-level stage and stage_assignment still identify investigator. The critic_review object, C01\u2013C12 namespace, own file path and own index correctly identify the critic. This is a real attribution defect but does not rebind source IDs or change the science.",
+      "primary_evidence_ids": [],
+      "lineage": "Critic map; explicit provenance in critic_review and reviser map reduces ambiguity, without changing original bytes."
+    }
+  ],
+  "all_original_freeze_matches": true,
+  "missing_authored_sources": "No additional authored source evidence files beyond the three source indexes/maps were present in assigned source roots. Separate candidate dispositions/check files absent; complete dispositions and validation are embedded in final.md. No required ordinary final missing.",
+  "reviewer_receipts": {
+    "precompletion": "evidence/reviewer-goal-precompletion.json",
+    "completion": "evidence/reviewer-goal-completion.json",
+    "verification_before_completion": "evidence/verification-before-completion.json",
+    "scope": "Own actual native tool evidence; separate from candidate source judgment. Completion receipt added only after the full judgment and this verification are saved."
+  }
+}

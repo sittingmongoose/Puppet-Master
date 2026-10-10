@@ -1,0 +1,164 @@
+{
+  "sources": [
+    {
+      "relative_path": "sources/helpers/er12-screen-v1/prepare.py",
+      "sha256": "3af25138aa7fc20123c238e8485df3210d9a4f3f2bf6419a256d73a1c4176fdc",
+      "bytes": 23592,
+      "source_logical_path": "helpers/er12-screen-v1/prepare.py",
+      "actual_current_sha256": "bb38b943536f5039018da2616afce260a88baf9aafa8412a1590180420f047da",
+      "normalization": [
+        "runtime path -> ER12_RUNTIME",
+        "route -> AUTHORIZED_PROVIDER_INSTANCE"
+      ],
+      "published_reference_sha256": "3af25138aa7fc20123c238e8485df3210d9a4f3f2bf6419a256d73a1c4176fdc",
+      "original_byte_equivalence_claimed": false
+    },
+    {
+      "relative_path": "sources/helpers/er12-screen-v1/reveal.py",
+      "sha256": "ec9579204af96aa6a45caba1eef94c6ca1a799c296a2363b179af359bd908abe",
+      "bytes": 2880,
+      "source_logical_path": "helpers/er12-screen-v1/reveal.py",
+      "actual_current_sha256": "ec9579204af96aa6a45caba1eef94c6ca1a799c296a2363b179af359bd908abe",
+      "normalization": [
+        "runtime path -> ER12_RUNTIME",
+        "route -> AUTHORIZED_PROVIDER_INSTANCE"
+      ],
+      "published_reference_sha256": "ec9579204af96aa6a45caba1eef94c6ca1a799c296a2363b179af359bd908abe",
+      "original_byte_equivalence_claimed": false
+    },
+    {
+      "relative_path": "sources/helpers/er12-screen-v1/bootstrap.js",
+      "sha256": "67b8667f5f7d09b854541f95c8453b977f3514a4243d679fdb24a26335fa4c56",
+      "bytes": 4352,
+      "source_logical_path": "helpers/er12-screen-v1/bootstrap.js",
+      "actual_current_sha256": "42d76b4a90d073e64fa25b730fe78a1810e25224c8acc1089f85e6c6786f3056",
+      "normalization": [
+        "runtime path -> ER12_RUNTIME",
+        "route -> AUTHORIZED_PROVIDER_INSTANCE"
+      ],
+      "published_reference_sha256": "67b8667f5f7d09b854541f95c8453b977f3514a4243d679fdb24a26335fa4c56",
+      "original_byte_equivalence_claimed": false
+    },
+    {
+      "relative_path": "sources/mechanics/native-root-code-mode/standardSpecJS.js",
+      "sha256": "02821bc77b08aae08c50203213e88556da8ab50401dc675c1425e0abbe503b92",
+      "bytes": 2503,
+      "source_logical_path": "mechanics/native-root-code-mode/standardSpecJS.js",
+      "actual_current_sha256": "803f679454dd062b9d11ec54c7adf04172b0c5330bc949ca115161672315fac6",
+      "normalization": [
+        "runtime path -> ER12_RUNTIME",
+        "route -> AUTHORIZED_PROVIDER_INSTANCE"
+      ],
+      "published_reference_sha256": "02821bc77b08aae08c50203213e88556da8ab50401dc675c1425e0abbe503b92",
+      "original_byte_equivalence_claimed": false
+    },
+    {
+      "relative_path": "sources/mechanics/native-root-code-mode/clarifySpecJS.js",
+      "sha256": "bb25e8ec79588d59aad269b9adff256ed9ea0bf7e4c28080245a2a45ea74556a",
+      "bytes": 380,
+      "source_logical_path": "mechanics/native-root-code-mode/clarifySpecJS.js",
+      "actual_current_sha256": "9bf15a8f4835128f27ceedd63d7267e0c99cd8f3cccf5c2da8f6600589d41588",
+      "normalization": [
+        "runtime path -> ER12_RUNTIME",
+        "route -> AUTHORIZED_PROVIDER_INSTANCE"
+      ],
+      "published_reference_sha256": null,
+      "original_byte_equivalence_claimed": false
+    },
+    {
+      "relative_path": "sources/mechanics/invocation-clarification-v1/transform.py",
+      "sha256": "3eeb571945b1ad45f38e3116c98fb5724c0fc5a2bd023fc5b66a807a11a93be8",
+      "bytes": 7821,
+      "source_logical_path": "mechanics/invocation-clarification-v1/transform.py",
+      "actual_current_sha256": "40d7052fffa5e8830c8c738c751755a0bfb25a63fa68ee4f2518a30dc1716594",
+      "normalization": [
+        "runtime path -> ER12_RUNTIME",
+        "route -> AUTHORIZED_PROVIDER_INSTANCE"
+      ],
+      "published_reference_sha256": null,
+      "original_byte_equivalence_claimed": false
+    },
+    {
+      "relative_path": "sources/helpers/er12-composite-A1-A8-v1/prepare.py",
+      "source_logical_path": "helpers/er12-composite-A1-A8-v1/prepare.py",
+      "actual_current_sha256": "0041e88d4806ecedd66521f0b63e28e1e4c83128b686b98db6f4ac91f7d0a5e8",
+      "sha256": "0a58d80ff288253c9cbbce15ec03a25ab5f4dc0c4c6cdd42e7ef3faedb8f2deb",
+      "bytes": 4645,
+      "original_byte_equivalence_claimed": false
+    },
+    {
+      "relative_path": "sources/helpers/er12-composite-A1-A8-v1/COMPONENT_PINS.json",
+      "source_logical_path": "helpers/er12-composite-A1-A8-v1/COMPONENT_PINS.json",
+      "actual_current_sha256": "656eab890701f839b54bf969c4fc26f4f0fd482389eb8b53796be86090b75c58",
+      "sha256": "d60077e6451c1a15fc6dc56396b1ee2f361de7cfdc52b1bdce1294897d9c818e",
+      "bytes": 945,
+      "original_byte_equivalence_claimed": false
+    },
+    {
+      "relative_path": "sources/methods/A8/critic_prompt_delta.txt",
+      "source_logical_path": "methods/A8/critic_prompt_delta.txt",
+      "actual_current_sha256": "6ca210592ebaffd1228f390855af2dcbb7b338dcbb3e00c9fb57f0bdc8672c0d",
+      "sha256": "6ca210592ebaffd1228f390855af2dcbb7b338dcbb3e00c9fb57f0bdc8672c0d",
+      "bytes": 3398,
+      "original_byte_equivalence_claimed": false
+    },
+    {
+      "relative_path": "sources/methods/A8/reviser_prompt_delta.txt",
+      "source_logical_path": "methods/A8/reviser_prompt_delta.txt",
+      "actual_current_sha256": "31b0b79da9d1a99d81103a485448bbd2d518e5c48cd56b15a1a1a9cb9d11e087",
+      "sha256": "31b0b79da9d1a99d81103a485448bbd2d518e5c48cd56b15a1a1a9cb9d11e087",
+      "bytes": 1715,
+      "original_byte_equivalence_claimed": false
+    },
+    {
+      "relative_path": "sources/mechanics/exact-goal-binding-guard-v1/overlay.py",
+      "source_logical_path": "mechanics/exact-goal-binding-guard-v1/overlay.py",
+      "actual_current_sha256": "05c96bcda9ee1babe46e9dff17a454b5b1cc769df7c4c6fc479a454f574cf4ff",
+      "sha256": "05c96bcda9ee1babe46e9dff17a454b5b1cc769df7c4c6fc479a454f574cf4ff",
+      "bytes": 8570,
+      "original_byte_equivalence_claimed": false
+    },
+    {
+      "relative_path": "sources/mechanics/exact-goal-binding-guard-v1/assert-active-goal.py",
+      "source_logical_path": "mechanics/exact-goal-binding-guard-v1/assert-active-goal.py",
+      "actual_current_sha256": "4a61deec5eb0ca5eca149f0e1f30c55c3e90b5a6ad0557fc98946d340cae99ed",
+      "sha256": "4a61deec5eb0ca5eca149f0e1f30c55c3e90b5a6ad0557fc98946d340cae99ed",
+      "bytes": 3151,
+      "original_byte_equivalence_claimed": false
+    },
+    {
+      "relative_path": "sources/mechanics/native-root-code-mode/exactSpecJS.js",
+      "source_logical_path": "mechanics/native-root-code-mode/exactSpecJS.js",
+      "actual_current_sha256": "9e0ed39aaea03047d71d47bf8bbc268bb54e10071aab1fa7e8d9051a4219f178",
+      "sha256": "127a1b34c143125583abf26b5cd3f4c139d0b2fd71470d9a65036b56fa63f03c",
+      "bytes": 376,
+      "original_byte_equivalence_claimed": false
+    },
+    {
+      "relative_path": "sources/mechanics/invocation-clarification-v1/helper-pins.json",
+      "source_logical_path": "mechanics/invocation-clarification-v1/helper-pins.json",
+      "actual_current_sha256": "c19221a12bf46b6b5e59d16d5cbfc464dbdc16ac3855dc945c3f4e94c54f0cd5",
+      "sha256": "f3f3bda6151468f2a4a1362a51dc21a5d5593ab50a8705986a043594f2bc00c6",
+      "bytes": 242,
+      "original_byte_equivalence_claimed": false
+    }
+  ],
+  "scope": [
+    "R0",
+    "A1",
+    "A1+A8"
+  ],
+  "prior_materializer_sha256": "7850bb8c7dce9dfef5c8bd09daacf378aaf4c3c94b21cf79dc131107c6abf0b8",
+  "selection": {
+    "recipe_id": "C-R2-A1-A8-standard-binding-v1",
+    "lock_sha256": "1f8e8ebcd74d79d7ed76b04c8be3fb472338012336138cf5ec360d0ff15d3fb0",
+    "prospectively_frozen": true,
+    "science_qualification": "actual C/D outputs only"
+  },
+  "explicit_public_amendments": [
+    "normalize runtime and authorized route placeholders",
+    "prune unreachable role/topology clarification branches for finite three-stage closure",
+    "apply exactSpec to all three public recipe choices",
+    "repin public composite/clarification companions to normalized public bytes"
+  ]
+}

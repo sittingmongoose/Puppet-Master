@@ -1,0 +1,37 @@
+{
+  "schema": "er12.public-native-lifecycle.v1",
+  "target": null,
+  "original_capture_sha256": "13e18bde053f63ef1e5399d91c8640149143d535910b9a9c6657ec3e465ece00",
+  "private_archive_lineage": "publication-cohort4/private/originals/mechanics/native-thin-timing-completion-v1/host/027.raw.json",
+  "observations": [],
+  "actual_lifecycle_metadata": [
+    {
+      "thread": {
+        "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-01-control-reviser-v1",
+        "status": "completed",
+        "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-01-control-reviser-v1:ordinal:1",
+        "activeRunId": null,
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "pendingRequestCount": 0,
+        "createdAt": "2026-10-10T05:24:44.488Z",
+        "updatedAt": "2026-10-10T05:35:45.858Z"
+      }
+    },
+    {
+      "thread": {
+        "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-01-control-reviser-v1",
+        "status": "completed",
+        "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-01-control-reviser-v1:ordinal:1",
+        "activeRunId": null,
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "pendingRequestCount": 0,
+        "createdAt": "2026-10-10T05:24:44.488Z",
+        "updatedAt": "2026-10-10T05:35:45.858Z"
+      }
+    }
+  ],
+  "omission": "Full thread messages/activity bodies, raw meters and source captures private; independently captured focused native Goal receipts remain separately published. No new host read or inference.",
+  "source_body_coverage": "UNKNOWN"
+}

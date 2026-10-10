@@ -1,0 +1,74 @@
+{
+  "checked_utc": "2026-10-10T05:29:00.663260+00:00",
+  "checks": [
+    "All assessment JSON files parse",
+    "All 18 inspected input/science/receipt hashes unchanged since inspection",
+    "All saved independent HTML/text digests match evidence map",
+    "Six axes, six original obligations, six critique dispositions represented",
+    "PASS_WITH_LIMITATIONS with zero material findings and one minor citation limitation",
+    "Required assessment and source-map files present"
+  ],
+  "result": "PASS",
+  "files": [
+    {
+      "path": "ER12_RUNTIME/assessment/B-FINAL-M-02/control-v1/assessment.json",
+      "bytes": 41508,
+      "sha256": "08f5ad60d830c84f04f8aa1a0e4089a8af45bbeafaf375bf990f7721cb12fe1c"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-FINAL-M-02/control-v1/assessment.md",
+      "bytes": 13494,
+      "sha256": "54822e7082029cd84f0b9da561c734d3655680cb6f7122d2733284043ece78f5"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-FINAL-M-02/control-v1/inspected-hashes.json",
+      "bytes": 13482,
+      "sha256": "30de90b08d05ba7646e7c3bda8142e7247c3b5ae7a0ad44dfe3930a39e6dbfad"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-FINAL-M-02/control-v1/primary-evidence/index.md",
+      "bytes": 1390,
+      "sha256": "7531137e3b70731e29f4ecbff6b8fb90375072dc6defa153144baf2083ecab93"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-FINAL-M-02/control-v1/primary-evidence/pg17-insert.html",
+      "bytes": 45611,
+      "sha256": "f18feb692580770ae7a17537db2b922a44fc0119be4dc4ff38537502307e2cba"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-FINAL-M-02/control-v1/primary-evidence/pg17-insert.txt",
+      "bytes": 21453,
+      "sha256": "4c5a39a34b2282b734a2168c22c8d935125d5684a1c2eca518e14a0ab56ed31b"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-FINAL-M-02/control-v1/primary-evidence/pg17-transaction-isolation.html",
+      "bytes": 47624,
+      "sha256": "b4c2f29cc4284f5fd860da91737055431dd7e742861b22218b1369e8933e6034"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-FINAL-M-02/control-v1/primary-evidence/pg17-transaction-isolation.txt",
+      "bytes": 25691,
+      "sha256": "6ad699f0367912f60030085648ca271fe3d0d41d6d4424f12ed110238dd35bad"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-FINAL-M-02/control-v1/primary-evidence/retrieval.json",
+      "bytes": 3901,
+      "sha256": "dc05a466b8ef64987714836b942359234432b7baff637955292798452b5ab1d7"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-FINAL-M-02/control-v1/review-native-goal-activation.json",
+      "bytes": 1130,
+      "sha256": "c55c9ee77c915d39c2003efcb6315028c3698d8cab6b246015c79e7d2ceacb06"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-FINAL-M-02/control-v1/root-review-request.json",
+      "bytes": 2710,
+      "sha256": "b8b31d5f67a20d0d6abe26ec01c911e749ab14428526e0106b3540ecf877f9f2"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-FINAL-M-02/control-v1/source-map.json",
+      "bytes": 26078,
+      "sha256": "35516000a515587f928a2a2d27a53ef0861f0300bf2af232de5cec2273d36e4b"
+    }
+  ]
+}

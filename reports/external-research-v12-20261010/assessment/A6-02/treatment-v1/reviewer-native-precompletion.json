@@ -1,0 +1,18 @@
+{
+  "tool": "get_goal",
+  "captured_by": "independent reviewer",
+  "phase": "after complete judgment saved, before completion",
+  "result": {
+    "goal": {
+      "threadId": "01a1243d-8c39-7b72-bbf7-9774b53143e3",
+      "objective": "Independently assess exactly one completed ER12 pipeline: A6-02 treatment. Read the full assessment RUBRIC-v1.md, frozen A6-02 brief.md and plan.md, treatment terminal-science-freeze-root.json, every authored stage document and actual stage assignment/input-map/freeze/source-map, dispositions/checks and authored source evidence. Follow maps and report absent material. Assess all six rubric axes and each exact plan clause; independently retrieve governing primary evidence for consequential claims, recommendations and corrections. Distinguish corrected lineage defects from remaining final defects. Do not review other arms/results/history or ER11, delegate, repair candidates, alter accounts/frozen sources, or use Git/publication. Save complete assessment.md, assessment.json and independent navigable evidence/source map only under ER12_RUNTIME/assessment/A6-02/treatment-v1. Use a finite 45-minute review envelope including saving, report unassessed scope if capped, and complete the native Goal only after the full judgment is saved.",
+      "status": "active",
+      "tokensUsed": 207011,
+      "timeUsedSeconds": 632,
+      "createdAt": 1791609392,
+      "updatedAt": 1791610024
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  }
+}

@@ -1,0 +1,240 @@
+{
+  "purpose": "Identity and preservation only; not semantic proof",
+  "checks": [
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/critic/critique.md",
+      "expected_sha256": "6219daf67968cea57e5abbbd9c803ea0926ba9e3580876dccaf898230f232ba7",
+      "actual_sha256": "6219daf67968cea57e5abbbd9c803ea0926ba9e3580876dccaf898230f232ba7",
+      "expected_bytes": 8958,
+      "actual_bytes": 8958,
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/critic/source-map.json",
+      "expected_sha256": "7dab05b5298cff8f8df6d37f39ae87a1bd955e9274aef55378e815ca23175c93",
+      "actual_sha256": "7dab05b5298cff8f8df6d37f39ae87a1bd955e9274aef55378e815ca23175c93",
+      "expected_bytes": 14769,
+      "actual_bytes": 14769,
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/critic/sources/index.md",
+      "expected_sha256": "cf7746702571e5d52154383ff602d6fe2d3740607d1d6e222eeb398e9c92c930",
+      "actual_sha256": "cf7746702571e5d52154383ff602d6fe2d3740607d1d6e222eeb398e9c92c930",
+      "expected_bytes": 3397,
+      "actual_bytes": 3397,
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/investigator/discovery.md",
+      "expected_sha256": "9e0acbb6f84b87de75f673e5199df210fca6a04bb7a74e081636d40e9db76a5e",
+      "actual_sha256": "9e0acbb6f84b87de75f673e5199df210fca6a04bb7a74e081636d40e9db76a5e",
+      "expected_bytes": 13400,
+      "actual_bytes": 13400,
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/investigator/draft.md",
+      "expected_sha256": "680da18cc7736293a2b50fe9c462f63096406bd56128ca0ada75d43a463e6677",
+      "actual_sha256": "680da18cc7736293a2b50fe9c462f63096406bd56128ca0ada75d43a463e6677",
+      "expected_bytes": 20056,
+      "actual_bytes": 20056,
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/investigator/revealed-plan.md",
+      "expected_sha256": "3aa40898cb794241b1931c0460c765b43b0ce73a3fb630bf14d7a928381e1728",
+      "actual_sha256": "3aa40898cb794241b1931c0460c765b43b0ce73a3fb630bf14d7a928381e1728",
+      "expected_bytes": 6203,
+      "actual_bytes": 6203,
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/investigator/source-map.json",
+      "expected_sha256": "e8817007e485763b3b6a51aa90f9c5dc534cab14effa5f136bcf8f709da89397",
+      "actual_sha256": "e8817007e485763b3b6a51aa90f9c5dc534cab14effa5f136bcf8f709da89397",
+      "expected_bytes": 16141,
+      "actual_bytes": 16141,
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/investigator/sources/index.md",
+      "expected_sha256": "9648bce5924dda04183fe6b1328f29ddc981c2b9dbbdfc80dc63bb388cb1ca3b",
+      "actual_sha256": "9648bce5924dda04183fe6b1328f29ddc981c2b9dbbdfc80dc63bb388cb1ca3b",
+      "expected_bytes": 3275,
+      "actual_bytes": 3275,
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+      "expected_sha256": "59bafb53a834012095b00ad1b9e91e083cbc1f248d6e3a78ce05225fc6e6deef",
+      "actual_sha256": "59bafb53a834012095b00ad1b9e91e083cbc1f248d6e3a78ce05225fc6e6deef",
+      "expected_bytes": 27690,
+      "actual_bytes": 27690,
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/source-map.json",
+      "expected_sha256": "38d99f97a4964f78857a8c5beb9bbc66d7802bcbc69f0e37804a75a75c7c9d71",
+      "actual_sha256": "38d99f97a4964f78857a8c5beb9bbc66d7802bcbc69f0e37804a75a75c7c9d71",
+      "expected_bytes": 43190,
+      "actual_bytes": 43190,
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/sources/index.md",
+      "expected_sha256": "fec4e46f0aebaa3ca18442e9bd65e6064ba180804d64ddf00fa30f78afa94ca1",
+      "actual_sha256": "fec4e46f0aebaa3ca18442e9bd65e6064ba180804d64ddf00fa30f78afa94ca1",
+      "expected_bytes": 6767,
+      "actual_bytes": 6767,
+      "match": true
+    },
+    {
+      "freeze_stage": "investigator",
+      "path": "ER12_RUNTIME/runs/A8-02/control/inputs/brief.md",
+      "expected_sha256": "68b40302289f6e7851430ffaa3a7ec9d812fefed6cc644e7d9a9bc6ce8b85264",
+      "actual_sha256": "68b40302289f6e7851430ffaa3a7ec9d812fefed6cc644e7d9a9bc6ce8b85264",
+      "match": true
+    },
+    {
+      "freeze_stage": "investigator",
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/investigator/assignment.md",
+      "expected_sha256": "3a62f6250b045d4eeb786fcd3a7ec38237c03e19eaade53bf29154bb201a736c",
+      "actual_sha256": "3a62f6250b045d4eeb786fcd3a7ec38237c03e19eaade53bf29154bb201a736c",
+      "match": true
+    },
+    {
+      "freeze_stage": "investigator",
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/investigator/input-map.json",
+      "expected_sha256": "e401c6d532e76581717711484b7d64570cc20013c98b5e255a118f7c2665feff",
+      "actual_sha256": "e401c6d532e76581717711484b7d64570cc20013c98b5e255a118f7c2665feff",
+      "match": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/A8-02/control/inputs/brief.md",
+      "expected_sha256": "68b40302289f6e7851430ffaa3a7ec9d812fefed6cc644e7d9a9bc6ce8b85264",
+      "actual_sha256": "68b40302289f6e7851430ffaa3a7ec9d812fefed6cc644e7d9a9bc6ce8b85264",
+      "match": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/critic/assignment.md",
+      "expected_sha256": "2a4976a96a2ebc62de73e8dc9604ea96dfe94345913e90d5f183aef82c93269c",
+      "actual_sha256": "2a4976a96a2ebc62de73e8dc9604ea96dfe94345913e90d5f183aef82c93269c",
+      "match": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/critic/input-map.json",
+      "expected_sha256": "ba0cd5a5ad1ab8a31e818e6312f8fc9b0fe83965c90c83516b22aaa75ae7fa37",
+      "actual_sha256": "ba0cd5a5ad1ab8a31e818e6312f8fc9b0fe83965c90c83516b22aaa75ae7fa37",
+      "match": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/investigator/discovery.md",
+      "expected_sha256": "9e0acbb6f84b87de75f673e5199df210fca6a04bb7a74e081636d40e9db76a5e",
+      "actual_sha256": "9e0acbb6f84b87de75f673e5199df210fca6a04bb7a74e081636d40e9db76a5e",
+      "match": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/investigator/draft.md",
+      "expected_sha256": "680da18cc7736293a2b50fe9c462f63096406bd56128ca0ada75d43a463e6677",
+      "actual_sha256": "680da18cc7736293a2b50fe9c462f63096406bd56128ca0ada75d43a463e6677",
+      "match": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/investigator/source-map.json",
+      "expected_sha256": "e8817007e485763b3b6a51aa90f9c5dc534cab14effa5f136bcf8f709da89397",
+      "actual_sha256": "e8817007e485763b3b6a51aa90f9c5dc534cab14effa5f136bcf8f709da89397",
+      "match": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/investigator/revealed-plan.md",
+      "expected_sha256": "3aa40898cb794241b1931c0460c765b43b0ce73a3fb630bf14d7a928381e1728",
+      "actual_sha256": "3aa40898cb794241b1931c0460c765b43b0ce73a3fb630bf14d7a928381e1728",
+      "match": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/investigator/plan-reveal.json",
+      "expected_sha256": "f71086c88d63ce749293176745f812b1d429c03ab3bc2e849e3df452875e7c26",
+      "actual_sha256": "f71086c88d63ce749293176745f812b1d429c03ab3bc2e849e3df452875e7c26",
+      "match": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A8-02/control/inputs/brief.md",
+      "expected_sha256": "68b40302289f6e7851430ffaa3a7ec9d812fefed6cc644e7d9a9bc6ce8b85264",
+      "actual_sha256": "68b40302289f6e7851430ffaa3a7ec9d812fefed6cc644e7d9a9bc6ce8b85264",
+      "match": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/assignment.md",
+      "expected_sha256": "b06c6cbc88d87035fbeede251fe8ed89976dd88478b06784997a293e138437c5",
+      "actual_sha256": "b06c6cbc88d87035fbeede251fe8ed89976dd88478b06784997a293e138437c5",
+      "match": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/input-map.json",
+      "expected_sha256": "10f539382ef961cff49baa8b266da5c7ff7581c34f2f3ddfe7b1063e4e6f5990",
+      "actual_sha256": "10f539382ef961cff49baa8b266da5c7ff7581c34f2f3ddfe7b1063e4e6f5990",
+      "match": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/investigator/discovery.md",
+      "expected_sha256": "9e0acbb6f84b87de75f673e5199df210fca6a04bb7a74e081636d40e9db76a5e",
+      "actual_sha256": "9e0acbb6f84b87de75f673e5199df210fca6a04bb7a74e081636d40e9db76a5e",
+      "match": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/investigator/draft.md",
+      "expected_sha256": "680da18cc7736293a2b50fe9c462f63096406bd56128ca0ada75d43a463e6677",
+      "actual_sha256": "680da18cc7736293a2b50fe9c462f63096406bd56128ca0ada75d43a463e6677",
+      "match": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/investigator/source-map.json",
+      "expected_sha256": "e8817007e485763b3b6a51aa90f9c5dc534cab14effa5f136bcf8f709da89397",
+      "actual_sha256": "e8817007e485763b3b6a51aa90f9c5dc534cab14effa5f136bcf8f709da89397",
+      "match": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/investigator/revealed-plan.md",
+      "expected_sha256": "3aa40898cb794241b1931c0460c765b43b0ce73a3fb630bf14d7a928381e1728",
+      "actual_sha256": "3aa40898cb794241b1931c0460c765b43b0ce73a3fb630bf14d7a928381e1728",
+      "match": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/investigator/plan-reveal.json",
+      "expected_sha256": "f71086c88d63ce749293176745f812b1d429c03ab3bc2e849e3df452875e7c26",
+      "actual_sha256": "f71086c88d63ce749293176745f812b1d429c03ab3bc2e849e3df452875e7c26",
+      "match": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/critic/critique.md",
+      "expected_sha256": "6219daf67968cea57e5abbbd9c803ea0926ba9e3580876dccaf898230f232ba7",
+      "actual_sha256": "6219daf67968cea57e5abbbd9c803ea0926ba9e3580876dccaf898230f232ba7",
+      "match": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/critic/source-map.json",
+      "expected_sha256": "7dab05b5298cff8f8df6d37f39ae87a1bd955e9274aef55378e815ca23175c93",
+      "actual_sha256": "7dab05b5298cff8f8df6d37f39ae87a1bd955e9274aef55378e815ca23175c93",
+      "match": true
+    }
+  ]
+}

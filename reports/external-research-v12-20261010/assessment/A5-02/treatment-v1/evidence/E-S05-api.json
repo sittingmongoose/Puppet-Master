@@ -1,0 +1,99 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://api.github.com/repos/grokability/snipe-it/issues/19515"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A5-02/treatment-v1/source-map.json",
+      "source_id": "E-S05-api",
+      "existing_authored_summary_fields": {
+        "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+        "independently_verified_version_or_commit": "Snipe-IT issue #19515 reports v8.7.1, opened 2026-08-18",
+        "governing_condition_default_exception": "Reporter context is demo/engine transition; no proven QR symbol suppression (L1)",
+        "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A5-02/treatment-v1/evidence/retrieval-manifest.json",
+      "source_id": "E-S05-api",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context."
+    },
+    {
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S05-api.txt",
+          "line": 11,
+          "needle": "QR Code Text",
+          "other_match_lines": [
+            146
+          ]
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S05-api.txt",
+          "line": 146,
+          "needle": "v8.7.1",
+          "other_match_lines": []
+        }
+      ]
+    }
+  ],
+  "raw_sha256": "68d70b01ef75a5eada31310a621ae4f789d9ed28b3950aa0f326eb66fcf161a4",
+  "original_bytes": 8801,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A5-02/treatment-v1/evidence/E-S05-api.json",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://api.github.com/repos/grokability/snipe-it/issues/19515"
+  ],
+  "version": [
+    {
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "Snipe-IT issue #19515 reports v8.7.1, opened 2026-08-18",
+      "governing_condition_default_exception": "Reporter context is demo/engine transition; no proven QR symbol suppression (L1)",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation."
+    }
+  ],
+  "selector": [
+    {
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context."
+    },
+    {
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S05-api.txt",
+          "line": 11,
+          "needle": "QR Code Text",
+          "other_match_lines": [
+            146
+          ]
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S05-api.txt",
+          "line": 146,
+          "needle": "v8.7.1",
+          "other_match_lines": []
+        }
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "Snipe-IT issue #19515 reports v8.7.1, opened 2026-08-18",
+      "governing_condition_default_exception": "Reporter context is demo/engine transition; no proven QR symbol suppression (L1)",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation."
+    }
+  ],
+  "rawSHA256": "68d70b01ef75a5eada31310a621ae4f789d9ed28b3950aa0f326eb66fcf161a4"
+}

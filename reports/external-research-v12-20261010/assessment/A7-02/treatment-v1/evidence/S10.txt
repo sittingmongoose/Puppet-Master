@@ -1,0 +1,95 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://paperpile.com/h/export-library-data/"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A7-02/treatment-v1/source-map.json",
+      "source_id": "S10",
+      "existing_authored_summary_fields": {
+        "independently_observed_version": "Help updated 2026-03-12",
+        "reviewer_observation": "BibTeX/RIS/CSV/JSON are offered; internal JSON cannot currently be reimported. Library-data export excludes PDF bytes.",
+        "condition_default_exception_domain": "Separate PDF download/Drive paths exist. JSON can contain attachment metadata even though it excludes PDF bytes. Final proposes metadata/link-only RIS/BibTeX, not JSON archival fidelity."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A7-02/treatment-v1/source-map.json",
+      "source_id": "S10",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/A7-02/treatment-v1/evidence/retrievals.json",
+      "source_id": "S10",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": "Choose export format; Are PDFs exported?"
+    },
+    {
+      "local_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S10.txt",
+          "first_line": 9,
+          "last_line": 45
+        }
+      ]
+    },
+    {
+      "text_lines": 52
+    },
+    {
+      "text_lines": 52
+    }
+  ],
+  "raw_sha256": "8d5ebe628febca514a54662ca7265276eaf5ffb68399c58460eabcc2d7f4663d",
+  "original_bytes": 3127,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A7-02/treatment-v1/evidence/S10.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://paperpile.com/h/export-library-data/"
+  ],
+  "version": [
+    {
+      "independently_observed_version": "Help updated 2026-03-12",
+      "reviewer_observation": "BibTeX/RIS/CSV/JSON are offered; internal JSON cannot currently be reimported. Library-data export excludes PDF bytes.",
+      "condition_default_exception_domain": "Separate PDF download/Drive paths exist. JSON can contain attachment metadata even though it excludes PDF bytes. Final proposes metadata/link-only RIS/BibTeX, not JSON archival fidelity."
+    }
+  ],
+  "selector": [
+    {
+      "locator": "Choose export format; Are PDFs exported?"
+    },
+    {
+      "local_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S10.txt",
+          "first_line": 9,
+          "last_line": 45
+        }
+      ]
+    },
+    {
+      "text_lines": 52
+    },
+    {
+      "text_lines": 52
+    }
+  ],
+  "conditions": [
+    {
+      "independently_observed_version": "Help updated 2026-03-12",
+      "reviewer_observation": "BibTeX/RIS/CSV/JSON are offered; internal JSON cannot currently be reimported. Library-data export excludes PDF bytes.",
+      "condition_default_exception_domain": "Separate PDF download/Drive paths exist. JSON can contain attachment metadata even though it excludes PDF bytes. Final proposes metadata/link-only RIS/BibTeX, not JSON archival fidelity."
+    }
+  ],
+  "rawSHA256": "8d5ebe628febca514a54662ca7265276eaf5ffb68399c58460eabcc2d7f4663d"
+}

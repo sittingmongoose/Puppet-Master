@@ -1,0 +1,50 @@
+{
+  "saved_before_native_completion_utc": "2026-10-10T06:02:54.220129+00:00",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "all_six_axes_assessed": true,
+  "unassessed_axes": [],
+  "original_source_freeze_unchanged": true,
+  "artifacts": [
+    {
+      "path": "assessment.md",
+      "bytes": 42649,
+      "sha256": "62afa6eb09d3d0210fc600c8ac1dd293571f4ba9b0469ba97d9c374a5b651b88"
+    },
+    {
+      "path": "assessment.json",
+      "bytes": 115828,
+      "sha256": "f9c8a68d43dd270c07837aa7de99131d3f5e4aaa10d700f391fcc57694423811"
+    },
+    {
+      "path": "source-map.json",
+      "bytes": 46164,
+      "sha256": "543b9d4f6ee02a7e83dc1878b469bace1c5ade35345b5423d53143067ec75b85"
+    },
+    {
+      "path": "plan-clause-assessment.json",
+      "bytes": 25443,
+      "sha256": "bc599db04ca1bbf16f55d8457af626fdf3c27b7bed151ac1a6b4741d32a8a1c9"
+    },
+    {
+      "path": "inspected-artifacts.json",
+      "bytes": 29024,
+      "sha256": "540a77db3fa03c10bae2f9025082bbacfe99d574a3e1f25a450f2c101e35f4c7"
+    },
+    {
+      "path": "verification.json",
+      "bytes": 953,
+      "sha256": "5df1cb4479d4e22c8a5bd096966bd6672601b66d4870beb270296cdf40507894"
+    },
+    {
+      "path": "evidence/index.md",
+      "bytes": 16397,
+      "sha256": "f6c7bebfe8b5b917217dd831482839c083eb1a20968ecbefa93090089353b9a5"
+    },
+    {
+      "path": "reviewer-native-goal-active.json",
+      "bytes": 1224,
+      "sha256": "4312b3f2280dbc3eb1bf02f3fdd82d6c8953ec6edf24dcbb9ee40b20972477ef"
+    }
+  ],
+  "note": "Identity and saved-delivery checks only; semantic judgment is in assessment.md/json. Native completion response is saved separately after this full-judgment save."
+}

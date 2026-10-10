@@ -1,0 +1,121 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://github.com/minio/minio/issues/21611"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A1-01/control-v1/source-map.json",
+      "source_id": "R07",
+      "existing_authored_summary_fields": {
+        "version": "Opened 2025-09-28; report names RELEASE.2025-09-07T16-13-09Z and Go service/s3 v1.73.0+; reproduction pins v1.73.0; archive banner 2026-04-25",
+        "subject_operation": "Reported HTTPS aws-chunked checksum-trailer request failure; reproduction calls PutObject",
+        "conditions": "Reporter describes >16 MiB failure; contributor separates streaming chunks from MPU parts and discusses buffering. Open issue is not release evidence. Workarounds in comments are reports, not independently qualified integrity-preserving recommendations.",
+        "applicability": "Specific historical MinIO/Go path; not a Rust UploadPart result or universal part-size rule. Development currently shows no PR; relationship to #21626 is independently supported by the PR's own issue reference."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A1-01/control-v1/evidence/retrieval-manifest.json",
+      "source_id": "R07",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": "Issue body/reproduction/environment, contributor comments, referenced commits, current status and Development"
+    },
+    {
+      "lines": [
+        [
+          96,
+          139
+        ],
+        [
+          154,
+          193
+        ],
+        [
+          201,
+          246
+        ],
+        [
+          269,
+          272
+        ]
+      ]
+    },
+    {
+      "text_lines": 287
+    },
+    {
+      "capture_locator": "R07.txt:96-139; R07.txt:154-193; R07.txt:201-246; R07.txt:269-272"
+    },
+    {
+      "text_lines": 287
+    }
+  ],
+  "raw_sha256": "880a9289535a974cab2e346367d504177453088c0db3c897533918b987ffc637",
+  "original_bytes": 392309,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A1-01/control-v1/evidence/R07.html",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://github.com/minio/minio/issues/21611"
+  ],
+  "version": [
+    {
+      "version": "Opened 2025-09-28; report names RELEASE.2025-09-07T16-13-09Z and Go service/s3 v1.73.0+; reproduction pins v1.73.0; archive banner 2026-04-25",
+      "subject_operation": "Reported HTTPS aws-chunked checksum-trailer request failure; reproduction calls PutObject",
+      "conditions": "Reporter describes >16 MiB failure; contributor separates streaming chunks from MPU parts and discusses buffering. Open issue is not release evidence. Workarounds in comments are reports, not independently qualified integrity-preserving recommendations.",
+      "applicability": "Specific historical MinIO/Go path; not a Rust UploadPart result or universal part-size rule. Development currently shows no PR; relationship to #21626 is independently supported by the PR's own issue reference."
+    }
+  ],
+  "selector": [
+    {
+      "locator": "Issue body/reproduction/environment, contributor comments, referenced commits, current status and Development"
+    },
+    {
+      "lines": [
+        [
+          96,
+          139
+        ],
+        [
+          154,
+          193
+        ],
+        [
+          201,
+          246
+        ],
+        [
+          269,
+          272
+        ]
+      ]
+    },
+    {
+      "text_lines": 287
+    },
+    {
+      "capture_locator": "R07.txt:96-139; R07.txt:154-193; R07.txt:201-246; R07.txt:269-272"
+    },
+    {
+      "text_lines": 287
+    }
+  ],
+  "conditions": [
+    {
+      "version": "Opened 2025-09-28; report names RELEASE.2025-09-07T16-13-09Z and Go service/s3 v1.73.0+; reproduction pins v1.73.0; archive banner 2026-04-25",
+      "subject_operation": "Reported HTTPS aws-chunked checksum-trailer request failure; reproduction calls PutObject",
+      "conditions": "Reporter describes >16 MiB failure; contributor separates streaming chunks from MPU parts and discusses buffering. Open issue is not release evidence. Workarounds in comments are reports, not independently qualified integrity-preserving recommendations.",
+      "applicability": "Specific historical MinIO/Go path; not a Rust UploadPart result or universal part-size rule. Development currently shows no PR; relationship to #21626 is independently supported by the PR's own issue reference."
+    }
+  ],
+  "rawSHA256": "880a9289535a974cab2e346367d504177453088c0db3c897533918b987ffc637"
+}

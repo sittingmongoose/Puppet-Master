@@ -1,0 +1,130 @@
+[
+  {
+    "id": "E-S10-label",
+    "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.7.1/app/Models/Labels/Label.php",
+    "status": 200,
+    "at_utc": "2026-10-10T05:43:39.745518+00:00",
+    "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S10-label.txt",
+    "sha256": "028cc5c356fb3dd4a8522074ab1240014f9707a6d5ea49f7e675e0b01aae99bf"
+  },
+  {
+    "id": "E-S10-default",
+    "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.7.1/app/Models/Labels/DefaultLabel.php",
+    "status": 200,
+    "at_utc": "2026-10-10T05:43:39.745937+00:00",
+    "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S10-default.txt",
+    "sha256": "01f4a66f43bbfccac472fb1e0e14c1fe1e45032ddc63956c018ffbda49cc6b15"
+  },
+  {
+    "id": "E-S10-controller",
+    "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.7.1/app/Http/Controllers/LabelsController.php",
+    "status": 200,
+    "at_utc": "2026-10-10T05:43:39.747622+00:00",
+    "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S10-controller.txt",
+    "sha256": "bc4362a942ba7d4e19f0674e4a213507c199b3f21204e8bd266d4bfb1aa2d0c8"
+  },
+  {
+    "id": "E-S11-controller",
+    "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/app/Http/Controllers/SettingsController.php",
+    "status": 200,
+    "at_utc": "2026-10-10T05:43:39.752860+00:00",
+    "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-controller.txt",
+    "sha256": "c13532096f6eb4253a54b977cd8b28037ae3f852b8050ef03f400defeee14fa9"
+  },
+  {
+    "id": "E-S11-default",
+    "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/app/Models/Labels/DefaultLabel.php",
+    "status": 200,
+    "at_utc": "2026-10-10T05:43:39.732933+00:00",
+    "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-default.txt",
+    "sha256": "9ce38f06ae35d7d010275a67c33d78847744db175f1c4d28b940de0d004404ec"
+  },
+  {
+    "id": "E-S10-view",
+    "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.7.1/app/View/Label.php",
+    "status": 200,
+    "at_utc": "2026-10-10T05:43:58.029211+00:00",
+    "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S10-view.txt",
+    "sha256": "302eec8071e8a1b68004988441e83e734f7e49cb688791cf17a58cf4aca6a22f"
+  },
+  {
+    "id": "E-S11-view",
+    "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/app/View/Label.php",
+    "status": 200,
+    "at_utc": "2026-10-10T05:44:34.498156+00:00",
+    "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-view.txt",
+    "sha256": "302eec8071e8a1b68004988441e83e734f7e49cb688791cf17a58cf4aca6a22f"
+  },
+  {
+    "id": "E-S11-ui",
+    "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/resources/views/partials/labels-new-engine.blade.php",
+    "status": 200,
+    "at_utc": "2026-10-10T05:44:34.524080+00:00",
+    "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-ui.txt",
+    "sha256": "2d8fda8ed58a66b47df15db8e3adfd6e043a36fa7a95ffa419cfa88a8e23c708"
+  },
+  {
+    "id": "E-S11-settings-validation",
+    "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/app/Http/Requests/StoreLabelSettings.php",
+    "status": 200,
+    "at_utc": "2026-10-10T05:44:34.524236+00:00",
+    "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-settings-validation.txt",
+    "sha256": "274f4f568c2c45aeb8d82c3dd15fb5bea39104c91d4802f99ff4f38d6c3c0add"
+  },
+  {
+    "id": "E-S11-prefix-history",
+    "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/database/migrations/2025_11_04_173713_add_2d_label_prefix.php",
+    "status": 200,
+    "at_utc": "2026-10-10T05:44:34.530553+00:00",
+    "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-prefix-history.txt",
+    "sha256": "086a901c1bfe84854cbaad7ae4f2a7fa4435cda7e16c3b34630ddf98a0d7cd64"
+  },
+  {
+    "id": "E-S11-language",
+    "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/resources/lang/en-US/admin/settings/general.php",
+    "status": 200,
+    "at_utc": "2026-10-10T05:45:20.820862+00:00",
+    "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-language.txt",
+    "sha256": "9a9f8f5c4d901feff5302b371042eebf076291c1fe06a8e2dc725a7f487d2ee9"
+  },
+  {
+    "id": "E-S11-ref",
+    "url": "https://api.github.com/repos/grokability/snipe-it/git/ref/tags/v8.8.0",
+    "status": 200,
+    "at_utc": "2026-10-10T05:45:20.832768+00:00",
+    "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-ref.txt",
+    "sha256": "ba049a3a24863e215552b037eb38929665b04825a25bfb4ee0ad1a1c18bd6361"
+  },
+  {
+    "id": "E-Z02-ref",
+    "url": "https://api.github.com/repos/zxing/zxing/git/ref/tags/zxing-3.5.3",
+    "status": 200,
+    "at_utc": "2026-10-10T05:45:20.841763+00:00",
+    "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z02-ref.txt",
+    "sha256": "c98db32865f6589264a92f975e8fa5c5fc99d2f44e797c129c8d4a3ce25f54a8"
+  },
+  {
+    "id": "E-Z04-ref",
+    "url": "https://api.github.com/repos/zxing/zxing/git/ref/tags/zxing-3.5.4",
+    "status": 200,
+    "at_utc": "2026-10-10T05:45:20.845082+00:00",
+    "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z04-ref.txt",
+    "sha256": "eeb7fcaab8a3a00a86cffc3a65fa8149f0594792e5322502171e0f0b448876b4"
+  },
+  {
+    "id": "E-Z02-ref-target",
+    "url": "https://api.github.com/repos/zxing/zxing/git/tags/2d608639c944a5b17363706fe5e9055bab0d6c2f",
+    "status": 200,
+    "at_utc": "2026-10-10T05:46:56.089326+00:00",
+    "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z02-ref-target.txt",
+    "sha256": "2a7a123b6aba4d9fc491743ae94ea124cef0477cd83c69165003dd67005f0fae"
+  },
+  {
+    "id": "E-Z04-ref-target",
+    "url": "https://api.github.com/repos/zxing/zxing/git/tags/3116a1970d66973475352d8161f2c42bf0a0ea7f",
+    "status": 200,
+    "at_utc": "2026-10-10T05:46:56.260747+00:00",
+    "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z04-ref-target.txt",
+    "sha256": "4ec554106e89eae35cb6a0175b3da4e3f34083f68414591cef5bb0ffb361214c"
+  }
+]

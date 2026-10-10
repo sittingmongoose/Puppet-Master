@@ -1,0 +1,84 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://tech.ebu.ch/docs/tech/tech3285.pdf"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A5-01/control-v1/source-map.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {
+        "version_or_commit": "Version 2.0, May 2011",
+        "governing_condition_default_exception": "Description, Originator and OriginatorReference are ASCII string fields of 256/32/32 characters, with NUL termination for shorter strings. This is a field-domain requirement distinct from selectable legacy-code-page support and successful reopening.",
+        "applicability": "Governing primary standard for F1, within obligation3 optional metadata conditions."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A5-01/control-v1/evidence/retrieval-records-additional.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A5-01/control-v1/evidence/E20.lines.txt"
+    },
+    {
+      "line_text_sha256": "7013fcbff4019a177a756a396fb7e1380ba31afedb29fa08240c16f06c07254b"
+    },
+    {
+      "semantic_locator": "Normative notation printed p.4; §2.3 printed pp.9–10; E20.lines.txt 71–96, 317–378"
+    },
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A5-01/control-v1/evidence/E20.lines.txt"
+    },
+    {
+      "line_text_sha256": "7013fcbff4019a177a756a396fb7e1380ba31afedb29fa08240c16f06c07254b"
+    }
+  ],
+  "raw_sha256": "60f59140c7dfa4c4b26a9c05914da98a69b47c07d24f07fb02ac2c4b11a7321c",
+  "original_bytes": 243500,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A5-01/control-v1/evidence/E20.pdf",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://tech.ebu.ch/docs/tech/tech3285.pdf"
+  ],
+  "version": [
+    {
+      "version_or_commit": "Version 2.0, May 2011",
+      "governing_condition_default_exception": "Description, Originator and OriginatorReference are ASCII string fields of 256/32/32 characters, with NUL termination for shorter strings. This is a field-domain requirement distinct from selectable legacy-code-page support and successful reopening.",
+      "applicability": "Governing primary standard for F1, within obligation3 optional metadata conditions."
+    }
+  ],
+  "selector": [
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A5-01/control-v1/evidence/E20.lines.txt"
+    },
+    {
+      "line_text_sha256": "7013fcbff4019a177a756a396fb7e1380ba31afedb29fa08240c16f06c07254b"
+    },
+    {
+      "semantic_locator": "Normative notation printed p.4; §2.3 printed pp.9–10; E20.lines.txt 71–96, 317–378"
+    },
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A5-01/control-v1/evidence/E20.lines.txt"
+    },
+    {
+      "line_text_sha256": "7013fcbff4019a177a756a396fb7e1380ba31afedb29fa08240c16f06c07254b"
+    }
+  ],
+  "conditions": [
+    {
+      "version_or_commit": "Version 2.0, May 2011",
+      "governing_condition_default_exception": "Description, Originator and OriginatorReference are ASCII string fields of 256/32/32 characters, with NUL termination for shorter strings. This is a field-domain requirement distinct from selectable legacy-code-page support and successful reopening.",
+      "applicability": "Governing primary standard for F1, within obligation3 optional metadata conditions."
+    }
+  ],
+  "rawSHA256": "60f59140c7dfa4c4b26a9c05914da98a69b47c07d24f07fb02ac2c4b11a7321c"
+}

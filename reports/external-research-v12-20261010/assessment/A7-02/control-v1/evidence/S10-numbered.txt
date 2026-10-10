@@ -1,0 +1,77 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://github.com/JabRef/jabref/releases/tag/v6.0-beta.1"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A7-02/control-v1/retrieval-manifest.json",
+      "source_id": "S10",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/A7-02/control-v1/source-map.json",
+      "source_id": "R10",
+      "existing_authored_summary_fields": {
+        "version_or_commit": "v6.0-beta.1, 3992b12; 2026-09-21T20:19:44Z; prerelease",
+        "governing_conditions_defaults_types_units_exceptions": "Release is beta/prerelease. Zotero Compatibility Mode is a preference for CSL citations emitted/read through LibreOffice, not general RIS fidelity.",
+        "applicability_judgment": "Conditional first testing and the alternative are reasonable. Chronology alone does not prove all alpha fixes survived; the final retains chosen-build validation."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A7-02/control-v1/source-map.json",
+      "source_id": "S10",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "lines": 458
+    },
+    {
+      "independent_locator": "Release heading/commit and compatibility change; numbered capture 111–131 and 161; HTML relative-time"
+    },
+    {
+      "lines": 458
+    }
+  ],
+  "raw_sha256": "5bf0b56ea6ee7778aafe12fc33b1ddac31e5860bd77d1e668a9e4738439e4176",
+  "original_bytes": 42199,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A7-02/control-v1/evidence/S10-numbered.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://github.com/JabRef/jabref/releases/tag/v6.0-beta.1"
+  ],
+  "version": [
+    {
+      "version_or_commit": "v6.0-beta.1, 3992b12; 2026-09-21T20:19:44Z; prerelease",
+      "governing_conditions_defaults_types_units_exceptions": "Release is beta/prerelease. Zotero Compatibility Mode is a preference for CSL citations emitted/read through LibreOffice, not general RIS fidelity.",
+      "applicability_judgment": "Conditional first testing and the alternative are reasonable. Chronology alone does not prove all alpha fixes survived; the final retains chosen-build validation."
+    }
+  ],
+  "selector": [
+    {
+      "lines": 458
+    },
+    {
+      "independent_locator": "Release heading/commit and compatibility change; numbered capture 111–131 and 161; HTML relative-time"
+    },
+    {
+      "lines": 458
+    }
+  ],
+  "conditions": [
+    {
+      "version_or_commit": "v6.0-beta.1, 3992b12; 2026-09-21T20:19:44Z; prerelease",
+      "governing_conditions_defaults_types_units_exceptions": "Release is beta/prerelease. Zotero Compatibility Mode is a preference for CSL citations emitted/read through LibreOffice, not general RIS fidelity.",
+      "applicability_judgment": "Conditional first testing and the alternative are reasonable. Chronology alone does not prove all alpha fixes survived; the final retains chosen-build validation."
+    }
+  ],
+  "rawSHA256": "5bf0b56ea6ee7778aafe12fc33b1ddac31e5860bd77d1e668a9e4738439e4176"
+}

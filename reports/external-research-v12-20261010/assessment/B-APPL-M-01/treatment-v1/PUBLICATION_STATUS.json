@@ -1,39 +1,9 @@
 {
   "slot": "B-APPL-M-01",
   "arm": "treatment",
-  "snapshot_task": {
-    "key": "er12-eval-B-APPL-M-01-treatment-v1",
-    "slot": "B-APPL-M-01",
-    "arm": "treatment",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-APPL-M-01-treatment-v1",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-APPL-M-01-treatment-v1",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-eval-B-APPL-M-01-treatment-v1:ordinal:1",
-    "status": "completed",
-    "hasPendingChildRuns": false,
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "gpt-6.1-sol",
-    "latestTerminalStatus": "completed",
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-eval-B-APPL-M-01-treatment-v1:ordinal:1"
-  },
   "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
   "source_judgment": "FAIL",
-  "included_files": [
-    "assessment/B-APPL-M-01/treatment-v1/assessment-artifact-hashes.json",
-    "assessment/B-APPL-M-01/treatment-v1/assessment.json",
-    "assessment/B-APPL-M-01/treatment-v1/assessment.md",
-    "assessment/B-APPL-M-01/treatment-v1/evidence/P1-wal.retrieval.json",
-    "assessment/B-APPL-M-01/treatment-v1/evidence/P2-checkpoint-v2.retrieval.json",
-    "assessment/B-APPL-M-01/treatment-v1/evidence/P3-uri.retrieval.json",
-    "assessment/B-APPL-M-01/treatment-v1/evidence/P4-useovernet.retrieval.json",
-    "assessment/B-APPL-M-01/treatment-v1/evidence/P5-checkpoint-modes.retrieval.json",
-    "assessment/B-APPL-M-01/treatment-v1/evidence/P6-release-3-51-3.retrieval.json",
-    "assessment/B-APPL-M-01/treatment-v1/evidence/candidate-terminal-science-freeze.json",
-    "assessment/B-APPL-M-01/treatment-v1/evidence/index.md",
-    "assessment/B-APPL-M-01/treatment-v1/evidence/retrieval-index.json",
-    "assessment/B-APPL-M-01/treatment-v1/evidence/terminal-freeze-comparison.json",
-    "assessment/B-APPL-M-01/treatment-v1/inspected-hashes.json",
-    "assessment/B-APPL-M-01/treatment-v1/reviewer-native-completion.json",
-    "assessment/B-APPL-M-01/treatment-v1/root-review-request.json",
-    "assessment/B-APPL-M-01/treatment-v1/source-map.json"
-  ]
+  "basis": "immutable cohort4 original-completed-judgment whitelist",
+  "source_grading": "original unmodified; no completion-derived grade",
+  "final_stage": "role"
 }

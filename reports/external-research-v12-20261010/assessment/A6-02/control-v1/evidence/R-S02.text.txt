@@ -1,0 +1,61 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://github.com/dpla/ingestion3/blob/698795ed19d8f1d8032f988e68123d39dd842413/docs/ingestion/README_NARA.md",
+    "https://raw.githubusercontent.com/dpla/ingestion3/698795ed19d8f1d8032f988e68123d39dd842413/docs/ingestion/README_NARA.md"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A6-02/control-v1/retrieval-manifest.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {
+        "candidate_version": "Same pinned commit as S01; document states last updated February 2026"
+      }
+    },
+    {
+      "authored_source_map": "assessment/A6-02/control-v1/source-map.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {
+        "version_applicability": "Same pinned commit as S01; document states last updated February 2026"
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "supported_locator": "README_NARA.md History L626-639; R-X01 L352-437; R-X02 L345-350"
+    }
+  ],
+  "raw_sha256": "87907e8734c9997587bcb9cf658cd9eb0f3d947de43079f125ff68afb91631d9",
+  "original_bytes": 23937,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A6-02/control-v1/evidence/R-S02.text.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://github.com/dpla/ingestion3/blob/698795ed19d8f1d8032f988e68123d39dd842413/docs/ingestion/README_NARA.md",
+    "https://raw.githubusercontent.com/dpla/ingestion3/698795ed19d8f1d8032f988e68123d39dd842413/docs/ingestion/README_NARA.md"
+  ],
+  "version": [
+    {
+      "candidate_version": "Same pinned commit as S01; document states last updated February 2026"
+    },
+    {
+      "version_applicability": "Same pinned commit as S01; document states last updated February 2026"
+    }
+  ],
+  "selector": [
+    {
+      "supported_locator": "README_NARA.md History L626-639; R-X01 L352-437; R-X02 L345-350"
+    }
+  ],
+  "conditions": [
+    {
+      "version_applicability": "Same pinned commit as S01; document states last updated February 2026"
+    }
+  ],
+  "rawSHA256": "87907e8734c9997587bcb9cf658cd9eb0f3d947de43079f125ff68afb91631d9"
+}

@@ -1,0 +1,17 @@
+{
+  "observed_after_saved_judgment": true,
+  "tool": "update_goal",
+  "actual_tool_response": {
+    "goal": {
+      "threadId": "01a12443-a4b9-7081-8f9f-29787950bec7",
+      "objective": "Independent bounded ER12 Track B semantic review for B-FINAL-M-02 treatment role. Read full rubric, role input-map/assignment/freeze and all mapped shared assignment/fixture/corpus, authored role deliverable/source-map/all sources; independently retrieve governing primary evidence; hash inspected science/input and check terminal-science-freeze-root.json. Assess only assigned role axes and exact obligations, preserve source/coverage/delivery/native/protocol/time separately, evidence-based UNKNOWN where needed. No delegation, candidate feedback/repair, accounts, Git/publication, other arms/history, roster/status labels, or ER11 rescore. Save complete assessment.md, assessment.json, source-map and navigable primary evidence solely under ER12_RUNTIME/assessment/B-FINAL-M-02/treatment-v1 within 25 minutes, then complete native Goal and report concise judgment and paths.",
+      "status": "complete",
+      "tokensUsed": 74039,
+      "timeUsedSeconds": 380,
+      "createdAt": 1791609795,
+      "updatedAt": 1791610175
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+  }
+}

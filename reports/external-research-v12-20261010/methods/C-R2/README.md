@@ -1,0 +1,3 @@
+# C-R2 prospective combined recipe
+
+Frozen before either fresh input. Combines the exact A1 budget contract and A8 source-condition witness, preserving full R0 scope and three fresh Luna contexts. Both comparator arms receive the same Standard routing and exact native binding guard. The treatment has a source-quality hypothesis; its component evidence does not establish20percent latency/resource savings and is not multiplied. Full bundle evidence must qualify any prospective replication claim. Original failures, incompatible tier strata, unknown billing/native provenance and the unselected bounded Muse alternative remain explicit in RECIPE_LOCK.json.

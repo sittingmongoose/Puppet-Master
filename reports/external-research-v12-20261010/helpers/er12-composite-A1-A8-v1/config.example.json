@@ -1,0 +1,54 @@
+{
+  "run_id": "PUBLIC_RUN_ID",
+  "runtime_root": "/absolute/public/runtime",
+  "brief_path": "/absolute/public/brief.md",
+  "plan_path": "/absolute/public/plan.md",
+  "whole_deadline_utc": "PUBLIC_ABSOLUTE_UTC_DEADLINE",
+  "provider": {
+    "providerInstanceId": "PUBLIC_PROVIDER_INSTANCE_ID",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    }
+  },
+  "stage_budgets_s": {
+    "investigator": 1800,
+    "critic": 720,
+    "reviser": 1080
+  },
+  "runtime_mode": "full-access",
+  "method_id": "A1",
+  "stage_prompt_deltas": {},
+  "dispatch_owner": "root",
+  "composite_guard": {
+    "recipe_id": "er12-composite-A1-A8-v1",
+    "components": {
+      "base_prepare": {
+        "path": "ER12_RUNTIME/helpers/er12-screen-v1/prepare.py",
+        "sha256": "bb38b943536f5039018da2616afce260a88baf9aafa8412a1590180420f047da",
+        "bytes": 23575
+      },
+      "base_reveal": {
+        "path": "ER12_RUNTIME/helpers/er12-screen-v1/reveal.py",
+        "sha256": "ec9579204af96aa6a45caba1eef94c6ca1a799c296a2363b179af359bd908abe",
+        "bytes": 2880
+      },
+      "base_bootstrap": {
+        "path": "ER12_RUNTIME/helpers/er12-screen-v1/bootstrap.js",
+        "sha256": "42d76b4a90d073e64fa25b730fe78a1810e25224c8acc1089f85e6c6786f3056",
+        "bytes": 4356
+      },
+      "critic_delta": {
+        "path": "ER12_RUNTIME/methods/A8/critic_prompt_delta.txt",
+        "sha256": "6ca210592ebaffd1228f390855af2dcbb7b338dcbb3e00c9fb57f0bdc8672c0d",
+        "bytes": 3398
+      },
+      "reviser_delta": {
+        "path": "ER12_RUNTIME/methods/A8/reviser_prompt_delta.txt",
+        "sha256": "31b0b79da9d1a99d81103a485448bbd2d518e5c48cd56b15a1a1a9cb9d11e087",
+        "bytes": 1715
+      }
+    }
+  }
+}

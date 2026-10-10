@@ -1,0 +1,18 @@
+{
+  "observed_at_utc": "2026-10-10 05:58:08 UTC",
+  "tool": "get_goal",
+  "actual_tool_response": {
+    "goal": {
+      "threadId": "01a12453-13fe-77c1-be45-a517180cd13b",
+      "objective": "Independently assess exactly one completed ER12 full pipeline: A5-02 treatment, within a finite 45-minute envelope including saving. Read the full rubric, original frozen brief and plan, terminal science freeze, authored stages and their complete source/assignment/input/freeze/handoff evidence. Inspect all six rubric axes and every exact plan clause; independently retrieve governing primary evidence for consequential recommendations, corrections and source conditions. Distinguish corrected lineage defects from remaining final defects. Do not inspect other arms/results/history or ER11, delegate, repair candidates, change accounts, use Git or publish. Save full assessment.md, assessment.json and navigable independent source-map/evidence only under ER12_RUNTIME/assessment/A5-02/treatment-v1. Preserve source freeze. Complete this Goal only after saving the full judgment and report result and paths.",
+      "status": "active",
+      "tokensUsed": 254535,
+      "timeUsedSeconds": 1086,
+      "createdAt": 1791610802,
+      "updatedAt": 1791611888
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "note": "Actual observed native response. Full source judgment had already been saved while Goal was active. These metrics are reported Goal occupancy and token fields, not billing or inference-time proof."
+}

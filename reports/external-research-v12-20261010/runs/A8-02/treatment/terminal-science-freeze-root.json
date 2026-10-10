@@ -1,0 +1,94 @@
+{
+  "observed_at_utc": "2026-10-10T05:32:31.035906+00:00",
+  "basis": "root observed terminal final T3 task/no pending; separate from native proof",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/critic/critique.md",
+      "bytes": 14836,
+      "sha256": "24655687c2aaf2bcd4c5957a4386e11f294d690ec55eb4944025f9a9a5eed69b",
+      "mtime_ns": 1791609736552594149
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/critic/source-map.json",
+      "bytes": 37659,
+      "sha256": "5f09fb6204bfa556d6a5fc959e7fc3ea4f4b90c8c3d5143c65d0d8dd05966589",
+      "mtime_ns": 1791609736553563792
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/critic/sources/index.md",
+      "bytes": 3898,
+      "sha256": "1cd51a54863f1ef6e34a0f7998d3c5f22a4c55ea198ae250a4956edd880062e1",
+      "mtime_ns": 1791609736554370352
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/investigator/discovery.md",
+      "bytes": 12358,
+      "sha256": "27497a817f9f4c18853f97d8006bc458a57354acbd90871149cbbf1cd4ff34c0",
+      "mtime_ns": 1791608522434974346
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/investigator/draft.md",
+      "bytes": 22034,
+      "sha256": "ed717cca8446002aeddf3ed60308719dcc9092bfb0549c117fc7e3bea7d362aa",
+      "mtime_ns": 1791609009026872313
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 6203,
+      "sha256": "3aa40898cb794241b1931c0460c765b43b0ce73a3fb630bf14d7a928381e1728",
+      "mtime_ns": 1791608527552197961
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/investigator/source-map.json",
+      "bytes": 23947,
+      "sha256": "98d5a401e023f14032b4f83045d3530a7778b5b76e9c6b42048614b84292b282",
+      "mtime_ns": 1791608612540374184
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/investigator/sources/index.md",
+      "bytes": 3898,
+      "sha256": "d5a8f3a22c7824ef4e5128f8388464531f8a964ffbb75af712e9df74e19dea9a",
+      "mtime_ns": 1791608612540374184
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+      "bytes": 34795,
+      "sha256": "665159e3beb71c21a489fdb03a1c7055c32df43d5afb18ef8b3def7ebe9616ef",
+      "mtime_ns": 1791610306243702432
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/source-map.json",
+      "bytes": 79218,
+      "sha256": "d1912f52e2b9e1d69642feacfc1e115ab15f1d83d6119d4e495515292e7ee862",
+      "mtime_ns": 1791610163232176036
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/sources/index.md",
+      "bytes": 5718,
+      "sha256": "0c9b7c1f6aaa79bb3f9cb1aef01a86ba556df6213e9679bf61e7804c82707250",
+      "mtime_ns": 1791610191705826033
+    }
+  ],
+  "final_stage_task": {
+    "slot": "A8-02",
+    "arm": "treatment",
+    "stage": "reviser",
+    "helper": "ER12_RUNTIME/helpers/er12-A8-v1",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A8-A8-02-treatment-reviser-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A8-A8-02-treatment-reviser-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A8-A8-02-treatment-reviser-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A8-A8-02-treatment-reviser-v1",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A8-A8-02-treatment-reviser-v1:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "Completed the A8-02 reviser stage. The single native Goal was activated with the exact objective and completed after the required outputs were saved.\n\n- [Complete proposal and plan/critique dispositions](<ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md>)\n- [Source map](<ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/source-map.json>) and [source index](<ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/sources/index.md>)\n- [Native Goal activation receipt](<ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/native-goal-activation.json>) and [completion receipt](<ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/native-goal-completion.json>)\n\nResearch was read-only; no product validation was run. Native Goal usage: 163,511 tokens and 7m 39s.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A8-A8-02-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:3ec61304-fa76-43aa-a38d-d1c5b345536c",
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "summary": "Completed the A8-02 reviser stage. The single native Goal was activated with the exact objective and completed after the required outputs were saved.\n\n- [Complete proposal and plan/critique dispositions](<ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md>)\n- [Source map](<ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/source-map.json>) and [source index](<ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/sources/index.md>)\n- [Native Goal activation receipt](<ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/native-goal-activation.json>) and [completion receipt](<ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/native-goal-completion.json>)\n\nResearch was read-only; no product validation was run. Native Goal usage: 163,511 tokens and 7m 39s.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A8-A8-02-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:3ec61304-fa76-43aa-a38d-d1c5b345536c",
+    "waitTimedOut": false
+  }
+}

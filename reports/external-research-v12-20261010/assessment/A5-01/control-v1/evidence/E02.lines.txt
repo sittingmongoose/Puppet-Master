@@ -1,0 +1,84 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://www.loc.gov/preservation/digital/formats/fdd/fdd000356.shtml"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A5-01/control-v1/source-map.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {
+        "version_or_commit": "fdd000356, last significant update 2024-04-23",
+        "governing_condition_default_exception": "BWF adds required bext; ordinary audio rendering and metadata display differ. Audio fidelity depends on contained encoding; ltxt can carry text but is not necessarily structured/tagged for screen readers. Older/larger format variants have applicability limits.",
+        "applicability": "Conditional BWF workflow, separate transcript, codec inspection."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A5-01/control-v1/evidence/retrieval-records.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A5-01/control-v1/evidence/E02.lines.txt"
+    },
+    {
+      "line_text_sha256": "4f179c453694c7da5a83c27a1481a7049485f3425130d2ae6c15e8f1a414bc54"
+    },
+    {
+      "semantic_locator": "E02.lines.txt 38–56, 132–140, 150–171"
+    },
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A5-01/control-v1/evidence/E02.lines.txt"
+    },
+    {
+      "line_text_sha256": "4f179c453694c7da5a83c27a1481a7049485f3425130d2ae6c15e8f1a414bc54"
+    }
+  ],
+  "raw_sha256": "4f179c453694c7da5a83c27a1481a7049485f3425130d2ae6c15e8f1a414bc54",
+  "original_bytes": 18844,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A5-01/control-v1/evidence/E02.lines.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://www.loc.gov/preservation/digital/formats/fdd/fdd000356.shtml"
+  ],
+  "version": [
+    {
+      "version_or_commit": "fdd000356, last significant update 2024-04-23",
+      "governing_condition_default_exception": "BWF adds required bext; ordinary audio rendering and metadata display differ. Audio fidelity depends on contained encoding; ltxt can carry text but is not necessarily structured/tagged for screen readers. Older/larger format variants have applicability limits.",
+      "applicability": "Conditional BWF workflow, separate transcript, codec inspection."
+    }
+  ],
+  "selector": [
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A5-01/control-v1/evidence/E02.lines.txt"
+    },
+    {
+      "line_text_sha256": "4f179c453694c7da5a83c27a1481a7049485f3425130d2ae6c15e8f1a414bc54"
+    },
+    {
+      "semantic_locator": "E02.lines.txt 38–56, 132–140, 150–171"
+    },
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A5-01/control-v1/evidence/E02.lines.txt"
+    },
+    {
+      "line_text_sha256": "4f179c453694c7da5a83c27a1481a7049485f3425130d2ae6c15e8f1a414bc54"
+    }
+  ],
+  "conditions": [
+    {
+      "version_or_commit": "fdd000356, last significant update 2024-04-23",
+      "governing_condition_default_exception": "BWF adds required bext; ordinary audio rendering and metadata display differ. Audio fidelity depends on contained encoding; ltxt can carry text but is not necessarily structured/tagged for screen readers. Older/larger format variants have applicability limits.",
+      "applicability": "Conditional BWF workflow, separate transcript, codec inspection."
+    }
+  ],
+  "rawSHA256": "4f179c453694c7da5a83c27a1481a7049485f3425130d2ae6c15e8f1a414bc54"
+}

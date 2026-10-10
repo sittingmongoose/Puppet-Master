@@ -1,0 +1,22 @@
+{
+  "run_id": "A3-02-treatment",
+  "initialized_at_utc": "2026-10-10T04:42:48.361Z",
+  "whole_deadline_utc": "2026-10-10T05:42:48.166Z",
+  "brief_sha256": "64d7c999cf74b0022f481d6e5412866fc4b9b63d05c1726ceef4658a0d8d712e",
+  "brief_bytes": 2869,
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    }
+  },
+  "runtime_mode_requested": "full-access",
+  "native_goal_status": "UNKNOWN until directly observed",
+  "method_id": "A3",
+  "stage_prompt_deltas": {
+    "critic": "Inside the existing critic/reviser budget, replace redundant rereading with a targeted challenge to recommendations that depend on “not supported,” “all,” “only,” “never,” or a supposedly unavoidable default. Inspect governing current/version-pinned documentation, adjacent exception sections, and relevant released history. Record source conflicts rather than assuming the newest-looking page wins. Keep normal full-scope review.",
+    "reviser": "Inside the existing critic/reviser budget, replace redundant rereading with a targeted challenge to recommendations that depend on “not supported,” “all,” “only,” “never,” or a supposedly unavoidable default. Inspect governing current/version-pinned documentation, adjacent exception sections, and relevant released history. Record source conflicts rather than assuming the newest-looking page wins. Keep normal full-scope review."
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "observed_at_utc": "2026-10-10T05:58:09.186994+00:00",
+  "basis": "root observed terminal final T3 task/no pending; separate from native proof",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/treatment/stages/critic/critique.md",
+      "bytes": 14813,
+      "sha256": "c8a792de80217f74a195699fd77a6f08d85805385df77f20f455a8cdf63da762",
+      "mtime_ns": 1791611095678560462
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/treatment/stages/critic/source-map.json",
+      "bytes": 21604,
+      "sha256": "4cd65579e1fb4eda4fe102face2704f520b883335a374781544d26b97262b913",
+      "mtime_ns": 1791610898519426411
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/treatment/stages/critic/sources/index.md",
+      "bytes": 5259,
+      "sha256": "d050f912dd487a4679ec3cf9dbbbc4b509045ba1f3ce4966830d6b5bc67d0e2d",
+      "mtime_ns": 1791610898535555142
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/treatment/stages/investigator/discovery.md",
+      "bytes": 14593,
+      "sha256": "64bc9f789b29346d29723bd17d01b7df2e08e5bf1ae2b760a174f22dfafb1adc",
+      "mtime_ns": 1791609365020067592
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/treatment/stages/investigator/draft.md",
+      "bytes": 37134,
+      "sha256": "2f69fd56cda5f101d041e891becfecc6c91f92ca5a2d849e239d9b706e839bd2",
+      "mtime_ns": 1791610056662579355
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 6794,
+      "sha256": "8e2247027ad8b2baa1338b77a5f4020d86ed2a926f102c618b802c618bd257c8",
+      "mtime_ns": 1791609378739203477
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/treatment/stages/investigator/source-map.json",
+      "bytes": 14018,
+      "sha256": "811751821eb3aec0ed6d8b9957d48b78e26e7b8a6d3dd02a54fd21e015b1d235",
+      "mtime_ns": 1791609874789412740
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/treatment/stages/investigator/sources/index.md",
+      "bytes": 11773,
+      "sha256": "fe0e7356d263953cbb312b0d9efaa9c5fd800a9be76042dbe32c841258427dad",
+      "mtime_ns": 1791609874789412740
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/treatment/stages/reviser/final.md",
+      "bytes": 31325,
+      "sha256": "1520ff67861de7fe57d88eea1109ed86d341658e0cca75e8fbe4aa2f7d11c153",
+      "mtime_ns": 1791611820125162735
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/treatment/stages/reviser/source-map.json",
+      "bytes": 28964,
+      "sha256": "dc092b5a27e12ecf3441efcad4e5aaa891066392503d553c36de7d06d39d22bd",
+      "mtime_ns": 1791611507090304683
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/treatment/stages/reviser/sources/index.md",
+      "bytes": 4202,
+      "sha256": "5d587bbdece76c0bb6c7ebe4978d82ebe3240bc601425aeece0297632f53f4ca",
+      "mtime_ns": 1791611485389113721
+    }
+  ],
+  "final_stage_task": {
+    "slot": "C-R1-02",
+    "arm": "treatment",
+    "stage": "reviser",
+    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-02-treatment-reviser-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-02-treatment-reviser-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-02-treatment-reviser-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-02-treatment-reviser-v1",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-02-treatment-reviser-v1:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "Completed the assigned reviser stage. [final.md](ER12_RUNTIME/runs/C-R1-02/treatment/stages/reviser/final.md) contains the full proposal and audits all 24 released-plan clauses. I accepted C1\u2019s metadata correction and retained all 12 source IDs in the [source map](ER12_RUNTIME/runs/C-R1-02/treatment/stages/reviser/source-map.json) and [source index](ER12_RUNTIME/runs/C-R1-02/treatment/stages/reviser/sources/index.md).\n\nThe one native Goal used the exact assigned objective and is complete. Its exact [activation response](ER12_RUNTIME/runs/C-R1-02/treatment/stages/reviser/native-goal-activation.json) and [completion response](ER12_RUNTIME/runs/C-R1-02/treatment/stages/reviser/native-goal-completion.json) are preserved. Reported usage: 154,742 tokens over 662 seconds (~11 minutes). Actual provider provenance and UTC-formatted native timestamps are recorded as UNKNOWN.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-02-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:5cab5a8d-b84c-4c69-93ec-c722bc203dc1",
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "summary": "Completed the assigned reviser stage. [final.md](ER12_RUNTIME/runs/C-R1-02/treatment/stages/reviser/final.md) contains the full proposal and audits all 24 released-plan clauses. I accepted C1\u2019s metadata correction and retained all 12 source IDs in the [source map](ER12_RUNTIME/runs/C-R1-02/treatment/stages/reviser/source-map.json) and [source index](ER12_RUNTIME/runs/C-R1-02/treatment/stages/reviser/sources/index.md).\n\nThe one native Goal used the exact assigned objective and is complete. Its exact [activation response](ER12_RUNTIME/runs/C-R1-02/treatment/stages/reviser/native-goal-activation.json) and [completion response](ER12_RUNTIME/runs/C-R1-02/treatment/stages/reviser/native-goal-completion.json) are preserved. Reported usage: 154,742 tokens over 662 seconds (~11 minutes). Actual provider provenance and UTC-formatted native timestamps are recorded as UNKNOWN.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-02-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:5cab5a8d-b84c-4c69-93ec-c722bc203dc1",
+    "waitTimedOut": false
+  }
+}

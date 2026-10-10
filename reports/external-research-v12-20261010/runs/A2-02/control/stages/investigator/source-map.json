@@ -1,0 +1,240 @@
+{
+  "run_id": "A2-02-control",
+  "stage": "investigator",
+  "discovery_basis": "the exact released brief only; no plan was accessed before this map and discovery were saved",
+  "accessed_at_utc": "2026-10-10T05:14:23Z",
+  "source_id_policy": "IDs S1–S21 are immutable within this stage artifact set; do not rebind an ID to another URL. Each entry records exact URL, version/commit or why no fixed release applies, locator, UTC access time, source-observed operation, condition/default/exception, and applicability.",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "IIIF Presentation API 3.0",
+      "url": "https://iiif.io/api/presentation/3.0/",
+      "version_or_commit": "3.0.0; latest stable shown",
+      "locator": "Canvas, Annotation Page, Annotation, API requests, Authentication",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Defines Manifest/Canvas identity, dimensions, referenced image/annotation resources, Canvas fragments, supplementing transcriptions, and authenticated resource flow.",
+      "governing_condition_default_exception": "Canvas ID should be HTTPS and persistent; referenced resources must be dereferenceable; clients process according to declared API/context and supported properties; viewer presentation details remain client dependent.",
+      "applicability": "Primary model for proposed v3 support, Canvas targets, page-level/rectangular notes, remote sources, and explicitly scoped version behavior."
+    },
+    {
+      "id": "S2",
+      "title": "IIIF Presentation API 2.1.1",
+      "url": "https://iiif.io/api/presentation/2.1/",
+      "version_or_commit": "2.1.1; previous version to 3.0.0",
+      "locator": "Canvas, @id/@type, images, otherContent, annotation lists",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Specifies v2 Canvas identifiers/dimensions, image links and external annotation-list links; distinguishes image pixels from Canvas coordinates.",
+      "governing_condition_default_exception": "Canvas has an HTTP(S) @id, integer width/height, labels; otherContent/AnnotationList is optional; clients require remote resources to be served and may encounter auth/CORS restrictions.",
+      "applicability": "Basis for accepting legacy collection manifests and mapping their AnnotationList/resource/on structures without rewriting source data."
+    },
+    {
+      "id": "S3",
+      "title": "IIIF Presentation API 3.0 Change Log",
+      "url": "https://iiif.io/api/presentation/3.0/change-log/",
+      "version_or_commit": "3.0.0 major release; change log dated with the spec",
+      "locator": "Sections 1.1.2, 1.2.1, 1.4.3, requirements changes",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Records adoption of W3C Web Annotation, renaming @id/@type to id/type, and replacing AnnotationList/Layer with AnnotationPage/AnnotationCollection.",
+      "governing_condition_default_exception": "This is a major-version migration with property/class differences; older v2 forms are not a v3 serialization contract.",
+      "applicability": "Supports version-aware import/export and an explicit compatibility risk for text, target, lists, and layers."
+    },
+    {
+      "id": "S4",
+      "title": "W3C Web Annotation Data Model",
+      "url": "https://www.w3.org/TR/annotation-model/",
+      "version_or_commit": "W3C Recommendation, 2017-02-23; Web Annotation Data Model 1.0",
+      "locator": "Textual Body, FragmentSelector, TextQuoteSelector, Specific Resources",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Defines embedded text bodies and target selectors; supports multiple selectors to improve later discovery.",
+      "governing_condition_default_exception": "TextualBody should carry value, language/format when relevant; FragmentSelector value follows a media-type fragment syntax; consumer support is not guaranteed for every selector.",
+      "applicability": "Supports structured transcription/comment bodies and interoperable selector serialization, while requiring viewer-specific verification."
+    },
+    {
+      "id": "S5",
+      "title": "W3C Media Fragments URI 1.0 (basic)",
+      "url": "https://www.w3.org/TR/media-frags/",
+      "version_or_commit": "W3C Recommendation, 2012-09-25; Media Fragments URI 1.0 basic",
+      "locator": "Section 4.2.2 Spatial Dimension",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Defines rectangular xywh fragments in pixels or integer percentages relative to source media.",
+      "governing_condition_default_exception": "Pixel is default; percent changes x/width relative to image width and y/height relative to image height; rectangles outside bounds are clipped or invalid per the stated cases.",
+      "applicability": "Supports region-address syntax and scaling discussion; use alongside stored Canvas dimensions and review because media-fragment support varies by client."
+    },
+    {
+      "id": "S6",
+      "title": "IIIF Image API 3.0",
+      "url": "https://iiif.io/api/image/3.0/",
+      "version_or_commit": "3.0.0 stable specification",
+      "locator": "Identifier, region, Image Information, CORS, server responses and authentication",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Defines remote image service identifiers, region requests including pct coordinates, advertised features, CORS recommendation and HTTP errors/authentication boundaries.",
+      "governing_condition_default_exception": "Capabilities depend on the service profile and image-information document; CORS is recommended; auth and access control remain external; 401/403/404/503 have distinct meanings.",
+      "applicability": "Supports preflight checks for remote image availability and warns that annotation syntax cannot make restricted/unavailable images usable."
+    },
+    {
+      "id": "S7",
+      "title": "Image and Canvas with Differing Dimensions",
+      "url": "https://iiif.io/api/cookbook/recipe/0004-canvas-size/",
+      "version_or_commit": "IIIF Presentation 3.0 cookbook recipe; page accessed at the recorded UTC",
+      "locator": "Implementation notes and restrictions",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Demonstrates a Canvas coordinate space larger than the current image so annotations align after image replacement with different pixel dimensions.",
+      "governing_condition_default_exception": "Source and Canvas aspect ratios must remain consistent; the recipe’s scale pattern does not address changed crops or content.",
+      "applicability": "Directly applicable to pilot pages with different image sizes; supports separating durable coordinates from delivered pixels."
+    },
+    {
+      "id": "S8",
+      "title": "Simplest Annotation — full Canvas",
+      "url": "https://iiif.io/api/cookbook/recipe/0266-full-canvas-annotation/",
+      "version_or_commit": "IIIF Presentation 3.0 cookbook recipe; page accessed at the recorded UTC",
+      "locator": "Restrictions and example",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Demonstrates a text annotation targeting a whole Canvas and warns viewers may omit a visual indicator for a whole-Canvas target.",
+      "governing_condition_default_exception": "A whole-page annotation can be valid without a selector but visible markers may vary; a full-area selector may be more widely supported.",
+      "applicability": "Supports testing whole-page note discovery in each pinned viewer."
+    },
+    {
+      "id": "S9",
+      "title": "Transcripts, Captions, and Subtitles — General Considerations",
+      "url": "https://iiif.io/api/cookbook/recipe/0231-transcript-meta-recipe/",
+      "version_or_commit": "IIIF Presentation 3.0 cookbook recipe; page accessed at the recorded UTC",
+      "locator": "Transcript options 1–3",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Describes download through rendering, one supplementing annotation alongside a resource, and synchronized spatial/temporal fragments.",
+      "governing_condition_default_exception": "The mechanism depends on intended user experience; a rendering link is a presentation pointer, not an implemented download UI.",
+      "applicability": "Evidence for retaining the optional text-only bundle as a separate product choice; does not establish that a viewer already provides the bundle."
+    },
+    {
+      "id": "S10",
+      "title": "IIIF Cookbook Viewer Matrix",
+      "url": "https://iiif.io/api/cookbook/recipe/matrix/",
+      "version_or_commit": "Generated current matrix, accessed at the recorded UTC; no fixed release",
+      "locator": "Annotation Recipes, including Simple Annotation — Tagging",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "For that recipe the matrix marks Mirador Yes and UV No; it gives per-recipe rather than blanket capability.",
+      "governing_condition_default_exception": "Matrix is generated from current cookbook recipes and is subject to correction; Yes/No is limited to that recipe/version and not a full product test.",
+      "applicability": "Evidence against promising identical annotation behavior in both viewers; informs a recipe-specific pilot matrix."
+    },
+    {
+      "id": "S11",
+      "title": "IIIF Viewers",
+      "url": "https://iiif.io/get-started/iiif-viewers/",
+      "version_or_commit": "IIIF project viewer overview, accessed at the recorded UTC",
+      "locator": "Universal Viewer and Mirador feature descriptions",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Describes Universal Viewer as embeddable and broad across IIIF images/audio/video and 3D/PDF; describes Mirador as multi-up and image-comparison capable.",
+      "governing_condition_default_exception": "High-level feature description; it does not establish local integration, authoring, storage, or all annotation features.",
+      "applicability": "Supports a bounded product comparison by pilot priority, not a claim that either viewer is the full product."
+    },
+    {
+      "id": "S12",
+      "title": "Announcing Mirador 4.0",
+      "url": "https://github.com/ProjectMirador/mirador/discussions/4200",
+      "version_or_commit": "Mirador 4.0 announced 2025-10-30",
+      "locator": "Upgrade and plugin-support sections",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Describes React/MUI changes and required plugin/integration/theme updates; calls out community Mirador 4 annotation plugins separately.",
+      "governing_condition_default_exception": "Version 4 is a breaking upgrade; plugin availability/compatibility depends on selected plugin and integration.",
+      "applicability": "Supports pinning viewer/plugin versions and treating annotation authoring as a separate integration decision."
+    },
+    {
+      "id": "S13",
+      "title": "mirador-annotations README",
+      "url": "https://github.com/ProjectMirador/mirador-annotations",
+      "version_or_commit": "Repository master README viewed 2026-10-10; no release/tag pinned in this source",
+      "locator": "About, Persisting Annotations, Installing",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Provides rectangle/oval/polygon/text-descriptor tools; local-storage demo; states plugin is Mirador 3-only and does not work with Mirador 4; persistent storage requires an annotation server.",
+      "governing_condition_default_exception": "Moving branch with no release/version identified on repository page; persistence is not provided by localStorage after browser state loss; server adapters are separately configured.",
+      "applicability": "Distinguishes Mirador plugin capability from core viewer and proves why v4 authoring support must be selected/tested."
+    },
+    {
+      "id": "S14",
+      "title": "Mirador issue #4198 — notification dot missing in M4",
+      "url": "https://github.com/ProjectMirador/mirador/issues/4198",
+      "version_or_commit": "Opened 2025-10-29; closed; issue status shown Done",
+      "locator": "Issue description and screenshots",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Records annotation/layer badge visible in M3 but absent in M4 demo and an institutional deployment.",
+      "governing_condition_default_exception": "The reported failure concerns discovery badges for canvases with annotations/layers; issue status says closed, not itself proof of release inclusion.",
+      "applicability": "Concrete regression affecting the act of finding notes during the pilot."
+    },
+    {
+      "id": "S15",
+      "title": "Mirador PR #4201 — fix #4198",
+      "url": "https://github.com/ProjectMirador/mirador/pull/4201",
+      "version_or_commit": "Merged 2025-12-04; commit 056262a",
+      "locator": "PR title, merge, commit",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Merged a change to provide the required notification-palette tokens for the annotation/layer/search badge.",
+      "governing_condition_default_exception": "A merged fix is distinct from release availability; verify chosen released viewer contains it.",
+      "applicability": "Links issue history to released viewer testing and a direct regression check."
+    },
+    {
+      "id": "S16",
+      "title": "Mirador v4.2.4 release",
+      "url": "https://github.com/ProjectMirador/mirador/releases/tag/v4.2.4",
+      "version_or_commit": "v4.2.4, commit 73fafe9; released 2026-09-02 per release page",
+      "locator": "Release metadata and changed list; includes PR #4201 fix",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Identifies an immutable viewer version/commit and the issue-fix release line.",
+      "governing_condition_default_exception": "The repo page shows later commits on main after this tag; pinning the release is a reproducible baseline, not a claim that no newer release exists.",
+      "applicability": "Candidate reproducible Mirador build for a pilot if tested; acceptance should verify page badges and authoring plugin separately."
+    },
+    {
+      "id": "S17",
+      "title": "Universal Viewer release history",
+      "url": "https://github.com/UniversalViewer/universalviewer/releases",
+      "version_or_commit": "v4.4.4 commit 2b92ff6 latest release shown; v4.4.3 and v4.4.1 explicitly DO NOT USE",
+      "locator": "Release list and release metadata",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Lists the latest release in the retrieved page and two releases marked unusable due to merge errors.",
+      "governing_condition_default_exception": "Release page is current and can change; do not consume floating latest or the explicitly rejected tags.",
+      "applicability": "Supports exact UV pinning and release-level regression review before the 100-page pilot."
+    },
+    {
+      "id": "S18",
+      "title": "Annotorious release history",
+      "url": "https://github.com/annotorious/annotorious/releases",
+      "version_or_commit": "v3.4.0, commit 0dd99c4; latest release shown",
+      "locator": "v3.4.0 release notes",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Records the exact candidate release and polygon-tool updates.",
+      "governing_condition_default_exception": "Release page can change; the guide’s default branch is moving, so pin code and re-check docs at implementation.",
+      "applicability": "Pins the analogous image-annotation library if explored in an integration spike."
+    },
+    {
+      "id": "S19",
+      "title": "Annotorious with OpenSeadragon and IIIF",
+      "url": "https://annotorious.dev/guides/openseadragon-iiif/",
+      "version_or_commit": "Current official guide; accessed 2026-10-10",
+      "locator": "Quick Start, Step-by-Step, IIIF Example",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Shows loading JSON annotations and connecting Annotorious to OpenSeadragon/IIIF; says coordinates are relative to base image resolution.",
+      "governing_condition_default_exception": "Image coordinates are not automatically curator-stable Canvas coordinates; source geometry/dimensions and adapters are integration responsibilities.",
+      "applicability": "Useful client-side mechanism for a custom image panel, with explicit caveat that persistence and page identity are separate work."
+    },
+    {
+      "id": "S20",
+      "title": "Annotorious Annotation Data Model",
+      "url": "https://annotorious.dev/guides/data-model/",
+      "version_or_commit": "Current official guide; accessed 2026-10-10",
+      "locator": "Key Differences and W3C Adapter",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Describes its optimized native data model and W3CImageFormat crosswalk.",
+      "governing_condition_default_exception": "The project explicitly makes no claim to support the full W3C model; conversions need representative selector/body tests.",
+      "applicability": "Supports evaluating Annotorious as an analogous tool without overstating standards completeness."
+    },
+    {
+      "id": "S21",
+      "title": "Visible Text Resource on a Canvas",
+      "url": "https://iiif.io/api/cookbook/recipe/0561-text-on-image/",
+      "version_or_commit": "IIIF Presentation 3.0 cookbook recipe; page accessed at the recorded UTC",
+      "locator": "Implementation Notes, Restrictions, Example",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Explains that text painted visibly onto an image uses motivation painting in an AnnotationPage, while commentary/supplementary notes have different semantics; notes client markup restrictions and styling variation.",
+      "governing_condition_default_exception": "Painted transcription visibility and viewer support vary; untrusted HTML must be restricted by clients.",
+      "applicability": "Clarifies why transcription-only download, visible overlay transcription, and private scholar notes are distinct output choices."
+    }
+  ]
+}

@@ -1,0 +1,390 @@
+{
+  "captured_at_utc": "2026-10-10T05:38:39.046318+00:00",
+  "purpose": "Original inspected identity and unchanged freeze evidence, not semantic proof",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A8-02/brief.md",
+      "bytes": 3426,
+      "sha256": "68b40302289f6e7851430ffaa3a7ec9d812fefed6cc644e7d9a9bc6ce8b85264",
+      "mtime_ns": 1791608160508893553,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A8-02/plan.md",
+      "bytes": 6203,
+      "sha256": "3aa40898cb794241b1931c0460c765b43b0ce73a3fb630bf14d7a928381e1728",
+      "mtime_ns": 1791608160509017719,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/terminal-science-freeze-root.json",
+      "bytes": 7053,
+      "sha256": "34a77f9c213101b0fc70af728fbecdac0e3744f310a3e620212a87e218fa87a3",
+      "mtime_ns": 1791610351036305242,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/inputs/brief.md",
+      "bytes": 3426,
+      "sha256": "68b40302289f6e7851430ffaa3a7ec9d812fefed6cc644e7d9a9bc6ce8b85264",
+      "mtime_ns": 1791608160743177327,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/investigator/assignment.md",
+      "bytes": 3710,
+      "sha256": "648ac78a9358fcac8cbcfce90d368d737a4a3d02e053bb6c6ab057fe8d69008b",
+      "mtime_ns": 1791608160743939365,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/investigator/input-map.json",
+      "bytes": 789,
+      "sha256": "ce46ae55a8435520c8a53aa5d98eeaf795a8f2392fb6afa24191445d4ce35b98",
+      "mtime_ns": 1791608160918170059,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/investigator/freeze.json",
+      "bytes": 1735,
+      "sha256": "a739544b298c7066d2a97729fba8e6a038feccb31d5328772edfd061b58e410a",
+      "mtime_ns": 1791608160918693563,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/investigator/request.json",
+      "bytes": 921,
+      "sha256": "279e864f103549a2031054b910444ae5e07d891a0cb2ff20799c06fa7c0578ae",
+      "mtime_ns": 1791608160918371990,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/investigator/dispatch.json",
+      "bytes": 4251,
+      "sha256": "b35bfc135c66e9b4b31c2c6e38584a987a0799ef5e3205e6b6e72848bfc7af38",
+      "mtime_ns": 1791608161569429893,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/investigator/service-tier-change.json",
+      "bytes": 493,
+      "sha256": "a5d93d0f2badeef6686ccc8b3e4671c6789b4e23c7f4a6226ed5ecb53cb78bfd",
+      "mtime_ns": 1791608160918860960,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/investigator/source-map.json",
+      "bytes": 23947,
+      "sha256": "98d5a401e023f14032b4f83045d3530a7778b5b76e9c6b42048614b84292b282",
+      "mtime_ns": 1791608612540374184,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/investigator/sources/index.md",
+      "bytes": 3898,
+      "sha256": "d5a8f3a22c7824ef4e5128f8388464531f8a964ffbb75af712e9df74e19dea9a",
+      "mtime_ns": 1791608612540374184,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/investigator/discovery.md",
+      "bytes": 12358,
+      "sha256": "27497a817f9f4c18853f97d8006bc458a57354acbd90871149cbbf1cd4ff34c0",
+      "mtime_ns": 1791608522434974346,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/investigator/draft.md",
+      "bytes": 22034,
+      "sha256": "ed717cca8446002aeddf3ed60308719dcc9092bfb0549c117fc7e3bea7d362aa",
+      "mtime_ns": 1791609009026872313,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 6203,
+      "sha256": "3aa40898cb794241b1931c0460c765b43b0ce73a3fb630bf14d7a928381e1728",
+      "mtime_ns": 1791608527552197961,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/investigator/plan-reveal.json",
+      "bytes": 429,
+      "sha256": "5df1650100146bae09e68ee8b23902eee2e87e8565c7cae0464d296fcf03680f",
+      "mtime_ns": 1791608527552328581,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/investigator/status.json",
+      "bytes": 3996,
+      "sha256": "8b2101670b5c6e7d41e5ed516b8e391099a18347a6569842cbb919c9e2506f20",
+      "mtime_ns": 1791609036992015652,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/critic/assignment.md",
+      "bytes": 7413,
+      "sha256": "c6d39114a8692952323c5b161935d0813f538e1f968aaf0e7c37596b82695413",
+      "mtime_ns": 1791609037729089222,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/critic/input-map.json",
+      "bytes": 1477,
+      "sha256": "cf0bb1258b39e7461d21ccbaac316dfc6854b7f01045f80b8c0761e0030ab244",
+      "mtime_ns": 1791609037728928310,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/critic/freeze.json",
+      "bytes": 3622,
+      "sha256": "04b5cfb01586377fe1108b468b6c558ce68b24a33167ce7fda7726ff59adfb7d",
+      "mtime_ns": 1791609037728764243,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/critic/request.json",
+      "bytes": 1613,
+      "sha256": "1695c63d12491d38719b837d273f3b5f3c4f0c0247698b5968b5b48d901615da",
+      "mtime_ns": 1791609037728544199,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/critic/dispatch.json",
+      "bytes": 4871,
+      "sha256": "00d668e5ef4f3a6731ed80ec72df278505ade95596ffab4d1deb413ffa0412c0",
+      "mtime_ns": 1791609038422133822,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/critic/service-tier-change.json",
+      "bytes": 481,
+      "sha256": "cbc13547f95369eba69fe51e298288d25589ac3bbdab86df61116d6e08a7aeb2",
+      "mtime_ns": 1791609037533025239,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/critic/source-map.json",
+      "bytes": 37659,
+      "sha256": "5f09fb6204bfa556d6a5fc959e7fc3ea4f4b90c8c3d5143c65d0d8dd05966589",
+      "mtime_ns": 1791609736553563792,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/critic/sources/index.md",
+      "bytes": 3898,
+      "sha256": "1cd51a54863f1ef6e34a0f7998d3c5f22a4c55ea198ae250a4956edd880062e1",
+      "mtime_ns": 1791609736554370352,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/critic/critique.md",
+      "bytes": 14836,
+      "sha256": "24655687c2aaf2bcd4c5957a4386e11f294d690ec55eb4944025f9a9a5eed69b",
+      "mtime_ns": 1791609736552594149,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/critic/invocation-clarification.json",
+      "bytes": 3030,
+      "sha256": "4dde908eda920db617f48bd7e78e02967e99a21eb54103a60940fc5c9acd68f3",
+      "mtime_ns": 1791609037729257523,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/critic/native-activation-response.json",
+      "bytes": 468,
+      "sha256": "8d9a8c1427dab5625351f8747207fa4961b66ae239236481f78c306d40e0db8b",
+      "mtime_ns": 1791609090957679689,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/critic/native-completion-response.json",
+      "bytes": 797,
+      "sha256": "aed5414e76172be91b0345f92b92b6a82bb14b70b8ba0aa6b46ed67c357053a3",
+      "mtime_ns": 1791609752277661755,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/critic/status.json",
+      "bytes": 3760,
+      "sha256": "0ac107b9b6c6d9f6cab5d875e0876f4bc1693b686f00fb828f18d30a6be933d9",
+      "mtime_ns": 1791609836992342040,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/assignment.md",
+      "bytes": 5712,
+      "sha256": "d6b00e63f8695fa01abf6ba0d445e2b01ca4a90bb8bd46ce119859437388afa5",
+      "mtime_ns": 1791609837747452455,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/input-map.json",
+      "bytes": 1794,
+      "sha256": "f7bbc2e41c1998598a0f7f4f36d7cf1b35a490a95e6f508d7b1175a39eeed697",
+      "mtime_ns": 1791609837747291178,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/freeze.json",
+      "bytes": 4402,
+      "sha256": "3f453d2bcb75bef05b63cf40d5914d785d9b81aa11e479945e354278772b81fb",
+      "mtime_ns": 1791609837747142076,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/request.json",
+      "bytes": 1619,
+      "sha256": "235bef57f30894aa3dd470e58e002dc60ca2130cf68c2ddada7acfb655c3fdab",
+      "mtime_ns": 1791609837746896021,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/dispatch.json",
+      "bytes": 4889,
+      "sha256": "f4b4f16a8498bc1008f858f3bab620e0d1b52a8d07700c09181640641ca3cb3b",
+      "mtime_ns": 1791609838754600033,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/service-tier-change.json",
+      "bytes": 483,
+      "sha256": "2acdcbaf98c3277433d06d989d95d690f9eefabe37ce842a094c551d0c20507b",
+      "mtime_ns": 1791609837544258478,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/source-map.json",
+      "bytes": 79218,
+      "sha256": "d1912f52e2b9e1d69642feacfc1e115ab15f1d83d6119d4e495515292e7ee862",
+      "mtime_ns": 1791610163232176036,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/sources/index.md",
+      "bytes": 5718,
+      "sha256": "0c9b7c1f6aaa79bb3f9cb1aef01a86ba556df6213e9679bf61e7804c82707250",
+      "mtime_ns": 1791610191705826033,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+      "bytes": 34795,
+      "sha256": "665159e3beb71c21a489fdb03a1c7055c32df43d5afb18ef8b3def7ebe9616ef",
+      "mtime_ns": 1791610306243702432,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/invocation-clarification.json",
+      "bytes": 3037,
+      "sha256": "4ab6983599d185237de853e3e91db07a5a9df444de8d624fb2d87e9459a4e6ec",
+      "mtime_ns": 1791609837747603161,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/native-goal-activation.json",
+      "bytes": 470,
+      "sha256": "8ee100aa00f57355e7e5d41a8e624476e1ae5825638c383eeffc37b1f3c876d3",
+      "mtime_ns": 1791609862912339711,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/native-goal-completion.json",
+      "bytes": 799,
+      "sha256": "903120caef08ebc9caabc52ee925b354afc50888207694e9ae2c0c7935e16691",
+      "mtime_ns": 1791610315572084983,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/methods/A8/critic_prompt_delta.txt",
+      "bytes": 3398,
+      "sha256": "6ca210592ebaffd1228f390855af2dcbb7b338dcbb3e00c9fb57f0bdc8672c0d",
+      "mtime_ns": 1791604541744895060,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    },
+    {
+      "path": "ER12_RUNTIME/methods/A8/reviser_prompt_delta.txt",
+      "bytes": 1715,
+      "sha256": "31b0b79da9d1a99d81103a485448bbd2d518e5c48cd56b15a1a1a9cb9d11e087",
+      "mtime_ns": 1791604541744994813,
+      "inspection": "FULL; duplicate brief/plan and reviser embedded maps matched byte/content-equivalent fully reviewed originals"
+    }
+  ],
+  "terminal_freeze_matches": [
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/critic/critique.md",
+      "sha256_matches": true,
+      "bytes_match": true,
+      "mtime_matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/critic/source-map.json",
+      "sha256_matches": true,
+      "bytes_match": true,
+      "mtime_matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/critic/sources/index.md",
+      "sha256_matches": true,
+      "bytes_match": true,
+      "mtime_matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/investigator/discovery.md",
+      "sha256_matches": true,
+      "bytes_match": true,
+      "mtime_matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/investigator/draft.md",
+      "sha256_matches": true,
+      "bytes_match": true,
+      "mtime_matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/investigator/revealed-plan.md",
+      "sha256_matches": true,
+      "bytes_match": true,
+      "mtime_matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/investigator/source-map.json",
+      "sha256_matches": true,
+      "bytes_match": true,
+      "mtime_matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/investigator/sources/index.md",
+      "sha256_matches": true,
+      "bytes_match": true,
+      "mtime_matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+      "sha256_matches": true,
+      "bytes_match": true,
+      "mtime_matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/source-map.json",
+      "sha256_matches": true,
+      "bytes_match": true,
+      "mtime_matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/sources/index.md",
+      "sha256_matches": true,
+      "bytes_match": true,
+      "mtime_matches": true
+    }
+  ],
+  "evidence_inventory_note": "Each authored sources directory contains only its index.md. Bounded evidence is in all three source maps; no local authored raw-source capture files are referenced. Reviser embeds exactly the already-reviewed investigator and critic maps and its input-map; all embedded fields were checked against complete originals."
+}

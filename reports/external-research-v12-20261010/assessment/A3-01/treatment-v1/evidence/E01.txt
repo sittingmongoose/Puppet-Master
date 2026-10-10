@@ -1,0 +1,97 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://www.sqlite.org/fts5.html"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A3-01/treatment-v1/source-map.json",
+      "source_id": "E01",
+      "existing_authored_summary_fields": {
+        "observations": [
+          {
+            "claim_check_id": "CC01",
+            "operation": "Create and use FTS5 on shipped targets",
+            "scope": "live docs; introduced 3.9.0"
+          },
+          {
+            "claim_check_id": "CC02",
+            "operation": "Generate quoted terms/phrases; bind fixed SQL",
+            "scope": "live FTS5 docs; actual release unpinned"
+          },
+          {
+            "claim_check_id": "CC03",
+            "operation": "Index/query accent and punctuation normalization",
+            "scope": "unicode61 remove_diacritics 2; live docs"
+          },
+          {
+            "claim_check_id": "CC04",
+            "operation": "Delete/update/replace and source value retrieval",
+            "scope": "contentless_delete since 3.43.0; plain configurations"
+          },
+          {
+            "claim_check_id": "CC05",
+            "operation": "Create/update/delete and initial population",
+            "scope": "same database; integer rowid mapping; actual schema unknown"
+          },
+          {
+            "claim_check_id": "CC06",
+            "operation": "Detect missing/stale rows and rebuild",
+            "scope": "FTS5 integrity-check/rebuild; external content"
+          },
+          {
+            "claim_check_id": "CC07",
+            "operation": "Conflict deletes and delete triggers",
+            "scope": "current documentation and 3.6.18 origin; connection setting/build unknown"
+          },
+          {
+            "claim_check_id": "CC12",
+            "operation": "Sort and handle ties/rebuilds",
+            "scope": "FTS live docs; Tantivy 0.26.2"
+          },
+          {
+            "claim_check_id": "CC13",
+            "operation": "Bound and display source note text",
+            "scope": "FTS live docs; Tantivy 0.26.2"
+          },
+          {
+            "claim_check_id": "CC17",
+            "operation": "Change derived generation without deleting authority",
+            "scope": "planning inference from configured tables/source authority"
+          }
+        ]
+      }
+    },
+    {
+      "authored_source_map": "assessment/A3-01/treatment-v1/evidence/retrieval-manifest.json",
+      "source_id": "E01",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "independent_locator": "§2.1, §3.1–3.2, §4.3.1, §4.4.1–4.4.4, §4.9, §5.1.1/5.1.3, §6.7/6.12; E01.txt lines 189–193, 235–269, 491–541, 662–828, 1022–1035, 1117–1132, 1323–1342, 1414–1419"
+    }
+  ],
+  "raw_sha256": "6c14ff0b1739bf3045af75d6d7b03e0672a0466802abca2a946e75d0a5d33797",
+  "original_bytes": 158493,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A3-01/treatment-v1/evidence/E01.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://www.sqlite.org/fts5.html"
+  ],
+  "version": "UNKNOWN",
+  "selector": [
+    {
+      "independent_locator": "§2.1, §3.1–3.2, §4.3.1, §4.4.1–4.4.4, §4.9, §5.1.1/5.1.3, §6.7/6.12; E01.txt lines 189–193, 235–269, 491–541, 662–828, 1022–1035, 1117–1132, 1323–1342, 1414–1419"
+    }
+  ],
+  "conditions": "UNKNOWN",
+  "rawSHA256": "6c14ff0b1739bf3045af75d6d7b03e0672a0466802abca2a946e75d0a5d33797"
+}

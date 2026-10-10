@@ -1,0 +1,65 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://www.epa.gov/sites/default/files/2017-07/documents/wastewater_sampling306_af.r4.pdf"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/C-R1-02/control-v1/source-map.json",
+      "source_id": "E08",
+      "existing_authored_summary_fields": {
+        "version_verified": "FSBPROC-306-R7; effective2026-02-11; next review2030-02-11",
+        "observed_subject_operation_units_types": "The actual PDF identifies R7 despite the legacy URL. Sampling design depends on the study, analytes, locations, batch/continuous operation, QA, flow and equipment. Composite versus grab and traceable records are covered. History says R7 replaces R6 and records April2025 archival.",
+        "conditions_defaults_domain_exceptions": "EPA Region4 SOP with documented variation when procedures are unsuitable. It is an analogy for a partner plan, not a universal permit, assay panel, or default sampling schedule."
+      }
+    },
+    {
+      "authored_source_map": "assessment/C-R1-02/control-v1/source-map.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/C-R1-02/control-v1/evidence/retrieval-manifest.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": "Cover; §§3–4,5.2,9; Revision History pp.22–23"
+    }
+  ],
+  "raw_sha256": "90caf5d5f51442c1697a9309fb850a9ac2af3a355aaf4766cdbacb1e2402a45c",
+  "original_bytes": 888686,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/C-R1-02/control-v1/evidence/S08.pdf",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://www.epa.gov/sites/default/files/2017-07/documents/wastewater_sampling306_af.r4.pdf"
+  ],
+  "version": [
+    {
+      "version_verified": "FSBPROC-306-R7; effective2026-02-11; next review2030-02-11",
+      "observed_subject_operation_units_types": "The actual PDF identifies R7 despite the legacy URL. Sampling design depends on the study, analytes, locations, batch/continuous operation, QA, flow and equipment. Composite versus grab and traceable records are covered. History says R7 replaces R6 and records April2025 archival.",
+      "conditions_defaults_domain_exceptions": "EPA Region4 SOP with documented variation when procedures are unsuitable. It is an analogy for a partner plan, not a universal permit, assay panel, or default sampling schedule."
+    }
+  ],
+  "selector": [
+    {
+      "locator": "Cover; §§3–4,5.2,9; Revision History pp.22–23"
+    }
+  ],
+  "conditions": [
+    {
+      "version_verified": "FSBPROC-306-R7; effective2026-02-11; next review2030-02-11",
+      "observed_subject_operation_units_types": "The actual PDF identifies R7 despite the legacy URL. Sampling design depends on the study, analytes, locations, batch/continuous operation, QA, flow and equipment. Composite versus grab and traceable records are covered. History says R7 replaces R6 and records April2025 archival.",
+      "conditions_defaults_domain_exceptions": "EPA Region4 SOP with documented variation when procedures are unsuitable. It is an analogy for a partner plan, not a universal permit, assay panel, or default sampling schedule."
+    }
+  ],
+  "rawSHA256": "90caf5d5f51442c1697a9309fb850a9ac2af3a355aaf4766cdbacb1e2402a45c"
+}

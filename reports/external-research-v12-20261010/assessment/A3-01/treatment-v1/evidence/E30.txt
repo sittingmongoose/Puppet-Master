@@ -1,0 +1,52 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://docs.rs/tantivy/0.26.2/src/tantivy/tokenizer/remove_long.rs.html"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A3-01/treatment-v1/source-map.json",
+      "source_id": "E30",
+      "existing_authored_summary_fields": {
+        "observations": [
+          {
+            "claim_check_id": "CC14",
+            "operation": "Apply explicit byte policy to index and query",
+            "scope": "Tantivy 0.26.2 implementation"
+          }
+        ]
+      }
+    },
+    {
+      "authored_source_map": "assessment/A3-01/treatment-v1/evidence/retrieval-manifest.json",
+      "source_id": "E30",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "independent_locator": "remove_long.rs source lines 34–37 (predicate); source snapshot also E42"
+    }
+  ],
+  "raw_sha256": "7b06f30bd3e6f1afc7d891fd9a43146a4e421f60a2c937619e1cf15eb31ac59d",
+  "original_bytes": 5589,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A3-01/treatment-v1/evidence/E30.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://docs.rs/tantivy/0.26.2/src/tantivy/tokenizer/remove_long.rs.html"
+  ],
+  "version": "UNKNOWN",
+  "selector": [
+    {
+      "independent_locator": "remove_long.rs source lines 34–37 (predicate); source snapshot also E42"
+    }
+  ],
+  "conditions": "UNKNOWN",
+  "rawSHA256": "7b06f30bd3e6f1afc7d891fd9a43146a4e421f60a2c937619e1cf15eb31ac59d"
+}

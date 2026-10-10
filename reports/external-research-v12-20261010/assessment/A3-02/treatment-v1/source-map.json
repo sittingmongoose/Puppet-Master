@@ -1,0 +1,852 @@
+{
+  "schema_version": 1,
+  "assessment_id": "ER12-A3-02-treatment-v1",
+  "independent": true,
+  "navigation": {
+    "assessment": "assessment.md",
+    "structured_judgment": "assessment.json",
+    "evidence_index": "evidence/index.md",
+    "original_hashes": "original-inspected-hashes.json",
+    "save_verification": "save-verification.json",
+    "reviewer_native_active": "reviewer-native-goal-active.json",
+    "reviewer_native_completion": "reviewer-native-goal-completion.json"
+  },
+  "sources": [
+    {
+      "id": "E01",
+      "original_source_ids": [
+        "S01"
+      ],
+      "title": "MediaStream Recording",
+      "url": "https://www.w3.org/TR/2026/WD-mediastream-recording-20260316/",
+      "version": "Working Draft 2026-03-16",
+      "locator": "§2.1 constructor step 4; §2.3 start, stop, pause/resume, inactivate, isTypeSupported; §6.1",
+      "independent_review": true,
+      "judgment": "Lifecycle/chunk/default distinctions supported; important probe exception missing from authored maps.",
+      "governing_conditions": "Public probe passes false, constructor passes true to deferred-codec check. Only enumerated codec identifiers are synchronously exposed; newer identifiers can give a negative probe without the same constructor rejection. Empty MIME leaves UA choice. Normal stop yields final data before stop; completed concatenation rather than every chunk is the playable object. Resource exhaustion remains possible.",
+      "local_evidence": [
+        "recording-wd20260316.html",
+        "recording-wd20260316-readable.txt",
+        "recording-wd20260316-retrieval.json"
+      ],
+      "evidence_note": "evidence/index.md#e01",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    },
+    {
+      "id": "E02",
+      "original_source_ids": [
+        "S02"
+      ],
+      "title": "Media Capture and Streams",
+      "url": "https://www.w3.org/TR/2025/CRD-mediacapture-streams-20251009/",
+      "version": "Candidate Recommendation Draft 2025-10-09",
+      "locator": "§4.3.1 track lifecycle; §9–10 MediaDevices/getUserMedia; permissions integration",
+      "independent_review": true,
+      "judgment": "Permission, mute/end and owned-track cleanup claims supported.",
+      "governing_conditions": "Secure-context and permission requirements apply. Muted/disabled audio yields silence. External ending queues ended; application track.stop() does not. Revocation ends relevant live tracks. Devicechange is supplementary and may be coalesced; cause inference is limited.",
+      "local_evidence": [
+        "capture-crd20251009.html",
+        "capture-crd20251009-readable.txt",
+        "capture-crd20251009.html.retrieval.json"
+      ],
+      "evidence_note": "evidence/index.md#e02",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    },
+    {
+      "id": "E03",
+      "original_source_ids": [
+        "S03"
+      ],
+      "title": "Web Audio API 1.1",
+      "url": "https://www.w3.org/TR/2026/WD-webaudio-1.1-20260922/",
+      "version": "Working Draft 2026-09-22",
+      "locator": "§1.2.5 AudioContextOptions; §1.24 MediaStreamAudioSourceNode; §1.32 AudioWorklet; §2 rendering",
+      "independent_review": true,
+      "judgment": "PCM-processing/encoding distinction, quantum and sample-rate qualifications supported.",
+      "governing_conditions": "Default render quantum is 128 frames; renderSizeHint may request another size and may not be honored. Worklet processing has a rendering deadline. A stream source resamples to context rate; that processing rate is not proof of physical hardware rate. File encoding/header/muxing are separate responsibilities.",
+      "local_evidence": [
+        "webaudio-wd20260922.html",
+        "webaudio-wd20260922-readable.txt",
+        "webaudio-wd20260922.html.retrieval.json"
+      ],
+      "evidence_note": "evidence/index.md#e03",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    },
+    {
+      "id": "E04",
+      "original_source_ids": [
+        "S04"
+      ],
+      "title": "Chrome desktop release anchor",
+      "url": "https://chromereleases.googleblog.com/2026/10/?amp=1",
+      "version": "Official October 2026 archive: Stable desktop announcement 2026-10-06",
+      "locator": "Stable Channel Update for Desktop, Tuesday October 6; also October 7 Early Stable entry",
+      "independent_review": true,
+      "judgment": "155 stable announcement verified; direct article fetch failed, official archive and corresponding official Android entry corroborate builds.",
+      "governing_conditions": "155.0.8059.39/.40 Windows/Mac, .39 Linux; staged rollout. October 7 also introduces 156 early stable for a small Windows/Mac population. The selected 155 lane is a bounded ordinary-stable baseline, not all currently distributed binaries. No installed browser was observed.",
+      "local_evidence": [],
+      "evidence_note": "evidence/index.md#e04",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    },
+    {
+      "id": "E05",
+      "original_source_ids": [
+        "S05"
+      ],
+      "title": "WebKit Features in Safari 18.4",
+      "url": "https://webkit.org/blog/16574/webkit-features-in-safari-18-4/",
+      "version": "Safari 18.4; 2025-03-31",
+      "locator": "Media heading: WebM MediaRecorder paragraph versus following Ogg paragraph (web extraction lines 145–168)",
+      "independent_review": true,
+      "judgment": "WebM recording history supported; critic F3 conflates generic Ogg media support with recording.",
+      "governing_conditions": "WebM recording has explicit Opus/audio and VP8/VP9/video wording, with ALAC/PCM recording discussion. Ogg support is qualified to macOS Sequoia 15.4, iOS/iPadOS 18.4 and visionOS 2.4. The Ogg paragraph supplies neither an Ogg MediaRecorder recording claim nor exact audio-only recorder MIME strings.",
+      "local_evidence": [],
+      "evidence_note": "evidence/index.md#e05",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    },
+    {
+      "id": "E06",
+      "original_source_ids": [
+        "S06"
+      ],
+      "title": "WebKit Features in Safari 26.0",
+      "url": "https://webkit.org/blog/17333/webkit-features-in-safari-26-0/",
+      "version": "Safari 26.0; 2025-09-15",
+      "locator": "Media heading, lines 349–358 in web extraction",
+      "independent_review": true,
+      "judgment": "ALAC/PCM MediaRecorder history and audio/mp4 ALAC example supported.",
+      "governing_conditions": "Historical released example audio/mp4; codecs=alac is explicit. AudioEncoder/AudioDecoder additions are also announced. This does not prove exact current Safari 27 binary behavior or a universal PCM support table.",
+      "local_evidence": [],
+      "evidence_note": "evidence/index.md#e06",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    },
+    {
+      "id": "E07",
+      "original_source_ids": [
+        "S07"
+      ],
+      "title": "Safari Technology Preview 110 release notes",
+      "url": "https://webkit.org/blog/10929/release-notes-for-safari-technology-preview-110/",
+      "version": "2020-07-16; WebKit revisions 263214–263988",
+      "locator": "WebRTC entries: empty stop Blob after first use, ignored timeslice; changesets r263511/r263633/r263891 and r263565/r263651/r263892",
+      "independent_review": true,
+      "judgment": "Historical regression details accurately used as prospective checks.",
+      "governing_conditions": "STP 110 history is not a diagnosis of Safari 27. No current defect or current successful regression test follows from those entries.",
+      "local_evidence": [],
+      "evidence_note": "evidence/index.md#e07",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    },
+    {
+      "id": "E08",
+      "original_source_ids": [
+        "S08"
+      ],
+      "title": "Chromium authored implementation snapshot",
+      "url": "https://chromium.googlesource.com/chromium/src/third_party/+/19646947eb735f84c5ae91af1fe901273d67d4f7/blink/renderer/modules/mediarecorder/media_recorder_handler.cc",
+      "version": "Immutable 19646947eb735f84c5ae91af1fe901273d67d4f7 (2025 snapshot)",
+      "locator": "AudioStringToCodecId lines 155–175; CanSupportAudioType lines 180–186; CanSupportMimeType/codec lists lines 286–355",
+      "independent_review": true,
+      "judgment": "WebM/MP4, Opus/PCM and build-conditional AAC claims supported by direct decoded source.",
+      "governing_conditions": "USE_PROPRIETARY_CODECS conditions AAC mp4a.40.2. Source supports forming audio/webm with pcm candidates too, although the final declines guessed PCM offerings. Snapshot does not authenticate a current installed Chrome binary.",
+      "local_evidence": [
+        "chromium-2025-handler.cpp",
+        "chromium-2025-handler.cpp.retrieval.json"
+      ],
+      "evidence_note": "evidence/index.md#e08",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    },
+    {
+      "id": "E09",
+      "original_source_ids": [
+        "S09"
+      ],
+      "title": "extendable-media-recorder architecture analog",
+      "url": "https://github.com/chrisguttandin/extendable-media-recorder/blob/3107005ffdf1a4857c15f224438ef86fa35dd7d6/README.md",
+      "version": "Independent reviewer resolved master to 3107005ffdf1a4857c15f224438ef86fa35dd7d6 (committer 2026-09-02); candidate used mutable README",
+      "locator": "Using a custom encoder; Setting the sample rate; Inner Workings",
+      "independent_review": true,
+      "judgment": "Analog mechanism supported; candidate correctly does not select or claim a tested dependency release.",
+      "governing_conditions": "Native implementation used when possible. Custom audio encoding path in Chrome consumes native WebM/PCM and parses EBML; other browsers use Web Audio PCM. AudioContext resampling is described. This is an analog, not a native browser compatibility matrix.",
+      "local_evidence": [
+        "library-readme-pinned.txt",
+        "library-readme-pinned.txt.retrieval.json",
+        "library-readme-at-review.txt",
+        "library-master-ref.json",
+        "library-readme-at-review.txt.retrieval.json",
+        "library-master-ref.json.retrieval.json"
+      ],
+      "evidence_note": "evidence/index.md#e09",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    },
+    {
+      "id": "E10",
+      "original_source_ids": [
+        "S10"
+      ],
+      "title": "Recorder WAV timeslice issue 263",
+      "url": "https://github.com/chrisguttandin/extendable-media-recorder/issues/263",
+      "version": "Opened 2019-05-20; completed 2019-09-03 via 2fe86e8",
+      "locator": "Maintainer comments May 25 and September 3; closure entry",
+      "independent_review": true,
+      "judgment": "Sentinel-header and missing requestData history supported.",
+      "governing_conditions": "Library-specific WAV compromise for unknown length during chunking. The closure does not imply all native containers share it or that a present package behaves identically.",
+      "local_evidence": [],
+      "evidence_note": "evidence/index.md#e10",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    },
+    {
+      "id": "E11",
+      "original_source_ids": [
+        "S11"
+      ],
+      "title": "Recorder WAV doubled-speed issue 692",
+      "url": "https://github.com/chrisguttandin/extendable-media-recorder/issues/692",
+      "version": "2025-08-08 opening; 2025-08-12 reporter closure; 2026-04-14/15 follow-up",
+      "locator": "2025 reporter/owner comments and April 15 adapted destination-stream advice (web extraction lines 273–474)",
+      "independent_review": true,
+      "judgment": "Final expanded history is supported; inherited summary was incomplete.",
+      "governing_conditions": "2025 report clarified Windows-only reproduction and two-channel destination stream despite mono request. Owner proposed channel-count patching; reporter closed. Later reporter said a general patch failed, then did not try the adapted destination-stream suggestion and wrote a custom Worklet solution. Neither closure nor advice proves a verified general fix.",
+      "local_evidence": [],
+      "evidence_note": "evidence/index.md#e11",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    },
+    {
+      "id": "E12",
+      "original_source_ids": [
+        "S12"
+      ],
+      "title": "High Resolution Time 3",
+      "url": "https://www.w3.org/TR/2026/WD-hr-time-3-20260901/",
+      "version": "Working Draft 2026-09-01",
+      "locator": "§2.1 clocks and background timer paragraph; performance.now",
+      "independent_review": true,
+      "judgment": "Independent clock versus delayed handler distinction supported.",
+      "governing_conditions": "Monotonic time within the relevant origin is independent of system-clock adjustment. UA throttling/freezing of background callbacks does not turn the clock into a guarantee that a scheduled Stop executes promptly.",
+      "local_evidence": [
+        "hrtime-wd20260901.html",
+        "hrtime-wd20260901-readable.txt",
+        "hrtime-wd20260901.html.retrieval.json"
+      ],
+      "evidence_note": "evidence/index.md#e12",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    },
+    {
+      "id": "E13",
+      "original_source_ids": [
+        "S13"
+      ],
+      "title": "HTML page visibility",
+      "url": "https://html.spec.whatwg.org/multipage/interaction.html#page-visibility",
+      "version": "Living Standard retrieved 2026-10-10",
+      "locator": "§6.2 system visibility update, queued global task and visibilitychange",
+      "independent_review": true,
+      "judgment": "Hidden-page signal policy supported; instantaneous release explicitly disclaimed.",
+      "governing_conditions": "UA determines visibility and queues the update/event. Signal-driven application stopping is a policy with scheduling limitations, not a hard realtime bound.",
+      "local_evidence": [],
+      "evidence_note": "evidence/index.md#e13",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    },
+    {
+      "id": "E14",
+      "original_source_ids": [
+        "C01"
+      ],
+      "title": "WebKit Features for Safari 27.0",
+      "url": "https://webkit.org/blog/18325/webkit-features-for-safari-27-0/",
+      "version": "Safari 27.0; 2026-09-17",
+      "locator": "Updating to Safari 27; Media and resolved issues; web extraction line 1241 for OS availability",
+      "independent_review": true,
+      "judgment": "F1 stale Safari anchor correction supported.",
+      "governing_conditions": "Comes with macOS 27 Golden Gate and is separately available on macOS 26/15. Microphone AudioSession and OverconstrainedError fixes are listed. No MediaRecorder MIME change is announced; silence is not proof of persistence/regression. Final selects two older supported OS lanes rather than every current OS.",
+      "local_evidence": [],
+      "evidence_note": "evidence/index.md#e14",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    },
+    {
+      "id": "E15",
+      "original_source_ids": [
+        "C02"
+      ],
+      "title": "New WebKit Features in Safari 14.1",
+      "url": "https://webkit.org/blog/11648/new-webkit-features-in-safari-14-1/",
+      "version": "Safari 14.1; 2021-04-29",
+      "locator": "MediaRecorder API heading",
+      "independent_review": true,
+      "judgment": "F4 historical support and added locator are correct.",
+      "governing_conditions": "Historical API introduction refutes blanket denial. It supplies no complete current recording/playback format matrix.",
+      "local_evidence": [],
+      "evidence_note": "evidence/index.md#e15",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    },
+    {
+      "id": "E16",
+      "original_source_ids": [],
+      "title": "Apple Safari 18.4 release notes",
+      "url": "https://developer.apple.com/documentation/safari-release-notes/safari-18_4-release-notes",
+      "version": "Safari 18.4 released notes",
+      "locator": "Media New Features; official DocC JSON endpoint https://developer.apple.com/tutorials/data/documentation/safari-release-notes/safari-18_4-release-notes.json",
+      "independent_review": true,
+      "judgment": "Independent second primary source confirms Ogg/recording distinction.",
+      "governing_conditions": "Generic Ogg Opus/Vorbis support and explicit WebM MediaRecorder support are separate release bullets. This supplies no claim that Ogg is a recorder export container.",
+      "local_evidence": [
+        "apple-safari18.4.json",
+        "apple-safari18.4-retrieval.json"
+      ],
+      "evidence_note": "evidence/index.md#e16",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    },
+    {
+      "id": "E17",
+      "original_source_ids": [],
+      "title": "WebKit Cocoa recorder implementation",
+      "url": "https://github.com/WebKit/WebKit/blob/73f39d84ea9d4071994214373efbde3665402b05/Source/WebCore/platform/mediarecorder/MediaRecorderPrivateAVFImpl.cpp",
+      "version": "Immutable WPE 2.54.0 commit 73f39d84ea9d4071994214373efbde3665402b05; historical comparator webkitgtk-2.48.0",
+      "locator": "MediaRecorderPrivateAVFImpl::isTypeSupported, lines 53–99 in downloaded 2.54 source",
+      "independent_review": true,
+      "judgment": "Recorded source restricts this recorder implementation to MP4 and enabled WebM, not Ogg.",
+      "governing_conditions": "Cocoa source is a recorder operation check, not an observation of any installed Safari 27 binary. WebM has compile/settings conditions. An unrelated release tag identifies the source revision, not a tested Safari version.",
+      "local_evidence": [
+        "webkit-254-recorder.cpp",
+        "webkit-254-recorder-retrieval.json",
+        "webkit-248-recorder.cpp",
+        "webkit-248-recorder-retrieval.json",
+        "webkit-tags.json",
+        "webkit-tags-retrieval.json"
+      ],
+      "evidence_note": "evidence/index.md#e17",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    },
+    {
+      "id": "E18",
+      "original_source_ids": [],
+      "title": "Chrome 155 MediaRecorder implementation",
+      "url": "https://chromium.googlesource.com/chromium/src/+/refs/tags/155.0.8059.39/third_party/blink/renderer/modules/mediarecorder/media_recorder_handler.cc",
+      "version": "Chrome release tag 155.0.8059.39; companion media_recorder.cc same tag",
+      "locator": "CanSupportMimeType lines 218–254; codec lists 270–344; AAC runtime check 449–453; Initialize 469–471; recorder isTypeSupported 391–409",
+      "independent_review": true,
+      "judgment": "Implementation inspected to avoid treating the 2026 draft exception as observed current browser behavior.",
+      "governing_conditions": "Constructor and public probe use the same codec support function in this snapshot; caller distinguishes telemetry. AAC additionally requires a supported Mojo audio encoder. Build configuration and actual encoder resources still matter. No browser run was performed.",
+      "local_evidence": [
+        "chrome155-handler-cc.cpp",
+        "chrome155-handler-cc-retrieval.json",
+        "chrome155-recorder-cc.cpp",
+        "chrome155-recorder-cc-retrieval.json"
+      ],
+      "evidence_note": "evidence/index.md#e18",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    },
+    {
+      "id": "E19",
+      "original_source_ids": [],
+      "title": "WebCodecs",
+      "url": "https://www.w3.org/TR/2026/WD-webcodecs-20261007/",
+      "version": "Working Draft 2026-10-07",
+      "locator": "§5 AudioEncoder interface/support; §7.4 codec string; encoded audio chunks",
+      "independent_review": true,
+      "judgment": "Encoding-versus-container qualification supported.",
+      "governing_conditions": "WebCodecs exposes raw/encoded chunks and codec configuration checks; encoded media is not containerized. Selecting it still leaves file muxing, queues, resource lifecycle and output verification.",
+      "local_evidence": [
+        "webcodecs-wd20261007.html",
+        "webcodecs-wd20261007-readable.txt",
+        "webcodecs-wd20261007.html.retrieval.json"
+      ],
+      "evidence_note": "evidence/index.md#e19",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    },
+    {
+      "id": "E20",
+      "original_source_ids": [],
+      "title": "Media Capabilities",
+      "url": "https://www.w3.org/TR/2026/WD-media-capabilities-20260609/",
+      "version": "Working Draft 2026-06-09; independently retrieved 2026-10-10",
+      "locator": "§2.1.3 MediaEncodingType; encodingInfo algorithm",
+      "independent_review": true,
+      "judgment": "Independent lead for the newer-codec probe condition; no universal support promise.",
+      "governing_conditions": "type record addresses recording configurations rather than decoding; it is the alternative pointed to by the dated recording draft for precise/newer codecs. Implementations and exact profiles require testing.",
+      "local_evidence": [
+        "media-capabilities-wd20260609.html",
+        "media-capabilities-wd20260609-readable.txt",
+        "media-capabilities-wd20260609.html.retrieval.json"
+      ],
+      "evidence_note": "evidence/index.md#e20",
+      "access_window_utc": "2026-10-10T05:35:05Z/2026-10-10T06:03:21.368760+00:00",
+      "exact_web_tool_access_timestamp": "UNKNOWN unless recorded in a local retrieval receipt"
+    }
+  ],
+  "claim_bindings": [
+    {
+      "obligation": "R1",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "15–37"
+      },
+      "evidence": [
+        "E01",
+        "E02",
+        "E13"
+      ]
+    },
+    {
+      "obligation": "R2",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "39–62"
+      },
+      "evidence": [
+        "E01",
+        "E05",
+        "E06",
+        "E08",
+        "E17",
+        "E18"
+      ]
+    },
+    {
+      "obligation": "R3",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "64–79"
+      },
+      "evidence": [
+        "E03",
+        "E08",
+        "E09",
+        "E10",
+        "E11",
+        "E19"
+      ]
+    },
+    {
+      "obligation": "R4",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "81–91"
+      },
+      "evidence": [
+        "E01",
+        "E12",
+        "E13"
+      ]
+    },
+    {
+      "obligation": "R5",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "93–103"
+      },
+      "evidence": [
+        "E04",
+        "E05",
+        "E06",
+        "E07",
+        "E08",
+        "E10",
+        "E11",
+        "E14",
+        "E15"
+      ]
+    },
+    {
+      "obligation": "R6",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "105–119"
+      },
+      "evidence": [
+        "E01",
+        "E02",
+        "E03",
+        "E12",
+        "E13"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "L1",
+      "locations": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/critic/critique.md",
+          "lines": "15–17"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+          "lines": "57; 60; 127; 131"
+        }
+      ],
+      "evidence": [
+        "E05",
+        "E16",
+        "E17"
+      ],
+      "remaining_material": false
+    },
+    {
+      "id": "L2",
+      "locations": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/draft.md",
+          "lines": "35"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/discovery.md",
+          "lines": "7; 11"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+          "lines": "41–50; 103; 114"
+        }
+      ],
+      "evidence": [
+        "E01",
+        "E18",
+        "E20"
+      ],
+      "remaining_material": false
+    },
+    {
+      "id": "L3",
+      "locations": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/source-map.json",
+          "lines": "sources S06 applicability; S11 observed_operation plus rechecks"
+        }
+      ],
+      "evidence": [
+        "E06",
+        "E11",
+        "E14"
+      ],
+      "remaining_material": false
+    },
+    {
+      "id": "L4",
+      "locations": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/draft.md",
+          "lines": "93"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+          "lines": "137"
+        }
+      ],
+      "evidence": [],
+      "remaining_material": false
+    },
+    {
+      "id": "L5",
+      "locations": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+          "lines": "58; 95; 97; 101; 107"
+        }
+      ],
+      "evidence": [
+        "E04",
+        "E08",
+        "E14"
+      ],
+      "remaining_material": false
+    },
+    {
+      "id": "L6",
+      "locations": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+          "lines": "79; 89; 114; 117; 141"
+        }
+      ],
+      "evidence": [
+        "E01",
+        "E03",
+        "E19"
+      ],
+      "remaining_material": false
+    }
+  ],
+  "critiques": [
+    {
+      "id": "F1",
+      "candidate_disposition": "Accept",
+      "independent_judgment": "SUPPORTED correction",
+      "assessment": "Safari 26 was incorrectly called current. Official Safari 27 release predates the research date. Final corrects the release lane while treating 26 as history and silence about formats as non-evidence.",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "125; 95–101"
+      },
+      "evidence": [
+        "E14",
+        "E06"
+      ]
+    },
+    {
+      "id": "F2",
+      "candidate_disposition": "Accept and amend",
+      "independent_judgment": "SUPPORTED need for explicit acceptance boundary",
+      "assessment": "The draft left the five-minute interpretation/over-limit outcome open. Final supplies strict encoded-duration recommendation, reliable verification requirement and fail-closed outcome. Owner acceptance and implementation remain openly external; this is a plan, not a completed deployment.",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "126; 87–91"
+      },
+      "evidence": [
+        "E01",
+        "E12",
+        "E13"
+      ]
+    },
+    {
+      "id": "F3",
+      "candidate_disposition": "Accept",
+      "independent_judgment": "WRONG recording premise; final narrowed",
+      "assessment": "Critic says Safari 18.4 announced Ogg recording. Governing release pages announce generic Ogg media support separately from explicit WebM MediaRecorder support; pinned Cocoa recorder source also lacks Ogg. Final does not repeat Ogg-recording success: strings are exploratory and require all gates. The false criticism was not expressly rejected. Two extra exploratory probes do not impose a recording capability or remove a requested feature.",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "127; 57; 60; 99"
+      },
+      "evidence": [
+        "E05",
+        "E16",
+        "E17"
+      ]
+    },
+    {
+      "id": "F4",
+      "candidate_disposition": "Accept",
+      "independent_judgment": "SUPPORTED locator correction",
+      "assessment": "Safari 14.1 API history is true; original discovery/draft lacked the corresponding source ID. Final adds C02 and keeps it historical.",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "128; 99"
+      },
+      "evidence": [
+        "E15"
+      ]
+    },
+    {
+      "id": "F5",
+      "candidate_disposition": "Accept with amendment",
+      "independent_judgment": "SUPPORTED enrichment; no verified fix",
+      "assessment": "Original S11 omitted maintainer/reporter follow-up and closure. Final captures destination-stream/two-channel diagnosis, advice, closure and separate later report without claiming a general fix. The later reporter declined the adapted suggestion, not all possible fixes.",
+      "final": {
+        "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+        "lines": "129; 77"
+      },
+      "evidence": [
+        "E11"
+      ]
+    }
+  ],
+  "raw_evidence": [
+    {
+      "path": "evidence/apple-safari18.4-retrieval.json",
+      "bytes": 418,
+      "sha256": "8585d54409260039d46bbb1da688cbb05f7ab114606e1285d4b5dad38366b89e"
+    },
+    {
+      "path": "evidence/apple-safari18.4.json",
+      "bytes": 76350,
+      "sha256": "8fba1f334b15f6d3fbbbcce38dc7f6534972b3c8e49a51ceaf9918334575e9be"
+    },
+    {
+      "path": "evidence/capture-crd20251009-readable.txt",
+      "bytes": 215932,
+      "sha256": "93a5289345b90b45895e25dcd9399083348f20a619307fb3243fe42d3f50ec9d"
+    },
+    {
+      "path": "evidence/capture-crd20251009.html",
+      "bytes": 1064169,
+      "sha256": "a5b825c2f691cb776575a25eddf24c78aa43b93d32c5eff1a749fff798383a27"
+    },
+    {
+      "path": "evidence/capture-crd20251009.html.retrieval.json",
+      "bytes": 446,
+      "sha256": "9c6b8408e912a7993283b24295858610cee24f9077b904a1a44658a47cc14894"
+    },
+    {
+      "path": "evidence/chrome155-handler-cc-retrieval.json",
+      "bytes": 503,
+      "sha256": "44f09b19f028ca31ccee5d12c5318a819d5cee06c9be42ed97307b7456b7c7db"
+    },
+    {
+      "path": "evidence/chrome155-handler-cc.cpp",
+      "bytes": 46528,
+      "sha256": "5caf8d17e7e7f46a3f37ccba1a8dfc5222862d4cf44071b561b3d9771a0f6310"
+    },
+    {
+      "path": "evidence/chrome155-recorder-cc-retrieval.json",
+      "bytes": 495,
+      "sha256": "209e1df246bac1090f38d7d8f4e3e5be88051f855d7c966fff5710285deb6028"
+    },
+    {
+      "path": "evidence/chrome155-recorder-cc.cpp",
+      "bytes": 21559,
+      "sha256": "842b0eb5dbc02714a68bd6e43b9a4af6627864cb53c8b125c1b020c2890e7493"
+    },
+    {
+      "path": "evidence/chromium-2025-handler.cpp",
+      "bytes": 46838,
+      "sha256": "02329cfede3660189dae8da5cef3ed9dceca96b3ac86797d9a65da4006484095"
+    },
+    {
+      "path": "evidence/chromium-2025-handler.cpp.retrieval.json",
+      "bytes": 673,
+      "sha256": "c356298c424beb255c662ccfbd1b2af0555987fa90e0eefad8d08d2a2743870e"
+    },
+    {
+      "path": "evidence/hrtime-wd20260901-readable.txt",
+      "bytes": 32006,
+      "sha256": "e4c87a6dd6b088eb8bd85969d1d0bf183fd02dcec65e92508920d8f1cbdaf832"
+    },
+    {
+      "path": "evidence/hrtime-wd20260901.html",
+      "bytes": 184617,
+      "sha256": "2c263286856eace560a8618be46fd47c18ce99cc7c8daeecfc97f2d9d844ba4d"
+    },
+    {
+      "path": "evidence/hrtime-wd20260901.html.retrieval.json",
+      "bytes": 421,
+      "sha256": "088d70cbe1b341c56d50ffe83e66adfc02c4fe7c19f00336e5d6f62130387480"
+    },
+    {
+      "path": "evidence/library-master-ref.json",
+      "bytes": 4229,
+      "sha256": "694ae01148e303a8255c01ba46d704d020efeada798e52b8979f746a65b85348"
+    },
+    {
+      "path": "evidence/library-master-ref.json.retrieval.json",
+      "bytes": 489,
+      "sha256": "04ccbed735bc91c50e3c87c6ec50fd4a785814a43273ca1e279f971f2654c13c"
+    },
+    {
+      "path": "evidence/library-readme-at-review.txt",
+      "bytes": 3249,
+      "sha256": "1b2e90c5e97172100af252030b862d1b24d78519f4ccfcb33945259be667af3b"
+    },
+    {
+      "path": "evidence/library-readme-at-review.txt.retrieval.json",
+      "bytes": 503,
+      "sha256": "776d62e2d5c783fcf13615f63aa13c813825cd352a55727c81910b5eb0baeb9c"
+    },
+    {
+      "path": "evidence/library-readme-pinned.txt",
+      "bytes": 3249,
+      "sha256": "1b2e90c5e97172100af252030b862d1b24d78519f4ccfcb33945259be667af3b"
+    },
+    {
+      "path": "evidence/library-readme-pinned.txt.retrieval.json",
+      "bytes": 531,
+      "sha256": "b268bd6c9594afe705ae5c798dd0adb021fdc5881056c991d0740147e5bd76a0"
+    },
+    {
+      "path": "evidence/media-capabilities-wd20260609-readable.txt",
+      "bytes": 50339,
+      "sha256": "0f24e7f6c56f1d46b9423918577dd615bc3f301843ff1398a79c67f6df8b660a"
+    },
+    {
+      "path": "evidence/media-capabilities-wd20260609.html",
+      "bytes": 345463,
+      "sha256": "849ad2aae83cb807a908611e6635f59be271e77dc2e9b697f1c296ad3bc62baf"
+    },
+    {
+      "path": "evidence/media-capabilities-wd20260609.html.retrieval.json",
+      "bytes": 399,
+      "sha256": "ceb6e818fc6ea10f6756981d0762a9a42dda45d89ee3db1b24a2f71e2b84964c"
+    },
+    {
+      "path": "evidence/recording-wd20260316-readable.txt",
+      "bytes": 39809,
+      "sha256": "ad42c49efe09599baa09bdc7021caa40190778700adecdb31d44d31a8dcf9531"
+    },
+    {
+      "path": "evidence/recording-wd20260316-retrieval.json",
+      "bytes": 406,
+      "sha256": "7b47fce4d544de06a0af896c5e69f98f74b3cf18483c9674006b9ac170c0204b"
+    },
+    {
+      "path": "evidence/recording-wd20260316.html",
+      "bytes": 270465,
+      "sha256": "b9da30d58668525c133eb92b2f8bd80be62f31a57503f4a870990715dc7427de"
+    },
+    {
+      "path": "evidence/webaudio-wd20260922-readable.txt",
+      "bytes": 491994,
+      "sha256": "9abb973435cb8f609ab9b0573f017b6dfb9745bb7c730a1ed0a21244c296eb87"
+    },
+    {
+      "path": "evidence/webaudio-wd20260922.html",
+      "bytes": 3087268,
+      "sha256": "8dbacf76c5a3f92900a5ff915a53ee7f1ac43a1c10257fc53df541d8e99588f1"
+    },
+    {
+      "path": "evidence/webaudio-wd20260922.html.retrieval.json",
+      "bytes": 428,
+      "sha256": "af042685d25e2746dcbfaa5c7d8fd822c6b9181dbbce5d426a4e292e94452fcf"
+    },
+    {
+      "path": "evidence/webcodecs-wd20261007-readable.txt",
+      "bytes": 247746,
+      "sha256": "91df4f88eece82fb194e07bcdbe1650346108d85defc5b5bfeefc0b2baa94a98"
+    },
+    {
+      "path": "evidence/webcodecs-wd20261007.html",
+      "bytes": 1752797,
+      "sha256": "4d3cfc10f8ce7fd03c4ab6f9b79eb38873235f2f92b916f7b24334ea65e318bc"
+    },
+    {
+      "path": "evidence/webcodecs-wd20261007.html.retrieval.json",
+      "bytes": 382,
+      "sha256": "50c17740b3440a4b09ae00e3caedd687adb1e119d0604b570e06856e0bb734e3"
+    },
+    {
+      "path": "evidence/webkit-248-recorder-retrieval.json",
+      "bytes": 477,
+      "sha256": "0f846ed5db331e6cf3d236dad71aaa05fe9d3555dd146ae613e4c3ea6ebc8515"
+    },
+    {
+      "path": "evidence/webkit-248-recorder.cpp",
+      "bytes": 8570,
+      "sha256": "be51afa7e9efc9ebcd933cca01fcc2e61762652cbbcfa66fd4292f2ec0a67b76"
+    },
+    {
+      "path": "evidence/webkit-254-recorder-retrieval.json",
+      "bytes": 501,
+      "sha256": "826a664bcdd7f4f055b39b3d04516226e2169537b40fcba7dad6e5d594ac16fe"
+    },
+    {
+      "path": "evidence/webkit-254-recorder.cpp",
+      "bytes": 8805,
+      "sha256": "6827e26031033aac04e1835b50deb88c22a989c1d99aa5559d4e314bd072d7f0"
+    },
+    {
+      "path": "evidence/webkit-tags-retrieval.json",
+      "bytes": 369,
+      "sha256": "8f0ead877690d6472d5ca9b5d3532154e7a25766c55cc6acdc4e39e3987a6958"
+    },
+    {
+      "path": "evidence/webkit-tags.json",
+      "bytes": 6697,
+      "sha256": "5340d6b24b76824b318de24d512742e90abffd2ed5750882a4df1f53463e6d77"
+    }
+  ],
+  "independence": "Retrieved governing primary evidence independently; original source maps supply locators, not semantic proof. No candidate assistance or comparator outcome reviewed."
+}

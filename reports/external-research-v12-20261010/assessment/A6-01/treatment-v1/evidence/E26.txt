@@ -1,0 +1,54 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://docs.opentripplanner.org/en/v2.10.0/SIRI-Config/"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A6-01/treatment-v1/source-map.json",
+      "source_id": "E26",
+      "existing_authored_summary_fields": {
+        "version_or_commit": "OTP v2.10.0 SIRI configuration",
+        "governing_locator": "Overview; ET and SX request/response tables",
+        "independent_semantic_observation": "Nordic/EPIP subset profiles; required feedId and default PT1M; partner profile unknown."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A6-01/treatment-v1/evidence/retrieval-manifest.json",
+      "source_id": "E26",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "governing_locator": "Overview; ET and SX request/response tables"
+    }
+  ],
+  "raw_sha256": "05f98e4b38dabbfd84d22515a6f52a746acd0e05bb8ec0ee4f0d44a67c8bbe7e",
+  "original_bytes": 10566,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A6-01/treatment-v1/evidence/E26.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://docs.opentripplanner.org/en/v2.10.0/SIRI-Config/"
+  ],
+  "version": [
+    {
+      "version_or_commit": "OTP v2.10.0 SIRI configuration",
+      "governing_locator": "Overview; ET and SX request/response tables",
+      "independent_semantic_observation": "Nordic/EPIP subset profiles; required feedId and default PT1M; partner profile unknown."
+    }
+  ],
+  "selector": [
+    {
+      "governing_locator": "Overview; ET and SX request/response tables"
+    }
+  ],
+  "conditions": "UNKNOWN",
+  "rawSHA256": "05f98e4b38dabbfd84d22515a6f52a746acd0e05bb8ec0ee4f0d44a67c8bbe7e"
+}

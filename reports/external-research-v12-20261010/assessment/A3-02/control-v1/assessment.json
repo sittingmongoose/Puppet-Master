@@ -1,0 +1,1380 @@
+{
+  "assessment_id": "ER12-A3-02-control-v1",
+  "rubric": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+  "arm": "control",
+  "slot": "A3-02",
+  "scope": "ONE completed full pipeline; original frozen brief/plan and actual discovery/draft/critique/final maps",
+  "source_judgment": "FAIL",
+  "judgment_basis": "M1 is a material remaining, source-backed failure-path contradiction. Corrected lineage issues and honest external release choices do not alone cause FAIL.",
+  "semantic_qualification": false,
+  "all_six_axes_assessed": true,
+  "unassessed_axes": [],
+  "capped": false,
+  "axis_coverage": [
+    {
+      "axis": 1,
+      "name": "Original obligations and negative constraints",
+      "coverage": "ASSESSED_FULL",
+      "conclusion": "Material R1/R2 failure-path conflict M1; remaining brief obligations and all eight prohibitions are addressed. Duration requirement is retained as an honest release gate.",
+      "finding_ids": [
+        "M1"
+      ],
+      "requirements": [
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R6"
+      ],
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+          "line": 36,
+          "section": ""
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+          "line": 46,
+          "section": ""
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+          "line": 61,
+          "section": ""
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+          "line": 75,
+          "section": ""
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+          "line": 83,
+          "section": ""
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+          "line": 98,
+          "section": ""
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+          "line": 119,
+          "section": ""
+        }
+      ]
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source claims: subject, operation, version, default, unit, type, domain and exception",
+      "coverage": "ASSESSED_FULL",
+      "conclusion": "Primary standards, vendor release context, issue fixes, pinned muxer and version-bound analog were checked independently. M1 is incompatible with the track/stream/start rules. Other consequential claims are bounded or identified as inferences/candidates rather than universal support.",
+      "finding_ids": [
+        "M1"
+      ],
+      "source_ids": [
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E06",
+        "E07",
+        "E08",
+        "E09",
+        "E10",
+        "E11",
+        "E12",
+        "E13",
+        "E14",
+        "E15",
+        "E16"
+      ]
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar discovery, alternatives, implementation/history and opportunity breadth",
+      "coverage": "ASSESSED_FULL",
+      "conclusion": "Substantive native negotiation/lifecycle discovery, AudioWorklet PCM transport/encoding comparison, WASM/Worker analog with library-specific WAV exception, browser and issue/fix history, multiple/lossless format and persistence opportunities. This is useful investigation, not vacuous caution.",
+      "finding_ids": [],
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/discovery.md",
+          "line": 1,
+          "section": ""
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+          "line": 46,
+          "section": ""
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+          "line": 61,
+          "section": ""
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+          "line": 83,
+          "section": ""
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+          "line": 113,
+          "section": ""
+        }
+      ]
+    },
+    {
+      "axis": 4,
+      "name": "Wrong criticisms, corrections/rejections and exact plan dispositions",
+      "coverage": "ASSESSED_FULL",
+      "conclusion": "All nineteen original substantive sentences and embedded subclauses were matched. F1 was properly qualified, F2 accepted without pretending backgrounding is surveillance, and F3 fixed using exact source history. No material false criticism is adopted; critic misses M1 and final leaves that wrong design combination. The independently-playable-chunk table row is a minor attribution issue.",
+      "finding_ids": [
+        "M1"
+      ],
+      "criticism_ids": [
+        "F1",
+        "F2",
+        "F3"
+      ],
+      "plan_clause_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07",
+        "P08",
+        "P09",
+        "P10",
+        "P11",
+        "P12",
+        "P13",
+        "P14",
+        "P15",
+        "P16",
+        "P17",
+        "P18",
+        "P19"
+      ]
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning preserved across discovery/draft/critique/final",
+      "coverage": "ASSESSED_FULL",
+      "conclusion": "No material supported-scope loss found. Final preserves mechanisms, format gates, byte/sample limits, history qualifications, alternatives, optional capabilities and proposed/executed distinction. Corrected F1/F3 lineage defects and the uncorrected draft/final M1 are separately retained in this assessment.",
+      "finding_ids": [],
+      "lineage_ids": [
+        "L-F1",
+        "L-F3",
+        "L-M1"
+      ]
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed versus executed validation and oracle applicability",
+      "coverage": "ASSESSED_FULL",
+      "conclusion": "The finite two-browser/four-candidate-plus-default matrix covers all requested proposed checks, actual output decoding and file inspection, blocked/frozen timing, cleanup, and a conditional complete Worklet pipeline. All browser work is explicitly unrun. No runtime pass is inferred. Timing oracle remains owner-defined; MIME probe/UI stop/download-click are expressly insufficient oracles.",
+      "finding_ids": [],
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+          "line": 98,
+          "section": ""
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+          "line": 102,
+          "section": ""
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+          "line": 104,
+          "section": ""
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+          "line": 106,
+          "section": ""
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+          "line": 109,
+          "section": ""
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+          "line": 111,
+          "section": ""
+        }
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "id": "R1",
+      "exact_brief_clause": "R1: Define permission, start/pause/resume/stop, track-ended, and cleanup behavior with an explicit error state.",
+      "assessment": "DEFINED_WITH_INTERFACE_DEFECT",
+      "analysis": "Lifecycle, permission cancellation/late resolution, mute, ended, input change, final events, explicit error and teardown are covered; stream release on candidate failure conflicts with R2. M1.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+        "line": 36,
+        "section": ""
+      },
+      "source_ids": [
+        "E01",
+        "E02"
+      ]
+    },
+    {
+      "id": "R2",
+      "exact_brief_clause": "R2: Establish container/codec negotiation and fallback strategy, differentiating format support, successful construction, and successful capture/export.",
+      "assessment": "MATERIAL_DEFECT",
+      "analysis": "Distinct format/construction/capture/export gates and finite named/default policy are present, but M1 prevents promised retry on constructor/start exceptions. Exact formats remain candidates.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+        "line": 46,
+        "section": ""
+      },
+      "source_ids": [
+        "E01",
+        "E02",
+        "E04",
+        "E05",
+        "E06",
+        "E07",
+        "E12"
+      ]
+    },
+    {
+      "id": "R3",
+      "exact_brief_clause": "R3: Compare native recording with an AudioWorklet-based mechanism, including encoding responsibility, buffering, and scope/cost implications.",
+      "assessment": "COVERED",
+      "analysis": "Browser encoder/muxer versus Float32 Worklet transport and owned encoder/muxer, bounded memory/backpressure, CPU/packaging costs; no custom library chosen.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+        "line": 61,
+        "section": ""
+      },
+      "source_ids": [
+        "E03",
+        "E14",
+        "E16"
+      ]
+    },
+    {
+      "id": "R4",
+      "exact_brief_clause": "R4: Explain data-chunk timing and assembly; do not treat callback frequency as a reliable clock or claim arbitrary chunks are independently playable.",
+      "assessment": "COVERED_WITH_HONEST_RELEASE_GATE",
+      "analysis": "Event counts rejected; completed-Blob assembly and trailing events covered. Page timer is explicitly best effort, with five-minute requirement retained pending an owner threshold and actual decoded-duration tests.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+        "line": 75,
+        "section": ""
+      },
+      "source_ids": [
+        "E01",
+        "E11"
+      ]
+    },
+    {
+      "id": "R5",
+      "exact_brief_clause": "R5: Include a relevant released implementation/history detail and bind positive or negative capability statements to browser, version, API, operation, and conditions.",
+      "assessment": "COVERED",
+      "analysis": "Safari 14.1/18.4/26.0, Safari 17.4 pause fix, exact two WebKit commits and pinned Chromium muxer are distinguished from unpinned current runtime support.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+        "line": 83,
+        "section": ""
+      },
+      "source_ids": [
+        "E05",
+        "E06",
+        "E07",
+        "E08",
+        "E09",
+        "E10",
+        "E12",
+        "E15"
+      ]
+    },
+    {
+      "id": "R6",
+      "exact_brief_clause": "R6: Specify a bounded validation matrix and clearly distinguish proposed checks from executed browser observations; disclose unsupported combinations and remaining uncertainty.",
+      "assessment": "COVERED_PROPOSED_ONLY",
+      "analysis": "Finite matrix, actual operation evidence gates, failure scope, unsupported uncertainty, decoded-output duration and save-file inspection. Browser execution was optional and is not fabricated.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+        "line": 98,
+        "section": ""
+      },
+      "source_ids": [
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E11"
+      ]
+    }
+  ],
+  "negative_constraints": [
+    {
+      "id": "N1",
+      "exact_constraint": "no recording without user permission",
+      "assessment": "RETAINED",
+      "analysis": "User Start and getUserMedia permission gate; no auto-reacquisition.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+        "line": 39,
+        "section": ""
+      }
+    },
+    {
+      "id": "N2",
+      "exact_constraint": "no uploading audio",
+      "assessment": "RETAINED",
+      "analysis": "No backend/upload path; R6 network inspection proposed.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+        "line": 106,
+        "section": ""
+      }
+    },
+    {
+      "id": "N3",
+      "exact_constraint": "no background-surveillance feature",
+      "assessment": "RETAINED",
+      "analysis": "Foreground-only v1 is an explicit conservative choice, not falsely required by the no-surveillance rule.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+        "line": 10,
+        "section": ""
+      }
+    },
+    {
+      "id": "N4",
+      "exact_constraint": "no system-audio capture",
+      "assessment": "RETAINED",
+      "analysis": "audio:true/video:false microphone request; no display/system-audio request.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+        "line": 38,
+        "section": ""
+      }
+    },
+    {
+      "id": "N5",
+      "exact_constraint": "no five-minute promise based only on callback counts",
+      "assessment": "RETAINED",
+      "analysis": "Callback counts rejected; actual duration requirement not claimed satisfied through suspend.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+        "line": 79,
+        "section": ""
+      }
+    },
+    {
+      "id": "N6",
+      "exact_constraint": "no fabricated browser tests",
+      "assessment": "RETAINED",
+      "analysis": "No browser tests claimed; source review only.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+        "line": 111,
+        "section": ""
+      }
+    },
+    {
+      "id": "N7",
+      "exact_constraint": "no blanket capability denial from an old compatibility summary",
+      "assessment": "RETAINED",
+      "analysis": "Safari denial rejected using released primary vendor evidence; old library tables excluded.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+        "line": 17,
+        "section": ""
+      }
+    },
+    {
+      "id": "N8",
+      "exact_constraint": "no unbounded raw-audio buffering without a stated bound",
+      "assessment": "RETAINED",
+      "analysis": "Native v1 encoded-byte proposal; custom raw path requires preallocated bound and sample/rate/channel sizing.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+        "line": 73,
+        "section": ""
+      }
+    }
+  ],
+  "exact_plan_dispositions": [
+    {
+      "id": "P01",
+      "original_line": 6,
+      "exact_text": "I want record, pause, stop, playback, and download controls.",
+      "disposition": "RETAIN",
+      "independent_assessment": "Record/pause/stop/playback/download remain component actions; resume is explicitly covered by R1.",
+      "final_section": "R1,R2/R6",
+      "source_ids": []
+    },
+    {
+      "id": "P02",
+      "original_line": 6,
+      "exact_text": "My draft obtains a microphone stream, constructs MediaRecorder with a single hard-coded WebM/Opus MIME string, requests a callback every second, and concatenates received chunks when stopped.",
+      "disposition": "AMEND",
+      "independent_assessment": "Retain microphone input and ordered completed-recording assembly; replace one hard-coded type with negotiated candidates/default; 1000 ms is a slice request, not a clock. All four embedded clauses assessed.",
+      "final_section": "R1,R2,R4",
+      "source_ids": [
+        "E01",
+        "E02"
+      ]
+    },
+    {
+      "id": "P03",
+      "original_line": 6,
+      "exact_text": "It increments a duration counter on each callback and stops at 300 callbacks.",
+      "disposition": "REJECT_AND_QUALIFY",
+      "independent_assessment": "Reject 300 callbacks as duration. Final proposes monotonic active-time stop but explicitly withholds strict duration compliance through suspension pending owner threshold and validation.",
+      "final_section": "R4/F1",
+      "source_ids": [
+        "E01",
+        "E11"
+      ]
+    },
+    {
+      "id": "P04",
+      "original_line": 6,
+      "exact_text": "On errors it currently just resets the controls; the permission/track cleanup path is missing.",
+      "disposition": "AMEND_WITH_MATERIAL_DEFECT",
+      "independent_assessment": "Explicit errors/cleanup replace silent reset; candidate-failure cleanup conflicts with format retries (M1).",
+      "final_section": "R1/R2",
+      "source_ids": [
+        "E01",
+        "E02"
+      ]
+    },
+    {
+      "id": "P05",
+      "original_line": 8,
+      "exact_text": "I am carrying an old assumption that Safari cannot use MediaRecorder and therefore must always take a custom encoder path.",
+      "disposition": "REJECT",
+      "independent_assessment": "Old Safari blanket denial is disproved by Safari 14.1 vendor history; Worklet is optional rather than mandatory for all Safari.",
+      "final_section": "Decision/R5",
+      "source_ids": [
+        "E05",
+        "E06",
+        "E07"
+      ]
+    },
+    {
+      "id": "P06",
+      "original_line": 8,
+      "exact_text": "I also assumed that Web Audio produces WAV files automatically, that choosing a sample rate guarantees the hardware records at that rate, and that a MIME support probe proves recording will work.",
+      "disposition": "REJECT_ALL_THREE_ASSUMPTIONS",
+      "independent_assessment": "Web Audio does not automatically export WAV; requested/graph rate does not prove physical hardware rate; preflight does not prove capture/export. Three embedded assumptions independently checked.",
+      "final_section": "correction table/R2/R3",
+      "source_ids": [
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E16"
+      ]
+    },
+    {
+      "id": "P07",
+      "original_line": 8,
+      "exact_text": "These assumptions have not been verified against a selected released browser.",
+      "disposition": "PRESERVE_UNCERTAINTY",
+      "independent_assessment": "Unpinned exact browser/OS runtime behavior is left unverified; release/source evidence is separately bounded.",
+      "final_section": "R5/R6",
+      "source_ids": [
+        "E05",
+        "E06",
+        "E07"
+      ]
+    },
+    {
+      "id": "P08",
+      "original_line": 8,
+      "exact_text": "Please research them rather than treating them as required product restrictions.",
+      "disposition": "FOLLOW",
+      "independent_assessment": "Investigates false assumptions as research questions, not product restrictions.",
+      "final_section": "Decision/correction table",
+      "source_ids": [
+        "E01",
+        "E02",
+        "E03",
+        "E05"
+      ]
+    },
+    {
+      "id": "P09",
+      "original_line": 10,
+      "exact_text": "The fallback sketch uses an AudioWorklet to collect raw samples and keeps all samples until stop, then encodes a WAV download.",
+      "disposition": "AMEND",
+      "independent_assessment": "Custom PCM/WAV path compared but not selected; raw accumulation must be capped and an encoder/container supplied. Native remains bounded first choice.",
+      "final_section": "R3",
+      "source_ids": [
+        "E03",
+        "E16"
+      ]
+    },
+    {
+      "id": "P10",
+      "original_line": 10,
+      "exact_text": "I have not budgeted memory for five minutes, resolved channel layout, chosen an encoder, or addressed a page suspension.",
+      "disposition": "INVESTIGATE_AND_BOUND",
+      "independent_assessment": "Memory math 48,000×300×1×4=57,600,000 bytes (54.93 MiB); PCM16 payload=28,800,000 bytes. Rate/channels multiply cost. Encoder/layout choice deferred because no Worklet implementation selected; page suspension and cap explicitly investigated.",
+      "final_section": "R3/R4",
+      "source_ids": [
+        "E03",
+        "E11",
+        "E16"
+      ]
+    },
+    {
+      "id": "P11",
+      "original_line": 10,
+      "exact_text": "A format fallback should preserve the user's capture capability where support exists, but the page must honestly explain an unsupported operation.",
+      "disposition": "MATERIAL_INCOMPLETE",
+      "independent_assessment": "Advertised native candidate/default fallback supports this intention, but R1 destroys the live track on the exact constructor/start-exception path R2 needs (M1). Honest unsupported messages otherwise defined.",
+      "final_section": "R1 item 2/R2 retries",
+      "source_ids": [
+        "E01",
+        "E02"
+      ]
+    },
+    {
+      "id": "P12",
+      "original_line": 10,
+      "exact_text": "No new upload service is allowed.",
+      "disposition": "RETAIN",
+      "independent_assessment": "No upload/backend introduced.",
+      "final_section": "Decision/R6",
+      "source_ids": []
+    },
+    {
+      "id": "P13",
+      "original_line": 12,
+      "exact_text": "Keep R1–R6 and the negative constraints binding.",
+      "disposition": "RETAIN_WITH_R2_DEFECT",
+      "independent_assessment": "All R1–R6 and eight negative constraints remain explicit; R2 coherence fails M1.",
+      "final_section": "R1–R6/closing constraint statement",
+      "source_ids": []
+    },
+    {
+      "id": "P14",
+      "original_line": 12,
+      "exact_text": "The revision needs explicit track cleanup, a truthful duration rule, format selection with failure handling, and a bounded buffer/export policy.",
+      "disposition": "PARTLY_SATISFIED",
+      "independent_assessment": "Cleanup, duration honesty and bounded export are developed. Format failure handling remains incoherent under M1. Duration meaning/threshold are disclosed release decisions, not a false completed guarantee. All four embedded needs assessed.",
+      "final_section": "R1/R2/R3/R4",
+      "source_ids": [
+        "E01",
+        "E02",
+        "E03",
+        "E11"
+      ]
+    },
+    {
+      "id": "P15",
+      "original_line": 12,
+      "exact_text": "It may choose native capture for some combinations and a fallback or explicit refusal for others if the evidence justifies that boundary.",
+      "disposition": "JUSTIFIED_BOUNDARY_WITH_M1",
+      "independent_assessment": "Native-first and explicit refusal without unselected custom encoder are justified for a small component. Refusal must not be conflated with failure to exercise the promised native fallback (M1).",
+      "final_section": "Decision/R2/R3",
+      "source_ids": [
+        "E01",
+        "E03",
+        "E16"
+      ]
+    },
+    {
+      "id": "P16",
+      "original_line": 12,
+      "exact_text": "No claim of identical audio quality or cross-browser file compatibility is required.",
+      "disposition": "RETAIN",
+      "independent_assessment": "Does not require identical quality or cross-browser playback; same-browser preview and optional external-player tests are scoped correctly.",
+      "final_section": "Decision/R2/R6",
+      "source_ids": []
+    },
+    {
+      "id": "P17",
+      "original_line": 14,
+      "exact_text": "Proposed validation only: denied permission; constructor/start failure despite a probe; a track ending mid-memo; backgrounding that delays callbacks; pause/resume; stop with pending data; playback and download for each selected format; resource cleanup after cancel.",
+      "disposition": "COVER_ALL_EIGHT_PROPOSED_CHECKS",
+      "independent_assessment": "Denial; probe-positive constructor/start failure; ended track; delayed background callbacks; pause/resume; trailing stop data; every offered format preview/download; cancel cleanup each appear in finite R6 rows. None asserted executed. Fallback behavior oracle can expose M1 if executed.",
+      "final_section": "R6",
+      "source_ids": [
+        "E01",
+        "E02",
+        "E11"
+      ]
+    },
+    {
+      "id": "P18",
+      "original_line": 14,
+      "exact_text": "A small manual browser check would establish only the exact browser/version/operation exercised, not universal support.",
+      "disposition": "RETAIN",
+      "independent_assessment": "Exact build/OS/type/operation observations are required, with no universal inference from a small manual witness.",
+      "final_section": "R5/R6",
+      "source_ids": []
+    },
+    {
+      "id": "P19",
+      "original_line": 14,
+      "exact_text": "No browser has been opened and no audio has been recorded for this fixture.",
+      "disposition": "RETAIN",
+      "independent_assessment": "Final explicitly says no browser opened or audio captured, queried, previewed or downloaded in the candidate stages. No contradictory runtime artifacts supplied.",
+      "final_section": "R6 not executed",
+      "source_ids": []
+    }
+  ],
+  "criticism_dispositions": [
+    {
+      "id": "F1",
+      "critic_classification": "Material incomplete — five-minute limit can overrun",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/A3-02/control/stages/critic/critique.md",
+        "line": 24,
+        "section": ""
+      },
+      "final_disposition": "Accept and strengthen",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+        "line": 9,
+        "section": ""
+      },
+      "independent_assessment": "Properly qualified in final. Critic continuation-through-freeze wording was not an observed browser behavior. Final explicitly says sources do not establish whether recording continues and does not claim duration compliance. Active/output/wall-clock semantics and permitted tolerance are honest owner decisions after timer/gathering investigation; not a remaining source failure by themselves.",
+      "source_ids": [
+        "E01",
+        "E11"
+      ],
+      "lineage_id": "L-F1"
+    },
+    {
+      "id": "F2",
+      "critic_classification": "Honestly unresolved external input — hidden-page behavior",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/A3-02/control/stages/critic/critique.md",
+        "line": 30,
+        "section": ""
+      },
+      "final_disposition": "Accept",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+        "line": 10,
+        "section": ""
+      },
+      "independent_assessment": "Correctly preserves conservative foreground-only policy and explicitly declines to treat incidental backgrounding as necessarily surveillance. No extra background implementation requirement is invented.",
+      "source_ids": [],
+      "governing_input": "original brief negative constraint and backgrounding environment"
+    },
+    {
+      "id": "F3",
+      "critic_classification": "Minor locator/history omission — WebKit issue 258567",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/A3-02/control/stages/critic/critique.md",
+        "line": 36,
+        "section": ""
+      },
+      "final_disposition": "Accept",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+        "line": 11,
+        "section": ""
+      },
+      "independent_assessment": "Correctly adds RESOLVED FIXED and 266130@main/8c01a9fbfd35 on 2023-07-18 while retaining system-output/OS/reporter bounds and unverified Safari release inclusion.",
+      "source_ids": [
+        "E08"
+      ],
+      "lineage_id": "L-F3"
+    }
+  ],
+  "material_findings": [
+    {
+      "id": "M1",
+      "severity": "MATERIAL",
+      "category": "inconsistent consequential cleanup/fallback design",
+      "status": "REMAINING_IN_FINAL",
+      "title": "Constructor/start cleanup makes the promised native-format retry unavailable",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+          "line": 39,
+          "section": "R1 item 2"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+          "line": 44,
+          "section": "R1 item 7"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+          "line": 54,
+          "section": "R2 bounded retries"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+          "line": 55,
+          "section": "R2 UA-default fallback"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/draft.md",
+          "line": 29,
+          "section": "R1 item 2"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/draft.md",
+          "line": 44,
+          "section": "R2 bounded retries"
+        }
+      ],
+      "exact_candidate_text": [
+        "A constructor or synchronous `start()` exception releases the stream and reports `error`.",
+        "If failure occurs before any nonempty chunk and the track is still live, finalize that recorder and try the next candidate."
+      ],
+      "analysis": "The first instruction is unconditional. Its cleanup semantics stop acquired tracks, while the second requires a live track. Thus a named-format constructor/start failure before bytes reaches terminal microphone cleanup instead of the stated remaining-candidate/default attempt. The plan specifies no reacquisition step for that retry. This is an internal plan conflict, not a claim that code was implemented or a browser failed.",
+      "primary_evidence": [
+        {
+          "id": "E02",
+          "locator": "§4.2 active/inactive definition and §4.3.1 stop algorithm",
+          "text_lines": [
+            391,
+            394,
+            913,
+            927
+          ]
+        },
+        {
+          "id": "E01",
+          "locator": "§2.3 start algorithm inactive-stream rejection",
+          "text_lines": [
+            225,
+            240
+          ]
+        }
+      ],
+      "source_backed_inference": "App track.stop ends the track. A stream with all tracks ended is inactive. MediaRecorder.start rejects an inactive stream. A fresh recorder cannot make the stopped microphone track live.",
+      "materiality": "R2 and exact original P11 require a coherent fallback that preserves capture where supported. The explicitly anticipated constructor/start-failure-despite-probe path cannot follow the advertised finite fallback, even in a permitted case where another native format or the UA default would be viable on the original live stream. No nonexistent deployment or requirement to build a custom fallback is assumed.",
+      "lineage": "Present in investigator draft; not detected in the independent critique; retained verbatim in final. It is not one of the corrected F1/F3 defects.",
+      "counterinterpretation_considered": "R2 could be intended as an exception to R1, or error cleanup could be intended only after all retries. The final states neither exception and expressly makes constructor/start failure release the stream. Guessing that precedence or an unmentioned reacquisition would repair the plan rather than assess its actual instructions.",
+      "affected_axes": [
+        1,
+        2,
+        4
+      ],
+      "affected_requirements": [
+        "R1/R2 interface",
+        "R2",
+        "P11",
+        "P14 format-failure handling"
+      ]
+    }
+  ],
+  "limits": [
+    {
+      "id": "Q1",
+      "kind": "HONEST_UNRESOLVED_EXTERNAL",
+      "detail": "Exact target Chrome/Safari build/OS, offered MIME strings and actual permission/capture/playback/download behavior remain untested. Browser execution was optional, so no invented deployment or browser test obligation is imposed."
+    },
+    {
+      "id": "Q2",
+      "kind": "HONEST_UNRESOLVED_EXTERNAL",
+      "detail": "Five-minute active/output/wall-clock meaning and permissible overrun need an owner decision; the final retains the requirement, documents timer insufficiency and proposes decoded-output threshold checks. This qualification is not itself a remaining material error."
+    },
+    {
+      "id": "Q3",
+      "kind": "MINOR_ATTRIBUTION",
+      "detail": "Final correction table calls independent playability of every Blob a released assumption/gap, but the exact user plan only proposed concatenation. R4 explicitly requires the chunk-playability caution, so coverage is correct; the attribution is imprecise."
+    },
+    {
+      "id": "Q4",
+      "kind": "SOURCE_SCOPE_LIMIT",
+      "detail": "Safari 18.4 Ogg sentence announces OS-scoped container support without explicitly saying MediaRecorder output; the final treats Ogg as a candidate requiring exact audio-only runtime checks, so it does not claim a supported Ogg recorder. Safari 18.4/26.0 ALAC overlap remains acknowledged."
+    },
+    {
+      "id": "Q5",
+      "kind": "SOURCE_SCOPE_LIMIT",
+      "detail": "Web Audio configurable render quantum is checked in the 2026-09-22 Working Draft. The final says actual buffer length should govern and does not claim all target browsers expose the newest configuration properties."
+    },
+    {
+      "id": "Q6",
+      "kind": "EVIDENCE_LIMIT",
+      "detail": "Candidate source directories contain authored indexes, not captured original primary-page responses. They were read in full; this reviewer independently saved current primary retrievals. Those cannot prove the exact webpage bytes seen at candidate access time."
+    }
+  ],
+  "unknowns": [
+    "Exact target builds and current format/runtime results",
+    "Owner duration basis/overrun threshold",
+    "Whether recording continues in particular browser freeze or sleep",
+    "Safari branded release inclusion for the issue commits",
+    "Raw candidate Goal-event authentication and critic independent native proof",
+    "Actual served service tier, inference time, effective comparable latency and billing",
+    "Any unauthorized assistance from the reported scope overread"
+  ],
+  "lineage_findings": [
+    {
+      "id": "L-F1",
+      "stage": "investigator draft/critic",
+      "status": "QUALIFIED_IN_FINAL",
+      "detail": "Draft timer scheme lacked an explicit overrun/validation boundary; final explicitly preserves the five-minute release requirement while withholding compliance and qualifying the critic continuation claim."
+    },
+    {
+      "id": "L-F3",
+      "stage": "investigator discovery/draft",
+      "status": "CORRECTED_IN_FINAL",
+      "detail": "WebKit 258567 final fixed status/commit omitted; final adds exact fixed history without inventing a Safari release guarantee."
+    },
+    {
+      "id": "L-M1",
+      "stage": "investigator draft → critic → final",
+      "status": "REMAINS",
+      "detail": "Stream release versus live-track retry contradiction remains; critic did not detect it."
+    }
+  ],
+  "useful_discoveries_and_alternatives": [
+    {
+      "discovery": "MediaCapabilities record preflight versus legacy isTypeSupported, construction, actual bytes and export",
+      "value": "Separates capability/configuration from an actual recording and export; does not treat a probe as proof.",
+      "source_ids": [
+        "E01",
+        "E04"
+      ]
+    },
+    {
+      "discovery": "Late permission result after Cancel, mute/ended distinction, explicit microphone switching boundaries",
+      "value": "Makes permission/device lifecycle concrete beyond button resets.",
+      "source_ids": [
+        "E02"
+      ]
+    },
+    {
+      "discovery": "AudioWorklet PCM transport and owned encoding/muxing with measurable memory budgets",
+      "value": "Discriminates a custom processing mechanism from a ready-made WAV recorder and surfaces backpressure/CPU/packaging costs.",
+      "source_ids": [
+        "E03"
+      ]
+    },
+    {
+      "discovery": "opus-media-recorder 0.8.0 as an established WASM/Worker analog; its WAV events are a library-specific assembly exception",
+      "value": "Useful unfamiliar alternative with real asset and format responsibilities; explicitly excludes its stale browser denial from current evidence.",
+      "source_ids": [
+        "E14",
+        "E16"
+      ]
+    },
+    {
+      "discovery": "Safari release changes plus two specific WebKit incident/fix histories and pinned Chromium muxer",
+      "value": "Shows why old blanket compatibility tables fail and motivates pause/flush/nonempty data regressions without declaring current targets broken.",
+      "source_ids": [
+        "E05",
+        "E06",
+        "E07",
+        "E08",
+        "E09",
+        "E10",
+        "E12",
+        "E15"
+      ]
+    },
+    {
+      "discovery": "One native output, optional verified lossless/second output, local persistence/OPFS and qualified custom encoder",
+      "value": "Preserves opportunity breadth without expanding the brief into an app or adding uploads.",
+      "source_ids": [
+        "E03",
+        "E07",
+        "E16"
+      ]
+    }
+  ],
+  "validation": {
+    "executed_by_candidates": "Source and frozen-file research only, as declared; no browser/recording/preview/download witness supplied",
+    "executed_by_reviewer": "Full assigned artifact inspection, independent HTTPS primary-source retrieval and semantic checking, simple memory arithmetic, hash/freeze integrity checks",
+    "proposed": "Finite six-group target-browser matrix in final; optional Worklet pipeline only if selected",
+    "oracle_applicability": "A MIME probe, UI timer stop or download click cannot alone qualify capture/export, duration or persistence. Decoded file duration and actual saved-file/type inspection are proposed. Exact build/operation qualification is preserved.",
+    "runtime_oracle_result": "UNKNOWN / NOT EXECUTED"
+  },
+  "delivery_native_protocol_time": {
+    "delivery": {
+      "status": "COMPLETE_FROZEN_ARTIFACT_CHAIN",
+      "final": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+      "all_required_stage_artifacts_present": true,
+      "separate_critic_disposition_or_check_files": "None present in critic stage directory; complete critique and map checked."
+    },
+    "native": {
+      "basis": "Frozen recorded receipt artifacts; reviewer did not access live candidate native threads",
+      "investigator": {
+        "activation_and_completion_record": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/native-goal-record.json",
+        "recorded_activation": {
+          "threadId": "01a1241e-f3f2-7270-a7f8-b8344bf163d5",
+          "objective": "ER12 investigator stage, run A3-02-control: execute ER12_RUNTIME/runs/A3-02/control/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "active",
+          "tokensUsed": 0,
+          "timeUsedSeconds": 0,
+          "createdAt": 1791607407,
+          "updatedAt": 1791607407
+        },
+        "recorded_completion": {
+          "threadId": "01a1241e-f3f2-7270-a7f8-b8344bf163d5",
+          "objective": "ER12 investigator stage, run A3-02-control: execute ER12_RUNTIME/runs/A3-02/control/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "complete",
+          "tokensUsed": 275077,
+          "timeUsedSeconds": 1233,
+          "createdAt": 1791607407,
+          "updatedAt": 1791608640
+        },
+        "raw_harness_authentication": "UNKNOWN"
+      },
+      "critic": {
+        "basis": "Fields reported in authored source-map only; no separate exact activation/completion response file supplied",
+        "recorded_fields": {
+          "tool": "functions.create_goal",
+          "activation_observed": true,
+          "objective": "ER12 critic stage, run A3-02-control: execute ER12_RUNTIME/runs/A3-02/control/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "threadId": "01a12433-4f14-70b1-bcf8-16e2e9f7070e",
+          "status_at_activation": "active",
+          "tokensUsed_at_activation": 0,
+          "timeUsedSeconds_at_activation": 0,
+          "createdAt_epoch_seconds": 1791608744,
+          "updatedAt_epoch_seconds": 1791608744,
+          "provider": "UNKNOWN; not returned by the native Goal tool",
+          "model": "UNKNOWN; not returned by the native Goal tool",
+          "terminal_status": "complete",
+          "terminal_observed": true,
+          "tokensUsed_at_terminal": 173022,
+          "timeUsedSeconds_at_terminal": 509,
+          "updatedAt_epoch_seconds_at_terminal": 1791609253
+        },
+        "independent_native_proof": "UNKNOWN"
+      },
+      "reviser": {
+        "exact_recorded_activation_response": {
+          "goal": {
+            "threadId": "01a1243e-8e07-7be0-a4be-6cd652ea8502",
+            "objective": "ER12 reviser stage, run A3-02-control: execute ER12_RUNTIME/runs/A3-02/control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+            "status": "active",
+            "tokensUsed": 0,
+            "timeUsedSeconds": 0,
+            "createdAt": 1791609472,
+            "updatedAt": 1791609472
+          },
+          "remainingTokens": null,
+          "completionBudgetReport": null
+        },
+        "exact_recorded_completion_response": {
+          "goal": {
+            "threadId": "01a1243e-8e07-7be0-a4be-6cd652ea8502",
+            "objective": "ER12 reviser stage, run A3-02-control: execute ER12_RUNTIME/runs/A3-02/control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+            "status": "complete",
+            "tokensUsed": 179788,
+            "timeUsedSeconds": 776,
+            "createdAt": 1791609472,
+            "updatedAt": 1791610248
+          },
+          "remainingTokens": null,
+          "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+        },
+        "raw_harness_authentication": "UNKNOWN"
+      },
+      "actual_native_provider_model": "UNKNOWN; not returned in native receipt fields"
+    },
+    "t3": {
+      "basis": "Assigned root terminal freeze records observed final task result",
+      "final_stage_taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-02-control-reviser-v1",
+      "reported_status": "completed",
+      "reported_hasPendingChildRuns": false,
+      "reported_providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "reported_model": "gpt-6-luna",
+      "other_stages_live_status": "UNKNOWN; no other outcome/status labels inspected"
+    },
+    "method": {
+      "status": "REPORTED_SCOPE_NONCOMPLIANCE",
+      "basis": "Final T3 result in assigned terminal freeze explicitly admits hashing pre-existing unlisted control/backup files during inventory",
+      "unauthorized_assistance": "UNKNOWN; scope overread is reported, but contents/use/assistance are not established",
+      "semantic_judgment_separate": true,
+      "reviewer_protocol": "Bounded independent review; no candidate contact/feedback/repair; no other arms/results/history; no delegation; no Git/publication or account changes"
+    },
+    "time": {
+      "stage_contract_minutes": [
+        30,
+        12,
+        18
+      ],
+      "recorded_native_elapsed_seconds": {
+        "investigator": 1233,
+        "critic": 509,
+        "reviser": 776
+      },
+      "interpretation": "These are recorded native occupancy fields, not inference time, effective comparable pipeline latency, or bills. Critic fields are authored reporting. Stage artifact final times in the root freeze fall before assigned absolute stage deadlines. Root terminal observation is 2026-10-10T05:31:31.049714+00:00.",
+      "pipeline_effective_latency": "UNKNOWN",
+      "billing": "UNKNOWN",
+      "effective_service_tier": "UNKNOWN; stage maps and change records request default, but there is no serving/billing attestation",
+      "savings_or_paired_comparison": "NOT_ASSESSED; only one arm assigned"
+    },
+    "reviewer_goal": {
+      "basis": "Actual create_goal called before substantive reads; actual get_goal response saved",
+      "goal_threadId": "01a1244b-86c2-7c92-a540-879dce5ffdcb",
+      "active_observation_file": "evidence/reviewer-native-active.json",
+      "completion": "Pending until all judgment artifacts are saved; exact completion response will be saved separately"
+    }
+  },
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "inspection": "FULL authored/control text read; native receipt fields read where present"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A3-02/brief.md",
+      "bytes": 2869,
+      "sha256": "64d7c999cf74b0022f481d6e5412866fc4b9b63d05c1726ceef4658a0d8d712e",
+      "inspection": "FULL authored/control text read; native receipt fields read where present"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A3-02/plan.md",
+      "bytes": 2470,
+      "sha256": "b977457667677faa27fe5256d090e48ec798eae592ffd7d860e4c3c239167b79",
+      "inspection": "FULL authored/control text read; native receipt fields read where present"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/terminal-science-freeze-root.json",
+      "bytes": 8252,
+      "sha256": "a5d94dfaa169cf5055c406b684e45c8d1e80b47008b0e906e4207999eff5b774",
+      "inspection": "FULL authored/control text read; native receipt fields read where present"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/inputs/brief.md",
+      "bytes": 2869,
+      "sha256": "64d7c999cf74b0022f481d6e5412866fc4b9b63d05c1726ceef4658a0d8d712e",
+      "inspection": "FULL authored/control text read; native receipt fields read where present"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/assignment.md",
+      "bytes": 3712,
+      "sha256": "b9ae49a8c0ca3cd91ed09343d8d9a599389d5762f1fea685743d33035fcca831",
+      "inspection": "FULL authored/control text read; native receipt fields read where present"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/input-map.json",
+      "bytes": 781,
+      "sha256": "3222507edaa1d81829677186b97361e8cd2cbfa6409a139f93eb7a57edb74f41",
+      "inspection": "FULL authored/control text read; native receipt fields read where present"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/freeze.json",
+      "bytes": 1721,
+      "sha256": "a474766eb516c6875d300fec44453453f78a008fe9bfde9a61b2925d0464e3db",
+      "inspection": "FULL authored/control text read; native receipt fields read where present"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/source-map.json",
+      "bytes": 10297,
+      "sha256": "5bde84fe10d40a6966477bebcd01c7246a88df3a254a543ebcc265ccb3f9111a",
+      "inspection": "FULL authored/control text read; native receipt fields read where present"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/sources/index.md",
+      "bytes": 12422,
+      "sha256": "78948a42cacc262879c72af0bc079a8c65d23cdf2549c37201d093fac266443e",
+      "inspection": "FULL authored/control text read; native receipt fields read where present"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/service-tier-change.json",
+      "bytes": 489,
+      "sha256": "658559bfb8db74d07070225d40a17ad556002746f5f9bd3db7d076fe8686fe29",
+      "inspection": "FULL authored/control text read; native receipt fields read where present"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/critic/assignment.md",
+      "bytes": 3306,
+      "sha256": "19b4dc6db6e4a6f66617cd769e134d41e15e8cf2c3210b87dfc0a968c3cd750a",
+      "inspection": "FULL authored/control text read; native receipt fields read where present"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/critic/input-map.json",
+      "bytes": 1457,
+      "sha256": "5380d8cd68f220a9225a83e093d7f38602bc746bd4c7881a8dd6ecfb4d731304",
+      "inspection": "FULL authored/control text read; native receipt fields read where present"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/critic/freeze.json",
+      "bytes": 3202,
+      "sha256": "2bf5bcf38af1f11a185cc6ed77bf293a65b316f70b4628f4e5c28e00e7dafce5",
+      "inspection": "FULL authored/control text read; native receipt fields read where present"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/critic/source-map.json",
+      "bytes": 14070,
+      "sha256": "29d80fc8ece41075619eaec44fc7f49d9e1eb1183bb62eeb916996254ad80c98",
+      "inspection": "FULL authored/control text read; native receipt fields read where present"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/critic/sources/index.md",
+      "bytes": 3365,
+      "sha256": "35cb4d6e17e0fe3d10004bb7a525f00605a95c1766b1989165ef01096e1fc5d6",
+      "inspection": "FULL authored/control text read; native receipt fields read where present"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/critic/service-tier-change.json",
+      "bytes": 477,
+      "sha256": "8e545d6822ba307a87d1e98b9168e356a65a3a43ff491bb8089f1e2f580cc583",
+      "inspection": "FULL authored/control text read; native receipt fields read where present"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/assignment.md",
+      "bytes": 3988,
+      "sha256": "ebd5441f4db8b9cbf156ed6b9ba56de2b6b633133ebb48c02b8c6ee9b11641eb",
+      "inspection": "FULL authored/control text read; native receipt fields read where present"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/input-map.json",
+      "bytes": 1768,
+      "sha256": "970566c8b0562793cfb5d73d8596a32e7d395368d3979f4b11a59a29e2503bfa",
+      "inspection": "FULL authored/control text read; native receipt fields read where present"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/freeze.json",
+      "bytes": 4060,
+      "sha256": "b5acf71d7bab5130f8aed0ad2e57c59465d8c0475bb41256e7d0422e77db20e5",
+      "inspection": "FULL authored/control text read; native receipt fields read where present"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/source-map.json",
+      "bytes": 18347,
+      "sha256": "ad6e879a6c626d2c55bed212f0422b2dbf7150aa9effe47148e95734453a493a",
+      "inspection": "FULL authored/control text read; native receipt fields read where present"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/sources/index.md",
+      "bytes": 11064,
+      "sha256": "4847084d3ec643e13dcddf821bc324c27d87b3ac6f222c6019c1ced252ae49b4",
+      "inspection": "FULL authored/control text read; native receipt fields read where present"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/service-tier-change.json",
+      "bytes": 479,
+      "sha256": "f2e6252ce838d2ea52467bf71dc0f503ee4f2dcecb6bf9e92951342da09c880f",
+      "inspection": "FULL authored/control text read; native receipt fields read where present"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/discovery.md",
+      "bytes": 11644,
+      "sha256": "756c86b1eaaf3c272ddda3f65fde869380a50351bd7d028edcb473b60c329734",
+      "inspection": "FULL authored/control text read; native receipt fields read where present"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/draft.md",
+      "bytes": 22923,
+      "sha256": "1ae0b7ef68c5bd0f51f5470a28fb49f45da62ee16d36537350520eb685741b38",
+      "inspection": "FULL authored/control text read; native receipt fields read where present"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/revealed-plan.md",
+      "bytes": 2470,
+      "sha256": "b977457667677faa27fe5256d090e48ec798eae592ffd7d860e4c3c239167b79",
+      "inspection": "FULL authored/control text read; native receipt fields read where present"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/plan-reveal.json",
+      "bytes": 427,
+      "sha256": "6618d8c2b92799b46c3ce00b3843795e49048538df2200832db165f7b95a681c",
+      "inspection": "FULL authored/control text read; native receipt fields read where present"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/native-goal-record.json",
+      "bytes": 2244,
+      "sha256": "d926af9a85ac7835b38c34c1f972a5413d360401abc69b29dbc36f976165fb02",
+      "inspection": "FULL authored/control text read; native receipt fields read where present"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/critic/critique.md",
+      "bytes": 7935,
+      "sha256": "65a8fe4685d55db2005e8cca8a94571a8d2e7733d81bef91e81fe3731ddaef5f",
+      "inspection": "FULL authored/control text read; native receipt fields read where present"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+      "bytes": 28397,
+      "sha256": "a0bb1532e129d42e715f99fd51918814deffc3104f3d28e9863f7f3fcec6fc5b",
+      "inspection": "FULL authored/control text read; native receipt fields read where present"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/native-goal-activation.json",
+      "bytes": 465,
+      "sha256": "2c31182154dd0556701aec65e232d1c7b5ec6dd3ee119d4b60629d38feb10f83",
+      "inspection": "FULL authored/control text read; native receipt fields read where present"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/native-goal-active-confirmation.json",
+      "bytes": 472,
+      "sha256": "748940b72217e1551ea0e91dabb94407a612ef3f2b8a06cda110df480c578bdc",
+      "inspection": "FULL authored/control text read; native receipt fields read where present"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/native-goal-completion.json",
+      "bytes": 794,
+      "sha256": "5c9a6aece5c6f605694be2a51cdbb6ca872b80fdaef89dad9b91dba7be873703",
+      "inspection": "FULL authored/control text read; native receipt fields read where present"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A3-02/control-v1/root-review-request.json",
+      "bytes": 3593,
+      "sha256": "84cab680febf6ca0377fce7735896259cd779934cd90d07c4deacfba074f96f2",
+      "inspection": "FULL authored/control text read; native receipt fields read where present"
+    }
+  ],
+  "sources": [
+    {
+      "id": "E01",
+      "url": "https://www.w3.org/TR/2026/WD-mediastream-recording-20260316/",
+      "version_or_commit": "W3C Working Draft 2026-03-16",
+      "locator": "§2.1; §2.3 start, stop, pause/resume, isTypeSupported; §2.4",
+      "evidence_file": "evidence/E01-text.txt",
+      "sha256": "b9da30d58668525c133eb92b2f8bd80be62f31a57503f4a870990715dc7427de"
+    },
+    {
+      "id": "E02",
+      "url": "https://www.w3.org/TR/mediacapture-streams/",
+      "version_or_commit": "W3C Candidate Recommendation Draft 2025-10-09",
+      "locator": "§4.2 active stream; §4.3.1 track lifecycle/stop/getSettings; §10 getUserMedia; §11 constraints",
+      "evidence_file": "evidence/E02-text.txt",
+      "sha256": "a5b825c2f691cb776575a25eddf24c78aa43b93d32c5eff1a749fff798383a27"
+    },
+    {
+      "id": "E03",
+      "url": "https://www.w3.org/TR/webaudio/",
+      "version_or_commit": "W3C Working Draft 2026-09-22",
+      "locator": "§1.24 MediaStreamAudioSourceNode; §1.32 AudioWorklet; §2.5–2.6 quantum/rendering",
+      "evidence_file": "evidence/E03-text.txt",
+      "sha256": "8dbacf76c5a3f92900a5ff915a53ee7f1ac43a1c10257fc53df541d8e99588f1"
+    },
+    {
+      "id": "E04",
+      "url": "https://www.w3.org/TR/media-capabilities/",
+      "version_or_commit": "W3C Working Draft 2026-06-09",
+      "locator": "§2.1.3 MediaEncodingType; §2.1.8 AudioConfiguration",
+      "evidence_file": "evidence/E04-text.txt",
+      "sha256": "849ad2aae83cb807a908611e6635f59be271e77dc2e9b697f1c296ad3bc62baf"
+    },
+    {
+      "id": "E05",
+      "url": "https://webkit.org/blog/11648/new-webkit-features-in-safari-14-1/",
+      "version_or_commit": "Safari 14.1; article published 2021-04-29",
+      "locator": "MediaRecorder API; separate WebM Support headings",
+      "evidence_file": "evidence/E05-text.txt",
+      "sha256": "ab6077488deebb221e3b6314c4bef560591197bc7484ae3aec4c7be9142c2230"
+    },
+    {
+      "id": "E06",
+      "url": "https://webkit.org/blog/16574/webkit-features-in-safari-18-4/",
+      "version_or_commit": "Safari 18.4; 2025-03-31 article",
+      "locator": "Media section",
+      "evidence_file": "evidence/E06-text.txt",
+      "sha256": "6acbe75ab52a20f5ff9a3d94717a18fabc9a154f291c261a5b9e634a9b0b5710"
+    },
+    {
+      "id": "E07",
+      "url": "https://webkit.org/blog/17333/webkit-features-in-safari-26-0/",
+      "version_or_commit": "Safari 26.0; 2025-09-15 article",
+      "locator": "Media section",
+      "evidence_file": "evidence/E07-text.txt",
+      "sha256": "ebe0484c74dd22e1597d7d9713daebe2f493e177e8d93f1f4964c93cd8357b01"
+    },
+    {
+      "id": "E08",
+      "url": "https://bugs.webkit.org/show_bug.cgi?id=258567",
+      "version_or_commit": "Safari 16.4/16.5.1 incident; 266130@main (8c01a9fbfd35), 2023-07-18",
+      "locator": "Comments 4–13; issue status",
+      "evidence_file": "evidence/E08-text.txt",
+      "sha256": "e724b539f162aa2f89cae81e8c9b31dae11c3e27bce1201bf3f7b9cc1c60c02e"
+    },
+    {
+      "id": "E09",
+      "url": "https://bugs.webkit.org/show_bug.cgi?id=243837",
+      "version_or_commit": "iPad 8th generation/iOS 15.6; 253529@main (f2967879748b), 2022-08-17",
+      "locator": "Report; comments 2–5",
+      "evidence_file": "evidence/E09-text.txt",
+      "sha256": "6f16acea02ea6671456f9f38d3cc71ed49270069f4b9e4268e76ea7f1b02baf6"
+    },
+    {
+      "id": "E10",
+      "url": "https://developer.chrome.com/blog/mediarecorder",
+      "version_or_commit": "Historical article last updated 2016-01-30",
+      "locator": "Support note; Browser support",
+      "evidence_file": "evidence/E10-text.txt",
+      "sha256": "88be18ad93f0ffe75f4fbbe2e6948f0235139fdfc368be0edd62d3244b3b546c"
+    },
+    {
+      "id": "E11",
+      "url": "https://developer.chrome.com/docs/web-platform/page-lifecycle-api",
+      "version_or_commit": "Live official documentation retrieved 2026-10-10; Chrome 68 lifecycle additions",
+      "locator": "Frozen state; recommendations",
+      "evidence_file": "evidence/E11-text.txt",
+      "sha256": "12c6884eaec3a2c2f645d1f66a30e74d866d1973cc7c6fe21656323dc850762c"
+    },
+    {
+      "id": "E12",
+      "url": "https://chromium.googlesource.com/chromium/src/media/+/042aaa189184e3d303c01946589eb84926d91000/muxers/README.md",
+      "version_or_commit": "Commit 042aaa189184e3d303c01946589eb84926d91000",
+      "locator": "README codec list",
+      "evidence_file": "evidence/E12-text.txt",
+      "sha256": "1a0f6473087a55a7acd8982f670b167f912ba05b1314938c701e5c88f3736b8a"
+    },
+    {
+      "id": "E13",
+      "url": "https://raw.githubusercontent.com/kbumsik/opus-media-recorder/master/README.md",
+      "version_or_commit": "Unpinned master at independent retrieval",
+      "locator": "Architecture, bundler setup, limitations",
+      "evidence_file": "evidence/E13-text.txt",
+      "sha256": "ae8cfd6d308c95933234310b9680d1317a9d2fffb72d81212fded04f1c6a15bc"
+    },
+    {
+      "id": "E14",
+      "url": "https://registry.npmjs.org/opus-media-recorder/0.8.0",
+      "version_or_commit": "Release 0.8.0; gitHead dd2f1d1249f9b7a66678f9833f8c01521eb4a2d9",
+      "locator": "version, gitHead, repository fields",
+      "evidence_file": "evidence/E14-text.txt",
+      "sha256": "2c01f36fa7a87a89fdd76bd399285932622dabe52bfa49d3cff941d8bfefe4d3"
+    },
+    {
+      "id": "E15",
+      "url": "https://developer.apple.com/tutorials/data/documentation/safari-release-notes/safari-17_4-release-notes.json",
+      "version_or_commit": "Safari 17.4 (19618.1.15), 2024-03-05",
+      "locator": "Media → Resolved Issues; issue 115979604",
+      "evidence_file": "evidence/E15-text.txt",
+      "sha256": "74cda1f52243dd55d643c621b207ce83d6984babaa7b1d62b7e74f6b77509beb"
+    },
+    {
+      "id": "E16",
+      "url": "https://raw.githubusercontent.com/kbumsik/opus-media-recorder/dd2f1d1249f9b7a66678f9833f8c01521eb4a2d9/README.md",
+      "version_or_commit": "npm 0.8.0 gitHead dd2f1d1249f9b7a66678f9833f8c01521eb4a2d9",
+      "locator": "Architecture; bundler; MIME and limitations",
+      "evidence_file": "evidence/E16-text.txt",
+      "sha256": "ae8cfd6d308c95933234310b9680d1317a9d2fffb72d81212fded04f1c6a15bc"
+    }
+  ],
+  "review_envelope": {
+    "start_utc": "2026-10-10T05:31:46Z",
+    "deadline_utc": "2026-10-10T06:16:46Z",
+    "judgment_saved_utc": "2026-10-10T05:44:44.840231+00:00",
+    "elapsed_seconds_at_judgment_save": 778.840231,
+    "cap_minutes": 45,
+    "full_declared_scope_complete": true
+  },
+  "original_freeze_preserved": true,
+  "hashes_are_semantic_proof": false,
+  "output_files": [
+    "assessment.md",
+    "assessment.json",
+    "source-map.json",
+    "evidence/index.md",
+    "evidence/original-inspected-hashes.json",
+    "evidence/freeze-integrity-before.json"
+  ]
+}

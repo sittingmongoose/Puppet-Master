@@ -1,0 +1,274 @@
+{
+  "observed_at_utc": "2026-10-10T05:41:31.119454+00:00",
+  "basis": "root observed terminal final T3 task/no pending; separate from native proof",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/critic/critique-dispositions.json",
+      "bytes": 1776,
+      "sha256": "a08c6fcf83d90113cf781560fc0153913ef68525c045e2cc8a9ee120916de080",
+      "mtime_ns": 1791610363710343945
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/critic/critique.md",
+      "bytes": 5202,
+      "sha256": "75c33753abca5e821b80443d26ea8499f77a9646e6c025138903ed7ba7fee27d",
+      "mtime_ns": 1791610332771177506
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/critic/source-map.json",
+      "bytes": 15864,
+      "sha256": "bde04edf5d7188a99b839add53c725915598829aea765f7555868e54f90bf415",
+      "mtime_ns": 1791610363711343951
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/critic/sources/index.md",
+      "bytes": 3096,
+      "sha256": "0be93f64d6ca9bfad2330c4525eba50c14a1b81c783fffbc4ced37e8c5c65daf",
+      "mtime_ns": 1791610332772177512
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/discovery.md",
+      "bytes": 9189,
+      "sha256": "25c962b93672822b88cc92914254cf199304d48a0b04434268d87ee25e5593f7",
+      "mtime_ns": 1791609397976318071
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/draft.md",
+      "bytes": 17907,
+      "sha256": "bb20d8358546c63bb90377bb2c50ffcd3ce5af235c3a9fd93ff059f5112655d2",
+      "mtime_ns": 1791609626429837515
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/critique-dispositions.json",
+      "bytes": 5323,
+      "sha256": "6be0c631dc5abfa70aab257f8e335f8d83feead543a14ab87387046dc65ef93f",
+      "mtime_ns": 1791610818799470030
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/final.md",
+      "bytes": 19574,
+      "sha256": "00067eed02c45c85004316d78b5b2bf9b664d24c95cff6e198f5174d567e147c",
+      "mtime_ns": 1791610583084477621
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/source-map.json",
+      "bytes": 16668,
+      "sha256": "a2871939bd7767ba4055f32f435d6b46e8e68a557314653018f0b2bf76ed8102",
+      "mtime_ns": 1791610741739291359
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/sources/S01-presentation-api-v3.md",
+      "bytes": 1420,
+      "sha256": "fcad89742abe21601920072a3740f4c923852522fc7a2baae2c43c02e916ac5b",
+      "mtime_ns": 1791610583081568940
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/sources/S02-presentation-v3-changelog.md",
+      "bytes": 955,
+      "sha256": "ac3a45e71a99731431536d8a179c22b812d62e805716dc96776c2cbf3a99e9ec",
+      "mtime_ns": 1791610583081761521
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/sources/S03-canvas-coordinate-space.md",
+      "bytes": 1099,
+      "sha256": "963eeab80f5b0853b52292896ab2ac7b3a26fa7fe0e516f0c38a6e1c7db89db2",
+      "mtime_ns": 1791610583081915727
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/sources/S04-web-annotation-model.md",
+      "bytes": 1085,
+      "sha256": "651147ac6e65b0a28f74aaf86df9306778083f40a3b28ffe9e2246ebbe15ce4f",
+      "mtime_ns": 1791610583082129722
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/sources/S05-image-api-v3.md",
+      "bytes": 1124,
+      "sha256": "0e3e8ad3fde912ba230eaec681b2440d76f462c267647f797b482bd6f953f716",
+      "mtime_ns": 1791610583082276600
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/sources/S06-content-state-v1.md",
+      "bytes": 885,
+      "sha256": "83cc057922c908709c79ec955c56ce74a36273018a314ac7412eb4f106c13a1f",
+      "mtime_ns": 1791610583082424895
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/sources/S07-mirador-v4-breaking-change.md",
+      "bytes": 945,
+      "sha256": "9f056d5f7bcc63d5cf4e2252a5ade87c2254929d191f643ac9db5780092883dd",
+      "mtime_ns": 1791610583082560210
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/sources/S08-mirador-current-release.md",
+      "bytes": 755,
+      "sha256": "56b27d67f873628b8eca2ff96657c78f434b59ac5238ee255b6ea0d41cf71e05",
+      "mtime_ns": 1791610583082695380
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/sources/S09-mirador-annotations.md",
+      "bytes": 978,
+      "sha256": "4a53867dc9a6bcf5de3197aa82be8cd97a290b56b53f7c2d39e07ce622b556fd",
+      "mtime_ns": 1791610583082830643
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/sources/S10-plugin-install-issue-75.md",
+      "bytes": 1484,
+      "sha256": "77ed3b7c4ccae1aabe0ec154d3b774a8bd6766a01f27c53581cdd7993e4bafe2",
+      "mtime_ns": 1791610741738616276
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/sources/S11-mae-compatibility.md",
+      "bytes": 1156,
+      "sha256": "14f996319b05aa07512b3f8612ea33f0b27b948d4458464d93b5ef94b5bc4e16",
+      "mtime_ns": 1791610583083114626
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/sources/S12-universal-viewer-config.md",
+      "bytes": 960,
+      "sha256": "f827585df3d87c9bedbd174513b509c4537f5c27168d419baff31a5742e5e943",
+      "mtime_ns": 1791610583083250015
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/sources/S13-universal-viewer-release.md",
+      "bytes": 871,
+      "sha256": "3f3d3a38fd13ee622d99d6841f0d844b7b61bc2a2c1c1c45f3cefe585b101751",
+      "mtime_ns": 1791610583083399389
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/sources/S14-iiif-viewer-guide.md",
+      "bytes": 1236,
+      "sha256": "91f564cda608842e703a33d90a3e106afb0cf3642d38aed3428c0f34bbaad69c",
+      "mtime_ns": 1791610741738788098
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/sources/index.md",
+      "bytes": 2202,
+      "sha256": "6831fbce2b731502fb07b019584f335d76bfc641519b8ca979e68864dcdd0f45",
+      "mtime_ns": 1791610583084097596
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 5932,
+      "sha256": "41c98c70681d7ab5e6534f387777df30ec06ff94ee93cdb071e124fe1a0c8ff6",
+      "mtime_ns": 1791609452911737071
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/source-map.json",
+      "bytes": 14710,
+      "sha256": "f98f2e62aefc4afd46e1f47fec03e028eb28188c7c81592d9f804d1b269126cd",
+      "mtime_ns": 1791609437432607659
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/sources/S01-presentation-api-v3.md",
+      "bytes": 1420,
+      "sha256": "fcad89742abe21601920072a3740f4c923852522fc7a2baae2c43c02e916ac5b",
+      "mtime_ns": 1791609397990318174
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/sources/S02-presentation-v3-changelog.md",
+      "bytes": 955,
+      "sha256": "ac3a45e71a99731431536d8a179c22b812d62e805716dc96776c2cbf3a99e9ec",
+      "mtime_ns": 1791609397997318225
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/sources/S03-canvas-coordinate-space.md",
+      "bytes": 1099,
+      "sha256": "963eeab80f5b0853b52292896ab2ac7b3a26fa7fe0e516f0c38a6e1c7db89db2",
+      "mtime_ns": 1791609398004318276
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/sources/S04-web-annotation-model.md",
+      "bytes": 1085,
+      "sha256": "651147ac6e65b0a28f74aaf86df9306778083f40a3b28ffe9e2246ebbe15ce4f",
+      "mtime_ns": 1791609398010318320
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/sources/S05-image-api-v3.md",
+      "bytes": 1124,
+      "sha256": "0e3e8ad3fde912ba230eaec681b2440d76f462c267647f797b482bd6f953f716",
+      "mtime_ns": 1791609398017318372
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/sources/S06-content-state-v1.md",
+      "bytes": 885,
+      "sha256": "83cc057922c908709c79ec955c56ce74a36273018a314ac7412eb4f106c13a1f",
+      "mtime_ns": 1791609398025318431
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/sources/S07-mirador-v4-breaking-change.md",
+      "bytes": 945,
+      "sha256": "9f056d5f7bcc63d5cf4e2252a5ade87c2254929d191f643ac9db5780092883dd",
+      "mtime_ns": 1791609398032318482
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/sources/S08-mirador-current-release.md",
+      "bytes": 755,
+      "sha256": "56b27d67f873628b8eca2ff96657c78f434b59ac5238ee255b6ea0d41cf71e05",
+      "mtime_ns": 1791609398038318526
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/sources/S09-mirador-annotations.md",
+      "bytes": 978,
+      "sha256": "4a53867dc9a6bcf5de3197aa82be8cd97a290b56b53f7c2d39e07ce622b556fd",
+      "mtime_ns": 1791609398045318577
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/sources/S10-plugin-install-issue-75.md",
+      "bytes": 885,
+      "sha256": "50b1413874e32455958842c53946cf7f54d3dadc7aefd090ca8debb73d074dcc",
+      "mtime_ns": 1791609398052318629
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/sources/S11-mae-compatibility.md",
+      "bytes": 1156,
+      "sha256": "14f996319b05aa07512b3f8612ea33f0b27b948d4458464d93b5ef94b5bc4e16",
+      "mtime_ns": 1791609398058318673
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/sources/S12-universal-viewer-config.md",
+      "bytes": 960,
+      "sha256": "f827585df3d87c9bedbd174513b509c4537f5c27168d419baff31a5742e5e943",
+      "mtime_ns": 1791609398065318724
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/sources/S13-universal-viewer-release.md",
+      "bytes": 871,
+      "sha256": "3f3d3a38fd13ee622d99d6841f0d844b7b61bc2a2c1c1c45f3cefe585b101751",
+      "mtime_ns": 1791609398071318768
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/sources/S14-iiif-viewer-guide.md",
+      "bytes": 941,
+      "sha256": "e002706e091cf23544e3ef52684428358bd31481389d9357e17ecf6a0add2b27",
+      "mtime_ns": 1791609398079318827
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/sources/index.md",
+      "bytes": 2229,
+      "sha256": "834d9eae857d05b569eab0b6ff325ec276bac4075bc38d6dd24e91b56625b031",
+      "mtime_ns": 1791609397982318115
+    }
+  ],
+  "final_stage_task": {
+    "slot": "A2-02",
+    "arm": "treatment",
+    "stage": "investigator",
+    "helper": "ER12_RUNTIME/helpers/topology-v1",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A2-A2-02-treatment-investigator-topology-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A2-A2-02-treatment-investigator-topology-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A2-A2-02-treatment-investigator-topology-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A2-A2-02-treatment-investigator-topology-v1",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A2-A2-02-treatment-investigator-topology-v1:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "Completed only the investigator stage under the original native Goal. The complete proposal and source bundle are saved in [final.md](ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/final.md), with the [source map](ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/source-map.json), [critique dispositions](ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/critique-dispositions.json), and [source index](ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/sources/index.md).\n\nC01 is amended to attribute the viewer comparison to the IIIF community guide and avoid inferring that Universal Viewer lacks annotation capability. C02 is amended: issue #75\u2019s tentative master-branch comment is dated June 21, 2023, and establishes no released fix ([issue #75](https://github.com/ProjectMirador/mirador-annotations/issues/75), [IIIF guide](https://guides.iiif.io/using_iiif_resources/)). No product validation was run.\n\n`seal-final` succeeded. Its report left `scope_fidelity_proven` and `source_truth_proven` false; I do not treat the seal as certifying either. The same native Goal is complete. Its [activation receipt](ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/native-goal-activation.json) and [completion receipt](ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/native-goal-completion.json) are preserved. The completion response reports 416,226 tokens and 1,906 seconds elapsed.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A2-A2-02-treatment-investigator-topology-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:8f069367-fba0-48fb-8bea-00e169999758",
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "summary": "Completed only the investigator stage under the original native Goal. The complete proposal and source bundle are saved in [final.md](ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/final.md), with the [source map](ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/source-map.json), [critique dispositions](ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/critique-dispositions.json), and [source index](ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/sources/index.md).\n\nC01 is amended to attribute the viewer comparison to the IIIF community guide and avoid inferring that Universal Viewer lacks annotation capability. C02 is amended: issue #75\u2019s tentative master-branch comment is dated June 21, 2023, and establishes no released fix ([issue #75](https://github.com/ProjectMirador/mirador-annotations/issues/75), [IIIF guide](https://guides.iiif.io/using_iiif_resources/)). No product validation was run.\n\n`seal-final` succeeded. Its report left `scope_fidelity_proven` and `source_truth_proven` false; I do not treat the seal as certifying either. The same native Goal is complete. Its [activation receipt](ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/native-goal-activation.json) and [completion receipt](ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/native-goal-completion.json) are preserved. The completion response reports 416,226 tokens and 1,906 seconds elapsed.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A2-A2-02-treatment-investigator-topology-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:8f069367-fba0-48fb-8bea-00e169999758",
+    "waitTimedOut": false
+  }
+}

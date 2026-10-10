@@ -1,0 +1,469 @@
+{
+  "run_id": "A2-02-control",
+  "stage": "reviser",
+  "discovery_basis": "Independent review of the complete brief, discovery, draft, released plan and reveal receipt; public primary pages independently opened during critic stage. Source IDs S1-S21 retained unchanged; none rebound.",
+  "accessed_at_utc": "2026-10-10T05:14:23Z",
+  "source_id_policy": "Preserve S1-S21 exactly as carried in the investigator source index; never rebind IDs. Original exact URL, release/version, locator, source access UTC, operation, condition and applicability remain. critic_review records this stage’s direct check and limits.",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "IIIF Presentation API 3.0",
+      "url": "https://iiif.io/api/presentation/3.0/",
+      "version_or_commit": "3.0.0; latest stable shown",
+      "locator": "Canvas, Annotation Page, Annotation, API requests, Authentication",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Defines Manifest/Canvas identity, dimensions, referenced image/annotation resources, Canvas fragments, supplementing transcriptions, and authenticated resource flow.",
+      "governing_condition_default_exception": "Canvas ID should be HTTPS and persistent; referenced resources must be dereferenceable; clients process according to declared API/context and supported properties; viewer presentation details remain client dependent.",
+      "applicability": "Primary model for proposed v3 support, Canvas targets, page-level/rectangular notes, remote sources, and explicitly scoped version behavior.",
+      "critic_review": {
+        "checked_at_utc": "2026-10-10T05:34:11Z",
+        "observed_operation": "Opened Presentation API 3.0; confirmed 3.0.0 stable, 2.1.1 previous, Canvas frame-of-reference and annotation model concepts. No collection behavior checked.",
+        "governing_condition_default_exception": "The original condition/default/exception field is retained unchanged. This critic check establishes public-document content only, not collection or product operation.",
+        "applicability": "Used to review the proposal claim against the exact source/version/locator in this entry. No product validation is inferred."
+      },
+      "reviser_review": {
+        "checked_at_utc": "2026-10-10T05:37:00Z",
+        "observed_operation": "Reopened Presentation API 3.0 status, Canvas and URI Recommendations sections. Confirmed Canvas is a frame of reference, uses dimensions for spatial extent, requires a URI without fragment, and published resource URIs should be as persistent and unchanging as possible.",
+        "governing_condition_default_exception": "The recommendation for persistent URIs is not a version-history or image-content checksum guarantee. Presentation API creation/update is outside the spec; referenced resources must be dereferenceable.",
+        "applicability": "Supports separating stable Canvas identity from observed image revision and preserving unknown revision state when a source publishes no reliable change signal."
+      }
+    },
+    {
+      "id": "S2",
+      "title": "IIIF Presentation API 2.1.1",
+      "url": "https://iiif.io/api/presentation/2.1/",
+      "version_or_commit": "2.1.1; previous version to 3.0.0",
+      "locator": "Canvas, @id/@type, images, otherContent, annotation lists",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Specifies v2 Canvas identifiers/dimensions, image links and external annotation-list links; distinguishes image pixels from Canvas coordinates.",
+      "governing_condition_default_exception": "Canvas has an HTTP(S) @id, integer width/height, labels; otherContent/AnnotationList is optional; clients require remote resources to be served and may encounter auth/CORS restrictions.",
+      "applicability": "Basis for accepting legacy collection manifests and mapping their AnnotationList/resource/on structures without rewriting source data.",
+      "critic_review": {
+        "checked_at_utc": "2026-10-10T05:34:11Z",
+        "observed_operation": "Opened Presentation API 2.1.1 around resource types; confirmed Canvas/page and Sequence structures. No v2 collection data or migration tested.",
+        "governing_condition_default_exception": "The original condition/default/exception field is retained unchanged. This critic check establishes public-document content only, not collection or product operation.",
+        "applicability": "Used to review the proposal claim against the exact source/version/locator in this entry. No product validation is inferred."
+      },
+      "reviser_review": {
+        "checked_at_utc": "2026-10-10T05:37:00Z",
+        "observed_operation": "Reopened Presentation API 2.1.1 status and resource type sections. Confirmed v2 declares Canvas/frame-of-reference and uses its own Sequence, AnnotationList, Layer, resource/on structures.",
+        "governing_condition_default_exception": "This is the v2.1.1 source structure, not a v3 serialization contract. Remote resources and clients remain subject to access and support.",
+        "applicability": "Supports the revised conditional v2 read and explicit v2-sidecar or separately labeled v3 export branch."
+      }
+    },
+    {
+      "id": "S3",
+      "title": "IIIF Presentation API 3.0 Change Log",
+      "url": "https://iiif.io/api/presentation/3.0/change-log/",
+      "version_or_commit": "3.0.0 major release; change log dated with the spec",
+      "locator": "Sections 1.1.2, 1.2.1, 1.4.3, requirements changes",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Records adoption of W3C Web Annotation, renaming @id/@type to id/type, and replacing AnnotationList/Layer with AnnotationPage/AnnotationCollection.",
+      "governing_condition_default_exception": "This is a major-version migration with property/class differences; older v2 forms are not a v3 serialization contract.",
+      "applicability": "Supports version-aware import/export and an explicit compatibility risk for text, target, lists, and layers.",
+      "critic_review": {
+        "checked_at_utc": "2026-10-10T05:34:11Z",
+        "observed_operation": "Checked change log: v3 adopts W3C Web Annotation and renames @id/@type to id/type; changelog characterizes practical effects as limited but real.",
+        "governing_condition_default_exception": "The original condition/default/exception field is retained unchanged. This critic check establishes public-document content only, not collection or product operation.",
+        "applicability": "Used to review the proposal claim against the exact source/version/locator in this entry. No product validation is inferred."
+      },
+      "reviser_review": {
+        "checked_at_utc": "2026-10-10T05:37:00Z",
+        "observed_operation": "Reopened change-log sections 1.4.3 and 1.5. Confirmed replacement of AnnotationList/Layer by AnnotationPage/AnnotationCollection and adoption of Web Annotation; the change log says practical effects are limited but real.",
+        "governing_condition_default_exception": "The major-version model/identifier changes remain relevant to explicit parsing and export selection; documentation alone does not show any adapter round-tripping pilot data.",
+        "applicability": "Supports the v2/v3 compatibility decision and loss-report gate, without claiming a conversion was implemented."
+      }
+    },
+    {
+      "id": "S4",
+      "title": "W3C Web Annotation Data Model",
+      "url": "https://www.w3.org/TR/annotation-model/",
+      "version_or_commit": "W3C Recommendation, 2017-02-23; Web Annotation Data Model 1.0",
+      "locator": "Textual Body, FragmentSelector, TextQuoteSelector, Specific Resources",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Defines embedded text bodies and target selectors; supports multiple selectors to improve later discovery.",
+      "governing_condition_default_exception": "TextualBody should carry value, language/format when relevant; FragmentSelector value follows a media-type fragment syntax; consumer support is not guaranteed for every selector.",
+      "applicability": "Supports structured transcription/comment bodies and interoperable selector serialization, while requiring viewer-specific verification.",
+      "critic_review": {
+        "checked_at_utc": "2026-10-10T05:34:11Z",
+        "observed_operation": "Opened W3C Web Annotation; checked selector/target examples, embedded textual body, and xywh fragment relationship. No client interoperability tested.",
+        "governing_condition_default_exception": "The original condition/default/exception field is retained unchanged. This critic check establishes public-document content only, not collection or product operation.",
+        "applicability": "Used to review the proposal claim against the exact source/version/locator in this entry. No product validation is inferred."
+      }
+    },
+    {
+      "id": "S5",
+      "title": "W3C Media Fragments URI 1.0 (basic)",
+      "url": "https://www.w3.org/TR/media-frags/",
+      "version_or_commit": "W3C Recommendation, 2012-09-25; Media Fragments URI 1.0 basic",
+      "locator": "Section 4.2.2 Spatial Dimension",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Defines rectangular xywh fragments in pixels or integer percentages relative to source media.",
+      "governing_condition_default_exception": "Pixel is default; percent changes x/width relative to image width and y/height relative to image height; rectangles outside bounds are clipped or invalid per the stated cases.",
+      "applicability": "Supports region-address syntax and scaling discussion; use alongside stored Canvas dimensions and review because media-fragment support varies by client.",
+      "critic_review": {
+        "checked_at_utc": "2026-10-10T05:34:11Z",
+        "observed_operation": "Opened Media Fragments; checked xywh pixel default and percent x/width, y/height semantics. Browser support untested.",
+        "governing_condition_default_exception": "The original condition/default/exception field is retained unchanged. This critic check establishes public-document content only, not collection or product operation.",
+        "applicability": "Used to review the proposal claim against the exact source/version/locator in this entry. No product validation is inferred."
+      }
+    },
+    {
+      "id": "S6",
+      "title": "IIIF Image API 3.0",
+      "url": "https://iiif.io/api/image/3.0/",
+      "version_or_commit": "3.0.0 stable specification",
+      "locator": "Identifier, region, Image Information, CORS, server responses and authentication",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Defines remote image service identifiers, region requests including pct coordinates, advertised features, CORS recommendation and HTTP errors/authentication boundaries.",
+      "governing_condition_default_exception": "Capabilities depend on the service profile and image-information document; CORS is recommended; auth and access control remain external; 401/403/404/503 have distinct meanings.",
+      "applicability": "Supports preflight checks for remote image availability and warns that annotation syntax cannot make restricted/unavailable images usable.",
+      "critic_review": {
+        "checked_at_utc": "2026-10-10T05:34:11Z",
+        "observed_operation": "Opened Image API 3.0; checked CORS recommendations, image profiles/capabilities, and 401/403/404/503 meanings. No image endpoint requested.",
+        "governing_condition_default_exception": "The original condition/default/exception field is retained unchanged. This critic check establishes public-document content only, not collection or product operation.",
+        "applicability": "Used to review the proposal claim against the exact source/version/locator in this entry. No product validation is inferred."
+      }
+    },
+    {
+      "id": "S7",
+      "title": "Image and Canvas with Differing Dimensions",
+      "url": "https://iiif.io/api/cookbook/recipe/0004-canvas-size/",
+      "version_or_commit": "IIIF Presentation 3.0 cookbook recipe; page accessed at the recorded UTC",
+      "locator": "Implementation notes and restrictions",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Demonstrates a Canvas coordinate space larger than the current image so annotations align after image replacement with different pixel dimensions.",
+      "governing_condition_default_exception": "Source and Canvas aspect ratios must remain consistent; the recipe’s scale pattern does not address changed crops or content.",
+      "applicability": "Directly applicable to pilot pages with different image sizes; supports separating durable coordinates from delivered pixels.",
+      "critic_review": {
+        "checked_at_utc": "2026-10-10T05:34:11Z",
+        "observed_operation": "Opened differing-dimensions recipe; confirmed source-image/Canvas aspect ratios should stay consistent to avoid unpredictable distortion.",
+        "governing_condition_default_exception": "The original condition/default/exception field is retained unchanged. This critic check establishes public-document content only, not collection or product operation.",
+        "applicability": "Used to review the proposal claim against the exact source/version/locator in this entry. No product validation is inferred."
+      },
+      "reviser_review": {
+        "checked_at_utc": "2026-10-10T05:37:00Z",
+        "observed_operation": "Reopened the IIIF differing-dimensions recipe. Confirmed a larger Canvas can provide the coordinate frame for a current smaller image and that source-image/Canvas aspect ratio should remain consistent.",
+        "governing_condition_default_exception": "The recipe covers geometry under consistent aspect ratio; it does not establish unchanged image content, support for crops/orientation changes, or a revision identifier.",
+        "applicability": "Supports Canvas-space mapping for same-content size changes and the explicit review/unknown state for changed or unversioned sources."
+      }
+    },
+    {
+      "id": "S8",
+      "title": "Simplest Annotation — full Canvas",
+      "url": "https://iiif.io/api/cookbook/recipe/0266-full-canvas-annotation/",
+      "version_or_commit": "IIIF Presentation 3.0 cookbook recipe; page accessed at the recorded UTC",
+      "locator": "Restrictions and example",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Demonstrates a text annotation targeting a whole Canvas and warns viewers may omit a visual indicator for a whole-Canvas target.",
+      "governing_condition_default_exception": "A whole-page annotation can be valid without a selector but visible markers may vary; a full-area selector may be more widely supported.",
+      "applicability": "Supports testing whole-page note discovery in each pinned viewer.",
+      "critic_review": {
+        "checked_at_utc": "2026-10-10T05:34:11Z",
+        "observed_operation": "Opened full-Canvas recipe; confirmed Canvas-only target, possible lack of visual indicator, and wider support for a full-area selector.",
+        "governing_condition_default_exception": "The original condition/default/exception field is retained unchanged. This critic check establishes public-document content only, not collection or product operation.",
+        "applicability": "Used to review the proposal claim against the exact source/version/locator in this entry. No product validation is inferred."
+      }
+    },
+    {
+      "id": "S9",
+      "title": "Transcripts, Captions, and Subtitles — General Considerations",
+      "url": "https://iiif.io/api/cookbook/recipe/0231-transcript-meta-recipe/",
+      "version_or_commit": "IIIF Presentation 3.0 cookbook recipe; page accessed at the recorded UTC",
+      "locator": "Transcript options 1–3",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Describes download through rendering, one supplementing annotation alongside a resource, and synchronized spatial/temporal fragments.",
+      "governing_condition_default_exception": "The mechanism depends on intended user experience; a rendering link is a presentation pointer, not an implemented download UI.",
+      "applicability": "Evidence for retaining the optional text-only bundle as a separate product choice; does not establish that a viewer already provides the bundle.",
+      "critic_review": {
+        "checked_at_utc": "2026-10-10T05:34:11Z",
+        "observed_operation": "Opened transcript meta-recipe; confirmed rendering link is one experience-dependent download option, not a built-in export UI.",
+        "governing_condition_default_exception": "The original condition/default/exception field is retained unchanged. This critic check establishes public-document content only, not collection or product operation.",
+        "applicability": "Used to review the proposal claim against the exact source/version/locator in this entry. No product validation is inferred."
+      }
+    },
+    {
+      "id": "S10",
+      "title": "IIIF Cookbook Viewer Matrix",
+      "url": "https://iiif.io/api/cookbook/recipe/matrix/",
+      "version_or_commit": "Generated current matrix, accessed at the recorded UTC; no fixed release",
+      "locator": "Annotation Recipes, including Simple Annotation — Tagging",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "For that recipe the matrix marks Mirador Yes and UV No; it gives per-recipe rather than blanket capability.",
+      "governing_condition_default_exception": "Matrix is generated from current cookbook recipes and is subject to correction; Yes/No is limited to that recipe/version and not a full product test.",
+      "applicability": "Evidence against promising identical annotation behavior in both viewers; informs a recipe-specific pilot matrix.",
+      "critic_review": {
+        "checked_at_utc": "2026-10-10T05:34:11Z",
+        "observed_operation": "Checked matrix header and Simple Annotation — Tagging row: Mirador Yes, UV No for that recipe only; not a blanket product test.",
+        "governing_condition_default_exception": "The original condition/default/exception field is retained unchanged. This critic check establishes public-document content only, not collection or product operation.",
+        "applicability": "Used to review the proposal claim against the exact source/version/locator in this entry. No product validation is inferred."
+      }
+    },
+    {
+      "id": "S11",
+      "title": "IIIF Viewers",
+      "url": "https://iiif.io/get-started/iiif-viewers/",
+      "version_or_commit": "IIIF project viewer overview, accessed at the recorded UTC",
+      "locator": "Universal Viewer and Mirador feature descriptions",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Describes Universal Viewer as embeddable and broad across IIIF images/audio/video and 3D/PDF; describes Mirador as multi-up and image-comparison capable.",
+      "governing_condition_default_exception": "High-level feature description; it does not establish local integration, authoring, storage, or all annotation features.",
+      "applicability": "Supports a bounded product comparison by pilot priority, not a claim that either viewer is the full product.",
+      "critic_review": {
+        "checked_at_utc": "2026-10-10T05:34:11Z",
+        "observed_operation": "Opened IIIF viewer overview; confirmed high-level Mirador multi-up/compare and Universal Viewer embeddable image/audio/video/3D/PDF descriptions only.",
+        "governing_condition_default_exception": "The original condition/default/exception field is retained unchanged. This critic check establishes public-document content only, not collection or product operation.",
+        "applicability": "Used to review the proposal claim against the exact source/version/locator in this entry. No product validation is inferred."
+      }
+    },
+    {
+      "id": "S12",
+      "title": "Announcing Mirador 4.0",
+      "url": "https://github.com/ProjectMirador/mirador/discussions/4200",
+      "version_or_commit": "Mirador 4.0 announced 2025-10-30",
+      "locator": "Upgrade and plugin-support sections",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Describes React/MUI changes and required plugin/integration/theme updates; calls out community Mirador 4 annotation plugins separately.",
+      "governing_condition_default_exception": "Version 4 is a breaking upgrade; plugin availability/compatibility depends on selected plugin and integration.",
+      "applicability": "Supports pinning viewer/plugin versions and treating annotation authoring as a separate integration decision.",
+      "critic_review": {
+        "checked_at_utc": "2026-10-10T05:34:11Z",
+        "observed_operation": "Opened Mirador 4.0 announcement; confirmed React 19/MUI 7 update and breaking custom plugin/integration/theme changes plus community-plugin references.",
+        "governing_condition_default_exception": "The original condition/default/exception field is retained unchanged. This critic check establishes public-document content only, not collection or product operation.",
+        "applicability": "Used to review the proposal claim against the exact source/version/locator in this entry. No product validation is inferred."
+      }
+    },
+    {
+      "id": "S13",
+      "title": "mirador-annotations README",
+      "url": "https://github.com/ProjectMirador/mirador-annotations",
+      "version_or_commit": "Repository master README viewed 2026-10-10; no release/tag pinned in this source",
+      "locator": "About, Persisting Annotations, Installing",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Provides rectangle/oval/polygon/text-descriptor tools; local-storage demo; states plugin is Mirador 3-only and does not work with Mirador 4; persistent storage requires an annotation server.",
+      "governing_condition_default_exception": "Moving branch with no release/version identified on repository page; persistence is not provided by localStorage after browser state loss; server adapters are separately configured.",
+      "applicability": "Distinguishes Mirador plugin capability from core viewer and proves why v4 authoring support must be selected/tested.",
+      "critic_review": {
+        "checked_at_utc": "2026-10-10T05:34:11Z",
+        "observed_operation": "Opened repository README; confirmed Mirador 3 tools, no Mirador 4 compatibility, local-storage demo and annotation-server persistence requirement.",
+        "governing_condition_default_exception": "The original condition/default/exception field is retained unchanged. This critic check establishes public-document content only, not collection or product operation.",
+        "applicability": "Used to review the proposal claim against the exact source/version/locator in this entry. No product validation is inferred."
+      }
+    },
+    {
+      "id": "S14",
+      "title": "Mirador issue #4198 — notification dot missing in M4",
+      "url": "https://github.com/ProjectMirador/mirador/issues/4198",
+      "version_or_commit": "Opened 2025-10-29; closed; issue status shown Done",
+      "locator": "Issue description and screenshots",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Records annotation/layer badge visible in M3 but absent in M4 demo and an institutional deployment.",
+      "governing_condition_default_exception": "The reported failure concerns discovery badges for canvases with annotations/layers; issue status says closed, not itself proof of release inclusion.",
+      "applicability": "Concrete regression affecting the act of finding notes during the pilot.",
+      "critic_review": {
+        "checked_at_utc": "2026-10-10T05:34:11Z",
+        "observed_operation": "Opened issue #4198; confirmed report of missing notification dot in M4 demo and a separate deployment when a Canvas had annotations/layers.",
+        "governing_condition_default_exception": "The original condition/default/exception field is retained unchanged. This critic check establishes public-document content only, not collection or product operation.",
+        "applicability": "Used to review the proposal claim against the exact source/version/locator in this entry. No product validation is inferred."
+      }
+    },
+    {
+      "id": "S15",
+      "title": "Mirador PR #4201 — fix #4198",
+      "url": "https://github.com/ProjectMirador/mirador/pull/4201",
+      "version_or_commit": "Merged 2025-12-04; commit 056262a",
+      "locator": "PR title, merge, commit",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Merged a change to provide the required notification-palette tokens for the annotation/layer/search badge.",
+      "governing_condition_default_exception": "A merged fix is distinct from release availability; verify chosen released viewer contains it.",
+      "applicability": "Links issue history to released viewer testing and a direct regression check.",
+      "critic_review": {
+        "checked_at_utc": "2026-10-10T05:34:11Z",
+        "observed_operation": "Opened PR #4201; confirmed merged badge repair. PR page displays merge commit 25c0b0e; carried 056262a is not identified there as merge commit.",
+        "governing_condition_default_exception": "The original condition/default/exception field is retained unchanged. This critic check establishes public-document content only, not collection or product operation.",
+        "applicability": "Used to review the proposal claim against the exact source/version/locator in this entry. No product validation is inferred."
+      },
+      "reviser_review": {
+        "checked_at_utc": "2026-10-10T05:37:00Z",
+        "observed_operation": "Reopened the merged PR page and merge-commit page. The PR head/second parent is 056262a; the merge commit into main is 25c0b0e, dated 2025-12-04. The merge changes the notification palette token used by the annotation/layer/search badge.",
+        "governing_condition_default_exception": "A merge proves source history, not behavior in a locally configured viewer. The merge commit and PR head are different commit identities.",
+        "applicability": "Corrects the carried commit labeling and supports the issue-to-merge portion of the compatibility chain; release ancestry is checked separately in S22."
+      }
+    },
+    {
+      "id": "S16",
+      "title": "Mirador v4.2.4 release",
+      "url": "https://github.com/ProjectMirador/mirador/releases/tag/v4.2.4",
+      "version_or_commit": "v4.2.4, commit 73fafe9; released 2026-09-02 per release page",
+      "locator": "Release metadata and changed list; includes PR #4201 fix",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Identifies an immutable viewer version/commit and the issue-fix release line.",
+      "governing_condition_default_exception": "The repo page shows later commits on main after this tag; pinning the release is a reproducible baseline, not a claim that no newer release exists.",
+      "applicability": "Candidate reproducible Mirador build for a pilot if tested; acceptance should verify page badges and authoring plugin separately.",
+      "critic_review": {
+        "checked_at_utc": "2026-10-10T05:34:11Z",
+        "observed_operation": "Opened v4.2.4 release; confirmed tag commit 73fafe9 and 2026-09-02 date. Inspected release-note excerpt did not identify PR #4201; tag ancestry not independently established.",
+        "governing_condition_default_exception": "The original condition/default/exception field is retained unchanged. This critic check establishes public-document content only, not collection or product operation.",
+        "applicability": "Used to review the proposal claim against the exact source/version/locator in this entry. No product validation is inferred."
+      },
+      "reviser_review": {
+        "checked_at_utc": "2026-10-10T05:37:00Z",
+        "observed_operation": "Reopened the v4.2.4 release and tag commit page: tag commit is 73fafe9. The release-note page does not name PR #4201. GitHub compare ancestry is recorded separately in S22.",
+        "governing_condition_default_exception": "The release page establishes tag identity and date; it does not by itself establish the PR inclusion. S22 establishes the commit ancestry. No viewer was run.",
+        "applicability": "Candidate fixed Mirador build. Badge behavior still requires product regression testing."
+      }
+    },
+    {
+      "id": "S17",
+      "title": "Universal Viewer release history",
+      "url": "https://github.com/UniversalViewer/universalviewer/releases",
+      "version_or_commit": "v4.4.4 commit 2b92ff6 latest release shown; v4.4.3 and v4.4.1 explicitly DO NOT USE",
+      "locator": "Release list and release metadata",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Lists the latest release in the retrieved page and two releases marked unusable due to merge errors.",
+      "governing_condition_default_exception": "Release page is current and can change; do not consume floating latest or the explicitly rejected tags.",
+      "applicability": "Supports exact UV pinning and release-level regression review before the 100-page pilot.",
+      "critic_review": {
+        "checked_at_utc": "2026-10-10T05:34:11Z",
+        "observed_operation": "Opened Universal Viewer releases; confirmed v4.4.4 at 2b92ff6 and do-not-use notes for v4.4.3 and v4.4.1 at access time.",
+        "governing_condition_default_exception": "The original condition/default/exception field is retained unchanged. This critic check establishes public-document content only, not collection or product operation.",
+        "applicability": "Used to review the proposal claim against the exact source/version/locator in this entry. No product validation is inferred."
+      }
+    },
+    {
+      "id": "S18",
+      "title": "Annotorious release history",
+      "url": "https://github.com/annotorious/annotorious/releases",
+      "version_or_commit": "v3.4.0, commit 0dd99c4; latest release shown",
+      "locator": "v3.4.0 release notes",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Records the exact candidate release and polygon-tool updates.",
+      "governing_condition_default_exception": "Release page can change; the guide’s default branch is moving, so pin code and re-check docs at implementation.",
+      "applicability": "Pins the analogous image-annotation library if explored in an integration spike.",
+      "critic_review": {
+        "checked_at_utc": "2026-10-10T05:34:11Z",
+        "observed_operation": "Opened Annotorious releases; confirmed v3.4.0 at 0dd99c4. No code or package installed.",
+        "governing_condition_default_exception": "The original condition/default/exception field is retained unchanged. This critic check establishes public-document content only, not collection or product operation.",
+        "applicability": "Used to review the proposal claim against the exact source/version/locator in this entry. No product validation is inferred."
+      }
+    },
+    {
+      "id": "S19",
+      "title": "Annotorious with OpenSeadragon and IIIF",
+      "url": "https://annotorious.dev/guides/openseadragon-iiif/",
+      "version_or_commit": "Current official guide; accessed 2026-10-10",
+      "locator": "Quick Start, Step-by-Step, IIIF Example",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Shows loading JSON annotations and connecting Annotorious to OpenSeadragon/IIIF; says coordinates are relative to base image resolution.",
+      "governing_condition_default_exception": "Image coordinates are not automatically curator-stable Canvas coordinates; source geometry/dimensions and adapters are integration responsibilities.",
+      "applicability": "Useful client-side mechanism for a custom image panel, with explicit caveat that persistence and page identity are separate work.",
+      "critic_review": {
+        "checked_at_utc": "2026-10-10T05:34:11Z",
+        "observed_operation": "Opened official OpenSeadragon/IIIF guide; confirmed image annotation coordinates are relative to base image resolution and guide loads JSON annotations.",
+        "governing_condition_default_exception": "The original condition/default/exception field is retained unchanged. This critic check establishes public-document content only, not collection or product operation.",
+        "applicability": "Used to review the proposal claim against the exact source/version/locator in this entry. No product validation is inferred."
+      }
+    },
+    {
+      "id": "S20",
+      "title": "Annotorious Annotation Data Model",
+      "url": "https://annotorious.dev/guides/data-model/",
+      "version_or_commit": "Current official guide; accessed 2026-10-10",
+      "locator": "Key Differences and W3C Adapter",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Describes its optimized native data model and W3CImageFormat crosswalk.",
+      "governing_condition_default_exception": "The project explicitly makes no claim to support the full W3C model; conversions need representative selector/body tests.",
+      "applicability": "Supports evaluating Annotorious as an analogous tool without overstating standards completeness.",
+      "critic_review": {
+        "checked_at_utc": "2026-10-10T05:34:11Z",
+        "observed_operation": "Opened data-model guide; confirmed no claim to the full W3C model and documented W3CImageFormat crosswalk. No round-trip executed.",
+        "governing_condition_default_exception": "The original condition/default/exception field is retained unchanged. This critic check establishes public-document content only, not collection or product operation.",
+        "applicability": "Used to review the proposal claim against the exact source/version/locator in this entry. No product validation is inferred."
+      }
+    },
+    {
+      "id": "S21",
+      "title": "Visible Text Resource on a Canvas",
+      "url": "https://iiif.io/api/cookbook/recipe/0561-text-on-image/",
+      "version_or_commit": "IIIF Presentation 3.0 cookbook recipe; page accessed at the recorded UTC",
+      "locator": "Implementation Notes, Restrictions, Example",
+      "accessed_at_utc": "2026-10-10T05:14:23Z",
+      "observed_operation": "Explains that text painted visibly onto an image uses motivation painting in an AnnotationPage, while commentary/supplementary notes have different semantics; notes client markup restrictions and styling variation.",
+      "governing_condition_default_exception": "Painted transcription visibility and viewer support vary; untrusted HTML must be restricted by clients.",
+      "applicability": "Clarifies why transcription-only download, visible overlay transcription, and private scholar notes are distinct output choices.",
+      "critic_review": {
+        "checked_at_utc": "2026-10-10T05:34:11Z",
+        "observed_operation": "Opened text-on-Canvas recipe; confirmed painting motivation/AnnotationPage differs from viewer-handled commentary, with client-dependent rendering and markup restrictions.",
+        "governing_condition_default_exception": "The original condition/default/exception field is retained unchanged. This critic check establishes public-document content only, not collection or product operation.",
+        "applicability": "Used to review the proposal claim against the exact source/version/locator in this entry. No product validation is inferred."
+      }
+    },
+    {
+      "id": "S22",
+      "title": "GitHub REST Compare — Mirador PR merge to v4.2.4 tag",
+      "url": "https://api.github.com/repos/ProjectMirador/mirador/compare/25c0b0e...73fafe9",
+      "version_or_commit": "Base merge commit 25c0b0ea119f48c0bde2276d516e3c2bbd795092; head release commit 73fafe9c8f6ef74dff0c26373ef3eeefdcabcdf5",
+      "locator": "Compare response status, ahead_by, behind_by, base_commit, head commit and merge_base_commit",
+      "accessed_at_utc": "2026-10-10T05:36:34Z",
+      "observed_operation": "Read-only GET returned status ahead, ahead_by 354, behind_by 0, and merge_base_commit equal to 25c0b0e. Therefore the PR merge commit is an ancestor of the v4.2.4 release commit.",
+      "governing_condition_default_exception": "This establishes public git commit ancestry only. The PR merge page identifies 056262a as the PR head/second parent and 25c0b0e as merge commit. Release notes do not mention PR #4201; no viewer was built or exercised.",
+      "applicability": "Resolves the C3 evidence gap about whether the Mirador badge fix is included in the pinned v4.2.4 source history; pilot UI behavior remains PROPOSED for validation."
+    }
+  ],
+  "critic_review_checked_at_utc": "2026-10-10T05:34:11Z",
+  "review_basis": "Complete brief, investigator discovery/draft/source map, exact released plan and reveal receipt, critic critique/source map, plus independent reviser rechecks of disputed consequential claims.",
+  "reviser_review_checked_at_utc": "2026-10-10T05:37:00Z",
+  "reviser_claim_dispositions": [
+    {
+      "claim_id": "C1",
+      "disposition": "accept_and_amend; retain uncertainty when source revision signals are absent",
+      "sources": [
+        "S1",
+        "S7"
+      ],
+      "rechecked_at_utc": "2026-10-10T05:37:00Z",
+      "finding": "Canvas identity/persistence and same-aspect-ratio geometry do not provide image-content history. Final proposal adds captured revision evidence, conservative digest comparison, explicit unknown/needs-review states, and curator approval for uncertain re-anchoring. The hash/detection workflow is a local proposal, not a IIIF guarantee."
+    },
+    {
+      "claim_id": "C2",
+      "disposition": "accept_and_amend; actual v2 support remains conditional on inventory",
+      "sources": [
+        "S1",
+        "S2",
+        "S3"
+      ],
+      "rechecked_at_utc": "2026-10-10T05:37:00Z",
+      "finding": "The primary specs distinguish v2 structures from v3 Web Annotation structures. Final proposal defines read-only v2 input and two explicit separate-output routes: v2-compatible sidecar for a v2 consumer, or labeled v3/Web Annotation export for a v3 consumer, with preselected contract and field-level loss blocking."
+    },
+    {
+      "claim_id": "C3",
+      "disposition": "accept_gap; documentary release ancestry resolved; runtime behavior remains uncertain",
+      "sources": [
+        "S14",
+        "S15",
+        "S16",
+        "S22"
+      ],
+      "rechecked_at_utc": "2026-10-10T05:37:00Z",
+      "finding": "PR head 056262a differs from merge commit 25c0b0e. The GitHub compare endpoint reports the 25c0b0e merge as merge base for the 73fafe9 release commit (354 ahead, 0 behind), confirming the fix is in v4.2.4 history. No viewer behavior or plugin compatibility was tested."
+    },
+    {
+      "claim_id": "C4",
+      "disposition": "accept_and_amend",
+      "sources": [
+        "S10",
+        "S11"
+      ],
+      "finding": "Final proposal adds a paired comparison table. Capability statements remain limited to official overview and the specified Cookbook recipe, not product-wide parity."
+    },
+    {
+      "claim_id": "C5",
+      "disposition": "accept_and_amend; optional scope retained",
+      "sources": [
+        "S9",
+        "S21"
+      ],
+      "finding": "Final proposal adds text language, provenance/status, encoding and page/version references; preserves rights/access and privacy conditions, excludes image bytes, and does not claim a viewer download feature."
+    }
+  ]
+}

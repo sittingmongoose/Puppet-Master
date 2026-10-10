@@ -1,0 +1,54 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://raw.githubusercontent.com/omeka-s-modules/CSVImport/v2.6.2/src/Job/Import.php"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A6-02/control-v1/retrieval-manifest.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/A6-02/control-v1/source-map.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {
+        "version_applicability": "CSVImport v2.6.2 Import.php"
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "supported_locator": "create L340-380; update L391-457"
+    }
+  ],
+  "raw_sha256": "2772d4f8b6849af84e8bc87167cfc43cb04137560fda547f11eae60431071a19",
+  "original_bytes": 46889,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A6-02/control-v1/evidence/R-X09.text.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://raw.githubusercontent.com/omeka-s-modules/CSVImport/v2.6.2/src/Job/Import.php"
+  ],
+  "version": [
+    {
+      "version_applicability": "CSVImport v2.6.2 Import.php"
+    }
+  ],
+  "selector": [
+    {
+      "supported_locator": "create L340-380; update L391-457"
+    }
+  ],
+  "conditions": [
+    {
+      "version_applicability": "CSVImport v2.6.2 Import.php"
+    }
+  ],
+  "rawSHA256": "2772d4f8b6849af84e8bc87167cfc43cb04137560fda547f11eae60431071a19"
+}

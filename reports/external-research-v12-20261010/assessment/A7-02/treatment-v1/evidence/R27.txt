@@ -1,0 +1,50 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://raw.githubusercontent.com/JabRef/jabref/v6.0-alpha.6/jablib/src/main/java/org/jabref/logic/layout/format/LastPage.java"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A7-02/treatment-v1/source-map.json",
+      "source_id": "R27",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/A7-02/treatment-v1/evidence/additional-retrievals.json",
+      "source_id": "R27",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "text_lines": 25
+    },
+    {
+      "text_lines": 25
+    }
+  ],
+  "raw_sha256": "ae5cf8254d09dd487c12acd383bf2178152ad463d6c0388e4fbafdc7db232c27",
+  "original_bytes": 854,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A7-02/treatment-v1/evidence/R27.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://raw.githubusercontent.com/JabRef/jabref/v6.0-alpha.6/jablib/src/main/java/org/jabref/logic/layout/format/LastPage.java"
+  ],
+  "version": "UNKNOWN",
+  "selector": [
+    {
+      "text_lines": 25
+    },
+    {
+      "text_lines": 25
+    }
+  ],
+  "conditions": "UNKNOWN",
+  "rawSHA256": "ae5cf8254d09dd487c12acd383bf2178152ad463d6c0388e4fbafdc7db232c27"
+}

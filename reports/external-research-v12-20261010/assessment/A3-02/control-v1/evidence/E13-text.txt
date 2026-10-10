@@ -1,0 +1,92 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://raw.githubusercontent.com/kbumsik/opus-media-recorder/dd2f1d1249f9b7a66678f9833f8c01521eb4a2d9/README.md",
+    "https://raw.githubusercontent.com/kbumsik/opus-media-recorder/master/README.md"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A3-02/control-v1/source-map.json",
+      "source_id": "E13",
+      "existing_authored_summary_fields": {
+        "version_or_commit": "Unpinned master at independent retrieval",
+        "governing_conditions_defaults_exceptions": "WASM codec/muxer libraries and Worker assets are described; package WAV events are individually complete files with a non-concatenation warning. Old support table is inapplicable to current targets.",
+        "applicability": "Readable upstream cross-check; E16 is the version-bound governing analog."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A3-02/control-v1/source-map.json",
+      "source_id": "E16",
+      "existing_authored_summary_fields": {
+        "version_or_commit": "npm 0.8.0 gitHead dd2f1d1249f9b7a66678f9833f8c01521eb4a2d9",
+        "governing_conditions_defaults_exceptions": "Version-pinned README describes WASM libraries, Worker/binary packaging, and its WAV event limitation. It is an analogous encoder pipeline, not claimed to be the chosen Worklet implementation.",
+        "applicability": "Supports useful unfamiliar analog and costs while preserving the stale-table exclusion."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A3-02/control-v1/evidence/retrieval-manifest.json",
+      "source_id": "E13",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/A3-02/control-v1/evidence/retrieval-manifest.json",
+      "source_id": "E16",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": "Architecture, bundler setup, limitations"
+    },
+    {
+      "locator": "Architecture; bundler; MIME and limitations"
+    }
+  ],
+  "raw_sha256": "ae8cfd6d308c95933234310b9680d1317a9d2fffb72d81212fded04f1c6a15bc",
+  "original_bytes": 9430,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A3-02/control-v1/evidence/E13-text.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://raw.githubusercontent.com/kbumsik/opus-media-recorder/dd2f1d1249f9b7a66678f9833f8c01521eb4a2d9/README.md",
+    "https://raw.githubusercontent.com/kbumsik/opus-media-recorder/master/README.md"
+  ],
+  "version": [
+    {
+      "version_or_commit": "Unpinned master at independent retrieval",
+      "governing_conditions_defaults_exceptions": "WASM codec/muxer libraries and Worker assets are described; package WAV events are individually complete files with a non-concatenation warning. Old support table is inapplicable to current targets.",
+      "applicability": "Readable upstream cross-check; E16 is the version-bound governing analog."
+    },
+    {
+      "version_or_commit": "npm 0.8.0 gitHead dd2f1d1249f9b7a66678f9833f8c01521eb4a2d9",
+      "governing_conditions_defaults_exceptions": "Version-pinned README describes WASM libraries, Worker/binary packaging, and its WAV event limitation. It is an analogous encoder pipeline, not claimed to be the chosen Worklet implementation.",
+      "applicability": "Supports useful unfamiliar analog and costs while preserving the stale-table exclusion."
+    }
+  ],
+  "selector": [
+    {
+      "locator": "Architecture, bundler setup, limitations"
+    },
+    {
+      "locator": "Architecture; bundler; MIME and limitations"
+    }
+  ],
+  "conditions": [
+    {
+      "version_or_commit": "Unpinned master at independent retrieval",
+      "governing_conditions_defaults_exceptions": "WASM codec/muxer libraries and Worker assets are described; package WAV events are individually complete files with a non-concatenation warning. Old support table is inapplicable to current targets.",
+      "applicability": "Readable upstream cross-check; E16 is the version-bound governing analog."
+    },
+    {
+      "version_or_commit": "npm 0.8.0 gitHead dd2f1d1249f9b7a66678f9833f8c01521eb4a2d9",
+      "governing_conditions_defaults_exceptions": "Version-pinned README describes WASM libraries, Worker/binary packaging, and its WAV event limitation. It is an analogous encoder pipeline, not claimed to be the chosen Worklet implementation.",
+      "applicability": "Supports useful unfamiliar analog and costs while preserving the stale-table exclusion."
+    }
+  ],
+  "rawSHA256": "ae8cfd6d308c95933234310b9680d1317a9d2fffb72d81212fded04f1c6a15bc"
+}

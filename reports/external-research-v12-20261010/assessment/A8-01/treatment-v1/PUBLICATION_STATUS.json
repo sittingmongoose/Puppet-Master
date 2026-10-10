@@ -1,41 +1,9 @@
 {
   "slot": "A8-01",
   "arm": "treatment",
-  "snapshot_task": {
-    "key": "er12-eval-A8-01-treatment-full-v1",
-    "slot": "A8-01",
-    "arm": "treatment",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A8-01-treatment-full-v1",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A8-01-treatment-full-v1",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-eval-A8-01-treatment-full-v1:ordinal:1",
-    "status": "completed",
-    "hasPendingChildRuns": false,
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "gpt-6.1-sol",
-    "latestTerminalStatus": "completed",
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-eval-A8-01-treatment-full-v1:ordinal:1"
-  },
   "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
   "source_judgment": "PASS_WITH_LIMITATIONS",
-  "included_files": [
-    "assessment/A8-01/treatment-v1/assessment.json",
-    "assessment/A8-01/treatment-v1/assessment.md",
-    "assessment/A8-01/treatment-v1/evidence/E04-ocfl-issue538.json",
-    "assessment/A8-01/treatment-v1/evidence/E05-ocfl-pr547.json",
-    "assessment/A8-01/treatment-v1/evidence/E06-ocfl-pr547-files.json",
-    "assessment/A8-01/treatment-v1/evidence/E07-ocfl-release11.json",
-    "assessment/A8-01/treatment-v1/evidence/E08-ocfl-release111.json",
-    "assessment/A8-01/treatment-v1/evidence/E13-ocfl-tag11.json",
-    "assessment/A8-01/treatment-v1/evidence/E14-ocfl-tag111.json",
-    "assessment/A8-01/treatment-v1/evidence/E15-ocfl-latest-release.json",
-    "assessment/A8-01/treatment-v1/evidence/index.md",
-    "assessment/A8-01/treatment-v1/evidence/inventory_schema.json",
-    "assessment/A8-01/treatment-v1/evidence/retrieval-index.json",
-    "assessment/A8-01/treatment-v1/original-inspected-hashes.json",
-    "assessment/A8-01/treatment-v1/reviewer-goal-active.json",
-    "assessment/A8-01/treatment-v1/reviewer-goal-completion.json",
-    "assessment/A8-01/treatment-v1/root-review-request.json",
-    "assessment/A8-01/treatment-v1/source-map.json",
-    "assessment/A8-01/treatment-v1/verification.json"
-  ]
+  "basis": "immutable cohort4 original-completed-judgment whitelist",
+  "source_grading": "original unmodified; no completion-derived grade",
+  "final_stage": "reviser"
 }

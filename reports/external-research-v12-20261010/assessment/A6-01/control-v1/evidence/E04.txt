@@ -1,0 +1,64 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://gtfs.org/documentation/realtime/feed-entities/service-alerts/"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A6-01/control-v1/source-map.json",
+      "source_id": "E04",
+      "existing_authored_summary_fields": {
+        "version_observed": "Living primary page/repository observed 2026-10-10; see precise scope in linked claim records",
+        "independent_observation": "Independent alert ranges and EntitySelector conjunctions; supports separate alert surface."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A6-01/control-v1/evidence/retrieval-manifest.json",
+      "source_id": "E04",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "lines": 230
+    },
+    {
+      "locator": "E04.txt lines 175-193 and 209-221"
+    },
+    {
+      "lines": 230
+    }
+  ],
+  "raw_sha256": "848485518a8e3121eebdfa15e5853e92a49968203725dd7043621a5e79e152bc",
+  "original_bytes": 6331,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A6-01/control-v1/evidence/E04.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://gtfs.org/documentation/realtime/feed-entities/service-alerts/"
+  ],
+  "version": [
+    {
+      "version_observed": "Living primary page/repository observed 2026-10-10; see precise scope in linked claim records",
+      "independent_observation": "Independent alert ranges and EntitySelector conjunctions; supports separate alert surface."
+    }
+  ],
+  "selector": [
+    {
+      "lines": 230
+    },
+    {
+      "locator": "E04.txt lines 175-193 and 209-221"
+    },
+    {
+      "lines": 230
+    }
+  ],
+  "conditions": "UNKNOWN",
+  "rawSHA256": "848485518a8e3121eebdfa15e5853e92a49968203725dd7043621a5e79e152bc"
+}

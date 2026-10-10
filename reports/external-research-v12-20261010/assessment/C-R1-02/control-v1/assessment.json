@@ -1,0 +1,3847 @@
+{
+  "schema": "ER12-independent-full-pipeline-assessment-v1",
+  "reviewer": "codex-er12-c-r1-02-control-review-v1",
+  "slot": "C-R1-02",
+  "arm": "control",
+  "assessment_version": "control-v1",
+  "case_id": "ER12-C-R1-02-FRESH",
+  "review_start_utc": "2026-10-10T05:41:50+00:00",
+  "review_deadline_utc": "2026-10-10T06:26:50+00:00",
+  "judgment_saved_utc": "2026-10-10T06:04:01.894306+00:00",
+  "finite_envelope_minutes": 45,
+  "capped": false,
+  "unassessed_axes": [],
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "source_judgment_basis": "Independent semantic inspection of the entire assigned original science package and governing primary evidence found no remaining material error, omission or unsupported consequential decision. Minor source-fidelity/locator and opportunity-depth limits are preserved. Hashes, source counts, critic agreement and native completion are not the scientific proof.",
+  "per_arm": {
+    "control": {
+      "delivery": "COMPLETE_FINAL_PRESENT",
+      "source": "PASS_WITH_LIMITATIONS",
+      "coverage": "ALL_SIX_AXES_AND_ALL_EXACT_PLAN_TEXT_ASSESSED",
+      "native": "DOCUMENTED_ACTIVE_AND_COMPLETE_LIFECYCLES_FOR_ALL_THREE_STAGES",
+      "protocol": "NO_OBSERVED_VIOLATION_IN_BOUNDED_PACKET; FULL_TRACE_UNKNOWN",
+      "time": "EXPOSED_NATIVE_FIELDS_AND_DEADLINE_ADHERENCE_RECORDED; ACTIVE_RESEARCH_TIME_UNKNOWN",
+      "effective_route_and_billing": "UNKNOWN"
+    }
+  },
+  "ordinary_final_path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Original obligations and negative constraints",
+      "coverage": "ASSESSED_COMPLETE",
+      "source_result": "PASS_WITH_LIMITATIONS",
+      "analysis": "The complete original brief and exact frozen/revealed plan are preserved as authority. The final compares controlled settling/flow, a measured filter candidate, and source segregation/contained accepted collection, while retaining intermittent loads, variable residue inventory, labor and residual fate. It proposes a baseline and contained comparison with stops. Appearance, safety, authorization, solids harmlessness, dosing, operating work, invented composition/throughput, and a final disposal route are not inferred. Unknowns and the owner’s zero-discharge choice remain open. The staged-settling variation has less depth (L03); exact coverage and administrative unknowns are recorded separately below.",
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 7,
+          "label": "reviser/final.md:7"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 32,
+          "label": "reviser/final.md:32"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 48,
+          "label": "reviser/final.md:48"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 50,
+          "label": "reviser/final.md:50"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 51,
+          "label": "reviser/final.md:51"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 73,
+          "label": "reviser/final.md:73"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 75,
+          "label": "reviser/final.md:75"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 77,
+          "label": "reviser/final.md:77"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 83,
+          "label": "reviser/final.md:83"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 85,
+          "label": "reviser/final.md:85"
+        }
+      ],
+      "source_ids": [
+        "ORIGINAL_BRIEF",
+        "ORIGINAL_PLAN",
+        "E01",
+        "E02",
+        "E04",
+        "E05",
+        "E06",
+        "E08",
+        "E09",
+        "E11",
+        "E12"
+      ]
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source claims, applicability and exact conditions",
+      "coverage": "ASSESSED_COMPLETE",
+      "source_result": "PASS_WITH_LIMITATIONS",
+      "analysis": "Independent primary checks support incomplete pre-chemical settling, combined-train attribution, membrane feed/history/fouling and cleaning burdens, source-reduction precedents, representative sampling, and method-specific total/filtered fractions. Units and subjects are kept distinct: mg/L TSS, NTU turbidity, minutes of settling, nm aperture, Da cutoff, and bar pressure are source-specific. No source supplies a workshop default, legal domain or removal estimate. S02 internal reporting and S10 fidelity defects are disclosed in the final; E13 corroborates the original scientific micron definition. Locator/source-quality/access limits do not establish a remaining material claim error.",
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 49,
+          "label": "reviser/final.md:49"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 50,
+          "label": "reviser/final.md:50"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 54,
+          "label": "reviser/final.md:54"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 56,
+          "label": "reviser/final.md:56"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 73,
+          "label": "reviser/final.md:73"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 99,
+          "label": "reviser/final.md:99"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 100,
+          "label": "reviser/final.md:100"
+        }
+      ],
+      "source_ids": [
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E06",
+        "E07",
+        "E08",
+        "E09",
+        "E10",
+        "E11",
+        "E12",
+        "E13"
+      ]
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar discovery, competing/analogous methods, implementation/history and breadth",
+      "coverage": "ASSESSED_COMPLETE",
+      "source_result": "PASS_WITH_LIMITATIONS",
+      "analysis": "Discovery supplies actual ceramic-factory/laboratory studies, operational studio precedents and municipal failure evidence. The useful unfamiliar content is incomplete pre-chemical capture; stable feed does not validate a workshop train; submicron/variable feed and cleaning can defeat membrane simplicity; prevention/reclaim creates a different operational choice. Factory/studio contexts are differentiated. The transfer inquiry requests influent, size/chemistry, peak and quiet flows, geometry, QA, operating changes, cleanouts, downtime, residual routes and labor, and recovers bucket dates/workload. Alternative breadth goes beyond a favorite device. No particular new deployment or software release history is invented. Serial settling depth is limited (L03), but core opportunity coverage is substantive rather than vacuous caution.",
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/discovery.md",
+          "line": 11,
+          "label": "investigator/discovery.md:11"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/discovery.md",
+          "line": 25,
+          "label": "investigator/discovery.md:25"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/discovery.md",
+          "line": 32,
+          "label": "investigator/discovery.md:32"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 48,
+          "label": "reviser/final.md:48"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 51,
+          "label": "reviser/final.md:51"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 58,
+          "label": "reviser/final.md:58"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 73,
+          "label": "reviser/final.md:73"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 85,
+          "label": "reviser/final.md:85"
+        }
+      ],
+      "source_ids": [
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E06",
+        "E07",
+        "E08"
+      ]
+    },
+    {
+      "axis": 4,
+      "name": "Wrong criticism, corrections, rejections and exact dispositions",
+      "coverage": "ASSESSED_COMPLETE",
+      "source_result": "PASS_WITH_LIMITATIONS",
+      "analysis": "All three specific critic issues and its positive coverage conclusion receive explicit final dispositions. The run-count ambiguity is real, with a minor incorrect draft locator. The CADDIS rendering criticism is valid as source fidelity; E13 prevents misclassifying it as a scientific-unit error. Timing uncertainty is appropriate within critic/reviser allowed inputs; this wider assessment has actual native receipts but still cannot equate occupancy with a completed research hour. The final does not falsely reject supported alternatives or follow a criticism into material scope reduction. Its “all covered” conclusion overstates uniform depth of staged settling (L03). Exact brief/plan coverage and the original rejection set are independently adjudicated below.",
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/critique.md",
+          "line": 25,
+          "label": "critic/critique.md:25"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 95,
+          "label": "reviser/final.md:95"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 99,
+          "label": "reviser/final.md:99"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 100,
+          "label": "reviser/final.md:100"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 101,
+          "label": "reviser/final.md:101"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 102,
+          "label": "reviser/final.md:102"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 83,
+          "label": "reviser/final.md:83"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 89,
+          "label": "reviser/final.md:89"
+        }
+      ],
+      "source_ids": [
+        "E02",
+        "E10",
+        "E13",
+        "ORIGINAL_PLAN"
+      ]
+    },
+    {
+      "axis": 5,
+      "name": "Supported discovery→draft→critique→final meaning preservation",
+      "coverage": "ASSESSED_COMPLETE",
+      "source_result": "PASS_WITH_LIMITATIONS",
+      "analysis": "The final preserves matched-feed reasoning, the quiet-week confound, the distinction between particles and dissolved chemistry, physical-treatment limitations, source segregation/containment, labor/residuals, transfer questions, owner decisions, and future-only validation. Its prose is self-contained for the requested proposal; source maps retain detailed study conditions and stable source identities. The absence of the discovery’s comparison table is not itself loss of the comparison: final paragraphs state benefit, failure and burdens. The two original reporting defects remain identifiable and their final qualifications are added without silently overwriting lineage. Some numerical implementation detail resides in the navigable map rather than final narrative; staged settling remains thin, not falsely proven.",
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/discovery.md",
+          "line": 11,
+          "label": "investigator/discovery.md:11"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/draft.md",
+          "line": 32,
+          "label": "investigator/draft.md:32"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 46,
+          "label": "reviser/final.md:46"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 58,
+          "label": "reviser/final.md:58"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 71,
+          "label": "reviser/final.md:71"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 79,
+          "label": "reviser/final.md:79"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 87,
+          "label": "reviser/final.md:87"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 95,
+          "label": "reviser/final.md:95"
+        }
+      ],
+      "source_ids": [
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E06",
+        "E10",
+        "E13"
+      ]
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed versus executed validation and oracle applicability",
+      "coverage": "ASSESSED_COMPLETE",
+      "source_result": "PASS",
+      "analysis": "The later design characterizes variable influent/outlet across workloads, records flow/material/task mix, uses suitable composites and separate grabs, screens matched aliquots, and compares contained work blocks with maintenance, capacity, breakthrough and receiving-route stops. These distinguish treatment effects from reduced load and visual improvement. TSS/turbidity/size oracles address particles; inventory-informed method-defined chemical fractions address chemistry; neither establishes discharge permission or solids classification. Lab/authority/receiver decisions are separate gates. Thresholds and sample burden remain external choices after useful investigation, not fabricated constants. Executed work is desk review only; no wet work, system, pilot, assay, local permission, receiving-facility approval, or performance validation is claimed. Literature checks and freeze hashes are not empirical oracles. Original per-source browsing extent is not independently logged.",
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 48,
+          "label": "reviser/final.md:48"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 73,
+          "label": "reviser/final.md:73"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 75,
+          "label": "reviser/final.md:75"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 77,
+          "label": "reviser/final.md:77"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 106,
+          "label": "reviser/final.md:106"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 108,
+          "label": "reviser/final.md:108"
+        }
+      ],
+      "source_ids": [
+        "E01",
+        "E02",
+        "E03",
+        "E08",
+        "E09",
+        "E10",
+        "E11",
+        "E12",
+        "E13"
+      ]
+    }
+  ],
+  "material_findings": [],
+  "limitations": [
+    {
+      "id": "L01",
+      "kind": "minor_source_reporting_corrected_in_final",
+      "axes": [
+        2,
+        4,
+        5
+      ],
+      "remaining_material": false,
+      "finding": "S02 abstract/body run count conflicts; the final discloses it. The 102 mg/L value is a single reported stage-1 train value, not a workshop efficiency or mean.",
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/discovery.md",
+          "line": 25,
+          "label": "investigator/discovery.md:25"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/critique.md",
+          "line": 27,
+          "label": "critic/critique.md:27"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 54,
+          "label": "reviser/final.md:54"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 56,
+          "label": "reviser/final.md:56"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 99,
+          "label": "reviser/final.md:99"
+        }
+      ],
+      "source_ids": [
+        "E02"
+      ],
+      "why_not_material": "No rate, dimension, rest time, efficiency, chemical condition, or release decision is transferred to the workshop."
+    },
+    {
+      "id": "L02",
+      "kind": "lineage_source_fidelity_defect_corrected",
+      "axes": [
+        2,
+        4,
+        5
+      ],
+      "remaining_material": false,
+      "finding": "Investigator S10 silently normalizes the EPA page’s erroneous unit rendering. Critic/reviser record the discrepancy. The discovery’s operational 0.45 µm statement is independently supported by EPA Method200.8; it is not scientifically false.",
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/discovery.md",
+          "line": 20,
+          "label": "investigator/discovery.md:20"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/critique.md",
+          "line": 29,
+          "label": "critic/critique.md:29"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 73,
+          "label": "reviser/final.md:73"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 100,
+          "label": "reviser/final.md:100"
+        }
+      ],
+      "source_ids": [
+        "E10",
+        "E13"
+      ],
+      "why_not_material": "Final retains method-defined total/filtered analysis and makes no treatment-aperture prescription. The documentary defect remains visible in preserved predecessor map fields."
+    },
+    {
+      "id": "L03",
+      "kind": "nonmaterial_opportunity_depth_limit",
+      "axes": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "remaining_material": false,
+      "finding": "Longer/rested batch settling and flow buffering are developed. Serial or staged settling is named in final coverage but has little separate investigation or hydraulic/maintenance analysis. Do not read the final’s “all” coverage claim as equally deep treatment of every variation.",
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 40,
+          "label": "reviser/final.md:40"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 49,
+          "label": "reviser/final.md:49"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 52,
+          "label": "reviser/final.md:52"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 75,
+          "label": "reviser/final.md:75"
+        }
+      ],
+      "source_ids": [
+        "ORIGINAL_PLAN:59",
+        "E01",
+        "E02",
+        "E04"
+      ],
+      "why_not_material": "The original required settling/flow, filtration and a real non-treatment comparison is substantive, and feed/geometry remains unknown. No unsupported serial-bucket design or favored hardware decision is made. This is weaker optional-method depth, not loss of a required comparison category or causal question."
+    },
+    {
+      "id": "L04",
+      "kind": "minor_locator_errors",
+      "axes": [
+        2,
+        4
+      ],
+      "remaining_material": false,
+      "finding": "Critic locates the three-stage account in draft “Recommended sequence,” although that explicit count occurs in discovery/source maps. WCU “PDF p.8” locator is off: the glaze table is printedp.6/PDFp.9.",
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/critique.md",
+          "line": 27,
+          "label": "critic/critique.md:27"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/draft.md",
+          "line": 32,
+          "label": "investigator/draft.md:32"
+        }
+      ],
+      "source_ids": [
+        "E02",
+        "E06"
+      ],
+      "why_not_material": "The source content is retrievable and the bounded claims remain supported; independent corrected locators are saved."
+    },
+    {
+      "id": "L05",
+      "kind": "bounded_access_and_audit_limit",
+      "axes": [
+        2,
+        6
+      ],
+      "remaining_material": false,
+      "finding": "No candidate raw web transcripts or full source captures are present; authored evidence consists of source-map records and indexes. The critic/sources root is empty. Reviewer independently retrieves governing sources; original execution extent remains self-reported. EPA S04 direct redirect returned403; original EPA text was independently available through the web tool.",
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 106,
+          "label": "reviser/final.md:106"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 108,
+          "label": "reviser/final.md:108"
+        }
+      ],
+      "source_ids": [
+        "E04"
+      ],
+      "why_not_material": "This limits proof of original browsing, not the independently supported final scientific reasoning. No empirical work is claimed."
+    }
+  ],
+  "unknowns": [
+    {
+      "id": "U01",
+      "scope": "external_workshop_inputs",
+      "status": "UNKNOWN",
+      "detail": "Actual particle size/settleability, composition, volume/flow, bucket geometry, destination, residual profile, footprint, labor, costs, lab availability and containment acceptability are absent. Preserving them is required; they are not semantic failures."
+    },
+    {
+      "id": "U02",
+      "scope": "external_operational_and_legal_choices",
+      "status": "UNKNOWN",
+      "detail": "No local authority/lab/receiver determinations, sampling burden/thresholds or final route exist. Literature cannot supply them; the proposal leaves these choices after useful investigation."
+    },
+    {
+      "id": "U03",
+      "scope": "native_time_and_billing",
+      "status": "UNKNOWN",
+      "detail": "Native resolved provider/model, effective tier/effort, active inference time, billable tokens/costs, and60minutes of active research are not established. Separate exposed native/T3 fields are recorded."
+    },
+    {
+      "id": "U04",
+      "scope": "complete_method_trace",
+      "status": "UNKNOWN",
+      "detail": "No full original tool/read/feedback transcript is in the bounded packet. Exact goal count, precise source-read sequence, unobserved assistance and last-quarter writing compliance cannot be proven. No unauthorized science assistance is observed in the inspected assignment/clarification records."
+    },
+    {
+      "id": "U05",
+      "scope": "upstream_release_recipe",
+      "status": "UNKNOWN",
+      "detail": "The upstream recipe freeze is not independently inspected; plan reveal/discovery hash ordering is documented. No inference of all release prerequisites is made."
+    },
+    {
+      "id": "U06",
+      "scope": "S02_authors_run_count",
+      "status": "UNRESOLVED",
+      "detail": "Original source abstract/body conflict remains. Its bounded treatment-train lesson does not depend on resolving that count."
+    }
+  ],
+  "brief_clauses": [
+    {
+      "id": "B01",
+      "exact_clause": "A community ceramics workshop collects glaze-tool rinse water in settling buckets.",
+      "original_brief_line": 9,
+      "same_clause_in_original_plan_line": 25,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/brief.md",
+      "status": "SATISFIED_OR_PRESERVED",
+      "assessment": "Synthetic context retained; existing bucket practice is the baseline.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 11,
+          "label": "reviser/final.md:11"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 81,
+          "label": "reviser/final.md:81"
+        }
+      ],
+      "source_ids": [
+        "ORIGINAL_BRIEF"
+      ]
+    },
+    {
+      "id": "B02",
+      "exact_clause": "The supervisor sees clear-looking overflow on some days and visible fines on others.",
+      "original_brief_line": 9,
+      "same_clause_in_original_plan_line": 25,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/brief.md",
+      "status": "SATISFIED_OR_PRESERVED",
+      "assessment": "Clear and visibly fine overflow remain observations, not chemical or removal measurements.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 11,
+          "label": "reviser/final.md:11"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 81,
+          "label": "reviser/final.md:81"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 83,
+          "label": "reviser/final.md:83"
+        }
+      ],
+      "source_ids": [
+        "ORIGINAL_BRIEF",
+        "E10"
+      ]
+    },
+    {
+      "id": "B03",
+      "exact_clause": "A temporary extra bucket seemed to help, but it also happened during a quieter week.",
+      "original_brief_line": 9,
+      "same_clause_in_original_plan_line": 25,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/brief.md",
+      "status": "SATISFIED_OR_PRESERVED",
+      "assessment": "Lower workload remains a confound; recover history and match/log input loads.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 12,
+          "label": "reviser/final.md:12"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 48,
+          "label": "reviser/final.md:48"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 73,
+          "label": "reviser/final.md:73"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 75,
+          "label": "reviser/final.md:75"
+        }
+      ],
+      "source_ids": [
+        "ORIGINAL_BRIEF"
+      ]
+    },
+    {
+      "id": "B04",
+      "exact_clause": "The workshop wants to study whether a modest treatment change is worth a later controlled pilot.",
+      "original_brief_line": 9,
+      "same_clause_in_original_plan_line": 25,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/brief.md",
+      "status": "SATISFIED_OR_PRESERVED",
+      "assessment": "A later modest comparison is the aim; no device winner or present operation.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 18,
+          "label": "reviser/final.md:18"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 48,
+          "label": "reviser/final.md:48"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 49,
+          "label": "reviser/final.md:49"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 50,
+          "label": "reviser/final.md:50"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 51,
+          "label": "reviser/final.md:51"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 75,
+          "label": "reviser/final.md:75"
+        }
+      ],
+      "source_ids": [
+        "E01",
+        "E04",
+        "E05"
+      ]
+    },
+    {
+      "id": "B05",
+      "exact_clause": "No analysis of the water, contaminant inventory, or discharge permission has been provided.",
+      "original_brief_line": 9,
+      "same_clause_in_original_plan_line": 25,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/brief.md",
+      "status": "SATISFIED_OR_PRESERVED",
+      "assessment": "Analysis, inventory and permission remain absent; partner gates retained.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 13,
+          "label": "reviser/final.md:13"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 48,
+          "label": "reviser/final.md:48"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 73,
+          "label": "reviser/final.md:73"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 77,
+          "label": "reviser/final.md:77"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 85,
+          "label": "reviser/final.md:85"
+        }
+      ],
+      "source_ids": [
+        "E11",
+        "E12"
+      ]
+    },
+    {
+      "id": "B06",
+      "exact_clause": "This workshop scenario is synthetic.",
+      "original_brief_line": 9,
+      "same_clause_in_original_plan_line": 25,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/brief.md",
+      "status": "SATISFIED_OR_PRESERVED",
+      "assessment": "Case is expressly synthetic; no imported site facts.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 14,
+          "label": "reviser/final.md:14"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 85,
+          "label": "reviser/final.md:85"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 108,
+          "label": "reviser/final.md:108"
+        }
+      ],
+      "source_ids": [
+        "ORIGINAL_BRIEF"
+      ]
+    },
+    {
+      "id": "B07",
+      "exact_clause": "Spend the 60-minute research window developing a research proposal for improving the handling of fine particles in this rinse stream.",
+      "original_brief_line": 13,
+      "same_clause_in_original_plan_line": 29,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/brief.md",
+      "status": "TIME_RECORDED_SEPARATELY",
+      "assessment": "Proposal delivered in the allotted pipeline window. No literal full-hour execution claimed; native/T3/window facts are separate from science.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 15,
+          "label": "reviser/final.md:15"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 101,
+          "label": "reviser/final.md:101"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 110,
+          "label": "reviser/final.md:110"
+        }
+      ],
+      "source_ids": [
+        "PIPELINE_RECEIPTS"
+      ]
+    },
+    {
+      "id": "B08",
+      "exact_clause": "We need a mechanism-based comparison of feasible approaches, a way to investigate previous implementations and their operating limitations, and a pilot design we can discuss with a qualified local partner.",
+      "original_brief_line": 13,
+      "same_clause_in_original_plan_line": 29,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/brief.md",
+      "status": "SATISFIED_OR_PRESERVED",
+      "assessment": "Mechanism comparison, transfer checklist and partner-led pilot are all developed.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 46,
+          "label": "reviser/final.md:46"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 58,
+          "label": "reviser/final.md:58"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 71,
+          "label": "reviser/final.md:71"
+        }
+      ],
+      "source_ids": [
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E06",
+        "E08",
+        "E09"
+      ]
+    },
+    {
+      "id": "B09",
+      "exact_clause": "Explain uncertainty and potential failure, not just a favored device.",
+      "original_brief_line": 13,
+      "same_clause_in_original_plan_line": 29,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/brief.md",
+      "status": "SATISFIED_OR_PRESERVED",
+      "assessment": "Failure modes, uncertainty and owner choices accompany each substantive comparison.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 49,
+          "label": "reviser/final.md:49"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 50,
+          "label": "reviser/final.md:50"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 51,
+          "label": "reviser/final.md:51"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 77,
+          "label": "reviser/final.md:77"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 85,
+          "label": "reviser/final.md:85"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 93,
+          "label": "reviser/final.md:93"
+        }
+      ],
+      "source_ids": [
+        "E01",
+        "E03",
+        "E04",
+        "E06"
+      ]
+    },
+    {
+      "id": "B10",
+      "exact_clause": "Do not build or operate a treatment system.",
+      "original_brief_line": 13,
+      "same_clause_in_original_plan_line": 29,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/brief.md",
+      "status": "SATISFIED_OR_PRESERVED",
+      "assessment": "No actual build or operation is claimed; all trial work is prospective.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 20,
+          "label": "reviser/final.md:20"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 75,
+          "label": "reviser/final.md:75"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 108,
+          "label": "reviser/final.md:108"
+        }
+      ],
+      "source_ids": [
+        "ORIGINAL_BRIEF"
+      ]
+    },
+    {
+      "id": "B11",
+      "exact_clause": "Distinguish removal of suspended particles from management of dissolved constituents; clear-looking water is not a sufficient success criterion.",
+      "original_brief_line": 17,
+      "same_clause_in_original_plan_line": 33,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/brief.md",
+      "status": "SATISFIED_OR_PRESERVED",
+      "assessment": "Particle endpoints remain distinct from inventory-selected, lab-defined chemistry; clarity alone is rejected.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 21,
+          "label": "reviser/final.md:21"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 50,
+          "label": "reviser/final.md:50"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 73,
+          "label": "reviser/final.md:73"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 83,
+          "label": "reviser/final.md:83"
+        }
+      ],
+      "source_ids": [
+        "E01",
+        "E10",
+        "E13"
+      ]
+    },
+    {
+      "id": "B12",
+      "exact_clause": "Compare improved settling or flow management with a filtration approach and a useful non-treatment alternative such as source segregation or off-site handling.",
+      "original_brief_line": 18,
+      "same_clause_in_original_plan_line": 34,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/brief.md",
+      "status": "SATISFIED_OR_PRESERVED",
+      "assessment": "Settling/flow, filtration and prevention/accepted contained collection remain real alternatives.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 49,
+          "label": "reviser/final.md:49"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 50,
+          "label": "reviser/final.md:50"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 51,
+          "label": "reviser/final.md:51"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 52,
+          "label": "reviser/final.md:52"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 75,
+          "label": "reviser/final.md:75"
+        }
+      ],
+      "source_ids": [
+        "E01",
+        "E04",
+        "E05",
+        "E06",
+        "E07"
+      ]
+    },
+    {
+      "id": "B13",
+      "exact_clause": "Address intermittent flow, variable glaze residues, cleaning labor, and the fate of collected solids in both the mechanism discussion and feasibility comparison.",
+      "original_brief_line": 19,
+      "same_clause_in_original_plan_line": 35,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/brief.md",
+      "status": "SATISFIED_OR_PRESERVED",
+      "assessment": "Peaks, residue mix, resuspension, filter service/cleanout labor, capacity and sludge/media routes are included.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 49,
+          "label": "reviser/final.md:49"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 50,
+          "label": "reviser/final.md:50"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 51,
+          "label": "reviser/final.md:51"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 60,
+          "label": "reviser/final.md:60"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 62,
+          "label": "reviser/final.md:62"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 64,
+          "label": "reviser/final.md:64"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 65,
+          "label": "reviser/final.md:65"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 66,
+          "label": "reviser/final.md:66"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 67,
+          "label": "reviser/final.md:67"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 73,
+          "label": "reviser/final.md:73"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 77,
+          "label": "reviser/final.md:77"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 69,
+          "label": "reviser/final.md:69"
+        }
+      ],
+      "source_ids": [
+        "E02",
+        "E03",
+        "E04",
+        "E06"
+      ]
+    },
+    {
+      "id": "B14",
+      "exact_clause": "Identify what an earlier implementation would need to report before its results could transfer to this small workshop.",
+      "original_brief_line": 20,
+      "same_clause_in_original_plan_line": 36,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/brief.md",
+      "status": "SATISFIED_OR_PRESERVED",
+      "assessment": "Transfer requires exact feed, operating/QA history, residuals and endpoints, including adverse conditions.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 58,
+          "label": "reviser/final.md:58"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 60,
+          "label": "reviser/final.md:60"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 62,
+          "label": "reviser/final.md:62"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 63,
+          "label": "reviser/final.md:63"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 64,
+          "label": "reviser/final.md:64"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 65,
+          "label": "reviser/final.md:65"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 66,
+          "label": "reviser/final.md:66"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 67,
+          "label": "reviser/final.md:67"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 68,
+          "label": "reviser/final.md:68"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 69,
+          "label": "reviser/final.md:69"
+        }
+      ],
+      "source_ids": [
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E06"
+      ]
+    },
+    {
+      "id": "B15",
+      "exact_clause": "Propose sampling, a baseline comparison, and a stopping or escalation condition; clearly separate validation proposed for a later pilot from anything actually checked during the research hour.",
+      "original_brief_line": 21,
+      "same_clause_in_original_plan_line": 37,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/brief.md",
+      "status": "SATISFIED_OR_PRESERVED",
+      "assessment": "Baseline, workload matching, proposed sampling, later screen/pilot and stops are separated from desk review.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 73,
+          "label": "reviser/final.md:73"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 75,
+          "label": "reviser/final.md:75"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 77,
+          "label": "reviser/final.md:77"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 106,
+          "label": "reviser/final.md:106"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 108,
+          "label": "reviser/final.md:108"
+        }
+      ],
+      "source_ids": [
+        "E08",
+        "E09"
+      ]
+    },
+    {
+      "id": "B16",
+      "exact_clause": "Do not infer potable water, safe discharge, regulatory compliance, or harmless solids from particle removal.",
+      "original_brief_line": 25,
+      "same_clause_in_original_plan_line": 41,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/brief.md",
+      "status": "SATISFIED_OR_PRESERVED",
+      "assessment": "All four forbidden inferences are rejected; no local water or solids safety/legal conclusion.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 27,
+          "label": "reviser/final.md:27"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 83,
+          "label": "reviser/final.md:83"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 108,
+          "label": "reviser/final.md:108"
+        }
+      ],
+      "source_ids": [
+        "E10",
+        "E11",
+        "E12"
+      ]
+    },
+    {
+      "id": "B17",
+      "exact_clause": "Do not prescribe chemical dosing, conduct wet experiments, discharge water, or give a final disposal route without the missing characterization and local review.",
+      "original_brief_line": 26,
+      "same_clause_in_original_plan_line": 42,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/brief.md",
+      "status": "SATISFIED_OR_PRESERVED",
+      "assessment": "No dosing, wet work, discharge or final disposal route is prescribed or executed.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 28,
+          "label": "reviser/final.md:28"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 52,
+          "label": "reviser/final.md:52"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 75,
+          "label": "reviser/final.md:75"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 77,
+          "label": "reviser/final.md:77"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 83,
+          "label": "reviser/final.md:83"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 108,
+          "label": "reviser/final.md:108"
+        }
+      ],
+      "source_ids": [
+        "ORIGINAL_BRIEF",
+        "E11",
+        "E12"
+      ]
+    },
+    {
+      "id": "B18",
+      "exact_clause": "Do not replace unknown composition or throughput with convenient invented data.",
+      "original_brief_line": 27,
+      "same_clause_in_original_plan_line": 43,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/brief.md",
+      "status": "SATISFIED_OR_PRESERVED",
+      "assessment": "Workshop throughput/composition stay unknown; study figures are identified as source-specific.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 29,
+          "label": "reviser/final.md:29"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 54,
+          "label": "reviser/final.md:54"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 85,
+          "label": "reviser/final.md:85"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 108,
+          "label": "reviser/final.md:108"
+        }
+      ],
+      "source_ids": [
+        "E01",
+        "E02",
+        "E03"
+      ]
+    },
+    {
+      "id": "B19",
+      "exact_clause": "We do not yet know particle sizes, dissolved constituents, bucket geometry, daily volumes, disposal practices, space, or allowable labor.",
+      "original_brief_line": 31,
+      "same_clause_in_original_plan_line": 47,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/brief.md",
+      "status": "SATISFIED_OR_PRESERVED",
+      "assessment": "Listed particle/chemistry/geometry/volume/disposal/space/labor unknowns are explicit questions.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 30,
+          "label": "reviser/final.md:30"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 48,
+          "label": "reviser/final.md:48"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 85,
+          "label": "reviser/final.md:85"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 93,
+          "label": "reviser/final.md:93"
+        }
+      ],
+      "source_ids": [
+        "ORIGINAL_BRIEF"
+      ]
+    },
+    {
+      "id": "B20",
+      "exact_clause": "The supervisor has not decided whether preventing discharge entirely is acceptable.",
+      "original_brief_line": 31,
+      "same_clause_in_original_plan_line": 47,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/brief.md",
+      "status": "SATISFIED_OR_PRESERVED",
+      "assessment": "Zero-discharge acceptability is an owner decision and a prospective pilot gate, not a known preference.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 48,
+          "label": "reviser/final.md:48"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 85,
+          "label": "reviser/final.md:85"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 93,
+          "label": "reviser/final.md:93"
+        }
+      ],
+      "source_ids": [
+        "ORIGINAL_BRIEF"
+      ]
+    },
+    {
+      "id": "B21",
+      "exact_clause": "Treat these as proposal questions, not hidden known values.",
+      "original_brief_line": 31,
+      "same_clause_in_original_plan_line": 47,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/brief.md",
+      "status": "SATISFIED_OR_PRESERVED",
+      "assessment": "Unknowns are preserved as proposal questions and contingent local decisions.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 85,
+          "label": "reviser/final.md:85"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 93,
+          "label": "reviser/final.md:93"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 108,
+          "label": "reviser/final.md:108"
+        }
+      ],
+      "source_ids": [
+        "ORIGINAL_BRIEF"
+      ]
+    }
+  ],
+  "plan_additional_clauses": [
+    {
+      "id": "P01",
+      "exact_clause": "Keep this file outside the candidate-facing research packet.",
+      "original_plan_line": 9,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/plan.md",
+      "status": "ADMINISTRATIVE_RELEASE_BOUNDARY",
+      "assessment": "Initial investigator input map excludes the plan; reveal record freezes discovery first. This is staging context, not a demand to hide the properly released plan forever.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 34,
+          "label": "reviser/final.md:34"
+        }
+      ],
+      "source_ids": [
+        "PLAN_REVEAL"
+      ]
+    },
+    {
+      "id": "P02",
+      "exact_clause": "It preserves the authored request and open design opportunities.",
+      "original_plan_line": 9,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/plan.md",
+      "status": "PRESERVED",
+      "assessment": "Original request and open opportunities are retained; input is not treated as results.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 34,
+          "label": "reviser/final.md:34"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 38,
+          "label": "reviser/final.md:38"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 40,
+          "label": "reviser/final.md:40"
+        }
+      ],
+      "source_ids": [
+        "ORIGINAL_PLAN"
+      ]
+    },
+    {
+      "id": "P03",
+      "exact_clause": "It is not a completed research proposal, a source list, a result, or an evaluation answer key.",
+      "original_plan_line": 9,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/plan.md",
+      "status": "PRESERVED",
+      "assessment": "Plan is treated as prospective scope, not a source list or scientific answer key.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 34,
+          "label": "reviser/final.md:34"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 34,
+          "label": "reviser/final.md:34"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 108,
+          "label": "reviser/final.md:108"
+        }
+      ],
+      "source_ids": [
+        "ORIGINAL_PLAN"
+      ]
+    },
+    {
+      "id": "P04",
+      "exact_clause": "Nothing here selects an eventual research method.",
+      "original_plan_line": 9,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/plan.md",
+      "status": "SATISFIED",
+      "assessment": "No method is selected by the input or final.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 48,
+          "label": "reviser/final.md:48"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 49,
+          "label": "reviser/final.md:49"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 50,
+          "label": "reviser/final.md:50"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 51,
+          "label": "reviser/final.md:51"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 52,
+          "label": "reviser/final.md:52"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 93,
+          "label": "reviser/final.md:93"
+        }
+      ],
+      "source_ids": [
+        "ORIGINAL_PLAN"
+      ]
+    },
+    {
+      "id": "P05",
+      "exact_clause": "No empirical validation has been executed in authoring this case.",
+      "original_plan_line": 9,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/plan.md",
+      "status": "PRESERVED",
+      "assessment": "Authoring did not empirically validate the case; later literature work is not mislabeled empirical.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 44,
+          "label": "reviser/final.md:44"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 108,
+          "label": "reviser/final.md:108"
+        }
+      ],
+      "source_ids": [
+        "ORIGINAL_PLAN"
+      ]
+    },
+    {
+      "id": "P06",
+      "exact_clause": "The original brief follows verbatim between the delimiters.",
+      "original_plan_line": 13,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/plan.md",
+      "status": "BYTE_IDENTITY_CONFIRMED",
+      "assessment": "The embedded original brief and supplied frozen brief have identical bytes.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 7,
+          "label": "reviser/final.md:7"
+        }
+      ],
+      "source_ids": [
+        "ORIGINAL_BRIEF",
+        "ORIGINAL_PLAN"
+      ]
+    },
+    {
+      "id": "P07",
+      "exact_clause": "These bytes define the original obligations; later clarification must not silently replace them.",
+      "original_plan_line": 13,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/plan.md",
+      "status": "SATISFIED",
+      "assessment": "Original obligations remain authoritative; critic/minor source qualifications do not silently replace them.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 7,
+          "label": "reviser/final.md:7"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 32,
+          "label": "reviser/final.md:32"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 95,
+          "label": "reviser/final.md:95"
+        }
+      ],
+      "source_ids": [
+        "ORIGINAL_BRIEF",
+        "ORIGINAL_PLAN"
+      ]
+    },
+    {
+      "id": "P08",
+      "exact_clause": "Which characterization and operational comparisons would make a small-workshop particle-management pilot useful without confusing visual clarity with environmental suitability?",
+      "original_plan_line": 53,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/plan.md",
+      "status": "SATISFIED",
+      "assessment": "Governing research question answered by characterization, causal comparison and separate environmental gates.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 38,
+          "label": "reviser/final.md:38"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 48,
+          "label": "reviser/final.md:48"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 73,
+          "label": "reviser/final.md:73"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 75,
+          "label": "reviser/final.md:75"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 77,
+          "label": "reviser/final.md:77"
+        }
+      ],
+      "source_ids": [
+        "E01",
+        "E08",
+        "E09",
+        "E11",
+        "E12"
+      ]
+    },
+    {
+      "id": "P09",
+      "exact_clause": "The relevant endpoints, hazardous constituents if any, partner laboratory access, sampling burden, and acceptability of complete containment remain unresolved.",
+      "original_plan_line": 55,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/plan.md",
+      "status": "PRESERVED_EXTERNAL_CHOICES",
+      "assessment": "Endpoints, hazard, lab access, sampling burden and containment acceptability remain conditional partner/owner choices.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 39,
+          "label": "reviser/final.md:39"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 48,
+          "label": "reviser/final.md:48"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 73,
+          "label": "reviser/final.md:73"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 85,
+          "label": "reviser/final.md:85"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 93,
+          "label": "reviser/final.md:93"
+        }
+      ],
+      "source_ids": [
+        "ORIGINAL_PLAN",
+        "E08",
+        "E11"
+      ]
+    },
+    {
+      "id": "P10",
+      "exact_clause": "The proposal should support a staged go/no-go decision and a useful interim operating inquiry even if a treatment pilot is premature.",
+      "original_plan_line": 55,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/plan.md",
+      "status": "SATISFIED",
+      "assessment": "Mapping, inventory, volumes, bucket history and source segregation provide an interim inquiry before a pilot go/no-go.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 48,
+          "label": "reviser/final.md:48"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 51,
+          "label": "reviser/final.md:51"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 73,
+          "label": "reviser/final.md:73"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 77,
+          "label": "reviser/final.md:77"
+        }
+      ],
+      "source_ids": [
+        "E05",
+        "E06",
+        "E07"
+      ]
+    },
+    {
+      "id": "P11",
+      "exact_clause": "Research longer residence time and staged settling, flow buffering, replaceable or cleanable filtration, and separating concentrated rinses at the source.",
+      "original_plan_line": 59,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/plan.md",
+      "status": "SATISFIED_WITH_NONMATERIAL_DEPTH_LIMIT",
+      "assessment": "Rest-time/batch settling, buffering, replaceable filtration and first-rinse segregation are substantive; serial/staged settling itself is mostly named. L03 records the unequal depth without pretending a separate serial-tank study occurred.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 40,
+          "label": "reviser/final.md:40"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 49,
+          "label": "reviser/final.md:49"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 50,
+          "label": "reviser/final.md:50"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 51,
+          "label": "reviser/final.md:51"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 75,
+          "label": "reviser/final.md:75"
+        }
+      ],
+      "source_ids": [
+        "E01",
+        "E02",
+        "E04",
+        "L03"
+      ]
+    },
+    {
+      "id": "P12",
+      "exact_clause": "Include containment with approved collection as a useful alternative if treatment evidence or operation is inadequate.",
+      "original_plan_line": 59,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/plan.md",
+      "status": "SATISFIED",
+      "assessment": "Containment/accepted collection remains a useful fallback where treatment, operation or residual acceptance is inadequate.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 51,
+          "label": "reviser/final.md:51"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 75,
+          "label": "reviser/final.md:75"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 77,
+          "label": "reviser/final.md:77"
+        }
+      ],
+      "source_ids": [
+        "E05",
+        "E06",
+        "E11"
+      ]
+    },
+    {
+      "id": "P13",
+      "exact_clause": "Compare maintenance burden and solids handling along with removal claims.",
+      "original_plan_line": 59,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/plan.md",
+      "status": "SATISFIED",
+      "assessment": "Labor, cleanout/filter service and solids/media/wash-water routes accompany removal goals.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 50,
+          "label": "reviser/final.md:50"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 51,
+          "label": "reviser/final.md:51"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 65,
+          "label": "reviser/final.md:65"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 66,
+          "label": "reviser/final.md:66"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 67,
+          "label": "reviser/final.md:67"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 77,
+          "label": "reviser/final.md:77"
+        }
+      ],
+      "source_ids": [
+        "E03",
+        "E04",
+        "E06"
+      ]
+    },
+    {
+      "id": "P14",
+      "exact_clause": "Combinations may be reasonable, but are not presumed better.",
+      "original_plan_line": 59,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/plan.md",
+      "status": "SATISFIED",
+      "assessment": "Combination performance is expressly a testable question, not a presumed improvement.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 52,
+          "label": "reviser/final.md:52"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 75,
+          "label": "reviser/final.md:75"
+        }
+      ],
+      "source_ids": [
+        "E02",
+        "E03"
+      ]
+    },
+    {
+      "id": "P15",
+      "exact_clause": "Examine particle suspension, residence time, resuspension, filter capture and fouling, and the distinction between suspended and dissolved material.",
+      "original_plan_line": 63,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/plan.md",
+      "status": "SATISFIED",
+      "assessment": "Residual suspension/colloids, rest, disturbed solids, filter capture/fouling and dissolved limits are examined.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 49,
+          "label": "reviser/final.md:49"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 50,
+          "label": "reviser/final.md:50"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 52,
+          "label": "reviser/final.md:52"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 73,
+          "label": "reviser/final.md:73"
+        }
+      ],
+      "source_ids": [
+        "E01",
+        "E03",
+        "E04",
+        "E10",
+        "E13"
+      ]
+    },
+    {
+      "id": "P16",
+      "exact_clause": "The observation that an extra bucket coincided with clearer water is compatible with several causal stories, including lower workload.",
+      "original_plan_line": 63,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/plan.md",
+      "status": "SATISFIED",
+      "assessment": "Treatment and lower-load causal stories are both preserved.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 14,
+          "label": "reviser/final.md:14"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 81,
+          "label": "reviser/final.md:81"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 89,
+          "label": "reviser/final.md:89"
+        }
+      ],
+      "source_ids": [
+        "ORIGINAL_BRIEF"
+      ]
+    },
+    {
+      "id": "P17",
+      "exact_clause": "The proposal should say which properties and comparisons would distinguish these stories without implying a measured treatment efficiency.",
+      "original_plan_line": 63,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/plan.md",
+      "status": "SATISFIED",
+      "assessment": "Workload/material/volume logs, paired measurements and matched aliquots/blocks distinguish the stories without asserting efficiency.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 49,
+          "label": "reviser/final.md:49"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 73,
+          "label": "reviser/final.md:73"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 75,
+          "label": "reviser/final.md:75"
+        }
+      ],
+      "source_ids": [
+        "E08",
+        "E09"
+      ]
+    },
+    {
+      "id": "P18",
+      "exact_clause": "Investigate implementation records that disclose actual influent, flow variation, particle characterization, maintenance, downtime, and residual handling.",
+      "original_plan_line": 67,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/plan.md",
+      "status": "SATISFIED",
+      "assessment": "Actual research implementations are investigated; missing operating/residual details are transfer conditions rather than assumed facts.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 54,
+          "label": "reviser/final.md:54"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 58,
+          "label": "reviser/final.md:58"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 60,
+          "label": "reviser/final.md:60"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 62,
+          "label": "reviser/final.md:62"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 63,
+          "label": "reviser/final.md:63"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 64,
+          "label": "reviser/final.md:64"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 65,
+          "label": "reviser/final.md:65"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 66,
+          "label": "reviser/final.md:66"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 67,
+          "label": "reviser/final.md:67"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 68,
+          "label": "reviser/final.md:68"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 69,
+          "label": "reviser/final.md:69"
+        }
+      ],
+      "source_ids": [
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E06"
+      ]
+    },
+    {
+      "id": "P19",
+      "exact_clause": "Reports from another craft operation or industrial stream may be informative only with differences made explicit.",
+      "original_plan_line": 67,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/plan.md",
+      "status": "SATISFIED",
+      "assessment": "Industrial, municipal and institutional analogues are explicitly bounded by feed, scale, equipment and local route.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 51,
+          "label": "reviser/final.md:51"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 54,
+          "label": "reviser/final.md:54"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 56,
+          "label": "reviser/final.md:56"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 68,
+          "label": "reviser/final.md:68"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 99,
+          "label": "reviser/final.md:99"
+        }
+      ],
+      "source_ids": [
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E06"
+      ]
+    },
+    {
+      "id": "P20",
+      "exact_clause": "Previous bucket changes are an opportunity to recover dates, cleaning habits, and workload; they are not already an effectiveness trial.",
+      "original_plan_line": 67,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/plan.md",
+      "status": "SATISFIED",
+      "assessment": "Bucket dates, cleaning/emptying and workload are recovery questions, not an existing efficacy trial.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 14,
+          "label": "reviser/final.md:14"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 48,
+          "label": "reviser/final.md:48"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 73,
+          "label": "reviser/final.md:73"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 81,
+          "label": "reviser/final.md:81"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 89,
+          "label": "reviser/final.md:89"
+        }
+      ],
+      "source_ids": [
+        "ORIGINAL_BRIEF"
+      ]
+    },
+    {
+      "id": "P21",
+      "exact_clause": "No particular installation is supplied as a success example.",
+      "original_plan_line": 67,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/plan.md",
+      "status": "PRESERVED",
+      "assessment": "No input installation is invented as a success example; literature installations are clearly separate.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 14,
+          "label": "reviser/final.md:14"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 54,
+          "label": "reviser/final.md:54"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 81,
+          "label": "reviser/final.md:81"
+        }
+      ],
+      "source_ids": [
+        "ORIGINAL_PLAN",
+        "E01",
+        "E02",
+        "E03"
+      ]
+    },
+    {
+      "id": "P22",
+      "exact_clause": "A later supervised pilot could characterize inlet and outlet particles across workload periods, track flow and maintenance, and compare operation under prespecified conditions.",
+      "original_plan_line": 71,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/plan.md",
+      "status": "SATISFIED",
+      "assessment": "Prospective partner pilot pairs particles and logs flow/maintenance across workload periods under agreed conditions.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 73,
+          "label": "reviser/final.md:73"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 75,
+          "label": "reviser/final.md:75"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 77,
+          "label": "reviser/final.md:77"
+        }
+      ],
+      "source_ids": [
+        "E08",
+        "E09"
+      ]
+    },
+    {
+      "id": "P23",
+      "exact_clause": "Discuss how to sample a variable stream, avoid comparing mismatched input loads, and recognize media breakthrough or resuspension.",
+      "original_plan_line": 71,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/plan.md",
+      "status": "SATISFIED",
+      "assessment": "Variable-flow sample design, matched input loads, headloss/flow/breakthrough and resuspension risks are operationalized.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 49,
+          "label": "reviser/final.md:49"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 50,
+          "label": "reviser/final.md:50"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 73,
+          "label": "reviser/final.md:73"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 75,
+          "label": "reviser/final.md:75"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 77,
+          "label": "reviser/final.md:77"
+        }
+      ],
+      "source_ids": [
+        "E03",
+        "E04",
+        "E08",
+        "E09"
+      ]
+    },
+    {
+      "id": "P24",
+      "exact_clause": "Chemical characterization and local disposal review are separate prerequisites when the eventual decision concerns handling or discharge.",
+      "original_plan_line": 71,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/plan.md",
+      "status": "SATISFIED",
+      "assessment": "Chemistry and local water/residual review are distinct prerequisites; particle reduction cannot answer either.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 48,
+          "label": "reviser/final.md:48"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 50,
+          "label": "reviser/final.md:50"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 73,
+          "label": "reviser/final.md:73"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 75,
+          "label": "reviser/final.md:75"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 77,
+          "label": "reviser/final.md:77"
+        }
+      ],
+      "source_ids": [
+        "E10",
+        "E11",
+        "E12",
+        "E13"
+      ]
+    },
+    {
+      "id": "P25",
+      "exact_clause": "Literature checks or a transparent residence-time illustration can be executed during the hour, but do not constitute measured removal or safety validation.",
+      "original_plan_line": 71,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/plan.md",
+      "status": "SATISFIED",
+      "assessment": "Desk checks are the claimed execution; a residence-time illustration is optional, not obligatory or claimed.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 106,
+          "label": "reviser/final.md:106"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 108,
+          "label": "reviser/final.md:108"
+        }
+      ],
+      "source_ids": [
+        "ORIGINAL_PLAN"
+      ]
+    },
+    {
+      "id": "P26",
+      "exact_clause": "Authoring status: only synthetic input files have been prepared.",
+      "original_plan_line": 73,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/plan.md",
+      "status": "PRESERVED",
+      "assessment": "Synthetic authoring status does not become new workshop facts.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 14,
+          "label": "reviser/final.md:14"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 85,
+          "label": "reviser/final.md:85"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 108,
+          "label": "reviser/final.md:108"
+        }
+      ],
+      "source_ids": [
+        "ORIGINAL_PLAN"
+      ]
+    },
+    {
+      "id": "P27",
+      "exact_clause": "No scientific search, pilot, experiment, data collection, implementation, or performance validation has been performed for this case.",
+      "original_plan_line": 73,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/plan.md",
+      "status": "PRESERVED_IN_AUTHORING_CONTEXT",
+      "assessment": "This sentence describes authoring. The researcher subsequently does literature work, while all case empirical checks remain unexecuted.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 106,
+          "label": "reviser/final.md:106"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 108,
+          "label": "reviser/final.md:108"
+        }
+      ],
+      "source_ids": [
+        "ORIGINAL_PLAN"
+      ]
+    },
+    {
+      "id": "P28",
+      "exact_clause": "Future researchers must state the actual extent of any work they execute.",
+      "original_plan_line": 73,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/plan.md",
+      "status": "SATISFIED",
+      "assessment": "Actual source-review extent and non-executed validation are explicitly stated.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 104,
+          "label": "reviser/final.md:104"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 106,
+          "label": "reviser/final.md:106"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 108,
+          "label": "reviser/final.md:108"
+        }
+      ],
+      "source_ids": [
+        "E02",
+        "E10"
+      ]
+    },
+    {
+      "id": "P29",
+      "exact_clause": "The topic is sized for a full 60-minute research-and-proposal session: substantive evidence discovery, causal reasoning, comparison of useful alternatives, implementation/history investigation, and a coherent later validation design.",
+      "original_plan_line": 77,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/plan.md",
+      "status": "SCOPE_SATISFIED_TIME_SEPARATE",
+      "assessment": "All substantive scope dimensions are assessed. Native elapsed/time-window proof is kept separately; literal full-hour active research is not asserted.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 46,
+          "label": "reviser/final.md:46"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 58,
+          "label": "reviser/final.md:58"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 71,
+          "label": "reviser/final.md:71"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 104,
+          "label": "reviser/final.md:104"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 110,
+          "label": "reviser/final.md:110"
+        }
+      ],
+      "source_ids": [
+        "PIPELINE_RECEIPTS"
+      ]
+    },
+    {
+      "id": "P30",
+      "exact_clause": "The proposal may contain reasoned provisional choices, but the case provides no predetermined winner.",
+      "original_plan_line": 77,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/plan.md",
+      "status": "SATISFIED",
+      "assessment": "No predetermined device winner; provisional sequence is gated by characterization and feasibility.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 48,
+          "label": "reviser/final.md:48"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 49,
+          "label": "reviser/final.md:49"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 50,
+          "label": "reviser/final.md:50"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 51,
+          "label": "reviser/final.md:51"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 52,
+          "label": "reviser/final.md:52"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 93,
+          "label": "reviser/final.md:93"
+        }
+      ],
+      "source_ids": [
+        "E01",
+        "E03",
+        "E05"
+      ]
+    },
+    {
+      "id": "P31",
+      "exact_clause": "It requests no product build.",
+      "original_plan_line": 77,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/plan.md",
+      "status": "SATISFIED",
+      "assessment": "No product build requested, delivered or claimed.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 20,
+          "label": "reviser/final.md:20"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 44,
+          "label": "reviser/final.md:44"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 108,
+          "label": "reviser/final.md:108"
+        }
+      ],
+      "source_ids": [
+        "ORIGINAL_PLAN"
+      ]
+    },
+    {
+      "id": "P32",
+      "exact_clause": "Preserve brief.md and plan.md exactly for later paired freezes.",
+      "original_plan_line": 77,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/plan.md",
+      "status": "BYTE_PRESERVATION_CONFIRMED",
+      "assessment": "Original frozen brief/plan and released plan hashes are inspected, matches recorded, and unchanged during review.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 5,
+          "label": "reviser/final.md:5"
+        }
+      ],
+      "source_ids": [
+        "ORIGINAL_HASH_INVENTORY",
+        "PLAN_REVEAL"
+      ]
+    },
+    {
+      "id": "P33",
+      "exact_clause": "C inputs remain sealed until the recipe freeze.",
+      "original_plan_line": 77,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/plan.md",
+      "status": "ADMINISTRATIVE_PREREQUISITE_UNKNOWN",
+      "assessment": "Actual upstream recipe-freeze occurrence is not established by this bounded science packet. Discovery-before-plan release is recorded; do not infer all upstream release prerequisites.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 44,
+          "label": "reviser/final.md:44"
+        }
+      ],
+      "source_ids": [
+        "PLAN_REVEAL"
+      ]
+    },
+    {
+      "id": "P34",
+      "exact_clause": "Input readiness does not assert that those release conditions have been satisfied.",
+      "original_plan_line": 77,
+      "authority_path": "ER12_RUNTIME/frozen-inputs/C-R1-02/plan.md",
+      "status": "PRESERVED_NO_READINESS_INFERENCE",
+      "assessment": "No readiness assertion is used as proof of release conditions, performance or qualification.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 44,
+          "label": "reviser/final.md:44"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 108,
+          "label": "reviser/final.md:108"
+        }
+      ],
+      "source_ids": [
+        "ORIGINAL_PLAN"
+      ]
+    }
+  ],
+  "exact_clause_accounting": {
+    "original_brief_sentences_or_bullets": 21,
+    "additional_plan_sentences": 34,
+    "total_unique_text_clauses": 55,
+    "repeated_original_brief_in_plan": "Each B clause has its exact plan line; no repeated clause is omitted.",
+    "identity_metadata": "Exact case title,CaseID,SlotID and domain are preserved in inputs and recorded above; structural headings/delimiters are framing, not extra product obligations.",
+    "upstream_admin_prerequisite_status": "Recorded separately, not invented as a semantic failure."
+  },
+  "criticism_dispositions": [
+    {
+      "id": "C01",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/critique.md",
+        "line": 27,
+        "label": "critic/critique.md:27"
+      },
+      "criticism": "S02 abstract reports four runs while body describes three stages; preserve ambiguity.",
+      "final_disposition": "ACCEPT_WITH_QUALIFICATION",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+        "line": 99,
+        "label": "reviser/final.md:99"
+      },
+      "independent_result": "Correct issue; primary PDF confirms. Draft passage locator is inaccurate: explicit count is in discovery/map, not that draft paragraph.",
+      "source_ids": [
+        "E02"
+      ],
+      "remaining_material": false
+    },
+    {
+      "id": "C02",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/critique.md",
+        "line": 29,
+        "label": "critic/critique.md:29"
+      },
+      "criticism": "S10 source-map silently normalizes EPA CADDIS unit rendering.",
+      "final_disposition": "AMEND_EVIDENCE_WORDING_RETAIN_METHOD_UNCERTAINTY",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+        "line": 100,
+        "label": "reviser/final.md:100"
+      },
+      "independent_result": "Valid source-fidelity criticism. E13 shows the underlying micron operational definition is scientifically supported; do not rescore discovery as a false definition. Final retains lab-defined fractions without prescribing a cutoff.",
+      "source_ids": [
+        "E10",
+        "E13"
+      ],
+      "remaining_material": false
+    },
+    {
+      "id": "C03",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/critique.md",
+        "line": 31,
+        "label": "critic/critique.md:31"
+      },
+      "criticism": "Original full-hour execution cannot be established from allowed predecessor package.",
+      "final_disposition": "RETAIN_UNCERTAINTY",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+        "line": 101,
+        "label": "reviser/final.md:101"
+      },
+      "independent_result": "Reasonable for the critic/reviser mapped inputs, which exclude investigator native receipt. This assessment can report the separate native elapsed724s and lifecycle, but not 60minutes of active research. Assignment expressly permits early completion when complete.",
+      "source_ids": [
+        "PIPELINE_RECEIPTS"
+      ],
+      "remaining_material": false
+    },
+    {
+      "id": "C04",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/critique.md",
+        "line": 9,
+        "label": "critic/critique.md:9"
+      },
+      "criticism": "Overall substantially complete, no material error or omission; nine positive coverage rows.",
+      "final_disposition": "ACCEPT_AFTER_REVIEW",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+        "line": 102,
+        "label": "reviser/final.md:102"
+      },
+      "independent_result": "Independent six-axis and55-clause assessment supports no remaining material issue. Equal-depth coverage is overstated for staged settling; L03 qualifies that conclusion. Every positive row is covered by the B/P matrix, not by critic agreement.",
+      "source_ids": [
+        "ORIGINAL_BRIEF",
+        "ORIGINAL_PLAN",
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E06",
+        "E07",
+        "E08",
+        "E09",
+        "E10",
+        "E11",
+        "E12",
+        "E13"
+      ],
+      "remaining_material": false
+    }
+  ],
+  "original_proposal_rejection_assessment": [
+    {
+      "rejection": "Appearance as success",
+      "result": "SUPPORTED_REJECTION",
+      "source_ids": [
+        "E01",
+        "E10",
+        "E13"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 83,
+          "label": "reviser/final.md:83"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 89,
+          "label": "reviser/final.md:89"
+        }
+      ]
+    },
+    {
+      "rejection": "Quiet-week extra bucket as efficacy trial",
+      "result": "SUPPORTED_REJECTION",
+      "source_ids": [
+        "ORIGINAL_BRIEF"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 83,
+          "label": "reviser/final.md:83"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 89,
+          "label": "reviser/final.md:89"
+        }
+      ]
+    },
+    {
+      "rejection": "Factory efficiency or industrial default as workshop result/design",
+      "result": "SUPPORTED_REJECTION",
+      "source_ids": [
+        "E01",
+        "E02",
+        "E03"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 83,
+          "label": "reviser/final.md:83"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 89,
+          "label": "reviser/final.md:89"
+        }
+      ]
+    },
+    {
+      "rejection": "Factory reuse criterion or sewer statement as workshop permission",
+      "result": "SUPPORTED_REJECTION",
+      "source_ids": [
+        "E02",
+        "E12"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 83,
+          "label": "reviser/final.md:83"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 89,
+          "label": "reviser/final.md:89"
+        }
+      ]
+    },
+    {
+      "rejection": "Numeric settling time or treatment filter rating without feed data",
+      "result": "SUPPORTED_REJECTION",
+      "source_ids": [
+        "E01",
+        "E03",
+        "ORIGINAL_BRIEF"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 83,
+          "label": "reviser/final.md:83"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 89,
+          "label": "reviser/final.md:89"
+        }
+      ]
+    },
+    {
+      "rejection": "Coagulant dosing as this proposal",
+      "result": "SUPPORTED_SCOPE_REJECTION",
+      "source_ids": [
+        "ORIGINAL_BRIEF"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 83,
+          "label": "reviser/final.md:83"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 89,
+          "label": "reviser/final.md:89"
+        }
+      ]
+    },
+    {
+      "rejection": "Analyte panel from assumed glaze composition",
+      "result": "SUPPORTED_REJECTION",
+      "source_ids": [
+        "ORIGINAL_BRIEF",
+        "E11"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 83,
+          "label": "reviser/final.md:83"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 89,
+          "label": "reviser/final.md:89"
+        }
+      ]
+    },
+    {
+      "rejection": "Captured solids as harmless",
+      "result": "SUPPORTED_REJECTION",
+      "source_ids": [
+        "E06",
+        "E11"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 83,
+          "label": "reviser/final.md:83"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 89,
+          "label": "reviser/final.md:89"
+        }
+      ]
+    },
+    {
+      "rejection": "Named final sewer/trash/evaporation/off-site destination before local acceptance",
+      "result": "SUPPORTED_REJECTION",
+      "source_ids": [
+        "ORIGINAL_BRIEF",
+        "E11",
+        "E12"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 83,
+          "label": "reviser/final.md:83"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 89,
+          "label": "reviser/final.md:89"
+        }
+      ]
+    },
+    {
+      "rejection": "Potable use or present treatment operation",
+      "result": "SUPPORTED_SCOPE_REJECTION",
+      "source_ids": [
+        "ORIGINAL_BRIEF"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 83,
+          "label": "reviser/final.md:83"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+          "line": 89,
+          "label": "reviser/final.md:89"
+        }
+      ]
+    }
+  ],
+  "useful_discoveries": [
+    {
+      "id": "D01",
+      "discovery": "A directly reported pre-chemical settling series leaves substantial residual TSS; a rest-time response can be measured without treating100minutes as a default.",
+      "source_ids": [
+        "E01"
+      ],
+      "lineage": "Discovery→draft→final preserved"
+    },
+    {
+      "id": "D02",
+      "discovery": "A stabilized high-TSS factory train can produce low reported TSS while another endpoint remains unsuitable; combined-train data cannot isolate settling.",
+      "source_ids": [
+        "E02"
+      ],
+      "lineage": "Discovery→draft→final preserved with run-count qualification"
+    },
+    {
+      "id": "D03",
+      "discovery": "Feed size/history, membrane types, irreversible fouling and chemical-cleaning/pressure burdens make high-performance filtration a maintenance question, not a simple upgrade.",
+      "source_ids": [
+        "E03",
+        "E04"
+      ],
+      "lineage": "Industrial comparator remains distinct from proposed workshop cartridge screening"
+    },
+    {
+      "id": "D04",
+      "discovery": "Studio reclaim/source segregation and institution-specific settling-tank cleanout provide real workflow precedents without performance or waste-status transfer.",
+      "source_ids": [
+        "E05",
+        "E06",
+        "E07"
+      ],
+      "lineage": "Non-treatment alternative and retained residual decisions preserved"
+    },
+    {
+      "id": "D05",
+      "discovery": "Variable streams require average-load and peak-condition measurements with different applicability; chemistry fractions and residual routes are separate oracles.",
+      "source_ids": [
+        "E08",
+        "E09",
+        "E10",
+        "E11",
+        "E12",
+        "E13"
+      ],
+      "lineage": "Proposed sampling and stop design preserved; no empirical execution claimed"
+    }
+  ],
+  "source_claim_checks": [
+    {
+      "id": "E01",
+      "candidate_source_id": "S01",
+      "title": "Optimization and economic evaluation of modified coagulation–flocculation process for enhanced treatment of ceramic-tile industry wastewater",
+      "url": "https://link.springer.com/article/10.1186/s13568-018-0702-4",
+      "version_verified": "2018 original research; AMB Express 8:172; DOI 10.1186/s13568-018-0702-4",
+      "locator": "Sampling and experimental procedure; Results / Effect of primary sedimentation time; Figure 2; Discussion",
+      "access_utc": "2026-10-10T05:43:35.541180+00:00",
+      "retrieval": {
+        "candidate_id": "S01",
+        "url": "https://link.springer.com/article/10.1186/s13568-018-0702-4",
+        "access_started_utc": "2026-10-10T05:43:35.541180+00:00",
+        "http_status": 200,
+        "resolved_url": "https://link.springer.com/article/10.1186/s13568-018-0702-4?error=cookies_not_supported&code=548ffe7d-50b8-4cf2-a71f-6a141f1b6778",
+        "content_type": "text/html; charset=utf-8",
+        "local_path": "ER12_RUNTIME/assessment/C-R1-02/control-v1/evidence/S01.html",
+        "bytes": 441892,
+        "sha256": "69ee358a25c4ec2535d9e5f19a96c6e9da8bd7f1cf4842c116bc7018d439e2e7",
+        "access_finished_utc": "2026-10-10T05:43:36.809434+00:00"
+      },
+      "reviewer_text_evidence": "ER12_RUNTIME/assessment/C-R1-02/control-v1/evidence/S01.txt",
+      "text_sha256": "ac742544eb229426973a5f71e9d21bc206b42645a143c1db85c76072daee3e23",
+      "observed_subject_operation_units_types": "The pre-coagulant test used 1 L factory wastewater in a flask, with a 10–120 minute series. Results associate 100 minutes with TSS 15,750→9,400 mg/L (41.97%) and turbidity 10,500→6,310 NTU (39.9%).",
+      "conditions_defaults_domain_exceptions": "Factory and laboratory result, not a workshop default or recommended rest time. The later chemical conditions are outside the brief. The Discussion reverses the two percentage labels; Results and the concentrations support the candidate’s ordering.",
+      "default_for_synthetic_workshop": "NONE ESTABLISHED",
+      "semantic_result": "SUPPORTED_WITH_SOURCE_QUALITY_LIMIT",
+      "basis": "Independent primary-source retrieval and examination; candidate review labels not adopted as proof"
+    },
+    {
+      "id": "E02",
+      "candidate_source_id": "S02",
+      "title": "Optimal Treatment of Ceramic Industrial Wastewater",
+      "url": "https://www.internationaljournalssrg.org/IJCE/2025/Volume12-Issue3/IJCE-V12I3P105.pdf",
+      "version_verified": "2025-03-29 original article; IJCE 12(3):47–55; DOI 10.14445/23488352/IJCE-V12I3P105",
+      "locator": "Printed pp. 47,49–54; PDF pp.1,3–8; Fig.1, Tables1–2 and §5.2",
+      "access_utc": "2026-10-10T05:43:35.542958+00:00",
+      "retrieval": {
+        "candidate_id": "S02",
+        "url": "https://www.internationaljournalssrg.org/IJCE/2025/Volume12-Issue3/IJCE-V12I3P105.pdf",
+        "access_started_utc": "2026-10-10T05:43:35.542958+00:00",
+        "http_status": 200,
+        "resolved_url": "https://www.internationaljournalssrg.org/IJCE/2025/Volume12-Issue3/IJCE-V12I3P105.pdf",
+        "content_type": "application/pdf",
+        "local_path": "ER12_RUNTIME/assessment/C-R1-02/control-v1/evidence/S02.pdf",
+        "bytes": 786025,
+        "sha256": "b352f427e5effe0ceb3f4f0b5eb27a7249a392448ef061487082aa964cbacb25",
+        "text_path": "ER12_RUNTIME/assessment/C-R1-02/control-v1/evidence/S02.txt",
+        "extraction_returncode": 0,
+        "extraction_diagnostic": "",
+        "access_finished_utc": "2026-10-10T05:43:38.073927+00:00"
+      },
+      "reviewer_text_evidence": "ER12_RUNTIME/assessment/C-R1-02/control-v1/evidence/S02.txt",
+      "text_sha256": "110b9263b1b9dcb8bc98cc058f8f977a0d4c39b937792a4d5d63ac925e9ab76d",
+      "observed_subject_operation_units_types": "The PDF confirms three parallel treatment trains, each including filtration; 250 L feed plus constant-head tank; stated 25 L/day and 6 h/day. Body: three sequential two-week stages. Abstract: four runs. Table 2 stage 1 ranges 102–120 mg/L; 102 is one reported value, not a mean. Physical stages miss the paper’s pH reuse target; residual handling and cost remain future work.",
+      "conditions_defaults_domain_exceptions": "A short single-factory train example. No settling-only efficiency, matched-stage superiority, local standard, or workshop release permission follows. The final preserves this boundary and the count conflict.",
+      "default_for_synthetic_workshop": "NONE ESTABLISHED",
+      "semantic_result": "SUPPORTED_WITH_DISCLOSED_SOURCE_AMBIGUITY",
+      "basis": "Independent primary-source retrieval and examination; candidate review labels not adopted as proof"
+    },
+    {
+      "id": "E03",
+      "candidate_source_id": "S03",
+      "title": "Effective treatment of the wastewater from ceramic industry using ceramic membranes",
+      "url": "https://publikationen.bibliothek.kit.edu/1000131147/109197328",
+      "version_verified": "2021 original research; Water Science & Technology 83(5):1055–1071; DOI 10.2166/wst.2021.039",
+      "locator": "Printed pp.1056–1063,1065–1070; Tables2–3, Methods, Results and Conclusions",
+      "access_utc": "2026-10-10T05:43:35.544215+00:00",
+      "retrieval": {
+        "candidate_id": "S03",
+        "url": "https://publikationen.bibliothek.kit.edu/1000131147/109197328",
+        "access_started_utc": "2026-10-10T05:43:35.544215+00:00",
+        "http_status": 200,
+        "resolved_url": "https://publikationen.bibliothek.kit.edu/1000131147/109197328",
+        "content_type": "application/pdf",
+        "local_path": "ER12_RUNTIME/assessment/C-R1-02/control-v1/evidence/S03.pdf",
+        "bytes": 969218,
+        "sha256": "707612677db9882fb36ba923fb0fce41b1a4358ae78d0d0dcfa1e487ee364b46",
+        "text_path": "ER12_RUNTIME/assessment/C-R1-02/control-v1/evidence/S03.txt",
+        "extraction_returncode": 0,
+        "extraction_diagnostic": "",
+        "access_finished_utc": "2026-10-10T05:43:36.718572+00:00"
+      },
+      "reviewer_text_evidence": "ER12_RUNTIME/assessment/C-R1-02/control-v1/evidence/S03.txt",
+      "text_sha256": "aeff02ab8dc3a4e6b7d593466fd690078de7fc4da1f891b825a28fb2b1f099ef",
+      "observed_subject_operation_units_types": "The study uses variable wastewater from one German manufacturer, with submicron through coarse particle sizes. MF is rated in nm; UF/NF use Da cutoffs. Cross-flow, feed history, membrane age, fouling, pressure and chemical cleaning affect results. MF ran at 1 bar; other pilot membranes at 20 bar; pilot maximum is 25 bar. A seven-day MF test displays its first 100 hours.",
+      "conditions_defaults_domain_exceptions": "Industrial membrane trials are an analogy, not cartridge proof. The candidate does not equate Da with a particle aperture or adopt these settings. Small-workshop membrane selection and dissolved-ion treatment remain separate investigated questions.",
+      "default_for_synthetic_workshop": "NONE ESTABLISHED",
+      "semantic_result": "SUPPORTED",
+      "basis": "Independent primary-source retrieval and examination; candidate review labels not adopted as proof"
+    },
+    {
+      "id": "E04",
+      "candidate_source_id": "S04",
+      "title": "Tertiary Granular Filtration: Problems and Remedies",
+      "url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=200045JL.TXT",
+      "version_verified": "EPA report, August 1984",
+      "locator": "Original EPA report Table1; Common Problems / Suggested Remedies, Filtration Cycle; web rendered lines188–244",
+      "access_utc": "2026-10-10T05:43:35.545219+00:00",
+      "retrieval": {
+        "candidate_id": "S04",
+        "url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=200045JL.TXT",
+        "access_started_utc": "2026-10-10T05:43:35.545219+00:00",
+        "http_status": 200,
+        "resolved_url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=200045JL.TXT",
+        "content_type": "text/html; charset=ISO-8859-1",
+        "local_path": "ER12_RUNTIME/assessment/C-R1-02/control-v1/evidence/S04.html",
+        "bytes": 980,
+        "sha256": "d9f8560dc6647e728b3561b19967c6beb8c38b8e64d15ca79b41decf71d7f68c",
+        "access_finished_utc": "2026-10-10T05:43:35.916223+00:00"
+      },
+      "reviewer_text_evidence": "ER12_RUNTIME/assessment/C-R1-02/control-v1/evidence/web-governing-open.txt",
+      "text_sha256": "1e13b4d2b826d13cedf4e557c6b7929016b2eddbc7ed382a9e805762e217dc24",
+      "observed_subject_operation_units_types": "The original report links solids loading and hydraulic surges to clogging, head loss, poor effluent, downtime and operator/maintenance problems; discusses upstream clarification and flow stabilization.",
+      "conditions_defaults_domain_exceptions": "Municipal granular filters and backwashing are the subject. Qualitative failure hypotheses can inform the proposed small-filter trial; equipment sizes, chemicals, operating defaults and performance cannot transfer.",
+      "default_for_synthetic_workshop": "NONE ESTABLISHED",
+      "semantic_result": "SUPPORTED_WITH_ACCESS_LIMIT",
+      "basis": "Independent primary-source retrieval and examination; candidate review labels not adopted as proof"
+    },
+    {
+      "id": "E05",
+      "candidate_source_id": "S05",
+      "title": "Arts & Crafts Center — ceramic studio policies and procedures",
+      "url": "https://union.ufl.edu/artscraftscenter/",
+      "version_verified": "Live University of Florida institutional page; no policy revision date established",
+      "locator": "Ceramic Studio Policies: Getting Started; Glazing your Pieces; Clean up Process / Throwing Room / Glazing Room; saved text lines139–174",
+      "access_utc": "2026-10-10T05:43:35.546349+00:00",
+      "retrieval": {
+        "candidate_id": "S05",
+        "url": "https://union.ufl.edu/artscraftscenter/",
+        "access_started_utc": "2026-10-10T05:43:35.546349+00:00",
+        "http_status": 200,
+        "resolved_url": "https://union.ufl.edu/artscraftscenter/",
+        "content_type": "text/html; charset=UTF-8",
+        "local_path": "ER12_RUNTIME/assessment/C-R1-02/control-v1/evidence/S05.html",
+        "bytes": 160731,
+        "sha256": "e3f140374f83d5e1e72af49057326289e2734d21c60be69bd2535750e616a041",
+        "access_finished_utc": "2026-10-10T05:43:36.521348+00:00"
+      },
+      "reviewer_text_evidence": "ER12_RUNTIME/assessment/C-R1-02/control-v1/evidence/S05.txt",
+      "text_sha256": "534de5dca6ccab350d465d620de06f8d6a26dcc28ec5fe2612e7ac8d1a8dcbdc",
+      "observed_subject_operation_units_types": "Direct HTML retrieval confirms clay reclaim and first rinse of glaze tools in reclaim buckets, with controlled supplied materials and restrictions on outside glazes.",
+      "conditions_defaults_domain_exceptions": "A documented teaching-studio workflow, without removal measurements or this workshop’s waste/discharge authorization. The candidate retains those limits.",
+      "default_for_synthetic_workshop": "NONE ESTABLISHED",
+      "semantic_result": "SUPPORTED",
+      "basis": "Independent primary-source retrieval and examination; candidate review labels not adopted as proof"
+    },
+    {
+      "id": "E06",
+      "candidate_source_id": "S06",
+      "title": "Laboratory Waste Management Plan",
+      "url": "https://www.wcu.edu/WebFiles/PDFs/SAFETYOFFICE-LaboratoryWasteManagementPlan.pdf",
+      "version_verified": "Western Carolina University Laboratory Waste Management Plan; Rev4/15/2020",
+      "locator": "Waste Separation / Ceramic Glaze; printed p.6, PDF p.9; saved text lines260–276",
+      "access_utc": "2026-10-10T05:43:35.548028+00:00",
+      "retrieval": {
+        "candidate_id": "S06",
+        "url": "https://www.wcu.edu/WebFiles/PDFs/SAFETYOFFICE-LaboratoryWasteManagementPlan.pdf",
+        "access_started_utc": "2026-10-10T05:43:35.548028+00:00",
+        "http_status": 200,
+        "resolved_url": "https://www.wcu.edu/WebFiles/PDFs/SAFETYOFFICE-LaboratoryWasteManagementPlan.pdf",
+        "content_type": "application/pdf",
+        "local_path": "ER12_RUNTIME/assessment/C-R1-02/control-v1/evidence/S06.pdf",
+        "bytes": 796321,
+        "sha256": "2c9d4c47671643c092b66f7d32c0c110d9c52a5861be0b725dad8752142fd486",
+        "text_path": "ER12_RUNTIME/assessment/C-R1-02/control-v1/evidence/S06.txt",
+        "extraction_returncode": 0,
+        "extraction_diagnostic": "",
+        "access_finished_utc": "2026-10-10T05:43:36.227862+00:00"
+      },
+      "reviewer_text_evidence": "ER12_RUNTIME/assessment/C-R1-02/control-v1/evidence/S06.txt",
+      "text_sha256": "2b189c75a7a300073bb57be70a60aef41f5fb39a28707d5b9be2b5233f3ea233",
+      "observed_subject_operation_units_types": "The institutional table directs glaze preparation/rinsing through a settling tank, frequent emptying, and its own hazardous-waste route for captured material.",
+      "conditions_defaults_domain_exceptions": "Institution-specific policy. It supports cleanout/residual planning, not classification of this synthetic stream. Candidate locator “PDF p.8” is imprecise; correct locator is supplied here.",
+      "default_for_synthetic_workshop": "NONE ESTABLISHED",
+      "semantic_result": "SUPPORTED_WITH_MINOR_LOCATOR_ERROR",
+      "basis": "Independent primary-source retrieval and examination; candidate review labels not adopted as proof"
+    },
+    {
+      "id": "E07",
+      "candidate_source_id": "S07",
+      "title": "Learn About Pollution Prevention",
+      "url": "https://www.epa.gov/p2/learn-about-pollution-prevention",
+      "version_verified": "EPA live guidance, last updated2026-08-12",
+      "locator": "What is Pollution Prevention; Specific Pollution Prevention Approaches",
+      "access_utc": "2026-10-10T05:43:35.916295+00:00",
+      "retrieval": {
+        "candidate_id": "S07",
+        "url": "https://www.epa.gov/p2/learn-about-pollution-prevention",
+        "access_started_utc": "2026-10-10T05:43:35.916295+00:00",
+        "http_status": 200,
+        "resolved_url": "https://www.epa.gov/p2/learn-about-pollution-prevention",
+        "content_type": "text/html; charset=UTF-8",
+        "local_path": "ER12_RUNTIME/assessment/C-R1-02/control-v1/evidence/S07.html",
+        "bytes": 58748,
+        "sha256": "654da67c74dedd18386c0778788f919bdd2846c2ad394b181cc59c60bc3a08da",
+        "access_finished_utc": "2026-10-10T05:43:36.058777+00:00"
+      },
+      "reviewer_text_evidence": "ER12_RUNTIME/assessment/C-R1-02/control-v1/evidence/S07.txt",
+      "text_sha256": "5738657912a5565eb73d131d233d1383d838a53acf3cfea22b7ce2681748306e",
+      "observed_subject_operation_units_types": "The page distinguishes source reduction from recycling, treatment and disposal and gives process modification and water conservation as prevention examples.",
+      "conditions_defaults_domain_exceptions": "General hierarchy, not proof that any specific segregation practice will work here. It supports retaining a non-treatment comparator.",
+      "default_for_synthetic_workshop": "NONE ESTABLISHED",
+      "semantic_result": "SUPPORTED",
+      "basis": "Independent primary-source retrieval and examination; candidate review labels not adopted as proof"
+    },
+    {
+      "id": "E08",
+      "candidate_source_id": "S08",
+      "title": "Wastewater Sampling (FSBPROC-306-R7)",
+      "url": "https://www.epa.gov/sites/default/files/2017-07/documents/wastewater_sampling306_af.r4.pdf",
+      "version_verified": "FSBPROC-306-R7; effective2026-02-11; next review2030-02-11",
+      "locator": "Cover; §§3–4,5.2,9; Revision History pp.22–23",
+      "access_utc": "2026-10-10T05:43:36.058932+00:00",
+      "retrieval": {
+        "candidate_id": "S08",
+        "url": "https://www.epa.gov/sites/default/files/2017-07/documents/wastewater_sampling306_af.r4.pdf",
+        "access_started_utc": "2026-10-10T05:43:36.058932+00:00",
+        "http_status": 200,
+        "resolved_url": "https://www.epa.gov/sites/default/files/2017-07/documents/wastewater_sampling306_af.r4.pdf",
+        "content_type": "application/pdf",
+        "local_path": "ER12_RUNTIME/assessment/C-R1-02/control-v1/evidence/S08.pdf",
+        "bytes": 888686,
+        "sha256": "90caf5d5f51442c1697a9309fb850a9ac2af3a355aaf4766cdbacb1e2402a45c",
+        "text_path": "ER12_RUNTIME/assessment/C-R1-02/control-v1/evidence/S08.txt",
+        "extraction_returncode": 0,
+        "extraction_diagnostic": "",
+        "access_finished_utc": "2026-10-10T05:43:36.368626+00:00"
+      },
+      "reviewer_text_evidence": "ER12_RUNTIME/assessment/C-R1-02/control-v1/evidence/S08.txt",
+      "text_sha256": "df5e95789a08916c6d8fd03058c38e7da1526bea9cb53a4e04efdb564c4b4aad",
+      "observed_subject_operation_units_types": "The actual PDF identifies R7 despite the legacy URL. Sampling design depends on the study, analytes, locations, batch/continuous operation, QA, flow and equipment. Composite versus grab and traceable records are covered. History says R7 replaces R6 and records April2025 archival.",
+      "conditions_defaults_domain_exceptions": "EPA Region4 SOP with documented variation when procedures are unsuitable. It is an analogy for a partner plan, not a universal permit, assay panel, or default sampling schedule.",
+      "default_for_synthetic_workshop": "NONE ESTABLISHED",
+      "semantic_result": "SUPPORTED",
+      "basis": "Independent primary-source retrieval and examination; candidate review labels not adopted as proof"
+    },
+    {
+      "id": "E09",
+      "candidate_source_id": "S09",
+      "title": "Industrial User Inspection and Sampling Manual for POTWs",
+      "url": "https://www.epa.gov/sites/default/files/2017-01/documents/iuinspect.pdf",
+      "version_verified": "EPA-831-B-17-001 / OECA-MANL-2017-002-R1; 2017",
+      "locator": "Chapter3 §§3.7.2–3.7.2.3; printed pp.70–73; saved text lines4483–4660",
+      "access_utc": "2026-10-10T05:43:36.228182+00:00",
+      "retrieval": {
+        "candidate_id": "S09",
+        "url": "https://www.epa.gov/sites/default/files/2017-01/documents/iuinspect.pdf",
+        "access_started_utc": "2026-10-10T05:43:36.228182+00:00",
+        "http_status": 200,
+        "resolved_url": "https://www.epa.gov/sites/default/files/2017-01/documents/iuinspect.pdf",
+        "content_type": "application/pdf",
+        "local_path": "ER12_RUNTIME/assessment/C-R1-02/control-v1/evidence/S09.pdf",
+        "bytes": 6333705,
+        "sha256": "719287864fb1daf3dd34d45f74190092e08266543ed4a46b5016efd70c40b1d2",
+        "text_path": "ER12_RUNTIME/assessment/C-R1-02/control-v1/evidence/S09.txt",
+        "extraction_returncode": 0,
+        "extraction_diagnostic": "",
+        "access_finished_utc": "2026-10-10T05:43:37.242518+00:00"
+      },
+      "reviewer_text_evidence": "ER12_RUNTIME/assessment/C-R1-02/control-v1/evidence/S09.txt",
+      "text_sha256": "b776ef857220c53ac4aeee000585f6f78d0163d3901c2b8693100ac447fde990",
+      "observed_subject_operation_units_types": "The manual distinguishes grabs for momentary conditions/extremes from composites for average characteristics and loads. Flow-proportional sampling requires accurate flow; time composites assume sufficiently steady flow. Well-mixed short batch discharges can support grabs. Its US compliance context specifies pH and other grab requirements.",
+      "conditions_defaults_domain_exceptions": "The proposal conditions sample choice on the partner/lab and keeps extremes separate. Neither a composite nor a TSS decrease is a safety or compliance oracle.",
+      "default_for_synthetic_workshop": "NONE ESTABLISHED",
+      "semantic_result": "SUPPORTED",
+      "basis": "Independent primary-source retrieval and examination; candidate review labels not adopted as proof"
+    },
+    {
+      "id": "E10",
+      "candidate_source_id": "S10",
+      "title": "Metals",
+      "url": "https://www.epa.gov/caddis/metals",
+      "version_verified": "EPA CADDIS Metals, live page",
+      "locator": "Ways to Measure; saved text lines150–157",
+      "access_utc": "2026-10-10T05:43:36.368983+00:00",
+      "retrieval": {
+        "candidate_id": "S10",
+        "url": "https://www.epa.gov/caddis/metals",
+        "access_started_utc": "2026-10-10T05:43:36.368983+00:00",
+        "http_status": 200,
+        "resolved_url": "https://www.epa.gov/caddis/metals",
+        "content_type": "text/html; charset=UTF-8",
+        "local_path": "ER12_RUNTIME/assessment/C-R1-02/control-v1/evidence/S10.html",
+        "bytes": 105072,
+        "sha256": "a8431e92d99a0ff058cb00f558292629ebb84cb99c04c8f0b5eb5d916fa9d7ba",
+        "access_finished_utc": "2026-10-10T05:43:36.511177+00:00"
+      },
+      "reviewer_text_evidence": "ER12_RUNTIME/assessment/C-R1-02/control-v1/evidence/S10.txt",
+      "text_sha256": "000ab2e0a6e27f8fe3abd8b3c3e35ab4f086d8f7278a2b6a26d7b74924e5ee76",
+      "observed_subject_operation_units_types": "Direct EPA HTML repeats a concentration unit where an aperture unit is needed. It supports laboratory handling and operational fractions but does not, as rendered, supply a reliable aperture unit.",
+      "conditions_defaults_domain_exceptions": "The final records the rendering and preserves lab-defined filtered versus total analysis. E13 independently supports the scientific 0.45 µm definition; the investigator normalization is a source-fidelity defect, not proof of a false scientific definition.",
+      "default_for_synthetic_workshop": "NONE ESTABLISHED",
+      "semantic_result": "SUPPORTED_WITH_CORRECTED_LINEAGE_REPORTING_DEFECT",
+      "basis": "Independent primary-source retrieval and examination; candidate review labels not adopted as proof"
+    },
+    {
+      "id": "E11",
+      "candidate_source_id": "S11",
+      "title": "Frequent Questions About Implementing the Hazardous Waste Generator Improvements Final Rule",
+      "url": "https://www.epa.gov/hwgenerators/frequent-questions-about-implementing-hazardous-waste-generator-improvements-final",
+      "version_verified": "EPA Generator Improvements FAQ; live US RCRA guidance on40CFR262.11",
+      "locator": "Waste Determinations questions1–3; state-adoption discussion; saved text lines96–122",
+      "access_utc": "2026-10-10T05:43:36.511255+00:00",
+      "retrieval": {
+        "candidate_id": "S11",
+        "url": "https://www.epa.gov/hwgenerators/frequent-questions-about-implementing-hazardous-waste-generator-improvements-final",
+        "access_started_utc": "2026-10-10T05:43:36.511255+00:00",
+        "http_status": 200,
+        "resolved_url": "https://www.epa.gov/hwgenerators/frequent-questions-about-implementing-hazardous-waste-generator-improvements-final",
+        "content_type": "text/html; charset=UTF-8",
+        "local_path": "ER12_RUNTIME/assessment/C-R1-02/control-v1/evidence/S11.html",
+        "bytes": 98019,
+        "sha256": "1b557ab376ce5c9b3fd2487b2de1b26aada15e931809b2517f9c2a9000fb39bf",
+        "access_finished_utc": "2026-10-10T05:43:36.618710+00:00"
+      },
+      "reviewer_text_evidence": "ER12_RUNTIME/assessment/C-R1-02/control-v1/evidence/S11.txt",
+      "text_sha256": "29bcff533ce22efe3dbd61be4500a43a6f1eef588b0948828c8d516aeace0332",
+      "observed_subject_operation_units_types": "The guidance requires waste-specific determinations before dilution/mixing, relevant process/material knowledge, appropriate tests if knowledge is insufficient, and management of potentially hazardous waste pending determination.",
+      "conditions_defaults_domain_exceptions": "US and state-adoption conditions are essential. The proposal uses a characterization/local-review gate; it does not classify this stream or select a final route.",
+      "default_for_synthetic_workshop": "NONE ESTABLISHED",
+      "semantic_result": "SUPPORTED",
+      "basis": "Independent primary-source retrieval and examination; candidate review labels not adopted as proof"
+    },
+    {
+      "id": "E12",
+      "candidate_source_id": "S12",
+      "title": "Pretreatment Standards and Requirements—General and Specific Prohibitions",
+      "url": "https://www.epa.gov/npdes/pretreatment-standards-and-requirements-general-and-specific-prohibitions",
+      "version_verified": "EPA live POTW pretreatment guidance; last updated2026-08-31;40CFR403.5",
+      "locator": "General and Specific Prohibitions; saved text lines60–84",
+      "access_utc": "2026-10-10T05:43:36.521411+00:00",
+      "retrieval": {
+        "candidate_id": "S12",
+        "url": "https://www.epa.gov/npdes/pretreatment-standards-and-requirements-general-and-specific-prohibitions",
+        "access_started_utc": "2026-10-10T05:43:36.521411+00:00",
+        "http_status": 200,
+        "resolved_url": "https://www.epa.gov/npdes/pretreatment-standards-and-requirements-general-and-specific-prohibitions",
+        "content_type": "text/html; charset=UTF-8",
+        "local_path": "ER12_RUNTIME/assessment/C-R1-02/control-v1/evidence/S12.html",
+        "bytes": 68803,
+        "sha256": "61a648db8529722f43d1c5ae6c516b65b7cc28fe234434d0ba503767f245fd9b",
+        "access_finished_utc": "2026-10-10T05:43:36.616889+00:00"
+      },
+      "reviewer_text_evidence": "ER12_RUNTIME/assessment/C-R1-02/control-v1/evidence/S12.txt",
+      "text_sha256": "5498fdb9c9591938cbcd931be39c65eeef2414671b4f26beb19e56b0334b2931",
+      "observed_subject_operation_units_types": "National US prohibitions apply to nondomestic discharges to a POTW even without an issued control mechanism; obstructive solids and interfering flow/concentration are included.",
+      "conditions_defaults_domain_exceptions": "POTW/jurisdiction applicability must first be established. The candidate does not infer that this workshop is in the US, uses a POTW, or has permission to discharge.",
+      "default_for_synthetic_workshop": "NONE ESTABLISHED",
+      "semantic_result": "SUPPORTED",
+      "basis": "Independent primary-source retrieval and examination; candidate review labels not adopted as proof"
+    },
+    {
+      "id": "E13",
+      "candidate_source_id": null,
+      "title": "EPA Method200.8, Revision5.4",
+      "url": "https://www.epa.gov/sites/default/files/2015-06/documents/epa-200.8.pdf",
+      "version_verified": "Revision5.4 EMMC version,1994",
+      "locator": "§3.3 (printed200.8-5, PDFp.5), §§8.1–8.3 (printed200.8-17); saved text lines190–192,813–841",
+      "access_utc": "2026-10-10T05:45:56.670391+00:00",
+      "retrieval": {
+        "id": "E13",
+        "url": "https://www.epa.gov/sites/default/files/2015-06/documents/epa-200.8.pdf",
+        "access_utc": "2026-10-10T05:45:56.670391+00:00",
+        "path": "ER12_RUNTIME/assessment/C-R1-02/control-v1/evidence/E13-method-200-8.pdf",
+        "sha256": "8fe2e099f698faf39d13f9b595c4d49aeeb27fd526f3294c2ae389dbe738f592",
+        "bytes": 735388
+      },
+      "reviewer_text_evidence": "ER12_RUNTIME/assessment/C-R1-02/control-v1/evidence/E13-method-200-8.txt",
+      "text_sha256": "0de7ddca41fa16f3ad91966f043d0b5d44e275afd7b08516f4346839ef6bdc59",
+      "observed_subject_operation_units_types": "The method defines the dissolved analyte operationally by passage through a 0.45 µm membrane before acidification; dissolved versus total-recoverable samples have distinct preparation.",
+      "conditions_defaults_domain_exceptions": "Method-specific metals analysis with analytical applicability and preservation requirements; not a general pore choice for workshop treatment or a safety definition.",
+      "default_for_synthetic_workshop": "NONE SELECTED",
+      "semantic_result": "CONFIRMS_SCIENTIFIC_DEFINITION_AND_LIMITS_CRITICISM",
+      "basis": "Additional governing primary evidence retrieved by reviewer, not provided as candidate assistance"
+    }
+  ],
+  "native_and_t3": [
+    {
+      "stage": "investigator",
+      "native_activation_status": "active",
+      "native_terminal_status": "complete",
+      "objective_match": true,
+      "thread_id": "01a12431-fe0a-7080-97e9-c570a5f2a740",
+      "createdAt": 1791608666,
+      "created_utc": "2026-10-10T05:04:26+00:00",
+      "terminal_updatedAt": 1791609391,
+      "terminal_updated_utc": "2026-10-10T05:16:31+00:00",
+      "recorded_native_timeUsedSeconds": 724,
+      "recorded_native_tokensUsed": 293300,
+      "metric_interpretation": "Native reported fields; not measured active inference time, effective billing, or token invoice.",
+      "native_resolved_provider_model": "UNKNOWN",
+      "t3_reported_provider": "AUTHORIZED_PROVIDER_INSTANCE",
+      "t3_reported_model": "gpt-6-luna",
+      "t3_terminal_status": "completed",
+      "has_pending_child_runs": false,
+      "request_utc": "2026-10-10T05:03:35.376Z",
+      "stage_deadline_utc": "2026-10-10T05:33:35.376Z",
+      "native_completion_before_stage_deadline": true,
+      "required_science_mtime_before_native_completion": true,
+      "requested_service_tier": "default",
+      "effective_service_tier": "UNKNOWN",
+      "effective_reasoning_effort": "UNKNOWN",
+      "billing_or_invoice": "UNKNOWN",
+      "evidence_paths": [
+        "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/native-goal-receipt.json",
+        "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/dispatch.json",
+        "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/freeze.json"
+      ],
+      "exactly_one_goal_and_no_substantive_external_feedback": "UNKNOWN from bounded receipts alone; one lifecycle is documented, no violation observed"
+    },
+    {
+      "stage": "critic",
+      "native_activation_status": "active",
+      "native_terminal_status": "complete",
+      "objective_match": true,
+      "thread_id": "01a1243e-9aeb-72f0-beb8-60068742ce5c",
+      "createdAt": 1791609463,
+      "created_utc": "2026-10-10T05:17:43+00:00",
+      "terminal_updatedAt": 1791610129,
+      "terminal_updated_utc": "2026-10-10T05:28:49+00:00",
+      "recorded_native_timeUsedSeconds": 666,
+      "recorded_native_tokensUsed": 139948,
+      "metric_interpretation": "Native reported fields; not measured active inference time, effective billing, or token invoice.",
+      "native_resolved_provider_model": "UNKNOWN",
+      "t3_reported_provider": "AUTHORIZED_PROVIDER_INSTANCE",
+      "t3_reported_model": "gpt-6-luna",
+      "t3_terminal_status": "completed",
+      "has_pending_child_runs": false,
+      "request_utc": "2026-10-10T05:17:24.050Z",
+      "stage_deadline_utc": "2026-10-10T05:29:24.050Z",
+      "native_completion_before_stage_deadline": true,
+      "required_science_mtime_before_native_completion": true,
+      "requested_service_tier": "default",
+      "effective_service_tier": "UNKNOWN",
+      "effective_reasoning_effort": "UNKNOWN",
+      "billing_or_invoice": "UNKNOWN",
+      "evidence_paths": [
+        "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/native-goal-activation.json",
+        "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/native-goal-completion.json",
+        "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/dispatch.json",
+        "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/freeze.json"
+      ],
+      "exactly_one_goal_and_no_substantive_external_feedback": "UNKNOWN from bounded receipts alone; one lifecycle is documented, no violation observed"
+    },
+    {
+      "stage": "reviser",
+      "native_activation_status": "active",
+      "native_terminal_status": "complete",
+      "objective_match": true,
+      "thread_id": "01a1244b-76fa-7450-bdc5-21bb7800690e",
+      "createdAt": 1791610307,
+      "created_utc": "2026-10-10T05:31:47+00:00",
+      "terminal_updatedAt": 1791610820,
+      "terminal_updated_utc": "2026-10-10T05:40:20+00:00",
+      "recorded_native_timeUsedSeconds": 513,
+      "recorded_native_tokensUsed": 113662,
+      "metric_interpretation": "Native reported fields; not measured active inference time, effective billing, or token invoice.",
+      "native_resolved_provider_model": "UNKNOWN",
+      "t3_reported_provider": "AUTHORIZED_PROVIDER_INSTANCE",
+      "t3_reported_model": "gpt-6-luna",
+      "t3_terminal_status": "completed",
+      "has_pending_child_runs": false,
+      "request_utc": "2026-10-10T05:31:26.208Z",
+      "stage_deadline_utc": "2026-10-10T05:49:26.208Z",
+      "native_completion_before_stage_deadline": true,
+      "required_science_mtime_before_native_completion": true,
+      "requested_service_tier": "default",
+      "effective_service_tier": "UNKNOWN",
+      "effective_reasoning_effort": "UNKNOWN",
+      "billing_or_invoice": "UNKNOWN",
+      "evidence_paths": [
+        "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/native-goal-activation.json",
+        "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/native-goal-completion.json",
+        "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/dispatch.json",
+        "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/freeze.json"
+      ],
+      "exactly_one_goal_and_no_substantive_external_feedback": "UNKNOWN from bounded receipts alone; one lifecycle is documented, no violation observed"
+    }
+  ],
+  "validation": {
+    "original_actual": "Authored desk/source review; no case empirical validation claimed or evidenced. Original per-source execution extent is self-report, not independently logged.",
+    "reviewer_actual": "Full assigned science/assignment/maps/freeze reading; independent governing primary retrieval; relevant PDF text/context and selected table/method visuals; byte/freeze identity checks. No wet work or candidate feedback.",
+    "proposed": "Partner-reviewed baseline across work loads, representative input/output sampling, inventory-informed methods, matched aliquots for settling/filter screen, contained matched/alternated work blocks, labor/flow/residual accounting and stops.",
+    "particle_oracles": "Paired TSS/particle metrics with activity/volume records; turbidity secondary. Not a dissolved-risk or discharge oracle.",
+    "chemical_oracles": "Selected total and lab-defined filtered analytes; method-specific fractions, not safety conclusions.",
+    "operational_oracles": "Flow/headloss/service interval, cleanout labor, capacity/containment, bypass/breakthrough and residual acceptance.",
+    "legal_oracles": "Actual jurisdiction/destination/authority and receiving acceptance are separate local determinations; none executed."
+  },
+  "artifact_inventory": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/C-R1-02/brief.md",
+      "bytes": 2605,
+      "sha256": "cd101158fb000ba659dc80e39dbf9a447c64517554f5220be6e2b5bbe6b46113",
+      "mtime_ns": 1791608613740972783,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/C-R1-02/plan.md",
+      "bytes": 6794,
+      "sha256": "8e2247027ad8b2baa1338b77a5f4020d86ed2a926f102c618b802c618bd257c8",
+      "mtime_ns": 1791608613741127852,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/control/run.json",
+      "bytes": 582,
+      "sha256": "10856ce2afe475a4d9430e97d56e7448da374e7fc4c8761172f44e3596ea56ca",
+      "mtime_ns": 1791608615376721758,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/inputs/brief.md",
+      "bytes": 2605,
+      "sha256": "cd101158fb000ba659dc80e39dbf9a447c64517554f5220be6e2b5bbe6b46113",
+      "mtime_ns": 1791608615376472091,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/assignment.md",
+      "bytes": 4014,
+      "sha256": "f535a7d649bdcf1889a1973b335757f9fb09c9668ca2129e8371eef9309cc548",
+      "mtime_ns": 1791609444395192942,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/critique.md",
+      "bytes": 7056,
+      "sha256": "5ba9503b8107d90357f9ec55658b61c38cf2a6cfcc930572c17ad3391a7725c8",
+      "mtime_ns": 1791609935039784189,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/dispatch.json",
+      "bytes": 4871,
+      "sha256": "f338660b7c5ae780e409237a25b1edfb5c6d53c5e6db6bc71e9861723d81290a",
+      "mtime_ns": 1791609445261742634,
+      "unchanged_since_review_inventory": true,
+      "inspection": "STRUCTURED_METADATA_AND_RAW_RESPONSE_FIELDS"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/freeze.json",
+      "bytes": 3314,
+      "sha256": "1c2313d06af906be485b89a5a79154fa1b7a1a3fc36c0cd324889b3a188b945e",
+      "mtime_ns": 1791609444394876860,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/input-map.json",
+      "bytes": 1477,
+      "sha256": "d7eef975da82a3a2646cd9aac1a8bf161fff24bbe0a2b9c7960d66bc75c60693",
+      "mtime_ns": 1791609444395014048,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/invocation-clarification.json",
+      "bytes": 3030,
+      "sha256": "f08c10d285c9aca0e579271c2d64350aad09446d848f63a019e33378e4502309",
+      "mtime_ns": 1791609444395337670,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/native-goal-activation.json",
+      "bytes": 468,
+      "sha256": "856921cbce943dc01d87ec2e0d77e2b2ecd2bbee30fdeb545eca67833f9b53e3",
+      "mtime_ns": 1791609935046784232,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/native-goal-completion.json",
+      "bytes": 797,
+      "sha256": "4b9093e2f8c9a14c6839de412c66656ee26c657e2b5bdb907ccfec0f84d9f79c",
+      "mtime_ns": 1791610129905973465,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/request.json",
+      "bytes": 1613,
+      "sha256": "cb63b2217c40c16faec506ca1bc087ce5fd8f83fd5d1f41b51e55a7ce45e57f8",
+      "mtime_ns": 1791609444394644807,
+      "unchanged_since_review_inventory": true,
+      "inspection": "STAGE_REQUEST_AND_ARGUMENTS"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/service-tier-change.json",
+      "bytes": 481,
+      "sha256": "c2d0f91fd31ce13dd0cd1ef6f17be2edff6719a59e02dce1e88097206865be09",
+      "mtime_ns": 1791609444189775047,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/source-map.json",
+      "bytes": 23437,
+      "sha256": "a424dd49685be4c3426c9ae55a87c606100a5bedbc5df5d6ecfc373db378bea9",
+      "mtime_ns": 1791609956314225847,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/status.json",
+      "bytes": 3930,
+      "sha256": "32d1e7ce706b1cf9a55907a0cab0a67a653530ad46cfd04d77e943eba8e2cfa5",
+      "mtime_ns": 1791610285903916896,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/assignment.md",
+      "bytes": 3720,
+      "sha256": "a509b7f2b14faaa3e25899cef3f15733cb59cec362de497c5f778b406567cf84",
+      "mtime_ns": 1791608615377371321,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/discovery.md",
+      "bytes": 13256,
+      "sha256": "c8b0aa4e8f87e9823442601ea2312b401fe3da5bc601744c76d3e808d701663a",
+      "mtime_ns": 1791609076031320183,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/dispatch.json",
+      "bytes": 4251,
+      "sha256": "060399e1f6b28cce014fdaeadf1359e6b3480ae171f883ed2adff0ac6adae012",
+      "mtime_ns": 1791608618483853616,
+      "unchanged_since_review_inventory": true,
+      "inspection": "STRUCTURED_METADATA_AND_RAW_RESPONSE_FIELDS"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/draft.md",
+      "bytes": 17352,
+      "sha256": "3a40e9102121dcfd8d5907987a92fabf603f1de94e28e491422e7170c62ec758",
+      "mtime_ns": 1791609265356377103,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/freeze.json",
+      "bytes": 1731,
+      "sha256": "3adf02c9f9aa248146d11ae72891663e8c60f950f0122af80a39d1578bd5851a",
+      "mtime_ns": 1791608615722178613,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/input-map.json",
+      "bytes": 789,
+      "sha256": "e5cbb785e94f3509a20a944a23a587692758d6ced154c86f260d0448f5f80a25",
+      "mtime_ns": 1791608615721662007,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/native-goal-receipt.json",
+      "bytes": 2100,
+      "sha256": "53b8136750d3e3367b3d3445d841ca7941b0250bb09b81a3ce3870eb818fc418",
+      "mtime_ns": 1791609404762651630,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/plan-reveal.json",
+      "bytes": 431,
+      "sha256": "ce3349d3eaf80ab65e2d60919713e46b7d3eaaf1bbbdf526382a7a16c1ff38a4",
+      "mtime_ns": 1791609092699312400,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/request.json",
+      "bytes": 921,
+      "sha256": "bd90dd5cad1cbe36ce52c3e5a8cde1d067e786cb8e63d5a7d0951bbdd9a2efff",
+      "mtime_ns": 1791608615721864787,
+      "unchanged_since_review_inventory": true,
+      "inspection": "STAGE_REQUEST_AND_ARGUMENTS"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/revealed-plan.md",
+      "bytes": 6794,
+      "sha256": "8e2247027ad8b2baa1338b77a5f4020d86ed2a926f102c618b802c618bd257c8",
+      "mtime_ns": 1791609092699155499,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/service-tier-change.json",
+      "bytes": 493,
+      "sha256": "985d82290de83268055c0cd69602f2773fd12701ccc21512159224835749360c",
+      "mtime_ns": 1791608615722392609,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/source-map.json",
+      "bytes": 17320,
+      "sha256": "7f0b91dd5e76450d1b10513bd3d877bc4fd415eac4e958b765987f2a93df8a33",
+      "mtime_ns": 1791609076039319303,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/sources/index.md",
+      "bytes": 1703,
+      "sha256": "0ae32a479ea16a218da0268e22cb325ad8104b7cf5e81a63c1608df78e7998b1",
+      "mtime_ns": 1791609076046318534,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/status.json",
+      "bytes": 3822,
+      "sha256": "ebcc1f990b4fa6dce50399c50ff849fd97c280358074096e8d2e513774e09454",
+      "mtime_ns": 1791609443652983809,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/assignment.md",
+      "bytes": 3996,
+      "sha256": "9a3b2805c8d6df6e8793eb5b2965e6b35b6a52974fc9836f706486c1bc27c645",
+      "mtime_ns": 1791610286510318127,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/dispatch.json",
+      "bytes": 4889,
+      "sha256": "76727ae5351b30b5513d862fdb180e6d61ea78b2a8cb07cb8a0bf7f32a36762c",
+      "mtime_ns": 1791610287664393835,
+      "unchanged_since_review_inventory": true,
+      "inspection": "STRUCTURED_METADATA_AND_RAW_RESPONSE_FIELDS"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+      "bytes": 24960,
+      "sha256": "02f63d6e57d2055fc45f9632e41caa6a9872e66aae7859f766cd1215c0d36c8b",
+      "mtime_ns": 1791610781614370427,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/freeze.json",
+      "bytes": 4092,
+      "sha256": "aa773d9c86203df434f75b4708dd3454e08dc6b43d41bb07aec63dd780bead0f",
+      "mtime_ns": 1791610286510000069,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/input-map.json",
+      "bytes": 1794,
+      "sha256": "bdf8c6637a813b6eb6358d425ddddacbd33e626886ab7213b6f5aa9a11d06c4e",
+      "mtime_ns": 1791610286510168140,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/invocation-clarification.json",
+      "bytes": 3037,
+      "sha256": "c89f81bc68d8f2ca57d625777cd8d2792ee965aecec1f05caf0fcbc1a74bde5a",
+      "mtime_ns": 1791610286510510300,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/native-goal-activation.json",
+      "bytes": 470,
+      "sha256": "7a6d9f68ba23bff37881dc13e2e48ddf47beb7c82a85f908edf6ddbd4990afdd",
+      "mtime_ns": 1791610401237545825,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/native-goal-completion.json",
+      "bytes": 799,
+      "sha256": "c2df6fdd658741db21b768e21eb834a36947122ce602cf2d34a3f400f340b557",
+      "mtime_ns": 1791610821010228474,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/request.json",
+      "bytes": 1619,
+      "sha256": "05c12f39630fba1b99e785c429a81ef185a427bc1ed24c31271d01d61d41e26f",
+      "mtime_ns": 1791610286509772092,
+      "unchanged_since_review_inventory": true,
+      "inspection": "STAGE_REQUEST_AND_ARGUMENTS"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/service-tier-change.json",
+      "bytes": 483,
+      "sha256": "f0fcd9ab9f8d8018c47cb33089af7e19df496d45b22b218def9fe20a4df63757",
+      "mtime_ns": 1791610286349563816,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/source-map.json",
+      "bytes": 27083,
+      "sha256": "d5c1ee3347ffae6a612d5b6b69299b77e79a2cbac54b40161a47361eb79121c7",
+      "mtime_ns": 1791610706294481744,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/sources/index.md",
+      "bytes": 6382,
+      "sha256": "8e2142dcd6eb13e361f899dbea95e8008fae17eb029450a5c029fbf7f4484990",
+      "mtime_ns": 1791610706294890179,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/terminal-science-freeze-root.json",
+      "bytes": 7286,
+      "sha256": "d3101f961af9125224f0da89e13148cbec63cc2ce8eafb08f3454a1edceae9b6",
+      "mtime_ns": 1791610892186592077,
+      "unchanged_since_review_inventory": true,
+      "inspection": "FULL_TEXT_OR_STRUCTURED_JSON"
+    }
+  ],
+  "terminal_freeze_checks": [
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/critique.md",
+      "bytes": 7056,
+      "sha256": "5ba9503b8107d90357f9ec55658b61c38cf2a6cfcc930572c17ad3391a7725c8",
+      "mtime_ns": 1791609935039784189,
+      "observed_sha256": "5ba9503b8107d90357f9ec55658b61c38cf2a6cfcc930572c17ad3391a7725c8",
+      "matches_terminal_freeze": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/source-map.json",
+      "bytes": 23437,
+      "sha256": "a424dd49685be4c3426c9ae55a87c606100a5bedbc5df5d6ecfc373db378bea9",
+      "mtime_ns": 1791609956314225847,
+      "observed_sha256": "a424dd49685be4c3426c9ae55a87c606100a5bedbc5df5d6ecfc373db378bea9",
+      "matches_terminal_freeze": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/discovery.md",
+      "bytes": 13256,
+      "sha256": "c8b0aa4e8f87e9823442601ea2312b401fe3da5bc601744c76d3e808d701663a",
+      "mtime_ns": 1791609076031320183,
+      "observed_sha256": "c8b0aa4e8f87e9823442601ea2312b401fe3da5bc601744c76d3e808d701663a",
+      "matches_terminal_freeze": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/draft.md",
+      "bytes": 17352,
+      "sha256": "3a40e9102121dcfd8d5907987a92fabf603f1de94e28e491422e7170c62ec758",
+      "mtime_ns": 1791609265356377103,
+      "observed_sha256": "3a40e9102121dcfd8d5907987a92fabf603f1de94e28e491422e7170c62ec758",
+      "matches_terminal_freeze": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/revealed-plan.md",
+      "bytes": 6794,
+      "sha256": "8e2247027ad8b2baa1338b77a5f4020d86ed2a926f102c618b802c618bd257c8",
+      "mtime_ns": 1791609092699155499,
+      "observed_sha256": "8e2247027ad8b2baa1338b77a5f4020d86ed2a926f102c618b802c618bd257c8",
+      "matches_terminal_freeze": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/source-map.json",
+      "bytes": 17320,
+      "sha256": "7f0b91dd5e76450d1b10513bd3d877bc4fd415eac4e958b765987f2a93df8a33",
+      "mtime_ns": 1791609076039319303,
+      "observed_sha256": "7f0b91dd5e76450d1b10513bd3d877bc4fd415eac4e958b765987f2a93df8a33",
+      "matches_terminal_freeze": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/sources/index.md",
+      "bytes": 1703,
+      "sha256": "0ae32a479ea16a218da0268e22cb325ad8104b7cf5e81a63c1608df78e7998b1",
+      "mtime_ns": 1791609076046318534,
+      "observed_sha256": "0ae32a479ea16a218da0268e22cb325ad8104b7cf5e81a63c1608df78e7998b1",
+      "matches_terminal_freeze": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+      "bytes": 24960,
+      "sha256": "02f63d6e57d2055fc45f9632e41caa6a9872e66aae7859f766cd1215c0d36c8b",
+      "mtime_ns": 1791610781614370427,
+      "observed_sha256": "02f63d6e57d2055fc45f9632e41caa6a9872e66aae7859f766cd1215c0d36c8b",
+      "matches_terminal_freeze": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/source-map.json",
+      "bytes": 27083,
+      "sha256": "d5c1ee3347ffae6a612d5b6b69299b77e79a2cbac54b40161a47361eb79121c7",
+      "mtime_ns": 1791610706294481744,
+      "observed_sha256": "d5c1ee3347ffae6a612d5b6b69299b77e79a2cbac54b40161a47361eb79121c7",
+      "matches_terminal_freeze": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/sources/index.md",
+      "bytes": 6382,
+      "sha256": "8e2142dcd6eb13e361f899dbea95e8008fae17eb029450a5c029fbf7f4484990",
+      "mtime_ns": 1791610706294890179,
+      "observed_sha256": "8e2142dcd6eb13e361f899dbea95e8008fae17eb029450a5c029fbf7f4484990",
+      "matches_terminal_freeze": true
+    }
+  ],
+  "input_identity_checks": {
+    "run_brief_equals_frozen_original": true,
+    "released_plan_equals_frozen_original": true,
+    "original_plan_embedded_brief_equals_original_brief": true,
+    "all_terminal_science_hashes_match": true,
+    "originals_unchanged_since_review": true
+  },
+  "authored_source_evidence_completeness": {
+    "investigator_sources_files": [
+      "sources/index.md"
+    ],
+    "critic_sources_files": [],
+    "reviser_sources_files": [
+      "sources/index.md"
+    ],
+    "all_three_source_maps_read_full": true,
+    "discovery_draft_critique_final_read_full": true,
+    "all_current_per_stage_assignment_input_map_freeze_read_full": true,
+    "standalone_critique_check_or_disposition_files": "None present; checks are embedded in critic/source-map.json and dispositions in reviser/final.md and reviser/source-map.json.",
+    "missing_required_science_artifacts": [],
+    "absent_optional_audit_artifacts": [
+      "Candidate raw source/tool captures and full browsing/feedback traces"
+    ],
+    "invocation_backups": "Not inspected: current assignment/input/freeze plus invocation-clarification records were sufficient; no other campaign/history accessed."
+  },
+  "review_method": {
+    "goal_created_before_source_reading": true,
+    "goal_thread_id": "01a12454-b935-7553-860b-533be2dccd3e",
+    "native_goal_status_at_save": "active; completion deliberately deferred until judgment files saved",
+    "nested_delegation": false,
+    "candidate_feedback_or_repair": false,
+    "account_changes": false,
+    "git_or_publication": false,
+    "other_arms_results_or_history": false,
+    "ER11_rescore": false,
+    "shared_roster_or_other_outcome_labels": false,
+    "mailbox": "Unique identity registered; only own inbox checked; background waiter used. No candidate messages sent.",
+    "write_root": "ER12_RUNTIME/assessment/C-R1-02/control-v1"
+  }
+}

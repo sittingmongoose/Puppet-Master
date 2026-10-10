@@ -1,0 +1,194 @@
+{
+  "schema_version": 1,
+  "run_id": "A3-02-treatment",
+  "stage": "critic",
+  "status": "review artifact saved after stage cutoff; do not claim on-time completion",
+  "deadline_utc": "2026-10-10T05:06:53.818Z",
+  "input_files_reviewed": [
+    "ER12_RUNTIME/runs/A3-02/treatment/inputs/brief.md",
+    "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/discovery.md",
+    "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/draft.md",
+    "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/source-map.json",
+    "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/revealed-plan.md",
+    "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/sources/index.md"
+  ],
+  "evidence_index": "sources/index.md",
+  "critique_file": "critique.md",
+  "browser_execution": "not performed",
+  "source_id_policy": "Inherited S identifiers retain their original URL/version binding. C01-C02 are critic additions. No source IDs are silently rebound.",
+  "sources": [
+    {
+      "id": "C01",
+      "title": "WebKit Features for Safari 27.0",
+      "url": "https://webkit.org/blog/18325/webkit-features-for-safari-27-0/",
+      "released_version_or_commit": "Safari 27.0, released 2026-09-17",
+      "locator": "Release heading/date; Media section; Updating to Safari 27; resolved issues",
+      "access_utc": "UNKNOWN",
+      "observed_operation": "Opened release article; inspected release date, desktop OS availability, media summary, and media-related resolved issues.",
+      "governing_condition_default_exception": "Safari 27.0 is available on macOS 26 and macOS 15; article does not announce a MediaRecorder MIME change, while the resolved-issues list includes microphone/session and MediaStreamTrack changes.",
+      "applicability": "Current desktop Safari version anchor; does not establish exact MediaRecorder format support."
+    },
+    {
+      "id": "C02",
+      "title": "New WebKit Features in Safari 14.1",
+      "url": "https://webkit.org/blog/11648/new-webkit-features-in-safari-14-1/",
+      "released_version_or_commit": "Safari 14.1, article dated 2021-04-29",
+      "locator": "MediaRecorder API section",
+      "access_utc": "UNKNOWN",
+      "observed_operation": "Opened official WebKit release article and checked the MediaRecorder announcement.",
+      "governing_condition_default_exception": "Article says WebKit added MediaStream Recording/MediaRecorder support; it does not give a complete MIME support matrix.",
+      "applicability": "Historical API implementation evidence only."
+    },
+    {
+      "id": "S01",
+      "title": "MediaStream Recording",
+      "url": "https://www.w3.org/TR/2026/WD-mediastream-recording-20260316/",
+      "released_version_or_commit": "W3C Working Draft, 2026-03-16",
+      "locator": "§§2.1-2.3 and §6.1; constructor, start/stop, timeslice, completed chunk combination, resource exhaustion",
+      "access_utc": "UNKNOWN",
+      "observed_operation": "Opened fixed dated report and inspected surrounding constructor/start/stop/timeslice context and current published-version link.",
+      "governing_condition_default_exception": "A supported MIME probe is not proof that resources permit encoding; stop queues final dataavailable before stop; timeslice has a UA minimum; separate chunks need not be playable while completed combination must be.",
+      "applicability": "API semantics, not browser/version support."
+    },
+    {
+      "id": "S05",
+      "title": "WebKit Features in Safari 18.4",
+      "url": "https://webkit.org/blog/16574/webkit-features-in-safari-18-4/",
+      "released_version_or_commit": "Safari 18.4 release article, 2025-03-31",
+      "locator": "Media section, especially Ogg condition",
+      "access_utc": "UNKNOWN",
+      "observed_operation": "Opened official release article and inspected WebM/Opus, ALAC/PCM, and Ogg text with platform qualifiers.",
+      "governing_condition_default_exception": "Ogg Opus/Vorbis is qualified to macOS Sequoia 15.4, iOS/iPadOS 18.4, and visionOS 2.4; article does not supply a complete audio-only MIME matrix.",
+      "applicability": "Historical candidate evidence; not proof of Safari 27 runtime support."
+    },
+    {
+      "id": "S11",
+      "title": "extendable-media-recorder issue 692",
+      "url": "https://github.com/chrisguttandin/extendable-media-recorder/issues/692",
+      "released_version_or_commit": "Opened 2025-08-08; reporter closed original report as completed 2025-08-12; later 2026 follow-up visible",
+      "locator": "Maintainer response, reporter AudioContext/MediaStreamAudioDestinationNode explanation and closure; later April 2026 follow-up",
+      "access_utc": "UNKNOWN",
+      "observed_operation": "Opened current issue history and inspected initial diagnosis, reporter follow-up/closure, and later similar report.",
+      "governing_condition_default_exception": "The original report concerned this library's Web Audio/channel-count path; maintainer pointed to two-channel track settings and reporter described a destination-node channel-count path. A later similar symptom remains a separate report.",
+      "applicability": "Library-specific test risk; does not establish a native Chrome/Safari defect or universal fix."
+    },
+    {
+      "id": "S12",
+      "title": "High Resolution Time",
+      "url": "https://www.w3.org/TR/2026/WD-hr-time-3-20260901/",
+      "released_version_or_commit": "W3C Working Draft, 2026-09-01",
+      "locator": "§2.1 clocks and timer throttling",
+      "access_utc": "UNKNOWN",
+      "observed_operation": "Opened fixed dated report and inspected monotonic clock and background timer exception.",
+      "governing_condition_default_exception": "A monotonic clock is not made inaccurate by background timer throttling, but timer callbacks may be throttled or frozen.",
+      "applicability": "Timekeeping basis only; does not guarantee scheduled stop execution."
+    },
+    {
+      "id": "S13",
+      "title": "HTML Standard — Page visibility",
+      "url": "https://html.spec.whatwg.org/multipage/interaction.html#page-visibility",
+      "released_version_or_commit": "Living Standard checked 2026-10-10; mutable",
+      "locator": "§6.2 visibility-state update and queued task",
+      "access_utc": "UNKNOWN",
+      "observed_operation": "Opened current section and inspected visibility event task order.",
+      "governing_condition_default_exception": "Visibility update and visibilitychange firing are task-queued after the user agent determines a state change.",
+      "applicability": "Supports hidden-stop policy as a signal, not a hard real-time boundary."
+    }
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "classification": "material wrong",
+      "locations": [
+        "draft.md: Research and release record",
+        "R2",
+        "R6"
+      ],
+      "summary": "Safari 26.0 is named current despite Safari 27.0 release on 2026-09-17; validation target is stale."
+    },
+    {
+      "id": "F2",
+      "classification": "material incomplete",
+      "locations": [
+        "draft.md: R4 Duration proposal",
+        "Owner decisions"
+      ],
+      "summary": "Five-minute meaning and over-limit outcome remain undecided; timer and visibility signaling cannot guarantee a hard boundary."
+    },
+    {
+      "id": "F3",
+      "classification": "material incomplete",
+      "locations": [
+        "draft.md: R2",
+        "R6"
+      ],
+      "summary": "Released Safari Ogg Opus/Vorbis path is recorded in S05 but absent from candidate probes; either test with exact MIME evidence or intentionally exclude."
+    },
+    {
+      "id": "F4",
+      "classification": "minor locator/wording",
+      "locations": [
+        "draft.md: R5",
+        "investigator/source-map.json"
+      ],
+      "summary": "Safari 14.1 announcement is supported but lacks a source-map binding; C02 supplies it."
+    },
+    {
+      "id": "F5",
+      "classification": "minor locator/wording",
+      "locations": [
+        "draft.md: R3",
+        "investigator/source-map.json S11"
+      ],
+      "summary": "Current issue history includes channel-count diagnosis and reporter closure, omitted from the source note; library-specific caution remains appropriate."
+    }
+  ],
+  "native_goal_observations": {
+    "activation": {
+      "tool": "create_goal",
+      "goal": {
+        "threadId": "01a12429-fe7b-7e51-861e-8d533a10c5ac",
+        "objective": "ER12 critic stage, run A3-02-treatment: execute ER12_RUNTIME/runs/A3-02/treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+        "status": "active",
+        "tokensUsed": 0,
+        "timeUsedSeconds": 0,
+        "createdAt": 1791608130,
+        "updatedAt": 1791608130
+      },
+      "remainingTokens": null,
+      "completionBudgetReport": null,
+      "additional_provenance_or_readable_timestamp": "UNKNOWN"
+    },
+    "terminal": {
+      "update_goal_result": {
+        "goal": {
+          "threadId": "01a12429-fe7b-7e51-861e-8d533a10c5ac",
+          "objective": "ER12 critic stage, run A3-02-treatment: execute ER12_RUNTIME/runs/A3-02/treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "complete",
+          "tokensUsed": 159659,
+          "timeUsedSeconds": 1381,
+          "createdAt": 1791608130,
+          "updatedAt": 1791609512
+        },
+        "remainingTokens": null,
+        "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+      },
+      "get_goal_after_completion": {
+        "goal": {
+          "threadId": "01a12429-fe7b-7e51-861e-8d533a10c5ac",
+          "objective": "ER12 critic stage, run A3-02-treatment: execute ER12_RUNTIME/runs/A3-02/treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "complete",
+          "tokensUsed": 159659,
+          "timeUsedSeconds": 1381,
+          "createdAt": 1791608130,
+          "updatedAt": 1791609512
+        },
+        "remainingTokens": null,
+        "completionBudgetReport": null
+      },
+      "additional_provenance_or_readable_timestamp": "UNKNOWN"
+    }
+  },
+  "source_access_timestamp_limitation": "Critic fetch timestamps were not exposed by the browser tool and remain UNKNOWN; no reconstruction was attempted.",
+  "late_artifact_save_utc": "UNKNOWN; artifact save occurred after the unchanged 2026-10-10T05:06:53.818Z stage deadline."
+}

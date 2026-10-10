@@ -1,0 +1,65 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://www.ioa.org.uk/system/files/proceedings/b_stofringsdal_e_bolstad_optimizing_too_small_ensemble_rehearsal_rooms_for_acoustic_loud_music_0.pdf"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/C-R1-01/control-v1/source-map.json",
+      "source_id": "S11",
+      "existing_authored_summary_fields": {
+        "released_version": "Støfringsdal & Bolstad 2023, Proceedings of the Institute of Acoustics 45(2); candidate DOI 10.25144/16014; publisher text identifies title/authors/year, DOI not exposed in retrieved publisher text.",
+        "exact_subject_operation_units_domain": "Completed 1600 m³ professional wind-band redesign; prior 40 mm absorbers reduced strength but survey found dry/imbalanced acoustics and overplaying.",
+        "conditions_exceptions_applicability": "Internal-acoustics case only. The later redesign trades listening support against loudness and still has limits. Candidate's caution is supported; it does not claim courtyard isolation or universal superiority."
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": "Publisher-hosted PDF, pp.2–5 §3.1/3.1.1/3.1.2/3.1.3, original web lines 91–229"
+    },
+    {
+      "candidate_locators": [
+        "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:64"
+      ]
+    }
+  ],
+  "raw_sha256": "26a7f4af5dfe94e7090d6ced398039c69ec28eeb34246b6cb0af10777f6219b1",
+  "original_bytes": 29338,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/C-R1-01/control-v1/evidence/web_follow3.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://www.ioa.org.uk/system/files/proceedings/b_stofringsdal_e_bolstad_optimizing_too_small_ensemble_rehearsal_rooms_for_acoustic_loud_music_0.pdf"
+  ],
+  "version": [
+    {
+      "released_version": "Støfringsdal & Bolstad 2023, Proceedings of the Institute of Acoustics 45(2); candidate DOI 10.25144/16014; publisher text identifies title/authors/year, DOI not exposed in retrieved publisher text.",
+      "exact_subject_operation_units_domain": "Completed 1600 m³ professional wind-band redesign; prior 40 mm absorbers reduced strength but survey found dry/imbalanced acoustics and overplaying.",
+      "conditions_exceptions_applicability": "Internal-acoustics case only. The later redesign trades listening support against loudness and still has limits. Candidate's caution is supported; it does not claim courtyard isolation or universal superiority."
+    }
+  ],
+  "selector": [
+    {
+      "locator": "Publisher-hosted PDF, pp.2–5 §3.1/3.1.1/3.1.2/3.1.3, original web lines 91–229"
+    },
+    {
+      "candidate_locators": [
+        "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:64"
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "released_version": "Støfringsdal & Bolstad 2023, Proceedings of the Institute of Acoustics 45(2); candidate DOI 10.25144/16014; publisher text identifies title/authors/year, DOI not exposed in retrieved publisher text.",
+      "exact_subject_operation_units_domain": "Completed 1600 m³ professional wind-band redesign; prior 40 mm absorbers reduced strength but survey found dry/imbalanced acoustics and overplaying.",
+      "conditions_exceptions_applicability": "Internal-acoustics case only. The later redesign trades listening support against loudness and still has limits. Candidate's caution is supported; it does not claim courtyard isolation or universal superiority."
+    }
+  ],
+  "rawSHA256": "26a7f4af5dfe94e7090d6ced398039c69ec28eeb34246b6cb0af10777f6219b1"
+}

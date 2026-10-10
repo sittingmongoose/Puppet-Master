@@ -1,0 +1,2011 @@
+{
+  "assessment_id": "ER12-A6-02-control-v1",
+  "slot": "A6-02",
+  "arm": "control",
+  "rubric": "ER12 independent rubric v1",
+  "pipeline": "investigator → critic → reviser",
+  "final_artifact": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+  "reviewer_identity": "codex-er12-a6-02-control-review-v1",
+  "review_started_at_utc": "2026-10-10T05:20:21Z",
+  "review_deadline_utc": "2026-10-10T06:05:21Z",
+  "judgment_saved_at_utc": "2026-10-10T05:41:08.986180+00:00",
+  "review_envelope_minutes": 45,
+  "scope_completion": "COMPLETE_EARLY_NOT_CAPPED",
+  "unassessed_axes": [],
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "source_judgment_basis": "Independent governing-primary semantic review found no remaining material error, material omission or unsupported consequential final decision. A material critic PATCH detail is corrected in final, separately retained as lineage. Minor locator/preservation/depth/wording limits remain. Honest external inputs and future checks are preserved without demanding implementation.",
+  "final_material_findings": [],
+  "lineage_findings": [
+    {
+      "id": "LF-01",
+      "classification": "MATERIAL_WRONG_CRITIC_DETAIL_CORRECTED_IN_FINAL",
+      "material_in_lineage": true,
+      "remaining_in_final": false,
+      "original_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/critic/critique.md",
+          "line": 11
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/critic/critique.md",
+          "line": 32
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/critic/source-map.json",
+          "json_pointer": "/critic_rechecks/12/finding"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/source-map.json",
+          "json_pointer": "/critic_rechecks/12/finding"
+        }
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 25
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 98
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 140
+        }
+      ],
+      "evidence_ids": [
+        "R-S27"
+      ],
+      "finding": "Critic narrows REST PATCH RDF replacement to the supplied property. The governing REST documentation treats all RDF values together as one key. Final L25 corrects the operative condition to the entire resource RDF value set; inherited critic records remain lineage.",
+      "materiality": "The narrower contract could falsely imply preservation of unrelated source/provenance RDF fields in a rights-only PATCH. Final conditions and prospective checks carry the correct scope, so this is not a remaining final failure."
+    },
+    {
+      "id": "LF-02",
+      "classification": "MINOR_LOCATOR_AND_OPTION_PRESERVATION_LOSS",
+      "material_in_lineage": false,
+      "remaining_in_final": false,
+      "original_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/investigator/discovery.md",
+          "line": 40
+        }
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 82
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 84
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 143
+        }
+      ],
+      "evidence_ids": [
+        "R-S14",
+        "R-X08"
+      ],
+      "finding": "Discovery cites structured metadata recipe 0053 for dual/version-negotiated v2/v3 publishing. It does not contain that pattern; recipe 0057 independently supports it. The explicit alternative is absent in draft/final, although version inventory/coexistence/client checks/rollback remain.",
+      "materiality": "Useful conditional opportunity and minor locator/preservation loss; no required negotiation feature or actual IIIF consumer need was established, and no authorized help/download capability was removed."
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L-01",
+      "classification": "MINOR_STAGE_WORDING",
+      "material": false,
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 130
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 138
+        }
+      ],
+      "description": "The validation intro says executed means performed in investigator stage, but a distinctly labeled reviser recheck row follows. Other stage/research labels make the meaning clear; no product-operation claim is fabricated."
+    },
+    {
+      "id": "L-02",
+      "classification": "MINOR_LOCATOR_AND_PRESERVATION",
+      "material": false,
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 82
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 143
+        }
+      ],
+      "evidence_ids": [
+        "R-S14",
+        "R-X08"
+      ],
+      "description": "LF-02 records the frozen discovery locator defect and lack of an explicit negotiated/dual publishing alternative in final. No established consumer requirement or authorized optional feature is excluded."
+    },
+    {
+      "id": "L-03",
+      "classification": "BOUNDED_PUBLIC_SOURCE_DEPTH_LIMIT",
+      "material": false,
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 25
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 140
+        }
+      ],
+      "evidence_ids": [
+        "R-S23",
+        "R-X06",
+        "R-X09"
+      ],
+      "description": "The candidate leaves CSV Undo as an apparent manual tension. Released code shows Undo deletes tracked created resources and the update path lacks restoration snapshots. Final makes no rollback promise and already warns that updates cannot be undone, so this limited investigation creates no material unsupported recovery decision."
+    },
+    {
+      "id": "L-04",
+      "classification": "MINOR_CONTEXTUAL_VALIDATION_WORDING",
+      "material": false,
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 18
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 60
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 74
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 142
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 145
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 150
+        }
+      ],
+      "description": "The no-rights-assigned-to-thumbnail test is broader in isolation than the actual ban on inferred/blanket permission, while the model expressly retains supplied thumbnail scope. Likewise the agreed-export exit gate must be read with repeated owner-selected optional scope. In full text, neither is a remaining decision to discard supplied thumbnail claims or force unselected exports."
+    }
+  ],
+  "axis_coverage": [
+    {
+      "axis": 1,
+      "name": "Original obligations and negative constraints",
+      "coverage": "ASSESSED_COMPLETE",
+      "judgment": "PASS",
+      "reason": "The final is a complete planning proposal for the five-collection catalogue. It compares staged Europeana aggregation with Omeka publishing, adds DPLA implementation/history, and supplies SKOS/Getty/PROV analogies. It distinguishes supplied statement, license, public-domain assertion/tool and local access policy, retains exact source values/identifiers/scope with change provenance, and handles missing/conflicting values without favorable defaults. Registrar and metadata-lead authority remains exact. Both optional capabilities are retained with technical/owner conditions. The unsafe binary map, blanket permission badge, thumbnail inference, restricted retrieval and unknown-to-public-domain conversion are rejected. Product choice, collection facts and owner approvals are not invented. Every exact plan clause and handoff validation row is dispositioned below; no new implementation or legal determination is demanded.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 12
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 14
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 24
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 30
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 38
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 45
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 57
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 74
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 80
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 104
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 117
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 128
+        }
+      ],
+      "evidence_ids": [
+        "R-S05",
+        "R-S06",
+        "R-S08",
+        "R-S10",
+        "R-S16",
+        "R-S19",
+        "R-S28"
+      ]
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source claims, conditions and applicability",
+      "coverage": "ASSESSED_COMPLETE",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "reason": "Independent governing-source review supports the consequential subjects, operations, versions, defaults, types/domains and exceptions. These include DPLA-specific mapping/rights validation; historical EDM aggregation/WebResource scope; IIIF versioned fields and machine/visible statements; Omeka CSV empty-cell/duplicate-ID semantics, suggestions/label loss, OAI publishing/media default/deletion limit, public reads/authenticated writes and conditional one-way importer overwrite exceptions. The final correctly states resource-wide RDF replacement for PATCH. Documentation/version evidence is distinct from runtime behavior. Official vocabulary context supports CNE/UND despite canonical-page retrieval failures. Minor locator limits and living-documentation deployment pinning remain; no remaining material wrong source condition or unsupported consequential choice was found. The independent evidence matrix below records each source separately, rather than relying on agreement or hashes.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 24
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 25
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 26
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 30
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 38
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 43
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 62
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 68
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 72
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 74
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 80
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 88
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 98
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 100
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 140
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 154
+        }
+      ],
+      "evidence_ids": [
+        "R-S01",
+        "R-S02",
+        "R-S03",
+        "R-S04",
+        "R-S05",
+        "R-S06",
+        "R-S07",
+        "R-S08",
+        "R-S09",
+        "R-S10",
+        "R-S11",
+        "R-S12",
+        "R-S13",
+        "R-S14",
+        "R-S15",
+        "R-S16",
+        "R-S17",
+        "R-S18",
+        "R-S19",
+        "R-S20",
+        "R-S21",
+        "R-S22",
+        "R-S23",
+        "R-S24",
+        "R-S25",
+        "R-S26",
+        "R-S27",
+        "R-S28",
+        "R-S29",
+        "R-C01"
+      ]
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar discovery, competing/analogous approaches, implementation/history and opportunity breadth",
+      "coverage": "ASSESSED_COMPLETE",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "reason": "Discovery is substantive beyond the concealed product hints: its original comparison is DPLA/Metis, with provider-specific mapping, URI preservation, NARA delete/backfill history, IIIF migration/display conditions, SKOS semantics and Getty/PROV analogies. Draft/final add Omeka publishing, CSV update hazards, optional OAI/API output, suggestion/label-loss risks and a conditional Item Importer path. These lead to concrete record/provenance and per-collection update proposals, not a product list or vacuous caution. History is bounded rather than projected onto the five unidentified museums. Exhaustive product selection or deployment is not required. Minor depth/opportunity limits are the omitted explicit dual/version-negotiated migration option and leaving CSV Undo scope as a manual tension despite a public released-code answer. Neither yields a wrong product choice or removal of authorized scope.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 16
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 24
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 25
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 26
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 30
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 43
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 74
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 80
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 88
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 99
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 121
+        }
+      ],
+      "evidence_ids": [
+        "R-S01",
+        "R-S02",
+        "R-S04",
+        "R-S11",
+        "R-S12",
+        "R-S16",
+        "R-S17",
+        "R-S18",
+        "R-S19",
+        "R-S23",
+        "R-S25",
+        "R-S26",
+        "R-S29",
+        "R-C01",
+        "R-X01",
+        "R-X02",
+        "R-X06",
+        "R-X08",
+        "R-X09"
+      ]
+    },
+    {
+      "axis": 4,
+      "name": "Wrong criticisms/corrections/rejections and exact plan dispositions",
+      "coverage": "ASSESSED_COMPLETE",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "reason": "All five final critique-disposition entries and all eight exact plan treatments are independently adjudicated below. The critic correctly identifies a missing prospective API-write check, but wrongly describes RDF PATCH replacement as per-property. That is a material lineage error: its use could erase unrelated RDF values. Final L25 explicitly corrects the operative condition to the whole resource RDF collection; the test remains future/NOT_RUN. The importer opportunity and direct-CNE access caveat receive supported conditional dispositions. The critic's omnibus no-wrong-claim assurance is too broad for its own wording and is not treated as authority. The binary/badge and discarded-URI rejections are justified; already-authorized optional scope and reserved owner/constraint clauses are retained. The corrected historical defect is preserved separately from final qualification.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 25
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 92
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 98
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 99
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 100
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 101
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 102
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 104
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 108
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 109
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 110
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 111
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 112
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 113
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 114
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 115
+        }
+      ],
+      "evidence_ids": [
+        "R-S27",
+        "R-C01",
+        "R-S05",
+        "R-S20",
+        "R-S21",
+        "R-S10",
+        "R-S16"
+      ]
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning preserved discovery → draft → critique → final",
+      "coverage": "ASSESSED_COMPLETE",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "reason": "The final carries the complete substantive proposal rather than predecessor IDs or a patch list: workflow roles, rights/access distinctions, exact URI/text/scope, temporal provenance, missing/conflict queues, per-collection maps/updates, bounded IIIF/NARA history, vocabulary/provenance analogy, optional help/download, exact owners/exclusions, uncertainty and proposed validation remain. The conditional importer and correct RDF-update condition are added without generalization. Source IDs remain bound; inherited historical checks remain visibly staged. A supported optional discovery detail—dual/version-negotiated v2/v3 publication—is not explicitly restated, and discovery's S14 citation for it is wrong. This is a minor locator/opportunity loss: no consumer need for negotiation was established, while the final retains version inventory, coexistence, client checks and rollback. No material supported scope is silently narrowed.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 12
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 24
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 25
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 26
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 30
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 38
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 43
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 45
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 57
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 74
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 80
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 84
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 88
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 98
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 99
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 100
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 104
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 121
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 134
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 138
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 141
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 145
+        }
+      ],
+      "evidence_ids": [
+        "R-S01",
+        "R-S02",
+        "R-S10",
+        "R-S11",
+        "R-S14",
+        "R-S16",
+        "R-S18",
+        "R-S19",
+        "R-S25",
+        "R-S29",
+        "R-C01",
+        "R-X08"
+      ]
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed versus executed validation and oracle applicability",
+      "coverage": "ASSESSED_COMPLETE",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "reason": "The final distinguishes desk research and reveal control from product operation. Product/feed/module/IIIF migration, optional compatibility and end-to-end checks remain proposed or NOT_RUN; no executable witness or deployed catalogue is claimed. Checks discriminate empty/omitted fields, duplicates, multi-valued rights, versioned visible text/URI semantics, full/delta/partial/failed runs, explicit delete versus omission, rejected deletes/backfill, privacy and source-attributed outputs for each collection. Oracles must use supplied sanitized values, owner-approved scopes/maps, pinned profiles, expected ID/count reconciliation and actual clients—not legal truth, source counts, hashes, task status or one provider's example. Schema/URI conformance does not establish legal applicability or runtime success. A copied intro wrongly attributes all executed rows to the investigator despite a clearly labeled reviser row; this is minor stage wording, not fabricated product validation.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 128
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 130
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 134
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 135
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 136
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 137
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 138
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 139
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 140
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 141
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 142
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 143
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 144
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 145
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 146
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 150
+        }
+      ],
+      "evidence_ids": [
+        "R-S08",
+        "R-S10",
+        "R-S16",
+        "R-S23",
+        "R-S26",
+        "R-S27",
+        "R-C01",
+        "R-X01",
+        "R-X02"
+      ]
+    }
+  ],
+  "exact_plan_clauses": [
+    {
+      "clause": 1,
+      "exact_heading": "Compare two aggregation/publishing workflows and an analogous controlled-vocabulary/provenance mechanism.",
+      "exact_draft_treatment": "Map every source rights string to one reusable/not-reusable boolean. Put a standard permission badge on all visible thumbnails.",
+      "reviewer_disposition": "CORRECT_UNSAFE_TREATMENT; RETAIN_PRODUCT_LEADS",
+      "assessment": "The boolean and universal permission badge erase meaningful distinctions and conflict with the explicit exclusions. Final rejects them, compares aggregation/publishing roles and adds controlled-vocabulary/provenance mechanisms. Named products remain leads.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 14
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 24
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 25
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 26
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 30
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 108
+        }
+      ],
+      "evidence_ids": [
+        "R-S05",
+        "R-S10",
+        "R-S16",
+        "R-S19"
+      ],
+      "remaining_material_issue": false
+    },
+    {
+      "clause": 2,
+      "exact_heading": "Distinguish supplied rights statement, license, public-domain assertion and local access policy without making independent legal conclusions.",
+      "exact_draft_treatment": "Omeka S is a tentative publisher; an aggregation route remains unresearched. Source record links are expected to be enough provenance.",
+      "reviewer_disposition": "CORRECT_PROVENANCE_SHORTCUT; DEFER_PLATFORM_CHOICE",
+      "assessment": "A changing source link is not a retained supplied observation or mapping history. Final stores raw statement/URI, source identity/scope/time and the four distinctions. Omeka stays tentative; no winner is falsely imposed.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 12
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 38
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 57
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 64
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 109
+        }
+      ],
+      "evidence_ids": [
+        "R-S05",
+        "R-S08",
+        "R-S18",
+        "R-S19",
+        "R-S28"
+      ],
+      "remaining_material_issue": false
+    },
+    {
+      "clause": 3,
+      "exact_heading": "Research related URI, attribution, mapping and update conditions as a coherent metadata neighborhood; explain missing/conflicting statements.",
+      "exact_draft_treatment": "Copy statement labels as text and discard their identifiers. The reuse-help and metadata-download options are retained, but missing/conflicting statements have no workflow.",
+      "reviewer_disposition": "CORRECT_IDENTIFIER_LOSS_AND_MISSING_WORKFLOW; RETAIN_OPTIONS",
+      "assessment": "Exact raw identifiers/labels survive beside network mappings. Missing/malformed/conflict/update states and attribution/update conditions receive a coherent workflow. Help/download remain conditional options.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 43
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 45
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 57
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 72
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 74
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 110
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 140
+        }
+      ],
+      "evidence_ids": [
+        "R-S10",
+        "R-S11",
+        "R-S16",
+        "R-S23",
+        "R-S25",
+        "R-S27",
+        "R-S29"
+      ],
+      "remaining_material_issue": false
+    },
+    {
+      "clause": 4,
+      "exact_heading": "Investigate a relevant vocabulary/mapping migration or released aggregator behavior change and its collection-specific consequences.",
+      "exact_draft_treatment": "No released mapping history is attached. Staff review of two records is proposed to validate all five collections.",
+      "reviewer_disposition": "ADD_BOUNDED_HISTORY_AND_PER_COLLECTION_COVERAGE",
+      "assessment": "Released IIIF migration and pinned NARA failure/fix/backfill history are researched and tied to each source. Final does not assert all collections supply IIIF or have the NARA bug. Two records cannot establish coverage of five unidentified feeds.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 80
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 84
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 88
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 90
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 111
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 141
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 143
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 144
+        }
+      ],
+      "evidence_ids": [
+        "R-S02",
+        "R-S09",
+        "R-S10",
+        "R-S11",
+        "R-S12",
+        "R-X01",
+        "R-X02"
+      ],
+      "remaining_material_issue": false
+    },
+    {
+      "clause": 5,
+      "exact_heading": "Preserve and investigate this supported optional scope: a reuse-help link and downloadable source-attributed metadata record. It is an authorized option, not a mandatory feature or an established technical capability; recommend conditions, retain it when supported, and explain any evidence-based exclusion.",
+      "exact_draft_treatment": "Retain a reuse-help link and downloadable source-attributed metadata record as supported owner-authorized optional scope. Support here means that the brief explicitly permits it; technical support, conditions and interoperability still need research. Do not remove it merely because the baseline route lacks it, or silently promote it to mandatory scope.",
+      "reviewer_disposition": "ALREADY_AUTHORIZED_OPTIONAL_SCOPE; RETAIN_AND_INVESTIGATE",
+      "assessment": "Both reuse-help and source-attributed metadata download are retained as optional. IIIF/API/OAI patterns have field/profile/privacy/attribution/compatibility conditions; no working capability or evidence-based exclusion is claimed. Selected/agreed-export wording is conditional (L-04).",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 18
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 74
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 112
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 145
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 150
+        }
+      ],
+      "evidence_ids": [
+        "R-S10",
+        "R-S14",
+        "R-S26",
+        "R-S27"
+      ],
+      "remaining_material_issue": false
+    },
+    {
+      "clause": 6,
+      "exact_heading": "Make owner decisions explicit: Each collection registrar owns its supplied statement; the network metadata lead owns mapping and provenance. Legal or policy ambiguity is routed to those owners rather than silently resolved by the catalogue.",
+      "exact_draft_treatment": "Owner authority is reserved as follows: Each collection registrar owns its supplied statement; the network metadata lead owns mapping and provenance. Legal or policy ambiguity is routed to those owners rather than silently resolved by the catalogue. The draft has not obtained these decisions. Its tentative implementation assumptions cannot substitute for them.",
+      "reviewer_disposition": "ALREADY_RESERVED_AUTHORITY; RETAIN_AND_LIST_OPEN_INPUTS",
+      "assessment": "Exact collection-registrar ownership of supplied statements and network-metadata-lead ownership of mapping/provenance remain. Legal/policy ambiguity routes to those owners. Added product/operations inputs do not transfer authority; no approval is invented.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 49
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 113
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 121
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 122
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 126
+        }
+      ],
+      "evidence_ids": [
+        "R-S19"
+      ],
+      "remaining_material_issue": false
+    },
+    {
+      "clause": 7,
+      "exact_heading": "Preserve negative constraints: Do not grant new licenses, infer reuse permission from a visible thumbnail, scrape restricted collections, or convert an unknown statement into a public-domain claim.",
+      "exact_draft_treatment": "Binding exclusions: Do not grant new licenses, infer reuse permission from a visible thumbnail, scrape restricted collections, or convert an unknown statement into a public-domain claim. The draft has no complete trace showing that its assumptions comply; revise the proposal wherever necessary to preserve these exclusions.",
+      "reviewer_disposition": "RETAIN_ALL_EXCLUSIONS; REMOVE_CONFLICTING_DESIGN",
+      "assessment": "Final prohibits new grants, thumbnail inference, restricted scraping and unknown-to-public-domain conversion and removes the boolean/badge conflict. Missing, CNE and UND remain separate supplied-data states.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 14
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 38
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 40
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 41
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 47
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 66
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 114
+        }
+      ],
+      "evidence_ids": [
+        "R-S05",
+        "R-S20",
+        "R-S21",
+        "R-S28"
+      ],
+      "remaining_material_issue": false
+    },
+    {
+      "clause": 8,
+      "exact_heading": "Deliver one coherent evidence-backed research proposal covering obligations 1–8, with recommendations, source/version applicability, useful discoveries, unresolved owner inputs, and a validation table separating checks actually executed from checks merely proposed. Do not report research sources or future tests as executed product validation.",
+      "exact_draft_treatment": "The draft currently contains no coherent evidence-backed final proposal. Its proposed demos are research/validation ideas only. A complete revision must preserve every obligation, disclose corrections and retained options, and not confuse documentation review with successful product operation.",
+      "reviewer_disposition": "DELIVER_FULL_PROPOSAL; SEPARATE_RESEARCH_AND_PRODUCT_CHECKS",
+      "assessment": "Final is self-contained with comparison, model/workflows/history, owners, applicability, source index, exact plan/critique dispositions and meaningful future checks. Demos, sources and workflow control are not promoted to successful product operation.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 8
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 104
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 115
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 117
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 128
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 134
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 138
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 146
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+          "line": 154
+        }
+      ],
+      "evidence_ids": [
+        "R-S27"
+      ],
+      "remaining_material_issue": false
+    }
+  ],
+  "criticism_dispositions": [
+    {
+      "id": "CD-01",
+      "criticism": "API update semantics missing from proposed checks",
+      "candidate_disposition": "Accept and amend",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+        "line": 98
+      },
+      "critic_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/critic/critique.md",
+          "line": 11
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/critic/critique.md",
+          "line": 32
+        }
+      ],
+      "reviewer_disposition": "ACCEPT_GAP; QUALIFY_WRONG_DETAIL",
+      "assessment": "Missing REST-write check is a valid planning gap, not evidence of product unsuitability. Critic per-property detail is wrong (LF-01); final whole-RDF collection condition is correct.",
+      "evidence_ids": [
+        "R-S27"
+      ],
+      "remaining_material_issue": false
+    },
+    {
+      "id": "CD-02",
+      "criticism": "Conditional Omeka-to-Omeka importer opportunity",
+      "candidate_disposition": "Amend proposal; retain owner uncertainty",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+        "line": 99
+      },
+      "critic_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/critic/critique.md",
+          "line": 33
+        }
+      ],
+      "reviewer_disposition": "SUPPORTED_CONDITIONAL_AMENDMENT",
+      "assessment": "Official module is one-way remote-Omeka synchronization with overwrite except site/block assignments. Final retains its prerequisite and asks registrars; it is not a general heterogeneous-feed solution or mandatory feature.",
+      "evidence_ids": [
+        "R-C01"
+      ],
+      "remaining_material_issue": false
+    },
+    {
+      "id": "CD-03",
+      "criticism": "Current English CNE page not directly retrieved",
+      "candidate_disposition": "Retain uncertainty with bounded corroboration",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+        "line": 100
+      },
+      "critic_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/critic/critique.md",
+          "line": 34
+        }
+      ],
+      "reviewer_disposition": "SUPPORTED_ACCESS_LIMIT; SEMANTIC_DISTINCTION_CORROBORATED",
+      "assessment": "Access caveat is appropriately retained. Independent official vocabulary/FAQ supports CNE/UND distinctions, without determining any museum object status or assigning a default.",
+      "evidence_ids": [
+        "R-S05",
+        "R-S20",
+        "R-S21"
+      ],
+      "remaining_material_issue": false
+    },
+    {
+      "id": "CD-04",
+      "criticism": "No material wrong/unsupported/minor issue identified",
+      "candidate_disposition": "Accept within review limits",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+        "line": 101
+      },
+      "critic_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/critic/critique.md",
+          "line": 13
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/critic/critique.md",
+          "line": 35
+        }
+      ],
+      "reviewer_disposition": "QUALIFY_OMNIBUS_ASSURANCE",
+      "assessment": "Agreement is not authority. Corrected wrong PATCH detail, discovery locator defect and minor final wording qualify this assurance without establishing a remaining material final error.",
+      "evidence_ids": [
+        "R-S27",
+        "R-S14",
+        "R-X08"
+      ],
+      "remaining_material_issue": false
+    },
+    {
+      "id": "CD-05",
+      "criticism": "Coverage complete apart from API proposed-check gap",
+      "candidate_disposition": "Amend completeness claim",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+        "line": 102
+      },
+      "critic_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/critic/critique.md",
+          "line": 9
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-02/control/stages/critic/critique.md",
+          "line": 19
+        }
+      ],
+      "reviewer_disposition": "COVERAGE_CONFIRMED_WITH_LIMITATIONS",
+      "assessment": "Every original obligation, exclusion and authorized option has substantive final treatment. The API addition is prospective, not executed proof; collection/owner choices remain legitimate open inputs.",
+      "evidence_ids": [
+        "R-S27",
+        "R-C01"
+      ],
+      "remaining_material_issue": false
+    }
+  ],
+  "preservation_matrix": [
+    {
+      "meaning": "Supplied statement/URI/scope, missing/conflicts",
+      "discovery": "discovery L18-34",
+      "draft": "draft L30-66",
+      "critique": "critique L19-26",
+      "final": "final L32-68",
+      "assessment": "PRESERVED"
+    },
+    {
+      "meaning": "Workflow alternatives/provider maps",
+      "discovery": "discovery L7-14",
+      "draft": "draft L18-28",
+      "critique": "critique L19/L43-46",
+      "final": "final L20-30",
+      "assessment": "PRESERVED; Omeka adds publishing role"
+    },
+    {
+      "meaning": "SKOS/Getty/PROV analogy",
+      "discovery": "discovery L32-34",
+      "draft": "draft L28/L61-62",
+      "critique": "critique L19/L45",
+      "final": "final L30/L63-64",
+      "assessment": "PRESERVED"
+    },
+    {
+      "meaning": "IIIF fields/migration/display",
+      "discovery": "discovery L38-40",
+      "draft": "draft L70/L78-82",
+      "critique": "critique L22/L45",
+      "final": "final L72/L80-84",
+      "assessment": "PRESERVED"
+    },
+    {
+      "meaning": "Dual/version-negotiated IIIF views",
+      "discovery": "discovery L40, wrong S14 locator",
+      "draft": "not explicit",
+      "critique": "not addressed",
+      "final": "not explicit; coexistence/client/rollback retained",
+      "assessment": "MINOR_OPTION_LOSS; LF-02"
+    },
+    {
+      "meaning": "NARA delete/fix/backfill history",
+      "discovery": "discovery L42",
+      "draft": "draft L84-88",
+      "critique": "critique L22/L43",
+      "final": "final L86-90",
+      "assessment": "PRESERVED_AND_BOUNDED; Dec/Jan evidence stated accurately"
+    },
+    {
+      "meaning": "Optional help/download",
+      "discovery": "discovery L49",
+      "draft": "draft L16/L72/L98/L130",
+      "critique": "critique L23",
+      "final": "final L18/L74/L112/L145",
+      "assessment": "PRESERVED_OPTIONAL"
+    },
+    {
+      "meaning": "Owners/exclusions",
+      "discovery": "discovery L26/L34/L46-50",
+      "draft": "draft L90-112",
+      "critique": "critique L24-25/L53",
+      "final": "final L104-126",
+      "assessment": "PRESERVED"
+    },
+    {
+      "meaning": "CSV/Value Suggest/Custom Vocab/OAI hazards",
+      "discovery": "not in frozen discovery",
+      "draft": "draft L23/L41/L66",
+      "critique": "critique L46",
+      "final": "final L25/L43/L68/L140",
+      "assessment": "PRESERVED"
+    },
+    {
+      "meaning": "REST RDF condition/prospective check",
+      "discovery": "not present",
+      "draft": "not explicit",
+      "critique": "critic L11/L32 wrong detail",
+      "final": "final L25/L98/L140",
+      "assessment": "ADDED_WITH_CORRECTED_LINEAGE; LF-01"
+    },
+    {
+      "meaning": "Conditional Item Importer",
+      "discovery": "not present",
+      "draft": "not present",
+      "critique": "critic L33/C01",
+      "final": "final L16/L25/L99/L121/L140",
+      "assessment": "PRESERVED_CONDITIONALLY"
+    },
+    {
+      "meaning": "Research/execution/uncertainty",
+      "discovery": "discovery L52-56",
+      "draft": "draft L114-142",
+      "critique": "critique L49-55",
+      "final": "final L128-157",
+      "assessment": "PRESERVED; minor L-01 stage wording"
+    }
+  ],
+  "useful_discoveries": [
+    {
+      "mechanism": "Supplied statement/URI/scope, missing/conflicts",
+      "stage_origin": "discovery L18-34",
+      "final_preservation": "final L32-68",
+      "assessment": "PRESERVED"
+    },
+    {
+      "mechanism": "Workflow alternatives/provider maps",
+      "stage_origin": "discovery L7-14",
+      "final_preservation": "final L20-30",
+      "assessment": "PRESERVED; Omeka adds publishing role"
+    },
+    {
+      "mechanism": "SKOS/Getty/PROV analogy",
+      "stage_origin": "discovery L32-34",
+      "final_preservation": "final L30/L63-64",
+      "assessment": "PRESERVED"
+    },
+    {
+      "mechanism": "IIIF fields/migration/display",
+      "stage_origin": "discovery L38-40",
+      "final_preservation": "final L72/L80-84",
+      "assessment": "PRESERVED"
+    },
+    {
+      "mechanism": "Dual/version-negotiated IIIF views",
+      "stage_origin": "discovery L40, wrong S14 locator",
+      "final_preservation": "not explicit; coexistence/client/rollback retained",
+      "assessment": "MINOR_OPTION_LOSS; LF-02"
+    },
+    {
+      "mechanism": "NARA delete/fix/backfill history",
+      "stage_origin": "discovery L42",
+      "final_preservation": "final L86-90",
+      "assessment": "PRESERVED_AND_BOUNDED; Dec/Jan evidence stated accurately"
+    },
+    {
+      "mechanism": "Optional help/download",
+      "stage_origin": "discovery L49",
+      "final_preservation": "final L18/L74/L112/L145",
+      "assessment": "PRESERVED_OPTIONAL"
+    },
+    {
+      "mechanism": "CSV/Value Suggest/Custom Vocab/OAI hazards",
+      "stage_origin": "not in frozen discovery",
+      "final_preservation": "final L25/L43/L68/L140",
+      "assessment": "PRESERVED"
+    },
+    {
+      "mechanism": "REST RDF condition/prospective check",
+      "stage_origin": "not present",
+      "final_preservation": "final L25/L98/L140",
+      "assessment": "ADDED_WITH_CORRECTED_LINEAGE; LF-01"
+    },
+    {
+      "mechanism": "Conditional Item Importer",
+      "stage_origin": "not present",
+      "final_preservation": "final L16/L25/L99/L121/L140",
+      "assessment": "PRESERVED_CONDITIONALLY"
+    }
+  ],
+  "handoff_validation_dispositions": [
+    {
+      "check": "External documentation/version review",
+      "original_status": "NOT_RUN",
+      "final_status": "EXECUTED — research only",
+      "final_line": 135,
+      "oracle": "Governing primary source and version/commit conditions independently corroborated here; not product operation."
+    },
+    {
+      "check": "Product comparison and history investigation",
+      "original_status": "NOT_RUN",
+      "final_status": "EXECUTED — desk research only",
+      "final_line": 137,
+      "oracle": "Primary implementation/documentation/history and bounded comparison; no winner or runtime conclusion."
+    },
+    {
+      "check": "Pilot scenario walkthrough",
+      "original_status": "PROPOSED",
+      "final_status": "PROPOSED/NOT_RUN",
+      "final_line": 141,
+      "oracle": "Per-collection sanitized expected source values, scopes, IDs and change/interruption cases at L144."
+    },
+    {
+      "check": "Optional-path compatibility",
+      "original_status": "PROPOSED",
+      "final_status": "PROPOSED/NOT_RUN",
+      "final_line": 145,
+      "oracle": "Owner-selected destination/format/profile, approved public fields and target clients; no required unselected deployment."
+    },
+    {
+      "check": "End-to-end product operation",
+      "original_status": "NOT_RUN",
+      "final_status": "NOT_RUN",
+      "final_line": 146,
+      "oracle": "Would require actual pinned approved installation/feeds/clients, none operated; prototype not required."
+    }
+  ],
+  "original_handoff_validation_exact_text": "| Check | Status | Evidence or intended observation |\n| --- | --- | --- |\n| External documentation/version review | NOT_RUN | Investigator must retrieve relevant public primary evidence. |\n| Product comparison and history investigation | NOT_RUN | No winner, applicability conclusion or failure-chain finding is supplied. |\n| Pilot scenario walkthrough | PROPOSED | Walk through ordinary use, interruption, correction and incompatible/missing input. |\n| Optional-path compatibility | PROPOSED | Check the option on its own terms, with conditions and owner choices. |\n| End-to-end product operation | NOT_RUN | No installation, deployment or live system access is authorized by this fixture. |\n\nThe local existence of this document is input preparation only. It establishes neither the truth of its draft claims nor feasibility of the proposed system. Reconcile research with the draft in the complete final; do not deliver only a critique or patch list.\n",
+  "proposed_validation_oracles": [
+    {
+      "check": "Omeka import/API/OAI/access",
+      "status": "PROPOSED_NOT_RUN",
+      "final_line": 140,
+      "discriminators": "Stable IDs/duplicates, CSV empty cells, PUT/PATCH omitted/empty/full-RDF values, multi-valued rights, private metadata/media, OAI tombstones and logs/Undo, conditional remote-Omeka overwrite.",
+      "oracle_applicability": "Pinned core/modules and owner-approved sanitized values; CSV PHP update behavior is not automatically REST PATCH behavior. Documentation does not establish runtime."
+    },
+    {
+      "check": "Five-source statement/mapping preservation",
+      "status": "PROPOSED_NOT_RUN",
+      "final_line": 141,
+      "discriminators": "Ordinary/missing/malformed/conflict/license/public-domain/scoped/restricted/changed/deleted cases for each collection; raw/mapped/displayed values at L142.",
+      "oracle_applicability": "Supplied values and approved scope/maps; no legal truth or binary permission oracle. Source-supplied thumbnail rights are preservable."
+    },
+    {
+      "check": "IIIF migration",
+      "status": "PROPOSED_NOT_RUN",
+      "final_line": 143,
+      "discriminators": "V2/v3 URI admissibility, fields, visible statement, provider information, source preservation and per-client rendering.",
+      "oracle_applicability": "Only actual IIIF collections and selected version/profile. Schema conformance proves neither legal correctness nor all-client support."
+    },
+    {
+      "check": "Update/delete/provenance",
+      "status": "PROPOSED_NOT_RUN",
+      "final_line": 144,
+      "discriminators": "Full/delta/partial/failed runs, duplicates/timestamps, explicit tombstones versus omission, rejected deletes and backfill.",
+      "oracle_applicability": "Per-collection authoritative IDs/change contract, known expected records/counts and approved deletion policy. NARA is history, not this feed oracle."
+    },
+    {
+      "check": "Optional help/download",
+      "status": "PROPOSED_NOT_RUN",
+      "final_line": 145,
+      "discriminators": "Wording/relation/destination, direct retrieval, content type/profile, attribution/provenance/scope, accessibility/stability and private leakage.",
+      "oracle_applicability": "Only owner-selected path and actual host/client; CORS is conditional. A conforming client may ignore seeAlso."
+    }
+  ],
+  "delivery": {
+    "status": "DELIVERED",
+    "scope": "Full original discovery/draft/critique/final, all three source maps and authored source indexes, all stage assignment/input-map/freeze, original frozen brief/plan, stage input copies/reveal and root terminal freeze inspected. Critique dispositions/checks are inline. Source roots contain authored indexes, no raw captured pages or separate executable-check/disposition files; no expected authored science output is missing.",
+    "integrity_evidence": "freeze-integrity-check.json",
+    "identity_result": "All frozen/root source artifact byte/hash checks match; original/released plan and original/stage brief are equal. Identity only; no semantic proof."
+  },
+  "native": {
+    "candidate_verified_status": "UNKNOWN",
+    "candidate_reports": "Critic/reviser artifacts report activation fields; root-embedded reviser summary reports Goal complete and counters. Separate native-tool receipts are absent from mapped science.",
+    "reviewer_actual_goal_snapshot": {
+      "goal": {
+        "threadId": "01a12441-100c-7f73-a691-48e2aa665da1",
+        "objective": "Independently assess ONE completed ER12 A6-02 control pipeline within a finite 45-minute review envelope including saving. Read the full RUBRIC-v1.md, original frozen A6-02 brief.md and plan.md, control terminal-science-freeze-root.json, all original authored discovery/draft/critique/final, stage source maps, assignment/input-map/freeze, critique dispositions/checks and authored evidence following actual maps. Assess all six axes separately, every exact plan clause, criticism dispositions, useful discovery/alternatives, supported meaning preservation and proposed versus executed validation/oracle applicability. Independently retrieve governing primary evidence for consequential recommendations/corrections/source conditions. Preserve original source freeze; no nested delegation, feedback/repair, account changes, Git/publication, other arms/results/history or ER11 rescore. Source-backed FAIL for remaining material errors; PASS_WITH_LIMITATIONS only absent material remaining issue. Protocol/time/billing require actual evidence or UNKNOWN, separately from source judgment. Save complete assessment.md, assessment.json and independent navigable source-map/evidence only under ER12_RUNTIME/assessment/A6-02/control-v1; include original inspected hashes, material findings, limits and unknowns. Report unassessed scope if capped. Check only unique reviewer pm-mail inbox. Complete native Goal only after full judgment is saved, then report result and paths.",
+        "status": "active",
+        "tokensUsed": 208334,
+        "timeUsedSeconds": 483,
+        "createdAt": 1791609621,
+        "updatedAt": 1791610104
+      },
+      "remainingTokens": null,
+      "completionBudgetReport": null
+    },
+    "reviewer_save_before_completion": true,
+    "reviewer_later_terminal_receipt": "reviewer-native-goal-completion.json"
+  },
+  "t3": {
+    "status": "ROOT_RECORDED_REVISER_COMPLETED; DIRECT_REVIEWER_AUDIT_UNKNOWN",
+    "root_observed_at_utc": "2026-10-10T05:20:05.612841+00:00",
+    "root_basis": "root observed terminal final T3 task/no pending; separate from native proof",
+    "root_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-02-control-reviser-v1",
+    "root_recorded_task_status": "completed",
+    "root_recorded_has_pending_child_runs": false,
+    "limit": "T3 completion is not native proof or semantic/effective-invocation proof."
+  },
+  "protocol": {
+    "reviewer": "One actual native Goal; independent bounded review; no nested delegation, feedback/repair, account changes, Git/publication, other arms/outcomes/history or ER11 rescore. Only unique own inbox checked; writes restricted to reserved assessment root; original source freeze unchanged.",
+    "candidate_full_trace": "UNKNOWN",
+    "artifact_continuity": "Original/revealed plan, original/stage brief and frozen discovery digest match. They do not independently prove brief-only access timing.",
+    "known_candidate_limit": "Critic L4 and source-map critic_review explicitly report that plan-reveal.json was not inspected. This is an input/control-inspection limit separately from source judgment."
+  },
+  "time": {
+    "reviewer_clock_start": "2026-10-10 05:20:21 UTC",
+    "reviewer_deadline": "2026-10-10 06:05:21 UTC",
+    "source_and_judgment_complete_before_deadline": true,
+    "candidate_whole_deadline_utc": "2026-10-10T05:39:56.996Z",
+    "candidate_stage_deadlines_utc": {
+      "investigator": "2026-10-10T05:09:58.224Z",
+      "critic": "2026-10-10T05:08:53.739Z",
+      "reviser": "2026-10-10T05:24:59.886Z"
+    },
+    "root_terminal_observation_utc": "2026-10-10T05:20:05.612841+00:00",
+    "candidate_measured_native_or_inference_elapsed": "UNKNOWN_VERIFIED",
+    "limit": "Artifact presence at root observation precedes whole deadline. Mtimes/source-map clock checkpoints/report counters do not prove effective occupancy or inference time."
+  },
+  "effective_execution": {
+    "requested_catalog_provider": "AUTHORIZED_PROVIDER_INSTANCE",
+    "requested_catalog_model": "gpt-6-luna",
+    "requested_reasoning_effort": "max",
+    "requested_service_tier_in_stage_maps": "default",
+    "actual_upstream_model": "UNKNOWN",
+    "actual_service_tier": "UNKNOWN",
+    "billing_tokens": "UNKNOWN",
+    "cost": "UNKNOWN",
+    "speed_or_savings_claim": "NONE; no paired/other outcome inspected"
+  },
+  "unknowns": [
+    {
+      "field": "Five collections actual schemas/IDs/feeds/statements/update/access",
+      "status": "UNKNOWN_EXTERNAL_INPUT",
+      "impact": "Legitimate registrar inputs; no defaults or legal claims substitute."
+    },
+    {
+      "field": "Whether any collection supplies IIIF or remote Omeka S",
+      "status": "UNKNOWN_EXTERNAL_INPUT",
+      "impact": "Controls conditional migration/importer relevance; not asserted or required."
+    },
+    {
+      "field": "Chosen platform/core/modules/profile/optional destination",
+      "status": "UNRESOLVED_OWNER_DECISION",
+      "impact": "Planning may retain this after meaningful investigated alternatives."
+    },
+    {
+      "field": "Deployed product compatibility/end-to-end operation",
+      "status": "NOT_RUN_REPORTED; NO_PRODUCT_RESULT_IN_ARTIFACTS",
+      "impact": "No deployment required or invented; cannot count as passed."
+    },
+    {
+      "field": "Canonical CNE/UND/FAQ direct retrieval",
+      "status": "UNAVAILABLE_DIRECT; OFFICIAL_TEXT_CORROBORATED",
+      "impact": "Primary alternatives support definitions; no item applicability/default is inferred."
+    },
+    {
+      "field": "Candidate native activation/terminal proof",
+      "status": "UNKNOWN_VERIFIED_NATIVE",
+      "impact": "Authored fields/root summary are reports; separate original native receipt is absent in mapped science."
+    },
+    {
+      "field": "Investigator/critic direct T3 telemetry",
+      "status": "UNKNOWN_DIRECT_TELEMETRY",
+      "impact": "Predecessor references are not a direct live task/native audit."
+    },
+    {
+      "field": "Full candidate protocol/access/delegation trace",
+      "status": "UNKNOWN",
+      "impact": "Freeze/reveal identity is not proof of no early-plan access or assistance; critic explicitly missed plan-reveal inspection."
+    },
+    {
+      "field": "Candidate inference/native/effective occupancy time",
+      "status": "UNKNOWN_VERIFIED_MEASURE",
+      "impact": "Deadlines, mtimes and reported counters are distinct from measured inference time."
+    },
+    {
+      "field": "Actual upstream model/service tier, billing and savings",
+      "status": "UNKNOWN",
+      "impact": "Configured route or tool tokensUsed cannot establish effective invocation, billed cost or savings; other results were excluded."
+    }
+  ],
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A6-02/brief.md",
+      "bytes": 3410,
+      "sha256": "2f0f5e66921a17b6966aee8ea7fce3fe7b8652a8cac03f05e6c175cebe354598",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A6-02/plan.md",
+      "bytes": 6071,
+      "sha256": "169aaf6153653975a15fc0bcb87130cf772fb7761f5c1abf2f80838b62a4a1db",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/terminal-science-freeze-root.json",
+      "bytes": 7300,
+      "sha256": "1ebc67d343f0ddd42afd670ef43d44af0af4348417a084b1f448c0f5ac987439",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/investigator/assignment.md",
+      "bytes": 3712,
+      "sha256": "b162f4a9f6cf390f3605dd7c19ba3d2ae658695bc96432a1ca3d59d8e2d6ae95",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/investigator/input-map.json",
+      "bytes": 781,
+      "sha256": "bb15d6109afa9c298cc26de42860236b2a42e498ffc1f643336839e198dd8182",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/investigator/freeze.json",
+      "bytes": 1721,
+      "sha256": "211b4723fdac9c40230bd38444230dfdd8a2ed4cc03cb9455b2e5df3509e1fd4",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/critic/assignment.md",
+      "bytes": 3306,
+      "sha256": "993223d02101a882611942764c0c22479ad74e310e3e659f5d093de63074daea",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/critic/input-map.json",
+      "bytes": 1457,
+      "sha256": "703b1a513c79d9d0faec6715c88be00ecb4502f19ed1cdbc6eb92982068a0f61",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/critic/freeze.json",
+      "bytes": 3202,
+      "sha256": "8fc32f478eabbb3fcfdc34779db5282e42e535475485ed31bb2bf2507d277204",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/assignment.md",
+      "bytes": 3286,
+      "sha256": "3d51b0943b727d8214843b3ecbeb47ca7048001b285833d11ed21a8ac855c619",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/input-map.json",
+      "bytes": 1768,
+      "sha256": "b0b6fe76dda44a50d8ad8e4dee6fca61d99f819edd9deccaaf4a7975ea3a8c4b",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/freeze.json",
+      "bytes": 3973,
+      "sha256": "679b22f6b42bd93a8c470d70a2d3f740145169f3c0d8fe5bf8c20d019b4081da",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/inputs/brief.md",
+      "bytes": 3410,
+      "sha256": "2f0f5e66921a17b6966aee8ea7fce3fe7b8652a8cac03f05e6c175cebe354598",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/investigator/plan-reveal.json",
+      "bytes": 427,
+      "sha256": "fbc0842ebc22443cebf93640cc83a477552df1308c248f042cd9e478a253d1e1",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/investigator/revealed-plan.md",
+      "bytes": 6071,
+      "sha256": "169aaf6153653975a15fc0bcb87130cf772fb7761f5c1abf2f80838b62a4a1db",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/investigator/discovery.md",
+      "bytes": 13649,
+      "sha256": "02799631734d0d4afdca3afde0426b22030aa35fddb235d94e22f524d7d69440",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/investigator/draft.md",
+      "bytes": 37287,
+      "sha256": "f0ba0b7b43cd2ce6399831c1b0d7600a7f4980988b8269946cd612236bbbc19d",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/critic/critique.md",
+      "bytes": 10869,
+      "sha256": "9b053df049d8ddb973032966c9dc1492fa0876b83015b14c722d157a4553b1ad",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+      "bytes": 43881,
+      "sha256": "325c6b4472ee9a02810fa5cf961a2b8adafa7a95e8377bbef4837dd9cec6fbef",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/critic/source-map.json",
+      "bytes": 45340,
+      "sha256": "ad63b15fd192b94a6a1b244112a3cce6d19b63e17d86e4ad2712c1c2790695f6",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/investigator/source-map.json",
+      "bytes": 33329,
+      "sha256": "54c401269b7800c147cff79d4bb98321f9e28a9d21180f5ac8e06a04f82e400c",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/source-map.json",
+      "bytes": 49814,
+      "sha256": "0f2847f0185222625367669d3651363a5ab0dc04e2eea5652812b30c37e526ba",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/investigator/sources/index.md",
+      "bytes": 6458,
+      "sha256": "4f7d53d2fb1500c785c2309ec8bb155bd4c82cb61e1cd3e1557cd71480baf89d",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/critic/sources/index.md",
+      "bytes": 9098,
+      "sha256": "3fc4d5f3b1e469ecbadc337558dbb0cdf8df1bff5f82604d34afa2a12fc2b82e",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/sources/index.md",
+      "bytes": 15362,
+      "sha256": "fa020986bb8d1d9d7925a29c578a299891efef8202e992a5b659e098cd2d0bbb",
+      "read_full": true
+    }
+  ],
+  "original_inspected_hashes_file": "original-inspected-hashes.json",
+  "independent_source_map": "source-map.json",
+  "independent_evidence_index": "evidence/index.md",
+  "urls_versions_source_conditions": [
+    {
+      "id": "R-S01",
+      "url": "https://github.com/dpla/ingestion3/blob/698795ed19d8f1d8032f988e68123d39dd842413/README.md",
+      "version_applicability": "GitHub commit 698795ed19d8f1d8032f988e68123d39dd842413 (main HEAD observed at retrieval); commit date 2026-10-09T14:10:10Z",
+      "locator": "README: Harvest L467-469; Mapping L474-527; validations/rights exception L565-627; original export retention L154-158",
+      "semantic_check": "VERIFIED",
+      "assessment": "DPLA-specific provider maps and rights normalization/validation, including invalid edm:rights plus dc:rights passing while invalid-only fails. Preserve originals; the pilot is not bound to these rules."
+    },
+    {
+      "id": "R-S02",
+      "url": "https://github.com/dpla/ingestion3/blob/698795ed19d8f1d8032f988e68123d39dd842413/docs/ingestion/README_NARA.md",
+      "version_applicability": "Same pinned commit as S01; document states last updated February 2026",
+      "locator": "README_NARA.md History L626-639; R-X01 L352-437; R-X02 L345-350",
+      "semantic_check": "VERIFIED",
+      "assessment": "The pinned history records zero deletes in December 2025/January 2026, the June 2026 fix, and an undecided backfill. The source script separates NAC_DESC_Deletes files from rosters; merge code reads case-sensitive naId. No actual ingest or present database repair is proved."
+    },
+    {
+      "id": "R-S03",
+      "url": "https://pro.dp.la/developers/field-reference",
+      "version_applicability": "Living documentation; search result states DPLA API currently implements MAP 3.1; separate official MAP page search result had 4.0/5.0 labels; not a coherent single release declaration",
+      "locator": "evidence-web-search7.json: official Field Reference, Metadata Application Profile and Definitions; official MAP page opening paragraphs",
+      "semantic_check": "VERIFIED_WITH_ACCESS_LIMIT",
+      "assessment": "Official search retrieval supports the API MAP 3.1 wording and inconsistent MAP-page 4.0/5.0 labels. Direct GET returned an empty 202 response. This is a documentation inconsistency, not proof of a live API version."
+    },
+    {
+      "id": "R-S04",
+      "url": "https://pro.europeana.eu/index.php/post/the-metis-sandbox-or-finding-joy-in-working-with-data",
+      "version_applicability": "Europeana Common Culture pilot article; no API release version declared on page",
+      "locator": "evidence-web-context5.json: Metis article L12-14, L30, L44-60",
+      "semantic_check": "VERIFIED",
+      "assessment": "The December 2020 pilot article, updated August 2025, describes sample import/validation/transformation/normalization/enrichment/publication, reports and preview. It is historical workflow evidence, not current onboarding or service operation proof."
+    },
+    {
+      "id": "R-S05",
+      "url": "https://rightsstatements.org/en/documentation/faq.html",
+      "version_applicability": "FAQ unversioned; vocabulary statement URI form explicitly carries its own version, commonly /1.0/",
+      "locator": "evidence-web-batch4.json: official FAQ, General/For users/Technical",
+      "semantic_check": "VERIFIED_WITH_ACCESS_LIMIT",
+      "assessment": "The official FAQ distinguishes descriptive statements from licensing tools and statement /vocab/ identifiers from /page/ and /data/ representations. Direct canonical retrieval failed with 526; official search text supplies the governing context."
+    },
+    {
+      "id": "R-S06",
+      "url": "https://pro.europeana.eu/index.php/page/available-rights-statements",
+      "version_applicability": "Living Europeana rights guidance; page lists its current 14 accepted options",
+      "locator": "evidence-web-context5.json: Europeana rights guide L23-54, L73-84",
+      "semantic_check": "VERIFIED",
+      "assessment": "The guide has 14 accepted options and separates CC0, Public Domain Mark, CC licences and rights statements. Its submissions policy is Europeana-specific; the final attributes it to that platform rather than granting rights locally."
+    },
+    {
+      "id": "R-S07",
+      "url": "https://pro.europeana.eu/index.php/page/selecting-a-rights-statement",
+      "version_applicability": "Europeana guidance updated 2024-09-20",
+      "locator": "evidence-web-context5.json: selection guide L23-37 and L57-69",
+      "semantic_check": "VERIFIED",
+      "assessment": "Best efforts, rights-holder permission, organizational policy, and work/reproduction distinctions are platform guidance. The final preserves source scope instead of importing the platform policy as a local legal conclusion."
+    },
+    {
+      "id": "R-S08",
+      "url": "https://pro.europeana.eu/files/Europeana_Professional/Share_your_data/Technical_requirements/EDM_Documentation/EDM_Definition_v5.2.7_042016.pdf",
+      "version_applicability": "EDM Definition v5.2.7 (April 2016)",
+      "locator": "EDM Definition v5.2.7 25/04/2016, printed p39 §3.2.32; extracted L2228-2263",
+      "semantic_check": "VERIFIED",
+      "assessment": "edm:rights concerns digital objects; mandatory on ore:Aggregation, optional on edm:WebResource, maximum one. Historical profile and accepted-set conditions are correctly bounded."
+    },
+    {
+      "id": "R-S09",
+      "url": "https://iiif.io/api/presentation/2.1/",
+      "version_applicability": "Presentation API 2.1.1; previous version to stable 3.0.0",
+      "locator": "Presentation 2.1.1 §3.2, extracted L157-164; status L68",
+      "semantic_check": "VERIFIED",
+      "assessment": "The v2 properties are license and attribution; attribution is text for display and license references rights/licensing information. The final does not equate this legacy text with a new legal grant."
+    },
+    {
+      "id": "R-S10",
+      "url": "https://iiif.io/api/presentation/3.0/",
+      "version_applicability": "Presentation API 3.0.0; stable published 2020-06-03",
+      "locator": "Presentation 3.0.0 §3.1 requiredStatement/rights/provider; §3.3 homepage/rendering/seeAlso; extracted rendering L543-547, seeAlso L629-633",
+      "semantic_check": "VERIFIED",
+      "assessment": "Rights is a URI string from permitted schemes/extension sets; requiredStatement is localized label/value text with mandatory client rendering when present. seeAlso processing is optional; rendering targets are directly displayable without an interstitial page. No pilot endpoint or successful download follows from these rules."
+    },
+    {
+      "id": "R-S11",
+      "url": "https://iiif.io/api/presentation/3.0/change-log/",
+      "version_applicability": "Change log for 3.0.0, backwards-incompatible from 2.1.1",
+      "locator": "3.0 change log §1.2.3, §1.2.5, §1.2.12, §1.2.14; extracted L48-53, L66-76",
+      "semantic_check": "VERIFIED",
+      "assessment": "Released migration history supports attribution→requiredStatement, license→rights, structured provider and new context. The normative specification governs implementation; the change log and cookbook have inconsistent scheme wording, so literal URI rules should be pinned rather than silently rewritten."
+    },
+    {
+      "id": "R-S12",
+      "url": "https://github.com/IIIF/api/issues/1287",
+      "version_applicability": "Issue opened 2017-10-12; milestone Presentation 3.0 - RC1; closed per page",
+      "locator": "Issue #1287 opened 2017-10-12; extracted L113-129, L178-191",
+      "semantic_check": "VERIFIED",
+      "assessment": "The issue documents confusion over artist attribution versus publisher-required display text. It is design history; the final properly uses the released specification for the adopted rule."
+    },
+    {
+      "id": "R-S13",
+      "url": "https://iiif.io/api/cookbook/recipe/0008-rights/",
+      "version_applicability": "Cookbook recipe for Presentation API 3.0; non-normative example",
+      "locator": "Cookbook 0008 Implementation Notes, extracted L21-31",
+      "semantic_check": "VERIFIED",
+      "assessment": "The cookbook supports visible requiredStatement versus potentially non-visible rights, and URI/text separation. It is non-normative guidance for a v3 client, not a guarantee about a particular viewer."
+    },
+    {
+      "id": "R-S14",
+      "url": "https://iiif.io/api/cookbook/recipe/0053-seeAlso/",
+      "version_applicability": "IIIF Cookbook; current recipe page, no discrete release tag",
+      "locator": "Cookbook 0053 Use Case/Implementation Notes, extracted L21-36; compare R-X08",
+      "semantic_check": "VERIFIED_WITH_LOCATOR_LIMIT",
+      "assessment": "This source supports structured metadata links and their distinction from homepage/rendering. It does not contain the discovery’s cited v2/v3 content-negotiation pattern; the correct governing recipe is 0057 (R-X08)."
+    },
+    {
+      "id": "R-S15",
+      "url": "https://iiif.io/api/auth/2.0/",
+      "version_applicability": "Authorization Flow API 2.0.0, published 2023-07-10; current stable listed by IIIF",
+      "locator": "Authorization Flow 2.0.0 Status; Introduction; substitute/probe/service model",
+      "semantic_check": "VERIFIED",
+      "assessment": "The specification governs access to controlled resources and substitutes, not reuse permission. No IIIF source or actual access flow from the five collections was established. The cited publication day was not independently needed for this access distinction."
+    },
+    {
+      "id": "R-S16",
+      "url": "https://www.w3.org/TR/skos-reference/",
+      "version_applicability": "W3C Recommendation 2009-08-18",
+      "locator": "SKOS W3C Recommendation 2009-08-18 §10, especially §10.6.3; extracted L2080-2096",
+      "semantic_check": "VERIFIED",
+      "assessment": "Only exactMatch is declared transitive among mapping properties; closeMatch is not a transitive relation. Concept links and relation types support a governed mapping analogy, not identity from similar strings."
+    },
+    {
+      "id": "R-S17",
+      "url": "https://www.getty.edu/publications/vocabularies-editorial-guidelines/aat-guidelines/1_about_aat/1.1/",
+      "version_applicability": "Living editorial guideline page; no stable numeric edition shown on this section",
+      "locator": "Getty AAT Guidelines §1.1.1.3, extracted L264-277; scope exclusions immediately preceding",
+      "semantic_check": "VERIFIED",
+      "assessment": "AAT concept records have numeric identifiers, terms, related concepts, hierarchy, sources and notes. The final uses a vocabulary-governance analogy without requiring AAT for all museum subjects."
+    },
+    {
+      "id": "R-S18",
+      "url": "https://www.getty.edu/research/tools/vocabularies/Linked_Data_Getty_Vocabularies.pdf",
+      "version_applicability": "Getty presentation labeled May 2023",
+      "locator": "Getty PDF Revised May 2023, printed slides 27-30; extracted L708-827; licensing overview",
+      "semantic_check": "VERIFIED",
+      "assessment": "Merged records retain source/contributor information and the data diagram includes editor/action/date revision fields. This supports provenance design, not an automatic audit log or rights in museum images."
+    },
+    {
+      "id": "R-S19",
+      "url": "https://www.w3.org/TR/prov-o/",
+      "version_applicability": "W3C Recommendation 2013-04-30",
+      "locator": "PROV-O W3C Recommendation 2013-04-30 §3.1 Starting Point Terms, extracted L218-247",
+      "semantic_check": "VERIFIED",
+      "assessment": "Entities, activities and agents with derivation/generation/usage/association can describe source transformations. The final explicitly treats the ontology as a vocabulary, not a logging implementation."
+    },
+    {
+      "id": "R-S20",
+      "url": "https://rightsstatements.org/page/UND/1.0/?language=en",
+      "version_applicability": "RightsStatements.org vocabulary statement UND/1.0",
+      "locator": "evidence-web-batch4.json: official collection-other/1.0 definition of UND; canonical page GET 526",
+      "semantic_check": "VERIFIED_WITH_ACCESS_LIMIT",
+      "assessment": "UND requires an attempted but unsuccessful status determination. It remains separate from missing input, CNE, and public-domain assertions. The canonical page was not directly independently fetched."
+    },
+    {
+      "id": "R-S21",
+      "url": "https://rightsstatements.org/page/CNE/1.0/?language=en",
+      "version_applicability": "RightsStatements.org vocabulary statement CNE/1.0",
+      "locator": "evidence-web-batch4.json: official collection-other/1.0 CNE definition; official 2016 recommendations §2.11 excerpt",
+      "semantic_check": "VERIFIED_WITH_ACCESS_LIMIT",
+      "assessment": "CNE means no evaluation effort by the providing institution, not a catalogue default. Direct page and PDF retrieval failed with 526, but official governing vocabulary text supports the distinction."
+    },
+    {
+      "id": "R-S22",
+      "url": "https://omeka.org/s/modules/CSVImport/",
+      "version_applicability": "Module release listing: CSV Import 2.6.2, released 2024-10-22, minimum Omeka S ^4.0.0",
+      "locator": "CSV Import release page extracted L16-30 and L55-58",
+      "semantic_check": "VERIFIED",
+      "assessment": "Release 2.6.2, 2024-10-22, compatibility ^4.0.0 and CSV/TSV/ODS import/update are supported. ODS additionally requires PHP zip/xml. These are documented capabilities, not a tested five-source deployment."
+    },
+    {
+      "id": "R-S23",
+      "url": "https://omeka.org/s/docs/user-manual/modules/csvimport/",
+      "version_applicability": "Living manual; module options correspond to the CSV Import 2.x workflow; deployment version not selected",
+      "locator": "CSV Import manual Advanced Settings L242-260; Past Imports/Undo L537-552; R-X06/R-X09",
+      "semantic_check": "VERIFIED",
+      "assessment": "Revise skips empty cells; Update replaces even with empty cells; identifiers require exact matches and select the oldest duplicate. The manual distinguishes unundoable update actions while providing an Undo control. Released source clarifies that Undo deletes created import entities rather than restoring overwritten values."
+    },
+    {
+      "id": "R-S24",
+      "url": "https://omeka.org/s/modules/RightsStatements/",
+      "version_applicability": "Module 1.2.1, released 2023-01-19, listed for Omeka S ^3.0.0 || ^4.0.0",
+      "locator": "Rights Statements module page extracted L20-35",
+      "semantic_check": "VERIFIED",
+      "assessment": "The release page lists 11 dropdown statements and URI/label pairing for module 1.2.1 (2023-01-19, ^3.0.0 || ^4.0.0). The final prudently makes no claim that this equals all currently available rights statements."
+    },
+    {
+      "id": "R-S25",
+      "url": "https://omeka.org/s/docs/user-manual/modules/valuesuggest/",
+      "version_applicability": "Living user manual; module release is not selected for this study",
+      "locator": "Value Suggest manual extracted L122-149 and L345-346",
+      "semantic_check": "VERIFIED",
+      "assessment": "Suggestions can be ignored; batch conversion does not import canonical labels and preserves empty or existing label states. The final correctly rejects autocomplete as an enforcement guarantee."
+    },
+    {
+      "id": "R-S26",
+      "url": "https://omeka.org/s/modules/OaiPmhRepository/",
+      "version_applicability": "Module 3.4.14, released 2026-10-05, minimum Omeka S ^4.0.0",
+      "locator": "OAI-PMH Repository extracted L24-37, L67-87, L191-230, L244-250, L298-301",
+      "semantic_check": "VERIFIED",
+      "assessment": "Release 3.4.14 dated 2026-10-05 requires compatible Omeka and Common. OAI-PMH 2.0 publication has required oai_dc, configurable simple_xml, media exposure default false and deletion support TODO. The proposed optional export must verify profile/visibility; this is not an inbound harvester."
+    },
+    {
+      "id": "R-S27",
+      "url": "https://omeka.org/s/docs/developer/api/rest_api/",
+      "version_applicability": "Living developer documentation; non-JSON-LD response formats documented from Omeka S 4.1.0",
+      "locator": "REST API extracted L126-162, L180-194; final L25/L98/L140 versus critic L11/L32",
+      "semantic_check": "VERIFIED_FINAL_CORRECTS_LINEAGE",
+      "assessment": "Default JSON-LD, alternate formats from 4.1.0 and public anonymous reads are documented. PUT replaces the resource. A REST PATCH with any RDF values replaces the entire RDF value collection, not only one property. Final L25 gives the correct resource-wide condition; the critic’s narrower wording is a corrected lineage defect."
+    },
+    {
+      "id": "R-S28",
+      "url": "https://omeka.org/s/modules/Access/",
+      "version_applicability": "Module page lists release 3.4.48; current deployment compatibility was not selected",
+      "locator": "Access module Usage extracted L208-218; server configuration L72-83; Embargo L442-449",
+      "semantic_check": "VERIFIED",
+      "assessment": "Record visibility follows core; file access and embargo add independent restrictions, requiring server routing. Public metadata is not a license or evidence that the original file is accessible."
+    },
+    {
+      "id": "R-S29",
+      "url": "https://omeka.org/s/docs/user-manual/modules/customvocab/",
+      "version_applicability": "Living user manual; module release is not selected for this study",
+      "locator": "Custom Vocab extracted L103-111 and L136-145",
+      "semantic_check": "VERIFIED",
+      "assessment": "Duplicate URIs keep the last label; conversion can replace a source label. The final’s preservation warning and separate provenance are supported; no conversion was actually run."
+    },
+    {
+      "id": "R-C01",
+      "url": "https://omeka.org/s/modules/Osii/",
+      "version_applicability": "Module 1.4.0, released 2024-03-18; minimum Omeka S ^4.0.0",
+      "locator": "Item Importer page extracted L20-23 and L35-38",
+      "semantic_check": "VERIFIED",
+      "assessment": "Release 1.4.0, 2024-03-18, ^4.0.0: remote Omeka-only one-way item/media/item-set synchronization, overwriting later local edits except site/block assignments. The final preserves that prerequisite and owner uncertainty."
+    },
+    {
+      "id": "R-X01",
+      "url": "https://raw.githubusercontent.com/dpla/ingestion3/698795ed19d8f1d8032f988e68123d39dd842413/scripts/harvest/nara-ingest.sh",
+      "version_applicability": "Pinned DPLA preprocessing script; 698795ed19d8f1d8032f988e68123d39dd842413",
+      "locator": "preprocess_month L352-437; zero-delete diagnostic L629-635",
+      "semantic_check": "VERIFIED_STATIC_SOURCE",
+      "assessment": "Code corroborates correct delete-file separation and diagnostic conditions; not executed."
+    },
+    {
+      "id": "R-X02",
+      "url": "https://raw.githubusercontent.com/dpla/ingestion3/698795ed19d8f1d8032f988e68123d39dd842413/src/main/scala/dpla/ingestion3/utils/NaraMergeUtil.scala",
+      "version_applicability": "Pinned DPLA NaraMergeUtil.scala; same commit",
+      "locator": "XML parsing L345-350/L376-382; delete metrics L210-290",
+      "semantic_check": "VERIFIED_STATIC_SOURCE",
+      "assessment": "Code corroborates case-sensitive naId parsing and delete reconciliation metrics; not executed."
+    },
+    {
+      "id": "R-X03",
+      "url": "https://api.github.com/repos/dpla/ingestion3/commits/698795ed19d8f1d8032f988e68123d39dd842413",
+      "version_applicability": "GitHub commit metadata for 698795ed19d8f1d8032f988e68123d39dd842413",
+      "locator": "sha and commit.author.date / commit.committer.date",
+      "semantic_check": "VERIFIED_STATIC_SOURCE",
+      "assessment": "Independently confirms exact commit and 2026-10-09T14:10:10Z date. Does not prove candidate retrieval occurred at its claimed time."
+    },
+    {
+      "id": "R-X04",
+      "url": "https://rightsstatements.org/files/160208recommendations_for_standardized_international_rights_statements_v1.1.pdf",
+      "version_applicability": "RightsStatements.org Recommendations v1.1, 2016",
+      "locator": "§2.11 CNE",
+      "semantic_check": "UNAVAILABLE",
+      "assessment": "Direct PDF unavailable (526). Official-domain returned text is retained in web batch4; no local PDF exists."
+    },
+    {
+      "id": "R-X05",
+      "url": "https://api.github.com/repos/omeka-s-modules/CSVImport/git/trees/v2.6.2?recursive=1",
+      "version_applicability": "CSVImport release v2.6.2 tree; tree SHA efdd9211da118d1c7fa31512ed768f1d4f7d91b1",
+      "locator": "tree entries for src/Job/Undo.php and src/Job/Import.php",
+      "semantic_check": "VERIFIED_STATIC_SOURCE",
+      "assessment": "Read-only release tree establishes paths and release version for static code inspection."
+    },
+    {
+      "id": "R-X06",
+      "url": "https://raw.githubusercontent.com/omeka-s-modules/CSVImport/v2.6.2/src/Job/Undo.php",
+      "version_applicability": "CSVImport v2.6.2 Undo.php",
+      "locator": "perform L15-29",
+      "semantic_check": "VERIFIED_STATIC_SOURCE",
+      "assessment": "Undo searches tracked imported entities and deletes their resources. This is deletion, not restoration of old property values."
+    },
+    {
+      "id": "R-X07",
+      "url": "https://raw.githubusercontent.com/omeka-s-modules/CSVImport/v2.6.2/src/Entity/CSVImportImport.php",
+      "version_applicability": "CSVImport v2.6.2 CSVImportImport.php",
+      "locator": "undoJob field/getter/setter",
+      "semantic_check": "VERIFIED_STATIC_SOURCE",
+      "assessment": "Supporting entity definition only; no claim of a rollback snapshot."
+    },
+    {
+      "id": "R-X08",
+      "url": "https://iiif.io/api/cookbook/recipe/0057-publishing-v2-and-v3/",
+      "version_applicability": "IIIF Cookbook 0057, living recipe for Presentation 2/3",
+      "locator": "Use Case, Implementation Notes and Restrictions",
+      "semantic_check": "VERIFIED_STATIC_SOURCE",
+      "assessment": "Supports version-specific URLs or negotiated v2/v3 responses; clients must check returned version and account for default responses/406. Correct locator for discovery L40, which instead cited 0053."
+    },
+    {
+      "id": "R-X09",
+      "url": "https://raw.githubusercontent.com/omeka-s-modules/CSVImport/v2.6.2/src/Job/Import.php",
+      "version_applicability": "CSVImport v2.6.2 Import.php",
+      "locator": "create L340-380; update L391-457",
+      "semantic_check": "VERIFIED_STATIC_SOURCE",
+      "assessment": "Static code registers csvimport_entities on creation and does not register replacement snapshots in the update path. Complements Undo code; no product operation or module test executed."
+    }
+  ],
+  "reviewer_checks_executed": [
+    "Full authored-input/stage/source-map/index reading",
+    "Independent primary documentation/code/history retrieval and static inspection",
+    "Original freeze identity/input equality checks",
+    "Assessment JSON/reference/scope completeness verification"
+  ],
+  "reviewer_checks_not_executed": [
+    "No product installation/import/API operation/write/collection harvest/viewer test/account or downloaded code execution",
+    "No candidate live native/T3/billing audit",
+    "No other arm/history/paired comparison/ER11 rescore"
+  ]
+}

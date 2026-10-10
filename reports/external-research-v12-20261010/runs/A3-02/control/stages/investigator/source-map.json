@@ -1,0 +1,154 @@
+{
+  "run_id": "A3-02-control",
+  "stage": "investigator",
+  "captured_at_utc": "2026-10-10T04:51:35Z/2026-10-10T04:51:36Z",
+  "index": "sources/index.md",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "W3C MediaStream Recording",
+      "url": "https://www.w3.org/TR/mediastream-recording/",
+      "version_or_commit": "W3C Working Draft 2026-03-16; exact snapshot https://www.w3.org/TR/2026/WD-mediastream-recording-20260316/",
+      "locator": "Sections 2.1-2.4, 4, 6.1, 7.1; lines 80-219, 225-273, 290-319, 366-421",
+      "access_utc": "2026-10-10T04:51:35Z/2026-10-10T04:51:36Z",
+      "observed_operation": "Read current published W3C HTML specification",
+      "condition_default_exception": "Omitted MIME hint permits UA default; supplied MIME constrains format; start/track/error paths can fail asynchronously; timeslice can be longer than requested; individual blobs need not be playable, completed concatenation must be.",
+      "applicability": "Governing lifecycle, MIME, pause/resume, chunk assembly, bounds; working-draft recommendations require browser feature detection."
+    },
+    {
+      "id": "S2",
+      "title": "W3C Media Capture and Streams",
+      "url": "https://www.w3.org/TR/mediacapture-streams/",
+      "version_or_commit": "Current published URL, accessed 2026-10-10; no pinned version in URL",
+      "locator": "Sections 4.3.1, 5.2, 8, 9, 14; actual getSettings around lines 636-649; sampleRate constraints lines 790-860 and ideal/exact semantics 1993-1995, 2252-2268; examples 2093-2113",
+      "access_utc": "2026-10-10T04:51:35Z/2026-10-10T04:57:59Z",
+      "observed_operation": "Read permission, track lifecycle, device enumeration, and sampleRate constraint/settings sections",
+      "condition_default_exception": "Permission/device errors reject getUserMedia; mute is temporary; ended covers revocation/device removal; devicechange reports changed device set; sampleRate can be exact/ideal and actual settings are read from getSettings(); stop() is own cleanup and does not fire ended.",
+      "applicability": "Microphone-only permission/start behavior, mute/ended/input changes, cleanup."
+    },
+    {
+      "id": "S3",
+      "title": "W3C Web Audio API 1.1",
+      "url": "https://www.w3.org/TR/webaudio/",
+      "version_or_commit": "Web Audio API 1.1 current published specification",
+      "locator": "Section 1.32 AudioWorklet; AudioWorkletGlobalScope/Processor; sections 2.5-2.6 render quantum; process algorithm",
+      "access_utc": "2026-10-10T04:51:35Z/2026-10-10T04:51:36Z",
+      "observed_operation": "Read specification definitions and processing algorithm",
+      "condition_default_exception": "AudioWorklet code runs on rendering thread; port messages bridge contexts; default render quantum 128 frames but can be configured; processor errors and ports have lifecycle semantics.",
+      "applicability": "Custom PCM capture mechanism; worklet does not define a recording encoder/container."
+    },
+    {
+      "id": "S4",
+      "title": "WebKit Features in Safari 14.1",
+      "url": "https://webkit.org/blog/11648/new-webkit-features-in-safari-14-1/",
+      "version_or_commit": "Safari 14.1; released 2021-04-26",
+      "locator": "MediaRecorder API and WebM Support, lines 69-78",
+      "access_utc": "2026-10-10T04:51:35Z/2026-10-10T04:51:36Z",
+      "observed_operation": "Read vendor release article",
+      "condition_default_exception": "WebKit added MediaStream Recording with platform defaults; adjacent WebM statement refers to playback on macOS, not WebM recording.",
+      "applicability": "Safari release history only, not a current capability denial."
+    },
+    {
+      "id": "S5",
+      "title": "WebKit Features in Safari 18.4",
+      "url": "https://webkit.org/blog/16574/webkit-features-in-safari-18-4/",
+      "version_or_commit": "Safari 18.4, article dated 2025-03-31",
+      "locator": "Media section, lines 145-168",
+      "access_utc": "2026-10-10T04:51:35Z/2026-10-10T04:51:36Z",
+      "observed_operation": "Read vendor release article",
+      "condition_default_exception": "MediaRecorder WebM with Opus and VP8/VP9, fragmented MP4, ALAC/PCM; Ogg Opus/Vorbis explicitly for macOS Sequoia 15.4, iOS/iPadOS 18.4, visionOS 2.4.",
+      "applicability": "Runtime candidate formats on matching Safari/OS releases; MIME exactness and capture still require probes."
+    },
+    {
+      "id": "S6",
+      "title": "WebKit Features in Safari 26.0",
+      "url": "https://webkit.org/blog/17333/webkit-features-in-safari-26-0/",
+      "version_or_commit": "Safari 26.0, article dated 2025-09-15",
+      "locator": "Media section; `audio/mp4; codecs=alac` example and WebCodecs addition",
+      "access_utc": "2026-10-10T04:51:35Z/2026-10-10T04:51:36Z",
+      "observed_operation": "Read vendor release article",
+      "condition_default_exception": "Release says ALAC/PCM in MediaRecorder and adds AudioEncoder/AudioDecoder; explicit ALAC MIME example.",
+      "applicability": "Version-bounded Safari candidate, not success in other releases/platforms."
+    },
+    {
+      "id": "S7",
+      "title": "Apple Safari 17.4 Release Notes",
+      "url": "https://developer.apple.com/documentation/safari-release-notes/safari-17_4-release-notes",
+      "version_or_commit": "Safari 17.4 (19618.1.15), released 2024-03-05",
+      "locator": "Media > Resolved Issues, issue 115979604",
+      "access_utc": "2026-10-10T04:43:44Z/2026-10-10T04:45:55Z; 2026-10-10T05:02:47Z/2026-10-10T05:03:20Z",
+      "observed_operation": "Read official Apple search-result excerpts for version/date and Media > Resolved Issues; direct page body was not exposed",
+      "condition_default_exception": "Release item says pausing MediaRecorder continued `ondataavailable` at every timeslice; fixed in this release.",
+      "applicability": "Pause/timeslice regression history for exact Safari 17.4 release."
+    },
+    {
+      "id": "S8",
+      "title": "WebKit Bug 258567: empty MediaRecorder Blobs",
+      "url": "https://bugs.webkit.org/show_bug.cgi?id=258567",
+      "version_or_commit": "Safari 16.4/16.5.1 report, 2023-06/07; system-specific repro",
+      "locator": "Comments 4-12, especially lines 62-99",
+      "access_utc": "2026-10-10T04:51:35Z/2026-10-10T04:51:36Z",
+      "observed_operation": "Read WebKit bug report and discussion",
+      "condition_default_exception": "M1/Ventura 13.4.1 reporter saw empty audio/mp4 at 96 kHz system output; their reload after switching output to 48 kHz worked; maintainer did not reproduce.",
+      "applicability": "Incident test motivation only; not a general browser claim."
+    },
+    {
+      "id": "S9",
+      "title": "WebKit Bug 243837: extra bytes after pause/requestData/stop",
+      "url": "https://bugs.webkit.org/show_bug.cgi?id=243837",
+      "version_or_commit": "Safari/iOS 15 report; fixed WebKit commit 253529@main (f2967879748b), 2022-08-17",
+      "locator": "Issue lines 36-58 and fix lines 61-75",
+      "access_utc": "2026-10-10T04:51:35Z/2026-10-10T04:51:36Z",
+      "observed_operation": "Read public issue and linked commit record",
+      "condition_default_exception": "Specific sequence start, pause, requestData, stop; reported additional bytes/truncation; fix committed.",
+      "applicability": "Historic Safari finalization sequence; original example was iOS, not current desktop mic."
+    },
+    {
+      "id": "S10",
+      "title": "Chrome Developers: Record audio and video with MediaRecorder",
+      "url": "https://developer.chrome.com/blog/mediarecorder",
+      "version_or_commit": "Historical article last updated 2016-01-30",
+      "locator": "Support notes and MIME examples, lines 50-73 onward",
+      "access_utc": "2026-10-10T04:51:35Z/2026-10-10T04:51:36Z",
+      "observed_operation": "Read official Google Chrome Developers article",
+      "condition_default_exception": "Audio support Chrome 49+, Chrome 47/48 video-only behind flag; shows audio/webm and omitted options default.",
+      "applicability": "Historical release detail only; not a current support table."
+    },
+    {
+      "id": "S11",
+      "title": "Chromium muxer README",
+      "url": "https://chromium.googlesource.com/chromium/src/media/+/042aaa189184e3d303c01946589eb84926d91000/muxers/README.md",
+      "version_or_commit": "Exact Chromium commit 042aaa189184e3d303c01946589eb84926d91000; not branded Chrome release",
+      "locator": "README lines 8-16",
+      "access_utc": "2026-10-10T04:51:35Z/2026-10-10T04:51:36Z",
+      "observed_operation": "Read pinned source documentation",
+      "condition_default_exception": "Muxers primarily used by MediaRecorder; WebM Opus and MP4 Opus/AAC listed.",
+      "applicability": "Candidate architecture/types only; no public runtime support guarantee."
+    },
+    {
+      "id": "S12",
+      "title": "opus-media-recorder npm package",
+      "url": "https://www.npmjs.com/package/opus-media-recorder?activeTab=code",
+      "version_or_commit": "Registry displayed package 0.8.0, MIT, last published about five years before access",
+      "locator": "README architecture/how-to/use/limitations and npm package version fields",
+      "access_utc": "2026-10-10T04:45:55Z/2026-10-10T04:51:35Z",
+      "observed_operation": "Read npm page and package README; no install/run",
+      "condition_default_exception": "WebAssembly encoders plus Web Worker and static asset/bundler setup; Ogg/WebM/WAV. README says WAV slices are complete independent files and cannot be concatenated; generic errors/no video.",
+      "applicability": "Established alternative analogy and cost/risk, not current browser support evidence."
+    }
+  ],
+  "research_limitations": [
+    "No Chrome or Safari browser/version was specified or executed.",
+    "No browser runtime permission, capability, constructor, capture, playback, or download observation was made.",
+    "Vendor codec announcements do not establish exact audio-only MIME-string behavior on an unpinned runtime."
+  ],
+  "plan_release": {
+    "released_copy": "revealed-plan.md",
+    "revealed_at_utc": "2026-10-10T04:56:38.164Z",
+    "discovery_sha256": "756c86b1eaaf3c272ddda3f65fde869380a50351bd7d028edcb473b60c329734",
+    "discovery_bytes": 11644,
+    "plan_sha256": "b977457667677faa27fe5256d090e48ec798eae592ffd7d860e4c3c239167b79",
+    "plan_bytes": 2470,
+    "single_use": true
+  }
+}

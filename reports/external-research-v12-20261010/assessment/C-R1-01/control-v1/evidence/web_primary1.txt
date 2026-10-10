@@ -1,0 +1,65 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://journals.sagepub.com/doi/10.1260/026309207783571389"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/C-R1-01/control-v1/source-map.json",
+      "source_id": "S07",
+      "existing_authored_summary_fields": {
+        "released_version": "Pedersen, Møller & Persson Waye 2007, 26(4):249–270; DOI 10.1260/026309207783571389.",
+        "exact_subject_operation_units_domain": "Low-frequency standing waves can produce 20–30 dB spatial variation; simulations and three-room measurements examine position methods.",
+        "conditions_exceptions_applicability": "The abstract warns that high-level locations can be missed, including problems with C-weighted scanning. Multiple marked positions are a justified inference; the reported range is not this site's measurement."
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": "SAGE article abstract L30–33; metadata L178–182"
+    },
+    {
+      "candidate_locators": [
+        "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:45"
+      ]
+    }
+  ],
+  "raw_sha256": "dba1c3b713785d5a4223c93752d99336d20082cabb4b81ade901f441d5047e59",
+  "original_bytes": 28441,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/C-R1-01/control-v1/evidence/web_primary1.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://journals.sagepub.com/doi/10.1260/026309207783571389"
+  ],
+  "version": [
+    {
+      "released_version": "Pedersen, Møller & Persson Waye 2007, 26(4):249–270; DOI 10.1260/026309207783571389.",
+      "exact_subject_operation_units_domain": "Low-frequency standing waves can produce 20–30 dB spatial variation; simulations and three-room measurements examine position methods.",
+      "conditions_exceptions_applicability": "The abstract warns that high-level locations can be missed, including problems with C-weighted scanning. Multiple marked positions are a justified inference; the reported range is not this site's measurement."
+    }
+  ],
+  "selector": [
+    {
+      "locator": "SAGE article abstract L30–33; metadata L178–182"
+    },
+    {
+      "candidate_locators": [
+        "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:45"
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "released_version": "Pedersen, Møller & Persson Waye 2007, 26(4):249–270; DOI 10.1260/026309207783571389.",
+      "exact_subject_operation_units_domain": "Low-frequency standing waves can produce 20–30 dB spatial variation; simulations and three-room measurements examine position methods.",
+      "conditions_exceptions_applicability": "The abstract warns that high-level locations can be missed, including problems with C-weighted scanning. Multiple marked positions are a justified inference; the reported range is not this site's measurement."
+    }
+  ],
+  "rawSHA256": "dba1c3b713785d5a4223c93752d99336d20082cabb4b81ade901f441d5047e59"
+}

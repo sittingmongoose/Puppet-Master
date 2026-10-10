@@ -1,0 +1,94 @@
+{
+  "observed_at_utc": "2026-10-10T05:31:31.049714+00:00",
+  "basis": "root observed terminal final T3 task/no pending; separate from native proof",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/critic/critique.md",
+      "bytes": 7935,
+      "sha256": "65a8fe4685d55db2005e8cca8a94571a8d2e7733d81bef91e81fe3731ddaef5f",
+      "mtime_ns": 1791609103913255796
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/critic/source-map.json",
+      "bytes": 14070,
+      "sha256": "29d80fc8ece41075619eaec44fc7f49d9e1eb1183bb62eeb916996254ad80c98",
+      "mtime_ns": 1791609408216393227
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/critic/sources/index.md",
+      "bytes": 3365,
+      "sha256": "35cb4d6e17e0fe3d10004bb7a525f00605a95c1766b1989165ef01096e1fc5d6",
+      "mtime_ns": 1791609103928254148
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/discovery.md",
+      "bytes": 11644,
+      "sha256": "756c86b1eaaf3c272ddda3f65fde869380a50351bd7d028edcb473b60c329734",
+      "mtime_ns": 1791608190924061224
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/draft.md",
+      "bytes": 22923,
+      "sha256": "1ae0b7ef68c5bd0f51f5470a28fb49f45da62ee16d36537350520eb685741b38",
+      "mtime_ns": 1791608550473354243
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/revealed-plan.md",
+      "bytes": 2470,
+      "sha256": "b977457667677faa27fe5256d090e48ec798eae592ffd7d860e4c3c239167b79",
+      "mtime_ns": 1791608198164694767
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/source-map.json",
+      "bytes": 10297,
+      "sha256": "5bde84fe10d40a6966477bebcd01c7246a88df3a254a543ebcc265ccb3f9111a",
+      "mtime_ns": 1791608627488294370
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/sources/index.md",
+      "bytes": 12422,
+      "sha256": "78948a42cacc262879c72af0bc079a8c65d23cdf2549c37201d093fac266443e",
+      "mtime_ns": 1791608627487681757
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+      "bytes": 28397,
+      "sha256": "a0bb1532e129d42e715f99fd51918814deffc3104f3d28e9863f7f3fcec6fc5b",
+      "mtime_ns": 1791610220290895048
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/source-map.json",
+      "bytes": 18347,
+      "sha256": "ad6e879a6c626d2c55bed212f0422b2dbf7150aa9effe47148e95734453a493a",
+      "mtime_ns": 1791610161777865758
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/sources/index.md",
+      "bytes": 11064,
+      "sha256": "4847084d3ec643e13dcddf821bc324c27d87b3ac6f222c6019c1ced252ae49b4",
+      "mtime_ns": 1791610166498601354
+    }
+  ],
+  "final_stage_task": {
+    "slot": "A3-02",
+    "arm": "control",
+    "stage": "reviser",
+    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-02-control-reviser-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-02-control-reviser-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-02-control-reviser-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-02-control-reviser-v1",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-02-control-reviser-v1:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "Completed the reviser stage. [final.md](ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md) covers R1\u2013R6, the original constraints, and dispositions of all three critique findings. It keeps the five-minute limit as an unresolved release gate: a page timer alone does not prove a strict cap when JavaScript is suspended. [Chrome\u2019s Page Lifecycle documentation](https://developer.chrome.com/docs/web-platform/page-lifecycle-api) and the [WebKit issue record](https://bugs.webkit.org/show_bug.cgi?id=258567) are documented in the source map.\n\nThe [source map](ER12_RUNTIME/runs/A3-02/control/stages/reviser/source-map.json) and [source index](ER12_RUNTIME/runs/A3-02/control/stages/reviser/sources/index.md) are saved. The exact native Goal activation and completion responses are preserved [here](ER12_RUNTIME/runs/A3-02/control/stages/reviser/native-goal-activation.json) and [here](ER12_RUNTIME/runs/A3-02/control/stages/reviser/native-goal-completion.json). The same Goal completed; usage was 179,788 tokens over 12m 56s. No browser tests were run.\n\nScope note: during final inventory, I accidentally traversed the reviser directory and computed hashes for pre-existing unlisted files, including control and backup artifacts. I did not print, parse, or use their contents, and did not modify them, but this exceeded the instruction not to read unlisted paths.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-02-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:ed994308-3e1a-4b22-8cb2-86aad0e803ff",
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "summary": "Completed the reviser stage. [final.md](ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md) covers R1\u2013R6, the original constraints, and dispositions of all three critique findings. It keeps the five-minute limit as an unresolved release gate: a page timer alone does not prove a strict cap when JavaScript is suspended. [Chrome\u2019s Page Lifecycle documentation](https://developer.chrome.com/docs/web-platform/page-lifecycle-api) and the [WebKit issue record](https://bugs.webkit.org/show_bug.cgi?id=258567) are documented in the source map.\n\nThe [source map](ER12_RUNTIME/runs/A3-02/control/stages/reviser/source-map.json) and [source index](ER12_RUNTIME/runs/A3-02/control/stages/reviser/sources/index.md) are saved. The exact native Goal activation and completion responses are preserved [here](ER12_RUNTIME/runs/A3-02/control/stages/reviser/native-goal-activation.json) and [here](ER12_RUNTIME/runs/A3-02/control/stages/reviser/native-goal-completion.json). The same Goal completed; usage was 179,788 tokens over 12m 56s. No browser tests were run.\n\nScope note: during final inventory, I accidentally traversed the reviser directory and computed hashes for pre-existing unlisted files, including control and backup artifacts. I did not print, parse, or use their contents, and did not modify them, but this exceeded the instruction not to read unlisted paths.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-02-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:ed994308-3e1a-4b22-8cb2-86aad0e803ff",
+    "waitTimedOut": false
+  }
+}

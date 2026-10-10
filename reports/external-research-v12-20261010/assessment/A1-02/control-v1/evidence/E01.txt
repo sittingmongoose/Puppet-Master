@@ -1,0 +1,80 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://www.rfc-editor.org/rfc/rfc5545.txt"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A1-02/control-v1/source-map.json",
+      "source_id": "E01",
+      "existing_authored_summary_fields": {
+        "version_or_edition": "RFC 5545, September 2009, Standards Track; original publication with internal gap contradiction"
+      }
+    },
+    {
+      "authored_source_map": "assessment/A1-02/control-v1/evidence/retrievals.json",
+      "source_id": "E01",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A1-02/control-v1/evidence/E01-lines.txt"
+    },
+    {
+      "line_text_sha256": "02b79fa75656ec8b8b4b37a8663ee6678267118ce864d32324e62f372183d7f0"
+    },
+    {
+      "line_count": 9579
+    },
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A1-02/control-v1/evidence/E01-lines.txt"
+    },
+    {
+      "line_text_sha256": "02b79fa75656ec8b8b4b37a8663ee6678267118ce864d32324e62f372183d7f0"
+    },
+    {
+      "line_count": 9579
+    }
+  ],
+  "raw_sha256": "c256f809479d98aa23d71bbd1658b3800ea9f13f41ca56e59c8d2de1b31cbfcb",
+  "original_bytes": 345537,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A1-02/control-v1/evidence/E01.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://www.rfc-editor.org/rfc/rfc5545.txt"
+  ],
+  "version": [
+    {
+      "version_or_edition": "RFC 5545, September 2009, Standards Track; original publication with internal gap contradiction"
+    }
+  ],
+  "selector": [
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A1-02/control-v1/evidence/E01-lines.txt"
+    },
+    {
+      "line_text_sha256": "02b79fa75656ec8b8b4b37a8663ee6678267118ce864d32324e62f372183d7f0"
+    },
+    {
+      "line_count": 9579
+    },
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A1-02/control-v1/evidence/E01-lines.txt"
+    },
+    {
+      "line_text_sha256": "02b79fa75656ec8b8b4b37a8663ee6678267118ce864d32324e62f372183d7f0"
+    },
+    {
+      "line_count": 9579
+    }
+  ],
+  "conditions": "UNKNOWN",
+  "rawSHA256": "c256f809479d98aa23d71bbd1658b3800ea9f13f41ca56e59c8d2de1b31cbfcb"
+}

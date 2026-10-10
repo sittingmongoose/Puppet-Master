@@ -1,0 +1,55 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://ocfl.io/1.1.0/spec/"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A8-01/control-v1/source-map.json",
+      "source_id": "E02",
+      "existing_authored_summary_fields": {
+        "released_version_or_commit": "OCFL 1.1.0, 7 October 2022",
+        "governing_subject_operation_default_unit_type_domain_exceptions": "Object id is unique locally and stable; URI is SHOULD. Version integers start at one without gaps; consistently padded names are permitted. Prior directories are intended immutable. Content-addressing MUST use sha512 or sha256 and SHOULD use sha512. Manifest values are arrays of physical content paths; version state values are arrays of logical paths. Root inventory is required; version inventories SHOULD exist. Each inventory has a matching-algorithm sidecar. Logs directory MAY exist and its format is out of scope.",
+        "applicability_assessment": "Supports richer version history/deduplication alternative on filesystem or object storage. Does not choose gallery completeness, version approval or demonstrate recovery. Draft state/content-path wording is imprecise; final avoids the explicit conflation."
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": "§§3.3–3.8; readable capture lines 201–240, 244–350, 402–438"
+    }
+  ],
+  "raw_sha256": "954cae07e2e3541891d76be5a95be199ed15d4d71251610937d0b0c47939b55c",
+  "original_bytes": 59403,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A8-01/control-v1/evidence/E02-ocfl11.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://ocfl.io/1.1.0/spec/"
+  ],
+  "version": [
+    {
+      "released_version_or_commit": "OCFL 1.1.0, 7 October 2022",
+      "governing_subject_operation_default_unit_type_domain_exceptions": "Object id is unique locally and stable; URI is SHOULD. Version integers start at one without gaps; consistently padded names are permitted. Prior directories are intended immutable. Content-addressing MUST use sha512 or sha256 and SHOULD use sha512. Manifest values are arrays of physical content paths; version state values are arrays of logical paths. Root inventory is required; version inventories SHOULD exist. Each inventory has a matching-algorithm sidecar. Logs directory MAY exist and its format is out of scope.",
+      "applicability_assessment": "Supports richer version history/deduplication alternative on filesystem or object storage. Does not choose gallery completeness, version approval or demonstrate recovery. Draft state/content-path wording is imprecise; final avoids the explicit conflation."
+    }
+  ],
+  "selector": [
+    {
+      "locator": "§§3.3–3.8; readable capture lines 201–240, 244–350, 402–438"
+    }
+  ],
+  "conditions": [
+    {
+      "released_version_or_commit": "OCFL 1.1.0, 7 October 2022",
+      "governing_subject_operation_default_unit_type_domain_exceptions": "Object id is unique locally and stable; URI is SHOULD. Version integers start at one without gaps; consistently padded names are permitted. Prior directories are intended immutable. Content-addressing MUST use sha512 or sha256 and SHOULD use sha512. Manifest values are arrays of physical content paths; version state values are arrays of logical paths. Root inventory is required; version inventories SHOULD exist. Each inventory has a matching-algorithm sidecar. Logs directory MAY exist and its format is out of scope.",
+      "applicability_assessment": "Supports richer version history/deduplication alternative on filesystem or object storage. Does not choose gallery completeness, version approval or demonstrate recovery. Draft state/content-path wording is imprecise; final avoids the explicit conflation."
+    }
+  ],
+  "rawSHA256": "954cae07e2e3541891d76be5a95be199ed15d4d71251610937d0b0c47939b55c"
+}

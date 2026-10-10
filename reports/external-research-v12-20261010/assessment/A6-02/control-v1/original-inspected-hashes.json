@@ -1,0 +1,162 @@
+{
+  "review_started_at_utc": "2026-10-10T05:20:21Z",
+  "review_deadline_utc": "2026-10-10T06:05:21Z",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A6-02/brief.md",
+      "bytes": 3410,
+      "sha256": "2f0f5e66921a17b6966aee8ea7fce3fe7b8652a8cac03f05e6c175cebe354598",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A6-02/plan.md",
+      "bytes": 6071,
+      "sha256": "169aaf6153653975a15fc0bcb87130cf772fb7761f5c1abf2f80838b62a4a1db",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/terminal-science-freeze-root.json",
+      "bytes": 7300,
+      "sha256": "1ebc67d343f0ddd42afd670ef43d44af0af4348417a084b1f448c0f5ac987439",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/investigator/assignment.md",
+      "bytes": 3712,
+      "sha256": "b162f4a9f6cf390f3605dd7c19ba3d2ae658695bc96432a1ca3d59d8e2d6ae95",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/investigator/input-map.json",
+      "bytes": 781,
+      "sha256": "bb15d6109afa9c298cc26de42860236b2a42e498ffc1f643336839e198dd8182",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/investigator/freeze.json",
+      "bytes": 1721,
+      "sha256": "211b4723fdac9c40230bd38444230dfdd8a2ed4cc03cb9455b2e5df3509e1fd4",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/critic/assignment.md",
+      "bytes": 3306,
+      "sha256": "993223d02101a882611942764c0c22479ad74e310e3e659f5d093de63074daea",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/critic/input-map.json",
+      "bytes": 1457,
+      "sha256": "703b1a513c79d9d0faec6715c88be00ecb4502f19ed1cdbc6eb92982068a0f61",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/critic/freeze.json",
+      "bytes": 3202,
+      "sha256": "8fc32f478eabbb3fcfdc34779db5282e42e535475485ed31bb2bf2507d277204",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/assignment.md",
+      "bytes": 3286,
+      "sha256": "3d51b0943b727d8214843b3ecbeb47ca7048001b285833d11ed21a8ac855c619",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/input-map.json",
+      "bytes": 1768,
+      "sha256": "b0b6fe76dda44a50d8ad8e4dee6fca61d99f819edd9deccaaf4a7975ea3a8c4b",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/freeze.json",
+      "bytes": 3973,
+      "sha256": "679b22f6b42bd93a8c470d70a2d3f740145169f3c0d8fe5bf8c20d019b4081da",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/inputs/brief.md",
+      "bytes": 3410,
+      "sha256": "2f0f5e66921a17b6966aee8ea7fce3fe7b8652a8cac03f05e6c175cebe354598",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/investigator/plan-reveal.json",
+      "bytes": 427,
+      "sha256": "fbc0842ebc22443cebf93640cc83a477552df1308c248f042cd9e478a253d1e1",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/investigator/revealed-plan.md",
+      "bytes": 6071,
+      "sha256": "169aaf6153653975a15fc0bcb87130cf772fb7761f5c1abf2f80838b62a4a1db",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/investigator/discovery.md",
+      "bytes": 13649,
+      "sha256": "02799631734d0d4afdca3afde0426b22030aa35fddb235d94e22f524d7d69440",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/investigator/draft.md",
+      "bytes": 37287,
+      "sha256": "f0ba0b7b43cd2ce6399831c1b0d7600a7f4980988b8269946cd612236bbbc19d",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/critic/critique.md",
+      "bytes": 10869,
+      "sha256": "9b053df049d8ddb973032966c9dc1492fa0876b83015b14c722d157a4553b1ad",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+      "bytes": 43881,
+      "sha256": "325c6b4472ee9a02810fa5cf961a2b8adafa7a95e8377bbef4837dd9cec6fbef",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/critic/source-map.json",
+      "bytes": 45340,
+      "sha256": "ad63b15fd192b94a6a1b244112a3cce6d19b63e17d86e4ad2712c1c2790695f6",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/investigator/source-map.json",
+      "bytes": 33329,
+      "sha256": "54c401269b7800c147cff79d4bb98321f9e28a9d21180f5ac8e06a04f82e400c",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/source-map.json",
+      "bytes": 49814,
+      "sha256": "0f2847f0185222625367669d3651363a5ab0dc04e2eea5652812b30c37e526ba",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/investigator/sources/index.md",
+      "bytes": 6458,
+      "sha256": "4f7d53d2fb1500c785c2309ec8bb155bd4c82cb61e1cd3e1557cd71480baf89d",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/critic/sources/index.md",
+      "bytes": 9098,
+      "sha256": "3fc4d5f3b1e469ecbadc337558dbb0cdf8df1bff5f82604d34afa2a12fc2b82e",
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/sources/index.md",
+      "bytes": 15362,
+      "sha256": "fa020986bb8d1d9d7925a29c578a299891efef8202e992a5b659e098cd2d0bbb",
+      "read_full": true
+    }
+  ]
+}

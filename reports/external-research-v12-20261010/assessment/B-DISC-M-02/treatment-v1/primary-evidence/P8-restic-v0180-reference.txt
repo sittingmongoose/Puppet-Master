@@ -1,0 +1,71 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://raw.githubusercontent.com/restic/restic/v0.18.0/doc/100_references.rst"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/B-DISC-M-02/treatment-v1/source-map.json",
+      "source_id": "P8-restic-v0180-reference",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/B-DISC-M-02/treatment-v1/source-map.json",
+      "source_id": "P8-restic-v0180-reference",
+      "existing_authored_summary_fields": {
+        "version": "restic tag v0.18.0, reference wrapper only; includes design.rst not retrieved"
+      }
+    },
+    {
+      "authored_source_map": "assessment/B-DISC-M-02/treatment-v1/primary-evidence/retrievals.json",
+      "source_id": "P8-restic-v0180-reference",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locators": [
+        {
+          "section": "Reference wrapper includes design.rst",
+          "text_lines": [
+            13,
+            23
+          ]
+        }
+      ]
+    }
+  ],
+  "raw_sha256": "24876da2a5598ece7f6088c9d8bd9b9eb720993f4a2fa52737d3bf83a844570a",
+  "original_bytes": 637,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/B-DISC-M-02/treatment-v1/primary-evidence/P8-restic-v0180-reference.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://raw.githubusercontent.com/restic/restic/v0.18.0/doc/100_references.rst"
+  ],
+  "version": [
+    {
+      "version": "restic tag v0.18.0, reference wrapper only; includes design.rst not retrieved"
+    }
+  ],
+  "selector": [
+    {
+      "locators": [
+        {
+          "section": "Reference wrapper includes design.rst",
+          "text_lines": [
+            13,
+            23
+          ]
+        }
+      ]
+    }
+  ],
+  "conditions": "UNKNOWN",
+  "rawSHA256": "24876da2a5598ece7f6088c9d8bd9b9eb720993f4a2fa52737d3bf83a844570a"
+}

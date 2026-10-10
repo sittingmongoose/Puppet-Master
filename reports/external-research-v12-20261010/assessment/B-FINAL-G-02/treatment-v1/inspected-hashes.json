@@ -1,0 +1,211 @@
+{
+  "computed_at_utc": "2026-10-10T05:25:17.691780+00:00",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "bytes": 2790,
+      "mtime_ns": 1791604608938287266,
+      "inspected_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/input-map.json",
+      "sha256": "a6b517ed716d0ea987d280fbacd9426314b1199837e5388d44c6de746a72ca23",
+      "bytes": 626,
+      "mtime_ns": 1791609606845790319,
+      "inspected_full": true,
+      "terminal_freeze": {
+        "expected_sha256": "a6b517ed716d0ea987d280fbacd9426314b1199837e5388d44c6de746a72ca23",
+        "expected_bytes": 626,
+        "match": true
+      },
+      "input_freeze": {
+        "expected_sha256": "a6b517ed716d0ea987d280fbacd9426314b1199837e5388d44c6de746a72ca23",
+        "expected_bytes": 626,
+        "match": true
+      }
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/assignment.md",
+      "sha256": "03e5e6cb0b03679d8cf53a4d427eceee8b73a68a8afe684a73424f3dff8aa16f",
+      "bytes": 3188,
+      "mtime_ns": 1791609606845929233,
+      "inspected_full": true,
+      "terminal_freeze": {
+        "expected_sha256": "03e5e6cb0b03679d8cf53a4d427eceee8b73a68a8afe684a73424f3dff8aa16f",
+        "expected_bytes": 3188,
+        "match": true
+      },
+      "input_freeze": {
+        "expected_sha256": "03e5e6cb0b03679d8cf53a4d427eceee8b73a68a8afe684a73424f3dff8aa16f",
+        "expected_bytes": 3188,
+        "match": true
+      }
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/freeze.json",
+      "sha256": "215d7f9ac1349abad7e6f2d4f8ab7a5e52d05f815c3df68f072f800355661d03",
+      "bytes": 2872,
+      "mtime_ns": 1791609606845571712,
+      "inspected_full": true,
+      "terminal_freeze": {
+        "expected_sha256": "215d7f9ac1349abad7e6f2d4f8ab7a5e52d05f815c3df68f072f800355661d03",
+        "expected_bytes": 2872,
+        "match": true
+      }
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/inputs/assignment.md",
+      "sha256": "39860a2ed8542ef8daaf0d84eff6f5b63fd5f79d5d62b35b62d4ee92eaeb694a",
+      "bytes": 4966,
+      "mtime_ns": 1791609606664616066,
+      "inspected_full": true,
+      "input_freeze": {
+        "expected_sha256": "39860a2ed8542ef8daaf0d84eff6f5b63fd5f79d5d62b35b62d4ee92eaeb694a",
+        "expected_bytes": 4966,
+        "match": true
+      }
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/inputs/fixture.json",
+      "sha256": "795857ccbb69b5914d9e24112379fc162f5a73deeb94cf17371c75cbc358898a",
+      "bytes": 2218,
+      "mtime_ns": 1791609606665081435,
+      "inspected_full": true,
+      "input_freeze": {
+        "expected_sha256": "795857ccbb69b5914d9e24112379fc162f5a73deeb94cf17371c75cbc358898a",
+        "expected_bytes": 2218,
+        "match": true
+      }
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/inputs/corpus/S1.md",
+      "sha256": "9b511a3588e02c588843e7d0a2d09ed43c7f4b13bc54d7bf2841e08ba8d9cbc0",
+      "bytes": 930,
+      "mtime_ns": 1791609606664774568,
+      "inspected_full": true,
+      "input_freeze": {
+        "expected_sha256": "9b511a3588e02c588843e7d0a2d09ed43c7f4b13bc54d7bf2841e08ba8d9cbc0",
+        "expected_bytes": 930,
+        "match": true
+      }
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/inputs/corpus/S2.md",
+      "sha256": "996efda6f552deb261be72379edac9588a2b96eb8ac1247fb0f083d004a4743c",
+      "bytes": 817,
+      "mtime_ns": 1791609606664873640,
+      "inspected_full": true,
+      "input_freeze": {
+        "expected_sha256": "996efda6f552deb261be72379edac9588a2b96eb8ac1247fb0f083d004a4743c",
+        "expected_bytes": 817,
+        "match": true
+      }
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/inputs/corpus/index.json",
+      "sha256": "b65e4c7e77821cdd3b43b6dce735662ae62801daa4b67a79a47569b5eebe1652",
+      "bytes": 1245,
+      "mtime_ns": 1791609606664962670,
+      "inspected_full": true,
+      "input_freeze": {
+        "expected_sha256": "b65e4c7e77821cdd3b43b6dce735662ae62801daa4b67a79a47569b5eebe1652",
+        "expected_bytes": 1245,
+        "match": true
+      }
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/final-section.md",
+      "sha256": "932786a3f7d86488cc9d2fed43ca5233f1ef1b55236e8bf8ee03dde718d90e4e",
+      "bytes": 5547,
+      "mtime_ns": 1791609713388417799,
+      "inspected_full": true,
+      "terminal_freeze": {
+        "expected_sha256": "932786a3f7d86488cc9d2fed43ca5233f1ef1b55236e8bf8ee03dde718d90e4e",
+        "expected_bytes": 5547,
+        "match": true
+      }
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/source-map.json",
+      "sha256": "2e4ab7c983df62903f48888890f6a29f1eb2d3b654499a32b7d73e22ba29c23a",
+      "bytes": 5716,
+      "mtime_ns": 1791609762653726399,
+      "inspected_full": true,
+      "terminal_freeze": {
+        "expected_sha256": "2e4ab7c983df62903f48888890f6a29f1eb2d3b654499a32b7d73e22ba29c23a",
+        "expected_bytes": 5716,
+        "match": true
+      }
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/sources/S1-excerpts.md",
+      "sha256": "5e40aea220cb7aa2a4115df902c693b22ab59859ed418aca77619384974cf7ee",
+      "bytes": 2895,
+      "mtime_ns": 1791609751988659955,
+      "inspected_full": true,
+      "terminal_freeze": {
+        "expected_sha256": "5e40aea220cb7aa2a4115df902c693b22ab59859ed418aca77619384974cf7ee",
+        "expected_bytes": 2895,
+        "match": true
+      }
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/sources/S2-excerpts.md",
+      "sha256": "a3c52b3434319d3962b4ec15cde1cd23718a352d96556dcf760bcaec29a150a1",
+      "bytes": 1231,
+      "mtime_ns": 1791609751988659955,
+      "inspected_full": true,
+      "terminal_freeze": {
+        "expected_sha256": "a3c52b3434319d3962b4ec15cde1cd23718a352d96556dcf760bcaec29a150a1",
+        "expected_bytes": 1231,
+        "match": true
+      }
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/records/native-goal-activation.json",
+      "sha256": "79910ba03ef0fed64e82fd9985df708b301ec77acfc70ed4a9477ce2ce788f67",
+      "bytes": 568,
+      "mtime_ns": 1791609752041660285,
+      "inspected_full": true,
+      "terminal_freeze": {
+        "expected_sha256": "79910ba03ef0fed64e82fd9985df708b301ec77acfc70ed4a9477ce2ce788f67",
+        "expected_bytes": 568,
+        "match": true
+      }
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/records/native-goal-completion.json",
+      "sha256": "d1ff1c82192d554679986861415c180f4a2932103a2c854344082a319c8a333c",
+      "bytes": 700,
+      "mtime_ns": 1791609776752814238,
+      "inspected_full": true,
+      "terminal_freeze": {
+        "expected_sha256": "d1ff1c82192d554679986861415c180f4a2932103a2c854344082a319c8a333c",
+        "expected_bytes": 700,
+        "match": true
+      }
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/terminal-science-freeze-root.json",
+      "sha256": "79b4e0f435612972cb20227dc893504bcb9a581c51f56298c93fe7553875faac",
+      "bytes": 10712,
+      "mtime_ns": 1791609838881569161,
+      "inspected_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/inputs/manifest.json",
+      "sha256": "2b906ed13e8d5af988ce49747860527c7c20c6da3de724b601451fb2a31b59a3",
+      "bytes": 624,
+      "mtime_ns": 1791609606665270387,
+      "inspected_full": true,
+      "input_freeze": {
+        "expected_sha256": "2b906ed13e8d5af988ce49747860527c7c20c6da3de724b601451fb2a31b59a3",
+        "expected_bytes": 624,
+        "match": true
+      }
+    }
+  ],
+  "terminal_freeze_scope": "Only inspected science, input, source and native receipt paths; no backup/history/dispatch reads.",
+  "mismatches": []
+}

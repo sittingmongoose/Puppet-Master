@@ -1,0 +1,18 @@
+{
+  "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-02-control-critic-v1",
+  "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-02-control-critic-v1",
+  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-02-control-critic-v1:ordinal:1",
+  "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-02-control-critic-v1",
+  "status": "completed",
+  "workState": "result_available",
+  "hasPendingChildRuns": false,
+  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-02-control-critic-v1:ordinal:1",
+  "latestTerminalStatus": "completed",
+  "latestTerminalSummary": "Critic stage complete. The native Goal reached `complete` with the exact requested objective. Its activation and completion responses are preserved in [native-goal-activation.json](ER12_RUNTIME/runs/C-R1-02/control/stages/critic/native-goal-activation.json) and [native-goal-completion.json](ER12_RUNTIME/runs/C-R1-02/control/stages/critic/native-goal-completion.json).\n\nThe investigator package substantially covers the brief and revealed plan; I found no material error or confirmed material omission. The critique records two minor source-reporting ambiguities and the unresolved question of whether the original 60-minute research window elapsed.\n\n- [critique.md](ER12_RUNTIME/runs/C-R1-02/control/stages/critic/critique.md)\n- [source-map.json](ER12_RUNTIME/runs/C-R1-02/control/stages/critic/source-map.json) — preserves all 12 source IDs and records the independent checks.\n\nThe Goal receipt reports 139,948 tokens used and 666 seconds elapsed.",
+  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-02-control-critic-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:fa629957-5233-45c4-b1cf-4eee5b57e536",
+  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+  "model": "gpt-6-luna",
+  "summary": "Critic stage complete. The native Goal reached `complete` with the exact requested objective. Its activation and completion responses are preserved in [native-goal-activation.json](ER12_RUNTIME/runs/C-R1-02/control/stages/critic/native-goal-activation.json) and [native-goal-completion.json](ER12_RUNTIME/runs/C-R1-02/control/stages/critic/native-goal-completion.json).\n\nThe investigator package substantially covers the brief and revealed plan; I found no material error or confirmed material omission. The critique records two minor source-reporting ambiguities and the unresolved question of whether the original 60-minute research window elapsed.\n\n- [critique.md](ER12_RUNTIME/runs/C-R1-02/control/stages/critic/critique.md)\n- [source-map.json](ER12_RUNTIME/runs/C-R1-02/control/stages/critic/source-map.json) — preserves all 12 source IDs and records the independent checks.\n\nThe Goal receipt reports 139,948 tokens used and 666 seconds elapsed.",
+  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-02-control-critic-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:fa629957-5233-45c4-b1cf-4eee5b57e536",
+  "waitTimedOut": false
+}

@@ -1,0 +1,60 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://support.apple.com/guide/iphone/use-multiple-calendars-iph3d1110d4/ios"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A4-02/treatment-v1/retrieval-manifest.json",
+      "source_id": "R10",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/A4-02/treatment-v1/source-map.json",
+      "source_id": "R10",
+      "existing_authored_summary_fields": {
+        "released_version_or_commit": "Current iPhone User Guide; selector includes iOS27/26/18; installed build UNKNOWN",
+        "governing_locator": "Set up a calendar; Turn on calendar event alerts",
+        "governing_conditions": "External ICS subscription is read-only. Created/subscribed calendar has Event Alerts on/off. Calendar-level control does not prove custom per-event reminders or direct snapshot import."
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "governing_locator": "Set up a calendar; Turn on calendar event alerts"
+    }
+  ],
+  "raw_sha256": "7c2b80e0ae22efa53678bed461eec06bba02f192eabc093c17d8842437a69f95",
+  "original_bytes": 39248,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A4-02/treatment-v1/evidence/R10.text.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://support.apple.com/guide/iphone/use-multiple-calendars-iph3d1110d4/ios"
+  ],
+  "version": [
+    {
+      "released_version_or_commit": "Current iPhone User Guide; selector includes iOS27/26/18; installed build UNKNOWN",
+      "governing_locator": "Set up a calendar; Turn on calendar event alerts",
+      "governing_conditions": "External ICS subscription is read-only. Created/subscribed calendar has Event Alerts on/off. Calendar-level control does not prove custom per-event reminders or direct snapshot import."
+    }
+  ],
+  "selector": [
+    {
+      "governing_locator": "Set up a calendar; Turn on calendar event alerts"
+    }
+  ],
+  "conditions": [
+    {
+      "released_version_or_commit": "Current iPhone User Guide; selector includes iOS27/26/18; installed build UNKNOWN",
+      "governing_locator": "Set up a calendar; Turn on calendar event alerts",
+      "governing_conditions": "External ICS subscription is read-only. Created/subscribed calendar has Event Alerts on/off. Calendar-level control does not prove custom per-event reminders or direct snapshot import."
+    }
+  ],
+  "rawSHA256": "7c2b80e0ae22efa53678bed461eec06bba02f192eabc093c17d8842437a69f95"
+}

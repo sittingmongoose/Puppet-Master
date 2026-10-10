@@ -1,0 +1,84 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://api.github.com/repos/uklibraries/ohms-viewer/releases/tags/v3.10.16"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A5-01/control-v1/source-map.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {
+        "version_or_commit": "v3.10.16 published 2025-12-15T16:33:17Z",
+        "governing_condition_default_exception": "Resolves reviewer release year; no comparison arm or present service result inferred.",
+        "applicability": "C6 provenance qualification."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A5-01/control-v1/evidence/retrieval-records-additional.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A5-01/control-v1/evidence/E24.lines.txt"
+    },
+    {
+      "line_text_sha256": "14488f7d6b70a9b4d0327d799212de00ccc5322ebcf4710de57a0c1439c9a0f7"
+    },
+    {
+      "semantic_locator": "JSON tag_name and published_at"
+    },
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A5-01/control-v1/evidence/E24.lines.txt"
+    },
+    {
+      "line_text_sha256": "14488f7d6b70a9b4d0327d799212de00ccc5322ebcf4710de57a0c1439c9a0f7"
+    }
+  ],
+  "raw_sha256": "14488f7d6b70a9b4d0327d799212de00ccc5322ebcf4710de57a0c1439c9a0f7",
+  "original_bytes": 1774,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A5-01/control-v1/evidence/E24.lines.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://api.github.com/repos/uklibraries/ohms-viewer/releases/tags/v3.10.16"
+  ],
+  "version": [
+    {
+      "version_or_commit": "v3.10.16 published 2025-12-15T16:33:17Z",
+      "governing_condition_default_exception": "Resolves reviewer release year; no comparison arm or present service result inferred.",
+      "applicability": "C6 provenance qualification."
+    }
+  ],
+  "selector": [
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A5-01/control-v1/evidence/E24.lines.txt"
+    },
+    {
+      "line_text_sha256": "14488f7d6b70a9b4d0327d799212de00ccc5322ebcf4710de57a0c1439c9a0f7"
+    },
+    {
+      "semantic_locator": "JSON tag_name and published_at"
+    },
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A5-01/control-v1/evidence/E24.lines.txt"
+    },
+    {
+      "line_text_sha256": "14488f7d6b70a9b4d0327d799212de00ccc5322ebcf4710de57a0c1439c9a0f7"
+    }
+  ],
+  "conditions": [
+    {
+      "version_or_commit": "v3.10.16 published 2025-12-15T16:33:17Z",
+      "governing_condition_default_exception": "Resolves reviewer release year; no comparison arm or present service result inferred.",
+      "applicability": "C6 provenance qualification."
+    }
+  ],
+  "rawSHA256": "14488f7d6b70a9b4d0327d799212de00ccc5322ebcf4710de57a0c1439c9a0f7"
+}

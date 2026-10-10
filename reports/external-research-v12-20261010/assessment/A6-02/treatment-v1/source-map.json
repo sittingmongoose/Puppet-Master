@@ -1,0 +1,1250 @@
+{
+  "assessment_id": "A6-02-treatment-v1",
+  "judgment": "PASS_WITH_LIMITATIONS",
+  "independent_retrieval": true,
+  "note": "Reviewer source IDs Pxx are independent of candidate INV/CRT/REV IDs. E captures are reviewer-owned. Direct retrieval errors and official indexed-source boundaries are explicit; hashes are identity evidence only.",
+  "sources": [
+    {
+      "id": "P01",
+      "title": "OAI-PMH 2.0",
+      "url": "https://www.openarchives.org/OAI/openarchivesprotocol.html",
+      "version_or_commit": "Protocol 2.0 (2002-06-14), document revision 2015-01-08",
+      "primary_source": true,
+      "candidate_source_ids": [
+        "INV:S01",
+        "CRT:S01"
+      ],
+      "locators": [
+        "Sections 2.5.1, 2.7.1, 3.3.2, 3.4, 3.5, 4.2; readable lines 294–312, 450–475, 1038–1120"
+      ],
+      "governing_conditions": "Identify declares no/transient/persistent deletion support. No means vanished records are undiscoverable by incremental harvesting; transient does not guarantee persistence; persistent retains deletion history. Request ranges are inclusive, dates use declared day/second granularity, and resumption tokens govern partial lists. oai_dc is mandatory, richer formats must be discovered separately.",
+      "independent_judgment": "The conditional connector design is supported. Snapshot reconciliation/staleness thresholds are proposed local choices, not OAI guarantees. No five-collection endpoint compatibility was demonstrated.",
+      "retrieval_evidence": [
+        {
+          "id": "E01",
+          "requested_url": "https://www.openarchives.org/OAI/openarchivesprotocol.html",
+          "started_at_utc": "2026-10-10T05:18:09.958740+00:00",
+          "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+          "http_status": 200,
+          "effective_url": "https://www.openarchives.org/OAI/openarchivesprotocol.html",
+          "content_type": "text/html; charset=ISO-8859-1",
+          "bytes": 148063,
+          "sha256": "d81e32299f773b460c9dc8494bc3fe69d5e919fe4d9ef74c39d1a0e3ed7c2b98",
+          "local_capture": "evidence/E01.html",
+          "readable_text": "evidence/E01.txt",
+          "completed_at_utc": "2026-10-10T05:18:10.177547+00:00"
+        }
+      ],
+      "web_access_window_utc": [
+        "2026-10-10T05:16:32+00:00",
+        "2026-10-10T05:26:38.254111+00:00"
+      ]
+    },
+    {
+      "id": "P02",
+      "title": "DPLA Hub Network and prospective hubs",
+      "url": "https://pro.dp.la/hubs",
+      "version_or_commit": "Current unversioned official documentation",
+      "primary_source": true,
+      "candidate_source_ids": [
+        "INV:S02",
+        "CRT:S02"
+      ],
+      "locators": [
+        "evidence/web5.txt: Hub Network and Prospective Hubs sections; official search retrieval"
+      ],
+      "governing_conditions": "Service hubs aggregate regional partners and can deliver a single feed such as OAI-PMH. Content hubs may contribute their own large collections. These are organizational aggregation routes, not rights-determination authorities.",
+      "independent_judgment": "Supports a realistic hub-mediated comparator. The general grouping of Content/Service Hubs is acceptable for this comparison, but their roles are not identical. Acceptance/geographic suitability is not assumed.",
+      "retrieval_evidence": [
+        {
+          "id": "E02",
+          "requested_url": "https://pro.dp.la/hubs",
+          "started_at_utc": "2026-10-10T05:18:09.961250+00:00",
+          "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+          "retrieval_error": "HTTP Error 403: Forbidden",
+          "completed_at_utc": "2026-10-10T05:18:10.085738+00:00"
+        }
+      ],
+      "web_access_window_utc": [
+        "2026-10-10T05:16:32+00:00",
+        "2026-10-10T05:26:38.254111+00:00"
+      ]
+    },
+    {
+      "id": "P03",
+      "title": "DPLA API Field Reference",
+      "url": "https://pro.dp.la/developers/field-reference",
+      "version_or_commit": "API documentation states MAP 3.1; page unversioned",
+      "primary_source": true,
+      "candidate_source_ids": [
+        "INV:S03",
+        "CRT:S03"
+      ],
+      "locators": [
+        "evidence/web2.txt: MAP introduction and object.@id/object.rights/originalRecord/sourceResource/sourceResource.rights definitions"
+      ],
+      "governing_conditions": "The sourceResource describes the original cultural object; object.@id identifies its digital preview and object.rights its asserted rights. originalRecord is the complete provider record. The documented API profile is MAP 3.1.",
+      "independent_judgment": "Supports preserving original versus mapped values and distinct rights subjects. No assertion is made that these are actual fields in the five unspecified sources.",
+      "retrieval_evidence": [
+        {
+          "id": "E03",
+          "requested_url": "https://pro.dp.la/developers/field-reference",
+          "started_at_utc": "2026-10-10T05:18:09.962336+00:00",
+          "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+          "retrieval_error": "HTTP Error 403: Forbidden",
+          "completed_at_utc": "2026-10-10T05:18:10.087578+00:00"
+        }
+      ],
+      "web_access_window_utc": [
+        "2026-10-10T05:16:32+00:00",
+        "2026-10-10T05:26:38.254111+00:00"
+      ]
+    },
+    {
+      "id": "P04",
+      "title": "DPLA MAP and metadata policy",
+      "url": "https://pro.dp.la/hubs/metadata-application-profile",
+      "version_or_commit": "Landing page gives conflicting 4.0 current-version and 5.0 download signals",
+      "primary_source": true,
+      "candidate_source_ids": [
+        "INV:S04",
+        "CRT:S04",
+        "REV:R02"
+      ],
+      "locators": [
+        "evidence/web2.txt: Download the MAP; Policy Statement on Metadata principles 2–4"
+      ],
+      "governing_conditions": "Partner metadata that may be copyright-protected is dedicated under CC0 in DPLA’s partner arrangement. DPLA also waives its own metadata/database contributions. The landing page’s version signals conflict, independently confirming C3.",
+      "independent_judgment": "C2 appropriately uses this as a relationship-specific example, not permission for the museum network. C3 correctly leaves the future integration artifact unresolved.",
+      "retrieval_evidence": [
+        {
+          "id": "E04",
+          "requested_url": "https://pro.dp.la/hubs/metadata-application-profile",
+          "started_at_utc": "2026-10-10T05:18:09.963327+00:00",
+          "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+          "retrieval_error": "HTTP Error 403: Forbidden",
+          "completed_at_utc": "2026-10-10T05:18:10.086684+00:00"
+        }
+      ],
+      "web_access_window_utc": [
+        "2026-10-10T05:16:32+00:00",
+        "2026-10-10T05:26:38.254111+00:00"
+      ]
+    },
+    {
+      "id": "P05",
+      "title": "DPLA API policies and API Codex",
+      "url": "https://pro.dp.la/developers/policies",
+      "version_or_commit": "API v2, current unversioned official pages",
+      "primary_source": true,
+      "candidate_source_ids": [
+        "INV:S05"
+      ],
+      "locators": [
+        "evidence/web5.txt: Policies API Keys; API Codex essentials; Requests search result"
+      ],
+      "governing_conditions": "DPLA documents a required API key, requested by HTTP POST and used in API queries. The Codex identifies v2 and JSON-LD results. Item results link to original online records.",
+      "independent_judgment": "Supports the external API setup dependency and JSON-LD publishing precedent. Reviewer did not perform the POST, obtain a key, or query product data.",
+      "retrieval_evidence": [
+        {
+          "id": "E06",
+          "requested_url": "https://pro.dp.la/developers/policies",
+          "started_at_utc": "2026-10-10T05:18:09.966131+00:00",
+          "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+          "retrieval_error": "HTTP Error 403: Forbidden",
+          "completed_at_utc": "2026-10-10T05:18:10.088523+00:00"
+        },
+        {
+          "id": "E05",
+          "requested_url": "https://pro.dp.la/developers/requests",
+          "started_at_utc": "2026-10-10T05:18:09.964449+00:00",
+          "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+          "retrieval_error": "HTTP Error 403: Forbidden",
+          "completed_at_utc": "2026-10-10T05:18:10.090654+00:00"
+        }
+      ],
+      "web_access_window_utc": [
+        "2026-10-10T05:16:32+00:00",
+        "2026-10-10T05:26:38.254111+00:00"
+      ]
+    },
+    {
+      "id": "P06",
+      "title": "Europeana EDM Definition",
+      "url": "https://pro.europeana.eu/files/Europeana_Professional/Share_your_data/Technical_requirements/EDM_Documentation/EDM_Definition_v5.2.7_042016.pdf",
+      "version_or_commit": "EDM Definition v5.2.7, April 2016",
+      "primary_source": true,
+      "candidate_source_ids": [
+        "INV:S06"
+      ],
+      "locators": [
+        "PDF printed page 40, edm:rights table; evidence/E07.txt lines 2198–2228; ProvidedCHO, WebResource, Aggregation class definitions"
+      ],
+      "governing_conditions": "edm:rights concerns copyright, usage and access rights of digital objects representing the source cultural object. It is mandatory once on ore:Aggregation and optional at most once on edm:WebResource in this definition. The cultural object, web resource and aggregation are distinct entities.",
+      "independent_judgment": "Supports the final’s scoped comparison. It is pinned historical model evidence, not proof of a current pilot schema or an image license.",
+      "retrieval_evidence": [
+        {
+          "id": "E07",
+          "requested_url": "https://pro.europeana.eu/files/Europeana_Professional/Share_your_data/Technical_requirements/EDM_Documentation/EDM_Definition_v5.2.7_042016.pdf",
+          "started_at_utc": "2026-10-10T05:18:09.967290+00:00",
+          "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+          "http_status": 200,
+          "effective_url": "https://pro.europeana.eu/files/Europeana_Professional/Share_your_data/Technical_requirements/EDM_Documentation/EDM_Definition_v5.2.7_042016.pdf",
+          "content_type": "application/pdf",
+          "bytes": 2213229,
+          "sha256": "64a7d4a67c24d1cb6bc3c26fecbc4d7957c80dd77617acd843f7d37c86b757da",
+          "local_capture": "evidence/E07.pdf",
+          "completed_at_utc": "2026-10-10T05:18:10.242754+00:00"
+        }
+      ],
+      "web_access_window_utc": [
+        "2026-10-10T05:16:32+00:00",
+        "2026-10-10T05:26:38.254111+00:00"
+      ]
+    },
+    {
+      "id": "P07",
+      "title": "Europeana ESE-to-EDM migration",
+      "url": "https://pro.europeana.eu/page/ese-documentation",
+      "version_or_commit": "Official historical guidance posted 2014-12-04, updated 2023-11-06 in indexed page",
+      "primary_source": true,
+      "candidate_source_ids": [
+        "INV:S07",
+        "CRT:S07"
+      ],
+      "locators": [
+        "evidence/web3.txt: Default mapping; options 1–3; dc:date/dcterms:created/dc:format examples"
+      ],
+      "governing_conditions": "ESE flattens object/web-resource/aggregation metadata. The default mapping makes broad assumptions; dates and formats can refer to different entities. Accepting the default is discouraged; direct minimal or richer EDM mapping is an alternative to remapping ESE.",
+      "independent_judgment": "The proposal’s collection-specific mapping review and retention for remapping follow the documented failure mechanism. It does not assert that the five collections actually use ESE.",
+      "retrieval_evidence": [
+        {
+          "id": "E08",
+          "requested_url": "https://pro.europeana.eu/page/ese-documentation",
+          "started_at_utc": "2026-10-10T05:18:09.968306+00:00",
+          "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+          "retrieval_error": "HTTP Error 403: Forbidden",
+          "completed_at_utc": "2026-10-10T05:18:10.047772+00:00"
+        }
+      ],
+      "web_access_window_utc": [
+        "2026-10-10T05:16:32+00:00",
+        "2026-10-10T05:26:38.254111+00:00"
+      ]
+    },
+    {
+      "id": "P08",
+      "title": "Europeana Licensing Framework",
+      "url": "https://pro.europeana.eu/page/europeana-licensing-framework",
+      "version_or_commit": "Current official redirect; effective page published 2023-09-10; DEA replaced prior agreements 2012-07-01",
+      "primary_source": true,
+      "candidate_source_ids": [
+        "INV:S08",
+        "CRT:S08",
+        "REV:R03"
+      ],
+      "locators": [
+        "evidence/web4.txt: effective URL https://www.dataspace-culturalheritage.eu/en/news/europeana-licensing-framework, lines 17–31"
+      ],
+      "governing_conditions": "The DEA structures the provider relationship and establishes CC0 for received metadata; data-use guidelines are nonbinding. edm:rights separately reports terms for previews/digital objects.",
+      "independent_judgment": "Supports C2 and the distinction between metadata and object rights. The final does not impose Europeana terms on the five sources or infer image reuse permission.",
+      "retrieval_evidence": [
+        {
+          "id": "E09",
+          "requested_url": "https://pro.europeana.eu/index.php/page/europeana-licensing-framework",
+          "started_at_utc": "2026-10-10T05:18:10.047915+00:00",
+          "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+          "retrieval_error": "HTTP Error 403: Forbidden",
+          "completed_at_utc": "2026-10-10T05:18:10.089788+00:00"
+        },
+        {
+          "id": "E10",
+          "requested_url": "https://www.dataspace-culturalheritage.eu/en/news/europeana-licensing-framework",
+          "started_at_utc": "2026-10-10T05:18:10.085840+00:00",
+          "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+          "retrieval_error": "HTTP Error 403: Forbidden",
+          "completed_at_utc": "2026-10-10T05:18:10.136900+00:00"
+        }
+      ],
+      "web_access_window_utc": [
+        "2026-10-10T05:16:32+00:00",
+        "2026-10-10T05:26:38.254111+00:00"
+      ]
+    },
+    {
+      "id": "P09",
+      "title": "Europeana semantic enrichment",
+      "url": "https://pro.europeana.eu/page/europeana-semantic-enrichment",
+      "version_or_commit": "Official indexed guidance updated 2025-06-23",
+      "primary_source": true,
+      "candidate_source_ids": [
+        "INV:S09"
+      ],
+      "locators": [
+        "evidence/web3.txt: Automatic semantic enrichment and linked-open-vocabulary guidance"
+      ],
+      "governing_conditions": "Europeana adds contextual links to provider metadata using its entity collection; dereferencing third-party vocabularies depends on supported mappings/configuration. This is derived enrichment, not replacement of the original assertion.",
+      "independent_judgment": "The opportunity to improve multilingual discovery while recording derived provenance is supported and survives in the final. No vocabulary configuration or enrichment was executed.",
+      "retrieval_evidence": [
+        {
+          "id": "E11",
+          "requested_url": "https://pro.europeana.eu/page/europeana-semantic-enrichment",
+          "started_at_utc": "2026-10-10T05:18:10.086767+00:00",
+          "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+          "retrieval_error": "HTTP Error 403: Forbidden",
+          "completed_at_utc": "2026-10-10T05:18:10.129582+00:00"
+        }
+      ],
+      "web_access_window_utc": [
+        "2026-10-10T05:16:32+00:00",
+        "2026-10-10T05:26:38.254111+00:00"
+      ]
+    },
+    {
+      "id": "P10",
+      "title": "RightsStatements.org Other statements",
+      "url": "https://rightsstatements.org/page/collection-other/1.0/?language=en",
+      "version_or_commit": "Vocabulary 1.0",
+      "primary_source": true,
+      "candidate_source_ids": [
+        "INV:S10",
+        "CRT:S10"
+      ],
+      "locators": [
+        "evidence/web2.txt: CNE, UND, NKC definitions and collection introduction"
+      ],
+      "governing_conditions": "CNE denotes unevaluated unknown status; UND follows an unsuccessful investigation; NKC requires reasonable cause to believe underlying copyright/related rights no longer apply and excludes orphan works or no inquiry. These are source assertions, not interchangeable null markers.",
+      "independent_judgment": "Supports preserving absent metadata as absent and not assigning a public-domain claim. Legitimately source-supplied CNE remains permissible to display. The final’s broad owner-input sentence about no determination is read in its missing-data context, not as overriding raw-value preservation.",
+      "retrieval_evidence": [
+        {
+          "id": "E13",
+          "requested_url": "https://rightsstatements.org/page/collection-other/1.0/?language=en",
+          "started_at_utc": "2026-10-10T05:18:10.088624+00:00",
+          "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+          "retrieval_error": "HTTP Error 526: <none>",
+          "completed_at_utc": "2026-10-10T05:18:10.690008+00:00"
+        }
+      ],
+      "web_access_window_utc": [
+        "2026-10-10T05:16:32+00:00",
+        "2026-10-10T05:26:38.254111+00:00"
+      ]
+    },
+    {
+      "id": "P11",
+      "title": "RightsStatements.org work/digital-object applicability",
+      "url": "https://rightsstatements.org/en/2018/12/where-statements-apply.html",
+      "version_or_commit": "Official guidance dated 2018-12-21",
+      "primary_source": true,
+      "candidate_source_ids": [
+        "CRT:S22",
+        "REV:R01"
+      ],
+      "locators": [
+        "evidence/web2.txt: three statement-family sections and complete term lists"
+      ],
+      "governing_conditions": "InC, InC-OW-EU, InC-RUU, NoC-US and Other statements may describe work and digital object. Educational/noncommercial InC terms and the remaining NoC terms describe the digital object only. NoC-US depends on user location.",
+      "independent_judgment": "The added final paragraph correctly distinguishes source-asserted subject, documented possible term applicability and displayed resource. C1 is resolved without expanding a permission or independently determining rights.",
+      "retrieval_evidence": [
+        {
+          "id": "E32",
+          "requested_url": "https://rightsstatements.org/en/2018/12/where-statements-apply.html",
+          "started_at_utc": "2026-10-10T05:18:10.690143+00:00",
+          "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+          "retrieval_error": "HTTP Error 526: <none>",
+          "completed_at_utc": "2026-10-10T05:18:11.271779+00:00"
+        }
+      ],
+      "web_access_window_utc": [
+        "2026-10-10T05:16:32+00:00",
+        "2026-10-10T05:26:38.254111+00:00"
+      ]
+    },
+    {
+      "id": "P12",
+      "title": "RightsStatements.org FAQ",
+      "url": "https://rightsstatements.org/en/documentation/faq.html",
+      "version_or_commit": "Current unversioned official FAQ; statement URIs include vocabulary version",
+      "primary_source": true,
+      "candidate_source_ids": [
+        "REV:R04"
+      ],
+      "locators": [
+        "evidence/web5.txt: General questions and Technical URI question"
+      ],
+      "governing_conditions": "Statements summarize rights status and complement rather than replace detailed information/licenses. The FAQ directs application using /vocab/[id]/[version]/, distinct from /page/ and /data/ representations; the currently indexed FAQ uses HTTPS examples.",
+      "independent_judgment": "Supports exact URI preservation and statement/license distinctions. IIIF 3.0 describes HTTP identifiers; the final attributes that rule to the pinned IIIF specification and does not require converting source HTTPS identifiers.",
+      "retrieval_evidence": [
+        {
+          "id": "E33",
+          "requested_url": "https://rightsstatements.org/en/documentation/faq.html",
+          "started_at_utc": "2026-10-10T05:18:10.726848+00:00",
+          "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+          "retrieval_error": "HTTP Error 526: <none>",
+          "completed_at_utc": "2026-10-10T05:18:10.918764+00:00"
+        }
+      ],
+      "web_access_window_utc": [
+        "2026-10-10T05:16:32+00:00",
+        "2026-10-10T05:26:38.254111+00:00"
+      ]
+    },
+    {
+      "id": "P13",
+      "title": "Creative Commons licenses and public-domain tools",
+      "url": "https://creativecommons.org/public-domain/",
+      "version_or_commit": "Current official guidance; PDM 1.0, CC0; license version to be preserved when supplied",
+      "primary_source": true,
+      "candidate_source_ids": [
+        "INV:S11",
+        "CRT:S11"
+      ],
+      "locators": [
+        "evidence/E16.txt License Types; evidence/E17.txt Using CC0/PDM distinction and use conditions; evidence/E18.txt PDM 1.0 Other Information"
+      ],
+      "governing_conditions": "CC licenses grant conditional permissions. CC0 is for rights a rightsholder can waive; PDM labels already public-domain works and guidance excludes uncertain/jurisdiction-specific status. The PDM deed warns about jurisdiction and other rights; it is not a guarantee.",
+      "independent_judgment": "The final preserves supplied assertions, separates tools and refuses independent determinations. It does not select a CC license or infer permission from a preview.",
+      "retrieval_evidence": [
+        {
+          "id": "E17",
+          "requested_url": "https://creativecommons.org/public-domain/",
+          "started_at_utc": "2026-10-10T05:18:10.136990+00:00",
+          "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+          "http_status": 200,
+          "effective_url": "https://creativecommons.org/public-domain/",
+          "content_type": "text/html; charset=UTF-8",
+          "bytes": 45237,
+          "sha256": "e59476895df81af0a0b6535cc083c735df0550fc02ea726e04948b7a143680b6",
+          "local_capture": "evidence/E17.html",
+          "readable_text": "evidence/E17.txt",
+          "completed_at_utc": "2026-10-10T05:18:10.211097+00:00"
+        },
+        {
+          "id": "E16",
+          "requested_url": "https://creativecommons.org/share-your-work/use-remix/cc-licenses/",
+          "started_at_utc": "2026-10-10T05:18:10.129679+00:00",
+          "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+          "http_status": 200,
+          "effective_url": "https://creativecommons.org/share-your-work/use-remix/cc-licenses/",
+          "content_type": "text/html; charset=UTF-8",
+          "bytes": 44217,
+          "sha256": "17f61c3bceb581c10d4440d7e6e80b24b786c453ff5aeb38537a171df340e21e",
+          "local_capture": "evidence/E16.html",
+          "readable_text": "evidence/E16.txt",
+          "completed_at_utc": "2026-10-10T05:18:10.650321+00:00"
+        },
+        {
+          "id": "E18",
+          "requested_url": "https://creativecommons.org/publicdomain/mark/1.0/",
+          "started_at_utc": "2026-10-10T05:18:10.177810+00:00",
+          "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+          "http_status": 200,
+          "effective_url": "https://creativecommons.org/publicdomain/mark/1.0/",
+          "content_type": "text/html",
+          "bytes": 31377,
+          "sha256": "28b3199d4df73c35c3593b1b42b41300fdfbd9a22ca851fd18e1c87a506f43ff",
+          "local_capture": "evidence/E18.html",
+          "readable_text": "evidence/E18.txt",
+          "completed_at_utc": "2026-10-10T05:18:10.227178+00:00"
+        }
+      ],
+      "web_access_window_utc": [
+        "2026-10-10T05:16:32+00:00",
+        "2026-10-10T05:26:38.254111+00:00"
+      ]
+    },
+    {
+      "id": "P14",
+      "title": "IIIF Presentation API",
+      "url": "https://iiif.io/api/presentation/3.0/",
+      "version_or_commit": "Presentation API 3.0.0; page lists this as latest stable",
+      "primary_source": true,
+      "candidate_source_ids": [
+        "INV:S12",
+        "CRT:S12"
+      ],
+      "locators": [
+        "evidence/E19.txt lines 178–205; sections 1.1, 3.1, 4.5, 5.2"
+      ],
+      "governing_conditions": "requiredStatement is a label/value language-map object for rendered text; rights is one informative URI string applying to resource content, not arbitrary legal prose. Clients may render rights, and extensions can add rights URIs. Manifest JSON is dereferenceable. Harvesting/discovery is outside the Presentation API’s direct purpose.",
+      "independent_judgment": "Supports an optional presentation/help-link pattern and JSON precedent, not a five-source harvester or export authorization. The final scopes these roles correctly. HTTPS link advice is attributed to this version.",
+      "retrieval_evidence": [
+        {
+          "id": "E19",
+          "requested_url": "https://iiif.io/api/presentation/3.0/",
+          "started_at_utc": "2026-10-10T05:18:10.211223+00:00",
+          "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+          "http_status": 200,
+          "effective_url": "https://iiif.io/api/presentation/3.0/",
+          "content_type": "text/html",
+          "bytes": 385826,
+          "sha256": "3e4cad9a0ff652e0905c4bd15a27c8d68e208dd34c1d55102870419e5ca5f77e",
+          "local_capture": "evidence/E19.html",
+          "readable_text": "evidence/E19.txt",
+          "completed_at_utc": "2026-10-10T05:18:10.639979+00:00"
+        }
+      ],
+      "web_access_window_utc": [
+        "2026-10-10T05:16:32+00:00",
+        "2026-10-10T05:26:38.254111+00:00"
+      ]
+    },
+    {
+      "id": "P15",
+      "title": "W3C SKOS Reference",
+      "url": "https://www.w3.org/TR/skos-reference/",
+      "version_or_commit": "W3C Recommendation 2009-08-18",
+      "primary_source": true,
+      "candidate_source_ids": [
+        "INV:S13",
+        "CRT:S13"
+      ],
+      "locators": [
+        "Sections 10.1, 10.3 S45, 10.6.8; evidence/E20.txt lines 1855–1875, 2177–2198"
+      ],
+      "governing_conditions": "exactMatch is transitive high-confidence interchangeability across information-retrieval applications; closeMatch is nontransitive looser similarity. owl:sameAs asserts resource identity. SKOS mapping is not a license or unrestricted logical equality.",
+      "independent_judgment": "The final’s brief concept-equivalence wording is acceptable in this retrieval context because it distinguishes owl:sameAs and requires evidence for mapping. No actual source-term crosswalk is claimed.",
+      "retrieval_evidence": [
+        {
+          "id": "E20",
+          "requested_url": "https://www.w3.org/TR/skos-reference/",
+          "started_at_utc": "2026-10-10T05:18:10.227312+00:00",
+          "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+          "http_status": 200,
+          "effective_url": "https://www.w3.org/TR/skos-reference/",
+          "content_type": "text/html; charset=utf-8",
+          "bytes": 227150,
+          "sha256": "3aa00cd16ee4d86d3a19b75501bb317d0b0c134e1f4029e9f3098c4dd3669e4c",
+          "local_capture": "evidence/E20.html",
+          "readable_text": "evidence/E20.txt",
+          "completed_at_utc": "2026-10-10T05:18:10.399509+00:00"
+        }
+      ],
+      "web_access_window_utc": [
+        "2026-10-10T05:16:32+00:00",
+        "2026-10-10T05:26:38.254111+00:00"
+      ]
+    },
+    {
+      "id": "P16",
+      "title": "W3C PROV-O",
+      "url": "https://www.w3.org/TR/prov-o/",
+      "version_or_commit": "W3C Recommendation 2013-04-30",
+      "primary_source": true,
+      "candidate_source_ids": [
+        "INV:S14"
+      ],
+      "locators": [
+        "Section 3.1; evidence/E21.txt lines 218–245"
+      ],
+      "governing_conditions": "Entity, Activity and Agent plus derivation, generation, association and attribution model the provenance chain and responsibility. They do not establish the legal correctness of the entity’s assertions.",
+      "independent_judgment": "Supports the analogous mechanism for source snapshots, mapping activities and responsible owners. The proposal treats it as a modeling option, not completed validation.",
+      "retrieval_evidence": [
+        {
+          "id": "E21",
+          "requested_url": "https://www.w3.org/TR/prov-o/",
+          "started_at_utc": "2026-10-10T05:18:10.243292+00:00",
+          "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+          "http_status": 200,
+          "effective_url": "https://www.w3.org/TR/prov-o/",
+          "content_type": "text/html; charset=utf-8",
+          "bytes": 464179,
+          "sha256": "6b96671ab84faf12ce3f041aca12c3f93a6df2ed242348810743179a68e69555",
+          "local_capture": "evidence/E21.html",
+          "readable_text": "evidence/E21.txt",
+          "completed_at_utc": "2026-10-10T05:18:10.458611+00:00"
+        }
+      ],
+      "web_access_window_utc": [
+        "2026-10-10T05:16:32+00:00",
+        "2026-10-10T05:26:38.254111+00:00"
+      ]
+    },
+    {
+      "id": "P17",
+      "title": "Europeana API key guidance",
+      "url": "https://pro.europeana.eu/page/get-api",
+      "version_or_commit": "Official guidance updated 2025-06-05; registration change 2025-05-28",
+      "primary_source": true,
+      "candidate_source_ids": [
+        "INV:S15"
+      ],
+      "locators": [
+        "evidence/web3.txt: What does this mean and account requirement"
+      ],
+      "governing_conditions": "New API-key requests require a registered, confirmed account and login; a project key may request higher rate access.",
+      "independent_judgment": "Supports treating an external API as a setup dependency rather than requiring it for this research. No account or key was created.",
+      "retrieval_evidence": [
+        {
+          "id": "E22",
+          "requested_url": "https://pro.europeana.eu/page/get-api",
+          "started_at_utc": "2026-10-10T05:18:10.399823+00:00",
+          "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+          "retrieval_error": "HTTP Error 403: Forbidden",
+          "completed_at_utc": "2026-10-10T05:18:10.471138+00:00"
+        }
+      ],
+      "web_access_window_utc": [
+        "2026-10-10T05:16:32+00:00",
+        "2026-10-10T05:26:38.254111+00:00"
+      ]
+    },
+    {
+      "id": "P18",
+      "title": "DPLA ingestion3 NARA fix and runbook",
+      "url": "https://github.com/dpla/ingestion3/commit/608ea023de200df48e8241ed08e0fa49466646f9",
+      "version_or_commit": "Commit 608ea023de200df48e8241ed08e0fa49466646f9, 2026-06-17T18:53:12Z, Issue 739 / PR 750",
+      "primary_source": true,
+      "candidate_source_ids": [
+        "INV:S16",
+        "CRT:S16"
+      ],
+      "locators": [
+        "evidence/E34.json scripts/harvest/nara-ingest.sh patch; evidence/E35.txt lines 127–219, 626–640; evidence/E36.txt lines 597–678"
+      ],
+      "governing_conditions": "The pinned patch selects NAC_DESC_Deletes files rather than NaidsList rosters. The runbook attributes unexecuted deletions to tag/naming mismatch and leaves retroactive processing to the team. Zero-valid-delete processing can prompt or halt, but bypass skips the gate and missing _SUMMARY.txt returns success without checking.",
+      "independent_judgment": "Supports the bounded historical example and proposed counted-delete/backfill controls. The final does not claim incident reproduction or deploy this script. Its gate summary omits the missing-summary exception; L1 records this as nonmaterial historical-source precision.",
+      "retrieval_evidence": [
+        {
+          "id": "E34",
+          "requested_url": "https://api.github.com/repos/dpla/ingestion3/commits/608ea023de200df48e8241ed08e0fa49466646f9",
+          "started_at_utc": "2026-10-10T05:18:10.918867+00:00",
+          "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+          "http_status": 200,
+          "effective_url": "https://api.github.com/repos/dpla/ingestion3/commits/608ea023de200df48e8241ed08e0fa49466646f9",
+          "content_type": "application/json; charset=utf-8",
+          "bytes": 58365,
+          "sha256": "d15650785c8cbdf672efd57e218be583f1bb70abdf81f043fd3b8e0056337690",
+          "local_capture": "evidence/E34.json",
+          "completed_at_utc": "2026-10-10T05:18:11.169414+00:00"
+        },
+        {
+          "id": "E23",
+          "requested_url": "https://github.com/dpla/ingestion3/commit/608ea023de200df48e8241ed08e0fa49466646f9",
+          "started_at_utc": "2026-10-10T05:18:10.458844+00:00",
+          "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+          "http_status": 200,
+          "effective_url": "https://github.com/dpla/ingestion3/commit/608ea023de200df48e8241ed08e0fa49466646f9",
+          "content_type": "text/html; charset=utf-8",
+          "bytes": 818128,
+          "sha256": "556cbb94cd196b1b37ef0baa48899ba971c0829844a0c1168d62495af6e8fc1a",
+          "local_capture": "evidence/E23.html",
+          "readable_text": "evidence/E23.txt",
+          "completed_at_utc": "2026-10-10T05:18:11.301502+00:00"
+        },
+        {
+          "id": "E35",
+          "requested_url": "https://raw.githubusercontent.com/dpla/ingestion3/608ea023de200df48e8241ed08e0fa49466646f9/docs/ingestion/README_NARA.md",
+          "started_at_utc": "2026-10-10T05:18:11.169538+00:00",
+          "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+          "http_status": 200,
+          "effective_url": "https://raw.githubusercontent.com/dpla/ingestion3/608ea023de200df48e8241ed08e0fa49466646f9/docs/ingestion/README_NARA.md",
+          "content_type": "text/plain; charset=utf-8",
+          "bytes": 23937,
+          "sha256": "87907e8734c9997587bcb9cf658cd9eb0f3d947de43079f125ff68afb91631d9",
+          "local_capture": "evidence/E35.txt",
+          "completed_at_utc": "2026-10-10T05:18:11.323199+00:00"
+        },
+        {
+          "id": "E36",
+          "requested_url": "https://raw.githubusercontent.com/dpla/ingestion3/608ea023de200df48e8241ed08e0fa49466646f9/scripts/harvest/nara-ingest.sh",
+          "started_at_utc": "2026-10-10T05:18:11.277136+00:00",
+          "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+          "http_status": 200,
+          "effective_url": "https://raw.githubusercontent.com/dpla/ingestion3/608ea023de200df48e8241ed08e0fa49466646f9/scripts/harvest/nara-ingest.sh",
+          "content_type": "text/plain; charset=utf-8",
+          "bytes": 42036,
+          "sha256": "719f42145f7c61b4d4bee2230e5ae9140d10737ff73beb8786b60ac60f205a50",
+          "local_capture": "evidence/E36.txt",
+          "completed_at_utc": "2026-10-10T05:18:11.419111+00:00"
+        }
+      ],
+      "web_access_window_utc": [
+        "2026-10-10T05:16:32+00:00",
+        "2026-10-10T05:26:38.254111+00:00"
+      ]
+    },
+    {
+      "id": "P19",
+      "title": "DPLA bulk download",
+      "url": "https://pro.dp.la/developers/bulk-download",
+      "version_or_commit": "Current official documentation; documented format transitions 2015, 2018, 2019",
+      "primary_source": true,
+      "candidate_source_ids": [
+        "INV:S17"
+      ],
+      "locators": [
+        "evidence/web3.txt: Bulk Download introduction and format-change dates"
+      ],
+      "governing_conditions": "DPLA describes zipped JSON and Parquet repository exports; format changes include JSONL and Parquet.",
+      "independent_judgment": "A valid export precedent, not proof that this network may redistribute any given source fields or objects. The final keeps export version and authorization conditional.",
+      "retrieval_evidence": [
+        {
+          "id": "E25",
+          "requested_url": "https://pro.dp.la/developers/bulk-download",
+          "started_at_utc": "2026-10-10T05:18:10.616074+00:00",
+          "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+          "retrieval_error": "HTTP Error 403: Forbidden",
+          "completed_at_utc": "2026-10-10T05:18:10.679248+00:00"
+        }
+      ],
+      "web_access_window_utc": [
+        "2026-10-10T05:16:32+00:00",
+        "2026-10-10T05:26:38.254111+00:00"
+      ]
+    },
+    {
+      "id": "P20",
+      "title": "Omeka S resource templates",
+      "url": "https://omeka.org/s/docs/user-manual/content/resource-template/",
+      "version_or_commit": "Current unversioned official manual",
+      "primary_source": true,
+      "candidate_source_ids": [
+        "INV:S18"
+      ],
+      "locators": [
+        "evidence/E26.txt lines 150–182, 200–208"
+      ],
+      "governing_conditions": "Templates support Rights and URI values. Value Suggest does not enforce suggested terms; Custom Vocab can enforce a selection but its vocabulary must be recreated when importing templates elsewhere.",
+      "independent_judgment": "Supports an optional editorial publisher requiring surrounding adapters/history. The final correctly does not present suggestions as a rights validator or automatic harvester. Template portability is retained in the inherited source map.",
+      "retrieval_evidence": [
+        {
+          "id": "E26",
+          "requested_url": "https://omeka.org/s/docs/user-manual/content/resource-template/",
+          "started_at_utc": "2026-10-10T05:18:10.640431+00:00",
+          "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+          "http_status": 200,
+          "effective_url": "https://omeka.org/s/docs/user-manual/content/resource-template/",
+          "content_type": "text/html; charset=UTF-8",
+          "bytes": 36623,
+          "sha256": "ef41c91f67e0e6078c36e91578b11908742d664f022d04e62db4a676903bc68a",
+          "local_capture": "evidence/E26.html",
+          "readable_text": "evidence/E26.txt",
+          "completed_at_utc": "2026-10-10T05:18:16.871691+00:00"
+        }
+      ],
+      "web_access_window_utc": [
+        "2026-10-10T05:16:32+00:00",
+        "2026-10-10T05:26:38.254111+00:00"
+      ]
+    },
+    {
+      "id": "P21",
+      "title": "Omeka S CSV Import",
+      "url": "https://omeka.org/s/modules/CSVImport/",
+      "version_or_commit": "2.6.2, 2024-10-22, Omeka S ^4.0.0 compatibility",
+      "primary_source": true,
+      "candidate_source_ids": [
+        "INV:S19",
+        "CRT:S19"
+      ],
+      "locators": [
+        "evidence/E27.txt release table; evidence/E28.txt lines 137–139, 317–336"
+      ],
+      "governing_conditions": "CSV/TSV/ODS imports require Global Administrator/Supervisor and PHP background jobs. Create is default; revise keeps existing values for blank cells, update replaces even with blanks, and replace clears properties. Matching is exact; duplicate matches affect the oldest resource.",
+      "independent_judgment": "The final’s high-level import/update claim is true, and no specific operation is selected. Detailed operation differences remain future-adoption boundaries. The ^4.0.0 declaration should not be read as support for all later major versions.",
+      "retrieval_evidence": [
+        {
+          "id": "E27",
+          "requested_url": "https://omeka.org/s/modules/CSVImport/",
+          "started_at_utc": "2026-10-10T05:18:10.650439+00:00",
+          "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+          "http_status": 200,
+          "effective_url": "https://omeka.org/s/modules/CSVImport/",
+          "content_type": "text/html; charset=UTF-8",
+          "bytes": 13259,
+          "sha256": "d6ffadce2f2b809275d6606787ab27b00882c8661ede35d3fa616d796b4780c1",
+          "local_capture": "evidence/E27.html",
+          "readable_text": "evidence/E27.txt",
+          "completed_at_utc": "2026-10-10T05:18:16.813550+00:00"
+        },
+        {
+          "id": "E28",
+          "requested_url": "https://omeka.org/s/docs/user-manual/modules/csvimport/",
+          "started_at_utc": "2026-10-10T05:18:10.679325+00:00",
+          "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+          "http_status": 200,
+          "effective_url": "https://omeka.org/s/docs/user-manual/modules/csvimport/",
+          "content_type": "text/html; charset=UTF-8",
+          "bytes": 102661,
+          "sha256": "c7ed927e1e7e90805e8b04747a172df0ac47c6c97f312d994aa99e8a39580c0a",
+          "local_capture": "evidence/E28.html",
+          "readable_text": "evidence/E28.txt",
+          "completed_at_utc": "2026-10-10T05:18:17.051454+00:00"
+        }
+      ],
+      "web_access_window_utc": [
+        "2026-10-10T05:16:32+00:00",
+        "2026-10-10T05:26:38.254111+00:00"
+      ]
+    },
+    {
+      "id": "P22",
+      "title": "Omeka S REST API and export",
+      "url": "https://omeka.org/s/docs/developer/api/rest_api_reference/",
+      "version_or_commit": "Current unversioned official manuals; property lookup detail since 4.0.0",
+      "primary_source": true,
+      "candidate_source_ids": [
+        "INV:S20",
+        "CRT:S20"
+      ],
+      "locators": [
+        "evidence/E29.txt lines 108–146; evidence/E30.txt lines 145–157"
+      ],
+      "governing_conditions": "Values are typed JSON-LD entries with boolean is_public; omitted is_public on input defaults public. API formats include JSON-LD/RDFXML; Output Formats can be enabled on public pages for browse/search exports.",
+      "independent_judgment": "Supports the conditional download option and separate access-policy flag. The final proposes excluding restricted fields and verifying actual deployment, not API writes or private-by-default behavior. The public default is an adoption boundary, not an exercised risk.",
+      "retrieval_evidence": [
+        {
+          "id": "E29",
+          "requested_url": "https://omeka.org/s/docs/developer/api/rest_api_reference/",
+          "started_at_utc": "2026-10-10T05:18:10.681835+00:00",
+          "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+          "http_status": 200,
+          "effective_url": "https://omeka.org/s/docs/developer/api/rest_api_reference/",
+          "content_type": "text/html; charset=UTF-8",
+          "bytes": 47530,
+          "sha256": "78d995d68f19857896fdf46c1c67b6e9ade90c00d39d274b0b361d4d2bc14c1a",
+          "local_capture": "evidence/E29.html",
+          "readable_text": "evidence/E29.txt",
+          "completed_at_utc": "2026-10-10T05:18:16.927998+00:00"
+        },
+        {
+          "id": "E30",
+          "requested_url": "https://omeka.org/s/docs/user-manual/importexport/",
+          "started_at_utc": "2026-10-10T05:18:10.687075+00:00",
+          "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+          "http_status": 200,
+          "effective_url": "https://omeka.org/s/docs/user-manual/importexport/",
+          "content_type": "text/html; charset=UTF-8",
+          "bytes": 29644,
+          "sha256": "f1e67aab088cbf53512271a16b0e78e39538171f719003da11b3d3acfc0b2b1c",
+          "local_capture": "evidence/E30.html",
+          "readable_text": "evidence/E30.txt",
+          "completed_at_utc": "2026-10-10T05:18:16.973579+00:00"
+        }
+      ],
+      "web_access_window_utc": [
+        "2026-10-10T05:16:32+00:00",
+        "2026-10-10T05:26:38.254111+00:00"
+      ]
+    },
+    {
+      "id": "P23",
+      "title": "Europeana Aggregators Forum",
+      "url": "https://pro.europeana.eu/page/aggregators",
+      "version_or_commit": "Current unversioned official program page",
+      "primary_source": true,
+      "candidate_source_ids": [
+        "INV:S21"
+      ],
+      "locators": [
+        "evidence/web5.txt: Europeana aggregators; domain/thematic and national/regional sections"
+      ],
+      "governing_conditions": "Aggregators work with institutions to gather data for Europeana; geographic, domain and thematic networks have different contributor scope.",
+      "independent_judgment": "Supports a concrete aggregation alternative. The network’s location, accreditation, acceptance and provider agreement remain external decisions.",
+      "retrieval_evidence": [
+        {
+          "id": "E31",
+          "requested_url": "https://pro.europeana.eu/page/aggregators",
+          "started_at_utc": "2026-10-10T05:18:10.687478+00:00",
+          "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+          "retrieval_error": "HTTP Error 403: Forbidden",
+          "completed_at_utc": "2026-10-10T05:18:10.726758+00:00"
+        }
+      ],
+      "web_access_window_utc": [
+        "2026-10-10T05:16:32+00:00",
+        "2026-10-10T05:26:38.254111+00:00"
+      ]
+    }
+  ],
+  "retrieval_manifest": [
+    {
+      "id": "E01",
+      "requested_url": "https://www.openarchives.org/OAI/openarchivesprotocol.html",
+      "started_at_utc": "2026-10-10T05:18:09.958740+00:00",
+      "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+      "http_status": 200,
+      "effective_url": "https://www.openarchives.org/OAI/openarchivesprotocol.html",
+      "content_type": "text/html; charset=ISO-8859-1",
+      "bytes": 148063,
+      "sha256": "d81e32299f773b460c9dc8494bc3fe69d5e919fe4d9ef74c39d1a0e3ed7c2b98",
+      "local_capture": "evidence/E01.html",
+      "readable_text": "evidence/E01.txt",
+      "completed_at_utc": "2026-10-10T05:18:10.177547+00:00"
+    },
+    {
+      "id": "E02",
+      "requested_url": "https://pro.dp.la/hubs",
+      "started_at_utc": "2026-10-10T05:18:09.961250+00:00",
+      "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+      "retrieval_error": "HTTP Error 403: Forbidden",
+      "completed_at_utc": "2026-10-10T05:18:10.085738+00:00"
+    },
+    {
+      "id": "E03",
+      "requested_url": "https://pro.dp.la/developers/field-reference",
+      "started_at_utc": "2026-10-10T05:18:09.962336+00:00",
+      "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+      "retrieval_error": "HTTP Error 403: Forbidden",
+      "completed_at_utc": "2026-10-10T05:18:10.087578+00:00"
+    },
+    {
+      "id": "E04",
+      "requested_url": "https://pro.dp.la/hubs/metadata-application-profile",
+      "started_at_utc": "2026-10-10T05:18:09.963327+00:00",
+      "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+      "retrieval_error": "HTTP Error 403: Forbidden",
+      "completed_at_utc": "2026-10-10T05:18:10.086684+00:00"
+    },
+    {
+      "id": "E05",
+      "requested_url": "https://pro.dp.la/developers/requests",
+      "started_at_utc": "2026-10-10T05:18:09.964449+00:00",
+      "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+      "retrieval_error": "HTTP Error 403: Forbidden",
+      "completed_at_utc": "2026-10-10T05:18:10.090654+00:00"
+    },
+    {
+      "id": "E06",
+      "requested_url": "https://pro.dp.la/developers/policies",
+      "started_at_utc": "2026-10-10T05:18:09.966131+00:00",
+      "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+      "retrieval_error": "HTTP Error 403: Forbidden",
+      "completed_at_utc": "2026-10-10T05:18:10.088523+00:00"
+    },
+    {
+      "id": "E07",
+      "requested_url": "https://pro.europeana.eu/files/Europeana_Professional/Share_your_data/Technical_requirements/EDM_Documentation/EDM_Definition_v5.2.7_042016.pdf",
+      "started_at_utc": "2026-10-10T05:18:09.967290+00:00",
+      "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+      "http_status": 200,
+      "effective_url": "https://pro.europeana.eu/files/Europeana_Professional/Share_your_data/Technical_requirements/EDM_Documentation/EDM_Definition_v5.2.7_042016.pdf",
+      "content_type": "application/pdf",
+      "bytes": 2213229,
+      "sha256": "64a7d4a67c24d1cb6bc3c26fecbc4d7957c80dd77617acd843f7d37c86b757da",
+      "local_capture": "evidence/E07.pdf",
+      "completed_at_utc": "2026-10-10T05:18:10.242754+00:00"
+    },
+    {
+      "id": "E08",
+      "requested_url": "https://pro.europeana.eu/page/ese-documentation",
+      "started_at_utc": "2026-10-10T05:18:09.968306+00:00",
+      "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+      "retrieval_error": "HTTP Error 403: Forbidden",
+      "completed_at_utc": "2026-10-10T05:18:10.047772+00:00"
+    },
+    {
+      "id": "E09",
+      "requested_url": "https://pro.europeana.eu/index.php/page/europeana-licensing-framework",
+      "started_at_utc": "2026-10-10T05:18:10.047915+00:00",
+      "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+      "retrieval_error": "HTTP Error 403: Forbidden",
+      "completed_at_utc": "2026-10-10T05:18:10.089788+00:00"
+    },
+    {
+      "id": "E10",
+      "requested_url": "https://www.dataspace-culturalheritage.eu/en/news/europeana-licensing-framework",
+      "started_at_utc": "2026-10-10T05:18:10.085840+00:00",
+      "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+      "retrieval_error": "HTTP Error 403: Forbidden",
+      "completed_at_utc": "2026-10-10T05:18:10.136900+00:00"
+    },
+    {
+      "id": "E11",
+      "requested_url": "https://pro.europeana.eu/page/europeana-semantic-enrichment",
+      "started_at_utc": "2026-10-10T05:18:10.086767+00:00",
+      "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+      "retrieval_error": "HTTP Error 403: Forbidden",
+      "completed_at_utc": "2026-10-10T05:18:10.129582+00:00"
+    },
+    {
+      "id": "E12",
+      "requested_url": "https://rightsstatements.org/en/about.html",
+      "started_at_utc": "2026-10-10T05:18:10.087668+00:00",
+      "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+      "retrieval_error": "HTTP Error 526: <none>",
+      "completed_at_utc": "2026-10-10T05:18:10.681647+00:00"
+    },
+    {
+      "id": "E13",
+      "requested_url": "https://rightsstatements.org/page/collection-other/1.0/?language=en",
+      "started_at_utc": "2026-10-10T05:18:10.088624+00:00",
+      "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+      "retrieval_error": "HTTP Error 526: <none>",
+      "completed_at_utc": "2026-10-10T05:18:10.690008+00:00"
+    },
+    {
+      "id": "E14",
+      "requested_url": "https://rightsstatements.org/page/collection-ic/1.0/?language=en",
+      "started_at_utc": "2026-10-10T05:18:10.089862+00:00",
+      "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+      "retrieval_error": "HTTP Error 526: <none>",
+      "completed_at_utc": "2026-10-10T05:18:10.686911+00:00"
+    },
+    {
+      "id": "E15",
+      "requested_url": "https://rightsstatements.org/page/collection-nc/1.0/?language=en",
+      "started_at_utc": "2026-10-10T05:18:10.090730+00:00",
+      "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+      "retrieval_error": "HTTP Error 526: <none>",
+      "completed_at_utc": "2026-10-10T05:18:10.687393+00:00"
+    },
+    {
+      "id": "E16",
+      "requested_url": "https://creativecommons.org/share-your-work/use-remix/cc-licenses/",
+      "started_at_utc": "2026-10-10T05:18:10.129679+00:00",
+      "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+      "http_status": 200,
+      "effective_url": "https://creativecommons.org/share-your-work/use-remix/cc-licenses/",
+      "content_type": "text/html; charset=UTF-8",
+      "bytes": 44217,
+      "sha256": "17f61c3bceb581c10d4440d7e6e80b24b786c453ff5aeb38537a171df340e21e",
+      "local_capture": "evidence/E16.html",
+      "readable_text": "evidence/E16.txt",
+      "completed_at_utc": "2026-10-10T05:18:10.650321+00:00"
+    },
+    {
+      "id": "E17",
+      "requested_url": "https://creativecommons.org/public-domain/",
+      "started_at_utc": "2026-10-10T05:18:10.136990+00:00",
+      "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+      "http_status": 200,
+      "effective_url": "https://creativecommons.org/public-domain/",
+      "content_type": "text/html; charset=UTF-8",
+      "bytes": 45237,
+      "sha256": "e59476895df81af0a0b6535cc083c735df0550fc02ea726e04948b7a143680b6",
+      "local_capture": "evidence/E17.html",
+      "readable_text": "evidence/E17.txt",
+      "completed_at_utc": "2026-10-10T05:18:10.211097+00:00"
+    },
+    {
+      "id": "E18",
+      "requested_url": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "started_at_utc": "2026-10-10T05:18:10.177810+00:00",
+      "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+      "http_status": 200,
+      "effective_url": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "content_type": "text/html",
+      "bytes": 31377,
+      "sha256": "28b3199d4df73c35c3593b1b42b41300fdfbd9a22ca851fd18e1c87a506f43ff",
+      "local_capture": "evidence/E18.html",
+      "readable_text": "evidence/E18.txt",
+      "completed_at_utc": "2026-10-10T05:18:10.227178+00:00"
+    },
+    {
+      "id": "E19",
+      "requested_url": "https://iiif.io/api/presentation/3.0/",
+      "started_at_utc": "2026-10-10T05:18:10.211223+00:00",
+      "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+      "http_status": 200,
+      "effective_url": "https://iiif.io/api/presentation/3.0/",
+      "content_type": "text/html",
+      "bytes": 385826,
+      "sha256": "3e4cad9a0ff652e0905c4bd15a27c8d68e208dd34c1d55102870419e5ca5f77e",
+      "local_capture": "evidence/E19.html",
+      "readable_text": "evidence/E19.txt",
+      "completed_at_utc": "2026-10-10T05:18:10.639979+00:00"
+    },
+    {
+      "id": "E20",
+      "requested_url": "https://www.w3.org/TR/skos-reference/",
+      "started_at_utc": "2026-10-10T05:18:10.227312+00:00",
+      "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+      "http_status": 200,
+      "effective_url": "https://www.w3.org/TR/skos-reference/",
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 227150,
+      "sha256": "3aa00cd16ee4d86d3a19b75501bb317d0b0c134e1f4029e9f3098c4dd3669e4c",
+      "local_capture": "evidence/E20.html",
+      "readable_text": "evidence/E20.txt",
+      "completed_at_utc": "2026-10-10T05:18:10.399509+00:00"
+    },
+    {
+      "id": "E21",
+      "requested_url": "https://www.w3.org/TR/prov-o/",
+      "started_at_utc": "2026-10-10T05:18:10.243292+00:00",
+      "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+      "http_status": 200,
+      "effective_url": "https://www.w3.org/TR/prov-o/",
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 464179,
+      "sha256": "6b96671ab84faf12ce3f041aca12c3f93a6df2ed242348810743179a68e69555",
+      "local_capture": "evidence/E21.html",
+      "readable_text": "evidence/E21.txt",
+      "completed_at_utc": "2026-10-10T05:18:10.458611+00:00"
+    },
+    {
+      "id": "E22",
+      "requested_url": "https://pro.europeana.eu/page/get-api",
+      "started_at_utc": "2026-10-10T05:18:10.399823+00:00",
+      "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+      "retrieval_error": "HTTP Error 403: Forbidden",
+      "completed_at_utc": "2026-10-10T05:18:10.471138+00:00"
+    },
+    {
+      "id": "E23",
+      "requested_url": "https://github.com/dpla/ingestion3/commit/608ea023de200df48e8241ed08e0fa49466646f9",
+      "started_at_utc": "2026-10-10T05:18:10.458844+00:00",
+      "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+      "http_status": 200,
+      "effective_url": "https://github.com/dpla/ingestion3/commit/608ea023de200df48e8241ed08e0fa49466646f9",
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 818128,
+      "sha256": "556cbb94cd196b1b37ef0baa48899ba971c0829844a0c1168d62495af6e8fc1a",
+      "local_capture": "evidence/E23.html",
+      "readable_text": "evidence/E23.txt",
+      "completed_at_utc": "2026-10-10T05:18:11.301502+00:00"
+    },
+    {
+      "id": "E24",
+      "requested_url": "https://github.com/dpla/ingestion3/blob/608ea023de200df48e8241ed08e0fa49466646f9/docs/ingestion/README_NARA.md",
+      "started_at_utc": "2026-10-10T05:18:10.471215+00:00",
+      "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+      "retrieval_error": "HTTP Error 503: Service Unavailable",
+      "completed_at_utc": "2026-10-10T05:18:10.615923+00:00"
+    },
+    {
+      "id": "E25",
+      "requested_url": "https://pro.dp.la/developers/bulk-download",
+      "started_at_utc": "2026-10-10T05:18:10.616074+00:00",
+      "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+      "retrieval_error": "HTTP Error 403: Forbidden",
+      "completed_at_utc": "2026-10-10T05:18:10.679248+00:00"
+    },
+    {
+      "id": "E26",
+      "requested_url": "https://omeka.org/s/docs/user-manual/content/resource-template/",
+      "started_at_utc": "2026-10-10T05:18:10.640431+00:00",
+      "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+      "http_status": 200,
+      "effective_url": "https://omeka.org/s/docs/user-manual/content/resource-template/",
+      "content_type": "text/html; charset=UTF-8",
+      "bytes": 36623,
+      "sha256": "ef41c91f67e0e6078c36e91578b11908742d664f022d04e62db4a676903bc68a",
+      "local_capture": "evidence/E26.html",
+      "readable_text": "evidence/E26.txt",
+      "completed_at_utc": "2026-10-10T05:18:16.871691+00:00"
+    },
+    {
+      "id": "E27",
+      "requested_url": "https://omeka.org/s/modules/CSVImport/",
+      "started_at_utc": "2026-10-10T05:18:10.650439+00:00",
+      "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+      "http_status": 200,
+      "effective_url": "https://omeka.org/s/modules/CSVImport/",
+      "content_type": "text/html; charset=UTF-8",
+      "bytes": 13259,
+      "sha256": "d6ffadce2f2b809275d6606787ab27b00882c8661ede35d3fa616d796b4780c1",
+      "local_capture": "evidence/E27.html",
+      "readable_text": "evidence/E27.txt",
+      "completed_at_utc": "2026-10-10T05:18:16.813550+00:00"
+    },
+    {
+      "id": "E28",
+      "requested_url": "https://omeka.org/s/docs/user-manual/modules/csvimport/",
+      "started_at_utc": "2026-10-10T05:18:10.679325+00:00",
+      "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+      "http_status": 200,
+      "effective_url": "https://omeka.org/s/docs/user-manual/modules/csvimport/",
+      "content_type": "text/html; charset=UTF-8",
+      "bytes": 102661,
+      "sha256": "c7ed927e1e7e90805e8b04747a172df0ac47c6c97f312d994aa99e8a39580c0a",
+      "local_capture": "evidence/E28.html",
+      "readable_text": "evidence/E28.txt",
+      "completed_at_utc": "2026-10-10T05:18:17.051454+00:00"
+    },
+    {
+      "id": "E29",
+      "requested_url": "https://omeka.org/s/docs/developer/api/rest_api_reference/",
+      "started_at_utc": "2026-10-10T05:18:10.681835+00:00",
+      "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+      "http_status": 200,
+      "effective_url": "https://omeka.org/s/docs/developer/api/rest_api_reference/",
+      "content_type": "text/html; charset=UTF-8",
+      "bytes": 47530,
+      "sha256": "78d995d68f19857896fdf46c1c67b6e9ade90c00d39d274b0b361d4d2bc14c1a",
+      "local_capture": "evidence/E29.html",
+      "readable_text": "evidence/E29.txt",
+      "completed_at_utc": "2026-10-10T05:18:16.927998+00:00"
+    },
+    {
+      "id": "E30",
+      "requested_url": "https://omeka.org/s/docs/user-manual/importexport/",
+      "started_at_utc": "2026-10-10T05:18:10.687075+00:00",
+      "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+      "http_status": 200,
+      "effective_url": "https://omeka.org/s/docs/user-manual/importexport/",
+      "content_type": "text/html; charset=UTF-8",
+      "bytes": 29644,
+      "sha256": "f1e67aab088cbf53512271a16b0e78e39538171f719003da11b3d3acfc0b2b1c",
+      "local_capture": "evidence/E30.html",
+      "readable_text": "evidence/E30.txt",
+      "completed_at_utc": "2026-10-10T05:18:16.973579+00:00"
+    },
+    {
+      "id": "E31",
+      "requested_url": "https://pro.europeana.eu/page/aggregators",
+      "started_at_utc": "2026-10-10T05:18:10.687478+00:00",
+      "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+      "retrieval_error": "HTTP Error 403: Forbidden",
+      "completed_at_utc": "2026-10-10T05:18:10.726758+00:00"
+    },
+    {
+      "id": "E32",
+      "requested_url": "https://rightsstatements.org/en/2018/12/where-statements-apply.html",
+      "started_at_utc": "2026-10-10T05:18:10.690143+00:00",
+      "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+      "retrieval_error": "HTTP Error 526: <none>",
+      "completed_at_utc": "2026-10-10T05:18:11.271779+00:00"
+    },
+    {
+      "id": "E33",
+      "requested_url": "https://rightsstatements.org/en/documentation/faq.html",
+      "started_at_utc": "2026-10-10T05:18:10.726848+00:00",
+      "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+      "retrieval_error": "HTTP Error 526: <none>",
+      "completed_at_utc": "2026-10-10T05:18:10.918764+00:00"
+    },
+    {
+      "id": "E34",
+      "requested_url": "https://api.github.com/repos/dpla/ingestion3/commits/608ea023de200df48e8241ed08e0fa49466646f9",
+      "started_at_utc": "2026-10-10T05:18:10.918867+00:00",
+      "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+      "http_status": 200,
+      "effective_url": "https://api.github.com/repos/dpla/ingestion3/commits/608ea023de200df48e8241ed08e0fa49466646f9",
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 58365,
+      "sha256": "d15650785c8cbdf672efd57e218be583f1bb70abdf81f043fd3b8e0056337690",
+      "local_capture": "evidence/E34.json",
+      "completed_at_utc": "2026-10-10T05:18:11.169414+00:00"
+    },
+    {
+      "id": "E35",
+      "requested_url": "https://raw.githubusercontent.com/dpla/ingestion3/608ea023de200df48e8241ed08e0fa49466646f9/docs/ingestion/README_NARA.md",
+      "started_at_utc": "2026-10-10T05:18:11.169538+00:00",
+      "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+      "http_status": 200,
+      "effective_url": "https://raw.githubusercontent.com/dpla/ingestion3/608ea023de200df48e8241ed08e0fa49466646f9/docs/ingestion/README_NARA.md",
+      "content_type": "text/plain; charset=utf-8",
+      "bytes": 23937,
+      "sha256": "87907e8734c9997587bcb9cf658cd9eb0f3d947de43079f125ff68afb91631d9",
+      "local_capture": "evidence/E35.txt",
+      "completed_at_utc": "2026-10-10T05:18:11.323199+00:00"
+    },
+    {
+      "id": "E36",
+      "requested_url": "https://raw.githubusercontent.com/dpla/ingestion3/608ea023de200df48e8241ed08e0fa49466646f9/scripts/harvest/nara-ingest.sh",
+      "started_at_utc": "2026-10-10T05:18:11.277136+00:00",
+      "operation": "independent read-only public GET; downloaded code is evidence and is never executed",
+      "http_status": 200,
+      "effective_url": "https://raw.githubusercontent.com/dpla/ingestion3/608ea023de200df48e8241ed08e0fa49466646f9/scripts/harvest/nara-ingest.sh",
+      "content_type": "text/plain; charset=utf-8",
+      "bytes": 42036,
+      "sha256": "719f42145f7c61b4d4bee2230e5ae9140d10737ff73beb8786b60ac60f205a50",
+      "local_capture": "evidence/E36.txt",
+      "completed_at_utc": "2026-10-10T05:18:11.419111+00:00"
+    }
+  ],
+  "original_inspected_hashes_path": "ER12_RUNTIME/assessment/A6-02/treatment-v1/original-inspected-manifest.json"
+}

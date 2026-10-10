@@ -1,0 +1,88 @@
+{
+  "prepared_at_utc": "2026-10-10T05:26:08.854Z",
+  "stage": "reviser",
+  "stage_deadline_utc": "2026-10-10T05:44:08.854Z",
+  "whole_deadline_utc": "2026-10-10T06:04:04.980Z",
+  "stage_budget_s": 1080,
+  "predecessors": [
+    {
+      "stage": "investigator",
+      "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A5-02-treatment-investigator-v1",
+      "statusPath": "ER12_RUNTIME/runs/A5-02/treatment/stages/investigator/status.json"
+    },
+    {
+      "stage": "critic",
+      "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A5-02-treatment-critic-v1",
+      "statusPath": "ER12_RUNTIME/runs/A5-02/treatment/stages/critic/status.json"
+    }
+  ],
+  "frozen_inputs": [
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/inputs/brief.md",
+      "sha256": "a6520dffb1ba50fd341f287ae6805fe99e8f14f159c53eb87668029014ba3589",
+      "bytes": 3394
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/reviser/assignment.md",
+      "sha256": "81fa2719dbf0a445babade85a0a1da40ed98c4cc7e367cda351e8e0e63fe2be2",
+      "bytes": 4520
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/reviser/input-map.json",
+      "sha256": "941953c35f0b1c4d7ac54168fd6005bab48807430d15c864ebde4f8e960813f5",
+      "bytes": 1794
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/investigator/discovery.md",
+      "sha256": "ee307dbdb3efe66d060103d905f7567d70ace9eae9f8082f9da73dbe5fc714c0",
+      "bytes": 14545
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/investigator/draft.md",
+      "sha256": "039a2996052529947313d1115877a66d5f0c8ddce2ec15f0efc8798a84197a51",
+      "bytes": 23000
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/investigator/source-map.json",
+      "sha256": "d5433097907d0981649bb7ea92bc394524ef1ab70f4a073542389ebdac65af97",
+      "bytes": 21542
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/investigator/revealed-plan.md",
+      "sha256": "b4cf16e079bff1eb16228453f99f8682a63d34ecd99e0f53ca1463416111931e",
+      "bytes": 6060
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/investigator/plan-reveal.json",
+      "sha256": "687cf2a2a91bb0f5d143e5c797aa6fea313cccaae6e5ba0ef0844e3e959db7a2",
+      "bytes": 429
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/critic/critique.md",
+      "sha256": "d855a616ac768d2df4137196a895dfc7ea87d834a3d9baf10cb65bf6e9fb7d4c",
+      "bytes": 8827
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/critic/source-map.json",
+      "sha256": "2e1f00ef21bc35dfb5a10a46b55d20ffc0f9c1b1836bdebec35e09753cbb8a8b",
+      "bytes": 31790
+    }
+  ],
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "runtime_mode_requested": "full-access",
+  "native_goal_objective": "ER12 reviser stage, run A5-02-treatment: execute ER12_RUNTIME/runs/A5-02/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+  "native_goal_status": "UNKNOWN until directly observed",
+  "method_id": "A5",
+  "stage_prompt_delta": "Keep three stages. Have the finalizer specifically challenge criticism that removes a supported capability, alters a mandatory plan clause, creates a categorical limitation, or introduces a new consequential claim. Recheck the cited primary evidence and relevant exceptions, then accept/amend/reject the criticism with a short evidence-backed reason. Spend less effort restating already-supported prose; deliver the entire final, not just a patch list.",
+  "time_contract": "fixed_stage_caps",
+  "available_stage_seconds_at_prepare": 1080.0,
+  "prospective_service_tier_revision": "user-standard-20261010-v1",
+  "request_sha256": "177342f3e5175145eaf860f4e9d871ada33b1c6749ca528aab08573166a91f86"
+}

@@ -1,0 +1,60 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://raw.githubusercontent.com/sqlite/sqlite/version-3.43.0/ext/fts5/fts5_unicode2.c"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A3-01/control-v1/source-map.json",
+      "source_id": "E19",
+      "existing_authored_summary_fields": {
+        "released_version_or_commit": "SQLite source tag version-3.43.0",
+        "governing_condition_default_exception": "A bitmap recognizes a bounded set of diacritical modifiers in U+0300–U+0331, including U+0301; enabled diacritic folding can map them to zero. Together with E15 this prevents the claimed separator behavior for that domain.",
+        "applicability": "F1 exact subject/domain/exception evidence; no universal language-quality claim."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A3-01/control-v1/evidence/retrievals.json",
+      "source_id": "E19",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": "sqlite3Fts5UnicodeIsdiacritic raw lines 98–106; UnicodeFold lines 240–242; fts5_remove_diacritic mapping"
+    }
+  ],
+  "raw_sha256": "e86bc679d585a927a4fd7dccac85bd02dcf6831ed973f76ec920cdbca1f64ed4",
+  "original_bytes": 42074,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A3-01/control-v1/evidence/E19-readable.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://raw.githubusercontent.com/sqlite/sqlite/version-3.43.0/ext/fts5/fts5_unicode2.c"
+  ],
+  "version": [
+    {
+      "released_version_or_commit": "SQLite source tag version-3.43.0",
+      "governing_condition_default_exception": "A bitmap recognizes a bounded set of diacritical modifiers in U+0300–U+0331, including U+0301; enabled diacritic folding can map them to zero. Together with E15 this prevents the claimed separator behavior for that domain.",
+      "applicability": "F1 exact subject/domain/exception evidence; no universal language-quality claim."
+    }
+  ],
+  "selector": [
+    {
+      "locator": "sqlite3Fts5UnicodeIsdiacritic raw lines 98–106; UnicodeFold lines 240–242; fts5_remove_diacritic mapping"
+    }
+  ],
+  "conditions": [
+    {
+      "released_version_or_commit": "SQLite source tag version-3.43.0",
+      "governing_condition_default_exception": "A bitmap recognizes a bounded set of diacritical modifiers in U+0300–U+0331, including U+0301; enabled diacritic folding can map them to zero. Together with E15 this prevents the claimed separator behavior for that domain.",
+      "applicability": "F1 exact subject/domain/exception evidence; no universal language-quality claim."
+    }
+  ],
+  "rawSHA256": "e86bc679d585a927a4fd7dccac85bd02dcf6831ed973f76ec920cdbca1f64ed4"
+}

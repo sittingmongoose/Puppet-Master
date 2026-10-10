@@ -1,0 +1,1491 @@
+{
+  "schema": "er12-independent-full-pipeline-assessment-v1",
+  "assignment": {
+    "slot": "A4-02",
+    "arm": "treatment",
+    "assessment_version": "treatment-v1",
+    "reviewer": "codex-er12-a402-review-v1",
+    "rubric": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+    "bounded_scope": "ONE completed full investigator → critic → reviser pipeline; no paired/control, other arms, campaign history or ER11 review",
+    "final_path": "ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/final.md",
+    "reserved_output_root": "ER12_RUNTIME/assessment/A4-02/treatment-v1"
+  },
+  "review_envelope": {
+    "start_utc": "2026-10-10T05:48:59Z",
+    "deadline_utc": "2026-10-10T06:33:59Z",
+    "cap_minutes": 45,
+    "capped": false,
+    "unassessed_axes": [],
+    "stop_rule": "Finish after all declared scope and saving; no need to consume full envelope.",
+    "completed_and_saved_utc": "2026-10-10T06:03:46.444372+00:00",
+    "elapsed_seconds_through_judgment_save": 887.444372
+  },
+  "native_reviewer_goal": {
+    "threadId": "01a1245b-42df-7052-840b-77f58eaf5a8f",
+    "created": true,
+    "initial_status": "active",
+    "completion_rule": "Complete only after complete assessment and evidence are saved.",
+    "completion_status_at_judgment_save": "active; complete only after this saved judgment and verified receipt"
+  },
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "source_judgment_reason": "The completed final meets the planning assignment with no identified remaining material error, omission, or unsupported consequential decision. The draft's Outlook operation overgeneralization is materially defective in lineage but explicitly repaired in the final. Minor plan-history wording, Nextcloud operation/edition precision and source-capture limitations remain; they do not drive an unsupported selected product, refresh SLA, or client-compatibility claim.",
+  "material_findings_remaining": [],
+  "delivery": {
+    "status": "COMPLETE",
+    "basis": "Full ordinary reviser final exists and was read; all stage authored documents/maps/indices and the full terminal freeze were inspected. This is a planning proposal, not an implemented or validated calendar.",
+    "missing_final": false
+  },
+  "axes": [
+    {
+      "id": 1,
+      "name": "Original obligations and negative constraints",
+      "coverage": "FULLY_ASSESSED",
+      "judgment": "PASS",
+      "evidence_ids": [
+        "R01",
+        "R05",
+        "R06",
+        "R07",
+        "R09",
+        "R10",
+        "R11"
+      ],
+      "assessment": "All eight exact brief obligations have corresponding complete final sections and explicit dispositions. One season, secretary-maintained read-only distribution, moved/cancelled weekly rehearsals, travel zones, two host routes, one analogy, issue/fix history, optional snapshot and all ownership boundaries survive. No member access, account migration, immediate-refresh promise or import/subscription conflation is recommended. Unselected host, venue zone, season bounds, room publicity and supported clients are genuine owner inputs; the proposal investigates the public questions rather than using those inputs to avoid research.",
+      "limitations": []
+    },
+    {
+      "id": 2,
+      "name": "Consequential source claims: subject, operation, version, default, unit, type, domain and exceptions",
+      "coverage": "FULLY_ASSESSED",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "evidence_ids": [
+        "R01",
+        "R02",
+        "R03",
+        "R04",
+        "R05",
+        "R06",
+        "R07",
+        "R08",
+        "R08b",
+        "R09",
+        "R10",
+        "R10b",
+        "R11",
+        "R12",
+        "R13",
+        "R14",
+        "R15c",
+        "R15d",
+        "R15e",
+        "R16",
+        "N01",
+        "N02"
+      ],
+      "assessment": "Independently retrieved and inspected governing primary evidence. Recurrence serialization, original instance identity, venue-zone choice, UNTIL's UTC condition, EXDATE cancellation, API-specific cancellation, file snapshots, provider-controlled subscriptions, scoped 3-hour/6-hour Outlook guidance with >24-hour delay, Apple controls, Google public/browser setup, Nextcloud public export, synchronization and WebSub are substantively supported. The final does not claim API/source-text behavior is observed downstream conformance. History is bounded to Thunderbird/Lightning releases and the actual patch, including the storage-calendar exception in maps. Current help builds and actual clients remain unoperated. See independent claim/source checks for exact locators and applicability.",
+      "limitations": [
+        "L1",
+        "L2"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Useful unfamiliar discovery, competing/analogous approaches, implementation/history and opportunity breadth",
+      "coverage": "FULLY_ASSESSED",
+      "judgment": "PASS",
+      "evidence_ids": [
+        "R01",
+        "R03",
+        "R04",
+        "R05",
+        "R06",
+        "R07",
+        "R09",
+        "R10",
+        "R11",
+        "R12",
+        "R13",
+        "R14",
+        "R15c",
+        "R15e",
+        "R16"
+      ],
+      "assessment": "The brief-only discovery offers Google public iCal publishing versus Nextcloud public read-only publishing/export, separates account-based CalDAV/WebDAV synchronization, and explains WebSub's push hub/callback/lease analogy without claiming calendar adoption. Useful less-obvious findings include UTC UNTIL for zoned recurrence, immutable original identity for a moved instance, CSV recurrence flattening, the browser-only Google setup boundary, public-search/privacy exposure, Apple alert/refresh controls, the Nextcloud default discrepancy, and inherited LOCATION loss with a failed first fix and released replacement. These produce discriminating tests and pilot choices, not a product catalogue or vacuous caution. A bounded historical source/code investigation is sufficient; no exhaustive alternatives catalogue or deployment is required.",
+      "limitations": []
+    },
+    {
+      "id": 4,
+      "name": "Wrong criticism/corrections/rejections and exact plan dispositions",
+      "coverage": "FULLY_ASSESSED",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "evidence_ids": [
+        "R01",
+        "R07",
+        "R09",
+        "R10",
+        "R10b",
+        "R11",
+        "R12",
+        "R14",
+        "R15c",
+        "N01",
+        "N02"
+      ],
+      "assessment": "F1 is valid against the combined draft Clause 3 operation row and is repaired in final Clauses 2/3 plus the separate test matrix. F2 is a justified minor evidence addition, repaired without promising per-event reminders. No unsupported scope rejection or removal of the optional snapshot occurred. C-NEXTCLOUD's assertion of distinct operations is not established by the manuals; both describe internal subscriptions, and the v35 server job/services show the upstream cache pathway. The final still correctly records a discrepancy and does not transfer either default to external consumers, so this is a minor explanatory issue. Both critic and final also mischaracterize the plan's factual 'no released-history comparison performed' status as an assertion that no history exists; the historical finding itself and proposed regression remain sound.",
+      "limitations": [
+        "L1",
+        "L3"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Supported meaning preserved across discovery/draft/critique/final",
+      "coverage": "FULLY_ASSESSED",
+      "judgment": "PASS",
+      "evidence_ids": [
+        "R01",
+        "R05",
+        "R06",
+        "R07",
+        "R08",
+        "R09",
+        "R10",
+        "R11",
+        "R12",
+        "R13",
+        "R14",
+        "R15c",
+        "R16"
+      ],
+      "assessment": "The final carries substantive discovery/draft content rather than just predecessor IDs: same venue-time/identity recommendations, both candidate hosts, static snapshot conditions, sync boundary, WebSub analogy, bounded history, owner decisions, negative constraints, source conditions and NOT_RUN status. Outlook scope is improved, not silently substituted; iPhone's alert toggle is added while reminder uncertainty remains. Stable source IDs retain inherited records with appended rechecks, making the stale inherited assertions visible. Corrected lineage defects are retained as lineage findings and are not converted into a final FAIL.",
+      "limitations": []
+    },
+    {
+      "id": 6,
+      "name": "Meaningful proposed versus executed validation and oracle applicability",
+      "coverage": "FULLY_ASSESSED",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "evidence_ids": [
+        "R01",
+        "R07",
+        "R08",
+        "R09",
+        "R10",
+        "R10b",
+        "R11",
+        "R12",
+        "R14",
+        "R15c",
+        "R15e"
+      ],
+      "assessment": "Executed activity is public-source research/code reading; no product run, installation, client import/subscription, venue fixture, account or refresh measurement is claimed. Proposed checks name exact service/client releases, publication/visibility times, DST fixture, moved identity, cancellation, unchanged later rehearsals, reminder ownership, snapshot import/replacement duplicates and privacy. Their oracles are appropriately scoped: an RFC checks data meaning, an API checks that API, the Thunderbird tests check inherited properties and explicit description override (not all clients or DST), and only named client operations can establish actual compatibility/refresh. The optional snapshot has a separate test rather than borrowing feed evidence. A detailed outage/recovery walkthrough from the plan's proposed validation row is only implicit in delayed refresh and replacement checks; this is a minor prospective-validation limitation, not a missing execution requirement.",
+      "limitations": [
+        "L4",
+        "L5"
+      ]
+    }
+  ],
+  "plan_clause_reviews": [
+    {
+      "number": 1,
+      "final_locator": "Exact clause dispositions / Clause 1; Recommendation; released-plan disposition bullets 1",
+      "judgment": "PASS",
+      "disposition": "Correct import-as-live and identifier recreation assumptions; use stable series and structured moved/cancelled exceptions with venue-zone encoding.",
+      "evidence_ids": [
+        "R01",
+        "R07",
+        "R08",
+        "R08b",
+        "R09",
+        "R16"
+      ],
+      "reason": "File imports are static, original occurrence identity survives a time move, and floating time does not fix a venue instant. Consumer compatibility remains explicitly proposed.",
+      "exact_original_plan_heading": "Explain recurring series, moved or cancelled instances, stable identity and time-zone behavior for the pilot.",
+      "exact_original_plan_treatment": "Distribute one calendar file and assume every import keeps receiving edits. Rebuild event identifiers whenever the secretary changes a date.",
+      "exact_original_brief_obligation": "Explain recurring series, moved or cancelled instances, stable identity and time-zone behavior for the pilot."
+    },
+    {
+      "number": 2,
+      "final_locator": "Clause 2 comparison and Client and protocol boundaries; Recommendation",
+      "judgment": "PASS",
+      "disposition": "Retain Nextcloud/source-feed leads; compare Google and Nextcloud without selecting a winner; add WebSub analogy and CalDAV/WebDAV distinction.",
+      "evidence_ids": [
+        "R03",
+        "R04",
+        "R05",
+        "R06",
+        "R07",
+        "R09",
+        "R10",
+        "R11",
+        "R13"
+      ],
+      "reason": "Two independently investigated host routes and one actual publish/subscribe analogy are present; host/refresh ownership remains explicit input, not a preselected answer.",
+      "exact_original_plan_heading": "Compare two distribution products/routes and one analogous publish/subscribe mechanism; distinguish file import, feed subscription and server synchronization.",
+      "exact_original_plan_treatment": "Nextcloud is a tentative source editor. A static feed is the fallback, with hosting and refresh ownership undecided.",
+      "exact_original_brief_obligation": "Compare two distribution products/routes and one analogous publish/subscribe mechanism; distinguish file import, feed subscription and server synchronization."
+    },
+    {
+      "number": 3,
+      "final_locator": "Clause 3 exact operation/version table; Clause 1; F1 disposition",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "disposition": "Reject unzoned wall-clock inference and free-text exceptions; identify documented operations/versions and remaining consumer uncertainty.",
+      "evidence_ids": [
+        "R01",
+        "R08",
+        "R09",
+        "R10",
+        "R10b",
+        "R11",
+        "R12",
+        "N01",
+        "N02"
+      ],
+      "reason": "The final now separates Outlook.com (~3 hours) from Outlook on the web (~6 hours), each permitting >24 hours. No SLA or common-client guarantee is asserted. Nextcloud edition/operation precision remains a minor limitation.",
+      "exact_original_plan_heading": "Bind recurrence and refresh claims to the exact client/server operation and versions investigated; identify remaining compatibility uncertainty.",
+      "exact_original_plan_treatment": "Store rehearsals as local wall-clock strings and presume clients will infer the intended zone. Exception handling is a free-text note.",
+      "exact_original_brief_obligation": "Bind recurrence and refresh claims to the exact client/server operation and versions investigated; identify remaining compatibility uncertainty."
+    },
+    {
+      "number": 4,
+      "final_locator": "Clause 4; C-MOZILLA disposition; validation scenario row",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "disposition": "Perform a bounded recurrence-property history review and replace single-desktop-import universal proof with client-scoped regression proposals.",
+      "evidence_ids": [
+        "R14",
+        "R15c",
+        "R15d",
+        "R15e"
+      ],
+      "reason": "Bug 1595332, initial landing/backout, final change and 91.0b4 uplift are source-backed. The plan-status sentence is inaccurately described as a claim that no history exists; this does not change the investigation or test scope.",
+      "exact_original_plan_heading": "Investigate a relevant recurrence/time-zone release or issue/fix chain and its consequences for a season update.",
+      "exact_original_plan_treatment": "A single desktop import demonstration is proposed as proof for all clients. No released-history comparison has been performed.",
+      "exact_original_brief_obligation": "Investigate a relevant recurrence/time-zone release or issue/fix chain and its consequences for a season update."
+    },
+    {
+      "number": 5,
+      "final_locator": "Clause 5; Recommendation paragraph 3; snapshot validation row",
+      "judgment": "PASS",
+      "disposition": "Retain downloadable one-season ICS as supported optional owner-authorized scope, conditional on generation and client tests; do not promote to mandatory.",
+      "evidence_ids": [
+        "R07",
+        "R09",
+        "R11"
+      ],
+      "reason": "Static desktop import and Nextcloud public export support investigation. Same-source season bounds/as-of label, dedicated-calendar replacement, duplicates and reminders are addressed; direct iPhone file import is honestly unestablished. No evidence-based exclusion is claimed.",
+      "exact_original_plan_heading": "Preserve and investigate this supported optional scope: a downloadable one-season calendar snapshot for members who cannot subscribe. It is an authorized option, not a mandatory feature or an established technical capability; recommend conditions, retain it when supported, and explain any evidence-based exclusion.",
+      "exact_original_plan_treatment": "Retain a downloadable one-season calendar snapshot for members who cannot subscribe as supported owner-authorized optional scope. Support here means that the brief explicitly permits it; technical support, conditions and interoperability still need research. Do not remove it merely because the baseline route lacks it, or silently promote it to mandatory scope.",
+      "exact_original_brief_obligation": "Preserve and investigate this supported optional scope: a downloadable one-season calendar snapshot for members who cannot subscribe. It is an authorized option, not a mandatory feature or an established technical capability; recommend conditions, retain it when supported, and explain any evidence-based exclusion."
+    },
+    {
+      "number": 6,
+      "final_locator": "Clause 6; Prioritized remaining inputs; F2 disposition",
+      "judgment": "PASS",
+      "disposition": "Retain secretary identity/amendment ownership, orchestra-manager room-publicity ownership and member reminder policy.",
+      "evidence_ids": [
+        "R01",
+        "R05",
+        "R08",
+        "R10",
+        "R10b",
+        "R11"
+      ],
+      "reason": "No owner choice is silently made; publisher alarms are not imposed. Calendar-level alerts do not prove custom per-event reminder timing; that distinction is explicit.",
+      "exact_original_plan_heading": "Make owner decisions explicit: The secretary owns event identity and amendments; the orchestra manager decides whether room details are public. Local reminders belong to members and must not be overwritten by policy.",
+      "exact_original_plan_treatment": "Owner authority is reserved as follows: The secretary owns event identity and amendments; the orchestra manager decides whether room details are public. Local reminders belong to members and must not be overwritten by policy. The draft has not obtained these decisions. Its tentative implementation assumptions cannot substitute for them.",
+      "exact_original_brief_obligation": "Make owner decisions explicit: The secretary owns event identity and amendments; the orchestra manager decides whether room details are public. Local reminders belong to members and must not be overwritten by policy."
+    },
+    {
+      "number": 7,
+      "final_locator": "Clause 7; Recommendation; Validation table",
+      "judgment": "PASS",
+      "disposition": "Preserve no member-calendar access, required migration, universal immediate-refresh promise or import/subscription conflation.",
+      "evidence_ids": [
+        "R05",
+        "R06",
+        "R07",
+        "R09",
+        "R10",
+        "R11"
+      ],
+      "reason": "The final recommends conditions compatible with current member clients and distinguishes account-based synchronization from passive feeds; research is read-only public retrieval. Candidate execution history beyond the retained evidence remains UNKNOWN.",
+      "exact_original_plan_heading": "Preserve negative constraints: Do not access member calendars, require account migration, promise immediate refresh on every client, or conflate importing a file with maintaining a live subscription.",
+      "exact_original_plan_treatment": "Binding exclusions: Do not access member calendars, require account migration, promise immediate refresh on every client, or conflate importing a file with maintaining a live subscription. The draft has no complete trace showing that its assumptions comply; revise the proposal wherever necessary to preserve these exclusions.",
+      "exact_original_brief_obligation": "Preserve negative constraints: Do not access member calendars, require account migration, promise immediate refresh on every client, or conflate importing a file with maintaining a live subscription."
+    },
+    {
+      "number": 8,
+      "final_locator": "Complete final; exact clause sections; Validation table; Prioritized remaining inputs; critique disposition table",
+      "judgment": "PASS",
+      "disposition": "Replace incomplete draft with a self-contained evidence-backed proposal and retain exact scope, discoveries, decisions and execution status.",
+      "evidence_ids": [
+        "R01",
+        "R05",
+        "R06",
+        "R07",
+        "R09",
+        "R10",
+        "R11",
+        "R13",
+        "R14",
+        "R15c"
+      ],
+      "reason": "The final contains a recommendation, comparison, source applicability, bounded history, optional path, owners, constraints and prioritized tests; sources/tests are never presented as executed product validation.",
+      "exact_original_plan_heading": "Deliver one coherent evidence-backed research proposal covering obligations 1–8, with recommendations, source/version applicability, useful discoveries, unresolved owner inputs, and a validation table separating checks actually executed from checks merely proposed. Do not report research sources or future tests as executed product validation.",
+      "exact_original_plan_treatment": "The draft currently contains no coherent evidence-backed final proposal. Its proposed demos are research/validation ideas only. A complete revision must preserve every obligation, disclose corrections and retained options, and not confuse documentation review with successful product operation.",
+      "exact_original_brief_obligation": "Deliver one coherent evidence-backed research proposal covering obligations 1–8, with recommendations, source/version applicability, useful discoveries, unresolved owner inputs, and a validation table separating checks actually executed from checks merely proposed. Do not report research sources or future tests as executed product validation."
+    }
+  ],
+  "plan_context_reviews": [
+    {
+      "locator": "Access and status",
+      "judgment": "RETAINED",
+      "reason": "Treats concealed draft as fallible input rather than truth. Discovery hash/time precedes reveal, and revealed plan matches original. Full transcript evidence of the investigator's absence of earlier access is not retained, so independence provenance is UNKNOWN rather than presumed."
+    },
+    {
+      "locator": "Pilot intent and tentative leads",
+      "judgment": "RETAINED",
+      "reason": "One-season amateur orchestra scope survives. Google discovered alongside the Nextcloud/feed leads; no preselected host or enterprise build is invented."
+    },
+    {
+      "locator": "Research boundaries and deliverable in original brief",
+      "judgment": "RETAINED",
+      "reason": "Planning only, public-primary docs/source/history, no prototype requirement, no installations/accounts/live writes needed, observed/inference/local choices labeled; no additional implementation obligation imposed."
+    },
+    {
+      "locator": "Plan closing paragraph",
+      "judgment": "RETAINED",
+      "reason": "The final reconciles the draft into a full standalone proposal and does not rely on draft existence as feasibility evidence."
+    }
+  ],
+  "plan_validation_reviews": [
+    {
+      "check": "External documentation/version review",
+      "original_status": "NOT_RUN",
+      "final_status": "EXECUTED — research only",
+      "judgment": "PASS",
+      "reason": "Primary sources/versions reviewed and mapped; no product-operation inference."
+    },
+    {
+      "check": "Product comparison and history investigation",
+      "original_status": "NOT_RUN",
+      "final_status": "EXECUTED — research only",
+      "judgment": "PASS",
+      "reason": "Google/Nextcloud/WebSub plus Thunderbird issue, source fix and release/uplift chain; no preselected winner."
+    },
+    {
+      "check": "Pilot scenario walkthrough",
+      "original_status": "PROPOSED",
+      "final_status": "PROPOSED / NOT_RUN",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "reason": "Ordinary recurrence, move/cancel corrections, delayed refresh and missing venue/privacy/client inputs are covered. Explicit feed outage/recovery and malformed-input steps are not separately specified (L4); these are prospective detail, not required executed deployment."
+    },
+    {
+      "check": "Optional-path compatibility",
+      "original_status": "PROPOSED",
+      "final_status": "PROPOSED / NOT_RUN",
+      "judgment": "PASS",
+      "reason": "Dedicated one-season ICS import/replacement, recurrence/duplicates/reminders and iPhone direct import are separate checks."
+    },
+    {
+      "check": "End-to-end product operation",
+      "original_status": "NOT_RUN",
+      "final_status": "NOT_RUN",
+      "judgment": "PASS",
+      "reason": "The fixture authorizes no install/deployment/live access; source reading is correctly kept separate."
+    }
+  ],
+  "criticism_dispositions": [
+    {
+      "id": "F1",
+      "critic_classification": "material incomplete",
+      "independent_classification": "material draft operation overgeneralization; corrected in final",
+      "critic_locator": "Findings requiring attention / F1",
+      "draft_locator": "Clause 3 combined Outlook.com/Outlook on the web row",
+      "final_locator": "F1 ACCEPT; Clauses 2/3 separate Outlook rows; validation matrix",
+      "final_disposition": "ACCEPT; AMEND",
+      "evidence_ids": [
+        "R09"
+      ],
+      "judgment": "VALID_AND_RESOLVED",
+      "reason": "The draft attaches Outlook.com's approximately 3-hour guidance to a combined operation row. Microsoft separately gives approximately 6 hours for Outlook on the web. Final repairs both and retains >24-hour possibility."
+    },
+    {
+      "id": "F2",
+      "critic_classification": "minor locator/wording",
+      "independent_classification": "minor omission of relevant iPhone control",
+      "critic_locator": "Findings requiring attention / F2",
+      "draft_locator": "Clause 6 reminder paragraph",
+      "final_locator": "F2 ACCEPT; Clause 6",
+      "final_disposition": "ACCEPT; AMEND",
+      "evidence_ids": [
+        "R10",
+        "R10b"
+      ],
+      "judgment": "VALID_AND_RESOLVED",
+      "reason": "Apple documents calendar-level Event Alerts on/off; final adds it without equating this control with per-event personal reminder capability."
+    },
+    {
+      "id": "C-NEXTCLOUD",
+      "critic_classification": "no issue identified",
+      "independent_classification": "minor unsupported explanatory operation distinction",
+      "critic_locator": "Other source-boundary checks bullet 1; critic source map C-NEXTCLOUD",
+      "final_locator": "C-NEXTCLOUD RETAIN; Clause 2/3 and map C4",
+      "final_disposition": "RETAIN; no claim change",
+      "evidence_ids": [
+        "R11",
+        "R12",
+        "N01",
+        "N02"
+      ],
+      "judgment": "PARTLY_UNSUPPORTED_MINOR_REMAINING",
+      "reason": "Two manual perspectives do not establish independent refresh operations. Both are internal upstream subscription descriptions; v35.0.0 server job uses configurable P1D default and stored override. Final acknowledges unresolved documentation discrepancy and excludes external-consumer applicability. No selected cadence/host decision depends on the unsupported explanation."
+    },
+    {
+      "id": "C-MOZILLA",
+      "critic_classification": "no issue identified",
+      "independent_classification": "supported bounded history",
+      "critic_locator": "Obligation 4; other source-boundary/history check; critic source map C-MOZILLA",
+      "final_locator": "C-MOZILLA RETAIN; Clause 4",
+      "final_disposition": "RETAIN; no claim change",
+      "evidence_ids": [
+        "R14",
+        "R15c",
+        "R15d",
+        "R15e"
+      ],
+      "judgment": "SUPPORTED",
+      "reason": "Independent issue, immutable patch, governing getter and beta uplift support the historical property-loss story and test rationale. Tests were not executed; scope is not generalized to present other clients."
+    },
+    {
+      "id": "C-UNTIL",
+      "critic_locator": "Other source-boundary checks bullet 2",
+      "final_locator": "Clause 1 and RFC recheck",
+      "final_disposition": "RETAIN",
+      "evidence_ids": [
+        "R01"
+      ],
+      "judgment": "SUPPORTED",
+      "reason": "UTC UNTIL for zoned DTSTART is type/operation-specific; no arbitrary local season-end string is proposed."
+    },
+    {
+      "id": "C-API-REFRESH",
+      "critic_locator": "Other source-boundary checks bullet 3",
+      "final_locator": "Clauses 1–3 and validation",
+      "final_disposition": "RETAIN",
+      "evidence_ids": [
+        "R08",
+        "R08b",
+        "R09",
+        "R10",
+        "R10b"
+      ],
+      "judgment": "SUPPORTED",
+      "reason": "API recurrence/cancel semantics remain separate from downstream feed behavior. >24-hour wording is not a maximum; Apple/Google pages do not establish universal refresh."
+    },
+    {
+      "id": "C-WEBSUB",
+      "critic_locator": "Other source-boundary checks bullet 4",
+      "final_locator": "Clause 2 WebSub row",
+      "final_disposition": "RETAIN",
+      "evidence_ids": [
+        "R13"
+      ],
+      "judgment": "SUPPORTED",
+      "reason": "Hub callback verification and leases are real, but no common calendar-client WebSub support is claimed."
+    },
+    {
+      "id": "C-OWNERS",
+      "critic_locator": "Other source-boundary checks bullet 5",
+      "final_locator": "Clauses 5–7; Prioritized remaining inputs",
+      "final_disposition": "RETAIN",
+      "evidence_ids": [
+        "R05",
+        "R11"
+      ],
+      "judgment": "SUPPORTED",
+      "reason": "Room visibility, venue zone, host/season and member client matrix are proper external choices, investigated enough to support a conditional planning proposal."
+    },
+    {
+      "id": "C-ADEQUACY",
+      "critic_locator": "Obligation and plan-disposition review clauses 1–8; overall judgment",
+      "final_locator": "Opening critique dispositions paragraph; complete final",
+      "final_disposition": "RETAIN with F1/F2 amendments",
+      "evidence_ids": [
+        "R01",
+        "R07",
+        "R09",
+        "R10",
+        "R11",
+        "R13",
+        "R14",
+        "R15c"
+      ],
+      "judgment": "SUBSTANTIVELY_SUPPORTED_WITH_L3_WORDING_LIMIT",
+      "reason": "No unsupported rejection or optional-scope removal. Critic's clause 4 statement misreads input preparation status as 'no history' assertion; preserve that defect separately."
+    }
+  ],
+  "lineage_findings": [
+    {
+      "id": "LF1",
+      "severity": "MATERIAL",
+      "stages": [
+        "draft"
+      ],
+      "status": "EXPLICITLY_CORRECTED_IN_FINAL",
+      "description": "Outlook.com's ~3-hour guidance in a combined Outlook.com/Outlook on the web operation row.",
+      "evidence_ids": [
+        "R09"
+      ],
+      "final_effect": "No remaining material final issue; lineage remains defective at draft stage."
+    },
+    {
+      "id": "LF2",
+      "severity": "MINOR",
+      "stages": [
+        "discovery",
+        "draft"
+      ],
+      "status": "EXPLICITLY_SUPPLEMENTED_IN_FINAL",
+      "description": "iPhone subscription-calendar alert toggle omitted from reminder evidence while Mac controls were cited.",
+      "evidence_ids": [
+        "R10"
+      ],
+      "final_effect": "Calendar-level toggle added with correct per-event capability limit."
+    },
+    {
+      "id": "LF3",
+      "severity": "MINOR",
+      "stages": [
+        "investigator source map/index",
+        "critic",
+        "reviser"
+      ],
+      "status": "REMAINING_MINOR",
+      "description": "Nextcloud internal Calendar-app subscription and server caching are asserted to be distinct refresh operations without a proven split, although the actual defaults remain unresolved in prose.",
+      "evidence_ids": [
+        "R11",
+        "R12",
+        "N01",
+        "N02"
+      ],
+      "final_effect": "Misleading explanation persists, but no external polling default or selected-host decision relies on it."
+    },
+    {
+      "id": "LF4",
+      "severity": "MINOR",
+      "stages": [
+        "draft",
+        "critic",
+        "final"
+      ],
+      "status": "REMAINING_MINOR",
+      "description": "Plan's 'No released-history comparison has been performed' is described as a claim that no released history exists.",
+      "evidence_ids": [
+        "ORIGINAL_PLAN"
+      ],
+      "final_effect": "False description of input status, not a false history finding or material scope rejection."
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L1",
+      "type": "minor source/operation precision",
+      "description": "The manuals' weekly and one-day statements describe internal upstream subscriptions from user/admin perspectives; distinct runtime operations are not established. Independent v35.0.0 code identifies one configurable P1D fallback job with stored/feed-derived overrides, but it is not an observed deployment setting. 'Calendar 35' is also imprecise: 35 is the server documentation edition, not evidence of Calendar app release 35.",
+      "locators": [
+        "final critique table C-NEXTCLOUD",
+        "final Clause 2 Nextcloud row",
+        "source-map C4 and R11/R12"
+      ],
+      "evidence_ids": [
+        "R11",
+        "R12",
+        "N01",
+        "N02"
+      ],
+      "materiality": "Non-material because final selects no Nextcloud cadence and explicitly prevents transferring it to outside clients."
+    },
+    {
+      "id": "L2",
+      "type": "minor edition/locator precision",
+      "description": "Inherited Apple source records say numeric iOS/macOS version is not stated, but retrieved guides expose edition selectors (currently iOS 27 and macOS 27 Golden Gate/Tahoe 26 options). An installed numeric build was not observed; that UNKNOWN is correct. Reviser recognizes the selector but does not bind the selected edition in the principal table.",
+      "locators": [
+        "all inherited R10 records",
+        "final Clause 3 Apple row",
+        "reviser R10 recheck"
+      ],
+      "evidence_ids": [
+        "R10",
+        "R10b"
+      ],
+      "materiality": "Non-material because documented controls are supported by the actual retrieved guide and runtime behavior is explicitly unverified."
+    },
+    {
+      "id": "L3",
+      "type": "minor wrong plan-status correction",
+      "description": "Original plan clause 4 says no released-history comparison had been performed, not that no released history exists. Draft/critic/final claim to correct the latter. They nevertheless supply a real relevant history and properly reject universal desktop proof.",
+      "locators": [
+        "draft Clause 4",
+        "critic obligation 4",
+        "final Clause 4"
+      ],
+      "evidence_ids": [
+        "ORIGINAL_PLAN",
+        "R14",
+        "R15c"
+      ],
+      "materiality": "Non-material editorial/disposition error; no supported option is removed and no consequential decision depends on the misreading."
+    },
+    {
+      "id": "L4",
+      "type": "prospective validation detail",
+      "description": "The plan's proposed pilot walkthrough explicitly includes interruption and incompatible/missing input. Final checks cover late refresh, missing owner inputs and snapshot correction, but do not spell out an unavailable-feed/recovery or malformed-input sequence.",
+      "locators": [
+        "original plan Validation status at handoff / Pilot scenario walkthrough",
+        "final Validation table"
+      ],
+      "evidence_ids": [
+        "ORIGINAL_PLAN"
+      ],
+      "materiality": "Non-material at planning stage: no implementation or end-to-end test is required, and the core recurrence/update/optional-path oracles are meaningful."
+    },
+    {
+      "id": "L5",
+      "type": "source capture and execution provenance",
+      "description": "Authored evidence consists of three source indices and structured maps; original raw page bodies/tool transcripts were not present in the mapped source roots. Independent primary retrieval confirms the consequential content but cannot establish each stage's exact original fetch bytes, account actions, or complete execution ordering.",
+      "locators": [
+        "all mapped sources roots",
+        "stage input maps"
+      ],
+      "evidence_ids": [],
+      "materiality": "Source judgment rests on independent evidence, while unsupported native/protocol/effective/billing details remain UNKNOWN."
+    }
+  ],
+  "useful_discoveries": [
+    {
+      "item": "Venue-local weekly recurrence with UTC UNTIL bound",
+      "evidence_ids": [
+        "R01",
+        "R08"
+      ],
+      "use": "Keeps local rehearsals aligned through DST and avoids encoding a season boundary with the wrong DATE-TIME form."
+    },
+    {
+      "item": "Stable original occurrence identity after a move",
+      "evidence_ids": [
+        "R01",
+        "R08",
+        "R08b"
+      ],
+      "use": "Prevents a room/time amendment from becoming an unrelated event or shifting later rehearsals."
+    },
+    {
+      "item": "Static snapshot can coexist with a live subscription",
+      "evidence_ids": [
+        "R07",
+        "R09",
+        "R11"
+      ],
+      "use": "Preserves the authorized optional downloadable season while labeling stale copies and replacement/duplicate risks."
+    },
+    {
+      "item": "CSV recurring import may flatten into one-time events",
+      "evidence_ids": [
+        "R07"
+      ],
+      "use": "Supports ICS selection for the snapshot without claiming universal recurrence fidelity."
+    },
+    {
+      "item": "Google public iCal exposure and browser-only setup",
+      "evidence_ids": [
+        "R05",
+        "R06"
+      ],
+      "use": "Connects manager privacy decision and mobile onboarding to real source-route constraints."
+    },
+    {
+      "item": "Outlook.com and Outlook on the web publish different approximate cadence guidance",
+      "evidence_ids": [
+        "R09"
+      ],
+      "use": "Final avoids transferring 3-hour guidance across operations; neither interval is a maximum."
+    },
+    {
+      "item": "Read-only Apple calendars have alert controls without proven personal per-event timing",
+      "evidence_ids": [
+        "R10",
+        "R10b"
+      ],
+      "use": "Supports member control while preventing an unsupported reminder promise."
+    },
+    {
+      "item": "Nextcloud public calendar exports and internal refresh documentation conflict",
+      "evidence_ids": [
+        "R11",
+        "R12"
+      ],
+      "use": "Makes the alternative route and optional snapshot concrete, and warns against applying host-internal refresh to external subscribers."
+    },
+    {
+      "item": "Thunderbird recurrence property loss, backed-out fix and released replacement",
+      "evidence_ids": [
+        "R14",
+        "R15c",
+        "R15d",
+        "R15e"
+      ],
+      "use": "Provides a source-backed one-occurrence inheritance regression and a bounded historical release chain."
+    },
+    {
+      "item": "CalDAV synchronization versus WebSub push analogy",
+      "evidence_ids": [
+        "R03",
+        "R04",
+        "R13"
+      ],
+      "use": "Clarifies three transport models and why a callback/hub push service is not implied by an ICS URL."
+    },
+    {
+      "item": "Independent reviewer code check: Nextcloud v35.0.0 subscription cache uses configurable P1D fallback and strips feed alarms by default",
+      "evidence_ids": [
+        "N01",
+        "N02"
+      ],
+      "use": "Checks the source-operation distinction and shows why internal cache/notification details must not be exported to external subscribers. This is reviewer evidence, not an original candidate discovery or an added feature requirement."
+    }
+  ],
+  "validation_assessment": {
+    "executed_candidate_report": "Public-primary research and source/patch text inspection only; product validation NOT_RUN.",
+    "independent_reviewer_executed": "Full original artifact reading, primary retrieval and governing definition/caller inspection, hash/freeze consistency check, assessment serialization checks. No downloaded code/product tests executed.",
+    "oracle_limits": [
+      "RFC 5545 proves format meaning, not all client parsing or refresh.",
+      "Google API v3 proves that API's resource/instance operation, not another client consuming ICS.",
+      "Microsoft cadence text is service/operation-specific approximate guidance, not bounded delivery.",
+      "Apple alert toggle/Ignore alerts does not prove custom per-event reminders on read-only events.",
+      "Mozilla doPropertiesTest compares inherited properties while skipping DTSTART/DTEND; it cannot serve as a cross-client/DST/time-move oracle.",
+      "Nextcloud versioned source defaults are not measured deployment schedules."
+    ],
+    "missing_product_tests_required_for_this_assignment": false
+  },
+  "telemetry": {
+    "native": {
+      "investigator": "UNKNOWN — no native Goal activation/completion capture among mapped authored artifacts; no conclusion from T3 status alone.",
+      "critic": {
+        "status": "SAVED_ACTIVE_STATE_AND_COMPLETE_RESPONSE",
+        "goal_threadId": "01a1243e-2cc4-7ad3-b8f8-6c234d009947",
+        "raw_create_response": "UNKNOWN / lost per capture note",
+        "observed_active_record": {
+          "tokensUsed": 7494,
+          "timeUsedSeconds": 38,
+          "createdAt": 1791609464,
+          "updatedAt": 1791609503
+        },
+        "observed_complete_record": {
+          "tokensUsed": 162261,
+          "timeUsedSeconds": 667,
+          "createdAt": 1791609464,
+          "updatedAt": 1791610131
+        },
+        "independent_server_provenance": "UNKNOWN; records were read, not queried from the candidate server."
+      },
+      "reviser": {
+        "status": "SAVED_ACTIVATION_AND_COMPLETION_RESPONSES",
+        "goal_threadId": "01a1244b-827b-7f53-9cc7-f9f839d61ad6",
+        "observed_activation": {
+          "status": "active",
+          "tokensUsed": 0,
+          "timeUsedSeconds": 0,
+          "createdAt": 1791610300,
+          "updatedAt": 1791610300
+        },
+        "observed_completion": {
+          "status": "complete",
+          "tokensUsed": 176762,
+          "timeUsedSeconds": 886,
+          "createdAt": 1791610300,
+          "updatedAt": 1791611230
+        },
+        "independent_server_provenance": "UNKNOWN; archived actual response captures were inspected."
+      }
+    },
+    "t3": {
+      "final_stage": "Root terminal freeze records reviser task completed/result_available, latestTerminalStatus completed and hasPendingChildRuns false at 2026-10-10T05:48:41.957955+00:00.",
+      "other_stage_terminal_proof": "UNKNOWN — no other outcome/status labels opened.",
+      "distinction": "T3 task terminal does not establish native Goal completion."
+    },
+    "protocol": {
+      "judgment": "UNKNOWN for complete historical method compliance",
+      "supported": "Assignments/maps/freezes are complete. Reveal record freezes discovery before plan reveal and revealed-plan hash matches original. Critic/reviser clarification is mechanical activation instruction, not candidate science feedback in the inspected text. No unauthorized assistance is evidenced in inspected scope.",
+      "unknown": "Complete investigator Goal lifecycle, hidden-plan nonaccess, exact stage input order, all account/service actions, number of Goal calls and absence of outside assistance require logs not present in the allowed package.",
+      "reviewer_compliance": "One actual native Goal; no nested delegation, feedback/repair, account changes, Git, publication, roster or other arm/history review. Only own mailbox checked; all authored output written under reserved assessment root."
+    },
+    "time": {
+      "judgment": "RECORDED_BOUNDS_ONLY",
+      "whole_prepare_utc": "2026-10-10T04:54:56.355Z",
+      "whole_deadline_utc": "2026-10-10T05:54:56.151Z",
+      "root_terminal_freeze_utc": "2026-10-10T05:48:41.957955+00:00",
+      "recorded_prepare_to_freeze_seconds": 3225.602955,
+      "observation": "Root freeze and final file mtimes precede the supplied whole/stage deadline. These are occupancy bounds from preparation/artifact records, not actual full-stage inference time or a comparative speed result.",
+      "queue_setup_inference_split": "UNKNOWN",
+      "reserve_last_quarter_compliance": "UNKNOWN",
+      "native_time_field_semantics": "Preserved as returned; do not equate to billing or total occupancy."
+    },
+    "effective_route": {
+      "requested": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "reasoningEffort": "max",
+        "serviceTier": "default",
+        "runtimeMode": "full-access"
+      },
+      "request_evidence": "Three stage input maps/freezes and service-tier-change records show requested default rather than original priority; terminal freeze records final task provider/model.",
+      "effective_inference_tier": "UNKNOWN",
+      "actual_billed_model_tier": "UNKNOWN"
+    },
+    "billing": {
+      "judgment": "UNKNOWN",
+      "evidence": "No billing/account telemetry in permitted original package; native tokensUsed/timeUsedSeconds are not billing evidence.",
+      "savings_or_speed_claim": "NONE; no other arm compared."
+    }
+  },
+  "unknowns": [
+    "Venue IANA zone, season dates, existing source host and maintenance owner.",
+    "Orchestra-manager decision on public room details and exact public-field scope.",
+    "Minimum supported member desktop/mobile client releases and existing account access.",
+    "Actual downstream recurrence, moved/cancelled-instance, DST/zone-rule, refresh and reminder behavior.",
+    "Direct one-season ICS import/replacement on iPhone and exact duplicate/reminder preservation behavior.",
+    "Chosen Nextcloud deployment's Calendar app release, stored/configured interval and runtime background-job operation.",
+    "Full historical native Goal/protocol provenance for investigator, lost critic create response and exact original retrieval bytes.",
+    "Queue/inference timing split, effective service tier and billing."
+  ],
+  "preservation_conclusion": "Final supported meaning is preserved with justified Outlook/iPhone amendments. No original optional scope is silently deleted, made mandatory, or declared established. No repair was made by this assessor.",
+  "source_evidence_policy": "Semantic support is primary content and governing conditions, never hash/count/agreement. Original hashes are integrity/identity evidence only. Original freeze is unchanged.",
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A4-02/brief.md",
+      "bytes": 3350,
+      "sha256": "20fcd49e3c924815b03c89b92fa9b0ede92f239eb777b4c4f6f3dbcabe88ba3e",
+      "mtime_ns": 1791608096133740839,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A4-02/plan.md",
+      "bytes": 5956,
+      "sha256": "0588e3e0686b6ccc9b5f3eafc56f3415d8565ac895c12ba6a84f572b46ccfe53",
+      "mtime_ns": 1791608096134217942,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/terminal-science-freeze-root.json",
+      "bytes": 7701,
+      "sha256": "5e015ea037b176c187a35166d11301e2d9c51ac05ee0088717a3dad40222cb27",
+      "mtime_ns": 1791611321958264390,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/inputs/brief.md",
+      "bytes": 3350,
+      "sha256": "20fcd49e3c924815b03c89b92fa9b0ede92f239eb777b4c4f6f3dbcabe88ba3e",
+      "mtime_ns": 1791608096354792448,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/assignment.md",
+      "bytes": 4136,
+      "sha256": "87e93c2fabb8ecfd9efd868a05c90e249c5a464cdf7782752e28f69523844552",
+      "mtime_ns": 1791608096355698488,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/input-map.json",
+      "bytes": 789,
+      "sha256": "2105d71d3fc5030efb01b0f0583f0482ee9f3e7962d8805f204cd3a77194dbeb",
+      "mtime_ns": 1791608096515536636,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/freeze.json",
+      "bytes": 2073,
+      "sha256": "63114a400507af62786b1d0455f9fc8b9f0632a70c2f97a12576cc60e58090e3",
+      "mtime_ns": 1791608096516067644,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/source-map.json",
+      "bytes": 20908,
+      "sha256": "cdfb19a3c12bed4397426a18c604879c257a24af53a62776962761f4ca9ec775",
+      "mtime_ns": 1791609009214578054,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/sources/index.md",
+      "bytes": 8893,
+      "sha256": "538021bc9c93ef4974e7e2798a5d0e4a777a2cbadfd726e7b356de01dc8bd2b4",
+      "mtime_ns": 1791609009214907320,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/service-tier-change.json",
+      "bytes": 493,
+      "sha256": "ec7e683e6b6e743b83e55cf59a248dda70dc575cd751b5a836144510a313a55c",
+      "mtime_ns": 1791608096516263148,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/discovery.md",
+      "bytes": 15325,
+      "sha256": "46807c16ec3d360b4af0ec58d21123a7466f933cf4902136ab754b1a62ecdb68",
+      "mtime_ns": 1791609009215308843,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/draft.md",
+      "bytes": 21874,
+      "sha256": "f5b1ad4e86d9a70c72011724af890ca30b0ee3139c8f5f8d2a89e1c567d53d1a",
+      "mtime_ns": 1791609284014619078,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 5956,
+      "sha256": "0588e3e0686b6ccc9b5f3eafc56f3415d8565ac895c12ba6a84f572b46ccfe53",
+      "mtime_ns": 1791609029005199383,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/plan-reveal.json",
+      "bytes": 429,
+      "sha256": "25ea8f2d7576f1c2d493ee0e86c1a19eb2fcb1c35a0209ac1896d76aa3c16e2f",
+      "mtime_ns": 1791609029005332975,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/assignment.md",
+      "bytes": 4430,
+      "sha256": "44b2d11ea71cc8dd184a28a93711fdc6fd20353984f9fc441bf2118057021fb7",
+      "mtime_ns": 1791609416367201966,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/input-map.json",
+      "bytes": 1477,
+      "sha256": "12da2ebbf975b935aa93dda3b37aa76312211e55bf63e6b8276c4395b2b8092d",
+      "mtime_ns": 1791609416367030404,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/freeze.json",
+      "bytes": 3656,
+      "sha256": "132c0cbf850febc3baa38050694509a4844f942606078788958b54101814cdbb",
+      "mtime_ns": 1791609416366893691,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/source-map.json",
+      "bytes": 24090,
+      "sha256": "3ec275cb952f973099d3ddf0dc53ba29796bde08d9d558fea56d22f1c44ed28c",
+      "mtime_ns": 1791610122488928381,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/sources/index.md",
+      "bytes": 4816,
+      "sha256": "75d50b11cc811564e74720b92a1273d9cf3648a5ee5596f3cf1424d0ad0d30f0",
+      "mtime_ns": 1791610075006639763,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/service-tier-change.json",
+      "bytes": 481,
+      "sha256": "9944733f58e5b05d4bc7277fc4a7046f826effa68ea9ef7e274436c24af21ade",
+      "mtime_ns": 1791609416162506299,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/critique.md",
+      "bytes": 9070,
+      "sha256": "8b47033aaebe7d18e6482e9ed5c4cf58f56250e972a093c583d526e105b0d18d",
+      "mtime_ns": 1791610074998639714,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/invocation-clarification.json",
+      "bytes": 3030,
+      "sha256": "2f8635f9a16a8aef868d9e2fa4d65d46ebbb689c0cd8b40e0cb468c4aa4921d0",
+      "mtime_ns": 1791609416367365241,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/native-goal-state.json",
+      "bytes": 530,
+      "sha256": "1436f0cf022a47d3204355183782954f00d781f85510e17843cc502c34ec891a",
+      "mtime_ns": 1791609528531207748,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/native-goal-completion.json",
+      "bytes": 855,
+      "sha256": "60ddf51a88624e4e3b183ac4b730948e411faa80648d97d339758ab1bb0fa448",
+      "mtime_ns": 1791610131846985264,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/native-goal-capture.md",
+      "bytes": 944,
+      "sha256": "9f7fe9fcb12e946cd41dd3d7f0ad4a924df0e32195cece8bb17626ff28ee86c6",
+      "mtime_ns": 1791610075012639799,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/assignment.md",
+      "bytes": 4412,
+      "sha256": "99e029ca4ed8a2362a6592f658f11e448e1c12cb88b340580911851ab8c5c6b9",
+      "mtime_ns": 1791610289730580139,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/input-map.json",
+      "bytes": 1794,
+      "sha256": "eba71b239ed62f6e88abce9aa31502dabf1f2f3e8fce6e681b148ca4ab140b42",
+      "mtime_ns": 1791610289730433514,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/freeze.json",
+      "bytes": 4434,
+      "sha256": "9fff06313f9a7cd8405015a542c998d18f306e174c9587055d54c4e8dc06f4f9",
+      "mtime_ns": 1791610289730225117,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/source-map.json",
+      "bytes": 31998,
+      "sha256": "3ad21682974e8f369fe06d05a7ce66dd576c89800c7329418f14f4f9f0f29f17",
+      "mtime_ns": 1791611170227738840,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/sources/index.md",
+      "bytes": 11546,
+      "sha256": "74b5ce89e0dedbb05f9f64071fbfcea639cce932be4afb4b94db1a58cfd40c3b",
+      "mtime_ns": 1791611014241627082,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/service-tier-change.json",
+      "bytes": 483,
+      "sha256": "18138f21db69a8d461c67a4973675c84f62046089972c93ede3685e0d1a348dc",
+      "mtime_ns": 1791610289530602253,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/final.md",
+      "bytes": 25460,
+      "sha256": "4115d20a6476642c4d4d02a2ee44c388af3baa812bb51551bee7d91c99599364",
+      "mtime_ns": 1791611170226606539,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/invocation-clarification.json",
+      "bytes": 3037,
+      "sha256": "bd536c9a72b578d3858a7a3279cb2be9cdffddc2369330f7b0f01cbfb5cd9960",
+      "mtime_ns": 1791610289730738573,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/native-goal-lifecycle.json",
+      "bytes": 3050,
+      "sha256": "1fe9292033d0b2342688ed563374884c24ed56e7d7fe19e976f46184b14717b2",
+      "mtime_ns": 1791611240778337570,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    }
+  ],
+  "original_integrity_checks": [
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/critique.md",
+      "expected_sha256": "8b47033aaebe7d18e6482e9ed5c4cf58f56250e972a093c583d526e105b0d18d",
+      "actual_sha256": "8b47033aaebe7d18e6482e9ed5c4cf58f56250e972a093c583d526e105b0d18d",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/source-map.json",
+      "expected_sha256": "3ec275cb952f973099d3ddf0dc53ba29796bde08d9d558fea56d22f1c44ed28c",
+      "actual_sha256": "3ec275cb952f973099d3ddf0dc53ba29796bde08d9d558fea56d22f1c44ed28c",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/sources/index.md",
+      "expected_sha256": "75d50b11cc811564e74720b92a1273d9cf3648a5ee5596f3cf1424d0ad0d30f0",
+      "actual_sha256": "75d50b11cc811564e74720b92a1273d9cf3648a5ee5596f3cf1424d0ad0d30f0",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/discovery.md",
+      "expected_sha256": "46807c16ec3d360b4af0ec58d21123a7466f933cf4902136ab754b1a62ecdb68",
+      "actual_sha256": "46807c16ec3d360b4af0ec58d21123a7466f933cf4902136ab754b1a62ecdb68",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/draft.md",
+      "expected_sha256": "f5b1ad4e86d9a70c72011724af890ca30b0ee3139c8f5f8d2a89e1c567d53d1a",
+      "actual_sha256": "f5b1ad4e86d9a70c72011724af890ca30b0ee3139c8f5f8d2a89e1c567d53d1a",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/revealed-plan.md",
+      "expected_sha256": "0588e3e0686b6ccc9b5f3eafc56f3415d8565ac895c12ba6a84f572b46ccfe53",
+      "actual_sha256": "0588e3e0686b6ccc9b5f3eafc56f3415d8565ac895c12ba6a84f572b46ccfe53",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/source-map.json",
+      "expected_sha256": "cdfb19a3c12bed4397426a18c604879c257a24af53a62776962761f4ca9ec775",
+      "actual_sha256": "cdfb19a3c12bed4397426a18c604879c257a24af53a62776962761f4ca9ec775",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/sources/index.md",
+      "expected_sha256": "538021bc9c93ef4974e7e2798a5d0e4a777a2cbadfd726e7b356de01dc8bd2b4",
+      "actual_sha256": "538021bc9c93ef4974e7e2798a5d0e4a777a2cbadfd726e7b356de01dc8bd2b4",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/final.md",
+      "expected_sha256": "4115d20a6476642c4d4d02a2ee44c388af3baa812bb51551bee7d91c99599364",
+      "actual_sha256": "4115d20a6476642c4d4d02a2ee44c388af3baa812bb51551bee7d91c99599364",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/source-map.json",
+      "expected_sha256": "3ad21682974e8f369fe06d05a7ce66dd576c89800c7329418f14f4f9f0f29f17",
+      "actual_sha256": "3ad21682974e8f369fe06d05a7ce66dd576c89800c7329418f14f4f9f0f29f17",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/sources/index.md",
+      "expected_sha256": "74b5ce89e0dedbb05f9f64071fbfcea639cce932be4afb4b94db1a58cfd40c3b",
+      "actual_sha256": "74b5ce89e0dedbb05f9f64071fbfcea639cce932be4afb4b94db1a58cfd40c3b",
+      "matches": true
+    }
+  ],
+  "missing_or_incomplete_original_evidence": [
+    {
+      "item": "Original captured external page bodies/source patch files",
+      "status": "NOT_PRESENT in mapped source roots",
+      "effect": "All three authored evidence indices/maps fully read; governing content independently retrieved. Exact original fetch bytes UNKNOWN."
+    },
+    {
+      "item": "Investigator native Goal lifecycle receipts",
+      "status": "NOT_PRESENT among mapped science/evidence",
+      "effect": "Native investigator lifecycle UNKNOWN; no semantic FAIL inferred."
+    },
+    {
+      "item": "Critic raw create_goal response",
+      "status": "LOST per capture note; active state/completion present",
+      "effect": "Capture gap preserved; recovered state is not represented as raw activation."
+    },
+    {
+      "item": "Separate critique checks/dispositions files",
+      "status": "No separate file present/required by maps",
+      "effect": "Full in-map checks and full final.md/source-map.json dispositions read."
+    }
+  ],
+  "independent_sources": [
+    {
+      "id": "R01",
+      "url": "https://www.rfc-editor.org/rfc/rfc5545",
+      "version": "RFC 5545 September 2009",
+      "locator": "§§3.2.19,3.3.5,3.3.10,3.6.5,3.8.4.4,3.8.4.7,3.8.5.1,3.8.5.3",
+      "access_utc": "2026-10-10T05:50:36.300582+00:00",
+      "judgment": "SUPPORTED",
+      "local_evidence": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R01.html",
+      "sha256": "de43294251e878a814fbc3e8985bece6418491ff0b1f8b192f6c7a6d86bcd4c2"
+    },
+    {
+      "id": "R02",
+      "url": "https://www.rfc-editor.org/rfc/rfc5546",
+      "version": "RFC 5546 December 2009",
+      "locator": "§3.2.5 CANCEL",
+      "access_utc": "2026-10-10T05:50:36.302351+00:00",
+      "judgment": "SUPPORTED",
+      "local_evidence": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R02.html",
+      "sha256": "8f927a79f695f80fdb70807e30ff2af975dafa73fd0a140cea5b7da385c41aee"
+    },
+    {
+      "id": "R03",
+      "url": "https://www.rfc-editor.org/rfc/rfc4791",
+      "version": "RFC 4791 March 2007",
+      "locator": "§8.2 especially §8.2.1.3",
+      "access_utc": "2026-10-10T05:50:36.303707+00:00",
+      "judgment": "SUPPORTED",
+      "local_evidence": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R03.html",
+      "sha256": "d8b97679de10acff40d5dc6c59ec76ebaed7329bc079a823a1100538588a9dbf"
+    },
+    {
+      "id": "R04",
+      "url": "https://www.rfc-editor.org/rfc/rfc6578",
+      "version": "RFC 6578 March 2012",
+      "locator": "§§3.5.1–3.5.2,6.1; Appendix A",
+      "access_utc": "2026-10-10T05:50:36.304982+00:00",
+      "judgment": "SUPPORTED",
+      "local_evidence": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R04.html",
+      "sha256": "b6af08a68ed7b8bc5e5e98360773a66b9145f26fa03c3b8db46a2d57d756a908"
+    },
+    {
+      "id": "R05",
+      "url": "https://support.google.com/calendar/answer/37083?hl=en",
+      "version": "Current Google Calendar web Help; numeric service build UNKNOWN",
+      "locator": "How public calendars work; Mark public; Share a link",
+      "access_utc": "2026-10-10T05:50:36.305949+00:00",
+      "judgment": "SUPPORTED",
+      "local_evidence": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R05.html",
+      "sha256": "973b719cc91641a83dc18ca8f9ff1d40fb2ae3ad70af6536bb13a8ccc40b687f"
+    },
+    {
+      "id": "R06",
+      "url": "https://support.google.com/calendar/answer/37100?hl=en",
+      "version": "Current Google Calendar Computer Help; numeric service build UNKNOWN",
+      "locator": "Opening setup note; Use a link to add a public calendar",
+      "access_utc": "2026-10-10T05:50:36.306642+00:00",
+      "judgment": "SUPPORTED",
+      "local_evidence": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R06.html",
+      "sha256": "e3068f98a1fece711b169a1fbb25c6024b4b0469748ad92e5fa813c71d3e1734"
+    },
+    {
+      "id": "R07",
+      "url": "https://support.google.com/calendar/answer/37118?hl=en",
+      "version": "Current Google Calendar Computer Help; numeric service build UNKNOWN",
+      "locator": "Step 1 imported-sync tip; Step 2 file import; CSV repeat warning",
+      "access_utc": "2026-10-10T05:50:36.730925+00:00",
+      "judgment": "SUPPORTED",
+      "local_evidence": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R07.html",
+      "sha256": "41f418ff9599666892bf9b3b78a3741cf8112a7468dd976a0dedaeec13685539"
+    },
+    {
+      "id": "R08",
+      "url": "https://developers.google.com/workspace/calendar/api/v3/reference/events",
+      "version": "Google Calendar API v3 Events resource",
+      "locator": "start.timeZone;originalStartTime;recurringEventId;status;reminders",
+      "access_utc": "2026-10-10T05:50:36.866646+00:00",
+      "judgment": "SUPPORTED",
+      "local_evidence": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R08.html",
+      "sha256": "796efe08a8920d70369f13cf0134f8a9f315bc5172cb4562db530f259d90d06f"
+    },
+    {
+      "id": "R08b",
+      "url": "https://developers.google.com/workspace/calendar/api/guides/recurringevents",
+      "version": "Google Calendar API v3 recurring events guide; updated2026-09-17 UTC",
+      "locator": "Access instances; Modify or delete instances",
+      "access_utc": "2026-10-10T05:50:36.936174+00:00",
+      "judgment": "SUPPORTED",
+      "local_evidence": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R08b.html",
+      "sha256": "5292a266b91171e12f8e894705f58cd89e1b2b087faa05b988b595c7ab0e4186"
+    },
+    {
+      "id": "R09",
+      "url": "https://support.microsoft.com/en-us/outlook/import-or-subscribe-to-a-calendar-in-outlook-com-or-outlook-on-the-web",
+      "version": "Current Microsoft Support; service build UNKNOWN",
+      "locator": "Personal account Subscribe/import distinction; Work/school corresponding sections",
+      "access_utc": "2026-10-10T05:50:36.970581+00:00",
+      "judgment": "F1 VALID IN DRAFT; FINAL REPAIRED",
+      "local_evidence": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R09.html",
+      "sha256": "a52d26d09ccc814556ddc24309621da8e375e078e0176fcb0efa3c381d549497"
+    },
+    {
+      "id": "R10",
+      "url": "https://support.apple.com/guide/iphone/use-multiple-calendars-iph3d1110d4/ios",
+      "version": "Current iPhone User Guide; selector includes iOS27/26/18; installed build UNKNOWN",
+      "locator": "Set up a calendar; Turn on calendar event alerts",
+      "access_utc": "2026-10-10T05:50:37.109872+00:00",
+      "judgment": "F2 VALID; FINAL SUPPLEMENTED; EDITION LIMIT L2",
+      "local_evidence": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R10.html",
+      "sha256": "7631fd7f514506a4dcc7f77544d5710a8922c76756a88e1a9bf161b11574a791"
+    },
+    {
+      "id": "R10b",
+      "url": "https://support.apple.com/en-il/guide/calendar/icl32362/mac",
+      "version": "Current Mac Calendar Guide; selector includes macOS27 Golden Gate/Tahoe26; installed build UNKNOWN",
+      "locator": "Subscribe to calendars",
+      "access_utc": "2026-10-10T05:50:37.226864+00:00",
+      "judgment": "SUPPORTED; EDITION LIMIT L2",
+      "local_evidence": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R10b.html",
+      "sha256": "b5ac115d74ebda42065906feae0f08dc6551f556e753c4619b51142a4a8c8485"
+    },
+    {
+      "id": "R11",
+      "url": "https://docs.nextcloud.com/server/stable/user_manual/en/groupware/calendar.html",
+      "version": "Nextcloud Server35 User Manual edition; exact Calendar app release UNKNOWN",
+      "locator": "Publishing a calendar; Subscribe to a Calendar; Set up reminders",
+      "access_utc": "2026-10-10T05:50:37.244073+00:00",
+      "judgment": "PUBLISH/EXPORT SUPPORTED; DEFAULT/OPERATION LIMIT L1",
+      "local_evidence": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R11.html",
+      "sha256": "600ae175ea04823367d060b806cb8c964ec4c77c724a698e4b892ddb09b1e626"
+    },
+    {
+      "id": "R12",
+      "url": "https://docs.nextcloud.com/server/stable/admin_manual/groupware/calendar.html",
+      "version": "Nextcloud Server35 Administration Manual edition",
+      "locator": "Subscriptions / Refresh rate",
+      "access_utc": "2026-10-10T05:50:37.383614+00:00",
+      "judgment": "DOC CONDITION SUPPORTED; DISTINCT-OPERATION CLAIM UNESTABLISHED",
+      "local_evidence": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R12.html",
+      "sha256": "f455fdae8ff36afafbc538d066a46733f99faa382f9ce2d2c2046843ba3ff51e"
+    },
+    {
+      "id": "R13",
+      "url": "https://www.w3.org/TR/websub/",
+      "version": "W3C WebSub Recommendation2026-06-02; dated URL https://www.w3.org/TR/2026/REC-websub-20260602/",
+      "locator": "§§2,5.1–5.3,6,7",
+      "access_utc": "2026-10-10T05:50:37.405135+00:00",
+      "judgment": "BOUNDED ANALOGY SUPPORTED",
+      "local_evidence": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R13.html",
+      "sha256": "75ccd70af4323efa197503c4d923b7d553b949e42992531ca7ca476820dedaef"
+    },
+    {
+      "id": "R14",
+      "url": "https://bugzilla.mozilla.org/show_bug.cgi?id=1595332",
+      "version": "Mozilla Bug1595332; TB68.2.1/Lightning68.2.0 report; TB91 fixed",
+      "locator": "Reproduction;comments3/4/6;first landing/backout;later landing;91.0b4 uplift",
+      "access_utc": "2026-10-10T05:50:37.448624+00:00",
+      "judgment": "HISTORY SUPPORTED",
+      "local_evidence": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R14.html",
+      "sha256": "6e9b1dc6846e9501e4414eb393dee4ac38867754d1cd638526f782069f4c4fc7"
+    },
+    {
+      "id": "R15",
+      "url": "https://hg.mozilla.org/comm-central/raw-rev/3787e583daf7",
+      "version": "Requested immutable node3787e583daf7d3026fa6fcc7bf08da03c4fcfb56",
+      "locator": "Long-node raw-rev fetch",
+      "access_utc": "2026-10-10T05:50:37.510344+00:00",
+      "judgment": "RETRIEVAL BLOCKED; USE R15c",
+      "local_evidence": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R15.html",
+      "sha256": "32ed63159c77e21ee19ca1b9aa3213ccf0218eb59539560b132a8e68ef0e18ea"
+    },
+    {
+      "id": "R16",
+      "url": "https://support.google.com/calendar/answer/37064?hl=en",
+      "version": "Current Google Calendar Computer Help; numeric build UNKNOWN",
+      "locator": "How Calendar uses time zones; Understand daylight saving time",
+      "access_utc": "2026-10-10T05:50:37.571715+00:00",
+      "judgment": "SUPPORTED",
+      "local_evidence": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R16.html",
+      "sha256": "a8d1a01f3bf26c9509b41f5bcf56f00df59a6ebeb78a396dbe070d15e71cc1d4"
+    },
+    {
+      "id": "R15a",
+      "url": "https://bugzilla.mozilla.org/attachment.cgi?id=9231671",
+      "version": "Mozilla Phabricator D120122 via Bugzilla attachment9231671",
+      "locator": "Attachment redirect / review page",
+      "access_utc": "2026-10-10T05:51:37.095185+00:00",
+      "judgment": "RELATED PRIMARY HISTORY",
+      "local_evidence": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R15a.html",
+      "sha256": "aac073c16a5e4cdc254cd01df69bd4519c51ce46808279807579ba1018cba652"
+    },
+    {
+      "id": "R15b",
+      "url": "https://phabricator.services.mozilla.com/D120122?download=true",
+      "version": "Mozilla Phabricator D120122 raw diff",
+      "locator": "Download Raw Diff; calItemBase.js;test_items.js;test_recur.js",
+      "access_utc": "2026-10-10T05:52:18.403822+00:00",
+      "judgment": "SUPPORTING DIFF",
+      "local_evidence": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R15b.patch",
+      "sha256": "f6d39a380b518cc46ab0d04792504975f852928425f6fef74fc85a5bf14e6f01"
+    },
+    {
+      "id": "N01",
+      "url": "https://raw.githubusercontent.com/nextcloud/server/v35.0.0/apps/dav/lib/BackgroundJob/RefreshWebcalJob.php",
+      "version": "Nextcloud Server v35.0.0 source tag",
+      "locator": "RefreshWebcalJob::start/run",
+      "access_utc": "2026-10-10T05:52:52.971169+00:00",
+      "judgment": "VERSIONED DEFAULT/CALLER CHECKED",
+      "local_evidence": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/N01.php.txt",
+      "sha256": "f8bd4e1c7eadea8c143c01ba58b4f4a2a95fff678be59f2816d78f87cd79e88a"
+    },
+    {
+      "id": "N02",
+      "url": "https://raw.githubusercontent.com/nextcloud/server/v35.0.0/apps/dav/lib/CalDAV/WebcalCaching/RefreshWebcalService.php",
+      "version": "Nextcloud Server v35.0.0 source tag",
+      "locator": "RefreshWebcalService::refreshSubscription/getSubscription/updateRefreshRate",
+      "access_utc": "2026-10-10T05:52:52.973131+00:00",
+      "judgment": "GOVERNING SERVICE/CONDITIONS CHECKED",
+      "local_evidence": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/N02.php.txt",
+      "sha256": "3c09863d5edf81fd3b7fdd46bae2be4025ee1af657cf828bd908df19047f0f7c"
+    },
+    {
+      "id": "R15c",
+      "url": "https://hg.mozilla.org/comm-central/raw-rev/3787e583daf7",
+      "version": "Immutable HG node3787e583daf7d3026fa6fcc7bf08da03c4fcfb56, parent2665c70f83edb41eb7cca3df6cbcd8c8160db508",
+      "locator": "Changeset header; calItemBase.js;test_items.js;test_recur.js",
+      "access_utc": "2026-10-10T05:54:16.861105+00:00",
+      "judgment": "IMMUTABLE FIX AND ORACLE SUPPORTED",
+      "local_evidence": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R15c.raw.txt",
+      "sha256": "fb21a4c4d751b6fdada33a980466d54fcf58ff1777be2fe65fc04d5ed03c1b95"
+    },
+    {
+      "id": "R15d",
+      "url": "https://hg.mozilla.org/releases/comm-beta/raw-rev/3ed31b89f582",
+      "version": "Immutable beta uplift node3ed31b89f582 (linked in Bug1595332)",
+      "locator": "Changeset header / beta release-path patch",
+      "access_utc": "2026-10-10T05:54:16.862656+00:00",
+      "judgment": "UPLIFT CHAIN SUPPORTED",
+      "local_evidence": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R15d.raw.txt",
+      "sha256": "d7bd1f08c8ee5c76d739544a0a1b263fe6f476e66e3175310bcbd4b7992f6ffc"
+    },
+    {
+      "id": "R15e",
+      "url": "https://hg.mozilla.org/comm-central/raw-file/3787e583daf7/calendar/base/src/calItemBase.js",
+      "version": "calItemBase.js at immutable node3787e583daf7",
+      "locator": "lines445–468,551–560; surrounding removed accessor",
+      "access_utc": "2026-10-10T05:54:26.390660+00:00",
+      "judgment": "GOVERNING DEFINITION/CALLER SUPPORTED",
+      "local_evidence": "ER12_RUNTIME/assessment/A4-02/treatment-v1/evidence/R15e-calItemBase.js.txt",
+      "sha256": "903d5b95212cecc6b3572dc2b65cbd97e40b3782d2ffb71d0e59571b8e48d121"
+    }
+  ],
+  "saved_judgment_utc": "2026-10-10T06:02:37.557487+00:00",
+  "source_map": "source-map.json",
+  "evidence_index": "evidence/index.md",
+  "original_hash_manifest": "original-inspected-manifest.json"
+}

@@ -1,0 +1,70 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://cdn.shopify.com/s/files/1/2430/4931/files/Cink_2_User_Manual_-_March_2025_4a6c2381-cf81-44a9-9e63-2838b8d6ab56.pdf?v=1742533095"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/C-R1-02/treatment-v1/source-map.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {
+        "version_or_release": "March 2025 manual.",
+        "governing_locator": "Cink 2 March 2025 manual printed pp. 3, 6–11",
+        "domain_conditions_defaults_exceptions": "Official model-specific manual. Generic filtration cannot inherit a universal clay-only restriction from this one product."
+      }
+    },
+    {
+      "authored_source_map": "assessment/C-R1-02/treatment-v1/source-map.json",
+      "source_id": "S10",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/C-R1-02/treatment-v1/evidence/retrieval-log.json",
+      "source_id": "S10",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/C-R1-02/treatment-v1/evidence/retrieval-log-initial.json",
+      "source_id": "S10",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "governing_locator": "Cink 2 March 2025 manual printed pp. 3, 6–11"
+    }
+  ],
+  "raw_sha256": "54b7f9ad5dca7576f485d86b0816b6eb4d88b3dfb97bf487ef809297c8c90844",
+  "original_bytes": 8817758,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/C-R1-02/treatment-v1/evidence/S10.pdf",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://cdn.shopify.com/s/files/1/2430/4931/files/Cink_2_User_Manual_-_March_2025_4a6c2381-cf81-44a9-9e63-2838b8d6ab56.pdf?v=1742533095"
+  ],
+  "version": [
+    {
+      "version_or_release": "March 2025 manual.",
+      "governing_locator": "Cink 2 March 2025 manual printed pp. 3, 6–11",
+      "domain_conditions_defaults_exceptions": "Official model-specific manual. Generic filtration cannot inherit a universal clay-only restriction from this one product."
+    }
+  ],
+  "selector": [
+    {
+      "governing_locator": "Cink 2 March 2025 manual printed pp. 3, 6–11"
+    }
+  ],
+  "conditions": [
+    {
+      "version_or_release": "March 2025 manual.",
+      "governing_locator": "Cink 2 March 2025 manual printed pp. 3, 6–11",
+      "domain_conditions_defaults_exceptions": "Official model-specific manual. Generic filtration cannot inherit a universal clay-only restriction from this one product."
+    }
+  ],
+  "rawSHA256": "54b7f9ad5dca7576f485d86b0816b6eb4d88b3dfb97bf487ef809297c8c90844"
+}

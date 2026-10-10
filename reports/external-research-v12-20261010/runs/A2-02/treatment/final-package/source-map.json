@@ -1,0 +1,211 @@
+{
+  "schema_version": "1.0",
+  "run_id": "A2-02-treatment",
+  "stage": "investigator",
+  "source_ids_are_immutable": true,
+  "index": "sources/index.md",
+  "review_method": {
+    "handoff_basis": "All frozen source notes and the investigator's full source-map.json were read from handoff/stages/investigator; IDs and exact URLs are carried without rebinding.",
+    "critic_operation": "Independently opened the cited public primary pages, pinned GitHub source/release pages, and issue history in a read-only browser; checked surrounding passages for the claims listed below.",
+    "critic_reviewed_utc": "UNKNOWN (web retrieval tool did not expose exact per-page timestamps; review completed before 2026-10-10T05:29:28Z)",
+    "original_access_utc": "Preserved per source from the immutable investigator source map.",
+    "retained_author_recheck": {
+      "sources_rechecked": [
+        "S10",
+        "S14"
+      ],
+      "direct_primary_pages_opened": [
+        "https://github.com/ProjectMirador/mirador-annotations/issues/75",
+        "https://guides.iiif.io/using_iiif_resources/"
+      ],
+      "recorded_review_time_utc": "2026-10-10T05:35:34Z",
+      "per_page_fetch_timestamp_exposed": false,
+      "result": "S10 contains a June 21, 2023 comment that then-current master might address errors and requests testers; no released fix is established. S14 is a community guide, says UV UI locations may vary by theme, and is not evidence that UV lacks annotation capability."
+    }
+  },
+  "sources": [
+    {
+      "id": "S01",
+      "title": "IIIF Presentation API 3.0",
+      "exact_url": "https://iiif.io/api/presentation/3.0/",
+      "released_version_or_commit": "3.0.0; page identifies latest stable 3.0.0, previous 2.1.1",
+      "locator": "§§2.1–2.2, 3.2 id/width/height, 5.2–5.7; URI recommendations",
+      "access_utc": "2026-10-10T05:14:45Z",
+      "observed_operation": "Handoff: read public specification; no product or remote manifest tested. Critic: opened exact official specification and checked Canvas URI, bounds, Annotation Page, annotations/items distinction, and external resource passages.",
+      "governing_condition_default_exception": "Canvas identifiers are HTTP(S) URIs without fragments; a URI does not ensure perpetual dereferenceability. Canvas width/height define extent; spatial targets stay within bounds. Non-painting annotations use Canvas annotations pages, separate from painting items.",
+      "applicability": "Stable page targets, region bounds, transcription structure, and the boundary between presentation model and editor/storage.",
+      "limits": "Does not promise a universal annotation editor, backend, or equal feature support across clients.",
+      "evidence_file": "sources/S01-presentation-api-v3.md"
+    },
+    {
+      "id": "S02",
+      "title": "Presentation API 3 change log",
+      "exact_url": "https://iiif.io/api/presentation/3.0/change-log/",
+      "released_version_or_commit": "Companion change log for Presentation API 3.0.0",
+      "locator": "§1.2.13 and v3 language/context changes",
+      "access_utc": "2026-10-10T05:14:45Z",
+      "observed_operation": "Handoff: read change log; no conversion executed. Critic: opened exact official change log and checked the `otherContent` migration description and transcription motivation.",
+      "governing_condition_default_exception": "V2 otherContent/AnnotationList links were replaced with v3 Annotation Pages via Canvas annotations; v3 also changes context and JSON-LD forms.",
+      "applicability": "Version-aware import and conversion with source identity/version preserved.",
+      "limits": "Change log does not establish current support in either viewer.",
+      "evidence_file": "sources/S02-presentation-v3-changelog.md"
+    },
+    {
+      "id": "S03",
+      "title": "IIIF Cookbook recipe 0004: Image and Canvas with Differing Dimensions",
+      "exact_url": "https://iiif.io/api/cookbook/recipe/0004-canvas-size/",
+      "released_version_or_commit": "Recipe 0004; no numbered API release",
+      "locator": "Recipe explanation and restrictions, lines 2–17",
+      "access_utc": "2026-10-10T05:14:45Z",
+      "observed_operation": "Handoff: read public recipe. Critic: opened exact official Cookbook page and checked replacement-image rationale and aspect-ratio restriction.",
+      "governing_condition_default_exception": "Canvas space can differ from painted image pixels; the documented replacement case assumes compatible aspect ratio/mapping and warns of distortion otherwise.",
+      "applicability": "Resolution changes while keeping page geometry in a stable Canvas frame.",
+      "limits": "Does not solve crop, rotation, page-boundary, aspect-ratio, or content changes.",
+      "evidence_file": "sources/S03-canvas-coordinate-space.md"
+    },
+    {
+      "id": "S04",
+      "title": "W3C Web Annotation Data Model",
+      "exact_url": "https://www.w3.org/TR/annotation-model/",
+      "released_version_or_commit": "W3C Recommendation, 2017-02-23",
+      "locator": "§§1.1–1.3, 4.2.1; FragmentSelector and embedded TextualBody examples",
+      "access_utc": "2026-10-10T05:14:45Z",
+      "observed_operation": "Handoff: read W3C Recommendation. Critic: opened exact Recommendation and checked FragmentSelector, Media Fragments `xywh`, and TextualBody language/format passages.",
+      "governing_condition_default_exception": "FragmentSelector is recommended for a consistent segment description; consumers need not support every selector/media pairing.",
+      "applicability": "Portable plain-text body and rectangular-region record subset.",
+      "limits": "Conformance does not prove a particular client can author, render, store, or import it.",
+      "evidence_file": "sources/S04-web-annotation-model.md"
+    },
+    {
+      "id": "S05",
+      "title": "IIIF Image API 3.0",
+      "exact_url": "https://iiif.io/api/image/3.0/",
+      "released_version_or_commit": "3.0.0; page identifies latest stable 3.0.0",
+      "locator": "§§3–6 image requests, size and compliance profiles; §§7–8 CORS/authentication",
+      "access_utc": "2026-10-10T05:14:45Z",
+      "observed_operation": "Handoff: read specification, no endpoint requested. Critic: opened exact official specification and checked static implementation, listed sizes, compliance profile, CORS/authentication context.",
+      "governing_condition_default_exception": "A limited/static service need not support arbitrary sizes; service profiles/features and browser access conditions govern requests.",
+      "applicability": "Per-page external image availability, requested regions/sizes, and access testing.",
+      "limits": "No collection endpoint or image access was tested.",
+      "evidence_file": "sources/S05-image-api-v3.md"
+    },
+    {
+      "id": "S06",
+      "title": "IIIF Content State API 1.0",
+      "exact_url": "https://iiif.io/api/content-state/1.0/",
+      "released_version_or_commit": "1.0.0; page identifies latest stable 1.0.0, previous 0.9",
+      "locator": "§§1–3, especially 2.1–2.2 and 3.1",
+      "access_utc": "2026-10-10T05:14:45Z",
+      "observed_operation": "Handoff: read specification. Critic: opened exact stable specification and checked Manifest/Canvas/region transfer and client-selected mechanisms.",
+      "governing_condition_default_exception": "Content State initializes a view/resource; clients choose mechanisms they support and Canvas/region links may require Manifest context.",
+      "applicability": "Separate page/region deep-link path for compatible viewers.",
+      "limits": "Not the annotation body or annotation-bundle exchange format.",
+      "evidence_file": "sources/S06-content-state-v1.md"
+    },
+    {
+      "id": "S07",
+      "title": "Mirador 4.0.0 release",
+      "exact_url": "https://github.com/ProjectMirador/mirador/releases/tag/v4.0.0",
+      "released_version_or_commit": "v4.0.0; commit ce377cf464918db562b24ee63edf274e732327a4",
+      "locator": "Release notes, major refresh and plugin/integration migration warning",
+      "access_utc": "2026-10-10T05:14:58Z",
+      "observed_operation": "Handoff: read release page and queried exact tag read-only. Critic: opened release page and checked breaking-change/plugin text and stated dependency modernization.",
+      "governing_condition_default_exception": "Release says upgrading from v3 requires updates to custom plugins, integrations, or theming; this does not imply all external annotations fail to render.",
+      "applicability": "Authoring integration and exact dependency pinning.",
+      "limits": "Release history is not an executed compatibility test.",
+      "evidence_file": "sources/S07-mirador-v4-breaking-change.md"
+    },
+    {
+      "id": "S08",
+      "title": "Mirador 4.2.6 release identity",
+      "exact_url": "https://github.com/ProjectMirador/mirador/releases/tag/v4.2.6",
+      "released_version_or_commit": "v4.2.6; commit a84ce284bd2146bbbf9cf2e702411cbd2bbdbf4c",
+      "locator": "Pinned release page and repository release list",
+      "access_utc": "2026-10-10T05:14:58Z",
+      "observed_operation": "Handoff: read release page and queried exact tag read-only. Critic: opened pinned release and checked version, commit, and its stated 4.2.x/MUI compatibility note.",
+      "governing_condition_default_exception": "Release identifies a specific candidate; it explicitly advises this is last 4.2.x release and should be compatible with MUI 7 and 9. It does not certify MAE compatibility.",
+      "applicability": "Exact candidate to include in the proposed compatibility spike.",
+      "limits": "Release identity alone proves no deployment or plugin pairing.",
+      "evidence_file": "sources/S08-mirador-current-release.md"
+    },
+    {
+      "id": "S09",
+      "title": "ProjectMirador mirador-annotations README",
+      "exact_url": "https://github.com/ProjectMirador/mirador-annotations/blob/f2e80c7c8400f7802d4e89d88956ecdaa2546d64/README.md",
+      "released_version_or_commit": "Pinned commit f2e80c7c8400f7802d4e89d88956ecdaa2546d64",
+      "locator": "README lines 189–200",
+      "access_utc": "2026-10-10T05:14:58Z",
+      "observed_operation": "Handoff: read commit-pinned README and queried branch identity. Critic: opened exact pinned README and checked M3-only scope, explicit M4 incompatibility, and persistence options.",
+      "governing_condition_default_exception": "README states it does not work with Mirador 4; persistence requires an annotation server, with adapters for local storage/Annotot.",
+      "applicability": "Separates plugin authoring from persistent annotation service.",
+      "limits": "README statement is not a runtime compatibility test.",
+      "evidence_file": "sources/S09-mirador-annotations.md"
+    },
+    {
+      "id": "S10",
+      "title": "Mirador annotation plugin install issue #75",
+      "exact_url": "https://github.com/ProjectMirador/mirador-annotations/issues/75",
+      "released_version_or_commit": "Issue #75, opened 2023-02-09; status Open when retrieved and at critic review",
+      "locator": "Issue description and activity comments; reported ERESOLVE tree and June 21, 2023 unverified master-branch follow-up",
+      "access_utc": "2026-10-10T05:14:45Z",
+      "observed_operation": "Handoff: read public issue. Critic: opened full issue thread, checked reported dependency conflict and surrounding maintainer follow-up. Retained author directly re-opened the full issue thread; review recorded at 2026-10-10T05:35:34Z, with per-page fetch time not exposed.",
+      "governing_condition_default_exception": "The reporter shows mirador-annotations 0.5.0 React ^17 peer versus Mirador 3.3.0 React ^16.8.3. A June 21, 2023 comment says then-current master may address errors and requests testers; no released fix is established.",
+      "applicability": "Historical install-time evidence with an explicitly unverified master-branch follow-up; exact version validation before authoring.",
+      "limits": "Reporter setup and unverified master note are not a general current compatibility result.",
+      "evidence_file": "sources/S10-plugin-install-issue-75.md"
+    },
+    {
+      "id": "S11",
+      "title": "Mirador Annotation Editor README",
+      "exact_url": "https://github.com/ARVEST-APP/mirador-annotation-editor/blob/a0eb08d7c7e0c1b2e409b39dbb2a573e6bd9ad70/README.md",
+      "released_version_or_commit": "Pinned commit a0eb08d7c7e0c1b2e409b39dbb2a573e6bd9ad70",
+      "locator": "README lines 227–265, 285–289",
+      "access_utc": "2026-10-10T05:14:58Z",
+      "observed_operation": "Handoff: read commit-pinned README and queried branch identity. Critic: opened exact pinned README and checked targets and stated runtime/package examples.",
+      "governing_condition_default_exception": "README describes Mirador 4 authoring but example specifies React 18/MUI 5 and Mirador 4.0.0-alpha.2; later 4.x compatibility is not established.",
+      "applicability": "Community integration candidate to test against exact pinned Mirador release.",
+      "limits": "README compatibility language is not a test of Mirador 4.2.6.",
+      "evidence_file": "sources/S11-mae-compatibility.md"
+    },
+    {
+      "id": "S12",
+      "title": "Universal Viewer v4.4.4 configuration manual",
+      "exact_url": "https://github.com/UniversalViewer/universalviewer/blob/v4.4.4/manual/CONFIG.md",
+      "released_version_or_commit": "Tag v4.4.4, tag-pinned file",
+      "locator": "CONFIG.md downloadDialogue lines 638–661 and related download controls",
+      "access_utc": "2026-10-10T05:14:45Z",
+      "observed_operation": "Handoff: read tag-pinned manual. Critic: opened exact manual and checked current-view and whole-image high/low-resolution defaults plus configurable status.",
+      "governing_condition_default_exception": "The listed download options default to enabled in this configuration; deployment/per-format configuration and collection rights/access still govern.",
+      "applicability": "Source-image download UI and access review.",
+      "limits": "Does not establish annotation authoring, persistence, or export/import.",
+      "evidence_file": "sources/S12-universal-viewer-config.md"
+    },
+    {
+      "id": "S13",
+      "title": "Universal Viewer 4.4.4 release identity and warning",
+      "exact_url": "https://github.com/UniversalViewer/universalviewer/releases/tag/v4.4.4",
+      "released_version_or_commit": "v4.4.4; commit 2b92ff6c1a21d7c6190d614dcbc1b58d7fd2c119",
+      "locator": "Pinned v4.4.4 release; repository release list v4.4.3 entry",
+      "access_utc": "2026-10-10T05:14:58Z",
+      "observed_operation": "Handoff: read release page and queried tags read-only. Critic: opened current release and the full official releases list; verified v4.4.4 listing and v4.4.3 merge-error warning.",
+      "governing_condition_default_exception": "Project says v4.4.3 contains a merge error and should not be used; v4.4.4 is a later release. No annotation-specific fix is stated.",
+      "applicability": "Pin a candidate UV release rather than a mutable alias.",
+      "limits": "Does not establish viewer/editor behavior or any annotation repair.",
+      "evidence_file": "sources/S13-universal-viewer-release.md"
+    },
+    {
+      "id": "S14",
+      "title": "IIIF guide to using resources and image viewers",
+      "exact_url": "https://guides.iiif.io/using_iiif_resources/",
+      "released_version_or_commit": "Live community guide; no released version stated",
+      "locator": "Mirador and Universal Viewer sections; Manifest import/export guidance",
+      "access_utc": "2026-10-10T05:14:45Z",
+      "observed_operation": "Handoff: read public guide. Critic: opened guide and checked its characterization and UI-specific import/export steps; treated it as a community guide, not first-party versioned product documentation. Retained author directly re-opened guide; review recorded at 2026-10-10T05:35:34Z, with per-page fetch time not exposed.",
+      "governing_condition_default_exception": "Community guide characterizes UV as more view-oriented and gives Manifest share/import examples; it notes themes can change control text/location. Not a versioned capability guarantee and does not establish that UV lacks annotation capability. Its old Content State status is superseded by S06.",
+      "applicability": "Qualified viewer comparison lead and UI-specific Manifest handoff example; do not generalize steps to all themed deployments.",
+      "limits": "Does not prove annotation feature support, persistence, or behavior in every deployment.",
+      "evidence_file": "sources/S14-iiif-viewer-guide.md"
+    }
+  ],
+  "artifact_role": "retained final source map"
+}

@@ -1,0 +1,94 @@
+{
+  "observed_at_utc": "2026-10-10T05:34:47.949665+00:00",
+  "basis": "root observed terminal final T3 task/no pending; separate from native proof",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/critic/critique.md",
+      "bytes": 8958,
+      "sha256": "6219daf67968cea57e5abbbd9c803ea0926ba9e3580876dccaf898230f232ba7",
+      "mtime_ns": 1791609707906847880
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/critic/source-map.json",
+      "bytes": 14769,
+      "sha256": "7dab05b5298cff8f8df6d37f39ae87a1bd955e9274aef55378e815ca23175c93",
+      "mtime_ns": 1791609707907089618
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/critic/sources/index.md",
+      "bytes": 3397,
+      "sha256": "cf7746702571e5d52154383ff602d6fe2d3740607d1d6e222eeb398e9c92c930",
+      "mtime_ns": 1791609707907286814
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/investigator/discovery.md",
+      "bytes": 13400,
+      "sha256": "9e0acbb6f84b87de75f673e5199df210fca6a04bb7a74e081636d40e9db76a5e",
+      "mtime_ns": 1791608825193427356
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/investigator/draft.md",
+      "bytes": 20056,
+      "sha256": "680da18cc7736293a2b50fe9c462f63096406bd56128ca0ada75d43a463e6677",
+      "mtime_ns": 1791608995515510225
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/investigator/revealed-plan.md",
+      "bytes": 6203,
+      "sha256": "3aa40898cb794241b1931c0460c765b43b0ce73a3fb630bf14d7a928381e1728",
+      "mtime_ns": 1791608842286588343
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/investigator/source-map.json",
+      "bytes": 16141,
+      "sha256": "e8817007e485763b3b6a51aa90f9c5dc534cab14effa5f136bcf8f709da89397",
+      "mtime_ns": 1791608825193629862
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/investigator/sources/index.md",
+      "bytes": 3275,
+      "sha256": "9648bce5924dda04183fe6b1328f29ddc981c2b9dbbdfc80dc63bb388cb1ca3b",
+      "mtime_ns": 1791608825193781474
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+      "bytes": 27690,
+      "sha256": "59bafb53a834012095b00ad1b9e91e083cbc1f248d6e3a78ce05225fc6e6deef",
+      "mtime_ns": 1791610367634365055
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/source-map.json",
+      "bytes": 43190,
+      "sha256": "38d99f97a4964f78857a8c5beb9bbc66d7802bcbc69f0e37804a75a75c7c9d71",
+      "mtime_ns": 1791610239283747523
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/sources/index.md",
+      "bytes": 6767,
+      "sha256": "fec4e46f0aebaa3ca18442e9bd65e6064ba180804d64ddf00fa30f78afa94ca1",
+      "mtime_ns": 1791610239297635514
+    }
+  ],
+  "final_stage_task": {
+    "slot": "A8-02",
+    "arm": "control",
+    "stage": "reviser",
+    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A8-02-control-reviser-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A8-02-control-reviser-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A8-02-control-reviser-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A8-02-control-reviser-v1",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A8-02-control-reviser-v1:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "Completed the reviser stage. The complete proposal, source map, and navigable source index were saved before the native Goal completed.\n\n- [final.md](ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md) \u2014 covers all eight obligations and dispositions each critic finding.\n- [source-map.json](ER12_RUNTIME/runs/A8-02/control/stages/reviser/source-map.json) and [sources/index.md](ER12_RUNTIME/runs/A8-02/control/stages/reviser/sources/index.md) \u2014 preserve prior source IDs and record direct rechecks.\n- Native Goal activation and completion responses are preserved in [native-activation-response.json](ER12_RUNTIME/runs/A8-02/control/stages/reviser/native-activation-response.json) and [native-completion-response.json](ER12_RUNTIME/runs/A8-02/control/stages/reviser/native-completion-response.json).\n\nThe Goal completed with status `complete` (ID `01a12444-92d6-7f80-9c8e-d0fcabe91fb9`), using 106,978 tokens over 9m 12s. Provider/model provenance and a separate UTC terminal timestamp were not returned; both are recorded as `UNKNOWN`. Product validation was not run.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A8-02-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:2270eaeb-ad03-4ace-9a2b-d993dff53f09",
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "summary": "Completed the reviser stage. The complete proposal, source map, and navigable source index were saved before the native Goal completed.\n\n- [final.md](ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md) \u2014 covers all eight obligations and dispositions each critic finding.\n- [source-map.json](ER12_RUNTIME/runs/A8-02/control/stages/reviser/source-map.json) and [sources/index.md](ER12_RUNTIME/runs/A8-02/control/stages/reviser/sources/index.md) \u2014 preserve prior source IDs and record direct rechecks.\n- Native Goal activation and completion responses are preserved in [native-activation-response.json](ER12_RUNTIME/runs/A8-02/control/stages/reviser/native-activation-response.json) and [native-completion-response.json](ER12_RUNTIME/runs/A8-02/control/stages/reviser/native-completion-response.json).\n\nThe Goal completed with status `complete` (ID `01a12444-92d6-7f80-9c8e-d0fcabe91fb9`), using 106,978 tokens over 9m 12s. Provider/model provenance and a separate UTC terminal timestamp were not returned; both are recorded as `UNKNOWN`. Product validation was not run.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A8-02-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:2270eaeb-ad03-4ace-9a2b-d993dff53f09",
+    "waitTimedOut": false
+  }
+}

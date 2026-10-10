@@ -1,0 +1,169 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://restic.readthedocs.io/en/latest/100_references.html"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/B-DISC-M-02/treatment-v1/source-map.json",
+      "source_id": "P1-restic-references",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/B-DISC-M-02/treatment-v1/source-map.json",
+      "source_id": "P1-restic-references",
+      "existing_authored_summary_fields": {
+        "version": "restic 0.19.1-dev latest documentation; repository formats 1/2; references restic 0.18.0 mitigation"
+      }
+    },
+    {
+      "authored_source_map": "assessment/B-DISC-M-02/treatment-v1/primary-evidence/retrievals.json",
+      "source_id": "P1-restic-references",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locators": [
+        {
+          "section": "Repository Format",
+          "text_lines": [
+            89,
+            121
+          ],
+          "anchor": "repository-format"
+        },
+        {
+          "section": "Pack Format",
+          "text_lines": [
+            187,
+            243
+          ],
+          "anchor": "pack-format"
+        },
+        {
+          "section": "Unpacked Data Format / Indexing",
+          "text_lines": [
+            244,
+            309
+          ],
+          "anchor": "unpacked-data-format"
+        },
+        {
+          "section": "Keys, Encryption and MAC",
+          "text_lines": [
+            317,
+            381
+          ],
+          "anchor": "keys-encryption-and-mac"
+        },
+        {
+          "section": "Backups and Deduplication",
+          "text_lines": [
+            627,
+            639
+          ],
+          "anchor": "backups-and-deduplication"
+        },
+        {
+          "section": "Threat Model",
+          "text_lines": [
+            640,
+            736
+          ],
+          "anchor": "threat-model"
+        },
+        {
+          "section": "Changes / Repository Version 2",
+          "text_lines": [
+            737,
+            739
+          ],
+          "anchor": "repository-version-2"
+        }
+      ]
+    }
+  ],
+  "raw_sha256": "30bae0157aba94ea4f8859aaf37128e282bb7871435f6ffe7b3e7c61edca9246",
+  "original_bytes": 59674,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/B-DISC-M-02/treatment-v1/primary-evidence/P1-restic-references.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://restic.readthedocs.io/en/latest/100_references.html"
+  ],
+  "version": [
+    {
+      "version": "restic 0.19.1-dev latest documentation; repository formats 1/2; references restic 0.18.0 mitigation"
+    }
+  ],
+  "selector": [
+    {
+      "locators": [
+        {
+          "section": "Repository Format",
+          "text_lines": [
+            89,
+            121
+          ],
+          "anchor": "repository-format"
+        },
+        {
+          "section": "Pack Format",
+          "text_lines": [
+            187,
+            243
+          ],
+          "anchor": "pack-format"
+        },
+        {
+          "section": "Unpacked Data Format / Indexing",
+          "text_lines": [
+            244,
+            309
+          ],
+          "anchor": "unpacked-data-format"
+        },
+        {
+          "section": "Keys, Encryption and MAC",
+          "text_lines": [
+            317,
+            381
+          ],
+          "anchor": "keys-encryption-and-mac"
+        },
+        {
+          "section": "Backups and Deduplication",
+          "text_lines": [
+            627,
+            639
+          ],
+          "anchor": "backups-and-deduplication"
+        },
+        {
+          "section": "Threat Model",
+          "text_lines": [
+            640,
+            736
+          ],
+          "anchor": "threat-model"
+        },
+        {
+          "section": "Changes / Repository Version 2",
+          "text_lines": [
+            737,
+            739
+          ],
+          "anchor": "repository-version-2"
+        }
+      ]
+    }
+  ],
+  "conditions": "UNKNOWN",
+  "rawSHA256": "30bae0157aba94ea4f8859aaf37128e282bb7871435f6ffe7b3e7c61edca9246"
+}

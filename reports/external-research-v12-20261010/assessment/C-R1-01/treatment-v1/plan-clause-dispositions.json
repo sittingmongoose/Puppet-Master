@@ -1,0 +1,502 @@
+{
+  "schema": "er12-exact-clause-register-v1",
+  "basis": "Each complete sentence and bullet in every non-heading plan content paragraph, including embedded exact brief. Paragraph positions are stable for frozen bytes; no product duties invented from authoring/release metadata. Case/title/domain headers are identifiers, and delimiters are framing rather than product clauses.",
+  "source_sha256": "5f18fc6d7f9d8e4c30af8e806cf1d6c177fb058e94954326ee0343a5020a2e09",
+  "clauses": [
+    {
+      "id": "P04.1",
+      "exact_clause": "Keep this file outside the candidate-facing research packet.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 9,
+      "status": "PROTOCOL_UNKNOWN",
+      "candidate_locator": "Release record and frozen discovery",
+      "independent_disposition": "The assignment withholds the plan until one-time release. This packet is consistent with release after discovery, but no transcript proving absence of early access was inspected."
+    },
+    {
+      "id": "P04.2",
+      "exact_clause": "It preserves the authored request and open design opportunities.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 9,
+      "status": "PRESERVED",
+      "candidate_locator": "final.md:96",
+      "independent_disposition": "Treats the plan as the original question and open opportunities; supplies its own proposal."
+    },
+    {
+      "id": "P04.3",
+      "exact_clause": "It is not a completed research proposal, a source list, a result, or an evaluation answer key.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 9,
+      "status": "HONORED",
+      "candidate_locator": "final.md:96",
+      "independent_disposition": "Does not treat the plan as a completed answer or chosen method."
+    },
+    {
+      "id": "P04.4",
+      "exact_clause": "Nothing here selects an eventual research method.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 9,
+      "status": "HONORED",
+      "candidate_locator": "final.md:9,25,96",
+      "independent_disposition": "Provisional source/event priority; useful alternatives and redirection conditions remain."
+    },
+    {
+      "id": "P04.5",
+      "exact_clause": "No empirical validation has been executed in authoring this case.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 9,
+      "status": "PRESERVED",
+      "candidate_locator": "final.md:107,110",
+      "independent_disposition": "Authoring nonvalidation and subsequent desk-only work remain distinct; no field validation claim."
+    },
+    {
+      "id": "P06.1",
+      "exact_clause": "The original brief follows verbatim between the delimiters.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 13,
+      "status": "VERIFIED_TEXT",
+      "candidate_locator": "revealed-plan.md and original brief",
+      "independent_disposition": "Embedded original brief corresponds to supplied brief; revealed copy is byte-identical to original plan."
+    },
+    {
+      "id": "P06.2",
+      "exact_clause": "These bytes define the original obligations; later clarification must not silently replace them.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 13,
+      "status": "HONORED",
+      "candidate_locator": "final.md:96 and complete proposal",
+      "independent_disposition": "Independent clause audit uses original brief/plan; later mechanics clarifications do not replace product requirements."
+    },
+    {
+      "id": "P11.1",
+      "exact_clause": "We run a small rehearsal building beside a residential courtyard.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 25,
+      "status": "PRESERVED",
+      "candidate_locator": "final.md:5,38",
+      "independent_disposition": "Two project outcomes and courtyard/room locations retain the hypothetical setting; no dimensions are invented."
+    },
+    {
+      "id": "P11.2",
+      "exact_clause": "The bass complaints are intermittent: some happen during drum sessions, but one tenant says the worst evenings include no drumming.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 25,
+      "status": "PRESERVED",
+      "candidate_locator": "final.md:7,17,44,56",
+      "independent_disposition": "Retains the no-drumming anecdote, explicitly distinguishes no-drum from no-session and records other/mixed events."
+    },
+    {
+      "id": "P11.3",
+      "exact_clause": "Rooms were rearranged last winter; nobody kept a reliable before-and-after log.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 25,
+      "status": "PRESERVED",
+      "candidate_locator": "final.md:7,75",
+      "independent_disposition": "Dated records/interviews and concurrent changes are proposed; no reconstructed before measurement."
+    },
+    {
+      "id": "P11.4",
+      "exact_clause": "We can borrow a recorder and a basic sound meter for a later pilot, and we can temporarily move freestanding panels.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 25,
+      "status": "PRESERVED",
+      "candidate_locator": "final.md:7,27,42",
+      "independent_disposition": "Existing movable panels and recorder/basic-meter capabilities are conditional; a one-meter fallback is explicit."
+    },
+    {
+      "id": "P11.5",
+      "exact_clause": "The building manager wants a defensible investigation before spending money on more treatment.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 25,
+      "status": "MET",
+      "candidate_locator": "final.md:9,25,63",
+      "independent_disposition": "Investigation/log/source comparison precede spending; results redirect action."
+    },
+    {
+      "id": "P11.6",
+      "exact_clause": "These are hypothetical project facts, not measurements.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 25,
+      "status": "HONORED",
+      "candidate_locator": "final.md:7",
+      "independent_disposition": "Hypothetical facts remain motivation, never measured site evidence."
+    },
+    {
+      "id": "P13.1",
+      "exact_clause": "Use the available 60-minute research window to prepare a research proposal that distinguishes plausible transmission paths and identifies a useful first pilot.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 29,
+      "status": "MET",
+      "candidate_locator": "final.md:11,36,56; timing records",
+      "independent_disposition": "Complete path-hypothesis proposal and useful first pilot delivered within recorded absolute whole deadline. Completion need not occupy all 60 minutes."
+    },
+    {
+      "id": "P13.2",
+      "exact_clause": "Explain what existing research can and cannot tell us about this particular building, the mechanism behind each serious option, what implementation details or earlier installations would be worth investigating, and what would change the recommendation.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 29,
+      "status": "MET",
+      "candidate_locator": "final.md:11,25,63,75",
+      "independent_disposition": "Source reach, mechanisms, comparators/installation history and recommendation changes are substantive and bounded. See six-axis and primary evidence reviews."
+    },
+    {
+      "id": "P13.3",
+      "exact_clause": "A diagram or simple model is welcome if it clarifies the investigation; we need no renovation design.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 29,
+      "status": "HONORED",
+      "candidate_locator": "final.md:11,25",
+      "independent_disposition": "Prose causal model is sufficient; diagram is optional. No renovation design is prescribed."
+    },
+    {
+      "id": "P15.1",
+      "exact_clause": "- Keep courtyard disturbance and sound inside the rehearsal rooms as separate outcomes; a quieter recording indoors is not evidence of reduced disturbance outside.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 33,
+      "status": "MET",
+      "candidate_locator": "final.md:9,48,63",
+      "independent_disposition": "Courtyard quantitative/resident outcome remains external decision; room-only benefit is interpreted separately."
+    },
+    {
+      "id": "P15.2",
+      "exact_clause": "- Compare at least one source or scheduling intervention with at least one path or room intervention, including a useful low-cost option if expensive treatment is unsupported.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 34,
+      "status": "MET",
+      "candidate_locator": "final.md:25,50",
+      "independent_disposition": "Source/time comparison versus separate existing-panel crossover; log/source settings are useful low-cost alternatives."
+    },
+    {
+      "id": "P15.3",
+      "exact_clause": "- Explain how an observation plan could distinguish airborne transmission, structural coupling, and unrelated background events without assuming only one is present.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 35,
+      "status": "MET",
+      "candidate_locator": "final.md:11,56",
+      "independent_disposition": "Event/source covariance is source-linked only; sound/vibration coverage for structural investigation; background/no-session/mixed paths retained. No sound-only path verdict."
+    },
+    {
+      "id": "P15.4",
+      "exact_clause": "- Include the changed room arrangement and the history of a real comparable implementation as research opportunities, with the relevant differences stated.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 36,
+      "status": "MET",
+      "candidate_locator": "final.md:75",
+      "independent_disposition": "Rearrangement records and three real installations with use/build/measurement differences; construction case is history, not proposed construction."
+    },
+    {
+      "id": "P15.5",
+      "exact_clause": "- Specify a proposed pilot, its comparison condition, likely confounders, and a decision that could be made from it; label proposed checks separately from any checks actually executed during research.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 37,
+      "status": "MET",
+      "candidate_locator": "final.md:36,50,63,110",
+      "independent_disposition": "Reference/source/optional room conditions, repetition/order, confounders, decision and no-executed-pilot label all explicit."
+    },
+    {
+      "id": "P17.1",
+      "exact_clause": "- Do not recommend structural alterations, landlord enforcement, permanent installations, or construction as part of this assignment.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 41,
+      "status": "HONORED",
+      "candidate_locator": "final.md:9,25,63",
+      "independent_disposition": "No permanent installation/alteration/enforcement/construction recommendation. Conditional temporary test and future survey are permitted research possibilities."
+    },
+    {
+      "id": "P17.2",
+      "exact_clause": "- Do not invent complaint counts, acoustic measurements, building materials, or a verified cause from the anecdote.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 42,
+      "status": "HONORED",
+      "candidate_locator": "final.md:7,11,92",
+      "independent_disposition": "No site counts, levels, materials or verified cause invented. Numerical examples belong only to identified comparator studies."
+    },
+    {
+      "id": "P17.3",
+      "exact_clause": "- Do not treat a phone recording or a manufacturer absorption claim as a validated prediction of courtyard benefit.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 43,
+      "status": "HONORED",
+      "candidate_locator": "final.md:21,25,48",
+      "independent_disposition": "Recorder stays contextual unless qualified/calibrated; absorption/product guidance is not a courtyard-benefit oracle."
+    },
+    {
+      "id": "P19.1",
+      "exact_clause": "We have not supplied a floor plan, dimensions, construction details, access permissions, complaint timestamps, or the noise metric the neighbors care about.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 47,
+      "status": "RETAINED_OWNER_INPUT",
+      "candidate_locator": "final.md:38,42,92",
+      "independent_disposition": "Geometry, construction, access, timestamps, resident outcome remain missing; data collection is conditional."
+    },
+    {
+      "id": "P19.2",
+      "exact_clause": "State the consequences of these gaps and any reversible assumptions rather than completing the building by imagination.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 47,
+      "status": "MET",
+      "candidate_locator": "final.md:19,21,38,48,92",
+      "independent_disposition": "Consequences include no site model, metric/limit, sensor suitability, path or efficacy prediction. Authorized repeatable points/conditions are assumptions to establish, not invented facts."
+    },
+    {
+      "id": "P22.1",
+      "exact_clause": "Can a modest observational and reversible-intervention study identify whether there is an actionable transmission path before a building-specific engineering survey is commissioned?",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 53,
+      "status": "ADDRESSED_PROSPECTIVELY",
+      "candidate_locator": "final.md:56,63,98",
+      "independent_disposition": "A modest first pilot can establish a useful source-linked response; path attribution may require additional adequate sound/vibration evidence or a survey. No assured dominant-path answer."
+    },
+    {
+      "id": "P23.1",
+      "exact_clause": "The requested observation permissions, relevant frequency range, tolerable interference with sessions, and budget remain open.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 55,
+      "status": "RETAINED_OWNER_INPUT",
+      "candidate_locator": "final.md:92,100",
+      "independent_disposition": "Observation permission, bands, session disruption and budget are explicitly open. No assumed budget or interruption is selected."
+    },
+    {
+      "id": "P23.2",
+      "exact_clause": "The proposal may prioritize one discriminating first study while retaining alternatives and explaining what new evidence would redirect it.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 55,
+      "status": "MET",
+      "candidate_locator": "final.md:9,25,63",
+      "independent_disposition": "First event/source comparison is prioritized; panels, source relocation, conditional isolation/absorption and background log retained with redirection criteria."
+    },
+    {
+      "id": "P23.3",
+      "exact_clause": "It is not expected to identify a verified dominant path from the supplied anecdote.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 55,
+      "status": "HONORED",
+      "candidate_locator": "final.md:7,56,98",
+      "independent_disposition": "No verified dominant route is inferred from anecdotes or covariance."
+    },
+    {
+      "id": "P25.1",
+      "exact_clause": "Investigate quieter source practice or time coordination, moving equipment away from possible coupling points, reversible room-layout changes, and targeted isolation or absorption concepts.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 59,
+      "status": "MET",
+      "candidate_locator": "final.md:25",
+      "independent_disposition": "All enumerated alternatives are present with mechanism, useful role and limiting conditions."
+    },
+    {
+      "id": "P25.2",
+      "exact_clause": "Each has a useful role only under particular conditions.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 59,
+      "status": "MET",
+      "candidate_locator": "final.md:25,63",
+      "independent_disposition": "Condition column and receiver decisions prevent indiscriminate transfer of intervention effects."
+    },
+    {
+      "id": "P25.3",
+      "exact_clause": "A documented complaint-and-session log may itself be the appropriate first deliverable if events cannot be attributed.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 59,
+      "status": "MET",
+      "candidate_locator": "final.md:9,34",
+      "independent_disposition": "Log is the first deliverable when timing/attribution or repeatability is inadequate."
+    },
+    {
+      "id": "P25.4",
+      "exact_clause": "Investigate the possibility that a background source explains some events.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 59,
+      "status": "MET",
+      "candidate_locator": "final.md:17,44,56,69",
+      "independent_disposition": "Other rehearsals/plant/traffic/courtyard sources are questions; no-session and event context are measured prospectively."
+    },
+    {
+      "id": "P25.5",
+      "exact_clause": "No option is preselected.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 59,
+      "status": "HONORED",
+      "candidate_locator": "final.md:9,25,63,100",
+      "independent_disposition": "No predetermined winner; retention depends on relevant receptor response and uncertainty."
+    },
+    {
+      "id": "P27.1",
+      "exact_clause": "Seek a causal account connecting excitation, transmission, receiver location, frequency, and perception.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 63,
+      "status": "MET",
+      "candidate_locator": "final.md:11,21,38,56",
+      "independent_disposition": "Excitation/path/receiver, low-frequency spatial/instrument issues and resident perception all linked in causal proposal."
+    },
+    {
+      "id": "P27.2",
+      "exact_clause": "Differentiate reducing room reverberation from changing energy transmitted to another space.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 63,
+      "status": "MET",
+      "candidate_locator": "final.md:13,25,63",
+      "independent_disposition": "Indoor reverberation reduction is not insulation or proof of outdoor benefit."
+    },
+    {
+      "id": "P27.3",
+      "exact_clause": "Possible structural coupling and airborne leakage are research hypotheses, not established properties of this building.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 63,
+      "status": "HONORED",
+      "candidate_locator": "final.md:11,56",
+      "independent_disposition": "Airborne and structural possibilities remain compatible hypotheses."
+    },
+    {
+      "id": "P27.4",
+      "exact_clause": "Ask which measurements or interventions would discriminate between them and where a simple model would cease to be credible.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 63,
+      "status": "MET",
+      "candidate_locator": "final.md:19,23,48,56",
+      "independent_disposition": "Controlled source comparison cannot alone distinguish route; adequate vibration/air channels and coverage can investigate; absent element/junction data and non-simultaneous sound limit modelling/inference."
+    },
+    {
+      "id": "P29.1",
+      "exact_clause": "Look for accessible implementation reports with enough description to understand installation, room use, measurement position, and before-and-after comparisons.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 67,
+      "status": "MET",
+      "candidate_locator": "final.md:75",
+      "independent_disposition": "Original papers supply specific construction/use/positions and measurement comparison limits. Henry Wood Hall offers lab and before/after internal reverberation history."
+    },
+    {
+      "id": "P29.2",
+      "exact_clause": "A panel purchase story without receiver measurements has limited relevance.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 67,
+      "status": "HONORED",
+      "candidate_locator": "final.md:25,75",
+      "independent_disposition": "A panel/absorption story is not accepted as courtyard evidence; actual receiver is measured independently."
+    },
+    {
+      "id": "P29.3",
+      "exact_clause": "Investigate the previous room arrangement through future records or interviews, and identify whether moving sources, changing operating hours, or simultaneous repairs could explain apparent improvement.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 67,
+      "status": "MET",
+      "candidate_locator": "final.md:77",
+      "independent_disposition": "Dated former/current plans/photos/schedules/work orders/interviews and concurrent source/hours/repairs are explicit; recall is separate from measured comparison."
+    },
+    {
+      "id": "P29.4",
+      "exact_clause": "This assignment supplies neither a named successful installation nor an answer-bearing source.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 67,
+      "status": "HONORED",
+      "candidate_locator": "discovery.md:31; final.md:75",
+      "independent_disposition": "Investigators found their own named cases; final does not claim the assignment supplied a successful installation."
+    },
+    {
+      "id": "P31.1",
+      "exact_clause": "A future pilot could pair session timestamps, background periods, repeatable source conditions, and inside/outside observations, then test a reversible change while recording room use and weather or courtyard activity where relevant.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 71,
+      "status": "MET",
+      "candidate_locator": "final.md:42,50",
+      "independent_disposition": "Event timestamps, background/no-session, repeatable conditions, inside/outside channels and weather/room/courtyard context are proposed together."
+    },
+    {
+      "id": "P31.2",
+      "exact_clause": "The proposal must explain feasibility, sensor limitations, repeatability, and a criterion tied to the receiver outcome rather than nominate an arbitrary universal threshold.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 71,
+      "status": "MET",
+      "candidate_locator": "final.md:38,42,50,63",
+      "independent_disposition": "Meter qualification, one-meter weakness, repeatability, masking, order and outcome/uncertainty-tied decisions are explicit. No arbitrary universal pass threshold."
+    },
+    {
+      "id": "P31.3",
+      "exact_clause": "Any calculations or synthetic examples executed in the research hour must identify their assumed inputs and cannot certify actual acoustic performance.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 71,
+      "status": "NOT_TRIGGERED_HONORED",
+      "candidate_locator": "final.md:110",
+      "independent_disposition": "No calculations/synthetic performance examples claimed; no actual acoustic performance certification."
+    },
+    {
+      "id": "P32.1",
+      "exact_clause": "Authoring status: only synthetic input files have been prepared.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 73,
+      "status": "PRESERVED_AUTHORING_STATUS",
+      "candidate_locator": "final.md:7,107",
+      "independent_disposition": "The case remains hypothetical; subsequent source review does not turn synthetic authoring into field evidence."
+    },
+    {
+      "id": "P32.2",
+      "exact_clause": "No scientific search, pilot, experiment, data collection, implementation, or performance validation has been performed for this case.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 73,
+      "status": "PRESERVED_AUTHORING_STATUS",
+      "candidate_locator": "final.md:107,110",
+      "independent_disposition": "Under the Authoring status heading this refers to input creation. Later candidate desk research is explicitly reported; field/product validation still unrun."
+    },
+    {
+      "id": "P32.3",
+      "exact_clause": "Future researchers must state the actual extent of any work they execute.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 73,
+      "status": "MET_REPORTED",
+      "candidate_locator": "discovery.md:6; draft.md:104; critique.md:7; final.md:110",
+      "independent_disposition": "Each stage distinguishes desk/source review from unexecuted field/pilot work; full tool transcript authentication of all executed research is outside the bounded packet."
+    },
+    {
+      "id": "P34.1",
+      "exact_clause": "The topic is sized for a full 60-minute research-and-proposal session: substantive evidence discovery, causal reasoning, comparison of useful alternatives, implementation/history investigation, and a coherent later validation design.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 77,
+      "status": "MET",
+      "candidate_locator": "Complete discovery/draft/critique/final",
+      "independent_disposition": "Substantive discovery, causal account, alternatives, real history and prospective validation present; no minimum occupancy or extra field build imposed."
+    },
+    {
+      "id": "P34.2",
+      "exact_clause": "The proposal may contain reasoned provisional choices, but the case provides no predetermined winner.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 77,
+      "status": "HONORED",
+      "candidate_locator": "final.md:9,25,63,100",
+      "independent_disposition": "Reasoned first source/event priority is conditional; no universal treatment or guaranteed winner."
+    },
+    {
+      "id": "P34.3",
+      "exact_clause": "It requests no product build.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 77,
+      "status": "HONORED",
+      "candidate_locator": "final.md:9",
+      "independent_disposition": "No product build requested or supplied; conditional temporary research test is not a deployment."
+    },
+    {
+      "id": "P34.4",
+      "exact_clause": "Preserve brief.md and plan.md exactly for later paired freezes.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 77,
+      "status": "VERIFIED_IN_REVIEW",
+      "candidate_locator": "evidence/freeze-integrity.json",
+      "independent_disposition": "Original brief/plan and stage science left unchanged; exact copies/hashes checked as provenance only, not semantic proof."
+    },
+    {
+      "id": "P34.5",
+      "exact_clause": "C inputs remain sealed until the recipe freeze.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 77,
+      "status": "PROTOCOL_UNKNOWN",
+      "candidate_locator": "Stage release and freeze records",
+      "independent_disposition": "A one-time plan release record exists after frozen discovery; recipe-freeze prerequisite is not authenticated from permitted packet. Not a final scientific defect."
+    },
+    {
+      "id": "P34.6",
+      "exact_clause": "Input readiness does not assert that those release conditions have been satisfied.",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R1-01/plan.md",
+      "source_line": 77,
+      "status": "HONORED_WITH_PROTOCOL_UNKNOWN",
+      "candidate_locator": "Stage freeze/plan-release records",
+      "independent_disposition": "This review makes no claim that input readiness establishes release prerequisites; those remain a protocol UNKNOWN."
+    }
+  ]
+}

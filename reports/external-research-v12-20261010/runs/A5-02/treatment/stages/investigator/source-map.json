@@ -1,0 +1,271 @@
+{
+  "run_id": "A5-02-treatment",
+  "stage": "investigator",
+  "stage_assignment": "ER12_RUNTIME/runs/A5-02/treatment/stages/investigator/assignment.md",
+  "brief": "ER12_RUNTIME/runs/A5-02/treatment/inputs/brief.md",
+  "access_utc_batch_timestamp": "2026-10-10T05:10:31Z",
+  "access_timestamp_note": "Observed UTC clock immediately after retrieval batch; web retrieval tool exposes no per-page fetch timestamp.",
+  "source_id_policy": "IDs are stable within this stage. Never silently rebind an ID; append a new ID if a different source is used.",
+  "discovery_basis": "Independent public-source research from brief.md only; exact plan not read before the assigned reveal step.",
+  "sources": [
+    {
+      "id": "O01",
+      "title": "Odoo 18.0 \u2014 Process receipts and deliveries with barcodes",
+      "url": "https://www.odoo.com/documentation/18.0/applications/inventory_and_mrp/barcode/operations/receipts_deliveries.html",
+      "version_or_commit": "Versioned Odoo documentation: 18.0; product patch/build is not specified on page.",
+      "locator": "Barcode app; Scan barcodes for receipts; Validating the delivery; full page.",
+      "access_utc": "2026-10-10T05:10:31Z",
+      "observed_operation": "The documented flow opens Operations, selects an outstanding receipt, scans the transfer/products, and uses Validate to proceed with stock moves.",
+      "governing_condition_default_exception": "Barcode feature must be enabled. The described operation is real-time; page does not document offline queueing.",
+      "applicability": "Reference for shipment/receipt-first operations. It does not establish a reusable-crate identity model or offline support."
+    },
+    {
+      "id": "O02",
+      "title": "Odoo 18.0 \u2014 Operation types and commands",
+      "url": "https://www.odoo.com/documentation/18.0/applications/inventory_and_mrp/barcode/setup/operation_types.html",
+      "version_or_commit": "Versioned Odoo documentation: 18.0; product patch/build is not specified.",
+      "locator": "Use barcodes for inventory operations and commands; Receipts WHIN warning.",
+      "access_utc": "2026-10-10T05:10:31Z",
+      "observed_operation": "A receipt operation barcode WHIN always creates a new operation instance; a scheduled receipt must be opened from its individual picking barcode.",
+      "governing_condition_default_exception": "Default printed operation types include Receipts WHIN where Barcode is enabled. Exception: scan the specific picking to reach an existing scheduled receipt.",
+      "applicability": "Consequential guard for staff so a generic command is not mistaken for a shipment-specific receipt."
+    },
+    {
+      "id": "O03",
+      "title": "Odoo 18.0 \u2014 Product and location barcodes",
+      "url": "https://www.odoo.com/documentation/18.0/applications/inventory_and_mrp/barcode/setup/software.html",
+      "version_or_commit": "Versioned Odoo documentation: 18.0; product patch/build is not specified.",
+      "locator": "Barcode nomenclature; Barcode lookup; Configure product barcode.",
+      "access_utc": "2026-10-10T05:10:31Z",
+      "observed_operation": "Odoo supports arbitrary strings as internal references. Creating a new GS1 GTIN requires a GS1 Company Prefix; Stock Barcode Database lookup is a separately enabled option for UPC/EAN/ISBN.",
+      "governing_condition_default_exception": "Custom strings are internal-use references. External GTIN allocation is distinct; database lookup is opt-in.",
+      "applicability": "Supports considering a local coop namespace without buying allocations, while warning against treating SKU/GTIN lookup as crate identity."
+    },
+    {
+      "id": "O04",
+      "title": "Odoo 18.0 \u2014 Barcodes for lot and serial numbers",
+      "url": "https://www.odoo.com/documentation/18.0/applications/inventory_and_mrp/barcode/setup/serial_numbers_lots.html",
+      "version_or_commit": "Versioned Odoo documentation: 18.0; product patch/build is not specified.",
+      "locator": "Mandatory and optional scanning; damaged vendor lot/serial label tip.",
+      "access_utc": "2026-10-10T05:10:31Z",
+      "observed_operation": "Each operation type can set lot/serial scan to mandatory or optional; optional scan allows manual typing and the docs recommend optional scan where received labels may be damaged.",
+      "governing_condition_default_exception": "Setting is configurable per operation type; mandatory scan blocks manual entry for required serial/lot.",
+      "applicability": "A relevant fallback precedent for damaged labels, though it addresses serial/lot tracking, not this coop's crate identifier."
+    },
+    {
+      "id": "O05",
+      "title": "Odoo 18.0 \u2014 Default barcode nomenclature",
+      "url": "https://www.odoo.com/documentation/18.0/applications/inventory_and_mrp/barcode/operations/barcode_nomenclature.html",
+      "version_or_commit": "Versioned Odoo documentation: 18.0; product patch/build is not specified.",
+      "locator": "Default barcode nomenclature; rule matching and custom rules.",
+      "access_utc": "2026-10-10T05:10:31Z",
+      "observed_operation": "Barcode nomenclature checks rules in order; prefix and/or length patterns determine a matching rule, and custom patterns are supported.",
+      "governing_condition_default_exception": "First matching rule wins; custom rules may classify strings, but fields do not automatically populate merely because a rule exists.",
+      "applicability": "Shows parser precedence can change interpretation; reserve a non-overlapping internal namespace and test the deployed rules."
+    },
+    {
+      "id": "O06",
+      "title": "Odoo 18.0 \u2014 Connect a printer / barcode scanner",
+      "url": "https://www.odoo.com/documentation/18.0/applications/general/iot/devices/printer.html",
+      "version_or_commit": "Versioned Odoo documentation: 18.0; product patch/build is not specified.",
+      "locator": "Barcode scanner issues: scanner detected as keyboard; characters individually; incorrect keyboard layout.",
+      "access_utc": "2026-10-10T05:10:31Z",
+      "observed_operation": "Docs say some scanners are seen as USB keyboards, keyboard layout affects input, and some mobile/IoT setups may treat each character as a separate scan.",
+      "governing_condition_default_exception": "Behavior depends on scanner, keyboard layout, mobile version, and IoT pairing; a separate Is scanner setting is needed for certain IoT cases.",
+      "applicability": "Supports an inexpensive keyboard-emulating reader as a possibility, not a compatibility guarantee. Test actual model/host/language/terminator."
+    },
+    {
+      "id": "S01",
+      "title": "Snipe-IT \u2014 Asset Tags",
+      "url": "https://snipe-it.readme.io/docs/asset-tags",
+      "version_or_commit": "Rolling official documentation; page has no release binding. Current repository release context is v8.8.0 (commit 2c466fa), separately recorded as S04.",
+      "locator": "Unique asset tag; auto-incrementing IDs; prefix; Length of Asset Tags.",
+      "access_utc": "2026-10-10T05:10:31Z",
+      "observed_operation": "An asset tag must be unique within Snipe-IT; optional prefix and zero-fill are available; changing length does not update existing tags.",
+      "governing_condition_default_exception": "Zero-fill standardizes new length but is not a migration of already stored tags; mixed alphanumeric tags can confuse numeric auto-increment.",
+      "applicability": "Useful asset-ID analogue and direct warning to freeze the pilot namespace or plan explicit migration/alias handling."
+    },
+    {
+      "id": "S02",
+      "title": "Snipe-IT \u2014 Asset Labels",
+      "url": "https://snipe-it.readme.io/docs/asset-labels",
+      "version_or_commit": "Rolling official documentation; no release version shown. Page indicates an update six months before access; current release context Snipe-IT v8.8.0 is separately S04.",
+      "locator": "1D and 2D labels; QR; USB/Bluetooth scanner; barcode setting.",
+      "access_utc": "2026-10-10T05:10:31Z",
+      "observed_operation": "Labels can carry 1D and 2D codes; QR opens an in-system asset link on a mobile reader; bottom 1D barcode searches by asset tag; standard USB/Bluetooth scanner described.",
+      "governing_condition_default_exception": "Barcode feature must be enabled. QR target is the Snipe-IT asset page, not an authorized public care page.",
+      "applicability": "Supports dual-code label design as an analogue, but do not expose private asset URL or movement history through the coop's public QR."
+    },
+    {
+      "id": "S03",
+      "title": "Snipe-IT \u2014 Importing Assets",
+      "url": "https://snipe-it.readme.io/docs/importing-assets",
+      "version_or_commit": "Rolling official documentation; no release version shown.",
+      "locator": "Mapping Asset Fields; ID; Asset Tag; Serial.",
+      "access_utc": "2026-10-10T05:10:31Z",
+      "observed_operation": "For asset-tag change on import, internal ID is required; otherwise asset tag is used to look up the record. Serial is a separate field.",
+      "governing_condition_default_exception": "When an internal ID is provided it supersedes tag lookup; asset tag may be auto-generated if configured.",
+      "applicability": "Illustrates why database-row ID, physical asset tag, and manufacturer serial should not be conflated."
+    },
+    {
+      "id": "S04",
+      "title": "Snipe-IT release v8.8.0",
+      "url": "https://github.com/grokability/snipe-it/releases/tag/v8.8.0",
+      "version_or_commit": "Snipe-IT v8.8.0, tag commit 2c466fa; released 2026-09-30.",
+      "locator": "Release overview lines 153-170; What's Changed lines 311 and 326; docs-updating note line 270.",
+      "access_utc": "2026-10-10T05:10:31Z",
+      "observed_operation": "Release lists the QR text transfer fix for the New Label Engine and 1D barcode support for a Zebra label template; official mobile app and sync adapters are described as beta; release says docs are being updated.",
+      "governing_condition_default_exception": "These are features/fixes in this release; beta status does not establish stable offline event queueing.",
+      "applicability": "Provides current release context for rolling docs and confirms label output changed recently; verify exact release behavior rather than generalizing."
+    },
+    {
+      "id": "S05",
+      "title": "Snipe-IT issue #19515 \u2014 QR Code Text missing in New Label Engine",
+      "url": "https://github.com/grokability/snipe-it/issues/19515",
+      "version_or_commit": "Issue reports Snipe-IT v8.7.1; opened 2026-08-18; closed 2026-09-23 after fix commit c1d1cd1.",
+      "locator": "Description; Snipe-IT Version; linked PR and close activity.",
+      "access_utc": "2026-10-10T05:10:31Z",
+      "observed_operation": "Reporter says old QR Code Text setting was not carried into the New Label Engine; field was not visible and blank text could result in no QR output.",
+      "governing_condition_default_exception": "Reported during legacy-to-new label-engine transition; this is a specific product migration issue.",
+      "applicability": "Direct caution for QR label configuration migrations. Not a general QR or scanner defect."
+    },
+    {
+      "id": "S06",
+      "title": "Snipe-IT PR #19633 \u2014 code diff for QR text transfer",
+      "url": "https://github.com/grokability/snipe-it/pull/19633/files",
+      "version_or_commit": "Commit 1e0fc8c (change), merged commit c1d1cd1 on 2026-09-17 into develop; fix appears in v8.8.0.",
+      "locator": "SettingsController.php transition logic and labels-new-engine view diff.",
+      "access_utc": "2026-10-10T05:10:31Z",
+      "observed_operation": "When the new label engine becomes enabled from disabled, code copies stored qr_text to label2_title; explanatory UI help is removed.",
+      "governing_condition_default_exception": "Copy is performed once on the transition, not a general migration of every label field.",
+      "applicability": "Primary code-level evidence for migration behavior; test persisted config plus decoded generated samples after an engine switch."
+    },
+    {
+      "id": "S07",
+      "title": "Snipe-IT PR #19679 \u2014 1D barcode support for Zebra template",
+      "url": "https://github.com/grokability/snipe-it/pull/19679",
+      "version_or_commit": "Commit df2c3d8, merged 2026-09-23 into develop; included in v8.8.0 release notes.",
+      "locator": "PR description and merge metadata.",
+      "access_utc": "2026-10-10T05:10:31Z",
+      "observed_operation": "Adds a 1D barcode to one Zebra label template (template 18939).",
+      "governing_condition_default_exception": "Applies to the named label template, not all printers/templates.",
+      "applicability": "Evidence that specific template output can differ; print-sample checks need the actual printer/template combination."
+    },
+    {
+      "id": "G01",
+      "title": "GS1 Digital Link Quick Start Guide",
+      "url": "https://ref.gs1.org/docs/2024/digital-link-quick-start-guide",
+      "version_or_commit": "Official GS1 guide dated by URL/publication as 2024; no point version shown.",
+      "locator": "Sections 2-5: offline identifier vs web access, application identifiers, identifier vs page URL, redirects.",
+      "access_utc": "2026-10-10T05:10:31Z",
+      "observed_operation": "Guide describes a QR with GS1 Digital Link URI as parseable with GS1 identifiers offline and also followable by a generic camera as a web link; GTIN, lot/serial qualifier examples use a defined hierarchy.",
+      "governing_condition_default_exception": "GS1 application identifiers have defined rules; serial/lot qualifiers are combined with an appropriate primary key. Web target retrieval is separate from local decode.",
+      "applicability": "Analogous identifier/resolver architecture only; does not grant or establish a cooperative crate ID or justify buying an allocation."
+    },
+    {
+      "id": "G02",
+      "title": "GS1 \u2014 Redirection: from scan to content",
+      "url": "https://ref.gs1.org/docs/2024/redirection-from-scan-to-content",
+      "version_or_commit": "Official GS1 guidance, copyright 2024; no point version shown.",
+      "locator": "Pages 1-3: organizational split, redirects, domain ownership, analytics, 303 recommendation.",
+      "access_utc": "2026-10-10T05:10:31Z",
+      "observed_operation": "GS1 says identifier and information location are distinct; redirect target can move; it recommends temporary 303 redirects and describes scan services that may collect time, place, and device analytics.",
+      "governing_condition_default_exception": "Guidance assumes GS1 Digital Link URI for formal sections; outside GS1, QR shorteners/analytics are separate service choices.",
+      "applicability": "Supports web-owner governance and warns against accidental location/device analytics in the public care flow."
+    },
+    {
+      "id": "G03",
+      "title": "GS1-Conformant Resolver Standard 1.2.0",
+      "url": "https://ref.gs1.org/standards/resolver/1.2.0/GS1_Conformant_Resolver_standard_i1.2-r-2026-01-19",
+      "version_or_commit": "Release 1.2.0, ratified January 2026.",
+      "locator": "Sections 4 and 5; resolver independence, redirect behavior, 404 and HTTPS/CORS requirements.",
+      "access_utc": "2026-10-10T05:10:31Z",
+      "observed_operation": "Different conformant resolvers are not required to yield identical targets/linksets; standard defines redirect/linkset behavior and resolver description metadata.",
+      "governing_condition_default_exception": "Requirements apply to a GS1-conformant resolver and supported GS1 keys; syntactically valid identifier with no entity info returns 404.",
+      "applicability": "If a GS1 resolver is ever selected, owner must govern the resolver/domain and target. For this pilot, a simpler coop-owned HTTPS page/link is enough."
+    },
+    {
+      "id": "G04",
+      "title": "GS1 General Specifications 23.0.0",
+      "url": "https://ref.gs1.org/standards/genspecs/23.0.0/",
+      "version_or_commit": "GS1 General Specifications release 23.0.0.",
+      "locator": "QR Code symbology identifier and FNC1 / GS1 QR notes.",
+      "access_utc": "2026-10-10T05:10:31Z",
+      "observed_operation": "Standard identifies ]Q3 as symbology identifier for GS1 QR codes with leading FNC1.",
+      "governing_condition_default_exception": "This marker distinguishes a GS1-system QR path; it is metadata/format information, not a receipt event or offline queue.",
+      "applicability": "Use only if the selected decoder/parser requires GS1 symbology identification; test exact reader output."
+    },
+    {
+      "id": "Z01",
+      "title": "ZXing PR #1681 \u2014 update GS1 AIs to 2023 spec",
+      "url": "https://github.com/zxing/zxing/pull/1681",
+      "version_or_commit": "Commit 557b5fc; merged 2023-09-04; milestone 3.5.3.",
+      "locator": "Conversation description, compatibility note, milestone.",
+      "access_utc": "2026-10-10T05:10:31Z",
+      "observed_operation": "Parser updates length limits where GS1 spec increased lengths; where lengths decreased or identifiers were removed, code remains permissive for backward compatibility.",
+      "governing_condition_default_exception": "Applies to ZXing's GS1 AI parsing and its 2023 spec update; not all barcode libraries.",
+      "applicability": "Format-migration example; pin parser version and test supported current plus legacy payloads only if adopting GS1 parsing."
+    },
+    {
+      "id": "Z02",
+      "title": "ZXing release 3.5.3",
+      "url": "https://github.com/zxing/zxing/releases/tag/zxing-3.5.3",
+      "version_or_commit": "ZXing 3.5.3, tag commit f0f1a94.",
+      "locator": "What's Changed; GS1 AIs update PR #1681.",
+      "access_utc": "2026-10-10T05:10:31Z",
+      "observed_operation": "Release history lists the GS1 AI update.",
+      "governing_condition_default_exception": "Applies to pinned ZXing 3.5.3 Java barcode library release.",
+      "applicability": "Release context confirms parser migration was shipped; it does not establish the cooperative's runtime library."
+    },
+    {
+      "id": "Z03",
+      "title": "ZXing PR #1839 \u2014 preserve QRCodeMultiReader symbology identifier",
+      "url": "https://github.com/zxing/zxing/pull/1839",
+      "version_or_commit": "Commit 34588d8; merged 2024-08-02.",
+      "locator": "Background/change/technical details.",
+      "access_utc": "2026-10-10T05:10:31Z",
+      "observed_operation": "PR reports QRCodeMultiReader dropped SYMBOLOGY_IDENTIFIER metadata; change adds it to result metadata for GS1 QR cases such as ]Q3.",
+      "governing_condition_default_exception": "Relevant when using ZXing QRCodeMultiReader and downstream processing depends on the symbology marker; single-reader and other scanner stacks differ.",
+      "applicability": "Narrow decoder behavior change; propose exact metadata regression test only if this code path is selected."
+    },
+    {
+      "id": "Z04",
+      "title": "ZXing release 3.5.4",
+      "url": "https://github.com/zxing/zxing/releases/tag/zxing-3.5.4",
+      "version_or_commit": "ZXing 3.5.4, tag commit f651b0a.",
+      "locator": "What's Changed; fix for PR #1839.",
+      "access_utc": "2026-10-10T05:10:31Z",
+      "observed_operation": "Release history lists fix for SYMBOLOGY_IDENTIFIER loss in QRCodeMultiReader.",
+      "governing_condition_default_exception": "Applies to pinned ZXing 3.5.4 release.",
+      "applicability": "Release context for a narrow decoder regression, not a general scanner guarantee."
+    },
+    {
+      "id": "S08",
+      "title": "Snipe-IT \u2014 Managing Assets",
+      "url": "https://snipe-it.readme.io/docs/managing-assets",
+      "version_or_commit": "Rolling official documentation; no release version shown; accessed 2026-10-10.",
+      "locator": "Best Practices \u2014 Checking out assets to non-people.",
+      "access_utc": "2026-10-10T05:15:00Z",
+      "observed_operation": "Snipe-IT says asset checkouts can target a location or another asset but discourages non-person targets because they cannot be accountable for damage/loss.",
+      "governing_condition_default_exception": "This is stated best-practice guidance, not a technical prohibition; location checkout remains possible.",
+      "applicability": "A depot-as-location checkout is supported but may not fit custody accountability. Keep movement/receipt event modeling explicit rather than mapping every depot move to a checkout."
+    },
+    {
+      "id": "S09",
+      "title": "Snipe-IT \u2014 Overview",
+      "url": "https://snipe-it.readme.io/docs/overview",
+      "version_or_commit": "Rolling official documentation; no release version shown; accessed 2026-10-10.",
+      "locator": "Assets; Asset Tags; Checkin/Checkout.",
+      "access_utc": "2026-10-10T05:15:00Z",
+      "observed_operation": "Snipe-IT describes unique asset tags and check-in/check-out as its asset custody process; location checkout is possible but not recommended for accountability.",
+      "governing_condition_default_exception": "Docs discuss ordinary asset checkout lifecycle; no coop-specific shipment receipt behavior or offline queue is specified.",
+      "applicability": "Supports Snipe-IT as an asset workflow analogue while bounding its fit for crate movements."
+    }
+  ],
+  "additional_retrieval_batches": [
+    {
+      "access_utc": "2026-10-10T05:15:00Z",
+      "note": "Clock timestamp immediately after retrieving two rolling Snipe-IT asset workflow documentation pages."
+    }
+  ]
+}

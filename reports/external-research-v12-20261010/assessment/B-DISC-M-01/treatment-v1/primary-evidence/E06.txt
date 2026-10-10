@@ -1,0 +1,140 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://aria2.github.io/manual/en/html/aria2c.html"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "source_id": "E06",
+      "existing_authored_summary_fields": {
+        "version": "aria2 1.37.0 documentation"
+      }
+    },
+    {
+      "authored_source_map": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/retrievals.json",
+      "source_id": "E06",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locators": [
+        {
+          "section": "Description: multi-source downloads and chunk validation",
+          "url": "https://aria2.github.io/manual/en/html/aria2c.html#description",
+          "text_lines": [
+            140,
+            148
+          ]
+        },
+        {
+          "section": "--check-integrity",
+          "url": "https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-check-integrity",
+          "text_lines": [
+            188,
+            199
+          ]
+        },
+        {
+          "section": "--split",
+          "url": "https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-split"
+        },
+        {
+          "section": "--allow-piece-length-change",
+          "url": "https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-allow-piece-length-change",
+          "text_lines": [
+            956,
+            960
+          ]
+        },
+        {
+          "section": "--realtime-chunk-checksum",
+          "url": "https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-realtime-chunk-checksum",
+          "text_lines": [
+            1290,
+            1293
+          ]
+        },
+        {
+          "section": "Control file",
+          "url": "https://aria2.github.io/manual/en/html/aria2c.html#control-file",
+          "text_lines": [
+            1609,
+            1623
+          ]
+        }
+      ]
+    }
+  ],
+  "raw_sha256": "091a71c4f89f0496aab292f0dd90cd793b3d5e159d33a128bc85d8abcb544e9d",
+  "original_bytes": 134308,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E06.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://aria2.github.io/manual/en/html/aria2c.html"
+  ],
+  "version": [
+    {
+      "version": "aria2 1.37.0 documentation"
+    }
+  ],
+  "selector": [
+    {
+      "locators": [
+        {
+          "section": "Description: multi-source downloads and chunk validation",
+          "url": "https://aria2.github.io/manual/en/html/aria2c.html#description",
+          "text_lines": [
+            140,
+            148
+          ]
+        },
+        {
+          "section": "--check-integrity",
+          "url": "https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-check-integrity",
+          "text_lines": [
+            188,
+            199
+          ]
+        },
+        {
+          "section": "--split",
+          "url": "https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-split"
+        },
+        {
+          "section": "--allow-piece-length-change",
+          "url": "https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-allow-piece-length-change",
+          "text_lines": [
+            956,
+            960
+          ]
+        },
+        {
+          "section": "--realtime-chunk-checksum",
+          "url": "https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-realtime-chunk-checksum",
+          "text_lines": [
+            1290,
+            1293
+          ]
+        },
+        {
+          "section": "Control file",
+          "url": "https://aria2.github.io/manual/en/html/aria2c.html#control-file",
+          "text_lines": [
+            1609,
+            1623
+          ]
+        }
+      ]
+    }
+  ],
+  "conditions": "UNKNOWN",
+  "rawSHA256": "091a71c4f89f0496aab292f0dd90cd793b3d5e159d33a128bc85d8abcb544e9d"
+}

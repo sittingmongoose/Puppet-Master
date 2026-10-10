@@ -1,0 +1,98 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://support.google.com/calendar/answer/37083?hl=en-CA"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A4-02/control-v1/source-map.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {
+        "version": "Current Google Calendar Help, retrieved 2026-10-10; SaaS build undisclosed",
+        "conditions": "Public iCal address works only if calendar is public. Public content may be found outside the orchestra; room disclosure is an owner decision."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A4-02/control-v1/source-map.json",
+      "source_id": "S03",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/A4-02/control-v1/evidence/retrievals.json",
+      "source_id": "S03",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": "How public calendars work; Share your public calendar; Add events to a public calendar"
+    },
+    {
+      "text_lines": [
+        [
+          18,
+          36
+        ],
+        [
+          43,
+          60
+        ]
+      ]
+    },
+    {
+      "text_lines": 110
+    },
+    {
+      "text_lines": 110
+    }
+  ],
+  "raw_sha256": "3f6e6f4e9e2acb6e6488ced7e31758e966d64bf813116d5789fed2e236e59581",
+  "original_bytes": 5221,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A4-02/control-v1/evidence/S03.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://support.google.com/calendar/answer/37083?hl=en-CA"
+  ],
+  "version": [
+    {
+      "version": "Current Google Calendar Help, retrieved 2026-10-10; SaaS build undisclosed",
+      "conditions": "Public iCal address works only if calendar is public. Public content may be found outside the orchestra; room disclosure is an owner decision."
+    }
+  ],
+  "selector": [
+    {
+      "locator": "How public calendars work; Share your public calendar; Add events to a public calendar"
+    },
+    {
+      "text_lines": [
+        [
+          18,
+          36
+        ],
+        [
+          43,
+          60
+        ]
+      ]
+    },
+    {
+      "text_lines": 110
+    },
+    {
+      "text_lines": 110
+    }
+  ],
+  "conditions": [
+    {
+      "version": "Current Google Calendar Help, retrieved 2026-10-10; SaaS build undisclosed",
+      "conditions": "Public iCal address works only if calendar is public. Public content may be found outside the orchestra; room disclosure is an owner decision."
+    }
+  ],
+  "rawSHA256": "3f6e6f4e9e2acb6e6488ced7e31758e966d64bf813116d5789fed2e236e59581"
+}

@@ -1,0 +1,33 @@
+{
+  "saved_at_utc": "2026-10-10T05:36:44.521702+00:00",
+  "type": "local filesystem save-order attestation, separate from host dynamic tool proof",
+  "phase": "before native update_goal(status=complete)",
+  "files": [
+    {
+      "path": "ER12_RUNTIME/mechanics/native-observation-cohort3/SELECTION.json",
+      "sha256": "79c5ac639769dcf69140fb7a1bc482eec29360b5ada5e544acfe3ac29bb7eb9f",
+      "size_bytes": 202628,
+      "mtime_ns": 1791610369019828988
+    },
+    {
+      "path": "ER12_RUNTIME/mechanics/native-observation-cohort3/SUMMARY.json",
+      "sha256": "1fab1308ebbfcf503ad14879c048f84919138e285338e635788478b58710a32e",
+      "size_bytes": 302239,
+      "mtime_ns": 1791610604512730737
+    },
+    {
+      "path": "ER12_RUNTIME/mechanics/native-observation-cohort3/TIMELINES.json",
+      "sha256": "430f00020d10404e33dd9fafae7f648b83a735c130bc59fe81d8cf410add9e45",
+      "size_bytes": 2201804,
+      "mtime_ns": 1791610604500392031
+    },
+    {
+      "path": "ER12_RUNTIME/mechanics/native-observation-cohort3/README.md",
+      "sha256": "9e754b46548cc0930b63888b1a680868d2b18401d930a50e0192f3258f51f7ef",
+      "mtime_ns": 1791610559426243236
+    }
+  ],
+  "verification": "60 contexts; 180 base reads; 12 focused reads; <=2 focused per context; all raw SHA pointers validated; tail offsets validated",
+  "self_host_dynamic_tool_proof": "UNKNOWN",
+  "timestamps_limitation": "Contexts 5-24 finish timestamps are batch upper bounds; exact return UNKNOWN."
+}

@@ -1,0 +1,118 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://docs.aws.amazon.com/AmazonS3/latest/userguide/upload-objects.html"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A4-01/control-v1/source-map.json",
+      "source_id": "I-AWS-01",
+      "existing_authored_summary_fields": {
+        "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A4-01/control-v1/evidence/retrieval-manifest.json",
+      "source_id": "I-AWS-01",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "text_lines": 205
+    },
+    {
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "Depending on the size",
+          "saved_text_lines": [
+            18
+          ]
+        },
+        {
+          "anchor": "single object up to 5 GB",
+          "saved_text_lines": [
+            21
+          ]
+        },
+        {
+          "anchor": "160 GB",
+          "saved_text_lines": [
+            12,
+            13,
+            23
+          ]
+        },
+        {
+          "anchor": "50 TB",
+          "saved_text_lines": [
+            26,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "text_lines": 205
+    }
+  ],
+  "raw_sha256": "902b2ee6b84a09d4ab1b1da623de15bd19ca074513363ae36ff41e2c6c9a029b",
+  "original_bytes": 13749,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A4-01/control-v1/evidence/I-AWS-01.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://docs.aws.amazon.com/AmazonS3/latest/userguide/upload-objects.html"
+  ],
+  "version": "UNKNOWN",
+  "selector": [
+    {
+      "text_lines": 205
+    },
+    {
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "Depending on the size",
+          "saved_text_lines": [
+            18
+          ]
+        },
+        {
+          "anchor": "single object up to 5 GB",
+          "saved_text_lines": [
+            21
+          ]
+        },
+        {
+          "anchor": "160 GB",
+          "saved_text_lines": [
+            12,
+            13,
+            23
+          ]
+        },
+        {
+          "anchor": "50 TB",
+          "saved_text_lines": [
+            26,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "text_lines": 205
+    }
+  ],
+  "conditions": [
+    {
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service."
+    }
+  ],
+  "rawSHA256": "902b2ee6b84a09d4ab1b1da623de15bd19ca074513363ae36ff41e2c6c9a029b"
+}

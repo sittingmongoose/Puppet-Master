@@ -1,0 +1,62 @@
+[
+  {
+    "source_id": "P1",
+    "url": "https://www.postgresql.org/docs/17/sql-insert.html",
+    "retrieval_operation": "independent Python standard-library urllib HTTPS GET; HTML saved without execution",
+    "started_utc": "2026-10-10T05:24:05.223520+00:00",
+    "completed_utc": "2026-10-10T05:24:05.716597+00:00",
+    "http_status": 200,
+    "effective_url": "https://www.postgresql.org/docs/17/sql-insert.html",
+    "headers": {
+      "Server": "nginx",
+      "Date": "Sat, 10 Oct 2026 00:14:24 GMT",
+      "Content-Type": "text/html; charset=utf-8",
+      "X-Frame-Options": "DENY",
+      "Content-Security-Policy": "default-src 'self' ; img-src * data: ; script-src 'unsafe-eval' 'self' www.google-analytics.com ssl.google-analytics.com www.googletagmanager.com tagmanager.google.com data: ; connect-src 'self' www.google-analytics.com ssl.google-analytics.com ; media-src 'self' ; style-src 'self' fonts.googleapis.com tagmanager.google.com 'unsafe-inline' ; font-src 'self' fonts.gstatic.com data: ; frame-ancestors 'none' ; report-uri https://csp-report.postgresql.org/",
+      "Cross-Origin-Opener-Policy": "same-origin",
+      "X-XSS-Protection": "1; mode=block",
+      "Vary": "Accept-Encoding",
+      "X-Varnish": "990975709 961745792",
+      "Age": "18580",
+      "Via": "1.1 zakdorn (Varnish/9.0)",
+      "Accept-Ranges": "bytes",
+      "Strict-Transport-Security": "max-age=31536000",
+      "Connection": "close",
+      "Transfer-Encoding": "chunked"
+    },
+    "html_path": "ER12_RUNTIME/assessment/B-FINAL-M-02/control-v1/primary-evidence/pg17-insert.html",
+    "html_sha256": "f18feb692580770ae7a17537db2b922a44fc0119be4dc4ff38537502307e2cba",
+    "text_path": "ER12_RUNTIME/assessment/B-FINAL-M-02/control-v1/primary-evidence/pg17-insert.txt",
+    "text_sha256": "4c5a39a34b2282b734a2168c22c8d935125d5684a1c2eca518e14a0ab56ed31b"
+  },
+  {
+    "source_id": "P2",
+    "url": "https://www.postgresql.org/docs/17/transaction-iso.html",
+    "retrieval_operation": "independent Python standard-library urllib HTTPS GET; HTML saved without execution",
+    "started_utc": "2026-10-10T05:24:05.727285+00:00",
+    "completed_utc": "2026-10-10T05:24:06.224549+00:00",
+    "http_status": 200,
+    "effective_url": "https://www.postgresql.org/docs/17/transaction-iso.html",
+    "headers": {
+      "Server": "nginx",
+      "Date": "Sat, 10 Oct 2026 05:08:42 GMT",
+      "Content-Type": "text/html; charset=utf-8",
+      "X-Frame-Options": "DENY",
+      "Content-Security-Policy": "default-src 'self' ; img-src * data: ; script-src 'unsafe-eval' 'self' www.google-analytics.com ssl.google-analytics.com www.googletagmanager.com tagmanager.google.com data: ; connect-src 'self' www.google-analytics.com ssl.google-analytics.com ; media-src 'self' ; style-src 'self' fonts.googleapis.com tagmanager.google.com 'unsafe-inline' ; font-src 'self' fonts.gstatic.com data: ; frame-ancestors 'none' ; report-uri https://csp-report.postgresql.org/",
+      "Cross-Origin-Opener-Policy": "same-origin",
+      "X-XSS-Protection": "1; mode=block",
+      "Vary": "Accept-Encoding",
+      "X-Varnish": "971018015 982975560",
+      "Age": "922",
+      "Via": "1.1 zetar (Varnish/9.0)",
+      "Accept-Ranges": "bytes",
+      "Strict-Transport-Security": "max-age=31536000",
+      "Connection": "close",
+      "Transfer-Encoding": "chunked"
+    },
+    "html_path": "ER12_RUNTIME/assessment/B-FINAL-M-02/control-v1/primary-evidence/pg17-transaction-isolation.html",
+    "html_sha256": "b4c2f29cc4284f5fd860da91737055431dd7e742861b22218b1369e8933e6034",
+    "text_path": "ER12_RUNTIME/assessment/B-FINAL-M-02/control-v1/primary-evidence/pg17-transaction-isolation.txt",
+    "text_sha256": "6ad699f0367912f60030085648ca271fe3d0d41d6d4424f12ed110238dd35bad"
+  }
+]

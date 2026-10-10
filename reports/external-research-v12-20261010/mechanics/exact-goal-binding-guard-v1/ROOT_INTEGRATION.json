@@ -1,0 +1,14 @@
+{
+  "version": "exact-goal-binding-guard-v1",
+  "root_only": true,
+  "order": ["existing stdSpec", "existing clarifySpec", "exactGoalBindingSpec overlay"],
+  "eligibility": "exclusively owned unused unexpired future stage only",
+  "argv_template": ["python3", "ER12_RUNTIME/mechanics/exact-goal-binding-guard-v1/overlay.py", "--stage-dir", "<ABSOLUTE_UNUSED_FUTURE_STAGE>"],
+  "use_returned_updated_args": true,
+  "actual_existing_stage_overlay_runs": 0,
+  "dispatch_performed": false,
+  "provider_calls_performed_by_scripts": false,
+  "symmetric_future_mechanics_only": true,
+  "scientific_qualification": false,
+  "original_v1_transformer_sha256": "40d7052fffa5e8830c8c738c751755a0bfb25a63fa68ee4f2518a30dc1716594"
+}

@@ -1,0 +1,95 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://support.datacite.org/docs/versioning"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A7-02/treatment-v1/source-map.json",
+      "source_id": "S20",
+      "existing_authored_summary_fields": {
+        "independently_observed_version": "Live official guidance accessed 2026-10-10; exact edition not exposed",
+        "reviewer_observation": "Same DOI may cover minor updated content; major changes are recommended to get a new DOI plus relation. Stewards decide major/minor; a canonical DOI may represent multiple versions.",
+        "condition_default_exception_domain": "This governs DataCite stewardship practices, not permission to reuse a DOI for unrelated works. Final preserves the domain and does not make a universal scholarly-version claim."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A7-02/treatment-v1/source-map.json",
+      "source_id": "S20",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/A7-02/treatment-v1/evidence/retrievals.json",
+      "source_id": "S20",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": "Minor/major changes; canonical DOI"
+    },
+    {
+      "local_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S20.txt",
+          "first_line": 273,
+          "last_line": 301
+        }
+      ]
+    },
+    {
+      "text_lines": 347
+    },
+    {
+      "text_lines": 347
+    }
+  ],
+  "raw_sha256": "02137a978119b7a202d11b57bb1cfaaa3244402b11df4008a90a15c39d5b44e4",
+  "original_bytes": 19631,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A7-02/treatment-v1/evidence/S20.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://support.datacite.org/docs/versioning"
+  ],
+  "version": [
+    {
+      "independently_observed_version": "Live official guidance accessed 2026-10-10; exact edition not exposed",
+      "reviewer_observation": "Same DOI may cover minor updated content; major changes are recommended to get a new DOI plus relation. Stewards decide major/minor; a canonical DOI may represent multiple versions.",
+      "condition_default_exception_domain": "This governs DataCite stewardship practices, not permission to reuse a DOI for unrelated works. Final preserves the domain and does not make a universal scholarly-version claim."
+    }
+  ],
+  "selector": [
+    {
+      "locator": "Minor/major changes; canonical DOI"
+    },
+    {
+      "local_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S20.txt",
+          "first_line": 273,
+          "last_line": 301
+        }
+      ]
+    },
+    {
+      "text_lines": 347
+    },
+    {
+      "text_lines": 347
+    }
+  ],
+  "conditions": [
+    {
+      "independently_observed_version": "Live official guidance accessed 2026-10-10; exact edition not exposed",
+      "reviewer_observation": "Same DOI may cover minor updated content; major changes are recommended to get a new DOI plus relation. Stewards decide major/minor; a canonical DOI may represent multiple versions.",
+      "condition_default_exception_domain": "This governs DataCite stewardship practices, not permission to reuse a DOI for unrelated works. Final preserves the domain and does not make a universal scholarly-version claim."
+    }
+  ],
+  "rawSHA256": "02137a978119b7a202d11b57bb1cfaaa3244402b11df4008a90a15c39d5b44e4"
+}

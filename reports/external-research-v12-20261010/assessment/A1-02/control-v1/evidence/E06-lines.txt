@@ -1,0 +1,80 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://learn.microsoft.com/en-us/graph/api/event-list-instances?view=graph-rest-1.0"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A1-02/control-v1/source-map.json",
+      "source_id": "E06",
+      "existing_authored_summary_fields": {
+        "version_or_edition": "Microsoft Graph v1.0; live first-party list instances contract"
+      }
+    },
+    {
+      "authored_source_map": "assessment/A1-02/control-v1/evidence/retrievals.json",
+      "source_id": "E06",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A1-02/control-v1/evidence/E06-lines.txt"
+    },
+    {
+      "line_text_sha256": "fea55b68cf1ccbfb367ce464827b0f72cdb8f3c4f23ecd476edad0e4992dee75"
+    },
+    {
+      "line_count": 291
+    },
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A1-02/control-v1/evidence/E06-lines.txt"
+    },
+    {
+      "line_text_sha256": "fea55b68cf1ccbfb367ce464827b0f72cdb8f3c4f23ecd476edad0e4992dee75"
+    },
+    {
+      "line_count": 291
+    }
+  ],
+  "raw_sha256": "fea55b68cf1ccbfb367ce464827b0f72cdb8f3c4f23ecd476edad0e4992dee75",
+  "original_bytes": 14210,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A1-02/control-v1/evidence/E06-lines.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://learn.microsoft.com/en-us/graph/api/event-list-instances?view=graph-rest-1.0"
+  ],
+  "version": [
+    {
+      "version_or_edition": "Microsoft Graph v1.0; live first-party list instances contract"
+    }
+  ],
+  "selector": [
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A1-02/control-v1/evidence/E06-lines.txt"
+    },
+    {
+      "line_text_sha256": "fea55b68cf1ccbfb367ce464827b0f72cdb8f3c4f23ecd476edad0e4992dee75"
+    },
+    {
+      "line_count": 291
+    },
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A1-02/control-v1/evidence/E06-lines.txt"
+    },
+    {
+      "line_text_sha256": "fea55b68cf1ccbfb367ce464827b0f72cdb8f3c4f23ecd476edad0e4992dee75"
+    },
+    {
+      "line_count": 291
+    }
+  ],
+  "conditions": "UNKNOWN",
+  "rawSHA256": "fea55b68cf1ccbfb367ce464827b0f72cdb8f3c4f23ecd476edad0e4992dee75"
+}

@@ -1,0 +1,95 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://openrefine.org/docs/technical-reference/reconciliation-api"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A7-02/treatment-v1/source-map.json",
+      "source_id": "S14",
+      "existing_authored_summary_fields": {
+        "independently_observed_version": "Manual updated 2026-06-06; API v0.2",
+        "reviewer_observation": "A service returns ranked potential entities in one identifier space, with optional type/property constraints and previews. API v0.2 is supported since OpenRefine 3.3.",
+        "condition_default_exception_domain": "This is a matching/search protocol, not a scholarly resolver or authoritative correction service."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A7-02/treatment-v1/source-map.json",
+      "source_id": "S14",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/A7-02/treatment-v1/evidence/retrievals.json",
+      "source_id": "S14",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": "API definition; API versions supported"
+    },
+    {
+      "local_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S14.txt",
+          "first_line": 32,
+          "last_line": 55
+        }
+      ]
+    },
+    {
+      "text_lines": 90
+    },
+    {
+      "text_lines": 90
+    }
+  ],
+  "raw_sha256": "31a15e277c69f8e3a44b211ffa8c57a6aef210a24141bb514c0698daa9f086fe",
+  "original_bytes": 6055,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A7-02/treatment-v1/evidence/S14.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://openrefine.org/docs/technical-reference/reconciliation-api"
+  ],
+  "version": [
+    {
+      "independently_observed_version": "Manual updated 2026-06-06; API v0.2",
+      "reviewer_observation": "A service returns ranked potential entities in one identifier space, with optional type/property constraints and previews. API v0.2 is supported since OpenRefine 3.3.",
+      "condition_default_exception_domain": "This is a matching/search protocol, not a scholarly resolver or authoritative correction service."
+    }
+  ],
+  "selector": [
+    {
+      "locator": "API definition; API versions supported"
+    },
+    {
+      "local_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S14.txt",
+          "first_line": 32,
+          "last_line": 55
+        }
+      ]
+    },
+    {
+      "text_lines": 90
+    },
+    {
+      "text_lines": 90
+    }
+  ],
+  "conditions": [
+    {
+      "independently_observed_version": "Manual updated 2026-06-06; API v0.2",
+      "reviewer_observation": "A service returns ranked potential entities in one identifier space, with optional type/property constraints and previews. API v0.2 is supported since OpenRefine 3.3.",
+      "condition_default_exception_domain": "This is a matching/search protocol, not a scholarly resolver or authoritative correction service."
+    }
+  ],
+  "rawSHA256": "31a15e277c69f8e3a44b211ffa8c57a6aef210a24141bb514c0698daa9f086fe"
+}

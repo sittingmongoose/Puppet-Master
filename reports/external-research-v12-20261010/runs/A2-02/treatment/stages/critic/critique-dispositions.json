@@ -1,0 +1,23 @@
+[
+  {
+    "id": "C01",
+    "classification": "minor locator/wording",
+    "draft_locator": "draft.md — Viewer comparison and integration boundary; S14; Universal Viewer row",
+    "criticism": "The high-level UV view-oriented and Manifest handoff description rests on S14, a community IIIF guide rather than versioned first-party product documentation. The draft otherwise appropriately treats UV annotation rendering and persistence as unproven.",
+    "evidence": [
+      "S14: https://guides.iiif.io/using_iiif_resources/ (Mirador and UV sections; live community guide)",
+      "S12: https://github.com/UniversalViewer/universalviewer/blob/v4.4.4/manual/CONFIG.md (download controls/defaults; not annotation authoring or persistence)"
+    ],
+    "requested_treatment": "Keep the guide attribution explicit and avoid generalizing its UI steps to all UV deployments; do not infer that UV lacks annotation capability without a direct check."
+  },
+  {
+    "id": "C02",
+    "classification": "minor locator/wording",
+    "draft_locator": "draft.md — Viewer comparison and integration boundary, Mirador issue #75 paragraph; S10",
+    "criticism": "The issue snapshot records the original install error but omits a 2023 follow-up saying then-current Mirador master may already address the errors and requesting testers. That comment is not proof of a released fix, so the draft’s caution is sound; the history summary can preserve this qualification.",
+    "evidence": [
+      "https://github.com/ProjectMirador/mirador-annotations/issues/75 (April 19, 2023 follow-up; unverified master-branch possibility)"
+    ],
+    "requested_treatment": "Mention the unverified master-branch follow-up as such; retain exact-version validation and do not claim the issue was fixed."
+  }
+]

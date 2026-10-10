@@ -1,0 +1,390 @@
+{
+  "schema_version": "ER12-independent-assessment-source-map-v1",
+  "slot": "C-R1-01",
+  "arm": "control",
+  "independence": "All semantic judgments are reviewer judgments; carried maps supplied identities, not verification. Only this assigned pipeline was inspected.",
+  "records": [
+    {
+      "source_id": "S01",
+      "title": "ISO 1996-2:2017 — Determination of environmental sound pressure levels",
+      "exact_url": "https://www.iso.org/standard/59766.html",
+      "released_version": "ISO 1996-2:2017, edition 3; official record confirmed 2026; lifecycle also contains revision entries.",
+      "reviewer_retrieval": "Independent web open/search plus separate HTTP retrieval attempt; see captures/HTTP logs",
+      "evidence_depth": "Official public abstract/lifecycle",
+      "local_evidence_path": "ER12_RUNTIME/assessment/C-R1-01/control-v1/evidence/web_iso.txt",
+      "local_evidence_sha256": "3a1cbe3ceac7a81f511e986eca2f7029629b32f758ad2d10875231c463b0c2b2",
+      "locator": "ISO 1996-2 abstract L45–47; confirmation L24 and lifecycle L139–147",
+      "exact_subject_operation_units_domain": "Environmental sound-pressure determination, principally outdoors, with uncertainty tied to chosen measurement effort.",
+      "conditions_exceptions_applicability": "No maximum uncertainty or resident target is imposed; some indoor guidance also exists. A courtyard comparison is an appropriate use of the framework, not proof of site cause or legal compliance.",
+      "default": "Not applicable: no API/configuration default claimed",
+      "semantic_verdict": "SUPPORTED_WITH_STATED_SCOPE",
+      "candidate_locators": [
+        "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:43"
+      ],
+      "capture_saved_at_utc": "2026-10-10T05:44:23.606980+00:00",
+      "access_utc": "2026-10-10T05:38:32.436722+00:00",
+      "access_time_basis": "HTTP attempt start where present (including failed direct attempts). Exact successful web retrieval timestamp not exposed; web operation occurred after reviewer start and before local capture save. See retrieval logs for outcome and evidence_depth for successful route.",
+      "web_retrieval_window_utc": {
+        "not_before": "2026-10-10T05:35:56Z",
+        "not_after": "2026-10-10T05:44:23.606980+00:00"
+      }
+    },
+    {
+      "source_id": "S02",
+      "title": "ISO 16283-1:2014 — Airborne sound insulation between rooms",
+      "exact_url": "https://www.iso.org/standard/55997.html",
+      "released_version": "ISO 16283-1:2014, edition 1; Amendment 1:2017; confirmed 2025.",
+      "reviewer_retrieval": "Independent web open/search plus separate HTTP retrieval attempt; see captures/HTTP logs",
+      "evidence_depth": "Official public abstract/lifecycle",
+      "local_evidence_path": "ER12_RUNTIME/assessment/C-R1-01/control-v1/evidence/web_iso.txt",
+      "local_evidence_sha256": "3a1cbe3ceac7a81f511e986eca2f7029629b32f758ad2d10875231c463b0c2b2",
+      "locator": "ISO 16283-1 abstract L50–51; amendment L87–89; confirmation L24",
+      "exact_subject_operation_units_domain": "Airborne room-to-room insulation by pressure measurements; 10–250 m³ and 50–5000 Hz.",
+      "conditions_exceptions_applicability": "Insulation is frequency-dependent; furnished/unfurnished and non-diffuse fields are contemplated. It is not a vibration measurement, a courtyard ambient metric or universal coverage of sub-50-Hz bass.",
+      "default": "Not applicable: no API/configuration default claimed",
+      "semantic_verdict": "SUPPORTED_WITH_STATED_SCOPE",
+      "candidate_locators": [
+        "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:43"
+      ],
+      "capture_saved_at_utc": "2026-10-10T05:44:23.606980+00:00",
+      "access_utc": "2026-10-10T05:38:32.438212+00:00",
+      "access_time_basis": "HTTP attempt start where present (including failed direct attempts). Exact successful web retrieval timestamp not exposed; web operation occurred after reviewer start and before local capture save. See retrieval logs for outcome and evidence_depth for successful route.",
+      "web_retrieval_window_utc": {
+        "not_before": "2026-10-10T05:35:56Z",
+        "not_after": "2026-10-10T05:44:23.606980+00:00"
+      }
+    },
+    {
+      "source_id": "S03",
+      "title": "ISO 16283-3:2016 — Façade sound insulation",
+      "exact_url": "https://www.iso.org/standard/59748.html",
+      "released_version": "ISO 16283-3:2016, edition 1; published, to be revised; ISO/CD successor under development.",
+      "reviewer_retrieval": "Independent web open/search plus separate HTTP retrieval attempt; see captures/HTTP logs",
+      "evidence_depth": "Official public abstract/lifecycle",
+      "local_evidence_path": "ER12_RUNTIME/assessment/C-R1-01/control-v1/evidence/web_iso.txt",
+      "local_evidence_sha256": "3a1cbe3ceac7a81f511e986eca2f7029629b32f758ad2d10875231c463b0c2b2",
+      "locator": "ISO 16283-3 abstract L48–49; lifecycle L62,143,155",
+      "exact_subject_operation_units_domain": "Façade-element/whole-façade airborne insulation; 10–250 m³ and 50–5000 Hz.",
+      "conditions_exceptions_applicability": "The operative measurement is building insulation, not general courtyard disturbance. Revision status is not a withdrawal. Candidate preserves the frequency and subject limits.",
+      "default": "Not applicable: no API/configuration default claimed",
+      "semantic_verdict": "SUPPORTED_WITH_STATED_SCOPE",
+      "candidate_locators": [
+        "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:43"
+      ],
+      "capture_saved_at_utc": "2026-10-10T05:44:23.606980+00:00",
+      "access_utc": "2026-10-10T05:38:32.443936+00:00",
+      "access_time_basis": "HTTP attempt start where present (including failed direct attempts). Exact successful web retrieval timestamp not exposed; web operation occurred after reviewer start and before local capture save. See retrieval logs for outcome and evidence_depth for successful route.",
+      "web_retrieval_window_utc": {
+        "not_before": "2026-10-10T05:35:56Z",
+        "not_after": "2026-10-10T05:44:23.606980+00:00"
+      }
+    },
+    {
+      "source_id": "S04",
+      "title": "ISO 10052:2021 — Survey method for airborne/impact insulation and service-equipment sound",
+      "exact_url": "https://www.iso.org/obp/ui?_escaped_fragment_=iso%3Astd%3Aiso%3A10052%3Aed-2%3Av1%3Aen",
+      "released_version": "ISO 10052:2021, edition 2, English official OBP preview.",
+      "reviewer_retrieval": "Independent web open/search plus separate HTTP retrieval attempt; see captures/HTTP logs",
+      "evidence_depth": "Official OBP introduction/scope preview",
+      "local_evidence_path": "ER12_RUNTIME/assessment/C-R1-01/control-v1/evidence/web_conditions.txt",
+      "local_evidence_sha256": "ab75bc2404d3d62d5d8e8a2b007b04aca7dabd2d7909342a650d886256d2f306",
+      "locator": "ISO 10052 introduction L88–94; scope L97–109",
+      "exact_subject_operation_units_domain": "Simplified survey: handheld instrument/manual sweep, greater uncertainty than engineering methods.",
+      "conditions_exceptions_applicability": "Dwelling/comparable rooms at most 150 m³; octave-band insulation, A/C service-equipment levels and a heavy/soft-impact exception. Annex operating cycles yield to national rules. No improvised pilot is thereby standards compliant.",
+      "default": "Not applicable: no API/configuration default claimed",
+      "semantic_verdict": "SUPPORTED_WITH_STATED_SCOPE",
+      "candidate_locators": [
+        "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:43"
+      ],
+      "capture_saved_at_utc": "2026-10-10T05:44:23.602479+00:00",
+      "access_utc": "2026-10-10T05:38:32.446052+00:00",
+      "access_time_basis": "HTTP attempt start where present (including failed direct attempts). Exact successful web retrieval timestamp not exposed; web operation occurred after reviewer start and before local capture save. See retrieval logs for outcome and evidence_depth for successful route.",
+      "web_retrieval_window_utc": {
+        "not_before": "2026-10-10T05:35:56Z",
+        "not_after": "2026-10-10T05:44:23.602479+00:00"
+      }
+    },
+    {
+      "source_id": "S05",
+      "title": "ISO 3382-2:2008 — Reverberation time in ordinary rooms",
+      "exact_url": "https://www.iso.org/standard/36201.html",
+      "released_version": "ISO 3382-2:2008, edition 1; Cor 1:2009; confirmed 2022.",
+      "reviewer_retrieval": "Independent web open/search plus separate HTTP retrieval attempt; see captures/HTTP logs",
+      "evidence_depth": "Official public abstract/lifecycle",
+      "local_evidence_path": "ER12_RUNTIME/assessment/C-R1-01/control-v1/evidence/web_version_tail.txt",
+      "local_evidence_sha256": "aaff9c996b6ce14bb75425b6f6f80a2b876e8107ae40ec018793decaba45a2e2",
+      "locator": "ISO 3382-2 L24,50–51,162",
+      "exact_subject_operation_units_domain": "Ordinary-room reverberation-time method, including apparatus, positions and reporting.",
+      "conditions_exceptions_applicability": "RT can correct other acoustic measurements; RT alone is not a courtyard outcome. No numeric RT target or compliance claim is asserted.",
+      "default": "Not applicable: no API/configuration default claimed",
+      "semantic_verdict": "SUPPORTED_WITH_STATED_SCOPE",
+      "candidate_locators": [
+        "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:45"
+      ],
+      "capture_saved_at_utc": "2026-10-10T05:44:23.608667+00:00",
+      "access_utc": "2026-10-10T05:38:32.447627+00:00",
+      "access_time_basis": "HTTP attempt start where present (including failed direct attempts). Exact successful web retrieval timestamp not exposed; web operation occurred after reviewer start and before local capture save. See retrieval logs for outcome and evidence_depth for successful route.",
+      "web_retrieval_window_utc": {
+        "not_before": "2026-10-10T05:35:56Z",
+        "not_after": "2026-10-10T05:44:23.608667+00:00"
+      }
+    },
+    {
+      "source_id": "S06",
+      "title": "ISO 23591:2021 — Acoustic quality criteria for music rehearsal rooms and spaces",
+      "exact_url": "https://www.iso.org/standard/76335.html",
+      "released_version": "ISO 23591:2021, edition 1; Amd 1:2025 (Gugak); under systematic review.",
+      "reviewer_retrieval": "Independent web open/search plus separate HTTP retrieval attempt; see captures/HTTP logs",
+      "evidence_depth": "Official public abstract/lifecycle",
+      "local_evidence_path": "ER12_RUNTIME/assessment/C-R1-01/control-v1/evidence/web_final_conditions.txt",
+      "local_evidence_sha256": "88fa2fc05409925d50f27978c231f91e06e77283420018fe817d6aeaeaaacb1f",
+      "locator": "ISO 23591 L49–55,68,91–94,186",
+      "exact_subject_operation_units_domain": "Room acoustics/size criteria differentiated for amplified, quiet-acoustic and loud-acoustic rehearsal.",
+      "conditions_exceptions_applicability": "Excludes sound-insulation criteria and specialized performance/recording venues. Existing-space assessment is allowed. Unknown room geometry/music type prevents applying a numeric criterion here.",
+      "default": "Not applicable: no API/configuration default claimed",
+      "semantic_verdict": "SUPPORTED_WITH_STATED_SCOPE",
+      "candidate_locators": [
+        "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:45"
+      ],
+      "capture_saved_at_utc": "2026-10-10T05:44:23.603685+00:00",
+      "access_utc": "2026-10-10T05:38:32.449264+00:00",
+      "access_time_basis": "HTTP attempt start where present (including failed direct attempts). Exact successful web retrieval timestamp not exposed; web operation occurred after reviewer start and before local capture save. See retrieval logs for outcome and evidence_depth for successful route.",
+      "web_retrieval_window_utc": {
+        "not_before": "2026-10-10T05:35:56Z",
+        "not_after": "2026-10-10T05:44:23.603685+00:00"
+      }
+    },
+    {
+      "source_id": "S07",
+      "title": "Pedersen, Møller & Persson Waye (2007), Indoor Measurements of Noise at Low Frequencies — Problems and Solutions",
+      "exact_url": "https://journals.sagepub.com/doi/10.1260/026309207783571389",
+      "released_version": "Pedersen, Møller & Persson Waye 2007, 26(4):249–270; DOI 10.1260/026309207783571389.",
+      "reviewer_retrieval": "Independent web open/search plus separate HTTP retrieval attempt; see captures/HTTP logs",
+      "evidence_depth": "Publisher abstract",
+      "local_evidence_path": "ER12_RUNTIME/assessment/C-R1-01/control-v1/evidence/web_primary1.txt",
+      "local_evidence_sha256": "dba1c3b713785d5a4223c93752d99336d20082cabb4b81ade901f441d5047e59",
+      "locator": "SAGE article abstract L30–33; metadata L178–182",
+      "exact_subject_operation_units_domain": "Low-frequency standing waves can produce 20–30 dB spatial variation; simulations and three-room measurements examine position methods.",
+      "conditions_exceptions_applicability": "The abstract warns that high-level locations can be missed, including problems with C-weighted scanning. Multiple marked positions are a justified inference; the reported range is not this site's measurement.",
+      "default": "Not applicable: no API/configuration default claimed",
+      "semantic_verdict": "SUPPORTED_WITH_STATED_SCOPE",
+      "candidate_locators": [
+        "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:45"
+      ],
+      "capture_saved_at_utc": "2026-10-10T05:44:23.607808+00:00",
+      "access_utc": "2026-10-10T05:38:32.517697+00:00",
+      "access_time_basis": "HTTP attempt start where present (including failed direct attempts). Exact successful web retrieval timestamp not exposed; web operation occurred after reviewer start and before local capture save. See retrieval logs for outcome and evidence_depth for successful route.",
+      "web_retrieval_window_utc": {
+        "not_before": "2026-10-10T05:35:56Z",
+        "not_after": "2026-10-10T05:44:23.607808+00:00"
+      }
+    },
+    {
+      "source_id": "S08",
+      "title": "Løvholt et al. (2017), Simulating low frequency sound transmission through walls and windows by a two-way coupled fluid-structure interaction model",
+      "exact_url": "https://www.sciencedirect.com/science/article/pii/S0022460X17301207",
+      "released_version": "Løvholt et al. 2017, Journal of Sound and Vibration 396:203–216; DOI 10.1016/j.jsv.2017.02.026.",
+      "reviewer_retrieval": "Independent web open/search plus separate HTTP retrieval attempt; see captures/HTTP logs",
+      "evidence_depth": "Publisher-hosted indexed abstract; direct 403",
+      "local_evidence_path": "ER12_RUNTIME/assessment/C-R1-01/control-v1/evidence/web_follow1.txt",
+      "local_evidence_sha256": "c6ee4a4f8cc83ade37471f549ad2ad05879b11a273d4cee2a3b84095b818a067",
+      "locator": "ScienceDirect exact-title search result, Abstract",
+      "exact_subject_operation_units_domain": "Two-way fluid–structure model compared with lab walls/windows over 10–100 Hz; structural connections matter.",
+      "conditions_exceptions_applicability": "Publisher abstract gives window dominance 15–30 Hz and wall dominance 30–100 Hz in tested assemblies, in aircraft/blast context. This supports coupled hypotheses, not site predictions or vibration-correlation route proof.",
+      "default": "Not applicable: no API/configuration default claimed",
+      "semantic_verdict": "SUPPORTED_WITH_STATED_SCOPE",
+      "candidate_locators": [
+        "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:49"
+      ],
+      "capture_saved_at_utc": "2026-10-10T05:44:23.604574+00:00",
+      "access_utc": "2026-10-10T05:38:32.519381+00:00",
+      "access_time_basis": "HTTP attempt start where present (including failed direct attempts). Exact successful web retrieval timestamp not exposed; web operation occurred after reviewer start and before local capture save. See retrieval logs for outcome and evidence_depth for successful route.",
+      "web_retrieval_window_utc": {
+        "not_before": "2026-10-10T05:35:56Z",
+        "not_after": "2026-10-10T05:44:23.604574+00:00"
+      }
+    },
+    {
+      "source_id": "S09",
+      "title": "Norén-Cosgriff et al. (2016), Countermeasures against noise and vibrations in lightweight wooden buildings caused by outdoor sources with strong low-frequency components",
+      "exact_url": "https://www.sintef.no/en/publications/publication/1450011/",
+      "released_version": "Norén-Cosgriff et al. 2016, Noise Control Engineering Journal 64(6):737–752; DOI 10.3397/1/376416.",
+      "reviewer_retrieval": "Independent web open/search plus separate HTTP retrieval attempt; see captures/HTTP logs",
+      "evidence_depth": "Author-institution abstract retrieved directly",
+      "local_evidence_path": "ER12_RUNTIME/assessment/C-R1-01/control-v1/evidence/S09.txt",
+      "local_evidence_sha256": "d7510244b1d1d1df7f431c9c5a408a06201153c909a1bdaac97b7326674bde5d",
+      "locator": "Abstract, beginning Low frequency sound may contribute; Year/DOI",
+      "exact_subject_operation_units_domain": "Lab/model/full-scale Norwegian wooden-building program; sound-induced floor vibration under F-16 aircraft noise.",
+      "conditions_exceptions_applicability": "Reported benefits belong to combined structural/window/ventilation countermeasures in that building. Candidate correctly avoids transferring their numerical reductions or recommending those structural measures.",
+      "default": "Not applicable: no API/configuration default claimed",
+      "semantic_verdict": "SUPPORTED_WITH_STATED_SCOPE",
+      "candidate_locators": [
+        "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:51"
+      ],
+      "capture_saved_at_utc": "2026-10-10T05:38:32.821773+00:00",
+      "access_utc": "2026-10-10T05:38:32.526596+00:00",
+      "access_time_basis": "HTTP attempt start where present (including failed direct attempts). Exact successful web retrieval timestamp not exposed; web operation occurred after reviewer start and before local capture save. See retrieval logs for outcome and evidence_depth for successful route.",
+      "web_retrieval_window_utc": {
+        "not_before": "2026-10-10T05:35:56Z",
+        "not_after": "2026-10-10T05:38:32.821773+00:00"
+      }
+    },
+    {
+      "source_id": "S10",
+      "title": "Vargas Vera, San Millán-Castillo & Swerdlow (2019), Sound insulation design methodology: case study on a music rehearsal room",
+      "exact_url": "https://euracoustics.org/documents/9/02_Sound_insulation.pdf",
+      "released_version": "Vargas Vera et al. 2019, Acoustics in Practice 7(1), 10-page EAA paper.",
+      "reviewer_retrieval": "Independent web open/search plus separate HTTP retrieval attempt; see captures/HTTP logs",
+      "evidence_depth": "Complete EAA PDF text read",
+      "local_evidence_path": "ER12_RUNTIME/assessment/C-R1-01/control-v1/evidence/S10.txt",
+      "local_evidence_sha256": "5dc89d021d66f04697898c417306e512bbb19808e07ebfcfd6e287ec8214cf22",
+      "locator": "PDF pp.1–2 abstract/scope and §2.1; pp.4–6 §2.3–2.4; pp.8–9 modeling/conclusions",
+      "exact_subject_operation_units_domain": "Residential-basement design workflow; bass/guitar/drums, repeated 20-second passages, enclosure measurements and modeling.",
+      "conditions_exceptions_applicability": "Paper explicitly excludes installed-solution verification despite later modeled objective-verification language. The candidate distinguishes a workflow analogue from an implemented success. Flanking/model and geometric limitations further constrain transfer.",
+      "default": "Not applicable: no API/configuration default claimed",
+      "semantic_verdict": "SUPPORTED_WITH_STATED_SCOPE",
+      "candidate_locators": [
+        "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:57"
+      ],
+      "capture_saved_at_utc": "2026-10-10T05:38:33.869777+00:00",
+      "access_utc": "2026-10-10T05:38:32.531767+00:00",
+      "access_time_basis": "HTTP attempt start where present (including failed direct attempts). Exact successful web retrieval timestamp not exposed; web operation occurred after reviewer start and before local capture save. See retrieval logs for outcome and evidence_depth for successful route.",
+      "web_retrieval_window_utc": {
+        "not_before": "2026-10-10T05:35:56Z",
+        "not_after": "2026-10-10T05:38:33.869777+00:00"
+      }
+    },
+    {
+      "source_id": "S11",
+      "title": "Støfringsdal & Bolstad (2023), Optimizing (too) small ensemble rehearsal rooms for acoustic loud music",
+      "exact_url": "https://www.ioa.org.uk/system/files/proceedings/b_stofringsdal_e_bolstad_optimizing_too_small_ensemble_rehearsal_rooms_for_acoustic_loud_music_0.pdf",
+      "released_version": "Støfringsdal & Bolstad 2023, Proceedings of the Institute of Acoustics 45(2); candidate DOI 10.25144/16014; publisher text identifies title/authors/year, DOI not exposed in retrieved publisher text.",
+      "reviewer_retrieval": "Independent web open/search plus separate HTTP retrieval attempt; see captures/HTTP logs",
+      "evidence_depth": "Publisher-indexed PDF text; live URLs 404; full paper tail not retrieved",
+      "local_evidence_path": "ER12_RUNTIME/assessment/C-R1-01/control-v1/evidence/web_follow3.txt",
+      "local_evidence_sha256": "26a7f4af5dfe94e7090d6ced398039c69ec28eeb34246b6cb0af10777f6219b1",
+      "locator": "Publisher-hosted PDF, pp.2–5 §3.1/3.1.1/3.1.2/3.1.3, original web lines 91–229",
+      "exact_subject_operation_units_domain": "Completed 1600 m³ professional wind-band redesign; prior 40 mm absorbers reduced strength but survey found dry/imbalanced acoustics and overplaying.",
+      "conditions_exceptions_applicability": "Internal-acoustics case only. The later redesign trades listening support against loudness and still has limits. Candidate's caution is supported; it does not claim courtyard isolation or universal superiority.",
+      "default": "Not applicable: no API/configuration default claimed",
+      "semantic_verdict": "SUPPORTED_WITH_STATED_SCOPE",
+      "candidate_locators": [
+        "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:64"
+      ],
+      "capture_saved_at_utc": "2026-10-10T05:44:23.606216+00:00",
+      "access_utc": "2026-10-10T05:38:32.535803+00:00",
+      "access_time_basis": "HTTP attempt start where present (including failed direct attempts). Exact successful web retrieval timestamp not exposed; web operation occurred after reviewer start and before local capture save. See retrieval logs for outcome and evidence_depth for successful route.",
+      "web_retrieval_window_utc": {
+        "not_before": "2026-10-10T05:35:56Z",
+        "not_after": "2026-10-10T05:44:23.606216+00:00"
+      }
+    },
+    {
+      "source_id": "S12",
+      "title": "Shearer et al. (2021), Flexible control of acoustic conditions in a music rehearsal space using airbeds",
+      "exact_url": "https://researchportal.lsbu.ac.uk/en/publications/flexible-control-of-acoustic-conditions-in-a-music-rehearsal-spac-3/",
+      "released_version": "Shearer et al. 2021, Applied Acoustics 173:107708; DOI 10.1016/j.apacoust.2020.107708.",
+      "reviewer_retrieval": "Independent web open/search plus separate HTTP retrieval attempt; see captures/HTTP logs",
+      "evidence_depth": "Author-university abstract retrieved directly",
+      "local_evidence_path": "ER12_RUNTIME/assessment/C-R1-01/control-v1/evidence/S12.txt",
+      "local_evidence_sha256": "3bd937397d760b87e6aeaf92e25704a7c8e0b437edf0d3d7077418d94ff5106a",
+      "locator": "Abstract; DOI/publication-status metadata",
+      "exact_subject_operation_units_domain": "Henry Wood Hall: lab-selected inflated consumer airbed, inflation dependence, installation and before/after low-band RT measurements.",
+      "conditions_exceptions_applicability": "Modest-budget flexibility sought for smaller ensembles/voice in a former church. It is a useful unusual room-decay precedent, not a measured neighbor-noise or isolation result.",
+      "default": "Not applicable: no API/configuration default claimed",
+      "semantic_verdict": "SUPPORTED_WITH_STATED_SCOPE",
+      "candidate_locators": [
+        "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:63"
+      ],
+      "capture_saved_at_utc": "2026-10-10T05:38:33.144480+00:00",
+      "access_utc": "2026-10-10T05:38:32.575303+00:00",
+      "access_time_basis": "HTTP attempt start where present (including failed direct attempts). Exact successful web retrieval timestamp not exposed; web operation occurred after reviewer start and before local capture save. See retrieval logs for outcome and evidence_depth for successful route.",
+      "web_retrieval_window_utc": {
+        "not_before": "2026-10-10T05:35:56Z",
+        "not_after": "2026-10-10T05:38:33.144480+00:00"
+      }
+    },
+    {
+      "source_id": "S13",
+      "title": "BKL Consultants, UBC Music Building Renovations case record",
+      "exact_url": "https://bkl.ca/projects/ubc-music-building-renovations/",
+      "released_version": "BKL first-party UBC Music Building renovation record; completed 2022; no page revision ID.",
+      "reviewer_retrieval": "Independent web open/search plus separate HTTP retrieval attempt; see captures/HTTP logs",
+      "evidence_depth": "Complete first-party case page read",
+      "local_evidence_path": "ER12_RUNTIME/assessment/C-R1-01/control-v1/evidence/S13.txt",
+      "local_evidence_sha256": "134258d1524e4e5eeb0eb39b195cce6ad24e991aef01c3414a44bca2944bb296",
+      "locator": "About This Project; Scope of Services; Acoustical Challenges; Project Benefits; Capital Cost",
+      "exact_subject_operation_units_domain": "Real multi-floor UBC renovation: pre-project instrument/floor/practice-room checks and construction inspection; structural transmission concern.",
+      "conditions_exceptions_applicability": "First-party page reports $2.8 million capital cost and objectives met, but no raw/numeric after-results. Its institutional scale and permanent renovation are explicitly outside the candidate's proposed intervention scope.",
+      "default": "Not applicable: no API/configuration default claimed",
+      "semantic_verdict": "SUPPORTED_WITH_STATED_SCOPE",
+      "candidate_locators": [
+        "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:61"
+      ],
+      "capture_saved_at_utc": "2026-10-10T05:38:33.978795+00:00",
+      "access_utc": "2026-10-10T05:38:32.583390+00:00",
+      "access_time_basis": "HTTP attempt start where present (including failed direct attempts). Exact successful web retrieval timestamp not exposed; web operation occurred after reviewer start and before local capture save. See retrieval logs for outcome and evidence_depth for successful route.",
+      "web_retrieval_window_utc": {
+        "not_before": "2026-10-10T05:35:56Z",
+        "not_after": "2026-10-10T05:38:33.978795+00:00"
+      }
+    },
+    {
+      "source_id": "S14",
+      "title": "Sandy Brown, Clore Music Studios, New College, University of Oxford case record",
+      "exact_url": "https://www.sandybrown.com/case-study/clore-music-studios-new-college-university-of-oxford/",
+      "released_version": "Sandy Brown first-party Clore Music Studios record; completed/opened 2019; no page revision ID.",
+      "reviewer_retrieval": "Independent web open/search plus separate HTTP retrieval attempt; see captures/HTTP logs",
+      "evidence_depth": "Complete first-party case page read",
+      "local_evidence_path": "ER12_RUNTIME/assessment/C-R1-01/control-v1/evidence/S14.txt",
+      "local_evidence_sha256": "68f274a0680343dd97d535c309162761fe32b7beb3183f0a0e679c74346d49bd",
+      "locator": "Project summary; survey/music-egress paragraphs; box-in-box paragraph",
+      "exact_subject_operation_units_domain": "Environmental baseline used to set music-egress limits outside nearest sensitive premises; independent envelope, floated floors and room finishes.",
+      "conditions_exceptions_applicability": "The page separately applies BS4142 to plant noise; it does not apply that rule indiscriminately to music. Purpose-built college facility differs. No numeric post-opening result or retrofit performance is claimed by the candidate.",
+      "default": "Not applicable: no API/configuration default claimed",
+      "semantic_verdict": "SUPPORTED_WITH_STATED_SCOPE",
+      "candidate_locators": [
+        "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:62"
+      ],
+      "capture_saved_at_utc": "2026-10-10T05:38:33.681351+00:00",
+      "access_utc": "2026-10-10T05:38:32.645459+00:00",
+      "access_time_basis": "HTTP attempt start where present (including failed direct attempts). Exact successful web retrieval timestamp not exposed; web operation occurred after reviewer start and before local capture save. See retrieval logs for outcome and evidence_depth for successful route.",
+      "web_retrieval_window_utc": {
+        "not_before": "2026-10-10T05:35:56Z",
+        "not_after": "2026-10-10T05:38:33.681351+00:00"
+      }
+    },
+    {
+      "source_id": "IR15",
+      "title": "ISO 16283-2:2020 — Impact sound insulation (independent reviewer cross-check)",
+      "exact_url": "https://www.iso.org/standard/77436.html",
+      "released_version": "Edition 3, July 2020, confirmed 2025",
+      "local_evidence_path": "ER12_RUNTIME/assessment/C-R1-01/control-v1/evidence/web_final_conditions.txt",
+      "locator": "ISO 16283-2 abstract L49; confirmation L24",
+      "evidence_depth": "Official public abstract",
+      "exact_subject_operation_units_domain": "Pressure measurement under an impact source on floor/stairs; 10–250 m³, 50–5000 Hz",
+      "conditions_exceptions_applicability": "Supports distinction between controlled airborne and impact excitation as measurement concepts. It does not validate the candidate's improvised diagnostic or courtyard applicability; those remain conditional.",
+      "default": "Not applicable",
+      "semantic_verdict": "SUPPORTS_BOUNDED_CRITIQUE_DISPOSITION",
+      "capture_saved_at_utc": "2026-10-10T05:44:23.603685+00:00",
+      "access_utc": null,
+      "access_time_basis": "HTTP attempt start where present (including failed direct attempts). Exact successful web retrieval timestamp not exposed; web operation occurred after reviewer start and before local capture save. See retrieval logs for outcome and evidence_depth for successful route.",
+      "web_retrieval_window_utc": {
+        "not_before": "2026-10-10T05:35:56Z",
+        "not_after": "2026-10-10T05:44:23.603685+00:00"
+      },
+      "local_evidence_sha256": "88fa2fc05409925d50f27978c231f91e06e77283420018fe817d6aeaeaaacb1f"
+    }
+  ],
+  "retrieval_logs": [
+    "evidence/http-retrievals.json",
+    "evidence/http-supplements.json"
+  ],
+  "original_inspected_hashes": "evidence/original-inspected-hashes.json",
+  "freeze_integrity": "evidence/freeze-integrity-check.json",
+  "source_evidence_missing_in_candidate": {
+    "critic_sources_directory": "input-map declares stages/critic/sources but directory absent; actual critic source-map points to investigator source index",
+    "raw_original_source_captures": "No raw snapshots/PDFs in original source directories; source indices explicitly say bounded references rather than downloaded captures. Independent retrievals saved here.",
+    "S11_current_url": "Candidate _0.pdf and alternative publisher .pdf URLs currently fail; publisher-indexed substantive text was independently retrieved. No claim of live full-text accessibility."
+  }
+}

@@ -1,0 +1,411 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A8-02/treatment-v1/source-map.json",
+      "source_id": "R01",
+      "existing_authored_summary_fields": {
+        "version_applicability": "OASIS MQTT 5.0 Standard, 2019-03-07; v5 only",
+        "governing_locators": [
+          {
+            "independent_source_id": "R01",
+            "carried_source_id": "S01",
+            "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S01.txt",
+            "lines": [
+              1565,
+              1588
+            ],
+            "governing_locator": "2.2.1 Packet Identifier"
+          },
+          {
+            "independent_source_id": "R01",
+            "carried_source_id": "S01",
+            "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S01.txt",
+            "lines": [
+              2372,
+              2394
+            ],
+            "governing_locator": "3.1.2.11.2 Session Expiry Interval"
+          },
+          {
+            "independent_source_id": "R01",
+            "carried_source_id": "S01",
+            "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S01.txt",
+            "lines": [
+              3500,
+              3526
+            ],
+            "governing_locator": "3.3.1.1 DUP"
+          },
+          {
+            "independent_source_id": "R01",
+            "carried_source_id": "S01",
+            "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S01.txt",
+            "lines": [
+              6237,
+              6306
+            ],
+            "governing_locator": "4.1.1 Stored state / 4.2 transport / 4.3 QoS"
+          },
+          {
+            "independent_source_id": "R01",
+            "carried_source_id": "S01",
+            "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S01.txt",
+            "lines": [
+              6326,
+              6386
+            ],
+            "governing_locator": "4.3.2-3 QoS"
+          },
+          {
+            "independent_source_id": "R01",
+            "carried_source_id": "S01",
+            "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S01.txt",
+            "lines": [
+              6468,
+              6475
+            ],
+            "governing_locator": "QoS 2 onward delivery note"
+          }
+        ]
+      }
+    },
+    {
+      "authored_source_map": "assessment/A8-02/treatment-v1/source-map.json",
+      "source_id": "S01",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/A8-02/treatment-v1/evidence/retrieval-manifest.json",
+      "source_id": "S01",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "governing_locators": [
+        {
+          "independent_source_id": "R01",
+          "carried_source_id": "S01",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S01.txt",
+          "lines": [
+            1565,
+            1588
+          ],
+          "governing_locator": "2.2.1 Packet Identifier"
+        },
+        {
+          "independent_source_id": "R01",
+          "carried_source_id": "S01",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S01.txt",
+          "lines": [
+            2372,
+            2394
+          ],
+          "governing_locator": "3.1.2.11.2 Session Expiry Interval"
+        },
+        {
+          "independent_source_id": "R01",
+          "carried_source_id": "S01",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S01.txt",
+          "lines": [
+            3500,
+            3526
+          ],
+          "governing_locator": "3.3.1.1 DUP"
+        },
+        {
+          "independent_source_id": "R01",
+          "carried_source_id": "S01",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S01.txt",
+          "lines": [
+            6237,
+            6306
+          ],
+          "governing_locator": "4.1.1 Stored state / 4.2 transport / 4.3 QoS"
+        },
+        {
+          "independent_source_id": "R01",
+          "carried_source_id": "S01",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S01.txt",
+          "lines": [
+            6326,
+            6386
+          ],
+          "governing_locator": "4.3.2-3 QoS"
+        },
+        {
+          "independent_source_id": "R01",
+          "carried_source_id": "S01",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S01.txt",
+          "lines": [
+            6468,
+            6475
+          ],
+          "governing_locator": "QoS 2 onward delivery note"
+        }
+      ]
+    },
+    {
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 45
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 58
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 79
+        }
+      ]
+    },
+    {
+      "text_lines": 8896
+    },
+    {
+      "text_lines": 8896
+    }
+  ],
+  "raw_sha256": "913603e48e7cd25a5fb132723c7fc72bdccfed6e2513aa27cacc3fad4e166dea",
+  "original_bytes": 365294,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A8-02/treatment-v1/evidence/S01.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html"
+  ],
+  "version": [
+    {
+      "version_applicability": "OASIS MQTT 5.0 Standard, 2019-03-07; v5 only",
+      "governing_locators": [
+        {
+          "independent_source_id": "R01",
+          "carried_source_id": "S01",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S01.txt",
+          "lines": [
+            1565,
+            1588
+          ],
+          "governing_locator": "2.2.1 Packet Identifier"
+        },
+        {
+          "independent_source_id": "R01",
+          "carried_source_id": "S01",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S01.txt",
+          "lines": [
+            2372,
+            2394
+          ],
+          "governing_locator": "3.1.2.11.2 Session Expiry Interval"
+        },
+        {
+          "independent_source_id": "R01",
+          "carried_source_id": "S01",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S01.txt",
+          "lines": [
+            3500,
+            3526
+          ],
+          "governing_locator": "3.3.1.1 DUP"
+        },
+        {
+          "independent_source_id": "R01",
+          "carried_source_id": "S01",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S01.txt",
+          "lines": [
+            6237,
+            6306
+          ],
+          "governing_locator": "4.1.1 Stored state / 4.2 transport / 4.3 QoS"
+        },
+        {
+          "independent_source_id": "R01",
+          "carried_source_id": "S01",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S01.txt",
+          "lines": [
+            6326,
+            6386
+          ],
+          "governing_locator": "4.3.2-3 QoS"
+        },
+        {
+          "independent_source_id": "R01",
+          "carried_source_id": "S01",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S01.txt",
+          "lines": [
+            6468,
+            6475
+          ],
+          "governing_locator": "QoS 2 onward delivery note"
+        }
+      ]
+    }
+  ],
+  "selector": [
+    {
+      "governing_locators": [
+        {
+          "independent_source_id": "R01",
+          "carried_source_id": "S01",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S01.txt",
+          "lines": [
+            1565,
+            1588
+          ],
+          "governing_locator": "2.2.1 Packet Identifier"
+        },
+        {
+          "independent_source_id": "R01",
+          "carried_source_id": "S01",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S01.txt",
+          "lines": [
+            2372,
+            2394
+          ],
+          "governing_locator": "3.1.2.11.2 Session Expiry Interval"
+        },
+        {
+          "independent_source_id": "R01",
+          "carried_source_id": "S01",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S01.txt",
+          "lines": [
+            3500,
+            3526
+          ],
+          "governing_locator": "3.3.1.1 DUP"
+        },
+        {
+          "independent_source_id": "R01",
+          "carried_source_id": "S01",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S01.txt",
+          "lines": [
+            6237,
+            6306
+          ],
+          "governing_locator": "4.1.1 Stored state / 4.2 transport / 4.3 QoS"
+        },
+        {
+          "independent_source_id": "R01",
+          "carried_source_id": "S01",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S01.txt",
+          "lines": [
+            6326,
+            6386
+          ],
+          "governing_locator": "4.3.2-3 QoS"
+        },
+        {
+          "independent_source_id": "R01",
+          "carried_source_id": "S01",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S01.txt",
+          "lines": [
+            6468,
+            6475
+          ],
+          "governing_locator": "QoS 2 onward delivery note"
+        }
+      ]
+    },
+    {
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 45
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 58
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 79
+        }
+      ]
+    },
+    {
+      "text_lines": 8896
+    },
+    {
+      "text_lines": 8896
+    }
+  ],
+  "conditions": [
+    {
+      "version_applicability": "OASIS MQTT 5.0 Standard, 2019-03-07; v5 only",
+      "governing_locators": [
+        {
+          "independent_source_id": "R01",
+          "carried_source_id": "S01",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S01.txt",
+          "lines": [
+            1565,
+            1588
+          ],
+          "governing_locator": "2.2.1 Packet Identifier"
+        },
+        {
+          "independent_source_id": "R01",
+          "carried_source_id": "S01",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S01.txt",
+          "lines": [
+            2372,
+            2394
+          ],
+          "governing_locator": "3.1.2.11.2 Session Expiry Interval"
+        },
+        {
+          "independent_source_id": "R01",
+          "carried_source_id": "S01",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S01.txt",
+          "lines": [
+            3500,
+            3526
+          ],
+          "governing_locator": "3.3.1.1 DUP"
+        },
+        {
+          "independent_source_id": "R01",
+          "carried_source_id": "S01",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S01.txt",
+          "lines": [
+            6237,
+            6306
+          ],
+          "governing_locator": "4.1.1 Stored state / 4.2 transport / 4.3 QoS"
+        },
+        {
+          "independent_source_id": "R01",
+          "carried_source_id": "S01",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S01.txt",
+          "lines": [
+            6326,
+            6386
+          ],
+          "governing_locator": "4.3.2-3 QoS"
+        },
+        {
+          "independent_source_id": "R01",
+          "carried_source_id": "S01",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S01.txt",
+          "lines": [
+            6468,
+            6475
+          ],
+          "governing_locator": "QoS 2 onward delivery note"
+        }
+      ]
+    }
+  ],
+  "rawSHA256": "913603e48e7cd25a5fb132723c7fc72bdccfed6e2513aa27cacc3fad4e166dea"
+}

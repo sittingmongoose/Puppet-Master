@@ -1,0 +1,64 @@
+{
+  "verified_at_utc": "2026-10-10T06:00:05.159229+00:00",
+  "judgment": "PASS_WITH_LIMITATIONS",
+  "axes_complete": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "exact_plan_clauses_complete": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "all_124_original_inspected_files_unchanged": true,
+  "independent_source_retrievals": 27,
+  "all_independent_evidence_hashes_match": true,
+  "all_local_assessment_navigation_resolves": true,
+  "saved_before_reviewer_goal_completion": true,
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/treatment-v1/assessment.md",
+      "bytes": 45100,
+      "sha256": "8fa3c2e15a21aad7a765ab0cf1446a6a7dcf5a864241931b6f9d45d656f7bc3b"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/treatment-v1/assessment.json",
+      "bytes": 115485,
+      "sha256": "6ff2cef9edcf59b0a404b22526b4eff617074a7a0d2e0a9bcc1173c0bdbb541f"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/treatment-v1/source-map.json",
+      "bytes": 48142,
+      "sha256": "82ca28fe6eb84fb9c0d79ec2d74c5c19a77a582bd6dd04646f0fa2861f7895b3"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/treatment-v1/evidence/index.md",
+      "bytes": 6468,
+      "sha256": "87dea6ce6556b793c67d8bfe4c2c4ebf674e3b5d060469f11d2d0b8440b7e9a3"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/treatment-v1/original-inspected-hashes.json",
+      "bytes": 45935,
+      "sha256": "ea7c169150ad94bea7c981a4c93bc42b8c9c23bafc740e1c4e2cabe1e3df9c25"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/treatment-v1/original-freeze-check.json",
+      "bytes": 70064,
+      "sha256": "3caa28e2211430492231903ec97b192d0c586a74b7e9fa0f9d7e608fba1eba1f"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/treatment-v1/carried-byte-and-locator-check.json",
+      "bytes": 28363,
+      "sha256": "0857f67faf0eb1d1ed9fea8af488c6a5740a59ede2768c3fe7b1c25dbaae4996"
+    }
+  ]
+}

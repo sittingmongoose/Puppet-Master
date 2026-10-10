@@ -1,0 +1,39 @@
+{
+  "activation_response": {
+    "goal": {
+      "threadId": "01a12442-c983-77c3-bd86-270766d23fa5",
+      "objective": "ER12 critic stage, run C-R1-01-treatment: execute ER12_RUNTIME/runs/C-R1-01-treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791609761,
+      "updatedAt": 1791609761
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "activation_response_compact_json": "{\"goal\":{\"threadId\":\"01a12442-c983-77c3-bd86-270766d23fa5\",\"objective\":\"ER12 critic stage, run C-R1-01-treatment: execute ER12_RUNTIME/runs/C-R1-01-treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.\",\"status\":\"active\",\"tokensUsed\":0,\"timeUsedSeconds\":0,\"createdAt\":1791609761,\"updatedAt\":1791609761},\"remainingTokens\":null,\"completionBudgetReport\":null}",
+  "completion_response": {
+    "goal": {
+      "threadId": "01a12442-c983-77c3-bd86-270766d23fa5",
+      "objective": "ER12 critic stage, run C-R1-01-treatment: execute ER12_RUNTIME/runs/C-R1-01-treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "status": "complete",
+      "tokensUsed": 184038,
+      "timeUsedSeconds": 890,
+      "createdAt": 1791609761,
+      "updatedAt": 1791610652
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+  },
+  "completion_response_compact_json": "{\"goal\":{\"threadId\":\"01a12442-c983-77c3-bd86-270766d23fa5\",\"objective\":\"ER12 critic stage, run C-R1-01-treatment: execute ER12_RUNTIME/runs/C-R1-01-treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.\",\"status\":\"complete\",\"tokensUsed\":184038,\"timeUsedSeconds\":890,\"createdAt\":1791609761,\"updatedAt\":1791610652},\"remainingTokens\":null,\"completionBudgetReport\":\"Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language.\"}",
+  "native_provenance": "UNKNOWN — not exposed in either native response.",
+  "native_activation_timestamp_utc": "UNKNOWN — native response exposes numeric createdAt/updatedAt fields only.",
+  "native_completion_timestamp_utc": "UNKNOWN — native response exposes numeric updatedAt only; no timezone-qualified completion time.",
+  "outputs_saved_before_goal_completion": [
+    "critique.md",
+    "source-map.json",
+    "sources/index.md"
+  ],
+  "objective_path_note": "The activation objective was used exactly as supplied by the user. Its embedded path differs from the assignment path explicitly requested for execution; no replacement Goal was created."
+}

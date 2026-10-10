@@ -1,0 +1,111 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://download.samba.org/pub/rsync/src/rsync-3.2.7.tar.gz"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/B-FINAL-G-01/treatment-v1/source-map.json",
+      "source_id": "P1",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/B-FINAL-G-01/treatment-v1/source-map.json",
+      "source_id": "P1-generator.c",
+      "existing_authored_summary_fields": {
+        "version": "3.2.7,20 Oct2022"
+      }
+    },
+    {
+      "authored_source_map": "assessment/B-FINAL-G-01/treatment-v1/source-map.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {
+        "version": "rsync 3.2.7, 20 Oct 2022"
+      }
+    },
+    {
+      "authored_source_map": "assessment/B-FINAL-G-01/treatment-v1/evidence/independent/P1-retrieval.json",
+      "source_id": "P1",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "read_line_ranges": [
+        [
+          128,
+          250
+        ],
+        [
+          272,
+          345
+        ],
+        [
+          1506,
+          1530
+        ],
+        [
+          2286,
+          2310
+        ]
+      ]
+    },
+    {
+      "lines": [
+        1520,
+        1525
+      ]
+    }
+  ],
+  "raw_sha256": "ffcb0b5473de8b1630a4866e074f8929428df6c9049b816a89a557e27b0f3c79",
+  "original_bytes": 68293,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/B-FINAL-G-01/treatment-v1/evidence/independent/generator.c.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://download.samba.org/pub/rsync/src/rsync-3.2.7.tar.gz"
+  ],
+  "version": [
+    {
+      "version": "3.2.7,20 Oct2022"
+    },
+    {
+      "version": "rsync 3.2.7, 20 Oct 2022"
+    }
+  ],
+  "selector": [
+    {
+      "read_line_ranges": [
+        [
+          128,
+          250
+        ],
+        [
+          272,
+          345
+        ],
+        [
+          1506,
+          1530
+        ],
+        [
+          2286,
+          2310
+        ]
+      ]
+    },
+    {
+      "lines": [
+        1520,
+        1525
+      ]
+    }
+  ],
+  "conditions": "UNKNOWN",
+  "rawSHA256": "ffcb0b5473de8b1630a4866e074f8929428df6c9049b816a89a557e27b0f3c79"
+}

@@ -1,0 +1,50 @@
+{
+  "verified_at_utc": "2026-10-10T06:03:32.350654+00:00",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "native_status": "complete",
+  "native_completion_epoch_seconds": 1791612137,
+  "all_full_judgment_files_saved_before_native_completion": true,
+  "save_order_evidence": "Actual sequential tool execution: initial full judgment writer and verification returned, followed by a pre-completion Markdown wording normalization call, followed by update_goal(complete).",
+  "timestamp_resolution_limit": "The final Markdown normalization and native completion share an integer-second timestamp. Mtime alone cannot strictly order them against the floored native timestamp; actual tool-call order supplies the order.",
+  "markdown_navigation_and_tables_valid": true,
+  "originals_unchanged": true,
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/assessment.md",
+      "bytes": 62053,
+      "sha256": "aab1df04735387c9b727fef0207dc52b20e882b829cc637d688e46adbf27adc0",
+      "mtime_ns": 1791612137491162462,
+      "mtime_utc": "2026-10-10T06:02:17.491163+00:00",
+      "mtime_before_native_terminal_second_upper_bound": true,
+      "save_order": "Written by the completed exec_command call before the sequential update_goal(complete) call."
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/assessment.json",
+      "bytes": 192828,
+      "sha256": "5c0623d45990f84fe5c578963f1656effe9858c313142e17d8c100d15927e75b",
+      "mtime_ns": 1791612073460931327,
+      "mtime_utc": "2026-10-10T06:01:13.460931+00:00",
+      "mtime_before_native_terminal_second_upper_bound": true,
+      "save_order": "Written by the completed exec_command call before the sequential update_goal(complete) call."
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/source-map.json",
+      "bytes": 124581,
+      "sha256": "623330afdff26410f2724126ce8730f6b36396c06d70267144fef4f28a2ecb9c",
+      "mtime_ns": 1791612073462403657,
+      "mtime_utc": "2026-10-10T06:01:13.462404+00:00",
+      "mtime_before_native_terminal_second_upper_bound": true,
+      "save_order": "Written by the completed exec_command call before the sequential update_goal(complete) call."
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/index.md",
+      "bytes": 30901,
+      "sha256": "1779a0b3fd95a69b07d2e1e3be1bf4513cac8f4c6a3055ad25a7012fa8e70c2b",
+      "mtime_ns": 1791612073462950367,
+      "mtime_utc": "2026-10-10T06:01:13.462950+00:00",
+      "mtime_before_native_terminal_second_upper_bound": true,
+      "save_order": "Written by the completed exec_command call before the sequential update_goal(complete) call."
+    }
+  ],
+  "audit_note": "The prior save receipt records then-current hashes. Before native completion a table-cell wording normalization removed literal pipes. The table assertion initially rejected a legitimate two-column table, and a later timing assertion incorrectly compared fractional mtimes with an integer-second terminal timestamp. These verification assumptions were corrected; read-only verification now passes. No semantic judgment or frozen source was altered after completion."
+}

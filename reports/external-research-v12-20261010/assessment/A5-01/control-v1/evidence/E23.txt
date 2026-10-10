@@ -1,0 +1,140 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/5b7f3d20167092ff63dcbb5004e8dae2e88a86ea/History_GUI.txt",
+    "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/master/History_GUI.txt"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A5-01/control-v1/source-map.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {
+        "version_or_commit": "master capture; independently pinned same bytes in E23 at 5b7f3d20167092ff63dcbb5004e8dae2e88a86ea; 20.05/23.04/25.04 entries",
+        "governing_condition_default_exception": "20.05 dated 2020-05-28 explicitly names issues #29/#63 for ASCII-support improvement; 23.04 dated 2023-04-10 adds listed legacy encoded fields and CSET read/write; 25.04 dated 2025-04-30 is a fallback for reading core files. A 20.08 non-Unicode compilation fix is not proof of metadata round-trip resolution.",
+        "applicability": "Exact release-history claim and original lineage omission."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A5-01/control-v1/source-map.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {
+        "version_or_commit": "5b7f3d20167092ff63dcbb5004e8dae2e88a86ea",
+        "governing_condition_default_exception": "Exact release-operation history preserved at immutable commit locator.",
+        "applicability": "Pinned reviewer evidence."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A5-01/control-v1/evidence/retrieval-records-additional.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/A5-01/control-v1/evidence/retrieval-records.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A5-01/control-v1/evidence/E04.lines.txt"
+    },
+    {
+      "line_text_sha256": "8071c840eb38d1bf6fe3223287313c08fde72bd600a2fd79aa8db0b46cc990b6"
+    },
+    {
+      "semantic_locator": "E04.lines.txt 12–15, 43–48, 105–114, 141–144"
+    },
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A5-01/control-v1/evidence/E23.lines.txt"
+    },
+    {
+      "line_text_sha256": "8071c840eb38d1bf6fe3223287313c08fde72bd600a2fd79aa8db0b46cc990b6"
+    },
+    {
+      "semantic_locator": "same release entries as E04"
+    },
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A5-01/control-v1/evidence/E23.lines.txt"
+    },
+    {
+      "line_text_sha256": "8071c840eb38d1bf6fe3223287313c08fde72bd600a2fd79aa8db0b46cc990b6"
+    },
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A5-01/control-v1/evidence/E04.lines.txt"
+    },
+    {
+      "line_text_sha256": "8071c840eb38d1bf6fe3223287313c08fde72bd600a2fd79aa8db0b46cc990b6"
+    }
+  ],
+  "raw_sha256": "88faeb6b107187959435d46c55a36f8538995bddea23953b62cc0b9b1a762b15",
+  "original_bytes": 15486,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A5-01/control-v1/evidence/E23.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/5b7f3d20167092ff63dcbb5004e8dae2e88a86ea/History_GUI.txt",
+    "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/master/History_GUI.txt"
+  ],
+  "version": [
+    {
+      "version_or_commit": "master capture; independently pinned same bytes in E23 at 5b7f3d20167092ff63dcbb5004e8dae2e88a86ea; 20.05/23.04/25.04 entries",
+      "governing_condition_default_exception": "20.05 dated 2020-05-28 explicitly names issues #29/#63 for ASCII-support improvement; 23.04 dated 2023-04-10 adds listed legacy encoded fields and CSET read/write; 25.04 dated 2025-04-30 is a fallback for reading core files. A 20.08 non-Unicode compilation fix is not proof of metadata round-trip resolution.",
+      "applicability": "Exact release-history claim and original lineage omission."
+    },
+    {
+      "version_or_commit": "5b7f3d20167092ff63dcbb5004e8dae2e88a86ea",
+      "governing_condition_default_exception": "Exact release-operation history preserved at immutable commit locator.",
+      "applicability": "Pinned reviewer evidence."
+    }
+  ],
+  "selector": [
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A5-01/control-v1/evidence/E04.lines.txt"
+    },
+    {
+      "line_text_sha256": "8071c840eb38d1bf6fe3223287313c08fde72bd600a2fd79aa8db0b46cc990b6"
+    },
+    {
+      "semantic_locator": "E04.lines.txt 12–15, 43–48, 105–114, 141–144"
+    },
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A5-01/control-v1/evidence/E23.lines.txt"
+    },
+    {
+      "line_text_sha256": "8071c840eb38d1bf6fe3223287313c08fde72bd600a2fd79aa8db0b46cc990b6"
+    },
+    {
+      "semantic_locator": "same release entries as E04"
+    },
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A5-01/control-v1/evidence/E23.lines.txt"
+    },
+    {
+      "line_text_sha256": "8071c840eb38d1bf6fe3223287313c08fde72bd600a2fd79aa8db0b46cc990b6"
+    },
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A5-01/control-v1/evidence/E04.lines.txt"
+    },
+    {
+      "line_text_sha256": "8071c840eb38d1bf6fe3223287313c08fde72bd600a2fd79aa8db0b46cc990b6"
+    }
+  ],
+  "conditions": [
+    {
+      "version_or_commit": "master capture; independently pinned same bytes in E23 at 5b7f3d20167092ff63dcbb5004e8dae2e88a86ea; 20.05/23.04/25.04 entries",
+      "governing_condition_default_exception": "20.05 dated 2020-05-28 explicitly names issues #29/#63 for ASCII-support improvement; 23.04 dated 2023-04-10 adds listed legacy encoded fields and CSET read/write; 25.04 dated 2025-04-30 is a fallback for reading core files. A 20.08 non-Unicode compilation fix is not proof of metadata round-trip resolution.",
+      "applicability": "Exact release-history claim and original lineage omission."
+    },
+    {
+      "version_or_commit": "5b7f3d20167092ff63dcbb5004e8dae2e88a86ea",
+      "governing_condition_default_exception": "Exact release-operation history preserved at immutable commit locator.",
+      "applicability": "Pinned reviewer evidence."
+    }
+  ],
+  "rawSHA256": "88faeb6b107187959435d46c55a36f8538995bddea23953b62cc0b9b1a762b15"
+}

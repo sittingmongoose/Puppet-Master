@@ -1,0 +1,15 @@
+# Reviser source index — C-R2-01-control
+
+S01–S09 preserve the investigator's stable identifiers and exact URLs. Original source identity, version, access time, locator, observed operation, governing condition and applicability, plus this reviser's checks, are in [source-map.json](../source-map.json). This is a bounded index; no raw captures are stored.
+
+| ID | Source | Reviser use and retrieval status |
+|---|---|---|
+| [S01](https://link.springer.com/article/10.1007/s10570-023-05626-6) | Larsson et al., *Changes in the macro and nano-structure of paper during moisture cycling*, Cellulose 31 (2024). | Direct primary article review; laboratory sheets made from commercial pulps, four RH cycles, restraint-dependent results. |
+| [S02](https://tugraz.elsevierpure.com/ws/portalfiles/portal/79063769/1-s2.0-S0264127523010092-main.pdf) | Maass & Hirn, *Long term curl of printing paper due to ink solvent migration*, Materials & Design 237 (2024). | Direct full-PDF review; two office papers and glycerol/water model ink over one week; conditional only. |
+| [S03](https://www.archives.gov/files/preservation/storage/pdf/label-stock-laser-printer.pdf) | NARA laser-print pressure-sensitive label specification, October 2015. | Direct official PDF review; use-specific housing system, permanent adhesive, distinct bond and readability checks. |
+| [S04](https://www.archives.gov/files/preservation/storage/pdf/label-stock-thermal-transfer.pdf) | NARA thermal-transfer pressure-sensitive label specification, October 2015 revision. | Direct official PDF review; specified face stock, adhesive, ribbon and substrate; not a case recommendation. |
+| [S05](https://www.canada.ca/en/conservation-institute/services/agents-deterioration/humidity.html) | Canadian Conservation Institute, *Incorrect relative humidity*. | Direct official guidance review; local/time-dependent readings and full-year seasonal monitoring context. |
+| [S06](https://www.canada.ca/en/conservation-institute/services/preventive-conservation/guidelines-collections/paper-objects.html) | Canadian Conservation Institute, *Caring for paper objects*. | Carried source-map entry; not reopened in this reviser stage and not decisive to a new claim. |
+| [S07](https://pubmed.ncbi.nlm.nih.gov/40362914/) | *Modified Acrylate Pressure-Sensitive Adhesives for Low-Surface-Energy Substrate and Adhesion Mechanism Models*, Polymers 17(9) (2025), DOI 10.3390/polym17091130. | PubMed search result only; direct page did not expose full text. Detailed temperature result remains unverified and is not used. |
+| [S08](https://spnhc.org/labeling-natural-history-collections/) | SPNHC, *Labeling Natural History Collections*, 26 March 2025. | Carried contextual field review; not reopened here and not primary performance evidence. |
+| [S09](https://www.nms.ac.uk/our-impact/national-work/training-and-guidance-for-museums/collections-care/object-labelling) | National Museums Scotland, *Object labelling*. | Carried contextual guidance; not reopened here; tag is an analogy requiring local mock-up. |

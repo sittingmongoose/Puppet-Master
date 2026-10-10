@@ -1,8 +1,8 @@
 [
   {
     "path": "ER12_RUNTIME/mechanics/native-root-code-mode/advanceJS.js",
-    "sha256": "fbf82fbad1121be21a3bab753a122059f8de06ec81b6100cc8a456dad3906b0a",
-    "bytes": 2661
+    "sha256": "b194377e7f330708d58450652ed99a02fa6ce77fb9cd0310f825be321e7de48d",
+    "bytes": 2715
   },
   {
     "path": "ER12_RUNTIME/mechanics/native-root-code-mode/advanceJS.pre-invocation-clarification.js",
@@ -30,6 +30,11 @@
     "bytes": 3174
   },
   {
+    "path": "ER12_RUNTIME/mechanics/native-root-code-mode/exactSpecJS.js",
+    "sha256": "9e0ed39aaea03047d71d47bf8bbc268bb54e10071aab1fa7e8d9051a4219f178",
+    "bytes": 471
+  },
+  {
     "path": "ER12_RUNTIME/mechanics/native-root-code-mode/harvestJS.js",
     "sha256": "2af2a930d8db0ca4a5fc6a35f0e1b2848146dadc13744772c176439ae43e7184",
     "bytes": 1082
@@ -46,6 +51,11 @@
   },
   {
     "path": "ER12_RUNTIME/mechanics/native-root-code-mode/startPipelineJS.js",
+    "sha256": "14b9b58c2cabc3943c090349f17475f81924b119f949f9c93677dfb3089603a0",
+    "bytes": 3963
+  },
+  {
+    "path": "ER12_RUNTIME/mechanics/native-root-code-mode/startPipelineJS.pre-composite.js",
     "sha256": "179e5095d99288f5b7f4bdba8a1c0db642f84f0ff9e10486f360635973129c40",
     "bytes": 3669
   },
@@ -53,6 +63,16 @@
     "path": "ER12_RUNTIME/mechanics/native-root-code-mode/startPipelineJS.pre-invocation-clarification.js",
     "sha256": "66c6e9ba5e5d057728b46a920c4792b14b95fad0463d9e025bdc80e792c1ee06",
     "bytes": 3626
+  },
+  {
+    "path": "ER12_RUNTIME/mechanics/native-root-code-mode/startReplicationJS.js",
+    "sha256": "7ca23986b380f5e158d0572a7deb5c518f1575b6519ad723708c3ccd76baf977",
+    "bytes": 5152
+  },
+  {
+    "path": "ER12_RUNTIME/mechanics/native-root-code-mode/startReplicationJS.pre-lock-guard.js",
+    "sha256": "08e33d161bb327c19d2eef2d8dedd6b2ac1a94110f08e689a70bf19fa6bc3b86",
+    "bytes": 4044
   },
   {
     "path": "ER12_RUNTIME/mechanics/native-root-code-mode/startRoleJS.js",

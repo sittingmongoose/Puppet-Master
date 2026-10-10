@@ -1,0 +1,84 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://raw.githubusercontent.com/uklibraries/ohms-viewer/v3.10.16/README.md"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A5-01/control-v1/source-map.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {
+        "version_or_commit": "v3.10.16 tagged source, commit 3343b7884d5e18b5925681d84ea0dab8bb165038",
+        "governing_condition_default_exception": "PHP/server file access and cache-file configuration; custom player must interact with transcript/index timepoint links; README recommends testing search results and timepoint behavior. Versioned documentation is not a present deployment recipe validation.",
+        "applicability": "Hosting burden and prospective access-layer oracle."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A5-01/control-v1/evidence/retrieval-records.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A5-01/control-v1/evidence/E19.lines.txt"
+    },
+    {
+      "line_text_sha256": "733222b28e394c2ec0ad7d066dbc852692da7d29b7e4aebcacf4a9c6d39a0018"
+    },
+    {
+      "semantic_locator": "E19.lines.txt 26–33, 58–61, 144–174"
+    },
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A5-01/control-v1/evidence/E19.lines.txt"
+    },
+    {
+      "line_text_sha256": "733222b28e394c2ec0ad7d066dbc852692da7d29b7e4aebcacf4a9c6d39a0018"
+    }
+  ],
+  "raw_sha256": "7a0bff85e5c58a7657880dfb7e1e43e2d98b57a7e3aaf4bc1144eba83d42e06e",
+  "original_bytes": 12287,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A5-01/control-v1/evidence/E19.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://raw.githubusercontent.com/uklibraries/ohms-viewer/v3.10.16/README.md"
+  ],
+  "version": [
+    {
+      "version_or_commit": "v3.10.16 tagged source, commit 3343b7884d5e18b5925681d84ea0dab8bb165038",
+      "governing_condition_default_exception": "PHP/server file access and cache-file configuration; custom player must interact with transcript/index timepoint links; README recommends testing search results and timepoint behavior. Versioned documentation is not a present deployment recipe validation.",
+      "applicability": "Hosting burden and prospective access-layer oracle."
+    }
+  ],
+  "selector": [
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A5-01/control-v1/evidence/E19.lines.txt"
+    },
+    {
+      "line_text_sha256": "733222b28e394c2ec0ad7d066dbc852692da7d29b7e4aebcacf4a9c6d39a0018"
+    },
+    {
+      "semantic_locator": "E19.lines.txt 26–33, 58–61, 144–174"
+    },
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A5-01/control-v1/evidence/E19.lines.txt"
+    },
+    {
+      "line_text_sha256": "733222b28e394c2ec0ad7d066dbc852692da7d29b7e4aebcacf4a9c6d39a0018"
+    }
+  ],
+  "conditions": [
+    {
+      "version_or_commit": "v3.10.16 tagged source, commit 3343b7884d5e18b5925681d84ea0dab8bb165038",
+      "governing_condition_default_exception": "PHP/server file access and cache-file configuration; custom player must interact with transcript/index timepoint links; README recommends testing search results and timepoint behavior. Versioned documentation is not a present deployment recipe validation.",
+      "applicability": "Hosting burden and prospective access-layer oracle."
+    }
+  ],
+  "rawSHA256": "7a0bff85e5c58a7657880dfb7e1e43e2d98b57a7e3aaf4bc1144eba83d42e06e"
+}

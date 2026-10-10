@@ -1,0 +1,533 @@
+{
+  "observed_at_utc": "2026-10-10T05:47:33.768670+00:00",
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A5-02/brief.md",
+      "bytes": 3394,
+      "sha256": "a6520dffb1ba50fd341f287ae6805fe99e8f14f159c53eb87668029014ba3589",
+      "mtime_ns": 1791608644962501459,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A5-02/plan.md",
+      "bytes": 6060,
+      "sha256": "b4cf16e079bff1eb16228453f99f8682a63d34ecd99e0f53ca1463416111931e",
+      "mtime_ns": 1791608644962626936,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/terminal-science-freeze-root.json",
+      "bytes": 6791,
+      "sha256": "0da8827ceea79f9d8d1d6978c917addb5d6b965dabccffbef40a20ab826cabbf",
+      "mtime_ns": 1791610786131758180,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/inputs/brief.md",
+      "bytes": 3394,
+      "sha256": "a6520dffb1ba50fd341f287ae6805fe99e8f14f159c53eb87668029014ba3589",
+      "mtime_ns": 1791608645409517063,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/investigator/assignment.md",
+      "bytes": 3720,
+      "sha256": "967ef59a9ac0f7fdd6c88276adc96a8dda0f2af1867a81e4b069114f5bdd5879",
+      "mtime_ns": 1791608645410550421,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/investigator/input-map.json",
+      "bytes": 789,
+      "sha256": "b18446c018a9b77251b83e82d150b4f17e1c06e4efa78c53cf5102a57b3eb433",
+      "mtime_ns": 1791608645560410599,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/investigator/freeze.json",
+      "bytes": 1731,
+      "sha256": "53d2cb2daf85e2bdc223b6fedbf371a3025617b6dfcc2285dbd636a7ee91e52e",
+      "mtime_ns": 1791608645560885688,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/investigator/source-map.json",
+      "bytes": 21542,
+      "sha256": "d5433097907d0981649bb7ea92bc394524ef1ab70f4a073542389ebdac65af97",
+      "mtime_ns": 1791609309124683955,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/investigator/sources/index.md",
+      "bytes": 5629,
+      "sha256": "9b2b589b2290e5bd8132bbeb035a866da245d41771b84520873ddc4d2931a55b",
+      "mtime_ns": 1791609309124683955,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/investigator/request.json",
+      "bytes": 921,
+      "sha256": "7ffca8fd54b759f117b71cf8c5c38ba36eebfcd02bf64b7364b6667decf041ed",
+      "mtime_ns": 1791608645560573583,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/investigator/dispatch.json",
+      "bytes": 4251,
+      "sha256": "03f532533d1256fd397545847d8cd6ab45f808949f597e25667de20653477a9c",
+      "mtime_ns": 1791608646610699576,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/investigator/service-tier-change.json",
+      "bytes": 493,
+      "sha256": "c064ff65bc92344f9e3f1f848be74535e7ca78c50d8d9dca9c9e56ff261382f8",
+      "mtime_ns": 1791608645560905375,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/investigator/discovery.md",
+      "bytes": 14545,
+      "sha256": "ee307dbdb3efe66d060103d905f7567d70ace9eae9f8082f9da73dbe5fc714c0",
+      "mtime_ns": 1791609242258393616,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/investigator/draft.md",
+      "bytes": 23000,
+      "sha256": "039a2996052529947313d1115877a66d5f0c8ddce2ec15f0efc8798a84197a51",
+      "mtime_ns": 1791609441819288456,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 6060,
+      "sha256": "b4cf16e079bff1eb16228453f99f8682a63d34ecd99e0f53ca1463416111931e",
+      "mtime_ns": 1791609254710176052,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/investigator/plan-reveal.json",
+      "bytes": 429,
+      "sha256": "687cf2a2a91bb0f5d143e5c797aa6fea313cccaae6e5ba0ef0844e3e959db7a2",
+      "mtime_ns": 1791609254710303473,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/investigator/status.json",
+      "bytes": 4122,
+      "sha256": "8f3ae46b37b55f1c7a03278e4653917cbb121d3adbc112220637cc4081921e91",
+      "mtime_ns": 1791609486770820903,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/critic/assignment.md",
+      "bytes": 4014,
+      "sha256": "74c2b405135714bb47111907645e2cf93b3f5d5050b41215660ed9be4aa514ee",
+      "mtime_ns": 1791609487482698548,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/critic/input-map.json",
+      "bytes": 1477,
+      "sha256": "3bd5feb40123cc52e822a91a04553ee3fc4ec0f3aefdcd4a285b732692182318",
+      "mtime_ns": 1791609487482543412,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/critic/freeze.json",
+      "bytes": 3314,
+      "sha256": "cad7cf95ef2f95128f74886d47001bd9b77e656485b0e59dfa936bb93b2fa0e6",
+      "mtime_ns": 1791609487482385852,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/critic/source-map.json",
+      "bytes": 31790,
+      "sha256": "2e1f00ef21bc35dfb5a10a46b55d20ffc0f9c1b1836bdebec35e09753cbb8a8b",
+      "mtime_ns": 1791609892930859957,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/critic/sources/index.md",
+      "bytes": 2729,
+      "sha256": "2f3cb4a1895613f77bd6884aed2139bd415e006479bdb05376b38679635dcd6e",
+      "mtime_ns": 1791609892880523977,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/critic/request.json",
+      "bytes": 1613,
+      "sha256": "bcb8fb75d56fb4fe9004e2ea3e6f33f044b9cae537eaa0a5f29109e9dc35a770",
+      "mtime_ns": 1791609487482161510,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/critic/dispatch.json",
+      "bytes": 4871,
+      "sha256": "fb46a0674c575b21cc604dfa48737c407d42d077396dfe8896218450605f7223",
+      "mtime_ns": 1791609488357161828,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/critic/service-tier-change.json",
+      "bytes": 481,
+      "sha256": "7e4db45e2dcf69e68aa0e9b8d396dc4b59c5b2d96f6fbf20356cad1ed9f498d8",
+      "mtime_ns": 1791609487316825702,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/critic/critique.md",
+      "bytes": 8827,
+      "sha256": "d855a616ac768d2df4137196a895dfc7ea87d834a3d9baf10cb65bf6e9fb7d4c",
+      "mtime_ns": 1791609892876523953,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/critic/invocation-clarification.json",
+      "bytes": 3030,
+      "sha256": "318d8e216b4675428113eeea826a831e5bb14c59caa6ab736f90e82d064b3775",
+      "mtime_ns": 1791609487482848620,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/critic/goal-activation-response.json",
+      "bytes": 468,
+      "sha256": "d001384643e07c5f04dc1315b7b55b1ba5d846cfd32d4a5b5a63fc1adeb7ae07",
+      "mtime_ns": 1791609558769408598,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/critic/goal-completion-response.json",
+      "bytes": 797,
+      "sha256": "d03f9b881407d1e175d673b51df044ead21827791ca2dc0835222ce7ae5e1d10",
+      "mtime_ns": 1791609923348711835,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/critic/status.json",
+      "bytes": 4034,
+      "sha256": "2ced328ddbf3a2c9cae569ca98df069efdf3244bc2f98f19a114f4da236a4186",
+      "mtime_ns": 1791609968538610946,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/reviser/assignment.md",
+      "bytes": 4520,
+      "sha256": "81fa2719dbf0a445babade85a0a1da40ed98c4cc7e367cda351e8e0e63fe2be2",
+      "mtime_ns": 1791609969237995836,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/reviser/input-map.json",
+      "bytes": 1794,
+      "sha256": "941953c35f0b1c4d7ac54168fd6005bab48807430d15c864ebde4f8e960813f5",
+      "mtime_ns": 1791609969237915406,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/reviser/freeze.json",
+      "bytes": 4542,
+      "sha256": "bafc56b9151d4ec7a9867a4f1bbdef203f70cba1fbf20b5a8732fc84b67ea716",
+      "mtime_ns": 1791609969237763586,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/reviser/source-map.json",
+      "bytes": 48001,
+      "sha256": "831d39afbeb1ea69b1a009c0e0d69affc262714d4e1a4762cc7a9164245e19fc",
+      "mtime_ns": 1791610750050523069,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/reviser/sources/index.md",
+      "bytes": 13160,
+      "sha256": "0b88112b97c9f32b13c0bbc0b13d90e07cf790b25f519209ca48b0bf89156dda",
+      "mtime_ns": 1791610679168576651,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/reviser/request.json",
+      "bytes": 1619,
+      "sha256": "177342f3e5175145eaf860f4e9d871ada33b1c6749ca528aab08573166a91f86",
+      "mtime_ns": 1791609969237561394,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/reviser/dispatch.json",
+      "bytes": 4889,
+      "sha256": "dee77fb52608a2dafa9472210d0f082b700d578ddce7452d673a2a43a5d5586a",
+      "mtime_ns": 1791609969918214414,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/reviser/service-tier-change.json",
+      "bytes": 483,
+      "sha256": "6fc0646c06260fe87dd82e2a2582edfb8e491c238f2a8a1b5f520fa0da424f01",
+      "mtime_ns": 1791609969038886366,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/reviser/final.md",
+      "bytes": 28400,
+      "sha256": "e3a263aad6a3a0d7c1f2fd302ce985d01c738ec9e0c74d48d45fb93f2d373ae0",
+      "mtime_ns": 1791610750050929459,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/reviser/invocation-clarification.json",
+      "bytes": 3037,
+      "sha256": "32f856066bf169b25ed1b7b9582ae84ade35f886e80e196f81c43e326b9b5514",
+      "mtime_ns": 1791609969238241981,
+      "inspection": "FULL content read; hash records identity only, not semantic proof"
+    }
+  ],
+  "terminal_freeze_checks": [
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/critic/critique.md",
+      "expected_sha256": "d855a616ac768d2df4137196a895dfc7ea87d834a3d9baf10cb65bf6e9fb7d4c",
+      "actual_sha256": "d855a616ac768d2df4137196a895dfc7ea87d834a3d9baf10cb65bf6e9fb7d4c",
+      "expected_bytes": 8827,
+      "actual_bytes": 8827,
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/critic/source-map.json",
+      "expected_sha256": "2e1f00ef21bc35dfb5a10a46b55d20ffc0f9c1b1836bdebec35e09753cbb8a8b",
+      "actual_sha256": "2e1f00ef21bc35dfb5a10a46b55d20ffc0f9c1b1836bdebec35e09753cbb8a8b",
+      "expected_bytes": 31790,
+      "actual_bytes": 31790,
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/critic/sources/index.md",
+      "expected_sha256": "2f3cb4a1895613f77bd6884aed2139bd415e006479bdb05376b38679635dcd6e",
+      "actual_sha256": "2f3cb4a1895613f77bd6884aed2139bd415e006479bdb05376b38679635dcd6e",
+      "expected_bytes": 2729,
+      "actual_bytes": 2729,
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/investigator/discovery.md",
+      "expected_sha256": "ee307dbdb3efe66d060103d905f7567d70ace9eae9f8082f9da73dbe5fc714c0",
+      "actual_sha256": "ee307dbdb3efe66d060103d905f7567d70ace9eae9f8082f9da73dbe5fc714c0",
+      "expected_bytes": 14545,
+      "actual_bytes": 14545,
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/investigator/draft.md",
+      "expected_sha256": "039a2996052529947313d1115877a66d5f0c8ddce2ec15f0efc8798a84197a51",
+      "actual_sha256": "039a2996052529947313d1115877a66d5f0c8ddce2ec15f0efc8798a84197a51",
+      "expected_bytes": 23000,
+      "actual_bytes": 23000,
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/investigator/revealed-plan.md",
+      "expected_sha256": "b4cf16e079bff1eb16228453f99f8682a63d34ecd99e0f53ca1463416111931e",
+      "actual_sha256": "b4cf16e079bff1eb16228453f99f8682a63d34ecd99e0f53ca1463416111931e",
+      "expected_bytes": 6060,
+      "actual_bytes": 6060,
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/investigator/source-map.json",
+      "expected_sha256": "d5433097907d0981649bb7ea92bc394524ef1ab70f4a073542389ebdac65af97",
+      "actual_sha256": "d5433097907d0981649bb7ea92bc394524ef1ab70f4a073542389ebdac65af97",
+      "expected_bytes": 21542,
+      "actual_bytes": 21542,
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/investigator/sources/index.md",
+      "expected_sha256": "9b2b589b2290e5bd8132bbeb035a866da245d41771b84520873ddc4d2931a55b",
+      "actual_sha256": "9b2b589b2290e5bd8132bbeb035a866da245d41771b84520873ddc4d2931a55b",
+      "expected_bytes": 5629,
+      "actual_bytes": 5629,
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/reviser/final.md",
+      "expected_sha256": "e3a263aad6a3a0d7c1f2fd302ce985d01c738ec9e0c74d48d45fb93f2d373ae0",
+      "actual_sha256": "e3a263aad6a3a0d7c1f2fd302ce985d01c738ec9e0c74d48d45fb93f2d373ae0",
+      "expected_bytes": 28400,
+      "actual_bytes": 28400,
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/reviser/source-map.json",
+      "expected_sha256": "831d39afbeb1ea69b1a009c0e0d69affc262714d4e1a4762cc7a9164245e19fc",
+      "actual_sha256": "831d39afbeb1ea69b1a009c0e0d69affc262714d4e1a4762cc7a9164245e19fc",
+      "expected_bytes": 48001,
+      "actual_bytes": 48001,
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/reviser/sources/index.md",
+      "expected_sha256": "0b88112b97c9f32b13c0bbc0b13d90e07cf790b25f519209ca48b0bf89156dda",
+      "actual_sha256": "0b88112b97c9f32b13c0bbc0b13d90e07cf790b25f519209ca48b0bf89156dda",
+      "expected_bytes": 13160,
+      "actual_bytes": 13160,
+      "match": true
+    }
+  ],
+  "stage_freeze_checks": [
+    {
+      "stage": "investigator",
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/inputs/brief.md",
+      "expected_sha256": "a6520dffb1ba50fd341f287ae6805fe99e8f14f159c53eb87668029014ba3589",
+      "actual_sha256": "a6520dffb1ba50fd341f287ae6805fe99e8f14f159c53eb87668029014ba3589",
+      "match": true
+    },
+    {
+      "stage": "investigator",
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/investigator/assignment.md",
+      "expected_sha256": "967ef59a9ac0f7fdd6c88276adc96a8dda0f2af1867a81e4b069114f5bdd5879",
+      "actual_sha256": "967ef59a9ac0f7fdd6c88276adc96a8dda0f2af1867a81e4b069114f5bdd5879",
+      "match": true
+    },
+    {
+      "stage": "investigator",
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/investigator/input-map.json",
+      "expected_sha256": "b18446c018a9b77251b83e82d150b4f17e1c06e4efa78c53cf5102a57b3eb433",
+      "actual_sha256": "b18446c018a9b77251b83e82d150b4f17e1c06e4efa78c53cf5102a57b3eb433",
+      "match": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/inputs/brief.md",
+      "expected_sha256": "a6520dffb1ba50fd341f287ae6805fe99e8f14f159c53eb87668029014ba3589",
+      "actual_sha256": "a6520dffb1ba50fd341f287ae6805fe99e8f14f159c53eb87668029014ba3589",
+      "match": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/critic/assignment.md",
+      "expected_sha256": "74c2b405135714bb47111907645e2cf93b3f5d5050b41215660ed9be4aa514ee",
+      "actual_sha256": "74c2b405135714bb47111907645e2cf93b3f5d5050b41215660ed9be4aa514ee",
+      "match": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/critic/input-map.json",
+      "expected_sha256": "3bd5feb40123cc52e822a91a04553ee3fc4ec0f3aefdcd4a285b732692182318",
+      "actual_sha256": "3bd5feb40123cc52e822a91a04553ee3fc4ec0f3aefdcd4a285b732692182318",
+      "match": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/investigator/discovery.md",
+      "expected_sha256": "ee307dbdb3efe66d060103d905f7567d70ace9eae9f8082f9da73dbe5fc714c0",
+      "actual_sha256": "ee307dbdb3efe66d060103d905f7567d70ace9eae9f8082f9da73dbe5fc714c0",
+      "match": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/investigator/draft.md",
+      "expected_sha256": "039a2996052529947313d1115877a66d5f0c8ddce2ec15f0efc8798a84197a51",
+      "actual_sha256": "039a2996052529947313d1115877a66d5f0c8ddce2ec15f0efc8798a84197a51",
+      "match": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/investigator/source-map.json",
+      "expected_sha256": "d5433097907d0981649bb7ea92bc394524ef1ab70f4a073542389ebdac65af97",
+      "actual_sha256": "d5433097907d0981649bb7ea92bc394524ef1ab70f4a073542389ebdac65af97",
+      "match": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/investigator/revealed-plan.md",
+      "expected_sha256": "b4cf16e079bff1eb16228453f99f8682a63d34ecd99e0f53ca1463416111931e",
+      "actual_sha256": "b4cf16e079bff1eb16228453f99f8682a63d34ecd99e0f53ca1463416111931e",
+      "match": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/investigator/plan-reveal.json",
+      "expected_sha256": "687cf2a2a91bb0f5d143e5c797aa6fea313cccaae6e5ba0ef0844e3e959db7a2",
+      "actual_sha256": "687cf2a2a91bb0f5d143e5c797aa6fea313cccaae6e5ba0ef0844e3e959db7a2",
+      "match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/inputs/brief.md",
+      "expected_sha256": "a6520dffb1ba50fd341f287ae6805fe99e8f14f159c53eb87668029014ba3589",
+      "actual_sha256": "a6520dffb1ba50fd341f287ae6805fe99e8f14f159c53eb87668029014ba3589",
+      "match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/reviser/assignment.md",
+      "expected_sha256": "81fa2719dbf0a445babade85a0a1da40ed98c4cc7e367cda351e8e0e63fe2be2",
+      "actual_sha256": "81fa2719dbf0a445babade85a0a1da40ed98c4cc7e367cda351e8e0e63fe2be2",
+      "match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/reviser/input-map.json",
+      "expected_sha256": "941953c35f0b1c4d7ac54168fd6005bab48807430d15c864ebde4f8e960813f5",
+      "actual_sha256": "941953c35f0b1c4d7ac54168fd6005bab48807430d15c864ebde4f8e960813f5",
+      "match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/investigator/discovery.md",
+      "expected_sha256": "ee307dbdb3efe66d060103d905f7567d70ace9eae9f8082f9da73dbe5fc714c0",
+      "actual_sha256": "ee307dbdb3efe66d060103d905f7567d70ace9eae9f8082f9da73dbe5fc714c0",
+      "match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/investigator/draft.md",
+      "expected_sha256": "039a2996052529947313d1115877a66d5f0c8ddce2ec15f0efc8798a84197a51",
+      "actual_sha256": "039a2996052529947313d1115877a66d5f0c8ddce2ec15f0efc8798a84197a51",
+      "match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/investigator/source-map.json",
+      "expected_sha256": "d5433097907d0981649bb7ea92bc394524ef1ab70f4a073542389ebdac65af97",
+      "actual_sha256": "d5433097907d0981649bb7ea92bc394524ef1ab70f4a073542389ebdac65af97",
+      "match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/investigator/revealed-plan.md",
+      "expected_sha256": "b4cf16e079bff1eb16228453f99f8682a63d34ecd99e0f53ca1463416111931e",
+      "actual_sha256": "b4cf16e079bff1eb16228453f99f8682a63d34ecd99e0f53ca1463416111931e",
+      "match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/investigator/plan-reveal.json",
+      "expected_sha256": "687cf2a2a91bb0f5d143e5c797aa6fea313cccaae6e5ba0ef0844e3e959db7a2",
+      "actual_sha256": "687cf2a2a91bb0f5d143e5c797aa6fea313cccaae6e5ba0ef0844e3e959db7a2",
+      "match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/critic/critique.md",
+      "expected_sha256": "d855a616ac768d2df4137196a895dfc7ea87d834a3d9baf10cb65bf6e9fb7d4c",
+      "actual_sha256": "d855a616ac768d2df4137196a895dfc7ea87d834a3d9baf10cb65bf6e9fb7d4c",
+      "match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A5-02/treatment/stages/critic/source-map.json",
+      "expected_sha256": "2e1f00ef21bc35dfb5a10a46b55d20ffc0f9c1b1836bdebec35e09753cbb8a8b",
+      "actual_sha256": "2e1f00ef21bc35dfb5a10a46b55d20ffc0f9c1b1836bdebec35e09753cbb8a8b",
+      "match": true
+    }
+  ],
+  "missing_authored_evidence": [],
+  "candidate_source_captures": "Source directories contain authored indexes only; no page captures or product execution witnesses. Maps link public originals. Independently retrieved evidence is under this assessment directory."
+}

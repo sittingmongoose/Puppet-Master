@@ -1,0 +1,353 @@
+{
+  "captured_utc": "2026-10-10T05:53:32.746943+00:00",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A4-02/brief.md",
+      "bytes": 3350,
+      "sha256": "20fcd49e3c924815b03c89b92fa9b0ede92f239eb777b4c4f6f3dbcabe88ba3e",
+      "mtime_ns": 1791608096133740839,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A4-02/plan.md",
+      "bytes": 5956,
+      "sha256": "0588e3e0686b6ccc9b5f3eafc56f3415d8565ac895c12ba6a84f572b46ccfe53",
+      "mtime_ns": 1791608096134217942,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/terminal-science-freeze-root.json",
+      "bytes": 7701,
+      "sha256": "5e015ea037b176c187a35166d11301e2d9c51ac05ee0088717a3dad40222cb27",
+      "mtime_ns": 1791611321958264390,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/inputs/brief.md",
+      "bytes": 3350,
+      "sha256": "20fcd49e3c924815b03c89b92fa9b0ede92f239eb777b4c4f6f3dbcabe88ba3e",
+      "mtime_ns": 1791608096354792448,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/assignment.md",
+      "bytes": 4136,
+      "sha256": "87e93c2fabb8ecfd9efd868a05c90e249c5a464cdf7782752e28f69523844552",
+      "mtime_ns": 1791608096355698488,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/input-map.json",
+      "bytes": 789,
+      "sha256": "2105d71d3fc5030efb01b0f0583f0482ee9f3e7962d8805f204cd3a77194dbeb",
+      "mtime_ns": 1791608096515536636,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/freeze.json",
+      "bytes": 2073,
+      "sha256": "63114a400507af62786b1d0455f9fc8b9f0632a70c2f97a12576cc60e58090e3",
+      "mtime_ns": 1791608096516067644,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/source-map.json",
+      "bytes": 20908,
+      "sha256": "cdfb19a3c12bed4397426a18c604879c257a24af53a62776962761f4ca9ec775",
+      "mtime_ns": 1791609009214578054,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/sources/index.md",
+      "bytes": 8893,
+      "sha256": "538021bc9c93ef4974e7e2798a5d0e4a777a2cbadfd726e7b356de01dc8bd2b4",
+      "mtime_ns": 1791609009214907320,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/service-tier-change.json",
+      "bytes": 493,
+      "sha256": "ec7e683e6b6e743b83e55cf59a248dda70dc575cd751b5a836144510a313a55c",
+      "mtime_ns": 1791608096516263148,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/discovery.md",
+      "bytes": 15325,
+      "sha256": "46807c16ec3d360b4af0ec58d21123a7466f933cf4902136ab754b1a62ecdb68",
+      "mtime_ns": 1791609009215308843,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/draft.md",
+      "bytes": 21874,
+      "sha256": "f5b1ad4e86d9a70c72011724af890ca30b0ee3139c8f5f8d2a89e1c567d53d1a",
+      "mtime_ns": 1791609284014619078,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 5956,
+      "sha256": "0588e3e0686b6ccc9b5f3eafc56f3415d8565ac895c12ba6a84f572b46ccfe53",
+      "mtime_ns": 1791609029005199383,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/plan-reveal.json",
+      "bytes": 429,
+      "sha256": "25ea8f2d7576f1c2d493ee0e86c1a19eb2fcb1c35a0209ac1896d76aa3c16e2f",
+      "mtime_ns": 1791609029005332975,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/assignment.md",
+      "bytes": 4430,
+      "sha256": "44b2d11ea71cc8dd184a28a93711fdc6fd20353984f9fc441bf2118057021fb7",
+      "mtime_ns": 1791609416367201966,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/input-map.json",
+      "bytes": 1477,
+      "sha256": "12da2ebbf975b935aa93dda3b37aa76312211e55bf63e6b8276c4395b2b8092d",
+      "mtime_ns": 1791609416367030404,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/freeze.json",
+      "bytes": 3656,
+      "sha256": "132c0cbf850febc3baa38050694509a4844f942606078788958b54101814cdbb",
+      "mtime_ns": 1791609416366893691,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/source-map.json",
+      "bytes": 24090,
+      "sha256": "3ec275cb952f973099d3ddf0dc53ba29796bde08d9d558fea56d22f1c44ed28c",
+      "mtime_ns": 1791610122488928381,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/sources/index.md",
+      "bytes": 4816,
+      "sha256": "75d50b11cc811564e74720b92a1273d9cf3648a5ee5596f3cf1424d0ad0d30f0",
+      "mtime_ns": 1791610075006639763,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/service-tier-change.json",
+      "bytes": 481,
+      "sha256": "9944733f58e5b05d4bc7277fc4a7046f826effa68ea9ef7e274436c24af21ade",
+      "mtime_ns": 1791609416162506299,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/critique.md",
+      "bytes": 9070,
+      "sha256": "8b47033aaebe7d18e6482e9ed5c4cf58f56250e972a093c583d526e105b0d18d",
+      "mtime_ns": 1791610074998639714,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/invocation-clarification.json",
+      "bytes": 3030,
+      "sha256": "2f8635f9a16a8aef868d9e2fa4d65d46ebbb689c0cd8b40e0cb468c4aa4921d0",
+      "mtime_ns": 1791609416367365241,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/native-goal-state.json",
+      "bytes": 530,
+      "sha256": "1436f0cf022a47d3204355183782954f00d781f85510e17843cc502c34ec891a",
+      "mtime_ns": 1791609528531207748,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/native-goal-completion.json",
+      "bytes": 855,
+      "sha256": "60ddf51a88624e4e3b183ac4b730948e411faa80648d97d339758ab1bb0fa448",
+      "mtime_ns": 1791610131846985264,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/native-goal-capture.md",
+      "bytes": 944,
+      "sha256": "9f7fe9fcb12e946cd41dd3d7f0ad4a924df0e32195cece8bb17626ff28ee86c6",
+      "mtime_ns": 1791610075012639799,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/assignment.md",
+      "bytes": 4412,
+      "sha256": "99e029ca4ed8a2362a6592f658f11e448e1c12cb88b340580911851ab8c5c6b9",
+      "mtime_ns": 1791610289730580139,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/input-map.json",
+      "bytes": 1794,
+      "sha256": "eba71b239ed62f6e88abce9aa31502dabf1f2f3e8fce6e681b148ca4ab140b42",
+      "mtime_ns": 1791610289730433514,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/freeze.json",
+      "bytes": 4434,
+      "sha256": "9fff06313f9a7cd8405015a542c998d18f306e174c9587055d54c4e8dc06f4f9",
+      "mtime_ns": 1791610289730225117,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/source-map.json",
+      "bytes": 31998,
+      "sha256": "3ad21682974e8f369fe06d05a7ce66dd576c89800c7329418f14f4f9f0f29f17",
+      "mtime_ns": 1791611170227738840,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/sources/index.md",
+      "bytes": 11546,
+      "sha256": "74b5ce89e0dedbb05f9f64071fbfcea639cce932be4afb4b94db1a58cfd40c3b",
+      "mtime_ns": 1791611014241627082,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/service-tier-change.json",
+      "bytes": 483,
+      "sha256": "18138f21db69a8d461c67a4973675c84f62046089972c93ede3685e0d1a348dc",
+      "mtime_ns": 1791610289530602253,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/final.md",
+      "bytes": 25460,
+      "sha256": "4115d20a6476642c4d4d02a2ee44c388af3baa812bb51551bee7d91c99599364",
+      "mtime_ns": 1791611170226606539,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/invocation-clarification.json",
+      "bytes": 3037,
+      "sha256": "bd536c9a72b578d3858a7a3279cb2be9cdffddc2369330f7b0f01cbfb5cd9960",
+      "mtime_ns": 1791610289730738573,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/native-goal-lifecycle.json",
+      "bytes": 3050,
+      "sha256": "1fe9292033d0b2342688ed563374884c24ed56e7d7fe19e976f46184b14717b2",
+      "mtime_ns": 1791611240778337570,
+      "read_scope": "FULL",
+      "role": "original input or authored package; no semantic truth inferred from hash"
+    }
+  ],
+  "terminal_freeze_comparison": [
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/critique.md",
+      "expected_sha256": "8b47033aaebe7d18e6482e9ed5c4cf58f56250e972a093c583d526e105b0d18d",
+      "actual_sha256": "8b47033aaebe7d18e6482e9ed5c4cf58f56250e972a093c583d526e105b0d18d",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/source-map.json",
+      "expected_sha256": "3ec275cb952f973099d3ddf0dc53ba29796bde08d9d558fea56d22f1c44ed28c",
+      "actual_sha256": "3ec275cb952f973099d3ddf0dc53ba29796bde08d9d558fea56d22f1c44ed28c",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/critic/sources/index.md",
+      "expected_sha256": "75d50b11cc811564e74720b92a1273d9cf3648a5ee5596f3cf1424d0ad0d30f0",
+      "actual_sha256": "75d50b11cc811564e74720b92a1273d9cf3648a5ee5596f3cf1424d0ad0d30f0",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/discovery.md",
+      "expected_sha256": "46807c16ec3d360b4af0ec58d21123a7466f933cf4902136ab754b1a62ecdb68",
+      "actual_sha256": "46807c16ec3d360b4af0ec58d21123a7466f933cf4902136ab754b1a62ecdb68",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/draft.md",
+      "expected_sha256": "f5b1ad4e86d9a70c72011724af890ca30b0ee3139c8f5f8d2a89e1c567d53d1a",
+      "actual_sha256": "f5b1ad4e86d9a70c72011724af890ca30b0ee3139c8f5f8d2a89e1c567d53d1a",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/revealed-plan.md",
+      "expected_sha256": "0588e3e0686b6ccc9b5f3eafc56f3415d8565ac895c12ba6a84f572b46ccfe53",
+      "actual_sha256": "0588e3e0686b6ccc9b5f3eafc56f3415d8565ac895c12ba6a84f572b46ccfe53",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/source-map.json",
+      "expected_sha256": "cdfb19a3c12bed4397426a18c604879c257a24af53a62776962761f4ca9ec775",
+      "actual_sha256": "cdfb19a3c12bed4397426a18c604879c257a24af53a62776962761f4ca9ec775",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/sources/index.md",
+      "expected_sha256": "538021bc9c93ef4974e7e2798a5d0e4a777a2cbadfd726e7b356de01dc8bd2b4",
+      "actual_sha256": "538021bc9c93ef4974e7e2798a5d0e4a777a2cbadfd726e7b356de01dc8bd2b4",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/final.md",
+      "expected_sha256": "4115d20a6476642c4d4d02a2ee44c388af3baa812bb51551bee7d91c99599364",
+      "actual_sha256": "4115d20a6476642c4d4d02a2ee44c388af3baa812bb51551bee7d91c99599364",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/source-map.json",
+      "expected_sha256": "3ad21682974e8f369fe06d05a7ce66dd576c89800c7329418f14f4f9f0f29f17",
+      "actual_sha256": "3ad21682974e8f369fe06d05a7ce66dd576c89800c7329418f14f4f9f0f29f17",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/sources/index.md",
+      "expected_sha256": "74b5ce89e0dedbb05f9f64071fbfcea639cce932be4afb4b94db1a58cfd40c3b",
+      "actual_sha256": "74b5ce89e0dedbb05f9f64071fbfcea639cce932be4afb4b94db1a58cfd40c3b",
+      "matches": true
+    }
+  ]
+}

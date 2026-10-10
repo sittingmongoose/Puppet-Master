@@ -1,0 +1,165 @@
+{
+  "basis": "Byte identity only, not semantic proof",
+  "checks": [
+    {
+      "manifest": "ER12_RUNTIME/runs/A4-02/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/critic/critique.md",
+      "matches": true
+    },
+    {
+      "manifest": "ER12_RUNTIME/runs/A4-02/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/critic/source-map.json",
+      "matches": true
+    },
+    {
+      "manifest": "ER12_RUNTIME/runs/A4-02/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/critic/sources/index.md",
+      "matches": true
+    },
+    {
+      "manifest": "ER12_RUNTIME/runs/A4-02/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/investigator/discovery.md",
+      "matches": true
+    },
+    {
+      "manifest": "ER12_RUNTIME/runs/A4-02/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/investigator/draft.md",
+      "matches": true
+    },
+    {
+      "manifest": "ER12_RUNTIME/runs/A4-02/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/investigator/revealed-plan.md",
+      "matches": true
+    },
+    {
+      "manifest": "ER12_RUNTIME/runs/A4-02/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/investigator/source-map.json",
+      "matches": true
+    },
+    {
+      "manifest": "ER12_RUNTIME/runs/A4-02/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/investigator/sources/index.md",
+      "matches": true
+    },
+    {
+      "manifest": "ER12_RUNTIME/runs/A4-02/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/reviser/final.md",
+      "matches": true
+    },
+    {
+      "manifest": "ER12_RUNTIME/runs/A4-02/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/reviser/source-map.json",
+      "matches": true
+    },
+    {
+      "manifest": "ER12_RUNTIME/runs/A4-02/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/reviser/sources/index.md",
+      "matches": true
+    },
+    {
+      "manifest": "ER12_RUNTIME/runs/A4-02/control/stages/investigator/freeze.json",
+      "path": "ER12_RUNTIME/runs/A4-02/control/inputs/brief.md",
+      "matches": true
+    },
+    {
+      "manifest": "ER12_RUNTIME/runs/A4-02/control/stages/investigator/freeze.json",
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/investigator/assignment.md",
+      "matches": true
+    },
+    {
+      "manifest": "ER12_RUNTIME/runs/A4-02/control/stages/investigator/freeze.json",
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/investigator/input-map.json",
+      "matches": true
+    },
+    {
+      "manifest": "ER12_RUNTIME/runs/A4-02/control/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A4-02/control/inputs/brief.md",
+      "matches": true
+    },
+    {
+      "manifest": "ER12_RUNTIME/runs/A4-02/control/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/critic/assignment.md",
+      "matches": true
+    },
+    {
+      "manifest": "ER12_RUNTIME/runs/A4-02/control/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/critic/input-map.json",
+      "matches": true
+    },
+    {
+      "manifest": "ER12_RUNTIME/runs/A4-02/control/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/investigator/discovery.md",
+      "matches": true
+    },
+    {
+      "manifest": "ER12_RUNTIME/runs/A4-02/control/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/investigator/draft.md",
+      "matches": true
+    },
+    {
+      "manifest": "ER12_RUNTIME/runs/A4-02/control/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/investigator/source-map.json",
+      "matches": true
+    },
+    {
+      "manifest": "ER12_RUNTIME/runs/A4-02/control/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/investigator/revealed-plan.md",
+      "matches": true
+    },
+    {
+      "manifest": "ER12_RUNTIME/runs/A4-02/control/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/investigator/plan-reveal.json",
+      "matches": true
+    },
+    {
+      "manifest": "ER12_RUNTIME/runs/A4-02/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A4-02/control/inputs/brief.md",
+      "matches": true
+    },
+    {
+      "manifest": "ER12_RUNTIME/runs/A4-02/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/reviser/assignment.md",
+      "matches": true
+    },
+    {
+      "manifest": "ER12_RUNTIME/runs/A4-02/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/reviser/input-map.json",
+      "matches": true
+    },
+    {
+      "manifest": "ER12_RUNTIME/runs/A4-02/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/investigator/discovery.md",
+      "matches": true
+    },
+    {
+      "manifest": "ER12_RUNTIME/runs/A4-02/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/investigator/draft.md",
+      "matches": true
+    },
+    {
+      "manifest": "ER12_RUNTIME/runs/A4-02/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/investigator/source-map.json",
+      "matches": true
+    },
+    {
+      "manifest": "ER12_RUNTIME/runs/A4-02/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/investigator/revealed-plan.md",
+      "matches": true
+    },
+    {
+      "manifest": "ER12_RUNTIME/runs/A4-02/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/investigator/plan-reveal.json",
+      "matches": true
+    },
+    {
+      "manifest": "ER12_RUNTIME/runs/A4-02/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/critic/critique.md",
+      "matches": true
+    },
+    {
+      "manifest": "ER12_RUNTIME/runs/A4-02/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/critic/source-map.json",
+      "matches": true
+    }
+  ]
+}

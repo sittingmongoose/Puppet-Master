@@ -1,0 +1,34 @@
+{
+  "critic_taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A2-A2-02-treatment-critic-topology-v1",
+  "retained_final_deadline_utc": "2026-10-10T05:51:12.545Z",
+  "frozen_at_utc": "2026-10-10T05:33:54.665Z",
+  "files": [
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/critic-package/critique.md",
+      "origin_path": "ER12_RUNTIME/runs/A2-02/treatment/stages/critic/critique.md",
+      "sha256": "75c33753abca5e821b80443d26ea8499f77a9646e6c025138903ed7ba7fee27d",
+      "bytes": 5202
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/critic-package/source-map.json",
+      "origin_path": "ER12_RUNTIME/runs/A2-02/treatment/stages/critic/source-map.json",
+      "sha256": "bde04edf5d7188a99b839add53c725915598829aea765f7555868e54f90bf415",
+      "bytes": 15864
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/critic-package/critique-dispositions.json",
+      "origin_path": "ER12_RUNTIME/runs/A2-02/treatment/stages/critic/critique-dispositions.json",
+      "sha256": "a08c6fcf83d90113cf781560fc0153913ef68525c045e2cc8a9ee120916de080",
+      "bytes": 1776
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/critic-package/sources/index.md",
+      "origin_path": "ER12_RUNTIME/runs/A2-02/treatment/stages/critic/sources/index.md",
+      "sha256": "0be93f64d6ca9bfad2330c4525eba50c14a1b81c783fffbc4ced37e8c5c65daf",
+      "bytes": 3096
+    }
+  ],
+  "identity_only": true,
+  "source_truth_proven": false,
+  "native_provenance_attested_by_helper": false
+}

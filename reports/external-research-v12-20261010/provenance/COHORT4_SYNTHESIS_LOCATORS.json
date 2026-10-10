@@ -1,0 +1,97 @@
+{
+  "projections": [
+    {
+      "public_path": "analysis/AB-synthesis-v1/ROOT_REVIEW.json",
+      "original_sha256": "47b1678e9e0c6a2d46d1c66c09a8cecbae5210ebadc7f5dfcbaafe7c3b1bba00",
+      "sanitized_sha256": "de9ec7700f1c6ae5e10d3ee8b665a20656c978dd7c3a8944e07917eaf631f423",
+      "sanitized_bytes": 2143,
+      "original_bytes": 2219,
+      "operation": "authored synthesis retained; duplicate originals replaced by lossless locators; privacy sanitation",
+      "private_archive_lineage": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/ROOT_REVIEW.json"
+    },
+    {
+      "public_path": "analysis/AB-synthesis-v1/accounting-AB-original.json",
+      "original_sha256": "a0fbd00177bab6946b5cee7431cbdc2d79b84ff22a51d83653ba2ce48df46d3c",
+      "sanitized_sha256": "97c99cb9446f27ae15ecdf65029c8448f381f820b76879bee9b47965532dd58f",
+      "sanitized_bytes": 3082123,
+      "original_bytes": 3181449,
+      "operation": "authored synthesis retained; duplicate originals replaced by lossless locators; privacy sanitation",
+      "private_archive_lineage": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/accounting-AB-original.json"
+    },
+    {
+      "public_path": "analysis/AB-synthesis-v1/analysis.json",
+      "original_sha256": "4a03dd38b362363d425e5ed73fc74243882d8d2bbb9a5077dafdc27b0291e855",
+      "sanitized_sha256": "0176eb8aa8ff3ecda6302c001398e8e38733f930ed84028be26a8b9cbbc80757",
+      "sanitized_bytes": 442232,
+      "original_bytes": 6550579,
+      "operation": "authored synthesis retained; duplicate originals replaced by lossless locators; privacy sanitation",
+      "private_archive_lineage": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/analysis.json"
+    },
+    {
+      "public_path": "analysis/AB-synthesis-v1/final-review.json",
+      "original_sha256": "b92ea666afa0466283a758a03b8b17aa05c1d8620b48d1739a0dcc56dbc620d4",
+      "sanitized_sha256": "b92ea666afa0466283a758a03b8b17aa05c1d8620b48d1739a0dcc56dbc620d4",
+      "sanitized_bytes": 1332,
+      "original_bytes": 1332,
+      "operation": "authored synthesis retained; duplicate originals replaced by lossless locators; privacy sanitation",
+      "private_archive_lineage": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/final-review.json"
+    },
+    {
+      "public_path": "analysis/AB-synthesis-v1/goal-activation-receipt.json",
+      "original_sha256": "2ae544ccf4809058a53cfe8f5605a07bd61c2529f79ca8b6b244cd29fc5fdb3c",
+      "sanitized_sha256": "c432a189fc4f51303b161684ac33948343df433b66c54f5e317d5d80290f84d8",
+      "sanitized_bytes": 1137,
+      "original_bytes": 1175,
+      "operation": "authored synthesis retained; duplicate originals replaced by lossless locators; privacy sanitation",
+      "private_archive_lineage": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/goal-activation-receipt.json"
+    },
+    {
+      "public_path": "analysis/AB-synthesis-v1/goal-completion-receipt.json",
+      "original_sha256": "f195cf8aca39eccf7495af3997b1f9513586800bcd922afa9b3db1de4907aa55",
+      "sanitized_sha256": "a539658684df0e7863e6b80f47313cab599a00b83dfeefc943b20b6ffc8172a8",
+      "sanitized_bytes": 1466,
+      "original_bytes": 1504,
+      "operation": "authored synthesis retained; duplicate originals replaced by lossless locators; privacy sanitation",
+      "private_archive_lineage": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/goal-completion-receipt.json"
+    },
+    {
+      "public_path": "analysis/AB-synthesis-v1/goal-precompletion-receipt.json",
+      "original_sha256": "72b82a4b9df7523b777495848bb64285cddf2b112af798c444678909079f58a6",
+      "sanitized_sha256": "e5979bea3d20fa318b76ea78ad3b99c8439a429514598f8b33b8cf96f6eee5eb",
+      "sanitized_bytes": 1144,
+      "original_bytes": 1182,
+      "operation": "authored synthesis retained; duplicate originals replaced by lossless locators; privacy sanitation",
+      "private_archive_lineage": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/goal-precompletion-receipt.json"
+    },
+    {
+      "public_path": "analysis/AB-synthesis-v1/original-evidence.json",
+      "original_sha256": "f37b266636d976a117aaa4e529a3d2d70e26cc4502a824441bd38d2ee789d316",
+      "sanitized_sha256": "1077504b4fc8bdcc0e3b37375692d0ee5a962dfd4be4ceafe24e69ac479a60b4",
+      "sanitized_bytes": 88143,
+      "original_bytes": 10009067,
+      "operation": "authored synthesis retained; duplicate originals replaced by lossless locators; privacy sanitation",
+      "private_archive_lineage": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "public_path": "analysis/AB-synthesis-v1/provenance-manifest.json",
+      "original_sha256": "d09e1859521283d0be8a551f5ced2ae59dbdc28b96416463eb68777c7a3c5a19",
+      "sanitized_sha256": "6d66c222eb43baff799f7489018c961587ad73f573c22589863265ea732969a1",
+      "sanitized_bytes": 4966608,
+      "original_bytes": 5806446,
+      "operation": "authored synthesis retained; duplicate originals replaced by lossless locators; privacy sanitation",
+      "private_archive_lineage": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/provenance-manifest.json"
+    },
+    {
+      "public_path": "analysis/AB-synthesis-v1/saved-outputs-manifest.json",
+      "original_sha256": "4d6482a6ef5e5b736233c4e6ba9e6173db62ad5877ca70392538951674604468",
+      "sanitized_sha256": "5fe73578b76ebfa8db477fa006601851acce9ade2f30be542cf30392760462be",
+      "sanitized_bytes": 1906,
+      "original_bytes": 2210,
+      "operation": "authored synthesis retained; duplicate originals replaced by lossless locators; privacy sanitation",
+      "private_archive_lineage": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/saved-outputs-manifest.json"
+    }
+  ],
+  "private_originals_full": true,
+  "duplicate_originals": "analysis/AB-synthesis-v1/original-evidence.json",
+  "source_body_omissions": "provenance/COHORT4_SOURCE_EVIDENCE_BINDING.json"
+}

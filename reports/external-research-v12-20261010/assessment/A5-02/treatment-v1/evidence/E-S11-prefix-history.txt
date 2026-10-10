@@ -1,0 +1,88 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/database/migrations/2025_11_04_173713_add_2d_label_prefix.php"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A5-02/treatment-v1/source-map.json",
+      "source_id": "E-S11-prefix-history",
+      "existing_authored_summary_fields": {
+        "independently_verified_version_or_commit": "Pinned Snipe-IT v8.8.0 / 2c466fa8a5a68525439bf1bbbc24470d6670c516",
+        "governing_condition_default_exception": "New Label Engine; selected template/type support; plain target for prefix path; escaped prefix; no established cooperative endpoint (F1/L1)",
+        "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A5-02/treatment-v1/evidence/supplemental-retrieval-manifest.json",
+      "source_id": "E-S11-prefix-history",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "source_locator_status": "Relevant cited code/metadata reviewed; not executed"
+    },
+    {
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-prefix-history.txt",
+          "line": 15,
+          "needle": "label2_2d_prefix",
+          "other_match_lines": [
+            16,
+            27,
+            28
+          ]
+        }
+      ]
+    }
+  ],
+  "raw_sha256": "086a901c1bfe84854cbaad7ae4f2a7fa4435cda7e16c3b34630ddf98a0d7cd64",
+  "original_bytes": 837,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A5-02/treatment-v1/evidence/E-S11-prefix-history.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/database/migrations/2025_11_04_173713_add_2d_label_prefix.php"
+  ],
+  "version": [
+    {
+      "independently_verified_version_or_commit": "Pinned Snipe-IT v8.8.0 / 2c466fa8a5a68525439bf1bbbc24470d6670c516",
+      "governing_condition_default_exception": "New Label Engine; selected template/type support; plain target for prefix path; escaped prefix; no established cooperative endpoint (F1/L1)",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation."
+    }
+  ],
+  "selector": [
+    {
+      "source_locator_status": "Relevant cited code/metadata reviewed; not executed"
+    },
+    {
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-prefix-history.txt",
+          "line": 15,
+          "needle": "label2_2d_prefix",
+          "other_match_lines": [
+            16,
+            27,
+            28
+          ]
+        }
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "independently_verified_version_or_commit": "Pinned Snipe-IT v8.8.0 / 2c466fa8a5a68525439bf1bbbc24470d6670c516",
+      "governing_condition_default_exception": "New Label Engine; selected template/type support; plain target for prefix path; escaped prefix; no established cooperative endpoint (F1/L1)",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation."
+    }
+  ],
+  "rawSHA256": "086a901c1bfe84854cbaad7ae4f2a7fa4435cda7e16c3b34630ddf98a0d7cd64"
+}

@@ -1,0 +1,62 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://hg-edge.mozilla.org/comm-central/raw-file/3787e583daf7/calendar/base/src/calItemBase.js",
+    "https://hg.mozilla.org/comm-central/raw-file/3787e583daf7/calendar/base/src/calItemBase.js"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A4-02/treatment-v1/retrieval-manifest.json",
+      "source_id": "R15e",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/A4-02/treatment-v1/source-map.json",
+      "source_id": "R15e",
+      "existing_authored_summary_fields": {
+        "released_version_or_commit": "calItemBase.js at immutable node3787e583daf7",
+        "governing_locator": "lines445–468,551–560; surrounding removed accessor",
+        "governing_conditions": "properties getter for mIsProxy merges parent then own Map (explicit overrides win). getProperty resolves local then parent; getParameterNames can fall back to parent. Tests call item.properties; removed overriding accessor unmasks real getter."
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "governing_locator": "lines445–468,551–560; surrounding removed accessor"
+    }
+  ],
+  "raw_sha256": "903d5b95212cecc6b3572dc2b65cbd97e40b3782d2ffb71d0e59571b8e48d121",
+  "original_bytes": 33681,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A4-02/treatment-v1/evidence/R15e-calItemBase.js.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://hg-edge.mozilla.org/comm-central/raw-file/3787e583daf7/calendar/base/src/calItemBase.js",
+    "https://hg.mozilla.org/comm-central/raw-file/3787e583daf7/calendar/base/src/calItemBase.js"
+  ],
+  "version": [
+    {
+      "released_version_or_commit": "calItemBase.js at immutable node3787e583daf7",
+      "governing_locator": "lines445–468,551–560; surrounding removed accessor",
+      "governing_conditions": "properties getter for mIsProxy merges parent then own Map (explicit overrides win). getProperty resolves local then parent; getParameterNames can fall back to parent. Tests call item.properties; removed overriding accessor unmasks real getter."
+    }
+  ],
+  "selector": [
+    {
+      "governing_locator": "lines445–468,551–560; surrounding removed accessor"
+    }
+  ],
+  "conditions": [
+    {
+      "released_version_or_commit": "calItemBase.js at immutable node3787e583daf7",
+      "governing_locator": "lines445–468,551–560; surrounding removed accessor",
+      "governing_conditions": "properties getter for mIsProxy merges parent then own Map (explicit overrides win). getProperty resolves local then parent; getParameterNames can fall back to parent. Tests call item.properties; removed overriding accessor unmasks real getter."
+    }
+  ],
+  "rawSHA256": "903d5b95212cecc6b3572dc2b65cbd97e40b3782d2ffb71d0e59571b8e48d121"
+}

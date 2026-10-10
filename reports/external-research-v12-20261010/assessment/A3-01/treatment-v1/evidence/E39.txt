@@ -1,0 +1,52 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/CHANGELOG.md"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A3-01/treatment-v1/source-map.json",
+      "source_id": "E39",
+      "existing_authored_summary_fields": {
+        "observations": [
+          {
+            "claim_check_id": "CC16",
+            "operation": "Tie reference source to release/history",
+            "scope": "SQLite 3.53.4 2026-07-24; Tantivy 0.26.2 2026-09-08"
+          }
+        ]
+      }
+    },
+    {
+      "authored_source_map": "assessment/A3-01/treatment-v1/evidence/retrieval-manifest.json",
+      "source_id": "E39",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "independent_locator": "Commit-pinned CHANGELOG.md lines 1–6, actual 0.26.2 fixes"
+    }
+  ],
+  "raw_sha256": "702320ebbfe1ab5057d646c7647a834024e07c5741ab040a4113f5d3e446c645",
+  "original_bytes": 59164,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A3-01/treatment-v1/evidence/E39.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/CHANGELOG.md"
+  ],
+  "version": "UNKNOWN",
+  "selector": [
+    {
+      "independent_locator": "Commit-pinned CHANGELOG.md lines 1–6, actual 0.26.2 fixes"
+    }
+  ],
+  "conditions": "UNKNOWN",
+  "rawSHA256": "702320ebbfe1ab5057d646c7647a834024e07c5741ab040a4113f5d3e446c645"
+}

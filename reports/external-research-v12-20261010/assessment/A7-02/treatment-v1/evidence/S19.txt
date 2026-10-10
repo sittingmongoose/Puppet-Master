@@ -1,0 +1,95 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://www.crossref.org/documentation/schema-library/markup-guide-metadata-segments/relationships/"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A7-02/treatment-v1/source-map.json",
+      "source_id": "S19",
+      "existing_authored_summary_fields": {
+        "independently_observed_version": "Schema guide updated 2020-04-08",
+        "reviewer_observation": "isPreprintOf/hasPreprint and isVersionOf/hasVersion are distinct relation types. One endpoint is a Crossref DOI; another may be a DOI or non-DOI identifier. Non-DOI identifiers are not verified.",
+        "condition_default_exception_domain": "This is registry relationship metadata, not a merge command. The local proposed ledger can hold relations without writing to Crossref."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A7-02/treatment-v1/source-map.json",
+      "source_id": "S19",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/A7-02/treatment-v1/evidence/retrievals.json",
+      "source_id": "S19",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": "Intra-work table; General typed relations"
+    },
+    {
+      "local_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S19.txt",
+          "first_line": 302,
+          "last_line": 348
+        }
+      ]
+    },
+    {
+      "text_lines": 679
+    },
+    {
+      "text_lines": 679
+    }
+  ],
+  "raw_sha256": "be6911cbee94744d1c31bccf303650e6e55961affb89eb065cef2c8cd7ce61ba",
+  "original_bytes": 28994,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A7-02/treatment-v1/evidence/S19.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://www.crossref.org/documentation/schema-library/markup-guide-metadata-segments/relationships/"
+  ],
+  "version": [
+    {
+      "independently_observed_version": "Schema guide updated 2020-04-08",
+      "reviewer_observation": "isPreprintOf/hasPreprint and isVersionOf/hasVersion are distinct relation types. One endpoint is a Crossref DOI; another may be a DOI or non-DOI identifier. Non-DOI identifiers are not verified.",
+      "condition_default_exception_domain": "This is registry relationship metadata, not a merge command. The local proposed ledger can hold relations without writing to Crossref."
+    }
+  ],
+  "selector": [
+    {
+      "locator": "Intra-work table; General typed relations"
+    },
+    {
+      "local_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S19.txt",
+          "first_line": 302,
+          "last_line": 348
+        }
+      ]
+    },
+    {
+      "text_lines": 679
+    },
+    {
+      "text_lines": 679
+    }
+  ],
+  "conditions": [
+    {
+      "independently_observed_version": "Schema guide updated 2020-04-08",
+      "reviewer_observation": "isPreprintOf/hasPreprint and isVersionOf/hasVersion are distinct relation types. One endpoint is a Crossref DOI; another may be a DOI or non-DOI identifier. Non-DOI identifiers are not verified.",
+      "condition_default_exception_domain": "This is registry relationship metadata, not a merge command. The local proposed ledger can hold relations without writing to Crossref."
+    }
+  ],
+  "rawSHA256": "be6911cbee94744d1c31bccf303650e6e55961affb89eb065cef2c8cd7ce61ba"
+}

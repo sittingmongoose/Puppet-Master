@@ -1,0 +1,49 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://github.com/UniversalViewer/universalviewer/blob/v4.4.4/manual/CONFIG.md"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A2-02/treatment-v1/source-map.json",
+      "source_id": "R12",
+      "existing_authored_summary_fields": {
+        "version_or_commit": "Universal Viewer v4.4.4 manual",
+        "governing_locator": "downloadDialogue.downloadCurrentViewEnabled/downloadWholeImageHighResEnabled/downloadWholeImageLowResEnabled; footerPanel.downloadEnabled; configuration hierarchy",
+        "independent_observation": "All three documented boolean image-download options default to true. They concern image retrieval UI, not annotation export, rights or every deployment. The final identifies the correct operation. Raw source lines 481–497 and 525–529 provide stable file locators distinct from rendered GitHub line numbers."
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "governing_locator": "downloadDialogue.downloadCurrentViewEnabled/downloadWholeImageHighResEnabled/downloadWholeImageLowResEnabled; footerPanel.downloadEnabled; configuration hierarchy"
+    }
+  ],
+  "raw_sha256": "41fd580fa2c3d3f671bcf3abf9c64961b212d9e435416d9d02b3cc42c5230174",
+  "original_bytes": 888,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A2-02/treatment-v1/evidence/R12-review-note.md",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://github.com/UniversalViewer/universalviewer/blob/v4.4.4/manual/CONFIG.md"
+  ],
+  "version": [
+    {
+      "version_or_commit": "Universal Viewer v4.4.4 manual",
+      "governing_locator": "downloadDialogue.downloadCurrentViewEnabled/downloadWholeImageHighResEnabled/downloadWholeImageLowResEnabled; footerPanel.downloadEnabled; configuration hierarchy",
+      "independent_observation": "All three documented boolean image-download options default to true. They concern image retrieval UI, not annotation export, rights or every deployment. The final identifies the correct operation. Raw source lines 481–497 and 525–529 provide stable file locators distinct from rendered GitHub line numbers."
+    }
+  ],
+  "selector": [
+    {
+      "governing_locator": "downloadDialogue.downloadCurrentViewEnabled/downloadWholeImageHighResEnabled/downloadWholeImageLowResEnabled; footerPanel.downloadEnabled; configuration hierarchy"
+    }
+  ],
+  "conditions": "UNKNOWN",
+  "rawSHA256": "41fd580fa2c3d3f671bcf3abf9c64961b212d9e435416d9d02b3cc42c5230174"
+}

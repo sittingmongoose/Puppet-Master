@@ -1,0 +1,97 @@
+{
+  "checked_utc": "2026-10-10T06:09:26.303507+00:00",
+  "role": "byte integrity only, not semantic proof",
+  "terminal_artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/treatment/stages/critic/critique.md",
+      "expected_sha256": "c8a792de80217f74a195699fd77a6f08d85805385df77f20f455a8cdf63da762",
+      "observed_sha256": "c8a792de80217f74a195699fd77a6f08d85805385df77f20f455a8cdf63da762",
+      "expected_bytes": 14813,
+      "observed_bytes": 14813,
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/treatment/stages/critic/source-map.json",
+      "expected_sha256": "4cd65579e1fb4eda4fe102face2704f520b883335a374781544d26b97262b913",
+      "observed_sha256": "4cd65579e1fb4eda4fe102face2704f520b883335a374781544d26b97262b913",
+      "expected_bytes": 21604,
+      "observed_bytes": 21604,
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/treatment/stages/critic/sources/index.md",
+      "expected_sha256": "d050f912dd487a4679ec3cf9dbbbc4b509045ba1f3ce4966830d6b5bc67d0e2d",
+      "observed_sha256": "d050f912dd487a4679ec3cf9dbbbc4b509045ba1f3ce4966830d6b5bc67d0e2d",
+      "expected_bytes": 5259,
+      "observed_bytes": 5259,
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/treatment/stages/investigator/discovery.md",
+      "expected_sha256": "64bc9f789b29346d29723bd17d01b7df2e08e5bf1ae2b760a174f22dfafb1adc",
+      "observed_sha256": "64bc9f789b29346d29723bd17d01b7df2e08e5bf1ae2b760a174f22dfafb1adc",
+      "expected_bytes": 14593,
+      "observed_bytes": 14593,
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/treatment/stages/investigator/draft.md",
+      "expected_sha256": "2f69fd56cda5f101d041e891becfecc6c91f92ca5a2d849e239d9b706e839bd2",
+      "observed_sha256": "2f69fd56cda5f101d041e891becfecc6c91f92ca5a2d849e239d9b706e839bd2",
+      "expected_bytes": 37134,
+      "observed_bytes": 37134,
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/treatment/stages/investigator/revealed-plan.md",
+      "expected_sha256": "8e2247027ad8b2baa1338b77a5f4020d86ed2a926f102c618b802c618bd257c8",
+      "observed_sha256": "8e2247027ad8b2baa1338b77a5f4020d86ed2a926f102c618b802c618bd257c8",
+      "expected_bytes": 6794,
+      "observed_bytes": 6794,
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/treatment/stages/investigator/source-map.json",
+      "expected_sha256": "811751821eb3aec0ed6d8b9957d48b78e26e7b8a6d3dd02a54fd21e015b1d235",
+      "observed_sha256": "811751821eb3aec0ed6d8b9957d48b78e26e7b8a6d3dd02a54fd21e015b1d235",
+      "expected_bytes": 14018,
+      "observed_bytes": 14018,
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/treatment/stages/investigator/sources/index.md",
+      "expected_sha256": "fe0e7356d263953cbb312b0d9efaa9c5fd800a9be76042dbe32c841258427dad",
+      "observed_sha256": "fe0e7356d263953cbb312b0d9efaa9c5fd800a9be76042dbe32c841258427dad",
+      "expected_bytes": 11773,
+      "observed_bytes": 11773,
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/treatment/stages/reviser/final.md",
+      "expected_sha256": "1520ff67861de7fe57d88eea1109ed86d341658e0cca75e8fbe4aa2f7d11c153",
+      "observed_sha256": "1520ff67861de7fe57d88eea1109ed86d341658e0cca75e8fbe4aa2f7d11c153",
+      "expected_bytes": 31325,
+      "observed_bytes": 31325,
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/treatment/stages/reviser/source-map.json",
+      "expected_sha256": "dc092b5a27e12ecf3441efcad4e5aaa891066392503d553c36de7d06d39d22bd",
+      "observed_sha256": "dc092b5a27e12ecf3441efcad4e5aaa891066392503d553c36de7d06d39d22bd",
+      "expected_bytes": 28964,
+      "observed_bytes": 28964,
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/treatment/stages/reviser/sources/index.md",
+      "expected_sha256": "5d587bbdece76c0bb6c7ebe4978d82ebe3240bc601425aeece0297632f53f4ca",
+      "observed_sha256": "5d587bbdece76c0bb6c7ebe4978d82ebe3240bc601425aeece0297632f53f4ca",
+      "expected_bytes": 4202,
+      "observed_bytes": 4202,
+      "matches": true
+    }
+  ],
+  "brief_exact_copy": true,
+  "plan_exact_copy": true,
+  "review_changed_originals": false
+}

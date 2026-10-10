@@ -1,0 +1,146 @@
+{
+  "run_id": "C-R2-01-control",
+  "stage": "critic",
+  "basis": "Independent review of investigator's mapped source packet. Source IDs preserved exactly; original identity/access metadata is carried forward, with critic access/retrieval noted separately. Critic access window UTC: 2026-10-10T06:06:12Z–2026-10-10T06:12:40Z; web client did not expose per-source second-level access timestamps.",
+  "source_index": "sources/INDEX.md",
+  "predecessor_source_map": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/source-map.json",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "Changes in the macro and nano-structure of paper during moisture cycling",
+      "creators": "Per Tomas Larsson et al.",
+      "exact_url": "https://link.springer.com/article/10.1007/s10570-023-05626-6",
+      "version_or_release": "Original research; published online 2023-12-20; Cellulose 31, 2743–2764 (2024); DOI 10.1007/s10570-023-05626-6.",
+      "original_accessed_at_utc": "2026-10-10T05:53:59Z",
+      "locator": "Abstract; Background; Methods RH cycle at lines 109–127; Results lines 156–171.",
+      "observed_operation": "Directly opened article and reviewed abstract, methods, and results. Four commercial pulp types were used to make laboratory sheets; the RH cycle 50→20→90→50% at 23°C was repeated four times, with ≥24-hour holds; restrained and freely dried sheets differed.",
+      "governing_condition_default_exception": "Laboratory sheet measurements only; initial transient and irreversible shrinkage depended on sheet preparation/restraint. The tested cycle is not a storage or label default.",
+      "applicability": "Supports conditional paper dimensional-change mechanism and separate dimensional endpoint; does not diagnose the case labels.",
+      "critic_retrieval": "Direct primary article access; verified."
+    },
+    {
+      "id": "S02",
+      "title": "Long term curl of printing paper due to ink solvent migration",
+      "creators": "Alexander Maass and Ulrich Hirn",
+      "exact_url": "https://tugraz.elsevierpure.com/ws/portalfiles/portal/79063769/1-s2.0-S0264127523010092-main.pdf",
+      "record_url": "https://doi.org/10.1016/j.matdes.2023.112593",
+      "version_or_release": "Published article version; Materials & Design 237 (2024), article 112593; DOI 10.1016/j.matdes.2023.112593.",
+      "original_accessed_at_utc": "2026-10-10T05:53:59Z",
+      "locator": "PDF pp. 3–9; §§1.2–1.4, 2.1–2.2; especially discussion of curl and model liquid.",
+      "observed_operation": "Directly opened full PDF. It describes two office-paper grades, a 60 wt% glycerol/water model liquid, curl observations and glycerol-distribution work over one week, and proposes nonvolatile co-solvent migration as a mechanism.",
+      "governing_condition_default_exception": "Model ink/paper results; not a default for other printer technologies, label constructions, or this sleeve.",
+      "applicability": "Supports a conditional print/drying mechanism only if the actual process is relevant; does not establish the case printer or attachment failure.",
+      "critic_retrieval": "Direct full-PDF access; verified."
+    },
+    {
+      "id": "S03",
+      "title": "RXC Specification for Pressure Sensitive Adhesive Labels for Laser Printing",
+      "creators": "National Archives and Records Administration",
+      "exact_url": "https://www.archives.gov/files/preservation/storage/pdf/label-stock-laser-printer.pdf",
+      "version_or_release": "October 2015 specification; labels for archival housings/storage furniture.",
+      "original_accessed_at_utc": "2026-10-10T05:53:59Z",
+      "locator": "PDF pp. 1–3, §§ I–II, bond strength, print/readability, workmanship and QC.",
+      "observed_operation": "Directly opened NARA PDF. Confirmed paper face stock with acrylic adhesive for laser-printing use, permanent adhesive language, 90° peel test, separate print/readability and flatness properties, and explicit exclusion of direct application to documents or records.",
+      "governing_condition_default_exception": "Procurement requirements for specified housing/furniture applications and printer/toner; not a conservation-safety or sleeve-specific default.",
+      "applicability": "Useful system-level records and test-design example, not a product recommendation or case acceptance threshold.",
+      "critic_retrieval": "Direct official PDF access; verified."
+    },
+    {
+      "id": "S04",
+      "title": "RXC Specification for Pressure Sensitive Adhesive Labels for Thermal Transfer Printers",
+      "creators": "National Archives and Records Administration",
+      "exact_url": "https://www.archives.gov/files/preservation/storage/pdf/label-stock-thermal-transfer.pdf",
+      "version_or_release": "October 2015 revision; revision note says revised from May 2013 and reformatted September 2010.",
+      "original_accessed_at_utc": "2026-10-10T05:53:59Z",
+      "locator": "PDF pp. 1–3, §§ I–II and QC table.",
+      "observed_operation": "Directly opened NARA PDF. Confirmed polyester or polypropylene face stock, acrylic adhesive, hard-resin ribbon compatibility, preference for polypropylene on curved substrates, and separate peel/print/flatness provisions.",
+      "governing_condition_default_exception": "Procurement specification for a stated thermal-transfer configuration and housing/furniture uses; not a default for unidentified materials or handwritten notes.",
+      "applicability": "Supports implementation-history questions and conditional system comparison only.",
+      "critic_retrieval": "Direct official PDF access; verified."
+    },
+    {
+      "id": "S05",
+      "title": "Incorrect relative humidity",
+      "creators": "Canadian Conservation Institute, Government of Canada",
+      "exact_url": "https://www.canada.ca/en/conservation-institute/services/agents-deterioration/humidity.html",
+      "version_or_release": "Current online guidance; no dated edition/version displayed.",
+      "original_accessed_at_utc": "2026-10-10T05:53:59Z",
+      "locator": "Detect/monitoring lines 299–315; response/control cautions lines 337–342.",
+      "observed_operation": "Directly opened current guidance. Confirmed RH is local and time-dependent, recording instruments near collections are useful, full-year observation may be needed for seasonal transmission in cases/cabinets, and existing damage does not alone establish current RH causation.",
+      "governing_condition_default_exception": "Monitoring duration/locations depend on the question; full-year statement is for seasonal context, not label adhesive durability.",
+      "applicability": "Supports observation-first environmental monitoring and caution against unsupported climate changes; no RH record exists for this case.",
+      "critic_retrieval": "Direct official page access; verified."
+    },
+    {
+      "id": "S06",
+      "title": "Caring for paper objects — Preventive conservation guidelines for collections",
+      "creators": "Canadian Conservation Institute, Government of Canada",
+      "exact_url": "https://www.canada.ca/en/conservation-institute/services/preventive-conservation/guidelines-collections/paper-objects.html",
+      "version_or_release": "Undated current online guidance; no edition/version date displayed.",
+      "original_accessed_at_utc": "2026-10-10T05:53:59Z",
+      "locator": "RH section, source-map locator lines 500–540.",
+      "observed_operation": "Carried from investigator source-map; not independently reopened or used as a decisive basis in this critique.",
+      "governing_condition_default_exception": "Carried source-map describes conditional paper-object guidance; applicability does not extend to testing a synthetic sleeve/adhesive system.",
+      "applicability": "Contextual paper-conservation lead only.",
+      "critic_retrieval": "Not independently reopened; no new claim based on it."
+    },
+    {
+      "id": "S07",
+      "title": "Modified Acrylate Pressure-Sensitive Adhesives for Low-Surface-Energy Substrate and Adhesion Mechanism Models",
+      "creators": "Primary study indexed by NCBI PubMed; DOI 10.3390/polym17091130",
+      "exact_url": "https://pubmed.ncbi.nlm.nih.gov/40362914/",
+      "record_url": "https://doi.org/10.3390/polym17091130",
+      "version_or_release": "2025 research article, Polymers 17(9), article 1130; PMID 40362914.",
+      "original_accessed_at_utc": "2026-10-10T05:50:04Z",
+      "locator": "Abstract and conflict-of-interest statement; carried source-map locator PubMed lines 227–251.",
+      "observed_operation": "Direct PubMed open returned an internal fetch error. Exact-title search surfaced the MDPI article page and described a specific modified acrylate PSA tested on HDPE; direct MDPI fetch was rate-limited. The detailed temperature result was not fully independently checked.",
+      "governing_condition_default_exception": "Specific modified adhesive and HDPE model; no generalization to unidentified PE/PP sleeves, other adhesives, storage life, or conservation safety.",
+      "applicability": "Conditional interface lead only; draft does not recommend this adhesive.",
+      "critic_retrieval": "Partial search-result access; full methods/results not verified."
+    },
+    {
+      "id": "S08",
+      "title": "Labeling Natural History Collections",
+      "creators": "Erika Range, Luci Cipera and Carolyn Leckie; Society for the Preservation of Natural History Collections",
+      "exact_url": "https://spnhc.org/labeling-natural-history-collections/",
+      "version_or_release": "Published 2025-03-26.",
+      "original_accessed_at_utc": "2026-10-10T05:53:59Z",
+      "locator": "Sections 4.3, 4.4, Decision Making and Future Research; carried source-map locator lines 269–296 and 313–330.",
+      "observed_operation": "Carried source-map and source index consulted; search excerpt confirms component framing and stated testing gaps. Not primary performance evidence.",
+      "governing_condition_default_exception": "Natural-history field review, not controlling requirements or primary comparative evidence for this invented store.",
+      "applicability": "Contextual map of attachment modes and evidence gaps only.",
+      "critic_retrieval": "Search excerpt plus carried map; not independently opened in full."
+    },
+    {
+      "id": "S09",
+      "title": "Object labelling",
+      "creators": "National Museums Scotland",
+      "exact_url": "https://www.nms.ac.uk/our-impact/national-work/training-and-guidance-for-museums/collections-care/object-labelling",
+      "version_or_release": "Current institutional training page; no publication/update date displayed; ©2026.",
+      "original_accessed_at_utc": "2026-10-10T05:53:59Z",
+      "locator": "Adding a label; When not to label; carried source-map locator lines 68–95 and 114–120.",
+      "observed_operation": "Search result excerpt supports a simple Tyvek tag for a fragile or loan object; direct page open timed out. This is not a validated design for the store’s sleeves.",
+      "governing_condition_default_exception": "Institutional guidance for object labelling; tag use is context-specific.",
+      "applicability": "Analogy for mock-up only; draft correctly requires local tests for visibility, snagging, retrieval and misassociation.",
+      "critic_retrieval": "Search excerpt; full page not independently reopened."
+    }
+  ],
+  "review": {
+    "direct_verifications": [
+      "S01",
+      "S02",
+      "S03",
+      "S04",
+      "S05"
+    ],
+    "partial_retrieval": [
+      "S07",
+      "S08",
+      "S09"
+    ],
+    "carried_only": [
+      "S06"
+    ],
+    "note": "Source IDs and URLs are not silently rebound. Original access timestamps are retained; critic retrieval status distinguishes direct review from search excerpts and carried metadata."
+  }
+}

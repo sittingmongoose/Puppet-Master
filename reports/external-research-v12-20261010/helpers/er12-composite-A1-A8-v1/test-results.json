@@ -1,0 +1,25 @@
+{
+  "recipe_id": "er12-composite-A1-A8-v1",
+  "started_at_utc": "2026-10-10T05:28:46.097408+00:00",
+  "finished_at_utc": "2026-10-10T05:28:46.948931+00:00",
+  "engineering_preparation_only": true,
+  "scientific_qualification": false,
+  "offline_synthetic_only": true,
+  "tests_run": 7,
+  "passed": true,
+  "failures": 0,
+  "errors": 0,
+  "tests": [
+    "saved_synthetic_checks.Mechanics.test_every_pin_fails_before_baseline_import",
+    "saved_synthetic_checks.Mechanics.test_exact_configuration_guards",
+    "saved_synthetic_checks.Mechanics.test_full_prompt_scope_components_deadlines_and_lifecycle",
+    "saved_synthetic_checks.Mechanics.test_later_stage_whole_cap_and_pending_predecessor",
+    "saved_synthetic_checks.Mechanics.test_original_cli_actions_through_overlay",
+    "saved_synthetic_checks.Mechanics.test_stable_retry_dispatch_and_duplicate_used_reject",
+    "saved_synthetic_checks.Mechanics.test_unchanged_late_cap_expiry_and_frozen_input_guards"
+  ],
+  "helper_sha256": "0041e88d4806ecedd66521f0b63e28e1e4c83128b686b98db6f4ac91f7d0a5e8",
+  "test_code_sha256": "a01644018760101056f2d69f55a11eb62b6adc3c19e4ace41be1f119388419ef",
+  "output": "test_every_pin_fails_before_baseline_import (saved_synthetic_checks.Mechanics.test_every_pin_fails_before_baseline_import) ... ok\ntest_exact_configuration_guards (saved_synthetic_checks.Mechanics.test_exact_configuration_guards) ... ok\ntest_full_prompt_scope_components_deadlines_and_lifecycle (saved_synthetic_checks.Mechanics.test_full_prompt_scope_components_deadlines_and_lifecycle) ... ok\ntest_later_stage_whole_cap_and_pending_predecessor (saved_synthetic_checks.Mechanics.test_later_stage_whole_cap_and_pending_predecessor) ... ok\ntest_original_cli_actions_through_overlay (saved_synthetic_checks.Mechanics.test_original_cli_actions_through_overlay) ... ok\ntest_stable_retry_dispatch_and_duplicate_used_reject (saved_synthetic_checks.Mechanics.test_stable_retry_dispatch_and_duplicate_used_reject) ... ok\ntest_unchanged_late_cap_expiry_and_frozen_input_guards (saved_synthetic_checks.Mechanics.test_unchanged_late_cap_expiry_and_frozen_input_guards) ... ok\n\n----------------------------------------------------------------------\nRan 7 tests in 0.806s\n\nOK\n",
+  "original_components_unchanged": true
+}

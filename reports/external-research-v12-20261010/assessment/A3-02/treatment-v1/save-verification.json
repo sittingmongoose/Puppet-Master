@@ -1,0 +1,164 @@
+{
+  "checked_utc": "2026-10-10T06:04:03.503683+00:00",
+  "originals_rechecked": 42,
+  "original_changes": [],
+  "raw_evidence_count": 38,
+  "raw_hash_mismatches": [],
+  "missing_local_evidence": [],
+  "stage_freeze_checks": [
+    {
+      "stage": "investigator",
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/inputs/brief.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "investigator",
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/assignment.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "investigator",
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/input-map.json",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/inputs/brief.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/critic/assignment.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/critic/input-map.json",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/discovery.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/draft.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/source-map.json",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/revealed-plan.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/plan-reveal.json",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/inputs/brief.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/assignment.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/input-map.json",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/discovery.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/draft.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/source-map.json",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/revealed-plan.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/plan-reveal.json",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/critic/critique.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/critic/source-map.json",
+      "sha256_matches": true,
+      "bytes_match": true
+    }
+  ],
+  "all_six_axes_complete": true,
+  "all_original_plan_substrings_present": true,
+  "reviewer_active_native_goal_objective_chars": 904,
+  "artifact_checks": "JSON parse, required sections/clauses, source IDs, file presence and content hashes only; these checks do not establish semantic correctness",
+  "judgment_saved_and_checked_utc": "2026-10-10T06:05:30.659267+00:00",
+  "saved_judgment_artifacts": [
+    {
+      "path": "assessment.md",
+      "bytes": 49328,
+      "sha256": "b1d329fb1b4ae3d52bd6a98c2e5e16d402345dacd33379fc2f87316981a5d06d"
+    },
+    {
+      "path": "assessment.json",
+      "bytes": 101637,
+      "sha256": "69ff978b63ef7e79b940017a487359670df6e84442c2d8b1eeabf29619247658"
+    },
+    {
+      "path": "source-map.json",
+      "bytes": 38416,
+      "sha256": "e7fa1895a72d3225a1d00dcd57cd1686d747c1404fb87d006438c4465bb02d5e"
+    },
+    {
+      "path": "evidence/index.md",
+      "bytes": 19233,
+      "sha256": "3d62e356c267573b594cb9f48947fd0cdbc571b8a17dc9a8f8aa39e40ffa2007"
+    }
+  ],
+  "temporary_build_script_removed": true
+}

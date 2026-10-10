@@ -1,0 +1,183 @@
+[
+  {
+    "path": "ER12_RUNTIME/runs/A3-02/control/stages/critic/critique.md",
+    "hash_matches_terminal_freeze": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/A3-02/control/stages/critic/source-map.json",
+    "hash_matches_terminal_freeze": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/A3-02/control/stages/critic/sources/index.md",
+    "hash_matches_terminal_freeze": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/discovery.md",
+    "hash_matches_terminal_freeze": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/draft.md",
+    "hash_matches_terminal_freeze": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/revealed-plan.md",
+    "hash_matches_terminal_freeze": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/source-map.json",
+    "hash_matches_terminal_freeze": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/sources/index.md",
+    "hash_matches_terminal_freeze": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+    "hash_matches_terminal_freeze": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/source-map.json",
+    "hash_matches_terminal_freeze": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/sources/index.md",
+    "hash_matches_terminal_freeze": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/A3-02/control/inputs/brief.md",
+    "stage_freeze": "investigator",
+    "hash_matches_stage_freeze": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/assignment.md",
+    "stage_freeze": "investigator",
+    "hash_matches_stage_freeze": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/input-map.json",
+    "stage_freeze": "investigator",
+    "hash_matches_stage_freeze": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/A3-02/control/inputs/brief.md",
+    "stage_freeze": "critic",
+    "hash_matches_stage_freeze": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/A3-02/control/stages/critic/assignment.md",
+    "stage_freeze": "critic",
+    "hash_matches_stage_freeze": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/A3-02/control/stages/critic/input-map.json",
+    "stage_freeze": "critic",
+    "hash_matches_stage_freeze": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/discovery.md",
+    "stage_freeze": "critic",
+    "hash_matches_stage_freeze": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/draft.md",
+    "stage_freeze": "critic",
+    "hash_matches_stage_freeze": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/source-map.json",
+    "stage_freeze": "critic",
+    "hash_matches_stage_freeze": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/revealed-plan.md",
+    "stage_freeze": "critic",
+    "hash_matches_stage_freeze": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/plan-reveal.json",
+    "stage_freeze": "critic",
+    "hash_matches_stage_freeze": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/A3-02/control/inputs/brief.md",
+    "stage_freeze": "reviser",
+    "hash_matches_stage_freeze": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/assignment.md",
+    "stage_freeze": "reviser",
+    "hash_matches_stage_freeze": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/input-map.json",
+    "stage_freeze": "reviser",
+    "hash_matches_stage_freeze": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/discovery.md",
+    "stage_freeze": "reviser",
+    "hash_matches_stage_freeze": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/draft.md",
+    "stage_freeze": "reviser",
+    "hash_matches_stage_freeze": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/source-map.json",
+    "stage_freeze": "reviser",
+    "hash_matches_stage_freeze": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/revealed-plan.md",
+    "stage_freeze": "reviser",
+    "hash_matches_stage_freeze": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/plan-reveal.json",
+    "stage_freeze": "reviser",
+    "hash_matches_stage_freeze": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/A3-02/control/stages/critic/critique.md",
+    "stage_freeze": "reviser",
+    "hash_matches_stage_freeze": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/A3-02/control/stages/critic/source-map.json",
+    "stage_freeze": "reviser",
+    "hash_matches_stage_freeze": true,
+    "bytes_match": true
+  }
+]

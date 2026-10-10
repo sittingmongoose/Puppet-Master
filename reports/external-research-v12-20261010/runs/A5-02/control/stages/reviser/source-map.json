@@ -1,0 +1,364 @@
+{
+  "run_id": "A5-02-control",
+  "stage": "reviser",
+  "source_identity_policy": "Stable source IDs S01-S17 are carried unchanged from the frozen investigator source map. Original source records (including exact URL, version, locator, access UTC, retrieval operation, observation, conditions and applicability) are preserved; rechecks and corrections are addenda, not silent rebinding.",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "Snipe-IT Asset Tags",
+      "url": "https://snipe-it.readme.io/docs/asset-tags",
+      "released_version_or_commit": "Live documentation; no product release is declared on this page.",
+      "locator": "Asset Tags; uniqueness, auto-increment, prefix and length settings.",
+      "access_utc": "2026-10-10T05:11:09Z",
+      "retrieval_operation": "web__run open",
+      "observed_operation": "The documentation says asset tags uniquely identify assets within Snipe-IT and describes optional auto-incrementing/prefix behavior.",
+      "conditions_defaults_exceptions": "Auto-increment can be enabled; non-numeric asset tags can confuse the next auto-increment value; length changes do not rewrite existing tags.",
+      "applicability": "Useful asset-identity pattern; system-specific uniqueness does not itself choose or govern the cooperative namespace."
+    },
+    {
+      "id": "S02",
+      "title": "Snipe-IT Asset Labels and Barcodes",
+      "url": "https://snipe-it.readme.io/docs/asset-labels",
+      "released_version_or_commit": "Live documentation; page does not bind behavior to a release.",
+      "locator": "Asset Labels, lines describing 1D/2D output, QR route, USB/Bluetooth scanners and barcode-enable setting.",
+      "access_utc": "2026-10-10T05:11:09Z",
+      "retrieval_operation": "web__run open",
+      "observed_operation": "Selected assets generate labels with a 1D search barcode and a 2D QR that opens the linked system asset page on a mobile QR reader.",
+      "conditions_defaults_exceptions": "Barcodes must be enabled. The described QR opens the asset record and therefore depends on its host being reachable; the 1D barcode is a separate search path.",
+      "applicability": "Evidence for separating human/1D staff ID from optional web QR; not evidence of offline record access."
+    },
+    {
+      "id": "S03",
+      "title": "Snipe-IT Managing Assets",
+      "url": "https://snipe-it.readme.io/docs/managing-assets",
+      "released_version_or_commit": "Live documentation; no product release is declared on this page.",
+      "locator": "Managing Assets; unique asset tags and Best Practices / checking out assets to non-people.",
+      "access_utc": "2026-10-10T05:11:09Z",
+      "retrieval_operation": "web__run open",
+      "observed_operation": "The manual describes check-in/check-out state and says checking assets out to locations or other assets is possible but discouraged.",
+      "conditions_defaults_exceptions": "The product recommends an accountable person rather than a location as checkout target.",
+      "applicability": "Shows a lightweight asset lifecycle and an explicit mismatch for depot-to-depot custody as a default workflow."
+    },
+    {
+      "id": "S04",
+      "title": "Snipe-IT issue #19515 — QR Code Text on New Label Engine",
+      "url": "https://github.com/grokability/snipe-it/issues/19515",
+      "released_version_or_commit": "Reported on v8.7.1; opened 2026-08-18; closed 2026-09-23 by merge commit c1d1cd1.",
+      "locator": "Issue description and activity, especially version, migration symptom, linked PR and closing commit.",
+      "access_utc": "2026-10-10T05:11:09Z",
+      "retrieval_operation": "web__run open",
+      "observed_operation": "Reporter said the old QR Code Text field did not carry into the new label engine and could result in no QR payload.",
+      "conditions_defaults_exceptions": "Reporter identified the new/legacy label-engine switch and Snipe-IT v8.7.1; this is a product configuration migration issue.",
+      "applicability": "Supports post-migration label-content checks; not a general scanner defect or evidence of cooperative label behavior."
+    },
+    {
+      "id": "S05",
+      "title": "Snipe-IT PR #19633 — source change for legacy to new QR title transfer",
+      "url": "https://github.com/grokability/snipe-it/pull/19633",
+      "released_version_or_commit": "PR commit 1e0fc8c; merged into develop 2026-09-17; issue closure cites c1d1cd1 merged to master 2026-09-23.",
+      "locator": "PR summary/activity and changed app/Http/Controllers/SettingsController.php; transition copies qr_code_text into label2_title once.",
+      "access_utc": "2026-10-10T05:11:09Z",
+      "retrieval_operation": "web__run open of PR and Files tab",
+      "observed_operation": "The diff adds the one-time legacy QR text to new-engine title transfer when enabling the new label engine.",
+      "conditions_defaults_exceptions": "Change is conditional on switching from the legacy engine to the new engine; this is a settings migration path.",
+      "applicability": "Relevant source-code and fix-history example. No ancestry check established whether this exact fix is included in v8.8.0; do not claim it is."
+    },
+    {
+      "id": "S06",
+      "title": "Snipe-IT v8.8.0 release",
+      "url": "https://github.com/grokability/snipe-it/releases/tag/v8.8.0",
+      "released_version_or_commit": "v8.8.0, release tag commit 2c466fa, published 2026-09-30.",
+      "locator": "Release header and release notes.",
+      "access_utc": "2026-10-10T05:06:55Z",
+      "retrieval_operation": "web__run search_query and open",
+      "observed_operation": "A v8.8.0 release exists and is dated after the label-engine PR/issue fix history.",
+      "conditions_defaults_exceptions": "Release page alone does not establish whether PR #19633 is an ancestor of this tag.",
+      "applicability": "Version context only; use exact deployed tag and retest labels."
+    },
+    {
+      "id": "S07",
+      "title": "Odoo 18 — Process receipts and deliveries with barcodes",
+      "url": "https://www.odoo.com/documentation/18.0/applications/inventory_and_mrp/barcode/operations/receipts_deliveries.html",
+      "released_version_or_commit": "Odoo documentation branch 18.0.",
+      "locator": "Enable Barcode app; Barcode Nomenclature; Scan barcodes for receipts; validate operation.",
+      "access_utc": "2026-10-10T05:06:55Z",
+      "retrieval_operation": "web__run search_query returned page excerpt; later open attempts timed out.",
+      "observed_operation": "Docs describe real-time receipt work through Barcode app using a scanner or mobile app, selecting an outstanding receipt, scanning products/package and validating.",
+      "conditions_defaults_exceptions": "Barcode feature must be enabled. Default UPC/EAN nomenclature and GS1 nomenclature are distinct configuration choices; default behavior handles UPC/EAN conversion.",
+      "applicability": "Workflow comparison evidence from the versioned docs; no app/runtime was operated and offline behavior was not established."
+    },
+    {
+      "id": "S08",
+      "title": "Odoo 18 — Operation types and commands",
+      "url": "https://www.odoo.com/documentation/18.0/applications/inventory_and_mrp/barcode/setup/operation_types.html",
+      "released_version_or_commit": "Odoo documentation branch 18.0.",
+      "locator": "Operation types and commands; Receipts (WHIN), scanning command barcode vs individual scheduled receipt.",
+      "access_utc": "2026-10-10T05:06:55Z",
+      "retrieval_operation": "web__run search_query returned page excerpt; later open attempts timed out.",
+      "observed_operation": "The generic Receipts operation barcode WHIN creates a new receipt operation; to process a scheduled receipt staff scan/print the barcode for that individual picking.",
+      "conditions_defaults_exceptions": "A command barcode is not an individual receipt reference; exact workflow depends on the specific operation barcode.",
+      "applicability": "Strong example for separating receipt-event/operation identity from shipment and crate labels."
+    },
+    {
+      "id": "S09",
+      "title": "Odoo 18 — Configure product / packages versus product packaging",
+      "url": "https://www.odoo.com/documentation/18.0/applications/inventory_and_mrp/inventory/product_management/configure.html",
+      "released_version_or_commit": "Odoo documentation branch 18.0.",
+      "locator": "Comparison/use cases, especially Packages versus Packagings; Package Use; unique individual package barcode versus type-level packaging barcode.",
+      "access_utc": "2026-10-10T05:06:55Z",
+      "retrieval_operation": "web__run search_query returned page excerpt; later open attempt timed out.",
+      "observed_operation": "The docs distinguish tracked physical packages with contents and individual barcodes, configurable reusable/disposable, from product-specific fixed quantity packaging whose barcode denotes the type.",
+      "conditions_defaults_exceptions": "Package and packaging are different objects. A package barcode is unique to an individual physical package; packaging labels can repeat for identical groupings.",
+      "applicability": "Direct alternative model for reusable crate records; the cooperative still must test actual fit and label formats."
+    },
+    {
+      "id": "S10",
+      "title": "Sortly — Can I use Sortly in offline mode?",
+      "url": "https://help.sortly.com/can-i-use-sortly-in-offline-mode",
+      "released_version_or_commit": "Current help-center documentation retrieved 2026-10-10; copyright 2026.",
+      "locator": "Offline mode availability, Disable Sync steps, FAQ on local updates and pre-offline full sync.",
+      "access_utc": "2026-10-10T05:11:09Z",
+      "retrieval_operation": "web__run open",
+      "observed_operation": "Mobile iOS/Android only; disabling sync permits local inventory-level updates; changes are pushed after sync is restored; device works from the snapshot present when sync was disabled.",
+      "conditions_defaults_exceptions": "Offline mode is not available on the web app; vendor advises a full sync before disabling sync.",
+      "applicability": "Useful offline comparator but not proof of event-level multi-depot queue, conflict control, or idempotent receipt replay."
+    },
+    {
+      "id": "S11",
+      "title": "Sortly — What kind of scanners can I use?",
+      "url": "https://help.sortly.com/what-kind-of-scanners-can-i-use-with-sortly",
+      "released_version_or_commit": "Current help-center documentation retrieved 2026-10-10; copyright 2026.",
+      "locator": "Mobile camera, Bluetooth scanner, web capabilities, plan availability and QR scanner FAQ.",
+      "access_utc": "2026-10-10T05:07:57Z",
+      "retrieval_operation": "web__run search_query and open",
+      "observed_operation": "Built-in phone camera scans QR/barcodes; web scans can search/link but not check-in/out; 1D scanner cannot read QR and QR needs a 2D-capable scanner.",
+      "conditions_defaults_exceptions": "Bluetooth integration is limited to Ultra, Premium and Enterprise tiers; supported hardware/operating systems vary by path.",
+      "applicability": "Concrete camera/low-cost and 2D/1D tradeoff; app behavior not tested."
+    },
+    {
+      "id": "S12",
+      "title": "GS1 General Specifications release 26.0 — GRAI",
+      "url": "https://gs1za.org/wp-content/uploads/2026/04/GS1_General_Specifications_2026.pdf",
+      "released_version_or_commit": "Release 26.0, ratified Jan 2026, © GS1 2026.",
+      "locator": "Section 2.3.1, Global Returnable Asset Identifier (GRAI): AI (8003), printed page 141.",
+      "access_utc": "2026-10-10T05:11:01Z",
+      "retrieval_operation": "web__run search_query returned the complete section excerpt; direct open was unavailable in this web tool.",
+      "observed_operation": "The section defines GRAI for returnable assets including crates; asset type can be shared by identical assets and optional serial distinguishes individuals; AI 8003 must not identify carried trade items; carriers include GS1-128, GS1 DataMatrix and GS1 QR Code.",
+      "conditions_defaults_exceptions": "GRAI includes the assigning company's GS1 Company Prefix; optional serial distinguishes individual assets. The source is a GS1 member-organization copy of the ratified standard.",
+      "applicability": "Very close global analogue, but no prefix purchase/GS1 allocation is authorized in this pilot."
+    },
+    {
+      "id": "S13",
+      "title": "GS1 Digital Link Standard — URI Syntax 1.7.0",
+      "url": "https://ref.gs1.org/standards/digital-link/uri-syntax/1.7.0/",
+      "released_version_or_commit": "Release 1.7.0, ratified Aug 2026.",
+      "locator": "Primary key AI 8003 / GRAI; §6 Recognising a GS1 Digital Link URI; phone URL decoding; change log.",
+      "access_utc": "2026-10-10T05:07:57Z",
+      "retrieval_operation": "web__run open/find",
+      "observed_operation": "GRAI appears as primary AI 8003. The spec describes Digital Link as a Web URI and says a general-purpose scanner app can treat it like any other URL; QR/Data Matrix URI can be read by phone camera/browser or dedicated app.",
+      "conditions_defaults_exceptions": "URI recognition is plausibility detection, not proof of full conformance; path/domain may vary and resolver compatibility is separate.",
+      "applicability": "Supports optional web-link decoding path and GRAI URL analogy; does not make a normal QR a verified receipt."
+    },
+    {
+      "id": "S14",
+      "title": "GS1-Conformant Resolver Standard",
+      "url": "https://ref.gs1.org/standards/resolver/",
+      "released_version_or_commit": "Current at access: Release 1.2.1, ratified Aug 2026.",
+      "locator": "§2.2 core functionality; §§2.5.8–2.6 redirection; §2.12 query strings; §9.3 change log; 1.2.1 erratum.",
+      "access_utc": "2026-10-10T05:07:57Z",
+      "retrieval_operation": "web__run search_query/open/find",
+      "observed_operation": "Resolver supports default and requested link-type behavior, returning 404 for unavailable requested types. Current log says 1.2.1 corrected the serial qualifier AI from 17 to 21 in §2.5.10. Query key/value pairs are passed through by default.",
+      "conditions_defaults_exceptions": "The AI correction concerns GTIN hierarchy serial parsing, not GRAI AI 8003. A missing requested link type returns 404 rather than falling back to default under current rules.",
+      "applicability": "Redirect governance and parser-version example for a future GS1 option; web owner must own target updates and tests."
+    },
+    {
+      "id": "S15",
+      "title": "GS1 Barcode Syntax Engine source and release 1.4.1",
+      "url": "https://github.com/gs1/gs1-syntax-engine/releases/tag/1.4.1",
+      "released_version_or_commit": "Release 1.4.1, commit ec595ff, released May 28, 2026; repository provides source in C/C++ and language bindings.",
+      "locator": "Release notes: long Digital Link stem overflow fix; source repository README/JS-WASM example and source architecture.",
+      "access_utc": "2026-10-10T05:11:09Z",
+      "retrieval_operation": "web__run open/search_query",
+      "observed_operation": "GS1 repository describes a syntax engine processing AI element strings, GS1 Digital Link URIs, and normalized scanner data; release 1.4.1 fixes overflow on very long Digital Link URI stems.",
+      "conditions_defaults_exceptions": "Source code/excerpts are read-only; the library is not installed, executed, or validated here. Later main-branch changes are not attributed to release 1.4.1.",
+      "applicability": "Useful future parser candidate if a GS1 path is selected; keep printed URLs short and pin tested version."
+    },
+    {
+      "id": "S16",
+      "title": "GS1 System Architecture — Digital Link 2D symbol decoding",
+      "url": "https://ref.gs1.org/architecture/system-architecture/",
+      "released_version_or_commit": "Live architecture page; no immutable version shown.",
+      "locator": "Decoding process for a 2D Symbol (GS1 Digital Link URI), lines on QR/Data Matrix and smartphone camera/browser, URI checks, link types and resolver.",
+      "access_utc": "2026-10-10T05:07:57Z",
+      "retrieval_operation": "web__run open",
+      "observed_operation": "Architecture describes QR/Data Matrix carrying a URL-like GS1 URI; native smartphone camera, browser, generic scanning app, or dedicated app can scan it, followed by HTTP(S) link/resolver behavior.",
+      "conditions_defaults_exceptions": "A general decoder extracts the URL; recognition as a conformant GS1 Digital Link and successful resolver access are later separate steps.",
+      "applicability": "Supports alternative scan paths and separates decode success from resolution and receipt confirmation."
+    },
+    {
+      "id": "S17",
+      "title": "Snipe-IT Barcodes manual, v8.3.6",
+      "url": "https://snipe-it.readme.io/v8.3.6/docs/barcodes",
+      "released_version_or_commit": "Documentation explicitly for Snipe-IT v8.3.6; page points to latest docs v8.8.0.",
+      "locator": "Changing your URL; supported 1D formats; QR Codes; legacy/new label engine note.",
+      "access_utc": "2026-10-10T05:14:29Z",
+      "retrieval_operation": "web__run open with page locator",
+      "observed_operation": "After APP_URL changes, the manual says to clear config cache and generated barcode image cache so QR images are regenerated with the new URL. It also says QR opens the asset detail page and barcode generation fails when a tag does not satisfy a selected 1D symbology.",
+      "conditions_defaults_exceptions": "This is v8.3.6 documentation, not a statement verified for later deployed tags. C128 accepts alphanumeric/numeric payloads; UPC/EAN formats impose narrower patterns.",
+      "applicability": "Historical versioned behavior showing URL/label coupling and label format constraints; verify exact behavior on any selected current release."
+    }
+  ],
+  "critic_reverification": {
+    "retrieval_window_utc": {
+      "start": "2026-10-10T05:22:50Z",
+      "end": "2026-10-10T05:25:47Z"
+    },
+    "entries": [
+      {
+        "source_id": "S01",
+        "review_operation": "web__run open exact URL; inspected asset-tag uniqueness, auto-increment, prefix and length behavior.",
+        "review_result": "Confirmed; no applicability change."
+      },
+      {
+        "source_id": "S02",
+        "review_operation": "web__run open exact URL; inspected label generation, separate 1D search barcode and QR asset-page path, enablement condition.",
+        "review_result": "Confirmed; QR route is separate from offline lookup."
+      },
+      {
+        "source_id": "S03",
+        "review_operation": "web__run open exact URL; inspected asset lifecycle and location-checkout best-practice passage.",
+        "review_result": "Confirmed; manual discourages using a location as checkout target."
+      },
+      {
+        "source_id": "S04",
+        "review_operation": "web__run open exact GitHub issue; inspected reported version, migration symptom and close activity.",
+        "review_result": "Confirmed as a report for v8.7.1 and label-engine migration, not a universal scanner defect."
+      },
+      {
+        "source_id": "S05",
+        "review_operation": "web__run open exact pull request; inspected merge target/date and one-time QR text transfer description.",
+        "review_result": "Confirmed; fix merged to develop. No release-tag ancestry conclusion added."
+      },
+      {
+        "source_id": "S06",
+        "review_operation": "web__run open exact release tag; inspected release date and tag commit.",
+        "review_result": "Confirmed v8.8.0 / 2c466fa dated Sep 30, 2026; fix inclusion remains unverified."
+      },
+      {
+        "source_id": "S07",
+        "review_operation": "web__run open exact English URL timed out; web__run search_query returned official Odoo 18 documentation excerpts, including Spanish locale official receipt page.",
+        "review_result": "Indexed primary material confirms real-time receipt processing with scanner/mobile app; no offline capability inferred. Full English page context unresolved."
+      },
+      {
+        "source_id": "S08",
+        "review_operation": "web__run open exact English URL timed out; web__run search_query returned the official Odoo 18 operation-types page with WHIN behavior and scheduled-picking warning.",
+        "review_result": "Indexed primary material confirms scanning WHIN creates a new receipt and does not match an existing scheduled receipt."
+      },
+      {
+        "source_id": "S09",
+        "review_operation": "web__run open exact English URL timed out; web__run search_query returned official Odoo 18 configure-product excerpts comparing packages and packagings.",
+        "review_result": "Indexed primary material supports individual package tracking/reuse and type/quantity packaging distinction; actual app behavior not tested."
+      },
+      {
+        "source_id": "S10",
+        "review_operation": "web__run open exact URL; inspected offline-mode availability, disable-sync flow, manual sync and snapshot condition.",
+        "review_result": "Confirmed mobile-only inventory-level offline updates and snapshot/manual-sync limits."
+      },
+      {
+        "source_id": "S11",
+        "review_operation": "web__run open exact URL; inspected phone-camera path, web limitations, plan conditions and 1D/QR FAQ.",
+        "review_result": "Confirmed; phone camera is no-extra-hardware alternative in the app, while QR requires 2D capability."
+      },
+      {
+        "source_id": "S12",
+        "review_operation": "web__run search_query against official GS1 26.0 standard index; official result returned §2.3.1 GRAI text and page 141. Attempt to open the whole official version page failed because content exceeded tool size. The carried source record also identifies the GS1 member-organization copy used by the investigator.",
+        "review_result": "Official indexed section confirms crates, prefix ownership, type and optional serial, and prohibits using AI 8003 for the contained trade item. No allocation or label was created."
+      },
+      {
+        "source_id": "S13",
+        "review_operation": "web__run open/find exact 1.7.0 URI syntax page; inspected release header and §6.1 recognition text.",
+        "review_result": "Confirmed that Digital Link URIs are URLs usable by general-purpose scanning applications; conformance recognition is a separate check."
+      },
+      {
+        "source_id": "S14",
+        "review_operation": "web__run open/find exact resolver standard; inspected 1.2.1 header, §2.6 redirection/404, query handling and change log.",
+        "review_result": "Confirmed 1.2.1 scope and requested-link 404; all key=value query pairs are normatively passed when redirecting, and omission option was removed. This supports finding C-01."
+      },
+      {
+        "source_id": "S15",
+        "review_operation": "web__run open/find exact 1.4.1 release page; inspected the long-stem overflow release note.",
+        "review_result": "Confirmed version-specific parser fix; no local install or execution."
+      },
+      {
+        "source_id": "S16",
+        "review_operation": "web__run open/find exact system architecture page; inspected resolver and URL resolution sections.",
+        "review_result": "Confirmed separation of extracting/following URL and resolver/redirection behavior; no QR or resolver call was made."
+      },
+      {
+        "source_id": "S17",
+        "review_operation": "web__run open exact versioned manual; inspected version note, 1D constraints and APP_URL/barcode-cache instructions.",
+        "review_result": "Confirmed as v8.3.6-specific documentation; current-tag behavior is not inferred."
+      }
+    ],
+    "limitations": [
+      "English Odoo 18 pages timed out on direct opens; official search-indexed page excerpts were inspected, so complete page context is not claimed.",
+      "The official GS1 General Specifications 26.0 version page exceeded the web tool's content limit; its official indexed GRAI section was returned, and the carried investigator record retains the member-organization mirror URL.",
+      "All external research checks are research only. No app, scanner, label, resolver, parser, account, live service or local product workflow was operated."
+    ]
+  },
+  "carried_investigator_method_notes": [
+    "Research began from the exact assigned brief after native Goal activation. The unreleased plan was not accessed during discovery.",
+    "Some Odoo/GS1 sources were returned as search-indexed primary-source excerpts; the source record states when a later direct open timed out or was unavailable.",
+    "No product runtime, account, scanner, label, resolver, downloaded executable, install, or local discriminating check was used."
+  ],
+  "inputs_reviewed": {
+    "brief": "ER12_RUNTIME/runs/A5-02/control/inputs/brief.md",
+    "investigator_artifacts": [
+      "ER12_RUNTIME/runs/A5-02/control/stages/investigator/discovery.md",
+      "ER12_RUNTIME/runs/A5-02/control/stages/investigator/draft.md",
+      "ER12_RUNTIME/runs/A5-02/control/stages/investigator/source-map.json",
+      "ER12_RUNTIME/runs/A5-02/control/stages/investigator/revealed-plan.md",
+      "ER12_RUNTIME/runs/A5-02/control/stages/investigator/plan-reveal.json"
+    ],
+    "critic_artifacts": [
+      "ER12_RUNTIME/runs/A5-02/control/stages/critic/critique.md",
+      "ER12_RUNTIME/runs/A5-02/control/stages/critic/source-map.json"
+    ],
+    "released_plan_sha256": "b4cf16e079bff1eb16228453f99f8682a63d34ecd99e0f53ca1463416111931e",
+    "released_plan_bytes": 6060
+  },
+  "critique_dispositions": [
+    {
+      "id": "C-01",
+      "disposition": "accept_and_amend",
+      "assessment": "The substantive query-forwarding correction is confirmed. The current Resolver 1.2.1 §2.12 says that on redirect the entirety of the incoming query string SHALL be transmitted by default. The prior option to omit query parameters was removed in the v1.2.0 change-log entry; the critic's locator to §9.3/1.2.1 is corrected here. The privacy consequence is to keep sensitive data out of URI paths and queries and test the redirect path if a resolver is later used.",
+      "evidence_source_id": "S14",
+      "final_locator": "§2.12; change-log subsection 'Changes included in version 1.2.0' (table of contents §9.2)",
+      "product_validation": "No resolver was configured or called."
+    },
+    {
+      "id": "C-02",
+      "disposition": "retain_uncertainty",
+      "assessment": "The steward namespace, depot-manager offline-queue policy, and web-owner route/redirect policy are unresolved external inputs, not defects. Preserve them as explicit owner decisions and state their consequences.",
+      "evidence_source_ids": [],
+      "product_validation": "No owner decisions were obtained."
+    }
+  ],
+  "reviser_independent_primary_source_rechecks": [
+    {
+      "source_id": "S14",
+      "exact_url": "https://ref.gs1.org/standards/resolver/",
+      "released_version_or_commit": "Current page declares GS1-Conformant Resolver Standard Release 1.2.1, ratified Aug 2026.",
+      "locator": "§2.12, lines 521-524; change log, version 1.2.0 subsection, lines 891-899; requested-link 404 also at §§2.6.2 and conformance summary.",
+      "access_window_utc": {
+        "start": "2026-10-10T05:36:00Z",
+        "end": "2026-10-10T05:36:28Z"
+      },
+      "retrieval_operation": "Independent web__run open of the exact canonical URL at the query-string section and change-log location; earlier direct open/find inspected release header and requested-link behavior.",
+      "observed_operation": "The standard states that when redirecting, by default a resolver SHALL transmit the entire query string to the target. The v1.2.0 change-log entry says the option to omit incoming query parameters was removed. Release 1.2.1's own change log separately corrects the serial AI from 17 to 21 in §2.5.10.",
+      "conditions_defaults_exceptions": "This applies to a GS1-conformant resolver when redirecting. Do not put sensitive values in the URI or query. The omission option was removed in v1.2.0; no resolver was operated.",
+      "applicability": "Confirms the substance of C-01, corrects its change-log locator, and informs privacy/redirect validation for a future resolver. It does not alter the optional shared static care-URL recommendation."
+    }
+  ],
+  "source_index": "sources/index.md"
+}

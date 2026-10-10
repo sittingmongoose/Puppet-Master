@@ -1,0 +1,165 @@
+{
+  "schema_version": "ER12-source-map-v1",
+  "run_id": "C-R1-01-control",
+  "stage": "critic",
+  "source_index_reviewed": "ER12_RUNTIME/runs/C-R1-01/control/stages/investigator/sources/index.md",
+  "source_root": "ER12_RUNTIME/runs/C-R1-01/control/stages/investigator/sources",
+  "reviewed_at_utc": "2026-10-10T05:17:27Z",
+  "access_time_basis": "Independent primary/official-source verification pass began at 05:17:27Z. Records S08/S11 were additionally checked from official publisher-hosted search results at 05:17:37Z; S13/S14 were additionally checked from first-party case-page search results at 05:17:43Z. Search extracts/direct-open limitations are stated per record. Source identities retain the investigator's S01-S14 IDs without reassignment.",
+  "records": [
+    {
+      "source_id": "S01",
+      "title": "ISO 1996-2:2017 — Determination of environmental sound pressure levels",
+      "exact_url": "https://www.iso.org/standard/59766.html",
+      "released_version": "Edition 3, July 2017; official record says current/confirmed in 2026, while its lifecycle contains a to-be-revised event.",
+      "locator": "ISO official product abstract, status and lifecycle.",
+      "access_utc": "2026-10-10T05:17:27Z",
+      "observed_operation": "Opened the ISO official product page and reviewed the scope, uncertainty statement, and lifecycle preview.",
+      "governing_condition_default_exception": "Primarily outdoor environmental sound determination; measurement effort is selected by the user and uncertainty is to be determined and reported; no allowable maximum uncertainty is set by this standard.",
+      "applicability": "Supports framing a separate courtyard outcome and reporting uncertainty; does not identify this building's path or set a local resident/legal threshold."
+    },
+    {
+      "source_id": "S02",
+      "title": "ISO 16283-1:2014 — Airborne sound insulation between rooms",
+      "exact_url": "https://www.iso.org/standard/55997.html",
+      "released_version": "Edition 1, February 2014, Amendment 1:2017; official record says reviewed/confirmed in 2025.",
+      "locator": "ISO official product abstract, amendment and lifecycle.",
+      "access_utc": "2026-10-10T05:17:27Z",
+      "observed_operation": "Opened the ISO official product page and reviewed its scope, range, amendment, and status.",
+      "governing_condition_default_exception": "Field procedures determine airborne sound insulation between two rooms; intended room volume 10-250 m3 and frequency range 50 Hz-5 kHz; measured insulation is frequency-dependent.",
+      "applicability": "Possible later room-to-room airborne follow-up only; does not measure structural vibration or ambient courtyard sound, and its frequency floor limits very-low-bass inference."
+    },
+    {
+      "source_id": "S03",
+      "title": "ISO 16283-3:2016 — Façade sound insulation",
+      "exact_url": "https://www.iso.org/standard/59748.html",
+      "released_version": "Edition 1, February 2016; official status says published and to be revised, with ISO/CD 16283-3 under development.",
+      "locator": "ISO official product abstract and lifecycle.",
+      "access_utc": "2026-10-10T05:17:27Z",
+      "observed_operation": "Opened the ISO official product page and reviewed the façade scope, frequency/volume range, and lifecycle.",
+      "governing_condition_default_exception": "Airborne façade-element and whole-façade methods; intended room volume 10-250 m3 and 50 Hz-5 kHz; current edition marked for revision.",
+      "applicability": "Later façade airborne investigation with suitable access/equipment only; not a courtyard ambient-noise or structure-borne test and not evidence of site performance."
+    },
+    {
+      "source_id": "S04",
+      "title": "ISO 10052:2021 — Survey method for airborne/impact insulation and service-equipment sound",
+      "exact_url": "https://www.iso.org/obp/ui?_escaped_fragment_=iso%3Astd%3Aiso%3A10052%3Aed-2%3Av1%3Aen",
+      "released_version": "Edition 2, 2021, ISO Online Browsing Platform English record.",
+      "locator": "OBP foreword, introduction, scope, survey procedure, and precision notes.",
+      "access_utc": "2026-10-10T05:17:27Z",
+      "observed_operation": "Opened the ISO OBP text and reviewed the introduction and scope.",
+      "governing_condition_default_exception": "Simplified survey uses a handheld sound-level instrument and manual microphone sweep; airborne/impact/façade insulation results are octave-band dependent; applicable rooms are dwellings/comparable rooms up to 150 m3; a priori uncertainty is greater than corresponding engineering methods. Annex operating cycles apply only when consistent with national requirements.",
+      "applicability": "Supports bounded screening only; it does not turn a basic meter, phone, or improvised music test into a formal insulation assessment."
+    },
+    {
+      "source_id": "S05",
+      "title": "ISO 3382-2:2008 — Reverberation time in ordinary rooms",
+      "exact_url": "https://www.iso.org/standard/36201.html",
+      "released_version": "Edition 1, June 2008; Corrigendum 1:2009; official record says confirmed in 2022.",
+      "locator": "ISO official product abstract and lifecycle.",
+      "access_utc": "2026-10-10T05:17:27Z",
+      "observed_operation": "Opened the ISO official product page and reviewed its method scope and lifecycle.",
+      "governing_condition_default_exception": "Specifies procedures, apparatus, positions, data evaluation, and reporting for room reverberation-time measurement.",
+      "applicability": "Internal room-decay result only; does not establish a reduction in courtyard disturbance."
+    },
+    {
+      "source_id": "S06",
+      "title": "ISO 23591:2021 — Acoustic quality criteria for music rehearsal rooms and spaces",
+      "exact_url": "https://www.iso.org/standard/76335.html",
+      "released_version": "Edition 1, September 2021, Amendment 1:2025 (Asian/Korean traditional music); official page shows systematic review activity.",
+      "locator": "ISO official product abstract, amendment, and lifecycle.",
+      "access_utc": "2026-10-10T05:17:27Z",
+      "observed_operation": "Opened the ISO official product page and reviewed criteria scope, amendment, and status.",
+      "governing_condition_default_exception": "Differentiates amplified, quiet acoustic, and loud acoustic rehearsal uses and includes room height/volume/area criteria; explicitly excludes sound-insulation criteria.",
+      "applicability": "Can frame room suitability after music type and dimensions are known; cannot set a neighbor-noise or façade target."
+    },
+    {
+      "source_id": "S07",
+      "title": "Pedersen, Møller & Persson Waye (2007), Indoor Measurements of Noise at Low Frequencies — Problems and Solutions",
+      "exact_url": "https://journals.sagepub.com/doi/10.1260/026309207783571389",
+      "released_version": "Journal of Low Frequency Noise, Vibration and Active Control, 26(4), 249-270, 2007; DOI 10.1260/026309207783571389.",
+      "locator": "Publisher abstract and bibliographic record.",
+      "access_utc": "2026-10-10T05:17:27Z",
+      "observed_operation": "Opened the primary journal article page and reviewed the abstract and publication details; full text was not needed for the claim checked.",
+      "governing_condition_default_exception": "Abstract reports up to 20-30 dB low-frequency spatial variation based on simulations and measurement distributions in three rooms, and discusses methods that risk missing high-level locations.",
+      "applicability": "Supports several marked room positions/repeatability; reported magnitude and proposed room method are not predictions for this building."
+    },
+    {
+      "source_id": "S08",
+      "title": "Løvholt et al. (2017), Simulating low frequency sound transmission through walls and windows by a two-way coupled fluid-structure interaction model",
+      "exact_url": "https://www.sciencedirect.com/science/article/pii/S0022460X17301207",
+      "released_version": "Journal of Sound and Vibration, 396, 203-216, published 26 May 2017; DOI 10.1016/j.jsv.2017.02.026.",
+      "locator": "Elsevier/ScienceDirect publisher abstract; direct-open tool error, abstract surfaced in publisher-hosted search result.",
+      "access_utc": "2026-10-10T05:17:37Z",
+      "observed_operation": "Searched the exact title/DOI and read the publisher-hosted abstract; a separate direct open returned an internal error. Full paper not read.",
+      "governing_condition_default_exception": "Abstract describes finite-element two-way fluid-structure simulations compared with laboratory wall/window tests from 10-100 Hz; structural connections matter, with different wall/window contributions by band; source context includes aircraft, supersonic flights, blasts and explosions.",
+      "applicability": "Supports coexistence and interaction of air and structure routes and the need for path-sensitive measurements; laboratory assemblies/source spectra do not predict this building."
+    },
+    {
+      "source_id": "S09",
+      "title": "Norén-Cosgriff et al. (2016), Countermeasures against noise and vibrations in lightweight wooden buildings caused by outdoor sources with strong low-frequency components",
+      "exact_url": "https://www.sintef.no/en/publications/publication/1450011/",
+      "released_version": "Noise Control Engineering Journal, 64(6), 737-752, 2016; DOI 10.3397/1/376416.",
+      "locator": "SINTEF institutional publication abstract and bibliographic record.",
+      "access_utc": "2026-10-10T05:17:27Z",
+      "observed_operation": "Opened SINTEF's author-institution page and reviewed its abstract and publication metadata.",
+      "governing_condition_default_exception": "Research combined laboratory measurement, finite-element simulation, designed structural countermeasures, and full-scale tests in a Norwegian lightweight wooden building under F-16 aircraft noise; it measured indoor sound and floor vibration.",
+      "applicability": "Supports measuring vibration alongside sound and illustrates a plausible mechanism; source/building and interventions differ, so numeric reductions are not transferable."
+    },
+    {
+      "source_id": "S10",
+      "title": "Vargas Vera, San Millán-Castillo & Swerdlow (2019), Sound insulation design methodology: case study on a music rehearsal room",
+      "exact_url": "https://euracoustics.org/documents/9/02_Sound_insulation.pdf",
+      "released_version": "Acoustics in Practice, vol. 7, no. 1, January 2019; 10-page EAA-hosted paper; no DOI identified in its record.",
+      "locator": "Primary PDF abstract and methodology/conclusion sections.",
+      "access_utc": "2026-10-10T05:17:27Z",
+      "observed_operation": "Opened the EAA-hosted primary PDF and checked its case scope, repeated-source procedure, and stated verification boundary.",
+      "governing_condition_default_exception": "Residential-house basement case includes bass guitar, guitar, and drums; uses repeated 20-second musical fragments for source characterization, measures current enclosure, and models candidate solutions. Paper explicitly leaves verification of proposed solutions outside its scope.",
+      "applicability": "Close source/use workflow analogue and a useful data-gathering lead, not proof of an installed solution or structural-path coverage."
+    },
+    {
+      "source_id": "S11",
+      "title": "Støfringsdal & Bolstad (2023), Optimizing (too) small ensemble rehearsal rooms for acoustic loud music",
+      "exact_url": "https://www.ioa.org.uk/system/files/proceedings/b_stofringsdal_e_bolstad_optimizing_too_small_ensemble_rehearsal_rooms_for_acoustic_loud_music_0.pdf",
+      "released_version": "Proceedings of the Institute of Acoustics, vol. 45, part 2, Auditorium Acoustics 2023; DOI 10.25144/16014.",
+      "locator": "Official Institute of Acoustics PDF, section 3.1 on the professional wind-band rehearsal room; direct-open tool error, relevant text surfaced in official-PDF search result.",
+      "access_utc": "2026-10-10T05:17:37Z",
+      "observed_operation": "Searched the exact title/DOI and reviewed the official proceedings PDF extract; direct open returned an internal error.",
+      "governing_condition_default_exception": "The case is a 1,600 m3 Norwegian professional wind-band room; previous work included 40 mm porous ceiling/wall absorbers. Musician survey reports a too-dry, imbalanced room and difficult mutual listening; several report overplaying.",
+      "applicability": "A real internal-acoustics implementation history/tradeoff, not evidence for exterior isolation; scale and ensemble differ."
+    },
+    {
+      "source_id": "S12",
+      "title": "Shearer et al. (2021), Flexible control of acoustic conditions in a music rehearsal space using airbeds",
+      "exact_url": "https://researchportal.lsbu.ac.uk/en/publications/flexible-control-of-acoustic-conditions-in-a-music-rehearsal-spac-3/",
+      "released_version": "Applied Acoustics, vol. 173, article 107708, published February 2021; DOI 10.1016/j.apacoust.2020.107708.",
+      "locator": "London South Bank University author research record and abstract.",
+      "access_utc": "2026-10-10T05:17:27Z",
+      "observed_operation": "Opened the authors' university research record and read the abstract and bibliographic details.",
+      "governing_condition_default_exception": "Lab tests selected an inflated consumer airbed and room measurements compared Henry Wood Hall before/after installation; intended outcome was lower-band reverberation for flexible smaller-ensemble/voice use.",
+      "applicability": "A reversible room-decay precedent only; not a sound-isolation or courtyard-disturbance result."
+    },
+    {
+      "source_id": "S13",
+      "title": "BKL Consultants, UBC Music Building Renovations case record",
+      "exact_url": "https://bkl.ca/projects/ubc-music-building-renovations/",
+      "released_version": "Project completed 2022; page copyright 2024; no revision/commit identifier shown.",
+      "locator": "First-party case page: scope of services, site visits, acoustical challenges, project benefits, capital cost.",
+      "access_utc": "2026-10-10T05:17:43Z",
+      "observed_operation": "Searched the first-party project page and reviewed its surfaced case text; source page itself exposes no raw measurement report.",
+      "governing_condition_default_exception": "Consultant reports pre-project floor/practice-room sound-isolation measurements and instrument tests, a construction inspection, structure-borne concern, and a $2.8M multi-floor institutional renovation; the page says objectives were met but gives no raw or numeric after-results.",
+      "applicability": "Useful implementation-history lead for requesting protocols/drawings/before-after evidence, not a performance prediction for a small residential-edge building."
+    },
+    {
+      "source_id": "S14",
+      "title": "Sandy Brown, Clore Music Studios, New College, University of Oxford case record",
+      "exact_url": "https://www.sandybrown.com/case-study/clore-music-studios-new-college-university-of-oxford/",
+      "released_version": "Studios opened summer 2019; first-party web case record has no revision/commit identifier shown.",
+      "locator": "First-party case page: project summary and acoustic implementation; associated first-party PDF also surfaced.",
+      "access_utc": "2026-10-10T05:17:43Z",
+      "observed_operation": "Searched the first-party case record and reviewed the page text and linked case PDF extract.",
+      "governing_condition_default_exception": "Purpose-built multiroom college facility in a three-storey solid-stone context; an environmental noise survey set music-egress limits; case describes independent heavy structures, wide-airspace windows, floated floors/box-in-box spaces, and internal finishes. No numeric post-opening results are published on the case page.",
+      "applicability": "A receiver-survey-to-design implementation lead with materially different building, scale, and construction scope; not proof that any element suits this site."
+    }
+  ]
+}

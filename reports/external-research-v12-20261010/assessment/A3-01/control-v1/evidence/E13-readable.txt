@@ -1,0 +1,60 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://raw.githubusercontent.com/quickwit-oss/tantivy/0.26.2/src/reader/mod.rs"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A3-01/control-v1/source-map.json",
+      "source_id": "E13",
+      "existing_authored_summary_fields": {
+        "released_version_or_commit": "Upstream tag 0.26.2",
+        "governing_condition_default_exception": "Default OnCommitWithDelay asynchronously reloads after commit; Manual never automatically reloads. searcher() lends the last loaded segment snapshot, and a fresh searcher should be acquired for each query. A writer commit watermark can be newer than the actual searcher.",
+        "applicability": "Source-backed F2: writer-applied/source watermark equality alone does not prove query completeness."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A3-01/control-v1/evidence/retrievals.json",
+      "source_id": "E13",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": "ReloadPolicy and default raw lines 15–29, 47–55; IndexReader::reload/searcher lines 277–303"
+    }
+  ],
+  "raw_sha256": "8a064863b7c59d829133652c7f5eae281381c939055a7f6681b368a487580b9d",
+  "original_bytes": 10474,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A3-01/control-v1/evidence/E13-readable.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://raw.githubusercontent.com/quickwit-oss/tantivy/0.26.2/src/reader/mod.rs"
+  ],
+  "version": [
+    {
+      "released_version_or_commit": "Upstream tag 0.26.2",
+      "governing_condition_default_exception": "Default OnCommitWithDelay asynchronously reloads after commit; Manual never automatically reloads. searcher() lends the last loaded segment snapshot, and a fresh searcher should be acquired for each query. A writer commit watermark can be newer than the actual searcher.",
+      "applicability": "Source-backed F2: writer-applied/source watermark equality alone does not prove query completeness."
+    }
+  ],
+  "selector": [
+    {
+      "locator": "ReloadPolicy and default raw lines 15–29, 47–55; IndexReader::reload/searcher lines 277–303"
+    }
+  ],
+  "conditions": [
+    {
+      "released_version_or_commit": "Upstream tag 0.26.2",
+      "governing_condition_default_exception": "Default OnCommitWithDelay asynchronously reloads after commit; Manual never automatically reloads. searcher() lends the last loaded segment snapshot, and a fresh searcher should be acquired for each query. A writer commit watermark can be newer than the actual searcher.",
+      "applicability": "Source-backed F2: writer-applied/source watermark equality alone does not prove query completeness."
+    }
+  ],
+  "rawSHA256": "8a064863b7c59d829133652c7f5eae281381c939055a7f6681b368a487580b9d"
+}

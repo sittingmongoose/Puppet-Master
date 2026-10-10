@@ -1,0 +1,94 @@
+{
+  "observed_at_utc": "2026-10-10T06:25:32.395986+00:00",
+  "basis": "root observed terminal final T3 task/no pending; separate from native proof",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/critic/critique.md",
+      "bytes": 13934,
+      "sha256": "f402aad5cf170c28b5b9544ff922d732bb648c961f32b70d5859435ab808bdd7",
+      "mtime_ns": 1791612836137290225
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/critic/source-map.json",
+      "bytes": 11857,
+      "sha256": "73cb990cad87a0b6d19ed143d5c847ba507a42592e77383b8b4439bd7eb53268",
+      "mtime_ns": 1791612836270148906
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/critic/sources/INDEX.md",
+      "bytes": 2319,
+      "sha256": "01ea8b9b7c008d71c5fa48966cacd495112cbd823c62c1bbb36fdf317238af32",
+      "mtime_ns": 1791612836395971674
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/discovery.md",
+      "bytes": 14715,
+      "sha256": "e85c7be9c7e519237bdccd247f9c892fb058adcfc6a0df2d8556c224eced1ac0",
+      "mtime_ns": 1791611858798666074
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/draft.md",
+      "bytes": 30735,
+      "sha256": "944f6ed7784b67c842bb8224d831b437962e93f302a528eaca1ab7ebcf34b493",
+      "mtime_ns": 1791612252523589063
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/revealed-plan.md",
+      "bytes": 6718,
+      "sha256": "a9cfe54c239ea09aeccec070c8754a305206f5565bf7d4cfa92d26b192f491e1",
+      "mtime_ns": 1791611869029623593
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/source-map.json",
+      "bytes": 12885,
+      "sha256": "273408ce6205481baaae3bf7e4a21bf8c8f1c37b639420b0162c956f3842099b",
+      "mtime_ns": 1791612109563697760
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/sources/INDEX.md",
+      "bytes": 3205,
+      "sha256": "91fab66dfff5a60c37f99b7aa93a95ed0eaf21dd42acf7ee467e744b09fa0ab8",
+      "mtime_ns": 1791611827466174555
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+      "bytes": 23514,
+      "sha256": "3a4158066585cc75d56ba6804bb6cc287b45a849a08f8502f4704ddac41e4235",
+      "mtime_ns": 1791613352086193925
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/source-map.json",
+      "bytes": 22068,
+      "sha256": "f28a5a3b8694b9521bce81f2a64ce812896ed32f01b7d7c9592c96089d131536",
+      "mtime_ns": 1791613379284848667
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/sources/INDEX.md",
+      "bytes": 3057,
+      "sha256": "2e543f41adf4e8e101a6502881e84a2e091aebf7bdc7f87fa5f497a1c2ab1929",
+      "mtime_ns": 1791613379285179221
+    }
+  ],
+  "final_stage_task": {
+    "slot": "C-R2-01",
+    "arm": "control",
+    "stage": "reviser",
+    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R2-01-control-reviser-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R2-01-control-reviser-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R2-01-control-reviser-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R2-01-control-reviser-v1",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R2-01-control-reviser-v1:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "Completed the C-R2-01-control reviser stage. The exact frozen Goal was activated, the binding guard passed, and that same Goal was completed.\n\n- [final.md](ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/source-map.json) and [source index](ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/sources/INDEX.md)\n- [Activation receipt](ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/native-goal-activation.json), [completion receipt](ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/native-goal-completion.json), and [guard result](ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/goal-binding-guard.txt)\n\nThe revision adds sleeve strata to the coupon design and treats 12 weeks only as a planning cap, with an inconclusive outcome when evidence is insufficient. It preserves uncertainty about the investigator\u2019s 60-minute timing and corrects the description of S01\u2019s laboratory sheets. Those limits are consistent with the primary paper, model-ink study, and CCI seasonal-monitoring guidance ([S01](https://link.springer.com/article/10.1007/s10570-023-05626-6), [S02](https://tugraz.elsevierpure.com/ws/portalfiles/portal/79063769/1-s2.0-S0264127523010092-main.pdf), [CCI](https://www.canada.ca/en/conservation-institute/services/agents-deterioration/humidity.html)).\n\nNo specimen inspection or material-performance validation was performed. The Goal completed with 118,942 tokens used and 581 seconds elapsed.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R2-01-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:3519bc8c-6a15-4a00-a349-67713b9a1f37",
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "summary": "Completed the C-R2-01-control reviser stage. The exact frozen Goal was activated, the binding guard passed, and that same Goal was completed.\n\n- [final.md](ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/source-map.json) and [source index](ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/sources/INDEX.md)\n- [Activation receipt](ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/native-goal-activation.json), [completion receipt](ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/native-goal-completion.json), and [guard result](ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/goal-binding-guard.txt)\n\nThe revision adds sleeve strata to the coupon design and treats 12 weeks only as a planning cap, with an inconclusive outcome when evidence is insufficient. It preserves uncertainty about the investigator\u2019s 60-minute timing and corrects the description of S01\u2019s laboratory sheets. Those limits are consistent with the primary paper, model-ink study, and CCI seasonal-monitoring guidance ([S01](https://link.springer.com/article/10.1007/s10570-023-05626-6), [S02](https://tugraz.elsevierpure.com/ws/portalfiles/portal/79063769/1-s2.0-S0264127523010092-main.pdf), [CCI](https://www.canada.ca/en/conservation-institute/services/agents-deterioration/humidity.html)).\n\nNo specimen inspection or material-performance validation was performed. The Goal completed with 118,942 tokens used and 581 seconds elapsed.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R2-01-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:3519bc8c-6a15-4a00-a349-67713b9a1f37",
+    "waitTimedOut": false
+  }
+}

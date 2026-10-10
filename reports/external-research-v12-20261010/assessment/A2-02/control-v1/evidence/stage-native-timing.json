@@ -1,0 +1,239 @@
+[
+  {
+    "stage": "investigator",
+    "activation_receipt_path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/native-goal-activation.json",
+    "terminal_receipt_path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/native-goal-terminal-status.json",
+    "native_activation_fields": {
+      "threadId": "01a12436-848f-7913-a1fc-5e2f99b9c98c",
+      "objective": "ER12 investigator stage, run A2-02-control: execute ER12_RUNTIME/runs/A2-02/control/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791608957,
+      "updatedAt": 1791608957
+    },
+    "native_terminal_fields": {
+      "threadId": "01a12436-848f-7913-a1fc-5e2f99b9c98c",
+      "objective": "ER12 investigator stage, run A2-02-control: execute ER12_RUNTIME/runs/A2-02/control/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "status": "complete",
+      "tokensUsed": 319203,
+      "timeUsedSeconds": 737,
+      "createdAt": 1791608957,
+      "updatedAt": 1791609695
+    },
+    "native_objective_matches_freeze": true,
+    "native_thread_matches": true,
+    "activation_utc": "2026-10-10T05:09:17+00:00",
+    "terminal_utc": "2026-10-10T05:21:35+00:00",
+    "stage_deadline_utc": "2026-10-10T05:38:32.328Z",
+    "terminal_before_stage_deadline": true,
+    "requested_at_utc": "2026-10-10T05:08:32.328Z",
+    "dispatch_captured_at_utc": "2026-10-10T05:08:34.609Z",
+    "t3_returned": {
+      "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-02-control-investigator-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-02-control-investigator-v1",
+      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-02-control-investigator-v1:ordinal:1",
+      "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-02-control-investigator-v1",
+      "status": "running",
+      "workState": "working",
+      "hasPendingChildRuns": false,
+      "latestTerminalRunId": null,
+      "latestTerminalStatus": null,
+      "latestTerminalSummary": null,
+      "latestTerminalResultContextTransferId": null,
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna",
+      "summary": null,
+      "resultContextTransferId": null,
+      "waitTimedOut": false
+    },
+    "requested_route": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna",
+      "options": {
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      }
+    },
+    "outputs": [
+      {
+        "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/discovery.md",
+        "mtime_utc": "2026-10-10T05:14:11.195426+00:00",
+        "mtime_ns": 1791609251195425792,
+        "mtime_before_recorded_terminal": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/draft.md",
+        "mtime_utc": "2026-10-10T05:21:08.288601+00:00",
+        "mtime_ns": 1791609668288600651,
+        "mtime_before_recorded_terminal": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/source-map.json",
+        "mtime_utc": "2026-10-10T05:14:58.882642+00:00",
+        "mtime_ns": 1791609298882642140,
+        "mtime_before_recorded_terminal": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/sources/index.md",
+        "mtime_utc": "2026-10-10T05:15:44.375673+00:00",
+        "mtime_ns": 1791609344375672544,
+        "mtime_before_recorded_terminal": true
+      }
+    ],
+    "effective_provider_model_reasoning_tier": "UNKNOWN: no actual provider-response execution telemetry inspected",
+    "billing": "UNKNOWN: native tokensUsed is a Goal counter, not billing or inference accounting"
+  },
+  {
+    "stage": "critic",
+    "activation_receipt_path": "ER12_RUNTIME/runs/A2-02/control/stages/critic/native-goal-activation.json",
+    "terminal_receipt_path": "ER12_RUNTIME/runs/A2-02/control/stages/critic/native-goal-completion.json",
+    "native_activation_fields": {
+      "threadId": "01a12443-c789-78e3-a0c1-101d023e96da",
+      "objective": "ER12 critic stage, run A2-02-control: execute ER12_RUNTIME/runs/A2-02/control/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791609800,
+      "updatedAt": 1791609800
+    },
+    "native_terminal_fields": {
+      "threadId": "01a12443-c789-78e3-a0c1-101d023e96da",
+      "objective": "ER12 critic stage, run A2-02-control: execute ER12_RUNTIME/runs/A2-02/control/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "status": "complete",
+      "tokensUsed": 133080,
+      "timeUsedSeconds": 662,
+      "createdAt": 1791609800,
+      "updatedAt": 1791610463
+    },
+    "native_objective_matches_freeze": true,
+    "native_thread_matches": true,
+    "activation_utc": "2026-10-10T05:23:20+00:00",
+    "terminal_utc": "2026-10-10T05:34:23+00:00",
+    "stage_deadline_utc": "2026-10-10T05:34:59.952Z",
+    "terminal_before_stage_deadline": true,
+    "requested_at_utc": "2026-10-10T05:22:59.952Z",
+    "dispatch_captured_at_utc": "2026-10-10T05:23:02.171Z",
+    "t3_returned": {
+      "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-02-control-critic-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-02-control-critic-v1",
+      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-02-control-critic-v1:ordinal:1",
+      "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-02-control-critic-v1",
+      "status": "running",
+      "workState": "working",
+      "hasPendingChildRuns": false,
+      "latestTerminalRunId": null,
+      "latestTerminalStatus": null,
+      "latestTerminalSummary": null,
+      "latestTerminalResultContextTransferId": null,
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna",
+      "summary": null,
+      "resultContextTransferId": null,
+      "waitTimedOut": false
+    },
+    "requested_route": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna",
+      "options": {
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      }
+    },
+    "outputs": [
+      {
+        "path": "ER12_RUNTIME/runs/A2-02/control/stages/critic/critique.md",
+        "mtime_utc": "2026-10-10T05:34:11.707790+00:00",
+        "mtime_ns": 1791610451707789912,
+        "mtime_before_recorded_terminal": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A2-02/control/stages/critic/source-map.json",
+        "mtime_utc": "2026-10-10T05:34:11.773790+00:00",
+        "mtime_ns": 1791610451773790191,
+        "mtime_before_recorded_terminal": true
+      }
+    ],
+    "effective_provider_model_reasoning_tier": "UNKNOWN: no actual provider-response execution telemetry inspected",
+    "billing": "UNKNOWN: native tokensUsed is a Goal counter, not billing or inference accounting"
+  },
+  {
+    "stage": "reviser",
+    "activation_receipt_path": "ER12_RUNTIME/runs/A2-02/control/stages/reviser/goal-activation.json",
+    "terminal_receipt_path": "ER12_RUNTIME/runs/A2-02/control/stages/reviser/goal-completion.json",
+    "native_activation_fields": {
+      "threadId": "01a1244e-9514-7492-8e5c-ace14b672dbe",
+      "objective": "ER12 reviser stage, run A2-02-control: execute ER12_RUNTIME/runs/A2-02/control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791610504,
+      "updatedAt": 1791610504
+    },
+    "native_terminal_fields": {
+      "threadId": "01a1244e-9514-7492-8e5c-ace14b672dbe",
+      "objective": "ER12 reviser stage, run A2-02-control: execute ER12_RUNTIME/runs/A2-02/control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "status": "complete",
+      "tokensUsed": 129411,
+      "timeUsedSeconds": 432,
+      "createdAt": 1791610504,
+      "updatedAt": 1791610936
+    },
+    "native_objective_matches_freeze": true,
+    "native_thread_matches": true,
+    "activation_utc": "2026-10-10T05:35:04+00:00",
+    "terminal_utc": "2026-10-10T05:42:16+00:00",
+    "stage_deadline_utc": "2026-10-10T05:52:50.969Z",
+    "terminal_before_stage_deadline": true,
+    "requested_at_utc": "2026-10-10T05:34:50.969Z",
+    "dispatch_captured_at_utc": "2026-10-10T05:34:52.358Z",
+    "t3_returned": {
+      "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-02-control-reviser-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-02-control-reviser-v1",
+      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-02-control-reviser-v1:ordinal:1",
+      "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-02-control-reviser-v1",
+      "status": "running",
+      "workState": "working",
+      "hasPendingChildRuns": false,
+      "latestTerminalRunId": null,
+      "latestTerminalStatus": null,
+      "latestTerminalSummary": null,
+      "latestTerminalResultContextTransferId": null,
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna",
+      "summary": null,
+      "resultContextTransferId": null,
+      "waitTimedOut": false
+    },
+    "requested_route": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna",
+      "options": {
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      }
+    },
+    "outputs": [
+      {
+        "path": "ER12_RUNTIME/runs/A2-02/control/stages/reviser/final.md",
+        "mtime_utc": "2026-10-10T05:38:17.227707+00:00",
+        "mtime_ns": 1791610697227706878,
+        "mtime_before_recorded_terminal": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A2-02/control/stages/reviser/source-map.json",
+        "mtime_utc": "2026-10-10T05:41:36.788661+00:00",
+        "mtime_ns": 1791610896788660975,
+        "mtime_before_recorded_terminal": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A2-02/control/stages/reviser/sources/index.md",
+        "mtime_utc": "2026-10-10T05:41:45.153583+00:00",
+        "mtime_ns": 1791610905153583028,
+        "mtime_before_recorded_terminal": true
+      }
+    ],
+    "effective_provider_model_reasoning_tier": "UNKNOWN: no actual provider-response execution telemetry inspected",
+    "billing": "UNKNOWN: native tokensUsed is a Goal counter, not billing or inference accounting"
+  }
+]

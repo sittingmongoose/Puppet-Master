@@ -1,0 +1,65 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://www.iso.org/standard/36201.html"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/C-R1-01/control-v1/source-map.json",
+      "source_id": "S05",
+      "existing_authored_summary_fields": {
+        "released_version": "ISO 3382-2:2008, edition 1; Cor 1:2009; confirmed 2022.",
+        "exact_subject_operation_units_domain": "Ordinary-room reverberation-time method, including apparatus, positions and reporting.",
+        "conditions_exceptions_applicability": "RT can correct other acoustic measurements; RT alone is not a courtyard outcome. No numeric RT target or compliance claim is asserted."
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": "ISO 3382-2 L24,50–51,162"
+    },
+    {
+      "candidate_locators": [
+        "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:45"
+      ]
+    }
+  ],
+  "raw_sha256": "aaff9c996b6ce14bb75425b6f6f80a2b876e8107ae40ec018793decaba45a2e2",
+  "original_bytes": 15926,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/C-R1-01/control-v1/evidence/web_version_tail.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://www.iso.org/standard/36201.html"
+  ],
+  "version": [
+    {
+      "released_version": "ISO 3382-2:2008, edition 1; Cor 1:2009; confirmed 2022.",
+      "exact_subject_operation_units_domain": "Ordinary-room reverberation-time method, including apparatus, positions and reporting.",
+      "conditions_exceptions_applicability": "RT can correct other acoustic measurements; RT alone is not a courtyard outcome. No numeric RT target or compliance claim is asserted."
+    }
+  ],
+  "selector": [
+    {
+      "locator": "ISO 3382-2 L24,50–51,162"
+    },
+    {
+      "candidate_locators": [
+        "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:45"
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "released_version": "ISO 3382-2:2008, edition 1; Cor 1:2009; confirmed 2022.",
+      "exact_subject_operation_units_domain": "Ordinary-room reverberation-time method, including apparatus, positions and reporting.",
+      "conditions_exceptions_applicability": "RT can correct other acoustic measurements; RT alone is not a courtyard outcome. No numeric RT target or compliance claim is asserted."
+    }
+  ],
+  "rawSHA256": "aaff9c996b6ce14bb75425b6f6f80a2b876e8107ae40ec018793decaba45a2e2"
+}

@@ -1,0 +1,21 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [],
+  "primary_url_status": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "fbdbe63959f2807e64dfac8fdb532cfaf5dd8acbfe8cd89821df67ceee4689c2",
+  "original_bytes": 4815,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/B-DISC-M-02/treatment-v1/primary-evidence/README.md",
+  "evidence_coverage": "UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": "UNKNOWN",
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "rawSHA256": "fbdbe63959f2807e64dfac8fdb532cfaf5dd8acbfe8cd89821df67ceee4689c2"
+}

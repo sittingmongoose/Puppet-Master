@@ -1,0 +1,80 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://github.com/Peltoche/ical-rs"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A1-02/control-v1/source-map.json",
+      "source_id": "E12",
+      "existing_authored_summary_fields": {
+        "version_or_edition": "Peltoche/ical-rs archived repository README; top-level dependency example ical 0.11, some lower examples 0.10; no pinned commit"
+      }
+    },
+    {
+      "authored_source_map": "assessment/A1-02/control-v1/evidence/retrievals.json",
+      "source_id": "E12",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A1-02/control-v1/evidence/E12-lines.txt"
+    },
+    {
+      "line_text_sha256": "86931e275b72b6b417eb7c443f771ad512d97c01716aa33e49cc9a72952cee09"
+    },
+    {
+      "line_count": 347
+    },
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A1-02/control-v1/evidence/E12-lines.txt"
+    },
+    {
+      "line_text_sha256": "86931e275b72b6b417eb7c443f771ad512d97c01716aa33e49cc9a72952cee09"
+    },
+    {
+      "line_count": 347
+    }
+  ],
+  "raw_sha256": "86931e275b72b6b417eb7c443f771ad512d97c01716aa33e49cc9a72952cee09",
+  "original_bytes": 9995,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A1-02/control-v1/evidence/E12-lines.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://github.com/Peltoche/ical-rs"
+  ],
+  "version": [
+    {
+      "version_or_edition": "Peltoche/ical-rs archived repository README; top-level dependency example ical 0.11, some lower examples 0.10; no pinned commit"
+    }
+  ],
+  "selector": [
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A1-02/control-v1/evidence/E12-lines.txt"
+    },
+    {
+      "line_text_sha256": "86931e275b72b6b417eb7c443f771ad512d97c01716aa33e49cc9a72952cee09"
+    },
+    {
+      "line_count": 347
+    },
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A1-02/control-v1/evidence/E12-lines.txt"
+    },
+    {
+      "line_text_sha256": "86931e275b72b6b417eb7c443f771ad512d97c01716aa33e49cc9a72952cee09"
+    },
+    {
+      "line_count": 347
+    }
+  ],
+  "conditions": "UNKNOWN",
+  "rawSHA256": "86931e275b72b6b417eb7c443f771ad512d97c01716aa33e49cc9a72952cee09"
+}

@@ -1,0 +1,16 @@
+{
+  "operation": "get_goal after directly observed create_goal activation in this review; this file preserves the get_goal response, not a reconstructed activation receipt",
+  "observed_response": {
+    "goal": {
+      "threadId": "01a12444-a204-7be3-ab16-2e5b06f54a53",
+      "objective": "Complete the independent bounded ER12 Track B semantic review for B-FINAL-G-02 treatment stages/role exactly as assigned by the user: read the full rubric, role input-map/assignment/freeze and all mapped shared assignment, fixture, corpus, authored role artifact, source map and sources; verify inspected input/science hashes against terminal-science-freeze-root.json; independently retrieve governing primary evidence; assess only assigned role axes and exact obligations, preserve source/coverage/delivery/native/protocol/time separately, record evidence-grounded PASS_WITH_LIMITATIONS/FAIL or ungraded missing final without candidate feedback, repair, delegation, accounts, Git/publication, other arms/history or ER11 rescore. Write complete assessment.md, assessment.json, source-map and navigable primary evidence only under ER12_RUNTIME/assessment/B-FINAL-G-02/treatment-v1; save judgment before native Goal completion; report concise result and paths; finish within 25 minutes.",
+      "status": "active",
+      "tokensUsed": 61763,
+      "timeUsedSeconds": 131,
+      "createdAt": 1791609851,
+      "updatedAt": 1791609983
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  }
+}

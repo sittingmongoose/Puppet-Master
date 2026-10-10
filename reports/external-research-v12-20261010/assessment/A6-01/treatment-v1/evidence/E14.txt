@@ -1,0 +1,54 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://www.gov.uk/government/publications/bus-open-data-implementation-guide/bus-open-data-implementation-guide"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A6-01/treatment-v1/source-map.json",
+      "source_id": "E14",
+      "existing_authored_summary_fields": {
+        "version_or_commit": "DfT implementation guide: TxC 2.4, SIRI-VM 2.0/2.0Q",
+        "governing_locator": "Publishing location data; Location Matching; Time Synchronisation",
+        "independent_semantic_observation": "Shared identifiers and revised TxC on operational identifier changes verified; bus applicability only."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A6-01/treatment-v1/evidence/retrieval-manifest.json",
+      "source_id": "E14",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "governing_locator": "Publishing location data; Location Matching; Time Synchronisation"
+    }
+  ],
+  "raw_sha256": "dc30cc5f35e461e873b066c475a91d95ba96158208e6ccc41e482d6b2e441531",
+  "original_bytes": 113157,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A6-01/treatment-v1/evidence/E14.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://www.gov.uk/government/publications/bus-open-data-implementation-guide/bus-open-data-implementation-guide"
+  ],
+  "version": [
+    {
+      "version_or_commit": "DfT implementation guide: TxC 2.4, SIRI-VM 2.0/2.0Q",
+      "governing_locator": "Publishing location data; Location Matching; Time Synchronisation",
+      "independent_semantic_observation": "Shared identifiers and revised TxC on operational identifier changes verified; bus applicability only."
+    }
+  ],
+  "selector": [
+    {
+      "governing_locator": "Publishing location data; Location Matching; Time Synchronisation"
+    }
+  ],
+  "conditions": "UNKNOWN",
+  "rawSHA256": "dc30cc5f35e461e873b066c475a91d95ba96158208e6ccc41e482d6b2e441531"
+}

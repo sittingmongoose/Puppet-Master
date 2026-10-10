@@ -1,0 +1,33 @@
+{
+  "counts": {
+    "admitted_logical_arms": 72,
+    "quiet_full_final_arms": 37,
+    "quiet_role_final_arms": 24,
+    "original_completed_judgments": 60,
+    "source_labels": {
+      "FAIL": 21,
+      "PASS_WITH_LIMITATIONS": 39
+    },
+    "judgment_scopes": {
+      "A": 32,
+      "B": 24,
+      "C1": 4
+    },
+    "full_final_pending_review": "C-R2-01/control"
+  },
+  "quiet_science_whitelist": "provenance/COHORT4_FREEZE.json",
+  "historical_method_strata": "METHOD_CASE_VERSION_MAP.json",
+  "current_method_strata": "provenance/COHORT4_METHOD_CASE_VERSION_MAP.json",
+  "current_guard": "mechanics/exact-goal-binding-guard-v1",
+  "C1_full_reviews": [
+    "assessment/C-R1-01/control-v1/assessment.json",
+    "assessment/C-R1-01/treatment-v1/assessment.json",
+    "assessment/C-R1-02/control-v1/assessment.json",
+    "assessment/C-R1-02/treatment-v1/assessment.json"
+  ],
+  "C2": "methods/C-R2/RECIPE_LOCK.json",
+  "D_lock": "methods/D-R1/RECIPE_LOCK.json",
+  "portable_v2": "recipes/materialize-v2/bundle-manifest.json",
+  "frozen_hash_checks": "provenance/COHORT4_FROZEN_HASH_CHECKS.json",
+  "complete_authored_input_dependencies": "provenance/SELECTED_INPUT_DEPENDENCIES.json"
+}

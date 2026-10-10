@@ -1,0 +1,60 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://docs.rs/tantivy/0.26.2/tantivy/collector/struct.TopDocs.html"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A3-01/control-v1/source-map.json",
+      "source_id": "E18",
+      "existing_authored_summary_fields": {
+        "released_version_or_commit": "Tantivy 0.26.2",
+        "governing_condition_default_exception": "The public collector exposes decreasing similarity-score ordering and DocAddress results.",
+        "applicability": "Independent pinned confirmation of original latest-docs S11 conclusion."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A3-01/control-v1/evidence/retrievals.json",
+      "source_id": "E18",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": "TopDocs/order_by_score"
+    }
+  ],
+  "raw_sha256": "944c9e157e88a6e20032a022bc571b687c28c211f66d5f9390bfdc4f66140e9d",
+  "original_bytes": 19217,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A3-01/control-v1/evidence/E18-readable.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://docs.rs/tantivy/0.26.2/tantivy/collector/struct.TopDocs.html"
+  ],
+  "version": [
+    {
+      "released_version_or_commit": "Tantivy 0.26.2",
+      "governing_condition_default_exception": "The public collector exposes decreasing similarity-score ordering and DocAddress results.",
+      "applicability": "Independent pinned confirmation of original latest-docs S11 conclusion."
+    }
+  ],
+  "selector": [
+    {
+      "locator": "TopDocs/order_by_score"
+    }
+  ],
+  "conditions": [
+    {
+      "released_version_or_commit": "Tantivy 0.26.2",
+      "governing_condition_default_exception": "The public collector exposes decreasing similarity-score ordering and DocAddress results.",
+      "applicability": "Independent pinned confirmation of original latest-docs S11 conclusion."
+    }
+  ],
+  "rawSHA256": "944c9e157e88a6e20032a022bc571b687c28c211f66d5f9390bfdc4f66140e9d"
+}

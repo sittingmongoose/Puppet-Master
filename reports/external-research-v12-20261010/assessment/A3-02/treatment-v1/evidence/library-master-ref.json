@@ -1,0 +1,31 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://api.github.com/repos/chrisguttandin/extendable-media-recorder/commits/master"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A3-02/treatment-v1/evidence/library-master-ref.json.retrieval.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [],
+  "raw_sha256": "694ae01148e303a8255c01ba46d704d020efeada798e52b8979f746a65b85348",
+  "original_bytes": 4229,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A3-02/treatment-v1/evidence/library-master-ref.json",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://api.github.com/repos/chrisguttandin/extendable-media-recorder/commits/master"
+  ],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "rawSHA256": "694ae01148e303a8255c01ba46d704d020efeada798e52b8979f746a65b85348"
+}

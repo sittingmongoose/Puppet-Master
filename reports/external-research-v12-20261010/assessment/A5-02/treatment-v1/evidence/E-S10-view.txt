@@ -1,0 +1,204 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://raw.githubusercontent.com/grokability/snipe-it/v8.7.1/app/View/Label.php",
+    "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/app/View/Label.php"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A5-02/treatment-v1/source-map.json",
+      "source_id": "E-S10-view",
+      "existing_authored_summary_fields": {
+        "independently_verified_version_or_commit": "Pinned Snipe-IT v8.7.1 label implementation; independently retrieved original bytes",
+        "governing_condition_default_exception": "Relevant static source only; no code executed; broader file/tree not entirely semantically assessed",
+        "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A5-02/treatment-v1/source-map.json",
+      "source_id": "E-S11-view",
+      "existing_authored_summary_fields": {
+        "independently_verified_version_or_commit": "Pinned Snipe-IT v8.8.0 / 2c466fa8a5a68525439bf1bbbc24470d6670c516",
+        "governing_condition_default_exception": "New Label Engine; selected template/type support; plain target for prefix path; escaped prefix; no established cooperative endpoint (F1/L1)",
+        "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A5-02/treatment-v1/evidence/supplemental-retrieval-manifest.json",
+      "source_id": "E-S10-view",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/A5-02/treatment-v1/evidence/supplemental-retrieval-manifest.json",
+      "source_id": "E-S11-view",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "source_locator_status": "Relevant cited code/metadata reviewed; not executed"
+    },
+    {
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S10-view.txt",
+          "line": 100,
+          "needle": "label2_title",
+          "other_match_lines": [
+            101
+          ]
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S10-view.txt",
+          "line": 176,
+          "needle": "barcode2d",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "source_locator_status": "Relevant cited code/metadata reviewed; not executed"
+    },
+    {
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-view.txt",
+          "line": 148,
+          "needle": "plain_asset_tag",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-view.txt",
+          "line": 140,
+          "needle": "label2_2d_prefix",
+          "other_match_lines": [
+            146,
+            149,
+            152,
+            155,
+            158,
+            161,
+            164
+          ]
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-view.txt",
+          "line": 100,
+          "needle": "label2_title",
+          "other_match_lines": [
+            101
+          ]
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-view.txt",
+          "line": 171,
+          "needle": "hardware_id",
+          "other_match_lines": []
+        }
+      ]
+    }
+  ],
+  "raw_sha256": "302eec8071e8a1b68004988441e83e734f7e49cb688791cf17a58cf4aca6a22f",
+  "original_bytes": 11741,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A5-02/treatment-v1/evidence/E-S10-view.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://raw.githubusercontent.com/grokability/snipe-it/v8.7.1/app/View/Label.php",
+    "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/app/View/Label.php"
+  ],
+  "version": [
+    {
+      "independently_verified_version_or_commit": "Pinned Snipe-IT v8.7.1 label implementation; independently retrieved original bytes",
+      "governing_condition_default_exception": "Relevant static source only; no code executed; broader file/tree not entirely semantically assessed",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation."
+    },
+    {
+      "independently_verified_version_or_commit": "Pinned Snipe-IT v8.8.0 / 2c466fa8a5a68525439bf1bbbc24470d6670c516",
+      "governing_condition_default_exception": "New Label Engine; selected template/type support; plain target for prefix path; escaped prefix; no established cooperative endpoint (F1/L1)",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation."
+    }
+  ],
+  "selector": [
+    {
+      "source_locator_status": "Relevant cited code/metadata reviewed; not executed"
+    },
+    {
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S10-view.txt",
+          "line": 100,
+          "needle": "label2_title",
+          "other_match_lines": [
+            101
+          ]
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S10-view.txt",
+          "line": 176,
+          "needle": "barcode2d",
+          "other_match_lines": []
+        }
+      ]
+    },
+    {
+      "source_locator_status": "Relevant cited code/metadata reviewed; not executed"
+    },
+    {
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-view.txt",
+          "line": 148,
+          "needle": "plain_asset_tag",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-view.txt",
+          "line": 140,
+          "needle": "label2_2d_prefix",
+          "other_match_lines": [
+            146,
+            149,
+            152,
+            155,
+            158,
+            161,
+            164
+          ]
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-view.txt",
+          "line": 100,
+          "needle": "label2_title",
+          "other_match_lines": [
+            101
+          ]
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S11-view.txt",
+          "line": 171,
+          "needle": "hardware_id",
+          "other_match_lines": []
+        }
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "independently_verified_version_or_commit": "Pinned Snipe-IT v8.7.1 label implementation; independently retrieved original bytes",
+      "governing_condition_default_exception": "Relevant static source only; no code executed; broader file/tree not entirely semantically assessed",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation."
+    },
+    {
+      "independently_verified_version_or_commit": "Pinned Snipe-IT v8.8.0 / 2c466fa8a5a68525439bf1bbbc24470d6670c516",
+      "governing_condition_default_exception": "New Label Engine; selected template/type support; plain target for prefix path; escaped prefix; no established cooperative endpoint (F1/L1)",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation."
+    }
+  ],
+  "rawSHA256": "302eec8071e8a1b68004988441e83e734f7e49cb688791cf17a58cf4aca6a22f"
+}

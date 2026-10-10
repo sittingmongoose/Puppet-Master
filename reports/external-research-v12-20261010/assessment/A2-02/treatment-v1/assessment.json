@@ -1,0 +1,1819 @@
+{
+  "schema_version": "ER12-independent-assessment-v1",
+  "assessment_id": "ER12-A2-02-treatment-v1",
+  "slot": "A2-02",
+  "arm": "treatment",
+  "reviewer_identity": "codex-er12-a202-review-v1",
+  "review_started_utc": "2026-10-10T05:41:49Z",
+  "review_envelope_deadline_utc": "2026-10-10T06:26:49Z",
+  "assessment_saved_utc": "2026-10-10T05:58:43.759820+00:00",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "full_pipeline_qualification": "PASS_WITH_LIMITATIONS",
+  "material_remaining_issue": false,
+  "material_findings": [],
+  "conclusion": "Independent source-backed review found no remaining material error, omission or unsupported consequential decision. Minor navigation/storage-wording/prospective-oracle limits and explicitly corrected lineage defects are retained. This is planning-proposal qualification, not runtime acceptance.",
+  "axis_coverage": [
+    {
+      "id": 1,
+      "name": "Original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "assessment": "The final is a coherent 100-page, multi-collection research proposal. It covers whole-page and rectangular notes, transcription and selected export, source/version identity, two real viewers, an analogous standards mechanism, a released compatibility boundary, the authorized optional text-only path, both named owner authorities, and all four exclusions. It does not turn owner decisions into viewer defaults or require deployment/accounts to qualify this planning deliverable. All eight exact plan treatments are independently adjudicated below.",
+      "final_locators": [
+        18,
+        26,
+        38,
+        51,
+        65,
+        69,
+        70,
+        71,
+        84
+      ],
+      "evidence": [
+        "original brief and plan",
+        "R01",
+        "R02",
+        "R03",
+        "R04",
+        "R07",
+        "R09",
+        "R11",
+        "R12",
+        "R14"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Consequential source claims and applicability",
+      "coverage": "COMPLETE",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "Governing primary evidence supports the technical recommendation and its qualifications. Subject/operation distinctions are retained: Canvas versus image/viewport, selected annotations versus image downloads/Manifest URLs, view links versus note exchange, original M3 plugin versus M4/MAE, documentation/defaults versus actual provider/client behavior, and historical install reports versus released fixes. Unitless Canvas dimensions and source-pixel dimensions are not equated. No working exact MAE/M4 pairing or universal client parity is claimed. The persistence-server phrasing is overbroad when read alone, but local-storage alternatives and the institutional/shared-store qualification remain in the final and lineage. That is L02, not a remaining unsupported material selection.",
+      "final_locators": [
+        18,
+        26,
+        33,
+        35,
+        38,
+        45
+      ],
+      "evidence": [
+        "R01",
+        "R02",
+        "R03",
+        "R04",
+        "R05",
+        "R06",
+        "R07",
+        "R08",
+        "R09",
+        "R10",
+        "R11",
+        "R12",
+        "R13",
+        "R14",
+        "R15",
+        "R18",
+        "R20",
+        "R23",
+        "R24",
+        "R25",
+        "R26"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Useful discovery, alternatives, implementation/history and opportunity breadth",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "assessment": "Discovery saved before the recorded plan reveal contains useful specifics beyond generic caution: stable Canvas space for replacement resolutions, a separate standards record layer, Content State deep links, MAE as an unfamiliar community authoring route, local versus server-backed storage, and the optional text/sidecar bundle. Mirador and UV have meaningful different roles; authoring plugin choices and the W3C mechanism distinguish UI, backend and data portability. The released Mirador 4 modernization plus old-plugin incompatibility is a valid released compatibility example; the issue report and tentative follow-up are bounded additional history, not a fabricated fix chain. The author’s implementation research is predominantly documentation/package/repository leads; no executable code inspection or product check is claimed. Independent pinned package/adapter/download-code inspection corroborates the consequential boundaries. The brief asks for bounded opportunity breadth, not an exhaustive viewer catalogue.",
+      "final_locators": [
+        8,
+        18,
+        26,
+        33,
+        35,
+        45,
+        74,
+        94
+      ],
+      "evidence": [
+        "R03",
+        "R04",
+        "R06",
+        "R07",
+        "R09",
+        "R10",
+        "R11",
+        "R14",
+        "R15",
+        "R16",
+        "R17",
+        "R23",
+        "R24",
+        "R25",
+        "R26",
+        "R27"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Criticism, corrections/rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "assessment": "C01 correctly requests community-guide attribution and avoidance of an annotation-absence inference; the final amends both. C02 correctly requests tentative follow-up context but the critic misdates it April 19. Independent primary retrieval confirms the retained author’s June 21 correction. Neither critic agreement nor this review is used as authority for an invented released fix. The original plan’s tentative pixel/current-URL identity, deferred resize/ID handling, cosmetic migration and underinvestigated alternatives/conversions are corrected for supported reasons. Optional scope and owner authority are retained, not falsely rejected. Every exact numbered treatment and non-numbered plan condition is adjudicated below.",
+      "final_locators": [
+        33,
+        57,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        78
+      ],
+      "evidence": [
+        "R01",
+        "R02",
+        "R03",
+        "R07",
+        "R09",
+        "R10",
+        "R12",
+        "R14"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Preservation of supported discovery/draft/critique/final meaning",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "assessment": "The final retains the draft’s substantive architecture, version/access conditions, crop/rotation/aspect-ratio uncertainty, viewer comparison, MAE route, optional download scope, identity/privacy owners, negative constraints, three distinct exchange paths and all proposed checks. Its additions qualify the guide and issue follow-up rather than narrowing product scope. S01–S14 identities are carried without URL rebinding; the twelve unchanged final notes are byte-identical and the two amended notes add justified context. The discovery’s concrete transcription/selector details remain navigable in final source notes although the final prose summarizes them. The critic’s erroneous date is a preserved lineage defect that the final explicitly corrects, not a remaining final defect.",
+      "final_locators": [
+        8,
+        18,
+        26,
+        38,
+        51,
+        57,
+        61,
+        74,
+        84
+      ],
+      "evidence": [
+        "full discovery/draft/critique/final texts",
+        "R01",
+        "R04",
+        "R06",
+        "R10",
+        "R14",
+        "carried-byte-and-locator-check.json"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Proposed/executed validation and oracle applicability",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "assessment": "The author reports read-only research as research and labels every product/install/provider/export/import/implementation check NOT_RUN. Seven proposed checks have meaningful discriminating outcomes: identity and privacy decisions, per-page availability/capability intake, resolution/geometry target behavior, locked dependency and saved-content readback, cross-viewer field/selector rendering, text-bundle association/Unicode round trip, and non-mutation/recovery. File integrity, successful promises or accepted JSON would not establish semantic correctness; the compare/reopen/import outcomes are the relevant proposed oracles. Provider before/after equality alone cannot prove that no write request occurred, a bounded test-design caveat, not an executed-validation claim. No prototype/deployment was required and none is invented.",
+      "final_locators": [
+        84,
+        86,
+        94
+      ],
+      "evidence": [
+        "original plan validation table",
+        "R03",
+        "R05",
+        "R09",
+        "R11",
+        "R24",
+        "R25",
+        "R26"
+      ]
+    }
+  ],
+  "unassessed_axes": [],
+  "exact_plan_clause_assessments": [
+    {
+      "number": 1,
+      "exact_obligation": "Explain page identity, region coordinates and annotation portability across viewers or changed image sizes.",
+      "exact_original_draft_treatment": "Use pixel rectangles directly on the displayed image and attach notes to its current URL. Resizing and identifier changes are deferred.",
+      "independent_disposition": "CORRECTED",
+      "judgment": "PASS",
+      "assessment": "The plan ties rectangles to displayed-image pixels/current URL and defers the required size/identifier problem. The final replaces this with curator-approved identity/source-version mapping and a Canvas frame, preserving geometry-change review. This is a supported correction rather than an invented obligation.",
+      "final_locators": [
+        "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/final.md:18",
+        "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/final.md:65"
+      ],
+      "independent_evidence": [
+        "R01",
+        "R03",
+        "R04",
+        "R18"
+      ]
+    },
+    {
+      "number": 2,
+      "exact_obligation": "Compare two manuscript/image viewers and an analogous annotation mechanism; separate native capability from an integration proposal.",
+      "exact_original_draft_treatment": "Mirador is the tentative viewer; Universal Viewer is an alternative name only. Import/export and extension boundaries need investigation.",
+      "independent_disposition": "EXPANDED_AND_QUALIFIED",
+      "judgment": "PASS",
+      "assessment": "Tentative Mirador selection and UV as a name-only alternative are investigated, with native viewer versus authoring/persistence integration separated. W3C/IIIF data records supply the analogous mechanism. No current plugin combination is selected as proven; UV capability absence is not inferred.",
+      "final_locators": [
+        "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/final.md:26",
+        "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/final.md:33",
+        "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/final.md:66"
+      ],
+      "independent_evidence": [
+        "R07",
+        "R09",
+        "R11",
+        "R12",
+        "R14",
+        "R15",
+        "R16",
+        "R23"
+      ]
+    },
+    {
+      "number": 3,
+      "exact_obligation": "Describe manifest/version compatibility, external-image availability and export/import behavior without modifying source masters.",
+      "exact_original_draft_treatment": "Support one manifest format first and treat all others as conversion inputs. Conversion ownership and loss reporting remain unspecified.",
+      "independent_disposition": "CORRECTED_AND_COMPLETED",
+      "judgment": "PASS",
+      "assessment": "A single-format start is not intrinsically forbidden, but unsupported conversion assumptions and missing preservation/loss reporting are incomplete for this multi-collection brief. The final proposes version-aware intake/adapters and separates source references, image retrieval, annotation bundles and view links. It retains provider authority and read-only masters.",
+      "final_locators": [
+        "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/final.md:38",
+        "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/final.md:67"
+      ],
+      "independent_evidence": [
+        "R01",
+        "R02",
+        "R05",
+        "R06",
+        "R12"
+      ]
+    },
+    {
+      "number": 4,
+      "exact_obligation": "Investigate a relevant released compatibility change or issue/fix chain and explain which pilot operations it affects.",
+      "exact_original_draft_treatment": "A migration is thought to be cosmetic. The draft has no compatibility matrix or released-history evidence.",
+      "independent_disposition": "CORRECTED",
+      "judgment": "PASS",
+      "assessment": "Cosmetic migration is rejected using the released Mirador 4 dependency/integration boundary. The reported installation conflict is tied to dependency resolution before authoring; downstream save/export work is conditional on a working integration. A tentative master update is retained as unverified and no released fix is asserted.",
+      "final_locators": [
+        "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/final.md:33",
+        "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/final.md:68"
+      ],
+      "independent_evidence": [
+        "R07",
+        "R09",
+        "R10",
+        "R11",
+        "R23"
+      ]
+    },
+    {
+      "number": 5,
+      "exact_obligation": "Preserve and investigate this supported optional scope: a downloadable transcription-only bundle for scholars without a compatible viewer. It is an authorized option, not a mandatory feature or an established technical capability; recommend conditions, retain it when supported, and explain any evidence-based exclusion.",
+      "exact_original_draft_treatment": "Retain a downloadable transcription-only bundle for scholars without a compatible viewer as supported owner-authorized optional scope. Support here means that the brief explicitly permits it; technical support, conditions and interoperability still need research. Do not remove it merely because the baseline route lacks it, or silently promote it to mandatory scope.",
+      "independent_disposition": "RETAINED_OPTIONAL_WITH_CONDITIONS",
+      "judgment": "PASS",
+      "assessment": "The brief-authorized transcription-only bundle remains optional and user-requested. Text/TSV and a JSON-LD association sidecar are explicitly local proposals. Unicode, page/language/selector associations, rights/privacy and round-trip checks condition technical acceptance. There is no evidence-based exclusion and no mandatory feature promotion.",
+      "final_locators": [
+        "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/final.md:14",
+        "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/final.md:49",
+        "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/final.md:69",
+        "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/final.md:80",
+        "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/final.md:104"
+      ],
+      "independent_evidence": [
+        "R01",
+        "R04",
+        "R05",
+        "R06"
+      ]
+    },
+    {
+      "number": 6,
+      "exact_obligation": "Make owner decisions explicit: The collections curator owns stable page identifiers; the reading-room lead chooses whether annotations are private by default. Neither decision may be silently inferred from a viewer default.",
+      "exact_original_draft_treatment": "Owner authority is reserved as follows: The collections curator owns stable page identifiers; the reading-room lead chooses whether annotations are private by default. Neither decision may be silently inferred from a viewer default. The draft has not obtained these decisions. Its tentative implementation assumptions cannot substitute for them.",
+      "independent_disposition": "PRESERVED_UNRESOLVED_OWNER_INPUTS",
+      "judgment": "PASS",
+      "assessment": "Curator stable-ID authority and reading-room-lead privacy-default authority remain explicit, unmade owner choices. Neither is inferred from storage or viewer defaults. Unknown local choices are legitimate after the technical investigation, not substitutes for it.",
+      "final_locators": [
+        "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/final.md:51",
+        "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/final.md:70",
+        "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/final.md:82",
+        "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/final.md:98"
+      ],
+      "independent_evidence": [
+        "original brief and plan",
+        "R09",
+        "R24"
+      ]
+    },
+    {
+      "number": 7,
+      "exact_obligation": "Preserve negative constraints: Do not copy entire collections, alter collection masters, promise that all viewers share every annotation feature, or introduce mandatory public publication of scholars’ notes.",
+      "exact_original_draft_treatment": "Binding exclusions: Do not copy entire collections, alter collection masters, promise that all viewers share every annotation feature, or introduce mandatory public publication of scholars’ notes. The draft has no complete trace showing that its assumptions comply; revise the proposal wherever necessary to preserve these exclusions.",
+      "independent_disposition": "PRESERVED",
+      "judgment": "PASS",
+      "assessment": "No full collection mirror, master/catalogue rewrite, all-viewer feature-parity promise or compulsory note publication is introduced. Selected annotation/text export and remote source references respect the exclusions. The proposal contains no actual source writes.",
+      "final_locators": [
+        "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/final.md:51",
+        "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/final.md:71",
+        "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/final.md:105"
+      ],
+      "independent_evidence": [
+        "original brief and plan",
+        "R01",
+        "R05"
+      ]
+    },
+    {
+      "number": 8,
+      "exact_obligation": "Deliver one coherent evidence-backed research proposal covering obligations 1–8, with recommendations, source/version applicability, useful discoveries, unresolved owner inputs, and a validation table separating checks actually executed from checks merely proposed. Do not report research sources or future tests as executed product validation.",
+      "exact_original_draft_treatment": "The draft currently contains no coherent evidence-backed final proposal. Its proposed demos are research/validation ideas only. A complete revision must preserve every obligation, disclose corrections and retained options, and not confuse documentation review with successful product operation.",
+      "independent_disposition": "COMPLETED",
+      "judgment": "PASS",
+      "assessment": "The final is self-contained substantive prose with comparison, recommendations, version applicability, alternatives, optional route, unresolved inputs, explicit clause/critique dispositions and proposed/actual validation distinction. Sources support the recommendations; no successful product operation is claimed. The table’s residual “This draft” is an editorial label, not an incomplete final.",
+      "final_locators": [
+        "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/final.md:8",
+        "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/final.md:61",
+        "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/final.md:72",
+        "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/final.md:74",
+        "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/final.md:84"
+      ],
+      "independent_evidence": [
+        "full final",
+        "source-map.json"
+      ]
+    }
+  ],
+  "non_numbered_plan_dispositions": [
+    {
+      "section": "Access and status",
+      "disposition": "Preserved original plan as a fallible draft rather than an assessor key; recorded reveal occurs after substantive discovery. Original execution secrecy beyond records remains UNKNOWN."
+    },
+    {
+      "section": "Pilot intent",
+      "disposition": "100 selected pages of differing dimensions; annotation/full-page/region/transcription/export and remote masters/catalogues remain the setting."
+    },
+    {
+      "section": "Tentative product/mechanism/history leads",
+      "disposition": "Mirador and UV are investigated rather than declared predetermined winners; MAE, W3C and Content State provide additional mechanisms/opportunities. History is operational, not cosmetic."
+    },
+    {
+      "section": "Validation status at handoff",
+      "disposition": "Original NOT_RUN preparation statuses are distinguished from later read-only documentation research. Walkthrough/optional-path/product checks are prospective, NOT_RUN; no deployment invented."
+    },
+    {
+      "section": "Closing reconciliation requirement",
+      "disposition": "Final is substantive coherent prose covering the complete brief and released plan, not merely a critique, patch list or predecessor IDs."
+    }
+  ],
+  "criticism_dispositions": [
+    {
+      "id": "C01",
+      "original_criticism": {
+        "id": "C01",
+        "classification": "minor locator/wording",
+        "draft_locator": "draft.md — Viewer comparison and integration boundary; S14; Universal Viewer row",
+        "criticism": "The high-level UV view-oriented and Manifest handoff description rests on S14, a community IIIF guide rather than versioned first-party product documentation. The draft otherwise appropriately treats UV annotation rendering and persistence as unproven.",
+        "evidence": [
+          "S14: https://guides.iiif.io/using_iiif_resources/ (Mirador and UV sections; live community guide)",
+          "S12: https://github.com/UniversalViewer/universalviewer/blob/v4.4.4/manual/CONFIG.md (download controls/defaults; not annotation authoring or persistence)"
+        ],
+        "requested_treatment": "Keep the guide attribution explicit and avoid generalizing its UI steps to all UV deployments; do not infer that UV lacks annotation capability without a direct check."
+      },
+      "retained_author_disposition": {
+        "id": "C01",
+        "classification": "minor locator/wording",
+        "draft_locator": "draft.md — Viewer comparison and integration boundary; S14; Universal Viewer row",
+        "criticism": "The high-level UV view-oriented and Manifest handoff description rests on S14, a community IIIF guide rather than versioned first-party product documentation. The draft otherwise appropriately treats UV annotation rendering and persistence as unproven.",
+        "evidence": "S14, https://guides.iiif.io/using_iiif_resources/, directly opened: community guide calls UV more view-oriented, describes Manifest sharing/import, and notes theme-dependent controls. S12, https://github.com/UniversalViewer/universalviewer/blob/v4.4.4/manual/CONFIG.md, directly supports download configuration only.",
+        "requested_treatment": "Keep the guide attribution explicit and avoid generalizing its UI steps to all UV deployments; do not infer that UV lacks annotation capability without a direct check.",
+        "disposition": "amend",
+        "rationale": "Accept the attribution and locator qualification. The directly re-opened guide calls UV more view-oriented, describes Manifest sharing/import, and says themed UV may place or label controls differently. It is a community guide, not a first-party v4.4.4 capability statement. The reviewed evidence does not establish annotation absence, so the final leaves UV capability unproven pending a pilot test.",
+        "final_change": "Final table and prose identify S14 as community guidance, qualify UI examples as theme-dependent, and state that lack of UV annotation capability is not inferred. S12 is described only as configuration evidence for image downloads.",
+        "recheck": "Retained-author direct review of https://guides.iiif.io/using_iiif_resources/ and tag-pinned S12 configuration documentation; recorded review time 2026-10-10T05:35:34Z (per-page fetch timestamp not exposed).",
+        "locator": "final.md § Viewer comparison and integration boundary; final/sources/S14-iiif-viewer-guide.md and S12-universal-viewer-config.md",
+        "evidence_basis": "Directly re-opened S14 community guide: UV is described as more view-oriented, Manifest handoff examples are given, and theme may change UI labels/location; it does not say UV lacks annotation capability. S12 is pinned configuration evidence for download controls only.",
+        "criticism_id": "C01",
+        "final_locator": "final.md § Viewer comparison and integration boundary; final/sources/S14-iiif-viewer-guide.md and S12-universal-viewer-config.md",
+        "source_urls": [
+          "S14: https://guides.iiif.io/using_iiif_resources/ (community guide; notes theme-dependent UI)",
+          "S12: https://github.com/UniversalViewer/universalviewer/blob/v4.4.4/manual/CONFIG.md (download controls; not annotation authoring or persistence)"
+        ]
+      },
+      "independent_judgment": "SUPPORTED_AMENDMENT",
+      "assessment": "Guide attribution/theme qualification is supported; no source establishes UV annotation absence.",
+      "evidence": [
+        "R14",
+        "R12",
+        "R16"
+      ],
+      "remaining_material_issue": false
+    },
+    {
+      "id": "C02",
+      "original_criticism": {
+        "id": "C02",
+        "classification": "minor locator/wording",
+        "draft_locator": "draft.md — Viewer comparison and integration boundary, Mirador issue #75 paragraph; S10",
+        "criticism": "The issue snapshot records the original install error but omits a 2023 follow-up saying then-current Mirador master may already address the errors and requesting testers. That comment is not proof of a released fix, so the draft’s caution is sound; the history summary can preserve this qualification.",
+        "evidence": [
+          "https://github.com/ProjectMirador/mirador-annotations/issues/75 (April 19, 2023 follow-up; unverified master-branch possibility)"
+        ],
+        "requested_treatment": "Mention the unverified master-branch follow-up as such; retain exact-version validation and do not claim the issue was fixed."
+      },
+      "retained_author_disposition": {
+        "id": "C02",
+        "classification": "minor locator/wording",
+        "draft_locator": "draft.md — Viewer comparison and integration boundary, Mirador issue #75 paragraph; S10",
+        "criticism": "The issue snapshot records the original install error but omits a 2023 follow-up saying then-current Mirador master may already address the errors and requesting testers. That comment is not proof of a released fix, so the draft’s caution is sound; the history summary can preserve this qualification.",
+        "evidence": "S10, https://github.com/ProjectMirador/mirador-annotations/issues/75, directly opened: issue body reports install-time peer dependency errors; the June 21, 2023 comment says then-current master may address errors and requests testers, without establishing a released fix.",
+        "requested_treatment": "Mention the unverified master-branch follow-up as such; retain exact-version validation and do not claim the issue was fixed.",
+        "disposition": "amend",
+        "rationale": "Accept the substantive qualification after directly re-opening the full issue thread. It contains a June 21, 2023 comment (not April 19, 2023 as the critic source-map states) that current-at-that-time Mirador master might address the errors and asks for testers before a release. Neither that comment nor the thread establishes a released fix.",
+        "final_change": "Final compatibility-history paragraph and S10 source note include the June 21, 2023 date, the tentative master-branch statement, and the absence of evidence for a released fix. Exact-version validation remains proposed.",
+        "recheck": "Retained-author direct review of https://github.com/ProjectMirador/mirador-annotations/issues/75 review recorded at 2026-10-10T05:35:34Z (per-page fetch timestamp not exposed).",
+        "locator": "final.md § Viewer comparison and integration boundary, Mirador compatibility paragraph; final/sources/S10-plugin-install-issue-75.md",
+        "evidence_basis": "Directly re-opened issue #75: reporter shows the 2023 install-time peer dependency conflict; a June 21, 2023 comment says then-current master may address it and asks for testers. No released fix is established.",
+        "criticism_id": "C02",
+        "final_locator": "final.md § Viewer comparison and integration boundary, Mirador compatibility paragraph; final/sources/S10-plugin-install-issue-75.md",
+        "source_urls": [
+          "https://github.com/ProjectMirador/mirador-annotations/issues/75 (issue body and follow-up comment)"
+        ]
+      },
+      "independent_judgment": "SUPPORTED_AMENDMENT_WITH_DATE_CORRECTION",
+      "assessment": "Substantive follow-up request is supported, but the critic’s April 19 date is wrong. The final’s June 21 date is confirmed by the primary thread; no released fix is established. The React16 success reply is additionally bounded participant evidence, not a general fix.",
+      "evidence": [
+        "R10"
+      ],
+      "remaining_material_issue": false
+    }
+  ],
+  "lineage_findings": [
+    {
+      "id": "H01",
+      "stage": "critic",
+      "severity": "minor_factual_locator",
+      "finding": "C02 and critic S10 misdate the tentative master-branch comment April 19, 2023; actual relevant comment is June 21, 2023. April 19 is a +1 report.",
+      "evidence": [
+        "R10"
+      ],
+      "final_status": "EXPLICITLY_CORRECTED",
+      "final_locator": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/final.md:33"
+    },
+    {
+      "id": "H02",
+      "stage": "discovery/draft",
+      "severity": "bounded_history_context_omission",
+      "finding": "The investigator’s initial issue note omits the tentative master follow-up. C02 requests it; the final adds it without claiming a released fix.",
+      "evidence": [
+        "R10"
+      ],
+      "final_status": "CORRECTED",
+      "final_locator": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/final.md:33"
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L01",
+      "severity": "minor_locator",
+      "title": "Critic evidence-file strings require arm-root interpretation",
+      "assessment": "All 14 critic source-map evidence_file strings start handoff/stages/... rather than resolving relative to stages/critic/source-map.json. They resolve at the arm root; every actual source note exists and was inspected. The sources index also gives primary URLs. This is navigational ambiguity, not missing source evidence or a substantive unsupported decision.",
+      "artifact": "ER12_RUNTIME/runs/A2-02/treatment/stages/critic/source-map.json",
+      "independent_evidence": [
+        "carried-byte-and-locator-check.json"
+      ]
+    },
+    {
+      "id": "L02",
+      "severity": "minor_wording",
+      "title": "Persistence server necessity is too broad in isolation",
+      "assessment": "Final comparison/clause-2 wording says persistence needs an annotation server. Browser-local persistence is documented and implemented. Read with the final’s express local-storage alternative and shared-institutional-store distinction, the proposal does not actually reject local persistence or choose a mandatory unproven backend. Institutional server-backed storage is a proposal, not a native viewer capability. No material remaining scope/decision error follows.",
+      "artifact": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/final.md:30",
+      "independent_evidence": [
+        "R09",
+        "R11",
+        "R24",
+        "R25"
+      ]
+    },
+    {
+      "id": "L03",
+      "severity": "bounded_prospective_oracle_limit",
+      "title": "Source equality alone cannot prove no write occurred",
+      "assessment": "Final proposed check 7 compares provider content/store before and after and asks to verify no source write. A byte comparison can detect changed content but cannot prove absence of writes or attribute a remote change. A future operation would need request/write-path evidence as well. The candidate does not claim this check was run or that hashes alone proved non-mutation; this is a limitation of a prospective planning row, not remaining material false validation.",
+      "artifact": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/final.md:105",
+      "independent_evidence": [
+        "R05",
+        "R25"
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "id": "U01",
+      "domain": "owner",
+      "unknown": "Curator’s stable ID scheme/source-version mapping and lead’s privacy default.",
+      "material_fault": false,
+      "reason": "Reserved named owner decisions explicitly retained."
+    },
+    {
+      "id": "U02",
+      "domain": "provider",
+      "unknown": "Actual selected Manifest versions, geometry, availability, CORS/authentication and rights for all 100 pages.",
+      "material_fault": false,
+      "reason": "No selected endpoints supplied; documented intake is an appropriate next investigation."
+    },
+    {
+      "id": "U03",
+      "domain": "runtime",
+      "unknown": "A working exact Mirador/MAE/store dependency set and all UV annotation behaviors.",
+      "material_fault": false,
+      "reason": "Candidates are conditional after source/version investigation; no selected deployment or compatibility promise."
+    },
+    {
+      "id": "U04",
+      "domain": "execution_provenance",
+      "unknown": "Original per-page retrieval/tool transcript provenance, hidden/unlisted activity and continuous Goal residency between sampled observations.",
+      "material_fault": false,
+      "reason": "Saved receipts and stage notes support only their explicit observations; this review did not inspect prohibited other history."
+    },
+    {
+      "id": "U05",
+      "domain": "effective_route_billing",
+      "unknown": "Effective service tier/reasoning effort, provider inference occupancy/token accounting and billed usage.",
+      "material_fault": false,
+      "reason": "Dispatch exposes model/provider but no effective-tier or billing telemetry; native counters and waits are not billing evidence."
+    }
+  ],
+  "useful_discoveries_and_alternatives": [
+    {
+      "id": "D01",
+      "finding": "Stable Canvas coordinates decouple region targets from a replacement image’s pixel resolution.",
+      "value": "Directly corrects the concealed URL/pixel assumption; preserves geometry/version review.",
+      "evidence": [
+        "R01",
+        "R03"
+      ],
+      "preserved_in_final": true
+    },
+    {
+      "id": "D02",
+      "finding": "MAE is a distinct community authoring route for Mirador 4 rather than reuse of the incompatible original M3 plugin.",
+      "value": "A realistic unfamiliar integration candidate, with explicit runtime/version friction and no premature winner.",
+      "evidence": [
+        "R09",
+        "R11",
+        "R15",
+        "R23"
+      ],
+      "preserved_in_final": true
+    },
+    {
+      "id": "D03",
+      "finding": "Content State deep links complement annotation record export.",
+      "value": "Page/region handoff opportunity without conflating a view reference and the notes themselves.",
+      "evidence": [
+        "R06"
+      ],
+      "preserved_in_final": true
+    },
+    {
+      "id": "D04",
+      "finding": "Browser-local and server-backed annotation adapters are different persistence routes.",
+      "value": "Meaningful tradeoff between local use and institutional reuse; source/storage/privacy decisions remain explicit.",
+      "evidence": [
+        "R09",
+        "R11",
+        "R24",
+        "R25"
+      ],
+      "preserved_in_final": true,
+      "qualification": "See L02 for isolated server wording."
+    },
+    {
+      "id": "D05",
+      "finding": "A selected text/TSV download with association sidecar can preserve authorized viewer-independent transcription scope.",
+      "value": "A concrete conditional local design, not an established standard bundle or removed optional path.",
+      "evidence": [
+        "R01",
+        "R04"
+      ],
+      "preserved_in_final": true
+    },
+    {
+      "id": "D06",
+      "finding": "Two different readers, a general W3C annotation mechanism, version adapters and a separately integrated authoring/store path are compared.",
+      "value": "Opportunity breadth matches a bounded 100-page planning brief. No exhaustive catalogue or production test is required.",
+      "evidence": [
+        "R04",
+        "R09",
+        "R11",
+        "R12",
+        "R14",
+        "R16"
+      ],
+      "preserved_in_final": true
+    }
+  ],
+  "validation_assessment": {
+    "actually_executed_product_validation": "NONE claimed or evidenced",
+    "read_only_research": "Claimed by original stages; consequential evidence independently retrieved in this review",
+    "reviewer_executed": "Original artifact reads, complete carried-byte/freeze checks and primary retrieval/source inspection. These are assessment operations, not product tests.",
+    "proposed_checks": [
+      {
+        "priority": 1,
+        "check": "Owner decisions",
+        "candidate_status": "NOT_RUN",
+        "independent_status": "PROPOSED_ONLY",
+        "applicable_oracle": "Written curator/lead decisions with access/export implications",
+        "oracle_limit": "A governance decision, not evidence of viewer capability."
+      },
+      {
+        "priority": 2,
+        "check": "100-page intake",
+        "candidate_status": "NOT_RUN",
+        "independent_status": "PROPOSED_ONLY",
+        "applicable_oracle": "Per-page declared version/IDs/dimensions/service/access/rights observations",
+        "oracle_limit": "No actual collection endpoints were supplied; availability is not established by docs."
+      },
+      {
+        "priority": 3,
+        "check": "Identity/coordinate cases",
+        "candidate_status": "NOT_RUN",
+        "independent_status": "PROPOSED_ONLY",
+        "applicable_oracle": "Correct whole-page/region placement under resampling and explicit flags/mappings for geometry changes",
+        "oracle_limit": "Must compare visible semantic locations and retained IDs, not merely valid JSON or equal counts."
+      },
+      {
+        "priority": 4,
+        "check": "Locked integration smoke",
+        "candidate_status": "NOT_RUN",
+        "independent_status": "PROPOSED_ONLY",
+        "applicable_oracle": "Exact dependencies plus create/save/reopen/export/import content comparison",
+        "oracle_limit": "A fulfilled adapter promise is insufficient; the stored note and target must survive readback."
+      },
+      {
+        "priority": 5,
+        "check": "Cross-viewer read",
+        "candidate_status": "NOT_RUN",
+        "independent_status": "PROPOSED_ONLY",
+        "applicable_oracle": "Same sample’s text, fields, motivations and rectangles visibly handled or explicitly unsupported",
+        "oracle_limit": "Standards conformity and successfully opening a Manifest are not feature-parity proof."
+      },
+      {
+        "priority": 6,
+        "check": "Optional bundle round trip",
+        "candidate_status": "NOT_RUN",
+        "independent_status": "PROPOSED_ONLY",
+        "applicable_oracle": "Unicode/language/page/source/selector associations preserved; no image bytes and policy checked",
+        "oracle_limit": "A downloaded file’s existence does not prove portability or rights."
+      },
+      {
+        "priority": 7,
+        "check": "Non-mutation/recovery",
+        "candidate_status": "NOT_RUN",
+        "independent_status": "PROPOSED_ONLY",
+        "applicable_oracle": "No source-write requests, stable permitted source observations and recoverable annotations",
+        "oracle_limit": "Before/after bytes are one signal, not conclusive proof of no write; see L03."
+      }
+    ]
+  },
+  "consequential_source_assessments": [
+    {
+      "id": "R01",
+      "candidate_source_id": "S01",
+      "url": "https://iiif.io/api/presentation/3.0/",
+      "version_or_commit": "Presentation API 3.0.0",
+      "locator": "§3.2 id/width/height; §3.4 annotations/items; §3.5 motivation; §5.3 Canvas; §5.5 Annotation Page",
+      "assessment": "A Canvas is a stable page/view coordinate frame rather than an image-pixel or viewport identity. Canvas dimensions are unitless positive integers; image dimensions are pixels. Canvas IDs use HTTP(S) without fragments; selectors may identify parts. Painting and non-painting pages have different placement, and derived transcription uses supplementing. The proposal correctly separates these resources from authoring and storage. These rules support correcting the URL/pixel draft assumption, with geometry/version mapping still local.",
+      "evidence_file": "evidence/S01.html",
+      "review_note": "evidence/R01-review-note.md"
+    },
+    {
+      "id": "R02",
+      "candidate_source_id": "S02",
+      "url": "https://iiif.io/api/presentation/3.0/change-log/",
+      "version_or_commit": "Presentation API 3.0.0 companion changelog",
+      "locator": "§1.2.13; §1.2.14; §1.3.3",
+      "assessment": "The documented v2 otherContent/AnnotationList transition to v3 Annotation Pages and annotations/items, plus changed context and language forms, supports deliberate version adapters rather than relabeling JSON. It does not certify viewer compatibility or a lossless converter. The final makes those boundaries explicit.",
+      "evidence_file": "evidence/S02.html",
+      "review_note": "evidence/R02-review-note.md"
+    },
+    {
+      "id": "R03",
+      "candidate_source_id": "S03",
+      "url": "https://iiif.io/api/cookbook/recipe/0004-canvas-size/",
+      "version_or_commit": "Cookbook recipe 0004; mutable documentation, no release number",
+      "locator": "Use Case; Implementation notes; Restrictions",
+      "assessment": "The replacement-image recipe supports stable Canvas coordinates across resolution changes. Its full-Canvas example requires consistent aspect ratio and mapping; geometry changes remain a distinct problem. The final preserves that boundary through its crop/rotation/aspect-ratio review conditions, rather than promising automatic portability.",
+      "evidence_file": "evidence/S03.html",
+      "review_note": "evidence/R03-review-note.md"
+    },
+    {
+      "id": "R04",
+      "candidate_source_id": "S04",
+      "url": "https://www.w3.org/TR/annotation-model/",
+      "version_or_commit": "W3C Recommendation, 2017-02-23",
+      "locator": "§3.2.4 Embedded Textual Body; §4.1 Specific Resources; §4.2.1 Fragment Selector",
+      "assessment": "TextualBody and SpecificResource/FragmentSelector provide a reusable body-target representation. Selector value is a string; type is FragmentSelector; conformsTo identifies its fragment syntax. A model does not provide editing, durable institutional storage, or every viewer feature. The proposed plain-text/rectangle subset is defensible, not independently runtime validated.",
+      "evidence_file": "evidence/S04.html",
+      "review_note": "evidence/R04-review-note.md"
+    },
+    {
+      "id": "R05",
+      "candidate_source_id": "S05",
+      "url": "https://iiif.io/api/image/3.0/",
+      "version_or_commit": "Image API 3.0.0",
+      "locator": "§1.1; §4.1 region; §4.2 size; §5.2 profile/dimensions; §5.3 Sizes; §6; §7.1 CORS; §7.3; §8 Authentication",
+      "assessment": "Request features, advertised sizes/profile, dimensions and access conditions govern image delivery. Limited/static services need not provide arbitrary crops/sizes; CORS support is recommended and authentication belongs in a separate access workflow. Rights, service availability and collection behavior cannot be inferred from an identifier. The final calls for provider-specific intake and keeps image masters remote.",
+      "evidence_file": "evidence/S05.html",
+      "review_note": "evidence/R05-review-note.md"
+    },
+    {
+      "id": "R06",
+      "candidate_source_id": "S06",
+      "url": "https://iiif.io/api/content-state/1.0/",
+      "version_or_commit": "Content State API 1.0.0",
+      "locator": "§1.1; §2.1; §2.2.1–2.2.5; §3.1–3.7; §4",
+      "assessment": "The API transfers a described IIIF resource/view into a compatible client. Canvas or region state needs enough Manifest context, and clients choose supported transfer mechanisms. This is distinct from maintaining a scholar’s note collection. The final’s separation of view links and annotation bundles is correct; its shorthand is not a claim that arbitrary W3C annotations can never have bodies.",
+      "evidence_file": "evidence/S06.html",
+      "review_note": "evidence/R06-review-note.md"
+    },
+    {
+      "id": "R07",
+      "candidate_source_id": "S07",
+      "url": "https://github.com/ProjectMirador/mirador/releases/tag/v4.0.0",
+      "version_or_commit": "Mirador v4.0.0; ce377cf464918db562b24ee63edf274e732327a4",
+      "locator": "Release opening; Significant changes in Mirador 4; IIIF Features and Compliance",
+      "assessment": "The released modernization requires plugin/integration/theming changes from v3, including dependency and import/build changes. It supports rejecting cosmetic migration and testing an exact integration before authoring/save/export work. It is not proof of universal annotation-rendering failure.",
+      "evidence_file": "evidence/S07.html",
+      "review_note": "evidence/R07-review-note.md"
+    },
+    {
+      "id": "R08",
+      "candidate_source_id": "S08",
+      "url": "https://github.com/ProjectMirador/mirador/releases/tag/v4.2.6",
+      "version_or_commit": "Mirador v4.2.6; a84ce284bd2146bbbf9cf2e702411cbd2bbdbf4c",
+      "locator": "Pinned release title/commit; 4.2.x compatibility statement",
+      "assessment": "The official page identifies v4.2.6 as Latest at review retrieval and describes MUI compatibility for that release line. The final uses it as a candidate pin, not proof of MAE operation. Full commit identity is visible in the independently retrieved release HTML.",
+      "evidence_file": "evidence/S08.html",
+      "review_note": "evidence/R08-review-note.md"
+    },
+    {
+      "id": "R09",
+      "candidate_source_id": "S09",
+      "url": "https://github.com/ProjectMirador/mirador-annotations/blob/f2e80c7c8400f7802d4e89d88956ecdaa2546d64/README.md",
+      "version_or_commit": "README pinned to f2e80c7c8400f7802d4e89d88956ecdaa2546d64",
+      "locator": "README opening; Persisting Annotations; Installing",
+      "assessment": "The original plugin is a Mirador 3 authoring extension and explicitly excludes Mirador 4. It lists geometric/text tools and both server and local-storage adapters. The final’s old-plugin boundary is supported. Its server-necessity wording should be read as institutional/shared persistence, since browser-local persistence is an explicit alternative.",
+      "evidence_file": "evidence/S09.html",
+      "review_note": "evidence/R09-review-note.md"
+    },
+    {
+      "id": "R10",
+      "candidate_source_id": "S10",
+      "url": "https://github.com/ProjectMirador/mirador-annotations/issues/75",
+      "version_or_commit": "Issue #75; opened 2023-02-09; Open at review",
+      "locator": "Issue body ERESOLVE; enriquediaz June 21, 2023 comment; agentcole and cmcooney same-day replies",
+      "assessment": "The reported plugin 0.5.0/Mirador 3.3.0 peer ranges conflict in that setup. The tentative master-branch comment is June 21, not April 19; it requests testers before release. Another participant reports success with React 16.x but not a released general fix. The final correctly retains a historical bounded warning and no current general defect/fix claim.",
+      "evidence_file": "evidence/S10.html",
+      "review_note": "evidence/R10-review-note.md"
+    },
+    {
+      "id": "R11",
+      "candidate_source_id": "S11",
+      "url": "https://github.com/ARVEST-APP/mirador-annotation-editor/blob/a0eb08d7c7e0c1b2e409b39dbb2a573e6bd9ad70/README.md",
+      "version_or_commit": "README pinned to a0eb08d7c7e0c1b2e409b39dbb2a573e6bd9ad70",
+      "locator": "Generalities; Technical aspects; npm examples; Persisting Annotations",
+      "assessment": "The community MAE documentation offers an authoring route and states React 18/MUI 5 with a Mirador alpha example. It is not proof of compatibility with the later candidate Mirador release. The final retains MAE as an investigated alternative and gates selection on exact-version checks. Its video extension is not needed for this image pilot.",
+      "evidence_file": "evidence/S11.html",
+      "review_note": "evidence/R11-review-note.md"
+    },
+    {
+      "id": "R12",
+      "candidate_source_id": "S12",
+      "url": "https://github.com/UniversalViewer/universalviewer/blob/v4.4.4/manual/CONFIG.md",
+      "version_or_commit": "Universal Viewer v4.4.4 manual",
+      "locator": "downloadDialogue.downloadCurrentViewEnabled/downloadWholeImageHighResEnabled/downloadWholeImageLowResEnabled; footerPanel.downloadEnabled; configuration hierarchy",
+      "assessment": "All three documented boolean image-download options default to true. They concern image retrieval UI, not annotation export, rights or every deployment. The final identifies the correct operation. Raw source lines 481–497 and 525–529 provide stable file locators distinct from rendered GitHub line numbers.",
+      "evidence_file": "evidence/S12.html",
+      "review_note": "evidence/R12-review-note.md"
+    },
+    {
+      "id": "R13",
+      "candidate_source_id": "S13",
+      "url": "https://github.com/UniversalViewer/universalviewer/releases/tag/v4.4.4",
+      "version_or_commit": "Universal Viewer v4.4.4; 2b92ff6c1a21d7c6190d614dcbc1b58d7fd2c119",
+      "locator": "Pinned release title/commit; related v4.4.3 warning in E19",
+      "assessment": "The official pinned release identifies v4.4.4, with a separate explicit merge-error warning for v4.4.3. The final does not invent an annotation-specific repair. The independently read v4.4.4 source tree resolves to the cited full commit.",
+      "evidence_file": "evidence/S13.html",
+      "review_note": "evidence/R13-review-note.md"
+    },
+    {
+      "id": "R14",
+      "candidate_source_id": "S14",
+      "url": "https://guides.iiif.io/using_iiif_resources/",
+      "version_or_commit": "Live IIIF community guide; no released version",
+      "locator": "Tools for viewing Manifests; Mirador; Universal Viewer Export/Import",
+      "assessment": "The guide supports a qualified practical comparison and Manifest-URL handoff examples, including themed-UI variation. It is not versioned first-party viewer capability evidence and does not establish lack of annotation support. The final accepts that attribution limit and does not use the guide’s stale Content State development status.",
+      "evidence_file": "evidence/S14.html",
+      "review_note": "evidence/R14-review-note.md"
+    },
+    {
+      "id": "R15",
+      "candidate_source_id": null,
+      "url": "https://raw.githubusercontent.com/ARVEST-APP/mirador-annotation-editor/a0eb08d7c7e0c1b2e409b39dbb2a573e6bd9ad70/package.json",
+      "version_or_commit": "MAE source package at a0eb08d7c7e0c1b2e409b39dbb2a573e6bd9ad70; package 1.0.87",
+      "locator": "name/version/description; peerDependencies; dependencies; devDependencies",
+      "assessment": "Independent package inspection confirms the React 18 and MUI 5 lineage and a development Mirador alias to an ARVEST package. This strengthens the final’s compatibility caution without proving a working or failing runtime combination. Package name/version differ from generic README examples; no exact MAE installation is selected in the final.",
+      "evidence_file": "evidence/E15.json",
+      "review_note": "evidence/R15-review-note.md"
+    },
+    {
+      "id": "R16",
+      "candidate_source_id": null,
+      "url": "https://raw.githubusercontent.com/UniversalViewer/universalviewer/v4.4.4/README.md",
+      "version_or_commit": "Universal Viewer v4.4.4 README",
+      "locator": "Opening feature summary; browser support note",
+      "assessment": "First-party pinned documentation directly supports the broad-media reader comparison: images, PDFs, 3D and audiovisual resources. It also limits UV4 to evergreen browsers. The final makes no browser guarantee or claim of UV authoring absence.",
+      "evidence_file": "evidence/E16.md",
+      "review_note": "evidence/R16-review-note.md"
+    },
+    {
+      "id": "R17",
+      "candidate_source_id": null,
+      "url": "https://raw.githubusercontent.com/UniversalViewer/universalviewer/v4.4.4/package.json",
+      "version_or_commit": "Universal Viewer v4.4.4 package.json",
+      "locator": "version; dependencies @iiif/presentation-3 and @iiif/manifold",
+      "assessment": "Package version is 4.4.4 and dependencies include Presentation 3 processing machinery. This is an implementation lead, not proof of complete v3 annotation handling. The final’s provider/client test requirement remains valid.",
+      "evidence_file": "evidence/E17.json",
+      "review_note": "evidence/R17-review-note.md"
+    },
+    {
+      "id": "R18",
+      "candidate_source_id": null,
+      "url": "https://www.w3.org/TR/media-frags/",
+      "version_or_commit": "W3C Media Fragments URI 1.0 Recommendation, 2012-09-25",
+      "locator": "§4.2.2 Spatial Dimension; §6.1.2; §6.3.3",
+      "assessment": "Spatial xywh supplies x/y position and width/height, with pixel default or percent units. Percentage representation can preserve relative location under resampling but cannot restore changed content/geometry. General media-fragment support does not establish actual IIIF-client support; the final’s conditional wording and client tests avoid that overclaim.",
+      "evidence_file": "evidence/E18.html",
+      "review_note": "evidence/R18-review-note.md"
+    },
+    {
+      "id": "R19",
+      "candidate_source_id": null,
+      "url": "https://github.com/UniversalViewer/universalviewer/releases/tag/v4.4.3",
+      "version_or_commit": "Universal Viewer v4.4.3; 25f8f3aff1b8a039241e830cb48fac36e6853c21",
+      "locator": "Release title and body warning",
+      "assessment": "The project explicitly says this release contains a merge error and should not be used. This supports the final’s pinning caution, not any annotation-specific diagnosis.",
+      "evidence_file": "evidence/E19.html",
+      "review_note": "evidence/R19-review-note.md"
+    },
+    {
+      "id": "R20",
+      "candidate_source_id": null,
+      "url": "https://raw.githubusercontent.com/UniversalViewer/universalviewer/v4.4.4/manual/CONFIG.md",
+      "version_or_commit": "Universal Viewer v4.4.4 raw CONFIG.md",
+      "locator": "Raw file lines 17–21; 473–529",
+      "assessment": "Independent raw retrieval verifies the candidate’s three true image-download defaults and override hierarchy. Nearby confinedImageSize, min/max width and runtime selection determine which options appear; true configuration defaults are not unconditional download success.",
+      "evidence_file": "evidence/E20.md",
+      "review_note": "evidence/R20-review-note.md"
+    },
+    {
+      "id": "R21",
+      "candidate_source_id": null,
+      "url": "https://api.github.com/repos/UniversalViewer/universalviewer/git/trees/v4.4.4?recursive=1",
+      "version_or_commit": "Universal Viewer v4.4.4 tree; commit 2b92ff6c1a21d7c6190d614dcbc1b58d7fd2c119",
+      "locator": "tree sha; non-truncated tree paths",
+      "assessment": "Public tree navigation located the relevant image-download and IIIF input code at the pinned release. This is an evidence locator, not a semantic or runtime oracle.",
+      "evidence_file": "evidence/E21.json",
+      "review_note": "evidence/R21-review-note.md"
+    },
+    {
+      "id": "R22",
+      "candidate_source_id": null,
+      "url": "https://api.github.com/repos/ARVEST-APP/mirador-annotation-editor/git/trees/a0eb08d7c7e0c1b2e409b39dbb2a573e6bd9ad70?recursive=1",
+      "version_or_commit": "MAE tree at a0eb08d7c7e0c1b2e409b39dbb2a573e6bd9ad70",
+      "locator": "tree sha; non-truncated src/annotationAdapter paths",
+      "assessment": "Public tree navigation located LocalStorageAdapter and AnnototAdapter. The source tree is pinned to the same README revision, avoiding a mutable-default-branch comparison.",
+      "evidence_file": "evidence/E22.json",
+      "review_note": "evidence/R22-review-note.md"
+    },
+    {
+      "id": "R23",
+      "candidate_source_id": null,
+      "url": "https://raw.githubusercontent.com/ProjectMirador/mirador/v4.2.6/package.json",
+      "version_or_commit": "Mirador v4.2.6 package.json",
+      "locator": "version and peerDependencies",
+      "assessment": "The concrete release accepts React 18 or 19 but specifies newer MUI major ranges. Compared with MAE’s older source package this supports investigation of the exact dependency set, not a simple blanket assertion that Mirador 4 and MAE either always work or always fail.",
+      "evidence_file": "evidence/E23.json",
+      "review_note": "evidence/R23-review-note.md"
+    },
+    {
+      "id": "R24",
+      "candidate_source_id": null,
+      "url": "https://raw.githubusercontent.com/ARVEST-APP/mirador-annotation-editor/a0eb08d7c7e0c1b2e409b39dbb2a573e6bd9ad70/src/annotationAdapter/LocalStorageAdapter.js",
+      "version_or_commit": "MAE LocalStorageAdapter.js at a0eb08d7c7e0c1b2e409b39dbb2a573e6bd9ad70",
+      "locator": "create/update/delete/get/all methods, raw lines 21–76",
+      "assessment": "This implementation creates and updates AnnotationPage JSON using browser localStorage. It establishes a real local persistence mechanism in the source, contradicting a literal universal server requirement. Context in the final already preserves local storage as an option and distinguishes it from a shared institutional store; the overbroad table wording is a limitation, not a material architectural decision.",
+      "evidence_file": "evidence/E24.txt",
+      "review_note": "evidence/R24-review-note.md"
+    },
+    {
+      "id": "R25",
+      "candidate_source_id": null,
+      "url": "https://raw.githubusercontent.com/ARVEST-APP/mirador-annotation-editor/a0eb08d7c7e0c1b2e409b39dbb2a573e6bd9ad70/src/annotationAdapter/AnnototAdapter.js",
+      "version_or_commit": "MAE AnnototAdapter.js at a0eb08d7c7e0c1b2e409b39dbb2a573e6bd9ad70",
+      "locator": "constructor; annotationPageId; create/update/delete/get/all",
+      "assessment": "This adapter writes annotation records to its configured endpoint and queries pages by Canvas ID. It does not alter image masters by itself. Its catch-and-refetch behavior is not a strong success oracle: proposed testing must inspect actual stored results, as the final’s save/reopen/export/import comparison calls for.",
+      "evidence_file": "evidence/E25.txt",
+      "review_note": "evidence/R25-review-note.md"
+    },
+    {
+      "id": "R26",
+      "candidate_source_id": null,
+      "url": "https://raw.githubusercontent.com/UniversalViewer/universalviewer/v4.4.4/src/content-handlers/iiif/extensions/uv-openseadragon-extension/DownloadDialogue.tsx",
+      "version_or_commit": "Universal Viewer v4.4.4 DownloadDialogue.tsx",
+      "locator": "isDownloadOptionAvailable raw lines 238–324; individual options 661–709",
+      "assessment": "Runtime availability also depends on selected external resources, service/profile and dimensions. Level-0/no-service cases restrict options; current-view depends on paging and limits. The final claims documented defaults only and requires service checks, so this source condition does not reveal an unconditional-download error.",
+      "evidence_file": "evidence/E26.txt",
+      "review_note": "evidence/R26-review-note.md"
+    },
+    {
+      "id": "R27",
+      "candidate_source_id": null,
+      "url": "https://raw.githubusercontent.com/UniversalViewer/universalviewer/v4.4.4/src/content-handlers/iiif/IIIFContentHandler.ts",
+      "version_or_commit": "Universal Viewer v4.4.4 IIIFContentHandler.ts",
+      "locator": "imports; load() and loadManifest() raw lines 303–322",
+      "assessment": "IIIF input loading delegates to the pinned manifold library. The code provides a concrete input-processing lead but does not prove all annotation features or v2/v3 round trips. No downloaded code was executed.",
+      "evidence_file": "evidence/E27.txt",
+      "review_note": "evidence/R27-review-note.md"
+    }
+  ],
+  "mechanics_separate_from_source_judgment": {
+    "delivery": {
+      "status": "COMPLETE",
+      "final_path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/final.md",
+      "final_sha256": "00067eed02c45c85004316d78b5b2bf9b664d24c95cff6e198f5174d567e147c",
+      "missing_required_authored_artifacts": [],
+      "full_byte_carried_copy_equivalence": "45 comparisons, all equal; integrity only"
+    },
+    "native": {
+      "status": "DOCUMENTED_BY_SAVED_NATIVE_RESPONSES",
+      "investigator_activation": {
+        "threadId": "01a12436-7972-7c93-9f56-b63dad0a7d9f",
+        "objective": "ER11 investigator stage, run A2-02-treatment: execute ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+        "status": "active",
+        "tokensUsed": 0,
+        "timeUsedSeconds": 0,
+        "createdAt": 1791608936,
+        "updatedAt": 1791608936
+      },
+      "investigator_completion": {
+        "threadId": "01a12436-7972-7c93-9f56-b63dad0a7d9f",
+        "objective": "ER11 investigator stage, run A2-02-treatment: execute ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+        "status": "complete",
+        "tokensUsed": 416226,
+        "timeUsedSeconds": 1906,
+        "createdAt": 1791608936,
+        "updatedAt": 1791610842
+      },
+      "same_investigator_identity_at_freeze_intake_seal_completion": true,
+      "critic_activation": {
+        "threadId": "01a12447-116d-7290-a059-204f670feac1",
+        "objective": "ER11 critic stage, run A2-02-treatment: execute ER12_RUNTIME/runs/A2-02/treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+        "status": "active",
+        "tokensUsed": 0,
+        "timeUsedSeconds": 0,
+        "createdAt": 1791610027,
+        "updatedAt": 1791610027
+      },
+      "critic_completion": {
+        "threadId": "01a12447-116d-7290-a059-204f670feac1",
+        "objective": "ER11 critic stage, run A2-02-treatment: execute ER12_RUNTIME/runs/A2-02/treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+        "status": "complete",
+        "tokensUsed": 150290,
+        "timeUsedSeconds": 367,
+        "createdAt": 1791610027,
+        "updatedAt": 1791610394
+      },
+      "external_tool_event_authentication": "UNKNOWN; saved raw responses inspected, not independently live-replayed",
+      "continuous_residency_between_observations": "UNKNOWN"
+    },
+    "t3": {
+      "final_stage_status": "completed",
+      "final_stage_pending_children": false,
+      "basis": "root terminal-science-freeze-root.json stored task observation, not native proof",
+      "critic_t3_terminal_separately_verified": "UNKNOWN",
+      "provider_model_returned_by_dispatch": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    },
+    "protocol": {
+      "status": "RECORDED_HANDOFF_AND_RETAINED_GOAL_SEQUENCE_CONSISTENT; UNOBSERVED_ACTIVITY_UNKNOWN",
+      "discovery_reveal": "Recorded discovery saved and hash frozen before 05:17:32.911Z plan reveal; revealed copy equals original plan",
+      "critic_package": "All four bound critic members present and unchanged; final addresses both criticisms",
+      "same_author_goal": "Same investigator identity in activation, handoff, frozen-active, intake, pre-completion seal and terminal receipt",
+      "assistance": "No unauthorized substantive feedback established in inspected materials. ROOT mechanics clarification concerns helper invocation. Complete undisclosed activity is UNKNOWN.",
+      "reviewer": "One actual native Goal; no delegation, candidate contact/repair, account changes, Git/publication, roster or other outcomes read."
+    },
+    "time": {
+      "investigator_requested_at": "2026-10-10T05:08:30.126Z",
+      "critic_requested_at": "2026-10-10T05:26:38.876Z",
+      "investigator_handoff_frozen_at": "2026-10-10T05:21:12.550Z",
+      "critic_package_frozen_at": "2026-10-10T05:33:54.665Z",
+      "retained_final_deadline": "2026-10-10T05:51:12.545Z",
+      "final_package_frozen_at": "2026-10-10T05:40:23.440Z",
+      "investigator_native_completion_utc": "2026-10-10T05:40:42+00:00",
+      "critic_native_completion_utc": "2026-10-10T05:33:14+00:00",
+      "saved_before_completion_recorded": true,
+      "final_saved_within_retained_final_envelope": true,
+      "native_elapsed_seconds": {
+        "investigator_including_waits": 1906,
+        "critic": 367
+      },
+      "recorded_blocking_wait_seconds": 652.384641,
+      "provider_inference_time": "UNKNOWN",
+      "paired_latency_or_savings": "NOT_ASSESSED; no other arm read"
+    },
+    "effective": {
+      "requested_service_tier": "default; prospectively revised before dispatch",
+      "requested_reasoning_effort": "max",
+      "effective_service_tier": "UNKNOWN",
+      "effective_reasoning_effort": "UNKNOWN"
+    },
+    "billing": {
+      "status": "UNKNOWN",
+      "native_counters_are_not_billed_tokens": true,
+      "cost_or_inference_savings_claim": "NONE"
+    }
+  },
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A2-02/plan.md",
+      "bytes": 5932,
+      "sha256": "41c98c70681d7ab5e6534f387777df30ec06ff94ee93cdb071e124fe1a0c8ff6",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A2-02/brief.md",
+      "bytes": 3330,
+      "sha256": "15ac2ec31efcc20dac85969b6855efaa85cfbe065d00df9031e32288b7fb3ca0",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/control/critic-notification.json",
+      "bytes": 1397,
+      "sha256": "17dd3c500c99f4978dda9f3d2a68f3cc7ed45cf878efd933b8d3a6da6b484752",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/control/handoff-binding.json",
+      "bytes": 112,
+      "sha256": "16878fd5c3e3788871252cdbf5f76393f9a2fc597afa5582aa07bff4021e858b",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/control/investigator-frozen-active.json",
+      "bytes": 736,
+      "sha256": "2fc8f35d449f94a964a75584c8a70c2c4cd8c1a1a6fd5144c3ccb9ea66b4f46b",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/control/notification-delivery.json",
+      "bytes": 1289,
+      "sha256": "12a7f361ddd9436029da1ca78c280a5c063efd29d82c0bad30940cb107ab3e42",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/control/notification-message.json",
+      "bytes": 647,
+      "sha256": "5734483c331a0f8cf61a8f5ccd3e3c639d3146ca713a8a89970912dce6fe69c3",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/control/residency.jsonl",
+      "bytes": 3720,
+      "sha256": "6f9eb1956a11d92b9eb1e975460ddfe00b200de8a5c326d5bfd1205abf244559",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/control/topology.json",
+      "bytes": 501,
+      "sha256": "9d4afc105c2d7869ebf06920d41c7e946eb2d45161d28fc1adfaf31a2c99d66d",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/critic-package/critique-dispositions.json",
+      "bytes": 1776,
+      "sha256": "a08c6fcf83d90113cf781560fc0153913ef68525c045e2cc8a9ee120916de080",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/critic-package/critique.md",
+      "bytes": 5202,
+      "sha256": "75c33753abca5e821b80443d26ea8499f77a9646e6c025138903ed7ba7fee27d",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/critic-package/manifest.json",
+      "bytes": 1859,
+      "sha256": "81696fb3261063b21f7f88772c7347ca204a47be1985aaab32667d98e8cf16b2",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/critic-package/source-map.json",
+      "bytes": 15864,
+      "sha256": "bde04edf5d7188a99b839add53c725915598829aea765f7555868e54f90bf415",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/critic-package/sources/index.md",
+      "bytes": 3096,
+      "sha256": "0be93f64d6ca9bfad2330c4525eba50c14a1b81c783fffbc4ced37e8c5c65daf",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/final-package/critique-dispositions.json",
+      "bytes": 5323,
+      "sha256": "6be0c631dc5abfa70aab257f8e335f8d83feead543a14ab87387046dc65ef93f",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/final-package/final.md",
+      "bytes": 19574,
+      "sha256": "00067eed02c45c85004316d78b5b2bf9b664d24c95cff6e198f5174d567e147c",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/final-package/manifest.json",
+      "bytes": 8661,
+      "sha256": "74f7a3addafd0c8218f39e4982440bd09646bde3cb5dd6278c0618cad218205a",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/final-package/source-map.json",
+      "bytes": 16668,
+      "sha256": "a2871939bd7767ba4055f32f435d6b46e8e68a557314653018f0b2bf76ed8102",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/final-package/sources/S01-presentation-api-v3.md",
+      "bytes": 1420,
+      "sha256": "fcad89742abe21601920072a3740f4c923852522fc7a2baae2c43c02e916ac5b",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/final-package/sources/S02-presentation-v3-changelog.md",
+      "bytes": 955,
+      "sha256": "ac3a45e71a99731431536d8a179c22b812d62e805716dc96776c2cbf3a99e9ec",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/final-package/sources/S03-canvas-coordinate-space.md",
+      "bytes": 1099,
+      "sha256": "963eeab80f5b0853b52292896ab2ac7b3a26fa7fe0e516f0c38a6e1c7db89db2",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/final-package/sources/S04-web-annotation-model.md",
+      "bytes": 1085,
+      "sha256": "651147ac6e65b0a28f74aaf86df9306778083f40a3b28ffe9e2246ebbe15ce4f",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/final-package/sources/S05-image-api-v3.md",
+      "bytes": 1124,
+      "sha256": "0e3e8ad3fde912ba230eaec681b2440d76f462c267647f797b482bd6f953f716",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/final-package/sources/S06-content-state-v1.md",
+      "bytes": 885,
+      "sha256": "83cc057922c908709c79ec955c56ce74a36273018a314ac7412eb4f106c13a1f",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/final-package/sources/S07-mirador-v4-breaking-change.md",
+      "bytes": 945,
+      "sha256": "9f056d5f7bcc63d5cf4e2252a5ade87c2254929d191f643ac9db5780092883dd",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/final-package/sources/S08-mirador-current-release.md",
+      "bytes": 755,
+      "sha256": "56b27d67f873628b8eca2ff96657c78f434b59ac5238ee255b6ea0d41cf71e05",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/final-package/sources/S09-mirador-annotations.md",
+      "bytes": 978,
+      "sha256": "4a53867dc9a6bcf5de3197aa82be8cd97a290b56b53f7c2d39e07ce622b556fd",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/final-package/sources/S10-plugin-install-issue-75.md",
+      "bytes": 1484,
+      "sha256": "77ed3b7c4ccae1aabe0ec154d3b774a8bd6766a01f27c53581cdd7993e4bafe2",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/final-package/sources/S11-mae-compatibility.md",
+      "bytes": 1156,
+      "sha256": "14f996319b05aa07512b3f8612ea33f0b27b948d4458464d93b5ef94b5bc4e16",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/final-package/sources/S12-universal-viewer-config.md",
+      "bytes": 960,
+      "sha256": "f827585df3d87c9bedbd174513b509c4537f5c27168d419baff31a5742e5e943",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/final-package/sources/S13-universal-viewer-release.md",
+      "bytes": 871,
+      "sha256": "3f3d3a38fd13ee622d99d6841f0d844b7b61bc2a2c1c1c45f3cefe585b101751",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/final-package/sources/S14-iiif-viewer-guide.md",
+      "bytes": 1236,
+      "sha256": "91f564cda608842e703a33d90a3e106afb0cf3642d38aed3428c0f34bbaad69c",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/final-package/sources/index.md",
+      "bytes": 2202,
+      "sha256": "6831fbce2b731502fb07b019584f335d76bfc641519b8ca979e68864dcdd0f45",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/inputs/brief.md",
+      "bytes": 3330,
+      "sha256": "15ac2ec31efcc20dac85969b6855efaa85cfbe065d00df9031e32288b7fb3ca0",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/manifest.json",
+      "bytes": 10330,
+      "sha256": "6aa3c16ac2c74b0b9b5a944b0fed2f712fde89d809bf97d194a7bc7be3e3f09b",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/discovery.md",
+      "bytes": 9189,
+      "sha256": "25c962b93672822b88cc92914254cf199304d48a0b04434268d87ee25e5593f7",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/draft.md",
+      "bytes": 17907,
+      "sha256": "bb20d8358546c63bb90377bb2c50ffcd3ce5af235c3a9fd93ff059f5112655d2",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/plan-reveal.json",
+      "bytes": 428,
+      "sha256": "74bfda863133564ed6e3aeacb5299be2369bd4049842429aa70000cf66d7c222",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/revealed-plan.md",
+      "bytes": 5932,
+      "sha256": "41c98c70681d7ab5e6534f387777df30ec06ff94ee93cdb071e124fe1a0c8ff6",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/source-map.json",
+      "bytes": 14710,
+      "sha256": "f98f2e62aefc4afd46e1f47fec03e028eb28188c7c81592d9f804d1b269126cd",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S01-presentation-api-v3.md",
+      "bytes": 1420,
+      "sha256": "fcad89742abe21601920072a3740f4c923852522fc7a2baae2c43c02e916ac5b",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S02-presentation-v3-changelog.md",
+      "bytes": 955,
+      "sha256": "ac3a45e71a99731431536d8a179c22b812d62e805716dc96776c2cbf3a99e9ec",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S03-canvas-coordinate-space.md",
+      "bytes": 1099,
+      "sha256": "963eeab80f5b0853b52292896ab2ac7b3a26fa7fe0e516f0c38a6e1c7db89db2",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S04-web-annotation-model.md",
+      "bytes": 1085,
+      "sha256": "651147ac6e65b0a28f74aaf86df9306778083f40a3b28ffe9e2246ebbe15ce4f",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S05-image-api-v3.md",
+      "bytes": 1124,
+      "sha256": "0e3e8ad3fde912ba230eaec681b2440d76f462c267647f797b482bd6f953f716",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S06-content-state-v1.md",
+      "bytes": 885,
+      "sha256": "83cc057922c908709c79ec955c56ce74a36273018a314ac7412eb4f106c13a1f",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S07-mirador-v4-breaking-change.md",
+      "bytes": 945,
+      "sha256": "9f056d5f7bcc63d5cf4e2252a5ade87c2254929d191f643ac9db5780092883dd",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S08-mirador-current-release.md",
+      "bytes": 755,
+      "sha256": "56b27d67f873628b8eca2ff96657c78f434b59ac5238ee255b6ea0d41cf71e05",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S09-mirador-annotations.md",
+      "bytes": 978,
+      "sha256": "4a53867dc9a6bcf5de3197aa82be8cd97a290b56b53f7c2d39e07ce622b556fd",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S10-plugin-install-issue-75.md",
+      "bytes": 885,
+      "sha256": "50b1413874e32455958842c53946cf7f54d3dadc7aefd090ca8debb73d074dcc",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S11-mae-compatibility.md",
+      "bytes": 1156,
+      "sha256": "14f996319b05aa07512b3f8612ea33f0b27b948d4458464d93b5ef94b5bc4e16",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S12-universal-viewer-config.md",
+      "bytes": 960,
+      "sha256": "f827585df3d87c9bedbd174513b509c4537f5c27168d419baff31a5742e5e943",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S13-universal-viewer-release.md",
+      "bytes": 871,
+      "sha256": "3f3d3a38fd13ee622d99d6841f0d844b7b61bc2a2c1c1c45f3cefe585b101751",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S14-iiif-viewer-guide.md",
+      "bytes": 941,
+      "sha256": "e002706e091cf23544e3ef52684428358bd31481389d9357e17ecf6a0add2b27",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/index.md",
+      "bytes": 2229,
+      "sha256": "834d9eae857d05b569eab0b6ff325ec276bac4075bc38d6dd24e91b56625b031",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/inputs/brief.md",
+      "bytes": 3330,
+      "sha256": "15ac2ec31efcc20dac85969b6855efaa85cfbe065d00df9031e32288b7fb3ca0",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/critic/assignment.md",
+      "bytes": 6448,
+      "sha256": "611c2cd2914355d776fb680b720915c6da43bf577234719156e306879a746bfe",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/critic/critique-dispositions.json",
+      "bytes": 1776,
+      "sha256": "a08c6fcf83d90113cf781560fc0153913ef68525c045e2cc8a9ee120916de080",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/critic/critique.md",
+      "bytes": 5202,
+      "sha256": "75c33753abca5e821b80443d26ea8499f77a9646e6c025138903ed7ba7fee27d",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/critic/freeze.json",
+      "bytes": 7990,
+      "sha256": "8d56d8f30dd7652d1098130b0a275fba77cf1e89a6eaa01a951dec45ab6c70d3",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/critic/input-check.json",
+      "bytes": 246,
+      "sha256": "54b77e0bc86ff0bbb8035af0c54193e3a1848cd49cf2e77d064f6d782c03fc09",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/critic/input-map.json",
+      "bytes": 3986,
+      "sha256": "6e3655cc85127ec7c97eae7550a5e55bf68f877f0a997e9bdfb11a6d2eca2911",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/critic/intake.json",
+      "bytes": 271,
+      "sha256": "940379a4e32200c96bac8751d95467a131c6cf4b43b8b8e1152814a9885d8419",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/critic/invocation-clarification.json",
+      "bytes": 3757,
+      "sha256": "aaeb974f67399a0b700bac8f28a6451481d733e34f175ab2db45317de4bff6e3",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/critic/native-goal-activation.json",
+      "bytes": 468,
+      "sha256": "37864948e4c9111e1c66b0d5e63c616a20ba922b5811f1aad0548b1d04552fae",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/critic/native-goal-completion.json",
+      "bytes": 797,
+      "sha256": "ab45fe1229fe4ed92622aebd080305c28dfcfea80ceab6354027d8ab0f395570",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/critic/native-goal-precompletion.json",
+      "bytes": 475,
+      "sha256": "dc4a6537419c53ee71087b2e75b1fcb7f89d18a2af3c9ac98c8184af7eebf1d1",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/critic/request.json",
+      "bytes": 1624,
+      "sha256": "4f169abe0253b7840b3b8da091ed682f3260abd6364d9032d6d982a8139cb3a4",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/critic/service-tier-change.json",
+      "bytes": 499,
+      "sha256": "0e886b1f9f0af5a14ea8aa235482c3c17686687fbef473ba3146cc9553d938d7",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/critic/source-map.json",
+      "bytes": 15864,
+      "sha256": "bde04edf5d7188a99b839add53c725915598829aea765f7555868e54f90bf415",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/critic/sources/index.md",
+      "bytes": 3096,
+      "sha256": "0be93f64d6ca9bfad2330c4525eba50c14a1b81c783fffbc4ced37e8c5c65daf",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/assignment.md",
+      "bytes": 10268,
+      "sha256": "ffa2beee5a0d53a505930810c0fe7976210d01898e15e151f878c2d1b0fe0739",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/discovery.md",
+      "bytes": 9189,
+      "sha256": "25c962b93672822b88cc92914254cf199304d48a0b04434268d87ee25e5593f7",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/draft.md",
+      "bytes": 17907,
+      "sha256": "bb20d8358546c63bb90377bb2c50ffcd3ce5af235c3a9fd93ff059f5112655d2",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/critique-dispositions.json",
+      "bytes": 5323,
+      "sha256": "6be0c631dc5abfa70aab257f8e335f8d83feead543a14ab87387046dc65ef93f",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/final.md",
+      "bytes": 19574,
+      "sha256": "00067eed02c45c85004316d78b5b2bf9b664d24c95cff6e198f5174d567e147c",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/intake.json",
+      "bytes": 1260,
+      "sha256": "b71ba1aed3954dbbf5ff5dfb80750086ff6076a57d655c5a156eb391780c7c20",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/native-goal-completion.json",
+      "bytes": 809,
+      "sha256": "a182b3e7993af9907b29f5ccb4fa7c446d307e2b5b3e5ae66b8d6bdf53d3eccb",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/native-goal-seal-observation.json",
+      "bytes": 487,
+      "sha256": "bf3e338dd7e64b9642a618b31acd1118b747544655b0770ce075719edf097185",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/source-map.json",
+      "bytes": 16668,
+      "sha256": "a2871939bd7767ba4055f32f435d6b46e8e68a557314653018f0b2bf76ed8102",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/sources/S01-presentation-api-v3.md",
+      "bytes": 1420,
+      "sha256": "fcad89742abe21601920072a3740f4c923852522fc7a2baae2c43c02e916ac5b",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/sources/S02-presentation-v3-changelog.md",
+      "bytes": 955,
+      "sha256": "ac3a45e71a99731431536d8a179c22b812d62e805716dc96776c2cbf3a99e9ec",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/sources/S03-canvas-coordinate-space.md",
+      "bytes": 1099,
+      "sha256": "963eeab80f5b0853b52292896ab2ac7b3a26fa7fe0e516f0c38a6e1c7db89db2",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/sources/S04-web-annotation-model.md",
+      "bytes": 1085,
+      "sha256": "651147ac6e65b0a28f74aaf86df9306778083f40a3b28ffe9e2246ebbe15ce4f",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/sources/S05-image-api-v3.md",
+      "bytes": 1124,
+      "sha256": "0e3e8ad3fde912ba230eaec681b2440d76f462c267647f797b482bd6f953f716",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/sources/S06-content-state-v1.md",
+      "bytes": 885,
+      "sha256": "83cc057922c908709c79ec955c56ce74a36273018a314ac7412eb4f106c13a1f",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/sources/S07-mirador-v4-breaking-change.md",
+      "bytes": 945,
+      "sha256": "9f056d5f7bcc63d5cf4e2252a5ade87c2254929d191f643ac9db5780092883dd",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/sources/S08-mirador-current-release.md",
+      "bytes": 755,
+      "sha256": "56b27d67f873628b8eca2ff96657c78f434b59ac5238ee255b6ea0d41cf71e05",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/sources/S09-mirador-annotations.md",
+      "bytes": 978,
+      "sha256": "4a53867dc9a6bcf5de3197aa82be8cd97a290b56b53f7c2d39e07ce622b556fd",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/sources/S10-plugin-install-issue-75.md",
+      "bytes": 1484,
+      "sha256": "77ed3b7c4ccae1aabe0ec154d3b774a8bd6766a01f27c53581cdd7993e4bafe2",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/sources/S11-mae-compatibility.md",
+      "bytes": 1156,
+      "sha256": "14f996319b05aa07512b3f8612ea33f0b27b948d4458464d93b5ef94b5bc4e16",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/sources/S12-universal-viewer-config.md",
+      "bytes": 960,
+      "sha256": "f827585df3d87c9bedbd174513b509c4537f5c27168d419baff31a5742e5e943",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/sources/S13-universal-viewer-release.md",
+      "bytes": 871,
+      "sha256": "3f3d3a38fd13ee622d99d6841f0d844b7b61bc2a2c1c1c45f3cefe585b101751",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/sources/S14-iiif-viewer-guide.md",
+      "bytes": 1236,
+      "sha256": "91f564cda608842e703a33d90a3e106afb0cf3642d38aed3428c0f34bbaad69c",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/sources/index.md",
+      "bytes": 2202,
+      "sha256": "6831fbce2b731502fb07b019584f335d76bfc641519b8ca979e68864dcdd0f45",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/freeze.json",
+      "bytes": 1682,
+      "sha256": "bd11c241ed88102220650d617512fece29b11478f3c7c8221a6c0348302649bc",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/goal-active.json",
+      "bytes": 737,
+      "sha256": "cf249d9b9cc95d333e21eebd59773b703bdde82cc10e7093aea1db3108e0a980",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/input-map.json",
+      "bytes": 789,
+      "sha256": "761482ada2fee79e2d44583896f9885c0cfcfc83671e382a93865023f7fda1f2",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/invocation-clarification.json",
+      "bytes": 6534,
+      "sha256": "4923ea4bfab0de274d1f7c9f3db9853fdbd0c151951d4275a95f1e4305536430",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/native-goal-activation.json",
+      "bytes": 480,
+      "sha256": "5e22c2b847b5290612f907b1461b8182be99841742e03bf692fa5a8c22b718c1",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/plan-reveal.json",
+      "bytes": 428,
+      "sha256": "74bfda863133564ed6e3aeacb5299be2369bd4049842429aa70000cf66d7c222",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/request.json",
+      "bytes": 1660,
+      "sha256": "3d9e1109036c8187cc0386336ead4c00a466600a474040e8ad7ffb3c35a5e4ab",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 5932,
+      "sha256": "41c98c70681d7ab5e6534f387777df30ec06ff94ee93cdb071e124fe1a0c8ff6",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/service-tier-change.json",
+      "bytes": 511,
+      "sha256": "6461612e3492429cb69914630ea964af6bb92d3234046b452468ece662c08560",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/source-map.json",
+      "bytes": 14710,
+      "sha256": "f98f2e62aefc4afd46e1f47fec03e028eb28188c7c81592d9f804d1b269126cd",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/sources/S01-presentation-api-v3.md",
+      "bytes": 1420,
+      "sha256": "fcad89742abe21601920072a3740f4c923852522fc7a2baae2c43c02e916ac5b",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/sources/S02-presentation-v3-changelog.md",
+      "bytes": 955,
+      "sha256": "ac3a45e71a99731431536d8a179c22b812d62e805716dc96776c2cbf3a99e9ec",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/sources/S03-canvas-coordinate-space.md",
+      "bytes": 1099,
+      "sha256": "963eeab80f5b0853b52292896ab2ac7b3a26fa7fe0e516f0c38a6e1c7db89db2",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/sources/S04-web-annotation-model.md",
+      "bytes": 1085,
+      "sha256": "651147ac6e65b0a28f74aaf86df9306778083f40a3b28ffe9e2246ebbe15ce4f",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/sources/S05-image-api-v3.md",
+      "bytes": 1124,
+      "sha256": "0e3e8ad3fde912ba230eaec681b2440d76f462c267647f797b482bd6f953f716",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/sources/S06-content-state-v1.md",
+      "bytes": 885,
+      "sha256": "83cc057922c908709c79ec955c56ce74a36273018a314ac7412eb4f106c13a1f",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/sources/S07-mirador-v4-breaking-change.md",
+      "bytes": 945,
+      "sha256": "9f056d5f7bcc63d5cf4e2252a5ade87c2254929d191f643ac9db5780092883dd",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/sources/S08-mirador-current-release.md",
+      "bytes": 755,
+      "sha256": "56b27d67f873628b8eca2ff96657c78f434b59ac5238ee255b6ea0d41cf71e05",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/sources/S09-mirador-annotations.md",
+      "bytes": 978,
+      "sha256": "4a53867dc9a6bcf5de3197aa82be8cd97a290b56b53f7c2d39e07ce622b556fd",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/sources/S10-plugin-install-issue-75.md",
+      "bytes": 885,
+      "sha256": "50b1413874e32455958842c53946cf7f54d3dadc7aefd090ca8debb73d074dcc",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/sources/S11-mae-compatibility.md",
+      "bytes": 1156,
+      "sha256": "14f996319b05aa07512b3f8612ea33f0b27b948d4458464d93b5ef94b5bc4e16",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/sources/S12-universal-viewer-config.md",
+      "bytes": 960,
+      "sha256": "f827585df3d87c9bedbd174513b509c4537f5c27168d419baff31a5742e5e943",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/sources/S13-universal-viewer-release.md",
+      "bytes": 871,
+      "sha256": "3f3d3a38fd13ee622d99d6841f0d844b7b61bc2a2c1c1c45f3cefe585b101751",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/sources/S14-iiif-viewer-guide.md",
+      "bytes": 941,
+      "sha256": "e002706e091cf23544e3ef52684428358bd31481389d9357e17ecf6a0add2b27",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/sources/index.md",
+      "bytes": 2229,
+      "sha256": "834d9eae857d05b569eab0b6ff325ec276bac4075bc38d6dd24e91b56625b031",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/terminal-science-freeze-root.json",
+      "bytes": 17732,
+      "sha256": "cd65649d5bf9c4ad8e36edbc7781c2397d634470273b9bfab2c894f1a38ff476",
+      "read_mode": "complete bytes; authored unique texts semantically read in review; byte-identical carried copies cross-checked"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/dispatch.json",
+      "bytes": 5098,
+      "sha256": "8de3696e0c0aabc263a48332f72e08a508f27f5ef0e624dc15ee6e78baa11762",
+      "read_mode": "complete text inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/treatment/stages/critic/dispatch.json",
+      "bytes": 4990,
+      "sha256": "b722757a375bd87ffae9ed377e94fd24229e148df759c382f3942cadd6a79902",
+      "read_mode": "complete text inspected"
+    }
+  ],
+  "artifacts": {
+    "assessment_md": "ER12_RUNTIME/assessment/A2-02/treatment-v1/assessment.md",
+    "assessment_json": "ER12_RUNTIME/assessment/A2-02/treatment-v1/assessment.json",
+    "source_map": "ER12_RUNTIME/assessment/A2-02/treatment-v1/source-map.json",
+    "evidence_index": "ER12_RUNTIME/assessment/A2-02/treatment-v1/evidence/index.md",
+    "original_hashes": "ER12_RUNTIME/assessment/A2-02/treatment-v1/original-inspected-hashes.json"
+  },
+  "original_source_freeze_preserved": true,
+  "review_capped": false,
+  "prohibited_scope_access": "No other arm/results/history/ER11 rescore; no shared roster; own inbox only."
+}

@@ -1,0 +1,88 @@
+{
+  "observed_at_utc": "2026-10-10T05:42:53.164641+00:00",
+  "basis": "root observed terminal final T3 task/no pending; separate from native proof",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/critic/critique.md",
+      "bytes": 9711,
+      "sha256": "e3f6c2de5ca46b46ca6b234a000f3b1e54749c81186ab67a378b8c37240b730e",
+      "mtime_ns": 1791610451707789912
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/critic/source-map.json",
+      "bytes": 31506,
+      "sha256": "38473a4cbc96c7ffd9db23369317823e51fc4a4f09635f1d41bef8a2cc7ea7ba",
+      "mtime_ns": 1791610451773790191
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/discovery.md",
+      "bytes": 13480,
+      "sha256": "248e9dc0ae51e2c5d56d681f2979211b984f2ecc0ec306d90173acf9f053964d",
+      "mtime_ns": 1791609251195425792
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/draft.md",
+      "bytes": 19665,
+      "sha256": "424478277a6aee2df0103b538792a384028f2ba6f0f82b533953f327bb273477",
+      "mtime_ns": 1791609668288600651
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/revealed-plan.md",
+      "bytes": 5932,
+      "sha256": "41c98c70681d7ab5e6534f387777df30ec06ff94ee93cdb071e124fe1a0c8ff6",
+      "mtime_ns": 1791609348806564995
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/source-map.json",
+      "bytes": 18142,
+      "sha256": "164fa8a9fc4153ad8d77767e3be0efc07c00fbe2df1ee6bac8dcae9b76fb7a01",
+      "mtime_ns": 1791609298882642140
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/sources/index.md",
+      "bytes": 5622,
+      "sha256": "0488c79df23bb2ac03c81999258ccafc773f1a11d9595c236093a6c39bbb3240",
+      "mtime_ns": 1791609344375672544
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/reviser/final.md",
+      "bytes": 27759,
+      "sha256": "afc64d11268e3d8776203423863bcaedbdc0b6dd5e85caa4b7590441b90fb189",
+      "mtime_ns": 1791610697227706878
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/reviser/source-map.json",
+      "bytes": 39660,
+      "sha256": "ee33cde39445f7377a40d4ce74d7076a2d8b28650d8503a78dfe3f1a757b9d2e",
+      "mtime_ns": 1791610896788660975
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/reviser/sources/index.md",
+      "bytes": 3943,
+      "sha256": "7d930d7f38ca28c9be931540b9fa4f98e2b94d68fd2c6712da2995dca00b9af7",
+      "mtime_ns": 1791610905153583028
+    }
+  ],
+  "final_stage_task": {
+    "slot": "A2-02",
+    "arm": "control",
+    "stage": "reviser",
+    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-02-control-reviser-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-02-control-reviser-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-02-control-reviser-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-02-control-reviser-v1",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-02-control-reviser-v1:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "Completed the A2-02-control reviser stage. One native Goal was activated and completed, with both responses preserved. Goal time: **7m 12s**.\n\n- [Complete proposal](ER12_RUNTIME/runs/A2-02/control/stages/reviser/final.md)\n- [Source map](ER12_RUNTIME/runs/A2-02/control/stages/reviser/source-map.json) and [source index](ER12_RUNTIME/runs/A2-02/control/stages/reviser/sources/index.md)\n- [Goal activation response](ER12_RUNTIME/runs/A2-02/control/stages/reviser/goal-activation.json) and [completion response](ER12_RUNTIME/runs/A2-02/control/stages/reviser/goal-completion.json)\n\nThe proposal addresses all eight plan clauses and dispositions C1\u2013C5. The fresh commit-history check confirms Mirador\u2019s badge fix merge is in the v4.2.4 history; [the compare result](https://api.github.com/repos/ProjectMirador/mirador/compare/25c0b0e...73fafe9) supports that finding. No product validation was run. Artifact checks confirmed valid source-map JSON, 22 unique source IDs, and coverage of all eight clauses.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-02-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:49642297-20c8-47d0-b8ce-3c146c5f3437",
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "summary": "Completed the A2-02-control reviser stage. One native Goal was activated and completed, with both responses preserved. Goal time: **7m 12s**.\n\n- [Complete proposal](ER12_RUNTIME/runs/A2-02/control/stages/reviser/final.md)\n- [Source map](ER12_RUNTIME/runs/A2-02/control/stages/reviser/source-map.json) and [source index](ER12_RUNTIME/runs/A2-02/control/stages/reviser/sources/index.md)\n- [Goal activation response](ER12_RUNTIME/runs/A2-02/control/stages/reviser/goal-activation.json) and [completion response](ER12_RUNTIME/runs/A2-02/control/stages/reviser/goal-completion.json)\n\nThe proposal addresses all eight plan clauses and dispositions C1\u2013C5. The fresh commit-history check confirms Mirador\u2019s badge fix merge is in the v4.2.4 history; [the compare result](https://api.github.com/repos/ProjectMirador/mirador/compare/25c0b0e...73fafe9) supports that finding. No product validation was run. Artifact checks confirmed valid source-map JSON, 22 unique source IDs, and coverage of all eight clauses.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-02-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:49642297-20c8-47d0-b8ce-3c146c5f3437",
+    "waitTimedOut": false
+  }
+}

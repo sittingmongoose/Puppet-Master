@@ -1,0 +1,78 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://docs.getodk.org/collect-forms/"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A2-01/control-v1/retrieval-manifest.json",
+      "source_id": "E01",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/A2-01/control-v1/source-map.json",
+      "source_id": "E01",
+      "existing_authored_summary_fields": {
+        "version": "Living docs; explicit Collect v2025.2.0 / Central v2025.1.4 feature gate",
+        "subject_operation": "Collect device-local Draft/Ready to send/Sent; opt-in edits of retained finalized/sent submissions",
+        "conditions": "Off by default; settings.client_editable=true. Edits use the original form definition, are tracked in Central, and manually queued edits must be sent in order. A Central-side edit makes that submission no longer editable from Collect. Entities are not updated by these edits."
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locators": [
+        {
+          "path": "evidence/E01.txt",
+          "lines": [
+            133,
+            166
+          ],
+          "section": "Finalizing drafts; Sending finalized forms; Editing finalized or sent forms"
+        }
+      ]
+    }
+  ],
+  "raw_sha256": "e16ae7d185dd70a2ca3d18ef7fceb69d98b4767eec85b3692e8b52e7824d8323",
+  "original_bytes": 13747,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A2-01/control-v1/evidence/E01.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://docs.getodk.org/collect-forms/"
+  ],
+  "version": [
+    {
+      "version": "Living docs; explicit Collect v2025.2.0 / Central v2025.1.4 feature gate",
+      "subject_operation": "Collect device-local Draft/Ready to send/Sent; opt-in edits of retained finalized/sent submissions",
+      "conditions": "Off by default; settings.client_editable=true. Edits use the original form definition, are tracked in Central, and manually queued edits must be sent in order. A Central-side edit makes that submission no longer editable from Collect. Entities are not updated by these edits."
+    }
+  ],
+  "selector": [
+    {
+      "locators": [
+        {
+          "path": "evidence/E01.txt",
+          "lines": [
+            133,
+            166
+          ],
+          "section": "Finalizing drafts; Sending finalized forms; Editing finalized or sent forms"
+        }
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "version": "Living docs; explicit Collect v2025.2.0 / Central v2025.1.4 feature gate",
+      "subject_operation": "Collect device-local Draft/Ready to send/Sent; opt-in edits of retained finalized/sent submissions",
+      "conditions": "Off by default; settings.client_editable=true. Edits use the original form definition, are tracked in Central, and manually queued edits must be sent in order. A Central-side edit makes that submission no longer editable from Collect. Entities are not updated by these edits."
+    }
+  ],
+  "rawSHA256": "e16ae7d185dd70a2ca3d18ef7fceb69d98b4767eec85b3692e8b52e7824d8323"
+}

@@ -1,0 +1,132 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://slsa.dev/spec/v1.0/verifying-artifacts"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/B-DISC-G-02/treatment-v1/primary-retrievals.json",
+      "source_id": "P02",
+      "existing_authored_summary_fields": {
+        "version": "SLSA v1.0 retired"
+      }
+    },
+    {
+      "authored_source_map": "assessment/B-DISC-G-02/treatment-v1/source-map.json",
+      "source_id": "P02",
+      "existing_authored_summary_fields": {
+        "version": "SLSA v1.0 retired",
+        "conditions_and_applicability": "Preconfigured trust, artifact subject digest, predicate, and expectations are distinct checks. Dependency recursion is optional. Approved ignored parameters are permitted."
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "text_lines": 398
+    },
+    {
+      "text_lines": 398
+    },
+    {
+      "locators": [
+        {
+          "section": "Verification prerequisites and roots of trust",
+          "text_start_line": 89,
+          "text_end_line": 105,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P02.view.html#L89",
+          "primary_url": "https://slsa.dev/spec/v1.0/verifying-artifacts#step-1-check-slsa-build-level"
+        },
+        {
+          "section": "Subject/predicate and threat distinctions",
+          "text_start_line": 166,
+          "text_end_line": 205,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P02.view.html#L166",
+          "primary_url": "https://slsa.dev/spec/v1.0/verifying-artifacts#step-1-check-slsa-build-level"
+        },
+        {
+          "section": "External parameter exceptions",
+          "text_start_line": 62,
+          "text_end_line": 77,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P02.view.html#L62",
+          "primary_url": "https://slsa.dev/spec/v1.0/verifying-artifacts#how-to-verify"
+        },
+        {
+          "section": "Optional dependency verification",
+          "text_start_line": 263,
+          "text_end_line": 284,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P02.view.html#L263",
+          "primary_url": "https://slsa.dev/spec/v1.0/verifying-artifacts#step-3-optional-check-dependencies-recursively"
+        }
+      ]
+    }
+  ],
+  "raw_sha256": "d061044bd9535fb8a91e6297a7cb31843c8b5ef9a078b2caa91613dee30e07f9",
+  "original_bytes": 14154,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/B-DISC-G-02/treatment-v1/primary/P02.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://slsa.dev/spec/v1.0/verifying-artifacts"
+  ],
+  "version": [
+    {
+      "version": "SLSA v1.0 retired"
+    },
+    {
+      "version": "SLSA v1.0 retired",
+      "conditions_and_applicability": "Preconfigured trust, artifact subject digest, predicate, and expectations are distinct checks. Dependency recursion is optional. Approved ignored parameters are permitted."
+    }
+  ],
+  "selector": [
+    {
+      "text_lines": 398
+    },
+    {
+      "text_lines": 398
+    },
+    {
+      "locators": [
+        {
+          "section": "Verification prerequisites and roots of trust",
+          "text_start_line": 89,
+          "text_end_line": 105,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P02.view.html#L89",
+          "primary_url": "https://slsa.dev/spec/v1.0/verifying-artifacts#step-1-check-slsa-build-level"
+        },
+        {
+          "section": "Subject/predicate and threat distinctions",
+          "text_start_line": 166,
+          "text_end_line": 205,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P02.view.html#L166",
+          "primary_url": "https://slsa.dev/spec/v1.0/verifying-artifacts#step-1-check-slsa-build-level"
+        },
+        {
+          "section": "External parameter exceptions",
+          "text_start_line": 62,
+          "text_end_line": 77,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P02.view.html#L62",
+          "primary_url": "https://slsa.dev/spec/v1.0/verifying-artifacts#how-to-verify"
+        },
+        {
+          "section": "Optional dependency verification",
+          "text_start_line": 263,
+          "text_end_line": 284,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P02.view.html#L263",
+          "primary_url": "https://slsa.dev/spec/v1.0/verifying-artifacts#step-3-optional-check-dependencies-recursively"
+        }
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "version": "SLSA v1.0 retired",
+      "conditions_and_applicability": "Preconfigured trust, artifact subject digest, predicate, and expectations are distinct checks. Dependency recursion is optional. Approved ignored parameters are permitted."
+    }
+  ],
+  "rawSHA256": "d061044bd9535fb8a91e6297a7cb31843c8b5ef9a078b2caa91613dee30e07f9"
+}

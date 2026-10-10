@@ -1,0 +1,125 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://github.com/tus/tusd/releases/tag/v2.10.1"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A4-01/treatment-v1/source-map.json",
+      "source_id": "P19",
+      "existing_authored_summary_fields": {
+        "version_or_commit_observed": "tusd v2.10.1 release, 2026-09-16; tag resolves 388a27cb81c33b2349e0308b5e97e23797e86fd9",
+        "conditions_defaults_units_types_exceptions": "Does not prove archive deployment or all-mode impact. Release API, PR and tagged implementation provide separate corroborating context.",
+        "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+        "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+      }
+    },
+    {
+      "authored_source_map": "assessment/A4-01/treatment-v1/evidence/retrieval-manifest.json",
+      "source_id": "P19",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "lines": 164
+    },
+    {
+      "locator": "Release changes / PR #1385"
+    },
+    {
+      "locators": [
+        {
+          "anchor": "1385",
+          "text_lines": [
+            139
+          ],
+          "primary_heading_or_json_field": "Release changes / PR #1385"
+        },
+        {
+          "anchor": "388a27c",
+          "text_lines": [
+            131
+          ],
+          "primary_heading_or_json_field": "Release changes / PR #1385"
+        },
+        {
+          "anchor": "16 Sep",
+          "text_lines": [
+            125
+          ],
+          "primary_heading_or_json_field": "Release changes / PR #1385"
+        }
+      ]
+    },
+    {
+      "lines": 164
+    }
+  ],
+  "raw_sha256": "ed0b6eb7c29101b17ab4fdaf5cbf0137b6d99149a7964b9a0e8fac3bebe53860",
+  "original_bytes": 3292,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A4-01/treatment-v1/evidence/P19-text.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://github.com/tus/tusd/releases/tag/v2.10.1"
+  ],
+  "version": [
+    {
+      "version_or_commit_observed": "tusd v2.10.1 release, 2026-09-16; tag resolves 388a27cb81c33b2349e0308b5e97e23797e86fd9",
+      "conditions_defaults_units_types_exceptions": "Does not prove archive deployment or all-mode impact. Release API, PR and tagged implementation provide separate corroborating context.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    }
+  ],
+  "selector": [
+    {
+      "lines": 164
+    },
+    {
+      "locator": "Release changes / PR #1385"
+    },
+    {
+      "locators": [
+        {
+          "anchor": "1385",
+          "text_lines": [
+            139
+          ],
+          "primary_heading_or_json_field": "Release changes / PR #1385"
+        },
+        {
+          "anchor": "388a27c",
+          "text_lines": [
+            131
+          ],
+          "primary_heading_or_json_field": "Release changes / PR #1385"
+        },
+        {
+          "anchor": "16 Sep",
+          "text_lines": [
+            125
+          ],
+          "primary_heading_or_json_field": "Release changes / PR #1385"
+        }
+      ]
+    },
+    {
+      "lines": 164
+    }
+  ],
+  "conditions": [
+    {
+      "version_or_commit_observed": "tusd v2.10.1 release, 2026-09-16; tag resolves 388a27cb81c33b2349e0308b5e97e23797e86fd9",
+      "conditions_defaults_units_types_exceptions": "Does not prove archive deployment or all-mode impact. Release API, PR and tagged implementation provide separate corroborating context.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    }
+  ],
+  "rawSHA256": "ed0b6eb7c29101b17ab4fdaf5cbf0137b6d99149a7964b9a0e8fac3bebe53860"
+}

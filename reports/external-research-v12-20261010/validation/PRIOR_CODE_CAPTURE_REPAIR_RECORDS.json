@@ -1,0 +1,70 @@
+{
+  "schema": "er12.publication-prior-code-capture-repair.v1",
+  "scope": "exact five prior-path guard omissions; mechanical publication correction only",
+  "records": [
+    {
+      "public_path": "assessment/A8-01/control-v1/evidence/E06-v160-bagit.py",
+      "original_sha256": "5dcb0c0f6739b8b60ca148fdd1cb37b48101f99fc44bb1831d18591b19cbac57",
+      "prior_public_sha256": "5dcb0c0f6739b8b60ca148fdd1cb37b48101f99fc44bb1831d18591b19cbac57",
+      "public_sha256": "9ba9eeecc2dafb67de8342e152de1731dd53259cc5b3e7d6aebd4573ebf5dae4",
+      "source_binding_count": 3,
+      "private_original": "publication-prior-code-capture-repair-v1/private/originals/assessment/A8-01/control-v1/evidence/E06-v160-bagit.py",
+      "private_prior_public": "publication-prior-code-capture-repair-v1/private/prior-public/assessment/A8-01/control-v1/evidence/E06-v160-bagit.py",
+      "quoted_body_words": 0,
+      "byte_exact_replay": false,
+      "omitted_coverage": "UNKNOWN"
+    },
+    {
+      "public_path": "assessment/A8-01/control-v1/evidence/E06-v160-test.py",
+      "original_sha256": "52a4c2c86342daf72f1a54ac10530f76a797e1032be8a563c561fcef65a32838",
+      "prior_public_sha256": "fac6e79418c0c083c50c2a969cb3327104c7239aca67ca65e185947d48b405f7",
+      "public_sha256": "a052fc6c2e136be6a351dac3e40c79b3e907222cf04852a612837e60cb3dce80",
+      "source_binding_count": 3,
+      "private_original": "publication-prior-code-capture-repair-v1/private/originals/assessment/A8-01/control-v1/evidence/E06-v160-test.py",
+      "private_prior_public": "publication-prior-code-capture-repair-v1/private/prior-public/assessment/A8-01/control-v1/evidence/E06-v160-test.py",
+      "quoted_body_words": 0,
+      "byte_exact_replay": false,
+      "omitted_coverage": "UNKNOWN"
+    },
+    {
+      "public_path": "assessment/A5-01/treatment-v1/evidence/release-26.08-Core.cpp",
+      "original_sha256": "bf8bda2de2abc7d2f75ff4574bca24dbc733ad8c429abea3651a0f2d0ee7c5d3",
+      "prior_public_sha256": "bf8bda2de2abc7d2f75ff4574bca24dbc733ad8c429abea3651a0f2d0ee7c5d3",
+      "public_sha256": "f19965d488fb651afd1b4e2108dbb875dae90fd24a2184ea529d4566de73a68d",
+      "source_binding_count": 2,
+      "private_original": "publication-prior-code-capture-repair-v1/private/originals/assessment/A5-01/treatment-v1/evidence/release-26.08-Core.cpp",
+      "private_prior_public": "publication-prior-code-capture-repair-v1/private/prior-public/assessment/A5-01/treatment-v1/evidence/release-26.08-Core.cpp",
+      "quoted_body_words": 0,
+      "byte_exact_replay": false,
+      "omitted_coverage": "UNKNOWN"
+    },
+    {
+      "public_path": "assessment/A5-01/treatment-v1/evidence/release-26.08-GUI_Main_xxxx_TextEditDialog.cpp",
+      "original_sha256": "6820925b88a89bc91e1f238985c0020893c5cce5e64df7e080e37ccc9af9a0ad",
+      "prior_public_sha256": "6820925b88a89bc91e1f238985c0020893c5cce5e64df7e080e37ccc9af9a0ad",
+      "public_sha256": "5e81efed3b567d05c666215f8202e91be2f2a708cd9af6548f238c8f567bec32",
+      "source_binding_count": 2,
+      "private_original": "publication-prior-code-capture-repair-v1/private/originals/assessment/A5-01/treatment-v1/evidence/release-26.08-GUI_Main_xxxx_TextEditDialog.cpp",
+      "private_prior_public": "publication-prior-code-capture-repair-v1/private/prior-public/assessment/A5-01/treatment-v1/evidence/release-26.08-GUI_Main_xxxx_TextEditDialog.cpp",
+      "quoted_body_words": 0,
+      "byte_exact_replay": false,
+      "omitted_coverage": "UNKNOWN"
+    },
+    {
+      "public_path": "assessment/A5-01/treatment-v1/evidence/release-26.08-riff-handler.cpp",
+      "original_sha256": "b610951194f7100931c14bf834f38147a75b27924848d772cc3209249dea6af4",
+      "prior_public_sha256": "b610951194f7100931c14bf834f38147a75b27924848d772cc3209249dea6af4",
+      "public_sha256": "ccf1449f65928fd321413f851ada3da8fcfe1fef16972596a2fc18e75dca4bb1",
+      "source_binding_count": 2,
+      "private_original": "publication-prior-code-capture-repair-v1/private/originals/assessment/A5-01/treatment-v1/evidence/release-26.08-riff-handler.cpp",
+      "private_prior_public": "publication-prior-code-capture-repair-v1/private/prior-public/assessment/A5-01/treatment-v1/evidence/release-26.08-riff-handler.cpp",
+      "quoted_body_words": 0,
+      "byte_exact_replay": false,
+      "omitted_coverage": "UNKNOWN"
+    }
+  ],
+  "no_source_fetch_science_regrading_candidate_feedback": true,
+  "earlier_cohort4_READY_unchanged": "96ed0548e46d31bf3e3ade7012cf9e19b122ea14c2705bedca4811571fc75374",
+  "source_functions": "bounded AST extraction of publication-cohort4 refresh classifier/copy and finalize explicit UNKNOWN policy",
+  "all_233_prior_repairs_and_1749_new_capsules_unchanged": true
+}

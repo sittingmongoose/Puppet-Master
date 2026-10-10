@@ -1,0 +1,95 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://www.crossref.org/documentation/retrieve-metadata/rest-api/access-and-authentication/"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A7-02/treatment-v1/source-map.json",
+      "source_id": "S18",
+      "existing_authored_summary_fields": {
+        "independently_observed_version": "Help updated 2025-10-16",
+        "reviewer_observation": "Public access needs no signup; polite access identifies requests. Rate and concurrency limits are pool-specific and supplied in response headers; clients should cache and back off on failures/increasing response times.",
+        "condition_default_exception_domain": "The page rate table does not independently state the time unit; the final wisely supplies no invented requests-per-second number. No service endpoint query was executed by the stages or this reviewer."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A7-02/treatment-v1/source-map.json",
+      "source_id": "S18",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/A7-02/treatment-v1/evidence/retrievals.json",
+      "source_id": "S18",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": "Access; Request limits; Best practice"
+    },
+    {
+      "local_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S18.txt",
+          "first_line": 302,
+          "last_line": 330
+        }
+      ]
+    },
+    {
+      "text_lines": 347
+    },
+    {
+      "text_lines": 347
+    }
+  ],
+  "raw_sha256": "37b6d305ce529bd473ac7fbef03d1f57bc7fae87f13bc66fea871791c471302c",
+  "original_bytes": 14742,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A7-02/treatment-v1/evidence/S18.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://www.crossref.org/documentation/retrieve-metadata/rest-api/access-and-authentication/"
+  ],
+  "version": [
+    {
+      "independently_observed_version": "Help updated 2025-10-16",
+      "reviewer_observation": "Public access needs no signup; polite access identifies requests. Rate and concurrency limits are pool-specific and supplied in response headers; clients should cache and back off on failures/increasing response times.",
+      "condition_default_exception_domain": "The page rate table does not independently state the time unit; the final wisely supplies no invented requests-per-second number. No service endpoint query was executed by the stages or this reviewer."
+    }
+  ],
+  "selector": [
+    {
+      "locator": "Access; Request limits; Best practice"
+    },
+    {
+      "local_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S18.txt",
+          "first_line": 302,
+          "last_line": 330
+        }
+      ]
+    },
+    {
+      "text_lines": 347
+    },
+    {
+      "text_lines": 347
+    }
+  ],
+  "conditions": [
+    {
+      "independently_observed_version": "Help updated 2025-10-16",
+      "reviewer_observation": "Public access needs no signup; polite access identifies requests. Rate and concurrency limits are pool-specific and supplied in response headers; clients should cache and back off on failures/increasing response times.",
+      "condition_default_exception_domain": "The page rate table does not independently state the time unit; the final wisely supplies no invented requests-per-second number. No service endpoint query was executed by the stages or this reviewer."
+    }
+  ],
+  "rawSHA256": "37b6d305ce529bd473ac7fbef03d1f57bc7fae87f13bc66fea871791c471302c"
+}

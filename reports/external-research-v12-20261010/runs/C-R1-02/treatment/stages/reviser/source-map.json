@@ -1,0 +1,341 @@
+{
+  "run_id": "C-R1-02-treatment",
+  "stage": "reviser",
+  "brief_path": "ER12_RUNTIME/runs/C-R1-02/treatment/inputs/brief.md",
+  "brief_sha256": "cd101158fb000ba659dc80e39dbf9a447c64517554f5220be6e2b5bbe6b46113",
+  "index_path": "sources/index.md",
+  "source_id_policy": "Stable inherited IDs S01-S12; all IDs and source bindings retained. Corrected the investigator map’s stale policy text (S01-S10) to match its S01-S12 records and indexes; no ID rebinding.",
+  "access_timezone": "UTC",
+  "sources": [
+    {
+      "source_id": "S01",
+      "title": "Development Document for Effluent Limitations Guidelines and Standards of Performance: The Clay, Gypsum, Refractory and Ceramic Products Industries",
+      "url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=9100XGMU.TXT",
+      "version_or_release": "April 1975; Draft contractor report; Contract No. 68-01-2633. Cover explicitly says not an official EPA publication and not reviewed by EPA.",
+      "locator": "Section V §3.7.2 pp. V-64–65; §§3.7.4–3.7.5 pp. V-67–68; Section VII §§2.1, 1.0, 1.5 pp. VII-1–4; Section VIII pp. VIII-23–24.",
+      "access_utc": "2026-10-10T05:11:46Z",
+      "observed_operation": "Surveyed pottery plants had variable clay/glaze-bearing wastes and intermittent small flows; reported one small art pottery recycling after settling, multiple settling/flocculation practices, and one complex plant filtering underflows, recycling filtrate, and landfilling filter cake.",
+      "governing_condition_default_exception": "Historical draft evidence only. It states fine clays may remain after settling, performance varies with solids and basin configuration, glaze formulations affect metal concerns, and some records lacked metals analyses. It is not current law or a reviewed EPA finding.",
+      "applicability": "Mechanism and historical implementation context; industrial and dated evidence cannot establish current local permission, small-shop efficacy, dissolved-phase removal, or a solids route."
+    },
+    {
+      "source_id": "S02",
+      "title": "eCFR 40 CFR §403.5 — National pretreatment standards: Prohibited discharges",
+      "url": "https://www.ecfr.gov/current/title-40/chapter-I/subchapter-N/part-403/section-403.5",
+      "version_or_release": "Current eCFR page as of 2026-10-07; page states Title 40 last amended 2026-10-02.",
+      "locator": "§403.5(a)(1), (b)(3)–(4), (c)(1)–(2), (c)(4).",
+      "access_utc": "2026-10-10T05:11:57Z",
+      "observed_operation": "General pass-through/interference prohibition; solids/viscous pollutants that obstruct a POTW; local specific limits and BMPs in the circumstances described.",
+      "governing_condition_default_exception": "Applies within the U.S. POTW pretreatment framework, with local authority and site-specific conditions. No location or receiving authority is supplied.",
+      "applicability": "Illustrates why the actual local control authority must decide; does not conclude that this synthetic workshop is a regulated industrial user or that any particular discharge is allowed."
+    },
+    {
+      "source_id": "S03",
+      "title": "U.S. EPA Pretreatment Standards and Requirements—Local Limits",
+      "url": "https://www.epa.gov/npdes/pretreatment-standards-and-requirements-local-limits",
+      "version_or_release": "Current web page; no page revision date displayed.",
+      "locator": "Page sections on pretreatment standards, local-limit purpose, site-specific nature, and local limits at industrial-user end-of-pipe.",
+      "access_utc": "2026-10-10T05:11:46Z",
+      "observed_operation": "Explains that local limits may be numeric or narrative and protect a POTW, receiving waters, workers, and sludge practices.",
+      "governing_condition_default_exception": "U.S. POTW explanatory context; limits depend on the actual POTW/control authority.",
+      "applicability": "Supports partner inquiry only; no local rule or discharge permit is known."
+    },
+    {
+      "source_id": "S04",
+      "title": "eCFR 40 CFR §262.11 — Hazardous waste determination and recordkeeping",
+      "url": "https://www.ecfr.gov/current/title-40/chapter-I/subchapter-I/part-262/subpart-A/section-262.11",
+      "version_or_release": "Current eCFR page as of 2026-10-07; page states Title 40 last amended 2026-10-02.",
+      "locator": "§262.11(a), (c), (d)(1)–(2).",
+      "access_utc": "2026-10-10T05:14:39Z",
+      "observed_operation": "Calls for accurate solid-waste determination at generation before dilution/mixing/alteration and uses process/composition knowledge and testing for listings/characteristics.",
+      "governing_condition_default_exception": "U.S. RCRA rules; applicability and any more stringent local/state rules are unknown here.",
+      "applicability": "Shows why composition and process history matter before assigning solids or liquid a route; not a finding that any workshop waste is hazardous."
+    },
+    {
+      "source_id": "S05",
+      "title": "GE/Housatonic River Site QAPP Vol. 2, Appendix A-3, laboratory SOP for EPA Method 160.2",
+      "url": "https://www.epa.gov/sites/production/files/2017-11/documents/vol2-appendixa-1_a-20.pdf",
+      "version_or_release": "QAPP October 1998; included Method 160.2 SOP Revision 4.0 dated 1997-09-04.",
+      "locator": "Appendix A-3, PDF pp. 14–18; Scope, summary, sample handling, and QC.",
+      "access_utc": "2026-10-10T05:11:46Z",
+      "observed_operation": "TSS/non-filterable residue is quantified gravimetrically from material retained on glass-fiber filter; SOP describes water/industrial waste scope and QC.",
+      "governing_condition_default_exception": "Dated, site/lab SOP; filter and handling details affect results. It is not a universal protocol for the workshop.",
+      "applicability": "Supports proposed measurement of suspended solids; a qualified lab should pick the current matrix-appropriate method and QA/QC."
+    },
+    {
+      "source_id": "S06",
+      "title": "U.S. EPA Method 200.8, Revision 5.4 — Trace Elements in Waters and Wastes by ICP-MS",
+      "url": "https://www.epa.gov/sites/default/files/2015-08/documents/method_200-8_rev_5-4_1994.pdf",
+      "version_or_release": "Revision 5.4, 1994.",
+      "locator": "§§1.3, 1.5, 8.1–8.3, 9.1.",
+      "access_utc": "2026-10-10T05:11:46Z",
+      "observed_operation": "Defines separate operational preparation for dissolved (0.45 µm filtered) and total-recoverable (unfiltered) aqueous elemental analyses and laboratory QC.",
+      "governing_condition_default_exception": "Method selection, analytes, detection limits, matrix effects, and preservation depend on the question and qualified laboratory.",
+      "applicability": "Useful proposed distinction for later paired samples; no water or metal testing occurred."
+    },
+    {
+      "source_id": "S07",
+      "title": "Helmut ROHDE GmbH Settling Tank TA 85 product page",
+      "url": "https://www.rohde.eu/en/arts-and-crafts/products/machinery-and-equipment/settling-tank-ta-85",
+      "version_or_release": "Current manufacturer page; no revision ID displayed.",
+      "locator": "Product description, technical data table, and feature list.",
+      "access_utc": "2026-10-10T05:11:46Z",
+      "observed_operation": "Lists three-chamber separator, internal volume 85 L, fill volume 70 L, dimensions, material, mobility, and removable partition.",
+      "governing_condition_default_exception": "Manufacturer description and specification; no independent performance data or dissolved-phase result.",
+      "applicability": "A real product for comparing footprint, capacity, and cleanout design; not an endorsement, permission, or treatment guarantee."
+    },
+    {
+      "source_id": "S08",
+      "title": "ROHDE Instruction Manual Sedimentation Tank TA 85",
+      "url": "https://www.rohde.eu/media/pdf/c8/c0/cb/BA-TA85_202603-01_EN.pdf",
+      "version_or_release": "Official English file BA-TA85_202603-01_EN.pdf; March 2026 version identifier.",
+      "locator": "§2.4 p. 3; §3.3 p. 4; §6.2, §7, §§8.1–8.3 pp. 14–15.",
+      "access_utc": "2026-10-10T05:14:56Z",
+      "observed_operation": "Water passes through three calmed compartments; most suspended particles are said to settle. One sink only; sudden gushing flow including a full 20 L sink can overflow; regular cleanout; collected solids require a fate decision based on glaze contents/local disposal.",
+      "governing_condition_default_exception": "Manufacturer's model-specific operation/maintenance instructions; its sewer connection and residue guidance do not establish local authorization. No independent treatment validation.",
+      "applicability": "Useful for testing flow-pulse, capacity, maintenance, and residue questions in transferability review."
+    },
+    {
+      "source_id": "S09",
+      "title": "DiamondCore Tools Cink and Mini Cink product comparison",
+      "url": "https://diamondcoretools.com/pages/cink-mini-cink",
+      "version_or_release": "Current manufacturer product page; no revision ID displayed.",
+      "locator": "Cink 2 introduction and comparison chart for operation, filtration, power, maintenance, price.",
+      "access_utc": "2026-10-10T05:11:46Z",
+      "observed_operation": "Describes Cink 2 as recirculating clay-water cleanup, with manufacturer-listed multi-stage 1 µm filtration, electric/GFCI pump, mobile buckets, and displayed product prices.",
+      "governing_condition_default_exception": "Sales-page claims only; dynamic pricing; read the manual S10 for explicit use exclusions.",
+      "applicability": "Candidate for a clay-only comparator after source segregation; its claims cannot establish dissolved removal, discharge quality, or suitability for glazes."
+    },
+    {
+      "source_id": "S10",
+      "title": "DiamondCore Tools Cink 2 User Manual",
+      "url": "https://cdn.shopify.com/s/files/1/2430/4931/files/Cink_2_User_Manual_-_March_2025_4a6c2381-cf81-44a9-9e63-2838b8d6ab56.pdf?v=1742533095",
+      "version_or_release": "March 2025 manual.",
+      "locator": "Safety p. 3; operation p. 6; maintenance pp. 7–9; troubleshooting pp. 11–12.",
+      "access_utc": "2026-10-10T05:11:57Z",
+      "observed_operation": "Specifies clean/water-soluble clay-material use, explicitly excludes glazes/chemicals/hazardous materials, forbids sewer/septic connection, and directs local-rule disposal of collected contents. Documents cloudiness under heavy continuous use, periodic settling/refresh, filter cleaning/replacement, reduced flow as pores clog, and seal/leak troubleshooting.",
+      "governing_condition_default_exception": "Manufacturer intended-use and maintenance instructions for Cink 2; not evidence the system treats glaze-bearing rinse water.",
+      "applicability": "Rules the Cink 2 out for mixed/unknown glaze water; only relevant to an authorized, reliably segregated clay-only stream."
+    },
+    {
+      "source_id": "S11",
+      "title": "DiamondCore Tools Cink 2 product detail, cautions, and customer review page",
+      "url": "https://diamondcoretools.com/collections/the-cink/products/cink-2-mobile-clay-water-recycling-system",
+      "version_or_release": "Current manufacturer page at retrieval; no release date or revision ID displayed.",
+      "locator": "Product description, specs, cautions, and customer review section.",
+      "access_utc": "2026-10-10T05:22:38Z",
+      "observed_operation": "Manufacturer describes an updated Cink 2 with flexible nozzle, foot switch, bucket dollies/cabinet, extra filters; claims four-stage clay filtration to 1 µm; lists unit/shipping weights and dynamic regional shipping prices. One hosted review reports motor noise impaired classroom conversation and the reviewer was considering a quieter pump.",
+      "governing_condition_default_exception": "Manufacturer page and a single user-generated review; no dated engineering change log, noise measurement, verified defect, or documented fix. Page cautions say not intended for glaze capture or reuse and mixed clay types are not compatible for reuse.",
+      "applicability": "Adds feasibility, version/update, and one reported noise concern to the Cink 2 review; anecdote is not proof of a general defect or treatment result. The manual S10 remains controlling for intended-use limits."
+    },
+    {
+      "source_id": "S12",
+      "title": "ROHDE Instruction Manual Sedimentation Tank TA 85, July 2025 release",
+      "url": "https://www.rohde.eu/media/pdf/f1/50/65/BA_TA85_20250729_DE_EN_FR_ES_IT_NL_CZ.pdf",
+      "version_or_release": "Official multilingual manual; filename release date 2025-07-29; English section begins after German section.",
+      "locator": "§2.1 technical characteristics; §2.4 three-compartment operation; English §3.3 one-sink/20 L warning; §6.2 use; §8.3 residue handling.",
+      "access_utc": "2026-10-10T05:22:38Z",
+      "observed_operation": "Older version lists 85 L volume, 587×387×523 mm, 12 kg; it has the same one-sink and sudden-full-20-L-sink overflow warning as the March 2026 manual, and the same three-compartment settling/regular cleanout approach.",
+      "governing_condition_default_exception": "Version comparison shows the newer manual adds an explicit 70 L fill volume and presents dimensions/weight differently; no manual changelog establishes whether this is a physical design change or revised specification. Both versions document the 20 L pulse/overflow condition.",
+      "applicability": "Version-history evidence only; confirm exact model/serial, usable capacity, and installation constraints with manufacturer before any future sizing. Neither version provides independent water-quality validation or local discharge permission."
+    }
+  ],
+  "actual_research_checks": {
+    "source_review": "Desktop document/source review only. This reviser directly reopened S01, S02, S04, S06, S08 and S10; inherited investigator and critic reviews remain identified separately in each source record and critic_review.",
+    "water_samples_collected": false,
+    "laboratory_analyses_run": false,
+    "wet_experiments_run": false,
+    "treatment_system_built_or_operated": false,
+    "local_authority_or_waste_route_confirmed": false,
+    "equipment_performance_at_workshop_tested": false,
+    "residence_time_calculated": false,
+    "discharge_occurred": false
+  },
+  "critic_review": {
+    "reviewed_utc": "2026-10-10T05:39:10Z",
+    "basis": "Independent navigation of the carried sources/index.md and direct checks of primary sources in the inherited records. The inherited source identity records, versions, URLs, locators, original access_utc values, and IDs remain preserved below.",
+    "independent_source_checks": [
+      {
+        "source_id": "S01",
+        "status": "checked",
+        "observed_operation": "The EPA NEPIS text identifies the April 1975 document as a draft contractor report, not an official EPA publication or agency-reviewed finding; it reports one small earthenware art pottery recycling after settling and that available plant analyses were generally deficient in heavy-metals analyses.",
+        "governing_condition_default_exception": "Historical contractor survey; not current law or current agency guidance.",
+        "applicability": "Supports mechanism and implementation history only, not workshop efficacy or permission."
+      },
+      {
+        "source_id": "S02",
+        "status": "checked",
+        "observed_operation": "Current eCFR text states the POTW general pass-through/interference prohibition, prohibits obstructive solid/viscous pollutants, and covers POTW-specific limits/BMPs under specified conditions.",
+        "governing_condition_default_exception": "Page showed Title 40 current through 2026-10-07; applicability depends on actual U.S. POTW and local context.",
+        "applicability": "Supports local-authority inquiry only."
+      },
+      {
+        "source_id": "S03",
+        "status": "checked",
+        "observed_operation": "EPA page says local limits address a particular POTW's needs, sludge, receiving waters, and are imposed at an industrial user's end-of-pipe discharge.",
+        "governing_condition_default_exception": "U.S. POTW pretreatment explanation; not a workshop permit.",
+        "applicability": "Supports asking the actual control authority; jurisdiction and route remain unknown."
+      },
+      {
+        "source_id": "S04",
+        "status": "checked",
+        "observed_operation": "Current eCFR §262.11 requires a hazardous-waste determination at generation before dilution, mixing, or alteration, and allows knowledge of origin/composition/process and, when needed, testing.",
+        "governing_condition_default_exception": "U.S. RCRA rule; generator status, jurisdiction, and waste classification are unknown.",
+        "applicability": "Supports characterization before assigning a route; does not classify this material."
+      },
+      {
+        "source_id": "S05",
+        "status": "checked",
+        "observed_operation": "The EPA-hosted GE/Housatonic QAPP contains an October 1998 Appendix A-3 Method 160.2 laboratory SOP, Revision 4.0 dated 1997-09-04; its stated procedure filters a well-mixed sample on glass fiber and dries retained residue.",
+        "governing_condition_default_exception": "Dated, site/lab-specific SOP; it notes sample/filter variables and potential interference from high filterable residue.",
+        "applicability": "A measurement example only; qualified lab must select an appropriate method and QC."
+      },
+      {
+        "source_id": "S06",
+        "status": "checked",
+        "observed_operation": "EPA Method 200.8 Revision 5.4 defines a 0.45 µm filtered fraction for dissolved analytes and an unfiltered, separately prepared total-recoverable fraction for aqueous samples.",
+        "governing_condition_default_exception": "Analyte choice, matrix suitability, limits, preservation, and QA/QC remain lab decisions; it is an operational fraction definition.",
+        "applicability": "Supports the proposed dissolved/total distinction; no workshop test."
+      },
+      {
+        "source_id": "S07",
+        "status": "checked",
+        "observed_operation": "Current ROHDE page lists TA 85 internal volume 85 L, fill volume 70 L, three chambers and a removable partition; these are manufacturer product descriptions.",
+        "governing_condition_default_exception": "No independent performance result or local discharge authorization.",
+        "applicability": "Footprint/capacity/cleanout comparison only."
+      },
+      {
+        "source_id": "S08",
+        "status": "checked",
+        "observed_operation": "Official March 2026 manual describes three compartments and regular removal of deposited dirt; warns to connect one sink only and avoid a sudden gushing full 20 L sink because overflow may result.",
+        "governing_condition_default_exception": "Model-specific manufacturer instructions; sewer-connection description does not confer local permission.",
+        "applicability": "Transferability conditions for flow pulses, installation, maintenance, and residual review."
+      },
+      {
+        "source_id": "S09",
+        "status": "partial",
+        "observed_operation": "The carried comparison page was directly opened; it presents a clay-water recirculation/filter product. Dynamic prices and all comparison details were not independently re-audited.",
+        "governing_condition_default_exception": "Manufacturer sales claims; page is unversioned and time-sensitive.",
+        "applicability": "No independent performance validation."
+      },
+      {
+        "source_id": "S10",
+        "status": "checked",
+        "observed_operation": "March 2025 Cink 2 manual limits use to clean water/water-soluble clay materials; excludes chemicals, paints, glazes and hazardous/biohazardous materials; forbids sewer/septic connection; requires local-rule disposal. It notes cloudiness under heavy continuous use, refresh after settling, frequent drain-bucket emptying, bag/string filter maintenance, and possible leakage during maintenance.",
+        "governing_condition_default_exception": "Manufacturer intended-use and maintenance instructions, not independent treatment data.",
+        "applicability": "Rules the product out for mixed/unknown glaze water; only conditional for reliable, authorized clay-only segregation."
+      },
+      {
+        "source_id": "S11",
+        "status": "checked",
+        "observed_operation": "Current DiamondCore product page calls the Cink 2 a four-stage 1 micron clay filtration system, cautions against glaze capture/reuse and mixed-clay reuse, and displays one customer report of loud motor noise.",
+        "governing_condition_default_exception": "Unversioned manufacturer page; one unverified user report is not a general defect or measured performance.",
+        "applicability": "Conditional equipment/feasibility detail only; read alongside S10."
+      },
+      {
+        "source_id": "S12",
+        "status": "checked",
+        "observed_operation": "Official July 2025 multilingual manual's English section lists 85 L, 587×387×523 mm, 12 kg and repeats the one-sink/full-20-L-pulse overflow warning. Current S08 instead lists 85 L internal and 70 L fill volume with different dimensions/weight presentation.",
+        "governing_condition_default_exception": "No release note was located in these manuals explaining whether the specification difference is physical or documentary.",
+        "applicability": "Version history only; manufacturer confirmation would be needed before any future sizing."
+      }
+    ],
+    "validation_boundary": "Direct desktop source review only. No water samples, lab analyses, local-rule verification, waste determination, workshop observations, system build/operation, or performance testing were executed by this critic."
+  },
+  "reviser_review": {
+    "reviewed_capture_utc": "2026-10-10T05:48:47Z",
+    "critique_dispositions": [
+      {
+        "id": "C1",
+        "classification": "minor locator/wording",
+        "disposition": "accept",
+        "basis": "The investigator policy field said S01-S10 while the same map array, investigator source index, draft citations, critic index and critic map carry S01-S12. Corrected only the policy metadata; retained all twelve inherited IDs and bindings."
+      },
+      {
+        "classification": "material wrong",
+        "disposition": "no change",
+        "basis": "Critic found none in its bounded review; reviser direct checks support the scoped claims examined. No new material wrong claim identified."
+      },
+      {
+        "classification": "material incomplete",
+        "disposition": "no change",
+        "basis": "Critic found none against the brief or released plan; reviser audit retains the full original-brief and plan clauses."
+      },
+      {
+        "classification": "unsupported",
+        "disposition": "qualify, no material defect found",
+        "basis": "No consequential unsupported claim identified by the critic. Vendor claims remain attributed; S09 access-time prices are retained as an inherited, time-sensitive observation and were not independently re-audited by the reviser."
+      },
+      {
+        "classification": "honestly unresolved external input",
+        "disposition": "retain uncertainty",
+        "basis": "Composition, particle size, flow, authority, route, lab access, residual acceptance, owner objective, space and labor remain unknown and are assigned to the owner/qualified partner."
+      }
+    ],
+    "direct_primary_source_checks": [
+      {
+        "source_id": "S01",
+        "status": "reopened by reviser",
+        "review_capture_utc": "2026-10-10T05:47:53Z",
+        "locator": "Cover notice; Section V §3.7.5, printed pp. V-67–68.",
+        "observed_operation": "Direct page review confirms the document identifies itself as a draft contractor report, not an official EPA publication or agency-reviewed finding; the pottery section reports one small earthenware art pottery recycling after settling and says available plant analyses were deficient in heavy-metals analysis.",
+        "governing_condition_default_exception": "Historical draft, not current guidance, regulation or reviewed agency conclusion.",
+        "applicability": "Supports historical implementation context only; does not establish workshop performance or permission."
+      },
+      {
+        "source_id": "S02",
+        "status": "reopened by reviser",
+        "review_capture_utc": "2026-10-10T05:47:53Z",
+        "locator": "40 CFR §403.5(a)(1), (b)(3), (c)(1)–(2), (c)(4).",
+        "observed_operation": "Direct current eCFR review confirms general POTW pass-through/interference prohibition, obstruction prohibition for solid or viscous pollutants, and POTW-specific limits/BMP provisions.",
+        "governing_condition_default_exception": "U.S. POTW pretreatment context; eCFR page showed Title 40 current through 2026-10-07 and last amended 2026-10-02.",
+        "applicability": "Supports consultation with the actual control authority only; no local route or permission is inferred."
+      },
+      {
+        "source_id": "S04",
+        "status": "reopened by reviser",
+        "review_capture_utc": "2026-10-10T05:48:47Z",
+        "locator": "40 CFR §262.11(a), (c), (d)(1)–(2).",
+        "observed_operation": "Direct current eCFR review confirms determination at generation before dilution, mixing or alteration; acceptable knowledge can include origin, composition and process, and testing is required when available knowledge is inadequate.",
+        "governing_condition_default_exception": "U.S. RCRA rules; jurisdiction, generator status and waste classification remain unknown.",
+        "applicability": "Supports characterization before assigning a route, not a determination that this material is hazardous."
+      },
+      {
+        "source_id": "S06",
+        "status": "reopened by reviser",
+        "review_capture_utc": "2026-10-10T05:47:53Z",
+        "locator": "EPA Method 200.8 Rev. 5.4 §§3.3, 8.1–8.3.",
+        "observed_operation": "Direct PDF review confirms operational dissolved analyte is the fraction passing a 0.45 µm membrane filter and total-recoverable aqueous samples are not filtered and are prepared separately.",
+        "governing_condition_default_exception": "Analytes, matrix suitability, preservation, reporting limits and QC remain laboratory decisions.",
+        "applicability": "Supports the proposed dissolved/total distinction; no workshop sample or analysis was run."
+      },
+      {
+        "source_id": "S08",
+        "status": "reopened by reviser",
+        "review_capture_utc": "2026-10-10T05:47:53Z",
+        "locator": "March 2026 manual §§2.1–2.4, 3.3, 6.2, 7, 8.1–8.3; PDF pp. 2–4, 14–15.",
+        "observed_operation": "Direct manual review confirms 85 L volume/70 L fill, three compartments and routine cleanout; it says connect one sink only and avoid a sudden gushing flow such as a full 20 L sink because overflow may result; most suspended particles are said to settle in calmed compartments.",
+        "governing_condition_default_exception": "Manufacturer instructions for the named model, not independent efficacy evidence; manual sewer connection/residue language is not local approval.",
+        "applicability": "Informs flow-pulse, capacity, maintenance and residual questions only."
+      },
+      {
+        "source_id": "S10",
+        "status": "reopened by reviser from official March 2025 PDF",
+        "review_capture_utc": "2026-10-10T05:48:20Z",
+        "locator": "Safety p. 3; operation p. 6; maintenance pp. 7–9; troubleshooting pp. 11–12.",
+        "observed_operation": "Direct PDF review confirms use only with clean water/water-soluble clay products; excludes chemicals, paints and glazes and hazardous/biohazardous materials; forbids sewer/septic connection; requires local-rule disposal. It warns of cloudiness under heavy continuous use, calls for sedimentation and at least weekly refresh, frequent drain-bucket emptying, bag cleaning, string-filter cleaning at least every three months, falling flow as pores fill, and leakage during maintenance.",
+        "governing_condition_default_exception": "Manufacturer intended-use/maintenance instructions; no independent treatment data.",
+        "applicability": "Unsuitable for mixed/unknown glaze stream; conditional clay-only comparator only after reliable segregation, model-use confirmation and local review."
+      }
+    ],
+    "not_directly_reopened_in_reviser_stage": [
+      "S03",
+      "S05",
+      "S07",
+      "S09",
+      "S11",
+      "S12"
+    ],
+    "access_time_note": "Inherited source records preserve the exact original access_utc values. Web tools did not expose exact fetch timestamps for each page; review_capture_utc records the exact clock observation made after each direct review call, not a claimed exact server fetch time."
+  }
+}

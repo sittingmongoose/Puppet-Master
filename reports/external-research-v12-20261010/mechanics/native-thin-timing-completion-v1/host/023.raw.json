@@ -1,0 +1,37 @@
+{
+  "schema": "er12.public-native-lifecycle.v1",
+  "target": null,
+  "original_capture_sha256": "53bf6e648329ba21faaca58beaa4d92a01a926837798debf6a553b69013e19b2",
+  "private_archive_lineage": "publication-cohort4/private/originals/mechanics/native-thin-timing-completion-v1/host/023.raw.json",
+  "observations": [],
+  "actual_lifecycle_metadata": [
+    {
+      "thread": {
+        "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-01-treatment-critic-v1",
+        "status": "completed",
+        "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-01-treatment-critic-v1:ordinal:1",
+        "activeRunId": null,
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "pendingRequestCount": 0,
+        "createdAt": "2026-10-10T05:21:59.008Z",
+        "updatedAt": "2026-10-10T05:38:02.707Z"
+      }
+    },
+    {
+      "thread": {
+        "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-01-treatment-critic-v1",
+        "status": "completed",
+        "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-01-treatment-critic-v1:ordinal:1",
+        "activeRunId": null,
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "pendingRequestCount": 0,
+        "createdAt": "2026-10-10T05:21:59.008Z",
+        "updatedAt": "2026-10-10T05:38:02.707Z"
+      }
+    }
+  ],
+  "omission": "Full thread messages/activity bodies, raw meters and source captures private; independently captured focused native Goal receipts remain separately published. No new host read or inference.",
+  "source_body_coverage": "UNKNOWN"
+}

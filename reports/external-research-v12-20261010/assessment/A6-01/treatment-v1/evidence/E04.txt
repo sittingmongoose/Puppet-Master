@@ -1,0 +1,54 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://gtfs.org/documentation/realtime/realtime-best-practices/"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A6-01/treatment-v1/source-map.json",
+      "source_id": "E04",
+      "existing_authored_summary_fields": {
+        "version_or_commit": "Maintained GTFS Realtime best practices",
+        "governing_locator": "Feed Publishing; FeedEntity; TripUpdate timestamps",
+        "independent_semantic_observation": "30-second refresh, 90-second TU/VP and 10-minute alert recommendations; content age differs from fetch/header age."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A6-01/treatment-v1/evidence/retrieval-manifest.json",
+      "source_id": "E04",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "governing_locator": "Feed Publishing; FeedEntity; TripUpdate timestamps"
+    }
+  ],
+  "raw_sha256": "335de8bd03476de944e87b01350049754981796005f026150482b80ab20b4d72",
+  "original_bytes": 18665,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A6-01/treatment-v1/evidence/E04.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://gtfs.org/documentation/realtime/realtime-best-practices/"
+  ],
+  "version": [
+    {
+      "version_or_commit": "Maintained GTFS Realtime best practices",
+      "governing_locator": "Feed Publishing; FeedEntity; TripUpdate timestamps",
+      "independent_semantic_observation": "30-second refresh, 90-second TU/VP and 10-minute alert recommendations; content age differs from fetch/header age."
+    }
+  ],
+  "selector": [
+    {
+      "governing_locator": "Feed Publishing; FeedEntity; TripUpdate timestamps"
+    }
+  ],
+  "conditions": "UNKNOWN",
+  "rawSHA256": "335de8bd03476de944e87b01350049754981796005f026150482b80ab20b4d72"
+}

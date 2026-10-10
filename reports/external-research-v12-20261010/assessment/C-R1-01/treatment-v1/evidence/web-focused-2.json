@@ -1,0 +1,52 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://www.sciencedirect.com/science/article/pii/S0003682X0500068X"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/C-R1-01/treatment-v1/source-map.json",
+      "source_id": "E06",
+      "existing_authored_summary_fields": {
+        "version": "Hopkins & Turner (2005), Applied Acoustics 66(12):1339–1382; DOI 10.1016/j.apacoust.2005.04.005",
+        "conditions": "Same-operator, short-interval repeatability; airborne insulation. Direct open failed; exact-title search retrieved the same exact primary publisher URL and article preview. Other search hits were not used as evidence."
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": "Publisher Abstract, Introduction and section snippet 'Proposal for sound pressure level measurements at low frequencies'"
+    }
+  ],
+  "raw_sha256": "b17bd3d28a5fb70415b3766eb00ba88c04d6a0d477405980081fc1311fbeca7a",
+  "original_bytes": 11920,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/C-R1-01/treatment-v1/evidence/web-focused-2.json",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://www.sciencedirect.com/science/article/pii/S0003682X0500068X"
+  ],
+  "version": [
+    {
+      "version": "Hopkins & Turner (2005), Applied Acoustics 66(12):1339–1382; DOI 10.1016/j.apacoust.2005.04.005",
+      "conditions": "Same-operator, short-interval repeatability; airborne insulation. Direct open failed; exact-title search retrieved the same exact primary publisher URL and article preview. Other search hits were not used as evidence."
+    }
+  ],
+  "selector": [
+    {
+      "locator": "Publisher Abstract, Introduction and section snippet 'Proposal for sound pressure level measurements at low frequencies'"
+    }
+  ],
+  "conditions": [
+    {
+      "version": "Hopkins & Turner (2005), Applied Acoustics 66(12):1339–1382; DOI 10.1016/j.apacoust.2005.04.005",
+      "conditions": "Same-operator, short-interval repeatability; airborne insulation. Direct open failed; exact-title search retrieved the same exact primary publisher URL and article preview. Other search hits were not used as evidence."
+    }
+  ],
+  "rawSHA256": "b17bd3d28a5fb70415b3766eb00ba88c04d6a0d477405980081fc1311fbeca7a"
+}

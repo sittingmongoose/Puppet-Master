@@ -1,0 +1,910 @@
+{
+  "assessment_id": "A5-02/control-v1",
+  "source_identity_policy": "E01–E19 are independent review IDs. Candidate S01–S17 identities are cited without rebinding; E12 is a new official-source cross-check, not a replacement of original S12 mirror.",
+  "sources": [
+    {
+      "id": "E01",
+      "candidate_source_ids": [
+        "S01"
+      ],
+      "url": "https://snipe-it.readme.io/docs/asset-tags",
+      "version_or_commit": "Live documentation retrieved 2026-10-10; no deployed version established",
+      "governing_locator": "Asset Tags; Generate Auto-Incrementing IDs; Next auto-increment; Length of Asset Tags",
+      "local_evidence": [
+        "evidence/snipe-tag-md.txt",
+        "evidence/web-retrieval-4.txt"
+      ],
+      "semantic_result": "System uniqueness is correctly distinguished from a steward-selected local namespace.",
+      "conditions_defaults_exceptions": "Auto-increment is optional; alphanumeric imports can distort numeric incrementing; changing tag length does not rewrite existing tags.",
+      "access_window_utc": {
+        "start": "2026-10-10T05:41:53+00:00",
+        "end": "2026-10-10T05:57:04.381052+00:00"
+      },
+      "access_precision": "Conservative independently observed review window; exact HTTP retrieval timestamps also appear in HTTP manifests.",
+      "operation": "Read-only public primary documentation/source/release retrieval and semantic reading; no product execution."
+    },
+    {
+      "id": "E02",
+      "candidate_source_ids": [
+        "S02"
+      ],
+      "url": "https://snipe-it.readme.io/docs/asset-labels",
+      "version_or_commit": "Live documentation; exact deployed release not selected",
+      "governing_locator": "Asset Labels: 1D search versus 2D asset-page QR; barcode enablement",
+      "local_evidence": [
+        "evidence/snipe-label-md.txt",
+        "evidence/web-retrieval-4.txt"
+      ],
+      "semantic_result": "Supports the documented dual-path asset-label pattern. Host reachability applies to asset-page retrieval, not decoding.",
+      "conditions_defaults_exceptions": "Barcode generation must be enabled. This describes an asset-page QR path, not every possible new-engine QR target. E18 shows configurable raw-value targets.",
+      "access_window_utc": {
+        "start": "2026-10-10T05:41:53+00:00",
+        "end": "2026-10-10T05:57:04.381052+00:00"
+      },
+      "access_precision": "Conservative independently observed review window; exact HTTP retrieval timestamps also appear in HTTP manifests.",
+      "operation": "Read-only public primary documentation/source/release retrieval and semantic reading; no product execution."
+    },
+    {
+      "id": "E03",
+      "candidate_source_ids": [
+        "S03"
+      ],
+      "url": "https://snipe-it.readme.io/docs/managing-assets",
+      "version_or_commit": "Live documentation",
+      "governing_locator": "Managing Assets > Best Practices > Checking out assets to non-people",
+      "local_evidence": [
+        "evidence/web-retrieval-4.txt"
+      ],
+      "semantic_result": "Location checkout is possible but discouraged for accountability; final correctly presents a workflow mismatch, not a prohibited capability.",
+      "conditions_defaults_exceptions": "Guidance recommends an accountable person; it does not prove all depot custody designs are impossible.",
+      "access_window_utc": {
+        "start": "2026-10-10T05:41:53+00:00",
+        "end": "2026-10-10T05:57:04.381052+00:00"
+      },
+      "access_precision": "Conservative independently observed review window; exact HTTP retrieval timestamps also appear in HTTP manifests.",
+      "operation": "Read-only public primary documentation/source/release retrieval and semantic reading; no product execution."
+    },
+    {
+      "id": "E04",
+      "candidate_source_ids": [
+        "S04"
+      ],
+      "url": "https://github.com/grokability/snipe-it/issues/19515",
+      "version_or_commit": "Reporter v8.7.1; opened 2026-08-18; closure 2026-09-23 referencing c1d1cd1",
+      "governing_locator": "Issue description, What happened?, version, linked PR and closure activity",
+      "local_evidence": [
+        "evidence/web-retrieval-4.txt"
+      ],
+      "semantic_result": "Confirms a legacy QR Code Text/new-engine title migration report. Discovery/source-map overreach about a missing encoded QR payload is not established by this report or the source. Final history narrows to the field/title migration.",
+      "conditions_defaults_exceptions": "A user report, not independently executed reproduction. QR Code Text is a displayed-title setting in the inspected source; blank title is not proof of blank encoded URL.",
+      "access_window_utc": {
+        "start": "2026-10-10T05:41:53+00:00",
+        "end": "2026-10-10T05:57:04.381052+00:00"
+      },
+      "access_precision": "Conservative independently observed review window; exact HTTP retrieval timestamps also appear in HTTP manifests.",
+      "operation": "Read-only public primary documentation/source/release retrieval and semantic reading; no product execution."
+    },
+    {
+      "id": "E05",
+      "candidate_source_ids": [
+        "S05"
+      ],
+      "url": "https://github.com/grokability/snipe-it/pull/19633",
+      "version_or_commit": "Head commit 1e0fc8c; merge c1d1cd1; develop merge 2026-09-17",
+      "governing_locator": "app/Http/Controllers/SettingsController.php postLabels; resources/views/partials/labels-new-engine.blade.php removed fallback help",
+      "local_evidence": [
+        "evidence/snipe-pr-diff.txt",
+        "evidence/snipe-pr-api.txt",
+        "evidence/web-retrieval-5.txt"
+      ],
+      "semantic_result": "The actual source copies qr_text into label2_title on a legacy-to-new enable transition. The final describes that bounded operation accurately.",
+      "conditions_defaults_exceptions": "Conditional !$wasLabel2Enabled && request boolean label2_enable; not each render or arbitrary scanner parsing. Original maps call the field qr_code_text, but the source property is qr_text.",
+      "access_window_utc": {
+        "start": "2026-10-10T05:41:53+00:00",
+        "end": "2026-10-10T05:57:04.381052+00:00"
+      },
+      "access_precision": "Conservative independently observed review window; exact HTTP retrieval timestamps also appear in HTTP manifests.",
+      "operation": "Read-only public primary documentation/source/release retrieval and semantic reading; no product execution."
+    },
+    {
+      "id": "E06",
+      "candidate_source_ids": [
+        "S06"
+      ],
+      "url": "https://github.com/grokability/snipe-it/releases/tag/v8.8.0",
+      "version_or_commit": "v8.8.0 / 2c466fa; published 2026-09-30",
+      "governing_locator": "Release header and What's Changed entry linking #19515/#19633",
+      "local_evidence": [
+        "evidence/snipe-release-api.txt",
+        "evidence/web-retrieval-5.txt"
+      ],
+      "semantic_result": "Release existence/date are confirmed. Release notes explicitly include #19633; candidate did not verify ancestry and correctly did not assert inclusion as a proven tested deployment fact.",
+      "conditions_defaults_exceptions": "Independent review establishes the released-note linkage, not an operated deployment. No Git ancestry command was run. This limited open historical check is not needed for the local-ID recommendation.",
+      "access_window_utc": {
+        "start": "2026-10-10T05:41:53+00:00",
+        "end": "2026-10-10T05:57:04.381052+00:00"
+      },
+      "access_precision": "Conservative independently observed review window; exact HTTP retrieval timestamps also appear in HTTP manifests.",
+      "operation": "Read-only public primary documentation/source/release retrieval and semantic reading; no product execution."
+    },
+    {
+      "id": "E07",
+      "candidate_source_ids": [
+        "S07"
+      ],
+      "url": "https://www.odoo.com/documentation/18.0/applications/inventory_and_mrp/barcode/operations/receipts_deliveries.html",
+      "version_or_commit": "Odoo documentation branch 18.0; independent official repository RST retrieved",
+      "governing_locator": "Enable Barcode app; Scan barcodes for receipts; Validating the transfer",
+      "local_evidence": [
+        "evidence/odoo-receipts-rst.txt",
+        "evidence/web-retrieval-3.txt"
+      ],
+      "semantic_result": "Confirms real-time receipt operations, selecting the outstanding receipt, scanning product/packaging and explicit validation. Documentation review is not a receipt run.",
+      "conditions_defaults_exceptions": "Barcode feature/app enablement is necessary. Default Nomenclature and Default GS1 Nomenclature differ; UPC/EAN conversion is described. No offline queue guarantee is given. Public-page timeout was resolved for this review via official 18.0 documentation source.",
+      "access_window_utc": {
+        "start": "2026-10-10T05:41:53+00:00",
+        "end": "2026-10-10T05:57:04.381052+00:00"
+      },
+      "access_precision": "Conservative independently observed review window; exact HTTP retrieval timestamps also appear in HTTP manifests.",
+      "operation": "Read-only public primary documentation/source/release retrieval and semantic reading; no product execution."
+    },
+    {
+      "id": "E08",
+      "candidate_source_ids": [
+        "S08"
+      ],
+      "url": "https://www.odoo.com/documentation/18.0/applications/inventory_and_mrp/barcode/setup/operation_types.html",
+      "version_or_commit": "Official Odoo 18.0 documentation source",
+      "governing_locator": "Use barcodes > Operations > WHIN warning; Commands > VALIDATE / PRINT PICKING OPERATION",
+      "local_evidence": [
+        "evidence/odoo-operations-rst.txt",
+        "evidence/web-retrieval-6.txt"
+      ],
+      "semantic_result": "WHIN starts a new receipt order; a particular picking reference finds a scheduled operation. Supports separating command/operation from physical-crate and local event identity.",
+      "conditions_defaults_exceptions": "Generic WHIN does not match a scheduled receipt even with equal contents. VALIDATE can itself be invoked by a command barcode; the local staff-confirmation choice is not a claim that Odoo requires only a screen click.",
+      "access_window_utc": {
+        "start": "2026-10-10T05:41:53+00:00",
+        "end": "2026-10-10T05:57:04.381052+00:00"
+      },
+      "access_precision": "Conservative independently observed review window; exact HTTP retrieval timestamps also appear in HTTP manifests.",
+      "operation": "Read-only public primary documentation/source/release retrieval and semantic reading; no product execution."
+    },
+    {
+      "id": "E09",
+      "candidate_source_ids": [
+        "S09"
+      ],
+      "url": "https://www.odoo.com/documentation/18.0/applications/inventory_and_mrp/inventory/product_management/configure.html",
+      "version_or_commit": "Official Odoo 18.0 documentation source",
+      "governing_locator": "Comparison: Packages versus Packaging; unique codes, inventory tracking, reusability, Smooth barcode operations",
+      "local_evidence": [
+        "evidence/odoo-configure-rst.txt",
+        "evidence/web-retrieval-6.txt"
+      ],
+      "semantic_result": "Individual physical packages and repeated type/quantity packaging are correctly distinguished. Closest researched fit is labeled inference, not proven depot suitability.",
+      "conditions_defaults_exceptions": "Package reception may require both package and individual-item scans. Move Entire Packages affects contents locations. Package Use context/default restrictions are in E19; product lot/serial tracking is not a crate instance ID.",
+      "access_window_utc": {
+        "start": "2026-10-10T05:41:53+00:00",
+        "end": "2026-10-10T05:57:04.381052+00:00"
+      },
+      "access_precision": "Conservative independently observed review window; exact HTTP retrieval timestamps also appear in HTTP manifests.",
+      "operation": "Read-only public primary documentation/source/release retrieval and semantic reading; no product execution."
+    },
+    {
+      "id": "E10",
+      "candidate_source_ids": [
+        "S10"
+      ],
+      "url": "https://help.sortly.com/can-i-use-sortly-in-offline-mode",
+      "version_or_commit": "Live vendor help, 2026-10-10; app build not selected",
+      "governing_locator": "How to Enable Offline Mode; FAQ snapshot and sync behavior",
+      "local_evidence": [
+        "evidence/web-retrieval-1.txt",
+        "evidence/web-retrieval-2.txt"
+      ],
+      "semantic_result": "Mobile-only disable-sync inventory edits and later synchronization are confirmed. Final does not promote this to a verified receipt-event queue.",
+      "conditions_defaults_exceptions": "Android/iOS only; web not offline. Disable Sync leaves a device snapshot; vendor advises full sync first. Conflict ordering/idempotency across depots are not established.",
+      "access_window_utc": {
+        "start": "2026-10-10T05:41:53+00:00",
+        "end": "2026-10-10T05:57:04.381052+00:00"
+      },
+      "access_precision": "Conservative independently observed review window; exact HTTP retrieval timestamps also appear in HTTP manifests.",
+      "operation": "Read-only public primary documentation/source/release retrieval and semantic reading; no product execution."
+    },
+    {
+      "id": "E11",
+      "candidate_source_ids": [
+        "S11"
+      ],
+      "url": "https://help.sortly.com/what-kind-of-scanners-can-i-use-with-sortly",
+      "version_or_commit": "Live vendor help; no app build or hardware selected",
+      "governing_locator": "Mobile App; web limits; FAQ Bluetooth plans, 1D/QR, smart-scanner camera and Android version",
+      "local_evidence": [
+        "evidence/web-retrieval-4.txt"
+      ],
+      "semantic_result": "Phone camera is a no-extra-reader route; QR needs 2D capability; web scan check-in/out is unsupported. Low-cost argument is qualitative, not a price/free-tier promise.",
+      "conditions_defaults_exceptions": "Bluetooth integration requires Ultra/Premium/Enterprise; tested hardware differs from unguaranteed alternatives. Smart scanner uses app camera by default and requires Android 12+. Final defers actual hardware suitability to a proposed check.",
+      "access_window_utc": {
+        "start": "2026-10-10T05:41:53+00:00",
+        "end": "2026-10-10T05:57:04.381052+00:00"
+      },
+      "access_precision": "Conservative independently observed review window; exact HTTP retrieval timestamps also appear in HTTP manifests.",
+      "operation": "Read-only public primary documentation/source/release retrieval and semantic reading; no product execution."
+    },
+    {
+      "id": "E12",
+      "candidate_source_ids": [
+        "S12"
+      ],
+      "url": "https://ref.gs1.org/standards/genspecs/26.0.0/",
+      "version_or_commit": "GS1 General Specifications release 26.0, ratified January 2026",
+      "governing_locator": "§2.3 and §2.3.1; physical/printed pages 140–142; header and footers visually inspected",
+      "local_evidence": [
+        "evidence/gs1-genspecs-26.pdf",
+        "evidence/gs1-genspecs-26.txt",
+        "evidence/gs1-genspecs-26-header.txt"
+      ],
+      "semantic_result": "Confirms crates, issuing Company Prefix, asset type plus optional individual serial, and prohibition on treating carried goods as AI 8003 assets.",
+      "conditions_defaults_exceptions": "For individual crate tracking, type alone is insufficient; serial distinguishes instances. In open environments, Digital Link QR/Data Matrix are additional to the listed GS1 carriers; p142 gives symbol-quality and multiple-carrier conditions. Final selects no GS1 label/deployment and disclaims GS1 conformity for the pilot. Original S12 mirror identity is preserved separately, not rebound.",
+      "access_window_utc": {
+        "start": "2026-10-10T05:41:53+00:00",
+        "end": "2026-10-10T05:57:04.381052+00:00"
+      },
+      "access_precision": "Conservative independently observed review window; exact HTTP retrieval timestamps also appear in HTTP manifests.",
+      "operation": "Read-only public primary documentation/source/release retrieval and semantic reading; no product execution."
+    },
+    {
+      "id": "E13",
+      "candidate_source_ids": [
+        "S13"
+      ],
+      "url": "https://ref.gs1.org/standards/digital-link/uri-syntax/1.7.0/",
+      "version_or_commit": "Release 1.7.0, ratified August 2026",
+      "governing_locator": "Header: Release 1.7.0, Ratified Aug 2026; §2 conformance; §4.3–4.5 primary keys/value grammar; §6.1 recognition; GRAI AI 8003.",
+      "local_evidence": [
+        "evidence/web-retrieval-7.txt",
+        "evidence/web-retrieval-8.txt",
+        "evidence/web-retrieval-10.txt"
+      ],
+      "semantic_result": "URL-shaped Digital Link can be treated as an ordinary URL; syntactic recognition and receiving-application validation are separate.",
+      "conditions_defaults_exceptions": "GRAI value is 13 digits plus optional 1–16-character serial under the defined character set; GTIN serial AI 21 has different grammar. Domain/stem and compressed/uncompressed processing matter. No concrete GS1 URI is proposed as an implemented crate label.",
+      "access_window_utc": {
+        "start": "2026-10-10T05:41:53+00:00",
+        "end": "2026-10-10T05:57:04.381052+00:00"
+      },
+      "access_precision": "Conservative independently observed review window; exact HTTP retrieval timestamps also appear in HTTP manifests.",
+      "operation": "Read-only public primary documentation/source/release retrieval and semantic reading; no product execution.",
+      "final_recheck_utc": "2026-10-10T05:59:04Z"
+    },
+    {
+      "id": "E14",
+      "candidate_source_ids": [
+        "S14"
+      ],
+      "url": "https://ref.gs1.org/standards/resolver/",
+      "version_or_commit": "Release 1.2.1, ratified August 2026",
+      "governing_locator": "§§1.1,2.1,2.2,2.5.10,2.6.2,2.12; conformance §5 item 19; change log §§9.2–9.3",
+      "local_evidence": [
+        "evidence/web-retrieval-2.txt",
+        "evidence/web-retrieval-8.txt",
+        "evidence/web-retrieval-9.txt"
+      ],
+      "semantic_result": "C-01 substance is correct: query pass-through is required on redirect. Final fixes the change-log version locator to 1.2.0; 1.2.1 corrects GTIN-hierarchy serial AI 17 to 21.",
+      "conditions_defaults_exceptions": "Missing requested link type gives 404; selection among multiple matching links may give 300 and default linkset is an optional mode. Resolver may support a subset of primary keys, so future GRAI support is a selection check. General one-to-one redirect needs no specialized resolver. Full query transmission applies when redirecting, not to offline decode or every generic web service.",
+      "access_window_utc": {
+        "start": "2026-10-10T05:41:53+00:00",
+        "end": "2026-10-10T05:57:04.381052+00:00"
+      },
+      "access_precision": "Conservative independently observed review window; exact HTTP retrieval timestamps also appear in HTTP manifests.",
+      "operation": "Read-only public primary documentation/source/release retrieval and semantic reading; no product execution."
+    },
+    {
+      "id": "E15",
+      "candidate_source_ids": [
+        "S15"
+      ],
+      "url": "https://github.com/gs1/gs1-syntax-engine/releases/tag/1.4.1",
+      "version_or_commit": "1.4.1 / ec595ff; release May 28, 2026",
+      "governing_locator": "Release notes; official 1.4.1 README architecture/bindings",
+      "local_evidence": [
+        "evidence/web-retrieval-7.txt",
+        "evidence/gs1-engine-readme.txt",
+        "evidence/gs1-engine-release-api.json",
+        "evidence/gs1-engine-release-retrieval.json"
+      ],
+      "semantic_result": "Very-long-Digital-Link-stem overflow fix is real versioned parser history. It is not a general hardware scanner fault.",
+      "conditions_defaults_exceptions": "C native library with C++ wrapper and other bindings. Not installed or executed. Short URL recommendation is a local practical choice; shortness is not a proof of parser security or resolver conformity.",
+      "access_window_utc": {
+        "start": "2026-10-10T05:41:53+00:00",
+        "end": "2026-10-10T05:57:04.381052+00:00"
+      },
+      "access_precision": "Conservative independently observed review window; exact HTTP retrieval timestamps also appear in HTTP manifests.",
+      "operation": "Read-only public primary documentation/source/release retrieval and semantic reading; no product execution.",
+      "final_recheck_utc": "2026-10-10T06:01:31.677441+00:00"
+    },
+    {
+      "id": "E16",
+      "candidate_source_ids": [
+        "S16"
+      ],
+      "url": "https://ref.gs1.org/architecture/system-architecture/",
+      "version_or_commit": "Live official architecture page; immutable edition not established",
+      "governing_locator": "2D Symbol (GS1 Digital Link URI) Specific Workflow; smartphone paths then HTTP(S) services",
+      "local_evidence": [
+        "evidence/web-retrieval-7.txt"
+      ],
+      "semantic_result": "Supports separation of decoding, URI recognition and web retrieval. Generic care-page QR is a local design, not an existing cooperative service.",
+      "conditions_defaults_exceptions": "Native camera/browser/generic/dedicated apps are potential paths; actual device support needs verification. These pages do not make any scan a confirmed receipt.",
+      "access_window_utc": {
+        "start": "2026-10-10T05:41:53+00:00",
+        "end": "2026-10-10T05:57:04.381052+00:00"
+      },
+      "access_precision": "Conservative independently observed review window; exact HTTP retrieval timestamps also appear in HTTP manifests.",
+      "operation": "Read-only public primary documentation/source/release retrieval and semantic reading; no product execution."
+    },
+    {
+      "id": "E17",
+      "candidate_source_ids": [
+        "S17"
+      ],
+      "url": "https://snipe-it.readme.io/v8.3.6/docs/barcodes",
+      "version_or_commit": "Explicit v8.3.6 documentation; not a tested later release",
+      "governing_locator": "Supported 1D Barcodes; QR Codes; Changing your URL",
+      "local_evidence": [
+        "evidence/snipe-barcode-md.txt"
+      ],
+      "semantic_result": "Supports Code 128 for ASCII/alphanumeric IDs and the historical APP_URL/cache regeneration workflow. Final correctly bounds that behavior to the cited version.",
+      "conditions_defaults_exceptions": "Symbology must match tag characters/length. Changing APP_URL plus regenerating images does not change already printed labels. Direct URL versus stable redirect remains a local choice; no cache-clearing command was executed.",
+      "access_window_utc": {
+        "start": "2026-10-10T05:41:53+00:00",
+        "end": "2026-10-10T05:57:04.381052+00:00"
+      },
+      "access_precision": "Conservative independently observed review window; exact HTTP retrieval timestamps also appear in HTTP manifests.",
+      "operation": "Read-only public primary documentation/source/release retrieval and semantic reading; no product execution."
+    },
+    {
+      "id": "E18",
+      "candidate_source_ids": [],
+      "url": "https://raw.githubusercontent.com/grokability/snipe-it/1e0fc8c/app/View/Label.php",
+      "version_or_commit": "Pinned Snipe-IT head commit 1e0fc8c",
+      "governing_locator": "render: title data block versus barcode2d target switch; DefaultLabel.php title/barcode rendering blocks",
+      "local_evidence": [
+        "evidence/snipe-label-view.txt",
+        "evidence/snipe-label-view-retrieval.json",
+        "evidence/snipe-default-label.txt"
+      ],
+      "semantic_result": "Independent source evidence distinguishes displayed label title from encoded QR content. It also exposes raw asset-tag/ID targets as a possible offline decoding opportunity.",
+      "conditions_defaults_exceptions": "2D output depends on template support/type and label2_2d_target, not label2_title. hardware_id is the default switch path, while plain_asset_tag and other targets exist. No PHP, label generator or scanner was run. This extra opportunity is not a new mandatory obligation or evidence of public-care customization.",
+      "access_window_utc": {
+        "start": "2026-10-10T05:41:53+00:00",
+        "end": "2026-10-10T05:57:04.381052+00:00"
+      },
+      "access_precision": "Conservative independently observed review window; exact HTTP retrieval timestamps also appear in HTTP manifests.",
+      "operation": "Read-only public primary documentation/source/release retrieval and semantic reading; no product execution."
+    },
+    {
+      "id": "E19",
+      "candidate_source_ids": [],
+      "url": "https://raw.githubusercontent.com/odoo/documentation/18.0/content/applications/inventory_and_mrp/inventory/product_management/configure/package.rst",
+      "version_or_commit": "Official Odoo documentation 18.0",
+      "governing_locator": "Package Use introduction; Cluster packages",
+      "local_evidence": [
+        "evidence/odoo-packages-rst.txt"
+      ],
+      "semantic_result": "Expands E09 to the actual default/context: the reusable selector is a cluster-picking setting. Final makes only a conditional package-model comparison.",
+      "conditions_defaults_exceptions": "Package Use becomes visible with Packages and Batch Transfers; default is Disposable Box; change to Reusable Box only for cluster picking. This is not an independently demonstrated inter-depot reusable-crate lifecycle.",
+      "access_window_utc": {
+        "start": "2026-10-10T05:41:53+00:00",
+        "end": "2026-10-10T05:57:04.381052+00:00"
+      },
+      "access_precision": "Conservative independently observed review window; exact HTTP retrieval timestamps also appear in HTTP manifests.",
+      "operation": "Read-only public primary documentation/source/release retrieval and semantic reading; no product execution."
+    }
+  ],
+  "original_inspected_artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791604608938287266
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A5-02/brief.md",
+      "bytes": 3394,
+      "sha256": "a6520dffb1ba50fd341f287ae6805fe99e8f14f159c53eb87668029014ba3589",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791608644962501459
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A5-02/plan.md",
+      "bytes": 6060,
+      "sha256": "b4cf16e079bff1eb16228453f99f8682a63d34ecd99e0f53ca1463416111931e",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791608644962626936
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/terminal-science-freeze-root.json",
+      "bytes": 7274,
+      "sha256": "ec45c5a231c5a689122810fb91312ac093fc44b3c87e3c608e2f0ef9c6346d3a",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610894688863129
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/inputs/brief.md",
+      "bytes": 3394,
+      "sha256": "a6520dffb1ba50fd341f287ae6805fe99e8f14f159c53eb87668029014ba3589",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791608646974788738
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/control/run.json",
+      "bytes": 580,
+      "sha256": "15c8f3f15d8b5e813ce4835f820339a306058e2c3519cb308b273479329f5fd3",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791608646975028923
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/assignment.md",
+      "bytes": 3712,
+      "sha256": "599e96a804efea9fff64d0a6951acf88a090f0af006c4970dd99d09acff812fe",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791608646975666250
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/input-map.json",
+      "bytes": 781,
+      "sha256": "9bdbbbde8717753ca7bf43caf818e5d5742c5ee670a7ae84de73716301991b94",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791608647127003129
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/freeze.json",
+      "bytes": 1721,
+      "sha256": "073c36adcdc359890415c7dc99ce5001431efc2900d63d6430af5e7afdc1b1bc",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791608647127425333
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/source-map.json",
+      "bytes": 18140,
+      "sha256": "27815f76afc49ec0a0d20e5ce70e0b62a432ce07998dc0971a5d20632e45979c",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609292215609690
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/sources/index.md",
+      "bytes": 4844,
+      "sha256": "ce4c0040855ac4654dbf62270003c49ee0aa586ec29eb3194826baef7f94d134",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609292215609690
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/request.json",
+      "bytes": 913,
+      "sha256": "c02a95105acf08a86ae58bc22e37a58723753b29bf9dfd017bbe77a0b36053cc",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791608647127161138
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/dispatch.json",
+      "bytes": 4219,
+      "sha256": "4285424ea3b9e59365c78cb797e671edd9a37d599923ecd9ff65e4b9738f792b",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791608647956872902
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/service-tier-change.json",
+      "bytes": 489,
+      "sha256": "5784abc30141439c1c3a0e101aa9fc6b0f7c65303dae69ee89c8e3cc285abc63",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791608647127585403
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/discovery.md",
+      "bytes": 13022,
+      "sha256": "b41b03f16f9707d36fb03fde84178c335dfc59069cbba4aed1d92c98b3b9b45e",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609292213609680
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/draft.md",
+      "bytes": 16811,
+      "sha256": "751e28236adb4cc707e611ccca7843d8b6c8fd165552cd157fa3f32960f7886f",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609411351416236
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/revealed-plan.md",
+      "bytes": 6060,
+      "sha256": "b4cf16e079bff1eb16228453f99f8682a63d34ecd99e0f53ca1463416111931e",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609303502371187
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/plan-reveal.json",
+      "bytes": 427,
+      "sha256": "175711d459dbca89770e8f95919bbee188c8e4353843a31f2499802b95b29422",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609303502526488
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/status.json",
+      "bytes": 4092,
+      "sha256": "1338ef368c7bd5b3f0611dd1185a393cc3e63bececd853b9eb13fc3a2ec0cee8",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609669338102906
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/assignment.md",
+      "bytes": 4006,
+      "sha256": "ed6d37f96bb3b4d522c21669899dfebf8eddacae425e8608b99b8afc5cc1198a",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609670064507493
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/input-map.json",
+      "bytes": 1457,
+      "sha256": "d3761089ee784702f403457c6a84900cfcf6b19cb7be91b29cffd0bcbf97da4f",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609670064212994
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/freeze.json",
+      "bytes": 3290,
+      "sha256": "fe4ae4bb4a4a10d4f5e104a8eb11e862868b2c69cbd6cae090e621a1d04a656a",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609670063922780
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/source-map.json",
+      "bytes": 24771,
+      "sha256": "413ce211e01dc9a1dd9d6cbc574bcade8764c666f64aabfbfce881cc1dccb4ab",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610167526473022
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/sources/index.md",
+      "bytes": 2657,
+      "sha256": "88d03f5e3a4c898ff90de625ff4430b30f045a40a998f742277fe557a45154b8",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610185482304935
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/request.json",
+      "bytes": 1601,
+      "sha256": "6ca010d930d952f3ac2f89490d12f7efbd8a97d9086ab4acfc6e9f30b99a27a9",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609670063563343
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/dispatch.json",
+      "bytes": 4835,
+      "sha256": "2a26f57aa3c9c8904f536807c881ef8f9d2d51376fdd1502251084665dea2962",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609670890124838
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/service-tier-change.json",
+      "bytes": 477,
+      "sha256": "e12bf475fa08bb8047d23a51c7a076e57b61da1d2860dfc25f70526cb3d3ff79",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609669854681151
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/critique.md",
+      "bytes": 8169,
+      "sha256": "d9ba8483f64403e7f2ad83da2f371b7e23367cc68ce5904334d11b99e1c89260",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610356437571557
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/status.json",
+      "bytes": 4054,
+      "sha256": "79c77262ed90cb5cf0d24d9a3e000b70aec9ee097a6d16feae0a19ca1f6fe0a2",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610396394245487
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/invocation-clarification.json",
+      "bytes": 3016,
+      "sha256": "5adb8188e8b628d6fb91e83e156569237c1ec371903223a6afadef5f30301a86",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609670064788481
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/native-goal-activation.json",
+      "bytes": 464,
+      "sha256": "df2b72cf1d1f5f2017901a7119112ea81668a74489bc219dbe0b04e2dda002e4",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791609770428774838
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/native-goal-completion.json",
+      "bytes": 793,
+      "sha256": "1004bc68ee7e4d9a1881a059bd8c749a4cafcc638b4bdfbba36d22883125d3cf",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610376570413127
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/assignment.md",
+      "bytes": 3988,
+      "sha256": "9633c115cd6aff52a0a94130ae902302dc2b2971806ab6611280829877906e7a",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610397154310148
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/input-map.json",
+      "bytes": 1768,
+      "sha256": "2a8bcafc73a3c93f0f74653612079f90e86a0798927596b8e86f2fdedf3f319b",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610397154144860
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/freeze.json",
+      "bytes": 4060,
+      "sha256": "3516f465e5fd473ecb0125f4301c8ab147fb41b1f800c68999ce2c90222c7ac5",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610397153979782
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/source-map.json",
+      "bytes": 28706,
+      "sha256": "acf19e5ff39acec451a4d62511a2d39d7b17cab75ab101177f8685baa11daa00",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610810578461781
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/sources/index.md",
+      "bytes": 4825,
+      "sha256": "4b0512c993f9d9453051823cd26e17fbb4c56906cdf8806c0c1ec66949d4f7b3",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610810515184251
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/request.json",
+      "bytes": 1607,
+      "sha256": "400ac692ddfcd90d7c18670a8e16381187206ffcc34b0e99ec29a90b6d15e6db",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610397153756877
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/dispatch.json",
+      "bytes": 4853,
+      "sha256": "bb2b5acd2977f3f46e5a131ff9b070444a257aea2cb58be18cdfd07ad03e450f",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610398207202681
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/service-tier-change.json",
+      "bytes": 479,
+      "sha256": "abf953ec1cb0da846e06454dcfa0d65a00898b293120c4b6a998ebab57d92920",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610396936557406
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+      "bytes": 17385,
+      "sha256": "772a070ee5b7cc26759535256478dabf09a7564e4cb0b324233cff1c5949d90d",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610810522184280
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/invocation-clarification.json",
+      "bytes": 3023,
+      "sha256": "5d135ef93d9a49cbdce3658e9e04f8601c873aa551698be8a820a743b7cde284",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610397154471693
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/native-goal-activation.json",
+      "bytes": 466,
+      "sha256": "c346eead688a4e751a81cf72a69d66647e8ab3d1bb6cdcb9c427893ff2b9b9f9",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610447657772759
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/native-goal-completion.json",
+      "bytes": 795,
+      "sha256": "91d987611c3c3cec3679f3ef4c1d7c0159f3146d6ff9ffb54c848e78dcb5826b",
+      "inspection": "FULL_TEXT_READ",
+      "mtime_ns": 1791610862077401518
+    }
+  ],
+  "evidence_inventory": [
+    {
+      "path": "evidence/followup-http-manifest.json",
+      "bytes": 1103,
+      "sha256": "084d8b6e5ff2a6c137fc836dd96debfc64dddc840c824fad1a0821eaf87c3f44"
+    },
+    {
+      "path": "evidence/gs1-engine-readme.txt",
+      "bytes": 9494,
+      "sha256": "d5308d34e5a4fc68f4badc265af59900536788eb6133ecc92e1f1c9406fcf076"
+    },
+    {
+      "path": "evidence/gs1-engine-release-api.json",
+      "bytes": 17124,
+      "sha256": "e3df3024030ec95ced09884267fae0868b4df4f94fed6d07313006e35ea1a723"
+    },
+    {
+      "path": "evidence/gs1-engine-release-retrieval.json",
+      "bytes": 456,
+      "sha256": "e4147faa0a6b0bc633bf985a580e861edb0a88d0c43934784a952a219bc4b1da"
+    },
+    {
+      "path": "evidence/gs1-genspecs-26-header.txt",
+      "bytes": 3982,
+      "sha256": "1e493645c4a2ee6b3f5fc06a344cf296289a4be339261ea01cef3fe9cee1af27"
+    },
+    {
+      "path": "evidence/gs1-genspecs-26.pdf",
+      "bytes": 12175796,
+      "sha256": "d32eae37039bdce4931714d6eae73fd682d060c692edecc23620233b0733efe6"
+    },
+    {
+      "path": "evidence/gs1-genspecs-26.txt",
+      "bytes": 9760,
+      "sha256": "df0b8fd3bcd33b03c8487b62a69c9b574fdadf47c6d9f91efd1984f7634cc14e"
+    },
+    {
+      "path": "evidence/gs1-grai-141.png",
+      "bytes": 269778,
+      "sha256": "e4185b1497f57b32f93e2c42060367f9d97ef71b9a8776bb36e7ff29f6621bb9"
+    },
+    {
+      "path": "evidence/gs1-grai-142.png",
+      "bytes": 345440,
+      "sha256": "ed25fec9bb99883328e6b7c619edca07e10a9f48291b87643289e2d05640bf81"
+    },
+    {
+      "path": "evidence/index.md",
+      "bytes": 16397,
+      "sha256": "f6c7bebfe8b5b917217dd831482839c083eb1a20968ecbefa93090089353b9a5"
+    },
+    {
+      "path": "evidence/odoo-configure-rst.txt",
+      "bytes": 7096,
+      "sha256": "0765423f1ac5ee4fb3b7c5ff12ef190779e9265fdfeb7504b52da123386346dd"
+    },
+    {
+      "path": "evidence/odoo-operations-rst.txt",
+      "bytes": 10958,
+      "sha256": "c45fcd51de5c5411d45ddafeacf5943906589f7004651761a72a8ebb5c62f1cd"
+    },
+    {
+      "path": "evidence/odoo-packages-rst.txt",
+      "bytes": 8993,
+      "sha256": "44936977b3574d877a762a8bd6e15602d2c5b1f2fec7d54c6794536094f12439"
+    },
+    {
+      "path": "evidence/odoo-receipts-rst.txt",
+      "bytes": 10121,
+      "sha256": "e8a7a5065bf88f39675da1842ddeae748f4843530f7d7a515bc1b4a74060378a"
+    },
+    {
+      "path": "evidence/primary-http-manifest.json",
+      "bytes": 8116,
+      "sha256": "430ac1c5eed3527d5ca0ea95ad5455c4d147748efcfc3d8adb3be84264cf22dd"
+    },
+    {
+      "path": "evidence/snipe-barcode-md.txt",
+      "bytes": 6583,
+      "sha256": "c23dfb9e35d902690ea2100d726cfeb243cbdf2ae51e410c23932e8c978be48c"
+    },
+    {
+      "path": "evidence/snipe-default-label.txt",
+      "bytes": 7199,
+      "sha256": "9ce38f06ae35d7d010275a67c33d78847744db175f1c4d28b940de0d004404ec"
+    },
+    {
+      "path": "evidence/snipe-label-controller.txt",
+      "bytes": 3931,
+      "sha256": "bc4362a942ba7d4e19f0674e4a213507c199b3f21204e8bd266d4bfb1aa2d0c8"
+    },
+    {
+      "path": "evidence/snipe-label-md.txt",
+      "bytes": 1518,
+      "sha256": "c9c09e200651997ea8f3ae0444203098047513417db6c44681644b21426b2881"
+    },
+    {
+      "path": "evidence/snipe-label-pinned.txt",
+      "bytes": 23879,
+      "sha256": "5d616bed727d438fa061e871c83467f6fae2850f464ce2e2595d58ce4ceb9643"
+    },
+    {
+      "path": "evidence/snipe-label-view-retrieval.json",
+      "bytes": 331,
+      "sha256": "bd0c5a6e7af8cecaf63b9380695e00298d719ac5eed64074d2e73309a2ab66fa"
+    },
+    {
+      "path": "evidence/snipe-label-view.txt",
+      "bytes": 11741,
+      "sha256": "302eec8071e8a1b68004988441e83e734f7e49cb688791cf17a58cf4aca6a22f"
+    },
+    {
+      "path": "evidence/snipe-pr-api.txt",
+      "bytes": 18671,
+      "sha256": "e2984b338ca1f25e40903195be0c5e49516e3783041da4082bb32a9fc2f373f3"
+    },
+    {
+      "path": "evidence/snipe-pr-diff.txt",
+      "bytes": 4212,
+      "sha256": "e08296b58df22b708f3147448fedfa0ffc772bc241a46fd3d02ca89c51ad51ff"
+    },
+    {
+      "path": "evidence/snipe-release-api.txt",
+      "bytes": 33808,
+      "sha256": "7f1d766edb5d9b75f7e3752b4fd8cdf469925dc396429ff6470e4d2a4a8b11ea"
+    },
+    {
+      "path": "evidence/snipe-source-list-assets.json",
+      "bytes": 4803,
+      "sha256": "9520bc88d2039f7fd1b6c46fc8109470d21c76ad6c35cce183862b25fe14b461"
+    },
+    {
+      "path": "evidence/snipe-source-list-labels.json",
+      "bytes": 8051,
+      "sha256": "bf9f43e6b38d4068d5b2a67eb5a394fe9e8e8e28b34a2f80be66014082c11b21"
+    },
+    {
+      "path": "evidence/snipe-tag-md.txt",
+      "bytes": 1523,
+      "sha256": "6302fc4c16bb40685b091d2b75ea7cae488a5c3b62cebc5b2a098682a795305b"
+    },
+    {
+      "path": "evidence/web-retrieval-1.txt",
+      "bytes": 34972,
+      "sha256": "7de3625c4ce98b013c6077760566a15effeb3ea2ff19d506440c7452106d3cd3"
+    },
+    {
+      "path": "evidence/web-retrieval-10.txt",
+      "bytes": 16520,
+      "sha256": "ec289b0b7493b67b49b5299212a268878a7b2b0eb8de3917725f810441322718"
+    },
+    {
+      "path": "evidence/web-retrieval-2.txt",
+      "bytes": 33407,
+      "sha256": "bbd2d1fe0114ec74a7a96553d158d85da8351e919d0a2b4104643acbb8bc9bef"
+    },
+    {
+      "path": "evidence/web-retrieval-3.txt",
+      "bytes": 1380,
+      "sha256": "f3d7a2651a4f021ee9935452c6e14c288341c1eed065219bdd46c718c4042b5c"
+    },
+    {
+      "path": "evidence/web-retrieval-4.txt",
+      "bytes": 29161,
+      "sha256": "c4a30364cea67865f8cd2f501f3c9c622f21c16b6a01a4ef30dca0b8f817f6fe"
+    },
+    {
+      "path": "evidence/web-retrieval-5.txt",
+      "bytes": 27799,
+      "sha256": "06dec356d981ae54f0c745fdcfe495697da185672357d4b2a1195bf64439648a"
+    },
+    {
+      "path": "evidence/web-retrieval-6.txt",
+      "bytes": 36429,
+      "sha256": "e41fd371f3b62fd508db821bf8f72a611117e767e383a9382bc49d856bc16e1a"
+    },
+    {
+      "path": "evidence/web-retrieval-7.txt",
+      "bytes": 33864,
+      "sha256": "c971110fb73e4e2a7e347c0a2938aeb8fee0cbd2dd0298a5f42c7d46a9a15c55"
+    },
+    {
+      "path": "evidence/web-retrieval-8.txt",
+      "bytes": 28893,
+      "sha256": "8e9e79cecd071df04c8ffa31c8d35ebbd56df1f54689f1b611529a12d64e109c"
+    },
+    {
+      "path": "evidence/web-retrieval-9.txt",
+      "bytes": 33308,
+      "sha256": "c2b80973a34c7607401147f46afd27f93f0bc2fdd92e370d17a20399f6872793"
+    }
+  ],
+  "navigation_index": "evidence/index.md",
+  "integrity_is_not_semantic_proof": true,
+  "research_execution_boundary": "Only source retrieval/extraction/reading; no cooperative/vendor/scanner/parser/resolver product validation.",
+  "evidence_index_finalized_at_utc": "2026-10-10T06:02:28.682331+00:00"
+}

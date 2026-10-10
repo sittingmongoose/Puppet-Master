@@ -1,0 +1,70 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://www.rohde.eu/media/pdf/c8/c0/cb/BA-TA85_202603-01_EN.pdf"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/C-R1-02/treatment-v1/source-map.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {
+        "version_or_release": "Official English file BA-TA85_202603-01_EN.pdf; March 2026 version identifier.",
+        "governing_locator": "March 2026 English manual §§2.1, 2.4, 3.3, 6.2–6.3, 7, 8.1–8.3",
+        "domain_conditions_defaults_exceptions": "Filename BA-TA85_202603-01_EN.pdf; manufacturer instructions. Does not establish dissolved removal or local approval."
+      }
+    },
+    {
+      "authored_source_map": "assessment/C-R1-02/treatment-v1/source-map.json",
+      "source_id": "S08",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/C-R1-02/treatment-v1/evidence/retrieval-log.json",
+      "source_id": "S08",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/C-R1-02/treatment-v1/evidence/retrieval-log-initial.json",
+      "source_id": "S08",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "governing_locator": "March 2026 English manual §§2.1, 2.4, 3.3, 6.2–6.3, 7, 8.1–8.3"
+    }
+  ],
+  "raw_sha256": "9a839910afaaadbec098969debcdef8b89b9285084813f380d230daae86cfb91",
+  "original_bytes": 34438,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/C-R1-02/treatment-v1/evidence/S08.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://www.rohde.eu/media/pdf/c8/c0/cb/BA-TA85_202603-01_EN.pdf"
+  ],
+  "version": [
+    {
+      "version_or_release": "Official English file BA-TA85_202603-01_EN.pdf; March 2026 version identifier.",
+      "governing_locator": "March 2026 English manual §§2.1, 2.4, 3.3, 6.2–6.3, 7, 8.1–8.3",
+      "domain_conditions_defaults_exceptions": "Filename BA-TA85_202603-01_EN.pdf; manufacturer instructions. Does not establish dissolved removal or local approval."
+    }
+  ],
+  "selector": [
+    {
+      "governing_locator": "March 2026 English manual §§2.1, 2.4, 3.3, 6.2–6.3, 7, 8.1–8.3"
+    }
+  ],
+  "conditions": [
+    {
+      "version_or_release": "Official English file BA-TA85_202603-01_EN.pdf; March 2026 version identifier.",
+      "governing_locator": "March 2026 English manual §§2.1, 2.4, 3.3, 6.2–6.3, 7, 8.1–8.3",
+      "domain_conditions_defaults_exceptions": "Filename BA-TA85_202603-01_EN.pdf; manufacturer instructions. Does not establish dissolved removal or local approval."
+    }
+  ],
+  "rawSHA256": "9a839910afaaadbec098969debcdef8b89b9285084813f380d230daae86cfb91"
+}

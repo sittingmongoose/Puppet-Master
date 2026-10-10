@@ -1,0 +1,632 @@
+{
+  "schema": "er12.independent_review_source_map.v1",
+  "case_id": "ER12-B-FINAL-G-02-FRESH",
+  "slot": "B-FINAL-G-02",
+  "arm": "control",
+  "role": "FINAL",
+  "reviewer": "codex-er12-bfinalg02-review-10681257",
+  "created_at_utc": "2026-10-10T05:31:21.154588+00:00",
+  "candidate_artifacts": {
+    "final": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/final-section.md",
+    "source_map": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/source-map.json",
+    "source_members": [
+      "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/sources/git-clone.md",
+      "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/sources/git-sparse-checkout.md"
+    ]
+  },
+  "primary_sources": [
+    {
+      "source_id": "P1",
+      "requested_url": "https://git-scm.com/docs/git-sparse-checkout/2.42.0",
+      "retrieved_at_utc": "2026-10-10T05:27:07.130570+00:00",
+      "resolved_url": "https://git-scm.com/docs/git-sparse-checkout/2.42.0",
+      "http_status": 200,
+      "operation": "HTTPS GET via Python urllib; response saved before optional extraction failed",
+      "file": "primary/git-sparse-checkout-2.42.0.html",
+      "bytes": 67024,
+      "sha256": "2bcf49af27a500672925ef983d84b7f5fd97c567eab5bc5bfb6af34ae10eac81",
+      "readable_file": "primary/git-sparse-checkout-2.42.0.html.txt",
+      "local_extraction_initial_error": "ModuleNotFoundError(\"No module named 'bs4'\")",
+      "local_extraction_recovery": "stdlib HTMLParser from saved bytes; no additional network request",
+      "content_type": "text/html; charset=utf-8",
+      "file_sha256": "2bcf49af27a500672925ef983d84b7f5fd97c567eab5bc5bfb6af34ae10eac81",
+      "readable_file_sha256": "6c7c831496de1b25c93fdb4833d05c1fc14b086e60d891fee984d0abb1cef55f",
+      "transport_metadata_confirmation": {
+        "retrieved_at_utc": "2026-10-10T05:32:00.986558+00:00",
+        "operation": "HTTPS GET to directly recapture transport metadata after prior optional extraction failure",
+        "resolved_url": "https://git-scm.com/docs/git-sparse-checkout/2.42.0",
+        "http_status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "bytes": 67024,
+        "sha256": "2bcf49af27a500672925ef983d84b7f5fd97c567eab5bc5bfb6af34ae10eac81",
+        "matches_saved_bytes": true
+      }
+    },
+    {
+      "source_id": "P2",
+      "requested_url": "https://git-scm.com/docs/git-clone/2.43.0",
+      "retrieved_at_utc": "2026-10-10T05:27:07.132520+00:00",
+      "resolved_url": "https://git-scm.com/docs/git-clone/2.43.0",
+      "http_status": 200,
+      "operation": "HTTPS GET via Python urllib; response saved before optional extraction failed",
+      "file": "primary/git-clone-2.43.0.html",
+      "bytes": 90587,
+      "sha256": "9d05b1b2c60486582bc1c4261118fcf905d18ed47da05da6319a37c1234f8f54",
+      "readable_file": "primary/git-clone-2.43.0.html.txt",
+      "local_extraction_initial_error": "ModuleNotFoundError(\"No module named 'bs4'\")",
+      "local_extraction_recovery": "stdlib HTMLParser from saved bytes; no additional network request",
+      "content_type": "text/html; charset=utf-8",
+      "file_sha256": "9d05b1b2c60486582bc1c4261118fcf905d18ed47da05da6319a37c1234f8f54",
+      "readable_file_sha256": "50dbd320c59f58b70c2c02f540350c42b4a13707125767cab086dcb4af14af33",
+      "transport_metadata_confirmation": {
+        "retrieved_at_utc": "2026-10-10T05:32:01.036838+00:00",
+        "operation": "HTTPS GET to directly recapture transport metadata after prior optional extraction failure",
+        "resolved_url": "https://git-scm.com/docs/git-clone/2.43.0",
+        "http_status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "bytes": 90587,
+        "sha256": "9d05b1b2c60486582bc1c4261118fcf905d18ed47da05da6319a37c1234f8f54",
+        "matches_saved_bytes": true
+      }
+    },
+    {
+      "source_id": "P3",
+      "requested_url": "https://raw.githubusercontent.com/git/git/v2.43.0/Documentation/git-sparse-checkout.txt",
+      "resolved_url": "https://raw.githubusercontent.com/git/git/v2.43.0/Documentation/git-sparse-checkout.txt",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-10T05:27:07.133582+00:00",
+      "operation": "HTTPS GET via Python urllib; data only, no downloaded-code execution",
+      "file": "primary/git-sparse-checkout-v2.43.0.txt",
+      "bytes": 21258,
+      "sha256": "2da80aef5d32b727870fc0b1680186a82a6153cc185a50d1b7a72b34a5f83883",
+      "content_type": "text/plain; charset=utf-8",
+      "file_sha256": "2da80aef5d32b727870fc0b1680186a82a6153cc185a50d1b7a72b34a5f83883"
+    },
+    {
+      "source_id": "P4",
+      "requested_url": "https://raw.githubusercontent.com/git/git/v2.43.0/Documentation/git-clone.txt",
+      "resolved_url": "https://raw.githubusercontent.com/git/git/v2.43.0/Documentation/git-clone.txt",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-10T05:27:07.138954+00:00",
+      "operation": "HTTPS GET via Python urllib; data only, no downloaded-code execution",
+      "file": "primary/git-clone-v2.43.0.txt",
+      "bytes": 14772,
+      "sha256": "d12bac1e23309f25d64aebeec82437c335914e3e7c7d6326b6857959306a4667",
+      "content_type": "text/plain; charset=utf-8",
+      "file_sha256": "d12bac1e23309f25d64aebeec82437c335914e3e7c7d6326b6857959306a4667"
+    }
+  ],
+  "primary_locator_groups": {
+    "cone_inclusion": [
+      {
+        "source_id": "P3",
+        "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L63-L71",
+        "file": "primary/git-sparse-checkout-v2.43.0.txt",
+        "line_start": 63,
+        "line_end": 71,
+        "section": "COMMANDS / set"
+      },
+      {
+        "source_id": "P3",
+        "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L308-L324",
+        "file": "primary/git-sparse-checkout-v2.43.0.txt",
+        "line_start": 308,
+        "line_end": 324,
+        "section": "INTERNALS -- CONE MODE HANDLING"
+      },
+      {
+        "source_id": "P3",
+        "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L377-L415",
+        "file": "primary/git-sparse-checkout-v2.43.0.txt",
+        "line_start": 377,
+        "line_end": 415,
+        "section": "INTERNALS -- CONE PATTERN SET"
+      }
+    ],
+    "sparse_index": [
+      {
+        "source_id": "P3",
+        "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L78-L91",
+        "file": "primary/git-sparse-checkout-v2.43.0.txt",
+        "line_start": 78,
+        "line_end": 91,
+        "section": "COMMANDS / set / --[no-]sparse-index"
+      }
+    ],
+    "reapply": [
+      {
+        "source_id": "P3",
+        "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L99-L112",
+        "file": "primary/git-sparse-checkout-v2.43.0.txt",
+        "line_start": 99,
+        "line_end": 112,
+        "section": "COMMANDS / reapply"
+      },
+      {
+        "source_id": "P3",
+        "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L186-L196",
+        "file": "primary/git-sparse-checkout-v2.43.0.txt",
+        "line_start": 186,
+        "line_end": 196,
+        "section": "EXAMPLES / reapply"
+      }
+    ],
+    "disable": [
+      {
+        "source_id": "P3",
+        "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L114-L116",
+        "file": "primary/git-sparse-checkout-v2.43.0.txt",
+        "line_start": 114,
+        "line_end": 116,
+        "section": "COMMANDS / disable"
+      }
+    ],
+    "ignored_deletion": [
+      {
+        "source_id": "P3",
+        "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L163-L172",
+        "file": "primary/git-sparse-checkout-v2.43.0.txt",
+        "line_start": 163,
+        "line_end": 172,
+        "section": "EXAMPLES / set"
+      },
+      {
+        "source_id": "P3",
+        "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L326-L334",
+        "file": "primary/git-sparse-checkout-v2.43.0.txt",
+        "line_start": 326,
+        "line_end": 334,
+        "section": "INTERNALS -- CONE MODE HANDLING / selection change"
+      }
+    ],
+    "submodules": [
+      {
+        "source_id": "P3",
+        "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L444-L472",
+        "file": "primary/git-sparse-checkout-v2.43.0.txt",
+        "line_start": 444,
+        "line_end": 472,
+        "section": "INTERNALS -- SUBMODULES"
+      }
+    ],
+    "clone_sparse": [
+      {
+        "source_id": "P4",
+        "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-clone.txt#L174-L178",
+        "file": "primary/git-clone-v2.43.0.txt",
+        "line_start": 174,
+        "line_end": 178,
+        "section": "OPTIONS / --sparse"
+      }
+    ],
+    "clone_filter": [
+      {
+        "source_id": "P4",
+        "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-clone.txt#L180-L193",
+        "file": "primary/git-clone-v2.43.0.txt",
+        "line_start": 180,
+        "line_end": 193,
+        "section": "OPTIONS / --filter; --also-filter-submodules"
+      }
+    ],
+    "clone_depth": [
+      {
+        "source_id": "P4",
+        "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-clone.txt#L245-L258",
+        "file": "primary/git-clone-v2.43.0.txt",
+        "line_start": 245,
+        "line_end": 258,
+        "section": "OPTIONS / --depth; --shallow-since; --shallow-exclude"
+      }
+    ],
+    "single_branch": [
+      {
+        "source_id": "P4",
+        "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-clone.txt#L260-L268",
+        "file": "primary/git-clone-v2.43.0.txt",
+        "line_start": 260,
+        "line_end": 268,
+        "section": "OPTIONS / --[no-]single-branch"
+      }
+    ],
+    "shallow_source_condition": [
+      {
+        "source_id": "P4",
+        "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-clone.txt#L157-L160",
+        "file": "primary/git-clone-v2.43.0.txt",
+        "line_start": 157,
+        "line_end": 160,
+        "section": "OPTIONS / --[no-]reject-shallow"
+      }
+    ]
+  },
+  "claim_applicability": [
+    {
+      "claim_id": "C1",
+      "candidate_lines": [
+        3,
+        5,
+        17
+      ],
+      "subject": "tracked working-tree paths",
+      "operation": "cone-mode sparse-checkout set",
+      "version": "Git 2.43",
+      "unit_domain": "selected directory recursively plus immediate ancestor files; not transfer bytes",
+      "conditions_exceptions": [
+        "Cone mode accepts directories; root files remain even with no directories selected.",
+        "Other sibling directories are not recursively included.",
+        "Submodule initialization state is separate."
+      ],
+      "evidence": [
+        {
+          "source_id": "P3",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L63-L71",
+          "file": "primary/git-sparse-checkout-v2.43.0.txt",
+          "line_start": 63,
+          "line_end": 71,
+          "section": "COMMANDS / set"
+        },
+        {
+          "source_id": "P3",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L308-L324",
+          "file": "primary/git-sparse-checkout-v2.43.0.txt",
+          "line_start": 308,
+          "line_end": 324,
+          "section": "INTERNALS -- CONE MODE HANDLING"
+        },
+        {
+          "source_id": "P3",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L377-L415",
+          "file": "primary/git-sparse-checkout-v2.43.0.txt",
+          "line_start": 377,
+          "line_end": 415,
+          "section": "INTERNALS -- CONE PATTERN SET"
+        },
+        {
+          "source_id": "P3",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L444-L472",
+          "file": "primary/git-sparse-checkout-v2.43.0.txt",
+          "line_start": 444,
+          "line_end": 472,
+          "section": "INTERNALS -- SUBMODULES"
+        }
+      ],
+      "judgment": "PASS"
+    },
+    {
+      "claim_id": "C2",
+      "candidate_lines": [
+        7,
+        18
+      ],
+      "subject": "initial working-tree population versus object transfer",
+      "operation": "clone --sparse versus clone --filter=blob:none",
+      "version": "Git 2.43",
+      "unit_domain": "paths versus reachable objects/blobs; no documented selected-file byte cap",
+      "conditions_exceptions": [
+        "--sparse initially populates top-level files.",
+        "--filter requests an object subset from the server.",
+        "blob:none defers blobs until Git needs them, so later demand is relevant.",
+        "Filtering submodules requires --filter and --recurse-submodules when --also-filter-submodules is used; no submodule filtering is prescribed here."
+      ],
+      "evidence": [
+        {
+          "source_id": "P4",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-clone.txt#L174-L178",
+          "file": "primary/git-clone-v2.43.0.txt",
+          "line_start": 174,
+          "line_end": 178,
+          "section": "OPTIONS / --sparse"
+        },
+        {
+          "source_id": "P4",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-clone.txt#L180-L193",
+          "file": "primary/git-clone-v2.43.0.txt",
+          "line_start": 180,
+          "line_end": 193,
+          "section": "OPTIONS / --filter; --also-filter-submodules"
+        }
+      ],
+      "judgment": "PASS"
+    },
+    {
+      "claim_id": "C3",
+      "candidate_lines": [
+        7,
+        19,
+        21
+      ],
+      "subject": "commit history",
+      "operation": "clone depth and branch-coverage options",
+      "version": "Git 2.43",
+      "unit_domain": "commit-count/history reachability; independent of current-tree completeness",
+      "conditions_exceptions": [
+        "--depth truncates history and implies single-branch unless no-single-branch is given.",
+        "--shallow-since and --shallow-exclude also truncate history.",
+        "--single-branch restricts history to one branch, without necessarily making it shallow.",
+        "Unspecified source repository completeness remains external; no hidden deployment or mandatory new option is imposed."
+      ],
+      "evidence": [
+        {
+          "source_id": "P4",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-clone.txt#L245-L258",
+          "file": "primary/git-clone-v2.43.0.txt",
+          "line_start": 245,
+          "line_end": 258,
+          "section": "OPTIONS / --depth; --shallow-since; --shallow-exclude"
+        },
+        {
+          "source_id": "P4",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-clone.txt#L260-L268",
+          "file": "primary/git-clone-v2.43.0.txt",
+          "line_start": 260,
+          "line_end": 268,
+          "section": "OPTIONS / --[no-]single-branch"
+        },
+        {
+          "source_id": "P4",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-clone.txt#L157-L160",
+          "file": "primary/git-clone-v2.43.0.txt",
+          "line_start": 157,
+          "line_end": 160,
+          "section": "OPTIONS / --[no-]reject-shallow"
+        }
+      ],
+      "judgment": "section PASS; disposition 5 FAIL (F1)"
+    },
+    {
+      "claim_id": "C4",
+      "candidate_lines": [
+        9,
+        20
+      ],
+      "subject": "out-of-cone working-tree files and local changes",
+      "operation": "merge/rebase materialization; reapply after handling affected paths",
+      "version": "Git 2.43",
+      "unit_domain": "tracked paths/conflicts/unstaged changes, not blobs or latency",
+      "conditions_exceptions": [
+        "Operations may materialize paths to show conflicts.",
+        "Unstaged changes or conflicts may prevent sparsification.",
+        "Reapply is useful after affected paths are cleaned/handled; it is not a promise to discard or override local changes."
+      ],
+      "evidence": [
+        {
+          "source_id": "P3",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L99-L112",
+          "file": "primary/git-sparse-checkout-v2.43.0.txt",
+          "line_start": 99,
+          "line_end": 112,
+          "section": "COMMANDS / reapply"
+        },
+        {
+          "source_id": "P3",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L186-L196",
+          "file": "primary/git-sparse-checkout-v2.43.0.txt",
+          "line_start": 186,
+          "line_end": 196,
+          "section": "EXAMPLES / reapply"
+        }
+      ],
+      "judgment": "PASS"
+    },
+    {
+      "claim_id": "C5",
+      "candidate_lines": [
+        9,
+        11
+      ],
+      "subject": "local files during selection changes",
+      "operation": "set new cone; disable sparsity",
+      "version": "Git 2.43",
+      "unit_domain": "tracked files, ignored files, nonignored untracked files and submodule state",
+      "conditions_exceptions": [
+        "set changes working-directory population.",
+        "Ignored files can be removed in a directory no longer containing tracked or nonignored untracked files.",
+        "Nonignored untracked files prevent deletion of that directory and produce a warning.",
+        "disable restores tracked working-tree scope; it does not initialize submodules or guarantee helper safety."
+      ],
+      "evidence": [
+        {
+          "source_id": "P3",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L163-L172",
+          "file": "primary/git-sparse-checkout-v2.43.0.txt",
+          "line_start": 163,
+          "line_end": 172,
+          "section": "EXAMPLES / set"
+        },
+        {
+          "source_id": "P3",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L326-L334",
+          "file": "primary/git-sparse-checkout-v2.43.0.txt",
+          "line_start": 326,
+          "line_end": 334,
+          "section": "INTERNALS -- CONE MODE HANDLING / selection change"
+        },
+        {
+          "source_id": "P3",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L114-L116",
+          "file": "primary/git-sparse-checkout-v2.43.0.txt",
+          "line_start": 114,
+          "line_end": 116,
+          "section": "COMMANDS / disable"
+        },
+        {
+          "source_id": "P3",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L444-L472",
+          "file": "primary/git-sparse-checkout-v2.43.0.txt",
+          "line_start": 444,
+          "line_end": 472,
+          "section": "INTERNALS -- SUBMODULES"
+        }
+      ],
+      "judgment": "PASS"
+    },
+    {
+      "claim_id": "C6",
+      "candidate_lines": [
+        22
+      ],
+      "subject": "index representation and command performance",
+      "operation": "optional sparse index",
+      "version": "Git 2.43",
+      "unit_domain": "index size/command work, not network-download prohibition",
+      "conditions_exceptions": [
+        "Sparse index is opt-in by default in this manual.",
+        "It is experimental; some commands may be slower, external-tool compatibility may be incomplete, and older Git may not understand sparse directory entries.",
+        "The candidate rejects mandatory use and makes no sparse-index performance guarantee."
+      ],
+      "evidence": [
+        {
+          "source_id": "P3",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L78-L91",
+          "file": "primary/git-sparse-checkout-v2.43.0.txt",
+          "line_start": 78,
+          "line_end": 91,
+          "section": "COMMANDS / set / --[no-]sparse-index"
+        },
+        {
+          "source_id": "P4",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-clone.txt#L180-L193",
+          "file": "primary/git-clone-v2.43.0.txt",
+          "line_start": 180,
+          "line_end": 193,
+          "section": "OPTIONS / --filter; --also-filter-submodules"
+        }
+      ],
+      "judgment": "PASS"
+    },
+    {
+      "claim_id": "C7",
+      "candidate_lines": [
+        5
+      ],
+      "subject": "documentation version applicability",
+      "operation": "manual change-history inspection and reviewer exact-tag retrieval",
+      "version": "official 2.42.0 manual with no changes 2.42.1-2.51.1; direct upstream v2.43.0 documentation",
+      "unit_domain": "documentation version, not measured implementation behavior",
+      "conditions_exceptions": [
+        "Manual no-change interval covers 2.43.",
+        "No-change history does not establish identical implementation or actual Git 2.43 runtime performance."
+      ],
+      "evidence": [
+        {
+          "source_id": "P1",
+          "url": "https://git-scm.com/docs/git-sparse-checkout/2.42.0#previous-versions-dropdown",
+          "file": "primary/git-sparse-checkout-2.42.0.html.txt",
+          "line_start": 146,
+          "line_end": 160,
+          "section": "Changes in the git-sparse-checkout manual"
+        },
+        {
+          "source_id": "P3",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L63-L71",
+          "file": "primary/git-sparse-checkout-v2.43.0.txt",
+          "line_start": 63,
+          "line_end": 71,
+          "section": "COMMANDS / set"
+        },
+        {
+          "source_id": "P3",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L308-L324",
+          "file": "primary/git-sparse-checkout-v2.43.0.txt",
+          "line_start": 308,
+          "line_end": 324,
+          "section": "INTERNALS -- CONE MODE HANDLING"
+        },
+        {
+          "source_id": "P3",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L377-L415",
+          "file": "primary/git-sparse-checkout-v2.43.0.txt",
+          "line_start": 377,
+          "line_end": 415,
+          "section": "INTERNALS -- CONE PATTERN SET"
+        }
+      ],
+      "judgment": "PASS"
+    }
+  ],
+  "retrieval_diagnostics": [
+    {
+      "operation": "web.open",
+      "requested_url": "https://git-scm.com/docs/git-sparse-checkout/2.43.0",
+      "observed_result": "redirect-only 3-line page, redirected to same version route with trailing slash; no substantive manual in web output",
+      "independent_observation": true,
+      "review_observed_at_utc": "2026-10-10T05:28Z (minute precision)",
+      "fallback": [
+        "P1 official 2.42 manual history",
+        "P3 exact v2.43.0 upstream manual source"
+      ]
+    },
+    {
+      "operation": "local optional HTML extraction",
+      "observed_result": "ModuleNotFoundError: No module named bs4 after HTTPS bytes had already been saved",
+      "recovery": "stdlib HTMLParser using saved bytes; no install, no additional request"
+    }
+  ],
+  "finding_evidence": {
+    "F1": {
+      "candidate": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/final-section.md",
+        "line": 21
+      },
+      "original_critique": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-G-02/inputs/assignment.md",
+        "line": 33
+      },
+      "obligations": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-G-02/inputs/assignment.md",
+        "lines": [
+          14,
+          15,
+          37
+        ]
+      },
+      "primary": [
+        {
+          "source_id": "P4",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-clone.txt#L245-L258",
+          "file": "primary/git-clone-v2.43.0.txt",
+          "line_start": 245,
+          "line_end": 258,
+          "section": "OPTIONS / --depth; --shallow-since; --shallow-exclude"
+        },
+        {
+          "source_id": "P3",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L99-L112",
+          "file": "primary/git-sparse-checkout-v2.43.0.txt",
+          "line_start": 99,
+          "line_end": 112,
+          "section": "COMMANDS / reapply"
+        },
+        {
+          "source_id": "P3",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L186-L196",
+          "file": "primary/git-sparse-checkout-v2.43.0.txt",
+          "line_start": 186,
+          "line_end": 196,
+          "section": "EXAMPLES / reapply"
+        },
+        {
+          "source_id": "P3",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L163-L172",
+          "file": "primary/git-sparse-checkout-v2.43.0.txt",
+          "line_start": 163,
+          "line_end": 172,
+          "section": "EXAMPLES / set"
+        },
+        {
+          "source_id": "P3",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L326-L334",
+          "file": "primary/git-sparse-checkout-v2.43.0.txt",
+          "line_start": 326,
+          "line_end": 334,
+          "section": "INTERNALS -- CONE MODE HANDLING / selection change"
+        }
+      ]
+    }
+  },
+  "inspected_hash_manifest": "inspected-hashes.json",
+  "evidence_is_retrieved_independently": true,
+  "executed_git_validation": false,
+  "no_candidate_feedback_or_repair": true
+}

@@ -1,0 +1,54 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://raw.githubusercontent.com/opentripplanner/OpenTripPlanner/v2.10.0/application/src/main/java/org/opentripplanner/apis/gtfs/datafetchers/FeedImpl.java"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A6-01/treatment-v1/source-map.json",
+      "source_id": "E30",
+      "existing_authored_summary_fields": {
+        "version_or_commit": "OTP v2.10.0 tagged FeedImpl.java",
+        "governing_locator": "version() lines 69-72",
+        "independent_semantic_observation": "Fetches loaded static FeedInfo.version; not realtime header version."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A6-01/treatment-v1/evidence/retrieval-manifest.json",
+      "source_id": "E30",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "governing_locator": "version() lines 69-72"
+    }
+  ],
+  "raw_sha256": "ce32b00f3eb3463bc8e5a441b4b5c4c755cdd2af31ac7e48452794ae77e10be6",
+  "original_bytes": 3746,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A6-01/treatment-v1/evidence/E30.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://raw.githubusercontent.com/opentripplanner/OpenTripPlanner/v2.10.0/application/src/main/java/org/opentripplanner/apis/gtfs/datafetchers/FeedImpl.java"
+  ],
+  "version": [
+    {
+      "version_or_commit": "OTP v2.10.0 tagged FeedImpl.java",
+      "governing_locator": "version() lines 69-72",
+      "independent_semantic_observation": "Fetches loaded static FeedInfo.version; not realtime header version."
+    }
+  ],
+  "selector": [
+    {
+      "governing_locator": "version() lines 69-72"
+    }
+  ],
+  "conditions": "UNKNOWN",
+  "rawSHA256": "ce32b00f3eb3463bc8e5a441b4b5c4c755cdd2af31ac7e48452794ae77e10be6"
+}

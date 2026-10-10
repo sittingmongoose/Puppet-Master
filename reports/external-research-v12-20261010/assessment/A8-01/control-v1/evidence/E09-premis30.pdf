@@ -1,0 +1,65 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A8-01/control-v1/source-map.json",
+      "source_id": "E09",
+      "existing_authored_summary_fields": {
+        "released_version_or_commit": "PREMIS 3.0, June 2015, revised November 2015",
+        "governing_subject_operation_default_unit_type_domain_exceptions": "Model has Objects, Events, Agents and Rights. Fixity digest comparison records an Event and eventOutcome. Equal same-algorithm digests are evidence of unchanged content; fixity is distinguished from structural/format integrity and authenticity. File/Bitstream fixity fields do not establish authorship or restore success.",
+        "applicability_assessment": "Supports lightweight event-log analogy and logical/fixity/custody distinction, not CSV PREMIS conformance or a deployed system."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A8-01/control-v1/source-map.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/A8-01/control-v1/evidence/retrieval-records.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": "Printed pp.6–7, 59 (§1.5.2), 258–259; PDF zero-based pp.15–16,68,267–268; extracted text lines 452–480,2906–2963,9537–9590"
+    }
+  ],
+  "raw_sha256": "2e3e3fe001798f3f43d26b4aed03e8737310fa044ee001af2493f7c72517b0e0",
+  "original_bytes": 2176353,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A8-01/control-v1/evidence/E09-premis30.pdf",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf"
+  ],
+  "version": [
+    {
+      "released_version_or_commit": "PREMIS 3.0, June 2015, revised November 2015",
+      "governing_subject_operation_default_unit_type_domain_exceptions": "Model has Objects, Events, Agents and Rights. Fixity digest comparison records an Event and eventOutcome. Equal same-algorithm digests are evidence of unchanged content; fixity is distinguished from structural/format integrity and authenticity. File/Bitstream fixity fields do not establish authorship or restore success.",
+      "applicability_assessment": "Supports lightweight event-log analogy and logical/fixity/custody distinction, not CSV PREMIS conformance or a deployed system."
+    }
+  ],
+  "selector": [
+    {
+      "locator": "Printed pp.6–7, 59 (§1.5.2), 258–259; PDF zero-based pp.15–16,68,267–268; extracted text lines 452–480,2906–2963,9537–9590"
+    }
+  ],
+  "conditions": [
+    {
+      "released_version_or_commit": "PREMIS 3.0, June 2015, revised November 2015",
+      "governing_subject_operation_default_unit_type_domain_exceptions": "Model has Objects, Events, Agents and Rights. Fixity digest comparison records an Event and eventOutcome. Equal same-algorithm digests are evidence of unchanged content; fixity is distinguished from structural/format integrity and authenticity. File/Bitstream fixity fields do not establish authorship or restore success.",
+      "applicability_assessment": "Supports lightweight event-log analogy and logical/fixity/custody distinction, not CSV PREMIS conformance or a deployed system."
+    }
+  ],
+  "rawSHA256": "2e3e3fe001798f3f43d26b4aed03e8737310fa044ee001af2493f7c72517b0e0"
+}

@@ -1,0 +1,94 @@
+{
+  "observed_at_utc": "2026-10-10T05:41:34.688501+00:00",
+  "basis": "root observed terminal final T3 task/no pending; separate from native proof",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/critique.md",
+      "bytes": 8169,
+      "sha256": "d9ba8483f64403e7f2ad83da2f371b7e23367cc68ce5904334d11b99e1c89260",
+      "mtime_ns": 1791610356437571557
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/source-map.json",
+      "bytes": 24771,
+      "sha256": "413ce211e01dc9a1dd9d6cbc574bcade8764c666f64aabfbfce881cc1dccb4ab",
+      "mtime_ns": 1791610167526473022
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/critic/sources/index.md",
+      "bytes": 2657,
+      "sha256": "88d03f5e3a4c898ff90de625ff4430b30f045a40a998f742277fe557a45154b8",
+      "mtime_ns": 1791610185482304935
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/discovery.md",
+      "bytes": 13022,
+      "sha256": "b41b03f16f9707d36fb03fde84178c335dfc59069cbba4aed1d92c98b3b9b45e",
+      "mtime_ns": 1791609292213609680
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/draft.md",
+      "bytes": 16811,
+      "sha256": "751e28236adb4cc707e611ccca7843d8b6c8fd165552cd157fa3f32960f7886f",
+      "mtime_ns": 1791609411351416236
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/revealed-plan.md",
+      "bytes": 6060,
+      "sha256": "b4cf16e079bff1eb16228453f99f8682a63d34ecd99e0f53ca1463416111931e",
+      "mtime_ns": 1791609303502371187
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/source-map.json",
+      "bytes": 18140,
+      "sha256": "27815f76afc49ec0a0d20e5ce70e0b62a432ce07998dc0971a5d20632e45979c",
+      "mtime_ns": 1791609292215609690
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/investigator/sources/index.md",
+      "bytes": 4844,
+      "sha256": "ce4c0040855ac4654dbf62270003c49ee0aa586ec29eb3194826baef7f94d134",
+      "mtime_ns": 1791609292215609690
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+      "bytes": 17385,
+      "sha256": "772a070ee5b7cc26759535256478dabf09a7564e4cb0b324233cff1c5949d90d",
+      "mtime_ns": 1791610810522184280
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/source-map.json",
+      "bytes": 28706,
+      "sha256": "acf19e5ff39acec451a4d62511a2d39d7b17cab75ab101177f8685baa11daa00",
+      "mtime_ns": 1791610810578461781
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/sources/index.md",
+      "bytes": 4825,
+      "sha256": "4b0512c993f9d9453051823cd26e17fbb4c56906cdf8806c0c1ec66949d4f7b3",
+      "mtime_ns": 1791610810515184251
+    }
+  ],
+  "final_stage_task": {
+    "slot": "A5-02",
+    "arm": "control",
+    "stage": "reviser",
+    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A5-02-control-reviser-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A5-02-control-reviser-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A5-02-control-reviser-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A5-02-control-reviser-v1",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A5-02-control-reviser-v1:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "Completed the reviser stage. The complete proposal is in [final.md](ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md), with the full source record in [source-map.json](ER12_RUNTIME/runs/A5-02/control/stages/reviser/source-map.json) and a navigable [source index](ER12_RUNTIME/runs/A5-02/control/stages/reviser/sources/index.md).\n\nC-01 was accepted and amended after independently checking the [GS1 Resolver Standard](https://ref.gs1.org/standards/resolver/); C-02 remains an explicit unresolved owner input. No product validation was run. The native Goal activation and completion responses are preserved in [native-goal-activation.json](ER12_RUNTIME/runs/A5-02/control/stages/reviser/native-goal-activation.json) and [native-goal-completion.json](ER12_RUNTIME/runs/A5-02/control/stages/reviser/native-goal-completion.json).\n\nNative Goal completed: **116,120 tokens**, **7m 32s**.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A5-02-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:71045a26-d7f3-4a35-a839-565d37f5629d",
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "summary": "Completed the reviser stage. The complete proposal is in [final.md](ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md), with the full source record in [source-map.json](ER12_RUNTIME/runs/A5-02/control/stages/reviser/source-map.json) and a navigable [source index](ER12_RUNTIME/runs/A5-02/control/stages/reviser/sources/index.md).\n\nC-01 was accepted and amended after independently checking the [GS1 Resolver Standard](https://ref.gs1.org/standards/resolver/); C-02 remains an explicit unresolved owner input. No product validation was run. The native Goal activation and completion responses are preserved in [native-goal-activation.json](ER12_RUNTIME/runs/A5-02/control/stages/reviser/native-goal-activation.json) and [native-goal-completion.json](ER12_RUNTIME/runs/A5-02/control/stages/reviser/native-goal-completion.json).\n\nNative Goal completed: **116,120 tokens**, **7m 32s**.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A5-02-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:71045a26-d7f3-4a35-a839-565d37f5629d",
+    "waitTimedOut": false
+  }
+}

@@ -1,0 +1,228 @@
+{
+  "schema": "er12.C.recipe-lock.v1",
+  "frozen_at_utc": "2026-10-10T05:48:43.195123+00:00",
+  "recipe_id": "C-R2-A1-A8-standard-binding-v1",
+  "slots": [
+    "C-R2-01",
+    "C-R2-02"
+  ],
+  "classification": "Luna-only combined source-quality/mechanism successor; no established20percent speed/resource improvement",
+  "components": [
+    "full original three-fresh-context R0 substantive scope with independent brief-first discovery and exact one-shot plan reveal",
+    "A1 transferred absolute T0+30/+42/+60 minute boundaries",
+    "A8 verbatim SCW-6 pivotal source-condition witness in critic/reviser only, complete baseline scope preserved",
+    "common symmetric Standard service route plus exact native Goal binding pre-input guard for both arms"
+  ],
+  "development_evidence": [
+    {
+      "method": "A1",
+      "slot": "A1-01",
+      "arms": {
+        "control": {
+          "original_independent_source_judgment": "PASS_WITH_LIMITATIONS",
+          "path": "ER12_RUNTIME/assessment/A1-01/control-v1/assessment.json",
+          "sha256": "2e8feaa4f758077eebe92a851cf36f74387aa67576f1877126ef24cd4b0c0e00",
+          "actual_evaluator_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A1-01-control-full-v1",
+          "actual_evaluator_completed_quiet": true,
+          "old_failures_preserved": true
+        },
+        "treatment": {
+          "original_independent_source_judgment": "PASS_WITH_LIMITATIONS",
+          "path": "ER12_RUNTIME/assessment/A1-01/treatment-v1/assessment.json",
+          "sha256": "ff4bb8e68753975444aa3f4d4caf5e356d1478ddd4e88cdbb174f88500b3e9eb",
+          "actual_evaluator_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A1-01-treatment-full-v1",
+          "actual_evaluator_completed_quiet": true,
+          "old_failures_preserved": true
+        }
+      }
+    },
+    {
+      "method": "A1",
+      "slot": "A1-02",
+      "arms": {
+        "control": {
+          "original_independent_source_judgment": "FAIL",
+          "path": "ER12_RUNTIME/assessment/A1-02/control-v1/assessment.json",
+          "sha256": "9e2292f269e56163d5c69b6dc8be900c24384c77072cc09707fdc72553f9dbce",
+          "actual_evaluator_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A1-02-control-full-v1",
+          "actual_evaluator_completed_quiet": true,
+          "old_failures_preserved": true
+        },
+        "treatment": {
+          "original_independent_source_judgment": "PASS_WITH_LIMITATIONS",
+          "path": "ER12_RUNTIME/assessment/A1-02/treatment-v1/assessment.json",
+          "sha256": "287e89fb780439a37e75f538942e324288957c74f63a18ff1625696ac93282bd",
+          "actual_evaluator_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A1-02-treatment-full-v1",
+          "actual_evaluator_completed_quiet": true,
+          "old_failures_preserved": true
+        }
+      }
+    },
+    {
+      "method": "A8",
+      "slot": "A8-01",
+      "arms": {
+        "control": {
+          "original_independent_source_judgment": "FAIL",
+          "path": "ER12_RUNTIME/assessment/A8-01/control-v1/assessment.json",
+          "sha256": "aeaa94460ebad5dfc577e6834244a5e23174703dab34d87793dbb978873b0044",
+          "actual_evaluator_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A8-01-control-full-v1",
+          "actual_evaluator_completed_quiet": true,
+          "old_failures_preserved": true
+        },
+        "treatment": {
+          "original_independent_source_judgment": "PASS_WITH_LIMITATIONS",
+          "path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/assessment.json",
+          "sha256": "8d47f5641f15cdf0a270196f22150e1f30a5fe7e151816df1666cb05d0b9459a",
+          "actual_evaluator_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A8-01-treatment-full-v1",
+          "actual_evaluator_completed_quiet": true,
+          "old_failures_preserved": true
+        }
+      }
+    },
+    {
+      "method": "A8",
+      "slot": "A8-02",
+      "arms": {
+        "control": {
+          "original_independent_source_judgment": "PASS_WITH_LIMITATIONS",
+          "path": "ER12_RUNTIME/assessment/A8-02/control-v1/assessment.json",
+          "sha256": "9be8f7848d2c7b14ca016c21c87aec986e972b05273c11fc62f5aff877ee3770",
+          "actual_evaluator_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A8-02-control-full-v1",
+          "actual_evaluator_completed_quiet": true,
+          "old_failures_preserved": true
+        },
+        "treatment": {
+          "original_independent_source_judgment": "PASS_WITH_LIMITATIONS",
+          "path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/assessment.json",
+          "sha256": "18287ef1230b2e9bf614635d5a6e9177a0ed27eb35de496da61af0f26833db30",
+          "actual_evaluator_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A8-02-treatment-full-v1",
+          "actual_evaluator_completed_quiet": true,
+          "old_failures_preserved": true
+        }
+      }
+    }
+  ],
+  "development_source_counts": {
+    "A1_treatment": 2,
+    "A1_control": 1,
+    "A8_treatment": 2,
+    "A8_control": 1,
+    "denominator_each": 2
+  },
+  "development_timing": {
+    "source": "mechanics/accounting-extractor-v1/cohort3-thin-snapshot.json",
+    "sha256": "4e0066d7a22956f9f2af0a013eff8e4917a10140133ed971ff6c3ce4aa6bcc4d",
+    "A1_first_both_source_pass_shorter_fraction": 0.10898769446331058,
+    "A1_all_assigned_control_latency_s": 4219.556,
+    "A1_all_assigned_treatment_latency_s": 4702.631,
+    "A8_second_both_source_pass_control_latency_s": 2306.591,
+    "A8_second_both_source_pass_treatment_latency_s": 2170.761,
+    "A8_second_shorter_fraction": 0.05888776987337588,
+    "limitations": "small samples; first A8 control source-failed and tier-mixed vs treatmentpriority; second Standard/Standard; native/effective/billing uncertainties and contention retained; no savings multiplication"
+  },
+  "mixed_provider_alternative": "Muse bounded finalization source2/3 across authored cases (original curl failure retained), no full-pipeline qualification; APPL/discovery material failures and GLM unsupported native execution kept. Not selected for this complete recipe. B24source10pass14fail kept separately.",
+  "control": "R0 fixed30/12/18; three fresh Luna Max; same Standard+binding guard/sources/tools/scope",
+  "treatment": "A1 absolute30/42/60 + exact A8 critic/reviser deltas; three fresh Luna Max; same Standard+binding guard",
+  "whole_arm_seconds": 3600,
+  "occupied_agent_minute_ceiling": 90,
+  "native_response_provenance_offline_proven": false,
+  "billing_cached_input_effective_settings": "UNKNOWN",
+  "fresh_input_access_before_lock": "only outer manifest IDs/domains/hashes, no C-R2 science opened",
+  "case_access_policy": "fresh brief-only discovery before sealed exact plan reveal; no winning sources/assessor feedback/othercasehistory; all original obligations, alternatives, governing source conditions and executed/proposed distinction",
+  "full_assessment": "fresh independent six-axis Sol xhigh after complete quiet full final; original failures and protocol/time/source separate",
+  "combined_gain_credit": "tested bundle only; component savings never multiplied",
+  "frozen_implementation": [
+    {
+      "path": "helpers/er12-screen-v1/prepare.py",
+      "sha256": "bb38b943536f5039018da2616afce260a88baf9aafa8412a1590180420f047da",
+      "bytes": 23575
+    },
+    {
+      "path": "helpers/er12-screen-v1/reveal.py",
+      "sha256": "ec9579204af96aa6a45caba1eef94c6ca1a799c296a2363b179af359bd908abe",
+      "bytes": 2880
+    },
+    {
+      "path": "helpers/er12-screen-v1/bootstrap.js",
+      "sha256": "42d76b4a90d073e64fa25b730fe78a1810e25224c8acc1089f85e6c6786f3056",
+      "bytes": 4356
+    },
+    {
+      "path": "helpers/er12-composite-A1-A8-v1/prepare.py",
+      "sha256": "0041e88d4806ecedd66521f0b63e28e1e4c83128b686b98db6f4ac91f7d0a5e8",
+      "bytes": 4645
+    },
+    {
+      "path": "helpers/er12-composite-A1-A8-v1/COMPONENT_PINS.json",
+      "sha256": "656eab890701f839b54bf969c4fc26f4f0fd482389eb8b53796be86090b75c58",
+      "bytes": 1135
+    },
+    {
+      "path": "methods/A8/critic_prompt_delta.txt",
+      "sha256": "6ca210592ebaffd1228f390855af2dcbb7b338dcbb3e00c9fb57f0bdc8672c0d",
+      "bytes": 3398
+    },
+    {
+      "path": "methods/A8/reviser_prompt_delta.txt",
+      "sha256": "31b0b79da9d1a99d81103a485448bbd2d518e5c48cd56b15a1a1a9cb9d11e087",
+      "bytes": 1715
+    },
+    {
+      "path": "mechanics/invocation-clarification-v1/transform.py",
+      "sha256": "40d7052fffa5e8830c8c738c751755a0bfb25a63fa68ee4f2518a30dc1716594",
+      "bytes": 12009
+    },
+    {
+      "path": "mechanics/invocation-clarification-v1/helper-pins.json",
+      "sha256": "c19221a12bf46b6b5e59d16d5cbfc464dbdc16ac3855dc945c3f4e94c54f0cd5",
+      "bytes": 314
+    },
+    {
+      "path": "mechanics/exact-goal-binding-guard-v1/overlay.py",
+      "sha256": "05c96bcda9ee1babe46e9dff17a454b5b1cc769df7c4c6fc479a454f574cf4ff",
+      "bytes": 8570
+    },
+    {
+      "path": "mechanics/exact-goal-binding-guard-v1/assert-active-goal.py",
+      "sha256": "4a61deec5eb0ca5eca149f0e1f30c55c3e90b5a6ad0557fc98946d340cae99ed",
+      "bytes": 3151
+    },
+    {
+      "path": "mechanics/native-root-code-mode/standardSpecJS.js",
+      "sha256": "803f679454dd062b9d11ec54c7adf04172b0c5330bc949ca115161672315fac6",
+      "bytes": 2507
+    },
+    {
+      "path": "mechanics/native-root-code-mode/clarifySpecJS.js",
+      "sha256": "9bf15a8f4835128f27ceedd63d7267e0c99cd8f3cccf5c2da8f6600589d41588",
+      "bytes": 418
+    },
+    {
+      "path": "mechanics/native-root-code-mode/exactSpecJS.js",
+      "sha256": "9e0ed39aaea03047d71d47bf8bbc268bb54e10071aab1fa7e8d9051a4219f178",
+      "bytes": 471
+    },
+    {
+      "path": "mechanics/native-root-code-mode/startPipelineJS.js",
+      "sha256": "14b9b58c2cabc3943c090349f17475f81924b119f949f9c93677dfb3089603a0",
+      "bytes": 3963
+    },
+    {
+      "path": "mechanics/native-root-code-mode/advanceJS.js",
+      "sha256": "b194377e7f330708d58450652ed99a02fa6ce77fb9cd0310f825be321e7de48d",
+      "bytes": 2715
+    },
+    {
+      "path": "methods/SELECTION-v1.md",
+      "sha256": "ce57140ef1243b50ed0c35ee7eec3763b51c415ea29160e6b1f6dbb5acd43137",
+      "bytes": 2142
+    },
+    {
+      "path": "methods/SELECTION_FREEZE.json",
+      "sha256": "771e10adc0813a7170bfbd74feddb10b74f7041f9f4ade41e4f1f73eee5eaaa0",
+      "bytes": 229
+    }
+  ],
+  "D_status": "unopened; wait own two C-R2 matched blocks and judgments, then exactlock before4freshcases"
+}

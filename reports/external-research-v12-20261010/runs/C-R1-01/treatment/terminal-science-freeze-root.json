@@ -1,0 +1,88 @@
+{
+  "observed_at_utc": "2026-10-10T05:49:36.173751+00:00",
+  "basis": "root observed terminal final T3 task/no pending; separate from native proof",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/treatment/stages/critic/critique.md",
+      "bytes": 9963,
+      "sha256": "ac3456af1b966e8e2a5e3a75b85fa7d4cdbed73599c9869a1fb64e6c494b14cc",
+      "mtime_ns": 1791610627054641764
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/treatment/stages/critic/source-map.json",
+      "bytes": 29058,
+      "sha256": "176f4fde0561ac1fb2cdf16c36ad48c4317b8271726f177da2b48b47836b9152",
+      "mtime_ns": 1791610507404496180
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/treatment/stages/critic/sources/index.md",
+      "bytes": 2515,
+      "sha256": "14531f417dc9e2622dee2de440a3e0d99c64a9e1f774f2340e3f249d6320f3a2",
+      "mtime_ns": 1791610507404656966
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/treatment/stages/investigator/discovery.md",
+      "bytes": 11850,
+      "sha256": "56f9a6d16af34de10d92a09a84161365abf758f76f1138f414d7bdffac694a5f",
+      "mtime_ns": 1791609355464619962
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/treatment/stages/investigator/draft.md",
+      "bytes": 19720,
+      "sha256": "833eb7e58a2555088d7b776be6a61a9fef379f21b1cc228166c678e3f3f58512",
+      "mtime_ns": 1791609668952225221
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 7137,
+      "sha256": "5f18fc6d7f9d8e4c30af8e806cf1d6c177fb058e94954326ee0343a5020a2e09",
+      "mtime_ns": 1791609375992726117
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/treatment/stages/investigator/source-map.json",
+      "bytes": 17726,
+      "sha256": "f995b2da0a13a6befac98c71fa06233bf0c1c5a5820f619afe25edddff441a50",
+      "mtime_ns": 1791609370001924718
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/treatment/stages/investigator/sources/index.md",
+      "bytes": 2736,
+      "sha256": "98472f381a904e2afd6f03588185bfe46a7b09dee03df2e2ec7158b403fbe60d",
+      "mtime_ns": 1791609355465318943
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/treatment/stages/reviser/final.md",
+      "bytes": 26397,
+      "sha256": "74a9b2a1a100c9d9d4194c4be881be0ef93189cd374235db4ac796554c4353ca",
+      "mtime_ns": 1791611263011379080
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-01/treatment/stages/reviser/source-map.json",
+      "bytes": 34836,
+      "sha256": "bb0a343aab1b623e25d8c078a1c0fa28f57fdfdbcbe2be222cd2828658d90998",
+      "mtime_ns": 1791611194459331507
+    }
+  ],
+  "final_stage_task": {
+    "slot": "C-R1-01",
+    "arm": "treatment",
+    "stage": "reviser",
+    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-01-treatment-reviser-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-01-treatment-reviser-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-01-treatment-reviser-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-01-treatment-reviser-v1",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-01-treatment-reviser-v1:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "Completed the assigned reviser stage. The proposal keeps site causes unresolved, corrects the vibration and Emslie comparison caveats, and separates proposed pilot work from checks actually performed. The [FHWA handbook](https://www.fhwa.dot.gov/Environment/noise/measurement/handbook.cfm) confirms that indoor sound alone may not distinguish transmission paths; the [AAS2008 paper](https://www.acoustics.asn.au/conference_proceedings/AAS2008/papers/p64.pdf) reports measurements at different boundary positions, not a matched before-and-after comparison.\n\n- [final.md](ER12_RUNTIME/runs/C-R1-01/treatment/stages/reviser/final.md) \u2014 complete proposal and navigable source index.\n- [source-map.json](ER12_RUNTIME/runs/C-R1-01/treatment/stages/reviser/source-map.json) \u2014 all 12 source IDs, identity details, and review dispositions.\n- Native Goal activation and completion responses are preserved in [native-goal-activation.json](ER12_RUNTIME/runs/C-R1-01/treatment/stages/reviser/native-goal-activation.json) and [native-goal-completion.json](ER12_RUNTIME/runs/C-R1-01/treatment/stages/reviser/native-goal-completion.json).\n\nNo site measurements or pilot validations were run. Goal usage: 164,627 tokens; 9m 52s.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-01-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:eaac9611-377a-4c14-9b21-d79b735e3846",
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "summary": "Completed the assigned reviser stage. The proposal keeps site causes unresolved, corrects the vibration and Emslie comparison caveats, and separates proposed pilot work from checks actually performed. The [FHWA handbook](https://www.fhwa.dot.gov/Environment/noise/measurement/handbook.cfm) confirms that indoor sound alone may not distinguish transmission paths; the [AAS2008 paper](https://www.acoustics.asn.au/conference_proceedings/AAS2008/papers/p64.pdf) reports measurements at different boundary positions, not a matched before-and-after comparison.\n\n- [final.md](ER12_RUNTIME/runs/C-R1-01/treatment/stages/reviser/final.md) \u2014 complete proposal and navigable source index.\n- [source-map.json](ER12_RUNTIME/runs/C-R1-01/treatment/stages/reviser/source-map.json) \u2014 all 12 source IDs, identity details, and review dispositions.\n- Native Goal activation and completion responses are preserved in [native-goal-activation.json](ER12_RUNTIME/runs/C-R1-01/treatment/stages/reviser/native-goal-activation.json) and [native-goal-completion.json](ER12_RUNTIME/runs/C-R1-01/treatment/stages/reviser/native-goal-completion.json).\n\nNo site measurements or pilot validations were run. Goal usage: 164,627 tokens; 9m 52s.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-01-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:eaac9611-377a-4c14-9b21-d79b735e3846",
+    "waitTimedOut": false
+  }
+}

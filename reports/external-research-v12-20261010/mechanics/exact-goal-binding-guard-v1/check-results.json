@@ -1,0 +1,176 @@
+{
+  "version": "exact-goal-binding-guard-v1",
+  "synthetic_only": true,
+  "all_passed": true,
+  "count": 33,
+  "checks": [
+    {
+      "check": "matching Codex complete envelope",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "check": "matching Muse goal_id envelope",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "check": "matching Muse direct object",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "check": "extracted Codex goal rejected",
+      "passed": true,
+      "exit_code": 2
+    },
+    {
+      "check": "partial Codex goal fields",
+      "passed": true,
+      "exit_code": 2
+    },
+    {
+      "check": "slash-to-hyphen mismatch",
+      "passed": true,
+      "exit_code": 2
+    },
+    {
+      "check": "blocked",
+      "passed": true,
+      "exit_code": 2
+    },
+    {
+      "check": "complete",
+      "passed": true,
+      "exit_code": 2
+    },
+    {
+      "check": "case-sensitive status",
+      "passed": true,
+      "exit_code": 2
+    },
+    {
+      "check": "whitespace mismatch",
+      "passed": true,
+      "exit_code": 2
+    },
+    {
+      "check": "invalid JSON",
+      "passed": true,
+      "exit_code": 2
+    },
+    {
+      "check": "trailing JSON",
+      "passed": true,
+      "exit_code": 2
+    },
+    {
+      "check": "partial wrapper",
+      "passed": true,
+      "exit_code": 2
+    },
+    {
+      "check": "missing identity",
+      "passed": true,
+      "exit_code": 2
+    },
+    {
+      "check": "missing status",
+      "passed": true,
+      "exit_code": 2
+    },
+    {
+      "check": "empty identity",
+      "passed": true,
+      "exit_code": 2
+    },
+    {
+      "check": "duplicate field",
+      "passed": true,
+      "exit_code": 2
+    },
+    {
+      "check": "gate symlink member",
+      "passed": true,
+      "exit_code": 2
+    },
+    {
+      "check": "gate symlink stage",
+      "passed": true,
+      "exit_code": 2
+    },
+    {
+      "check": "missing freeze",
+      "passed": true,
+      "exit_code": 2
+    },
+    {
+      "check": "overlay backup/hash closure/idempotent/preservation request-in-map=False",
+      "passed": true
+    },
+    {
+      "check": "changed hash retry",
+      "passed": true,
+      "diagnostic": "assignment hash mismatch"
+    },
+    {
+      "check": "overlay backup/hash closure/idempotent/preservation request-in-map=True",
+      "passed": true
+    },
+    {
+      "check": "changed hash retry",
+      "passed": true,
+      "diagnostic": "assignment hash mismatch"
+    },
+    {
+      "check": "dispatch",
+      "passed": true,
+      "diagnostic": "dispatched/used/partial stage rejected: dispatch.json"
+    },
+    {
+      "check": "used",
+      "passed": true,
+      "diagnostic": "dispatched/used/partial stage rejected: native-active.json"
+    },
+    {
+      "check": "source-used",
+      "passed": true,
+      "diagnostic": "source work already present"
+    },
+    {
+      "check": "expiry",
+      "passed": true,
+      "diagnostic": "expired stage; never reset clocks"
+    },
+    {
+      "check": "missing-marker",
+      "passed": true,
+      "diagnostic": "complete clarified prepared stage required"
+    },
+    {
+      "check": "marker-hash",
+      "passed": true,
+      "diagnostic": "carried hash/size mismatch: ER12_RUNTIME/mechanics/exact-goal-binding-guard-v1/synthetic-scratch/marker-hash/input-map.json"
+    },
+    {
+      "check": "symlink",
+      "passed": true,
+      "diagnostic": "symlink stage member rejected"
+    },
+    {
+      "check": "request-hash",
+      "passed": true,
+      "diagnostic": "request hash mismatch"
+    },
+    {
+      "check": "dispatched idempotent replay",
+      "passed": true,
+      "diagnostic": "dispatched/used/partial stage rejected: dispatch.json"
+    }
+  ],
+  "live_overlay_runs": 0,
+  "provider_calls": 0,
+  "delegations": 0,
+  "scientific_qualification": false,
+  "scratch_removed": true
+}

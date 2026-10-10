@@ -1,0 +1,149 @@
+[
+  {
+    "stage": "investigator",
+    "path": "ER12_RUNTIME/runs/A2-02/control/inputs/brief.md",
+    "expected_sha256": "15ac2ec31efcc20dac85969b6855efaa85cfbe065d00df9031e32288b7fb3ca0",
+    "actual_sha256": "15ac2ec31efcc20dac85969b6855efaa85cfbe065d00df9031e32288b7fb3ca0",
+    "matches": true
+  },
+  {
+    "stage": "investigator",
+    "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/assignment.md",
+    "expected_sha256": "024560cb3fefcf4b7ea52f20da3dcfa347d7c2b237e145e3caae17a4b42457f4",
+    "actual_sha256": "024560cb3fefcf4b7ea52f20da3dcfa347d7c2b237e145e3caae17a4b42457f4",
+    "matches": true
+  },
+  {
+    "stage": "investigator",
+    "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/input-map.json",
+    "expected_sha256": "5ce3b91a5e15706223ffde4b9026416855c99c09dc3496fed6d488a3c6eab91d",
+    "actual_sha256": "5ce3b91a5e15706223ffde4b9026416855c99c09dc3496fed6d488a3c6eab91d",
+    "matches": true
+  },
+  {
+    "stage": "critic",
+    "path": "ER12_RUNTIME/runs/A2-02/control/inputs/brief.md",
+    "expected_sha256": "15ac2ec31efcc20dac85969b6855efaa85cfbe065d00df9031e32288b7fb3ca0",
+    "actual_sha256": "15ac2ec31efcc20dac85969b6855efaa85cfbe065d00df9031e32288b7fb3ca0",
+    "matches": true
+  },
+  {
+    "stage": "critic",
+    "path": "ER12_RUNTIME/runs/A2-02/control/stages/critic/assignment.md",
+    "expected_sha256": "67ee90e38a1f329c5bd3280f9f9f1a8f011b1eed7176603a854fd76a905a22b8",
+    "actual_sha256": "67ee90e38a1f329c5bd3280f9f9f1a8f011b1eed7176603a854fd76a905a22b8",
+    "matches": true
+  },
+  {
+    "stage": "critic",
+    "path": "ER12_RUNTIME/runs/A2-02/control/stages/critic/input-map.json",
+    "expected_sha256": "cbe43fa0e4b3b3c73888192c44dfd3f8bd147e9f9781bfe59f1028d5675d9ff4",
+    "actual_sha256": "cbe43fa0e4b3b3c73888192c44dfd3f8bd147e9f9781bfe59f1028d5675d9ff4",
+    "matches": true
+  },
+  {
+    "stage": "critic",
+    "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/discovery.md",
+    "expected_sha256": "248e9dc0ae51e2c5d56d681f2979211b984f2ecc0ec306d90173acf9f053964d",
+    "actual_sha256": "248e9dc0ae51e2c5d56d681f2979211b984f2ecc0ec306d90173acf9f053964d",
+    "matches": true
+  },
+  {
+    "stage": "critic",
+    "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/draft.md",
+    "expected_sha256": "424478277a6aee2df0103b538792a384028f2ba6f0f82b533953f327bb273477",
+    "actual_sha256": "424478277a6aee2df0103b538792a384028f2ba6f0f82b533953f327bb273477",
+    "matches": true
+  },
+  {
+    "stage": "critic",
+    "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/source-map.json",
+    "expected_sha256": "164fa8a9fc4153ad8d77767e3be0efc07c00fbe2df1ee6bac8dcae9b76fb7a01",
+    "actual_sha256": "164fa8a9fc4153ad8d77767e3be0efc07c00fbe2df1ee6bac8dcae9b76fb7a01",
+    "matches": true
+  },
+  {
+    "stage": "critic",
+    "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/revealed-plan.md",
+    "expected_sha256": "41c98c70681d7ab5e6534f387777df30ec06ff94ee93cdb071e124fe1a0c8ff6",
+    "actual_sha256": "41c98c70681d7ab5e6534f387777df30ec06ff94ee93cdb071e124fe1a0c8ff6",
+    "matches": true
+  },
+  {
+    "stage": "critic",
+    "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/plan-reveal.json",
+    "expected_sha256": "f08abfa8be9002d5cadaba00a76ccb67f557a7515d05f695a868d5024f7f7569",
+    "actual_sha256": "f08abfa8be9002d5cadaba00a76ccb67f557a7515d05f695a868d5024f7f7569",
+    "matches": true
+  },
+  {
+    "stage": "reviser",
+    "path": "ER12_RUNTIME/runs/A2-02/control/inputs/brief.md",
+    "expected_sha256": "15ac2ec31efcc20dac85969b6855efaa85cfbe065d00df9031e32288b7fb3ca0",
+    "actual_sha256": "15ac2ec31efcc20dac85969b6855efaa85cfbe065d00df9031e32288b7fb3ca0",
+    "matches": true
+  },
+  {
+    "stage": "reviser",
+    "path": "ER12_RUNTIME/runs/A2-02/control/stages/reviser/assignment.md",
+    "expected_sha256": "1faa65108c3794bf632be7cf5d98ceaa575efa17d9da8d69295b5b215747dd41",
+    "actual_sha256": "1faa65108c3794bf632be7cf5d98ceaa575efa17d9da8d69295b5b215747dd41",
+    "matches": true
+  },
+  {
+    "stage": "reviser",
+    "path": "ER12_RUNTIME/runs/A2-02/control/stages/reviser/input-map.json",
+    "expected_sha256": "aa4f189ebf6097688871b206646a49d2a11b6674b58f851d2129ffcabb7a75e6",
+    "actual_sha256": "aa4f189ebf6097688871b206646a49d2a11b6674b58f851d2129ffcabb7a75e6",
+    "matches": true
+  },
+  {
+    "stage": "reviser",
+    "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/discovery.md",
+    "expected_sha256": "248e9dc0ae51e2c5d56d681f2979211b984f2ecc0ec306d90173acf9f053964d",
+    "actual_sha256": "248e9dc0ae51e2c5d56d681f2979211b984f2ecc0ec306d90173acf9f053964d",
+    "matches": true
+  },
+  {
+    "stage": "reviser",
+    "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/draft.md",
+    "expected_sha256": "424478277a6aee2df0103b538792a384028f2ba6f0f82b533953f327bb273477",
+    "actual_sha256": "424478277a6aee2df0103b538792a384028f2ba6f0f82b533953f327bb273477",
+    "matches": true
+  },
+  {
+    "stage": "reviser",
+    "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/source-map.json",
+    "expected_sha256": "164fa8a9fc4153ad8d77767e3be0efc07c00fbe2df1ee6bac8dcae9b76fb7a01",
+    "actual_sha256": "164fa8a9fc4153ad8d77767e3be0efc07c00fbe2df1ee6bac8dcae9b76fb7a01",
+    "matches": true
+  },
+  {
+    "stage": "reviser",
+    "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/revealed-plan.md",
+    "expected_sha256": "41c98c70681d7ab5e6534f387777df30ec06ff94ee93cdb071e124fe1a0c8ff6",
+    "actual_sha256": "41c98c70681d7ab5e6534f387777df30ec06ff94ee93cdb071e124fe1a0c8ff6",
+    "matches": true
+  },
+  {
+    "stage": "reviser",
+    "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/plan-reveal.json",
+    "expected_sha256": "f08abfa8be9002d5cadaba00a76ccb67f557a7515d05f695a868d5024f7f7569",
+    "actual_sha256": "f08abfa8be9002d5cadaba00a76ccb67f557a7515d05f695a868d5024f7f7569",
+    "matches": true
+  },
+  {
+    "stage": "reviser",
+    "path": "ER12_RUNTIME/runs/A2-02/control/stages/critic/critique.md",
+    "expected_sha256": "e3f6c2de5ca46b46ca6b234a000f3b1e54749c81186ab67a378b8c37240b730e",
+    "actual_sha256": "e3f6c2de5ca46b46ca6b234a000f3b1e54749c81186ab67a378b8c37240b730e",
+    "matches": true
+  },
+  {
+    "stage": "reviser",
+    "path": "ER12_RUNTIME/runs/A2-02/control/stages/critic/source-map.json",
+    "expected_sha256": "38473a4cbc96c7ffd9db23369317823e51fc4a4f09635f1d41bef8a2cc7ea7ba",
+    "actual_sha256": "38473a4cbc96c7ffd9db23369317823e51fc4a4f09635f1d41bef8a2cc7ea7ba",
+    "matches": true
+  }
+]

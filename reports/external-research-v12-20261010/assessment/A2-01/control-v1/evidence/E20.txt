@@ -1,0 +1,78 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://github.com/getodk/collect/pull/4655"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A2-01/control-v1/retrieval-manifest.json",
+      "source_id": "E20",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/A2-01/control-v1/source-map.json",
+      "source_id": "E20",
+      "existing_authored_summary_fields": {
+        "version": "Merged 2021-07-07; six commits",
+        "subject_operation": "Final historical change and testing account",
+        "conditions": "Closes #4589; source author describes stub-based FormResubmissionTest and manual intervention. Combined with E08 establishes shipped milestone."
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locators": [
+        {
+          "path": "evidence/E20.txt",
+          "lines": [
+            108,
+            163
+          ],
+          "section": "Merge record and verification/design notes"
+        }
+      ]
+    }
+  ],
+  "raw_sha256": "505e5e44f9ae1ed4a06551bcbb74c2dbd48e0e34f1b71530d5665625a2967e6e",
+  "original_bytes": 16080,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A2-01/control-v1/evidence/E20.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://github.com/getodk/collect/pull/4655"
+  ],
+  "version": [
+    {
+      "version": "Merged 2021-07-07; six commits",
+      "subject_operation": "Final historical change and testing account",
+      "conditions": "Closes #4589; source author describes stub-based FormResubmissionTest and manual intervention. Combined with E08 establishes shipped milestone."
+    }
+  ],
+  "selector": [
+    {
+      "locators": [
+        {
+          "path": "evidence/E20.txt",
+          "lines": [
+            108,
+            163
+          ],
+          "section": "Merge record and verification/design notes"
+        }
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "version": "Merged 2021-07-07; six commits",
+      "subject_operation": "Final historical change and testing account",
+      "conditions": "Closes #4589; source author describes stub-based FormResubmissionTest and manual intervention. Combined with E08 establishes shipped milestone."
+    }
+  ],
+  "rawSHA256": "505e5e44f9ae1ed4a06551bcbb74c2dbd48e0e34f1b71530d5665625a2967e6e"
+}

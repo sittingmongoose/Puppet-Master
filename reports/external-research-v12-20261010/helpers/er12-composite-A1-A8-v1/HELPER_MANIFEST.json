@@ -1,0 +1,71 @@
+{
+  "recipe_id": "er12-composite-A1-A8-v1",
+  "version": "1.0.0",
+  "created_at_utc": "2026-10-10T05:28:46.950305+00:00",
+  "engineering_preparation_only": true,
+  "scientific_qualification": false,
+  "dispatch_owner": "root",
+  "components": {
+    "base_prepare": {
+      "path": "ER12_RUNTIME/helpers/er12-screen-v1/prepare.py",
+      "sha256": "bb38b943536f5039018da2616afce260a88baf9aafa8412a1590180420f047da",
+      "bytes": 23575
+    },
+    "base_reveal": {
+      "path": "ER12_RUNTIME/helpers/er12-screen-v1/reveal.py",
+      "sha256": "ec9579204af96aa6a45caba1eef94c6ca1a799c296a2363b179af359bd908abe",
+      "bytes": 2880
+    },
+    "base_bootstrap": {
+      "path": "ER12_RUNTIME/helpers/er12-screen-v1/bootstrap.js",
+      "sha256": "42d76b4a90d073e64fa25b730fe78a1810e25224c8acc1089f85e6c6786f3056",
+      "bytes": 4356
+    },
+    "critic_delta": {
+      "path": "ER12_RUNTIME/methods/A8/critic_prompt_delta.txt",
+      "sha256": "6ca210592ebaffd1228f390855af2dcbb7b338dcbb3e00c9fb57f0bdc8672c0d",
+      "bytes": 3398
+    },
+    "reviser_delta": {
+      "path": "ER12_RUNTIME/methods/A8/reviser_prompt_delta.txt",
+      "sha256": "31b0b79da9d1a99d81103a485448bbd2d518e5c48cd56b15a1a1a9cb9d11e087",
+      "bytes": 1715
+    }
+  },
+  "files": {
+    "COMPONENT_PINS.json": {
+      "sha256": "656eab890701f839b54bf969c4fc26f4f0fd482389eb8b53796be86090b75c58",
+      "bytes": 1135
+    },
+    "README.md": {
+      "sha256": "4311116a9dd21c20f64851868f152fd3c43afb5d15fd5484e9bab84466e16e78",
+      "bytes": 4454
+    },
+    "VERSION.json": {
+      "sha256": "444924da4c9441884c5c079fcd21034951716d264f153b5a1d8229245109c2a8",
+      "bytes": 1348
+    },
+    "config.example.json": {
+      "sha256": "406ba37b9448b354cd9dd0db8ed97d2a169e4180a0ae034e4e249f5c8a5bef91",
+      "bytes": 1947
+    },
+    "prepare.py": {
+      "sha256": "0041e88d4806ecedd66521f0b63e28e1e4c83128b686b98db6f4ac91f7d0a5e8",
+      "bytes": 4645
+    },
+    "test-results.json": {
+      "sha256": "362b84bb68b9849ac74258454d964762103eef90390daf4aef60e156c93810dd",
+      "bytes": 2277
+    },
+    "test_prepare.py": {
+      "sha256": "a01644018760101056f2d69f55a11eb62b6adc3c19e4ace41be1f119388419ef",
+      "bytes": 11771
+    }
+  },
+  "offline_checks": {
+    "passed": true,
+    "tests_run": 7,
+    "results_file": "test-results.json"
+  },
+  "scratch_remaining": []
+}

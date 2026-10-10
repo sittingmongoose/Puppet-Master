@@ -1,0 +1,1768 @@
+{
+  "assessment_id": "ER12-A2-02-control-v1",
+  "independent": true,
+  "purpose": "Navigable freshly retrieved governing evidence and claim conditions; hashes are integrity locators, not semantic proof.",
+  "sources": [
+    {
+      "id": "R01",
+      "candidate_source_id": "S1",
+      "url": "https://iiif.io/api/presentation/3.0/",
+      "version_or_commit_independently_checked": "3.0.0",
+      "primary_locator": "§5.3 Canvas; §5.6 Annotation; §6.1 URI Recommendations; status header",
+      "observed_operation": "Canvas identity and spatial frame; placement of painting versus non-painting annotations; persistent URI guidance.",
+      "governing_subject_unit_type_default_domain_exceptions": "Canvas IDs are HTTP(S) URIs without fragments. Canvas dimensions describe a coordinate frame rather than delivered pixel resolution. Non-painting notes belong under annotations; Canvas items contain painting annotations. URI persistence is recommended, not a guarantee of unchanged image bytes or a version history.",
+      "applicability_judgment": "Supports stable Canvas targets, separate scholar notes, and explicit revision uncertainty. Curator and privacy ownership come from the brief, not IIIF.",
+      "retrieval": {
+        "id": "S1",
+        "url": "https://iiif.io/api/presentation/3.0/",
+        "candidate_version": "3.0.0; latest stable shown",
+        "accessed_at_utc": "2026-10-10T05:44:43.942894+00:00",
+        "status": 200,
+        "final_url": "https://iiif.io/api/presentation/3.0/",
+        "headers": {
+          "Content-Type": "text/html",
+          "Content-Length": "385826",
+          "Connection": "close",
+          "Cache-Control": "public, no-transform, max-age=300",
+          "Date": "Sat, 10 Oct 2026 05:44:44 GMT",
+          "ETag": "\"57700142c11e03d57e1c7219dbe8320c\"",
+          "Last-Modified": "Thu, 21 May 2026 20:45:05 GMT",
+          "Server": "nginx",
+          "X-UA-Compatible": "IE=Edge,chrome=1",
+          "X-Cache": "Miss from cloudfront",
+          "Via": "1.1 e681dabd190d3783884c0bade3bdc5ca.cloudfront.net (CloudFront)",
+          "X-Amz-Cf-Pop": "PHL51-P1",
+          "X-Amz-Cf-Id": "jybiAKV-RbbxcOOXWCM2McRnG3jBcUIsJu3l0nE72hnMPwyrrj9DVA=="
+        },
+        "bytes": 385826,
+        "sha256": "3e4cad9a0ff652e0905c4bd15a27c8d68e208dd34c1d55102870419e5ca5f77e",
+        "raw_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S1.html",
+        "text_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S1.txt"
+      },
+      "semantic_status": "SUPPORTED_WITH_STATED_BOUNDARIES",
+      "candidate_retrieval_execution_proved_by_this_check": false
+    },
+    {
+      "id": "R02",
+      "candidate_source_id": "S2",
+      "url": "https://iiif.io/api/presentation/2.1/",
+      "version_or_commit_independently_checked": "2.1.1",
+      "primary_locator": "§5.2 Sequence; §5.3 Canvas; §5.7 Annotation List; §5.8 Layer",
+      "observed_operation": "Read-only interpretation of v2 page ordering, Canvas geometry, external annotation lists and resource/on annotations.",
+      "governing_subject_unit_type_default_domain_exceptions": "v2 uses @id/@type, sequences/canvases, images and otherContent. Canvas height/width are integers and clients scale images into Canvas space; matching image and Canvas dimensions is not universal. Annotation lists and non-image content are distinct from collection master image data.",
+      "applicability_judgment": "Supports the conditional v2 input branch and a separate, explicitly selected output contract. It does not supply a ready-made converter.",
+      "retrieval": {
+        "id": "S2",
+        "url": "https://iiif.io/api/presentation/2.1/",
+        "candidate_version": "2.1.1; previous version to 3.0.0",
+        "accessed_at_utc": "2026-10-10T05:44:43.945096+00:00",
+        "status": 200,
+        "final_url": "https://iiif.io/api/presentation/2.1/",
+        "headers": {
+          "Content-Type": "text/html",
+          "Content-Length": "310181",
+          "Connection": "close",
+          "Cache-Control": "public, no-transform, max-age=300",
+          "Date": "Sat, 10 Oct 2026 05:44:44 GMT",
+          "ETag": "\"685f77553b82598f0feb27d587fde736\"",
+          "Last-Modified": "Thu, 21 May 2026 20:45:04 GMT",
+          "Server": "nginx",
+          "X-UA-Compatible": "IE=Edge,chrome=1",
+          "X-Cache": "Miss from cloudfront",
+          "Via": "1.1 4ceb2989b2985c33abee5da8ac0ecbcc.cloudfront.net (CloudFront)",
+          "X-Amz-Cf-Pop": "PHL51-P1",
+          "X-Amz-Cf-Id": "I-qf5whyDnkUTW8Z_sNkI4QxbahwJV1TVaWLVNr9sjtCsJmI5M__ZA=="
+        },
+        "bytes": 310181,
+        "sha256": "67f7247d11409bd6736edbd0f474f553ea715f0e60a7f06b25a5eebf30221f1c",
+        "raw_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S2.html",
+        "text_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S2.txt"
+      },
+      "semantic_status": "SUPPORTED_WITH_STATED_BOUNDARIES",
+      "candidate_retrieval_execution_proved_by_this_check": false
+    },
+    {
+      "id": "R03",
+      "candidate_source_id": "S3",
+      "url": "https://iiif.io/api/presentation/3.0/change-log/",
+      "version_or_commit_independently_checked": "Presentation 3.0 change log",
+      "primary_locator": "§1.1.2; §1.2.1; §1.2.13; §1.3.6; §1.4.1; §1.4.3",
+      "observed_operation": "Released major-version migration of annotation model, identifiers, lists, layers and ordering structures.",
+      "governing_subject_unit_type_default_domain_exceptions": "W3C Web Annotation replaces Open Annotation. @id/@type become id/type. otherContent gives way to annotations, AnnotationList/Layer to AnnotationPage/AnnotationCollection, and Sequence is removed. Some practical effects are characterized as limited but real; the complete migration is backwards incompatible.",
+      "applicability_judgment": "Supports rejecting the original cosmetic-migration assumption and testing bodies, targets, lists/layers and page ordering. No adapter execution is established.",
+      "retrieval": {
+        "id": "S3",
+        "url": "https://iiif.io/api/presentation/3.0/change-log/",
+        "candidate_version": "3.0.0 major release; change log dated with the spec",
+        "accessed_at_utc": "2026-10-10T05:44:43.946354+00:00",
+        "status": 200,
+        "final_url": "https://iiif.io/api/presentation/3.0/change-log/",
+        "headers": {
+          "Content-Type": "text/html",
+          "Content-Length": "71875",
+          "Connection": "close",
+          "Cache-Control": "public, no-transform, max-age=300",
+          "Date": "Sat, 10 Oct 2026 05:44:44 GMT",
+          "ETag": "\"2829cc0f108baab15d7e14d3e9c1cf06\"",
+          "Last-Modified": "Thu, 21 May 2026 20:45:05 GMT",
+          "Server": "nginx",
+          "X-UA-Compatible": "IE=Edge,chrome=1",
+          "X-Cache": "Miss from cloudfront",
+          "Via": "1.1 b88fda0ef7fc0be68ec5692fdd8f97ec.cloudfront.net (CloudFront)",
+          "X-Amz-Cf-Pop": "PHL51-P1",
+          "X-Amz-Cf-Id": "RnxqIOZW1QI8wiuY_LqtOht3nk9EQGs0VvVhJ0T460lTnexyuDqCVA=="
+        },
+        "bytes": 71875,
+        "sha256": "a1c25c702c13ef5cea91be23888aa77279c389c1b08530f0ab4658b4faf66e35",
+        "raw_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S3.html",
+        "text_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S3.txt"
+      },
+      "semantic_status": "SUPPORTED_WITH_STATED_BOUNDARIES",
+      "candidate_retrieval_execution_proved_by_this_check": false
+    },
+    {
+      "id": "R04",
+      "candidate_source_id": "S4",
+      "url": "https://www.w3.org/TR/annotation-model/",
+      "version_or_commit_independently_checked": "W3C Recommendation 2017-02-23, Data Model 1.0",
+      "primary_locator": "§3.3 Embedded Textual Body; §4 Specific Resources; §4.2.1 Fragment Selector",
+      "observed_operation": "Embedded transcription/comment text and an explicit target selector representation.",
+      "governing_subject_unit_type_default_domain_exceptions": "TextualBody has exactly one value; language and format can describe it. SpecificResource has exactly one source. FragmentSelector has exactly one type=FragmentSelector and value; conformsTo is recommended and must not occur more than once. Standards syntax is not proof of any viewer profile.",
+      "applicability_judgment": "Supports structured text and region export, while preserving the final requirement to test consuming clients.",
+      "retrieval": {
+        "id": "S4",
+        "url": "https://www.w3.org/TR/annotation-model/",
+        "candidate_version": "W3C Recommendation, 2017-02-23; Web Annotation Data Model 1.0",
+        "accessed_at_utc": "2026-10-10T05:44:43.948067+00:00",
+        "status": 200,
+        "final_url": "https://www.w3.org/TR/annotation-model/",
+        "headers": {
+          "Date": "Sat, 10 Oct 2026 05:44:44 GMT",
+          "Content-Type": "text/html; charset=utf-8",
+          "Transfer-Encoding": "chunked",
+          "Connection": "close",
+          "content-location": "Overview.html",
+          "last-modified": "Wed, 22 Feb 2017 08:03:33 GMT",
+          "Cache-Control": "max-age=31536000, s-maxage=2592001",
+          "expires": "Sat, 09 Oct 2027 08:03:57 GMT",
+          "vary": "Accept-Encoding,Origin",
+          "cf-cache-status": "HIT",
+          "link": "<https://www.w3.org/TR/annotation-model/>;rel=\"canonical\"",
+          "access-control-allow-origin": "*",
+          "x-backend": "www-mirrors",
+          "x-request-id": "a47bdf29ad45e5ef",
+          "strict-transport-security": "max-age=15552000; includeSubdomains; preload",
+          "content-security-policy": "frame-ancestors 'self' https://cms.w3.org/ https://cms-dev.w3.org/; upgrade-insecure-requests",
+          "X-Content-Type-Options": "nosniff",
+          "set-cookie": "__cf_bm=3H_6rKVK7.0pOUW56voxcAQfaHrDPLCK3m1GCaj32pU-1791611084.0051315-1.0.1.1-B4udroKhYWhKtl2_sFc3qfFyFHv3ZIp4TIKXzRMCA5qIa11P.RfotHn2UIJwi2gmMRfwGd9JzTonxOSQpfm9XvTYqqKLusjzS7hHm4GShlsxSEtZyesV1.5JBEjrIG.g; HttpOnly; SameSite=None; Secure; Path=/; Domain=w3.org; Expires=Sat, 10 Oct 2026 06:14:44 GMT",
+          "Age": "78046",
+          "Server": "cloudflare",
+          "CF-RAY": "a483509b09804f30-PHL",
+          "alt-svc": "h3=\":443\"; ma=86400"
+        },
+        "bytes": 284185,
+        "sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+        "raw_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S4.html",
+        "text_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S4.txt"
+      },
+      "semantic_status": "SUPPORTED_WITH_STATED_BOUNDARIES",
+      "candidate_retrieval_execution_proved_by_this_check": false
+    },
+    {
+      "id": "R05",
+      "candidate_source_id": "S5",
+      "url": "https://www.w3.org/TR/media-frags/",
+      "version_or_commit_independently_checked": "W3C Recommendation 2012-09-25, Media Fragments 1.0 basic",
+      "primary_locator": "§4.2.2 Spatial Dimension; §6.1.2; §6.2.3; §6.3.3",
+      "observed_operation": "Rectangular xywh fragment addressing of visual media.",
+      "governing_subject_unit_type_default_domain_exceptions": "pixel is the default. The basic grammar requires four comma-separated integers, including for percent. x/width percentages use source width and y/height use source height. Bounds and invalid-region handling matter; pixel fragments on multi-resolution images must be ignored. This is a fragment selector operation, distinct from Image API pct requests.",
+      "applicability_judgment": "Supports the proposal’s bounded percent/pixel syntax discussion. It does not justify arbitrary decimal fragment values or automatic crop/content remapping; the final makes neither promise.",
+      "retrieval": {
+        "id": "S5",
+        "url": "https://www.w3.org/TR/media-frags/",
+        "candidate_version": "W3C Recommendation, 2012-09-25; Media Fragments URI 1.0 basic",
+        "accessed_at_utc": "2026-10-10T05:44:43.954416+00:00",
+        "status": 200,
+        "final_url": "https://www.w3.org/TR/media-frags/",
+        "headers": {
+          "Date": "Sat, 10 Oct 2026 05:44:44 GMT",
+          "Content-Type": "text/html; charset=utf-8",
+          "Transfer-Encoding": "chunked",
+          "Connection": "close",
+          "content-location": "Overview.html",
+          "last-modified": "Wed, 20 Mar 2019 17:12:22 GMT",
+          "Cache-Control": "max-age=31536000, s-maxage=2592001",
+          "expires": "Sat, 09 Oct 2027 08:07:38 GMT",
+          "vary": "Accept-Encoding,Origin",
+          "cf-cache-status": "HIT",
+          "link": "<https://www.w3.org/TR/media-frags/>;rel=\"canonical\"",
+          "access-control-allow-origin": "*",
+          "x-backend": "www-mirrors",
+          "x-request-id": "a47be4927c2bafd3",
+          "strict-transport-security": "max-age=15552000; includeSubdomains; preload",
+          "content-security-policy": "frame-ancestors 'self' https://cms.w3.org/ https://cms-dev.w3.org/; upgrade-insecure-requests",
+          "X-Content-Type-Options": "nosniff",
+          "set-cookie": "__cf_bm=Vdkp1UN5sr8efVCtMash4Kx6uzfTogYpSvHcxcUFZq0-1791611084.005763-1.0.1.1-m3_V.alQSbYyKmeu13yX.rBDH0uwISJdneuk4kehWzv0x4BWDzjE45jVM0s9ltkp7RpOUHxRw9mOCRIFiHnY7cQKl.YgIOvuzAGdZzcmpzEfB5VH1vUbmk2I4XGemxu0; HttpOnly; SameSite=None; Secure; Path=/; Domain=w3.org; Expires=Sat, 10 Oct 2026 06:14:44 GMT",
+          "Age": "77825",
+          "Server": "cloudflare",
+          "CF-RAY": "a483509b0b1fd226-PHL",
+          "alt-svc": "h3=\":443\"; ma=86400"
+        },
+        "bytes": 89887,
+        "sha256": "ecbaffe292d75c6d70f31b406475dd6e678440f92be34aa468fda67fb4217d9e",
+        "raw_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S5.html",
+        "text_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S5.txt"
+      },
+      "semantic_status": "SUPPORTED_WITH_STATED_BOUNDARIES",
+      "candidate_retrieval_execution_proved_by_this_check": false
+    },
+    {
+      "id": "R06",
+      "candidate_source_id": "S6",
+      "url": "https://iiif.io/api/image/3.0/",
+      "version_or_commit_independently_checked": "IIIF Image API 3.0.0",
+      "primary_locator": "§4 Image Requests; §4.1 Region; §5 Image Information; §7.1 CORS; §7.3 Error Conditions; §8 Authentication",
+      "observed_operation": "Remote service requests, advertised capabilities, browser access and failures.",
+      "governing_subject_unit_type_default_domain_exceptions": "Image requests extract a region, scale, mirror/rotate and transform quality/format in order. Pixel parameters are integers; percentage/rotation parameters can be floating point. pct uses dimensions reported by info.json. CORS is recommended. 404 can also mean unsupported parameters or size limits, not only absent image content. 401, 403 and 503 differ. Authentication is outside the API within a IIIF-aware workflow.",
+      "applicability_judgment": "Supports availability/access preflight and avoiding master copies as a workaround. Source correctness does not establish the pilot’s actual CORS, auth or service behavior.",
+      "retrieval": {
+        "id": "S6",
+        "url": "https://iiif.io/api/image/3.0/",
+        "candidate_version": "3.0.0 stable specification",
+        "accessed_at_utc": "2026-10-10T05:44:43.956180+00:00",
+        "status": 200,
+        "final_url": "https://iiif.io/api/image/3.0/",
+        "headers": {
+          "Content-Type": "text/html",
+          "Content-Length": "145643",
+          "Connection": "close",
+          "Cache-Control": "public, no-transform, max-age=300",
+          "Date": "Sat, 10 Oct 2026 05:44:44 GMT",
+          "ETag": "\"fe0bd821e143c70d9d0061d21ccc3f42\"",
+          "Last-Modified": "Thu, 21 May 2026 20:44:53 GMT",
+          "Server": "nginx",
+          "X-UA-Compatible": "IE=Edge,chrome=1",
+          "X-Cache": "Miss from cloudfront",
+          "Via": "1.1 b88fda0ef7fc0be68ec5692fdd8f97ec.cloudfront.net (CloudFront)",
+          "X-Amz-Cf-Pop": "PHL51-P1",
+          "X-Amz-Cf-Id": "BuGBH7uNpcPbVmlnK11gR8SA8Tv2esA3FDVpbgaGj2asUmK5zwfHiQ=="
+        },
+        "bytes": 145643,
+        "sha256": "efcbafb8055c5bfb2880def63f1368b7db47db868f6444ac517764ceeb2180c3",
+        "raw_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S6.html",
+        "text_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S6.txt"
+      },
+      "semantic_status": "SUPPORTED_WITH_STATED_BOUNDARIES",
+      "candidate_retrieval_execution_proved_by_this_check": false
+    },
+    {
+      "id": "R07",
+      "candidate_source_id": "S7",
+      "url": "https://iiif.io/api/cookbook/recipe/0004-canvas-size/",
+      "version_or_commit_independently_checked": "Presentation 3 cookbook, retrieved 2026-10-10",
+      "primary_locator": "Use Case; Implementation notes; Restrictions",
+      "observed_operation": "Stable Canvas coordinates across a same-content higher-resolution image replacement.",
+      "governing_subject_unit_type_default_domain_exceptions": "Canvas dimensions are unitless and need not equal image pixels. The recipe fills a Canvas with a differently sized image; aspect ratios should remain consistent to avoid distortion. It does not handle changed crops, orientation, page content or identity.",
+      "applicability_judgment": "Directly supports the geometry recommendation and its final restrictions.",
+      "retrieval": {
+        "id": "S7",
+        "url": "https://iiif.io/api/cookbook/recipe/0004-canvas-size/",
+        "candidate_version": "IIIF Presentation 3.0 cookbook recipe; page accessed at the recorded UTC",
+        "accessed_at_utc": "2026-10-10T05:44:44.064564+00:00",
+        "status": 200,
+        "final_url": "https://iiif.io/api/cookbook/recipe/0004-canvas-size/",
+        "headers": {
+          "Content-Type": "text/html",
+          "Content-Length": "17599",
+          "Connection": "close",
+          "Cache-Control": "public, no-transform, max-age=300",
+          "Date": "Sat, 10 Oct 2026 05:44:44 GMT",
+          "ETag": "\"453fa788d6c0e24bbbf2f2be091e68d3\"",
+          "Last-Modified": "Fri, 09 Oct 2026 12:21:39 GMT",
+          "Server": "nginx",
+          "X-UA-Compatible": "IE=Edge,chrome=1",
+          "X-Cache": "Miss from cloudfront",
+          "Via": "1.1 bbd89b29eb16bb369cdc097594fa8260.cloudfront.net (CloudFront)",
+          "X-Amz-Cf-Pop": "PHL51-P1",
+          "X-Amz-Cf-Id": "7B2WO6WV_iY5tPuL_Fvci5psTT4V3W-WcgIE_r84Kd0T5LYex1491w=="
+        },
+        "bytes": 17599,
+        "sha256": "1ae2467ff53bca8ca51b64612abbceab089523e5b1cbbed1bb34ae76b8d3b504",
+        "raw_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S7.html",
+        "text_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S7.txt"
+      },
+      "semantic_status": "SUPPORTED_WITH_STATED_BOUNDARIES",
+      "candidate_retrieval_execution_proved_by_this_check": false
+    },
+    {
+      "id": "R08",
+      "candidate_source_id": "S8",
+      "url": "https://iiif.io/api/cookbook/recipe/0266-full-canvas-annotation/",
+      "version_or_commit_independently_checked": "Presentation 3 cookbook, retrieved 2026-10-10",
+      "primary_locator": "Implementation Notes; Restrictions; Example",
+      "observed_operation": "Full-Canvas text notes with or without a selector, and their discoverability.",
+      "governing_subject_unit_type_default_domain_exceptions": "Non-painting annotations are in Canvas annotations/AnnotationPage. A Canvas-only target is valid; clients may show no marker. A full-area selector may be better supported. Viewers may display only some motivations.",
+      "applicability_judgment": "A useful unfamiliar operational detail preserved in the final: test whole-page cue and region display separately.",
+      "retrieval": {
+        "id": "S8",
+        "url": "https://iiif.io/api/cookbook/recipe/0266-full-canvas-annotation/",
+        "candidate_version": "IIIF Presentation 3.0 cookbook recipe; page accessed at the recorded UTC",
+        "accessed_at_utc": "2026-10-10T05:44:44.215526+00:00",
+        "status": 200,
+        "final_url": "https://iiif.io/api/cookbook/recipe/0266-full-canvas-annotation/",
+        "headers": {
+          "Content-Type": "text/html",
+          "Content-Length": "19397",
+          "Connection": "close",
+          "Cache-Control": "public, no-transform, max-age=300",
+          "Date": "Sat, 10 Oct 2026 05:44:44 GMT",
+          "ETag": "\"9465ff59774fea8e2e5469f81c2cce22\"",
+          "Last-Modified": "Fri, 09 Oct 2026 12:21:42 GMT",
+          "Server": "nginx",
+          "X-UA-Compatible": "IE=Edge,chrome=1",
+          "X-Cache": "Miss from cloudfront",
+          "Via": "1.1 2a78cba32e1e70413cb851835f0eb89c.cloudfront.net (CloudFront)",
+          "X-Amz-Cf-Pop": "PHL51-P1",
+          "X-Amz-Cf-Id": "0n-CLkQpFM1fwKcCaCQMMZHFXgXfflt42XKT9zr8UqYDSdKGLVp-SQ=="
+        },
+        "bytes": 19397,
+        "sha256": "d23fe75aa4b8c9089509316f201d30521a719ee2c0ece8deb06d2d00fce7c2b7",
+        "raw_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S8.html",
+        "text_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S8.txt"
+      },
+      "semantic_status": "SUPPORTED_WITH_STATED_BOUNDARIES",
+      "candidate_retrieval_execution_proved_by_this_check": false
+    },
+    {
+      "id": "R09",
+      "candidate_source_id": "S9",
+      "url": "https://iiif.io/api/cookbook/recipe/0231-transcript-meta-recipe/",
+      "version_or_commit_independently_checked": "Presentation 3 cookbook, retrieved 2026-10-10",
+      "primary_locator": "Transcripts, options 1–3",
+      "observed_operation": "Independent transcript access/download versus alongside-resource and synchronized transcript presentation.",
+      "governing_subject_unit_type_default_domain_exceptions": "A rendering link can point to an alternative representation for download or viewing outside the client. Supplementing annotations and spatial/temporal fragments provide different experiences. No viewer-created bundle or implemented download UI follows merely from the pointer.",
+      "applicability_judgment": "Supports retaining the optional text-only route as an implementable local proposal, subject to access/rights and provenance.",
+      "retrieval": {
+        "id": "S9",
+        "url": "https://iiif.io/api/cookbook/recipe/0231-transcript-meta-recipe/",
+        "candidate_version": "IIIF Presentation 3.0 cookbook recipe; page accessed at the recorded UTC",
+        "accessed_at_utc": "2026-10-10T05:44:44.257833+00:00",
+        "status": 200,
+        "final_url": "https://iiif.io/api/cookbook/recipe/0231-transcript-meta-recipe/",
+        "headers": {
+          "Content-Type": "text/html",
+          "Content-Length": "18564",
+          "Connection": "close",
+          "Cache-Control": "public, no-transform, max-age=300",
+          "Date": "Sat, 10 Oct 2026 05:44:44 GMT",
+          "ETag": "\"9879de9b30be6834063d40dce02b6efd\"",
+          "Last-Modified": "Fri, 09 Oct 2026 12:21:42 GMT",
+          "Server": "nginx",
+          "X-UA-Compatible": "IE=Edge,chrome=1",
+          "X-Cache": "Miss from cloudfront",
+          "Via": "1.1 cdbbcd70735de4c554b3d02a12c5bea0.cloudfront.net (CloudFront)",
+          "X-Amz-Cf-Pop": "PHL51-P1",
+          "X-Amz-Cf-Id": "uQDnl30nP89ShMepBpB7-nvTCUunlI1qJOv8Mm_ul122_Em4Nye2mg=="
+        },
+        "bytes": 18564,
+        "sha256": "fc61502ef1f4b8267a64f0b069f01b79c2c1e8828a190ce6b2ecc8d46198a593",
+        "raw_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S9.html",
+        "text_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S9.txt"
+      },
+      "semantic_status": "SUPPORTED_WITH_STATED_BOUNDARIES",
+      "candidate_retrieval_execution_proved_by_this_check": false
+    },
+    {
+      "id": "R10",
+      "candidate_source_id": "S10",
+      "url": "https://iiif.io/api/cookbook/recipe/matrix/",
+      "version_or_commit_independently_checked": "Current unversioned viewer matrix, retrieved 2026-10-10",
+      "primary_locator": "Annotation Recipes table, header and Simple Annotation — Tagging row",
+      "observed_operation": "Recipe-specific display support comparison.",
+      "governing_subject_unit_type_default_domain_exceptions": "Header order is Recipe, Mirador, UV. The row’s img alt/title values are Yes and No respectively. The matrix is not tied by this row to the final’s selected release builds and is not a comprehensive authoring/export test.",
+      "applicability_judgment": "The final correctly treats this as a bounded hypothesis for the pinned comparison, not a universal product guarantee.",
+      "retrieval": {
+        "id": "S10",
+        "url": "https://iiif.io/api/cookbook/recipe/matrix/",
+        "candidate_version": "Generated current matrix, accessed at the recorded UTC; no fixed release",
+        "accessed_at_utc": "2026-10-10T05:44:44.283663+00:00",
+        "status": 200,
+        "final_url": "https://iiif.io/api/cookbook/recipe/matrix/",
+        "headers": {
+          "Content-Type": "text/html",
+          "Content-Length": "322052",
+          "Connection": "close",
+          "Cache-Control": "public, no-transform, max-age=300",
+          "Date": "Sat, 10 Oct 2026 05:44:44 GMT",
+          "ETag": "\"a73b3474e21581645ec391e953d972d0\"",
+          "Last-Modified": "Fri, 09 Oct 2026 12:21:43 GMT",
+          "Server": "nginx",
+          "X-UA-Compatible": "IE=Edge,chrome=1",
+          "X-Cache": "Miss from cloudfront",
+          "Via": "1.1 a147f9c60c162e36df3586fdd9c01478.cloudfront.net (CloudFront)",
+          "X-Amz-Cf-Pop": "PHL51-P1",
+          "X-Amz-Cf-Id": "22fzEF2T0VtQ8bh44sXEWNeupWwX2MazPzsCn4ACGUALDNf2mSO7qA=="
+        },
+        "bytes": 322052,
+        "sha256": "92f0add99331eb8ec25431b0cb9ac09ab8cf641d7ccc3a7fc9137fa8fd01688a",
+        "raw_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S10.html",
+        "text_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S10.txt"
+      },
+      "semantic_status": "SUPPORTED_WITH_STATED_BOUNDARIES",
+      "candidate_retrieval_execution_proved_by_this_check": false
+    },
+    {
+      "id": "R11",
+      "candidate_source_id": "S11",
+      "url": "https://iiif.io/get-started/iiif-viewers/",
+      "version_or_commit_independently_checked": "Current IIIF project viewer overview",
+      "primary_locator": "Image viewers: Universal Viewer and Mirador",
+      "observed_operation": "High-level viewing capabilities and candidate fit.",
+      "governing_subject_unit_type_default_domain_exceptions": "Mirador is described as a multi-up viewer with zoom/pan/rotate and image/annotation comparison. UV is rich and embeddable for IIIF images/audio/video and non-IIIF 3D/PDF. The overview gives no complete pilot authoring/storage/import-export contract.",
+      "applicability_judgment": "Supports the conditional first Mirador comparison candidate and UV alternative as local pilot choices.",
+      "retrieval": {
+        "id": "S11",
+        "url": "https://iiif.io/get-started/iiif-viewers/",
+        "candidate_version": "IIIF project viewer overview, accessed at the recorded UTC",
+        "accessed_at_utc": "2026-10-10T05:44:44.284407+00:00",
+        "status": 200,
+        "final_url": "https://iiif.io/get-started/iiif-viewers/",
+        "headers": {
+          "Content-Type": "text/html",
+          "Content-Length": "18486",
+          "Connection": "close",
+          "Cache-Control": "public, no-transform, max-age=300",
+          "Date": "Sat, 10 Oct 2026 05:44:44 GMT",
+          "ETag": "\"a947eaaba67aebe07b84a3d5c4a0b13c\"",
+          "Last-Modified": "Wed, 07 Oct 2026 18:51:31 GMT",
+          "Server": "nginx",
+          "X-UA-Compatible": "IE=Edge,chrome=1",
+          "X-Cache": "Miss from cloudfront",
+          "Via": "1.1 4ceb2989b2985c33abee5da8ac0ecbcc.cloudfront.net (CloudFront)",
+          "X-Amz-Cf-Pop": "PHL51-P1",
+          "X-Amz-Cf-Id": "B0QscrGTViY9EnK2atmBexMEfyDwaMZZrLBSGwA5lqlaIqdu-JstEA=="
+        },
+        "bytes": 18486,
+        "sha256": "57f3a7558c44989ab7f1d8d71f48752a2ad3fabb4b01920efddf22c3e29e7967",
+        "raw_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S11.html",
+        "text_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S11.txt"
+      },
+      "semantic_status": "SUPPORTED_WITH_STATED_BOUNDARIES",
+      "candidate_retrieval_execution_proved_by_this_check": false
+    },
+    {
+      "id": "R12",
+      "candidate_source_id": "S12",
+      "url": "https://github.com/ProjectMirador/mirador/discussions/4200",
+      "version_or_commit_independently_checked": "Mirador 4.0 announcement, 2025-10-30",
+      "primary_locator": "For Mirador Developers; plugin references",
+      "observed_operation": "Breaking framework/plugin migration and community extension opportunities.",
+      "governing_subject_unit_type_default_domain_exceptions": "React 19 and MUI 7 changes require custom plugin/integration/theme updates. Community annotation plugins are separate integrations. A reference does not prove compatibility with the exact pilot release or deployment.",
+      "applicability_judgment": "Supports version pinning and the separation of core display from selected authoring extensions; the named MAE lead is an opportunity explored only shallowly by the candidate.",
+      "retrieval": {
+        "id": "S12",
+        "url": "https://github.com/ProjectMirador/mirador/discussions/4200",
+        "candidate_version": "Mirador 4.0 announced 2025-10-30",
+        "accessed_at_utc": "2026-10-10T05:44:44.451525+00:00",
+        "status": 200,
+        "final_url": "https://github.com/ProjectMirador/mirador/discussions/4200",
+        "headers": {
+          "Date": "Sat, 10 Oct 2026 05:44:44 GMT",
+          "Content-Type": "text/html; charset=utf-8",
+          "Cache-Control": "max-age=0, private, must-revalidate",
+          "Content-Security-Policy": "default-src 'none'; base-uri 'self'; child-src github.githubassets.com github.com/assets-cdn/worker/ github.com/assets/ gist.github.com/assets-cdn/worker/; connect-src 'self' uploads.github.com www.githubstatus.com collector.github.com raw.githubusercontent.com api.github.com github-cloud.s3.amazonaws.com github-production-repository-file-5c1aeb.s3.amazonaws.com github-production-upload-manifest-file-7fdce7.s3.amazonaws.com github-production-user-asset-6210df.s3.amazonaws.com *.rel.tunnels.api.visualstudio.com wss://*.rel.tunnels.api.visualstudio.com github.githubassets.com objects-origin.githubusercontent.com copilot-proxy.githubusercontent.com proxy.individual.githubcopilot.com proxy.business.githubcopilot.com proxy.enterprise.githubcopilot.com *.actions.githubusercontent.com wss://*.actions.githubusercontent.com productionresultssa0.blob.core.windows.net productionresultssa1.blob.core.windows.net productionresultssa2.blob.core.windows.net productionresultssa3.blob.core.windows.net productionresultssa4.blob.core.windows.net productionresultssa5.blob.core.windows.net productionresultssa6.blob.core.windows.net productionresultssa7.blob.core.windows.net productionresultssa8.blob.core.windows.net productionresultssa9.blob.core.windows.net productionresultssa10.blob.core.windows.net productionresultssa11.blob.core.windows.net productionresultssa12.blob.core.windows.net productionresultssa13.blob.core.windows.net productionresultssa14.blob.core.windows.net productionresultssa15.blob.core.windows.net productionresultssa16.blob.core.windows.net productionresultssa17.blob.core.windows.net productionresultssa18.blob.core.windows.net productionresultssa19.blob.core.windows.net github-production-repository-image-32fea6.s3.amazonaws.com github-production-release-asset-2e65be.s3.amazonaws.com insights.github.com wss://alive.github.com wss://alive-staging.github.com api.githubcopilot.com api.individual.githubcopilot.com api.business.githubcopilot.com api.enterprise.githubcopilot.com wss://production-copilot-host.webpubsub.azure.com api.github.com/cmc_internal/api/; font-src github.githubassets.com; form-action 'self' github.com gist.github.com copilot-workspace.githubnext.com objects-origin.githubusercontent.com; frame-ancestors 'none'; frame-src viewscreen.githubusercontent.com notebooks.githubusercontent.com; img-src 'self' data: blob: github.githubassets.com media.githubusercontent.com camo.githubusercontent.com identicons.github.com avatars.githubusercontent.com private-avatars.githubusercontent.com github-cloud.s3.amazonaws.com objects.githubusercontent.com release-assets.githubusercontent.com secured-user-images.githubusercontent.com user-images.githubusercontent.com private-user-images.githubusercontent.com opengraph.githubassets.com repository-images.githubusercontent.com marketplace-screenshots.githubusercontent.com copilotprodattachments.blob.core.windows.net/github-production-copilot-attachments/ github-production-user-asset-6210df.s3.amazonaws.com customer-stories-feed.github.com spotlights-feed.github.com explore-feed.github.com *.googleusercontent.com objects-origin.githubusercontent.com *.githubusercontent.com; manifest-src 'self'; media-src github.com user-images.githubusercontent.com secured-user-images.githubusercontent.com private-user-images.githubusercontent.com github-production-user-asset-6210df.s3.amazonaws.com gist.github.com github.githubassets.com; script-src github.githubassets.com 'sha256-tSjmyPUky1KbRZ0fw9VUil3wFEbeM82rtbJDygGJAXw='; style-src 'unsafe-inline' github.githubassets.com; upgrade-insecure-requests; worker-src github.githubassets.com github.com/assets-cdn/worker/ github.com/assets/ gist.github.com/assets-cdn/worker/",
+          "Referrer-Policy": "no-referrer-when-downgrade",
+          "server-timing": "discussion_layout-fragment;desc=\"discussion_layout fragment\";dur=116.539838,content_1-fragment;desc=\"content_1 fragment\";dur=87.998311,content_2-fragment;desc=\"content_2 fragment\";dur=80.711144,sidebar_content-fragment;desc=\"sidebar_content fragment\";dur=76.917908,nginx;desc=\"NGINX\";dur=0.742907,glb;desc=\"GLB\";dur=40.595924",
+          "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+          "Vary": "X-PJAX, X-PJAX-Container, Turbo-Visit, Turbo-Frame, X-Requested-With, X-GitHub-Client-Version, Sec-Fetch-Site,Accept-Encoding, Accept, X-Requested-With",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "deny",
+          "x-voltron-version": "c8822c3",
+          "X-XSS-Protection": "0",
+          "Server": "github.com",
+          "Accept-Ranges": "bytes",
+          "Set-Cookie": "_gh_sess=4TEZrszs%2BooyH5ygHlcs6tpU3U2vjT6gtzGIvt44G6rb3NWh7Lf%2FxKdZ5SOJFJBxlQFjmgT2LsMKy9qAm2CfAzG3rCp9mj6%2Bar4%2FWOU%2BLkkw8A260dadeLUOq4SbmOQIGkAnwA0Xtt1XNzAUYnBy4bzy%2B5QLC3olkA43t7sfPk1JgmLD3ZOjvch7qCUti4Tj5YMzodIP5cKgg8k2fiiRm6FuEKQqf1708eef5ocPw6SaXel1QpHfzUI93qT8WuFPEE8XCYgD8MYo%2BK%2BTLldB2Q%3D%3D--pSkRxkwf7ZoTBVRe--Spnp6N0jlVVrYzLjSWxmqw%3D%3D; path=/; HttpOnly; secure; SameSite=Lax",
+          "X-GitHub-Request-Id": "BD4C:11AE6A:236EF8:2E05BB:6AC9D0CC",
+          "x-github-edge-region": "iad",
+          "connection": "close",
+          "Transfer-Encoding": "chunked"
+        },
+        "bytes": 282373,
+        "sha256": "339976069b69ab6b674f1a5d54e52d20129f04d9ad29bbc169b08c785372ca6a",
+        "raw_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S12.html",
+        "text_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S12.txt"
+      },
+      "semantic_status": "SUPPORTED_WITH_STATED_BOUNDARIES",
+      "candidate_retrieval_execution_proved_by_this_check": false
+    },
+    {
+      "id": "R13",
+      "candidate_source_id": "S13",
+      "url": "https://github.com/ProjectMirador/mirador-annotations",
+      "version_or_commit_independently_checked": "ProjectMirador/mirador-annotations moving repository README",
+      "primary_locator": "About; Persisting Annotations; Installing",
+      "observed_operation": "Mirador 3 plugin authoring and persistence boundary.",
+      "governing_subject_unit_type_default_domain_exceptions": "The README explicitly says this codebase does not work with Mirador 4. It describes rectangle, oval, polygon and text-descriptor tools, a local-storage demo, and annotation-server persistence. It also names MAE as a Mirador 4 community alternative. These statements are about this plugin, not all annotation storage technologies.",
+      "applicability_judgment": "Supports the final’s compatibility warning and separate integration requirement without implying no Mirador 4 authoring option exists.",
+      "retrieval": {
+        "id": "S13",
+        "url": "https://github.com/ProjectMirador/mirador-annotations",
+        "candidate_version": "Repository master README viewed 2026-10-10; no release/tag pinned in this source",
+        "accessed_at_utc": "2026-10-10T05:44:44.495582+00:00",
+        "status": 200,
+        "final_url": "https://github.com/ProjectMirador/mirador-annotations",
+        "headers": {
+          "Date": "Sat, 10 Oct 2026 05:44:44 GMT",
+          "Content-Type": "text/html; charset=utf-8",
+          "Vary": "X-PJAX, X-PJAX-Container, Turbo-Visit, Turbo-Frame, X-Requested-With, X-GitHub-Client-Version, Sec-Fetch-Site,Accept-Encoding, Accept, X-Requested-With",
+          "ETag": "W/\"b737dee7862d50da707e62109be835f3\"",
+          "Cache-Control": "max-age=0, private, must-revalidate",
+          "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+          "X-Frame-Options": "deny",
+          "X-Content-Type-Options": "nosniff",
+          "X-XSS-Protection": "0",
+          "Referrer-Policy": "no-referrer-when-downgrade",
+          "Content-Security-Policy": "default-src 'none'; base-uri 'self'; child-src github.githubassets.com github.com/assets-cdn/worker/ github.com/assets/ gist.github.com/assets-cdn/worker/; connect-src 'self' uploads.github.com www.githubstatus.com collector.github.com raw.githubusercontent.com api.github.com github-cloud.s3.amazonaws.com github-production-repository-file-5c1aeb.s3.amazonaws.com github-production-upload-manifest-file-7fdce7.s3.amazonaws.com github-production-user-asset-6210df.s3.amazonaws.com *.rel.tunnels.api.visualstudio.com wss://*.rel.tunnels.api.visualstudio.com github.githubassets.com objects-origin.githubusercontent.com copilot-proxy.githubusercontent.com proxy.individual.githubcopilot.com proxy.business.githubcopilot.com proxy.enterprise.githubcopilot.com *.actions.githubusercontent.com wss://*.actions.githubusercontent.com productionresultssa0.blob.core.windows.net productionresultssa1.blob.core.windows.net productionresultssa2.blob.core.windows.net productionresultssa3.blob.core.windows.net productionresultssa4.blob.core.windows.net productionresultssa5.blob.core.windows.net productionresultssa6.blob.core.windows.net productionresultssa7.blob.core.windows.net productionresultssa8.blob.core.windows.net productionresultssa9.blob.core.windows.net productionresultssa10.blob.core.windows.net productionresultssa11.blob.core.windows.net productionresultssa12.blob.core.windows.net productionresultssa13.blob.core.windows.net productionresultssa14.blob.core.windows.net productionresultssa15.blob.core.windows.net productionresultssa16.blob.core.windows.net productionresultssa17.blob.core.windows.net productionresultssa18.blob.core.windows.net productionresultssa19.blob.core.windows.net github-production-repository-image-32fea6.s3.amazonaws.com github-production-release-asset-2e65be.s3.amazonaws.com insights.github.com wss://alive.github.com wss://alive-staging.github.com api.githubcopilot.com api.individual.githubcopilot.com api.business.githubcopilot.com api.enterprise.githubcopilot.com wss://production-copilot-host.webpubsub.azure.com api.github.com/cmc_internal/api/; font-src github.githubassets.com; form-action 'self' github.com gist.github.com copilot-workspace.githubnext.com objects-origin.githubusercontent.com; frame-ancestors 'none'; frame-src viewscreen.githubusercontent.com notebooks.githubusercontent.com; img-src 'self' data: blob: github.githubassets.com media.githubusercontent.com camo.githubusercontent.com identicons.github.com avatars.githubusercontent.com private-avatars.githubusercontent.com github-cloud.s3.amazonaws.com objects.githubusercontent.com release-assets.githubusercontent.com secured-user-images.githubusercontent.com user-images.githubusercontent.com private-user-images.githubusercontent.com opengraph.githubassets.com repository-images.githubusercontent.com marketplace-screenshots.githubusercontent.com copilotprodattachments.blob.core.windows.net/github-production-copilot-attachments/ github-production-user-asset-6210df.s3.amazonaws.com customer-stories-feed.github.com spotlights-feed.github.com explore-feed.github.com *.googleusercontent.com objects-origin.githubusercontent.com *.githubusercontent.com; manifest-src 'self'; media-src github.com user-images.githubusercontent.com secured-user-images.githubusercontent.com private-user-images.githubusercontent.com github-production-user-asset-6210df.s3.amazonaws.com gist.github.com github.githubassets.com; script-src github.githubassets.com 'sha256-tSjmyPUky1KbRZ0fw9VUil3wFEbeM82rtbJDygGJAXw='; style-src 'unsafe-inline' github.githubassets.com; upgrade-insecure-requests; worker-src github.githubassets.com github.com/assets-cdn/worker/ github.com/assets/ gist.github.com/assets-cdn/worker/",
+          "Server": "github.com",
+          "Accept-Ranges": "bytes",
+          "Set-Cookie": "_gh_sess=oPqTOar6vGf0dvAGkxVB39O0dq6j6YzzZrsv%2Bm2pLYrZH%2B%2Fo2Kza2A0cw57y32Awz4g0hpqPZ30YXwBsoeP8FAscugpsU3uwzXDIqVJr6an08kj%2FmHB4IlKCmUKUJWN35fr8stsW3%2B0YlMtFR1EhIkrNuiK3BNZwxROJ%2FBLI%2B1vj9TD75aeU4XGEbfTnFbR4TCh1ukYk4Ac8UJosniMpn1m20A4GwZOXWgzcs2KmaLc7MMDZA8bOPDRJZ7f2OQ6zTUBPQUHJMpUJ82bOf4AJyg%3D%3D--reEDY0%2Fbpj%2BTJJe8--nWo%2BGdOAXy62hO0rnZjevA%3D%3D; path=/; HttpOnly; secure; SameSite=Lax",
+          "X-GitHub-Request-Id": "BD56:5FAE7:587194:735C34:6AC9D0CC",
+          "x-github-edge-region": "iad",
+          "connection": "close",
+          "Transfer-Encoding": "chunked"
+        },
+        "bytes": 290018,
+        "sha256": "313bd5110ab2d1e989e3b1a114bd606b3f258a98f17719f5ecc0fae24650eddb",
+        "raw_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S13.html",
+        "text_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S13.txt"
+      },
+      "semantic_status": "SUPPORTED_WITH_STATED_BOUNDARIES",
+      "candidate_retrieval_execution_proved_by_this_check": false
+    },
+    {
+      "id": "R14",
+      "candidate_source_id": "S14",
+      "url": "https://github.com/ProjectMirador/mirador/issues/4198",
+      "version_or_commit_independently_checked": "Mirador issue #4198, opened 2025-10-29",
+      "primary_locator": "Issue description, screenshots and recipe context",
+      "observed_operation": "Reported missing annotation/layer notification dots in Mirador 4.",
+      "governing_subject_unit_type_default_domain_exceptions": "The report concerns sidebar annotation/layer icons when a Canvas has annotations/layers, with M3, M4 demo and an institutional M4 comparison using Cookbook recipe 33. A reported failure and closed issue alone do not prove fix release or pilot success.",
+      "applicability_judgment": "Supports a bounded note-discovery regression example, not a general region-rendering failure.",
+      "retrieval": {
+        "id": "S14",
+        "url": "https://github.com/ProjectMirador/mirador/issues/4198",
+        "candidate_version": "Opened 2025-10-29; closed; issue status shown Done",
+        "accessed_at_utc": "2026-10-10T05:44:44.532259+00:00",
+        "status": 200,
+        "final_url": "https://github.com/ProjectMirador/mirador/issues/4198",
+        "headers": {
+          "Date": "Sat, 10 Oct 2026 05:44:45 GMT",
+          "Content-Type": "text/html; charset=utf-8",
+          "Cache-Control": "max-age=0, private, must-revalidate",
+          "Content-Security-Policy": "default-src 'none'; base-uri 'self'; child-src github.githubassets.com github.com/assets-cdn/worker/ github.com/assets/ gist.github.com/assets-cdn/worker/; connect-src 'self' uploads.github.com www.githubstatus.com collector.github.com raw.githubusercontent.com api.github.com github-cloud.s3.amazonaws.com github-production-repository-file-5c1aeb.s3.amazonaws.com github-production-upload-manifest-file-7fdce7.s3.amazonaws.com github-production-user-asset-6210df.s3.amazonaws.com *.rel.tunnels.api.visualstudio.com wss://*.rel.tunnels.api.visualstudio.com github.githubassets.com objects-origin.githubusercontent.com copilot-proxy.githubusercontent.com proxy.individual.githubcopilot.com proxy.business.githubcopilot.com proxy.enterprise.githubcopilot.com *.actions.githubusercontent.com wss://*.actions.githubusercontent.com productionresultssa0.blob.core.windows.net productionresultssa1.blob.core.windows.net productionresultssa2.blob.core.windows.net productionresultssa3.blob.core.windows.net productionresultssa4.blob.core.windows.net productionresultssa5.blob.core.windows.net productionresultssa6.blob.core.windows.net productionresultssa7.blob.core.windows.net productionresultssa8.blob.core.windows.net productionresultssa9.blob.core.windows.net productionresultssa10.blob.core.windows.net productionresultssa11.blob.core.windows.net productionresultssa12.blob.core.windows.net productionresultssa13.blob.core.windows.net productionresultssa14.blob.core.windows.net productionresultssa15.blob.core.windows.net productionresultssa16.blob.core.windows.net productionresultssa17.blob.core.windows.net productionresultssa18.blob.core.windows.net productionresultssa19.blob.core.windows.net github-production-repository-image-32fea6.s3.amazonaws.com github-production-release-asset-2e65be.s3.amazonaws.com insights.github.com wss://alive.github.com wss://alive-staging.github.com api.githubcopilot.com api.individual.githubcopilot.com api.business.githubcopilot.com api.enterprise.githubcopilot.com wss://production-copilot-host.webpubsub.azure.com api.github.com/cmc_internal/api/; font-src github.githubassets.com; form-action 'self' github.com gist.github.com copilot-workspace.githubnext.com objects-origin.githubusercontent.com; frame-ancestors 'none'; frame-src viewscreen.githubusercontent.com notebooks.githubusercontent.com; img-src 'self' data: blob: github.githubassets.com media.githubusercontent.com camo.githubusercontent.com identicons.github.com avatars.githubusercontent.com private-avatars.githubusercontent.com github-cloud.s3.amazonaws.com objects.githubusercontent.com release-assets.githubusercontent.com secured-user-images.githubusercontent.com user-images.githubusercontent.com private-user-images.githubusercontent.com opengraph.githubassets.com repository-images.githubusercontent.com marketplace-screenshots.githubusercontent.com copilotprodattachments.blob.core.windows.net/github-production-copilot-attachments/ github-production-user-asset-6210df.s3.amazonaws.com customer-stories-feed.github.com spotlights-feed.github.com explore-feed.github.com *.googleusercontent.com objects-origin.githubusercontent.com *.githubusercontent.com; manifest-src 'self'; media-src github.com user-images.githubusercontent.com secured-user-images.githubusercontent.com private-user-images.githubusercontent.com github-production-user-asset-6210df.s3.amazonaws.com gist.github.com github.githubassets.com; script-src github.githubassets.com 'sha256-tSjmyPUky1KbRZ0fw9VUil3wFEbeM82rtbJDygGJAXw='; style-src 'unsafe-inline' github.githubassets.com; upgrade-insecure-requests; worker-src github.githubassets.com github.com/assets-cdn/worker/ github.com/assets/ gist.github.com/assets-cdn/worker/",
+          "Referrer-Policy": "no-referrer-when-downgrade",
+          "server-timing": "issue_layout-fragment;desc=\"issue_layout fragment\";dur=132.756856,issue_conversation_content-fragment;desc=\"issue_conversation_content fragment\";dur=581.75989,nginx;desc=\"NGINX\";dur=0.876418,glb;desc=\"GLB\";dur=52.498374",
+          "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+          "Vary": "X-PJAX, X-PJAX-Container, Turbo-Visit, Turbo-Frame, X-Requested-With, X-GitHub-Client-Version, X-Issues-React-Relay-Cache, X-Issues-Viewer-TanStack-Cache, Accept, Sec-Fetch-Site,Accept-Encoding, Accept, X-Requested-With",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "deny",
+          "x-voltron-version": "c8822c3",
+          "X-XSS-Protection": "0",
+          "Server": "github.com",
+          "Accept-Ranges": "bytes",
+          "Set-Cookie": "_gh_sess=qs7pZ9oPL2wz%2B4GKIsV1tjyTZ2HljaAiPcyZ%2FdPvhE26bT75H2aHtD8Fgr4PZORXYnXmmXeH6BE86pPP1TYlpMbGOkz0ZcD9GqnaXxgBiaFx34FfjVlYUHEstDqGkMe9Ivt9y3Ot%2F3KI9rxp4W6e3%2F6eooI6TqkbVrmTvseK%2Fiy%2Bo0LnPwo8dS48uKJdUfl6z9f8LaSa9ANwfZFnwi5PXJL06K6NSEA7PZs%2FzcN3%2F%2F5ikteGuJQMFSKZyNl48uPcSz7i5V5r6XUSBdSYP7%2BJGQ%3D%3D--LXCyMgTxvQYRO1aK--j1wELc3tn3PVmRHEZEV31w%3D%3D; path=/; HttpOnly; secure; SameSite=Lax",
+          "X-GitHub-Request-Id": "BD58:1E2D68:561110:71346F:6AC9D0CC",
+          "x-github-edge-region": "iad",
+          "connection": "close",
+          "Transfer-Encoding": "chunked"
+        },
+        "bytes": 353821,
+        "sha256": "170e6001fc7b5e3410a9d001662440c5d0f5fbc6f88cbe654d18f66bfbb2afdd",
+        "raw_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S14.html",
+        "text_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S14.txt"
+      },
+      "semantic_status": "SUPPORTED_WITH_STATED_BOUNDARIES",
+      "candidate_retrieval_execution_proved_by_this_check": false
+    },
+    {
+      "id": "R15",
+      "candidate_source_id": "S15",
+      "url": "https://github.com/ProjectMirador/mirador/pull/4201",
+      "version_or_commit_independently_checked": "PR #4201, merged 2025-12-04; head 056262ac0e990fa61bdc001e401c0201692700aa; merge 25c0b0ea119f48c0bde2276d516e3c2bbd795092",
+      "primary_locator": "PR metadata; E23 merged_at/merge_commit_sha/head.sha; E24 patch; E28 parents",
+      "observed_operation": "Source repair of the notification palette token for annotation/layer/search badges.",
+      "governing_subject_unit_type_default_domain_exceptions": "PR head and merge commit differ. The patch adds notification.contrastText; a merged source change does not itself prove release inclusion or configured UI behavior.",
+      "applicability_judgment": "Confirms the reviser’s correction of the draft’s commit labeling; released inclusion is verified separately.",
+      "retrieval": {
+        "id": "S15",
+        "url": "https://github.com/ProjectMirador/mirador/pull/4201",
+        "candidate_version": "Merged 2025-12-04; commit 056262a",
+        "accessed_at_utc": "2026-10-10T05:44:44.688627+00:00",
+        "status": 200,
+        "final_url": "https://github.com/ProjectMirador/mirador/pull/4201",
+        "headers": {
+          "Date": "Sat, 10 Oct 2026 05:44:45 GMT",
+          "Content-Type": "text/html; charset=utf-8",
+          "Cache-Control": "no-cache",
+          "Content-Security-Policy": "default-src 'none'; base-uri 'self'; child-src github.githubassets.com github.com/assets-cdn/worker/ github.com/assets/ gist.github.com/assets-cdn/worker/; connect-src 'self' uploads.github.com www.githubstatus.com collector.github.com raw.githubusercontent.com api.github.com github-cloud.s3.amazonaws.com github-production-repository-file-5c1aeb.s3.amazonaws.com github-production-upload-manifest-file-7fdce7.s3.amazonaws.com github-production-user-asset-6210df.s3.amazonaws.com *.rel.tunnels.api.visualstudio.com wss://*.rel.tunnels.api.visualstudio.com github.githubassets.com objects-origin.githubusercontent.com copilot-proxy.githubusercontent.com proxy.individual.githubcopilot.com proxy.business.githubcopilot.com proxy.enterprise.githubcopilot.com *.actions.githubusercontent.com wss://*.actions.githubusercontent.com productionresultssa0.blob.core.windows.net productionresultssa1.blob.core.windows.net productionresultssa2.blob.core.windows.net productionresultssa3.blob.core.windows.net productionresultssa4.blob.core.windows.net productionresultssa5.blob.core.windows.net productionresultssa6.blob.core.windows.net productionresultssa7.blob.core.windows.net productionresultssa8.blob.core.windows.net productionresultssa9.blob.core.windows.net productionresultssa10.blob.core.windows.net productionresultssa11.blob.core.windows.net productionresultssa12.blob.core.windows.net productionresultssa13.blob.core.windows.net productionresultssa14.blob.core.windows.net productionresultssa15.blob.core.windows.net productionresultssa16.blob.core.windows.net productionresultssa17.blob.core.windows.net productionresultssa18.blob.core.windows.net productionresultssa19.blob.core.windows.net github-production-repository-image-32fea6.s3.amazonaws.com github-production-release-asset-2e65be.s3.amazonaws.com insights.github.com wss://alive.github.com wss://alive-staging.github.com api.githubcopilot.com api.individual.githubcopilot.com api.business.githubcopilot.com api.enterprise.githubcopilot.com wss://production-copilot-host.webpubsub.azure.com api.github.com/cmc_internal/api/; font-src github.githubassets.com; form-action 'self' github.com gist.github.com copilot-workspace.githubnext.com objects-origin.githubusercontent.com; frame-ancestors 'none'; frame-src viewscreen.githubusercontent.com notebooks.githubusercontent.com; img-src 'self' data: blob: github.githubassets.com media.githubusercontent.com camo.githubusercontent.com identicons.github.com avatars.githubusercontent.com private-avatars.githubusercontent.com github-cloud.s3.amazonaws.com objects.githubusercontent.com release-assets.githubusercontent.com secured-user-images.githubusercontent.com user-images.githubusercontent.com private-user-images.githubusercontent.com opengraph.githubassets.com repository-images.githubusercontent.com marketplace-screenshots.githubusercontent.com copilotprodattachments.blob.core.windows.net/github-production-copilot-attachments/ github-production-user-asset-6210df.s3.amazonaws.com customer-stories-feed.github.com spotlights-feed.github.com explore-feed.github.com *.googleusercontent.com objects-origin.githubusercontent.com *.githubusercontent.com; manifest-src 'self'; media-src github.com user-images.githubusercontent.com secured-user-images.githubusercontent.com private-user-images.githubusercontent.com github-production-user-asset-6210df.s3.amazonaws.com gist.github.com github.githubassets.com; script-src github.githubassets.com 'sha256-tSjmyPUky1KbRZ0fw9VUil3wFEbeM82rtbJDygGJAXw='; style-src 'unsafe-inline' github.githubassets.com; upgrade-insecure-requests; worker-src github.githubassets.com github.com/assets-cdn/worker/ github.com/assets/ gist.github.com/assets-cdn/worker/",
+          "Referrer-Policy": "no-referrer-when-downgrade",
+          "server-timing": "pull_request_layout-fragment;desc=\"pull_request_layout fragment\";dur=270.96031,conversation_content-fragment;desc=\"conversation_content fragment\";dur=542.976174,conversation_sidebar-fragment;desc=\"conversation_sidebar fragment\";dur=309.547369,nginx;desc=\"NGINX\";dur=0.81922,glb;desc=\"GLB\";dur=24.736193",
+          "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+          "Vary": "X-PJAX, X-PJAX-Container, Turbo-Visit, Turbo-Frame, X-Requested-With, X-GitHub-Client-Version, Sec-Fetch-Site,Accept-Encoding, Accept, X-Requested-With",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "deny",
+          "x-voltron-version": "c8822c3",
+          "X-XSS-Protection": "0",
+          "Server": "github.com",
+          "Accept-Ranges": "bytes",
+          "Set-Cookie": "_gh_sess=Awzz8l6B5KwGlyGbPZJqvNDTv7vahWEJgmhna4FgTFZiE7dw%2FH%2B1rwb90ekqBUhBqAWSALvr4N%2BHvNVlcxNVVboDQit6ClNMublkVbwo9sjwt7M%2BwMvY4I8ZtTkP2%2BfKiysZvN4htaaiFEDcfbRt9gCPVEL5g%2F%2BKbTWk6KZNoYmiKz3TzAUsIWabq8AzM6tnr%2BYLQxuQ5wUjiaHoLqcANeyQ%2FkIm2WdiJGsJCBvVxEw81rW%2BfxuzXQqAxe15Ndrf9ycVZBESY%2BcI8%2FvYFCwtaQ%3D%3D--M9TW%2FllcYhgHZzDy--PQ%2Fi2RumCXrOL2tFwSrQeg%3D%3D; path=/; HttpOnly; secure; SameSite=Lax",
+          "X-GitHub-Request-Id": "BD66:120973:5E17FA:7A4A81:6AC9D0CC",
+          "x-github-edge-region": "iad",
+          "connection": "close",
+          "Transfer-Encoding": "chunked"
+        },
+        "bytes": 334102,
+        "sha256": "55e59929469aee42ce8aa1866948125878c99e621a5315374df42bb8f8c84b27",
+        "raw_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S15.html",
+        "text_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S15.txt"
+      },
+      "semantic_status": "SUPPORTED_WITH_STATED_BOUNDARIES",
+      "candidate_retrieval_execution_proved_by_this_check": false
+    },
+    {
+      "id": "R16",
+      "candidate_source_id": "S16",
+      "url": "https://github.com/ProjectMirador/mirador/releases/tag/v4.2.4",
+      "version_or_commit_independently_checked": "Mirador v4.2.4; 73fafe9c8f6ef74dff0c26373ef3eeefdcabcdf5; published 2026-09-02",
+      "primary_locator": "Release tag metadata; E25 body; S22 comparison",
+      "observed_operation": "Identity/date of the proposed fixed viewer comparison release.",
+      "governing_subject_unit_type_default_domain_exceptions": "The release notes do not name #4201; their full changelog covers v4.2.3 to v4.2.4. The old inherited locator saying the changed list includes #4201 is inaccurate. The final establishes source ancestry separately rather than using those release notes.",
+      "applicability_judgment": "Final release-inclusion meaning is supported, while the stale inherited locator remains limitation L1.",
+      "retrieval": {
+        "id": "S16",
+        "url": "https://github.com/ProjectMirador/mirador/releases/tag/v4.2.4",
+        "candidate_version": "v4.2.4, commit 73fafe9; released 2026-09-02 per release page",
+        "accessed_at_utc": "2026-10-10T05:44:44.771167+00:00",
+        "status": 200,
+        "final_url": "https://github.com/ProjectMirador/mirador/releases/tag/v4.2.4",
+        "headers": {
+          "Date": "Sat, 10 Oct 2026 05:44:45 GMT",
+          "Content-Type": "text/html; charset=utf-8",
+          "Vary": "X-PJAX, X-PJAX-Container, Turbo-Visit, Turbo-Frame, X-Requested-With, X-GitHub-Client-Version, Sec-Fetch-Site,Accept-Encoding, Accept, X-Requested-With",
+          "ETag": "W/\"7767c66b40a6ecf7e3258982fc2d811b\"",
+          "Cache-Control": "max-age=0, private, must-revalidate",
+          "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+          "X-Frame-Options": "deny",
+          "X-Content-Type-Options": "nosniff",
+          "X-XSS-Protection": "0",
+          "Referrer-Policy": "no-referrer-when-downgrade",
+          "Content-Security-Policy": "default-src 'none'; base-uri 'self'; child-src github.githubassets.com github.com/assets-cdn/worker/ github.com/assets/ gist.github.com/assets-cdn/worker/; connect-src 'self' uploads.github.com www.githubstatus.com collector.github.com raw.githubusercontent.com api.github.com github-cloud.s3.amazonaws.com github-production-repository-file-5c1aeb.s3.amazonaws.com github-production-upload-manifest-file-7fdce7.s3.amazonaws.com github-production-user-asset-6210df.s3.amazonaws.com *.rel.tunnels.api.visualstudio.com wss://*.rel.tunnels.api.visualstudio.com github.githubassets.com objects-origin.githubusercontent.com copilot-proxy.githubusercontent.com proxy.individual.githubcopilot.com proxy.business.githubcopilot.com proxy.enterprise.githubcopilot.com *.actions.githubusercontent.com wss://*.actions.githubusercontent.com productionresultssa0.blob.core.windows.net productionresultssa1.blob.core.windows.net productionresultssa2.blob.core.windows.net productionresultssa3.blob.core.windows.net productionresultssa4.blob.core.windows.net productionresultssa5.blob.core.windows.net productionresultssa6.blob.core.windows.net productionresultssa7.blob.core.windows.net productionresultssa8.blob.core.windows.net productionresultssa9.blob.core.windows.net productionresultssa10.blob.core.windows.net productionresultssa11.blob.core.windows.net productionresultssa12.blob.core.windows.net productionresultssa13.blob.core.windows.net productionresultssa14.blob.core.windows.net productionresultssa15.blob.core.windows.net productionresultssa16.blob.core.windows.net productionresultssa17.blob.core.windows.net productionresultssa18.blob.core.windows.net productionresultssa19.blob.core.windows.net github-production-repository-image-32fea6.s3.amazonaws.com github-production-release-asset-2e65be.s3.amazonaws.com insights.github.com wss://alive.github.com wss://alive-staging.github.com api.githubcopilot.com api.individual.githubcopilot.com api.business.githubcopilot.com api.enterprise.githubcopilot.com wss://production-copilot-host.webpubsub.azure.com api.github.com/cmc_internal/api/; font-src github.githubassets.com; form-action 'self' github.com gist.github.com copilot-workspace.githubnext.com objects-origin.githubusercontent.com; frame-ancestors 'none'; frame-src viewscreen.githubusercontent.com notebooks.githubusercontent.com; img-src 'self' data: blob: github.githubassets.com media.githubusercontent.com camo.githubusercontent.com identicons.github.com avatars.githubusercontent.com private-avatars.githubusercontent.com github-cloud.s3.amazonaws.com objects.githubusercontent.com release-assets.githubusercontent.com secured-user-images.githubusercontent.com user-images.githubusercontent.com private-user-images.githubusercontent.com opengraph.githubassets.com repository-images.githubusercontent.com marketplace-screenshots.githubusercontent.com copilotprodattachments.blob.core.windows.net/github-production-copilot-attachments/ github-production-user-asset-6210df.s3.amazonaws.com customer-stories-feed.github.com spotlights-feed.github.com explore-feed.github.com *.googleusercontent.com objects-origin.githubusercontent.com *.githubusercontent.com; manifest-src 'self'; media-src github.com user-images.githubusercontent.com secured-user-images.githubusercontent.com private-user-images.githubusercontent.com github-production-user-asset-6210df.s3.amazonaws.com gist.github.com github.githubassets.com; script-src github.githubassets.com 'sha256-tSjmyPUky1KbRZ0fw9VUil3wFEbeM82rtbJDygGJAXw='; style-src 'unsafe-inline' github.githubassets.com; upgrade-insecure-requests; worker-src github.githubassets.com github.com/assets-cdn/worker/ github.com/assets/ gist.github.com/assets-cdn/worker/",
+          "Server": "github.com",
+          "Accept-Ranges": "bytes",
+          "Set-Cookie": "_gh_sess=ivh5JfCfUMB7LjC7DP%2B0uvSU2cWQFlrXkJ1lQH0jhcWFjGGwCRX8a3DiW4ZzmyFRCF8cUcmZ3SaQUNQNmHSOSup%2BAe1PndskCJHZMa42onRGNGv4%2BFQ2A4ufsuf4SvFSxLoRGZpFCOv3Am4Z8QZYIr9Q%2BWt4vr%2Fvj%2FQw6LuKtj9aeNv3KL%2BUsKn9vCadEA7pGuwpse3QkUypmUQrvBrqM28HYsiU%2F0IF0efWBWeZXvCT6%2BkGaFAw6k8AIso4iJIe70qIz%2FDHtmfd1kX6PnVtCQ%3D%3D--8F9a9wnVpESj959Z--2%2FTfYKviB1Dh55HBl8XxTg%3D%3D; path=/; HttpOnly; secure; SameSite=Lax",
+          "X-GitHub-Request-Id": "BD70:1E2D68:561164:7134DE:6AC9D0CC",
+          "x-github-edge-region": "iad",
+          "connection": "close",
+          "Transfer-Encoding": "chunked"
+        },
+        "bytes": 228141,
+        "sha256": "ed225f1b7f38ff420d400fbb34510309b47bc83353730f25211fb36354d41b6d",
+        "raw_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S16.html",
+        "text_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S16.txt"
+      },
+      "semantic_status": "SUPPORTED_WITH_STATED_BOUNDARIES",
+      "candidate_retrieval_execution_proved_by_this_check": false
+    },
+    {
+      "id": "R17",
+      "candidate_source_id": "S17",
+      "url": "https://github.com/UniversalViewer/universalviewer/releases",
+      "version_or_commit_independently_checked": "UV v4.4.4, 2b92ff6; observed release list 2026-10-10",
+      "primary_locator": "v4.4.4 metadata; v4.4.3 and v4.4.1 notices",
+      "observed_operation": "A fixed comparison release and unusable-release history.",
+      "governing_subject_unit_type_default_domain_exceptions": "The current page shows v4.4.4 and marks v4.4.3/v4.4.1 DO NOT USE because of merge errors. These are mutable release-list observations, not a timeless claim or demonstration of annotation capability.",
+      "applicability_judgment": "Supports avoiding those named tags and rechecking before implementation.",
+      "retrieval": {
+        "id": "S17",
+        "url": "https://github.com/UniversalViewer/universalviewer/releases",
+        "candidate_version": "v4.4.4 commit 2b92ff6 latest release shown; v4.4.3 and v4.4.1 explicitly DO NOT USE",
+        "accessed_at_utc": "2026-10-10T05:44:44.812386+00:00",
+        "status": 200,
+        "final_url": "https://github.com/UniversalViewer/universalviewer/releases",
+        "headers": {
+          "Date": "Sat, 10 Oct 2026 05:44:45 GMT",
+          "Content-Type": "text/html; charset=utf-8",
+          "Vary": "X-PJAX, X-PJAX-Container, Turbo-Visit, Turbo-Frame, X-Requested-With, X-GitHub-Client-Version, Sec-Fetch-Site,Accept-Encoding, Accept, X-Requested-With",
+          "ETag": "W/\"e8d34c07be8a1d984e890c62341fa66f\"",
+          "Cache-Control": "max-age=0, private, must-revalidate",
+          "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+          "X-Frame-Options": "deny",
+          "X-Content-Type-Options": "nosniff",
+          "X-XSS-Protection": "0",
+          "Referrer-Policy": "no-referrer-when-downgrade",
+          "Content-Security-Policy": "default-src 'none'; base-uri 'self'; child-src github.githubassets.com github.com/assets-cdn/worker/ github.com/assets/ gist.github.com/assets-cdn/worker/; connect-src 'self' uploads.github.com www.githubstatus.com collector.github.com raw.githubusercontent.com api.github.com github-cloud.s3.amazonaws.com github-production-repository-file-5c1aeb.s3.amazonaws.com github-production-upload-manifest-file-7fdce7.s3.amazonaws.com github-production-user-asset-6210df.s3.amazonaws.com *.rel.tunnels.api.visualstudio.com wss://*.rel.tunnels.api.visualstudio.com github.githubassets.com objects-origin.githubusercontent.com copilot-proxy.githubusercontent.com proxy.individual.githubcopilot.com proxy.business.githubcopilot.com proxy.enterprise.githubcopilot.com *.actions.githubusercontent.com wss://*.actions.githubusercontent.com productionresultssa0.blob.core.windows.net productionresultssa1.blob.core.windows.net productionresultssa2.blob.core.windows.net productionresultssa3.blob.core.windows.net productionresultssa4.blob.core.windows.net productionresultssa5.blob.core.windows.net productionresultssa6.blob.core.windows.net productionresultssa7.blob.core.windows.net productionresultssa8.blob.core.windows.net productionresultssa9.blob.core.windows.net productionresultssa10.blob.core.windows.net productionresultssa11.blob.core.windows.net productionresultssa12.blob.core.windows.net productionresultssa13.blob.core.windows.net productionresultssa14.blob.core.windows.net productionresultssa15.blob.core.windows.net productionresultssa16.blob.core.windows.net productionresultssa17.blob.core.windows.net productionresultssa18.blob.core.windows.net productionresultssa19.blob.core.windows.net github-production-repository-image-32fea6.s3.amazonaws.com github-production-release-asset-2e65be.s3.amazonaws.com insights.github.com wss://alive.github.com wss://alive-staging.github.com api.githubcopilot.com api.individual.githubcopilot.com api.business.githubcopilot.com api.enterprise.githubcopilot.com wss://production-copilot-host.webpubsub.azure.com api.github.com/cmc_internal/api/; font-src github.githubassets.com; form-action 'self' github.com gist.github.com copilot-workspace.githubnext.com objects-origin.githubusercontent.com; frame-ancestors 'none'; frame-src viewscreen.githubusercontent.com notebooks.githubusercontent.com; img-src 'self' data: blob: github.githubassets.com media.githubusercontent.com camo.githubusercontent.com identicons.github.com avatars.githubusercontent.com private-avatars.githubusercontent.com github-cloud.s3.amazonaws.com objects.githubusercontent.com release-assets.githubusercontent.com secured-user-images.githubusercontent.com user-images.githubusercontent.com private-user-images.githubusercontent.com opengraph.githubassets.com repository-images.githubusercontent.com marketplace-screenshots.githubusercontent.com copilotprodattachments.blob.core.windows.net/github-production-copilot-attachments/ github-production-user-asset-6210df.s3.amazonaws.com customer-stories-feed.github.com spotlights-feed.github.com explore-feed.github.com *.googleusercontent.com objects-origin.githubusercontent.com *.githubusercontent.com; manifest-src 'self'; media-src github.com user-images.githubusercontent.com secured-user-images.githubusercontent.com private-user-images.githubusercontent.com github-production-user-asset-6210df.s3.amazonaws.com gist.github.com github.githubassets.com; script-src github.githubassets.com 'sha256-tSjmyPUky1KbRZ0fw9VUil3wFEbeM82rtbJDygGJAXw='; style-src 'unsafe-inline' github.githubassets.com; upgrade-insecure-requests; worker-src github.githubassets.com github.com/assets-cdn/worker/ github.com/assets/ gist.github.com/assets-cdn/worker/",
+          "Server": "github.com",
+          "Accept-Ranges": "bytes",
+          "Set-Cookie": "_gh_sess=0hfNeItHj%2BcoAN6h81x7Qu%2B1NXjag45dFAxw%2B9G4w%2FZ2Q7NAo5nexvNty3rK1cq4bD36mlWKm7zaO9ONyjfNiDpm3aCRT4RFOHA1wvXEbdpxOXDcagjEJpue28cFRuRqUVtH3mqDhpEY4w9RGogH%2BdTwCkxV5%2BuN4AC59yBx%2FIa6%2BJgz5996uLVyufhkukdl3aWyhb92DMxPd58pNUQ7s5QVlGjUgFakL98L7epD%2BueXQYnQ5w4YYeGXjJrMO4PbkESs2c1YTko6maTA9P7Q0A%3D%3D--2HGCYN4222YKU%2FCV--DOZDIHw6kMgPDWGCNT8nqQ%3D%3D; path=/; HttpOnly; secure; SameSite=Lax",
+          "X-GitHub-Request-Id": "BD76:334D46:22DAC0:2D5A1D:6AC9D0CC",
+          "x-github-edge-region": "iad",
+          "connection": "close",
+          "Transfer-Encoding": "chunked"
+        },
+        "bytes": 577004,
+        "sha256": "0e5d7fe3b5107850cdee298507629d05e476f392d47089bb522651c53d179c0c",
+        "raw_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S17.html",
+        "text_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S17.txt"
+      },
+      "semantic_status": "SUPPORTED_WITH_STATED_BOUNDARIES",
+      "candidate_retrieval_execution_proved_by_this_check": false
+    },
+    {
+      "id": "R18",
+      "candidate_source_id": "S18",
+      "url": "https://github.com/annotorious/annotorious/releases",
+      "version_or_commit_independently_checked": "Annotorious v3.4.0, 0dd99c4; published 2025-05-27",
+      "primary_locator": "Release metadata; E31/E32 package name/version/dependencies",
+      "observed_operation": "Released analogous annotation library version and package applicability.",
+      "governing_subject_unit_type_default_domain_exceptions": "The release includes polygon-tool changes. At v3.4.0 both @annotorious/annotorious and @annotorious/openseadragon packages identify version 3.4.0; the latter declares OpenSeadragon ^3 || ^4 || ^5 peer compatibility. The moving guide is not a product-operation witness.",
+      "applicability_judgment": "The proposed version is a real applicable library release, not a mislabeled core-only version.",
+      "retrieval": {
+        "id": "S18",
+        "url": "https://github.com/annotorious/annotorious/releases",
+        "candidate_version": "v3.4.0, commit 0dd99c4; latest release shown",
+        "accessed_at_utc": "2026-10-10T05:44:44.917784+00:00",
+        "status": 200,
+        "final_url": "https://github.com/annotorious/annotorious/releases",
+        "headers": {
+          "Date": "Sat, 10 Oct 2026 05:44:45 GMT",
+          "Content-Type": "text/html; charset=utf-8",
+          "Vary": "X-PJAX, X-PJAX-Container, Turbo-Visit, Turbo-Frame, X-Requested-With, X-GitHub-Client-Version, Sec-Fetch-Site,Accept-Encoding, Accept, X-Requested-With",
+          "ETag": "W/\"9a9ae401b1a13e036527236dd6df9db3\"",
+          "Cache-Control": "max-age=0, private, must-revalidate",
+          "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+          "X-Frame-Options": "deny",
+          "X-Content-Type-Options": "nosniff",
+          "X-XSS-Protection": "0",
+          "Referrer-Policy": "no-referrer-when-downgrade",
+          "Content-Security-Policy": "default-src 'none'; base-uri 'self'; child-src github.githubassets.com github.com/assets-cdn/worker/ github.com/assets/ gist.github.com/assets-cdn/worker/; connect-src 'self' uploads.github.com www.githubstatus.com collector.github.com raw.githubusercontent.com api.github.com github-cloud.s3.amazonaws.com github-production-repository-file-5c1aeb.s3.amazonaws.com github-production-upload-manifest-file-7fdce7.s3.amazonaws.com github-production-user-asset-6210df.s3.amazonaws.com *.rel.tunnels.api.visualstudio.com wss://*.rel.tunnels.api.visualstudio.com github.githubassets.com objects-origin.githubusercontent.com copilot-proxy.githubusercontent.com proxy.individual.githubcopilot.com proxy.business.githubcopilot.com proxy.enterprise.githubcopilot.com *.actions.githubusercontent.com wss://*.actions.githubusercontent.com productionresultssa0.blob.core.windows.net productionresultssa1.blob.core.windows.net productionresultssa2.blob.core.windows.net productionresultssa3.blob.core.windows.net productionresultssa4.blob.core.windows.net productionresultssa5.blob.core.windows.net productionresultssa6.blob.core.windows.net productionresultssa7.blob.core.windows.net productionresultssa8.blob.core.windows.net productionresultssa9.blob.core.windows.net productionresultssa10.blob.core.windows.net productionresultssa11.blob.core.windows.net productionresultssa12.blob.core.windows.net productionresultssa13.blob.core.windows.net productionresultssa14.blob.core.windows.net productionresultssa15.blob.core.windows.net productionresultssa16.blob.core.windows.net productionresultssa17.blob.core.windows.net productionresultssa18.blob.core.windows.net productionresultssa19.blob.core.windows.net github-production-repository-image-32fea6.s3.amazonaws.com github-production-release-asset-2e65be.s3.amazonaws.com insights.github.com wss://alive.github.com wss://alive-staging.github.com api.githubcopilot.com api.individual.githubcopilot.com api.business.githubcopilot.com api.enterprise.githubcopilot.com wss://production-copilot-host.webpubsub.azure.com api.github.com/cmc_internal/api/; font-src github.githubassets.com; form-action 'self' github.com gist.github.com copilot-workspace.githubnext.com objects-origin.githubusercontent.com; frame-ancestors 'none'; frame-src viewscreen.githubusercontent.com notebooks.githubusercontent.com; img-src 'self' data: blob: github.githubassets.com media.githubusercontent.com camo.githubusercontent.com identicons.github.com avatars.githubusercontent.com private-avatars.githubusercontent.com github-cloud.s3.amazonaws.com objects.githubusercontent.com release-assets.githubusercontent.com secured-user-images.githubusercontent.com user-images.githubusercontent.com private-user-images.githubusercontent.com opengraph.githubassets.com repository-images.githubusercontent.com marketplace-screenshots.githubusercontent.com copilotprodattachments.blob.core.windows.net/github-production-copilot-attachments/ github-production-user-asset-6210df.s3.amazonaws.com customer-stories-feed.github.com spotlights-feed.github.com explore-feed.github.com *.googleusercontent.com objects-origin.githubusercontent.com *.githubusercontent.com; manifest-src 'self'; media-src github.com user-images.githubusercontent.com secured-user-images.githubusercontent.com private-user-images.githubusercontent.com github-production-user-asset-6210df.s3.amazonaws.com gist.github.com github.githubassets.com; script-src github.githubassets.com 'sha256-tSjmyPUky1KbRZ0fw9VUil3wFEbeM82rtbJDygGJAXw='; style-src 'unsafe-inline' github.githubassets.com; upgrade-insecure-requests; worker-src github.githubassets.com github.com/assets-cdn/worker/ github.com/assets/ gist.github.com/assets-cdn/worker/",
+          "Server": "github.com",
+          "Accept-Ranges": "bytes",
+          "Set-Cookie": "_gh_sess=O2QZWnLGd2qf0fO9nbotyYVp8%2BWs0GgA5TLcCcoXq003Lg%2BFbHdvXoCbrIaoDGdwAvprlr0JwnmFd0LuCcB565lOKcZhd5UN1rkfSPcAP9tnkiFVs6I6anspc6SCnqy90oP1MZRoMNOfbQeOvCSlS91LTCVxHY4ID98wZBaJDhIsnVVq6csppK1zu64K%2BNpHMcREx4oX31e3SGiUbH%2Ftjm5qDEMA9%2F6NUCWQo7vz0JQnsVU9f7xzKaHgbyPu%2BjPYpJsoX8sCygOT9oqA1jysEA%3D%3D--AtQfnqt4KkFIXcWa--UChiDpIhBJ%2BPUobYOMPT5Q%3D%3D; path=/; HttpOnly; secure; SameSite=Lax",
+          "X-GitHub-Request-Id": "BD86:37670E:59A16C:747097:6AC9D0CC",
+          "x-github-edge-region": "iad",
+          "connection": "close",
+          "Transfer-Encoding": "chunked"
+        },
+        "bytes": 387232,
+        "sha256": "b2068697e4577614642c37e867fdd7a17ce78e6c82ddd0cdcf3ee77720fb1939",
+        "raw_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S18.html",
+        "text_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S18.txt"
+      },
+      "semantic_status": "SUPPORTED_WITH_STATED_BOUNDARIES",
+      "candidate_retrieval_execution_proved_by_this_check": false
+    },
+    {
+      "id": "R19",
+      "candidate_source_id": "S19",
+      "url": "https://annotorious.dev/guides/openseadragon-iiif/",
+      "version_or_commit_independently_checked": "Current official Annotorious OpenSeadragon/IIIF guide",
+      "primary_locator": "Quick Start; Step-by-Step Guide; IIIF Example",
+      "observed_operation": "Client-side image annotation, JSON loading, events and IIIF image sources.",
+      "governing_subject_unit_type_default_domain_exceptions": "Coordinates are relative to the base resolution of the image. The guide shows createOSDAnnotator, annotation lifecycle events and loadAnnotations; it does not supply curator-stable Canvas identity, persistence or a reading-room access model.",
+      "applicability_judgment": "Supports a meaningful custom-panel alternative with explicit coordinate and storage integration work.",
+      "retrieval": {
+        "id": "S19",
+        "url": "https://annotorious.dev/guides/openseadragon-iiif/",
+        "candidate_version": "Current official guide; accessed 2026-10-10",
+        "accessed_at_utc": "2026-10-10T05:44:45.016923+00:00",
+        "status": 200,
+        "final_url": "https://annotorious.dev/guides/openseadragon-iiif/",
+        "headers": {
+          "Date": "Sat, 10 Oct 2026 05:44:45 GMT",
+          "Content-Type": "text/html; charset=utf-8",
+          "Transfer-Encoding": "chunked",
+          "Connection": "close",
+          "x-content-type-options": "nosniff",
+          "Report-To": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=Ap7X6w3xpd1mc%2BhVuhASpGCIP6zh%2BOm7nzSI1BHHh3qg%2F6U65UkAtShX9R7uqSt588LRl5Xmx6SnJ8EA711SfuNkmqGwgBRqkmpd2TgHtoyT2rtrv%2F2ODon4VOdhtRaFPII%3D\"}]}",
+          "Nel": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}",
+          "Access-Control-Allow-Origin": "*",
+          "Cache-Control": "public, max-age=0, must-revalidate",
+          "referrer-policy": "strict-origin-when-cross-origin",
+          "Server-Timing": "cfCacheStatus;desc=\"DYNAMIC\"",
+          "Server": "cloudflare",
+          "cf-cache-status": "DYNAMIC",
+          "CF-RAY": "a48350a1f9e06d8a-EWR",
+          "alt-svc": "h3=\":443\"; ma=86400"
+        },
+        "bytes": 74137,
+        "sha256": "907aead9a3a8224095e7abc9722220e77add1abbc29c9d5c278203a90d983104",
+        "raw_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S19.html",
+        "text_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S19.txt"
+      },
+      "semantic_status": "SUPPORTED_WITH_STATED_BOUNDARIES",
+      "candidate_retrieval_execution_proved_by_this_check": false
+    },
+    {
+      "id": "R20",
+      "candidate_source_id": "S20",
+      "url": "https://annotorious.dev/guides/data-model/",
+      "version_or_commit_independently_checked": "Current official Annotorious data-model guide",
+      "primary_locator": "Annotation Bodies; Key Differences; The W3C Adapter",
+      "observed_operation": "Simplified native annotation geometry and W3CImageFormat crosswalk.",
+      "governing_subject_unit_type_default_domain_exceptions": "The project disclaims full W3C-model support. Bodies are application payload and are not processed/displayed directly by Annotorious. W3CImageFormat takes a string source argument; representative body/selector conversion remains necessary.",
+      "applicability_judgment": "Supports the final’s adapter and custom integration caveats. The library is not falsely presented as a full scholar-note application.",
+      "retrieval": {
+        "id": "S20",
+        "url": "https://annotorious.dev/guides/data-model/",
+        "candidate_version": "Current official guide; accessed 2026-10-10",
+        "accessed_at_utc": "2026-10-10T05:44:45.213749+00:00",
+        "status": 200,
+        "final_url": "https://annotorious.dev/guides/data-model/",
+        "headers": {
+          "Date": "Sat, 10 Oct 2026 05:44:45 GMT",
+          "Content-Type": "text/html; charset=utf-8",
+          "Transfer-Encoding": "chunked",
+          "Connection": "close",
+          "x-content-type-options": "nosniff",
+          "Report-To": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=TcZ7a0CpPiv7soMA9vbKxfBlObQdTa1ortFQ7gj%2F9WVS6Szk%2FjbgaTDbafsg5VelXEy62H%2BbTPd6vdvn8fMzqKCG1vj%2FCdJzn5IqAwFUc7z9VBTf3rwBAYJzqv%2FBEwV%2FlgE%3D\"}]}",
+          "Nel": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}",
+          "Access-Control-Allow-Origin": "*",
+          "Cache-Control": "public, max-age=0, must-revalidate",
+          "referrer-policy": "strict-origin-when-cross-origin",
+          "Server-Timing": "cfCacheStatus;desc=\"DYNAMIC\"",
+          "Server": "cloudflare",
+          "cf-cache-status": "DYNAMIC",
+          "CF-RAY": "a48350a2c8e24153-EWR",
+          "alt-svc": "h3=\":443\"; ma=86400"
+        },
+        "bytes": 67181,
+        "sha256": "830a2fab8cc71a0e01b0426aff4e2ec96f668d8ae4dbf3913d034ef8c7508b6d",
+        "raw_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S20.html",
+        "text_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S20.txt"
+      },
+      "semantic_status": "SUPPORTED_WITH_STATED_BOUNDARIES",
+      "candidate_retrieval_execution_proved_by_this_check": false
+    },
+    {
+      "id": "R21",
+      "candidate_source_id": "S21",
+      "url": "https://iiif.io/api/cookbook/recipe/0561-text-on-image/",
+      "version_or_commit_independently_checked": "Presentation 3 cookbook, retrieved 2026-10-10",
+      "primary_locator": "Implementation Notes; Restrictions; Example",
+      "observed_operation": "Visible text painting without deriving a new master image.",
+      "governing_subject_unit_type_default_domain_exceptions": "Visible painted text is ordered in Canvas items with motivation painting; other annotations are handled differently. Styling varies across clients and HTML markup is restricted. This does not make a private scholar note public or create a download bundle.",
+      "applicability_judgment": "Supports separating painted display, supplementing transcription and optional standalone text reuse.",
+      "retrieval": {
+        "id": "S21",
+        "url": "https://iiif.io/api/cookbook/recipe/0561-text-on-image/",
+        "candidate_version": "IIIF Presentation 3.0 cookbook recipe; page accessed at the recorded UTC",
+        "accessed_at_utc": "2026-10-10T05:44:45.334339+00:00",
+        "status": 200,
+        "final_url": "https://iiif.io/api/cookbook/recipe/0561-text-on-image/",
+        "headers": {
+          "Content-Type": "text/html",
+          "Content-Length": "17037",
+          "Connection": "close",
+          "Cache-Control": "public, no-transform, max-age=300",
+          "Date": "Sat, 10 Oct 2026 05:44:45 GMT",
+          "ETag": "\"5371ae5ac866e4cbbbb1f2169d46bec1\"",
+          "Last-Modified": "Fri, 09 Oct 2026 12:21:43 GMT",
+          "Server": "nginx",
+          "X-UA-Compatible": "IE=Edge,chrome=1",
+          "X-Cache": "Miss from cloudfront",
+          "Via": "1.1 f300b5f0c0ff51593fb31953294424c0.cloudfront.net (CloudFront)",
+          "X-Amz-Cf-Pop": "PHL51-P1",
+          "X-Amz-Cf-Id": "H4yRqaPeTe8kUUiRB7cBPNdWH0m84tDBJOQYFyYHw7cMuzs2_Py4bA=="
+        },
+        "bytes": 17037,
+        "sha256": "a873ca90943773d151cd650e4b06c4441539713f4990f1e9c65989187a254467",
+        "raw_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S21.html",
+        "text_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S21.txt"
+      },
+      "semantic_status": "SUPPORTED_WITH_STATED_BOUNDARIES",
+      "candidate_retrieval_execution_proved_by_this_check": false
+    },
+    {
+      "id": "R22",
+      "candidate_source_id": "S22",
+      "url": "https://api.github.com/repos/ProjectMirador/mirador/compare/25c0b0e...73fafe9",
+      "version_or_commit_independently_checked": "Base 25c0b0ea119f48c0bde2276d516e3c2bbd795092; head 73fafe9c8f6ef74dff0c26373ef3eeefdcabcdf5",
+      "primary_locator": "JSON status, ahead_by, behind_by, base_commit.sha, merge_base_commit.sha and commits",
+      "observed_operation": "Independent read-only comparison of merge and release source history.",
+      "governing_subject_unit_type_default_domain_exceptions": "The response is ahead, ahead_by=354, behind_by=0 and merge_base_commit.sha equals the base merge. This is ancestry evidence, not runtime validation. E29 independently shows the changed notification token persists in the release source.",
+      "applicability_judgment": "Resolves the C3 documentary gap and preserves the distinction from unrun UI checks.",
+      "retrieval": {
+        "id": "S22",
+        "url": "https://api.github.com/repos/ProjectMirador/mirador/compare/25c0b0e...73fafe9",
+        "candidate_version": "Base merge commit 25c0b0ea119f48c0bde2276d516e3c2bbd795092; head release commit 73fafe9c8f6ef74dff0c26373ef3eeefdcabcdf5",
+        "accessed_at_utc": "2026-10-10T05:44:45.427123+00:00",
+        "status": 200,
+        "final_url": "https://api.github.com/repos/ProjectMirador/mirador/compare/25c0b0e...73fafe9",
+        "headers": {
+          "Date": "Sat, 10 Oct 2026 05:44:45 GMT",
+          "Content-Type": "application/json; charset=utf-8",
+          "Cache-Control": "public, max-age=60, s-maxage=60",
+          "Vary": "Accept,Accept-Encoding, Accept, X-Requested-With",
+          "ETag": "W/\"3989b10bbe58fcfb2b14c3d81b6f8e09d162f623b07f0940a2efdca42af275b8\"",
+          "Last-Modified": "Wed, 02 Sep 2026 18:21:28 GMT",
+          "X-GitHub-Media-Type": "github.v3",
+          "x-github-api-version-selected": "2022-11-28",
+          "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+          "Access-Control-Allow-Origin": "*",
+          "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+          "X-Frame-Options": "deny",
+          "X-Content-Type-Options": "nosniff",
+          "X-XSS-Protection": "0",
+          "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+          "Content-Security-Policy": "default-src 'none'",
+          "Server": "github.com",
+          "Accept-Ranges": "bytes",
+          "X-RateLimit-Limit": "60",
+          "X-RateLimit-Remaining": "16",
+          "X-RateLimit-Used": "44",
+          "X-RateLimit-Resource": "core",
+          "X-RateLimit-Reset": "1791614073",
+          "Transfer-Encoding": "chunked",
+          "X-GitHub-Request-Id": "BC72:30B341:9CC931:2069852:6AC9D0CD",
+          "x-github-edge-region": "iad",
+          "connection": "close"
+        },
+        "bytes": 1824925,
+        "sha256": "fd36ac608dceece586fda5ffa4e7133cf04be466a070264f445d0221c815afb5",
+        "raw_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S22.json",
+        "text_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S22.txt"
+      },
+      "semantic_status": "SUPPORTED_WITH_STATED_BOUNDARIES",
+      "candidate_retrieval_execution_proved_by_this_check": false
+    },
+    {
+      "id": "R23",
+      "candidate_source_id": null,
+      "title": "PR #4201 metadata",
+      "url": "https://api.github.com/repos/ProjectMirador/mirador/pulls/4201",
+      "primary_locator": "number/title/merged/merged_at/merge_commit_sha/head.sha",
+      "observed_meaning_and_limits": "Confirms the PR head and merge commit identities and actual recorded merge date.",
+      "retrieval": {
+        "id": "E23",
+        "url": "https://api.github.com/repos/ProjectMirador/mirador/pulls/4201",
+        "accessed_at_utc": "2026-10-10T05:46:21.262227+00:00",
+        "status": 200,
+        "raw_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/E23.json",
+        "bytes": 18147,
+        "sha256": "fd28b29c92c7c05244cf2ece89d24421dec20002bf10bc6cd2c5d85ebdc26f62"
+      },
+      "semantic_status": "INDEPENDENT_SUPPLEMENTAL_EVIDENCE"
+    },
+    {
+      "id": "R24",
+      "candidate_source_id": null,
+      "title": "PR #4201 changed source",
+      "url": "https://api.github.com/repos/ProjectMirador/mirador/pulls/4201/files",
+      "primary_locator": "[0].filename and patch in src/config/settings.js",
+      "observed_meaning_and_limits": "The repair adds notification.contrastText; it is a source-level badge-color change, not an authoring/storage implementation.",
+      "retrieval": {
+        "id": "E24",
+        "url": "https://api.github.com/repos/ProjectMirador/mirador/pulls/4201/files",
+        "accessed_at_utc": "2026-10-10T05:46:21.264358+00:00",
+        "status": 200,
+        "raw_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/E24.json",
+        "bytes": 842,
+        "sha256": "2a682689cc15b91cd4e58ea19a92f05aeeeb7d632edfded7771af8f6e15596cb"
+      },
+      "semantic_status": "INDEPENDENT_SUPPLEMENTAL_EVIDENCE"
+    },
+    {
+      "id": "R25",
+      "candidate_source_id": null,
+      "title": "Mirador v4.2.4 release API",
+      "url": "https://api.github.com/repos/ProjectMirador/mirador/releases/tags/v4.2.4",
+      "primary_locator": "tag_name/created_at/published_at/body",
+      "observed_meaning_and_limits": "Confirms the release date and the absence of #4201 from its release-note body; does not independently identify the tag SHA.",
+      "retrieval": {
+        "id": "E25",
+        "url": "https://api.github.com/repos/ProjectMirador/mirador/releases/tags/v4.2.4",
+        "accessed_at_utc": "2026-10-10T05:46:21.265311+00:00",
+        "status": 200,
+        "raw_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/E25.json",
+        "bytes": 6395,
+        "sha256": "714406bc9a89fd42f97a401caf1085e70290a55beeac3ffed893fd380db85b42"
+      },
+      "semantic_status": "INDEPENDENT_SUPPLEMENTAL_EVIDENCE"
+    },
+    {
+      "id": "R26",
+      "candidate_source_id": null,
+      "title": "UV v4.4.4 release API",
+      "url": "https://api.github.com/repos/UniversalViewer/universalviewer/releases/tags/v4.4.4",
+      "primary_locator": "tag_name/name/created_at/published_at/body",
+      "observed_meaning_and_limits": "Confirms a real named fixed release. Commit identity is separately visible on S17.",
+      "retrieval": {
+        "id": "E26",
+        "url": "https://api.github.com/repos/UniversalViewer/universalviewer/releases/tags/v4.4.4",
+        "accessed_at_utc": "2026-10-10T05:46:21.266104+00:00",
+        "status": 200,
+        "raw_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/E26.json",
+        "bytes": 1926,
+        "sha256": "a9c181e9d423e41c44154608bac083207973833bb659f8ec964f5869ea05b4e5"
+      },
+      "semantic_status": "INDEPENDENT_SUPPLEMENTAL_EVIDENCE"
+    },
+    {
+      "id": "R27",
+      "candidate_source_id": null,
+      "title": "Annotorious v3.4.0 release API",
+      "url": "https://api.github.com/repos/annotorious/annotorious/releases/tags/v3.4.0",
+      "primary_locator": "tag_name/name/published_at/body",
+      "observed_meaning_and_limits": "Confirms the analogous library release and its bounded polygon-tool history.",
+      "retrieval": {
+        "id": "E27",
+        "url": "https://api.github.com/repos/annotorious/annotorious/releases/tags/v3.4.0",
+        "accessed_at_utc": "2026-10-10T05:46:21.267299+00:00",
+        "status": 200,
+        "raw_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/E27.json",
+        "bytes": 2034,
+        "sha256": "e3644a0dfdf8a2a38d4872e9b223108686ab00a721834093e10337e698b96999"
+      },
+      "semantic_status": "INDEPENDENT_SUPPLEMENTAL_EVIDENCE"
+    },
+    {
+      "id": "R28",
+      "candidate_source_id": null,
+      "title": "Mirador merge commit",
+      "url": "https://api.github.com/repos/ProjectMirador/mirador/commits/25c0b0e",
+      "primary_locator": "sha/commit.message/commit.committer.date/parents/files.patch",
+      "observed_meaning_and_limits": "Confirms 25c0b0e is a merge of PR head 056262a, with the palette-token patch.",
+      "retrieval": {
+        "id": "E28",
+        "url": "https://api.github.com/repos/ProjectMirador/mirador/commits/25c0b0e",
+        "accessed_at_utc": "2026-10-10T05:46:21.441685+00:00",
+        "status": 200,
+        "raw_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/E28.json",
+        "bytes": 5914,
+        "sha256": "82d08bc0ff5fb01245d20362e806e64b38c4ed6d7ac88d4c3f14fcfc7b274288"
+      },
+      "semantic_status": "INDEPENDENT_SUPPLEMENTAL_EVIDENCE"
+    },
+    {
+      "id": "R29",
+      "candidate_source_id": null,
+      "title": "Mirador released settings source",
+      "url": "https://raw.githubusercontent.com/ProjectMirador/mirador/73fafe9c8f6ef74dff0c26373ef3eeefdcabcdf5/src/config/settings.js",
+      "primary_locator": "src/config/settings.js lines 57–61 at 73fafe9c8f6ef74dff0c26373ef3eeefdcabcdf5",
+      "observed_meaning_and_limits": "The released source retains notification.main and notification.contrastText. This is a static source observation only.",
+      "retrieval": {
+        "id": "E29",
+        "url": "https://raw.githubusercontent.com/ProjectMirador/mirador/73fafe9c8f6ef74dff0c26373ef3eeefdcabcdf5/src/config/settings.js",
+        "accessed_at_utc": "2026-10-10T05:47:16.938130+00:00",
+        "status": 200,
+        "bytes": 19242,
+        "sha256": "9c25e7dd75ec4162716c9faa8d7a1ccffaec3820c861924461baf3462a0fe917",
+        "raw_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/E29-settings.js"
+      },
+      "semantic_status": "INDEPENDENT_SUPPLEMENTAL_EVIDENCE"
+    },
+    {
+      "id": "R30",
+      "candidate_source_id": null,
+      "title": "Annotorious v3.4.0 source tree",
+      "url": "https://api.github.com/repos/annotorious/annotorious/git/trees/v3.4.0?recursive=1",
+      "primary_locator": "truncated=false; packages/annotorious-openseadragon/package.json and packages/annotorious/package.json",
+      "observed_meaning_and_limits": "Locates package metadata in the exact release tree. Only relevant tree paths were inspected, not all source bodies.",
+      "retrieval": {
+        "id": "E30",
+        "url": "https://api.github.com/repos/annotorious/annotorious/git/trees/v3.4.0?recursive=1",
+        "accessed_at_utc": "2026-10-10T05:47:47.257219+00:00",
+        "status": 200,
+        "sha256": "cc56660a94a59a408554c0b174bc0fe812e74c69c705d7b05b316810dfd956f8",
+        "bytes": 85562,
+        "raw_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/E30.json"
+      },
+      "semantic_status": "INDEPENDENT_SUPPLEMENTAL_EVIDENCE"
+    },
+    {
+      "id": "R31",
+      "candidate_source_id": null,
+      "title": "Released OpenSeadragon integration package",
+      "url": "https://raw.githubusercontent.com/annotorious/annotorious/v3.4.0/packages/annotorious-openseadragon/package.json",
+      "primary_locator": "name/version/peerDependencies/dependencies",
+      "observed_meaning_and_limits": "At v3.4.0 @annotorious/openseadragon is 3.4.0, consumes 3.4.0 core/annotorious, and accepts OSD ^3.0.0 || ^4.0.0 || ^5.0.0. No dependency or runtime check was executed.",
+      "retrieval": {
+        "id": "E31",
+        "url": "https://raw.githubusercontent.com/annotorious/annotorious/v3.4.0/packages/annotorious-openseadragon/package.json",
+        "accessed_at_utc": "2026-10-10T05:48:12.575986+00:00",
+        "status": 200,
+        "raw_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/E31.json",
+        "bytes": 1615,
+        "sha256": "7ab247a23d527a51c35816ec1e38e71f67e090f3ca8dd6d3225b84320046ccd1"
+      },
+      "semantic_status": "INDEPENDENT_SUPPLEMENTAL_EVIDENCE"
+    },
+    {
+      "id": "R32",
+      "candidate_source_id": null,
+      "title": "Released Annotorious package",
+      "url": "https://raw.githubusercontent.com/annotorious/annotorious/v3.4.0/packages/annotorious/package.json",
+      "primary_locator": "name/version/dependencies",
+      "observed_meaning_and_limits": "At v3.4.0 @annotorious/annotorious is 3.4.0 and consumes @annotorious/core 3.4.0.",
+      "retrieval": {
+        "id": "E32",
+        "url": "https://raw.githubusercontent.com/annotorious/annotorious/v3.4.0/packages/annotorious/package.json",
+        "accessed_at_utc": "2026-10-10T05:48:12.578533+00:00",
+        "status": 200,
+        "raw_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/E32.json",
+        "bytes": 1487,
+        "sha256": "f995e0b905dea1a5311069ea8f5b23f56fe3517908d0527a3ae40b6fefade55d"
+      },
+      "semantic_status": "INDEPENDENT_SUPPLEMENTAL_EVIDENCE"
+    },
+    {
+      "id": "R33",
+      "candidate_source_id": null,
+      "title": "Documented MAE opportunity",
+      "url": "https://github.com/TETRAS-IIIF/mirador-annotation-editor",
+      "primary_locator": "README Generalities/General functionalities/Persisting Annotations/Technical aspects; E33.txt lines 203–328",
+      "observed_meaning_and_limits": "The moving README describes a Mirador 4 editor with geometric/text annotation and server persistence. It has mixed framework-version wording, so it proves a realistic lead, not tested compatibility with 4.2.4, export parity or private defaults. No accounts, installs or writes were used.",
+      "retrieval": {
+        "id": "E33",
+        "url": "https://github.com/TETRAS-IIIF/mirador-annotation-editor",
+        "accessed_at_utc": "2026-10-10T05:48:12.579595+00:00",
+        "status": 200,
+        "raw_path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/E33.html",
+        "bytes": 388767,
+        "sha256": "1525e19ab8dae4756399e887fb7923228c6cce4b5a6cc9451c8f4e6fcc730138"
+      },
+      "semantic_status": "INDEPENDENT_SUPPLEMENTAL_EVIDENCE"
+    }
+  ],
+  "original_artifact_manifest": "evidence/original-inventory-start.json",
+  "original_artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/control/run.json",
+      "bytes": 580,
+      "sha256": "690c9dd40c92b19953000a192e9321273be7316aeb1eac759b955b47d72072a7",
+      "mtime_ns": 1791608912327743922,
+      "inspection_scope": "BOUNDED_MECHANICS_FULL_BYTES_PARSED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/inputs/brief.md",
+      "bytes": 3330,
+      "sha256": "15ac2ec31efcc20dac85969b6855efaa85cfbe065d00df9031e32288b7fb3ca0",
+      "mtime_ns": 1791608912327490304,
+      "inspection_scope": "FULL_AUTHORED_CONTENT_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/critic/.invocation-backup-0dcfd449163d4133a3407f74bbdcfefe/assignment.md",
+      "bytes": 3306,
+      "sha256": "da919878a69a81e206a532c259647fd33af39e32f334a9b93ec9a17435d4ce93",
+      "mtime_ns": 1791609780306972478,
+      "inspection_scope": "FULL_AUTHORED_CONTENT_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/critic/.invocation-backup-0dcfd449163d4133a3407f74bbdcfefe/freeze.json",
+      "bytes": 3202,
+      "sha256": "140f13c221acc31a15620897cfd49e186491cc16dc2769c4e124f0baaf092a8a",
+      "mtime_ns": 1791609780306849804,
+      "inspection_scope": "FULL_AUTHORED_CONTENT_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/critic/.invocation-backup-0dcfd449163d4133a3407f74bbdcfefe/input-map.json",
+      "bytes": 1457,
+      "sha256": "cbe43fa0e4b3b3c73888192c44dfd3f8bd147e9f9781bfe59f1028d5675d9ff4",
+      "mtime_ns": 1791609780306914631,
+      "inspection_scope": "FULL_AUTHORED_CONTENT_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/critic/.invocation-backup-0dcfd449163d4133a3407f74bbdcfefe/request.json",
+      "bytes": 889,
+      "sha256": "a4da88144824a6f68d434a2a83ac53270dd15f639863c4ac78f11debc94b49cc",
+      "mtime_ns": 1791609780306747147,
+      "inspection_scope": "BOUNDED_MECHANICS_FULL_BYTES_PARSED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/critic/assignment.md",
+      "bytes": 4006,
+      "sha256": "67ee90e38a1f329c5bd3280f9f9f1a8f011b1eed7176603a854fd76a905a22b8",
+      "mtime_ns": 1791609780308285723,
+      "inspection_scope": "FULL_AUTHORED_CONTENT_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/critic/critique.md",
+      "bytes": 9711,
+      "sha256": "e3f6c2de5ca46b46ca6b234a000f3b1e54749c81186ab67a378b8c37240b730e",
+      "mtime_ns": 1791610451707789912,
+      "inspection_scope": "FULL_AUTHORED_CONTENT_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/critic/dispatch.json",
+      "bytes": 4835,
+      "sha256": "6cd71d51f7477a4a3aa1ee1f590a80ca47daadbb903b9698f1d88065a7622dfd",
+      "mtime_ns": 1791609782171918441,
+      "inspection_scope": "BOUNDED_MECHANICS_FULL_BYTES_PARSED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/critic/freeze.json",
+      "bytes": 3290,
+      "sha256": "de47dd0d8f333dc2d3485e27dda359e0be762cdd94085b7fb2c694a34854306d",
+      "mtime_ns": 1791609780307914500,
+      "inspection_scope": "FULL_AUTHORED_CONTENT_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/critic/input-map.json",
+      "bytes": 1457,
+      "sha256": "cbe43fa0e4b3b3c73888192c44dfd3f8bd147e9f9781bfe59f1028d5675d9ff4",
+      "mtime_ns": 1791609780308123724,
+      "inspection_scope": "FULL_AUTHORED_CONTENT_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/critic/invocation-clarification.json",
+      "bytes": 3016,
+      "sha256": "49125ad5f778378e097ead4c31cb5cdf7a1492b54d48bef329017780d5eb48c9",
+      "mtime_ns": 1791609780308459903,
+      "inspection_scope": "BOUNDED_MECHANICS_FULL_BYTES_PARSED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/critic/native-goal-activation.json",
+      "bytes": 464,
+      "sha256": "4b1d02045591e6e556bcba57f83cf58392e2ae2253dea16ebe814869ef7952ef",
+      "mtime_ns": 1791609809227012172,
+      "inspection_scope": "BOUNDED_MECHANICS_FULL_BYTES_PARSED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/critic/native-goal-completion.json",
+      "bytes": 793,
+      "sha256": "8bdb98ed177bd689db705b103d210595df3b094ce6b8193f7dcbd1cf9e83561b",
+      "mtime_ns": 1791610467433856516,
+      "inspection_scope": "BOUNDED_MECHANICS_FULL_BYTES_PARSED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/critic/request.json",
+      "bytes": 1601,
+      "sha256": "094634fffec47859b200bff86422b63e6c958c77966caf6c4798b33699234c44",
+      "mtime_ns": 1791609780307659994,
+      "inspection_scope": "BOUNDED_MECHANICS_FULL_BYTES_PARSED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/critic/service-tier-change.json",
+      "bytes": 477,
+      "sha256": "b17daaa020ed0c1ede93025984db12c29b25a5d6f591d42ff4cec14d5f2c953b",
+      "mtime_ns": 1791609780100602799,
+      "inspection_scope": "BOUNDED_MECHANICS_FULL_BYTES_PARSED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/critic/source-map.json",
+      "bytes": 31506,
+      "sha256": "38473a4cbc96c7ffd9db23369317823e51fc4a4f09635f1d41bef8a2cc7ea7ba",
+      "mtime_ns": 1791610451773790191,
+      "inspection_scope": "FULL_AUTHORED_CONTENT_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/critic/status.json",
+      "bytes": 3546,
+      "sha256": "8d01842a24e833fd5c2eebd7624124022d931c3c3291c01a75c5138c408b40c9",
+      "mtime_ns": 1791610490676560592,
+      "inspection_scope": "BOUNDED_MECHANICS_FULL_BYTES_PARSED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/.invocation-backup-4ac8a8ae7c5240a987b375d7516b611d/assignment.md",
+      "bytes": 3712,
+      "sha256": "52bfee78f083fe28f3a6648ea1a72bbaa4efbcdb1c062d92f2064af1ee4b45b0",
+      "mtime_ns": 1791608912840244961,
+      "inspection_scope": "FULL_AUTHORED_CONTENT_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/.invocation-backup-4ac8a8ae7c5240a987b375d7516b611d/freeze.json",
+      "bytes": 1721,
+      "sha256": "55a59005a8ffd7a19c13d24a036641c8aede5c19857dc74bc36a93106b850382",
+      "mtime_ns": 1791608912840107659,
+      "inspection_scope": "FULL_AUTHORED_CONTENT_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/.invocation-backup-4ac8a8ae7c5240a987b375d7516b611d/input-map.json",
+      "bytes": 781,
+      "sha256": "5ce3b91a5e15706223ffde4b9026416855c99c09dc3496fed6d488a3c6eab91d",
+      "mtime_ns": 1791608912840172304,
+      "inspection_scope": "FULL_AUTHORED_CONTENT_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/.invocation-backup-4ac8a8ae7c5240a987b375d7516b611d/request.json",
+      "bytes": 913,
+      "sha256": "58d16a2d36d98300cd8ff484f1410d40ae91c843316a0d4909692cb7ccde2416",
+      "mtime_ns": 1791608912839966848,
+      "inspection_scope": "BOUNDED_MECHANICS_FULL_BYTES_PARSED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/assignment.md",
+      "bytes": 4424,
+      "sha256": "024560cb3fefcf4b7ea52f20da3dcfa347d7c2b237e145e3caae17a4b42457f4",
+      "mtime_ns": 1791608912841306825,
+      "inspection_scope": "FULL_AUTHORED_CONTENT_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/discovery.md",
+      "bytes": 13480,
+      "sha256": "248e9dc0ae51e2c5d56d681f2979211b984f2ecc0ec306d90173acf9f053964d",
+      "mtime_ns": 1791609251195425792,
+      "inspection_scope": "FULL_AUTHORED_CONTENT_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/dispatch.json",
+      "bytes": 4943,
+      "sha256": "d846a01ecab9006aa3e748bfccf35a90cc6067a931891e3cef39ba6c49daf36d",
+      "mtime_ns": 1791608914609559717,
+      "inspection_scope": "BOUNDED_MECHANICS_FULL_BYTES_PARSED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/draft.md",
+      "bytes": 19665,
+      "sha256": "424478277a6aee2df0103b538792a384028f2ba6f0f82b533953f327bb273477",
+      "mtime_ns": 1791609668288600651,
+      "inspection_scope": "FULL_AUTHORED_CONTENT_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/freeze.json",
+      "bytes": 1809,
+      "sha256": "a57751e412679c512be8dfb72299e86e8689632756ebf70c1c73835ebcabcab2",
+      "mtime_ns": 1791608912840931924,
+      "inspection_scope": "FULL_AUTHORED_CONTENT_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/input-map.json",
+      "bytes": 781,
+      "sha256": "5ce3b91a5e15706223ffde4b9026416855c99c09dc3496fed6d488a3c6eab91d",
+      "mtime_ns": 1791608912841113035,
+      "inspection_scope": "FULL_AUTHORED_CONTENT_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/invocation-clarification.json",
+      "bytes": 3058,
+      "sha256": "c94cf7309f563ab9acf280f6784f0f5a0d308d1ae94ebd9822618bcffb8bd04e",
+      "mtime_ns": 1791608912841472135,
+      "inspection_scope": "BOUNDED_MECHANICS_FULL_BYTES_PARSED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/native-goal-activation.json",
+      "bytes": 534,
+      "sha256": "67fac6971d294961e17971bc8406d25de9925dbdccf933ffa900e052ec759799",
+      "mtime_ns": 1791608957842768455,
+      "inspection_scope": "BOUNDED_MECHANICS_FULL_BYTES_PARSED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/native-goal-terminal-status.json",
+      "bytes": 485,
+      "sha256": "d289633971407ae200cb7d17871db0131038722e6741c9e22f30342e85904bb0",
+      "mtime_ns": 1791609720439463400,
+      "inspection_scope": "BOUNDED_MECHANICS_FULL_BYTES_PARSED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/plan-reveal.json",
+      "bytes": 427,
+      "sha256": "f08abfa8be9002d5cadaba00a76ccb67f557a7515d05f695a868d5024f7f7569",
+      "mtime_ns": 1791609348806681872,
+      "inspection_scope": "BOUNDED_MECHANICS_FULL_BYTES_PARSED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/request.json",
+      "bytes": 1637,
+      "sha256": "089e20da02b4d337ad02d82a7b663fb7ab294d44573f14b8bd916919a317a45d",
+      "mtime_ns": 1791608912840721320,
+      "inspection_scope": "BOUNDED_MECHANICS_FULL_BYTES_PARSED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/reveal-receipt.json",
+      "bytes": 409,
+      "sha256": "fc9fc0e4544ed8bb2279ee008b109ea719dd6664a8c5bb2506ec82ec91d84df6",
+      "mtime_ns": 1791609386658233297,
+      "inspection_scope": "BOUNDED_MECHANICS_FULL_BYTES_PARSED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/revealed-plan.md",
+      "bytes": 5932,
+      "sha256": "41c98c70681d7ab5e6534f387777df30ec06ff94ee93cdb071e124fe1a0c8ff6",
+      "mtime_ns": 1791609348806564995,
+      "inspection_scope": "FULL_AUTHORED_CONTENT_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/service-tier-change.json",
+      "bytes": 489,
+      "sha256": "7f74d2f423ece50c68d8789c5765a8de745ad2c38f34738075eea598814740d2",
+      "mtime_ns": 1791608912471539329,
+      "inspection_scope": "BOUNDED_MECHANICS_FULL_BYTES_PARSED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/source-map.json",
+      "bytes": 18142,
+      "sha256": "164fa8a9fc4153ad8d77767e3be0efc07c00fbe2df1ee6bac8dcae9b76fb7a01",
+      "mtime_ns": 1791609298882642140,
+      "inspection_scope": "FULL_AUTHORED_CONTENT_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/sources/index.md",
+      "bytes": 5622,
+      "sha256": "0488c79df23bb2ac03c81999258ccafc773f1a11d9595c236093a6c39bbb3240",
+      "mtime_ns": 1791609344375672544,
+      "inspection_scope": "FULL_AUTHORED_CONTENT_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/investigator/status.json",
+      "bytes": 4836,
+      "sha256": "98d4706db25266c7054c723e196b5f5b69976a49717cccb2fba1dbd7421a2d2f",
+      "mtime_ns": 1791609779482045319,
+      "inspection_scope": "BOUNDED_MECHANICS_FULL_BYTES_PARSED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/reviser/.invocation-backup-4faa5ea2c947441b94c17e9280336cc6/assignment.md",
+      "bytes": 3286,
+      "sha256": "75b4423f048590d55d9e64c44a36fd64885638a94347b30bec932161e77a34bf",
+      "mtime_ns": 1791610491337111843,
+      "inspection_scope": "FULL_AUTHORED_CONTENT_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/reviser/.invocation-backup-4faa5ea2c947441b94c17e9280336cc6/freeze.json",
+      "bytes": 3972,
+      "sha256": "87a174593893cb915bcb5a23573cdf1fded5556fa94a0ea56883623738ddc8e3",
+      "mtime_ns": 1791610491336955823,
+      "inspection_scope": "FULL_AUTHORED_CONTENT_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/reviser/.invocation-backup-4faa5ea2c947441b94c17e9280336cc6/input-map.json",
+      "bytes": 1768,
+      "sha256": "aa4f189ebf6097688871b206646a49d2a11b6674b58f851d2129ffcabb7a75e6",
+      "mtime_ns": 1791610491337022896,
+      "inspection_scope": "FULL_AUTHORED_CONTENT_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/reviser/.invocation-backup-4faa5ea2c947441b94c17e9280336cc6/request.json",
+      "bytes": 893,
+      "sha256": "443cac05a5457633b6aeb6c0a6156a384ebba95d370c14af74b832a8b6e49be1",
+      "mtime_ns": 1791610491336843698,
+      "inspection_scope": "BOUNDED_MECHANICS_FULL_BYTES_PARSED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/reviser/assignment.md",
+      "bytes": 3988,
+      "sha256": "1faa65108c3794bf632be7cf5d98ceaa575efa17d9da8d69295b5b215747dd41",
+      "mtime_ns": 1791610491338128774,
+      "inspection_scope": "FULL_AUTHORED_CONTENT_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/reviser/dispatch.json",
+      "bytes": 4853,
+      "sha256": "afcb0c62c0a18fe727c6239433501b6a99aaa58eb3d74702ff7637a952a6efdb",
+      "mtime_ns": 1791610492358864105,
+      "inspection_scope": "BOUNDED_MECHANICS_FULL_BYTES_PARSED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/reviser/final.md",
+      "bytes": 27759,
+      "sha256": "afc64d11268e3d8776203423863bcaedbdc0b6dd5e85caa4b7590441b90fb189",
+      "mtime_ns": 1791610697227706878,
+      "inspection_scope": "FULL_AUTHORED_CONTENT_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/reviser/freeze.json",
+      "bytes": 4060,
+      "sha256": "6cff86933ee79a238fb9a8bf7bfa9c91cbed698b3f860093fda1e8dbd34cab69",
+      "mtime_ns": 1791610491337845428,
+      "inspection_scope": "FULL_AUTHORED_CONTENT_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/reviser/goal-activation.json",
+      "bytes": 466,
+      "sha256": "27a24ee75b2f9b8720e82efbfbafb43d5fbfd04e4c3d7e8380e3270f5bc562a0",
+      "mtime_ns": 1791610530155122160,
+      "inspection_scope": "BOUNDED_MECHANICS_FULL_BYTES_PARSED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/reviser/goal-completion.json",
+      "bytes": 795,
+      "sha256": "1cf1e5567061ca914cff981157db5daafcf1ecc09aad304b3fc043b860f8dcec",
+      "mtime_ns": 1791610936966717079,
+      "inspection_scope": "BOUNDED_MECHANICS_FULL_BYTES_PARSED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/reviser/input-map.json",
+      "bytes": 1768,
+      "sha256": "aa4f189ebf6097688871b206646a49d2a11b6674b58f851d2129ffcabb7a75e6",
+      "mtime_ns": 1791610491337984198,
+      "inspection_scope": "FULL_AUTHORED_CONTENT_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/reviser/invocation-clarification.json",
+      "bytes": 3023,
+      "sha256": "f7525fc5c58d5adfaf596aaa4449f68a42590640cba5535e5a29cb69b676bf83",
+      "mtime_ns": 1791610491338309302,
+      "inspection_scope": "BOUNDED_MECHANICS_FULL_BYTES_PARSED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/reviser/request.json",
+      "bytes": 1607,
+      "sha256": "7d5a7ae04cd8460d61db3e6a0e047f318cd41789429573fad9a07d8d99793e5b",
+      "mtime_ns": 1791610491337616392,
+      "inspection_scope": "BOUNDED_MECHANICS_FULL_BYTES_PARSED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/reviser/service-tier-change.json",
+      "bytes": 479,
+      "sha256": "08c56d532ded62edddb06288834c535867635758bd221d50d2a2103a344a1514",
+      "mtime_ns": 1791610491124483500,
+      "inspection_scope": "BOUNDED_MECHANICS_FULL_BYTES_PARSED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/reviser/source-map.json",
+      "bytes": 39660,
+      "sha256": "ee33cde39445f7377a40d4ce74d7076a2d8b28650d8503a78dfe3f1a757b9d2e",
+      "mtime_ns": 1791610896788660975,
+      "inspection_scope": "FULL_AUTHORED_CONTENT_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/stages/reviser/sources/index.md",
+      "bytes": 3943,
+      "sha256": "7d930d7f38ca28c9be931540b9fa4f98e2b94d68fd2c6712da2995dca00b9af7",
+      "mtime_ns": 1791610905153583028,
+      "inspection_scope": "FULL_AUTHORED_CONTENT_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-02/control/terminal-science-freeze-root.json",
+      "bytes": 7250,
+      "sha256": "05ddc8d0c0c47664ebfedbeebaaf15be63a88b8beeedae3b67f1f3c03955c539",
+      "mtime_ns": 1791610973164903039,
+      "inspection_scope": "BOUNDED_MECHANICS_FULL_BYTES_PARSED"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266,
+      "inspection_scope": "FULL_AUTHORED_CONTENT_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A2-02/brief.md",
+      "bytes": 3330,
+      "sha256": "15ac2ec31efcc20dac85969b6855efaa85cfbe065d00df9031e32288b7fb3ca0",
+      "mtime_ns": 1791608909886456363,
+      "inspection_scope": "FULL_AUTHORED_CONTENT_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A2-02/plan.md",
+      "bytes": 5932,
+      "sha256": "41c98c70681d7ab5e6534f387777df30ec06ff94ee93cdb071e124fe1a0c8ff6",
+      "mtime_ns": 1791608909886625485,
+      "inspection_scope": "FULL_AUTHORED_CONTENT_INSPECTED"
+    }
+  ],
+  "authored_source_evidence_inventory": "evidence/authored-source-evidence-inventory.json",
+  "terminal_freeze_check": "evidence/terminal-freeze-check.json",
+  "stage_freeze_checks": "evidence/stage-freeze-checks.json",
+  "native_timing_evidence": "evidence/stage-native-timing.json",
+  "judgment_links": {
+    "axes": {
+      "A1": [
+        "R01",
+        "R02",
+        "R07",
+        "R09",
+        "R13",
+        "R19"
+      ],
+      "A2": [
+        "R01",
+        "R02",
+        "R03",
+        "R04",
+        "R05",
+        "R06",
+        "R07",
+        "R08",
+        "R09",
+        "R10",
+        "R11",
+        "R12",
+        "R13",
+        "R14",
+        "R15",
+        "R16",
+        "R17",
+        "R18",
+        "R19",
+        "R20",
+        "R21",
+        "R22",
+        "R23",
+        "R24",
+        "R25",
+        "R28",
+        "R29",
+        "R31",
+        "R32"
+      ],
+      "A3": [
+        "R03",
+        "R07",
+        "R08",
+        "R09",
+        "R10",
+        "R11",
+        "R12",
+        "R13",
+        "R14",
+        "R15",
+        "R17",
+        "R19",
+        "R20",
+        "R33"
+      ],
+      "A4": [
+        "R01",
+        "R02",
+        "R03",
+        "R07",
+        "R09",
+        "R10",
+        "R11",
+        "R15",
+        "R16",
+        "R21",
+        "R22",
+        "R23",
+        "R28",
+        "R29"
+      ],
+      "A5": [
+        "R01",
+        "R03",
+        "R07",
+        "R08",
+        "R09",
+        "R13",
+        "R19",
+        "R20",
+        "R22"
+      ],
+      "A6": [
+        "R03",
+        "R07",
+        "R08",
+        "R09",
+        "R10",
+        "R13",
+        "R19",
+        "R20",
+        "R22",
+        "R24",
+        "R29"
+      ]
+    },
+    "clauses": {
+      "1": [
+        "R01",
+        "R02",
+        "R04",
+        "R05",
+        "R07",
+        "R08"
+      ],
+      "2": [
+        "R10",
+        "R11",
+        "R12",
+        "R13",
+        "R18",
+        "R19",
+        "R20"
+      ],
+      "3": [
+        "R01",
+        "R02",
+        "R03",
+        "R06"
+      ],
+      "4": [
+        "R03",
+        "R12",
+        "R14",
+        "R15",
+        "R16",
+        "R22",
+        "R23",
+        "R24",
+        "R28",
+        "R29"
+      ],
+      "5": [
+        "R09",
+        "R21"
+      ],
+      "6": [
+        "R01",
+        "R02"
+      ],
+      "7": [
+        "R01",
+        "R06",
+        "R10",
+        "R13"
+      ],
+      "8": [
+        "R01",
+        "R03",
+        "R07",
+        "R09",
+        "R19",
+        "R22"
+      ]
+    },
+    "criticisms": {
+      "C1": [
+        "R01",
+        "R07"
+      ],
+      "C2": [
+        "R01",
+        "R02",
+        "R03"
+      ],
+      "C3": [
+        "R14",
+        "R15",
+        "R16",
+        "R22",
+        "R23",
+        "R24",
+        "R25",
+        "R28",
+        "R29"
+      ],
+      "C4": [
+        "R10",
+        "R11",
+        "R19",
+        "R20"
+      ],
+      "C5": [
+        "R09",
+        "R21"
+      ]
+    },
+    "limitations": {
+      "L1": [
+        "R16",
+        "R22",
+        "R23",
+        "R24",
+        "R25",
+        "R28",
+        "R29"
+      ],
+      "L2": [
+        "R12",
+        "R13",
+        "R33"
+      ],
+      "L3": [
+        "R01",
+        "R22"
+      ]
+    }
+  },
+  "retrieval_execution_boundary": "Independent current retrieval does not prove the candidate originally retrieved that page. Original capture absence is explicit L3/U3."
+}

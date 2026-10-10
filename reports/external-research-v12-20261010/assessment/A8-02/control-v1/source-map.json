@@ -1,0 +1,349 @@
+{
+  "schema_version": "er12-independent-assessment-v1",
+  "assignment": "A8-02/control",
+  "reviewer": "codex-er12-a802-control-review-0535",
+  "judgment_basis": "Semantic inspection of original complete authored stages and independent primary evidence; hashes and stage agreement establish neither correctness nor validation.",
+  "sources": [
+    {
+      "source_id": "E01",
+      "title": "The Things Stack MQTT Server",
+      "url": "https://www.thethingsindustries.com/docs/integrations/other-integrations/mqtt/",
+      "version": "Current official docs; deployed release UNKNOWN",
+      "locator": "MQTT Server note; upstream traffic; example uplink",
+      "observed_operation": "Independent public primary retrieval and surrounding-condition inspection; no service access or code execution",
+      "access_utc_window": {
+        "after": "2026-10-10T05:35:35Z",
+        "before": "2026-10-10T05:38:27.616722Z",
+        "note": "Bounded observed review interval; not fabricated per-request timestamps"
+      },
+      "governing_conditions": "MQTT 3.1.1, QoS 0 only; application-server uplink topics. Tenant-qualified names exclude Open Source. These concern the application integration, not station sample identity or battery performance.",
+      "corresponds_to_original_ids": [
+        "S01",
+        "C01",
+        "R01"
+      ],
+      "claim_verdict": "SUPPORTED_WITH_STATED_APPLICABILITY",
+      "evidence_note": "evidence/primary-evidence.md#e01"
+    },
+    {
+      "source_id": "E02",
+      "title": "OASIS MQTT 3.1.1",
+      "url": "https://docs.oasis-open.org/mqtt/mqtt/v3.1.1/os/mqtt-v3.1.1-os.html",
+      "version": "OASIS Standard, 2014-10-29",
+      "locator": "§4.3 and §4.3.1; §4.3.2",
+      "observed_operation": "Independent public primary retrieval and surrounding-condition inspection; no service access or code execution",
+      "access_utc_window": {
+        "after": "2026-10-10T05:35:35Z",
+        "before": "2026-10-10T05:38:27.616722Z",
+        "note": "Bounded observed review interval; not fabricated per-request timestamps"
+      },
+      "governing_conditions": "QoS governs one sender/receiver message exchange. QoS 0 has no acknowledgment/retry and can lose the message; QoS 1 may duplicate. Neither identifies semantic samples across radio, application and archive.",
+      "corresponds_to_original_ids": [
+        "S02",
+        "C02",
+        "R02"
+      ],
+      "claim_verdict": "SUPPORTED_WITH_STATED_APPLICABILITY",
+      "evidence_note": "evidence/primary-evidence.md#e02"
+    },
+    {
+      "source_id": "E03",
+      "title": "The Things Stack Storage Integration",
+      "url": "https://www.thethingsindustries.com/docs/integrations/storage/",
+      "version": "Current official docs; deployed release UNKNOWN",
+      "locator": "How it works; retention and batching warning; configuration",
+      "observed_operation": "Independent public primary retrieval and surrounding-condition inspection; no service access or code execution",
+      "access_utc_window": {
+        "after": "2026-10-10T05:35:35Z",
+        "before": "2026-10-10T05:38:27.616722Z",
+        "note": "Bounded observed review interval; not fabricated per-request timestamps"
+      },
+      "governing_conditions": "Cloud retention 30 days; Sandbox 24 hours; Enterprise configurable. Cloud stores uplinks only. Enabled application/end-device integration writes in batches and can lag. The proposed short-gap recovery use is conditional, not an archive guarantee.",
+      "corresponds_to_original_ids": [
+        "S03",
+        "C04",
+        "R05"
+      ],
+      "claim_verdict": "SUPPORTED_WITH_STATED_APPLICABILITY",
+      "evidence_note": "evidence/primary-evidence.md#e03"
+    },
+    {
+      "source_id": "E04",
+      "title": "The Things Stack Retrieve Messages",
+      "url": "https://www.thethingsindustries.com/docs/integrations/storage/retrieve/",
+      "version": "Current official docs; deployed release UNKNOWN",
+      "locator": "Retrieve Uplinks using HTTP API, example response; CLI simulated examples",
+      "observed_operation": "Independent public primary retrieval and surrounding-condition inspection; no service access or code execution",
+      "access_utc_window": {
+        "after": "2026-10-10T05:35:35Z",
+        "before": "2026-10-10T05:38:27.616722Z",
+        "note": "Bounded observed review interval; not fabricated per-request timestamps"
+      },
+      "governing_conditions": "Response examples distinguish outer/nested received_at, gateway time, transport counter and session. They contain device payload bytes, not a universal sample-time field. CLI simulated examples can contain a zero-time sentinel. Public retrieval requires traffic-read authorization; reviewer used documentation only.",
+      "corresponds_to_original_ids": [
+        "S04",
+        "C07",
+        "R06"
+      ],
+      "claim_verdict": "SUPPORTED_WITH_STATED_APPLICABILITY",
+      "evidence_note": "evidence/primary-evidence.md#e04"
+    },
+    {
+      "source_id": "E05",
+      "title": "The Things Stack Console Troubleshooting",
+      "url": "https://www.thethingsindustries.com/docs/concepts/features/console/troubleshooting/",
+      "version": "Current official docs; deployed release UNKNOWN",
+      "locator": "UTC display note; Entity Not Found; Duplicate Uplink",
+      "observed_operation": "Independent public primary retrieval and surrounding-condition inspection; no service access or code execution",
+      "access_utc_window": {
+        "after": "2026-10-10T05:35:35Z",
+        "before": "2026-10-10T05:38:27.616722Z",
+        "note": "Bounded observed review interval; not fabricated per-request timestamps"
+      },
+      "governing_conditions": "ABP power-cycle counter reset can prevent session matching. A multi-gateway uplink copy arriving outside the deduplication window may be dropped. These are specific TTS transport cases. Browser-local display versus UTC event detail is separate from sample-time truth.",
+      "corresponds_to_original_ids": [
+        "S05",
+        "C05",
+        "R07"
+      ],
+      "claim_verdict": "SUPPORTED_WITH_STATED_APPLICABILITY",
+      "evidence_note": "evidence/primary-evidence.md#e05"
+    },
+    {
+      "source_id": "E06",
+      "title": "LoRaWAN L2 1.0.4",
+      "url": "https://lora-alliance.org/wp-content/uploads/2021/11/LoRaWAN-Link-Layer-Specification-v1.0.4.pdf",
+      "version": "TS001-1.0.4, October 2020",
+      "locator": "§2.1, printed pp9–10; §4.3.1.3 and §4.3.1.5, printed pp21–23; numbered spec lines678–708",
+      "observed_operation": "Independent public primary retrieval and surrounding-condition inspection; no service access or code execution",
+      "access_utc_window": {
+        "after": "2026-10-10T05:35:35Z",
+        "before": "2026-10-10T05:38:27.616722Z",
+        "note": "Bounded observed review interval; not fabricated per-request timestamps"
+      },
+      "governing_conditions": "Successful OTAA Join-Accept resets counters. ABP counters must survive power loss. Retransmissions reuse FCntUp; the network forwards one application-payload instance. Counters are 32 bits, wire FCnt 16 bits; session rules govern reuse. Class C consumes more power. No club batching or battery behavior is established.",
+      "corresponds_to_original_ids": [
+        "S06",
+        "C06",
+        "R03"
+      ],
+      "claim_verdict": "SUPPORTED_WITH_STATED_APPLICABILITY",
+      "evidence_note": "evidence/primary-evidence.md#e06"
+    },
+    {
+      "source_id": "E07",
+      "title": "The Things Stack Webhook Retries",
+      "url": "https://www.thethingsindustries.com/docs/integrations/webhooks/retries/",
+      "version": "Feature marked new in 3.30.1; deployed release UNKNOWN",
+      "locator": "Availability, enabling, failure definition, timeout/count/schedule",
+      "observed_operation": "Independent public primary retrieval and surrounding-condition inspection; no service access or code execution",
+      "access_utc_window": {
+        "after": "2026-10-10T05:35:35Z",
+        "before": "2026-10-10T05:38:27.616722Z",
+        "note": "Bounded observed review interval; not fabricated per-request timestamps"
+      },
+      "governing_conditions": "Default is at most one try per uplink. Enabled retries require applicable deployment support; Cloud Plus or vendor evaluation for Cloud. Failure includes unavailable endpoint and non-2xx response. Defaults: seven total tries; response under ten seconds; backoff with jitter. These are configurable bounds, not outage guarantees.",
+      "corresponds_to_original_ids": [
+        "S07",
+        "C03",
+        "R04"
+      ],
+      "claim_verdict": "SUPPORTED_WITH_STATED_APPLICABILITY",
+      "evidence_note": "evidence/primary-evidence.md#e07"
+    },
+    {
+      "source_id": "E08",
+      "title": "PostgreSQL COPY",
+      "url": "https://www.postgresql.org/docs/18/sql-copy.html",
+      "version": "PostgreSQL 18",
+      "locator": "Description; HEADER; ON_ERROR; CSV Format",
+      "observed_operation": "Independent public primary retrieval and surrounding-condition inspection; no service access or code execution",
+      "access_utc_window": {
+        "after": "2026-10-10T05:35:35Z",
+        "before": "2026-10-10T05:38:27.616722Z",
+        "note": "Bounded observed review interval; not fabricated per-request timestamps"
+      },
+      "governing_conditions": "COPY FROM appends; STDIN streams over the client connection. HEADER MATCH checks column count/names/order. Conversion errors stop by default; ignore skips rows only for text/CSV FROM. CSV quoting distinguishes null/empty and permits embedded newlines. psql inline STDIN has an end-marker caveat. A loader does not provide staff review.",
+      "corresponds_to_original_ids": [
+        "S08",
+        "C08",
+        "R08"
+      ],
+      "claim_verdict": "SUPPORTED_WITH_STATED_APPLICABILITY",
+      "evidence_note": "evidence/primary-evidence.md#e08"
+    },
+    {
+      "source_id": "E09",
+      "title": "PostgreSQL Constraints",
+      "url": "https://www.postgresql.org/docs/18/ddl-constraints.html",
+      "version": "PostgreSQL 18",
+      "locator": "§5.5.3 Unique Constraints; §5.5.4 Primary Keys",
+      "observed_operation": "Independent public primary retrieval and surrounding-condition inspection; no service access or code execution",
+      "access_utc_window": {
+        "after": "2026-10-10T05:35:35Z",
+        "before": "2026-10-10T05:38:27.616722Z",
+        "note": "Bounded observed review interval; not fabricated per-request timestamps"
+      },
+      "governing_conditions": "Unique constraints apply to selected columns; nulls are distinct by default unless NULLS NOT DISTINCT is selected. Primary keys are unique and non-null. Enforcing a known stable identity is supported; documentation cannot determine an unknown sensor's sample identity.",
+      "corresponds_to_original_ids": [
+        "S09",
+        "C09"
+      ],
+      "claim_verdict": "SUPPORTED_WITH_STATED_APPLICABILITY",
+      "evidence_note": "evidence/primary-evidence.md#e09"
+    },
+    {
+      "source_id": "E10",
+      "title": "PostgreSQL Transactions",
+      "url": "https://www.postgresql.org/docs/18/tutorial-transactions.html",
+      "version": "PostgreSQL 18",
+      "locator": "§3.4 opening explanation and BEGIN/COMMIT example",
+      "observed_operation": "Independent public primary retrieval and surrounding-condition inspection; no service access or code execution",
+      "access_utc_window": {
+        "after": "2026-10-10T05:35:35Z",
+        "before": "2026-10-10T05:38:27.616722Z",
+        "note": "Bounded observed review interval; not fabricated per-request timestamps"
+      },
+      "governing_conditions": "Database changes can be grouped atomically, with incomplete changes hidden from concurrent transactions. This supports a proposed database acceptance step, not atomic coordination of an external source file and database. Final explicitly preserves that boundary.",
+      "corresponds_to_original_ids": [
+        "S10",
+        "C10"
+      ],
+      "claim_verdict": "SUPPORTED_WITH_STATED_APPLICABILITY",
+      "evidence_note": "evidence/primary-evidence.md#e10"
+    },
+    {
+      "source_id": "E11",
+      "title": "Apache Beam Programming Guide",
+      "url": "https://beam.apache.org/documentation/programming-guide/",
+      "version": "Current guide; no pinned guide edition",
+      "locator": "§8.4 watermarks; §9.4.2 handling late data; §9.5.2 AfterWatermark",
+      "observed_operation": "Independent public primary retrieval and surrounding-condition inspection; no service access or code execution",
+      "access_utc_window": {
+        "after": "2026-10-10T05:35:35Z",
+        "before": "2026-10-10T05:38:27.616722Z",
+        "note": "Bounded observed review interval; not fabricated per-request timestamps"
+      },
+      "governing_conditions": "Watermarks estimate event-time completeness. Configured allowed lateness lets triggers react after a window boundary; pane accumulation/discarding is distinct. The analogy supports derived refresh policy only. It does not justify deleting canonical raw observations or establish station behavior.",
+      "corresponds_to_original_ids": [
+        "S11",
+        "C11",
+        "R09"
+      ],
+      "claim_verdict": "SUPPORTED_WITH_STATED_APPLICABILITY",
+      "evidence_note": "evidence/primary-evidence.md#e11"
+    },
+    {
+      "source_id": "E12",
+      "title": "Apache Beam TriggerExample.java",
+      "url": "https://github.com/apache/beam/blob/v2.76.0/examples/java/src/main/java/org/apache/beam/examples/cookbook/TriggerExample.java",
+      "version": "v2.76.0; commit 3862626d08b234f127dbf69253b8a9f00904c671",
+      "locator": "CalculateTotalFlow.expand concepts1–2; raw source lines170–238; GitHub rendered lines1660–1787",
+      "observed_operation": "Independent public primary retrieval and surrounding-condition inspection; no service access or code execution",
+      "access_utc_window": {
+        "after": "2026-10-10T05:35:35Z",
+        "before": "2026-10-10T05:38:27.616722Z",
+        "note": "Bounded observed review interval; not fabricated per-request timestamps"
+      },
+      "governing_conditions": "Released Java source configures zero lateness and a one-day alternative with repeated AfterWatermark and discarding panes. This confirms the described example, not an executed test or a selected club grace period. Source was inspected read-only; no Beam or BigQuery execution.",
+      "corresponds_to_original_ids": [
+        "S12",
+        "C12"
+      ],
+      "claim_verdict": "SUPPORTED_WITH_STATED_APPLICABILITY",
+      "evidence_note": "evidence/primary-evidence.md#e12",
+      "alternate_url": "https://raw.githubusercontent.com/apache/beam/v2.76.0/examples/java/src/main/java/org/apache/beam/examples/cookbook/TriggerExample.java"
+    },
+    {
+      "source_id": "E13",
+      "title": "Apache Beam issue 36470",
+      "url": "https://github.com/apache/beam/issues/36470",
+      "version": "Opened2025-10-10; closed2025-10-30; report identifies 2.67 aggravating change",
+      "locator": "What happened; update references; closure; milestone metadata",
+      "observed_operation": "Independent public primary retrieval and surrounding-condition inspection; no service access or code execution",
+      "access_utc_window": {
+        "after": "2026-10-10T05:35:35Z",
+        "before": "2026-10-10T05:38:27.616722Z",
+        "note": "Bounded observed review interval; not fabricated per-request timestamps"
+      },
+      "governing_conditions": "Report describes Spanner connector partition-watermark regression from reordered metadata updates, aggravated by 2.67 caching/filtering. Closure cites release2.69. Current milestone2.70 does not override the issue's explicit history. This is a bounded connector analogue, not a weather-stack defect.",
+      "corresponds_to_original_ids": [
+        "S13",
+        "C13",
+        "R10"
+      ],
+      "claim_verdict": "SUPPORTED_WITH_STATED_APPLICABILITY",
+      "evidence_note": "evidence/primary-evidence.md#e13"
+    },
+    {
+      "source_id": "E14",
+      "title": "Apache Beam 2.69.0 release",
+      "url": "https://github.com/apache/beam/releases/tag/v2.69.0",
+      "version": "v2.69.0; displayed short commit2ca7d21; release2025-10-17",
+      "locator": "Bugfixes, Spanner Change Stream entry; release metadata",
+      "observed_operation": "Independent public primary retrieval and surrounding-condition inspection; no service access or code execution",
+      "access_utc_window": {
+        "after": "2026-10-10T05:35:35Z",
+        "before": "2026-10-10T05:38:27.616722Z",
+        "note": "Bounded observed review interval; not fabricated per-request timestamps"
+      },
+      "governing_conditions": "Official release page lists issue36470 as fixed in2.69.0. This corroborates the release claim independently of agreement between candidate stages. It does not demonstrate a deployed processor or weather-system fix.",
+      "corresponds_to_original_ids": [
+        "S14",
+        "C14",
+        "R11"
+      ],
+      "claim_verdict": "SUPPORTED_WITH_STATED_APPLICABILITY",
+      "evidence_note": "evidence/primary-evidence.md#e14"
+    },
+    {
+      "source_id": "E15",
+      "title": "InfluxDB 3 Core Line Protocol",
+      "url": "https://docs.influxdata.com/influxdb3/core/reference/line-protocol/",
+      "version": "InfluxDB 3 Core docs; server patch UNKNOWN",
+      "locator": "Duplicate points; Overwrites are not deterministic; append-only patterns",
+      "observed_operation": "Independent public primary retrieval and surrounding-condition inspection; no service access or code execution",
+      "access_utc_window": {
+        "after": "2026-10-10T05:35:35Z",
+        "before": "2026-10-10T05:38:27.616722Z",
+        "note": "Bounded observed review interval; not fabricated per-request timestamps"
+      },
+      "governing_conditions": "Identity is table/tag-set/timestamp. Same-key writes merge fields; conflicting retained values are not guaranteed to be newest. Append-only patterns are documented. Keeping correction authority elsewhere is a supported local design choice, not a claim about InfluxDB2 or a measured pilot.",
+      "corresponds_to_original_ids": [
+        "S15",
+        "C15"
+      ],
+      "claim_verdict": "SUPPORTED_WITH_STATED_APPLICABILITY",
+      "evidence_note": "evidence/primary-evidence.md#e15"
+    }
+  ],
+  "local_governing_inputs": [
+    {
+      "id": "B",
+      "path": "ER12_RUNTIME/frozen-inputs/A8-02/brief.md",
+      "locator": "All numbered obligations and Research boundaries and deliverable"
+    },
+    {
+      "id": "P",
+      "path": "ER12_RUNTIME/frozen-inputs/A8-02/plan.md",
+      "locator": "All sections and exact numbered clause bodies"
+    },
+    {
+      "id": "RB",
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "locator": "Complete rubric"
+    }
+  ],
+  "original_artifact_hashes": "original-inspected.json",
+  "freeze_integrity_evidence": "evidence/integrity-checks.json",
+  "missing_original_evidence": [
+    "Stage sources directories contain navigation indexes only; no preserved original page bodies, product captures or executable-check records. Source maps document claimed reads but cannot independently prove tool execution."
+  ],
+  "retrieval_diagnostics": [
+    {
+      "url": "https://api.github.com/repos/apache/beam/git/ref/tags/v2.76.0",
+      "web_error": "URL https://api.github.com/repos/apache/beam/git/ref/tags/v2.76.0 is not accessible via this tool.",
+      "fallback": "Successful read-only Python urllib public API retrieval; tag object followed to commit; evidence in evidence/beam-tag-metadata.json"
+    }
+  ]
+}

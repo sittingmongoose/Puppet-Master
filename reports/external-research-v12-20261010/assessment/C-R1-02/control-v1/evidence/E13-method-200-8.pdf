@@ -1,0 +1,65 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://www.epa.gov/sites/default/files/2015-06/documents/epa-200.8.pdf"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/C-R1-02/control-v1/source-map.json",
+      "source_id": "E13",
+      "existing_authored_summary_fields": {
+        "version_verified": "Revision5.4 EMMC version,1994",
+        "observed_subject_operation_units_types": "The method defines the dissolved analyte operationally by passage through a 0.45 µm membrane before acidification; dissolved versus total-recoverable samples have distinct preparation.",
+        "conditions_defaults_domain_exceptions": "Method-specific metals analysis with analytical applicability and preservation requirements; not a general pore choice for workshop treatment or a safety definition."
+      }
+    },
+    {
+      "authored_source_map": "assessment/C-R1-02/control-v1/source-map.json",
+      "source_id": "E13",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/C-R1-02/control-v1/evidence/E13-retrieval.json",
+      "source_id": "E13",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": "§3.3 (printed200.8-5, PDFp.5), §§8.1–8.3 (printed200.8-17); saved text lines190–192,813–841"
+    }
+  ],
+  "raw_sha256": "8fe2e099f698faf39d13f9b595c4d49aeeb27fd526f3294c2ae389dbe738f592",
+  "original_bytes": 735388,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/C-R1-02/control-v1/evidence/E13-method-200-8.pdf",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://www.epa.gov/sites/default/files/2015-06/documents/epa-200.8.pdf"
+  ],
+  "version": [
+    {
+      "version_verified": "Revision5.4 EMMC version,1994",
+      "observed_subject_operation_units_types": "The method defines the dissolved analyte operationally by passage through a 0.45 µm membrane before acidification; dissolved versus total-recoverable samples have distinct preparation.",
+      "conditions_defaults_domain_exceptions": "Method-specific metals analysis with analytical applicability and preservation requirements; not a general pore choice for workshop treatment or a safety definition."
+    }
+  ],
+  "selector": [
+    {
+      "locator": "§3.3 (printed200.8-5, PDFp.5), §§8.1–8.3 (printed200.8-17); saved text lines190–192,813–841"
+    }
+  ],
+  "conditions": [
+    {
+      "version_verified": "Revision5.4 EMMC version,1994",
+      "observed_subject_operation_units_types": "The method defines the dissolved analyte operationally by passage through a 0.45 µm membrane before acidification; dissolved versus total-recoverable samples have distinct preparation.",
+      "conditions_defaults_domain_exceptions": "Method-specific metals analysis with analytical applicability and preservation requirements; not a general pore choice for workshop treatment or a safety definition."
+    }
+  ],
+  "rawSHA256": "8fe2e099f698faf39d13f9b595c4d49aeeb27fd526f3294c2ae389dbe738f592"
+}

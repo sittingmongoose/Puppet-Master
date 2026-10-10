@@ -1,0 +1,94 @@
+{
+  "observed_at_utc": "2026-10-10T05:34:47.140961+00:00",
+  "basis": "root observed terminal final T3 task/no pending; separate from native proof",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/critic/critique.md",
+      "bytes": 7105,
+      "sha256": "e770ac9ce0819bf44ecdfc97cd2ff1d3652f12f3631ff7abf70e60fcda285e76",
+      "mtime_ns": 1791609512146101522
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/critic/source-map.json",
+      "bytes": 11087,
+      "sha256": "f20bc262ec0fee4e15e9b4a16e2dc580603cc4d8d6b9733666e3ad8b507b5ac4",
+      "mtime_ns": 1791609512241102126
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/critic/sources/index.md",
+      "bytes": 2581,
+      "sha256": "dffea7b2594c53b823bc713824bea6aa63045fe5934bb9a79e5d220b4ef17cba",
+      "mtime_ns": 1791609121009874026
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/discovery.md",
+      "bytes": 10244,
+      "sha256": "510bcbb9f05eb883d1323caa2af5603ac1a6506b73cbd2fa0705e50702944069",
+      "mtime_ns": 1791607766809596936
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/draft.md",
+      "bytes": 21174,
+      "sha256": "4d80c59ff8763895427b97c1b066fd3afdd12ea1dd42029fd6ca3c853f00f6ef",
+      "mtime_ns": 1791607963189457834
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 2470,
+      "sha256": "b977457667677faa27fe5256d090e48ec798eae592ffd7d860e4c3c239167b79",
+      "mtime_ns": 1791607775237200790
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/source-map.json",
+      "bytes": 16591,
+      "sha256": "56502caed4f390491f2bab25fa330fe3a4c620a9f738279b2e5f9a3c844c6c0b",
+      "mtime_ns": 1791608027809296038
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/sources/index.md",
+      "bytes": 8305,
+      "sha256": "fd0a668d5455405d6ed4831f392ca337328f1c7219cb55125cf2cd11d31b86af",
+      "mtime_ns": 1791607963189005404
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+      "bytes": 26085,
+      "sha256": "2f53d66742cbf31eb8c0a2497f2609360e7ba701d458a63eecbade5309f03bc9",
+      "mtime_ns": 1791610438248720922
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/source-map.json",
+      "bytes": 28971,
+      "sha256": "aea827bab33b904d493a005f0c50fa670f032c1f024651a33fa421525f91892d",
+      "mtime_ns": 1791610438249732913
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/sources/index.md",
+      "bytes": 5800,
+      "sha256": "e0db72c512794be41d7678391aaa48979c228bafda107ebaa915e67cbc2deff4",
+      "mtime_ns": 1791610438249120638
+    }
+  ],
+  "final_stage_task": {
+    "slot": "A3-02",
+    "arm": "treatment",
+    "stage": "reviser",
+    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-02-treatment-reviser-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-02-treatment-reviser-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-02-treatment-reviser-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-02-treatment-reviser-v1",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-02-treatment-reviser-v1:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "Completed the reviser stage. The complete plan, source map, and navigable source index are saved:\n\n- [final.md](ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/sources/index.md)\n\nThe one native Goal completed with the same thread ID. Exact activation and completion responses are preserved in [native-goal-activation.json](ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/native-goal-activation.json) and [native-goal-completion.json](ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/native-goal-completion.json). The completion response reports 153,513 tokens and 14m 49s.\n\nNo browser or microphone tests were run; the validation matrix is proposed only.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-02-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:a9fb7d67-d1ea-4db8-aabd-35d15d72981a",
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "summary": "Completed the reviser stage. The complete plan, source map, and navigable source index are saved:\n\n- [final.md](ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/sources/index.md)\n\nThe one native Goal completed with the same thread ID. Exact activation and completion responses are preserved in [native-goal-activation.json](ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/native-goal-activation.json) and [native-goal-completion.json](ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/native-goal-completion.json). The completion response reports 153,513 tokens and 14m 49s.\n\nNo browser or microphone tests were run; the validation matrix is proposed only.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-02-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:a9fb7d67-d1ea-4db8-aabd-35d15d72981a",
+    "waitTimedOut": false
+  }
+}

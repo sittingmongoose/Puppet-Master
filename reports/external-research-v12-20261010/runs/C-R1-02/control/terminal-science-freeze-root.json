@@ -1,0 +1,88 @@
+{
+  "observed_at_utc": "2026-10-10T05:41:32.186294+00:00",
+  "basis": "root observed terminal final T3 task/no pending; separate from native proof",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/critique.md",
+      "bytes": 7056,
+      "sha256": "5ba9503b8107d90357f9ec55658b61c38cf2a6cfcc930572c17ad3391a7725c8",
+      "mtime_ns": 1791609935039784189
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/critic/source-map.json",
+      "bytes": 23437,
+      "sha256": "a424dd49685be4c3426c9ae55a87c606100a5bedbc5df5d6ecfc373db378bea9",
+      "mtime_ns": 1791609956314225847
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/discovery.md",
+      "bytes": 13256,
+      "sha256": "c8b0aa4e8f87e9823442601ea2312b401fe3da5bc601744c76d3e808d701663a",
+      "mtime_ns": 1791609076031320183
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/draft.md",
+      "bytes": 17352,
+      "sha256": "3a40e9102121dcfd8d5907987a92fabf603f1de94e28e491422e7170c62ec758",
+      "mtime_ns": 1791609265356377103
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/revealed-plan.md",
+      "bytes": 6794,
+      "sha256": "8e2247027ad8b2baa1338b77a5f4020d86ed2a926f102c618b802c618bd257c8",
+      "mtime_ns": 1791609092699155499
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/source-map.json",
+      "bytes": 17320,
+      "sha256": "7f0b91dd5e76450d1b10513bd3d877bc4fd415eac4e958b765987f2a93df8a33",
+      "mtime_ns": 1791609076039319303
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/sources/index.md",
+      "bytes": 1703,
+      "sha256": "0ae32a479ea16a218da0268e22cb325ad8104b7cf5e81a63c1608df78e7998b1",
+      "mtime_ns": 1791609076046318534
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+      "bytes": 24960,
+      "sha256": "02f63d6e57d2055fc45f9632e41caa6a9872e66aae7859f766cd1215c0d36c8b",
+      "mtime_ns": 1791610781614370427
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/source-map.json",
+      "bytes": 27083,
+      "sha256": "d5c1ee3347ffae6a612d5b6b69299b77e79a2cbac54b40161a47361eb79121c7",
+      "mtime_ns": 1791610706294481744
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/sources/index.md",
+      "bytes": 6382,
+      "sha256": "8e2142dcd6eb13e361f899dbea95e8008fae17eb029450a5c029fbf7f4484990",
+      "mtime_ns": 1791610706294890179
+    }
+  ],
+  "final_stage_task": {
+    "slot": "C-R1-02",
+    "arm": "control",
+    "stage": "reviser",
+    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-02-control-reviser-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-02-control-reviser-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-02-control-reviser-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-02-control-reviser-v1",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-02-control-reviser-v1:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "Completed the assigned reviser stage. The one native Goal was activated and completed; its exact responses are saved in [native-goal-activation.json](ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/native-goal-activation.json) and [native-goal-completion.json](ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/native-goal-completion.json). The completion response reports 113,662 tokens and 513 seconds; provider/model provenance is unknown.\n\nThe complete proposal is in [final.md](ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md). The preserved 12-source map and navigable [source index](ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/sources/index.md) are also saved. They record the S02 reporting ambiguity against the [publisher article](https://www.internationaljournalssrg.org/IJCE/paper-details?Id=747) and the S10 unit wording on the [EPA page](https://www.epa.gov/caddis/metals).\n\nThe investigator\u2019s 60-minute completion status remains unknown; no workshop sampling, pilot, permit review, or waste determination is claimed.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-02-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:de67496c-e04e-4d0c-9f7f-a379c414d6cf",
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "summary": "Completed the assigned reviser stage. The one native Goal was activated and completed; its exact responses are saved in [native-goal-activation.json](ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/native-goal-activation.json) and [native-goal-completion.json](ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/native-goal-completion.json). The completion response reports 113,662 tokens and 513 seconds; provider/model provenance is unknown.\n\nThe complete proposal is in [final.md](ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md). The preserved 12-source map and navigable [source index](ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/sources/index.md) are also saved. They record the S02 reporting ambiguity against the [publisher article](https://www.internationaljournalssrg.org/IJCE/paper-details?Id=747) and the S10 unit wording on the [EPA page](https://www.epa.gov/caddis/metals).\n\nThe investigator\u2019s 60-minute completion status remains unknown; no workshop sampling, pilot, permit review, or waste determination is claimed.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-02-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:de67496c-e04e-4d0c-9f7f-a379c414d6cf",
+    "waitTimedOut": false
+  }
+}

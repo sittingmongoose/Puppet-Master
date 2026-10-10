@@ -1,0 +1,115 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://snipe-it.readme.io/docs/asset-labels"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A5-02/treatment-v1/source-map.json",
+      "source_id": "E-S02",
+      "existing_authored_summary_fields": {
+        "candidate_version": "Rolling official documentation; no release version shown. Page indicates an update six months before access; current release context Snipe-IT v8.8.0 is separately S04.",
+        "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+        "independently_verified_version_or_commit": "Official rolling Snipe-IT Asset Labels docs, independently retrieved 2026-10-10; no release binding",
+        "governing_condition_default_exception": "Barcodes must be enabled; this documented path does not enumerate the released New Label Engine target/prefix exceptions (F1)",
+        "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A5-02/treatment-v1/evidence/retrieval-manifest.json",
+      "source_id": "E-S02",
+      "existing_authored_summary_fields": {
+        "candidate_version": "Rolling official documentation; no release version shown. Page indicates an update six months before access; current release context Snipe-IT v8.8.0 is separately S04."
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context."
+    },
+    {
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S02.txt",
+          "line": 4,
+          "needle": "QR code will provide",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S02.txt",
+          "line": 5,
+          "needle": "bottom barcode",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S02.txt",
+          "line": 6,
+          "needle": "must have barcodes enabled",
+          "other_match_lines": []
+        }
+      ]
+    }
+  ],
+  "raw_sha256": "3ac1b883170b7b3779d0c1d90046f109bf60e760f4c299cc9ea3abf00ed425ae",
+  "original_bytes": 1142,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A5-02/treatment-v1/evidence/E-S02.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://snipe-it.readme.io/docs/asset-labels"
+  ],
+  "version": [
+    {
+      "candidate_version": "Rolling official documentation; no release version shown. Page indicates an update six months before access; current release context Snipe-IT v8.8.0 is separately S04.",
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "Official rolling Snipe-IT Asset Labels docs, independently retrieved 2026-10-10; no release binding",
+      "governing_condition_default_exception": "Barcodes must be enabled; this documented path does not enumerate the released New Label Engine target/prefix exceptions (F1)",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation."
+    },
+    {
+      "candidate_version": "Rolling official documentation; no release version shown. Page indicates an update six months before access; current release context Snipe-IT v8.8.0 is separately S04."
+    }
+  ],
+  "selector": [
+    {
+      "source_locator_status": "Relevant governing sections/code/metadata reviewed; broad captures retained for surrounding context."
+    },
+    {
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S02.txt",
+          "line": 4,
+          "needle": "QR code will provide",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S02.txt",
+          "line": 5,
+          "needle": "bottom barcode",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-S02.txt",
+          "line": 6,
+          "needle": "must have barcodes enabled",
+          "other_match_lines": []
+        }
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "candidate_version": "Rolling official documentation; no release version shown. Page indicates an update six months before access; current release context Snipe-IT v8.8.0 is separately S04.",
+      "candidate_version_status": "Candidate version label is lineage; independent version judgment is in semantic check and pinned metadata.",
+      "independently_verified_version_or_commit": "Official rolling Snipe-IT Asset Labels docs, independently retrieved 2026-10-10; no release binding",
+      "governing_condition_default_exception": "Barcodes must be enabled; this documented path does not enumerate the released New Label Engine target/prefix exceptions (F1)",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation."
+    }
+  ],
+  "rawSHA256": "3ac1b883170b7b3779d0c1d90046f109bf60e760f4c299cc9ea3abf00ed425ae"
+}

@@ -1,0 +1,262 @@
+{
+  "schema": "er12-source-map-v1",
+  "run_id": "A4-02-treatment",
+  "stage": "investigator",
+  "created_at_utc": "2026-10-10T05:09:25Z",
+  "index": "sources/index.md",
+  "source_id_policy": "Source IDs are fixed for this stage and must not be silently rebound. The draft cites these IDs and the index records exact source URLs.",
+  "evidence_limits": "Public primary documentation, public source code and public released issue/fix history only. Research retrieval is not product validation. No downloaded code was run.",
+  "claim_source_comparison": [
+    {
+      "claim_id": "C1",
+      "claim": "Weekly rehearsal should remain at the venue's local wall-clock time across DST; a zoned DTSTART + recurring rule communicates this, and a VTIMEZONE definition must cover the season.",
+      "operation_subject": "iCalendar recurrence expansion in RFC 5545; Google Calendar API v3 start.timeZone field.",
+      "conditions": "TZID/VTIMEZONE are paired; local date-time without TZID is floating; TZID DTSTART requires UNTIL in UTC; client support still varies. Google Help additionally warns about future/past events and DST-rule updates.",
+      "source_ids": [
+        "R01",
+        "R08",
+        "R16"
+      ],
+      "applicability_limit": "Normative format/API behavior, not observed client implementation or refresh result."
+    },
+    {
+      "claim_id": "C2",
+      "claim": "Keep one UID for the recurring series; use original recurrence identity for a moved instance and exclude a canceled instance from the recurrence set.",
+      "operation_subject": "iCalendar event series/exception; Google API get/update of a single recurring event instance.",
+      "conditions": "RECURRENCE-ID is original scheduled time; Google originalStartTime is immutable; Google API status=cancelled only for a specific instance; exact feed serialization still to test.",
+      "source_ids": [
+        "R01",
+        "R08"
+      ],
+      "applicability_limit": "Standards/API identity, not guarantee across all clients."
+    },
+    {
+      "claim_id": "C3",
+      "claim": "A file import is a snapshot; URL subscription refresh is client/service controlled and cannot be promised immediate.",
+      "operation_subject": "Google Calendar computer import vs public-URL add; Outlook.com web upload vs Subscribe from web.",
+      "conditions": "Google source must be public for URL add; Outlook documentation says refresh can exceed 24 hours despite approximate 3-hour guidance; numeric builds unavailable.",
+      "source_ids": [
+        "R05",
+        "R06",
+        "R07",
+        "R09"
+      ],
+      "applicability_limit": "Exact documented web operations only; actual refresh must be measured per target app/version."
+    },
+    {
+      "claim_id": "C4",
+      "claim": "The Nextcloud 35 weekly user-app subscription interval and one-day server-cached subscription default describe different operations.",
+      "operation_subject": "Nextcloud Calendar app subscribing to a feed vs Nextcloud server periodically refreshing its own cached upstream subscription.",
+      "conditions": "Nextcloud 35 user manual says weekly default; Nextcloud 35 admin manual says one-day server default absent a source refresh interval. The docs appear to concern internal feed subscriptions but do not reconcile the default; treat as an unresolved documentation conflict, not separate proven defaults.",
+      "source_ids": [
+        "R11",
+        "R12"
+      ],
+      "applicability_limit": "Neither page sets refresh behavior of Google, Outlook, Apple or other external clients fetching a Nextcloud public URL."
+    },
+    {
+      "claim_id": "C5",
+      "claim": "Keep policy reminders out of the feed and test per-member local reminder behavior.",
+      "operation_subject": "iCalendar VALARM and client subscription settings / Google API per-user reminders.",
+      "conditions": "Apple Mac allows Ignore alerts; Google API describes reminders for authenticated user; Nextcloud app notifications apply to owner/write-sharees, while third-party sync may show notices.",
+      "source_ids": [
+        "R01",
+        "R08",
+        "R10",
+        "R11"
+      ],
+      "applicability_limit": "No uniform reminder promise established for every subscribed-feed client."
+    },
+    {
+      "claim_id": "C6",
+      "claim": "One-occurrence property edits can lose inherited series fields in at least one historical remote-calendar client path; test room-only overrides.",
+      "operation_subject": "Thunderbird Lightning 68.2 remote recurrence exception editing and the later source fix.",
+      "conditions": "Bug report, code change and version history are limited to Thunderbird Calendar; current other clients are not covered.",
+      "source_ids": [
+        "R14",
+        "R15"
+      ],
+      "applicability_limit": "Regression example only; no current product validation performed."
+    }
+  ],
+  "sources": [
+    {
+      "id": "R01",
+      "title": "RFC 5545: iCalendar",
+      "url": "https://www.rfc-editor.org/rfc/rfc5545",
+      "released_version_or_commit": "IETF Standards Track RFC, September 2009; RFC Editor landing page notes updates by RFCs 5546, 6868, 7529, 7953, 7986, 9073, 9074, 9253.",
+      "locator": "TZID §3.2.19; DATE-TIME; RRULE/UNTIL; recurrence set; RECURRENCE-ID; UID; EXDATE; STATUS; VALARM (notably pp. 27-28, 112-123).",
+      "access_utc": "2026-10-10T05:04:45Z",
+      "observed_operation": "Reading normative iCalendar serialization/recurrence definitions for a published VEVENT series and its exceptions.",
+      "governing_condition_default_exception": "A DATE-TIME without TZID is floating; TZID refers to VTIMEZONE, with one zone definition per TZID and coverage across recurrence. For DTSTART with a zone reference, RRULE UNTIL is UTC. A recurrence instance uses its original scheduled date/time for RECURRENCE-ID; EXDATE excludes dates. UID plus recurrence identity is stable for series/instance tracking.",
+      "applicability": "Governs ICS syntax/meaning, not consumer refresh cadence or exact implementation behavior. Product interoperability remains to be validated."
+    },
+    {
+      "id": "R02",
+      "title": "RFC 5546: iTIP",
+      "url": "https://www.rfc-editor.org/rfc/rfc5546",
+      "released_version_or_commit": "IETF Standards Track RFC, December 2009.",
+      "locator": "§3.2.5 CANCEL; recurring VEVENT cancellation with/without RECURRENCE-ID.",
+      "access_utc": "2026-10-10T05:04:45Z",
+      "observed_operation": "Reading the organizer-to-attendee scheduling-message cancellation operation.",
+      "governing_condition_default_exception": "CANCEL is an iTIP message sent by the organizer to affected attendees; RECURRENCE-ID identifies one instance. Whole-series cancellation omits RECURRENCE-ID.",
+      "applicability": "Boundary only: do not conflate attendee cancellation messages with a passive read-only ICS feed update."
+    },
+    {
+      "id": "R03",
+      "title": "RFC 4791: CalDAV",
+      "url": "https://www.rfc-editor.org/rfc/rfc4791",
+      "released_version_or_commit": "IETF Standards Track RFC, March 2007.",
+      "locator": "§8.2 synchronization, ETag/cache behavior, calendar-query REPORT and calendar object resources.",
+      "access_utc": "2026-10-10T05:04:45Z",
+      "observed_operation": "Reading the client/server calendar data access and synchronization model.",
+      "governing_condition_default_exception": "A client that supports sync can cache calendar object URI/ETag and synchronize; server and client must implement the relevant protocol operations.",
+      "applicability": "Analogous server synchronization route, not a bare URL subscription or downloaded file; often entails accounts and permissions."
+    },
+    {
+      "id": "R04",
+      "title": "RFC 6578: WebDAV Collection Synchronization",
+      "url": "https://www.rfc-editor.org/rfc/rfc6578",
+      "released_version_or_commit": "IETF Standards Track RFC, March 2012.",
+      "locator": "§3.5 change reporting and §6.1 DAV:sync-collection.",
+      "access_utc": "2026-10-10T05:04:45Z",
+      "observed_operation": "Reading incremental collection synchronization with DAV:sync-token.",
+      "governing_condition_default_exception": "With a valid token, changed or removed member URLs can be reported; initial sync sends an empty token and retrieves collection members.",
+      "applicability": "CalDAV/WebDAV server and client must implement the sync extension; not a guarantee for public ICS URL subscribers."
+    },
+    {
+      "id": "R05",
+      "title": "Google Calendar public calendar help",
+      "url": "https://support.google.com/calendar/answer/37083?hl=en",
+      "released_version_or_commit": "Current online Google Calendar Help; numeric service version/build not published.",
+      "locator": "How public calendars work; Mark your calendar as public; Share your public calendar.",
+      "access_utc": "2026-10-10T05:04:45Z",
+      "observed_operation": "Publishing a Google Calendar and retrieving shareable/public/iCal links from desktop web settings.",
+      "governing_condition_default_exception": "Calendar must be made public for public iCal address; public calendars may be searchable; owner may hide details by sharing free/busy; Workspace administrator may restrict sharing; visibility change may take up to four hours.",
+      "applicability": "Applies to Google Calendar's public-hosting route; privacy choice belongs to the owner/manager."
+    },
+    {
+      "id": "R06",
+      "title": "Google Calendar subscribe by URL help",
+      "url": "https://support.google.com/calendar/answer/37100?hl=en",
+      "released_version_or_commit": "Current online Google Calendar Help; numeric service version/build not published.",
+      "locator": "Use a link to add a public calendar; notes on subscription setup by browser vs mobile app.",
+      "access_utc": "2026-10-10T05:04:45Z",
+      "observed_operation": "Adding a published calendar URL under Other calendars in Google Calendar on a computer browser.",
+      "governing_condition_default_exception": "The source must be public to add by URL; a new subscription cannot be set up in the Google Calendar mobile apps, though after computer setup it appears in the app.",
+      "applicability": "Setup behavior only; page states no refresh interval or guarantee."
+    },
+    {
+      "id": "R07",
+      "title": "Google Calendar import events help",
+      "url": "https://support.google.com/calendar/answer/37118?hl=en",
+      "released_version_or_commit": "Current online Google Calendar Help; numeric service version/build not published.",
+      "locator": "Import events into Google Calendar; repeat-event CSV note.",
+      "access_utc": "2026-10-10T05:04:45Z",
+      "observed_operation": "Importing an ICS/CSV file on a computer into a selected Google Calendar.",
+      "governing_condition_default_exception": "Imported events do not stay in sync. CSV recurring events may become single events. Default import target is primary calendar unless user selects another.",
+      "applicability": "Supports a downloadable static snapshot via ICS; import is not live subscription."
+    },
+    {
+      "id": "R08",
+      "title": "Google Calendar API v3 Events and recurring event guide",
+      "url": "https://developers.google.com/workspace/calendar/api/v3/reference/events",
+      "related_url": "https://developers.google.com/workspace/calendar/api/guides/recurringevents",
+      "released_version_or_commit": "Google Calendar API v3; current reference page, retrieval date 2026-10-10.",
+      "locator": "Event fields start.timeZone, originalStartTime, recurringEventId, status, reminders; recurring events guide: access instances and modify/cancel one instance.",
+      "access_utc": "2026-10-10T05:04:45Z",
+      "observed_operation": "Creating recurring event resource; retrieving an instance; updating its instance URL; cancellation example sets instance status=cancelled.",
+      "governing_condition_default_exception": "For recurring event expansion, start.timeZone is required and uses an IANA identifier. originalStartTime remains the instance's original scheduled time if moved. A cancelled recurring exception is an instance-level status; consumer API operations require authorization.",
+      "applicability": "Versioned API evidence for Google server operations only; not equivalent to public feed import/subscription semantics."
+    },
+    {
+      "id": "R09",
+      "title": "Outlook.com import or subscribe help",
+      "url": "https://support.microsoft.com/en-us/outlook/import-or-subscribe-to-a-calendar-in-outlook-com-or-outlook-on-the-web",
+      "released_version_or_commit": "Current Microsoft Support page; applies to Outlook.com/Outlook on the web; numeric client/service build not published.",
+      "locator": "Subscribe to a calendar; Upload a calendar from a file; difference between importing and subscribing.",
+      "access_utc": "2026-10-10T05:04:45Z",
+      "observed_operation": "Outlook.com Subscribe from web URL vs Upload from file .ics.",
+      "governing_condition_default_exception": "Subscription refresh may take more than 24 hours although updates should happen approximately every three hours; no maximum is guaranteed. Upload/import is a point-in-time snapshot and never auto-refreshes.",
+      "applicability": "Exact Outlook.com web operation in current docs; not a guarantee about every Outlook desktop/mobile version or other providers."
+    },
+    {
+      "id": "R10",
+      "title": "Apple Calendar subscription guides",
+      "url": "https://support.apple.com/guide/iphone/use-multiple-calendars-iph3d1110d4/ios",
+      "related_url": "https://support.apple.com/en-il/guide/calendar/icl32362/mac",
+      "released_version_or_commit": "Current Apple Support guides; numeric iOS/macOS version not stated.",
+      "locator": "iPhone external read-only calendar subscription; Mac Calendar New Calendar Subscription, Auto-refresh, Ignore alerts.",
+      "access_utc": "2026-10-10T05:04:45Z",
+      "observed_operation": "Subscribing to a URL for an external .ics calendar on iPhone/Mac; configuring Mac subscription refresh and alert display.",
+      "governing_condition_default_exception": "Provider controls subscribed events; Mac user may select auto-refresh frequency or ignore alerts. The guide gives no single default refresh interval applying to all Apple clients.",
+      "applicability": "Supports read-only URL subscription on common Apple clients; specific device release/build and actual refresh schedule require validation."
+    },
+    {
+      "id": "R11",
+      "title": "Nextcloud 35 Calendar User Manual",
+      "url": "https://docs.nextcloud.com/server/stable/user_manual/en/groupware/calendar.html",
+      "released_version_or_commit": "Nextcloud 35 User Manual (stable docs page identified as version 35).",
+      "locator": "Publishing a calendar; Subscribe to a Calendar; reminders; recurrence; iCalendar file support.",
+      "access_utc": "2026-10-10T05:04:45Z",
+      "observed_operation": "Publishing a read-only external link and retrieving its subscription/export links; subscribing to an external iCal feed within Nextcloud Calendar app.",
+      "governing_condition_default_exception": "Public link is read-only to external users and public page offers subscribe/export. The user manual says Nextcloud Calendar app subscriptions refresh weekly by default, subject to administrator configuration.",
+      "applicability": "Useful alternate publishing host and client. Refresh statement is a Nextcloud app subscription behavior and conflicts with the one-day default in the Nextcloud 35 administration manual; exact default remains unresolved."
+    },
+    {
+      "id": "R12",
+      "title": "Nextcloud 35 Calendar Administration Manual",
+      "url": "https://docs.nextcloud.com/server/stable/admin_manual/groupware/calendar.html",
+      "released_version_or_commit": "Nextcloud 35 Administration Manual (stable docs page identified as version 35).",
+      "locator": "Subscriptions; Refresh rate; calendarSubscriptionRefreshRate.",
+      "access_utc": "2026-10-10T05:04:45Z",
+      "observed_operation": "Nextcloud server caches calendars that its own users have subscribed to and periodically fetches their source feed.",
+      "governing_condition_default_exception": "The administration manual says calendar subscriptions are cached on server and refreshed periodically; it honors a source refresh interval and otherwise defaults to one day; administrators can set another DateInterval.",
+      "applicability": "Likely relates to Nextcloud internal feed subscription/cache behavior, while R11 says weekly by default. Do not resolve the discrepancy without a versioned discriminating check. Does not govern external clients subscribing to Nextcloud public URLs."
+    },
+    {
+      "id": "R13",
+      "title": "W3C WebSub",
+      "url": "https://www.w3.org/TR/websub/",
+      "released_version_or_commit": "W3C Recommendation, 2 June 2026.",
+      "locator": "§2 high-level protocol flow; §5 subscription validation/leases; §6 publishing/delivery.",
+      "access_utc": "2026-10-10T05:04:45Z",
+      "observed_operation": "Publisher notifies hub of an updated topic; hub delivers updates to registered subscriber callback URLs.",
+      "governing_condition_default_exception": "Subscribers require callback endpoints; subscriptions are verified and expire via leases; hubs retry only within their own limits.",
+      "applicability": "Analogous web pub/sub and possible update-notice channel; no evidence common calendar clients consume event feeds via WebSub."
+    },
+    {
+      "id": "R14",
+      "title": "Mozilla Bugzilla 1595332",
+      "url": "https://bugzilla.mozilla.org/show_bug.cgi?id=1595332",
+      "released_version_or_commit": "Affected: Thunderbird 68.2.1 / Lightning 68.2.0 (remote calendar); fixed release tracking: Thunderbird 91, uplift to 91.0b4.",
+      "locator": "Reproduction and environment; comments diagnosing recurring proxy properties; backout/relanding; Thunderbird 91 status.",
+      "access_utc": "2026-10-10T05:04:45Z",
+      "observed_operation": "Edit one occurrence of a remote recurring event and add a description; reported inherited location lost on save.",
+      "governing_condition_default_exception": "The report says remote calendar; discussion says broadly remote calendars and local ICS were affected except storage calendar due to a prior fix. First patch was backed out after recurrence tests failed; later patch marked fixed and uplifted.",
+      "applicability": "Historical Thunderbird recurrence-editor defect, relevant as an example regression test for a room-only instance change. Not evidence of current behavior in other clients."
+    },
+    {
+      "id": "R15",
+      "title": "Mozilla changeset 3787e583daf7",
+      "url": "https://hg.mozilla.org/comm-central/raw-rev/3787e583daf7",
+      "released_version_or_commit": "Mercurial node 3787e583daf7d3026fa6fcc7bf08da03c4fcfb56; Bug 1595332; final patch; later uplift referenced by R14.",
+      "locator": "calendar/base/src/calItemBase.js diff; calendar/test/unit/test_items.js tests for recurring event and exception properties, including LOCATION inheritance.",
+      "access_utc": "2026-10-10T05:03:07Z",
+      "observed_operation": "Read immutable source patch and regression tests as text; did not execute downloaded code.",
+      "governing_condition_default_exception": "The final change exposes inherited parent properties for recurring proxy/exception objects; test additions assert inherited properties, allowing an explicit exception override. The code and tests are scoped to Thunderbird Calendar internals.",
+      "applicability": "Primary source for a historical recurrence-property fix and regression test idea; does not predict behavior in other products."
+    },
+    {
+      "id": "R16",
+      "title": "Google Calendar Help: Use Google Calendar in different time zones",
+      "url": "https://support.google.com/calendar/answer/37064?hl=en",
+      "released_version_or_commit": "Current online Google Calendar Help; numeric service version/build not published.",
+      "locator": "How Calendar uses time zones; create/change event with a different time zone; Understand how Calendar handles daylight saving time.",
+      "access_utc": "2026-10-10T05:09:25Z",
+      "observed_operation": "Google Calendar web event time-zone configuration, display for invitees in different zones, and viewing while traveling.",
+      "governing_condition_default_exception": "Help says events appear in local time to invitees and the viewer while traveling; it also warns past/future events might not reflect DST changes, dates adjust as time advances within a few years, and zone-rule changes can leave earlier-created events wrong.",
+      "applicability": "Google Calendar service documentation only; does not establish behavior in Apple, Outlook, Nextcloud or other feed consumers."
+    }
+  ]
+}

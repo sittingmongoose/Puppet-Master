@@ -1,0 +1,358 @@
+{
+  "run_id": "C-R1-01-treatment",
+  "stage": "reviser",
+  "brief": "ER12_RUNTIME/runs/C-R1-01/treatment/inputs/brief.md",
+  "scope_status": "Independent critic review against the original brief and exact revealed plan; source IDs and URLs preserved from investigator evidence map.",
+  "source_ids_preserved": [
+    "STD-1996-1",
+    "STD-1996-2",
+    "STD-16283-1",
+    "STD-16283-3",
+    "STD-12354",
+    "STUDY-HOPKINS",
+    "GUIDE-FHWA",
+    "CASE-EMSLIE",
+    "CASE-GJERS",
+    "CASE-AIRBED",
+    "STUDY-SONG",
+    "PROD-SYLOMER"
+  ],
+  "sources": [
+    {
+      "id": "STD-1996-1",
+      "title": "ISO 1996-1:2016, Acoustics — Description, measurement and assessment of environmental noise — Part 1: Basic quantities and assessment procedures",
+      "url": "https://www.iso.org/standard/59765.html",
+      "version_or_commit": "Edition 3, 2016-03; official ISO record said last reviewed and confirmed in 2021 and current at access.",
+      "locator": "Official ISO abstract and lifecycle/status, especially lines 22-25 and 43-51 of the page.",
+      "access_utc": "2026-10-10T05:09:34Z",
+      "observed_operation": "Defines community-noise quantities and assessment. Long-term community-annoyance guidance is limited to residential areas/long-term uses; recognizes low-frequency, tonal, and impulsive features when authorities consider them; requires the physical quantity be named; does not specify environmental-noise limits.",
+      "governing_condition_default_exception": "Metric and assessment context must be selected; same measured dB can represent different underlying quantities. Special character corrections are discretionary where authorities deem necessary. No default local limit is supplied.",
+      "applicability": "Supports defining the neighbor's desired outcome/metric and avoiding invented thresholds. Long-term annoyance guidance is not a direct prediction for intermittent music at this unspecified courtyard.",
+      "critic_check": {
+        "checked_utc": "2026-10-10T05:30:50Z",
+        "locator": "Official ISO abstract/status, lines 22-24, 43-51, 57-67.",
+        "observed_operation": "Confirms ISO 1996-1:2016 edition 3/current at record access; defines community-noise quantities and assessment, allows responsible-authority consideration of low-frequency/tonal/impulsive character, and specifies no environmental-noise limits.",
+        "governing_condition_default_exception": "Long-term annoyance guidance is limited to residential areas/long-term land use; any character adjustments are authority-dependent; the physical quantity must be stated.",
+        "applicability": "Supports defining the resident-valued outdoor outcome and avoiding an invented universal threshold; it does not predict this intermittent event or set a local limit."
+      }
+    },
+    {
+      "id": "STD-1996-2",
+      "title": "ISO 1996-2:2017, Acoustics — Description, measurement and assessment of environmental noise — Part 2: Determination of sound pressure levels",
+      "url": "https://www.iso.org/standard/59766.html",
+      "version_or_commit": "Edition 3, 2017-07; official ISO record said last reviewed/confirmed in 2026 and current at access.",
+      "locator": "Official ISO abstract and lifecycle/status, especially lines 22-24 and 43-64.",
+      "access_utc": "2026-10-10T05:09:34Z",
+      "observed_operation": "Describes direct measurement and calculation-based extrapolation of outdoor environmental sound pressure levels; gives some indoor guidance; measurement effort determines uncertainty, which is to be determined and reported.",
+      "governing_condition_default_exception": "Primarily outdoor use; no maximum allowable uncertainty is prescribed, so the user chooses effort and reports resulting uncertainty.",
+      "applicability": "Useful framework for courtyard measurement and comparing scenarios after an outcome/metric is agreed. It does not supply this project's limit or establish a causal path.",
+      "critic_check": {
+        "checked_utc": "2026-10-10T05:30:50Z",
+        "locator": "Official ISO abstract/status, lines 22-24, 43-47, 58-64; lifecycle event list.",
+        "observed_operation": "Confirms ISO 1996-2:2017 edition 3; describes outdoor sound pressure measurement/calculation and says effort determines uncertainty, which is determined and reported.",
+        "governing_condition_default_exception": "No allowable maximum uncertainty is prescribed. The page summary reports confirmation/current in 2026; the event history also lists a 2026-04-01 “to be revised” event followed by 2026-05-20 confirmation.",
+        "applicability": "Supports the draft’s proposal to set effort, report uncertainty, and compare scenarios without importing an unprovided limit."
+      }
+    },
+    {
+      "id": "STD-16283-1",
+      "title": "ISO 16283-1:2014, Acoustics — Field measurement of sound insulation in buildings and of building elements — Part 1: Airborne sound insulation",
+      "url": "https://www.iso.org/standard/55997.html?browse=ics",
+      "version_or_commit": "Edition 1, 2014-02 plus Amendment 1 (2017); official ISO record confirmed the base edition in 2025 and current at access.",
+      "locator": "Official ISO scope/status/edition and amendment listing, especially lines 22-25, 48-51, 60-89.",
+      "access_utc": "2026-10-10T05:09:34Z",
+      "observed_operation": "Uses sound-pressure measurements for airborne insulation between rooms; scope 10–250 m³ and 50–5000 Hz; results can apply to furnished or unfurnished rooms with diffuse or non-diffuse fields and be frequency dependent.",
+      "governing_condition_default_exception": "Only airborne room-to-room insulation within its specified range. Amendment 1:2017 is listed; the abstract accessed did not expose the amendment text.",
+      "applicability": "A later acoustician-led option if source and receiver rooms/access/geometry are known. It is not a general courtyard disturbance metric and cannot by itself identify structure-borne contribution.",
+      "critic_check": {
+        "checked_utc": "2026-10-10T05:30:50Z",
+        "locator": "Official ISO abstract/scope/status/amendments, lines 22-25, 49-51, 84-89, 135-145, 203-205.",
+        "observed_operation": "Confirms edition 1 (2014), status confirmed in 2025, Amendment 1:2017 listing, room volumes 10–250 m3, and airborne room-to-room field measurement from 50–5000 Hz.",
+        "governing_condition_default_exception": "Airborne insulation between rooms only; the amendment text was not available in the abstract.",
+        "applicability": "A possible specialist method after rooms, access, and geometry are known; not an outdoor disturbance metric or a general structural-path discriminator."
+      }
+    },
+    {
+      "id": "STD-16283-3",
+      "title": "ISO 16283-3:2016, Acoustics — Field measurement of sound insulation in buildings and of building elements — Part 3: Façade sound insulation",
+      "url": "https://www.iso.org/standard/59748.html",
+      "version_or_commit": "Edition 1, 2016-02; official ISO record showed Published / stage 90.92 (to be revised) at access; no replacement was identified in the record.",
+      "locator": "Official ISO abstract, edition, and lifecycle/status, lines 45-62 and 90-96.",
+      "access_utc": "2026-10-10T05:09:34Z",
+      "observed_operation": "Specifies sound-pressure procedures for airborne façade-element or whole-façade insulation, 10–250 m³ rooms and 50–5000 Hz; results can address diffuse and non-diffuse fields.",
+      "governing_condition_default_exception": "Airborne facade measurement only; published 2016 edition is marked for revision, so verify lifecycle before a formal commissioned test.",
+      "applicability": "Potential later method for a characterized facade and room. It does not determine ground-borne transfer or the relevant neighborhood response.",
+      "critic_check": {
+        "checked_utc": "2026-10-10T05:30:50Z",
+        "locator": "Official ISO abstract/scope/status, lines 45-62 and lifecycle stage at 90.92.",
+        "observed_operation": "Confirms the 2016 edition’s airborne façade element/whole-façade procedures, 10–250 m3 room volume, 50–5000 Hz range, and “to be revised” lifecycle status.",
+        "governing_condition_default_exception": "Airborne façade insulation only; lifecycle should be checked before a commissioned method is selected.",
+        "applicability": "Supports a later characterized-façade assessment, not ground-borne transfer or the neighbor-valued metric."
+      }
+    },
+    {
+      "id": "STD-12354",
+      "title": "ISO 12354-1:2017, Building acoustics — Estimation of acoustic performance of buildings from the performance of elements — Part 1: Airborne sound insulation between rooms",
+      "url": "https://www.iso.org/standard/70242.html",
+      "version_or_commit": "Edition 1, 2017-07; official ISO record showed confirmed in 2023, published and to be revised in the 2026 record.",
+      "locator": "Official ISO abstract/scope and lifecycle, especially lines 22-23 and 46-52.",
+      "access_utc": "2026-10-10T05:09:34Z",
+      "observed_operation": "Calculation models use measured element data for direct/indirect flanking paths plus theory for structural-element propagation; detailed bands cover 100–3150 Hz and may extend to 50 Hz if element and junction data are available.",
+      "governing_condition_default_exception": "Frequency extension below 100 Hz is conditional on having measured element and junction data; simplified method has a restricted application field.",
+      "applicability": "Shows why a model cannot be responsibly populated from this brief's absent construction details. It is an airborne between-room model, not a measured finding.",
+      "critic_check": {
+        "checked_utc": "2026-10-10T05:30:50Z",
+        "locator": "Official ISO abstract/model/status, lines 22-23, 46-52, 63-65.",
+        "observed_operation": "Confirms ISO 12354-1:2017 room-to-room airborne calculation from measured direct/flanking element data and theoretical structural propagation; 50 Hz extension is conditional on element and junction data.",
+        "governing_condition_default_exception": "The record summary says confirmed/current (2023) while its lifecycle display marks “to be revised”; below 100 Hz needs element and junction data.",
+        "applicability": "Supports refusing to populate a site model from absent construction data; this is a calculation method, not measured evidence or path proof."
+      }
+    },
+    {
+      "id": "STUDY-HOPKINS",
+      "title": "Hopkins & Turner, Field measurement of airborne sound insulation between rooms with non-diffuse sound fields at low frequencies",
+      "url": "https://www.sciencedirect.com/science/article/pii/S0003682X0500068X",
+      "version_or_commit": "Applied Acoustics 66(12), 1339–1382, published 2005-12; DOI 10.1016/j.apacoust.2005.04.005. Publisher abstract only; full text access not obtained.",
+      "locator": "Publisher abstract/introduction/conclusion exposed in the ScienceDirect result; study proposes corner and central positions, 50/63/80 Hz one-third-octave protocol.",
+      "access_utc": "2026-10-10T05:12:30Z",
+      "observed_operation": "Proposes corner plus central microphone locations to estimate room-average airborne sound levels at 50, 63, and 80 Hz with improved repeatability in non-diffuse small rooms.",
+      "governing_condition_default_exception": "Airborne insulation between small rooms; repeatability is same operator/short time, while reproducibility across days/operators was outside that study's scope. Not a complaint-event metric.",
+      "applicability": "Motivates multiple repeatable room positions and a low-frequency band check if the borrowed instrument supports them; does not establish this building's modes.",
+      "critic_check": {
+        "checked_utc": "2026-10-10T05:30:50Z",
+        "locator": "ScienceDirect publisher abstract and introduction/conclusion returned for the exact listed article URL; direct open errored, but the publisher search result exposed this same record.",
+        "observed_operation": "Confirms the low-frequency measurement protocol combines corner and central microphone positions for a room-average estimate in 50, 63, and 80 Hz third-octave bands, with improved short-term repeatability.",
+        "governing_condition_default_exception": "Airborne insulation between rooms with non-diffuse low-frequency fields; repeatability was same operator/short interval, while different-day/operator reproducibility was outside scope.",
+        "applicability": "Supports multiple room positions if the equipment permits; not a courtyard limit, outdoor metric, or structure-borne discriminator."
+      }
+    },
+    {
+      "id": "GUIDE-FHWA",
+      "title": "FHWA-HEP-18-065, Measurement of Highway-Related Noise",
+      "url": "https://www.fhwa.dot.gov/Environment/noise/measurement/handbook.cfm",
+      "version_or_commit": "FHWA manual report number HEP-18-065 (2018); current public HTML page viewed. The page does not expose a later revision date in the inspected sections.",
+      "locator": "Sections 4.6/background correction (lines 1400–1436), 7.0 groundborne vibration/noise (1843–1862), and 17.2 transducers (3264–3277).",
+      "access_utc": "2026-10-10T05:09:45Z",
+      "observed_operation": "Explains field documentation, background adjustment, attached vibration transducers, coexistence of groundborne and airborne sound, and difficulty distinguishing path contributions from indoor SPL alone.",
+      "governing_condition_default_exception": "Highway-noise procedures and numerical examples are transportation-specific; do not transfer their noise limits or pass/fail rules to this project. The physical measurement caveat about co-occurring paths is relevant.",
+      "applicability": "Primary government measurement guidance for planning paired sound/vibration channels, background windows, fixed microphone metadata, and field notes; not a regulatory criterion for rehearsal music.",
+      "critic_check": {
+        "checked_utc": "2026-10-10T05:30:50Z",
+        "locator": "FHWA-HEP-18-065 sections 4.6, 7.0, 7.1.2, and 17.2; especially §§7.0 discussion of mixed paths and transducer placement.",
+        "observed_operation": "States indoor SPL often cannot separate airborne and groundborne contributions; describes vibration as the usual indirect basis for groundborne-noise estimates and gives transducer type, coupling, placement, and frequency considerations.",
+        "governing_condition_default_exception": "The procedures, criteria, and numerical examples are highway-specific; use only the measurement principles, not transportation limits or pass/fail thresholds.",
+        "applicability": "Supports the draft’s paired sound/vibration and context-log proposal; also supports the caveat that an absent/poorly placed vibration reading cannot rule out a structural contribution."
+      }
+    },
+    {
+      "id": "CASE-EMSLIE",
+      "title": "Emslie & Hanson, Design and Acoustic Performance of a Drum Practice Music Studio",
+      "url": "https://www.acoustics.asn.au/conference_proceedings/AAS2008/papers/p64.pdf",
+      "version_or_commit": "Australian Acoustical Society Acoustics 2008 proceedings paper AAS2008-64, presented 24–26 Nov 2008; explicitly marked not peer reviewed. A journal version exists, but this source ID is the proceedings copy.",
+      "locator": "PDF pages 1–2 baseline/constraints, 3–5 isolation/details and staged treatments, 6–8 facade/reverberation/boundary outcome.",
+      "access_utc": "2026-10-10T05:09:45Z",
+      "observed_operation": "Reports baseline at two boundaries, construction of an isolated drum studio in a new garage extension, staged internal absorption, later exterior drumming levels, and separate internal family-room levels. Initial heavy masonry concept was rejected after slab-capacity concerns; roof performance later limited the facade; seal, penetration, gap, and vibration-bridge detailing demanded inspection.",
+      "governing_condition_default_exception": "Single Australian residential property, drum/cymbal source, nighttime measurement with low traffic background, local consent target and specific mic locations; unreviewed conference proceeding. Values are not general targets.",
+      "applicability": "Comparable only as a documented drum-neighbor implementation and a source of investigable detail/history; differs from shared rehearsal rooms and unknown construction, and includes a permanent build outside this assignment boundary.",
+      "critic_check": {
+        "checked_utc": "2026-10-10T05:30:50Z",
+        "locator": "AAS2008-64 PDF pp. 1–2 for context/baseline, pp. 3–6 for design/detail, pp. 8–9 for post-build boundary and indoor outcomes.",
+        "observed_operation": "Confirms a private drum studio in a new extension, vibration-isolated free-standing construction, initial masonry concept abandoned over slab capacity, roof as limiting façade element, detailing of gaps/doors/ventilation/bridges, and separate baseline/post-build outdoor and indoor results.",
+        "governing_condition_default_exception": "Paper is explicitly marked not peer reviewed; one NSW property, source, consent target, background, and microphone positions. Pre/post outdoor conditions are not a matched same-position/same-source experiment.",
+        "applicability": "Useful installation history/questions only; not a forecast, target, or transferable design for this shared building."
+      }
+    },
+    {
+      "id": "CASE-GJERS",
+      "title": "Gjers, Vibration and Airborne Sound in Repurposed Buildings: A Case Study of a Drum Kit in a Music Classroom",
+      "url": "https://www.acoustics.asn.au/conference_proceedings/AAS2024/papers/p36.pdf",
+      "version_or_commit": "Australian Acoustical Society Proceedings of Acoustics 2024, paper 36, 6–8 Nov 2024.",
+      "locator": "PDF pages 1–5 setting/test setup, pp. 6–9 airborne and vibration findings and further-investigation limitations.",
+      "access_utc": "2026-10-10T05:09:45Z",
+      "observed_operation": "A school music classroom in a commercial building was assessed over 180 mm and 450 mm concrete slab zones. Paired source/receiver meters and accelerometers were used; a 24 kg subset of kit on a 15 kg platform with nine 25 mm Sylomer SR11 pads was tested. The 180 mm Dw comparison changed by 5 dB; locations/contact points and some source comparisons differed. Frequency bands include both amplification and reduction; the authors state path separation is complex and further tests needed.",
+      "governing_condition_default_exception": "One site, specific slab zones, restricted component set/platform size, short steady-intensity play, time-limited two accelerometer positions; not a courtyard/outdoor test and not a clean generalizable product guarantee.",
+      "applicability": "Useful hypothesis and method comparator if source-to-floor coupling is suspected; reinforces need to control source/location and measure structural response, but cannot predict a result here.",
+      "critic_check": {
+        "checked_utc": "2026-10-10T05:30:50Z",
+        "locator": "AAS2024 paper pp. 1–5 setup, pp. 6–9 Dw and vibration results/limitations, pp. 9–10 conclusion.",
+        "observed_operation": "Confirms 180 mm and 450 mm slab zones, paired sound/vibration channels, the 5 dB Dw difference for the 180 mm critical-component comparison, changing contact/placement caveats, mixed vibration bands, and the authors’ call for further investigation.",
+        "governing_condition_default_exception": "One commercial school-classroom site; a limited component set/platform and time-limited sensor positions; the 450 mm comparison uses different source setup; not an outdoor-neighbor test.",
+        "applicability": "Supports a possible controlled vibration investigation if indicated by evidence, not a product or courtyard-performance prediction."
+      }
+    },
+    {
+      "id": "CASE-AIRBED",
+      "title": "Shearer, Dance, Gomez-Agustina & Randell, Flexible control of acoustic conditions in a music rehearsal space using airbeds",
+      "url": "https://researchportal.lsbu.ac.uk/en/publications/flexible-control-of-acoustic-conditions-in-a-music-rehearsal-spac-3/",
+      "version_or_commit": "Applied Acoustics 173, article 107708; published Feb 2021; DOI 10.1016/j.apacoust.2020.107708; peer-reviewed article; LSBU page identifies CC BY-NC-ND 4.0.",
+      "locator": "LSBU institutional record abstract and bibliographic record, lines 18–34 and 46–50.",
+      "access_utc": "2026-10-10T05:09:45Z",
+      "observed_operation": "Airbeds were tested in a university reverberation chamber, promising model selected and inflation dependence evaluated, then hall room-acoustic measurements before and after installation showed reduced low-frequency reverberation time in Henry Wood Hall.",
+      "governing_condition_default_exception": "Flexible low-frequency room conditioning for smaller ensembles/voice in a former church orchestral hall; the abstract does not provide product model or measured band values. It does not measure façade isolation or courtyard sound.",
+      "applicability": "Unfamiliar reversible room-acoustics alternative; worth investigating for in-room response only, not a neighbor noise-control prediction.",
+      "critic_check": {
+        "checked_utc": "2026-10-10T05:30:50Z",
+        "locator": "LSBU institutional record/abstract and bibliographic record, lines 22-24, 32-34, 72-80, 128-133.",
+        "observed_operation": "Confirms Henry Wood Hall as an orchestral rehearsal space; laboratory screening/inflation study of airbeds followed by hall room measurements showing reduced low-frequency reverberation time.",
+        "governing_condition_default_exception": "Internal room-acoustics use for a former church/hall; the record does not establish façade isolation or neighbor-side sound reduction.",
+        "applicability": "A reversible internal-acoustics example only; the draft preserves that boundary."
+      }
+    },
+    {
+      "id": "STUDY-SONG",
+      "title": "Song & Kang, Effects of the absorber location on low-frequency noise control in typical dwelling layouts",
+      "url": "https://discovery.ucl.ac.uk/id/eprint/10138595/",
+      "version_or_commit": "Applied Acoustics 186 (2022), article 108465, DOI 10.1016/j.apacoust.2021.108465; UCL record provides the author-accepted manuscript link.",
+      "locator": "UCL Discovery abstract/record, lines 28–46; manuscript is offered as accepted version. A later repeat fetch of the PDF timed out, so evidence used here is limited to the record/abstract.",
+      "access_utc": "2026-10-10T05:09:54Z",
+      "observed_operation": "Authors report in-situ steady-state measurements across coupled dwelling room layouts; absorber area and location changed low-frequency noise reduction and the loud/quiet spread, with diminishing gains or over-damping as area grew.",
+      "governing_condition_default_exception": "Typical dwelling topologies and steady-state source, not this unknown rehearsal building or an outdoor microphone result; abstract-only claims kept at that scope.",
+      "applicability": "Supports controlled testing of existing panel position and multiple room points, while explicitly not supporting external courtyard benefit.",
+      "critic_check": {
+        "checked_utc": "2026-10-10T05:30:50Z",
+        "locator": "UCL Discovery institutional record/accepted-manuscript abstract, lines 28-36.",
+        "observed_operation": "Confirms steady-state in-situ measurements in typical coupled dwelling layouts; absorber location and area affected low-frequency noise reduction, with lower marginal gain or overdamping at larger area.",
+        "governing_condition_default_exception": "Abstract-level evidence; typical dwelling topologies and steady source, not this rehearsal building or an outdoor result. The accepted manuscript link exists but was not reviewed.",
+        "applicability": "Supports investigating panel position and multiple in-room points, not courtyard benefit."
+      }
+    },
+    {
+      "id": "PROD-SYLOMER",
+      "title": "Getzner Sylomer SR 11 data sheet",
+      "url": "https://www.getzner.com/media/914/download/Data%20Sheet%20Sylomer%20SR%2011%20EN.pdf?v=6",
+      "version_or_commit": "Manufacturer data sheet, copyright/footer revision 04-2025; URL parameter v=6. Manufacturer says subject to change without notice.",
+      "locator": "Official manufacturer PDF, pp. 1–4: product characteristics and range of use (lines 0–42), measurement/load test conditions (60–72), curves (pp. 2–3), disclaimer/revision footer (173–177, 229).",
+      "access_utc": "2026-10-10T05:09:45Z",
+      "observed_operation": "Reports load-deflection and vibration/isolation characteristics for SR11. Values shown apply to shape factor 3; static/dynamic load ranges and deflection differ; elasticity depends on frequency, specific load, and amplitude.",
+      "governing_condition_default_exception": "Manufacturer-data-sheet values are guidance subject to manufacturing tolerances and not guaranteed; do not equate them to guaranteed courtyard attenuation or select pad size without actual load/frequency/support conditions.",
+      "applicability": "Only a candidate to examine for a reversible, correctly sized source-to-structure test if vibration evidence appears; no product purchase or installation is recommended from this desk research.",
+      "critic_check": {
+        "checked_utc": "2026-10-10T05:30:50Z",
+        "locator": "Official manufacturer SR 11 PDF v=6, pp. 1–4; product/load conditions and test graphs on pp. 1–3; disclaimer/revision footer on p. 4.",
+        "observed_operation": "Confirms shape-factor/load-dependent use ranges, frequency/load/amplitude dependence, and the manufacturer’s statement that values are guidance subject to manufacturing tolerances and are not guaranteed; sheet revision 04-2025.",
+        "governing_condition_default_exception": "Manufacturer data only; values do not guarantee project attenuation and depend on actual support/load/frequency conditions.",
+        "applicability": "A candidate for investigation only if later vibration evidence warrants a correctly loaded temporary test; not a selected treatment or courtyard prediction."
+      }
+    }
+  ],
+  "research_notes": {
+    "research_access_window_utc": [
+      "2026-10-10T05:09:34Z",
+      "2026-10-10T05:12:30Z"
+    ],
+    "standards_lifecycle": "ISO 1996-1:2016 and 1996-2:2017 were shown current; ISO 16283-1:2014 (including listed Amendment 1:2017) was confirmed in 2025; ISO 16283-3:2016 and ISO 12354-1:2017 were marked to be revised at access.",
+    "regulatory_applicability": "Jurisdiction was not supplied. No local code, ordinance, acoustic limit, or consent condition has been selected or asserted.",
+    "issue_fix_regression_release_history": "No application software is proposed. Standards lifecycle/revision facts and product datasheet revision/conditions are recorded above. No installation issue/fix/regression history specific to this hypothetical building exists in supplied facts or was established in this bounded literature review; absence from reviewed sources is not proof that none exists. Instrument model/revision is unknown and must be established before pilot design.",
+    "executed_checks": "Literature/standard/catalog desk review only; no measurements, on-site checks, simulations, or downloaded code execution.",
+    "critic_review_access_window_utc": [
+      "2026-10-10T05:23:23Z",
+      "2026-10-10T05:30:50Z"
+    ],
+    "critic_executed_checks": "Independent primary-record review of all preserved source IDs; frozen discovery/plan hash comparison; no building, instrument, simulation, or pilot check."
+  },
+  "critic_review": {
+    "recorded_utc": "2026-10-10T05:30:50Z",
+    "source_review_window_utc": [
+      "2026-10-10T05:23:23Z",
+      "2026-10-10T05:30:50Z"
+    ],
+    "source_index": "sources/index.md",
+    "checked_source_ids": [
+      "STD-1996-1",
+      "STD-1996-2",
+      "STD-16283-1",
+      "STD-16283-3",
+      "STD-12354",
+      "STUDY-HOPKINS",
+      "GUIDE-FHWA",
+      "CASE-EMSLIE",
+      "CASE-GJERS",
+      "CASE-AIRBED",
+      "STUDY-SONG",
+      "PROD-SYLOMER"
+    ],
+    "method": "Official ISO, government, institutional, publisher, and manufacturer records were checked; both listed AAS PDFs were text-extracted directly from their exact listed URLs. No raw sources were copied. The direct ScienceDirect open returned an internal error; the publisher search result for the same exact article URL exposed the abstract and bibliographic metadata. The UCL abstract was checked; the accepted manuscript was not read.",
+    "checks_executed": "Source-record review and frozen-file hash comparison only. No site measurements, simulations, calculations, resident contact, product tests, or pilot validations."
+  },
+  "source_index": {
+    "location": "final.md#source-index",
+    "identity_records": "source-map.json#/sources",
+    "navigation_rule": "Source IDs and exact URLs are preserved from the investigator record; critic checks and reviser checks are nested under the same stable IDs. No ID is silently rebound."
+  },
+  "reviser_review": {
+    "recorded_utc": "2026-10-10T05:41:42Z",
+    "scope": "Full brief, investigator discovery/draft/source-map, revealed plan and plan-reveal record, critic critique/source-map, and both mapped source indexes reviewed.",
+    "disputed_primary_source_rechecks": [
+      {
+        "source_id": "GUIDE-FHWA",
+        "title": "FHWA-HEP-18-065, Measurement of Highway-Related Noise",
+        "url": "https://www.fhwa.dot.gov/Environment/noise/measurement/handbook.cfm",
+        "version_or_commit": "FHWA manual report HEP-18-065, dated 2018-06-01; current public HTML page viewed at recheck.",
+        "access_utc": "2026-10-10T05:41:42Z",
+        "locator": "Official HTML §§7.0 (lines 1855–1862), 7.1.2 and 7.1.2.2 (lines 1872–1882), 17.2.1 (lines 3264–3273).",
+        "observed_operation": "States that indoor sound can be difficult to distinguish between airborne and groundborne contributions; groundborne noise is typically inferred from vibration. It describes transducer location and firm coupling, frequency limitations, and says accelerometers are appropriate when low-frequency data are a primary concern. The record also allows mixed airborne and groundborne sound.",
+        "governing_condition_default_exception": "The handbook procedures and criteria concern highway noise/vibration. They are method guidance only here; no highway criterion, prevalence statement, radiation factor, or pass threshold is transferred to this building.",
+        "applicability": "Supports the accepted caveat: absent vibration is not evidence of airborne transmission unless an adequate synchronized, correctly placed/coupled, frequency-appropriate vibration measurement covers the plausible route and event. Even valid non-detection only bears on tested routes/conditions."
+      },
+      {
+        "source_id": "CASE-EMSLIE",
+        "title": "Emslie & Hanson, Design and Acoustic Performance of a Drum Practice Music Studio",
+        "url": "https://www.acoustics.asn.au/conference_proceedings/AAS2008/papers/p64.pdf",
+        "version_or_commit": "Australian Acoustical Society Acoustics 2008 proceedings paper AAS2008-64, presented 2008-11-24 to 2008-11-26; paper explicitly marked not peer reviewed.",
+        "access_utc": "2026-10-10T05:40:23.987Z",
+        "rechecked_utc": "2026-10-10T05:41:42Z",
+        "locator": "Exact proceedings PDF pp.1–2 for non-peer-review notice, context and baseline boundary positions; pp.8–9 for post-build exterior and indoor outcomes.",
+        "observed_operation": "The pre-build report describes boundary measurements at two neighbor-side positions. The completed-studio report describes later outside drumming measurements; it compares a 64 dBA front-boundary level with a nominal 47.5 dBA elevated deck result at the rear of the neighbor property, and separately reports an indoor family-room outcome. These are not same-position, same-source matched before-and-after readings.",
+        "governing_condition_default_exception": "One NSW residential property and dedicated new garage extension, particular drummer/source, local council context and microphone positions; proceedings paper is not peer reviewed. Its outcome and thresholds do not transfer.",
+        "applicability": "Accepted as an implementation history and a source of installation/measurement questions only; it cannot forecast benefit or define a target for the shared rehearsal building."
+      }
+    ],
+    "critique_dispositions": [
+      {
+        "finding": "Material wrong: none identified",
+        "disposition": "accept",
+        "basis": "No checked consequential source claim needed reversal."
+      },
+      {
+        "finding": "Material incomplete: absent vibration could imply airborne",
+        "disposition": "accept and amend",
+        "basis": "FHWA primary record confirms indoor SPL alone often cannot separate paths and that vibration evidence depends on measurement coverage and coupling."
+      },
+      {
+        "finding": "Unsupported site claims: none identified",
+        "disposition": "accept",
+        "basis": "No site cause, measurement, material, complaint count, local limit, or efficacy prediction is asserted."
+      },
+      {
+        "finding": "Minor Emslie comparison wording",
+        "disposition": "accept and amend",
+        "basis": "Exact proceedings PDF confirms distinct boundary positions and non-peer-review status; final states this is not matched before/after evidence."
+      },
+      {
+        "finding": "Unresolved external inputs",
+        "disposition": "retain uncertainty",
+        "basis": "The brief does not provide these inputs; final states the consequences instead of filling them by assumption."
+      },
+      {
+        "finding": "Broad coverage and reviewer handoff",
+        "disposition": "accept with amendments",
+        "basis": "Preserves brief scope and alternatives while applying both specific corrections."
+      }
+    ],
+    "checks_executed": "Desk review and source-record inspection only. No building visit, measurements, instrument qualification, interviews, resident contact, product trial, simulation, calculation, or pilot validation.",
+    "stable_source_ids_preserved": [
+      "STD-1996-1",
+      "STD-1996-2",
+      "STD-16283-1",
+      "STD-16283-3",
+      "STD-12354",
+      "STUDY-HOPKINS",
+      "GUIDE-FHWA",
+      "CASE-EMSLIE",
+      "CASE-GJERS",
+      "CASE-AIRBED",
+      "STUDY-SONG",
+      "PROD-SYLOMER"
+    ]
+  }
+}

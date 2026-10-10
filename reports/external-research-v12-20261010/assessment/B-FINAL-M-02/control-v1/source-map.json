@@ -1,0 +1,649 @@
+{
+  "schema": "er12-independent-evidence-map-v1",
+  "case_id": "ER12-B-FINAL-M-02-FRESH",
+  "slot_id": "B-FINAL-M-02",
+  "arm": "control",
+  "assessment_id": "control-v1",
+  "recorded_utc": "2026-10-10T05:28:32.986444+00:00",
+  "primary_sources": [
+    {
+      "source_id": "P1",
+      "url": "https://www.postgresql.org/docs/17/sql-insert.html",
+      "retrieval_operation": "independent Python standard-library urllib HTTPS GET; HTML saved without execution",
+      "started_utc": "2026-10-10T05:24:05.223520+00:00",
+      "completed_utc": "2026-10-10T05:24:05.716597+00:00",
+      "http_status": 200,
+      "effective_url": "https://www.postgresql.org/docs/17/sql-insert.html",
+      "headers": {
+        "Server": "nginx",
+        "Date": "Sat, 10 Oct 2026 00:14:24 GMT",
+        "Content-Type": "text/html; charset=utf-8",
+        "X-Frame-Options": "DENY",
+        "Content-Security-Policy": "default-src 'self' ; img-src * data: ; script-src 'unsafe-eval' 'self' www.google-analytics.com ssl.google-analytics.com www.googletagmanager.com tagmanager.google.com data: ; connect-src 'self' www.google-analytics.com ssl.google-analytics.com ; media-src 'self' ; style-src 'self' fonts.googleapis.com tagmanager.google.com 'unsafe-inline' ; font-src 'self' fonts.gstatic.com data: ; frame-ancestors 'none' ; report-uri https://csp-report.postgresql.org/",
+        "Cross-Origin-Opener-Policy": "same-origin",
+        "X-XSS-Protection": "1; mode=block",
+        "Vary": "Accept-Encoding",
+        "X-Varnish": "990975709 961745792",
+        "Age": "18580",
+        "Via": "1.1 zakdorn (Varnish/9.0)",
+        "Accept-Ranges": "bytes",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Connection": "close",
+        "Transfer-Encoding": "chunked"
+      },
+      "html_path": "ER12_RUNTIME/assessment/B-FINAL-M-02/control-v1/primary-evidence/pg17-insert.html",
+      "html_sha256": "f18feb692580770ae7a17537db2b922a44fc0119be4dc4ff38537502307e2cba",
+      "text_path": "ER12_RUNTIME/assessment/B-FINAL-M-02/control-v1/primary-evidence/pg17-insert.txt",
+      "text_sha256": "4c5a39a34b2282b734a2168c22c8d935125d5684a1c2eca518e14a0ab56ed31b",
+      "version": "PostgreSQL 17",
+      "evidence_kind": "Independent governing primary evidence, distinct from candidate paraphrases",
+      "retrieved_code_executed": false,
+      "governing_locator_url": "https://www.postgresql.org/docs/17/sql-insert.html#SQL-ON-CONFLICT",
+      "locators": [
+        {
+          "section": "Description / RETURNING",
+          "text_lines": [
+            99
+          ],
+          "candidate_lines": [
+            11,
+            21
+          ]
+        },
+        {
+          "section": "Privileges",
+          "text_lines": [
+            100,
+            101,
+            102
+          ],
+          "candidate_lines": [
+            9,
+            23
+          ]
+        },
+        {
+          "section": "ON CONFLICT / arbiter inference and atomic outcome",
+          "text_lines": [
+            133,
+            134,
+            135,
+            136,
+            138
+          ],
+          "candidate_lines": [
+            7,
+            9,
+            23
+          ]
+        },
+        {
+          "section": "existing/excluded / BEFORE INSERT trigger effects",
+          "text_lines": [
+            140,
+            141
+          ],
+          "candidate_lines": [
+            7,
+            11,
+            15
+          ]
+        },
+        {
+          "section": "collation/operator class",
+          "text_lines": [
+            147,
+            149
+          ],
+          "candidate_lines": [
+            7,
+            15
+          ]
+        },
+        {
+          "section": "condition / lock and eligibility / cardinality",
+          "text_lines": [
+            155,
+            156,
+            157
+          ],
+          "candidate_lines": [
+            5,
+            7,
+            9,
+            11,
+            19,
+            21,
+            22,
+            24
+          ]
+        },
+        {
+          "section": "concurrent maintenance warning",
+          "text_lines": [
+            162
+          ],
+          "candidate_source_map": "sources[0].conditions_and_exceptions"
+        },
+        {
+          "section": "Outputs",
+          "text_lines": [
+            166,
+            167
+          ],
+          "candidate_lines": [
+            11
+          ]
+        }
+      ],
+      "conditions_and_exceptions": [
+        "Applicable to PostgreSQL17 INSERT ON CONFLICT DO UPDATE on the selected key, not any database operation.",
+        "Column target performs eligible unique-index inference; unsupported/missing arbiter errors remain. Only NOT DEFERRABLE constraints/unique indexes qualify; exclusion constraints are not DO UPDATE arbiters.",
+        "Strict WHERE condition is evaluated after conflict identification; false conditions lock but skip update and RETURNING.",
+        "Deterministic restriction is about affecting a row more than once; duplicate preflight product policy applies even if a specific duplicate sequence might avoid an actual error.",
+        "Unrelated constraints, privileges and index-maintenance failures are not removed.",
+        "BEFORE INSERT effects are reflected in excluded; actual identity/timestamp normalization, trigger effects and any other writers are unprovided implementation evidence.",
+        "Partition movement restriction exists in source, but no partitioned design or partition-key update is specified here; not an invented task obligation."
+      ]
+    },
+    {
+      "source_id": "P2",
+      "url": "https://www.postgresql.org/docs/17/transaction-iso.html",
+      "retrieval_operation": "independent Python standard-library urllib HTTPS GET; HTML saved without execution",
+      "started_utc": "2026-10-10T05:24:05.727285+00:00",
+      "completed_utc": "2026-10-10T05:24:06.224549+00:00",
+      "http_status": 200,
+      "effective_url": "https://www.postgresql.org/docs/17/transaction-iso.html",
+      "headers": {
+        "Server": "nginx",
+        "Date": "Sat, 10 Oct 2026 05:08:42 GMT",
+        "Content-Type": "text/html; charset=utf-8",
+        "X-Frame-Options": "DENY",
+        "Content-Security-Policy": "default-src 'self' ; img-src * data: ; script-src 'unsafe-eval' 'self' www.google-analytics.com ssl.google-analytics.com www.googletagmanager.com tagmanager.google.com data: ; connect-src 'self' www.google-analytics.com ssl.google-analytics.com ; media-src 'self' ; style-src 'self' fonts.googleapis.com tagmanager.google.com 'unsafe-inline' ; font-src 'self' fonts.gstatic.com data: ; frame-ancestors 'none' ; report-uri https://csp-report.postgresql.org/",
+        "Cross-Origin-Opener-Policy": "same-origin",
+        "X-XSS-Protection": "1; mode=block",
+        "Vary": "Accept-Encoding",
+        "X-Varnish": "971018015 982975560",
+        "Age": "922",
+        "Via": "1.1 zetar (Varnish/9.0)",
+        "Accept-Ranges": "bytes",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Connection": "close",
+        "Transfer-Encoding": "chunked"
+      },
+      "html_path": "ER12_RUNTIME/assessment/B-FINAL-M-02/control-v1/primary-evidence/pg17-transaction-isolation.html",
+      "html_sha256": "b4c2f29cc4284f5fd860da91737055431dd7e742861b22218b1369e8933e6034",
+      "text_path": "ER12_RUNTIME/assessment/B-FINAL-M-02/control-v1/primary-evidence/pg17-transaction-isolation.txt",
+      "text_sha256": "6ad699f0367912f60030085648ca271fe3d0d41d6d4424f12ed110238dd35bad",
+      "version": "PostgreSQL 17",
+      "evidence_kind": "Independent governing primary evidence, distinct from candidate paraphrases",
+      "retrieved_code_executed": false,
+      "governing_locator_url": "https://www.postgresql.org/docs/17/transaction-iso.html#XACT-READ-COMMITTED",
+      "locators": [
+        {
+          "section": "13.2.1 default/snapshot",
+          "text_lines": [
+            121
+          ],
+          "candidate_scope": "Read Committed"
+        },
+        {
+          "section": "current-row wait/re-evaluation",
+          "text_lines": [
+            122
+          ],
+          "candidate_lines": [
+            9,
+            13
+          ]
+        },
+        {
+          "section": "INSERT ON CONFLICT DO UPDATE at Read Committed",
+          "text_lines": [
+            123
+          ],
+          "candidate_lines": [
+            9,
+            23,
+            24
+          ]
+        },
+        {
+          "section": "MERGE alternative limits",
+          "text_lines": [
+            125
+          ],
+          "candidate_obligation": "not required; independent useful discovery"
+        }
+      ],
+      "conditions_and_exceptions": [
+        "Read Committed is the assigned PostgreSQL17 isolation, not a whole-database serializability guarantee.",
+        "Upsert can handle a conflicting row whose transaction effects were invisible to the statement snapshot.",
+        "Generic insert-or-update description is qualified by unrelated errors and by P1 deliberate WHERE-false conditional skips.",
+        "Monotonic successful-write reasoning combines this page with the strict P1 predicate; it is not an executed concurrency test or an unconditional guarantee for arbitrary trigger/external writer behavior.",
+        "MERGE does not provide the same insert/update concurrent guarantee; this is contextual, not a demand for redesign."
+      ]
+    }
+  ],
+  "obligation_map": [
+    {
+      "id": "O1",
+      "status": "PASS",
+      "candidate_lines": [
+        1,
+        3,
+        7
+      ],
+      "reason": "The standalone section uses the exact title, PostgreSQL 17, Read Committed and one latest_reading table keyed by non-null unique device_id."
+    },
+    {
+      "id": "O2",
+      "status": "PASS",
+      "candidate_lines": [
+        3,
+        7,
+        20,
+        22
+      ],
+      "reason": "All three exact tokens are preserved; the caller validates the batch row limit before submission."
+    },
+    {
+      "id": "O3",
+      "status": "PASS",
+      "candidate_lines": [
+        5,
+        13,
+        19,
+        20
+      ],
+      "reason": "The complete batch is checked for repeated device_id values, the whole batch is rejected, no SQL is issued, and no duplicate is silently retained."
+    },
+    {
+      "id": "O4",
+      "status": "PASS",
+      "candidate_lines": [
+        7,
+        11,
+        13,
+        21,
+        22
+      ],
+      "reason": "Timestamp and payload update only under strict greater-than. Older/equal rows remain unchanged; locked conditional skips are not returned, so submitted rows are not all counted as changed.",
+      "primary": [
+        {
+          "source_id": "P1",
+          "local_text": "ER12_RUNTIME/assessment/B-FINAL-M-02/control-v1/primary-evidence/pg17-insert.txt",
+          "lines": [
+            99,
+            140,
+            155
+          ],
+          "url": "https://www.postgresql.org/docs/17/sql-insert.html#SQL-ON-CONFLICT",
+          "version": "PostgreSQL 17"
+        }
+      ]
+    },
+    {
+      "id": "O5",
+      "status": "PASS_WITH_SCOPE_LIMITATIONS",
+      "candidate_lines": [
+        3,
+        9,
+        15,
+        23,
+        24
+      ],
+      "reason": "A valid device_id arbiter, required isolation and concurrent conflicting-row comparison are specified. Independent constraints, privileges, trigger and transaction errors remain possible. The source map explicitly retains NOT DEFERRABLE/unique-index arbiter limits and concurrent maintenance exception. Actual DDL and trigger conformance remain unresolved rather than asserted.",
+      "primary": [
+        {
+          "source_id": "P1",
+          "local_text": "ER12_RUNTIME/assessment/B-FINAL-M-02/control-v1/primary-evidence/pg17-insert.txt",
+          "lines": [
+            135,
+            136,
+            141,
+            155,
+            156,
+            162
+          ],
+          "url": "https://www.postgresql.org/docs/17/sql-insert.html#SQL-ON-CONFLICT",
+          "version": "PostgreSQL 17"
+        },
+        {
+          "source_id": "P2",
+          "local_text": "ER12_RUNTIME/assessment/B-FINAL-M-02/control-v1/primary-evidence/pg17-transaction-isolation.txt",
+          "lines": [
+            122,
+            123
+          ],
+          "url": "https://www.postgresql.org/docs/17/transaction-iso.html#XACT-READ-COMMITTED",
+          "version": "PostgreSQL 17"
+        }
+      ]
+    },
+    {
+      "id": "O6",
+      "status": "PASS",
+      "candidate_lines": [
+        11,
+        13,
+        15
+      ],
+      "reason": "Exactly three numbered prospective acceptance groups cover duplicate rejection, fresh/newer/older/equal/RETURNING cases, competing upserts and unrelated-error reporting. Batch/error reporting, commit-gated acknowledgement and unresolved implementation evidence are explicit. No database test is claimed executed."
+    }
+  ],
+  "critique_disposition_map": [
+    {
+      "item": 1,
+      "candidate": "accept",
+      "judgment": "CORRECT",
+      "candidate_line": 19,
+      "primary": [
+        {
+          "source_id": "P1",
+          "local_text": "ER12_RUNTIME/assessment/B-FINAL-M-02/control-v1/primary-evidence/pg17-insert.txt",
+          "lines": [
+            157
+          ],
+          "url": "https://www.postgresql.org/docs/17/sql-insert.html#SQL-ON-CONFLICT",
+          "version": "PostgreSQL 17"
+        }
+      ],
+      "reason": "Repeated proposed arbiter keys can violate the deterministic-statement restriction. Caller rejection is required independently of whether a particular duplicate sequence would actually raise that error."
+    },
+    {
+      "item": 2,
+      "candidate": "reject",
+      "judgment": "CORRECT_WITH_MINOR_CITATION_OMISSION",
+      "candidate_line": 20,
+      "primary_authority": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-02/inputs/assignment.md",
+        "lines": [
+          12,
+          13,
+          37
+        ]
+      },
+      "reason": "last_row_wins would change the original reject-batch product rule. A missing assignment locator is limitation L1, not a wrong rejection."
+    },
+    {
+      "item": 3,
+      "candidate": "accept",
+      "judgment": "CORRECT",
+      "candidate_line": 21,
+      "primary": [
+        {
+          "source_id": "P1",
+          "local_text": "ER12_RUNTIME/assessment/B-FINAL-M-02/control-v1/primary-evidence/pg17-insert.txt",
+          "lines": [
+            99,
+            155,
+            167
+          ],
+          "url": "https://www.postgresql.org/docs/17/sql-insert.html#SQL-ON-CONFLICT",
+          "version": "PostgreSQL 17"
+        }
+      ],
+      "reason": "WHERE-false conflicting rows are locked but not updated/returned; accounting must use actually returned changed rows."
+    },
+    {
+      "item": 4,
+      "candidate": "reject",
+      "judgment": "CORRECT",
+      "candidate_line": 22,
+      "primary": [
+        {
+          "source_id": "P1",
+          "local_text": "ER12_RUNTIME/assessment/B-FINAL-M-02/control-v1/primary-evidence/pg17-insert.txt",
+          "lines": [
+            140,
+            155
+          ],
+          "url": "https://www.postgresql.org/docs/17/sql-insert.html#SQL-ON-CONFLICT",
+          "version": "PostgreSQL 17"
+        }
+      ],
+      "primary_authority": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-02/inputs/assignment.md",
+        "lines": [
+          12,
+          14
+        ]
+      },
+      "reason": "Unconditional overwrite would abandon strict-newer and keep_newer obligations; conditional update is supported."
+    },
+    {
+      "item": 5,
+      "candidate": "accept",
+      "judgment": "CORRECT",
+      "candidate_line": 23,
+      "primary": [
+        {
+          "source_id": "P1",
+          "local_text": "ER12_RUNTIME/assessment/B-FINAL-M-02/control-v1/primary-evidence/pg17-insert.txt",
+          "lines": [
+            100,
+            101,
+            102,
+            136,
+            162
+          ],
+          "url": "https://www.postgresql.org/docs/17/sql-insert.html#SQL-ON-CONFLICT",
+          "version": "PostgreSQL 17"
+        },
+        {
+          "source_id": "P2",
+          "local_text": "ER12_RUNTIME/assessment/B-FINAL-M-02/control-v1/primary-evidence/pg17-transaction-isolation.txt",
+          "lines": [
+            123
+          ],
+          "url": "https://www.postgresql.org/docs/17/transaction-iso.html#XACT-READ-COMMITTED",
+          "version": "PostgreSQL 17"
+        }
+      ],
+      "reason": "The documented upsert atomicity is qualified by independent/unrelated errors and does not warrant unconditional batch success."
+    },
+    {
+      "item": 6,
+      "candidate": "reject",
+      "judgment": "CORRECT",
+      "candidate_line": 24,
+      "primary": [
+        {
+          "source_id": "P2",
+          "local_text": "ER12_RUNTIME/assessment/B-FINAL-M-02/control-v1/primary-evidence/pg17-transaction-isolation.txt",
+          "lines": [
+            122,
+            123
+          ],
+          "url": "https://www.postgresql.org/docs/17/transaction-iso.html#XACT-READ-COMMITTED",
+          "version": "PostgreSQL 17"
+        },
+        {
+          "source_id": "P1",
+          "local_text": "ER12_RUNTIME/assessment/B-FINAL-M-02/control-v1/primary-evidence/pg17-insert.txt",
+          "lines": [
+            155
+          ],
+          "url": "https://www.postgresql.org/docs/17/sql-insert.html#SQL-ON-CONFLICT",
+          "version": "PostgreSQL 17"
+        }
+      ],
+      "reason": "Read Committed expressly supports ON CONFLICT DO UPDATE; combine that concurrency behavior with the intentional WHERE skip, rather than requiring Serializable."
+    }
+  ],
+  "findings": [],
+  "limitations": [
+    {
+      "id": "L1",
+      "severity": "minor",
+      "material": false,
+      "axis": "critique dispositions and delivery citation coverage",
+      "finding": "Critique disposition 2 correctly rejects last_row_wins but has no navigable primary citation. The assignment requires a primary citation for each numbered disposition.",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-02/control/stages/role/final-section.md",
+        "line": 20
+      },
+      "exact_candidate": "2. **Reject.** `last_row_wins` contradicts the frozen `duplicate_policy=reject_batch` and the caller-side rejection requirement; database convenience does not authorize changing that product rule.",
+      "primary_authority": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-02/inputs/assignment.md",
+        "lines": [
+          12,
+          13,
+          37
+        ],
+        "locator": "O2, O3, Required output"
+      },
+      "reasoning": "The omitted locator is to the governing product assignment, not an absent PostgreSQL fact. The exact policy and caller rejection are correctly preserved at final-section.md lines 3 and 5. This is a minor citation/locator omission under RUBRIC-v1, not a material unsupported decision."
+    }
+  ],
+  "useful_discoveries": [
+    {
+      "id": "D1",
+      "kind": "candidate useful clarification",
+      "candidate_lines": [
+        7,
+        11,
+        13
+      ],
+      "description": "Equal timestamps retain the stored payload and timestamp and are absent from RETURNING; this extends the draft's older-only prospective example while preserving strict-newer policy.",
+      "primary": [
+        {
+          "source_id": "P1",
+          "local_text": "ER12_RUNTIME/assessment/B-FINAL-M-02/control-v1/primary-evidence/pg17-insert.txt",
+          "lines": [
+            99,
+            155
+          ],
+          "url": "https://www.postgresql.org/docs/17/sql-insert.html#SQL-ON-CONFLICT",
+          "version": "PostgreSQL 17"
+        }
+      ]
+    },
+    {
+      "id": "D2",
+      "kind": "candidate useful clarification",
+      "candidate_lines": [
+        11,
+        15
+      ],
+      "description": "Separate changed-row accounting from submitted-row count and delay success acknowledgement until commit; actual trigger, driver and transaction-wrapper behavior remains unresolved.",
+      "primary": [
+        {
+          "source_id": "P1",
+          "local_text": "ER12_RUNTIME/assessment/B-FINAL-M-02/control-v1/primary-evidence/pg17-insert.txt",
+          "lines": [
+            99,
+            141,
+            167
+          ],
+          "url": "https://www.postgresql.org/docs/17/sql-insert.html#SQL-ON-CONFLICT",
+          "version": "PostgreSQL 17"
+        }
+      ]
+    },
+    {
+      "id": "D3",
+      "kind": "source condition already retained in candidate source map",
+      "description": "The selected arbiter must be a supported nondeferrable constraint/unique index; concurrent unique-index creation/reindexing can still cause unique violations. These are retained in source-map.json sources[0].conditions_and_exceptions and subsumed by bounded failure handling, not asserted impossible.",
+      "primary": [
+        {
+          "source_id": "P1",
+          "local_text": "ER12_RUNTIME/assessment/B-FINAL-M-02/control-v1/primary-evidence/pg17-insert.txt",
+          "lines": [
+            156,
+            162
+          ],
+          "url": "https://www.postgresql.org/docs/17/sql-insert.html#SQL-ON-CONFLICT",
+          "version": "PostgreSQL 17"
+        }
+      ]
+    },
+    {
+      "id": "D4",
+      "kind": "reviewer source-backed alternative boundary",
+      "description": "MERGE is not an equivalent concurrent insert/update guarantee at Read Committed. This independently retrieved fact is useful context, not a missing candidate obligation or proposed policy change.",
+      "primary": [
+        {
+          "source_id": "P2",
+          "local_text": "ER12_RUNTIME/assessment/B-FINAL-M-02/control-v1/primary-evidence/pg17-transaction-isolation.txt",
+          "lines": [
+            125
+          ],
+          "url": "https://www.postgresql.org/docs/17/transaction-iso.html#XACT-READ-COMMITTED",
+          "version": "PostgreSQL 17"
+        }
+      ]
+    },
+    {
+      "id": "D5",
+      "kind": "reviewer implementation boundary",
+      "description": "Database equality/collation/operator class and BEFORE INSERT transformations can affect conflict identity and excluded values. A production preflight/per-row outcome implementation must use the intended database identity semantics and verify trigger effects. No actual DDL or triggers were supplied; the candidate already leaves normalization and trigger validation open, so no concrete implementation defect is established.",
+      "primary": [
+        {
+          "source_id": "P1",
+          "local_text": "ER12_RUNTIME/assessment/B-FINAL-M-02/control-v1/primary-evidence/pg17-insert.txt",
+          "lines": [
+            135,
+            141,
+            147,
+            149
+          ],
+          "url": "https://www.postgresql.org/docs/17/sql-insert.html#SQL-ON-CONFLICT",
+          "version": "PostgreSQL 17"
+        }
+      ],
+      "candidate_lines": [
+        7,
+        11,
+        15
+      ]
+    }
+  ],
+  "local_authority": {
+    "rubric": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+    "product_assignment": "ER12_RUNTIME/runs/B-FINAL-M-02/inputs/assignment.md",
+    "exact_obligation_lines": [
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ],
+    "required_output_line": 37
+  },
+  "integrity_file": "inspected-hashes.json",
+  "unknowns": [
+    {
+      "id": "U1",
+      "subject": "deployment/implementation",
+      "status": "UNKNOWN",
+      "detail": "No concrete DDL, chosen timestamp type/normalization, trigger inventory, driver/transaction wrapper or other writers were supplied. No schema, service or deployment was inspected or invented."
+    },
+    {
+      "id": "U2",
+      "subject": "actual test execution",
+      "status": "NOT_EXECUTED_CLAIMED; INDEPENDENTLY_UNVERIFIED",
+      "detail": "The candidate explicitly labels all acceptance checks prospective and says none executed. Reviewer executed only reads, HTTPS retrieval, hash checks and output consistency checks; no PostgreSQL/caller test."
+    },
+    {
+      "id": "U3",
+      "subject": "effective provider/model/reasoning/service tier",
+      "status": "UNKNOWN",
+      "detail": "freeze.json requests AUTHORIZED_PROVIDER_INSTANCE/gpt-6-luna/max/default; service-tier-change.json records a request to default. The root terminal record has provider/model task metadata. Neither proves actual backend execution settings or effective service tier; no independent provider/billing telemetry inspected."
+    },
+    {
+      "id": "U4",
+      "subject": "billing and economic/comparative inference",
+      "status": "UNKNOWN",
+      "detail": "No invoice, price-applied usage breakdown, billing tier, comparative arm evidence or source-comparable paired latency was inspected. Native reported tokens/time are not converted into cost or savings."
+    },
+    {
+      "id": "U5",
+      "subject": "candidate complete native/method event sequence",
+      "status": "UNKNOWN_BEYOND_SAVED_RECEIPTS",
+      "detail": "Matching frozen activation/completion receipt files support a single reported goal ID and exact objective. No original provider event trace was inspected, so exact-one-total activation, activation-before-every-scientific-read, authenticity beyond the frozen records, and absence of all prohibited assistance cannot be independently proven."
+    }
+  ]
+}

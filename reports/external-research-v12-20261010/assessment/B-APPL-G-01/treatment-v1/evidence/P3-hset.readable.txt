@@ -1,0 +1,61 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://redis.io/docs/latest/commands/hset/"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/B-APPL-G-01/treatment-v1/source-map.json",
+      "source_id": "P3-hset",
+      "existing_authored_summary_fields": {
+        "version": "Live official Redis documentation independently retrieved 2026-10-10; option history checked against target 7.2"
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locators": [
+        {
+          "start_line": 140,
+          "end_line": 154,
+          "section": "Since 2.0.0; fields overwritten; absent hash created",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P3-hset.readable.txt:140",
+          "primary_locator": "https://redis.io/docs/latest/commands/hset/"
+        }
+      ]
+    }
+  ],
+  "raw_sha256": "b8b19f8fec4cf6139f4945f69095af548b5b705e6625303326eca8601a58078c",
+  "original_bytes": 91476,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/B-APPL-G-01/treatment-v1/evidence/P3-hset.readable.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://redis.io/docs/latest/commands/hset/"
+  ],
+  "version": [
+    {
+      "version": "Live official Redis documentation independently retrieved 2026-10-10; option history checked against target 7.2"
+    }
+  ],
+  "selector": [
+    {
+      "locators": [
+        {
+          "start_line": 140,
+          "end_line": 154,
+          "section": "Since 2.0.0; fields overwritten; absent hash created",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P3-hset.readable.txt:140",
+          "primary_locator": "https://redis.io/docs/latest/commands/hset/"
+        }
+      ]
+    }
+  ],
+  "conditions": "UNKNOWN",
+  "rawSHA256": "b8b19f8fec4cf6139f4945f69095af548b5b705e6625303326eca8601a58078c"
+}

@@ -1,0 +1,479 @@
+{
+  "schema": "er12-independent-source-map-v1",
+  "slot_id": "B-FINAL-M-02",
+  "arm": "treatment",
+  "created_at_utc": "2026-10-10T05:29:03.188970+00:00",
+  "role": "FINAL",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "primary_sources": [
+    {
+      "id": "P1",
+      "url": "https://www.postgresql.org/docs/17/sql-insert.html",
+      "final_url": "https://www.postgresql.org/docs/17/sql-insert.html",
+      "retrieved_at_utc": "2026-10-10T05:24:11.286517+00:00",
+      "operation": "HTTPS GET via Python standard-library urllib.request (documentation data only)",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 45611,
+      "sha256": "f18feb692580770ae7a17537db2b922a44fc0119be4dc4ff38537502307e2cba",
+      "file": "primary/P1.html",
+      "text_file": "primary/P1.txt",
+      "text_sha256": "c00520394f2d36f665a9adcfcce19084e024c2f6d1598eca5e2266c9aaccfc8d",
+      "version": "PostgreSQL major version 17 documentation",
+      "governing_sections": [
+        "INSERT Description / RETURNING",
+        "ON CONFLICT Clause; conflict_target; condition; deterministic-statement restriction; concurrent-index warning"
+      ],
+      "locators": [
+        {
+          "id": "P1-returning",
+          "url": "https://www.postgresql.org/docs/17/sql-insert.html",
+          "snapshot": "primary/P1.html",
+          "text": "primary/P1.txt",
+          "line": 163,
+          "selector": "Description: paragraph beginning The optional RETURNING clause"
+        },
+        {
+          "id": "P1-arbiter",
+          "url": "https://www.postgresql.org/docs/17/sql-insert.html#SQL-ON-CONFLICT",
+          "snapshot": "primary/P1.html#SQL-ON-CONFLICT",
+          "text": "primary/P1.txt",
+          "line": 235,
+          "selector": "conflict_target unique-index inference and required conflict_target"
+        },
+        {
+          "id": "P1-condition",
+          "url": "https://www.postgresql.org/docs/17/sql-insert.html#SQL-ON-CONFLICT",
+          "snapshot": "primary/P1.html#SQL-ON-CONFLICT",
+          "text": "primary/P1.txt",
+          "line": 275,
+          "selector": "condition definition: evaluated last, true updates, all conflicts locked"
+        },
+        {
+          "id": "P1-supported-arbiters",
+          "url": "https://www.postgresql.org/docs/17/sql-insert.html#SQL-ON-CONFLICT",
+          "snapshot": "primary/P1.html#SQL-ON-CONFLICT",
+          "text": "primary/P1.txt",
+          "line": 277,
+          "selector": "supported arbiters: NOT DEFERRABLE constraints and unique indexes; exclusion not supported for DO UPDATE"
+        },
+        {
+          "id": "P1-deterministic",
+          "url": "https://www.postgresql.org/docs/17/sql-insert.html#SQL-ON-CONFLICT",
+          "snapshot": "primary/P1.html#SQL-ON-CONFLICT",
+          "text": "primary/P1.txt",
+          "line": 279,
+          "selector": "paragraph beginning INSERT with an ON CONFLICT DO UPDATE clause is a deterministic statement"
+        },
+        {
+          "id": "P1-errors",
+          "url": "https://www.postgresql.org/docs/17/sql-insert.html#SQL-ON-CONFLICT",
+          "snapshot": "primary/P1.html#SQL-ON-CONFLICT",
+          "text": "primary/P1.txt",
+          "line": 237,
+          "selector": "atomic INSERT or UPDATE: independent-error proviso"
+        },
+        {
+          "id": "P1-index-maintenance",
+          "url": "https://www.postgresql.org/docs/17/sql-insert.html#SQL-ON-CONFLICT",
+          "snapshot": "primary/P1.html#SQL-ON-CONFLICT",
+          "text": "primary/P1.txt",
+          "line": 289,
+          "selector": "Warning: CREATE INDEX CONCURRENTLY or REINDEX CONCURRENTLY unique violation"
+        },
+        {
+          "id": "P1-trigger-scope",
+          "url": "https://www.postgresql.org/docs/17/sql-insert.html#SQL-ON-CONFLICT",
+          "snapshot": "primary/P1.html#SQL-ON-CONFLICT",
+          "text": "primary/P1.txt",
+          "line": 247,
+          "selector": "BEFORE INSERT effects reflected in excluded"
+        }
+      ]
+    },
+    {
+      "id": "P2",
+      "url": "https://www.postgresql.org/docs/17/transaction-iso.html",
+      "final_url": "https://www.postgresql.org/docs/17/transaction-iso.html",
+      "retrieved_at_utc": "2026-10-10T05:24:11.808681+00:00",
+      "operation": "HTTPS GET via Python standard-library urllib.request (documentation data only)",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 47624,
+      "sha256": "b4c2f29cc4284f5fd860da91737055431dd7e742861b22218b1369e8933e6034",
+      "file": "primary/P2.html",
+      "text_file": "primary/P2.txt",
+      "text_sha256": "d36d2d4ab6674074f96507fc2d870bcdac0e05ba62f3187f0a8cf8cc458f0f96",
+      "version": "PostgreSQL major version 17 documentation",
+      "governing_sections": [
+        "13.2.1 Read Committed Isolation Level"
+      ],
+      "locators": [
+        {
+          "id": "P2-default",
+          "url": "https://www.postgresql.org/docs/17/transaction-iso.html#XACT-READ-COMMITTED",
+          "snapshot": "primary/P2.html#XACT-READ-COMMITTED",
+          "text": "primary/P2.txt",
+          "line": 198,
+          "selector": "Read Committed default / statement snapshots"
+        },
+        {
+          "id": "P2-concurrent-update",
+          "url": "https://www.postgresql.org/docs/17/transaction-iso.html#XACT-READ-COMMITTED",
+          "snapshot": "primary/P2.html#XACT-READ-COMMITTED",
+          "text": "primary/P2.txt",
+          "line": 200,
+          "selector": "UPDATE waiting and re-evaluating WHERE on updated version"
+        },
+        {
+          "id": "P2-upsert",
+          "url": "https://www.postgresql.org/docs/17/transaction-iso.html#XACT-READ-COMMITTED",
+          "snapshot": "primary/P2.html#XACT-READ-COMMITTED",
+          "text": "primary/P2.txt",
+          "line": 202,
+          "selector": "INSERT ON CONFLICT DO UPDATE at Read Committed, unrelated-error proviso, invisible conflicting version"
+        },
+        {
+          "id": "P2-merge-alternative",
+          "url": "https://www.postgresql.org/docs/17/transaction-iso.html#XACT-READ-COMMITTED",
+          "snapshot": "primary/P2.html#XACT-READ-COMMITTED",
+          "text": "primary/P2.txt",
+          "line": 206,
+          "selector": "MERGE differs from DO UPDATE outcome guarantee under concurrency"
+        }
+      ]
+    }
+  ],
+  "primary_retrieval_failures": [],
+  "input_authority": {
+    "rubric": {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "bytes": 2790,
+      "mtime_ns": 1791604608938287266,
+      "terminal_hash_match": null,
+      "input_freeze_hash_match": null,
+      "read_full": true
+    },
+    "common_assignment": "ER12_RUNTIME/runs/B-FINAL-M-02/inputs/assignment.md",
+    "fixture": "ER12_RUNTIME/runs/B-FINAL-M-02/inputs/fixture.json",
+    "corpus_members": [
+      "ER12_RUNTIME/runs/B-FINAL-M-02/inputs/corpus/S1.md",
+      "ER12_RUNTIME/runs/B-FINAL-M-02/inputs/corpus/S2.md",
+      "ER12_RUNTIME/runs/B-FINAL-M-02/inputs/corpus/index.json"
+    ]
+  },
+  "candidate_sources": [
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/sources/S1-excerpt.md",
+      "read": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/sources/S2-excerpt.md",
+      "read": "FULL"
+    }
+  ],
+  "obligation_links": [
+    {
+      "id": "O1",
+      "status": "PASS",
+      "candidate": [
+        {
+          "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+          "line": 1
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+          "line": 3
+        }
+      ],
+      "evidence": [
+        "P2-upsert"
+      ],
+      "finding": "Exact section title, PostgreSQL 17, Read Committed and one device-keyed table."
+    },
+    {
+      "id": "O2",
+      "status": "PASS",
+      "candidate": [
+        {
+          "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+          "line": 3
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+          "line": 5
+        }
+      ],
+      "exact_tokens": [
+        "duplicate_policy=reject_batch",
+        "stale_policy=keep_newer",
+        "max_batch_rows=100"
+      ],
+      "finding": "Exact tokens preserved and 100 input rows per batch enforced."
+    },
+    {
+      "id": "O3",
+      "status": "PASS",
+      "candidate": [
+        {
+          "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+          "line": 5
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+          "line": 13
+        }
+      ],
+      "evidence": [
+        "P1-deterministic"
+      ],
+      "finding": "Reject entire duplicate-key batch before INSERT; no silent duplicate winner."
+    },
+    {
+      "id": "O4",
+      "status": "PASS",
+      "candidate": [
+        {
+          "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+          "line": 7
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+          "line": 9
+        }
+      ],
+      "evidence": [
+        "P1-condition",
+        "P1-returning"
+      ],
+      "finding": "Strict newer-only predicate, equal/older retention, locking and skipped RETURNING/accounting explained."
+    },
+    {
+      "id": "O5",
+      "status": "PASS",
+      "candidate": [
+        {
+          "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+          "line": 3
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+          "line": 11
+        }
+      ],
+      "evidence": [
+        "P1-arbiter",
+        "P1-supported-arbiters",
+        "P1-errors",
+        "P1-index-maintenance",
+        "P2-upsert"
+      ],
+      "finding": "Unique arbiter/concurrency/error conditions preserved; no unconditional success claim."
+    },
+    {
+      "id": "O6",
+      "status": "PASS",
+      "candidate": [
+        {
+          "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+          "line": 13
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+          "line": 24
+        }
+      ],
+      "finding": "Three prospective checks, diagnostics/no success counts on failed statement, unresolved implementation and no executed DB test claim."
+    }
+  ],
+  "critique_links": [
+    {
+      "item": 1,
+      "candidate": "accept",
+      "independent": "accept",
+      "status": "PASS",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+        "line": 17
+      },
+      "primary": [
+        "P1-deterministic"
+      ],
+      "obligations": [
+        "O3"
+      ]
+    },
+    {
+      "item": 2,
+      "candidate": "reject",
+      "independent": "reject",
+      "status": "PASS_WITH_LIMITATIONS",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+        "line": 18
+      },
+      "primary": [
+        "P1-deterministic"
+      ],
+      "obligations": [
+        "O2",
+        "O3"
+      ],
+      "limitation": "L1"
+    },
+    {
+      "item": 3,
+      "candidate": "accept",
+      "independent": "accept",
+      "status": "PASS",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+        "line": 19
+      },
+      "primary": [
+        "P1-returning"
+      ],
+      "obligations": [
+        "O4"
+      ]
+    },
+    {
+      "item": 4,
+      "candidate": "reject",
+      "independent": "reject",
+      "status": "PASS",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+        "line": 20
+      },
+      "primary": [
+        "P1-condition"
+      ],
+      "obligations": [
+        "O4"
+      ]
+    },
+    {
+      "item": 5,
+      "candidate": "accept",
+      "independent": "accept",
+      "status": "PASS",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+        "line": 21
+      },
+      "primary": [
+        "P1-errors",
+        "P2-upsert"
+      ],
+      "obligations": [
+        "O5"
+      ]
+    },
+    {
+      "item": 6,
+      "candidate": "reject",
+      "independent": "reject",
+      "status": "PASS",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+        "line": 22
+      },
+      "primary": [
+        "P2-default",
+        "P2-upsert"
+      ],
+      "obligations": [
+        "O1"
+      ]
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L1",
+      "severity": "minor",
+      "material": false,
+      "axis": "critique_dispositions / source_subject_applicability",
+      "title": "Last-row-wins is not inherently a duplicate-key SQL statement",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+        "line": 18
+      },
+      "candidate_exact_quote": "would send arbiter duplicates that S1 forbids",
+      "additional_candidate_locator": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/source-map.json",
+        "json_pointer": "/applicability/S1_deterministic"
+      },
+      "primary_locators": [
+        "P1-deterministic"
+      ],
+      "finding": "The PostgreSQL restriction applies to rows actually proposed to INSERT. A caller could reduce its input to one last occurrence per key before SQL. The candidate overstates the technical objection to last_row_wins.",
+      "inference_label": "Application-side deduplication possibility is reviewer inference from the SQL-row subject of the documented restriction; no executed implementation is claimed.",
+      "why_nonmaterial": "The rejection is independently required by O2/O3 and the final enforces pre-SQL reject_batch. No selected disposition, product constraint, SQL behavior or consequential decision relies on the extra rationale.",
+      "disposition": "Nonmaterial wording/source-scope limitation; no candidate feedback or repair performed."
+    }
+  ],
+  "source_conditions": {
+    "version": "PostgreSQL 17",
+    "isolation": "Read Committed",
+    "default": "Read Committed is PostgreSQL default; assignment explicitly selects it",
+    "subject": "one latest-reading table keyed by device_id",
+    "operation": "single multi-row INSERT ON CONFLICT(device_id) DO UPDATE ... WHERE excluded.observed_at > readings.observed_at RETURNING device_id",
+    "units": "max 100 submitted input readings per batch, not changed-row count",
+    "arbiter": "unique device_id inference must succeed; DO UPDATE conflict_target mandatory; NOT DEFERRABLE constraints and unique indexes supported",
+    "conditional_exception": "WHERE false locks but does not update or RETURN; generic insert/update outcome statement is not an unconditional change guarantee",
+    "error_exception": "independent/unrelated errors remain possible; concurrent unique-index maintenance can raise unique violation",
+    "domain_limit": "no supplied deployed schema, trigger/rule configuration, timestamp datatype, service or implementation run; do not invent them"
+  },
+  "useful_discoveries": [
+    {
+      "id": "D1",
+      "finding": "Caller last-occurrence selection can avoid SQL duplicate rows, but violates O3 here",
+      "primary": [
+        "P1-deterministic"
+      ],
+      "kind": "reviewer inference / non-selected alternative"
+    },
+    {
+      "id": "D2",
+      "finding": "Concurrent index maintenance is a documented remaining unique-violation case",
+      "primary": [
+        "P1-index-maintenance"
+      ],
+      "kind": "primary source fact"
+    },
+    {
+      "id": "D3",
+      "finding": "MERGE at Read Committed is not interchangeable with the upsert outcome guarantee",
+      "primary": [
+        "P2-merge-alternative"
+      ],
+      "kind": "primary source fact"
+    },
+    {
+      "id": "D4",
+      "finding": "Conditional stale conflicts retain locks without RETURNING presence",
+      "primary": [
+        "P1-condition",
+        "P1-returning"
+      ],
+      "kind": "primary source fact"
+    }
+  ],
+  "proposed_vs_executed": {
+    "candidate_proposed": "3 acceptance groups; no DB test claimed",
+    "candidate_reported_retrievals": "two primary URLs, zero additional pages, zero DB probes; precise tool route not independently observed",
+    "reviewer_executed": [
+      "full frozen input/science reads",
+      "independent primary web opens and HTTPS GETs",
+      "JSON parse",
+      "exact-token / word-count checks",
+      "SHA-256, bytes, mtime comparisons",
+      "assessment save verification"
+    ],
+    "reviewer_database_execution": false
+  },
+  "inspected_hashes": "inspected-hashes.json",
+  "retrieval_metadata": "retrievals.json"
+}

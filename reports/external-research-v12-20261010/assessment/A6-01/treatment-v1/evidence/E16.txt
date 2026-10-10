@@ -1,0 +1,54 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://docs.opentripplanner.org/en/v2.10.0/Changelog/"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A6-01/treatment-v1/source-map.json",
+      "source_id": "E16",
+      "existing_authored_summary_fields": {
+        "version_or_commit": "OTP v2.10.0 changelog",
+        "governing_locator": "2.10.0 #7445; 2.8.0 #6523 and #6028",
+        "independent_semantic_observation": "Release inclusions verified. #6523 is positions cleanup; #6028 also records released NEW/REPLACEMENT support."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A6-01/treatment-v1/evidence/retrieval-manifest.json",
+      "source_id": "E16",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "governing_locator": "2.10.0 #7445; 2.8.0 #6523 and #6028"
+    }
+  ],
+  "raw_sha256": "7e81044b8f973a16aebce4e9bd126a72141660c231217bb3a72026984a5e97cb",
+  "original_bytes": 76502,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A6-01/treatment-v1/evidence/E16.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://docs.opentripplanner.org/en/v2.10.0/Changelog/"
+  ],
+  "version": [
+    {
+      "version_or_commit": "OTP v2.10.0 changelog",
+      "governing_locator": "2.10.0 #7445; 2.8.0 #6523 and #6028",
+      "independent_semantic_observation": "Release inclusions verified. #6523 is positions cleanup; #6028 also records released NEW/REPLACEMENT support."
+    }
+  ],
+  "selector": [
+    {
+      "governing_locator": "2.10.0 #7445; 2.8.0 #6523 and #6028"
+    }
+  ],
+  "conditions": "UNKNOWN",
+  "rawSHA256": "7e81044b8f973a16aebce4e9bd126a72141660c231217bb3a72026984a5e97cb"
+}

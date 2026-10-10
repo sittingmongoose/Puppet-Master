@@ -1,0 +1,83 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://docs.getodk.org/central-api-changelog/"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A2-01/treatment-v1/source-map.json",
+      "source_id": "R19",
+      "existing_authored_summary_fields": {
+        "released_version_or_commit": "Living Central API changelog; v1.2, v1.3, v1.4 introductions",
+        "governing_condition_default_exception_and_independent_judgment": "The carried source itself documents version resources with submitted media from v1.2, per-version differences from v1.3, and formVersion/client metadata additions in v1.4. These establish public API leads even though UI previous-version viewing is qualified elsewhere. Final’s selected-release full-media recoverability gate remains sensible."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A2-01/treatment-v1/evidence/retrieval-manifest.json",
+      "source_id": "R19",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "text_lines": 1191
+    },
+    {
+      "locator": {
+        "text_file": "evidence/R19.txt",
+        "line_ranges": "730-767,768-825",
+        "url": "https://docs.getodk.org/central-api-changelog/"
+      }
+    },
+    {
+      "candidate_locator": "Final:50,68,108; discovery:33"
+    },
+    {
+      "text_lines": 1191
+    }
+  ],
+  "raw_sha256": "1c6998b34b0eb82641f65fe860dc660bedcdb352ff456561886b1edb0f28d56d",
+  "original_bytes": 18509,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A2-01/treatment-v1/evidence/R19.response.gz",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://docs.getodk.org/central-api-changelog/"
+  ],
+  "version": [
+    {
+      "released_version_or_commit": "Living Central API changelog; v1.2, v1.3, v1.4 introductions",
+      "governing_condition_default_exception_and_independent_judgment": "The carried source itself documents version resources with submitted media from v1.2, per-version differences from v1.3, and formVersion/client metadata additions in v1.4. These establish public API leads even though UI previous-version viewing is qualified elsewhere. Final’s selected-release full-media recoverability gate remains sensible."
+    }
+  ],
+  "selector": [
+    {
+      "text_lines": 1191
+    },
+    {
+      "locator": {
+        "text_file": "evidence/R19.txt",
+        "line_ranges": "730-767,768-825",
+        "url": "https://docs.getodk.org/central-api-changelog/"
+      }
+    },
+    {
+      "candidate_locator": "Final:50,68,108; discovery:33"
+    },
+    {
+      "text_lines": 1191
+    }
+  ],
+  "conditions": [
+    {
+      "released_version_or_commit": "Living Central API changelog; v1.2, v1.3, v1.4 introductions",
+      "governing_condition_default_exception_and_independent_judgment": "The carried source itself documents version resources with submitted media from v1.2, per-version differences from v1.3, and formVersion/client metadata additions in v1.4. These establish public API leads even though UI previous-version viewing is qualified elsewhere. Final’s selected-release full-media recoverability gate remains sensible."
+    }
+  ],
+  "rawSHA256": "1c6998b34b0eb82641f65fe860dc660bedcdb352ff456561886b1edb0f28d56d"
+}

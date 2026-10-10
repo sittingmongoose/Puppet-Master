@@ -1,0 +1,59 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://github.com/Ultimaker/Cura/blob/5.13.0/plugins/3MFReader/ThreeMFReader.py",
+    "https://raw.githubusercontent.com/Ultimaker/Cura/5.13.0/plugins/3MFReader/ThreeMFReader.py"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A7-01/treatment-v1/source-map.json",
+      "source_id": "P22",
+      "existing_authored_summary_fields": {
+        "version_or_commit": "Source at released 5.13.0 tag",
+        "governing_conditions_and_applicability": "The current reader asks Savitar for a node name and uses a fallback only when empty. It reads scene metadata and transforms/units. This limits extrapolation from the 2023 name issue, but the dependency/parser/UI/export chain still needs end-to-end tests."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A7-01/treatment-v1/evidence/retrieval-record.json",
+      "source_id": "P22-cura-reader-code",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": "_convertSavitarNodeToUMNode lines 101–135; _read lines 260–328; _getScaleFromUnit 339–364"
+    }
+  ],
+  "raw_sha256": "17e549322b505a57546696cf9ba635688b01867f5f1ab55d857a6742ab01633c",
+  "original_bytes": 16552,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A7-01/treatment-v1/evidence/P22-cura-reader-code.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://github.com/Ultimaker/Cura/blob/5.13.0/plugins/3MFReader/ThreeMFReader.py",
+    "https://raw.githubusercontent.com/Ultimaker/Cura/5.13.0/plugins/3MFReader/ThreeMFReader.py"
+  ],
+  "version": [
+    {
+      "version_or_commit": "Source at released 5.13.0 tag",
+      "governing_conditions_and_applicability": "The current reader asks Savitar for a node name and uses a fallback only when empty. It reads scene metadata and transforms/units. This limits extrapolation from the 2023 name issue, but the dependency/parser/UI/export chain still needs end-to-end tests."
+    }
+  ],
+  "selector": [
+    {
+      "locator": "_convertSavitarNodeToUMNode lines 101–135; _read lines 260–328; _getScaleFromUnit 339–364"
+    }
+  ],
+  "conditions": [
+    {
+      "version_or_commit": "Source at released 5.13.0 tag",
+      "governing_conditions_and_applicability": "The current reader asks Savitar for a node name and uses a fallback only when empty. It reads scene metadata and transforms/units. This limits extrapolation from the 2023 name issue, but the dependency/parser/UI/export chain still needs end-to-end tests."
+    }
+  ],
+  "rawSHA256": "17e549322b505a57546696cf9ba635688b01867f5f1ab55d857a6742ab01633c"
+}

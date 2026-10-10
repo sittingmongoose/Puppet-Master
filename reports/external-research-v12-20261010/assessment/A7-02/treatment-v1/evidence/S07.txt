@@ -1,0 +1,105 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://www.zotero.org/support/dev/translators"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A7-02/treatment-v1/source-map.json",
+      "source_id": "S07",
+      "existing_authored_summary_fields": {
+        "independently_observed_version": "Developer help updated 2026-05-12",
+        "reviewer_observation": "Import/export/search translators have different operations. Export file/note/tag checkboxes exist only for declared properties; true/false determines checked/unchecked defaults.",
+        "condition_default_exception_domain": "Final says exporters can expose these controls, not that every exporter has all controls or a safe default. Selected translator/build still needs inspection."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A7-02/treatment-v1/source-map.json",
+      "source_id": "S07",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/A7-02/treatment-v1/evidence/retrievals.json",
+      "source_id": "S07",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": "Translator Types; displayOptions"
+    },
+    {
+      "local_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S07.txt",
+          "first_line": 65,
+          "last_line": 78
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S07.txt",
+          "first_line": 100,
+          "last_line": 105
+        }
+      ]
+    },
+    {
+      "text_lines": 185
+    },
+    {
+      "text_lines": 185
+    }
+  ],
+  "raw_sha256": "9e4f6c4a049522ac0f6b3a8c5112e2d04a69595629c2084b78e81bfd03f390cd",
+  "original_bytes": 17055,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A7-02/treatment-v1/evidence/S07.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://www.zotero.org/support/dev/translators"
+  ],
+  "version": [
+    {
+      "independently_observed_version": "Developer help updated 2026-05-12",
+      "reviewer_observation": "Import/export/search translators have different operations. Export file/note/tag checkboxes exist only for declared properties; true/false determines checked/unchecked defaults.",
+      "condition_default_exception_domain": "Final says exporters can expose these controls, not that every exporter has all controls or a safe default. Selected translator/build still needs inspection."
+    }
+  ],
+  "selector": [
+    {
+      "locator": "Translator Types; displayOptions"
+    },
+    {
+      "local_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S07.txt",
+          "first_line": 65,
+          "last_line": 78
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S07.txt",
+          "first_line": 100,
+          "last_line": 105
+        }
+      ]
+    },
+    {
+      "text_lines": 185
+    },
+    {
+      "text_lines": 185
+    }
+  ],
+  "conditions": [
+    {
+      "independently_observed_version": "Developer help updated 2026-05-12",
+      "reviewer_observation": "Import/export/search translators have different operations. Export file/note/tag checkboxes exist only for declared properties; true/false determines checked/unchecked defaults.",
+      "condition_default_exception_domain": "Final says exporters can expose these controls, not that every exporter has all controls or a safe default. Selected translator/build still needs inspection."
+    }
+  ],
+  "rawSHA256": "9e4f6c4a049522ac0f6b3a8c5112e2d04a69595629c2084b78e81bfd03f390cd"
+}

@@ -1,0 +1,55 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://www.epa.gov/npdes/pretreatment-standards-and-requirements-general-and-specific-prohibitions"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/C-R1-02/control-v1/source-map.json",
+      "source_id": "E12",
+      "existing_authored_summary_fields": {
+        "version_verified": "EPA live POTW pretreatment guidance; last updated2026-08-31;40CFR403.5",
+        "observed_subject_operation_units_types": "National US prohibitions apply to nondomestic discharges to a POTW even without an issued control mechanism; obstructive solids and interfering flow/concentration are included.",
+        "conditions_defaults_domain_exceptions": "POTW/jurisdiction applicability must first be established. The candidate does not infer that this workshop is in the US, uses a POTW, or has permission to discharge."
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": "General and Specific Prohibitions; saved text lines60–84"
+    }
+  ],
+  "raw_sha256": "5498fdb9c9591938cbcd931be39c65eeef2414671b4f26beb19e56b0334b2931",
+  "original_bytes": 8158,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/C-R1-02/control-v1/evidence/S12.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://www.epa.gov/npdes/pretreatment-standards-and-requirements-general-and-specific-prohibitions"
+  ],
+  "version": [
+    {
+      "version_verified": "EPA live POTW pretreatment guidance; last updated2026-08-31;40CFR403.5",
+      "observed_subject_operation_units_types": "National US prohibitions apply to nondomestic discharges to a POTW even without an issued control mechanism; obstructive solids and interfering flow/concentration are included.",
+      "conditions_defaults_domain_exceptions": "POTW/jurisdiction applicability must first be established. The candidate does not infer that this workshop is in the US, uses a POTW, or has permission to discharge."
+    }
+  ],
+  "selector": [
+    {
+      "locator": "General and Specific Prohibitions; saved text lines60–84"
+    }
+  ],
+  "conditions": [
+    {
+      "version_verified": "EPA live POTW pretreatment guidance; last updated2026-08-31;40CFR403.5",
+      "observed_subject_operation_units_types": "National US prohibitions apply to nondomestic discharges to a POTW even without an issued control mechanism; obstructive solids and interfering flow/concentration are included.",
+      "conditions_defaults_domain_exceptions": "POTW/jurisdiction applicability must first be established. The candidate does not infer that this workshop is in the US, uses a POTW, or has permission to discharge."
+    }
+  ],
+  "rawSHA256": "5498fdb9c9591938cbcd931be39c65eeef2414671b4f26beb19e56b0334b2931"
+}

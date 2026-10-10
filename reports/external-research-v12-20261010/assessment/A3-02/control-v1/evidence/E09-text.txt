@@ -1,0 +1,60 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://bugs.webkit.org/show_bug.cgi?id=243837"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A3-02/control-v1/source-map.json",
+      "source_id": "E09",
+      "existing_authored_summary_fields": {
+        "version_or_commit": "iPad 8th generation/iOS 15.6; 253529@main (f2967879748b), 2022-08-17",
+        "governing_conditions_defaults_exceptions": "Report concerns start/pause/requestData/stop and truncated data. Maintainer explains in-flight encoding/writer flushing, and the landed change is recorded.",
+        "applicability": "Supports bounded final-flush history, not a defect asserted in current desktop microphone capture."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A3-02/control-v1/evidence/retrieval-manifest.json",
+      "source_id": "E09",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": "Report; comments 2–5"
+    }
+  ],
+  "raw_sha256": "fbaabbadc1dbb49044e2bf3b191f2ab71b6a3af0c2ad66c6e3757ca66eca640a",
+  "original_bytes": 4782,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A3-02/control-v1/evidence/E09-text.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://bugs.webkit.org/show_bug.cgi?id=243837"
+  ],
+  "version": [
+    {
+      "version_or_commit": "iPad 8th generation/iOS 15.6; 253529@main (f2967879748b), 2022-08-17",
+      "governing_conditions_defaults_exceptions": "Report concerns start/pause/requestData/stop and truncated data. Maintainer explains in-flight encoding/writer flushing, and the landed change is recorded.",
+      "applicability": "Supports bounded final-flush history, not a defect asserted in current desktop microphone capture."
+    }
+  ],
+  "selector": [
+    {
+      "locator": "Report; comments 2–5"
+    }
+  ],
+  "conditions": [
+    {
+      "version_or_commit": "iPad 8th generation/iOS 15.6; 253529@main (f2967879748b), 2022-08-17",
+      "governing_conditions_defaults_exceptions": "Report concerns start/pause/requestData/stop and truncated data. Maintainer explains in-flight encoding/writer flushing, and the landed change is recorded.",
+      "applicability": "Supports bounded final-flush history, not a defect asserted in current desktop microphone capture."
+    }
+  ],
+  "rawSHA256": "fbaabbadc1dbb49044e2bf3b191f2ab71b6a3af0c2ad66c6e3757ca66eca640a"
+}

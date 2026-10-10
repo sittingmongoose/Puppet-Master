@@ -1,0 +1,515 @@
+{
+  "schema": "er12.C1.actual-host-timing.v1",
+  "at_utc": "2026-10-10T06:04:15.472897+00:00",
+  "actual_one_time_bounded_host_reads": 12,
+  "raw_capture_sha256": "88745db72a839d43d8a55070b5de448512daac8f2cd6c3635b880ff65e59f559",
+  "stages": [
+    {
+      "slot": "C-R1-01",
+      "arm": "control",
+      "stage": "investigator",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-01-control-investigator-v1",
+      "host_quiet": true,
+      "host_requested_at": "2026-10-10T04:58:06.740Z",
+      "host_completed_at": "2026-10-10T05:12:09.130Z",
+      "context_created_at": "2026-10-10T04:58:06.528Z",
+      "occupied_context_seconds_including_waits": 842.6019999980927,
+      "stage_deadline": "2026-10-10T05:28:05.540Z",
+      "host_lateness_seconds": 0,
+      "local_goal_receipts": [
+        {
+          "path": "runs/C-R1-01/control/stages/investigator/native-goal-record.json",
+          "sha256": "5d015b13c8add7a62d0f2d1dc2c4e67ff2a48cfb7751154f2ecea07292598ce9",
+          "pointer": "/native_goal_fields",
+          "status": "complete",
+          "exact_frozen_objective": true,
+          "native_thread_id": "01a1242c-f093-7bd1-a6a6-e975ea4b2997",
+          "createdAt": 1791608320,
+          "objective": "ER12 investigator stage, run C-R1-01-control: execute ER12_RUNTIME/runs/C-R1-01/control/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "evidence_kind": "local authored/captured native record, not host Goal proof"
+        }
+      ],
+      "direct_host_goal_proof": "UNKNOWN"
+    },
+    {
+      "slot": "C-R1-01",
+      "arm": "treatment",
+      "stage": "investigator",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-01-treatment-investigator-v1",
+      "host_quiet": true,
+      "host_requested_at": "2026-10-10T04:58:08.421Z",
+      "host_completed_at": "2026-10-10T05:21:52.965Z",
+      "context_created_at": "2026-10-10T04:58:08.419Z",
+      "occupied_context_seconds_including_waits": 1424.5460000038147,
+      "stage_deadline": "2026-10-10T05:28:07.488Z",
+      "host_lateness_seconds": 0,
+      "local_goal_receipts": [
+        {
+          "path": "runs/C-R1-01/treatment/stages/investigator/native-goal.json",
+          "sha256": "27cf26644be41af8939f823f3b6fb27c1a44b9bdb8166c69befcd689ab1950de",
+          "pointer": "/create_goal_observation",
+          "status": "active",
+          "exact_frozen_objective": true,
+          "native_thread_id": "01a1242c-febe-70f3-8426-445ad968661c",
+          "createdAt": 1791608318,
+          "objective": "ER12 investigator stage, run C-R1-01-treatment: execute ER12_RUNTIME/runs/C-R1-01/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "evidence_kind": "local authored/captured native record, not host Goal proof"
+        },
+        {
+          "path": "runs/C-R1-01/treatment/stages/investigator/native-goal.json",
+          "sha256": "27cf26644be41af8939f823f3b6fb27c1a44b9bdb8166c69befcd689ab1950de",
+          "pointer": "/get_goal_confirmation",
+          "status": "active",
+          "exact_frozen_objective": true,
+          "native_thread_id": "01a1242c-febe-70f3-8426-445ad968661c",
+          "createdAt": 1791608318,
+          "objective": "ER12 investigator stage, run C-R1-01-treatment: execute ER12_RUNTIME/runs/C-R1-01/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "evidence_kind": "local authored/captured native record, not host Goal proof"
+        },
+        {
+          "path": "runs/C-R1-01/treatment/stages/investigator/native-goal.json",
+          "sha256": "27cf26644be41af8939f823f3b6fb27c1a44b9bdb8166c69befcd689ab1950de",
+          "pointer": "/update_goal_terminal_observation",
+          "status": "complete",
+          "exact_frozen_objective": true,
+          "native_thread_id": "01a1242c-febe-70f3-8426-445ad968661c",
+          "createdAt": 1791608318,
+          "objective": "ER12 investigator stage, run C-R1-01-treatment: execute ER12_RUNTIME/runs/C-R1-01/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "evidence_kind": "local authored/captured native record, not host Goal proof"
+        },
+        {
+          "path": "runs/C-R1-01/treatment/stages/investigator/native-goal.json",
+          "sha256": "27cf26644be41af8939f823f3b6fb27c1a44b9bdb8166c69befcd689ab1950de",
+          "pointer": "/get_goal_terminal_confirmation",
+          "status": "complete",
+          "exact_frozen_objective": true,
+          "native_thread_id": "01a1242c-febe-70f3-8426-445ad968661c",
+          "createdAt": 1791608318,
+          "objective": "ER12 investigator stage, run C-R1-01-treatment: execute ER12_RUNTIME/runs/C-R1-01/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "evidence_kind": "local authored/captured native record, not host Goal proof"
+        }
+      ],
+      "direct_host_goal_proof": "UNKNOWN"
+    },
+    {
+      "slot": "C-R1-02",
+      "arm": "treatment",
+      "stage": "investigator",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-02-treatment-investigator-v1",
+      "host_quiet": true,
+      "host_requested_at": "2026-10-10T05:03:34.717Z",
+      "host_completed_at": "2026-10-10T05:28:30.310Z",
+      "context_created_at": "2026-10-10T05:03:34.716Z",
+      "occupied_context_seconds_including_waits": 1495.593999862671,
+      "stage_deadline": "2026-10-10T05:33:33.967Z",
+      "host_lateness_seconds": 0,
+      "local_goal_receipts": [],
+      "direct_host_goal_proof": "UNKNOWN"
+    },
+    {
+      "slot": "C-R1-02",
+      "arm": "control",
+      "stage": "investigator",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-02-control-investigator-v1",
+      "host_quiet": true,
+      "host_requested_at": "2026-10-10T05:03:37.451Z",
+      "host_completed_at": "2026-10-10T05:16:59.760Z",
+      "context_created_at": "2026-10-10T05:03:37.449Z",
+      "occupied_context_seconds_including_waits": 802.3110001087189,
+      "stage_deadline": "2026-10-10T05:33:35.376Z",
+      "host_lateness_seconds": 0,
+      "local_goal_receipts": [
+        {
+          "path": "runs/C-R1-02/control/stages/investigator/native-goal-receipt.json",
+          "sha256": "53b8136750d3e3367b3d3445d841ca7941b0250bb09b81a3ce3870eb818fc418",
+          "pointer": "/initial_observation/goal",
+          "status": "active",
+          "exact_frozen_objective": true,
+          "native_thread_id": "01a12431-fe0a-7080-97e9-c570a5f2a740",
+          "createdAt": 1791608666,
+          "objective": "ER12 investigator stage, run C-R1-02-control: execute ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "evidence_kind": "local authored/captured native record, not host Goal proof"
+        },
+        {
+          "path": "runs/C-R1-02/control/stages/investigator/native-goal-receipt.json",
+          "sha256": "53b8136750d3e3367b3d3445d841ca7941b0250bb09b81a3ce3870eb818fc418",
+          "pointer": "/latest_observation_before_outputs/goal",
+          "status": "active",
+          "exact_frozen_objective": true,
+          "native_thread_id": "01a12431-fe0a-7080-97e9-c570a5f2a740",
+          "createdAt": 1791608666,
+          "objective": "ER12 investigator stage, run C-R1-02-control: execute ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "evidence_kind": "local authored/captured native record, not host Goal proof"
+        }
+      ],
+      "direct_host_goal_proof": "UNKNOWN"
+    },
+    {
+      "slot": "C-R1-01",
+      "arm": "control",
+      "stage": "critic",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-01-control-critic-v1",
+      "host_quiet": true,
+      "host_requested_at": "2026-10-10T05:12:35.379Z",
+      "host_completed_at": "2026-10-10T05:24:01.546Z",
+      "context_created_at": "2026-10-10T05:12:35.378Z",
+      "occupied_context_seconds_including_waits": 686.1679999828339,
+      "stage_deadline": "2026-10-10T05:24:34.628Z",
+      "host_lateness_seconds": 0,
+      "local_goal_receipts": [
+        {
+          "path": "runs/C-R1-01/control/stages/critic/native-goal-activation-response.json",
+          "sha256": "627590656b4bad1545373d0efd407e03ab7502ce84e0ea9b01fbd9f33bf9d172",
+          "pointer": "/goal",
+          "status": "active",
+          "exact_frozen_objective": true,
+          "native_thread_id": "01a1243a-2faf-7ba2-b158-31dd1c0cfd00",
+          "createdAt": 1791609164,
+          "objective": "ER12 critic stage, run C-R1-01-control: execute ER12_RUNTIME/runs/C-R1-01/control/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "evidence_kind": "local authored/captured native record, not host Goal proof"
+        },
+        {
+          "path": "runs/C-R1-01/control/stages/critic/native-goal-completion-response.json",
+          "sha256": "9edc48fbf2d01a354912d10a30f9e38f2c257f79c77d80126554e0fe9053b3d6",
+          "pointer": "/goal",
+          "status": "complete",
+          "exact_frozen_objective": true,
+          "native_thread_id": "01a1243a-2faf-7ba2-b158-31dd1c0cfd00",
+          "createdAt": 1791609164,
+          "objective": "ER12 critic stage, run C-R1-01-control: execute ER12_RUNTIME/runs/C-R1-01/control/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "evidence_kind": "local authored/captured native record, not host Goal proof"
+        }
+      ],
+      "direct_host_goal_proof": "UNKNOWN"
+    },
+    {
+      "slot": "C-R1-02",
+      "arm": "control",
+      "stage": "critic",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-02-control-critic-v1",
+      "host_quiet": true,
+      "host_requested_at": "2026-10-10T05:17:24.868Z",
+      "host_completed_at": "2026-10-10T05:29:03.451Z",
+      "context_created_at": "2026-10-10T05:17:24.841Z",
+      "occupied_context_seconds_including_waits": 698.6099998950958,
+      "stage_deadline": "2026-10-10T05:29:24.050Z",
+      "host_lateness_seconds": 0,
+      "local_goal_receipts": [
+        {
+          "path": "runs/C-R1-02/control/stages/critic/native-goal-activation.json",
+          "sha256": "856921cbce943dc01d87ec2e0d77e2b2ecd2bbee30fdeb545eca67833f9b53e3",
+          "pointer": "/goal",
+          "status": "active",
+          "exact_frozen_objective": true,
+          "native_thread_id": "01a1243e-9aeb-72f0-beb8-60068742ce5c",
+          "createdAt": 1791609463,
+          "objective": "ER12 critic stage, run C-R1-02-control: execute ER12_RUNTIME/runs/C-R1-02/control/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "evidence_kind": "local authored/captured native record, not host Goal proof"
+        },
+        {
+          "path": "runs/C-R1-02/control/stages/critic/native-goal-completion.json",
+          "sha256": "4b9093e2f8c9a14c6839de412c66656ee26c657e2b5bdb907ccfec0f84d9f79c",
+          "pointer": "/goal",
+          "status": "complete",
+          "exact_frozen_objective": true,
+          "native_thread_id": "01a1243e-9aeb-72f0-beb8-60068742ce5c",
+          "createdAt": 1791609463,
+          "objective": "ER12 critic stage, run C-R1-02-control: execute ER12_RUNTIME/runs/C-R1-02/control/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "evidence_kind": "local authored/captured native record, not host Goal proof"
+        }
+      ],
+      "direct_host_goal_proof": "UNKNOWN"
+    },
+    {
+      "slot": "C-R1-01",
+      "arm": "treatment",
+      "stage": "critic",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-01-treatment-critic-v1",
+      "host_quiet": true,
+      "host_requested_at": "2026-10-10T05:21:59.010Z",
+      "host_completed_at": "2026-10-10T05:37:56.774Z",
+      "context_created_at": "2026-10-10T05:21:59.008Z",
+      "occupied_context_seconds_including_waits": 957.7660000324249,
+      "stage_deadline": "2026-10-10T05:40:07.488Z",
+      "host_lateness_seconds": 0,
+      "local_goal_receipts": [
+        {
+          "path": "runs/C-R1-01/treatment/stages/critic/goal-lifecycle.json",
+          "sha256": "5d05097f893f6ac1942a62bb07c035a55a7647890c4c313c71b7991b59a6e0c5",
+          "pointer": "/activation_response/goal",
+          "status": "active",
+          "exact_frozen_objective": false,
+          "native_thread_id": "01a12442-c983-77c3-bd86-270766d23fa5",
+          "createdAt": 1791609761,
+          "objective": "ER12 critic stage, run C-R1-01-treatment: execute ER12_RUNTIME/runs/C-R1-01-treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "evidence_kind": "local authored/captured native record, not host Goal proof"
+        },
+        {
+          "path": "runs/C-R1-01/treatment/stages/critic/goal-lifecycle.json",
+          "sha256": "5d05097f893f6ac1942a62bb07c035a55a7647890c4c313c71b7991b59a6e0c5",
+          "pointer": "/completion_response/goal",
+          "status": "complete",
+          "exact_frozen_objective": false,
+          "native_thread_id": "01a12442-c983-77c3-bd86-270766d23fa5",
+          "createdAt": 1791609761,
+          "objective": "ER12 critic stage, run C-R1-01-treatment: execute ER12_RUNTIME/runs/C-R1-01-treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "evidence_kind": "local authored/captured native record, not host Goal proof"
+        }
+      ],
+      "direct_host_goal_proof": "UNKNOWN"
+    },
+    {
+      "slot": "C-R1-01",
+      "arm": "control",
+      "stage": "reviser",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-01-control-reviser-v1",
+      "host_quiet": true,
+      "host_requested_at": "2026-10-10T05:24:44.489Z",
+      "host_completed_at": "2026-10-10T05:35:29.317Z",
+      "context_created_at": "2026-10-10T05:24:44.488Z",
+      "occupied_context_seconds_including_waits": 644.8289999961853,
+      "stage_deadline": "2026-10-10T05:42:43.062Z",
+      "host_lateness_seconds": 0,
+      "local_goal_receipts": [
+        {
+          "path": "runs/C-R1-01/control/stages/reviser/native-goal-activation-response.json",
+          "sha256": "f82656e26ad880c381299f73e508ab6abc21317d894acdb694dcf7fea746ca21",
+          "pointer": "/goal",
+          "status": "active",
+          "exact_frozen_objective": true,
+          "native_thread_id": "01a12445-558d-7843-a1a6-f7690b3cef1c",
+          "createdAt": 1791609902,
+          "objective": "ER12 reviser stage, run C-R1-01-control: execute ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "evidence_kind": "local authored/captured native record, not host Goal proof"
+        },
+        {
+          "path": "runs/C-R1-01/control/stages/reviser/native-goal-completion-response.json",
+          "sha256": "d0915673f31a7c0cc5b29d88097aef6af2084c87f8c5065ee7035906adfb88ac",
+          "pointer": "/goal",
+          "status": "complete",
+          "exact_frozen_objective": true,
+          "native_thread_id": "01a12445-558d-7843-a1a6-f7690b3cef1c",
+          "createdAt": 1791609902,
+          "objective": "ER12 reviser stage, run C-R1-01-control: execute ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "evidence_kind": "local authored/captured native record, not host Goal proof"
+        }
+      ],
+      "direct_host_goal_proof": "UNKNOWN"
+    },
+    {
+      "slot": "C-R1-02",
+      "arm": "treatment",
+      "stage": "critic",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-02-treatment-critic-v1",
+      "host_quiet": true,
+      "host_requested_at": "2026-10-10T05:31:23.916Z",
+      "host_completed_at": "2026-10-10T05:45:25.698Z",
+      "context_created_at": "2026-10-10T05:31:23.914Z",
+      "occupied_context_seconds_including_waits": 841.7839999198914,
+      "stage_deadline": "2026-10-10T05:45:33.967Z",
+      "host_lateness_seconds": 0,
+      "local_goal_receipts": [
+        {
+          "path": "runs/C-R1-02/treatment/stages/critic/native-goal-activation-response.json",
+          "sha256": "e523acf3fbd6133666afd33769aaf21f3c0013ba3f4ab7a8f1186b4700d5e2d5",
+          "pointer": "/goal",
+          "status": "active",
+          "exact_frozen_objective": true,
+          "native_thread_id": "01a1244b-6838-7a00-9a70-b1ce3c1cd741",
+          "createdAt": 1791610300,
+          "objective": "ER12 critic stage, run C-R1-02-treatment: execute ER12_RUNTIME/runs/C-R1-02/treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "evidence_kind": "local authored/captured native record, not host Goal proof"
+        },
+        {
+          "path": "runs/C-R1-02/treatment/stages/critic/native-goal-completion-response.json",
+          "sha256": "c12c1cecea1d662f0e2a95a864080ad62aaa43d2bc72ef2161b7de7660a47b48",
+          "pointer": "/goal",
+          "status": "complete",
+          "exact_frozen_objective": false,
+          "native_thread_id": "01a1244b-6838-7a00-9a70-b1ce3c1cd741",
+          "createdAt": 1791610300,
+          "objective": "ER12 critic stage, run C-R1-02-treatment: execute ER12_RUNTIME/runs/C-R1-02-treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "evidence_kind": "local authored/captured native record, not host Goal proof"
+        }
+      ],
+      "direct_host_goal_proof": "UNKNOWN"
+    },
+    {
+      "slot": "C-R1-02",
+      "arm": "control",
+      "stage": "reviser",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-02-control-reviser-v1",
+      "host_quiet": true,
+      "host_requested_at": "2026-10-10T05:31:27.097Z",
+      "host_completed_at": "2026-10-10T05:41:11.783Z",
+      "context_created_at": "2026-10-10T05:31:27.095Z",
+      "occupied_context_seconds_including_waits": 584.6879999637604,
+      "stage_deadline": "2026-10-10T05:49:26.208Z",
+      "host_lateness_seconds": 0,
+      "local_goal_receipts": [
+        {
+          "path": "runs/C-R1-02/control/stages/reviser/native-goal-activation.json",
+          "sha256": "7a6d9f68ba23bff37881dc13e2e48ddf47beb7c82a85f908edf6ddbd4990afdd",
+          "pointer": "/goal",
+          "status": "active",
+          "exact_frozen_objective": true,
+          "native_thread_id": "01a1244b-76fa-7450-bdc5-21bb7800690e",
+          "createdAt": 1791610307,
+          "objective": "ER12 reviser stage, run C-R1-02-control: execute ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "evidence_kind": "local authored/captured native record, not host Goal proof"
+        },
+        {
+          "path": "runs/C-R1-02/control/stages/reviser/native-goal-completion.json",
+          "sha256": "c2df6fdd658741db21b768e21eb834a36947122ce602cf2d34a3f400f340b557",
+          "pointer": "/goal",
+          "status": "complete",
+          "exact_frozen_objective": true,
+          "native_thread_id": "01a1244b-76fa-7450-bdc5-21bb7800690e",
+          "createdAt": 1791610307,
+          "objective": "ER12 reviser stage, run C-R1-02-control: execute ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "evidence_kind": "local authored/captured native record, not host Goal proof"
+        }
+      ],
+      "direct_host_goal_proof": "UNKNOWN"
+    },
+    {
+      "slot": "C-R1-01",
+      "arm": "treatment",
+      "stage": "reviser",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-01-treatment-reviser-v1",
+      "host_quiet": true,
+      "host_requested_at": "2026-10-10T05:38:05.010Z",
+      "host_completed_at": "2026-10-10T05:48:38.446Z",
+      "context_created_at": "2026-10-10T05:38:05.009Z",
+      "occupied_context_seconds_including_waits": 633.4370000362396,
+      "stage_deadline": "2026-10-10T05:58:05.343Z",
+      "host_lateness_seconds": 0,
+      "local_goal_receipts": [
+        {
+          "path": "runs/C-R1-01/treatment/stages/reviser/native-goal-activation.json",
+          "sha256": "a30cc214e74b1c5c5eea06b72036492005294b5785c136070d3efd932067dbcc",
+          "pointer": "/goal",
+          "status": "active",
+          "exact_frozen_objective": true,
+          "native_thread_id": "01a12451-86f5-7d41-8fc4-fea466079247",
+          "createdAt": 1791610706,
+          "objective": "ER12 reviser stage, run C-R1-01-treatment: execute ER12_RUNTIME/runs/C-R1-01/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "evidence_kind": "local authored/captured native record, not host Goal proof"
+        },
+        {
+          "path": "runs/C-R1-01/treatment/stages/reviser/native-goal-completion.json",
+          "sha256": "455a500a23254cb19288f6c2db4e7b0164362ad2759f0cd189574d15945defdb",
+          "pointer": "/goal",
+          "status": "complete",
+          "exact_frozen_objective": true,
+          "native_thread_id": "01a12451-86f5-7d41-8fc4-fea466079247",
+          "createdAt": 1791610706,
+          "objective": "ER12 reviser stage, run C-R1-01-treatment: execute ER12_RUNTIME/runs/C-R1-01/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "evidence_kind": "local authored/captured native record, not host Goal proof"
+        }
+      ],
+      "direct_host_goal_proof": "UNKNOWN"
+    },
+    {
+      "slot": "C-R1-02",
+      "arm": "treatment",
+      "stage": "reviser",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-02-treatment-reviser-v1",
+      "host_quiet": true,
+      "host_requested_at": "2026-10-10T05:45:35.260Z",
+      "host_completed_at": "2026-10-10T05:57:57.471Z",
+      "context_created_at": "2026-10-10T05:45:35.258Z",
+      "occupied_context_seconds_including_waits": 742.2130000591278,
+      "stage_deadline": "2026-10-10T06:03:33.756Z",
+      "host_lateness_seconds": 0,
+      "local_goal_receipts": [
+        {
+          "path": "runs/C-R1-02/treatment/stages/reviser/native-goal-activation.json",
+          "sha256": "fac6f144994bcbd34dd5797e6d5c0e04da569c5686659c0d6c229c6b287d98b9",
+          "pointer": "/goal",
+          "status": "active",
+          "exact_frozen_objective": true,
+          "native_thread_id": "01a12458-660f-7780-aa2b-a975c34ee67e",
+          "createdAt": 1791611187,
+          "objective": "ER12 reviser stage, run C-R1-02-treatment: execute ER12_RUNTIME/runs/C-R1-02/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "evidence_kind": "local authored/captured native record, not host Goal proof"
+        },
+        {
+          "path": "runs/C-R1-02/treatment/stages/reviser/native-goal-completion.json",
+          "sha256": "2203a8bf758ad6dbad9b584fe4b471b152091ba2d5f6652aee3ba871f13c7d5e",
+          "pointer": "/goal",
+          "status": "complete",
+          "exact_frozen_objective": true,
+          "native_thread_id": "01a12458-660f-7780-aa2b-a975c34ee67e",
+          "createdAt": 1791611187,
+          "objective": "ER12 reviser stage, run C-R1-02-treatment: execute ER12_RUNTIME/runs/C-R1-02/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "evidence_kind": "local authored/captured native record, not host Goal proof"
+        }
+      ],
+      "direct_host_goal_proof": "UNKNOWN"
+    }
+  ],
+  "arms": [
+    {
+      "slot": "C-R1-01",
+      "arm": "control",
+      "candidate_latency_seconds": 2242.576999902725,
+      "occupied_context_seconds_including_waits": 2173.598999977112,
+      "first_requested_at": "2026-10-10T04:58:06.740Z",
+      "full_final_completed_at": "2026-10-10T05:35:29.317Z",
+      "whole_deadline_utc": "2026-10-10T05:58:05.343294+00:00",
+      "whole_deadline_met": true,
+      "billing_effective_cached_input": "UNKNOWN"
+    },
+    {
+      "slot": "C-R1-01",
+      "arm": "treatment",
+      "candidate_latency_seconds": 3030.0250000953674,
+      "occupied_context_seconds_including_waits": 3015.7490000724792,
+      "first_requested_at": "2026-10-10T04:58:08.421Z",
+      "full_final_completed_at": "2026-10-10T05:48:38.446Z",
+      "whole_deadline_utc": "2026-10-10T05:58:05.343662+00:00",
+      "whole_deadline_met": true,
+      "billing_effective_cached_input": "UNKNOWN"
+    },
+    {
+      "slot": "C-R1-02",
+      "arm": "treatment",
+      "candidate_latency_seconds": 3262.7539999485016,
+      "occupied_context_seconds_including_waits": 3079.59099984169,
+      "first_requested_at": "2026-10-10T05:03:34.717Z",
+      "full_final_completed_at": "2026-10-10T05:57:57.471Z",
+      "whole_deadline_utc": "2026-10-10T06:03:33.756182+00:00",
+      "whole_deadline_met": true,
+      "billing_effective_cached_input": "UNKNOWN"
+    },
+    {
+      "slot": "C-R1-02",
+      "arm": "control",
+      "candidate_latency_seconds": 2254.332000017166,
+      "occupied_context_seconds_including_waits": 2085.608999967575,
+      "first_requested_at": "2026-10-10T05:03:37.451Z",
+      "full_final_completed_at": "2026-10-10T05:41:11.783Z",
+      "whole_deadline_utc": "2026-10-10T06:03:33.755841+00:00",
+      "whole_deadline_met": true,
+      "billing_effective_cached_input": "UNKNOWN"
+    }
+  ],
+  "interpretation": "All assigned candidate contexts included; local native receipts not host Goal proof; source/coverage/native/protocol independent; no speed quality eligibility until own assessments complete.",
+  "native_capture_dispositions": [
+    {
+      "slot": "C-R1-01",
+      "arm": "treatment",
+      "stage": "critic",
+      "classification": "local activation+completion captured objective mismatches exact frozen request; direct host native binding UNKNOWN; protocol qualification not established",
+      "historical_incident": "mechanics/C-R1-01_CRITIC_GOAL_BINDING_MISMATCH.json"
+    },
+    {
+      "slot": "C-R1-02",
+      "arm": "treatment",
+      "stage": "critic",
+      "classification": "local activation objective matches freeze; same-identity completion file objective differs. Captured-receipt contradiction, actual native objective change/cause UNKNOWN; do not infer wrong activation or second Goal. Direct host native binding UNKNOWN; protocol qualification not established"
+    }
+  ],
+  "updated_at_utc": "2026-10-10T06:05:20.602906+00:00"
+}

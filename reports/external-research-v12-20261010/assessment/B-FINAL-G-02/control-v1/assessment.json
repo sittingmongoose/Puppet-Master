@@ -1,0 +1,831 @@
+{
+  "schema": "er12.independent_bounded_role_assessment.v1",
+  "assessment_version": "control-v1",
+  "case_id": "ER12-B-FINAL-G-02-FRESH",
+  "slot": "B-FINAL-G-02",
+  "arm": "control",
+  "assigned_role": "Criticism adjudication and complete bounded finalization",
+  "track": "B",
+  "counts_as_full_pipeline": false,
+  "reviewer": {
+    "identity": "codex-er12-bfinalg02-review-10681257",
+    "native_goal_activation_receipt": "reviewer-native-goal-activation.json",
+    "native_goal_thread_id": "01a12446-3027-7f22-a07b-ea9a0697f2f7",
+    "native_goal_objective": "Independent bounded ER12 Track B semantic review of B-FINAL-G-02/control under RUBRIC-v1.md and the exact assignment in ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role. Read all mapped frozen inputs and all authored final/source artifacts; check terminal-science-freeze-root.json and independently retrieve governing primary evidence. Assess assigned finalization axes, exact obligations, critique dispositions, supported-scope preservation and proposed/executed validation; preserve source, coverage, delivery, native/protocol and time separately. No delegation, candidate assistance/repair, accounts, Git/publication, other arms/history or ER11 rescore. Save complete independent assessment.md, assessment.json, source-map.json and navigable primary evidence only to ER12_RUNTIME/assessment/B-FINAL-G-02/control-v1; record inspected hashes and unknown provenance honestly. Finish within 25 minutes including saving, then complete this actual native Goal after saved judgment.",
+    "native_goal_status_at_judgment_save": "active",
+    "completion_receipt_to_save_after_judgment": "reviewer-native-goal-completion.json",
+    "review_started_native_utc": "2026-10-10T05:26:06Z",
+    "judgment_saved_at_utc": "2026-10-10T05:31:21.154588+00:00",
+    "review_limit_seconds": 1500,
+    "within_limit": true,
+    "no_delegation": true,
+    "no_candidate_feedback_or_repair": true,
+    "no_other_arm_or_history_inspection": true,
+    "mailbox": "own inbox only; no shared roster inspected"
+  },
+  "source_judgment": "FAIL",
+  "source_judgment_scope": "Assigned FINAL axes including explicit critique dispositions; replacement section factual applicability PASS",
+  "delivery_judgment": "PASS",
+  "axis_coverage": "COMPLETE_FOR_ASSIGNED_ROLE",
+  "axes": [
+    {
+      "axis": "exact_section_obligations",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "evidence": "O1-O6 all satisfied; candidate lines 1,3,5,7,9,11,13; word counts 582/748"
+    },
+    {
+      "axis": "factual_applicability_and_source_conditions",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "evidence": "C1-C7; exact Git v2.43.0 sources independently retrieved"
+    },
+    {
+      "axis": "all_critique_dispositions",
+      "coverage": "COMPLETE",
+      "judgment": "FAIL",
+      "material_findings": [
+        "F1"
+      ],
+      "evidence": "All six inspected; 1/2 accept and 3/4/6 reject supported; 5 incorrectly rejected"
+    },
+    {
+      "axis": "supported_scope_preservation",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "evidence": "Original valid safety/recovery/history choices and exact tokens preserved; original three false mechanisms corrected"
+    },
+    {
+      "axis": "proposed_versus_executed_validation",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "evidence": "Three discriminating prospective checks at line 11; none claimed executed; no real repository or deployment required"
+    },
+    {
+      "axis": "bounded_discoveries_alternatives_and_version_history",
+      "coverage": "COMPLETE_FOR_ASSIGNED_FINAL_ROLE",
+      "judgment": "PASS",
+      "evidence": "Ignored-file risk, submodule state, sparse-index option, blob filtering alternative and target-version manual history addressed. Separate implementation-history campaign is not an obligation of this case."
+    }
+  ],
+  "original_obligations": [
+    {
+      "id": "O1",
+      "judgment": "PASS"
+    },
+    {
+      "id": "O2",
+      "judgment": "PASS"
+    },
+    {
+      "id": "O3",
+      "judgment": "PASS"
+    },
+    {
+      "id": "O4",
+      "judgment": "PASS"
+    },
+    {
+      "id": "O5",
+      "judgment": "PASS"
+    },
+    {
+      "id": "O6",
+      "judgment": "PASS"
+    }
+  ],
+  "word_counts": {
+    "method": "whitespace split",
+    "replacement_including_title": 582,
+    "replacement_excluding_title_tokens": 577,
+    "entire_deliverable": 748,
+    "section_min": 400,
+    "section_max": 650,
+    "deliverable_below": 1100
+  },
+  "critique_dispositions": [
+    {
+      "item": 1,
+      "candidate": "accept",
+      "assessment": "correct",
+      "evidence": [
+        {
+          "source_id": "P3",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L63-L71",
+          "file": "primary/git-sparse-checkout-v2.43.0.txt",
+          "line_start": 63,
+          "line_end": 71,
+          "section": "COMMANDS / set"
+        },
+        {
+          "source_id": "P3",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L308-L324",
+          "file": "primary/git-sparse-checkout-v2.43.0.txt",
+          "line_start": 308,
+          "line_end": 324,
+          "section": "INTERNALS -- CONE MODE HANDLING"
+        },
+        {
+          "source_id": "P3",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L377-L415",
+          "file": "primary/git-sparse-checkout-v2.43.0.txt",
+          "line_start": 377,
+          "line_end": 415,
+          "section": "INTERNALS -- CONE PATTERN SET"
+        }
+      ]
+    },
+    {
+      "item": 2,
+      "candidate": "accept",
+      "assessment": "correct",
+      "evidence": [
+        {
+          "source_id": "P4",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-clone.txt#L174-L178",
+          "file": "primary/git-clone-v2.43.0.txt",
+          "line_start": 174,
+          "line_end": 178,
+          "section": "OPTIONS / --sparse"
+        },
+        {
+          "source_id": "P4",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-clone.txt#L180-L193",
+          "file": "primary/git-clone-v2.43.0.txt",
+          "line_start": 180,
+          "line_end": 193,
+          "section": "OPTIONS / --filter; --also-filter-submodules"
+        }
+      ]
+    },
+    {
+      "item": 3,
+      "candidate": "reject",
+      "assessment": "correct",
+      "evidence": [
+        {
+          "source_id": "P4",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-clone.txt#L245-L258",
+          "file": "primary/git-clone-v2.43.0.txt",
+          "line_start": 245,
+          "line_end": 258,
+          "section": "OPTIONS / --depth; --shallow-since; --shallow-exclude"
+        }
+      ]
+    },
+    {
+      "item": 4,
+      "candidate": "reject",
+      "assessment": "correct",
+      "evidence": [
+        {
+          "source_id": "P3",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L99-L112",
+          "file": "primary/git-sparse-checkout-v2.43.0.txt",
+          "line_start": 99,
+          "line_end": 112,
+          "section": "COMMANDS / reapply"
+        },
+        {
+          "source_id": "P3",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L186-L196",
+          "file": "primary/git-sparse-checkout-v2.43.0.txt",
+          "line_start": 186,
+          "line_end": 196,
+          "section": "EXAMPLES / reapply"
+        }
+      ]
+    },
+    {
+      "item": 5,
+      "candidate": "reject",
+      "assessment": "incorrect",
+      "finding": "F1",
+      "evidence": [
+        {
+          "source_id": "P4",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-clone.txt#L245-L258",
+          "file": "primary/git-clone-v2.43.0.txt",
+          "line_start": 245,
+          "line_end": 258,
+          "section": "OPTIONS / --depth; --shallow-since; --shallow-exclude"
+        },
+        {
+          "source_id": "P3",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L99-L112",
+          "file": "primary/git-sparse-checkout-v2.43.0.txt",
+          "line_start": 99,
+          "line_end": 112,
+          "section": "COMMANDS / reapply"
+        },
+        {
+          "source_id": "P3",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L186-L196",
+          "file": "primary/git-sparse-checkout-v2.43.0.txt",
+          "line_start": 186,
+          "line_end": 196,
+          "section": "EXAMPLES / reapply"
+        }
+      ]
+    },
+    {
+      "item": 6,
+      "candidate": "reject",
+      "assessment": "correct",
+      "evidence": [
+        {
+          "source_id": "P3",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L78-L91",
+          "file": "primary/git-sparse-checkout-v2.43.0.txt",
+          "line_start": 78,
+          "line_end": 91,
+          "section": "COMMANDS / set / --[no-]sparse-index"
+        },
+        {
+          "source_id": "P4",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-clone.txt#L180-L193",
+          "file": "primary/git-clone-v2.43.0.txt",
+          "line_start": 180,
+          "line_end": 193,
+          "section": "OPTIONS / --filter; --also-filter-submodules"
+        }
+      ]
+    }
+  ],
+  "material_findings": [
+    {
+      "id": "F1",
+      "severity": "MATERIAL_TO_ASSIGNED_ADJUDICATION",
+      "axis": "critique_dispositions",
+      "title": "Valid full-history/recovery correction is explicitly rejected",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/final-section.md",
+        "line": 21
+      },
+      "candidate_exact_text": "5. **Reject.** Removing `--depth=1` is required by `history_policy=full`; retain complete history and explain its distinction from working-tree sparsity. (Git clone v2.43.0, \u201c--depth\u201d and \u201c--sparse.\u201d)",
+      "input_locator": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-G-02/inputs/assignment.md",
+        "line": 33
+      },
+      "input_exact_text": "5. Remove --depth=1 to satisfy history_policy=full; explain recovery without discarding user changes.",
+      "primary_locators": [
+        {
+          "source_id": "P4",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-clone.txt#L245-L258",
+          "file": "primary/git-clone-v2.43.0.txt",
+          "line_start": 245,
+          "line_end": 258,
+          "section": "OPTIONS / --depth; --shallow-since; --shallow-exclude"
+        },
+        {
+          "source_id": "P3",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L99-L112",
+          "file": "primary/git-sparse-checkout-v2.43.0.txt",
+          "line_start": 99,
+          "line_end": 112,
+          "section": "COMMANDS / reapply"
+        },
+        {
+          "source_id": "P3",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L186-L196",
+          "file": "primary/git-sparse-checkout-v2.43.0.txt",
+          "line_start": 186,
+          "line_end": 196,
+          "section": "EXAMPLES / reapply"
+        },
+        {
+          "source_id": "P3",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L163-L172",
+          "file": "primary/git-sparse-checkout-v2.43.0.txt",
+          "line_start": 163,
+          "line_end": 172,
+          "section": "EXAMPLES / set"
+        },
+        {
+          "source_id": "P3",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L326-L334",
+          "file": "primary/git-sparse-checkout-v2.43.0.txt",
+          "line_start": 326,
+          "line_end": 334,
+          "section": "INTERNALS -- CONE MODE HANDLING / selection change"
+        }
+      ],
+      "supported_analysis": "Critique 5 agrees with original O4/O5 and the target-version primary evidence. Candidate labels it Reject without a source-backed objection; its reason and section lines 7/9 endorse it. An incorrect explicit disposition is a failure of the expressly assigned adjudication output.",
+      "impact_boundary": "Wrong adjudication classification only. The replacement section itself omits shallow options and protects local work; no incorrect helper execution or work loss is inferred.",
+      "not_double_counted": true
+    }
+  ],
+  "other_material_findings": [],
+  "limitations": [
+    {
+      "id": "L1",
+      "type": "unexecuted_validation",
+      "material": false,
+      "description": "Compatibility and data-safety implementation remain prospective; this assignment requires proposed checks, not their execution."
+    },
+    {
+      "id": "L2",
+      "type": "documentation_history_scope",
+      "material": false,
+      "description": "No manual changes supports documentation applicability, not implementation identity or performance. Reviewer directly checked exact-tag 2.43 text."
+    }
+  ],
+  "unknowns": [
+    "Effective backend model, reasoning effort, service tier, account identity, provider-native invocation authentication and billing are UNKNOWN beyond the saved route labels/receipt fields.",
+    "Complete candidate action trace, first-read ordering, exact source-retrieval instants and complete method compliance are UNKNOWN; no other-arm/history access was used to resolve them.",
+    "Exact T3 task completion/delivery latency and investigation-versus-writing allocation are UNKNOWN; root terminal observation supplies an upper bound.",
+    "Actual Git 2.43 helper compatibility/data safety and proposed oracle execution are unverified; all three checks remain prospective.",
+    "Network bytes, runtime, server filter behavior, unspecified source-repository completeness and submodule population remain unmeasured or unspecified. These do not authorize invented deployment requirements."
+  ],
+  "useful_discoveries": [
+    {
+      "discovery": "Ignored files can be deleted when a changed cone empties a directory of tracked and nonignored-untracked files.",
+      "candidate_line": 9,
+      "evidence": [
+        {
+          "source_id": "P3",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L163-L172",
+          "file": "primary/git-sparse-checkout-v2.43.0.txt",
+          "line_start": 163,
+          "line_end": 172,
+          "section": "EXAMPLES / set"
+        },
+        {
+          "source_id": "P3",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L326-L334",
+          "file": "primary/git-sparse-checkout-v2.43.0.txt",
+          "line_start": 326,
+          "line_end": 334,
+          "section": "INTERNALS -- CONE MODE HANDLING / selection change"
+        }
+      ]
+    },
+    {
+      "discovery": "Submodule initialization/deinitialization is separate from sparse inclusion.",
+      "candidate_line": 5,
+      "evidence": [
+        {
+          "source_id": "P3",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L444-L472",
+          "file": "primary/git-sparse-checkout-v2.43.0.txt",
+          "line_start": 444,
+          "line_end": 472,
+          "section": "INTERNALS -- SUBMODULES"
+        }
+      ]
+    },
+    {
+      "discovery": "Sparse index is optional index representation/performance rather than a transfer control.",
+      "candidate_line": 22,
+      "evidence": [
+        {
+          "source_id": "P3",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L78-L91",
+          "file": "primary/git-sparse-checkout-v2.43.0.txt",
+          "line_start": 78,
+          "line_end": 91,
+          "section": "COMMANDS / set / --[no-]sparse-index"
+        }
+      ]
+    }
+  ],
+  "meaningful_alternatives": [
+    {
+      "alternative": "partial clone blob filtering",
+      "disposition": "separate possible transfer optimization, not mandated; no byte cap inferred",
+      "evidence": [
+        {
+          "source_id": "P4",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-clone.txt#L180-L193",
+          "file": "primary/git-clone-v2.43.0.txt",
+          "line_start": 180,
+          "line_end": 193,
+          "section": "OPTIONS / --filter; --also-filter-submodules"
+        }
+      ]
+    },
+    {
+      "alternative": "shallow history",
+      "disposition": "incompatible with history_policy=full",
+      "evidence": [
+        {
+          "source_id": "P4",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-clone.txt#L245-L258",
+          "file": "primary/git-clone-v2.43.0.txt",
+          "line_start": 245,
+          "line_end": 258,
+          "section": "OPTIONS / --depth; --shallow-since; --shallow-exclude"
+        }
+      ]
+    },
+    {
+      "alternative": "sparse index",
+      "disposition": "optional and does not meet proposed network prohibition",
+      "evidence": [
+        {
+          "source_id": "P3",
+          "url": "https://github.com/git/git/blob/v2.43.0/Documentation/git-sparse-checkout.txt#L78-L91",
+          "file": "primary/git-sparse-checkout-v2.43.0.txt",
+          "line_start": 78,
+          "line_end": 91,
+          "section": "COMMANDS / set / --[no-]sparse-index"
+        }
+      ]
+    }
+  ],
+  "validation": {
+    "proposed": [
+      {
+        "check": 1,
+        "oracle": "expected selected subtree plus immediate root/ancestor tracked-file set",
+        "diagnostics": "missing/unexpected paths and sparse-checkout list"
+      },
+      {
+        "check": 2,
+        "oracle": "local edit preserved or selection change stopped; handled merge-like materialization followed by reapply",
+        "diagnostics": "remaining out-of-cone paths, status, command diagnostics"
+      },
+      {
+        "check": 3,
+        "oracle": "disable returns full tracked working-tree scope, with separately noted submodule state",
+        "diagnostics": "missing paths, conflicts, status, exit code"
+      }
+    ],
+    "executed_git_commands": false,
+    "executed_tests": false,
+    "network_bytes_measured": false,
+    "runtime_measured": false,
+    "no_nonexistent_deployment_demanded": true
+  },
+  "native": {
+    "candidate_activation_receipt_path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/native-goal-activation.json",
+    "candidate_completion_receipt_path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/native-goal-completion.json",
+    "evidence_type": "root-frozen saved native response files, independently read and hash checked; no provider action-history authentication",
+    "same_thread_and_objective": true,
+    "receipt_activation_status": "active",
+    "receipt_terminal_status": "complete",
+    "receipt_created_at_epoch_s": 1791609620,
+    "receipt_completed_at_epoch_s": 1791609870,
+    "receipt_reported_tokens_used": 94780,
+    "receipt_reported_elapsed_seconds": 250,
+    "actual_native_invocation_independently_authenticated": "UNKNOWN",
+    "native_provider_or_model": "UNKNOWN",
+    "billing": "UNKNOWN",
+    "billed_tokens": "UNKNOWN"
+  },
+  "route": {
+    "evidence": [
+      "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/request.json",
+      "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/dispatch.json",
+      "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/terminal-science-freeze-root.json"
+    ],
+    "requested_provider_instance": "AUTHORIZED_PROVIDER_INSTANCE",
+    "requested_model": "gpt-6-luna",
+    "requested_reasoning_effort": "max",
+    "requested_service_tier": "default",
+    "orchestrator_reported_provider_instance": "AUTHORIZED_PROVIDER_INSTANCE",
+    "orchestrator_reported_model": "gpt-6-luna",
+    "effective_backend_model": "UNKNOWN",
+    "effective_reasoning_effort": "UNKNOWN",
+    "effective_service_tier": "UNKNOWN",
+    "account_identity": "UNKNOWN"
+  },
+  "protocol": {
+    "candidate_status": "NO_OBSERVED_VIOLATION_IN_PERMITTED_ARTIFACTS; FULL_ACTION_COMPLIANCE_UNKNOWN",
+    "no_unauthorized_assistance_evidenced": true,
+    "candidate_deliverables_precede_receipt_completion_by_frozen_mtime": true,
+    "activation_before_every_science_read": "UNKNOWN",
+    "full_candidate_trace": "UNKNOWN",
+    "independent_source_diagnostic": "FAIL (F1), unchanged by telemetry unknowns"
+  },
+  "time": {
+    "candidate_requested_at_utc": "2026-10-10T05:20:06.159000+00:00",
+    "candidate_deadline_utc": "2026-10-10T05:35:06.159000+00:00",
+    "root_terminal_observed_at_utc": "2026-10-10T05:25:41.399238+00:00",
+    "root_terminal_status": "completed",
+    "root_has_pending_child_runs": false,
+    "request_to_terminal_observation_upper_bound_seconds": 335.240238,
+    "within_candidate_deadline": true,
+    "exact_whole_arm_occupancy_seconds": "UNKNOWN",
+    "exact_t3_completion_or_delivery_latency_seconds": "UNKNOWN",
+    "investigation_vs_writing_seconds": "UNKNOWN",
+    "native_interval_seconds": 250,
+    "inference_or_billing_savings_claim": "NONE",
+    "paired_latency_or_speed_comparison": "NONE"
+  },
+  "freeze_integrity": {
+    "checked_at_utc": "2026-10-10T05:27:58.720506+00:00",
+    "terminal_freeze_path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/terminal-science-freeze-root.json",
+    "inspected_frozen_input_and_science_matches": true,
+    "hashes_are_integrity_only_not_semantic_proof": true
+  },
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/input-map.json",
+      "bytes": 692,
+      "sha256": "3a9866ee8f3773a744c22c720030645a690ab75c58720bb1beab08aeee19f283",
+      "mtime_ns": 1791609608832107768,
+      "input_freeze": {
+        "expected_sha256": "3a9866ee8f3773a744c22c720030645a690ab75c58720bb1beab08aeee19f283",
+        "expected_bytes": 692,
+        "matches": true
+      },
+      "terminal_science_freeze": {
+        "expected_sha256": "3a9866ee8f3773a744c22c720030645a690ab75c58720bb1beab08aeee19f283",
+        "expected_bytes": 692,
+        "matches": true
+      }
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/assignment.md",
+      "bytes": 3176,
+      "sha256": "9025ff6c548dbb96c78095a8652f34481492f671bf63248cf7e00500f482c40d",
+      "mtime_ns": 1791609608832242898,
+      "input_freeze": {
+        "expected_sha256": "9025ff6c548dbb96c78095a8652f34481492f671bf63248cf7e00500f482c40d",
+        "expected_bytes": 3176,
+        "matches": true
+      },
+      "terminal_science_freeze": {
+        "expected_sha256": "9025ff6c548dbb96c78095a8652f34481492f671bf63248cf7e00500f482c40d",
+        "expected_bytes": 3176,
+        "matches": true
+      }
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/freeze.json",
+      "bytes": 2955,
+      "sha256": "2fb7ebb7295663cff0a6fdf926f075176e34dae14d8ae7f24c9371d095c4852b",
+      "mtime_ns": 1791609608831917388,
+      "terminal_science_freeze": {
+        "expected_sha256": "2fb7ebb7295663cff0a6fdf926f075176e34dae14d8ae7f24c9371d095c4852b",
+        "expected_bytes": 2955,
+        "matches": true
+      }
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/final-section.md",
+      "bytes": 5736,
+      "sha256": "b4d525027019c2694cd6c2f1144152fe53d9a8923a4b1239693ac8f1251b26af",
+      "mtime_ns": 1791609834480504019,
+      "terminal_science_freeze": {
+        "expected_sha256": "b4d525027019c2694cd6c2f1144152fe53d9a8923a4b1239693ac8f1251b26af",
+        "expected_bytes": 5736,
+        "matches": true
+      }
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/source-map.json",
+      "bytes": 5285,
+      "sha256": "94e4f2ab0878958ae5a3542b41b1fa00ba77ff5eed3c1161df05df3d67a43aab",
+      "mtime_ns": 1791609859952184179,
+      "terminal_science_freeze": {
+        "expected_sha256": "94e4f2ab0878958ae5a3542b41b1fa00ba77ff5eed3c1161df05df3d67a43aab",
+        "expected_bytes": 5285,
+        "matches": true
+      }
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/native-goal-activation.json",
+      "bytes": 462,
+      "sha256": "63b586388e35a77c2d66ce56136cebb8f2327048fd9aab072135537a968242f4",
+      "mtime_ns": 1791609632730876149,
+      "terminal_science_freeze": {
+        "expected_sha256": "63b586388e35a77c2d66ce56136cebb8f2327048fd9aab072135537a968242f4",
+        "expected_bytes": 462,
+        "matches": true
+      }
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/native-goal-completion.json",
+      "bytes": 790,
+      "sha256": "517f892ee752ef495dffb8615aac53de476792524f50d136ccdf96387353da72",
+      "mtime_ns": 1791609877234427773,
+      "terminal_science_freeze": {
+        "expected_sha256": "517f892ee752ef495dffb8615aac53de476792524f50d136ccdf96387353da72",
+        "expected_bytes": 790,
+        "matches": true
+      }
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/terminal-science-freeze-root.json",
+      "bytes": 10767,
+      "sha256": "c59f237e7db245943878e584f77d0df71c6cf2fc6d0772e303867ffabca0512c",
+      "mtime_ns": 1791609941399540482
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/request.json",
+      "bytes": 1807,
+      "sha256": "0c938d14a964f578252d115e1536ae83411c21f7faf1b3d388715625293a5c00",
+      "mtime_ns": 1791609608831705965,
+      "terminal_science_freeze": {
+        "expected_sha256": "0c938d14a964f578252d115e1536ae83411c21f7faf1b3d388715625293a5c00",
+        "expected_bytes": 1807,
+        "matches": true
+      }
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/dispatch.json",
+      "bytes": 5073,
+      "sha256": "90eff72180162e127ad55d56b56f55d72e33e87e7a592daa46ce162f56b6c809",
+      "mtime_ns": 1791609609981325964,
+      "terminal_science_freeze": {
+        "expected_sha256": "90eff72180162e127ad55d56b56f55d72e33e87e7a592daa46ce162f56b6c809",
+        "expected_bytes": 5073,
+        "matches": true
+      }
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/service-tier-change.json",
+      "bytes": 481,
+      "sha256": "a540d0a0ee05af883b3fcd454d6a164083e6a7ad00022f0def0570e1f6a7f65b",
+      "mtime_ns": 1791609608627527699,
+      "terminal_science_freeze": {
+        "expected_sha256": "a540d0a0ee05af883b3fcd454d6a164083e6a7ad00022f0def0570e1f6a7f65b",
+        "expected_bytes": 481,
+        "matches": true
+      }
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/inputs/assignment.md",
+      "bytes": 4966,
+      "sha256": "39860a2ed8542ef8daaf0d84eff6f5b63fd5f79d5d62b35b62d4ee92eaeb694a",
+      "mtime_ns": 1791609606664616066,
+      "input_freeze": {
+        "expected_sha256": "39860a2ed8542ef8daaf0d84eff6f5b63fd5f79d5d62b35b62d4ee92eaeb694a",
+        "expected_bytes": 4966,
+        "matches": true
+      }
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/inputs/fixture.json",
+      "bytes": 2218,
+      "sha256": "795857ccbb69b5914d9e24112379fc162f5a73deeb94cf17371c75cbc358898a",
+      "mtime_ns": 1791609606665081435,
+      "input_freeze": {
+        "expected_sha256": "795857ccbb69b5914d9e24112379fc162f5a73deeb94cf17371c75cbc358898a",
+        "expected_bytes": 2218,
+        "matches": true
+      }
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/inputs/manifest.json",
+      "bytes": 624,
+      "sha256": "2b906ed13e8d5af988ce49747860527c7c20c6da3de724b601451fb2a31b59a3",
+      "mtime_ns": 1791609606665270387,
+      "input_freeze": {
+        "expected_sha256": "2b906ed13e8d5af988ce49747860527c7c20c6da3de724b601451fb2a31b59a3",
+        "expected_bytes": 624,
+        "matches": true
+      }
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/inputs/corpus/S1.md",
+      "bytes": 930,
+      "sha256": "9b511a3588e02c588843e7d0a2d09ed43c7f4b13bc54d7bf2841e08ba8d9cbc0",
+      "mtime_ns": 1791609606664774568,
+      "input_freeze": {
+        "expected_sha256": "9b511a3588e02c588843e7d0a2d09ed43c7f4b13bc54d7bf2841e08ba8d9cbc0",
+        "expected_bytes": 930,
+        "matches": true
+      }
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/inputs/corpus/S2.md",
+      "bytes": 817,
+      "sha256": "996efda6f552deb261be72379edac9588a2b96eb8ac1247fb0f083d004a4743c",
+      "mtime_ns": 1791609606664873640,
+      "input_freeze": {
+        "expected_sha256": "996efda6f552deb261be72379edac9588a2b96eb8ac1247fb0f083d004a4743c",
+        "expected_bytes": 817,
+        "matches": true
+      }
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/inputs/corpus/index.json",
+      "bytes": 1245,
+      "sha256": "b65e4c7e77821cdd3b43b6dce735662ae62801daa4b67a79a47569b5eebe1652",
+      "mtime_ns": 1791609606664962670,
+      "input_freeze": {
+        "expected_sha256": "b65e4c7e77821cdd3b43b6dce735662ae62801daa4b67a79a47569b5eebe1652",
+        "expected_bytes": 1245,
+        "matches": true
+      }
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/sources/git-clone.md",
+      "bytes": 1161,
+      "sha256": "3a7f3101f4117ae1b14bd958a8b7cdb99d879e5d17399f23c9a2f39462aa72ac",
+      "mtime_ns": 1791609834495165752,
+      "terminal_science_freeze": {
+        "expected_sha256": "3a7f3101f4117ae1b14bd958a8b7cdb99d879e5d17399f23c9a2f39462aa72ac",
+        "expected_bytes": 1161,
+        "matches": true
+      }
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/sources/git-sparse-checkout.md",
+      "bytes": 1946,
+      "sha256": "482686b1c0e8ffac70ebc3df471eb1f0bff98482d72488d825c70ca5e8c17d20",
+      "mtime_ns": 1791609859952481730,
+      "terminal_science_freeze": {
+        "expected_sha256": "482686b1c0e8ffac70ebc3df471eb1f0bff98482d72488d825c70ca5e8c17d20",
+        "expected_bytes": 1946,
+        "matches": true
+      }
+    }
+  ],
+  "primary_sources": [
+    {
+      "source_id": "P1",
+      "requested_url": "https://git-scm.com/docs/git-sparse-checkout/2.42.0",
+      "retrieved_at_utc": "2026-10-10T05:27:07.130570+00:00",
+      "resolved_url": "https://git-scm.com/docs/git-sparse-checkout/2.42.0",
+      "http_status": 200,
+      "operation": "HTTPS GET via Python urllib; response saved before optional extraction failed",
+      "file": "primary/git-sparse-checkout-2.42.0.html",
+      "bytes": 67024,
+      "sha256": "2bcf49af27a500672925ef983d84b7f5fd97c567eab5bc5bfb6af34ae10eac81",
+      "readable_file": "primary/git-sparse-checkout-2.42.0.html.txt",
+      "local_extraction_initial_error": "ModuleNotFoundError(\"No module named 'bs4'\")",
+      "local_extraction_recovery": "stdlib HTMLParser from saved bytes; no additional network request",
+      "content_type": "text/html; charset=utf-8",
+      "file_sha256": "2bcf49af27a500672925ef983d84b7f5fd97c567eab5bc5bfb6af34ae10eac81",
+      "readable_file_sha256": "6c7c831496de1b25c93fdb4833d05c1fc14b086e60d891fee984d0abb1cef55f",
+      "transport_metadata_confirmation": {
+        "retrieved_at_utc": "2026-10-10T05:32:00.986558+00:00",
+        "operation": "HTTPS GET to directly recapture transport metadata after prior optional extraction failure",
+        "resolved_url": "https://git-scm.com/docs/git-sparse-checkout/2.42.0",
+        "http_status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "bytes": 67024,
+        "sha256": "2bcf49af27a500672925ef983d84b7f5fd97c567eab5bc5bfb6af34ae10eac81",
+        "matches_saved_bytes": true
+      }
+    },
+    {
+      "source_id": "P2",
+      "requested_url": "https://git-scm.com/docs/git-clone/2.43.0",
+      "retrieved_at_utc": "2026-10-10T05:27:07.132520+00:00",
+      "resolved_url": "https://git-scm.com/docs/git-clone/2.43.0",
+      "http_status": 200,
+      "operation": "HTTPS GET via Python urllib; response saved before optional extraction failed",
+      "file": "primary/git-clone-2.43.0.html",
+      "bytes": 90587,
+      "sha256": "9d05b1b2c60486582bc1c4261118fcf905d18ed47da05da6319a37c1234f8f54",
+      "readable_file": "primary/git-clone-2.43.0.html.txt",
+      "local_extraction_initial_error": "ModuleNotFoundError(\"No module named 'bs4'\")",
+      "local_extraction_recovery": "stdlib HTMLParser from saved bytes; no additional network request",
+      "content_type": "text/html; charset=utf-8",
+      "file_sha256": "9d05b1b2c60486582bc1c4261118fcf905d18ed47da05da6319a37c1234f8f54",
+      "readable_file_sha256": "50dbd320c59f58b70c2c02f540350c42b4a13707125767cab086dcb4af14af33",
+      "transport_metadata_confirmation": {
+        "retrieved_at_utc": "2026-10-10T05:32:01.036838+00:00",
+        "operation": "HTTPS GET to directly recapture transport metadata after prior optional extraction failure",
+        "resolved_url": "https://git-scm.com/docs/git-clone/2.43.0",
+        "http_status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "bytes": 90587,
+        "sha256": "9d05b1b2c60486582bc1c4261118fcf905d18ed47da05da6319a37c1234f8f54",
+        "matches_saved_bytes": true
+      }
+    },
+    {
+      "source_id": "P3",
+      "requested_url": "https://raw.githubusercontent.com/git/git/v2.43.0/Documentation/git-sparse-checkout.txt",
+      "resolved_url": "https://raw.githubusercontent.com/git/git/v2.43.0/Documentation/git-sparse-checkout.txt",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-10T05:27:07.133582+00:00",
+      "operation": "HTTPS GET via Python urllib; data only, no downloaded-code execution",
+      "file": "primary/git-sparse-checkout-v2.43.0.txt",
+      "bytes": 21258,
+      "sha256": "2da80aef5d32b727870fc0b1680186a82a6153cc185a50d1b7a72b34a5f83883",
+      "content_type": "text/plain; charset=utf-8",
+      "file_sha256": "2da80aef5d32b727870fc0b1680186a82a6153cc185a50d1b7a72b34a5f83883"
+    },
+    {
+      "source_id": "P4",
+      "requested_url": "https://raw.githubusercontent.com/git/git/v2.43.0/Documentation/git-clone.txt",
+      "resolved_url": "https://raw.githubusercontent.com/git/git/v2.43.0/Documentation/git-clone.txt",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-10T05:27:07.138954+00:00",
+      "operation": "HTTPS GET via Python urllib; data only, no downloaded-code execution",
+      "file": "primary/git-clone-v2.43.0.txt",
+      "bytes": 14772,
+      "sha256": "d12bac1e23309f25d64aebeec82437c335914e3e7c7d6326b6857959306a4667",
+      "content_type": "text/plain; charset=utf-8",
+      "file_sha256": "d12bac1e23309f25d64aebeec82437c335914e3e7c7d6326b6857959306a4667"
+    }
+  ],
+  "source_map": "source-map.json",
+  "assessment_markdown": "assessment.md",
+  "inspected_hash_manifest": "inspected-hashes.json",
+  "original_assessment_preserved": true,
+  "later_dispute_requires_separate_disposition": true
+}

@@ -1,0 +1,70 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://www.sandybrown.com/case-study/clore-music-studios-new-college-university-of-oxford/"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/C-R1-01/control-v1/source-map.json",
+      "source_id": "S14",
+      "existing_authored_summary_fields": {
+        "released_version": "Sandy Brown first-party Clore Music Studios record; completed/opened 2019; no page revision ID.",
+        "exact_subject_operation_units_domain": "Environmental baseline used to set music-egress limits outside nearest sensitive premises; independent envelope, floated floors and room finishes.",
+        "conditions_exceptions_applicability": "The page separately applies BS4142 to plant noise; it does not apply that rule indiscriminately to music. Purpose-built college facility differs. No numeric post-opening result or retrofit performance is claimed by the candidate."
+      }
+    },
+    {
+      "authored_source_map": "assessment/C-R1-01/control-v1/evidence/http-retrievals.json",
+      "source_id": "S14",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": "Project summary; survey/music-egress paragraphs; box-in-box paragraph"
+    },
+    {
+      "candidate_locators": [
+        "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:62"
+      ]
+    }
+  ],
+  "raw_sha256": "68f274a0680343dd97d535c309162761fe32b7beb3183f0a0e679c74346d49bd",
+  "original_bytes": 3275,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/C-R1-01/control-v1/evidence/S14.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://www.sandybrown.com/case-study/clore-music-studios-new-college-university-of-oxford/"
+  ],
+  "version": [
+    {
+      "released_version": "Sandy Brown first-party Clore Music Studios record; completed/opened 2019; no page revision ID.",
+      "exact_subject_operation_units_domain": "Environmental baseline used to set music-egress limits outside nearest sensitive premises; independent envelope, floated floors and room finishes.",
+      "conditions_exceptions_applicability": "The page separately applies BS4142 to plant noise; it does not apply that rule indiscriminately to music. Purpose-built college facility differs. No numeric post-opening result or retrofit performance is claimed by the candidate."
+    }
+  ],
+  "selector": [
+    {
+      "locator": "Project summary; survey/music-egress paragraphs; box-in-box paragraph"
+    },
+    {
+      "candidate_locators": [
+        "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md:62"
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "released_version": "Sandy Brown first-party Clore Music Studios record; completed/opened 2019; no page revision ID.",
+      "exact_subject_operation_units_domain": "Environmental baseline used to set music-egress limits outside nearest sensitive premises; independent envelope, floated floors and room finishes.",
+      "conditions_exceptions_applicability": "The page separately applies BS4142 to plant noise; it does not apply that rule indiscriminately to music. Purpose-built college facility differs. No numeric post-opening result or retrofit performance is claimed by the candidate."
+    }
+  ],
+  "rawSHA256": "68f274a0680343dd97d535c309162761fe32b7beb3183f0a0e679c74346d49bd"
+}

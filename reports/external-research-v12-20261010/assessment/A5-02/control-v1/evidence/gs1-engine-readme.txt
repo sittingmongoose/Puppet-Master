@@ -1,0 +1,21 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [],
+  "primary_url_status": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "d5308d34e5a4fc68f4badc265af59900536788eb6133ecc92e1f1c9406fcf076",
+  "original_bytes": 9494,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A5-02/control-v1/evidence/gs1-engine-readme.txt",
+  "evidence_coverage": "UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": "UNKNOWN",
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "rawSHA256": "d5308d34e5a4fc68f4badc265af59900536788eb6133ecc92e1f1c9406fcf076"
+}

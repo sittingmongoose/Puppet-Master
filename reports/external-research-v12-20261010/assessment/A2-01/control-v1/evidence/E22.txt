@@ -1,0 +1,78 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://docs.getodk.org/central-install/"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A2-01/control-v1/retrieval-manifest.json",
+      "source_id": "E22",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/A2-01/control-v1/source-map.json",
+      "source_id": "E22",
+      "existing_authored_summary_fields": {
+        "version": "Living installation docs; no deployed build selected",
+        "subject_operation": "ODK Cloud versus operator-owned self-hosting",
+        "conditions": "Official paid managed hosting and free software self-hosting are documented. Self-hosting needs Linux administration, infrastructure expenses, ongoing maintenance and a domain name."
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locators": [
+        {
+          "path": "evidence/E22.txt",
+          "lines": [
+            119,
+            151
+          ],
+          "section": "Cloud; Self-hosting; installation requirements"
+        }
+      ]
+    }
+  ],
+  "raw_sha256": "bd1e62bb75337ba946f6e4e505c051e46574ebc9658688daa92109e5bc99d3d3",
+  "original_bytes": 9637,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A2-01/control-v1/evidence/E22.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://docs.getodk.org/central-install/"
+  ],
+  "version": [
+    {
+      "version": "Living installation docs; no deployed build selected",
+      "subject_operation": "ODK Cloud versus operator-owned self-hosting",
+      "conditions": "Official paid managed hosting and free software self-hosting are documented. Self-hosting needs Linux administration, infrastructure expenses, ongoing maintenance and a domain name."
+    }
+  ],
+  "selector": [
+    {
+      "locators": [
+        {
+          "path": "evidence/E22.txt",
+          "lines": [
+            119,
+            151
+          ],
+          "section": "Cloud; Self-hosting; installation requirements"
+        }
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "version": "Living installation docs; no deployed build selected",
+      "subject_operation": "ODK Cloud versus operator-owned self-hosting",
+      "conditions": "Official paid managed hosting and free software self-hosting are documented. Self-hosting needs Linux administration, infrastructure expenses, ongoing maintenance and a domain name."
+    }
+  ],
+  "rawSHA256": "bd1e62bb75337ba946f6e4e505c051e46574ebc9658688daa92109e5bc99d3d3"
+}

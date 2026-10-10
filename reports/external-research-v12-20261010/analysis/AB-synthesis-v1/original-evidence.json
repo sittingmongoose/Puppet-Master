@@ -1,0 +1,1920 @@
+{
+  "freeze": {
+    "at_utc": "2026-10-10T06:06:35.420876+00:00",
+    "all_original_AB_assessors_terminal_quiet": true,
+    "rows": [
+      {
+        "slot": "B-DISC-M-01",
+        "arm": "treatment",
+        "path": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+        "sha256": "12ce8013bfd59a4a30c4339e995968d6aa224273025d4e6d176f51fab353f2ae",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-DISC-M-01-treatment-v1"
+      },
+      {
+        "slot": "B-APPL-G-01",
+        "arm": "control",
+        "path": "assessment/B-APPL-G-01/control-v1/assessment.json",
+        "sha256": "9e0463165f1767a9b337cfd16cb334827d5328fb347e63f24e02c3c551fce914",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-APPL-G-01-control-v1"
+      },
+      {
+        "slot": "B-DISC-M-01",
+        "arm": "control",
+        "path": "assessment/B-DISC-M-01/control-v1/assessment.json",
+        "sha256": "28baf2e858b94d2d8dc2c7d4b3218f779040fdf70d29668c8e2f9e0f0b3a83ac",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-DISC-M-01-control-v1"
+      },
+      {
+        "slot": "B-APPL-M-01",
+        "arm": "control",
+        "path": "assessment/B-APPL-M-01/control-v1/assessment.json",
+        "sha256": "e929e0c1ff3978e72c421b650fe73ad9962262476180681c3fdb18c5f92e4452",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-APPL-M-01-control-v1"
+      },
+      {
+        "slot": "B-APPL-M-01",
+        "arm": "treatment",
+        "path": "assessment/B-APPL-M-01/treatment-v1/assessment.json",
+        "sha256": "122fe9751385c51d27000b2936d19bdc18a2ad55640b616ee13d4e5f245f883a",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-APPL-M-01-treatment-v1"
+      },
+      {
+        "slot": "B-APPL-G-01",
+        "arm": "treatment",
+        "path": "assessment/B-APPL-G-01/treatment-v1/assessment.json",
+        "sha256": "e63d283ba10cff51468180cf2a3d464bc01c3883bdf3c285184dbcca2d95cd71",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-APPL-G-01-treatment-v1"
+      },
+      {
+        "slot": "B-FINAL-G-01",
+        "arm": "treatment",
+        "path": "assessment/B-FINAL-G-01/treatment-v1/assessment.json",
+        "sha256": "94c8e8ce21ee3b7b1adc028ea3e4c454b57a0d62898522784a428551405fedf0",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-G-01-treatment-v1"
+      },
+      {
+        "slot": "B-FINAL-G-01",
+        "arm": "control",
+        "path": "assessment/B-FINAL-G-01/control-v1/assessment.json",
+        "sha256": "b4475269b2b406fda3942b7850c07ea6f485168cf5b5278600bedcf382a3064f",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-G-01-control-v1"
+      },
+      {
+        "slot": "B-APPL-M-02",
+        "arm": "control",
+        "path": "assessment/B-APPL-M-02/control-v1/assessment.json",
+        "sha256": "4a3829336eb5f6b21564edae6d9f9ffd010537fdbeda4a881e29d9d63a26a1d5",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-APPL-M-02-control-v1"
+      },
+      {
+        "slot": "B-APPL-M-02",
+        "arm": "treatment",
+        "path": "assessment/B-APPL-M-02/treatment-v1/assessment.json",
+        "sha256": "39e254132cd4bfe4c7cde3e6c4ef68f60bd0f82d479452d8840cd71585f76eb6",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-APPL-M-02-treatment-v1"
+      },
+      {
+        "slot": "A4-01",
+        "arm": "control",
+        "path": "assessment/A4-01/control-v1/assessment.json",
+        "sha256": "e43ef375bdcc63db1fb6e2b9bcf50cf76c0bae1b54e55859ab7ea571d3a18b2a",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A4-01-control-full-v1"
+      },
+      {
+        "slot": "B-FINAL-M-01",
+        "arm": "treatment",
+        "path": "assessment/B-FINAL-M-01/treatment-v1/assessment.json",
+        "sha256": "0c9b49e342128008e3f00d031ee7a87cdf46caeeac40624130666f61d5eb67f7",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-M-01-treatment-v1"
+      },
+      {
+        "slot": "A1-01",
+        "arm": "treatment",
+        "path": "assessment/A1-01/treatment-v1/assessment.json",
+        "sha256": "ff4bb8e68753975444aa3f4d4caf5e356d1478ddd4e88cdbb174f88500b3e9eb",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A1-01-treatment-full-v1"
+      },
+      {
+        "slot": "B-FINAL-M-01",
+        "arm": "control",
+        "path": "assessment/B-FINAL-M-01/control-v1/assessment.json",
+        "sha256": "92c6564d988c342d0d1fba8314365d36949931409890c2add08d48d6a8a8f090",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-M-01-control-v1"
+      },
+      {
+        "slot": "A6-01",
+        "arm": "treatment",
+        "path": "assessment/A6-01/treatment-v1/assessment.json",
+        "sha256": "9b062d21f7193110c253920d0edf8d0173aa1777b1eaa14b16a0ab0e1da0723c",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A6-01-treatment-full-v1"
+      },
+      {
+        "slot": "A1-02",
+        "arm": "control",
+        "path": "assessment/A1-02/control-v1/assessment.json",
+        "sha256": "9e2292f269e56163d5c69b6dc8be900c24384c77072cc09707fdc72553f9dbce",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A1-02-control-full-v1"
+      },
+      {
+        "slot": "A3-01",
+        "arm": "control",
+        "path": "assessment/A3-01/control-v1/assessment.json",
+        "sha256": "ad89862f132b364bea142acc9a2c873fe45eb411e4439f266a5ea6b726f9eaf7",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A3-01-control-full-v1"
+      },
+      {
+        "slot": "A1-01",
+        "arm": "control",
+        "path": "assessment/A1-01/control-v1/assessment.json",
+        "sha256": "2e8feaa4f758077eebe92a851cf36f74387aa67576f1877126ef24cd4b0c0e00",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A1-01-control-full-v1"
+      },
+      {
+        "slot": "A3-01",
+        "arm": "treatment",
+        "path": "assessment/A3-01/treatment-v1/assessment.json",
+        "sha256": "bce8d45f2601b63b056141c107b37c3180429d3cebf3d1d618d5662058d4cf16",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A3-01-treatment-full-v1"
+      },
+      {
+        "slot": "A6-01",
+        "arm": "control",
+        "path": "assessment/A6-01/control-v1/assessment.json",
+        "sha256": "4850f2f799e7f959d0c18ace032bd25e9bb30bb82ab3dd7f8c7d8c3a6cc0689e",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A6-01-control-full-v1"
+      },
+      {
+        "slot": "A8-01",
+        "arm": "treatment",
+        "path": "assessment/A8-01/treatment-v1/assessment.json",
+        "sha256": "8d47f5641f15cdf0a270196f22150e1f30a5fe7e151816df1666cb05d0b9459a",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A8-01-treatment-full-v1"
+      },
+      {
+        "slot": "A4-01",
+        "arm": "treatment",
+        "path": "assessment/A4-01/treatment-v1/assessment.json",
+        "sha256": "8b88e1b5f4a7ea99c563200d42a7c21f05ccdd4b3c2352908c75af2cbdc08664",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A4-01-treatment-full-v1"
+      },
+      {
+        "slot": "B-DISC-M-02",
+        "arm": "treatment",
+        "path": "assessment/B-DISC-M-02/treatment-v1/assessment.json",
+        "sha256": "0f73f07e4669b05ddbeb7b18a127740d6e75a4e9dcb92bd2823751e0840a1887",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-DISC-M-02-treatment-v1"
+      },
+      {
+        "slot": "A8-01",
+        "arm": "control",
+        "path": "assessment/A8-01/control-v1/assessment.json",
+        "sha256": "aeaa94460ebad5dfc577e6834244a5e23174703dab34d87793dbb978873b0044",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A8-01-control-full-v1"
+      },
+      {
+        "slot": "A1-02",
+        "arm": "treatment",
+        "path": "assessment/A1-02/treatment-v1/assessment.json",
+        "sha256": "287e89fb780439a37e75f538942e324288957c74f63a18ff1625696ac93282bd",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A1-02-treatment-full-v1"
+      },
+      {
+        "slot": "B-DISC-M-02",
+        "arm": "control",
+        "path": "assessment/B-DISC-M-02/control-v1/assessment.json",
+        "sha256": "b2b6a9d4478e3659d354c99d676ff7f911f8c801070640d88dffb9c459418e9a",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-DISC-M-02-control-v1"
+      },
+      {
+        "slot": "A5-01",
+        "arm": "treatment",
+        "path": "assessment/A5-01/treatment-v1/assessment.json",
+        "sha256": "0863fd6668d91c94bb590e1b13f4950ad207b1cc7c2166b45173c21efcf8cfac",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A5-01-treatment-full-v1"
+      },
+      {
+        "slot": "A2-01",
+        "arm": "treatment",
+        "path": "assessment/A2-01/treatment-v1/assessment.json",
+        "sha256": "05bc4912379526714ca7fe7c001839a2b38d751912a0d98bdd5cc3c02c693501",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A2-01-treatment-full-v1"
+      },
+      {
+        "slot": "A5-01",
+        "arm": "control",
+        "path": "assessment/A5-01/control-v1/assessment.json",
+        "sha256": "2542d312f799604883b0df782006ec492a894c2aa80af07b8bfaf01d05f4fbd2",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A5-01-control-full-v1"
+      },
+      {
+        "slot": "B-DISC-G-01",
+        "arm": "treatment",
+        "path": "assessment/B-DISC-G-01/treatment-v1/assessment.json",
+        "sha256": "bf7e98facf5813922b8e778f749dc499ca9c5243fea76a47a97ffd9062026f04",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-DISC-G-01-treatment-v1"
+      },
+      {
+        "slot": "A7-01",
+        "arm": "treatment",
+        "path": "assessment/A7-01/treatment-v1/assessment.json",
+        "sha256": "82915d4c90203398521b8dfd7d8b09b79d7aafd43f5616d13a506c911ddb13fa",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A7-01-treatment-full-v1"
+      },
+      {
+        "slot": "A7-01",
+        "arm": "control",
+        "path": "assessment/A7-01/control-v1/assessment.json",
+        "sha256": "381648046499f76c27b9ece715c4fae4d189a92ba0d4f8a20e4d7223c3954561",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A7-01-control-full-v1"
+      },
+      {
+        "slot": "A2-01",
+        "arm": "control",
+        "path": "assessment/A2-01/control-v1/assessment.json",
+        "sha256": "34bd8eaae0563fc427c4fcde63fd92d13ce116ce6db4125f519e9a2941c70c0f",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A2-01-control-full-v1"
+      },
+      {
+        "slot": "B-DISC-G-01",
+        "arm": "control",
+        "path": "assessment/B-DISC-G-01/control-v1/assessment.json",
+        "sha256": "428950d2fe194f7ce3f476646ace273e3f893ad5b8645196dd7e2b3b5197b9f6",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-DISC-G-01-control-v1"
+      },
+      {
+        "slot": "A7-02",
+        "arm": "treatment",
+        "path": "assessment/A7-02/treatment-v1/assessment.json",
+        "sha256": "dd4ac34a188c413b6a0845d07152326cd9e631bf8564f5a1fcc611c509c88abe",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A7-02-treatment-full-v1"
+      },
+      {
+        "slot": "B-DISC-G-02",
+        "arm": "treatment",
+        "path": "assessment/B-DISC-G-02/treatment-v1/assessment.json",
+        "sha256": "6da2942eaedec9d0e0c6486eb46e2959ba9f95099c387fc69c7f71317688004b",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-DISC-G-02-treatment-v1"
+      },
+      {
+        "slot": "B-DISC-G-02",
+        "arm": "control",
+        "path": "assessment/B-DISC-G-02/control-v1/assessment.json",
+        "sha256": "7f2dc999c433787fc36a54da326f94265dbe806ab45e4a734eaec0e1216f9cd6",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-DISC-G-02-control-v1"
+      },
+      {
+        "slot": "A7-02",
+        "arm": "control",
+        "path": "assessment/A7-02/control-v1/assessment.json",
+        "sha256": "f4db346b869edbedceed8d9890d6533734b5a258e8e79bac5e32c0cee4bd1a9e",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A7-02-control-full-v1"
+      },
+      {
+        "slot": "B-APPL-G-02",
+        "arm": "treatment",
+        "path": "assessment/B-APPL-G-02/treatment-v1/assessment.json",
+        "sha256": "464f4f16295f5aebe768bcb1ef0bb99f3b4f99b1409655aa51e72e11e2b848d1",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-APPL-G-02-treatment-v1"
+      },
+      {
+        "slot": "A6-02",
+        "arm": "treatment",
+        "path": "assessment/A6-02/treatment-v1/assessment.json",
+        "sha256": "ab87a6330551e15b6a77ac2728583dbfb6b836953285cfd80bd5cb182553216a",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A6-02-treatment-full-v1"
+      },
+      {
+        "slot": "B-APPL-G-02",
+        "arm": "control",
+        "path": "assessment/B-APPL-G-02/control-v1/assessment.json",
+        "sha256": "317a52883afd89bbb15ef85fc53847c4afc761e73e3e2dec4683e3281743b29d",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-APPL-G-02-control-v1"
+      },
+      {
+        "slot": "A6-02",
+        "arm": "control",
+        "path": "assessment/A6-02/control-v1/assessment.json",
+        "sha256": "8426823cefe95aa30bc58213d6142d24297cb70b276f31973b9c8e6a7b18caea",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A6-02-control-full-v1"
+      },
+      {
+        "slot": "B-FINAL-M-02",
+        "arm": "treatment",
+        "path": "assessment/B-FINAL-M-02/treatment-v1/assessment.json",
+        "sha256": "c509eb0538228b151aab4f4743691a1fe1fd9e213a3543c726c88dfafcb6a1f5",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-M-02-treatment-v1"
+      },
+      {
+        "slot": "B-FINAL-M-02",
+        "arm": "control",
+        "path": "assessment/B-FINAL-M-02/control-v1/assessment.json",
+        "sha256": "08f5ad60d830c84f04f8aa1a0e4089a8af45bbeafaf375bf990f7721cb12fe1c",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-M-02-control-v1"
+      },
+      {
+        "slot": "B-FINAL-G-02",
+        "arm": "treatment",
+        "path": "assessment/B-FINAL-G-02/treatment-v1/assessment.json",
+        "sha256": "1fe1afb5a99637ec19ac33cb9e93a2506082b8f1426a85e0ed42ff45cd3f4ee7",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-G-02-treatment-v1"
+      },
+      {
+        "slot": "A4-02",
+        "arm": "control",
+        "path": "assessment/A4-02/control-v1/assessment.json",
+        "sha256": "d3bb713f70ff2a022dd5e0231aa25346386c98ad86ca3bd36979efb8bcac000f",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A4-02-control-full-v1"
+      },
+      {
+        "slot": "B-FINAL-G-02",
+        "arm": "control",
+        "path": "assessment/B-FINAL-G-02/control-v1/assessment.json",
+        "sha256": "5c83bc6a76f4ffa6392306430fc922f56d59da90dac183cbc1342c1edd50fb94",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-G-02-control-v1"
+      },
+      {
+        "slot": "A3-02",
+        "arm": "control",
+        "path": "assessment/A3-02/control-v1/assessment.json",
+        "sha256": "e724db52464182841aa6e4d00b705733057195195c6aef71ac3ebe9c550aaee0",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A3-02-control-full-v1"
+      },
+      {
+        "slot": "A8-02",
+        "arm": "treatment",
+        "path": "assessment/A8-02/treatment-v1/assessment.json",
+        "sha256": "18287ef1230b2e9bf614635d5a6e9177a0ed27eb35de496da61af0f26833db30",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A8-02-treatment-full-v1"
+      },
+      {
+        "slot": "A3-02",
+        "arm": "treatment",
+        "path": "assessment/A3-02/treatment-v1/assessment.json",
+        "sha256": "69ff978b63ef7e79b940017a487359670df6e84442c2d8b1eeabf29619247658",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A3-02-treatment-full-v1"
+      },
+      {
+        "slot": "A8-02",
+        "arm": "control",
+        "path": "assessment/A8-02/control-v1/assessment.json",
+        "sha256": "9be8f7848d2c7b14ca016c21c87aec986e972b05273c11fc62f5aff877ee3770",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A8-02-control-full-v1"
+      },
+      {
+        "slot": "A5-02",
+        "arm": "treatment",
+        "path": "assessment/A5-02/treatment-v1/assessment.json",
+        "sha256": "874b3cbe80802cfc8dea28b30ca8d93ee530b7f45ff44fe5f9941ddf5321d6b8",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A5-02-treatment-full-v1"
+      },
+      {
+        "slot": "A2-02",
+        "arm": "treatment",
+        "path": "assessment/A2-02/treatment-v1/assessment.json",
+        "sha256": "6ff2cef9edcf59b0a404b22526b4eff617074a7a0d2e0a9bcc1173c0bdbb541f",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A2-02-treatment-full-v1"
+      },
+      {
+        "slot": "A5-02",
+        "arm": "control",
+        "path": "assessment/A5-02/control-v1/assessment.json",
+        "sha256": "f9c8a68d43dd270c07837aa7de99131d3f5e4aaa10d700f391fcc57694423811",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A5-02-control-full-v1"
+      },
+      {
+        "slot": "A2-02",
+        "arm": "control",
+        "path": "assessment/A2-02/control-v1/assessment.json",
+        "sha256": "5c0623d45990f84fe5c578963f1656effe9858c313142e17d8c100d15927e75b",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A2-02-control-full-v1"
+      },
+      {
+        "slot": "A4-02",
+        "arm": "treatment",
+        "path": "assessment/A4-02/treatment-v1/assessment.json",
+        "sha256": "2136d62e52b612d92ac56852d4c189fe0c514a720a893cd00b7cd7d7177c8595",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A4-02-treatment-full-v1"
+      }
+    ]
+  },
+  "originals": [
+    {
+      "freeze": {
+        "slot": "A1-01",
+        "arm": "control",
+        "path": "assessment/A1-01/control-v1/assessment.json",
+        "sha256": "2e8feaa4f758077eebe92a851cf36f74387aa67576f1877126ef24cd4b0c0e00",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A1-01-control-full-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/A1-01/control-v1/assessment.json",
+        "original_sha256": "2e8feaa4f758077eebe92a851cf36f74387aa67576f1877126ef24cd4b0c0e00",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/A1-01/control-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/A1-01/control-v1/source-map.json",
+          "original_sha256": "5866c012a3528ff882438b7a231339c1320224aa6f6ffdcbc5a9738f2e37e238",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "A1-01",
+        "arm": "treatment",
+        "path": "assessment/A1-01/treatment-v1/assessment.json",
+        "sha256": "ff4bb8e68753975444aa3f4d4caf5e356d1478ddd4e88cdbb174f88500b3e9eb",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A1-01-treatment-full-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/A1-01/treatment-v1/assessment.json",
+        "original_sha256": "ff4bb8e68753975444aa3f4d4caf5e356d1478ddd4e88cdbb174f88500b3e9eb",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/A1-01/treatment-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/A1-01/treatment-v1/source-map.json",
+          "original_sha256": "3b989ddd6a645e6f201dda840bf31c9ff21aeee6c3d7d646928d93b7a8628d74",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "A1-02",
+        "arm": "control",
+        "path": "assessment/A1-02/control-v1/assessment.json",
+        "sha256": "9e2292f269e56163d5c69b6dc8be900c24384c77072cc09707fdc72553f9dbce",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A1-02-control-full-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/A1-02/control-v1/assessment.json",
+        "original_sha256": "9e2292f269e56163d5c69b6dc8be900c24384c77072cc09707fdc72553f9dbce",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/A1-02/control-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/A1-02/control-v1/source-map.json",
+          "original_sha256": "daced39bb85dc553b76e4c3b32bf9bfcf4875253d323accadc57c794f84abb5b",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "A1-02",
+        "arm": "treatment",
+        "path": "assessment/A1-02/treatment-v1/assessment.json",
+        "sha256": "287e89fb780439a37e75f538942e324288957c74f63a18ff1625696ac93282bd",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A1-02-treatment-full-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/A1-02/treatment-v1/assessment.json",
+        "original_sha256": "287e89fb780439a37e75f538942e324288957c74f63a18ff1625696ac93282bd",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/A1-02/treatment-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/A1-02/treatment-v1/source-map.json",
+          "original_sha256": "a60c58cb9c0756aa3cc926e4f443a078ce61fec8429ae6a567d52609de0d204e",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "A2-01",
+        "arm": "control",
+        "path": "assessment/A2-01/control-v1/assessment.json",
+        "sha256": "34bd8eaae0563fc427c4fcde63fd92d13ce116ce6db4125f519e9a2941c70c0f",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A2-01-control-full-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/A2-01/control-v1/assessment.json",
+        "original_sha256": "34bd8eaae0563fc427c4fcde63fd92d13ce116ce6db4125f519e9a2941c70c0f",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/A2-01/control-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/A2-01/control-v1/source-map.json",
+          "original_sha256": "d96858ebc42620f40c7c9bc8132d4d8fd79ca68871507c50bf0d628e2966eb65",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "A2-01",
+        "arm": "treatment",
+        "path": "assessment/A2-01/treatment-v1/assessment.json",
+        "sha256": "05bc4912379526714ca7fe7c001839a2b38d751912a0d98bdd5cc3c02c693501",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A2-01-treatment-full-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/A2-01/treatment-v1/assessment.json",
+        "original_sha256": "05bc4912379526714ca7fe7c001839a2b38d751912a0d98bdd5cc3c02c693501",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/A2-01/treatment-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/A2-01/treatment-v1/source-map.json",
+          "original_sha256": "84b803cd5db09861978259ca1362a94d2e1e79f596dd6782a374bb2178cfcd1d",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "A2-02",
+        "arm": "control",
+        "path": "assessment/A2-02/control-v1/assessment.json",
+        "sha256": "5c0623d45990f84fe5c578963f1656effe9858c313142e17d8c100d15927e75b",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A2-02-control-full-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/A2-02/control-v1/assessment.json",
+        "original_sha256": "5c0623d45990f84fe5c578963f1656effe9858c313142e17d8c100d15927e75b",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/A2-02/control-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/A2-02/control-v1/source-map.json",
+          "original_sha256": "623330afdff26410f2724126ce8730f6b36396c06d70267144fef4f28a2ecb9c",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "A2-02",
+        "arm": "treatment",
+        "path": "assessment/A2-02/treatment-v1/assessment.json",
+        "sha256": "6ff2cef9edcf59b0a404b22526b4eff617074a7a0d2e0a9bcc1173c0bdbb541f",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A2-02-treatment-full-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/A2-02/treatment-v1/assessment.json",
+        "original_sha256": "6ff2cef9edcf59b0a404b22526b4eff617074a7a0d2e0a9bcc1173c0bdbb541f",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/A2-02/treatment-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/A2-02/treatment-v1/source-map.json",
+          "original_sha256": "82ca28fe6eb84fb9c0d79ec2d74c5c19a77a582bd6dd04646f0fa2861f7895b3",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "A3-01",
+        "arm": "control",
+        "path": "assessment/A3-01/control-v1/assessment.json",
+        "sha256": "ad89862f132b364bea142acc9a2c873fe45eb411e4439f266a5ea6b726f9eaf7",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A3-01-control-full-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/A3-01/control-v1/assessment.json",
+        "original_sha256": "ad89862f132b364bea142acc9a2c873fe45eb411e4439f266a5ea6b726f9eaf7",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/A3-01/control-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/A3-01/control-v1/source-map.json",
+          "original_sha256": "c71e86c760ed6f0e0e8e12a57b823bbc07b862b448a8c700d9e910ea7f3de198",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "A3-01",
+        "arm": "treatment",
+        "path": "assessment/A3-01/treatment-v1/assessment.json",
+        "sha256": "bce8d45f2601b63b056141c107b37c3180429d3cebf3d1d618d5662058d4cf16",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A3-01-treatment-full-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/A3-01/treatment-v1/assessment.json",
+        "original_sha256": "bce8d45f2601b63b056141c107b37c3180429d3cebf3d1d618d5662058d4cf16",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/A3-01/treatment-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/A3-01/treatment-v1/source-map.json",
+          "original_sha256": "29973cd8024541d3ceec32007088c1e44d43df5283d8327a6e41853b23c200db",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "A3-02",
+        "arm": "control",
+        "path": "assessment/A3-02/control-v1/assessment.json",
+        "sha256": "e724db52464182841aa6e4d00b705733057195195c6aef71ac3ebe9c550aaee0",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A3-02-control-full-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/A3-02/control-v1/assessment.json",
+        "original_sha256": "e724db52464182841aa6e4d00b705733057195195c6aef71ac3ebe9c550aaee0",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/A3-02/control-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/A3-02/control-v1/source-map.json",
+          "original_sha256": "9ef481aef841db46310195f4128ac9185a9c1f25ff72eae2fff100e20c91ed4c",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "A3-02",
+        "arm": "treatment",
+        "path": "assessment/A3-02/treatment-v1/assessment.json",
+        "sha256": "69ff978b63ef7e79b940017a487359670df6e84442c2d8b1eeabf29619247658",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A3-02-treatment-full-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/A3-02/treatment-v1/assessment.json",
+        "original_sha256": "69ff978b63ef7e79b940017a487359670df6e84442c2d8b1eeabf29619247658",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/A3-02/treatment-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/A3-02/treatment-v1/source-map.json",
+          "original_sha256": "e7fa1895a72d3225a1d00dcd57cd1686d747c1404fb87d006438c4465bb02d5e",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "A4-01",
+        "arm": "control",
+        "path": "assessment/A4-01/control-v1/assessment.json",
+        "sha256": "e43ef375bdcc63db1fb6e2b9bcf50cf76c0bae1b54e55859ab7ea571d3a18b2a",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A4-01-control-full-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/A4-01/control-v1/assessment.json",
+        "original_sha256": "e43ef375bdcc63db1fb6e2b9bcf50cf76c0bae1b54e55859ab7ea571d3a18b2a",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/A4-01/control-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/A4-01/control-v1/source-map.json",
+          "original_sha256": "2db89959550f9e08f3227d66a8f0d52ba6f6839b2828ea78400bb4cfed54efa2",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "A4-01",
+        "arm": "treatment",
+        "path": "assessment/A4-01/treatment-v1/assessment.json",
+        "sha256": "8b88e1b5f4a7ea99c563200d42a7c21f05ccdd4b3c2352908c75af2cbdc08664",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A4-01-treatment-full-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/A4-01/treatment-v1/assessment.json",
+        "original_sha256": "8b88e1b5f4a7ea99c563200d42a7c21f05ccdd4b3c2352908c75af2cbdc08664",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/A4-01/treatment-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/A4-01/treatment-v1/source-map.json",
+          "original_sha256": "46125670f9f8bf81f803cefecdb7ff5f6f9087399c9ad404af6578798b42f891",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "A4-02",
+        "arm": "control",
+        "path": "assessment/A4-02/control-v1/assessment.json",
+        "sha256": "d3bb713f70ff2a022dd5e0231aa25346386c98ad86ca3bd36979efb8bcac000f",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A4-02-control-full-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/A4-02/control-v1/assessment.json",
+        "original_sha256": "d3bb713f70ff2a022dd5e0231aa25346386c98ad86ca3bd36979efb8bcac000f",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/A4-02/control-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/A4-02/control-v1/source-map.json",
+          "original_sha256": "54293ede7994522185a1e014ffc74f4ed48efdc31f1e49fcd95da9bdc937ffa5",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "A4-02",
+        "arm": "treatment",
+        "path": "assessment/A4-02/treatment-v1/assessment.json",
+        "sha256": "2136d62e52b612d92ac56852d4c189fe0c514a720a893cd00b7cd7d7177c8595",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A4-02-treatment-full-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/A4-02/treatment-v1/assessment.json",
+        "original_sha256": "2136d62e52b612d92ac56852d4c189fe0c514a720a893cd00b7cd7d7177c8595",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/A4-02/treatment-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/A4-02/treatment-v1/source-map.json",
+          "original_sha256": "238ae3dd00c07d476611db81946de8751847526bfe42d2f1a79e17155b3bea2c",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "A5-01",
+        "arm": "control",
+        "path": "assessment/A5-01/control-v1/assessment.json",
+        "sha256": "2542d312f799604883b0df782006ec492a894c2aa80af07b8bfaf01d05f4fbd2",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A5-01-control-full-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/A5-01/control-v1/assessment.json",
+        "original_sha256": "2542d312f799604883b0df782006ec492a894c2aa80af07b8bfaf01d05f4fbd2",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/A5-01/control-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/A5-01/control-v1/source-map.json",
+          "original_sha256": "adfef70390e0fbf6e0c3bc80c0a4d306f9ce1a22d00815c90dd4d5d013919cc8",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "A5-01",
+        "arm": "treatment",
+        "path": "assessment/A5-01/treatment-v1/assessment.json",
+        "sha256": "0863fd6668d91c94bb590e1b13f4950ad207b1cc7c2166b45173c21efcf8cfac",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A5-01-treatment-full-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/A5-01/treatment-v1/assessment.json",
+        "original_sha256": "0863fd6668d91c94bb590e1b13f4950ad207b1cc7c2166b45173c21efcf8cfac",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/A5-01/treatment-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/A5-01/treatment-v1/source-map.json",
+          "original_sha256": "675a6860057cf66c599a3e83a119fe3b1618f8a51453edddebf1389b89a82c7c",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "A5-02",
+        "arm": "control",
+        "path": "assessment/A5-02/control-v1/assessment.json",
+        "sha256": "f9c8a68d43dd270c07837aa7de99131d3f5e4aaa10d700f391fcc57694423811",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A5-02-control-full-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/A5-02/control-v1/assessment.json",
+        "original_sha256": "f9c8a68d43dd270c07837aa7de99131d3f5e4aaa10d700f391fcc57694423811",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/A5-02/control-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/A5-02/control-v1/source-map.json",
+          "original_sha256": "543b9d4f6ee02a7e83dc1878b469bace1c5ade35345b5423d53143067ec75b85",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "A5-02",
+        "arm": "treatment",
+        "path": "assessment/A5-02/treatment-v1/assessment.json",
+        "sha256": "874b3cbe80802cfc8dea28b30ca8d93ee530b7f45ff44fe5f9941ddf5321d6b8",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A5-02-treatment-full-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/A5-02/treatment-v1/assessment.json",
+        "original_sha256": "874b3cbe80802cfc8dea28b30ca8d93ee530b7f45ff44fe5f9941ddf5321d6b8",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/A5-02/treatment-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/A5-02/treatment-v1/source-map.json",
+          "original_sha256": "71e82f98bd38f9db362537af0046c27ebfd44dfc560b871c29ff0521d084d299",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "A6-01",
+        "arm": "control",
+        "path": "assessment/A6-01/control-v1/assessment.json",
+        "sha256": "4850f2f799e7f959d0c18ace032bd25e9bb30bb82ab3dd7f8c7d8c3a6cc0689e",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A6-01-control-full-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/A6-01/control-v1/assessment.json",
+        "original_sha256": "4850f2f799e7f959d0c18ace032bd25e9bb30bb82ab3dd7f8c7d8c3a6cc0689e",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/A6-01/control-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/A6-01/control-v1/source-map.json",
+          "original_sha256": "7a8e299272aa7aed2ef3fe27f92c2ff5f16a7ba95534726ad87f31f7d1f60037",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "A6-01",
+        "arm": "treatment",
+        "path": "assessment/A6-01/treatment-v1/assessment.json",
+        "sha256": "9b062d21f7193110c253920d0edf8d0173aa1777b1eaa14b16a0ab0e1da0723c",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A6-01-treatment-full-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/A6-01/treatment-v1/assessment.json",
+        "original_sha256": "9b062d21f7193110c253920d0edf8d0173aa1777b1eaa14b16a0ab0e1da0723c",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/A6-01/treatment-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/A6-01/treatment-v1/source-map.json",
+          "original_sha256": "8f82b63eebf68a90e287036cd1bcb4b9258c9bd68f55a3dc4d290817e8ac5b11",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "A6-02",
+        "arm": "control",
+        "path": "assessment/A6-02/control-v1/assessment.json",
+        "sha256": "8426823cefe95aa30bc58213d6142d24297cb70b276f31973b9c8e6a7b18caea",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A6-02-control-full-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/A6-02/control-v1/assessment.json",
+        "original_sha256": "8426823cefe95aa30bc58213d6142d24297cb70b276f31973b9c8e6a7b18caea",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/A6-02/control-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/A6-02/control-v1/source-map.json",
+          "original_sha256": "a5d74603726e9ba2b4eb800adffb2015a89aa4147d04dc801e31a595708a072a",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "A6-02",
+        "arm": "treatment",
+        "path": "assessment/A6-02/treatment-v1/assessment.json",
+        "sha256": "ab87a6330551e15b6a77ac2728583dbfb6b836953285cfd80bd5cb182553216a",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A6-02-treatment-full-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/A6-02/treatment-v1/assessment.json",
+        "original_sha256": "ab87a6330551e15b6a77ac2728583dbfb6b836953285cfd80bd5cb182553216a",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/A6-02/treatment-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/A6-02/treatment-v1/source-map.json",
+          "original_sha256": "0897800267b67fe3520366f7fee9a0e5f8900918b0d3aea4fd9b08c39fdcdb33",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "A7-01",
+        "arm": "control",
+        "path": "assessment/A7-01/control-v1/assessment.json",
+        "sha256": "381648046499f76c27b9ece715c4fae4d189a92ba0d4f8a20e4d7223c3954561",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A7-01-control-full-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/A7-01/control-v1/assessment.json",
+        "original_sha256": "381648046499f76c27b9ece715c4fae4d189a92ba0d4f8a20e4d7223c3954561",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/A7-01/control-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/A7-01/control-v1/source-map.json",
+          "original_sha256": "b23a395099314fceacb5d12dfa04befeaf69d3c322bc6d07b6dce8a6c3fc9084",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "A7-01",
+        "arm": "treatment",
+        "path": "assessment/A7-01/treatment-v1/assessment.json",
+        "sha256": "82915d4c90203398521b8dfd7d8b09b79d7aafd43f5616d13a506c911ddb13fa",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A7-01-treatment-full-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/A7-01/treatment-v1/assessment.json",
+        "original_sha256": "82915d4c90203398521b8dfd7d8b09b79d7aafd43f5616d13a506c911ddb13fa",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/A7-01/treatment-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/A7-01/treatment-v1/source-map.json",
+          "original_sha256": "6547bebe0c849cddf7f905357fc6ca5a36197222c69aaf34bb82e7b3bff043ce",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "A7-02",
+        "arm": "control",
+        "path": "assessment/A7-02/control-v1/assessment.json",
+        "sha256": "f4db346b869edbedceed8d9890d6533734b5a258e8e79bac5e32c0cee4bd1a9e",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A7-02-control-full-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/A7-02/control-v1/assessment.json",
+        "original_sha256": "f4db346b869edbedceed8d9890d6533734b5a258e8e79bac5e32c0cee4bd1a9e",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/A7-02/control-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/A7-02/control-v1/source-map.json",
+          "original_sha256": "72fa5e360683a0ae15ee26c7f0aa102d52191ce8c8cf943a8e2b999b290447ca",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "A7-02",
+        "arm": "treatment",
+        "path": "assessment/A7-02/treatment-v1/assessment.json",
+        "sha256": "dd4ac34a188c413b6a0845d07152326cd9e631bf8564f5a1fcc611c509c88abe",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A7-02-treatment-full-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/A7-02/treatment-v1/assessment.json",
+        "original_sha256": "dd4ac34a188c413b6a0845d07152326cd9e631bf8564f5a1fcc611c509c88abe",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/A7-02/treatment-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/A7-02/treatment-v1/source-map.json",
+          "original_sha256": "381eb97873b7d6917d9ff88a1f23ed5b963fd3b7a597053f09a582d17ec14dd8",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "A8-01",
+        "arm": "control",
+        "path": "assessment/A8-01/control-v1/assessment.json",
+        "sha256": "aeaa94460ebad5dfc577e6834244a5e23174703dab34d87793dbb978873b0044",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A8-01-control-full-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/A8-01/control-v1/assessment.json",
+        "original_sha256": "aeaa94460ebad5dfc577e6834244a5e23174703dab34d87793dbb978873b0044",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/A8-01/control-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/A8-01/control-v1/source-map.json",
+          "original_sha256": "8fd8c7039fd51a307dffd7dcb2de7c1e2e6b0da75ea2d3f3398c5b510f61edba",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "A8-01",
+        "arm": "treatment",
+        "path": "assessment/A8-01/treatment-v1/assessment.json",
+        "sha256": "8d47f5641f15cdf0a270196f22150e1f30a5fe7e151816df1666cb05d0b9459a",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A8-01-treatment-full-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/A8-01/treatment-v1/assessment.json",
+        "original_sha256": "8d47f5641f15cdf0a270196f22150e1f30a5fe7e151816df1666cb05d0b9459a",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/A8-01/treatment-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/A8-01/treatment-v1/source-map.json",
+          "original_sha256": "3c62714669269d5be579c65288a9d46abcc16e8188e37193ae6697e705379c0b",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "A8-02",
+        "arm": "control",
+        "path": "assessment/A8-02/control-v1/assessment.json",
+        "sha256": "9be8f7848d2c7b14ca016c21c87aec986e972b05273c11fc62f5aff877ee3770",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A8-02-control-full-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/A8-02/control-v1/assessment.json",
+        "original_sha256": "9be8f7848d2c7b14ca016c21c87aec986e972b05273c11fc62f5aff877ee3770",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/A8-02/control-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/A8-02/control-v1/source-map.json",
+          "original_sha256": "7abfa56d860b394099c10fdb9e763eb4bc8a84e6bad3e5717d09a1bb617c9c33",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "A8-02",
+        "arm": "treatment",
+        "path": "assessment/A8-02/treatment-v1/assessment.json",
+        "sha256": "18287ef1230b2e9bf614635d5a6e9177a0ed27eb35de496da61af0f26833db30",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A8-02-treatment-full-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/A8-02/treatment-v1/assessment.json",
+        "original_sha256": "18287ef1230b2e9bf614635d5a6e9177a0ed27eb35de496da61af0f26833db30",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/A8-02/treatment-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/A8-02/treatment-v1/source-map.json",
+          "original_sha256": "8ac3b5cde4a141ebf8c6c0c751925fec9f07365260d43c7ac782bd5eca708807",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "B-APPL-G-01",
+        "arm": "control",
+        "path": "assessment/B-APPL-G-01/control-v1/assessment.json",
+        "sha256": "9e0463165f1767a9b337cfd16cb334827d5328fb347e63f24e02c3c551fce914",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-APPL-G-01-control-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/B-APPL-G-01/control-v1/assessment.json",
+        "original_sha256": "9e0463165f1767a9b337cfd16cb334827d5328fb347e63f24e02c3c551fce914",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/B-APPL-G-01/control-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/B-APPL-G-01/control-v1/source-map.json",
+          "original_sha256": "3e606c4c512d5b30829288218b2dc980bff331af54d4c859fb34dcbbfc8a23bf",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "B-APPL-G-01",
+        "arm": "treatment",
+        "path": "assessment/B-APPL-G-01/treatment-v1/assessment.json",
+        "sha256": "e63d283ba10cff51468180cf2a3d464bc01c3883bdf3c285184dbcca2d95cd71",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-APPL-G-01-treatment-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/B-APPL-G-01/treatment-v1/assessment.json",
+        "original_sha256": "e63d283ba10cff51468180cf2a3d464bc01c3883bdf3c285184dbcca2d95cd71",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/B-APPL-G-01/treatment-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/B-APPL-G-01/treatment-v1/source-map.initial-saved.json",
+          "original_sha256": "3858170449c30875bac0cc47b7a0d3d7da2e576802bc9ee4a7b4c9f06fd530fb",
+          "json_pointer": ""
+        },
+        {
+          "public_path": "assessment/B-APPL-G-01/treatment-v1/source-map.json",
+          "original_sha256": "4d47b8e107b7f1b0f3ab9e1bdc59ca64e13d1d2b695cfa0ad80054c241c8e08d",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "B-APPL-G-02",
+        "arm": "control",
+        "path": "assessment/B-APPL-G-02/control-v1/assessment.json",
+        "sha256": "317a52883afd89bbb15ef85fc53847c4afc761e73e3e2dec4683e3281743b29d",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-APPL-G-02-control-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/B-APPL-G-02/control-v1/assessment.json",
+        "original_sha256": "317a52883afd89bbb15ef85fc53847c4afc761e73e3e2dec4683e3281743b29d",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/B-APPL-G-02/control-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/B-APPL-G-02/control-v1/source-map.json",
+          "original_sha256": "8ec662cd030b4741d9e6ea160c770970a4327d2add957904a768d9a2cfe824d9",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "B-APPL-G-02",
+        "arm": "treatment",
+        "path": "assessment/B-APPL-G-02/treatment-v1/assessment.json",
+        "sha256": "464f4f16295f5aebe768bcb1ef0bb99f3b4f99b1409655aa51e72e11e2b848d1",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-APPL-G-02-treatment-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/B-APPL-G-02/treatment-v1/assessment.json",
+        "original_sha256": "464f4f16295f5aebe768bcb1ef0bb99f3b4f99b1409655aa51e72e11e2b848d1",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/B-APPL-G-02/treatment-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/B-APPL-G-02/treatment-v1/source-map.json",
+          "original_sha256": "22f6efb1d57594898eabb98ed10ea0514fd19c1b6656693325c6d5917798d0c7",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "B-APPL-M-01",
+        "arm": "control",
+        "path": "assessment/B-APPL-M-01/control-v1/assessment.json",
+        "sha256": "e929e0c1ff3978e72c421b650fe73ad9962262476180681c3fdb18c5f92e4452",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-APPL-M-01-control-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/B-APPL-M-01/control-v1/assessment.json",
+        "original_sha256": "e929e0c1ff3978e72c421b650fe73ad9962262476180681c3fdb18c5f92e4452",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/B-APPL-M-01/control-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/B-APPL-M-01/control-v1/source-map.json",
+          "original_sha256": "4e510c341b62cd5307b43d6d9e9e60db565ff79a2338c1ef4f861936b4982395",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "B-APPL-M-01",
+        "arm": "treatment",
+        "path": "assessment/B-APPL-M-01/treatment-v1/assessment.json",
+        "sha256": "122fe9751385c51d27000b2936d19bdc18a2ad55640b616ee13d4e5f245f883a",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-APPL-M-01-treatment-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/B-APPL-M-01/treatment-v1/assessment.json",
+        "original_sha256": "122fe9751385c51d27000b2936d19bdc18a2ad55640b616ee13d4e5f245f883a",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/B-APPL-M-01/treatment-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/B-APPL-M-01/treatment-v1/source-map.json",
+          "original_sha256": "f5bfd69abf3a9930048b41053a0b5fa71547a7b13ee89b6d1de64d99850ca2c6",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "B-APPL-M-02",
+        "arm": "control",
+        "path": "assessment/B-APPL-M-02/control-v1/assessment.json",
+        "sha256": "4a3829336eb5f6b21564edae6d9f9ffd010537fdbeda4a881e29d9d63a26a1d5",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-APPL-M-02-control-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/B-APPL-M-02/control-v1/assessment.json",
+        "original_sha256": "4a3829336eb5f6b21564edae6d9f9ffd010537fdbeda4a881e29d9d63a26a1d5",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/B-APPL-M-02/control-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/B-APPL-M-02/control-v1/source-map.json",
+          "original_sha256": "fa9c7a72aa0ddaa82149bbe2631c5fb683e1a1f59247a46a816bb199c4283aba",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "B-APPL-M-02",
+        "arm": "treatment",
+        "path": "assessment/B-APPL-M-02/treatment-v1/assessment.json",
+        "sha256": "39e254132cd4bfe4c7cde3e6c4ef68f60bd0f82d479452d8840cd71585f76eb6",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-APPL-M-02-treatment-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/B-APPL-M-02/treatment-v1/assessment.json",
+        "original_sha256": "39e254132cd4bfe4c7cde3e6c4ef68f60bd0f82d479452d8840cd71585f76eb6",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/B-APPL-M-02/treatment-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/B-APPL-M-02/treatment-v1/source-map.json",
+          "original_sha256": "375708b332083030d7e337d537918add4d97ed194841dba4722491da051b7075",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "B-DISC-G-01",
+        "arm": "control",
+        "path": "assessment/B-DISC-G-01/control-v1/assessment.json",
+        "sha256": "428950d2fe194f7ce3f476646ace273e3f893ad5b8645196dd7e2b3b5197b9f6",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-DISC-G-01-control-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/B-DISC-G-01/control-v1/assessment.json",
+        "original_sha256": "428950d2fe194f7ce3f476646ace273e3f893ad5b8645196dd7e2b3b5197b9f6",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/B-DISC-G-01/control-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/B-DISC-G-01/control-v1/source-map.json",
+          "original_sha256": "ef8cc7e528ca79f28a5be3f40530328b5c75cd07f8bdbf21e031225f1774b725",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "B-DISC-G-01",
+        "arm": "treatment",
+        "path": "assessment/B-DISC-G-01/treatment-v1/assessment.json",
+        "sha256": "bf7e98facf5813922b8e778f749dc499ca9c5243fea76a47a97ffd9062026f04",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-DISC-G-01-treatment-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/B-DISC-G-01/treatment-v1/assessment.json",
+        "original_sha256": "bf7e98facf5813922b8e778f749dc499ca9c5243fea76a47a97ffd9062026f04",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/B-DISC-G-01/treatment-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/B-DISC-G-01/treatment-v1/source-map.json",
+          "original_sha256": "91b4b84060483fbc9469b72313fb831a8993989e4b99cad82b6f24c8ab61e116",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "B-DISC-G-02",
+        "arm": "control",
+        "path": "assessment/B-DISC-G-02/control-v1/assessment.json",
+        "sha256": "7f2dc999c433787fc36a54da326f94265dbe806ab45e4a734eaec0e1216f9cd6",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-DISC-G-02-control-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/B-DISC-G-02/control-v1/assessment.json",
+        "original_sha256": "7f2dc999c433787fc36a54da326f94265dbe806ab45e4a734eaec0e1216f9cd6",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/B-DISC-G-02/control-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/B-DISC-G-02/control-v1/source-map.json",
+          "original_sha256": "48018c497c705dfd41ff013443d135d8515b821750108128cf26edab3953d89f",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "B-DISC-G-02",
+        "arm": "treatment",
+        "path": "assessment/B-DISC-G-02/treatment-v1/assessment.json",
+        "sha256": "6da2942eaedec9d0e0c6486eb46e2959ba9f95099c387fc69c7f71317688004b",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-DISC-G-02-treatment-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/B-DISC-G-02/treatment-v1/assessment.json",
+        "original_sha256": "6da2942eaedec9d0e0c6486eb46e2959ba9f95099c387fc69c7f71317688004b",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/B-DISC-G-02/treatment-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/B-DISC-G-02/treatment-v1/source-map.json",
+          "original_sha256": "2628df9d4a8d1dd0278e973b0aeb5b539ff1eba9e830ac1f6258ac1cfa4d680c",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "B-DISC-M-01",
+        "arm": "control",
+        "path": "assessment/B-DISC-M-01/control-v1/assessment.json",
+        "sha256": "28baf2e858b94d2d8dc2c7d4b3218f779040fdf70d29668c8e2f9e0f0b3a83ac",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-DISC-M-01-control-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/B-DISC-M-01/control-v1/assessment.json",
+        "original_sha256": "28baf2e858b94d2d8dc2c7d4b3218f779040fdf70d29668c8e2f9e0f0b3a83ac",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/B-DISC-M-01/control-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/B-DISC-M-01/control-v1/source-map.json",
+          "original_sha256": "623174534a5dacdbdbfaa282a62e2f44f1920c0ec27e7f3b6537bebc15572c17",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "B-DISC-M-01",
+        "arm": "treatment",
+        "path": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+        "sha256": "12ce8013bfd59a4a30c4339e995968d6aa224273025d4e6d176f51fab353f2ae",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-DISC-M-01-treatment-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+        "original_sha256": "12ce8013bfd59a4a30c4339e995968d6aa224273025d4e6d176f51fab353f2ae",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/B-DISC-M-01/treatment-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+          "original_sha256": "359e517684aaaac1d067aeeb9b9e7e37d749eea4e7d2590cb7f76252bf8d8547",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "B-DISC-M-02",
+        "arm": "control",
+        "path": "assessment/B-DISC-M-02/control-v1/assessment.json",
+        "sha256": "b2b6a9d4478e3659d354c99d676ff7f911f8c801070640d88dffb9c459418e9a",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-DISC-M-02-control-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/B-DISC-M-02/control-v1/assessment.json",
+        "original_sha256": "b2b6a9d4478e3659d354c99d676ff7f911f8c801070640d88dffb9c459418e9a",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/B-DISC-M-02/control-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/B-DISC-M-02/control-v1/source-map.json",
+          "original_sha256": "c3f3af5d3173c050c099f44aa3f7e8ddf5ef68bcd0b6bda641ce8ce46f412435",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "B-DISC-M-02",
+        "arm": "treatment",
+        "path": "assessment/B-DISC-M-02/treatment-v1/assessment.json",
+        "sha256": "0f73f07e4669b05ddbeb7b18a127740d6e75a4e9dcb92bd2823751e0840a1887",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-DISC-M-02-treatment-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/B-DISC-M-02/treatment-v1/assessment.json",
+        "original_sha256": "0f73f07e4669b05ddbeb7b18a127740d6e75a4e9dcb92bd2823751e0840a1887",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/B-DISC-M-02/treatment-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/B-DISC-M-02/treatment-v1/source-map.json",
+          "original_sha256": "af642acc805e27a9422745f8d3ae29d9812bcedd55605ea90627a080acbb16fa",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "B-FINAL-G-01",
+        "arm": "control",
+        "path": "assessment/B-FINAL-G-01/control-v1/assessment.json",
+        "sha256": "b4475269b2b406fda3942b7850c07ea6f485168cf5b5278600bedcf382a3064f",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-G-01-control-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/B-FINAL-G-01/control-v1/assessment.json",
+        "original_sha256": "b4475269b2b406fda3942b7850c07ea6f485168cf5b5278600bedcf382a3064f",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/B-FINAL-G-01/control-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/B-FINAL-G-01/control-v1/source-map.json",
+          "original_sha256": "403da99fc85a253078235d2dbfa800df3496caa0ac2bc568197de8da4aece12e",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "B-FINAL-G-01",
+        "arm": "treatment",
+        "path": "assessment/B-FINAL-G-01/treatment-v1/assessment.json",
+        "sha256": "94c8e8ce21ee3b7b1adc028ea3e4c454b57a0d62898522784a428551405fedf0",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-G-01-treatment-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/B-FINAL-G-01/treatment-v1/assessment.json",
+        "original_sha256": "94c8e8ce21ee3b7b1adc028ea3e4c454b57a0d62898522784a428551405fedf0",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/B-FINAL-G-01/treatment-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/B-FINAL-G-01/treatment-v1/source-map.json",
+          "original_sha256": "e83ab5d3f59cd0f1222d357ea134c489755a8c28750630d573c7f1be72262fb4",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "B-FINAL-G-02",
+        "arm": "control",
+        "path": "assessment/B-FINAL-G-02/control-v1/assessment.json",
+        "sha256": "5c83bc6a76f4ffa6392306430fc922f56d59da90dac183cbc1342c1edd50fb94",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-G-02-control-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/B-FINAL-G-02/control-v1/assessment.json",
+        "original_sha256": "5c83bc6a76f4ffa6392306430fc922f56d59da90dac183cbc1342c1edd50fb94",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/B-FINAL-G-02/control-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/B-FINAL-G-02/control-v1/source-map.json",
+          "original_sha256": "b547e236a6f0ee36a726b1530527ba6659a51d7893b612b2868a8e952b8b8401",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "B-FINAL-G-02",
+        "arm": "treatment",
+        "path": "assessment/B-FINAL-G-02/treatment-v1/assessment.json",
+        "sha256": "1fe1afb5a99637ec19ac33cb9e93a2506082b8f1426a85e0ed42ff45cd3f4ee7",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-G-02-treatment-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/B-FINAL-G-02/treatment-v1/assessment.json",
+        "original_sha256": "1fe1afb5a99637ec19ac33cb9e93a2506082b8f1426a85e0ed42ff45cd3f4ee7",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/B-FINAL-G-02/treatment-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/B-FINAL-G-02/treatment-v1/source-map.json",
+          "original_sha256": "d48aea0629c1293c9adf90638a660c739303c0cd8eed1fd55f23d5fc80da544c",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "B-FINAL-M-01",
+        "arm": "control",
+        "path": "assessment/B-FINAL-M-01/control-v1/assessment.json",
+        "sha256": "92c6564d988c342d0d1fba8314365d36949931409890c2add08d48d6a8a8f090",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-M-01-control-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/B-FINAL-M-01/control-v1/assessment.json",
+        "original_sha256": "92c6564d988c342d0d1fba8314365d36949931409890c2add08d48d6a8a8f090",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/B-FINAL-M-01/control-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/B-FINAL-M-01/control-v1/source-map.json",
+          "original_sha256": "6c4019c3caa8e096626e2aa2a43c25fd7614bae6771f8819777da1815477aa74",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "B-FINAL-M-01",
+        "arm": "treatment",
+        "path": "assessment/B-FINAL-M-01/treatment-v1/assessment.json",
+        "sha256": "0c9b49e342128008e3f00d031ee7a87cdf46caeeac40624130666f61d5eb67f7",
+        "source_judgment": "FAIL",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-M-01-treatment-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/B-FINAL-M-01/treatment-v1/assessment.json",
+        "original_sha256": "0c9b49e342128008e3f00d031ee7a87cdf46caeeac40624130666f61d5eb67f7",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/B-FINAL-M-01/treatment-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/B-FINAL-M-01/treatment-v1/source-map.json",
+          "original_sha256": "3a4515d594dab53171560b0b4954349a7aece950ae9e48b39371a9153b74b41b",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "B-FINAL-M-02",
+        "arm": "control",
+        "path": "assessment/B-FINAL-M-02/control-v1/assessment.json",
+        "sha256": "08f5ad60d830c84f04f8aa1a0e4089a8af45bbeafaf375bf990f7721cb12fe1c",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-M-02-control-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/B-FINAL-M-02/control-v1/assessment.json",
+        "original_sha256": "08f5ad60d830c84f04f8aa1a0e4089a8af45bbeafaf375bf990f7721cb12fe1c",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/B-FINAL-M-02/control-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/B-FINAL-M-02/control-v1/source-map.json",
+          "original_sha256": "35516000a515587f928a2a2d27a53ef0861f0300bf2af232de5cec2273d36e4b",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    },
+    {
+      "freeze": {
+        "slot": "B-FINAL-M-02",
+        "arm": "treatment",
+        "path": "assessment/B-FINAL-M-02/treatment-v1/assessment.json",
+        "sha256": "c509eb0538228b151aab4f4743691a1fe1fd9e213a3543c726c88dfafcb6a1f5",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-M-02-treatment-v1"
+      },
+      "assessment": {
+        "public_path": "assessment/B-FINAL-M-02/treatment-v1/assessment.json",
+        "original_sha256": "c509eb0538228b151aab4f4743691a1fe1fd9e213a3543c726c88dfafcb6a1f5",
+        "json_pointer": ""
+      },
+      "assessment_markdown": {
+        "public_path": "assessment/B-FINAL-M-02/treatment-v1/assessment.md"
+      },
+      "source_maps": [
+        {
+          "public_path": "assessment/B-FINAL-M-02/treatment-v1/source-map.json",
+          "original_sha256": "bccecf8d4fbc5a0745bfb4b963c047fe6c84a94bbaf245b991a3e6e03fd069de",
+          "json_pointer": ""
+        }
+      ],
+      "full_private_original": "publication-cohort4/private/originals/analysis/AB-synthesis-v1/original-evidence.json"
+    }
+  ],
+  "projection": "Lossless locators replace duplicate embedded originals; source bodies have separate private omission/hash map."
+}

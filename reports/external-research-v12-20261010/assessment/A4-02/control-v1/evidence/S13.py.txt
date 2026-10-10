@@ -1,0 +1,92 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://github.com/dateutil/dateutil/blob/2.7.0/dateutil/rrule.py#L1499-L1612",
+    "https://raw.githubusercontent.com/dateutil/dateutil/2.7.0/dateutil/rrule.py"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A4-02/control-v1/source-map.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {
+        "version": "dateutil/rrule.py at tag 2.7.0; release tag commit 51bda94",
+        "conditions": "Resolved TZID is attached only to a naive parsed start; a start already having a zone raises multiple-timezones error in that branch. Full VCALENDAR/VTIMEZONE/RECURRENCE-ID input is outside this parser; TZID EXDATE parameters are rejected in this version."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A4-02/control-v1/source-map.json",
+      "source_id": "S13",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/A4-02/control-v1/evidence/retrievals.json",
+      "source_id": "S13",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": "_parse_rfc and surrounding parser branches, original code lines 1430–1654"
+    },
+    {
+      "text_lines": [
+        [
+          1430,
+          1654
+        ]
+      ]
+    },
+    {
+      "text_lines": 1654
+    },
+    {
+      "text_lines": 1654
+    }
+  ],
+  "raw_sha256": "01d13dc3fb62124e5d8c5694177cad5445e98fa7ddde512b8e39ef51bd77dc63",
+  "original_bytes": 63905,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A4-02/control-v1/evidence/S13.py.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://github.com/dateutil/dateutil/blob/2.7.0/dateutil/rrule.py#L1499-L1612",
+    "https://raw.githubusercontent.com/dateutil/dateutil/2.7.0/dateutil/rrule.py"
+  ],
+  "version": [
+    {
+      "version": "dateutil/rrule.py at tag 2.7.0; release tag commit 51bda94",
+      "conditions": "Resolved TZID is attached only to a naive parsed start; a start already having a zone raises multiple-timezones error in that branch. Full VCALENDAR/VTIMEZONE/RECURRENCE-ID input is outside this parser; TZID EXDATE parameters are rejected in this version."
+    }
+  ],
+  "selector": [
+    {
+      "locator": "_parse_rfc and surrounding parser branches, original code lines 1430–1654"
+    },
+    {
+      "text_lines": [
+        [
+          1430,
+          1654
+        ]
+      ]
+    },
+    {
+      "text_lines": 1654
+    },
+    {
+      "text_lines": 1654
+    }
+  ],
+  "conditions": [
+    {
+      "version": "dateutil/rrule.py at tag 2.7.0; release tag commit 51bda94",
+      "conditions": "Resolved TZID is attached only to a naive parsed start; a start already having a zone raises multiple-timezones error in that branch. Full VCALENDAR/VTIMEZONE/RECURRENCE-ID input is outside this parser; TZID EXDATE parameters are rejected in this version."
+    }
+  ],
+  "rawSHA256": "01d13dc3fb62124e5d8c5694177cad5445e98fa7ddde512b8e39ef51bd77dc63"
+}

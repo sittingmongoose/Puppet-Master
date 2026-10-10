@@ -1,0 +1,95 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://www.crossref.org/documentation/retrieve-metadata/"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A7-02/treatment-v1/source-map.json",
+      "source_id": "S17",
+      "existing_authored_summary_fields": {
+        "independently_observed_version": "Help updated 2025-10-16",
+        "reviewer_observation": "Metadata primarily comes from member deposits, with reciprocal relationships, alias information and matching/enrichment added by Crossref.",
+        "condition_default_exception_domain": "Public access is not curator approval. Abstracts have separate copyright conditions; the proposal exports citations/links and does not recommend abstracts or full text."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A7-02/treatment-v1/source-map.json",
+      "source_id": "S17",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/A7-02/treatment-v1/evidence/retrievals.json",
+      "source_id": "S17",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": "Sources of metadata; Enrichments; Licensing"
+    },
+    {
+      "local_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S17.txt",
+          "first_line": 314,
+          "last_line": 346
+        }
+      ]
+    },
+    {
+      "text_lines": 395
+    },
+    {
+      "text_lines": 395
+    }
+  ],
+  "raw_sha256": "28db97fbc6b9a835a0fc27d13399b4b4bd1a28c291d93cfc8d81928695c794ea",
+  "original_bytes": 19692,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A7-02/treatment-v1/evidence/S17.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://www.crossref.org/documentation/retrieve-metadata/"
+  ],
+  "version": [
+    {
+      "independently_observed_version": "Help updated 2025-10-16",
+      "reviewer_observation": "Metadata primarily comes from member deposits, with reciprocal relationships, alias information and matching/enrichment added by Crossref.",
+      "condition_default_exception_domain": "Public access is not curator approval. Abstracts have separate copyright conditions; the proposal exports citations/links and does not recommend abstracts or full text."
+    }
+  ],
+  "selector": [
+    {
+      "locator": "Sources of metadata; Enrichments; Licensing"
+    },
+    {
+      "local_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S17.txt",
+          "first_line": 314,
+          "last_line": 346
+        }
+      ]
+    },
+    {
+      "text_lines": 395
+    },
+    {
+      "text_lines": 395
+    }
+  ],
+  "conditions": [
+    {
+      "independently_observed_version": "Help updated 2025-10-16",
+      "reviewer_observation": "Metadata primarily comes from member deposits, with reciprocal relationships, alias information and matching/enrichment added by Crossref.",
+      "condition_default_exception_domain": "Public access is not curator approval. Abstracts have separate copyright conditions; the proposal exports citations/links and does not recommend abstracts or full text."
+    }
+  ],
+  "rawSHA256": "28db97fbc6b9a835a0fc27d13399b4b4bd1a28c291d93cfc8d81928695c794ea"
+}

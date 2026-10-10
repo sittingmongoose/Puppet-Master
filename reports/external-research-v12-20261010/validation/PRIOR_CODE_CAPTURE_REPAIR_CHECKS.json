@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "scope": "all current public privacy/JSON/Python/JavaScript syntax; typed capsules skip code syntax; exact five repair",
+  "parse": {
+    "json": 2693,
+    "typed_capsules": 1980,
+    "python": 50,
+    "javascript": 35
+  },
+  "original_invalid_JSON_diagnostics_preserved": [
+    {
+      "path": "runs/B-APPL-G-01/treatment/stages/role/goal_activation.json",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "parse_error": "Expecting value: line 1 column 1 (char 0)",
+      "kind": "actual zero-byte failed native-activation diagnostic; preserved unchanged",
+      "native_goal_proof": false
+    },
+    {
+      "path": "runs/A3-02/control/stages/reviser/native-goal-active-confirmation.json",
+      "bytes": 429,
+      "sha256": "841f9305457f7ab06f41d04b732cd0f7eb5f32415cef5cb0367b7598d0fd07c0",
+      "parse_error": "Extra data: line 1 column 428 (char 427)",
+      "kind": "actual authored/native diagnostic contains extra JSON data; original structure preserved with sanitation only",
+      "native_goal_proof": "Not inferred from malformed JSON"
+    }
+  ],
+  "frozen_original_judgment_hashes_unchanged": 60,
+  "prior_repairs_unchanged": 233,
+  "new_cohort4_capsules_unchanged": 1749,
+  "authored_outputs_unchanged": true,
+  "offline_tests_rerun": false,
+  "new_source_fetch": false,
+  "source_quotes": 0,
+  "earlier_cohort4_READY_unchanged": "96ed0548e46d31bf3e3ade7012cf9e19b122ea14c2705bedca4811571fc75374"
+}

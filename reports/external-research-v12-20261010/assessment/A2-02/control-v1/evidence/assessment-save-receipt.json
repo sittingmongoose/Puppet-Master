@@ -1,0 +1,379 @@
+{
+  "saved_before_native_completion": true,
+  "sealed_at_utc": "2026-10-10T06:01:50.077827+00:00",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "judgment_files": [
+    "assessment.md",
+    "assessment.json",
+    "source-map.json"
+  ],
+  "local_navigation_verified": true,
+  "temporary_writer_removed": true,
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/assessment.json",
+      "bytes": 192828,
+      "sha256": "5c0623d45990f84fe5c578963f1656effe9858c313142e17d8c100d15927e75b"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/assessment.md",
+      "bytes": 62032,
+      "sha256": "3ab14138ffa22fbd1c1ef9787ff34d391fb9d09ffc1044bba78095bb37d2fb42"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/E23.json",
+      "bytes": 18147,
+      "sha256": "fd28b29c92c7c05244cf2ece89d24421dec20002bf10bc6cd2c5d85ebdc26f62"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/E24.json",
+      "bytes": 842,
+      "sha256": "2a682689cc15b91cd4e58ea19a92f05aeeeb7d632edfded7771af8f6e15596cb"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/E25.json",
+      "bytes": 6395,
+      "sha256": "714406bc9a89fd42f97a401caf1085e70290a55beeac3ffed893fd380db85b42"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/E26.json",
+      "bytes": 1926,
+      "sha256": "a9c181e9d423e41c44154608bac083207973833bb659f8ec964f5869ea05b4e5"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/E27.json",
+      "bytes": 2034,
+      "sha256": "e3644a0dfdf8a2a38d4872e9b223108686ab00a721834093e10337e698b96999"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/E28.json",
+      "bytes": 5914,
+      "sha256": "82d08bc0ff5fb01245d20362e806e64b38c4ed6d7ac88d4c3f14fcfc7b274288"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/E29-settings.js",
+      "bytes": 19242,
+      "sha256": "9c25e7dd75ec4162716c9faa8d7a1ccffaec3820c861924461baf3462a0fe917"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/E30.json",
+      "bytes": 85562,
+      "sha256": "cc56660a94a59a408554c0b174bc0fe812e74c69c705d7b05b316810dfd956f8"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/E31.json",
+      "bytes": 1615,
+      "sha256": "7ab247a23d527a51c35816ec1e38e71f67e090f3ca8dd6d3225b84320046ccd1"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/E32.json",
+      "bytes": 1487,
+      "sha256": "f995e0b905dea1a5311069ea8f5b23f56fe3517908d0527a3ae40b6fefade55d"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/E33.html",
+      "bytes": 388767,
+      "sha256": "1525e19ab8dae4756399e887fb7923228c6cce4b5a6cc9451c8f4e6fcc730138"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/E33.txt",
+      "bytes": 11572,
+      "sha256": "416ee68e3a5e166381c1293b3c75fcec11fc886f8bdaa383f0a93d1c5b5e507a"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S1.html",
+      "bytes": 385826,
+      "sha256": "3e4cad9a0ff652e0905c4bd15a27c8d68e208dd34c1d55102870419e5ca5f77e"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S1.txt",
+      "bytes": 116193,
+      "sha256": "609d6f1c3a3a68578d2909c9d4218434768f1311cafb37860c96f34f4e649489"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S10.html",
+      "bytes": 322052,
+      "sha256": "92f0add99331eb8ec25431b0cb9ac09ab8cf641d7ccc3a7fc9137fa8fd01688a"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S10.txt",
+      "bytes": 7871,
+      "sha256": "cfe7e2d0bf777d27dbf435723f8585bec464f3a75e6f391e4cd55b4df23bc4af"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S11.html",
+      "bytes": 18486,
+      "sha256": "57f3a7558c44989ab7f1d8d71f48752a2ad3fabb4b01920efddf22c3e29e7967"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S11.txt",
+      "bytes": 4052,
+      "sha256": "babec2515ffe57c19031aeb306e79890211cd7c3984e2cc3e7294aa57385aa2e"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S12.html",
+      "bytes": 282373,
+      "sha256": "339976069b69ab6b674f1a5d54e52d20129f04d9ad29bbc169b08c785372ca6a"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S12.txt",
+      "bytes": 10899,
+      "sha256": "ab27d5745f0230056d7ef748fb9a0f4b415d6c2d03c5c15028dbd0b5b0d88819"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S13.html",
+      "bytes": 290018,
+      "sha256": "313bd5110ab2d1e989e3b1a114bd606b3f258a98f17719f5ecc0fae24650eddb"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S13.txt",
+      "bytes": 5320,
+      "sha256": "b6291b0b81f309adb6b53da388cfb819baa4e71a666ef275ec2f3e7a9dfadbe3"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S14.html",
+      "bytes": 353821,
+      "sha256": "170e6001fc7b5e3410a9d001662440c5d0f5fbc6f88cbe654d18f66bfbb2afdd"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S14.txt",
+      "bytes": 5613,
+      "sha256": "f502b31ebd07db312b3b43d442de1a97f025c41b7602a71197ef086a2b221da9"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S15.html",
+      "bytes": 334102,
+      "sha256": "55e59929469aee42ce8aa1866948125878c99e621a5315374df42bb8f8c84b27"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S15.txt",
+      "bytes": 7048,
+      "sha256": "007f9127dc7fe5b04c1711f7de317ff09c1e9211c776560b9e47b336918ea702"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S16.html",
+      "bytes": 228141,
+      "sha256": "ed225f1b7f38ff420d400fbb34510309b47bc83353730f25211fb36354d41b6d"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S16.txt",
+      "bytes": 5566,
+      "sha256": "72c94cf80bfa0210522e0904225d5f96ee81c79f7bc9453088466c54eeeac663"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S17.html",
+      "bytes": 577004,
+      "sha256": "0e5d7fe3b5107850cdee298507629d05e476f392d47089bb522651c53d179c0c"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S17.txt",
+      "bytes": 23261,
+      "sha256": "92cd08fc701ccb630a5b19567cfdf74956cb95b45d7310f5a0670853813e8011"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S18.html",
+      "bytes": 387232,
+      "sha256": "b2068697e4577614642c37e867fdd7a17ce78e6c82ddd0cdcf3ee77720fb1939"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S18.txt",
+      "bytes": 9830,
+      "sha256": "df2963a4f9cbb0a67bb0c946acec405d2dd536f0a61140ea51fb46635d508ac4"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S19.html",
+      "bytes": 74137,
+      "sha256": "907aead9a3a8224095e7abc9722220e77add1abbc29c9d5c278203a90d983104"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S19.txt",
+      "bytes": 5208,
+      "sha256": "f18b46c73a7e6d2ad14308ee68173329645293651aa4fa8f5888c7d482c2fe5b"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S2.html",
+      "bytes": 310181,
+      "sha256": "67f7247d11409bd6736edbd0f474f553ea715f0e60a7f06b25a5eebf30221f1c"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S2.txt",
+      "bytes": 98646,
+      "sha256": "04647fc6fe6edfe623dcf9e89dc35bc3cb25868e1cf38f1b6ecf76c3764aacce"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S20.html",
+      "bytes": 67181,
+      "sha256": "830a2fab8cc71a0e01b0426aff4e2ec96f668d8ae4dbf3913d034ef8c7508b6d"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S20.txt",
+      "bytes": 7289,
+      "sha256": "6203921ee8e3b022ab09d0a4c6cf05ee72554852cf883ca1b230e55bccb478be"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S21.html",
+      "bytes": 17037,
+      "sha256": "a873ca90943773d151cd650e4b06c4441539713f4990f1e9c65989187a254467"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S21.txt",
+      "bytes": 3723,
+      "sha256": "87d06cc6454cb1119936539857bb05631ca6c108934db7765fa00f92eb086cfe"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S22.json",
+      "bytes": 1824925,
+      "sha256": "fd36ac608dceece586fda5ffa4e7133cf04be466a070264f445d0221c815afb5"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S22.txt",
+      "bytes": 1824925,
+      "sha256": "fd36ac608dceece586fda5ffa4e7133cf04be466a070264f445d0221c815afb5"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S3.html",
+      "bytes": 71875,
+      "sha256": "a1c25c702c13ef5cea91be23888aa77279c389c1b08530f0ab4658b4faf66e35"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S3.txt",
+      "bytes": 26537,
+      "sha256": "b7ed91040fa3a7ec799f28b61d64e15a15c5b37418841d71de1c306eb435a047"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S4.html",
+      "bytes": 284185,
+      "sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S4.txt",
+      "bytes": 119598,
+      "sha256": "fe63a09888c643200ff57a14c0962d7ae3934b304118aa53326dd0f44dd25105"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S5.html",
+      "bytes": 89887,
+      "sha256": "ecbaffe292d75c6d70f31b406475dd6e678440f92be34aa468fda67fb4217d9e"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S5.txt",
+      "bytes": 62092,
+      "sha256": "285630423ed0c30133542fb1272daf583a8737a3579296261d427d06f3c1e9b4"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S6.html",
+      "bytes": 145643,
+      "sha256": "efcbafb8055c5bfb2880def63f1368b7db47db868f6444ac517764ceeb2180c3"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S6.txt",
+      "bytes": 51759,
+      "sha256": "01ba93a2038b630c671443e49c445846849a6e56ca7e1feeaa1b48d0f0b1e995"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S7.html",
+      "bytes": 17599,
+      "sha256": "1ae2467ff53bca8ca51b64612abbceab089523e5b1cbbed1bb34ae76b8d3b504"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S7.txt",
+      "bytes": 3395,
+      "sha256": "e78f17840a460770b308e026a147a2fee390faa037d39fd5cbf26c386ea87665"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S8.html",
+      "bytes": 19397,
+      "sha256": "d23fe75aa4b8c9089509316f201d30521a719ee2c0ece8deb06d2d00fce7c2b7"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S8.txt",
+      "bytes": 3989,
+      "sha256": "8ceb7233454c187ddf57bff58442246fe8c0a1add71e36318bb7875be9020a06"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S9.html",
+      "bytes": 18564,
+      "sha256": "fc61502ef1f4b8267a64f0b069f01b79c2c1e8828a190ce6b2ecc8d46198a593"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/S9.txt",
+      "bytes": 4741,
+      "sha256": "02a70b8d0a52f185fb2eed17906d98e3262d8c6f79ebd79e96560071aa1ce789"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/authored-source-evidence-inventory.json",
+      "bytes": 1089,
+      "sha256": "489e74d05ef257fe4f8f01cbbd4569df21ea995ef8b7ef8f215233a9644aabcc"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/index.md",
+      "bytes": 30901,
+      "sha256": "1779a0b3fd95a69b07d2e1e3be1bf4513cac8f4c6a3055ad25a7012fa8e70c2b"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/opportunity-retrievals.json",
+      "bytes": 1276,
+      "sha256": "6184cf1d950b8428524d1aad84c84016c35eb2221c5e2a11d2f15c68fcf3479d"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/original-inventory-start.json",
+      "bytes": 16113,
+      "sha256": "f17ea928312b062b34b2d2e299b91b24ed947db3123b17c418d8f25f2d851f07"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/original-preservation-check.json",
+      "bytes": 20412,
+      "sha256": "b550c50e1dd161e09cf598ffe1ed9ae82c8d809b9b9a6bc2d95222e50d73feca"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/package-tree-retrieval.json",
+      "bytes": 398,
+      "sha256": "14519556f83f58acc061923d088b9b0d507fc6f739ae3a260ceb8e64d067039b"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/released-source-retrieval.json",
+      "bytes": 444,
+      "sha256": "8057155e0de412e6943c13af4eb0d1e89c7bb99cb4c0cfc80ee24af3e9ced97e"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/retrievals.json",
+      "bytes": 63587,
+      "sha256": "4c466ff71560dddaacd0371e203c719be2c4496769b76c8dfbe3a7500c14e7e9"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/reviewer-goal-observation.json",
+      "bytes": 1436,
+      "sha256": "690dc4020cb15e5ea98d2d20bceefb60156237bcb36254ac8f178889f8ee6c7d"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/stage-freeze-checks.json",
+      "bytes": 7321,
+      "sha256": "680f872bd5c63cb1488fabb11d392adb20e11267a46a392d3ddb94fc0967e5ce"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/stage-native-timing.json",
+      "bytes": 12247,
+      "sha256": "807eb9ddbe1a61d12533314579fbf9e2187df0a6b71ccabdaf682a27c4fbb470"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/supplemental-retrievals.json",
+      "bytes": 2436,
+      "sha256": "1b8f02678343f607fc1ab9db7020a7c146427f1e08a2c7c95e6e72f8239e869f"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/evidence/terminal-freeze-check.json",
+      "bytes": 1458,
+      "sha256": "2fa50dca6bef656fe11a297683e10a2c1bea02685c8e2b9450a791c97e78ecc2"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/root-review-request.json",
+      "bytes": 3593,
+      "sha256": "1d522659efd0474671bf3d12585ba700437a14f32f63c961148f1ff32f41bde0"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/source-map.json",
+      "bytes": 124581,
+      "sha256": "623330afdff26410f2724126ce8730f6b36396c06d70267144fef4f28a2ecb9c"
+    }
+  ]
+}

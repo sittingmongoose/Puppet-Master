@@ -1,0 +1,688 @@
+{
+  "selected_final_arms": [
+    {
+      "slot": "B-DISC-M-01",
+      "arm": "treatment",
+      "stage": "role",
+      "config": "configs/B-DISC-M-01-treatment.json",
+      "requests": [
+        "runs/B-DISC-M-01/treatment/stages/role/request.json"
+      ],
+      "actual_scientist_outputs": "runs/B-DISC-M-01/treatment"
+    },
+    {
+      "slot": "B-DISC-M-01",
+      "arm": "control",
+      "stage": "role",
+      "config": "configs/B-DISC-M-01-control.json",
+      "requests": [
+        "runs/B-DISC-M-01/control/stages/role/request.json"
+      ],
+      "actual_scientist_outputs": "runs/B-DISC-M-01/control"
+    },
+    {
+      "slot": "B-APPL-G-01",
+      "arm": "control",
+      "stage": "role",
+      "config": "configs/B-APPL-G-01-control.json",
+      "requests": [
+        "runs/B-APPL-G-01/control/stages/role/request.json"
+      ],
+      "actual_scientist_outputs": "runs/B-APPL-G-01/control"
+    },
+    {
+      "slot": "B-APPL-G-01",
+      "arm": "treatment",
+      "stage": "role",
+      "config": "configs/B-APPL-G-01-treatment.json",
+      "requests": [
+        "runs/B-APPL-G-01/treatment/stages/role/request.json"
+      ],
+      "actual_scientist_outputs": "runs/B-APPL-G-01/treatment"
+    },
+    {
+      "slot": "B-APPL-M-01",
+      "arm": "control",
+      "stage": "role",
+      "config": "configs/B-APPL-M-01-control.json",
+      "requests": [
+        "runs/B-APPL-M-01/control/stages/role/request.json"
+      ],
+      "actual_scientist_outputs": "runs/B-APPL-M-01/control"
+    },
+    {
+      "slot": "B-APPL-M-01",
+      "arm": "treatment",
+      "stage": "role",
+      "config": "configs/B-APPL-M-01-treatment.json",
+      "requests": [
+        "runs/B-APPL-M-01/treatment/stages/role/request.json"
+      ],
+      "actual_scientist_outputs": "runs/B-APPL-M-01/treatment"
+    },
+    {
+      "slot": "B-FINAL-G-01",
+      "arm": "treatment",
+      "stage": "role",
+      "config": "configs/B-FINAL-G-01-treatment.json",
+      "requests": [
+        "runs/B-FINAL-G-01/treatment/stages/role/request.json"
+      ],
+      "actual_scientist_outputs": "runs/B-FINAL-G-01/treatment"
+    },
+    {
+      "slot": "B-FINAL-G-01",
+      "arm": "control",
+      "stage": "role",
+      "config": "configs/B-FINAL-G-01-control.json",
+      "requests": [
+        "runs/B-FINAL-G-01/control/stages/role/request.json"
+      ],
+      "actual_scientist_outputs": "runs/B-FINAL-G-01/control"
+    },
+    {
+      "slot": "A2-01",
+      "arm": "treatment",
+      "stage": "investigator",
+      "config": "configs/A2-01-treatment.json",
+      "requests": [
+        "runs/A2-01/treatment/stages/critic/request.json",
+        "runs/A2-01/treatment/stages/investigator/request.json"
+      ],
+      "actual_scientist_outputs": "runs/A2-01/treatment"
+    },
+    {
+      "slot": "A4-01",
+      "arm": "control",
+      "stage": "reviser",
+      "config": "configs/A4-01-control.json",
+      "requests": [
+        "runs/A4-01/control/stages/reviser/request.json",
+        "runs/A4-01/control/stages/critic/request.json",
+        "runs/A4-01/control/stages/investigator/request.json"
+      ],
+      "actual_scientist_outputs": "runs/A4-01/control"
+    },
+    {
+      "slot": "B-APPL-M-02",
+      "arm": "treatment",
+      "stage": "role",
+      "config": "configs/B-APPL-M-02-treatment.json",
+      "requests": [
+        "runs/B-APPL-M-02/treatment/stages/role/request.json"
+      ],
+      "actual_scientist_outputs": "runs/B-APPL-M-02/treatment"
+    },
+    {
+      "slot": "B-APPL-M-02",
+      "arm": "control",
+      "stage": "role",
+      "config": "configs/B-APPL-M-02-control.json",
+      "requests": [
+        "runs/B-APPL-M-02/control/stages/role/request.json"
+      ],
+      "actual_scientist_outputs": "runs/B-APPL-M-02/control"
+    },
+    {
+      "slot": "B-FINAL-M-01",
+      "arm": "control",
+      "stage": "role",
+      "config": "configs/B-FINAL-M-01-control.json",
+      "requests": [
+        "runs/B-FINAL-M-01/control/stages/role/request.json"
+      ],
+      "actual_scientist_outputs": "runs/B-FINAL-M-01/control"
+    },
+    {
+      "slot": "B-FINAL-M-01",
+      "arm": "treatment",
+      "stage": "role",
+      "config": "configs/B-FINAL-M-01-treatment.json",
+      "requests": [
+        "runs/B-FINAL-M-01/treatment/stages/role/request.json"
+      ],
+      "actual_scientist_outputs": "runs/B-FINAL-M-01/treatment"
+    },
+    {
+      "slot": "A1-01",
+      "arm": "control",
+      "stage": "reviser",
+      "config": "configs/A1-01-control.json",
+      "requests": [
+        "runs/A1-01/control/stages/reviser/request.json",
+        "runs/A1-01/control/stages/critic/request.json",
+        "runs/A1-01/control/stages/investigator/request.json"
+      ],
+      "actual_scientist_outputs": "runs/A1-01/control"
+    },
+    {
+      "slot": "A1-01",
+      "arm": "treatment",
+      "stage": "reviser",
+      "config": "configs/A1-01-treatment.json",
+      "requests": [
+        "runs/A1-01/treatment/stages/reviser/request.json",
+        "runs/A1-01/treatment/stages/critic/request.json",
+        "runs/A1-01/treatment/stages/investigator/request.json"
+      ],
+      "actual_scientist_outputs": "runs/A1-01/treatment"
+    },
+    {
+      "slot": "A3-01",
+      "arm": "control",
+      "stage": "reviser",
+      "config": "configs/A3-01-control.json",
+      "requests": [
+        "runs/A3-01/control/stages/reviser/request.json",
+        "runs/A3-01/control/stages/critic/request.json",
+        "runs/A3-01/control/stages/investigator/request.json"
+      ],
+      "actual_scientist_outputs": "runs/A3-01/control"
+    },
+    {
+      "slot": "A6-01",
+      "arm": "treatment",
+      "stage": "reviser",
+      "config": "configs/A6-01-treatment.json",
+      "requests": [
+        "runs/A6-01/treatment/stages/reviser/request.json",
+        "runs/A6-01/treatment/stages/critic/request.json",
+        "runs/A6-01/treatment/stages/investigator/request.json"
+      ],
+      "actual_scientist_outputs": "runs/A6-01/treatment"
+    },
+    {
+      "slot": "A1-02",
+      "arm": "control",
+      "stage": "reviser",
+      "config": "configs/A1-02-control.json",
+      "requests": [
+        "runs/A1-02/control/stages/reviser/request.json",
+        "runs/A1-02/control/stages/critic/request.json",
+        "runs/A1-02/control/stages/investigator/request.json"
+      ],
+      "actual_scientist_outputs": "runs/A1-02/control"
+    },
+    {
+      "slot": "A6-01",
+      "arm": "control",
+      "stage": "reviser",
+      "config": "configs/A6-01-control.json",
+      "requests": [
+        "runs/A6-01/control/stages/reviser/request.json",
+        "runs/A6-01/control/stages/critic/request.json",
+        "runs/A6-01/control/stages/investigator/request.json"
+      ],
+      "actual_scientist_outputs": "runs/A6-01/control"
+    },
+    {
+      "slot": "A3-01",
+      "arm": "treatment",
+      "stage": "reviser",
+      "config": "configs/A3-01-treatment.json",
+      "requests": [
+        "runs/A3-01/treatment/stages/reviser/request.json",
+        "runs/A3-01/treatment/stages/critic/request.json",
+        "runs/A3-01/treatment/stages/investigator/request.json"
+      ],
+      "actual_scientist_outputs": "runs/A3-01/treatment"
+    },
+    {
+      "slot": "A1-02",
+      "arm": "treatment",
+      "stage": "reviser",
+      "config": "configs/A1-02-treatment.json",
+      "requests": [
+        "runs/A1-02/treatment/stages/reviser/request.json",
+        "runs/A1-02/treatment/stages/critic/request.json",
+        "runs/A1-02/treatment/stages/investigator/request.json"
+      ],
+      "actual_scientist_outputs": "runs/A1-02/treatment"
+    },
+    {
+      "slot": "A4-01",
+      "arm": "treatment",
+      "stage": "reviser",
+      "config": "configs/A4-01-treatment.json",
+      "requests": [
+        "runs/A4-01/treatment/stages/reviser/request.json",
+        "runs/A4-01/treatment/stages/critic/request.json",
+        "runs/A4-01/treatment/stages/investigator/request.json"
+      ],
+      "actual_scientist_outputs": "runs/A4-01/treatment"
+    },
+    {
+      "slot": "A7-01",
+      "arm": "treatment",
+      "stage": "critic-finalizer",
+      "config": "configs/A7-01-treatment.json",
+      "requests": [
+        "runs/A7-01/treatment/stages/critic-finalizer/request.json",
+        "runs/A7-01/treatment/stages/investigator/request.json"
+      ],
+      "actual_scientist_outputs": "runs/A7-01/treatment"
+    },
+    {
+      "slot": "A8-01",
+      "arm": "treatment",
+      "stage": "reviser",
+      "config": "configs/A8-01-treatment.json",
+      "requests": [
+        "runs/A8-01/treatment/stages/reviser/request.json",
+        "runs/A8-01/treatment/stages/critic/request.json",
+        "runs/A8-01/treatment/stages/investigator/request.json"
+      ],
+      "actual_scientist_outputs": "runs/A8-01/treatment"
+    },
+    {
+      "slot": "A5-01",
+      "arm": "treatment",
+      "stage": "reviser",
+      "config": "configs/A5-01-treatment.json",
+      "requests": [
+        "runs/A5-01/treatment/stages/reviser/request.json",
+        "runs/A5-01/treatment/stages/critic/request.json",
+        "runs/A5-01/treatment/stages/investigator/request.json"
+      ],
+      "actual_scientist_outputs": "runs/A5-01/treatment"
+    },
+    {
+      "slot": "A8-01",
+      "arm": "control",
+      "stage": "reviser",
+      "config": "configs/A8-01-control.json",
+      "requests": [
+        "runs/A8-01/control/stages/reviser/request.json",
+        "runs/A8-01/control/stages/critic/request.json",
+        "runs/A8-01/control/stages/investigator/request.json"
+      ],
+      "actual_scientist_outputs": "runs/A8-01/control"
+    },
+    {
+      "slot": "B-DISC-M-02",
+      "arm": "treatment",
+      "stage": "role",
+      "config": "configs/B-DISC-M-02-treatment.json",
+      "requests": [
+        "runs/B-DISC-M-02/treatment/stages/role/request.json"
+      ],
+      "actual_scientist_outputs": "runs/B-DISC-M-02/treatment"
+    },
+    {
+      "slot": "B-DISC-M-02",
+      "arm": "control",
+      "stage": "role",
+      "config": "configs/B-DISC-M-02-control.json",
+      "requests": [
+        "runs/B-DISC-M-02/control/stages/role/request.json"
+      ],
+      "actual_scientist_outputs": "runs/B-DISC-M-02/control"
+    },
+    {
+      "slot": "A5-01",
+      "arm": "control",
+      "stage": "reviser",
+      "config": "configs/A5-01-control.json",
+      "requests": [
+        "runs/A5-01/control/stages/reviser/request.json",
+        "runs/A5-01/control/stages/critic/request.json",
+        "runs/A5-01/control/stages/investigator/request.json"
+      ],
+      "actual_scientist_outputs": "runs/A5-01/control"
+    },
+    {
+      "slot": "A2-01",
+      "arm": "control",
+      "stage": "reviser",
+      "config": "configs/A2-01-control.json",
+      "requests": [
+        "runs/A2-01/control/stages/reviser/request.json",
+        "runs/A2-01/control/stages/critic/request.json",
+        "runs/A2-01/control/stages/investigator/request.json"
+      ],
+      "actual_scientist_outputs": "runs/A2-01/control"
+    },
+    {
+      "slot": "A7-02",
+      "arm": "treatment",
+      "stage": "critic-finalizer",
+      "config": "configs/A7-02-treatment.json",
+      "requests": [
+        "runs/A7-02/treatment/stages/critic-finalizer/request.json",
+        "runs/A7-02/treatment/stages/investigator/request.json"
+      ],
+      "actual_scientist_outputs": "runs/A7-02/treatment"
+    },
+    {
+      "slot": "A7-01",
+      "arm": "control",
+      "stage": "reviser",
+      "config": "configs/A7-01-control.json",
+      "requests": [
+        "runs/A7-01/control/stages/reviser/request.json",
+        "runs/A7-01/control/stages/critic/request.json",
+        "runs/A7-01/control/stages/investigator/request.json"
+      ],
+      "actual_scientist_outputs": "runs/A7-01/control"
+    },
+    {
+      "slot": "B-DISC-G-01",
+      "arm": "control",
+      "stage": "role",
+      "config": "configs/B-DISC-G-01-control.json",
+      "requests": [
+        "runs/B-DISC-G-01/control/stages/role/request.json"
+      ],
+      "actual_scientist_outputs": "runs/B-DISC-G-01/control"
+    },
+    {
+      "slot": "B-DISC-G-01",
+      "arm": "treatment",
+      "stage": "role",
+      "config": "configs/B-DISC-G-01-treatment.json",
+      "requests": [
+        "runs/B-DISC-G-01/treatment/stages/role/request.json"
+      ],
+      "actual_scientist_outputs": "runs/B-DISC-G-01/treatment"
+    },
+    {
+      "slot": "B-DISC-G-02",
+      "arm": "treatment",
+      "stage": "role",
+      "config": "configs/B-DISC-G-02-treatment.json",
+      "requests": [
+        "runs/B-DISC-G-02/treatment/stages/role/request.json"
+      ],
+      "actual_scientist_outputs": "runs/B-DISC-G-02/treatment"
+    },
+    {
+      "slot": "B-DISC-G-02",
+      "arm": "control",
+      "stage": "role",
+      "config": "configs/B-DISC-G-02-control.json",
+      "requests": [
+        "runs/B-DISC-G-02/control/stages/role/request.json"
+      ],
+      "actual_scientist_outputs": "runs/B-DISC-G-02/control"
+    },
+    {
+      "slot": "A7-02",
+      "arm": "control",
+      "stage": "reviser",
+      "config": "configs/A7-02-control.json",
+      "requests": [
+        "runs/A7-02/control/stages/reviser/request.json",
+        "runs/A7-02/control/stages/critic/request.json",
+        "runs/A7-02/control/stages/investigator/request.json"
+      ],
+      "actual_scientist_outputs": "runs/A7-02/control"
+    },
+    {
+      "slot": "A6-02",
+      "arm": "treatment",
+      "stage": "reviser",
+      "config": "configs/A6-02-treatment.json",
+      "requests": [
+        "runs/A6-02/treatment/stages/reviser/request.json",
+        "runs/A6-02/treatment/stages/critic/request.json",
+        "runs/A6-02/treatment/stages/investigator/request.json"
+      ],
+      "actual_scientist_outputs": "runs/A6-02/treatment"
+    },
+    {
+      "slot": "A6-02",
+      "arm": "control",
+      "stage": "reviser",
+      "config": "configs/A6-02-control.json",
+      "requests": [
+        "runs/A6-02/control/stages/reviser/request.json",
+        "runs/A6-02/control/stages/critic/request.json",
+        "runs/A6-02/control/stages/investigator/request.json"
+      ],
+      "actual_scientist_outputs": "runs/A6-02/control"
+    },
+    {
+      "slot": "A2-02",
+      "arm": "treatment",
+      "stage": "investigator",
+      "config": "configs/A2-02-treatment.json",
+      "requests": [
+        "runs/A2-02/treatment/stages/critic/request.json",
+        "runs/A2-02/treatment/stages/investigator/request.json"
+      ],
+      "actual_scientist_outputs": "runs/A2-02/treatment"
+    },
+    {
+      "slot": "B-APPL-G-02",
+      "arm": "treatment",
+      "stage": "role",
+      "config": "configs/B-APPL-G-02-treatment.json",
+      "requests": [
+        "runs/B-APPL-G-02/treatment/stages/role/request.json"
+      ],
+      "actual_scientist_outputs": "runs/B-APPL-G-02/treatment"
+    },
+    {
+      "slot": "B-APPL-G-02",
+      "arm": "control",
+      "stage": "role",
+      "config": "configs/B-APPL-G-02-control.json",
+      "requests": [
+        "runs/B-APPL-G-02/control/stages/role/request.json"
+      ],
+      "actual_scientist_outputs": "runs/B-APPL-G-02/control"
+    },
+    {
+      "slot": "A4-02",
+      "arm": "control",
+      "stage": "reviser",
+      "config": "configs/A4-02-control.json",
+      "requests": [
+        "runs/A4-02/control/stages/reviser/request.json",
+        "runs/A4-02/control/stages/critic/request.json",
+        "runs/A4-02/control/stages/investigator/request.json"
+      ],
+      "actual_scientist_outputs": "runs/A4-02/control"
+    },
+    {
+      "slot": "A3-02",
+      "arm": "control",
+      "stage": "reviser",
+      "config": "configs/A3-02-control.json",
+      "requests": [
+        "runs/A3-02/control/stages/reviser/request.json",
+        "runs/A3-02/control/stages/critic/request.json",
+        "runs/A3-02/control/stages/investigator/request.json"
+      ],
+      "actual_scientist_outputs": "runs/A3-02/control"
+    },
+    {
+      "slot": "B-FINAL-M-02",
+      "arm": "treatment",
+      "stage": "role",
+      "config": "configs/B-FINAL-M-02-treatment.json",
+      "requests": [
+        "runs/B-FINAL-M-02/treatment/stages/role/request.json"
+      ],
+      "actual_scientist_outputs": "runs/B-FINAL-M-02/treatment"
+    },
+    {
+      "slot": "B-FINAL-M-02",
+      "arm": "control",
+      "stage": "role",
+      "config": "configs/B-FINAL-M-02-control.json",
+      "requests": [
+        "runs/B-FINAL-M-02/control/stages/role/request.json"
+      ],
+      "actual_scientist_outputs": "runs/B-FINAL-M-02/control"
+    },
+    {
+      "slot": "A3-02",
+      "arm": "treatment",
+      "stage": "reviser",
+      "config": "configs/A3-02-treatment.json",
+      "requests": [
+        "runs/A3-02/treatment/stages/reviser/request.json",
+        "runs/A3-02/treatment/stages/critic/request.json",
+        "runs/A3-02/treatment/stages/investigator/request.json"
+      ],
+      "actual_scientist_outputs": "runs/A3-02/treatment"
+    },
+    {
+      "slot": "B-FINAL-G-02",
+      "arm": "treatment",
+      "stage": "role",
+      "config": "configs/B-FINAL-G-02-treatment.json",
+      "requests": [
+        "runs/B-FINAL-G-02/treatment/stages/role/request.json"
+      ],
+      "actual_scientist_outputs": "runs/B-FINAL-G-02/treatment"
+    },
+    {
+      "slot": "B-FINAL-G-02",
+      "arm": "control",
+      "stage": "role",
+      "config": "configs/B-FINAL-G-02-control.json",
+      "requests": [
+        "runs/B-FINAL-G-02/control/stages/role/request.json"
+      ],
+      "actual_scientist_outputs": "runs/B-FINAL-G-02/control"
+    },
+    {
+      "slot": "A8-02",
+      "arm": "control",
+      "stage": "reviser",
+      "config": "configs/A8-02-control.json",
+      "requests": [
+        "runs/A8-02/control/stages/reviser/request.json",
+        "runs/A8-02/control/stages/critic/request.json",
+        "runs/A8-02/control/stages/investigator/request.json"
+      ],
+      "actual_scientist_outputs": "runs/A8-02/control"
+    },
+    {
+      "slot": "A8-02",
+      "arm": "treatment",
+      "stage": "reviser",
+      "config": "configs/A8-02-treatment.json",
+      "requests": [
+        "runs/A8-02/treatment/stages/reviser/request.json",
+        "runs/A8-02/treatment/stages/critic/request.json",
+        "runs/A8-02/treatment/stages/investigator/request.json"
+      ],
+      "actual_scientist_outputs": "runs/A8-02/treatment"
+    },
+    {
+      "slot": "C-R1-01",
+      "arm": "control",
+      "stage": "reviser",
+      "config": "configs/C-R1-01-control.json",
+      "requests": [
+        "runs/C-R1-01/control/stages/reviser/request.json",
+        "runs/C-R1-01/control/stages/critic/request.json",
+        "runs/C-R1-01/control/stages/investigator/request.json"
+      ],
+      "actual_scientist_outputs": "runs/C-R1-01/control"
+    },
+    {
+      "slot": "A5-02",
+      "arm": "treatment",
+      "stage": "reviser",
+      "config": "configs/A5-02-treatment.json",
+      "requests": [
+        "runs/A5-02/treatment/stages/reviser/request.json",
+        "runs/A5-02/treatment/stages/critic/request.json",
+        "runs/A5-02/treatment/stages/investigator/request.json"
+      ],
+      "actual_scientist_outputs": "runs/A5-02/treatment"
+    },
+    {
+      "slot": "C-R1-02",
+      "arm": "control",
+      "stage": "reviser",
+      "config": "configs/C-R1-02-control.json",
+      "requests": [
+        "runs/C-R1-02/control/stages/reviser/request.json",
+        "runs/C-R1-02/control/stages/critic/request.json",
+        "runs/C-R1-02/control/stages/investigator/request.json"
+      ],
+      "actual_scientist_outputs": "runs/C-R1-02/control"
+    },
+    {
+      "slot": "A4-02",
+      "arm": "treatment",
+      "stage": "reviser",
+      "config": "configs/A4-02-treatment.json",
+      "requests": [
+        "runs/A4-02/treatment/stages/reviser/request.json",
+        "runs/A4-02/treatment/stages/critic/request.json",
+        "runs/A4-02/treatment/stages/investigator/request.json"
+      ],
+      "actual_scientist_outputs": "runs/A4-02/treatment"
+    },
+    {
+      "slot": "A5-02",
+      "arm": "control",
+      "stage": "reviser",
+      "config": "configs/A5-02-control.json",
+      "requests": [
+        "runs/A5-02/control/stages/reviser/request.json",
+        "runs/A5-02/control/stages/critic/request.json",
+        "runs/A5-02/control/stages/investigator/request.json"
+      ],
+      "actual_scientist_outputs": "runs/A5-02/control"
+    },
+    {
+      "slot": "A2-02",
+      "arm": "control",
+      "stage": "reviser",
+      "config": "configs/A2-02-control.json",
+      "requests": [
+        "runs/A2-02/control/stages/reviser/request.json",
+        "runs/A2-02/control/stages/critic/request.json",
+        "runs/A2-02/control/stages/investigator/request.json"
+      ],
+      "actual_scientist_outputs": "runs/A2-02/control"
+    },
+    {
+      "slot": "C-R1-01",
+      "arm": "treatment",
+      "stage": "reviser",
+      "config": "configs/C-R1-01-treatment.json",
+      "requests": [
+        "runs/C-R1-01/treatment/stages/reviser/request.json",
+        "runs/C-R1-01/treatment/stages/critic/request.json",
+        "runs/C-R1-01/treatment/stages/investigator/request.json"
+      ],
+      "actual_scientist_outputs": "runs/C-R1-01/treatment"
+    },
+    {
+      "slot": "C-R1-02",
+      "arm": "treatment",
+      "stage": "reviser",
+      "config": "configs/C-R1-02-treatment.json",
+      "requests": [
+        "runs/C-R1-02/treatment/stages/reviser/request.json",
+        "runs/C-R1-02/treatment/stages/critic/request.json",
+        "runs/C-R1-02/treatment/stages/investigator/request.json"
+      ],
+      "actual_scientist_outputs": "runs/C-R1-02/treatment"
+    },
+    {
+      "slot": "C-R2-01",
+      "arm": "control",
+      "stage": "reviser",
+      "config": "configs/C-R2-01-control.json",
+      "requests": [
+        "runs/C-R2-01/control/stages/reviser/request.json",
+        "runs/C-R2-01/control/stages/critic/request.json",
+        "runs/C-R2-01/control/stages/investigator/request.json"
+      ],
+      "actual_scientist_outputs": "runs/C-R2-01/control"
+    }
+  ],
+  "actual_model_effort_requested_tier_per_stage": "mechanics/results-table-v1/table.json#/rows",
+  "historical_prior_method_map": "METHOD_CASE_VERSION_MAP.json",
+  "G_to_Muse": "prospective reallocation separate from original GLM science; models/effort/requested tier retained despite private provider alias normalization",
+  "effective_billing": "UNKNOWN"
+}

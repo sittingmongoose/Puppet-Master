@@ -1,0 +1,211 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://docs.influxdata.com/influxdb/v2/reference/faq/"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A8-02/treatment-v1/source-map.json",
+      "source_id": "R09",
+      "existing_authored_summary_fields": {
+        "version_applicability": "Rolling InfluxDB OSS v2 FAQ; no v3 inference",
+        "governing_locators": [
+          {
+            "independent_source_id": "R09",
+            "carried_source_id": "S09",
+            "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S09.txt",
+            "lines": [
+              835,
+              840
+            ],
+            "governing_locator": "How does InfluxDB handle duplicate points?"
+          },
+          {
+            "independent_source_id": "R09",
+            "carried_source_id": "S09",
+            "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S09.txt",
+            "lines": [
+              854,
+              860
+            ],
+            "governing_locator": "Does the precision of the timestamp matter?"
+          }
+        ]
+      }
+    },
+    {
+      "authored_source_map": "assessment/A8-02/treatment-v1/source-map.json",
+      "source_id": "S09",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/A8-02/treatment-v1/evidence/retrieval-manifest.json",
+      "source_id": "S09",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "governing_locators": [
+        {
+          "independent_source_id": "R09",
+          "carried_source_id": "S09",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S09.txt",
+          "lines": [
+            835,
+            840
+          ],
+          "governing_locator": "How does InfluxDB handle duplicate points?"
+        },
+        {
+          "independent_source_id": "R09",
+          "carried_source_id": "S09",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S09.txt",
+          "lines": [
+            854,
+            860
+          ],
+          "governing_locator": "Does the precision of the timestamp matter?"
+        }
+      ]
+    },
+    {
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 32
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 52
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 58
+        }
+      ]
+    },
+    {
+      "text_lines": 1281
+    },
+    {
+      "text_lines": 1281
+    }
+  ],
+  "raw_sha256": "ee77190aa53f858e2e1209f1615734228322134133388bc879e3f4ce44faa43c",
+  "original_bytes": 32129,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A8-02/treatment-v1/evidence/S09.response.gz",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://docs.influxdata.com/influxdb/v2/reference/faq/"
+  ],
+  "version": [
+    {
+      "version_applicability": "Rolling InfluxDB OSS v2 FAQ; no v3 inference",
+      "governing_locators": [
+        {
+          "independent_source_id": "R09",
+          "carried_source_id": "S09",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S09.txt",
+          "lines": [
+            835,
+            840
+          ],
+          "governing_locator": "How does InfluxDB handle duplicate points?"
+        },
+        {
+          "independent_source_id": "R09",
+          "carried_source_id": "S09",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S09.txt",
+          "lines": [
+            854,
+            860
+          ],
+          "governing_locator": "Does the precision of the timestamp matter?"
+        }
+      ]
+    }
+  ],
+  "selector": [
+    {
+      "governing_locators": [
+        {
+          "independent_source_id": "R09",
+          "carried_source_id": "S09",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S09.txt",
+          "lines": [
+            835,
+            840
+          ],
+          "governing_locator": "How does InfluxDB handle duplicate points?"
+        },
+        {
+          "independent_source_id": "R09",
+          "carried_source_id": "S09",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S09.txt",
+          "lines": [
+            854,
+            860
+          ],
+          "governing_locator": "Does the precision of the timestamp matter?"
+        }
+      ]
+    },
+    {
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 32
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 52
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+          "line": 58
+        }
+      ]
+    },
+    {
+      "text_lines": 1281
+    },
+    {
+      "text_lines": 1281
+    }
+  ],
+  "conditions": [
+    {
+      "version_applicability": "Rolling InfluxDB OSS v2 FAQ; no v3 inference",
+      "governing_locators": [
+        {
+          "independent_source_id": "R09",
+          "carried_source_id": "S09",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S09.txt",
+          "lines": [
+            835,
+            840
+          ],
+          "governing_locator": "How does InfluxDB handle duplicate points?"
+        },
+        {
+          "independent_source_id": "R09",
+          "carried_source_id": "S09",
+          "evidence_path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/evidence/S09.txt",
+          "lines": [
+            854,
+            860
+          ],
+          "governing_locator": "Does the precision of the timestamp matter?"
+        }
+      ]
+    }
+  ],
+  "rawSHA256": "ee77190aa53f858e2e1209f1615734228322134133388bc879e3f4ce44faa43c"
+}

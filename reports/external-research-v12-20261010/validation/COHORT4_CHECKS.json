@@ -1,0 +1,370 @@
+{
+  "status": "PASS",
+  "counts": {
+    "admitted_logical_arms": 72,
+    "quiet_full_final_arms": 37,
+    "quiet_role_final_arms": 24,
+    "original_completed_judgments": 60,
+    "source_labels": {
+      "FAIL": 21,
+      "PASS_WITH_LIMITATIONS": 39
+    },
+    "judgment_scopes": {
+      "A": 32,
+      "B": 24,
+      "C1": 4
+    },
+    "full_final_pending_review": "C-R2-01/control"
+  },
+  "parse": {
+    "json": 2691,
+    "python": 52,
+    "javascript": 35
+  },
+  "JSON_exceptions": [
+    {
+      "path": "runs/B-APPL-G-01/treatment/stages/role/goal_activation.json",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "parse_error": "Expecting value: line 1 column 1 (char 0)",
+      "kind": "actual zero-byte failed native-activation diagnostic; preserved unchanged",
+      "native_goal_proof": false
+    },
+    {
+      "path": "runs/A3-02/control/stages/reviser/native-goal-active-confirmation.json",
+      "bytes": 429,
+      "sha256": "841f9305457f7ab06f41d04b732cd0f7eb5f32415cef5cb0367b7598d0fd07c0",
+      "parse_error": "Extra data: line 1 column 428 (char 427)",
+      "kind": "actual authored/native diagnostic contains extra JSON data; original structure preserved with sanitation only",
+      "native_goal_proof": "Not inferred from malformed JSON"
+    }
+  ],
+  "privacy_findings": [],
+  "prior_repaired_capsules_unchanged": 233,
+  "frozen_judgment_hashes_checked": 60,
+  "terminal_freeze_mismatches": [],
+  "historical_freeze_mismatches_disclosed": [
+    {
+      "freeze": "runs/A2-02/control/stages/investigator/.invocation-backup-4ac8a8ae7c5240a987b375d7516b611d/freeze.json",
+      "path": "runs/A2-02/control/stages/investigator/assignment.md",
+      "expected": "52bfee78f083fe28f3a6648ea1a72bbaa4efbcdb1c062d92f2064af1ee4b45b0",
+      "actual": "024560cb3fefcf4b7ea52f20da3dcfa347d7c2b237e145e3caae17a4b42457f4",
+      "matches": false,
+      "terminal": false
+    },
+    {
+      "freeze": "runs/A2-02/control/stages/critic/.invocation-backup-0dcfd449163d4133a3407f74bbdcfefe/freeze.json",
+      "path": "runs/A2-02/control/stages/critic/assignment.md",
+      "expected": "da919878a69a81e206a532c259647fd33af39e32f334a9b93ec9a17435d4ce93",
+      "actual": "67ee90e38a1f329c5bd3280f9f9f1a8f011b1eed7176603a854fd76a905a22b8",
+      "matches": false,
+      "terminal": false
+    },
+    {
+      "freeze": "runs/A2-02/control/stages/reviser/.invocation-backup-4faa5ea2c947441b94c17e9280336cc6/freeze.json",
+      "path": "runs/A2-02/control/stages/reviser/assignment.md",
+      "expected": "75b4423f048590d55d9e64c44a36fd64885638a94347b30bec932161e77a34bf",
+      "actual": "1faa65108c3794bf632be7cf5d98ceaa575efa17d9da8d69295b5b215747dd41",
+      "matches": false,
+      "terminal": false
+    },
+    {
+      "freeze": "runs/A2-02/treatment/stages/investigator/.invocation-backup-9d45ce2fc417490d8bb066305d7570e5/freeze.json",
+      "path": "runs/A2-02/treatment/stages/investigator/assignment.md",
+      "expected": "46e3bde1113289ce249ceef3c526cd3851bee4032ed4f39ca5c8124500a04562",
+      "actual": "ffa2beee5a0d53a505930810c0fe7976210d01898e15e151f878c2d1b0fe0739",
+      "matches": false,
+      "terminal": false
+    },
+    {
+      "freeze": "runs/A2-02/treatment/stages/critic/.invocation-backup-06a36be8048a459a91764178f423a62a/freeze.json",
+      "path": "runs/A2-02/treatment/stages/critic/assignment.md",
+      "expected": "610e8fa156b3e977b39d60984412907a6a6e2c99f5c9abc5cacb04cf8f9e7570",
+      "actual": "611c2cd2914355d776fb680b720915c6da43bf577234719156e306879a746bfe",
+      "matches": false,
+      "terminal": false
+    },
+    {
+      "freeze": "runs/A3-02/control/stages/reviser/.invocation-backup-5122a3e372684358acd95addd8144078/freeze.json",
+      "path": "runs/A3-02/control/stages/reviser/assignment.md",
+      "expected": "95b2ae9d09f3269a934e4e4936d0f598fc5f6e9dd5fc7aa7c109ec7664b6afb8",
+      "actual": "ebd5441f4db8b9cbf156ed6b9ba56de2b6b633133ebb48c02b8c6ee9b11641eb",
+      "matches": false,
+      "terminal": false
+    },
+    {
+      "freeze": "runs/A3-02/treatment/stages/reviser/.invocation-backup-55ab5a23a90449b28acc55f4501e1e4a/freeze.json",
+      "path": "runs/A3-02/treatment/stages/reviser/assignment.md",
+      "expected": "1c922614fb84f1d48276429346e5dde2f87f361bc6ae5dce4944bb95a5b7590e",
+      "actual": "206a7136de0a86949160fd3bd4be121a6ec6db68795e0b3d3188e3e3f9b6accd",
+      "matches": false,
+      "terminal": false
+    },
+    {
+      "freeze": "runs/A4-02/control/stages/reviser/.invocation-backup-aec9e2997348418999bc9a9bfb212938/freeze.json",
+      "path": "runs/A4-02/control/stages/reviser/assignment.md",
+      "expected": "ee0040bf346b199353de72900c2edb3e91cd13517f2dd677e8a4d72fca813c4a",
+      "actual": "0d5bb24472faa2d2bacbc38cad3afa7584737464069374e06775dcf24793b93a",
+      "matches": false,
+      "terminal": false
+    },
+    {
+      "freeze": "runs/A4-02/treatment/stages/critic/.invocation-backup-9cbe64b32f4045f194dc534d54e84c2b/freeze.json",
+      "path": "runs/A4-02/treatment/stages/critic/assignment.md",
+      "expected": "501d064bfec67d2deb8e1632b94aa20380b1e23f5173c93eda88f6c8dc523980",
+      "actual": "44b2d11ea71cc8dd184a28a93711fdc6fd20353984f9fc441bf2118057021fb7",
+      "matches": false,
+      "terminal": false
+    },
+    {
+      "freeze": "runs/A4-02/treatment/stages/reviser/.invocation-backup-5011d354aa1e4576adf360d9ab684d78/freeze.json",
+      "path": "runs/A4-02/treatment/stages/reviser/assignment.md",
+      "expected": "de45f0d5ae721f9d03da96eb79d0be0b2360b6cf34c945616e54699b06748e45",
+      "actual": "99e029ca4ed8a2362a6592f658f11e448e1c12cb88b340580911851ab8c5c6b9",
+      "matches": false,
+      "terminal": false
+    },
+    {
+      "freeze": "runs/A5-02/control/stages/critic/.invocation-backup-1b954dacd1064dd0aaaa6a0b988037c6/freeze.json",
+      "path": "runs/A5-02/control/stages/critic/assignment.md",
+      "expected": "55f6563f82e43c83b35a642c5aecdda8344ca70d43b00962b126e2e67a45ca83",
+      "actual": "ed6d37f96bb3b4d522c21669899dfebf8eddacae425e8608b99b8afc5cc1198a",
+      "matches": false,
+      "terminal": false
+    },
+    {
+      "freeze": "runs/A5-02/control/stages/reviser/.invocation-backup-5b4b6059a3be4f62aec96dde6d4c6906/freeze.json",
+      "path": "runs/A5-02/control/stages/reviser/assignment.md",
+      "expected": "0c59eb1877bbadba66fd368014da781068790b80e94281c03727ab973a39d560",
+      "actual": "9633c115cd6aff52a0a94130ae902302dc2b2971806ab6611280829877906e7a",
+      "matches": false,
+      "terminal": false
+    },
+    {
+      "freeze": "runs/A5-02/treatment/stages/critic/.invocation-backup-3ef116221d6a4c5ebabbf4c56cf50b85/freeze.json",
+      "path": "runs/A5-02/treatment/stages/critic/assignment.md",
+      "expected": "b8474ad05a077fb006d11dbbe8b13852fdd3593c43bf1a6e846219ce0046bda6",
+      "actual": "74c2b405135714bb47111907645e2cf93b3f5d5050b41215660ed9be4aa514ee",
+      "matches": false,
+      "terminal": false
+    },
+    {
+      "freeze": "runs/A5-02/treatment/stages/reviser/.invocation-backup-d2ead2c2072344c48eb6407bad80da81/freeze.json",
+      "path": "runs/A5-02/treatment/stages/reviser/assignment.md",
+      "expected": "853e50c10a4153d49d428498f41a5e6d9638673d9f8ae236bc54efa8d417812e",
+      "actual": "81fa2719dbf0a445babade85a0a1da40ed98c4cc7e367cda351e8e0e63fe2be2",
+      "matches": false,
+      "terminal": false
+    },
+    {
+      "freeze": "runs/A8-02/control/stages/critic/.invocation-backup-74a4afb54cbd458ca469fcf4c8bc16c2/freeze.json",
+      "path": "runs/A8-02/control/stages/critic/assignment.md",
+      "expected": "33b7640e257602be40e5d5a866f97502fc75a6e69f11d206d34bf733a969a3eb",
+      "actual": "2a4976a96a2ebc62de73e8dc9604ea96dfe94345913e90d5f183aef82c93269c",
+      "matches": false,
+      "terminal": false
+    },
+    {
+      "freeze": "runs/A8-02/control/stages/reviser/.invocation-backup-937dcdbe43ab4741a6302dc914ab10e2/freeze.json",
+      "path": "runs/A8-02/control/stages/reviser/assignment.md",
+      "expected": "473a66a8ba27f80d7051451b6b02418f5ac7afeb8b6093c47a7e54362b8f1167",
+      "actual": "b06c6cbc88d87035fbeede251fe8ed89976dd88478b06784997a293e138437c5",
+      "matches": false,
+      "terminal": false
+    },
+    {
+      "freeze": "runs/A8-02/treatment/stages/critic/.invocation-backup-ff685bbd5ed44e2da422463b3fbacd84/freeze.json",
+      "path": "runs/A8-02/treatment/stages/critic/assignment.md",
+      "expected": "2b1692eba17fa894a0c56b1beecd8933282ff15aecaa6d10b8509e30529fa84b",
+      "actual": "c6d39114a8692952323c5b161935d0813f538e1f968aaf0e7c37596b82695413",
+      "matches": false,
+      "terminal": false
+    },
+    {
+      "freeze": "runs/A8-02/treatment/stages/reviser/.invocation-backup-ba0bc29cc88c4ceb9042f8801256d64d/freeze.json",
+      "path": "runs/A8-02/treatment/stages/reviser/assignment.md",
+      "expected": "9d8b0999fe948682f54312405961f70eb5f26cf8fa48bf6f98b748485f21012b",
+      "actual": "d6b00e63f8695fa01abf6ba0d445e2b01ca4a90bb8bd46ce119859437388afa5",
+      "matches": false,
+      "terminal": false
+    },
+    {
+      "freeze": "runs/B-APPL-G-02/control/stages/role/.invocation-backup-b8d764bd7e794d228a9d76432f819611/freeze.json",
+      "path": "runs/B-APPL-G-02/control/stages/role/assignment.md",
+      "expected": "1e879ad2e08310cfe69f4e6f227db4ce4605520dfbfe82498b0e61d41434c83d",
+      "actual": "c54d8e7cc564c67056edfe762a9ff1d6dceee66e56187deb817be93290ab71ec",
+      "matches": false,
+      "terminal": false
+    },
+    {
+      "freeze": "runs/B-APPL-G-02/treatment/stages/role/.invocation-backup-f4a9350df8884746a0b8da28ecb66c0f/freeze.json",
+      "path": "runs/B-APPL-G-02/treatment/stages/role/assignment.md",
+      "expected": "decbf47d7581baf94a86cefeac9675bc4576a076942126a60138c069613ccd7c",
+      "actual": "bab768476a8ef3af2f396ffe2a306c6bb872d22a081fd425a1e800b2f0e8e880",
+      "matches": false,
+      "terminal": false
+    },
+    {
+      "freeze": "runs/B-FINAL-G-02/control/stages/role/.invocation-backup-a59096d98f7e4724ad338348a01fabd1/freeze.json",
+      "path": "runs/B-FINAL-G-02/control/stages/role/assignment.md",
+      "expected": "7f9c430b8d3ee2074f44ef280f95f5341bab8b956c07ca2627d28117661b90a1",
+      "actual": "9025ff6c548dbb96c78095a8652f34481492f671bf63248cf7e00500f482c40d",
+      "matches": false,
+      "terminal": false
+    },
+    {
+      "freeze": "runs/B-FINAL-G-02/treatment/stages/role/.invocation-backup-c14f1cad7a564526961353571afe662e/freeze.json",
+      "path": "runs/B-FINAL-G-02/treatment/stages/role/assignment.md",
+      "expected": "cd7b93e378fee236df67dfb9f449b552c95ac838feeef91c0795dcc66d7ecf33",
+      "actual": "03e5e6cb0b03679d8cf53a4d427eceee8b73a68a8afe684a73424f3dff8aa16f",
+      "matches": false,
+      "terminal": false
+    },
+    {
+      "freeze": "runs/B-FINAL-M-02/control/stages/role/.invocation-backup-ce3c74cf195e4e6b8c3a3ec86ea4708c/freeze.json",
+      "path": "runs/B-FINAL-M-02/control/stages/role/assignment.md",
+      "expected": "a4c63021ed65d180dc5032dbdb3b1d86a3360a993b7794895ab991ab75eca4dc",
+      "actual": "2fa1e39b95729cdb8f8b56f9a092d15011408bfa770e3112eaeb53232d4ff219",
+      "matches": false,
+      "terminal": false
+    },
+    {
+      "freeze": "runs/B-FINAL-M-02/treatment/stages/role/.invocation-backup-2d7b34fde33a48e49a43cc2ac9e5fb5a/freeze.json",
+      "path": "runs/B-FINAL-M-02/treatment/stages/role/assignment.md",
+      "expected": "2f4ae9506d59eb24f5428e891bcd118208a85fff2bfd1623e42c8ee817a4edc6",
+      "actual": "81e9d2a081c411da64bf901e717d11a11ac51625841d8da01156057ce3b5f369",
+      "matches": false,
+      "terminal": false
+    },
+    {
+      "freeze": "runs/C-R1-01/control/stages/critic/.invocation-backup-c5f9766ab4954f3285c10397db890d7a/freeze.json",
+      "path": "runs/C-R1-01/control/stages/critic/assignment.md",
+      "expected": "1ed1dd21de54d751565ee82c42525f1fc8858dfca70d7228dcb3d1479a328fab",
+      "actual": "247fe02318558a21c3f9834f92fb55d2f8938f74adeb1f188117b42934df9cf2",
+      "matches": false,
+      "terminal": false
+    },
+    {
+      "freeze": "runs/C-R1-01/control/stages/reviser/.invocation-backup-05fd1756fad8424992da848552df6f07/freeze.json",
+      "path": "runs/C-R1-01/control/stages/reviser/assignment.md",
+      "expected": "f64b352c2a935bf8c4344ce9da05ad1e067d2272648ea7b150ffa5254f21b8f2",
+      "actual": "7fff24f06cabb3f38915a4987c5eb85ed704142eb9e85627118b4b1ff93c4e08",
+      "matches": false,
+      "terminal": false
+    },
+    {
+      "freeze": "runs/C-R1-01/treatment/stages/critic/.invocation-backup-1f53e4f458f84f0092e117072b36b6f6/freeze.json",
+      "path": "runs/C-R1-01/treatment/stages/critic/assignment.md",
+      "expected": "35b2f4889fbebbe2a7f6fe2ae1dd90501fc8ecb7884a34a8077b7020dea09e96",
+      "actual": "d91cab8f1c54b67bc307bcba74d72e6dc1deddfa337f32a8bedd871583ea38c1",
+      "matches": false,
+      "terminal": false
+    },
+    {
+      "freeze": "runs/C-R1-01/treatment/stages/reviser/.invocation-backup-91754ce137ca433f8509d0aecf3ef07a/freeze.json",
+      "path": "runs/C-R1-01/treatment/stages/reviser/assignment.md",
+      "expected": "e1d8d70613ac66f230675a9ec619d3f7412a6698a584f7113fad022ebcf0f2b4",
+      "actual": "2ac9d5bf5cba4583cb6c3bd91b32a8dbf24d28b14efe8abcfecf873c48d46102",
+      "matches": false,
+      "terminal": false
+    },
+    {
+      "freeze": "runs/C-R1-02/control/stages/critic/.invocation-backup-dd6d9e9153214024be1d077c70922b2b/freeze.json",
+      "path": "runs/C-R1-02/control/stages/critic/assignment.md",
+      "expected": "c01a3444dd12693f5065aa803ea95a4ca2b0c0654314a3cbd9fbec1842e3893b",
+      "actual": "f535a7d649bdcf1889a1973b335757f9fb09c9668ca2129e8371eef9309cc548",
+      "matches": false,
+      "terminal": false
+    },
+    {
+      "freeze": "runs/C-R1-02/control/stages/reviser/.invocation-backup-fc7cc40ca6824d5694091a2f9db60c99/freeze.json",
+      "path": "runs/C-R1-02/control/stages/reviser/assignment.md",
+      "expected": "0947cdf052441008f677e57b9472e70a5e50e954c163b47c50f6bb4f7e05a624",
+      "actual": "9a3b2805c8d6df6e8793eb5b2965e6b35b6a52974fc9836f706486c1bc27c645",
+      "matches": false,
+      "terminal": false
+    },
+    {
+      "freeze": "runs/C-R1-02/treatment/stages/critic/.invocation-backup-bba15d0214d04e2388942d644142263f/freeze.json",
+      "path": "runs/C-R1-02/treatment/stages/critic/assignment.md",
+      "expected": "9d9ddaf410bb5c483f82bb36d9fe13dadb330e5d8b2ce9aa85ff936b81e2b0d2",
+      "actual": "15da25bacd0db9c66372dc889938aa67c5acdeddcb4911474dfaea60f045e71b",
+      "matches": false,
+      "terminal": false
+    },
+    {
+      "freeze": "runs/C-R1-02/treatment/stages/reviser/.invocation-backup-92d3c7e636924558b3129be9c14c3011/freeze.json",
+      "path": "runs/C-R1-02/treatment/stages/reviser/assignment.md",
+      "expected": "bf55b34b2626f9119a15e53e6cc4c86796104696eb3b5b25377bf23b1885f99c",
+      "actual": "1a86e87e682ca36c6d11ae46c5ec549d077f910096c4023d1574f94db8a818bc",
+      "matches": false,
+      "terminal": false
+    },
+    {
+      "freeze": "runs/C-R2-01/control/stages/investigator/.goal-guard-backup-146cc12618694131a196aa72a200d530/freeze.json",
+      "path": "runs/C-R2-01/control/stages/investigator/assignment.md",
+      "expected": "ab41aadf148f3b8b7c1d8b8abc5ec873d7bd83b1135c5452f2d702287dbb1e69",
+      "actual": "f5edd287f91e8961180822875e9c79e68e15fceeb7648e85143834c95b2bbfb1",
+      "matches": false,
+      "terminal": false
+    },
+    {
+      "freeze": "runs/C-R2-01/control/stages/investigator/.invocation-backup-06deca60dc234987b7401e70ccfb3d24/freeze.json",
+      "path": "runs/C-R2-01/control/stages/investigator/assignment.md",
+      "expected": "17ae1cfd6375e5f4e90054cd77e8da93d52d2d37181e74fcb66b7accf9ac9a1a",
+      "actual": "f5edd287f91e8961180822875e9c79e68e15fceeb7648e85143834c95b2bbfb1",
+      "matches": false,
+      "terminal": false
+    },
+    {
+      "freeze": "runs/C-R2-01/control/stages/critic/.goal-guard-backup-5ec7c4a653b44e51bdec9d63b5144399/freeze.json",
+      "path": "runs/C-R2-01/control/stages/critic/assignment.md",
+      "expected": "01fc659622d29481a22bcfd238c161507974621a65432724b9203a62817a8439",
+      "actual": "6b0feb927c0c7c8a684358b9124f9244f9b461213955835289cfa4d9e032082f",
+      "matches": false,
+      "terminal": false
+    },
+    {
+      "freeze": "runs/C-R2-01/control/stages/critic/.invocation-backup-2c5eb52752984bc2988c645c0cb14ae3/freeze.json",
+      "path": "runs/C-R2-01/control/stages/critic/assignment.md",
+      "expected": "72a0dff09ab8c62107d992396701fce9ef742afd083f460f1551523ffdd430f5",
+      "actual": "6b0feb927c0c7c8a684358b9124f9244f9b461213955835289cfa4d9e032082f",
+      "matches": false,
+      "terminal": false
+    },
+    {
+      "freeze": "runs/C-R2-01/control/stages/reviser/.invocation-backup-9ed2e642b2b1487d962f75649e347ddb/freeze.json",
+      "path": "runs/C-R2-01/control/stages/reviser/assignment.md",
+      "expected": "707695fb2a94b05f5ea2b27ce39f44b1850e05f09c738d2088dbff81e7917206",
+      "actual": "0a9c05e5332018b222f75e967b65a4b7f834bed7f25e6b0426fe3fb92abef775",
+      "matches": false,
+      "terminal": false
+    },
+    {
+      "freeze": "runs/C-R2-01/control/stages/reviser/.goal-guard-backup-db63daaac8f247e992043a09c2efb530/freeze.json",
+      "path": "runs/C-R2-01/control/stages/reviser/assignment.md",
+      "expected": "4c8ac65ada442452930f5eb0c56ad04909ec187dc55f111e285089ebe3197647",
+      "actual": "0a9c05e5332018b222f75e967b65a4b7f834bed7f25e6b0426fe3fb92abef775",
+      "matches": false,
+      "terminal": false
+    }
+  ],
+  "dependency_hash_checks": 58,
+  "authored_dependency_paths": 5256,
+  "v2_actual_offline_checks_retained": 236,
+  "v2_root_verification_retained": true,
+  "offline_tests_rerun": false,
+  "whitespace": "Original intentional Markdown trailing spaces/blank EOF retained; prior check was not PASS. See validation/COHORT3_WHITESPACE_EXCEPTION.json",
+  "JSON_serialization_repairs": [],
+  "source_classifier": "content/source bindings/provenance; no extension-only safety inference",
+  "new_capture_body_quotes": 0,
+  "lossless_synthesis_facet_pointer_checks": 485,
+  "original_Python_syntax_warnings": [
+    {
+      "path": "assessment/A8-01/control-v1/evidence/E06-v160-bagit.py",
+      "line": 806,
+      "warning": "\"\\c\" is an invalid escape sequence. Such sequences will not work in the future. Did you mean \"\\\\c\"? A raw string is also an option.",
+      "kind": "SyntaxWarning"
+    }
+  ]
+}

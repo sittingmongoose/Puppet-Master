@@ -1,0 +1,175 @@
+{
+  "schema_version": "1",
+  "run_id": "A8-02-control",
+  "stage": "investigator",
+  "brief": "ER12_RUNTIME/runs/A8-02/control/inputs/brief.md",
+  "prepared_before_plan_release": true,
+  "access_clock_note": "UTC times are the immediately preceding clock reading for the read-only retrieval batch; web reads completed within seconds. Sources were not connected to any live product or account.",
+  "sources": [
+    {
+      "source_id": "S01",
+      "title": "MQTT Server — The Things Stack",
+      "url": "https://www.thethingsindustries.com/docs/integrations/other-integrations/mqtt/",
+      "released_version_or_commit": "Current TTS documentation at access; page does not pin deployed server release.",
+      "locator": "MQTT Server intro and note; Subscribing to Upstream Traffic; example uplink topic/payload, lines 19-25, 57-71, 107-155.",
+      "access_utc": "2026-10-10T05:04:28Z",
+      "observed_operation": "Opened the public official documentation page and read the protocol/QoS restriction, upstream topics, tenant-ID caveat, and sample uplink.",
+      "governing_condition_default_exception": "TTS MQTT documentation says MQTT 3.1.1 and QoS 0 only. Topics include tenant ID except on Open Source. This is the app-facing stream; client delivery is subject to QoS 0 semantics.",
+      "applicability": "Candidate only if the club already uses LoRaWAN/TTS; does not establish club devices, application sample identity, or durable end-to-end delivery."
+    },
+    {
+      "source_id": "S02",
+      "title": "MQTT Version 3.1.1 — OASIS Standard",
+      "url": "https://docs.oasis-open.org/mqtt/mqtt/v3.1.1/os/mqtt-v3.1.1-os.html",
+      "released_version_or_commit": "MQTT 3.1.1 OASIS Standard, 2014-10-29.",
+      "locator": "Abstract/QoS summary lines 53-67; Section 4.3.1 QoS 0 delivery.",
+      "access_utc": "2026-10-10T05:04:39Z",
+      "observed_operation": "Opened the primary OASIS standard, inspected its version/status and QoS descriptions.",
+      "governing_condition_default_exception": "QoS 0: no response and no retry; message arrives once or not at all. QoS 1 can duplicate. These are protocol message-delivery modes, not guarantees about semantic observations across devices/apps.",
+      "applicability": "Defines the meaning of TTS's documented QoS 0 application integration; does not describe the low-power radio/MAC route or the archive's idempotency."
+    },
+    {
+      "source_id": "S03",
+      "title": "Storage Integration — The Things Stack",
+      "url": "https://www.thethingsindustries.com/docs/integrations/storage/",
+      "released_version_or_commit": "Current TTS documentation at access; retention is deployment-specific.",
+      "locator": "How it works, retention, batch delay and Cloud scope, lines 17-34; use cases/configuration lines 62-70.",
+      "access_utc": "2026-10-10T05:04:28Z",
+      "observed_operation": "Opened official TTS documentation and read retention and write timing.",
+      "governing_condition_default_exception": "Documented retention: Cloud 30 days, Sandbox 24 hours, Enterprise configurable. Cloud stores only uplinks. Writes are batched and can lag; feature should not serve real-time queries.",
+      "applicability": "May aid short-gap reconciliation if already enabled; retention is not an adequate club archive and actual TTS deployment/version is unknown."
+    },
+    {
+      "source_id": "S04",
+      "title": "Retrieve Messages — The Things Stack Storage Integration",
+      "url": "https://www.thethingsindustries.com/docs/integrations/storage/retrieve/",
+      "released_version_or_commit": "Current TTS documentation at access; sample schema has historical timestamps.",
+      "locator": "Retrieve Uplinks using HTTP API, especially JSON example at lines 22-43.",
+      "access_utc": "2026-10-10T05:04:39Z",
+      "observed_operation": "Opened public official retrieval guide and inspected documented sample API result.",
+      "governing_condition_default_exception": "Sample exposes root received_at, nested uplink_message.received_at, rx_metadata.time, settings.time/timestamp, session_key_id and f_cnt. Examples distinguish several server/gateway times and a frame counter; no universal sample-time field is promised by this envelope.",
+      "applicability": "Supports storing transport provenance and keeping observation time separate. A real device payload schema must be inspected before choosing its sample-time field."
+    },
+    {
+      "source_id": "S05",
+      "title": "Troubleshooting Console — The Things Stack",
+      "url": "https://www.thethingsindustries.com/docs/concepts/features/console/troubleshooting/",
+      "released_version_or_commit": "Current TTS documentation at access; no deployed release pinned.",
+      "locator": "UTC display note and Common Errors: Entity Not Found / Device Not Found and Duplicate Uplink, lines 38-56.",
+      "access_utc": "2026-10-10T05:04:49Z",
+      "observed_operation": "Opened the troubleshooting page, including a focused read around its common errors section.",
+      "governing_condition_default_exception": "An ABP device that resets frame counters may not be found in its existing session and may need reactivation; OTAA avoids that particular problem. A duplicate reception from multiple gateways can be dropped if it arrives outside the deduplication window due to backhaul latency or Packet Broker.",
+      "applicability": "Illustrates network-server behavior only for TTS/LoRaWAN and specific activation/session conditions. Does not imply the club's gateways or devices use this protocol."
+    },
+    {
+      "source_id": "S06",
+      "title": "LoRaWAN L2 Specification TS001-1.0.4",
+      "url": "https://lora-alliance.org/wp-content/uploads/2021/11/LoRaWAN-Link-Layer-Specification-v1.0.4.pdf",
+      "released_version_or_commit": "LoRa Alliance TS001-1.0.4, 2020 specification; official resource page published 2023-09-28 and links errata ERRATA_L2_1_0_4_D2D.",
+      "locator": "Section 4.3.1.5 Frame counter (PDF page 22/90); also official resource page.",
+      "access_utc": "2026-10-10T04:58:43Z",
+      "observed_operation": "Read official LoRa Alliance resource listing; searched/opened the official PDF's indexed Section 4.3.1.5 text. No device or firmware was accessed.",
+      "governing_condition_default_exception": "OTAA successful join resets FCntUp/FCntDown; ABP counters must not reset during device life and must survive power loss. FCntUp increments per uplink subject to retransmission rules; frame counter reuse under the same session keys is prohibited except retransmission; the network server drops retransmitted frame payloads and forwards one instance to the application server.",
+      "applicability": "Conditional on device LoRaWAN version/activation. FCnt identifies protocol frames, not each sample in a buffered payload and not all downstream delivery."
+    },
+    {
+      "source_id": "S07",
+      "title": "Webhook Retries — The Things Stack",
+      "url": "https://www.thethingsindustries.com/docs/integrations/webhooks/retries/",
+      "released_version_or_commit": "Feature marked new in TTS 3.30.1; Cloud Plus subscription required for TTS Cloud use.",
+      "locator": "Feature availability/default behavior and retry conditions, lines 21-37; defaults/configuration and schedule lines 68-95.",
+      "access_utc": "2026-10-10T05:04:28Z",
+      "observed_operation": "Opened official TTS webhook retry documentation and read product availability, default, and retry schedule.",
+      "governing_condition_default_exception": "Default webhook is tried at most once per application uplink; if endpoint is temporarily unavailable, associated traffic is lost. When enabled, default policy is 7 tries including initial, exponential intervals and jitter; timing values are deployment configuration defaults and endpoint response must be under 10 seconds.",
+      "applicability": "A conditional alternative to QoS 0 only if the actual deployment already supports/enables it. No account, purchase, or configuration change was made."
+    },
+    {
+      "source_id": "S08",
+      "title": "COPY — PostgreSQL 18 documentation",
+      "url": "https://www.postgresql.org/docs/18/sql-copy.html",
+      "released_version_or_commit": "PostgreSQL 18 documentation; page lists version 18 as supported and 19 as development at access.",
+      "locator": "COPY description/default error behavior lines 49-57; HEADER MATCH/ON_ERROR lines 125-152; CSV/null conventions lines 232-251; STDIN and client/server path lines 85-88, 193-196.",
+      "access_utc": "2026-10-10T05:04:49Z",
+      "observed_operation": "Opened PostgreSQL's official versioned COPY documentation and read CSV/header/error/client-input behavior.",
+      "governing_condition_default_exception": "COPY FROM appends to its destination. Default on conversion error is stop; ON_ERROR ignore can discard rows. HEADER MATCH checks header column names/order. CSV blank/null and quoting details matter. STDIN streams via client connection; filename reads from the server's filesystem.",
+      "applicability": "Supports a controlled PostgreSQL staging design only if PostgreSQL 18 is chosen; COPY itself does not perform staff review, source-file preservation, correction lineage, or observation dedupe."
+    },
+    {
+      "source_id": "S09",
+      "title": "Constraints — PostgreSQL 18 documentation",
+      "url": "https://www.postgresql.org/docs/18/ddl-constraints.html",
+      "released_version_or_commit": "PostgreSQL 18 documentation.",
+      "locator": "Unique Constraints and Primary Keys, Section 5.5.3-5.5.4.",
+      "access_utc": "2026-10-10T05:04:49Z",
+      "observed_operation": "Opened the official versioned constraints documentation and reviewed uniqueness and null behavior.",
+      "governing_condition_default_exception": "Uniqueness applies to the chosen column/key set; by default nulls are distinct in unique constraints unless NULLS NOT DISTINCT is selected. A design must specify a real stable identity and non-null fields if uniqueness is expected.",
+      "applicability": "Supports proposed intake constraints after station/sample identity is known. It cannot determine the correct sample identity for unknown devices."
+    },
+    {
+      "source_id": "S10",
+      "title": "Transactions — PostgreSQL 18 tutorial",
+      "url": "https://www.postgresql.org/docs/18/tutorial-transactions.html",
+      "released_version_or_commit": "PostgreSQL 18 documentation.",
+      "locator": "Section 3.4 Transactions.",
+      "access_utc": "2026-10-10T05:04:49Z",
+      "observed_operation": "Opened official PostgreSQL transaction tutorial and read atomicity/commit behavior.",
+      "governing_condition_default_exception": "A transaction groups related database changes into an all-or-nothing operation; intermediate state is not visible to other transactions before commit.",
+      "applicability": "Supports a proposed reviewed CSV/staging acceptance transaction; not a product validation or a guarantee over external file storage plus DB without coordinated procedures."
+    },
+    {
+      "source_id": "S11",
+      "title": "Programming Guide — Apache Beam",
+      "url": "https://beam.apache.org/documentation/programming-guide/",
+      "released_version_or_commit": "Current online guide at access; paired code example is pinned to Beam v2.76.0.",
+      "locator": "Event time, watermarks, windowing, and Section 9.4.2 Handling late data.",
+      "access_utc": "2026-10-10T05:04:39Z",
+      "observed_operation": "Opened the public official Beam guide; queried/read its late-data documentation.",
+      "governing_condition_default_exception": "Allowed lateness keeps a window eligible to react to late elements; triggers can emit additional results. Lateness is bounded by policy and does not imply indefinite retention of raw events.",
+      "applicability": "Analogical design mechanism only; Apache Beam is not recommended as a pilot dependency."
+    },
+    {
+      "source_id": "S12",
+      "title": "TriggerExample.java — Apache Beam source",
+      "url": "https://github.com/apache/beam/blob/v2.76.0/examples/java/src/main/java/org/apache/beam/examples/cookbook/TriggerExample.java",
+      "released_version_or_commit": "Beam release tag v2.76.0; release source commit 3862626.",
+      "locator": "Java source comments and window configuration around lines 1663-1787; zero lateness vs one-day lateness.",
+      "access_utc": "2026-10-10T05:04:39Z",
+      "observed_operation": "Opened GitHub code view at released tag, inspected the examples; code was not downloaded or executed.",
+      "governing_condition_default_exception": "Example explicitly says zero allowed lateness drops late data; ONE_DAY allowed lateness keeps a window open and can emit late panes. Its default trigger, firing/accumulation behavior, and one-day bound are illustrative example choices.",
+      "applicability": "Concrete released source-code example for a derived aggregation only; not a command to discard archived observations or select a one-day club policy."
+    },
+    {
+      "source_id": "S13",
+      "title": "Spanner Change Stream watermark ordering issue #36470 — Apache Beam",
+      "url": "https://github.com/apache/beam/issues/36470",
+      "released_version_or_commit": "Issue #36470; report says caching/filtering introduced in Beam 2.67 exacerbated it; fixed release cross-reference is v2.69.0.",
+      "locator": "Issue description root cause lines 163-169; activity fixing/release notes and closure lines 224-282.",
+      "access_utc": "2026-10-10T05:04:39Z",
+      "observed_operation": "Opened public issue, read the affected behavior, root-cause description, and activity timeline.",
+      "governing_condition_default_exception": "Spanner change stream partition watermarks could regress because metadata-table watermark updates were reordered; described as exacerbated by 2.67 caching/filtering. This issue concerns a specific Spanner connector, not generic Beam windows or the proposed weather stack.",
+      "applicability": "Released failure analogue for ordering-sensitive event-time systems; use as caution, not direct evidence the club has the same defect."
+    },
+    {
+      "source_id": "S14",
+      "title": "Beam 2.69.0 release notes",
+      "url": "https://github.com/apache/beam/releases/tag/v2.69.0",
+      "released_version_or_commit": "Beam v2.69.0 release tag, short commit 2ca7d21; release page shows 17 Oct; issue chronology is 2025.",
+      "locator": "Bugfixes list, line 208: Spanner Change Stream stuck issue #36470.",
+      "access_utc": "2026-10-10T05:04:39Z",
+      "observed_operation": "Opened GitHub's official Beam release page and checked the release commit/version and bugfix entry.",
+      "governing_condition_default_exception": "Release notes identify the watermark-backwards Spanner Change Stream issue as fixed in 2.69.0. This release fix is relevant only to Beam's connector implementation.",
+      "applicability": "Confirms the fix/release side of the history chain; does not validate a weather data design."
+    },
+    {
+      "source_id": "S15",
+      "title": "Line protocol reference — InfluxDB 3 Core",
+      "url": "https://docs.influxdata.com/influxdb3/core/reference/line-protocol/",
+      "released_version_or_commit": "InfluxDB 3 Core documentation path; no exact server patch version displayed in the page.",
+      "locator": "Duplicate points and append-only patterns, lines 254-310.",
+      "access_utc": "2026-10-10T05:04:49Z",
+      "observed_operation": "Opened official InfluxDB 3 Core documentation and read its duplicate-write semantics and recommendations.",
+      "governing_condition_default_exception": "A point identity is table + tag set + timestamp. Duplicates merge field sets, and conflicting duplicate fields are not guaranteed to resolve to the latest write; docs recommend append-only unique timestamps.",
+      "applicability": "Alternative analytics-store design consideration only. If chosen, correction history needs an append-only model; timestamp/tag overwrite cannot be the authoritative correction mechanism."
+    }
+  ]
+}

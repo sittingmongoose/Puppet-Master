@@ -1,0 +1,341 @@
+{
+  "checked_utc": "2026-10-10T05:24:35.186828+00:00",
+  "scope": "Only inspected assigned rubric, inputs, current role outputs, native receipt files and terminal freeze. No backup/history or other arm inspected.",
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "bytes": 2790,
+      "mtime_ns": 1791604608938287266,
+      "full_content_inspected": true,
+      "expected": [],
+      "all_recorded_sha256_match": null,
+      "all_recorded_sizes_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/inputs/assignment.md",
+      "sha256": "ff2b636fc14365864262cef1330454a807288fe456febf8f0660a142b9521f2f",
+      "bytes": 5079,
+      "mtime_ns": 1791609445820236482,
+      "full_content_inspected": true,
+      "expected": [
+        {
+          "basis": "input_freeze",
+          "sha256": "ff2b636fc14365864262cef1330454a807288fe456febf8f0660a142b9521f2f",
+          "bytes": 5079
+        },
+        {
+          "basis": "fixture",
+          "sha256": "ff2b636fc14365864262cef1330454a807288fe456febf8f0660a142b9521f2f"
+        },
+        {
+          "basis": "manifest",
+          "sha256": "ff2b636fc14365864262cef1330454a807288fe456febf8f0660a142b9521f2f"
+        }
+      ],
+      "all_recorded_sha256_match": true,
+      "all_recorded_sizes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/inputs/fixture.json",
+      "sha256": "a6cccca9be12f21291c5c5d991e0355f8abaac1e675ae1372e5e7fac717142ca",
+      "bytes": 1649,
+      "mtime_ns": 1791609445820784482,
+      "full_content_inspected": true,
+      "expected": [
+        {
+          "basis": "input_freeze",
+          "sha256": "a6cccca9be12f21291c5c5d991e0355f8abaac1e675ae1372e5e7fac717142ca",
+          "bytes": 1649
+        },
+        {
+          "basis": "manifest",
+          "sha256": "a6cccca9be12f21291c5c5d991e0355f8abaac1e675ae1372e5e7fac717142ca"
+        }
+      ],
+      "all_recorded_sha256_match": true,
+      "all_recorded_sizes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/inputs/manifest.json",
+      "sha256": "bb341175ce21f6a33a366bf78842e8057cc090642052f0bbdf469dcbf21b4cad",
+      "bytes": 624,
+      "mtime_ns": 1791609445820967341,
+      "full_content_inspected": true,
+      "expected": [
+        {
+          "basis": "input_freeze",
+          "sha256": "bb341175ce21f6a33a366bf78842e8057cc090642052f0bbdf469dcbf21b4cad",
+          "bytes": 624
+        }
+      ],
+      "all_recorded_sha256_match": true,
+      "all_recorded_sizes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/inputs/corpus/S1.md",
+      "sha256": "abe9113df5303a6896c0efcffb0f053cef56cc5a6d0e2f3f8784a1ef5248cd0b",
+      "bytes": 891,
+      "mtime_ns": 1791609445820421772,
+      "full_content_inspected": true,
+      "expected": [
+        {
+          "basis": "input_freeze",
+          "sha256": "abe9113df5303a6896c0efcffb0f053cef56cc5a6d0e2f3f8784a1ef5248cd0b",
+          "bytes": 891
+        },
+        {
+          "basis": "fixture",
+          "sha256": "abe9113df5303a6896c0efcffb0f053cef56cc5a6d0e2f3f8784a1ef5248cd0b"
+        },
+        {
+          "basis": "manifest",
+          "sha256": "abe9113df5303a6896c0efcffb0f053cef56cc5a6d0e2f3f8784a1ef5248cd0b"
+        }
+      ],
+      "all_recorded_sha256_match": true,
+      "all_recorded_sizes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/inputs/corpus/S2.md",
+      "sha256": "82283c7ceb2bde2011bf62f375f02e452fdc66d7dbe9be299af2d18cb2e72cef",
+      "bytes": 937,
+      "mtime_ns": 1791609445820550789,
+      "full_content_inspected": true,
+      "expected": [
+        {
+          "basis": "input_freeze",
+          "sha256": "82283c7ceb2bde2011bf62f375f02e452fdc66d7dbe9be299af2d18cb2e72cef",
+          "bytes": 937
+        },
+        {
+          "basis": "fixture",
+          "sha256": "82283c7ceb2bde2011bf62f375f02e452fdc66d7dbe9be299af2d18cb2e72cef"
+        },
+        {
+          "basis": "manifest",
+          "sha256": "82283c7ceb2bde2011bf62f375f02e452fdc66d7dbe9be299af2d18cb2e72cef"
+        }
+      ],
+      "all_recorded_sha256_match": true,
+      "all_recorded_sizes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/inputs/corpus/index.json",
+      "sha256": "ba1dd888161f20c30b39b1019aac62a69750209beb91fbff93131b343d1b61b1",
+      "bytes": 1316,
+      "mtime_ns": 1791609445820686836,
+      "full_content_inspected": true,
+      "expected": [
+        {
+          "basis": "input_freeze",
+          "sha256": "ba1dd888161f20c30b39b1019aac62a69750209beb91fbff93131b343d1b61b1",
+          "bytes": 1316
+        },
+        {
+          "basis": "fixture",
+          "sha256": "ba1dd888161f20c30b39b1019aac62a69750209beb91fbff93131b343d1b61b1"
+        },
+        {
+          "basis": "manifest",
+          "sha256": "ba1dd888161f20c30b39b1019aac62a69750209beb91fbff93131b343d1b61b1"
+        }
+      ],
+      "all_recorded_sha256_match": true,
+      "all_recorded_sizes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/control/stages/role/input-map.json",
+      "sha256": "9df42d9180b6e4287a6087da51f3995f0fc59cde63c81a25e545262e787bde7d",
+      "bytes": 692,
+      "mtime_ns": 1791609447811363194,
+      "full_content_inspected": true,
+      "expected": [
+        {
+          "basis": "input_freeze",
+          "sha256": "9df42d9180b6e4287a6087da51f3995f0fc59cde63c81a25e545262e787bde7d",
+          "bytes": 692
+        },
+        {
+          "basis": "terminal_freeze",
+          "sha256": "9df42d9180b6e4287a6087da51f3995f0fc59cde63c81a25e545262e787bde7d",
+          "bytes": 692
+        }
+      ],
+      "all_recorded_sha256_match": true,
+      "all_recorded_sizes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/control/stages/role/assignment.md",
+      "sha256": "2fa1e39b95729cdb8f8b56f9a092d15011408bfa770e3112eaeb53232d4ff219",
+      "bytes": 3176,
+      "mtime_ns": 1791609447811509650,
+      "full_content_inspected": true,
+      "expected": [
+        {
+          "basis": "input_freeze",
+          "sha256": "2fa1e39b95729cdb8f8b56f9a092d15011408bfa770e3112eaeb53232d4ff219",
+          "bytes": 3176
+        },
+        {
+          "basis": "terminal_freeze",
+          "sha256": "2fa1e39b95729cdb8f8b56f9a092d15011408bfa770e3112eaeb53232d4ff219",
+          "bytes": 3176
+        }
+      ],
+      "all_recorded_sha256_match": true,
+      "all_recorded_sizes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/control/stages/role/freeze.json",
+      "sha256": "a6215aa0dcbd9779ba0dd08d343879e12ec4d3b79f7acce7752f8718d7cad9f8",
+      "bytes": 2955,
+      "mtime_ns": 1791609447811183090,
+      "full_content_inspected": true,
+      "expected": [
+        {
+          "basis": "terminal_freeze",
+          "sha256": "a6215aa0dcbd9779ba0dd08d343879e12ec4d3b79f7acce7752f8718d7cad9f8",
+          "bytes": 2955
+        }
+      ],
+      "all_recorded_sha256_match": true,
+      "all_recorded_sizes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/control/stages/role/final-section.md",
+      "sha256": "48f56eebda7c8b6cb680a70b5633b258e64b578bbca950817921ebc7933748c7",
+      "bytes": 5977,
+      "mtime_ns": 1791609702725344293,
+      "full_content_inspected": true,
+      "expected": [
+        {
+          "basis": "terminal_freeze",
+          "sha256": "48f56eebda7c8b6cb680a70b5633b258e64b578bbca950817921ebc7933748c7",
+          "bytes": 5977
+        }
+      ],
+      "all_recorded_sha256_match": true,
+      "all_recorded_sizes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/control/stages/role/source-map.json",
+      "sha256": "bc893127940420051656513cc896170a1663e1fad64f21acc2340f5530aa8b90",
+      "bytes": 4907,
+      "mtime_ns": 1791609702731344335,
+      "full_content_inspected": true,
+      "expected": [
+        {
+          "basis": "terminal_freeze",
+          "sha256": "bc893127940420051656513cc896170a1663e1fad64f21acc2340f5530aa8b90",
+          "bytes": 4907
+        }
+      ],
+      "all_recorded_sha256_match": true,
+      "all_recorded_sizes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/control/stages/role/native-goal-activation.json",
+      "sha256": "2e516dfd768657f9a95cfe3fc011e9219f06f5bc57099eab817f92f433ca5f85",
+      "bytes": 462,
+      "mtime_ns": 1791609482392912546,
+      "full_content_inspected": true,
+      "expected": [
+        {
+          "basis": "terminal_freeze",
+          "sha256": "2e516dfd768657f9a95cfe3fc011e9219f06f5bc57099eab817f92f433ca5f85",
+          "bytes": 462
+        }
+      ],
+      "all_recorded_sha256_match": true,
+      "all_recorded_sizes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/control/stages/role/native-goal-completion.json",
+      "sha256": "1a00d6024406fc6c3977f467f4e440fb8327ff4e01acde0054a318eb9b52cee6",
+      "bytes": 790,
+      "mtime_ns": 1791609726545501441,
+      "full_content_inspected": true,
+      "expected": [
+        {
+          "basis": "terminal_freeze",
+          "sha256": "1a00d6024406fc6c3977f467f4e440fb8327ff4e01acde0054a318eb9b52cee6",
+          "bytes": 790
+        }
+      ],
+      "all_recorded_sha256_match": true,
+      "all_recorded_sizes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/control/stages/role/service-tier-change.json",
+      "sha256": "2f774e25972df4c86d21a4b56217331fbd4aa8498bfcb53a7bb1f3292dd1c9f4",
+      "bytes": 481,
+      "mtime_ns": 1791609447606955227,
+      "full_content_inspected": true,
+      "expected": [
+        {
+          "basis": "terminal_freeze",
+          "sha256": "2f774e25972df4c86d21a4b56217331fbd4aa8498bfcb53a7bb1f3292dd1c9f4",
+          "bytes": 481
+        }
+      ],
+      "all_recorded_sha256_match": true,
+      "all_recorded_sizes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/control/stages/role/terminal-science-freeze-root.json",
+      "sha256": "310807eddf629ad8415e302b38a307e09417092c34ae4e93423f848a95d00f8a",
+      "bytes": 9771,
+      "mtime_ns": 1791609775307611100,
+      "full_content_inspected": true,
+      "expected": [],
+      "all_recorded_sha256_match": null,
+      "all_recorded_sizes_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/control/stages/role/sources/S1.md",
+      "sha256": "a3d25f57135919d8885eccf5c6e7a2b28fea7e225b7bec97d5e89297bc1be6db",
+      "bytes": 1478,
+      "mtime_ns": 1791609702738344383,
+      "full_content_inspected": true,
+      "expected": [
+        {
+          "basis": "terminal_freeze",
+          "sha256": "a3d25f57135919d8885eccf5c6e7a2b28fea7e225b7bec97d5e89297bc1be6db",
+          "bytes": 1478
+        }
+      ],
+      "all_recorded_sha256_match": true,
+      "all_recorded_sizes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/control/stages/role/sources/S2.md",
+      "sha256": "72f457cc1818817e0c53851bc9bc4a7542a98f90d2e52992b302f33c3f67a824",
+      "bytes": 1451,
+      "mtime_ns": 1791609702745344431,
+      "full_content_inspected": true,
+      "expected": [
+        {
+          "basis": "terminal_freeze",
+          "sha256": "72f457cc1818817e0c53851bc9bc4a7542a98f90d2e52992b302f33c3f67a824",
+          "bytes": 1451
+        }
+      ],
+      "all_recorded_sha256_match": true,
+      "all_recorded_sizes_match": true
+    }
+  ],
+  "hash_mismatches": [],
+  "terminal_science_freeze_verified": true,
+  "not_inspected_terminal_entries": [
+    "ER12_RUNTIME/runs/B-FINAL-M-02/control/stages/role/.invocation-backup-ce3c74cf195e4e6b8c3a3ec86ea4708c/assignment.md",
+    "ER12_RUNTIME/runs/B-FINAL-M-02/control/stages/role/.invocation-backup-ce3c74cf195e4e6b8c3a3ec86ea4708c/freeze.json",
+    "ER12_RUNTIME/runs/B-FINAL-M-02/control/stages/role/.invocation-backup-ce3c74cf195e4e6b8c3a3ec86ea4708c/input-map.json",
+    "ER12_RUNTIME/runs/B-FINAL-M-02/control/stages/role/.invocation-backup-ce3c74cf195e4e6b8c3a3ec86ea4708c/request.json",
+    "ER12_RUNTIME/runs/B-FINAL-M-02/control/stages/role/dispatch.json",
+    "ER12_RUNTIME/runs/B-FINAL-M-02/control/stages/role/invocation-clarification.json",
+    "ER12_RUNTIME/runs/B-FINAL-M-02/control/stages/role/raw-dispatch.json",
+    "ER12_RUNTIME/runs/B-FINAL-M-02/control/stages/role/records/dispatch-20261010T051729094517-0d15fd8c60304986b8216a19e990d3fb.json",
+    "ER12_RUNTIME/runs/B-FINAL-M-02/control/stages/role/request.json"
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://api.github.com/repos/zxing/zxing/git/ref/tags/zxing-3.5.3"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A5-02/treatment-v1/source-map.json",
+      "source_id": "E-Z02-ref",
+      "existing_authored_summary_fields": {
+        "independently_verified_version_or_commit": "Official tag/reference target metadata for ZXing 3.5.3/3.5.4",
+        "governing_condition_default_exception": "Tag metadata proves source identity, not compatibility or semantic correctness",
+        "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation."
+      }
+    },
+    {
+      "authored_source_map": "assessment/A5-02/treatment-v1/evidence/supplemental-retrieval-manifest.json",
+      "source_id": "E-Z02-ref",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "source_locator_status": "Relevant cited code/metadata reviewed; not executed"
+    },
+    {
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z02-ref.txt",
+          "line": 1,
+          "needle": "sha",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z02-ref.txt",
+          "line": 1,
+          "needle": "object",
+          "other_match_lines": []
+        }
+      ]
+    }
+  ],
+  "raw_sha256": "c98db32865f6589264a92f975e8fa5c5fc99d2f44e797c129c8d4a3ce25f54a8",
+  "original_bytes": 339,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/A5-02/treatment-v1/evidence/E-Z02-ref.txt",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://api.github.com/repos/zxing/zxing/git/ref/tags/zxing-3.5.3"
+  ],
+  "version": [
+    {
+      "independently_verified_version_or_commit": "Official tag/reference target metadata for ZXing 3.5.3/3.5.4",
+      "governing_condition_default_exception": "Tag metadata proves source identity, not compatibility or semantic correctness",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation."
+    }
+  ],
+  "selector": [
+    {
+      "source_locator_status": "Relevant cited code/metadata reviewed; not executed"
+    },
+    {
+      "independent_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z02-ref.txt",
+          "line": 1,
+          "needle": "sha",
+          "other_match_lines": []
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/evidence/E-Z02-ref.txt",
+          "line": 1,
+          "needle": "object",
+          "other_match_lines": []
+        }
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "independently_verified_version_or_commit": "Official tag/reference target metadata for ZXing 3.5.3/3.5.4",
+      "governing_condition_default_exception": "Tag metadata proves source identity, not compatibility or semantic correctness",
+      "applicability": "Only the named product/library/version/operation; planning evidence, not executed cooperative product validation."
+    }
+  ],
+  "rawSHA256": "c98db32865f6589264a92f975e8fa5c5fc99d2f44e797c129c8d4a3ce25f54a8"
+}

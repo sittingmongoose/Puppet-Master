@@ -1,0 +1,1287 @@
+{
+  "schema": "er12-independent-full-pipeline-assessment-v1",
+  "assessment_id": "A6-02-treatment-v1",
+  "slot": "A6-02",
+  "arm": "treatment",
+  "final_stage": "reviser",
+  "reviewer_identity": "codex-er12-a602-review-10681257",
+  "rubric_path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "source_judgment_basis": "No remaining material source error, omission or unsupported consequential decision was found after full declared-scope semantic assessment and independent primary checks. Minor source precision/fidelity/navigation and evidence-access limitations are explicit. Corrected lineage defects are retained as history, not scored as remaining final defects.",
+  "material_findings": [],
+  "remaining_material_findings": [],
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Original obligations and negative constraints",
+      "coverage": "FULL",
+      "source_judgment": "PASS",
+      "assessment": "The final is a five-collection planning proposal, not a build or legal determination. All eight clauses are explicitly reconciled. It preserves registrar/metadata-lead authority, exact supplied statement plus origin/history, both authorized optional features, and all four negative constraints. No license, thumbnail permission, restricted scrape, unknown-to-public-domain conversion or nonexistent deployment is prescribed. Source-specific permissions and collection endpoints are honestly unresolved owner inputs, after investigation of the relevant public mechanisms.",
+      "evidence_ids": [
+        "P01",
+        "P03",
+        "P04",
+        "P06",
+        "P08",
+        "P10",
+        "P11",
+        "P13",
+        "P14"
+      ],
+      "limitations": [
+        "L4"
+      ]
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source claims: subject, operation, version, defaults, type, domain and exceptions",
+      "coverage": "FULL",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "Independently checked entity/rights subjects, vocabulary-family applicability, licenses/CC0/PDM, OAI deletion/date/format/token conditions, DPLA MAP/API/partner terms, EDM 5.2.7, IIIF 3.0 typed URI/text and viewer scope, SKOS mapping semantics, PROV responsibility, Omeka import/export roles and compatibility, and pinned NARA source history. The final uses documentation as conditional planning evidence. No source supports actual feeds/export permissions for the unspecified collections, and the final does not claim them. Historical gate summary is slightly overcompressed. Current RightsStatements FAQ uses HTTPS examples while IIIF 3.0 describes HTTP; preserving original source identifiers prevents a wrong normalization rule.",
+      "evidence_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07",
+        "P08",
+        "P09",
+        "P10",
+        "P11",
+        "P12",
+        "P13",
+        "P14",
+        "P15",
+        "P16",
+        "P17",
+        "P18",
+        "P19",
+        "P20",
+        "P21",
+        "P22",
+        "P23"
+      ],
+      "limitations": [
+        "L1",
+        "L3",
+        "L4",
+        "L5"
+      ]
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar discovery, competing/analogous approaches, implementation/history and opportunity breadth",
+      "coverage": "FULL",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "Discovery independently found DPLA/Europeana hub patterns, conditional OAI-PMH harvesting, IIIF presentation, RightsStatements/CC distinctions, SKOS/PROV analogues, enrichment and export opportunities. After reveal, Omeka S was researched as an editorial publisher rather than assumed to be an aggregator. The final meaningfully compares network-controlled history versus hub reach/intermediary conditions and carries a pinned deletion fix plus ESE mapping migration into per-collection controls. This is useful investigation, not vacuous caution. One supplementary live-federation fallback is lost, without material loss of required workflow/option coverage.",
+      "evidence_ids": [
+        "P01",
+        "P02",
+        "P07",
+        "P09",
+        "P14",
+        "P15",
+        "P16",
+        "P18",
+        "P19",
+        "P20",
+        "P21",
+        "P22",
+        "P23"
+      ],
+      "limitations": [
+        "L2"
+      ]
+    },
+    {
+      "axis": 4,
+      "name": "Wrong criticism/corrections/rejections and exact plan dispositions",
+      "coverage": "FULL",
+      "source_judgment": "PASS",
+      "assessment": "The plan’s binary mapping, universal badge, discarded URI and link-only provenance assumptions are correctly rejected. Unattached history and the two-record all-collection validation idea are replaced by documented mechanisms and source-specific prospective checks. Optional capabilities remain optional and owner constraints remain binding. C1 is independently supported and corrected; C2 is accepted as an operational terms gate using relationship-specific evidence, not a blanket legal rule; C3 accurately records conflicting source-version signals; C4 appropriately remains a nonempirical method contrast. No material wrong criticism, false correction or unsupported scope rejection remains.",
+      "evidence_ids": [
+        "P01",
+        "P03",
+        "P04",
+        "P07",
+        "P08",
+        "P10",
+        "P11",
+        "P12",
+        "P13",
+        "P18",
+        "P21",
+        "P22"
+      ]
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning preserved through discovery, draft, critique and final",
+      "coverage": "FULL",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "The draft/final carry the core discovery recommendation, sources and historical mechanisms, raw URI/attribution provenance, explicit owner routing, useful tool/analogue roles, both optional features, uncertainties and validation boundaries. Final corrections add term-specific scope and source-operation authorization without replacing the proposal with a patch list. Investigator and critic source maps are embedded unchanged under distinct namespaces, corroborating identity only; semantic comparison, not those hashes, establishes preservation. Minor loss of a live-federation alternative and imperfect relative locators remain.",
+      "evidence_ids": [
+        "P01",
+        "P03",
+        "P07",
+        "P09",
+        "P10",
+        "P11",
+        "P14",
+        "P15",
+        "P16",
+        "P18",
+        "P20",
+        "P22"
+      ],
+      "limitations": [
+        "L2",
+        "L3"
+      ]
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed versus executed validation and oracle applicability",
+      "coverage": "FULL",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "Executed items are source reading, read-only pinned history inspection and input/reveal/file operations; none is presented as successful catalog operation. Five-source compatibility, UI/export operation and legal/owner decisions remain NOT RUN. Proposed checks discriminate source scope/missing/conflict states, exact URI preservation, mapping ambiguity, updates/deletion policies/recovery and export exclusions. Their oracle is the original assertion plus selected feed/profile/owner rules, not a thumbnail or a synthesized permission boolean. No local executable witness is claimed. Public code inspection proves a source-level mechanism, not deployment success; upstream executed-read claims lack preserved transcripts. Validation priorities are expressed mainly by prerequisites and order, not an explicit ranked column.",
+      "evidence_ids": [
+        "P01",
+        "P04",
+        "P07",
+        "P08",
+        "P10",
+        "P11",
+        "P14",
+        "P18",
+        "P21",
+        "P22"
+      ],
+      "limitations": [
+        "L5"
+      ]
+    }
+  ],
+  "exact_plan_clause_assessment": [
+    {
+      "number": 1,
+      "exact_plan_obligation": "Compare two aggregation/publishing workflows and an analogous controlled-vocabulary/provenance mechanism.",
+      "exact_plan_draft_treatment": "Map every source rights string to one reusable/not-reusable boolean. Put a standard permission badge on all visible thumbnails.",
+      "final_disposition": "REJECT_AND_REPLACE",
+      "independent_assessment": "Reject universal reusable/not-reusable coercion and permission badge. Compare hub-mediated aggregation with network-owned harvest/publish; preserve raw descriptive assertions and add SKOS/PROV analogues.",
+      "source_judgment": "PASS",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/final.md",
+        "line": 7,
+        "section": "Proposal and workflow comparison"
+      },
+      "additional_final_locator": {
+        "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/final.md",
+        "line": 67,
+        "section": "Exact per-clause reconciliation"
+      },
+      "evidence_ids": [
+        "P01",
+        "P02",
+        "P10",
+        "P13",
+        "P15",
+        "P16",
+        "P23"
+      ]
+    },
+    {
+      "number": 2,
+      "exact_plan_obligation": "Distinguish supplied rights statement, license, public-domain assertion and local access policy without making independent legal conclusions.",
+      "exact_plan_draft_treatment": "Omeka S is a tentative publisher; an aggregation route remains unresearched. Source record links are expected to be enough provenance.",
+      "final_disposition": "AMEND_AND_RETAIN_CANDIDATE",
+      "independent_assessment": "Keep Omeka S as an investigated optional publisher, not a winner; keep aggregation research and captured provenance. Separately model statement, license, public-domain assertion, access policy and source/vocabulary/display subjects.",
+      "source_judgment": "PASS",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/final.md",
+        "line": 22,
+        "section": "Rights assertions, scope and display"
+      },
+      "additional_final_locator": {
+        "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/final.md",
+        "line": 67,
+        "section": "Exact per-clause reconciliation"
+      },
+      "evidence_ids": [
+        "P03",
+        "P06",
+        "P08",
+        "P10",
+        "P11",
+        "P13",
+        "P20",
+        "P21",
+        "P22"
+      ]
+    },
+    {
+      "number": 3,
+      "exact_plan_obligation": "Research related URI, attribution, mapping and update conditions as a coherent metadata neighborhood; explain missing/conflicting statements.",
+      "exact_plan_draft_treatment": "Copy statement labels as text and discard their identifiers. The reuse-help and metadata-download options are retained, but missing/conflicting statements have no workflow.",
+      "final_disposition": "REJECT_AND_COMPLETE",
+      "independent_assessment": "Retain exact URIs alongside labels; capture source, field, time, version and mapping provenance. Preserve missing/conflicting/stale/changed states and use feed-dependent update/delete handling. Retain optional help/download scope.",
+      "source_judgment": "PASS",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/final.md",
+        "line": 37,
+        "section": "URI, attribution, mapping, provenance and changes"
+      },
+      "additional_final_locator": {
+        "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/final.md",
+        "line": 67,
+        "section": "Exact per-clause reconciliation"
+      },
+      "evidence_ids": [
+        "P01",
+        "P03",
+        "P10",
+        "P11",
+        "P12",
+        "P14",
+        "P15",
+        "P16"
+      ]
+    },
+    {
+      "number": 4,
+      "exact_plan_obligation": "Investigate a relevant vocabulary/mapping migration or released aggregator behavior change and its collection-specific consequences.",
+      "exact_plan_draft_treatment": "No released mapping history is attached. Staff review of two records is proposed to validate all five collections.",
+      "final_disposition": "ADD_RESEARCH_AND_BOUND_VALIDATION",
+      "independent_assessment": "Investigate ESE-to-EDM migration and pinned NARA deletion fix; apply per-collection schema/scope/change tests. Two staff-reviewed records cannot establish all five unrelated collection mappings; tests remain proposed.",
+      "source_judgment": "PASS",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/final.md",
+        "line": 55,
+        "section": "A useful released behavior example"
+      },
+      "additional_final_locator": {
+        "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/final.md",
+        "line": 67,
+        "section": "Exact per-clause reconciliation"
+      },
+      "evidence_ids": [
+        "P01",
+        "P07",
+        "P18"
+      ]
+    },
+    {
+      "number": 5,
+      "exact_plan_obligation": "Preserve and investigate this supported optional scope: a reuse-help link and downloadable source-attributed metadata record. It is an authorized option, not a mandatory feature or an established technical capability; recommend conditions, retain it when supported, and explain any evidence-based exclusion.",
+      "exact_plan_draft_treatment": "Retain a reuse-help link and downloadable source-attributed metadata record as supported owner-authorized optional scope. Support here means that the brief explicitly permits it; technical support, conditions and interoperability still need research. Do not remove it merely because the baseline route lacks it, or silently promote it to mandatory scope.",
+      "final_disposition": "RETAIN_OPTIONAL_WITH_CONDITIONS",
+      "independent_assessment": "Retain both authorized options. Help links use official supplied terms or registrar-approved local pages. Attributed JSON/JSON-LD download requires allowed source fields/terms, stable schema, source/mapping context and exclusion of objects/restricted data. Exclusions remain per source/field/record, not global.",
+      "source_judgment": "PASS",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/final.md",
+        "line": 59,
+        "section": "Optional reuse-help link and downloadable record"
+      },
+      "additional_final_locator": {
+        "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/final.md",
+        "line": 67,
+        "section": "Exact per-clause reconciliation"
+      },
+      "evidence_ids": [
+        "P05",
+        "P10",
+        "P12",
+        "P14",
+        "P19",
+        "P22"
+      ]
+    },
+    {
+      "number": 6,
+      "exact_plan_obligation": "Make owner decisions explicit: Each collection registrar owns its supplied statement; the network metadata lead owns mapping and provenance. Legal or policy ambiguity is routed to those owners rather than silently resolved by the catalogue.",
+      "exact_plan_draft_treatment": "Owner authority is reserved as follows: Each collection registrar owns its supplied statement; the network metadata lead owns mapping and provenance. Legal or policy ambiguity is routed to those owners rather than silently resolved by the catalogue. The draft has not obtained these decisions. Its tentative implementation assumptions cannot substitute for them.",
+      "final_disposition": "RETAIN_OWNER_AUTHORITY_AND_UNCERTAINTY",
+      "independent_assessment": "Preserve each registrar as statement owner and network metadata lead as mapping/provenance owner. Legal/policy ambiguity routes to them; decisions are not reported as approved.",
+      "source_judgment": "PASS",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/final.md",
+        "line": 82,
+        "section": "Owner inputs still needed"
+      },
+      "additional_final_locator": {
+        "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/final.md",
+        "line": 67,
+        "section": "Exact per-clause reconciliation"
+      },
+      "evidence_ids": [
+        "P04",
+        "P08",
+        "P16"
+      ]
+    },
+    {
+      "number": 7,
+      "exact_plan_obligation": "Preserve negative constraints: Do not grant new licenses, infer reuse permission from a visible thumbnail, scrape restricted collections, or convert an unknown statement into a public-domain claim.",
+      "exact_plan_draft_treatment": "Binding exclusions: Do not grant new licenses, infer reuse permission from a visible thumbnail, scrape restricted collections, or convert an unknown statement into a public-domain claim. The draft has no complete trace showing that its assumptions comply; revise the proposal wherever necessary to preserve these exclusions.",
+      "final_disposition": "RETAIN_ALL_BINDING_EXCLUSIONS",
+      "independent_assessment": "No new licenses, thumbnail-based permission inference, restricted scraping, or unknown-to-public-domain conversion. Neutral states and operation-specific source authorization preserve all four exclusions.",
+      "source_judgment": "PASS",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/final.md",
+        "line": 35,
+        "section": "A universal permission badge"
+      },
+      "additional_final_locator": {
+        "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/final.md",
+        "line": 67,
+        "section": "Exact per-clause reconciliation"
+      },
+      "evidence_ids": [
+        "P10",
+        "P11",
+        "P13",
+        "P14"
+      ]
+    },
+    {
+      "number": 8,
+      "exact_plan_obligation": "Deliver one coherent evidence-backed research proposal covering obligations 1–8, with recommendations, source/version applicability, useful discoveries, unresolved owner inputs, and a validation table separating checks actually executed from checks merely proposed. Do not report research sources or future tests as executed product validation.",
+      "exact_plan_draft_treatment": "The draft currently contains no coherent evidence-backed final proposal. Its proposed demos are research/validation ideas only. A complete revision must preserve every obligation, disclose corrections and retained options, and not confuse documentation review with successful product operation.",
+      "final_disposition": "DELIVER_COMPLETE_PROPOSAL",
+      "independent_assessment": "Deliver recommendations, comparison, conditions, alternatives/history, exact dispositions, owner unknowns and executed/proposed table. Source research and historical observations remain distinct from product validation.",
+      "source_judgment": "PASS",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/final.md",
+        "line": 99,
+        "section": "Validation plan and actual execution record"
+      },
+      "additional_final_locator": {
+        "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/final.md",
+        "line": 67,
+        "section": "Exact per-clause reconciliation"
+      },
+      "evidence_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07",
+        "P08",
+        "P09",
+        "P10",
+        "P11",
+        "P12",
+        "P13",
+        "P14",
+        "P15",
+        "P16",
+        "P17",
+        "P18",
+        "P19",
+        "P20",
+        "P21",
+        "P22",
+        "P23"
+      ]
+    }
+  ],
+  "criticism_dispositions": [
+    {
+      "id": "C1",
+      "critic_classification": "material incomplete",
+      "final_disposition": "ACCEPT",
+      "independent_disposition": "SUPPORTED_AND_RESOLVED",
+      "draft_lineage_defect": "Generic source-scope storage did not investigate term-family work/digital-object applicability. This was a completeness defect, not evidence that every stored URI was already wrong.",
+      "final_resolution": "Final adds exact family distinctions and separately preserves source subject/NOT_STATED, documented applicability and displayed resource; ambiguity stays with the registrar.",
+      "remaining_material_issue": false,
+      "evidence_ids": [
+        "P10",
+        "P11",
+        "P12",
+        "P14"
+      ]
+    },
+    {
+      "id": "C2",
+      "critic_classification": "material incomplete",
+      "final_disposition": "ACCEPT WITH AMENDMENT",
+      "independent_disposition": "SUPPORTED_AS_OPERATIONAL_CLARIFICATION_AND_RESOLVED",
+      "draft_lineage_defect": "Draft requested feed access conditions and retention decisions, and gated optional exports, but did not make core retention/display conditions an explicit prerequisite. Thus the critic sharpens an existing owner dependency rather than discovering that the catalog legally has no authority.",
+      "final_resolution": "Final makes allowed retrieval/retention/display operations and fields a per-collection gate. DPLA/Europeana conditions are explicitly relationship-specific and do not settle these five sources.",
+      "remaining_material_issue": false,
+      "evidence_ids": [
+        "P04",
+        "P08"
+      ]
+    },
+    {
+      "id": "C3",
+      "critic_classification": "minor locator/wording",
+      "final_disposition": "ACCEPT",
+      "independent_disposition": "SUPPORTED_AND_RESOLVED",
+      "draft_lineage_defect": "Draft noted API 3.1 versus offered 5.0, but omitted the same landing page’s current-version 4.0 signal.",
+      "final_resolution": "Final states all three signals and requires exact artifact/interface pinning for a real integration.",
+      "remaining_material_issue": false,
+      "evidence_ids": [
+        "P03",
+        "P04"
+      ]
+    },
+    {
+      "id": "C4",
+      "critic_classification": "honestly unresolved external input",
+      "final_disposition": "RETAIN UNCERTAINTY",
+      "independent_disposition": "APPROPRIATE_UNCERTAINTY",
+      "draft_lineage_defect": null,
+      "final_resolution": "No competent-reference artifact or measured sequential trace exists in the assigned input maps. The final carries only a procedural contrast and no empirical performance result. Whether ordinary competent reviewers always reopen sources is itself unmeasured.",
+      "remaining_material_issue": false,
+      "evidence_ids": []
+    }
+  ],
+  "lineage": [
+    {
+      "topic": "Two workflow comparison and network-owned history",
+      "assessment": "Discovery establishes DPLA/Europeana hubs and scheduled harvest; draft/final develop comparison and source-specific conditions.",
+      "status": "PRESERVED",
+      "evidence_ids": [
+        "P01",
+        "P02",
+        "P23"
+      ]
+    },
+    {
+      "topic": "Rights subjects and exact supplied assertions",
+      "assessment": "Discovery/draft distinguish assertions, licenses, PDM/CC0 and access; critic adds statement-family scope; final keeps originals and adds separate interpretive fields.",
+      "status": "PRESERVED_AND_QUALIFIED",
+      "evidence_ids": [
+        "P03",
+        "P06",
+        "P10",
+        "P11",
+        "P13"
+      ]
+    },
+    {
+      "topic": "Missing/conflict/update/deletion behavior",
+      "assessment": "All science stages retain neutral states and repository-dependent deletion behavior, plus source/version capture.",
+      "status": "PRESERVED",
+      "evidence_ids": [
+        "P01",
+        "P10",
+        "P18"
+      ]
+    },
+    {
+      "topic": "Historical mechanisms",
+      "assessment": "NARA filename/tag mismatch and ESE flat-field ambiguity retain their mechanisms and per-collection consequences; no incident reproduction is claimed.",
+      "status": "PRESERVED",
+      "evidence_ids": [
+        "P07",
+        "P18"
+      ]
+    },
+    {
+      "topic": "Help link and downloadable attributed record",
+      "assessment": "Both authorized options remain conditional in discovery/draft/final; critique requests additional core gates without removing them.",
+      "status": "PRESERVED",
+      "evidence_ids": [
+        "P14",
+        "P19",
+        "P22"
+      ]
+    },
+    {
+      "topic": "Alternatives and opportunities",
+      "assessment": "IIIF viewer, Omeka editorial publisher, enrichment and SKOS/PROV survive. Live federation’s supplementary fallback is omitted.",
+      "status": "PRESERVED_WITH_MINOR_LOSS",
+      "evidence_ids": [
+        "P09",
+        "P14",
+        "P15",
+        "P16",
+        "P20",
+        "P22"
+      ]
+    },
+    {
+      "topic": "Owner authority and validation boundaries",
+      "assessment": "No registrar decision or product check becomes approved/executed in the final; C2 tightens operation gates.",
+      "status": "PRESERVED",
+      "evidence_ids": [
+        "P04",
+        "P08"
+      ]
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L1",
+      "severity": "minor_source_precision",
+      "material": false,
+      "remaining_in_final": true,
+      "axes": [
+        2
+      ],
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/final.md",
+        "line": 55,
+        "section": "A useful released behavior example"
+      },
+      "finding": "The historical zero-delete gate summary omits the early success return when _SUMMARY.txt is absent, and does not spell out the TTY confirmation/30-second default or that the skip flag bypasses rather than mechanically verifies confirmation.",
+      "evidence_ids": [
+        "P18"
+      ],
+      "reason_not_material": "The final uses this as a bounded source/runbook analogy, explicitly not a reproduced incident or selected pilot component. Its recommended pilot counts and alerts are proposed local controls, not a claim that the NARA gate is comprehensive. No remaining consequential decision relies on the omitted exception."
+    },
+    {
+      "id": "L2",
+      "severity": "minor_fidelity_loss",
+      "material": false,
+      "remaining_in_final": true,
+      "axes": [
+        3,
+        5
+      ],
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/investigator/discovery.md",
+        "line": 9,
+        "section": "A live-federated query layer"
+      },
+      "finding": "Discovery’s live-federated fallback and its uptime/query-limit/history tradeoff are omitted from the complete draft/final. The final still compares hub publication and network harvesting and retains IIIF, Omeka S, enrichment and conditional exports.",
+      "evidence_ids": [
+        "P01",
+        "P05",
+        "P14"
+      ],
+      "reason_not_material": "Live federation was an architectural inference, not an established five-source capability or explicit brief requirement. Dropping this extra fallback modestly reduces carried breadth but does not erase either required comparison, supported optional feature or a governing condition of the chosen planning recommendation."
+    },
+    {
+      "id": "L3",
+      "severity": "minor_locator_wording",
+      "material": false,
+      "remaining_in_final": true,
+      "axes": [
+        2,
+        5
+      ],
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/final.md",
+        "line": 5,
+        "section": "The saved released copy is revealed-plan.md"
+      },
+      "finding": "The final inherits the relative name revealed-plan.md although that file lives in the investigator stage, and copied README_NARA line-number locators do not match the raw pinned file. The absolute input-map paths, source namespaces, section names and pinned commit resolve the intended sources.",
+      "evidence_ids": [
+        "P18"
+      ],
+      "reason_not_material": "Navigability is recoverable without choosing a different source or meaning; original files and section titles are complete."
+    },
+    {
+      "id": "L4",
+      "severity": "minor_wording",
+      "material": false,
+      "remaining_in_final": true,
+      "axes": [
+        1,
+        2
+      ],
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/final.md",
+        "line": 85,
+        "section": "If no determination was made, leave the rights field absent"
+      },
+      "finding": "The owner-input sentence about leaving rights absent when no determination was made is broader than the necessary rule for missing source data. Legitimately source-supplied CNE is precisely an assertion that no evaluation occurred.",
+      "evidence_ids": [
+        "P10"
+      ],
+      "reason_not_material": "The surrounding proposal repeatedly preserves all supplied raw statements, forbids inventing CNE from missing metadata, and displays source assertions without independent reevaluation. It never directs deletion of an actually supplied CNE value; the sentence is read as guidance for resolving missing/incomplete data."
+    },
+    {
+      "id": "L5",
+      "severity": "evidence_access_limit",
+      "material": false,
+      "remaining_in_final": false,
+      "axes": [
+        2,
+        6
+      ],
+      "finding": "The authored source roots contain indexes only, with source summaries/access windows in the maps but no original page captures, request transcripts or executable witnesses. Several independent direct opens also failed; official indexed page text was used where returned, with errors retained.",
+      "evidence_ids": [
+        "P02",
+        "P03",
+        "P04",
+        "P07",
+        "P10",
+        "P11",
+        "P12",
+        "P17",
+        "P19",
+        "P23"
+      ],
+      "reason_not_material": "Independent governing evidence still supports the consequential recommendations and corrections. It does not prove every upstream retrieval operation, product behavior, or live source availability."
+    }
+  ],
+  "useful_discoveries": [
+    {
+      "topic": "Two workflow comparison and network-owned history",
+      "useful_consequence": "Discovery establishes DPLA/Europeana hubs and scheduled harvest; draft/final develop comparison and source-specific conditions.",
+      "evidence_ids": [
+        "P01",
+        "P02",
+        "P23"
+      ]
+    },
+    {
+      "topic": "Rights subjects and exact supplied assertions",
+      "useful_consequence": "Discovery/draft distinguish assertions, licenses, PDM/CC0 and access; critic adds statement-family scope; final keeps originals and adds separate interpretive fields.",
+      "evidence_ids": [
+        "P03",
+        "P06",
+        "P10",
+        "P11",
+        "P13"
+      ]
+    },
+    {
+      "topic": "Missing/conflict/update/deletion behavior",
+      "useful_consequence": "All science stages retain neutral states and repository-dependent deletion behavior, plus source/version capture.",
+      "evidence_ids": [
+        "P01",
+        "P10",
+        "P18"
+      ]
+    },
+    {
+      "topic": "Historical mechanisms",
+      "useful_consequence": "NARA filename/tag mismatch and ESE flat-field ambiguity retain their mechanisms and per-collection consequences; no incident reproduction is claimed.",
+      "evidence_ids": [
+        "P07",
+        "P18"
+      ]
+    },
+    {
+      "topic": "Help link and downloadable attributed record",
+      "useful_consequence": "Both authorized options remain conditional in discovery/draft/final; critique requests additional core gates without removing them.",
+      "evidence_ids": [
+        "P14",
+        "P19",
+        "P22"
+      ]
+    },
+    {
+      "topic": "Alternatives and opportunities",
+      "useful_consequence": "IIIF viewer, Omeka editorial publisher, enrichment and SKOS/PROV survive. Live federation’s supplementary fallback is omitted.",
+      "evidence_ids": [
+        "P09",
+        "P14",
+        "P15",
+        "P16",
+        "P20",
+        "P22"
+      ]
+    }
+  ],
+  "validation_assessment": [
+    {
+      "topic": "Public source/version and pinned code review",
+      "candidate_status": "EXECUTED_RESEARCH",
+      "independent_status": "GOVERNING_MEANING_RECHECKED; UPSTREAM OPERATIONS ONLY AUTHORED_REPORTS",
+      "applicable_oracle": "Primary specification and pinned source, at their declared versions; not a catalog operation oracle.",
+      "priority_interpretation": "Research basis already complete."
+    },
+    {
+      "topic": "Discovery save and exact plan reveal",
+      "candidate_status": "EXECUTED_UPSTREAM_ONCE",
+      "independent_status": "RECEIPT_PRESENT; DISCOVERY/PLAN IDENTITIES MATCH",
+      "applicable_oracle": "Helper receipt and byte identity establish handoff identity/order claims only, not semantic correctness.",
+      "priority_interpretation": "Method input prerequisite."
+    },
+    {
+      "topic": "Per-collection terms, endpoint and schema inventory",
+      "candidate_status": "NOT_RUN / PROPOSED",
+      "independent_status": "APPROPRIATE_UNRESOLVED_INPUT",
+      "applicable_oracle": "Actual source terms, registrar authorization, selected feed Identify/schema and source examples.",
+      "priority_interpretation": "First prerequisite before connector/public display, as final specifies."
+    },
+    {
+      "topic": "Mapping and rights-state fixtures for all five sources",
+      "candidate_status": "PROPOSED",
+      "independent_status": "MEANINGFUL; NOT_EXECUTED",
+      "applicable_oracle": "Raw source assertion/URI/subject and versioned mapping rules; verify no generated grant and preserve missing/conflicting/changed values.",
+      "priority_interpretation": "After input selection; cover ordinary and consequential edge cases per collection."
+    },
+    {
+      "topic": "Update/delete/outage/recovery and migration regression",
+      "candidate_status": "PROPOSED",
+      "independent_status": "MEANINGFUL; NOT_EXECUTED",
+      "applicable_oracle": "Repository-declared deletion policy, granularity/tokens, explicit tombstones and completed snapshots; source-specific before/after mapping fixtures. Zero count prompts investigation, not proof of no deletions.",
+      "priority_interpretation": "Before pilot operation is accepted."
+    },
+    {
+      "topic": "Visitor statement/source display and optional help/download",
+      "candidate_status": "PROPOSED",
+      "independent_status": "MEANINGFUL; NOT_EXECUTED",
+      "applicable_oracle": "Original supplied statement plus source provenance; official/owner-approved help target; allowed fields and independent metadata/object scopes. JSON shape alone cannot prove permission.",
+      "priority_interpretation": "Core display then optional-path checks after owner/export approval."
+    },
+    {
+      "topic": "End-to-end catalog, Omeka import/API, collection feeds and legal decision",
+      "candidate_status": "NOT_RUN",
+      "independent_status": "NO_REQUIREMENT_TO_EXECUTE_IN_THIS_PLANNING_ASSIGNMENT",
+      "applicable_oracle": "Would need a selected authorized pilot and owners; documentation does not substitute for it.",
+      "priority_interpretation": "A later authorized pilot, not a missing mandatory deliverable."
+    }
+  ],
+  "mechanics": {
+    "delivery": {
+      "judgment": "DELIVERED",
+      "final_path": "ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/final.md",
+      "root_terminal_observed_at_utc": "2026-10-10T05:16:15.062685+00:00",
+      "basis": "terminal-science-freeze-root.json contains an app task completed/result_available observation without pending runs; required science exists. Reviser standalone status.json is absent, but root final_stage_task supplies the required terminal task evidence."
+    },
+    "coverage": {
+      "judgment": "FULL_DECLARED_SCOPE",
+      "axes_assessed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "exact_plan_clauses_assessed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "unassessed_axes": [],
+      "missing_semantic_inputs": []
+    },
+    "native": {
+      "judgment": "UNKNOWN_INDEPENDENT_VERIFICATION",
+      "reported_fields": {
+        "investigator": {
+          "threadId": "01a1241c-51b2-71d1-b017-37dc0910e43d",
+          "create_reported_at": 1791607213,
+          "terminal_tokens_reported": 220047,
+          "terminal_seconds_reported": 719
+        },
+        "critic": {
+          "threadId": "01a12428-01ef-7f61-8b03-6710bf615d91",
+          "create_reported_at": 1791607995,
+          "terminal_tokens_reported": 146472,
+          "terminal_seconds_reported": 606
+        },
+        "reviser": {
+          "threadId": "01a12432-56bc-7ae2-9d79-d258e650c52e",
+          "create_reported_at": 1791608666,
+          "terminal_tokens_reported": 144885,
+          "terminal_seconds_reported": 678
+        }
+      },
+      "basis": "Candidate prose/maps and T3 terminal summaries report actual native create/get/completion fields, but the assigned freeze has no separate raw native-tool activation/completion receipts. T3 completion is not native proof; reported counters are not billing evidence. Reviewer native Goal is independently observed through tools in this review and recorded separately."
+    },
+    "t3": {
+      "judgment": "TERMINAL_OBSERVED",
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna",
+      "basis": "Captured dispatch responses, investigator/critic status and root final_stage_task expose these T3 task fields. This proves the app route/terminal observations, not an underlying provider billing tier."
+    },
+    "protocol": {
+      "judgment": "NO_VIOLATION_OBSERVED_WITH_TELEMETRY_LIMITS",
+      "brief_and_plan_identity": "MATCH",
+      "discovery_reveal_receipt": "PRESENT_AND_MATCHING",
+      "source_id_preservation": "INV/CRT embedded maps equal original maps; semantic lineage independently read",
+      "unauthorized_candidate_assistance": "NONE_OBSERVED",
+      "complete_tool_trace": "UNKNOWN",
+      "basis": "Only assigned A6-02 treatment files were substantively inspected. No candidate feedback, repair, nested delegation, account/Git/publication action or other-arm assessment occurred. File/receipt records support input identities but do not independently establish all stage actions."
+    },
+    "time": {
+      "judgment": "DELIVERY_WITHIN_RECORDED_ENVELOPE",
+      "prepared_start_utc": "2026-10-10T04:39:57.192Z",
+      "whole_deadline_utc": "2026-10-10T05:39:56.996Z",
+      "root_terminal_observed_at_utc": "2026-10-10T05:16:15.062685+00:00",
+      "observed_prepare_to_root_terminal_seconds": 2177.870685,
+      "basis": "All authored final science mtimes precede individual frozen deadlines. Root terminal observation precedes whole deadline. This bounds delivery occupancy; actual execution/queue boundaries and comparative speed are not inferred."
+    },
+    "effective_service_tier": {
+      "judgment": "UNKNOWN",
+      "requested": "default",
+      "prospective_revision": "user-standard-20261010-v1",
+      "basis": "Stage input-map/request/dispatch and service-tier-change records document a requested default tier. No effective-tier provider telemetry or billing receipt is in the assigned package."
+    },
+    "billing": {
+      "judgment": "UNKNOWN",
+      "basis": "No invoice, billable-token or provider inference-cost record was supplied. Native reported tokens/time and shorter observed occupancy do not establish costs or savings."
+    }
+  },
+  "unknowns": [
+    "Five unnamed collections’ feeds, terms, field export/display permissions, attribution, schemas, stable IDs and deletion semantics remain actual owner/source inputs.",
+    "No actual catalog, UI, import, API visibility or export compatibility validation was executed or required by this research brief.",
+    "Exact future DPLA API/profile artifact remains unresolved; current official documentation exposes 3.1/4.0/5.0 surfaces.",
+    "Pinned DPLA maintainer code/runbook supports history, but actual production deployment, incident counts and successful remediation were not independently reproduced.",
+    "Independent native activation/completion receipts, full protocol traces, effective tier and provider billing for the candidate are UNKNOWN.",
+    "No competent-reference proposal or measured ordinary sequential trace is an assigned input; quality/speed/cost comparison is UNKNOWN.",
+    "Upstream source-access timestamps are authored windows, not independently preserved per-request receipts; some current direct pages are unavailable."
+  ],
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A6-02/brief.md",
+      "bytes": 3410,
+      "sha256": "2f0f5e66921a17b6966aee8ea7fce3fe7b8652a8cac03f05e6c175cebe354598",
+      "mtime_ns": 1791607196981640320
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A6-02/plan.md",
+      "bytes": 6071,
+      "sha256": "169aaf6153653975a15fc0bcb87130cf772fb7761f5c1abf2f80838b62a4a1db",
+      "mtime_ns": 1791607196981772195
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/inputs/brief.md",
+      "bytes": 3410,
+      "sha256": "2f0f5e66921a17b6966aee8ea7fce3fe7b8652a8cac03f05e6c175cebe354598",
+      "mtime_ns": 1791607197192269730
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/critic/assignment.md",
+      "bytes": 3779,
+      "sha256": "7e72e6f7bbd61626539a821309fe25a4509c585ca0ca3ec2f0cedd764fadf906",
+      "mtime_ns": 1791607963588103913
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/critic/critique.md",
+      "bytes": 12494,
+      "sha256": "cb1caad0601e7fd748001086f85fd7c490bc7de461c6c4e71cd9b064a8eb70a4",
+      "mtime_ns": 1791608570678783743
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/critic/dispatch.json",
+      "bytes": 4155,
+      "sha256": "41986ac3de350bb5f5ca7bc7aaa29f48ccea61c21a68c62481e11df86fedac09",
+      "mtime_ns": 1791607964311193213
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/critic/freeze.json",
+      "bytes": 3620,
+      "sha256": "942577eb676816913f1e07d30eea5e0ebeeb4de808148dd562f887fdd27f1adf",
+      "mtime_ns": 1791607963741082914
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/critic/input-map.json",
+      "bytes": 1477,
+      "sha256": "f73b5bb7a09067f843324ee8040db3b7f4688904ae699c0ea5637b0106b450cc",
+      "mtime_ns": 1791607963740462560
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/critic/request.json",
+      "bytes": 897,
+      "sha256": "db6c4fa13623e4fe2525819030567955a34f39043a5d1a4a9cd870f97f3eb7a6",
+      "mtime_ns": 1791607963740675138
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/critic/service-tier-change.json",
+      "bytes": 481,
+      "sha256": "594a46409e9c9bcdd19bffc68ddddb8a7093d2fb459ba6b4b4ec19e3b0789ef2",
+      "mtime_ns": 1791607963741308253
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/critic/source-map.json",
+      "bytes": 15709,
+      "sha256": "884b8dc448808de7aa18e2f1039b50e5f8baa5b46cbc80149b3bd780351f5dd0",
+      "mtime_ns": 1791608570681791903
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/critic/sources/index.md",
+      "bytes": 2627,
+      "sha256": "bff3b3acbb6682b3fcc7c509847f38fcf5e3689c19b3f0c64cc514c91c8f53be",
+      "mtime_ns": 1791608570697835418
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/critic/status.json",
+      "bytes": 4208,
+      "sha256": "53586725b34856af801793c046711aacda0814641824b158b67a9fadb88fa85b",
+      "mtime_ns": 1791608639518608998
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/investigator/assignment.md",
+      "bytes": 4189,
+      "sha256": "290802da8e3cce7a25d646a9e884444b181691de4e1ac306741f24fce2b76ebe",
+      "mtime_ns": 1791607197192980715
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/investigator/discovery.md",
+      "bytes": 9957,
+      "sha256": "6ceb48b8cdcd2660861a3d0f651c005382a8313bb2d0ea227dd4644defd2a6e5",
+      "mtime_ns": 1791607636961242217
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/investigator/dispatch.json",
+      "bytes": 4251,
+      "sha256": "3465ee59539f1e9da0d11812832caa6d310f3a64d9bc3499cf50fafc35071199",
+      "mtime_ns": 1791607198026625739
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/investigator/draft.md",
+      "bytes": 28318,
+      "sha256": "1377bda71ce8f1caf2ac46d56aed127b00d8a6ae2272266732bead508081f1d6",
+      "mtime_ns": 1791607921571988769
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/investigator/freeze.json",
+      "bytes": 2126,
+      "sha256": "dadf812ec45f43e5ccd1ee38b44d4e7130795ba4ebdf0f2d64132ada14d82327",
+      "mtime_ns": 1791607197384508189
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/investigator/input-map.json",
+      "bytes": 789,
+      "sha256": "1701fc9191e878e1d64cd99e846588918a3ffe60bc0eed567138bf06ad8808db",
+      "mtime_ns": 1791607197383951302
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/investigator/plan-reveal.json",
+      "bytes": 428,
+      "sha256": "7d824cb3beca8d6a55de279ee56927b3174df11887e1991e89640ed99d3b43ea",
+      "mtime_ns": 1791607646093189858
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/investigator/request.json",
+      "bytes": 921,
+      "sha256": "fc72b6fc2cf3440afbe29196397b53ce49b03459735c8348e0839d9c5084f830",
+      "mtime_ns": 1791607197384187477
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 6071,
+      "sha256": "169aaf6153653975a15fc0bcb87130cf772fb7761f5c1abf2f80838b62a4a1db",
+      "mtime_ns": 1791607646093077428
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/investigator/service-tier-change.json",
+      "bytes": 493,
+      "sha256": "085a51564660d6a6f475b80c6ca1100ccdf600657898b9d53aec9b9f0452b7b5",
+      "mtime_ns": 1791607197384695670
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/investigator/source-map.json",
+      "bytes": 28217,
+      "sha256": "fec1b5c705917ba5ac2435fab7fb6266fa12e75823be987ee3aa9dff5eb955b9",
+      "mtime_ns": 1791607901071248994
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/investigator/sources/index.md",
+      "bytes": 4041,
+      "sha256": "b7a955c6717ac4b68acb29425ec2626275647dde3183c3783c9173018bfb0025",
+      "mtime_ns": 1791607730343844824
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/investigator/status.json",
+      "bytes": 4338,
+      "sha256": "d51e4c7a9089752c5732e8d2afa909a1a1579e00a01962b3894f26d3d85b60ea",
+      "mtime_ns": 1791607963224740911
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/assignment.md",
+      "bytes": 3759,
+      "sha256": "27d918bcf9394df99b1dce7e87db2b9173a7df8c1e1b4399424b5f586af80ac2",
+      "mtime_ns": 1791608639858716897
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/dispatch.json",
+      "bytes": 4171,
+      "sha256": "ddbb4e019e809c110c3104aac70fdf654f015c0101feea3591a5c8d0e84fc3b9",
+      "mtime_ns": 1791608641373007335
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/final.md",
+      "bytes": 35452,
+      "sha256": "8c420eef0702eaab80dc1e5fe23373a9c05eb12d2119b1a2175227f59cb482ab",
+      "mtime_ns": 1791609341008285841
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/freeze.json",
+      "bytes": 4399,
+      "sha256": "4a7b26d57190b734fa93452c1ae246bc65800e6ece3c30d0778303b803571f0e",
+      "mtime_ns": 1791608640057396267
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/input-map.json",
+      "bytes": 1794,
+      "sha256": "2168d498b7d0b31bde0778ad3643d8093f6bed56968fb8b2322804c3f554f3b2",
+      "mtime_ns": 1791608640056708753
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/request.json",
+      "bytes": 901,
+      "sha256": "e6cd3c36a7f8ba4f0fe2e0065221eb6f40250798cbbd8045f39a61e9d37aca57",
+      "mtime_ns": 1791608640056915237
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/service-tier-change.json",
+      "bytes": 483,
+      "sha256": "f5597411b3a1b8a8a57618d9e5281b83746346fd450fdaec959471f3b2f1e4b2",
+      "mtime_ns": 1791608640057657484
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/source-map.json",
+      "bytes": 60726,
+      "sha256": "3cc2f8a6084c9dde1e1fa8533939823f92690296938140a468a34d853a8fefe8",
+      "mtime_ns": 1791609341007576431
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/sources/index.md",
+      "bytes": 10472,
+      "sha256": "57285e1edcf3e362ff1856d19637d9bca2f2ae696f014e7ed6d443ba401c91da",
+      "mtime_ns": 1791609157443233287
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/terminal-science-freeze-root.json",
+      "bytes": 7715,
+      "sha256": "05667c1190079869b7db681563304d27cf14d7169ab18f03f5ec69e7680d84c8",
+      "mtime_ns": 1791609375062933530
+    }
+  ],
+  "source_ids": [
+    "P01",
+    "P02",
+    "P03",
+    "P04",
+    "P05",
+    "P06",
+    "P07",
+    "P08",
+    "P09",
+    "P10",
+    "P11",
+    "P12",
+    "P13",
+    "P14",
+    "P15",
+    "P16",
+    "P17",
+    "P18",
+    "P19",
+    "P20",
+    "P21",
+    "P22",
+    "P23"
+  ],
+  "urls_versions_and_locators": [
+    {
+      "id": "P01",
+      "url": "https://www.openarchives.org/OAI/openarchivesprotocol.html",
+      "version_or_commit": "Protocol 2.0 (2002-06-14), document revision 2015-01-08",
+      "locators": [
+        "Sections 2.5.1, 2.7.1, 3.3.2, 3.4, 3.5, 4.2; readable lines 294–312, 450–475, 1038–1120"
+      ]
+    },
+    {
+      "id": "P02",
+      "url": "https://pro.dp.la/hubs",
+      "version_or_commit": "Current unversioned official documentation",
+      "locators": [
+        "evidence/web5.txt: Hub Network and Prospective Hubs sections; official search retrieval"
+      ]
+    },
+    {
+      "id": "P03",
+      "url": "https://pro.dp.la/developers/field-reference",
+      "version_or_commit": "API documentation states MAP 3.1; page unversioned",
+      "locators": [
+        "evidence/web2.txt: MAP introduction and object.@id/object.rights/originalRecord/sourceResource/sourceResource.rights definitions"
+      ]
+    },
+    {
+      "id": "P04",
+      "url": "https://pro.dp.la/hubs/metadata-application-profile",
+      "version_or_commit": "Landing page gives conflicting 4.0 current-version and 5.0 download signals",
+      "locators": [
+        "evidence/web2.txt: Download the MAP; Policy Statement on Metadata principles 2–4"
+      ]
+    },
+    {
+      "id": "P05",
+      "url": "https://pro.dp.la/developers/policies",
+      "version_or_commit": "API v2, current unversioned official pages",
+      "locators": [
+        "evidence/web5.txt: Policies API Keys; API Codex essentials; Requests search result"
+      ]
+    },
+    {
+      "id": "P06",
+      "url": "https://pro.europeana.eu/files/Europeana_Professional/Share_your_data/Technical_requirements/EDM_Documentation/EDM_Definition_v5.2.7_042016.pdf",
+      "version_or_commit": "EDM Definition v5.2.7, April 2016",
+      "locators": [
+        "PDF printed page 40, edm:rights table; evidence/E07.txt lines 2198–2228; ProvidedCHO, WebResource, Aggregation class definitions"
+      ]
+    },
+    {
+      "id": "P07",
+      "url": "https://pro.europeana.eu/page/ese-documentation",
+      "version_or_commit": "Official historical guidance posted 2014-12-04, updated 2023-11-06 in indexed page",
+      "locators": [
+        "evidence/web3.txt: Default mapping; options 1–3; dc:date/dcterms:created/dc:format examples"
+      ]
+    },
+    {
+      "id": "P08",
+      "url": "https://pro.europeana.eu/page/europeana-licensing-framework",
+      "version_or_commit": "Current official redirect; effective page published 2023-09-10; DEA replaced prior agreements 2012-07-01",
+      "locators": [
+        "evidence/web4.txt: effective URL https://www.dataspace-culturalheritage.eu/en/news/europeana-licensing-framework, lines 17–31"
+      ]
+    },
+    {
+      "id": "P09",
+      "url": "https://pro.europeana.eu/page/europeana-semantic-enrichment",
+      "version_or_commit": "Official indexed guidance updated 2025-06-23",
+      "locators": [
+        "evidence/web3.txt: Automatic semantic enrichment and linked-open-vocabulary guidance"
+      ]
+    },
+    {
+      "id": "P10",
+      "url": "https://rightsstatements.org/page/collection-other/1.0/?language=en",
+      "version_or_commit": "Vocabulary 1.0",
+      "locators": [
+        "evidence/web2.txt: CNE, UND, NKC definitions and collection introduction"
+      ]
+    },
+    {
+      "id": "P11",
+      "url": "https://rightsstatements.org/en/2018/12/where-statements-apply.html",
+      "version_or_commit": "Official guidance dated 2018-12-21",
+      "locators": [
+        "evidence/web2.txt: three statement-family sections and complete term lists"
+      ]
+    },
+    {
+      "id": "P12",
+      "url": "https://rightsstatements.org/en/documentation/faq.html",
+      "version_or_commit": "Current unversioned official FAQ; statement URIs include vocabulary version",
+      "locators": [
+        "evidence/web5.txt: General questions and Technical URI question"
+      ]
+    },
+    {
+      "id": "P13",
+      "url": "https://creativecommons.org/public-domain/",
+      "version_or_commit": "Current official guidance; PDM 1.0, CC0; license version to be preserved when supplied",
+      "locators": [
+        "evidence/E16.txt License Types; evidence/E17.txt Using CC0/PDM distinction and use conditions; evidence/E18.txt PDM 1.0 Other Information"
+      ]
+    },
+    {
+      "id": "P14",
+      "url": "https://iiif.io/api/presentation/3.0/",
+      "version_or_commit": "Presentation API 3.0.0; page lists this as latest stable",
+      "locators": [
+        "evidence/E19.txt lines 178–205; sections 1.1, 3.1, 4.5, 5.2"
+      ]
+    },
+    {
+      "id": "P15",
+      "url": "https://www.w3.org/TR/skos-reference/",
+      "version_or_commit": "W3C Recommendation 2009-08-18",
+      "locators": [
+        "Sections 10.1, 10.3 S45, 10.6.8; evidence/E20.txt lines 1855–1875, 2177–2198"
+      ]
+    },
+    {
+      "id": "P16",
+      "url": "https://www.w3.org/TR/prov-o/",
+      "version_or_commit": "W3C Recommendation 2013-04-30",
+      "locators": [
+        "Section 3.1; evidence/E21.txt lines 218–245"
+      ]
+    },
+    {
+      "id": "P17",
+      "url": "https://pro.europeana.eu/page/get-api",
+      "version_or_commit": "Official guidance updated 2025-06-05; registration change 2025-05-28",
+      "locators": [
+        "evidence/web3.txt: What does this mean and account requirement"
+      ]
+    },
+    {
+      "id": "P18",
+      "url": "https://github.com/dpla/ingestion3/commit/608ea023de200df48e8241ed08e0fa49466646f9",
+      "version_or_commit": "Commit 608ea023de200df48e8241ed08e0fa49466646f9, 2026-06-17T18:53:12Z, Issue 739 / PR 750",
+      "locators": [
+        "evidence/E34.json scripts/harvest/nara-ingest.sh patch; evidence/E35.txt lines 127–219, 626–640; evidence/E36.txt lines 597–678"
+      ]
+    },
+    {
+      "id": "P19",
+      "url": "https://pro.dp.la/developers/bulk-download",
+      "version_or_commit": "Current official documentation; documented format transitions 2015, 2018, 2019",
+      "locators": [
+        "evidence/web3.txt: Bulk Download introduction and format-change dates"
+      ]
+    },
+    {
+      "id": "P20",
+      "url": "https://omeka.org/s/docs/user-manual/content/resource-template/",
+      "version_or_commit": "Current unversioned official manual",
+      "locators": [
+        "evidence/E26.txt lines 150–182, 200–208"
+      ]
+    },
+    {
+      "id": "P21",
+      "url": "https://omeka.org/s/modules/CSVImport/",
+      "version_or_commit": "2.6.2, 2024-10-22, Omeka S ^4.0.0 compatibility",
+      "locators": [
+        "evidence/E27.txt release table; evidence/E28.txt lines 137–139, 317–336"
+      ]
+    },
+    {
+      "id": "P22",
+      "url": "https://omeka.org/s/docs/developer/api/rest_api_reference/",
+      "version_or_commit": "Current unversioned official manuals; property lookup detail since 4.0.0",
+      "locators": [
+        "evidence/E29.txt lines 108–146; evidence/E30.txt lines 145–157"
+      ]
+    },
+    {
+      "id": "P23",
+      "url": "https://pro.europeana.eu/page/aggregators",
+      "version_or_commit": "Current unversioned official program page",
+      "locators": [
+        "evidence/web5.txt: Europeana aggregators; domain/thematic and national/regional sections"
+      ]
+    }
+  ],
+  "review_envelope": {
+    "start_utc": "2026-10-10T05:16:32+00:00",
+    "deadline_utc": "2026-10-10T06:01:32+00:00",
+    "judgment_saved_at_utc": "2026-10-10T05:26:38.254111+00:00",
+    "elapsed_seconds_before_final_save": 606.254111,
+    "capped": false,
+    "unassessed_axes": [],
+    "early_finish_basis": "Full declared science/input/source/disposition/validation scope assessed; no need to occupy the remaining envelope."
+  },
+  "frozen_sources_changed": false,
+  "assessment_outputs": {
+    "markdown": "ER12_RUNTIME/assessment/A6-02/treatment-v1/assessment.md",
+    "json": "ER12_RUNTIME/assessment/A6-02/treatment-v1/assessment.json",
+    "source_map": "ER12_RUNTIME/assessment/A6-02/treatment-v1/source-map.json",
+    "evidence_index": "ER12_RUNTIME/assessment/A6-02/treatment-v1/evidence/index.md",
+    "original_manifest": "ER12_RUNTIME/assessment/A6-02/treatment-v1/original-inspected-manifest.json"
+  }
+}

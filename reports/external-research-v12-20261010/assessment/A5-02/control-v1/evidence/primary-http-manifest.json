@@ -1,0 +1,162 @@
+[
+  {
+    "id": "odoo-receipts-rst",
+    "requested_url": "https://raw.githubusercontent.com/odoo/documentation/18.0/content/applications/inventory_and_mrp/barcode/operations/receipts_deliveries.rst",
+    "retrieved_at_utc": "2026-10-10T05:45:03.263238+00:00",
+    "operation": "unauthenticated requests.get; 25-second timeout; no executable source run",
+    "status": 200,
+    "final_url": "https://raw.githubusercontent.com/odoo/documentation/18.0/content/applications/inventory_and_mrp/barcode/operations/receipts_deliveries.rst",
+    "content_type": "text/plain; charset=utf-8",
+    "response_bytes": 10121,
+    "response_sha256": "e8a7a5065bf88f39675da1842ddeae748f4843530f7d7a515bc1b4a74060378a",
+    "file": "odoo-receipts-rst.txt"
+  },
+  {
+    "id": "odoo-operations-rst",
+    "requested_url": "https://raw.githubusercontent.com/odoo/documentation/18.0/content/applications/inventory_and_mrp/barcode/setup/operation_types.rst",
+    "retrieved_at_utc": "2026-10-10T05:45:03.264491+00:00",
+    "operation": "unauthenticated requests.get; 25-second timeout; no executable source run",
+    "status": 200,
+    "final_url": "https://raw.githubusercontent.com/odoo/documentation/18.0/content/applications/inventory_and_mrp/barcode/setup/operation_types.rst",
+    "content_type": "text/plain; charset=utf-8",
+    "response_bytes": 10958,
+    "response_sha256": "c45fcd51de5c5411d45ddafeacf5943906589f7004651761a72a8ebb5c62f1cd",
+    "file": "odoo-operations-rst.txt"
+  },
+  {
+    "id": "odoo-configure-rst",
+    "requested_url": "https://raw.githubusercontent.com/odoo/documentation/18.0/content/applications/inventory_and_mrp/inventory/product_management/configure.rst",
+    "retrieved_at_utc": "2026-10-10T05:45:03.268010+00:00",
+    "operation": "unauthenticated requests.get; 25-second timeout; no executable source run",
+    "status": 200,
+    "final_url": "https://raw.githubusercontent.com/odoo/documentation/18.0/content/applications/inventory_and_mrp/inventory/product_management/configure.rst",
+    "content_type": "text/plain; charset=utf-8",
+    "response_bytes": 7096,
+    "response_sha256": "0765423f1ac5ee4fb3b7c5ff12ef190779e9265fdfeb7504b52da123386346dd",
+    "file": "odoo-configure-rst.txt"
+  },
+  {
+    "id": "snipe-pr-diff",
+    "requested_url": "https://github.com/grokability/snipe-it/pull/19633.diff",
+    "retrieved_at_utc": "2026-10-10T05:45:03.271582+00:00",
+    "operation": "unauthenticated requests.get; 25-second timeout; no executable source run",
+    "status": 200,
+    "final_url": "https://patch-diff.githubusercontent.com/raw/grokability/snipe-it/pull/19633.diff",
+    "content_type": "text/plain; charset=utf-8",
+    "response_bytes": 4212,
+    "response_sha256": "e08296b58df22b708f3147448fedfa0ffc772bc241a46fd3d02ca89c51ad51ff",
+    "file": "snipe-pr-diff.txt"
+  },
+  {
+    "id": "snipe-label-pinned",
+    "requested_url": "https://raw.githubusercontent.com/grokability/snipe-it/1e0fc8c/app/Models/Labels/Label.php",
+    "retrieved_at_utc": "2026-10-10T05:45:03.272886+00:00",
+    "operation": "unauthenticated requests.get; 25-second timeout; no executable source run",
+    "status": 200,
+    "final_url": "https://raw.githubusercontent.com/grokability/snipe-it/1e0fc8c/app/Models/Labels/Label.php",
+    "content_type": "text/plain; charset=utf-8",
+    "response_bytes": 23879,
+    "response_sha256": "5d616bed727d438fa061e871c83467f6fae2850f464ce2e2595d58ce4ceb9643",
+    "file": "snipe-label-pinned.txt"
+  },
+  {
+    "id": "gs1-genspecs-26",
+    "requested_url": "https://ref.gs1.org/standards/genspecs/26.0.0/",
+    "retrieved_at_utc": "2026-10-10T05:45:03.382915+00:00",
+    "operation": "unauthenticated requests.get; 25-second timeout; no executable source run",
+    "status": 200,
+    "final_url": "https://ref.gs1.org/standards/genspecs/26.0.0/",
+    "content_type": "application/pdf",
+    "response_bytes": 12175796,
+    "response_sha256": "d32eae37039bdce4931714d6eae73fd682d060c692edecc23620233b0733efe6",
+    "initial_text_extraction_status": "INVALID: initial generic fetch treated application/pdf as text; no semantic inference drawn from that file."
+  },
+  {
+    "id": "snipe-pr-api",
+    "requested_url": "https://api.github.com/repos/grokability/snipe-it/pulls/19633",
+    "retrieved_at_utc": "2026-10-10T05:45:03.396190+00:00",
+    "operation": "unauthenticated requests.get; 25-second timeout; no executable source run",
+    "status": 200,
+    "final_url": "https://api.github.com/repos/grokability/snipe-it/pulls/19633",
+    "content_type": "application/json; charset=utf-8",
+    "response_bytes": 18671,
+    "response_sha256": "e2984b338ca1f25e40903195be0c5e49516e3783041da4082bb32a9fc2f373f3",
+    "file": "snipe-pr-api.txt"
+  },
+  {
+    "id": "snipe-release-api",
+    "requested_url": "https://api.github.com/repos/grokability/snipe-it/releases/tags/v8.8.0",
+    "retrieved_at_utc": "2026-10-10T05:45:03.401553+00:00",
+    "operation": "unauthenticated requests.get; 25-second timeout; no executable source run",
+    "status": 200,
+    "final_url": "https://api.github.com/repos/grokability/snipe-it/releases/tags/v8.8.0",
+    "content_type": "application/json; charset=utf-8",
+    "response_bytes": 33808,
+    "response_sha256": "7f1d766edb5d9b75f7e3752b4fd8cdf469925dc396429ff6470e4d2a4a8b11ea",
+    "file": "snipe-release-api.txt"
+  },
+  {
+    "id": "gs1-engine-readme",
+    "requested_url": "https://raw.githubusercontent.com/gs1/gs1-syntax-engine/1.4.1/README.md",
+    "retrieved_at_utc": "2026-10-10T05:45:03.410316+00:00",
+    "operation": "unauthenticated requests.get; 25-second timeout; no executable source run",
+    "status": 200,
+    "final_url": "https://raw.githubusercontent.com/gs1/gs1-syntax-engine/1.4.1/README.md",
+    "content_type": "text/plain; charset=utf-8",
+    "response_bytes": 9494,
+    "response_sha256": "d5308d34e5a4fc68f4badc265af59900536788eb6133ecc92e1f1c9406fcf076",
+    "file": "gs1-engine-readme.txt"
+  },
+  {
+    "id": "snipe-tag-md",
+    "requested_url": "https://snipe-it.readme.io/docs/asset-tags.md",
+    "retrieved_at_utc": "2026-10-10T05:45:03.557781+00:00",
+    "operation": "unauthenticated requests.get; 25-second timeout; no executable source run",
+    "status": 200,
+    "final_url": "https://snipe-it.readme.io/docs/asset-tags.md",
+    "content_type": "text/markdown; charset=utf-8",
+    "response_bytes": 1523,
+    "response_sha256": "6302fc4c16bb40685b091d2b75ea7cae488a5c3b62cebc5b2a098682a795305b",
+    "file": "snipe-tag-md.txt"
+  },
+  {
+    "id": "snipe-label-md",
+    "requested_url": "https://snipe-it.readme.io/docs/asset-labels.md",
+    "retrieved_at_utc": "2026-10-10T05:45:03.562019+00:00",
+    "operation": "unauthenticated requests.get; 25-second timeout; no executable source run",
+    "status": 200,
+    "final_url": "https://snipe-it.readme.io/docs/asset-labels.md",
+    "content_type": "text/markdown; charset=utf-8",
+    "response_bytes": 1518,
+    "response_sha256": "c9c09e200651997ea8f3ae0444203098047513417db6c44681644b21426b2881",
+    "file": "snipe-label-md.txt"
+  },
+  {
+    "id": "snipe-barcode-md",
+    "requested_url": "https://snipe-it.readme.io/v8.3.6/docs/barcodes.md",
+    "retrieved_at_utc": "2026-10-10T05:45:03.656826+00:00",
+    "operation": "unauthenticated requests.get; 25-second timeout; no executable source run",
+    "status": 200,
+    "final_url": "https://snipe-it.readme.io/v8.3.6/docs/barcodes.md",
+    "content_type": "text/markdown; charset=utf-8",
+    "response_bytes": 6583,
+    "response_sha256": "c23dfb9e35d902690ea2100d726cfeb243cbdf2ae51e410c23932e8c978be48c",
+    "file": "snipe-barcode-md.txt"
+  },
+  {
+    "id": "gs1-genspecs-26-pdf",
+    "requested_url": "https://ref.gs1.org/standards/genspecs/26.0.0/",
+    "retrieved_at_utc": "2026-10-10T05:46:40.934457+00:00",
+    "status": 200,
+    "response_bytes": 12175796,
+    "response_sha256": "d32eae37039bdce4931714d6eae73fd682d060c692edecc23620233b0733efe6",
+    "file": "gs1-genspecs-26.pdf",
+    "operation": "Read-only PDF retrieval, pdftotext extraction; no product operation",
+    "text_excerpt": "gs1-genspecs-26.txt",
+    "physical_pages": [
+      140,
+      141,
+      142
+    ]
+  }
+]

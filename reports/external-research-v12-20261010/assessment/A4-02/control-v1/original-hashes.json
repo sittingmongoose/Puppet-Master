@@ -1,0 +1,342 @@
+{
+  "captured_at_utc": "2026-10-10T05:26:20.264494+00:00",
+  "scope": "Only assigned A4-02 control current pipeline, original frozen brief/plan and rubric. No other arms or outcomes. Superseded uninvoked backup files not inspected.",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns_at_review": 1791604608938287266,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A4-02/brief.md",
+      "bytes": 3350,
+      "sha256": "20fcd49e3c924815b03c89b92fa9b0ede92f239eb777b4c4f6f3dbcabe88ba3e",
+      "mtime_ns_at_review": 1791608096133740839,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A4-02/plan.md",
+      "bytes": 5956,
+      "sha256": "0588e3e0686b6ccc9b5f3eafc56f3415d8565ac895c12ba6a84f572b46ccfe53",
+      "mtime_ns_at_review": 1791608096134217942,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/control/control/run.json",
+      "bytes": 580,
+      "sha256": "cda337aa937f5c12dd5328fbfd4b39bb6f5c08ab461d32ace4cdccba179c84e6",
+      "mtime_ns_at_review": 1791608097571400373,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/control/inputs/brief.md",
+      "bytes": 3350,
+      "sha256": "20fcd49e3c924815b03c89b92fa9b0ede92f239eb777b4c4f6f3dbcabe88ba3e",
+      "mtime_ns_at_review": 1791608097570828209,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/critic/assignment.md",
+      "bytes": 3306,
+      "sha256": "3e254cf644585990b30429567d0cccc400c5525a81157e645e9c93313310752e",
+      "mtime_ns_at_review": 1791608685634418961,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/critic/critique.md",
+      "bytes": 10073,
+      "sha256": "7994bde7673d8333bb9e2575e481974d728d76dc179d118f9fbe73646187d7f9",
+      "mtime_ns_at_review": 1791609178500761481,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/critic/dispatch.json",
+      "bytes": 4123,
+      "sha256": "ea82e3093e3f6c02c99c7de2fd4f13b48ad13ff66ffa1b591b1657e62dc042ee",
+      "mtime_ns_at_review": 1791608687166529608,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/critic/freeze.json",
+      "bytes": 3202,
+      "sha256": "4057a783e86ceb59982b19fc5f6438f50a2faa9df267e054282bf5bed8a3b268",
+      "mtime_ns_at_review": 1791608685812521006,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/critic/goal-record.json",
+      "bytes": 1008,
+      "sha256": "416e7d553e85d2581f29555a3f04e99b3762f5c11f1eeb7028e612e128391c53",
+      "mtime_ns_at_review": 1791609192389368758,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/critic/input-map.json",
+      "bytes": 1457,
+      "sha256": "cc35eb3e0543d4279d68b9a958d53de18589faa6a9b5f17a92f844833533a63b",
+      "mtime_ns_at_review": 1791608685811877007,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/critic/request.json",
+      "bytes": 889,
+      "sha256": "8d5c993c3a5dd938cac5567424e398d223f2677fceb8e9924287de8f7b58a1ba",
+      "mtime_ns_at_review": 1791608685812109317,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/critic/service-tier-change.json",
+      "bytes": 477,
+      "sha256": "0726fa24da28616869c71f8cdfb2eb9d029d37b95e32f982fa8bdd6691a6ab81",
+      "mtime_ns_at_review": 1791608685812736074,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/critic/source-map.json",
+      "bytes": 20807,
+      "sha256": "97c7977ec7f5f82dd9a35b57e4940c0361481acb5954b37d89720699a33bc2d5",
+      "mtime_ns_at_review": 1791609192388772688,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/critic/sources/index.md",
+      "bytes": 4371,
+      "sha256": "68e82aa82cf2332f1c45f365d8d29f45141ceac33d111d317837cb11ad87773b",
+      "mtime_ns_at_review": 1791609178500927700,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/critic/status.json",
+      "bytes": 3562,
+      "sha256": "9df7e62ea26a9fc9510c43c846451f8fd5c34bdc8608b8948442a002490d0c7e",
+      "mtime_ns_at_review": 1791609240157726845,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/investigator/assignment.md",
+      "bytes": 3712,
+      "sha256": "dc923c63a69d205491cd27595c0d8e123aef26b2b9e90e30a52be69274a287fb",
+      "mtime_ns_at_review": 1791608097572083260,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/investigator/discovery.md",
+      "bytes": 14466,
+      "sha256": "aeb0d8de4916fb8126df1c7487fafa84c33f96d9c63add54ef2076523c28a34d",
+      "mtime_ns_at_review": 1791608406635795026,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/investigator/dispatch.json",
+      "bytes": 4219,
+      "sha256": "cc3f5fbc4ad312c3902338cfeff353292dfe4b7c92755b771a84c29fa1983849",
+      "mtime_ns_at_review": 1791608098867500267,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/investigator/draft.md",
+      "bytes": 22920,
+      "sha256": "3f0543dbdeedf02a140e3b59e568c591ee9f2ce10877a16a06fc45b766603949",
+      "mtime_ns_at_review": 1791608622196258761,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/investigator/freeze.json",
+      "bytes": 1721,
+      "sha256": "17da11c84a2a24d7e72ea0d9a2b179cad9c181e52197ed7c05a3490ddd0dff6f",
+      "mtime_ns_at_review": 1791608097726015737,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/investigator/input-map.json",
+      "bytes": 781,
+      "sha256": "86c0c2f9c8396b88c396a0c973175e1c4dbb759ada76f024cde421df9f396ba0",
+      "mtime_ns_at_review": 1791608097725456653,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/investigator/plan-reveal.json",
+      "bytes": 427,
+      "sha256": "f3a8a59bab936c46593c99853ad76de21accad07a349192bc3f6171e12b14a50",
+      "mtime_ns_at_review": 1791608460275651471,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/investigator/request.json",
+      "bytes": 913,
+      "sha256": "1ba0ba924f0504e9189b86b8ea428cfc4c1ef9231faca12a3a43411e43eb1c1c",
+      "mtime_ns_at_review": 1791608097725669708,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/investigator/revealed-plan.md",
+      "bytes": 5956,
+      "sha256": "0588e3e0686b6ccc9b5f3eafc56f3415d8565ac895c12ba6a84f572b46ccfe53",
+      "mtime_ns_at_review": 1791608460275537114,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/investigator/service-tier-change.json",
+      "bytes": 489,
+      "sha256": "d66a0a488cf50d9defcf9c22e0291829cf4ead73e24c6ef861c0b136f6905f7f",
+      "mtime_ns_at_review": 1791608097726216264,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/investigator/source-map.json",
+      "bytes": 15732,
+      "sha256": "117323bf8eb658ee052df8649c3dd23d98b1c3a73fce79323d594953cb17f383",
+      "mtime_ns_at_review": 1791608446929064684,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/investigator/sources/index.md",
+      "bytes": 3168,
+      "sha256": "05ddb8ff2464f0b8d6062e64f22c0d5831776d01172d0537be0fcffdeaf6c39d",
+      "mtime_ns_at_review": 1791608446919064617,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/investigator/status.json",
+      "bytes": 3570,
+      "sha256": "97aea9fe2dfafc6c1ae1daece3f927c170dc5c47003032f2a996d8b7ed2232fc",
+      "mtime_ns_at_review": 1791608685267037389,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/reviser/assignment.md",
+      "bytes": 3988,
+      "sha256": "0d5bb24472faa2d2bacbc38cad3afa7584737464069374e06775dcf24793b93a",
+      "mtime_ns_at_review": 1791609240937750699,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/reviser/dispatch.json",
+      "bytes": 4853,
+      "sha256": "58005c73f28189fec4729d4cb93a491cbf6659421a714bee87c4dae5c35bab67",
+      "mtime_ns_at_review": 1791609241878842013,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/reviser/final.md",
+      "bytes": 27698,
+      "sha256": "b082aa7610d0eaf1dc4a6f42e42767cb38a5064a8ed9fac583c6e361168e61ee",
+      "mtime_ns_at_review": 1791609747186578566,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/reviser/freeze.json",
+      "bytes": 4061,
+      "sha256": "d76f9fe9181755afe8cb423e715f3f094b1ac0995dc493cb120c24453844a26c",
+      "mtime_ns_at_review": 1791609240937340438,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/reviser/input-map.json",
+      "bytes": 1768,
+      "sha256": "d326c048b488162946e751dc9c3f88a4b539c929b6385d1e9a894a6b87d9bf1a",
+      "mtime_ns_at_review": 1791609240937564230,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/reviser/invocation-clarification.json",
+      "bytes": 3023,
+      "sha256": "ac0b0a30c83bc3e7da8e1a210a40eda84998134210f82737681abfd06f69d68c",
+      "mtime_ns_at_review": 1791609240937946309,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/reviser/native-goal-activation.json",
+      "bytes": 466,
+      "sha256": "1a4f422e0e274f3ba9e2b0c7fd03a8b96a661a39908a0d2dd2078d0dc54eac8e",
+      "mtime_ns_at_review": 1791609315088721017,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/reviser/native-goal-completion.json",
+      "bytes": 795,
+      "sha256": "71f11284d27f87bf34b46e643391d7de2350da54e9ab79df07eaa36a5102377f",
+      "mtime_ns_at_review": 1791609772610788432,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/reviser/request.json",
+      "bytes": 1607,
+      "sha256": "cba8b83337c7043945f2fcc07ca011a8fd3b17cbfd8898fa5e4236e250aa4b17",
+      "mtime_ns_at_review": 1791609240937118592,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/reviser/service-tier-change.json",
+      "bytes": 479,
+      "sha256": "58e1f4cd07735d761c51be9286c88da0f43ed44d838b7da93e44872e175161e9",
+      "mtime_ns_at_review": 1791609240719353363,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/reviser/source-map.json",
+      "bytes": 23041,
+      "sha256": "71ff1c675cb1849ab605e1bf2a6b2fb1ceb92cddc9e9b49c9d09894072612e0e",
+      "mtime_ns_at_review": 1791609671290154699,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/control/stages/reviser/sources/index.md",
+      "bytes": 3001,
+      "sha256": "190840895acd460edbb94f4e880faa39e6f8bbca97f050e7f06bd862b2a0a4e0",
+      "mtime_ns_at_review": 1791609671290321942,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-02/control/terminal-science-freeze-root.json",
+      "bytes": 7797,
+      "sha256": "92bc383bf5451296d3ab3df8493e8527d4a94c7185f9c149003e9a80b3670bdc",
+      "mtime_ns_at_review": 1791609840081767779,
+      "inspected_in_full": true,
+      "inspection_kind": "full authored document or full current-pipeline metadata; hashes do not establish semantic correctness"
+    }
+  ]
+}

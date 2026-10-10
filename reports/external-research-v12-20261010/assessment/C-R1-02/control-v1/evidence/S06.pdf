@@ -1,0 +1,65 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "source_urls": [
+    "https://www.wcu.edu/WebFiles/PDFs/SAFETYOFFICE-LaboratoryWasteManagementPlan.pdf"
+  ],
+  "primary_url_status": "BOUND",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/C-R1-02/control-v1/source-map.json",
+      "source_id": "E06",
+      "existing_authored_summary_fields": {
+        "version_verified": "Western Carolina University Laboratory Waste Management Plan; Rev4/15/2020",
+        "observed_subject_operation_units_types": "The institutional table directs glaze preparation/rinsing through a settling tank, frequent emptying, and its own hazardous-waste route for captured material.",
+        "conditions_defaults_domain_exceptions": "Institution-specific policy. It supports cleanout/residual planning, not classification of this synthetic stream. Candidate locator “PDF p.8” is imprecise; correct locator is supplied here."
+      }
+    },
+    {
+      "authored_source_map": "assessment/C-R1-02/control-v1/source-map.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/C-R1-02/control-v1/evidence/retrieval-manifest.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": "Waste Separation / Ceramic Glaze; printed p.6, PDF p.9; saved text lines260–276"
+    }
+  ],
+  "raw_sha256": "2c9d4c47671643c092b66f7d32c0c110d9c52a5861be0b725dad8752142fd486",
+  "original_bytes": 796321,
+  "private_archive_lineage": "publication-cohort4/private/originals/assessment/C-R1-02/control-v1/evidence/S06.pdf",
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "quoted_body_words": 0,
+  "omission": "Full fetched body omitted. No new source retrieval, invented summary or semantic adjudication. Missing version/selector/conditions remain UNKNOWN.",
+  "byte_exact_replay": false,
+  "primaryURL": [
+    "https://www.wcu.edu/WebFiles/PDFs/SAFETYOFFICE-LaboratoryWasteManagementPlan.pdf"
+  ],
+  "version": [
+    {
+      "version_verified": "Western Carolina University Laboratory Waste Management Plan; Rev4/15/2020",
+      "observed_subject_operation_units_types": "The institutional table directs glaze preparation/rinsing through a settling tank, frequent emptying, and its own hazardous-waste route for captured material.",
+      "conditions_defaults_domain_exceptions": "Institution-specific policy. It supports cleanout/residual planning, not classification of this synthetic stream. Candidate locator “PDF p.8” is imprecise; correct locator is supplied here."
+    }
+  ],
+  "selector": [
+    {
+      "locator": "Waste Separation / Ceramic Glaze; printed p.6, PDF p.9; saved text lines260–276"
+    }
+  ],
+  "conditions": [
+    {
+      "version_verified": "Western Carolina University Laboratory Waste Management Plan; Rev4/15/2020",
+      "observed_subject_operation_units_types": "The institutional table directs glaze preparation/rinsing through a settling tank, frequent emptying, and its own hazardous-waste route for captured material.",
+      "conditions_defaults_domain_exceptions": "Institution-specific policy. It supports cleanout/residual planning, not classification of this synthetic stream. Candidate locator “PDF p.8” is imprecise; correct locator is supplied here."
+    }
+  ],
+  "rawSHA256": "2c9d4c47671643c092b66f7d32c0c110d9c52a5861be0b725dad8752142fd486"
+}
