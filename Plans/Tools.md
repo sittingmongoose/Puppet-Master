@@ -3470,6 +3470,7 @@ split_recommended: false
 depends_on:
 - T-007
 - T-017
+- DL-181
 unblocks: []
 acceptance_criteria:
 - Parameters `command`, `mode`, `initial_wait`, `shellId`, and `detach` remain preserved.

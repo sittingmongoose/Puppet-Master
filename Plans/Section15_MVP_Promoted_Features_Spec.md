@@ -52,7 +52,7 @@ Secondary surfaces:
 - `detached_preview` window
 - detached browser window
 - detached DevTools window
-- detached terminal window
+- detached terminal window (amended 2026-10-09, DL-181: terminal sections no longer detach; whether a terminal tab can pop out into its own window is an open question, not settled canon, and the universal panels name Pop out only for the chat, `Plans/FinalGUISpec.md#F3-637`)
 - detached compare/review window when explicitly invoked
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Wiring_Matrix.md
@@ -322,6 +322,12 @@ Ordinary resize and soft-wrap reflow preserve logical text selection and command
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run_Modes.md
 
 ### Session lifecycle and user-visible actions
+Amended 2026-10-09 (DL-181): a terminal tab holds exactly one session (`#SMPFS-180`). Where the rules below say pane,
+read the terminal tab and its one session: the `terminal_pane` states and the pane-level runtime statuses are that
+session's, shown on its tab. Attention flags belong to the terminal tab; the section and window scopes retire with
+sections and detached sections, and a tab the user is not looking at shows its attention as the tab's attention mark
+(`#SMPFS-025`, `Plans/FinalGUISpec.md#F3-631`).
+
 Canonical terminal session states are:
 - `starting`
 - `running`
@@ -342,7 +348,7 @@ Action rules:
 - closing a pane or tab removes presentation state; if a live session is still attached, the user gets explicit close-versus-terminate behavior instead of silent orphaning (amended 2026-10-09, DL-181: closing a terminal tab ends its session, and when a process still runs the tab first says so and offers Close terminal or Keep it open, `#SMPFS-180`)
 - `pre-run` terminal command `/safety` approval is visible before execution and includes edit, approve, reject, and trust choices; hard interrupt and `/kill/cancel` primitives are non-negotiable for AI-driven terminal work.
 - Retired 2026-10-09 (DL-181; lineage only): `terminal_section` state includes `docked_visible`, `docked_hidden`, `detached_visible`, and `detached_hidden`; dock, detach, show, hide, resize, and `/move` transitions are state-preserving events.
-- `terminal_tab` state includes `active`, `inactive`, `restoring`, and `review_only`; activation and `/deactivate` are presentation transitions, project reopen enters restoring, and a tab becomes review_only when all attached panes are exited or `/disconnected`.
+- `terminal_tab` state includes `active`, `inactive`, `restoring`, and `review_only`; activation and `/deactivate` are presentation transitions, project reopen enters restoring, and a tab becomes review_only when all attached panes are exited or `/disconnected`. Amended 2026-10-09 (DL-181): a terminal tab holds one session (`#SMPFS-180`). A restore does not leave it review_only: its saved scrollback is the review part and a new session starts below it on its own. A session that ends while the tab is open keeps the tab with the Session ended row, Restart and Close tab (`Plans/FinalGUISpec.md#F3-640`).
 - `terminal_pane` state includes `live_idle`, `/live_idle`, `live_running`, `tui_active`, `exited`, `disconnected`, and `restoring`; command or `/task` start moves `live_idle` to live_running, command completion returns to live_idle or exited, and alternate-screen or TUI capture enters tui_active.
 - runtime-status is pane-level and distinct from attention state and the notifications-model: canonical pane statuses include `ready`, `running`, `tui_active`, `restoring`, `exited_clean`, `exited_error`, `disconnected`, and `failed_to_start`; `tui_active` means a live `/session` is in alternate-screen or `/TUI-oriented` interaction, `/profile/cwd` context is status metadata rather than the status itself, and focused-pane events prefer inline status plus badges while `/inactive` or detached failures may notify.
 - Exited-session review preserves `/profile/env` and last-known command context when available, but any relaunch or restart still mints a new live runtime identity.
@@ -359,7 +365,7 @@ ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring
 - Tab-scoped overrides live in workspace-local UI because they affect one workspace, not the project baseline: tab role `/intent`, tab label, tab default cwd or profile override, and tab layout style `/arrangement`. Amended 2026-10-09 (DL-181, DL-183): tab role and layout style retire; the tab's appearance override joins this list (`Plans/FinalGUISpec.md#F3-642`).
 - Pane and `/session-local` actions are runtime behavior, not durable Settings rows: `/rerun/replace/terminate/kill`, current runtime status handling, live search, selection, review position, temporary overlays, and one-off reveal or `/focus` stay in terminal runtime UI.
 - Settings may expose persistent diagnostics preferences, high-level capability visibility, and command `/behaviors`; detailed per-session errors, `/events/logs`, first-run creation, and review-only empty-state actions belong in runtime diagnostics or runtime UI rather than editable settings.
-- `restored_without_history` (source shorthand restored-without-history) means PM restored structure but lacks retained transcript or `/history`; it is not first-run empty, and the pane remains user-visible with explicit history-unavailable wording plus create, `/restart/replacement`, or replacement actions. Closing the last-pane removes the tab unless PM intentionally preserves a review-only shell-like workspace, closing the `/last-tab` removes the now-empty section unless a section-empty-shell is explicitly supported, and any empty section shell offers create, `/import/move`, or move actions rather than looking broken. Amended 2026-10-09 (DL-181): sections retire; closing a panel's last tab follows the panel rules (`Plans/FinalGUISpec.md#F3-630`).
+- `restored_without_history` (source shorthand restored-without-history) means PM restored structure but lacks retained transcript or `/history`; it is not first-run empty, and the pane remains user-visible with explicit history-unavailable wording plus create, `/restart/replacement`, or replacement actions. Closing the last-pane removes the tab unless PM intentionally preserves a review-only shell-like workspace, closing the `/last-tab` removes the now-empty section unless a section-empty-shell is explicitly supported, and any empty section shell offers create, `/import/move`, or move actions rather than looking broken. Amended 2026-10-09 (DL-181): sections retire; closing a panel's last tab follows the panel rules (`Plans/FinalGUISpec.md#F3-630`). For a terminal tab, `restored_without_history` is a tab whose saved scrollback did not load: the inline notice says the tab starts without its scrollback, and a new session starts on its own in the same folder and profile (`#SMPFS-180`), so the user does not have to choose create or restart.
 - Restore language must not blur live continuity with historical slot recovery: a `/restored` `/pane` can keep durable `terminal_session_id` metadata, labels, ratios, layout, and defaults while being metadata-only or `/review-limited` when transcript is missing, and continuity of the same live session after app restart is best-effort and terminal-consistent only when the runtime proves it.
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
@@ -582,7 +588,7 @@ Terminal persistence uses three guarantee tiers:
 
 Terminal state categories stay distinct: transcript state, command-block `/history` metadata, layout `/session` metadata, and settings `/theme` defaults keep separate persistence owners and MUST NOT be collapsed into one terminal blob.
 - Terminal persistence is append-oriented and chunked: high-output or long-running PTY sessions write bounded transcript chunks plus command-history metadata, not a single layout record or `/blob`; partially-backed and metadata-only records are valid degraded states, but the UI must disclose missing backing transcript before offering transcript-specific review, copy, or search behavior.
-- Restore labels are exact: `live-restored` requires a verified live-session reattach; `/disconnected/review-only` is the durable UI state when no live runtime exists; `/history/context` hydrates best effort, while `/ephemeral` overlays remain `transient-only`. Guaranteed durable layout includes tab-scoped `/intent`, `/placement`, `/ratios`, and last-known `/profile/env` metadata.
+- Restore labels are exact: `live-restored` requires a verified live-session reattach; `/disconnected/review-only` is the durable UI state when no live runtime exists; `/history/context` hydrates best effort, while `/ephemeral` overlays remain `transient-only`. Guaranteed durable layout includes tab-scoped `/intent`, `/placement`, `/ratios`, and last-known `/profile/env` metadata. Amended 2026-10-09 (DL-181): a terminal tab is never left without a live runtime after a restore. `/disconnected/review-only` names the restored scrollback of the earlier session, which is the review part; a new session starts below it on its own in the same folder and profile (`#SMPFS-180`, outcomes in `#SMPFS-063`). Restart and rerun stay the actions for a session that ended while the tab was open.
 
 Amended 2026-10-09 (DL-180, DL-181, DL-182): the terminal's layout state is panel tab state in the Home layout record (`Plans/storage-plan.md#SP-330`); section and pane layout and the selected pane retire, and SP-332 reads their old records once as migration inputs. Saved scrollback, with its command records and images, is part of the `best_effort_durable` bounded transcript (`#SMPFS-181`, `Plans/storage-plan.md#SP-332`); the alternate screen, the command line being typed, selections and find highlights stay `transient_only`.
 
@@ -4718,7 +4724,12 @@ plan_unit_id: SMPFS-062
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Terminal restore UI discloses missing transcript backing before transcript-specific review/copy/search and uses exact labels live-restored, /disconnected/review-only, /history/context, and /ephemeral for restored or degraded states.
+canonical_text: >-
+  Terminal restore UI discloses missing transcript backing before transcript-specific review/copy/search and uses exact labels live-restored, /disconnected/review-only, /history/context, and /ephemeral for restored or degraded states.
+  Amended 2026-10-09 (DL-181): in a terminal tab, /disconnected/review-only names the restored scrollback of an
+  earlier session that did not survive, not a state the tab stays in. A new session starts below that scrollback on
+  its own (SMPFS-180), so the tab is live again; Restart and rerun stay the actions for a session that ended while
+  the tab was open. A tab whose saved scrollback did not load says so before it offers review, copy or search of it.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
 split_recommended: false
@@ -4729,6 +4740,7 @@ depends_on:
 - PNC-001
 - SP-001
 - UCC-001
+- DL-181
 unblocks: []
 acceptance_criteria:
 - SMPFS-062 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
@@ -4765,7 +4777,8 @@ preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md'
 - 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Glossary.md, ContractName:Plans/assistant-chat-design.md'
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): /disconnected/review-only is the restored scrollback of an earlier session; the terminal tab does not stay review-only, because a new session starts below it (SMPFS-180)."
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 - Plans/storage-plan.md
@@ -9982,15 +9995,21 @@ status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
 canonical_text: >-
   P1-TERMINAL-SESSION-PRESERVE-UPDATE (P1) is compiled as canonical Puppet Master intent for Terminal session continuity across relaunch/update: Add TerminalSessionRestorePolicy by platform/runtime: local PTY, WSL, SSH, container, devcontainer. Define reconnect tokens, when impossible, and exact banners/actions. The preserved PM gap/delta is: Need a concrete platform matrix for live session survival/reconnect and a UX flow for when only historical review can be restored. The observed external-repo signal remains source-lineage evidence: Warp issue requests terminal/agent sessions alive across relaunch/app updates; Warp changelog includes reopen closed sessions and restored WSL PWD; tmux's mature value is session/window/pane durability.
+  Amended 2026-10-09 (DL-181): a terminal tab whose live session cannot survive is not left review-only. Its saved
+  scrollback is the review part, and a new session starts below it in the same folder and profile on its own, with
+  the dim rule and the restore notice (SMPFS-180); it is never shown as the earlier live session. Restart and rerun
+  stay the actions for a session that ended while the tab was open.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
 - PDS-003
 - PNC-001
+- DL-181
 unblocks: []
 acceptance_criteria:
 - Relaunch fixtures prove PWD/profile/layout/transcript restoration.
 - If live PTY cannot survive, UI says review-limited and offers restart/rerun, not fake continuity.
+- "Amended 2026-10-09 (DL-181): if live PTY cannot survive, the tab shows its saved scrollback as review above a new session that starts on its own, with the dim rule and the restore notice of SMPFS-180; the earlier session is never shown as live, and Restart and rerun stay for a session that ended while the tab was open."
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
@@ -12358,11 +12377,13 @@ Superseded here: section 1.6's section, tab-pane grid, layout-family and bottom-
 (`terminal.workgroup_moved` is withdrawn under that unit's own rule), the Pane Layout Family Transform and the
 orphaned grid sentence of section 3.14's acceptance criteria. Amended in place: SMPFS-014, SMPFS-015, SMPFS-016,
 SMPFS-025, SMPFS-026, SMPFS-029, SMPFS-030, SMPFS-057, SMPFS-065, SMPFS-067, SMPFS-068, SMPFS-069, SMPFS-073,
-SMPFS-108, SMPFS-124, SMPFS-134, SMPFS-158, SMPFS-162 and SMPFS-165, section 1.6's settings-tier passage, the
-`/spectacle` row of section 3.14 and the image sentence of the DL-035 addendum's P3 row. Kept unchanged and cited:
-SMPFS-017 to SMPFS-024, SMPFS-031, SMPFS-032, SMPFS-061 to SMPFS-064, SMPFS-066, SMPFS-070 to SMPFS-072, SMPFS-074 to
-SMPFS-078, SMPFS-107, SMPFS-109, SMPFS-110, SMPFS-125 to SMPFS-133, SMPFS-135 to SMPFS-137, SMPFS-159 to SMPFS-161,
-SMPFS-163 and SMPFS-164.
+SMPFS-108, SMPFS-124, SMPFS-134, SMPFS-158, SMPFS-162 and SMPFS-165, SMPFS-062 and SMPFS-128 (a restored terminal
+tab is not left review-only: a new session starts below its saved scrollback), section 1.6's settings-tier passage,
+its restore-label, `terminal_tab` state and `restored_without_history` bullets, the `/spectacle` row of section 3.14
+and the image sentence of the DL-035 addendum's P3 row. Kept unchanged and cited: SMPFS-017 to SMPFS-024, SMPFS-031,
+SMPFS-032, SMPFS-061, SMPFS-063, SMPFS-064, SMPFS-066, SMPFS-070 to SMPFS-072, SMPFS-074 to SMPFS-078, SMPFS-107,
+SMPFS-109, SMPFS-110, SMPFS-125 to SMPFS-127, SMPFS-129 to SMPFS-133, SMPFS-135 to SMPFS-137, SMPFS-159 to
+SMPFS-161, SMPFS-163 and SMPFS-164.
 
 The terminal concept (branch `concept/home-terminal-20261009`, its rules and numbers in
 `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md`,
@@ -12405,7 +12426,13 @@ canonical_text: >-
   terminal was restored with its scrollback (N images were not kept). Its earlier session ended when the page
   reloaded; this is a new session." The part in parentheses appears only when images were not kept; a reopened tab's
   notice says it was reopened and that the earlier session ended when the tab closed; a tab whose saved copy did
-  not load within SP-332's load budget starts without its scrollback and says so. A command still running when the
+  not load within SP-332's load budget starts without its scrollback and says so. The restore outcome of SMPFS-063
+  is recorded for the earlier session: `restored_live` only for a verified reattach; `restored_exited` when that
+  session had already ended before the restart, `restored_disconnected` when it was still running and did not
+  survive, and `restored_without_history` when its saved scrollback did not load. In those three cases the restored
+  scrollback is the review part, the new session below it is live with its own `terminal_session_id`, and the tab
+  is never left review-only; Restart and rerun stay the actions for a session that ends while the tab is open. A
+  command still running when the
   earlier session ended comes back ended and indeterminate ("ended with the earlier session"), never done, through
   this document's abnormal or indeterminate finalisation of command blocks. There is no broadcast input to several
   terminals. The per-tab role setting `code.terminal.tab-role` retires; shell profiles (zsh, bash, pwsh and SSH
@@ -12433,6 +12460,7 @@ acceptance_criteria:
 - "Closing a tab whose session runs a process shows the inline close row first, and closing ends the session; Reopen closed tab opens a new session in the same folder and profile."
 - "An ended session keeps its tab with the Session ended row; Restart starts a new session in that tab and the tab id does not change."
 - "After a restart, a tab whose session did not survive loads its saved scrollback, draws the dim rule, shows the notice and starts a new session; it is never shown as the earlier live session, and a command that was running comes back ended and indeterminate."
+- "The earlier session's restore outcome is restored_live only for a verified reattach, and otherwise restored_exited, restored_disconnected or restored_without_history; in each of those three the tab has a new live session below the restored scrollback and is never left review-only."
 - "No active unit describes terminal sections, workgroups, sub-tabs, in-tab splits, the editor terminal stack, the Quadrant layout, the pane layout families or the four-section and four-pane caps."
 - "The terminal surface offers no AI action and no broadcast input; code.terminal.tab-role and code.terminal.explanations are retired."
 validation_surfaces:
@@ -12654,7 +12682,8 @@ canonical_text: >-
   (lead ruling of 2026-10-10 in DL-181; the concept's "Always allow here", renamed because Always in PS-041's
   approval choices means a stored rule) is a write grant to one agent in one terminal session. It is held in memory
   only and never stored, and it ends when the terminal closes, when the human takes over (a keystroke, Take over or
-  Stop) or when that agent's run ends; Hand back after a take-over grants it again for the rest of that run. Deny
+  Stop), when the human revokes it (that agent's row in the terminal's Agent input menu, `Plans/FinalGUISpec.md#F3-646`)
+  or when that agent's run ends; Hand back after a take-over grants it again for the rest of that run. Deny
   refuses the write and the agent is told. A grant decides who may type, never what may run: every command an
   agent types still passes the Tools policy engine with its own approval over that exact invocation (SMPFS-024,
   `Plans/Tools.md#T-007`, `Plans/Tools.md#T-171`, `Plans/Permissions_System.md#PS-041`, `#PS-129`, `#PS-130`).
@@ -12697,7 +12726,7 @@ unblocks:
 acceptance_criteria:
 - "A human keystroke while an agent drives takes over before the agent's next write, which is refused as preempted; the agent receives its notice; Hand back resumes it."
 - "An agent write into a human-opened terminal without a grant writes nothing to the session; Allow once admits exactly one command, after which the driving row, the agent's mark and the writer lease return to the human; Deny writes nothing and the agent is told."
-- "Allow in this terminal is never written to storage, settings, the layout record or a permission rule, and it ends when the terminal closes, the human takes over (keystroke, Take over or Stop) or the agent's run ends; Hand back restores it for that run only."
+- "Allow in this terminal is never written to storage, settings, the layout record or a permission rule, and it ends when the terminal closes, the human takes over (keystroke, Take over or Stop), the human revokes it from the Agent input menu or the agent's run ends; Hand back restores it for that run only."
 - "Every command an agent types under any grant still gets its own Tools policy decision and approval over that exact invocation."
 - "During a secret prompt every agent write is refused as secret_input with zero bytes reaching the PTY; the padlock cursor and the Password needed row show."
 - "Every command record carries by; a shell-integration mark or record without the terminal's secret creates no command boundary and no attribution."
@@ -12724,7 +12753,7 @@ node_compile_hint:
 source_lineage:
 - Plans/Decision_Log.md#DL-181
 - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D18)"
-- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b (section 8; concept lineage only)"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b (sections 2 and 8; concept lineage only)"
 - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-terminal-audit.md, SHA-256 12f95fa6f79b1c0a1f9f34b1eee004cac9edacfd8e0a7f4e6495fe1af23aabe3 (Appendix C, gaps G2 to G8)"
 preserved_exact_tokens:
 - "SMPFS-182"
@@ -12746,7 +12775,7 @@ preserved_exact_tokens:
 - "Type it"
 - "final"
 negative_constraints:
-- "Do not store an agent's terminal write grant, keep it after the terminal closes, the human takes over or the agent's run ends, or let it stand in for command approval."
+- "Do not store an agent's terminal write grant, keep it after the terminal closes, the human takes over, the human revokes it or the agent's run ends, or let it stand in for command approval."
 - "Do not let an agent answer a password or secret prompt."
 - "Do not let an agent write after a human keystroke until the human hands back."
 - "Do not attribute a command, or treat output as a command boundary, from a mark that lacks the terminal's secret."
@@ -12787,8 +12816,7 @@ canonical_text: >-
   detected `path:line:col` references pass FileSafe's path checks and open through the one opening module
   (`Plans/FinalGUISpec.md#F3-634`: the panel's preview tab, Ctrl+double-click keeps it, Ctrl+Alt+click opens a new
   panel); other URLs open a Browser tab under the browser's own navigation rules; a `file://` link naming another
-  host is never opened as a local path. A detected path is a link only when it resolves to an existing file from
-  the terminal's current folder. "Open output in an editor tab" opens a buffer, never a preview. OSC 7 reports the
+  host is never opened as a local path. "Open output in an editor tab" opens a buffer, never a preview. OSC 7 reports the
   current folder, which the header row, the tab label, Split and path detection use. OSC 9;4 is advisory progress
   under SMPFS-162. Bell and notifications: BEL shows the look's visual bell (`Plans/FinalGUISpec.md#F3-643`; the
   `bell` field is follow, visual or off, so there is no audible bell). A bell, or an OSC 9, OSC 777 or OSC 99
@@ -12803,7 +12831,9 @@ canonical_text: >-
   (SMPFS-136, SMPFS-158). The accessible plain-text buffer is SMPFS-126's text mirror shown as plain text with each
   command as a heading and moved through command by command; images read as SMPFS-181 says. The sticky command
   header, command jumps and the scrollbar's command, failure and search marks resolve from command blocks and
-  degrade honestly when backing is pruned (SMPFS-023).
+  degrade honestly when backing is pruned (SMPFS-023). Effects idle stop: the effects, their frame budget and the
+  idle rule are `Plans/FinalGUISpec.md#F3-643`'s; on the engine side every effect goes idle within 10 s of the last
+  output or keystroke, after which the engine draws no effect frame until the next output or keystroke (SMPFS-073).
 gui_related: true
 gui_classification_reason: Owns the engine behaviour behind the terminal's visible marks, links, find, copy mode, bell and accessible buffer.
 split_recommended: false
@@ -12825,10 +12855,11 @@ acceptance_criteria:
 - "OSC 133 marks and the PM-private command-line and who-typed records count only with the terminal session's secret; the same sequences without it are drawn as output and change no command block."
 - "Every command record holds by, exit status, folder, start and end, and survives a restore with saved scrollback."
 - "OSC 8 link text never replaces the target: the hover tag shows the target, only Ctrl+click (Cmd+click) or a menu action opens it, file:// targets and detected paths pass FileSafe's path checks and open through the opening module, and a file:// link naming another host never opens as a local path."
-- "A detected path:line:col is a link only when the file exists from the terminal's current folder; Ctrl+click, Ctrl+double-click and Ctrl+Alt+click open the preview tab, a kept tab and a new panel, and a plain click selects text."
+- "A detected path:line:col link passes FileSafe's path checks before it opens; Ctrl+click, Ctrl+double-click and Ctrl+Alt+click open the preview tab, a kept tab and a new panel, and a plain click selects text."
 - "A bell or an OSC 9, OSC 777 or OSC 99 notification in an unseen terminal tab sets its attention mark and a polite announcement, creates no new notification family, and never also counts as OSC 9;4 progress."
 - "Copy mode offers character, line and block selection by keyboard while pointer selection stays linear; quick select copies, inserts or opens the labelled item."
 - "The accessible buffer shows the scrollback as plain text with each command as a heading and images as their text descriptions."
+- "Every effect, the Full CRT tier's ambient noise and flicker included, goes idle within 10 s of the last output or keystroke, and no effect frame is drawn after that until the next output or keystroke."
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -12850,6 +12881,7 @@ source_lineage:
 - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D13, D18)"
 - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b (sections 1 to 3 and 8; concept lineage only)"
 - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-ARCHITECTURE-542703c07c.md, SHA-256 b6daf31a8953b3d7b633dd0db0a7b8a0ecba41f4533e8d6db6df5fa0f08bf476 (section 3, shell integration; concept lineage only)"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-wave2-numbers-5e549d6961.md, SHA-256 f9d7756f94f26c5285b35400a380afed57fb27dfaee6d29683c3916604b4a15a (the 10 s effects idle stop, adopted by the lead as R34; concept lineage only)"
 preserved_exact_tokens:
 - "SMPFS-183"
 - "OSC 133"
