@@ -118,7 +118,8 @@ Teletype / PM Phosphor Green (Amber is the sibling); Basic One Half Light / Dark
 "Switch with light and dark" (default on) swaps a chosen scheme for its family's other appearance.
 
 The code editor uses the same catalog (D27). Each scheme carries 17 editor syntax colours (`schemes/editor-syntax.json`,
-held to 4.5:1 for text and 3:1 for comments against the scheme's background, 7:1 throughout on PM High Contrast); an
+held to 4.5:1 for every token, comments included, against the scheme's background, 7:1 throughout on PM High
+Contrast: the editor's floor, so a scheme draws the same comments on both surfaces); an
 imported scheme takes its from its ANSI 16 by a fixed map. Both surfaces default to "Follow look", and the editor's Appearance popover offers only scheme, font
 and size. The Retro editor follows the terminal's Retro dark choice (`retroPhosphor`): PM Phosphor Amber chosen for
 All terminals turns it amber, anything else leaves it green.

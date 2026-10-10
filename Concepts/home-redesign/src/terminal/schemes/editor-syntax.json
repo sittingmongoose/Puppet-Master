@@ -23,7 +23,7 @@
       "kw": "#ffa659",
       "str": "#d5ff80",
       "num": "#dfbfff",
-      "com": "#6e7c8f",
+      "com": "#7d8c9f",
       "fn": "#ffcd66",
       "ty": "#73d0ff",
       "var": "#cccac2",
@@ -37,13 +37,16 @@
       "link": "#5ccfe6",
       "head": "#d5ff80",
       "code": "#cccac2",
-      "source": "https://raw.githubusercontent.com/ayu-theme/vscode-ayu/d676974ebb245fa5a7ae4444027f72801017f1b6/ayu-mirage.json"
+      "source": "https://raw.githubusercontent.com/ayu-theme/vscode-ayu/d676974ebb245fa5a7ae4444027f72801017f1b6/ayu-mirage.json",
+      "adjusted": [
+        "com"
+      ]
     },
     "catppuccin-latte": {
       "kw": "#8839ef",
       "str": "#257f0a",
       "num": "#c04600",
-      "com": "#7c7f93",
+      "com": "#6a6d80",
       "fn": "#1b63f1",
       "ty": "#9d6000",
       "var": "#4c4f69",
@@ -69,7 +72,8 @@
         "attr",
         "esc",
         "mac",
-        "link"
+        "link",
+        "com"
       ]
     },
     "catppuccin-frappe": {
@@ -136,7 +140,7 @@
       "kw": "#ff79c6",
       "str": "#f1fa8c",
       "num": "#bd93f9",
-      "com": "#6272a4",
+      "com": "#7f90c4",
       "fn": "#50fa7b",
       "ty": "#8be9fd",
       "var": "#f8f8f2",
@@ -150,13 +154,16 @@
       "link": "#8be9fd",
       "head": "#bd93f9",
       "code": "#50fa7b",
-      "source": "https://github.com/dracula/visual-studio-code/releases/download/v2.24.3/dracula.vsix (theme/dracula.json)"
+      "source": "https://github.com/dracula/visual-studio-code/releases/download/v2.24.3/dracula.vsix (theme/dracula.json)",
+      "adjusted": [
+        "com"
+      ]
     },
     "everforest-light": {
       "kw": "#d53135",
       "str": "#956900",
       "num": "#b74495",
-      "com": "#869284",
+      "com": "#697467",
       "fn": "#687800",
       "ty": "#1378a7",
       "var": "#5c6a72",
@@ -190,7 +197,7 @@
       "kw": "#e67e80",
       "str": "#dbbc7f",
       "num": "#d699b6",
-      "com": "#859289",
+      "com": "#929f96",
       "fn": "#a7c080",
       "ty": "#7fbbb3",
       "var": "#d3c6aa",
@@ -204,7 +211,10 @@
       "link": "#dbbc7f",
       "head": "#d3c6aa",
       "code": "#d3c6aa",
-      "source": "https://raw.githubusercontent.com/sainnhe/everforest-vscode/b17f8affe9096f18d209caf2fc26322490e55857/themes/everforest-dark.json"
+      "source": "https://raw.githubusercontent.com/sainnhe/everforest-vscode/b17f8affe9096f18d209caf2fc26322490e55857/themes/everforest-dark.json",
+      "adjusted": [
+        "com"
+      ]
     },
     "flexoki-light": {
       "kw": "#657e00",
@@ -281,7 +291,7 @@
       "kw": "#ff7b72",
       "str": "#a5d6ff",
       "num": "#79c0ff",
-      "com": "#8b949e",
+      "com": "#969fa9",
       "fn": "#d2a8ff",
       "ty": "#ffa657",
       "var": "#e6edf3",
@@ -295,13 +305,16 @@
       "link": "#a5d6ff",
       "head": "#79c0ff",
       "code": "#79c0ff",
-      "source": "https://raw.githubusercontent.com/primer/github-vscode-theme/cd78e5e4e7bcf132a6f428ae0f32264bb1b729cf/src/theme.js"
+      "source": "https://raw.githubusercontent.com/primer/github-vscode-theme/cd78e5e4e7bcf132a6f428ae0f32264bb1b729cf/src/theme.js",
+      "adjusted": [
+        "com"
+      ]
     },
     "gruvbox-light": {
       "kw": "#a25579",
       "str": "#72710a",
       "num": "#936400",
-      "com": "#928374",
+      "com": "#796b5c",
       "fn": "#36777a",
       "ty": "#467948",
       "var": "#3c3836",
@@ -328,14 +341,15 @@
         "mac",
         "link",
         "head",
-        "code"
+        "code",
+        "com"
       ]
     },
     "gruvbox-dark": {
       "kw": "#c6759a",
       "str": "#98971a",
       "num": "#d79921",
-      "com": "#928374",
+      "com": "#9b8c7d",
       "fn": "#59999c",
       "ty": "#689d6a",
       "var": "#ebdbb2",
@@ -357,14 +371,15 @@
         "tag",
         "mac",
         "link",
-        "head"
+        "head",
+        "com"
       ]
     },
     "kanagawa-wave": {
       "kw": "#957fb8",
       "str": "#76946a",
       "num": "#c0a36e",
-      "com": "#727169",
+      "com": "#88877f",
       "fn": "#7e9cd8",
       "ty": "#6a9589",
       "var": "#dcd7ba",
@@ -380,14 +395,15 @@
       "code": "#76946a",
       "source": "derived",
       "adjusted": [
-        "tag"
+        "tag",
+        "com"
       ]
     },
     "kanagawa-lotus": {
       "kw": "#a44e6c",
       "str": "#597238",
       "num": "#716b39",
-      "com": "#88877e",
+      "com": "#6b6a62",
       "fn": "#4d699b",
       "ty": "#4e706a",
       "var": "#545464",
@@ -419,7 +435,7 @@
       "kw": "#81a1c1",
       "str": "#a3be8c",
       "num": "#b690af",
-      "com": "#707d98",
+      "com": "#8e9cb8",
       "fn": "#88c0d0",
       "ty": "#8fbcbb",
       "var": "#d8dee9",
@@ -476,7 +492,7 @@
       "kw": "#c678dd",
       "str": "#98c379",
       "num": "#e5c07b",
-      "com": "#6b7589",
+      "com": "#8893a8",
       "fn": "#61afef",
       "ty": "#56b6c2",
       "var": "#dcdfe4",
@@ -500,7 +516,7 @@
       "kw": "#e9fee9",
       "str": "#3dcc56",
       "num": "#deff9f",
-      "com": "#4b7a4f",
+      "com": "#57865a",
       "fn": "#e9fee9",
       "ty": "#87f2c4",
       "var": "#77ea83",
@@ -514,13 +530,16 @@
       "link": "#87f2c4",
       "head": "#e9fee9",
       "code": "#25e954",
-      "source": "derived"
+      "source": "derived",
+      "adjusted": [
+        "com"
+      ]
     },
     "pm-phosphor-amber": {
       "kw": "#fff3e2",
       "str": "#fea621",
       "num": "#ffef90",
-      "com": "#8c6843",
+      "com": "#98744e",
       "fn": "#fff3e2",
       "ty": "#f6dda7",
       "var": "#ffb963",
@@ -534,13 +553,16 @@
       "link": "#f6dda7",
       "head": "#fff3e2",
       "code": "#ffc781",
-      "source": "derived"
+      "source": "derived",
+      "adjusted": [
+        "com"
+      ]
     },
     "pm-paper-teletype": {
       "kw": "#a13126",
       "str": "#231e19",
       "num": "#231e19",
-      "com": "#8b857d",
+      "com": "#706a62",
       "fn": "#231e19",
       "ty": "#231e19",
       "var": "#231e19",
@@ -554,13 +576,16 @@
       "link": "#231e19",
       "head": "#a13126",
       "code": "#231e19",
-      "source": "derived"
+      "source": "derived",
+      "adjusted": [
+        "com"
+      ]
     },
     "pm-yorha-parchment": {
       "kw": "#5d4452",
       "str": "#425731",
       "num": "#5c5022",
-      "com": "#6f6c5e",
+      "com": "#575447",
       "fn": "#3e505a",
       "ty": "#3b5654",
       "var": "#211f1b",
@@ -574,13 +599,16 @@
       "link": "#3e505a",
       "head": "#3e505a",
       "code": "#425731",
-      "source": "derived"
+      "source": "derived",
+      "adjusted": [
+        "com"
+      ]
     },
     "pm-yorha-ink": {
       "kw": "#bfa1b1",
       "str": "#a9c68c",
       "num": "#d3c47e",
-      "com": "#848073",
+      "com": "#949082",
       "fn": "#99aebb",
       "ty": "#96b5b3",
       "var": "#d1cdb7",
@@ -594,7 +622,10 @@
       "link": "#99aebb",
       "head": "#99aebb",
       "code": "#a9c68c",
-      "source": "derived"
+      "source": "derived",
+      "adjusted": [
+        "com"
+      ]
     },
     "pm-high-contrast-light": {
       "kw": "#8a1593",
@@ -640,7 +671,7 @@
       "kw": "#286983",
       "str": "#9f6300",
       "num": "#a95956",
-      "com": "#908b9d",
+      "com": "#726e7f",
       "fn": "#a95956",
       "ty": "#3b7984",
       "var": "#575279",
@@ -673,7 +704,7 @@
       "kw": "#4293b4",
       "str": "#f6c177",
       "num": "#ea9a97",
-      "com": "#6e6a86",
+      "com": "#8b87a4",
       "fn": "#ea9a97",
       "ty": "#9ccfd8",
       "var": "#e0def4",
@@ -691,14 +722,15 @@
       "adjusted": [
         "kw",
         "op",
-        "esc"
+        "esc",
+        "com"
       ]
     },
     "rose-pine-main": {
       "kw": "#4789a5",
       "str": "#f6c177",
       "num": "#ebbcba",
-      "com": "#6e6a86",
+      "com": "#827e9b",
       "fn": "#ebbcba",
       "ty": "#9ccfd8",
       "var": "#e0def4",
@@ -716,7 +748,8 @@
       "adjusted": [
         "kw",
         "op",
-        "esc"
+        "esc",
+        "com"
       ]
     },
     "solarized-light": {
@@ -762,7 +795,7 @@
       "kw": "#ef5299",
       "str": "#859900",
       "num": "#b58900",
-      "com": "#5d737a",
+      "com": "#7a9198",
       "fn": "#3093da",
       "ty": "#2aa198",
       "var": "#839496",
@@ -792,7 +825,7 @@
       "kw": "#65359d",
       "str": "#385f0d",
       "num": "#965027",
-      "com": "#7e818a",
+      "com": "#62656d",
       "fn": "#2959aa",
       "ty": "#343b58",
       "var": "#343b58",
@@ -815,7 +848,7 @@
       "kw": "#bb9af7",
       "str": "#9ece6a",
       "num": "#ff9e64",
-      "com": "#65709d",
+      "com": "#828ebd",
       "fn": "#7aa2f7",
       "ty": "#c0caf5",
       "var": "#c0caf5",
@@ -838,7 +871,7 @@
       "kw": "#bb9af7",
       "str": "#9ece6a",
       "num": "#ff9e64",
-      "com": "#5d658a",
+      "com": "#7982a8",
       "fn": "#7aa2f7",
       "ty": "#c0caf5",
       "var": "#c0caf5",

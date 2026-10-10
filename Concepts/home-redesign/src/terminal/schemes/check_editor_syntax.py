@@ -4,8 +4,8 @@
 Reads the scheme catalog (schemes/*.json family files) and checks every
 editor-syntax.json entry: 34 schemes, one of each catalog id, all 17 token
 keys, lowercase #rrggbb values, and the WCAG 2.x contrast floors against each
-scheme's own background (4.5:1 for text tokens, 3:1 for comments; the PM High
-Contrast schemes need 7:1 for every token). Entries whose source colour was
+scheme's own background (4.5:1 for every token, comments included, the editor's
+floor; the PM High Contrast schemes need 7:1 for every token). Entries whose source colour was
 lightness-adjusted to meet a floor carry an "adjusted" key and the token names
 are printed on their line. Exits 0 only when everything passes ("ALL OK").
 """
@@ -47,7 +47,7 @@ def is_hex(v):
 
 
 def floors_for(scheme_id):
-    return (7.0, 7.0) if scheme_id.startswith("pm-high-contrast") else (4.5, 3.0)
+    return (7.0, 7.0) if scheme_id.startswith("pm-high-contrast") else (4.5, 4.5)
 
 
 def main():
