@@ -1,0 +1,18 @@
+{
+  "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-02-control-critic-v1",
+  "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-02-control-critic-v1",
+  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-02-control-critic-v1:ordinal:1",
+  "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-02-control-critic-v1",
+  "status": "completed",
+  "workState": "result_available",
+  "hasPendingChildRuns": false,
+  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-02-control-critic-v1:ordinal:1",
+  "latestTerminalStatus": "completed",
+  "latestTerminalSummary": "Completed only the A4-02 critic stage. The review found no material wrong or incomplete claims and flagged one limited evidence gap about CalDAV account requirements. Product validation remains marked NOT_RUN.\n\nSaved the outputs under the critic stage:\n\n- [critique.md](ER12_RUNTIME/runs/A4-02/control/stages/critic/critique.md)\n- [source-map.json](ER12_RUNTIME/runs/A4-02/control/stages/critic/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A4-02/control/stages/critic/sources/index.md)\n- [goal-record.json](ER12_RUNTIME/runs/A4-02/control/stages/critic/goal-record.json)\n\nThe native Goal was directly observed as active, then completed after the outputs were saved. Final usage: 173,958 tokens and 480 seconds. Unavailable Goal provenance is recorded as UNKNOWN.",
+  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-02-control-critic-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:b0c85367-6f7f-468f-b736-d8109a834ef3",
+  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+  "model": "gpt-6-luna",
+  "summary": "Completed only the A4-02 critic stage. The review found no material wrong or incomplete claims and flagged one limited evidence gap about CalDAV account requirements. Product validation remains marked NOT_RUN.\n\nSaved the outputs under the critic stage:\n\n- [critique.md](ER12_RUNTIME/runs/A4-02/control/stages/critic/critique.md)\n- [source-map.json](ER12_RUNTIME/runs/A4-02/control/stages/critic/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A4-02/control/stages/critic/sources/index.md)\n- [goal-record.json](ER12_RUNTIME/runs/A4-02/control/stages/critic/goal-record.json)\n\nThe native Goal was directly observed as active, then completed after the outputs were saved. Final usage: 173,958 tokens and 480 seconds. Unavailable Goal provenance is recorded as UNKNOWN.",
+  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-02-control-critic-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:b0c85367-6f7f-468f-b736-d8109a834ef3",
+  "waitTimedOut": false
+}

@@ -9,6 +9,14 @@
       "parse_error": "Expecting value: line 1 column 1 (char 0)",
       "kind": "actual zero-byte failed native-activation diagnostic; preserved unchanged",
       "native_goal_proof": false
+    },
+    {
+      "path": "runs/A3-02/control/stages/reviser/native-goal-active-confirmation.json",
+      "bytes": 429,
+      "sha256": "841f9305457f7ab06f41d04b732cd0f7eb5f32415cef5cb0367b7598d0fd07c0",
+      "parse_error": "Extra data: line 1 column 428 (char 427)",
+      "kind": "actual authored/native diagnostic contains extra JSON data; original structure preserved with sanitation only",
+      "native_goal_proof": "Not inferred from malformed JSON"
     }
   ],
   "unexpected_exceptions": []

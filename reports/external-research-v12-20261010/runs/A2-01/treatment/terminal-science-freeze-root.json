@@ -1,0 +1,106 @@
+{
+  "observed_at_utc": "2026-10-10T04:48:59.059956+00:00",
+  "basis": "root observed terminal final T3 task/no pending; separate from native proof",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/treatment/stages/critic/critique-dispositions.json",
+      "bytes": 1111,
+      "sha256": "e08d7e3a9a44d575eb8606997e7234d795c23b129c9943a86774eb489735b1ee",
+      "mtime_ns": 1791606771588393738
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/treatment/stages/critic/critique.md",
+      "bytes": 12431,
+      "sha256": "50a8bc0f7b43d850d42424c9cd03c3ceb06c40ee3e92ce7b64d21053913aea1a",
+      "mtime_ns": 1791606809107857201
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/treatment/stages/critic/source-map.json",
+      "bytes": 32124,
+      "sha256": "b41c1a11303edbe25891d272d4892884a2b0702aad37418adf20d6b341dfed06",
+      "mtime_ns": 1791606788847725767
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/treatment/stages/critic/sources/index.md",
+      "bytes": 4217,
+      "sha256": "5fd710bf70aec0968f3b35da79c9dd536acece8910911034d30b330e9f966225",
+      "mtime_ns": 1791606788847990357
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/discovery.md",
+      "bytes": 16771,
+      "sha256": "c3f190e4f5a8606033b1aa5d73a958dbe67dbbe0607bc8a0284df78852daf0d7",
+      "mtime_ns": 1791605993993233052
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/draft.md",
+      "bytes": 26362,
+      "sha256": "4d3113c12c5d8ce08f866095e223dafaddc20ab6ba1f8fa9ca26a30ec1161a07",
+      "mtime_ns": 1791606230320398082
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/final/critique-dispositions.json",
+      "bytes": 2955,
+      "sha256": "621de2d69959b40c6818fc796984e9fec5aa6d325c40c667d2e3b95cd3275e46",
+      "mtime_ns": 1791607608169316946
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/final/final.md",
+      "bytes": 34960,
+      "sha256": "98078e8fd7b329a5d314e003cb64907088ed39e4a83f314fd2e9b76b665b4bfe",
+      "mtime_ns": 1791607625777686626
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/final/source-map.json",
+      "bytes": 23216,
+      "sha256": "66e91326519a8df0ba75967fc1b89922837d4f40fc062998e0e3eeeab5697645",
+      "mtime_ns": 1791607699961659899
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/final/sources/index.md",
+      "bytes": 5314,
+      "sha256": "4cc345e65c5752b4a74a6246d416052146440de03f8b44b7102069c543732ecc",
+      "mtime_ns": 1791607608169540620
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 5925,
+      "sha256": "57c6e740ac94d7c3b783621e59b759460ff10e4d157288e72d590e3f1f41666b",
+      "mtime_ns": 1791606070991016882
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/source-map.json",
+      "bytes": 18629,
+      "sha256": "2ebcfa0707a1dfd4d67f911adf00ca8fa242ea06ce20cde8ab746584b4154e29",
+      "mtime_ns": 1791606134606989073
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/sources/index.md",
+      "bytes": 3568,
+      "sha256": "a445e06a1f4effda4181b2594675a6a2d782c70a0a905834b365f95c64309492",
+      "mtime_ns": 1791606134607421002
+    }
+  ],
+  "final_stage_task": {
+    "slot": "A2-01",
+    "arm": "treatment",
+    "stage": "investigator",
+    "helper": "ER12_RUNTIME/helpers/topology-v1",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A2-A2-01-treatment-investigator-topology-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A2-A2-01-treatment-investigator-topology-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A2-A2-01-treatment-investigator-topology-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A2-A2-01-treatment-investigator-topology-v1",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A2-A2-01-treatment-investigator-topology-v1:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "Completed the investigator stage in the **original native Goal**. The final package was sealed at 04:48:20 UTC, and that same Goal is complete. No new Goal or review round was created.\n\nSaved the complete proposal, all three critic dispositions, the preserved 21-source map, and source index:\n\n- [final.md](ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/final/final.md)\n- [critique-dispositions.json](ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/final/critique-dispositions.json)\n- [source-map.json](ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/final/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/final/sources/index.md)\n\nNo product validation was run. The seal records that source truth and scope fidelity were not independently proven by the helper. The Goal reports 562,132 tokens and 2,185 seconds elapsed.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A2-A2-01-treatment-investigator-topology-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:14c1467d-96b1-4801-b694-6c99413bf00b",
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "summary": "Completed the investigator stage in the **original native Goal**. The final package was sealed at 04:48:20 UTC, and that same Goal is complete. No new Goal or review round was created.\n\nSaved the complete proposal, all three critic dispositions, the preserved 21-source map, and source index:\n\n- [final.md](ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/final/final.md)\n- [critique-dispositions.json](ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/final/critique-dispositions.json)\n- [source-map.json](ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/final/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/final/sources/index.md)\n\nNo product validation was run. The seal records that source truth and scope fidelity were not independently proven by the helper. The Goal reports 562,132 tokens and 2,185 seconds elapsed.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A2-A2-01-treatment-investigator-topology-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:14c1467d-96b1-4801-b694-6c99413bf00b",
+    "waitTimedOut": false
+  }
+}

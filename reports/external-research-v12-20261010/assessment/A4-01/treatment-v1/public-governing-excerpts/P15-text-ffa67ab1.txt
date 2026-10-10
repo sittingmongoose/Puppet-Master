@@ -1,0 +1,12 @@
+URL: https://docs.aws.amazon.com/cli/latest/topic/s3-faq.html
+Original locator: ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P15-text.txt
+Original SHA256: ffa67ab12a09379e0bc5c25e05d01a25062c1945939123c2c73008b4344add8e
+Original numbered lines; gaps omitted. Not full response.
+
+43: By default, the Cyclic Redundancy Check 64 (CRC64NVME) algorithm
+44: is used to calculate checksums, but an alternative algorithm can be specified by using the
+45: --checksum-algorithm argument on high-level aws s3 commands. The checksum algorithms
+46: supported by the AWS CLI v2 are:
+47: CRC64NVME (Recommended)
+57: does not match the checksum provided, the object will not be stored and an error message
+69: The AWS CLI will attempt to verify the checksum of downloads when possible. If a non-MD5 checksum is returned

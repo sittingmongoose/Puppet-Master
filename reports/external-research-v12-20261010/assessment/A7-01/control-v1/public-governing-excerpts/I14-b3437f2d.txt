@@ -1,0 +1,7 @@
+URL: https://blog.prusa3d.com/prusaslicer-2-release_30008/
+Original locator: ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I14.txt
+Original SHA256: b3437f2d493610f92039a0f43ae39e356e5fe9d60385c515b552338cfdb4225e
+Original numbered lines; gaps omitted. Not full response.
+
+86: Project file
+87: File – Save Project now saves a 3MF file containing all objects, settings, modifiers and their parameters. It’s essentially a complete snapshot of PrusaSlicer. When you open a project file on a different computer, it should still produce the same G-code. We chose 3MF over AMF, because it’s a modern format supported by Microsoft 3D Builder and Cura, but we still support AMF import. And yes, this feature was already present since Slic3r PE 1.40, but it was buried in the export menu as “Export plater as 3MF/AMF”.

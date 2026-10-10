@@ -1,0 +1,25 @@
+{
+  "native_goal_status": "complete",
+  "elapsed_seconds": 528,
+  "native_goal_count": 1,
+  "receipts": [
+    {
+      "path": "private/NATIVE_GOAL_ACTIVATION.json",
+      "sha256": "31677fcee7e2179fc04e0cbc07d4e08b86be10565a9a037a0e84a3a97c7b44ec",
+      "exact_receipt_retained": true,
+      "publication": "private; root reviews separately"
+    },
+    {
+      "path": "private/NATIVE_GOAL_ACTIVE_OBSERVATION.json",
+      "sha256": "0c98caca4ca6cc70dbc180abfd2c99dac273ddb20277bf5cf55e2521d4882b3d",
+      "exact_receipt_retained": true,
+      "publication": "private; root reviews separately"
+    },
+    {
+      "path": "private/NATIVE_GOAL_TERMINAL.json",
+      "sha256": "51c93ed3fc35d2731c3aba4af668a52025e93f60d601d099e70a9236d89f3b63",
+      "exact_receipt_retained": true,
+      "publication": "private; root reviews separately"
+    }
+  ]
+}

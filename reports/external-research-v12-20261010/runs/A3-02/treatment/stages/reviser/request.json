@@ -1,0 +1,21 @@
+{
+  "requested_at_utc": "2026-10-10T05:19:03.324Z",
+  "clientRequestId": "er12ref-A3-02-treatment-reviser-v1",
+  "args": {
+    "clientRequestId": "er12ref-A3-02-treatment-reviser-v1",
+    "mode": "async",
+    "role": "general",
+    "title": "ER12 reference A3-02-treatment reviser",
+    "target": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna",
+      "options": {
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      }
+    },
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "task": "Execute only the assigned reference stage. Read ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/assignment.md and its input-map.json. Create one actual native Goal under 4,000 characters referring to the assignment; save required outputs before native terminal. No nested agents or parent-history use.\nBefore any case/source input or inference, activate exactly ONE actual exposed native Goal using this exact immutable freeze.native_goal_objective string: \"ER12 reviser stage, run A3-02-treatment: execute ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.\"\nNo case input is needed for activation. Preserve the exact native activation response; if unsupported, stop before inference and preserve the exact diagnostic. No second or replacement Goal. Original Goal lifecycle and scope remain binding. Follow the appended ROOT MECHANICS CLARIFICATION v1 in the assignment.\n"
+  }
+}

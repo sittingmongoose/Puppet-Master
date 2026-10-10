@@ -8,14 +8,36 @@
     "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A1-01-treatment-full-v1",
     "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A1-01-treatment-full-v1",
     "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-eval-A1-01-treatment-full-v1:ordinal:1",
-    "status": "running",
+    "status": "completed",
     "hasPendingChildRuns": false,
     "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
     "model": "gpt-6.1-sol",
-    "latestTerminalStatus": null,
-    "latestTerminalRunId": null
+    "latestTerminalStatus": "completed",
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-eval-A1-01-treatment-full-v1:ordinal:1"
   },
-  "state": "SOURCE_PENDING",
-  "source_judgment": null,
-  "included_files": []
+  "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "included_files": [
+    "assessment/A1-01/treatment-v1/assessment.json",
+    "assessment/A1-01/treatment-v1/assessment.md",
+    "assessment/A1-01/treatment-v1/evidence/R1.md",
+    "assessment/A1-01/treatment-v1/evidence/R2.md",
+    "assessment/A1-01/treatment-v1/evidence/R3.md",
+    "assessment/A1-01/treatment-v1/evidence/R4.md",
+    "assessment/A1-01/treatment-v1/evidence/R5.md",
+    "assessment/A1-01/treatment-v1/evidence/R6.md",
+    "assessment/A1-01/treatment-v1/evidence/R7.md",
+    "assessment/A1-01/treatment-v1/evidence/R8.md",
+    "assessment/A1-01/treatment-v1/evidence/R9.md",
+    "assessment/A1-01/treatment-v1/evidence/freeze-checks.json",
+    "assessment/A1-01/treatment-v1/evidence/index.md",
+    "assessment/A1-01/treatment-v1/evidence/original-inventory.json",
+    "assessment/A1-01/treatment-v1/evidence/reviewer-final-pre-completion.json",
+    "assessment/A1-01/treatment-v1/evidence/reviewer-goal-activation.json",
+    "assessment/A1-01/treatment-v1/evidence/reviewer-goal-completion.json",
+    "assessment/A1-01/treatment-v1/evidence/reviewer-goal-pre-completion.json",
+    "assessment/A1-01/treatment-v1/evidence/reviewer-save-verification.json",
+    "assessment/A1-01/treatment-v1/root-review-request.json",
+    "assessment/A1-01/treatment-v1/source-map.json"
+  ]
 }

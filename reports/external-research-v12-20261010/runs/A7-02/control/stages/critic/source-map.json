@@ -1,0 +1,211 @@
+{
+  "run_id": "A7-02-control",
+  "stage": "critic",
+  "source_review_cutoff_utc": "2026-10-10T04:59:41Z",
+  "source_id_policy": "IDs retain their investigator source-map URL bindings; records below are the critic's independent observations and do not replace or rebind predecessor IDs.",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "Zotero Duplicate Detection",
+      "url": "https://www.zotero.org/support/duplicate_detection",
+      "released_version_or_commit": "Living official documentation; page last updated 2017-11-25; no app release pinned.",
+      "locator": "Finding Duplicates and Merging Duplicates, page lines 56-74.",
+      "accessed_utc": "2026-10-10T04:50:59Z",
+      "observed_operation": "Opened official page; no Zotero operation run.",
+      "governing_condition_default_exception": "Matching conditions include title/DOI/ISBN, then year within one year and creator overlap; detection is within one library and false positives cannot be marked non-duplicate.",
+      "applicability": "Supports candidate review and field merge; older documentation requires current pinned-app validation."
+    },
+    {
+      "id": "S02",
+      "title": "Zotero import of standardized formats",
+      "url": "https://www.zotero.org/support/kb/importing_standardized_formats",
+      "released_version_or_commit": "Living official documentation; page last updated 2018-11-04; no app release pinned.",
+      "locator": "Format list, page lines 54-85.",
+      "accessed_utc": "2026-10-10T04:51:20Z",
+      "observed_operation": "Opened official page; no import run.",
+      "governing_condition_default_exception": "Supported imports include RIS, BibTeX, BibLaTeX and CSL JSON; support does not establish lossless round-trip.",
+      "applicability": "Shows RIS is a practical manager interchange format."
+    },
+    {
+      "id": "S04",
+      "title": "Zotero Import/Export Field Mappings",
+      "url": "https://www.zotero.org/support/kb/field_mappings",
+      "released_version_or_commit": "Living official documentation; page last updated 2017-11-22; no app release pinned.",
+      "locator": "Data loss during import/export, page lines 56-67.",
+      "accessed_utc": "2026-10-10T04:51:20Z",
+      "observed_operation": "Opened official page; no round-trip run.",
+      "governing_condition_default_exception": "RIS/MODS can carry notes but do not preserve attachments or collections; mappings can change.",
+      "applicability": "Supports the proposal's warning against using RIS as an archival provenance record."
+    },
+    {
+      "id": "S05",
+      "title": "Zotero Creating Bibliographies",
+      "url": "https://www.zotero.org/support/creating_bibliographies",
+      "released_version_or_commit": "Living official documentation; current served page last updated 2025-12-12; no app release pinned.",
+      "locator": "Quick Copy and Create Bibliography, page lines 59-78.",
+      "accessed_utc": "2026-10-10T04:51:20Z",
+      "observed_operation": "Opened official page; no bibliography file generated.",
+      "governing_condition_default_exception": "RIS/BibTeX Quick Copy and RTF/HTML file output are separate modes.",
+      "applicability": "Supports optional output route; the page-update date motivates the minor source-map wording finding."
+    },
+    {
+      "id": "S06",
+      "title": "JabRef Find Duplicates",
+      "url": "https://docs.jabref.org/finding-sorting-and-cleaning-entries/findduplicates",
+      "released_version_or_commit": "Living official documentation retrieved 2026-10-10; app release not pinned.",
+      "locator": "Detection and Selecting which entry to keep, Markdown lines 1-34.",
+      "accessed_utc": "2026-10-10T04:50:59Z",
+      "observed_operation": "Opened official page; no JabRef operation run.",
+      "governing_condition_default_exception": "Edit-distance candidates weight author/editor/title/journal; user can keep both, merge, or remove exact duplicates.",
+      "applicability": "Supports review workflow, not automatic identity."
+    },
+    {
+      "id": "S07",
+      "title": "JabRef Merge Entries",
+      "url": "https://docs.jabref.org/finding-sorting-and-cleaning-entries/mergeentries",
+      "released_version_or_commit": "Living official documentation retrieved 2026-10-10; app release not pinned.",
+      "locator": "Field selection and merge actions, Markdown lines 1-40.",
+      "accessed_utc": "2026-10-10T04:50:59Z",
+      "observed_operation": "Opened official page; no merge run.",
+      "governing_condition_default_exception": "User selects fields or edits values and initiates merge.",
+      "applicability": "Supports field review but not immutable submission history."
+    },
+    {
+      "id": "S08",
+      "title": "JabRef identifier-based metadata enrichment",
+      "url": "https://docs.jabref.org/finding-sorting-and-cleaning-entries/getbibtexdatafromdoi",
+      "released_version_or_commit": "Living official documentation retrieved 2026-10-10; page not release-pinned.",
+      "locator": "Identifier lookup and DOI/ISBN completion, Markdown lines 1-20.",
+      "accessed_utc": "2026-10-10T04:50:59Z",
+      "observed_operation": "Opened official page; no lookup run.",
+      "governing_condition_default_exception": "DOI/ISBN completion requires an identifier; original fields are default and missing fields may be filled; separate full-text retrieval exists.",
+      "applicability": "Supports lookup as reviewed suggestion and the no-full-text boundary."
+    },
+    {
+      "id": "S09",
+      "title": "JabRef command-line import/export",
+      "url": "https://docs.jabref.org/advanced/commandline",
+      "released_version_or_commit": "Official docs state described CLI applies since JabRef 5.0.",
+      "locator": "Import and Export file options, Markdown lines 4-9 and 74-100.",
+      "accessed_utc": "2026-10-10T04:59:41Z",
+      "observed_operation": "Opened official page; did not execute commands.",
+      "governing_condition_default_exception": "Export format is selected by filter; default output is BibTeX.",
+      "applicability": "Documents a possible file conversion route, not a validated RIS capability on a chosen build."
+    },
+    {
+      "id": "S10",
+      "title": "JabRef v6.0-beta.1 release",
+      "url": "https://github.com/JabRef/jabref/releases/tag/v6.0-beta.1",
+      "released_version_or_commit": "v6.0-beta.1 prerelease; tag commit 3992b12; released 2026-09-21.",
+      "locator": "Release heading, prerelease label, date, and tag/commit lines 130-160.",
+      "accessed_utc": "2026-10-10T04:59:41Z",
+      "observed_operation": "Opened official release page; no binary downloaded or run.",
+      "governing_condition_default_exception": "Prerelease; a release listing does not prove a local product test or all earlier fixes.",
+      "applicability": "Version anchor for the alternative workflow."
+    },
+    {
+      "id": "S11",
+      "title": "JabRef RIS page-range export issue #15106",
+      "url": "https://github.com/JabRef/jabref/issues/15106",
+      "released_version_or_commit": "Reported on JabRef 5.15, GNU/Linux; opened 2026-02-13.",
+      "locator": "Version/OS and reproduction, page lines 167-188.",
+      "accessed_utc": "2026-10-10T04:50:59Z",
+      "observed_operation": "Opened public issue; no export run.",
+      "governing_condition_default_exception": "Reported BibTeX pages 13905--13911 exported the full range to both RIS SP and EP; reporter says single hyphen worked.",
+      "applicability": "A bounded regression case, not evidence all records or releases failed."
+    },
+    {
+      "id": "S12",
+      "title": "JabRef fix PR #15315",
+      "url": "https://github.com/JabRef/jabref/pull/15315",
+      "released_version_or_commit": "Merged 2026-03-13 to main at d687c08.",
+      "locator": "Merge status and commit lines 130-179, tests/change summary lines 910-933, queue result lines 1225-1227.",
+      "accessed_utc": "2026-10-10T04:50:59Z",
+      "observed_operation": "Opened public PR history; code/tests not executed.",
+      "governing_condition_default_exception": "Changed FirstPage/LastPage parsing for Unicode dashes; PR unit tests are not an end-to-end RIS export run.",
+      "applicability": "Supports the fix chain and the proposal's regression-test limit."
+    },
+    {
+      "id": "S13",
+      "title": "Crossref REST API",
+      "url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/",
+      "released_version_or_commit": "Living official API documentation retrieved 2026-10-10; no schema version pinned.",
+      "locator": "REST API description and DOI/search examples, page lines 112-128.",
+      "accessed_utc": "2026-10-10T04:51:20Z",
+      "observed_operation": "Opened official page; no API call made.",
+      "governing_condition_default_exception": "Metadata is deposited by Crossref members and trusted sources; coverage is not universal.",
+      "applicability": "Supports optional retrieval/search with results treated as evidence."
+    },
+    {
+      "id": "S14",
+      "title": "Crossref REST API access and authentication",
+      "url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/access-and-authentication/",
+      "released_version_or_commit": "Living official docs; last updated 2025-10-16.",
+      "locator": "Access modes, rate limits, 429/backoff and best practice, page lines 112-153.",
+      "accessed_utc": "2026-10-10T04:52:34Z",
+      "observed_operation": "Opened official page and inspected access/limit guidance; no request made.",
+      "governing_condition_default_exception": "No signup; polite pool uses mailto/agent; rate limits are response-header dependent and 429 requires reduced rate/backoff.",
+      "applicability": "Supports account-free read-only lookup subject to provider approval and rate handling."
+    },
+    {
+      "id": "S16",
+      "title": "Crossref relationships schema guide",
+      "url": "https://www.crossref.org/documentation/schema-library/markup-guide-metadata-segments/relationships/",
+      "released_version_or_commit": "Living official schema docs retrieved 2026-10-10; schema version not pinned.",
+      "locator": "Relation vocabulary, identifiers, and deposit conditions.",
+      "accessed_utc": "2026-10-10T04:52:34Z",
+      "observed_operation": "Opened official schema page; no deposit or API operation.",
+      "governing_condition_default_exception": "Relations are deposited claims; DOI relation may be bidirectional and identifier validation depends on identifier type.",
+      "applicability": "An analogous typed-link model, not universal identity authority."
+    },
+    {
+      "id": "S17",
+      "title": "Crossref Posted Content / Preprint Markup Guide",
+      "url": "https://www.crossref.org/documentation/schema-library/markup-guide-record-types/posted-content-includes-preprints/",
+      "released_version_or_commit": "Posted-content type since schema 4.4.0; version/status fields since schema 5.4.0.",
+      "locator": "Metadata elements and isPreprintOf relation, page lines 129-156 and 185-210.",
+      "accessed_utc": "2026-10-10T04:51:20Z",
+      "observed_operation": "Opened official schema page; no deposit.",
+      "governing_condition_default_exception": "Crossref member-deposit model; relation completeness depends on deposits and updates.",
+      "applicability": "Supports separate preprint record and typed relationship where supplied."
+    },
+    {
+      "id": "S19",
+      "title": "Crossref preprint-to-journal matching methods and dataset",
+      "url": "https://www.crossref.org/blog/discovering-relationships-between-preprints-and-journal-articles/",
+      "released_version_or_commit": "Official Crossref historical method post; dataset is time-bounded as described by the source.",
+      "locator": "Candidate matching method and dataset scope.",
+      "accessed_utc": "2026-10-10T04:52:34Z",
+      "observed_operation": "Opened official method/history page; no match operation run.",
+      "governing_condition_default_exception": "Title/first-author candidate matching can miss deposited relationships; historical coverage is not a current estimate.",
+      "applicability": "Supports treating links as review cues, not proof or required merges."
+    },
+    {
+      "id": "S20",
+      "title": "JabRef v6.0-alpha.6 release notes",
+      "url": "https://github.com/JabRef/jabref/releases/tag/v6.0-alpha.6",
+      "released_version_or_commit": "v6.0-alpha.6 prerelease; commit 6d24100; released 2026-05-14.",
+      "locator": "RIS fix for #15106, release page line 221.",
+      "accessed_utc": "2026-10-10T04:50:59Z",
+      "observed_operation": "Opened official release page; no binary run.",
+      "governing_condition_default_exception": "Release note states the reported SP/EP range issue is fixed in this prerelease.",
+      "applicability": "Version-qualified fix evidence; not an end-to-end test."
+    },
+    {
+      "id": "S21",
+      "title": "JabRef page-range formatter source and tests at fix commit",
+      "url": "https://raw.githubusercontent.com/JabRef/jabref/d687c08/jablib/src/main/java/org/jabref/logic/layout/format/FirstPage.java",
+      "supporting_urls": [
+        "https://raw.githubusercontent.com/JabRef/jabref/d687c08/jablib/src/main/java/org/jabref/logic/layout/format/LastPage.java",
+        "https://raw.githubusercontent.com/JabRef/jabref/d687c08/jablib/src/test/java/org/jabref/logic/layout/format/FirstPageTest.java",
+        "https://raw.githubusercontent.com/JabRef/jabref/d687c08/jablib/src/test/java/org/jabref/logic/layout/format/LastPageTest.java"
+      ],
+      "released_version_or_commit": "JabRef main merge commit d687c08, 2026-03-13.",
+      "locator": "FirstPage/LastPage formatter lines 4-20; tests lines 20-30.",
+      "accessed_utc": "2026-10-10T04:51:53Z",
+      "observed_operation": "Opened raw source and unit-test text; did not execute code or tests.",
+      "governing_condition_default_exception": "Tests check page-field helpers for ASCII and en/em dash variants, including spaced en dash; they do not test full RIS export.",
+      "applicability": "Supports the fixture scope and preserves the proposal's end-to-end uncertainty."
+    }
+  ]
+}

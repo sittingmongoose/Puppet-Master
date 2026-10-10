@@ -1,0 +1,20 @@
+# B-APPL-G-02 — applicability and exception verification
+
+**Scope:** systemd 257 timer/service behavior. Scenario: a oneshot cleanup may take three minutes; the proposals are `OnCalendar=daily` or `OnUnitInactiveSec=10min`, both with `Persistent=true`; `AccuracySec` and `RandomizedDelaySec` are unspecified. In v257 their documented defaults are 1 minute and 0, respectively. Effective drop-ins and host settings were not supplied.
+
+1. **Supported, calendar-only.** For a timer with `OnCalendar=`, `Persistent=true` stores the last-trigger time and, when the timer is activated, triggers if at least one scheduled event elapsed while it was inactive. This supports a catch-up after the stated powered-off interval. It does not establish one activation for every missed day, an exact start time, or completion by a deadline; any `RandomizedDelaySec` can delay the catch-up. Citation: S1, `Persistent=` (v257).
+
+2. **Rejected.** `Persistent=` has effect only on `OnCalendar=` timers, so it does not give `OnUnitInactiveSec=` the same powered-off catch-up behavior. `OnUnitInactiveSec=` is a monotonic timer, not a wall-clock calendar event. Do not infer a persisted monotonic interval across power-off from this flag. Citation: S1, `Persistent=` and monotonic timer directives (v257). `WakeSystem=` addresses supported suspend wakeups, not power-off catch-up.
+
+3. **Rejected.** When the target unit is already active at expiry, systemd leaves it running; it does not restart it or spawn another service instance. A timer elapse is therefore not proof of a new cleanup run. Citation: S1, `Description` (v257). A later trigger can activate the unit after it becomes inactive, subject to that timer’s schedule.
+
+4. **Supported with bounds.** v257 defaults `AccuracySec=` to 1 minute. It schedules expiry in a window beginning at the configured elapse and ending up to that accuracy later, at a host-specific stable position; it does not promise the wall-clock second. Timer slack can also apply. `RandomizedDelaySec=` defaults to zero, but any effective nonzero value adds delay before accuracy coalescing. Citation: S1, `AccuracySec=` and `RandomizedDelaySec=` (v257).
+
+5. **Supported.** `OnUnitInactiveSec=` measures from the last deactivation of the unit the timer activates. It is a ten-minute interval from that event in the proposed configuration, subject to timer accuracy and runtime conditions; it is not an interval from boot or from wall-clock midnight. Citation: S1, monotonic timer directive table (v257).
+
+6. **Rejected.** A valid daily calendar expression establishes syntax, not a post-boot completion deadline. `daily` normalizes to midnight in the applicable timezone; an `OnCalendar=` timer can be delayed by its default accuracy window, and a persistent catch-up is triggered when the timer activates, not guaranteed two seconds after every boot. Even a timely service start cannot establish completion by 00:00:02 when the cleanup may take three minutes. Clock correctness, boot/timer ordering, service start and completion timestamps, and a measured upper runtime bound are absent. Citation: S1, `OnCalendar=` and `AccuracySec=` (v257); S2, `Calendar Events` (v257). This is a conclusion about the stated guarantee, not a prediction of a particular run.
+
+**Acceptance checks**
+
+1. On the target host, record `systemd --version`, timezone and full timer/service units including drop-ins; validate the actual calendar expression with `systemd-analyze calendar` and inspect effective `Persistent`, `AccuracyUSec`, `RandomizedDelayUSec` and trigger properties with `systemctl show`. Reject any timing claim based only on syntax validation.
+2. In a disposable systemd 257 environment using the same units, trace a controlled two-day power-off/boot and an expiry while the service is active. Record clock-sync, timer-elapse, service-start and service-finish timestamps. To accept the two-second completion claim, repeated representative boot tests and a justified runtime bound must show completion within that deadline; the supplied evidence cannot pass it.

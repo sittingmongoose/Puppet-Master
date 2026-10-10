@@ -1,0 +1,43 @@
+{
+  "version": "invocation-clarification-v1",
+  "stageDir": "ER12_RUNTIME/runs/A2-02/control/stages/critic",
+  "backupDir": "ER12_RUNTIME/runs/A2-02/control/stages/critic/.invocation-backup-0dcfd449163d4133a3407f74bbdcfefe",
+  "args": {
+    "clientRequestId": "er12ref-A2-02-control-critic-v1",
+    "mode": "async",
+    "role": "general",
+    "title": "ER12 reference A2-02-control critic",
+    "target": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna",
+      "options": {
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      }
+    },
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "task": "Execute only the assigned reference stage. Read ER12_RUNTIME/runs/A2-02/control/stages/critic/assignment.md and its input-map.json. Create one actual native Goal under 4,000 characters referring to the assignment; save required outputs before native terminal. No nested agents or parent-history use.\nBefore any case/source input or inference, activate exactly ONE actual exposed native Goal using this exact immutable freeze.native_goal_objective string: \"ER12 critic stage, run A2-02-control: execute ER12_RUNTIME/runs/A2-02/control/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.\"\nNo case input is needed for activation. Preserve the exact native activation response; if unsupported, stop before inference and preserve the exact diagnostic. No second or replacement Goal. Original Goal lifecycle and scope remain binding. Follow the appended ROOT MECHANICS CLARIFICATION v1 in the assignment.\n"
+  },
+  "config": null,
+  "commands": [],
+  "original_sha256": {
+    "request.json": "a4da88144824a6f68d434a2a83ac53270dd15f639863c4ac78f11debc94b49cc",
+    "freeze.json": "140f13c221acc31a15620897cfd49e186491cc16dc2769c4e124f0baaf092a8a",
+    "input-map.json": "cbe43fa0e4b3b3c73888192c44dfd3f8bd147e9f9781bfe59f1028d5675d9ff4",
+    "assignment.md": "da919878a69a81e206a532c259647fd33af39e32f334a9b93ec9a17435d4ce93"
+  },
+  "updated_sha256": {
+    "request.json": "094634fffec47859b200bff86422b63e6c958c77966caf6c4798b33699234c44",
+    "freeze.json": "de47dd0d8f333dc2d3485e27dda359e0be762cdd94085b7fb2c694a34854306d",
+    "input-map.json": "cbe43fa0e4b3b3c73888192c44dfd3f8bd147e9f9781bfe59f1028d5675d9ff4",
+    "assignment.md": "67ee90e38a1f329c5bd3280f9f9f1a8f011b1eed7176603a854fd76a905a22b8"
+  },
+  "helper_pins": {
+    "ER12_RUNTIME/helpers/topology-v1/prepare.py": "3cf320737c60b45de8c524fea0484f78a688bf720a0f60b9becc5e2873f8dbf0",
+    "ER12_RUNTIME/helpers/role-v2/prepare-role.py": "83cebd8dc762eb780fa04399676a39c709654995f6e2a22e934a1f821af78478"
+  },
+  "root_only_integration": true,
+  "dispatch_performed": false,
+  "idempotent": false
+}

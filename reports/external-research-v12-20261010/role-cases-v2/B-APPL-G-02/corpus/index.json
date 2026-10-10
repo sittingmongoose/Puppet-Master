@@ -1,0 +1,27 @@
+{
+  "sources": [
+    {
+      "source_id": "S1",
+      "title": "systemd timer manual source",
+      "url": "https://github.com/systemd/systemd/blob/v257/man/systemd.timer.xml",
+      "version": "Pinned upstream tag v257; target systemd 257",
+      "retrieved_at": "2026-10-10T03:54:10Z",
+      "navigation": "Description; OnUnitInactiveSec; AccuracySec; RandomizedDelaySec; Persistent",
+      "file": "corpus/S1.md",
+      "sha256": "502f95d36e1da301057116c7d443c652463e7fd2b1f934b6b34e8b04334fc32a",
+      "verbatim_word_count": 3
+    },
+    {
+      "source_id": "S2",
+      "title": "systemd time manual source",
+      "url": "https://github.com/systemd/systemd/blob/v257/man/systemd.time.xml",
+      "version": "Pinned upstream tag v257; target systemd 257",
+      "retrieved_at": "2026-10-10T03:54:10Z",
+      "navigation": "Parsing Time Spans; Calendar Events; calendar examples",
+      "file": "corpus/S2.md",
+      "sha256": "e58ec490cbdd3d90ae98b4c45bc8efd670f7d64f29f42a5f4a34a307e30a7409",
+      "verbatim_word_count": 2
+    }
+  ],
+  "retrieval_policy": "Both arms may follow the listed URLs and retrieve up to eight additional primary pages within the same 600-second investigation allowance. Snapshots are short excerpts and attributed paraphrases, not complete manuals."
+}

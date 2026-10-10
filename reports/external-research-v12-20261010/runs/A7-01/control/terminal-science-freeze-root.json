@@ -1,0 +1,94 @@
+{
+  "observed_at_utc": "2026-10-10T04:53:53.834607+00:00",
+  "basis": "root observed terminal final T3 task/no pending; separate from native proof",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/critic/critique.md",
+      "bytes": 10330,
+      "sha256": "40986b4c2b3c438c13d13e20df811d58f1c7bced0e53439be957d30c660cb04d",
+      "mtime_ns": 1791607270238436834
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/critic/source-map.json",
+      "bytes": 39383,
+      "sha256": "372272951e49ffedfc5a1d0449b8d407ec5d9d7afc101ec9c67f1501ccfd3b82",
+      "mtime_ns": 1791607323744932677
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/critic/sources/index.md",
+      "bytes": 4239,
+      "sha256": "37a4c73dc6b50c0c64defcd243589ca41807002face1e6698205dc0cab175ce0",
+      "mtime_ns": 1791607001988239869
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/discovery.md",
+      "bytes": 14812,
+      "sha256": "17ff8435c3352da4d6ab501fb6a90272c342a2b04bedf7a04afb4eeaa6b04dfb",
+      "mtime_ns": 1791606156235060153
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/draft.md",
+      "bytes": 19339,
+      "sha256": "f187c5e9a18a4a5b3e30ef3e263704374bf08512bfb3cab116d106f6c3976442",
+      "mtime_ns": 1791606289646668988
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/revealed-plan.md",
+      "bytes": 6015,
+      "sha256": "b9063b147acff997c7c788eac44d2149ca6946fa4ee2a3ce6f0bdf80789397e7",
+      "mtime_ns": 1791606185319611415
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/source-map.json",
+      "bytes": 24810,
+      "sha256": "ca05e8dfe48e66a179c754a65a485593502eced26d1b38cd2613b94fd0c14fa1",
+      "mtime_ns": 1791606156234060149
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/sources/index.md",
+      "bytes": 6778,
+      "sha256": "3d85af0028365984a7432ad2b1194e0a3142141177e4b8b60d876ae5f7e65185",
+      "mtime_ns": 1791606156236060157
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/final.md",
+      "bytes": 24904,
+      "sha256": "9b96a8ba94e1567069ad240b192f203ec7b7a360e7aaa95c1fa11c7c43793383",
+      "mtime_ns": 1791607903365579844
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/source-map.json",
+      "bytes": 77043,
+      "sha256": "d825831ff50b46682ba6d9ceb261c4aafdf1c89fc7a700be5800c98b351cdfe6",
+      "mtime_ns": 1791607919751592587
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/sources/index.md",
+      "bytes": 14029,
+      "sha256": "18831167e2799780732bdaee807ee8d5dab003d5f5847a7f4e25903973cfb491",
+      "mtime_ns": 1791607919749413385
+    }
+  ],
+  "final_stage_task": {
+    "slot": "A7-01",
+    "arm": "control",
+    "stage": "reviser",
+    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A7-01-control-reviser-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A7-01-control-reviser-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A7-01-control-reviser-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A7-01-control-reviser-v1",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A7-01-control-reviser-v1:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "Completed the reviser stage and completed the native Goal after saving the outputs.\n\n- [final.md](ER12_RUNTIME/runs/A7-01/control/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A7-01/control/stages/reviser/source-map.json)\n- [sources index](ER12_RUNTIME/runs/A7-01/control/stages/reviser/sources/index.md)\n\nThe proposal covers all eight brief and plan clauses. C2\u2013C4 are accepted; C1 remains unresolved because [Materials 1.2.1](https://github.com/3MFConsortium/spec_materials/blob/1.2.1/3MF%20Materials%20Extension.md) specifies Core 1.2, while the [conformance-suite README](https://github.com/3MFConsortium/test_suites) lists Core 1.4.0 and Materials 1.2.1. Product validation remains NOT_RUN.\n\nGoal `01a1241e-b3f2-7102-91be-344bb0b66a8f` was directly observed active, then complete; its terminal response reported 578 seconds elapsed. Provider and model provenance are recorded as UNKNOWN. No parent history or nested agents were used.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A7-01-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:e9f6fde7-903b-4969-9f83-11018d52c153",
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "summary": "Completed the reviser stage and completed the native Goal after saving the outputs.\n\n- [final.md](ER12_RUNTIME/runs/A7-01/control/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A7-01/control/stages/reviser/source-map.json)\n- [sources index](ER12_RUNTIME/runs/A7-01/control/stages/reviser/sources/index.md)\n\nThe proposal covers all eight brief and plan clauses. C2\u2013C4 are accepted; C1 remains unresolved because [Materials 1.2.1](https://github.com/3MFConsortium/spec_materials/blob/1.2.1/3MF%20Materials%20Extension.md) specifies Core 1.2, while the [conformance-suite README](https://github.com/3MFConsortium/test_suites) lists Core 1.4.0 and Materials 1.2.1. Product validation remains NOT_RUN.\n\nGoal `01a1241e-b3f2-7102-91be-344bb0b66a8f` was directly observed active, then complete; its terminal response reported 578 seconds elapsed. Provider and model provenance are recorded as UNKNOWN. No parent history or nested agents were used.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A7-01-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:e9f6fde7-903b-4969-9f83-11018d52c153",
+    "waitTimedOut": false
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "source": "direct functions.create_goal and functions.get_goal tool results",
+  "initial_observation": {
+    "goal": {
+      "threadId": "01a12431-fe0a-7080-97e9-c570a5f2a740",
+      "objective": "ER12 investigator stage, run C-R1-02-control: execute ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791608666,
+      "updatedAt": 1791608666
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "latest_observation_before_outputs": {
+    "goal": {
+      "threadId": "01a12431-fe0a-7080-97e9-c570a5f2a740",
+      "objective": "ER12 investigator stage, run C-R1-02-control: execute ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "status": "active",
+      "tokensUsed": 208295,
+      "timeUsedSeconds": 302,
+      "createdAt": 1791608666,
+      "updatedAt": 1791608969
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "requested_route_from_frozen_input": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "reasoningEffort": "max",
+    "serviceTier": "default"
+  },
+  "actual_native_goal_provider_provenance": "UNKNOWN; native Goal tools did not expose resolved provider/model provenance.",
+  "activation": "CONFIRMED: direct tool result reported status=active.",
+  "terminal_completion": "CONFIRMED: direct tool result reported status=complete after required outputs had been saved.",
+  "terminal_completion_observation": {
+    "source": "direct functions.update_goal tool result",
+    "goal": {
+      "threadId": "01a12431-fe0a-7080-97e9-c570a5f2a740",
+      "status": "complete",
+      "tokensUsed": 293300,
+      "timeUsedSeconds": 724,
+      "createdAt": 1791608666,
+      "updatedAt": 1791609391
+    }
+  }
+}

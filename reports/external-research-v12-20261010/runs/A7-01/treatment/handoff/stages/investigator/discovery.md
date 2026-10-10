@@ -1,0 +1,48 @@
+# Discovery — community workshop printable-project handoff
+
+**Run:** A7-01-treatment / investigator  
+**Discovery basis:** the exact brief only; the released plan had not yet been exposed when this file was prepared.  
+**Research window:** 2026-10-10 UTC. Public documentation and issue/release pages were read only. No CAD or slicer was run and no package was locally inspected.
+
+## Findings and recommended direction
+
+Use a neutral 3MF mesh package as the normal pilot handoff, authored with explicit millimetre units, stable part names, intended separations/relationships, and short design-intent material labels. 3MF Core 1.4.0 is an OPC/ZIP package format: the core model can encode units, object resources, component references and transforms, and named base materials. It also defines optional package thumbnails and model Description metadata. These are useful for a reviewer who lacks the original CAD application, but an application may not display or preserve every optional part, extension, or vendor project setting. Do not equate a standards-compliant payload with universal application fidelity. [[S01]][[S09]]
+
+Keep two routes available in the pilot matrix:
+
+| Route | Best fit | Interoperability tradeoff |
+| --- | --- | --- |
+| CAD export → 3MF geometry package → receiving slicer | Routine decorative project review; multiple named bodies, scale, placement, colors/material intent, compact one-file transfer. Autodesk Fusion exposes a 3MF mesh export with explicit unit choices and one-file/all-bodies or one-body-per-file structure. | Better self-description than STL, but CAD history/constraints are not carried. Extensions and application-specific project data have uneven support; explicitly test names, transforms, thumbnails, and metadata in the receiving tool. |
+| CAD export → STEP → slicer STEP import | Alternate input where the recipient accepts STEP and a CAD-derived solid boundary representation is useful before slicer tessellation. Fusion lists STEP as an export format; PrusaSlicer 2.9 documentation accepts STEP but says it triangulates the model during import. | The receiving slicer/kernel and STEP application protocol still govern outcomes. Tessellation, component naming, appearance, and assembly intent may be simplified or lost; this route is not a guarantee of native assembly semantics. Confirm sizes, holes, and relative placement after import. |
+| Portable project envelope (3MF/OPC, or a simple outer ZIP with a note and preview) | Reviewer-facing packaging: geometry plus an optional preview and a human-readable statement of units, parts, material intent, and assembly. | The standardized 3MF package is directly useful to 3D tools; a generic ZIP can hold a README and image but does not itself make its contents slicer-importable or define their meaning. Avoid duplicate stale model copies. |
+
+Do not make STL the default handoff. Prusa’s format guide describes 3MF as its preferred project format and says STEP is triangulated on import; Fusion’s mesh export permits an explicit unit setting for STL, but plain STL does not define a common unit, component hierarchy, project note, or slicer-independent material assignment. Use STL only as a deliberately limited geometry fallback with a companion note, and never claim that it preserves all project properties. [[S02]][[S03]][[S04]]
+
+## Meaning to carry across applications
+
+- **Units and dimensions.** 3MF Core defaults an omitted unit to millimeter and defines micron, millimeter, centimeter, inch, foot, and meter. Set the unit explicitly anyway; include a few expected overall dimensions and the intended unit in the reviewer note. This catches scale and transform errors without assuming every importer handles units alike. Fusion’s mesh export exposes centimeter, millimeter, meter, inch, and foot and documents whether one unit in the design equals the selected unit. [[S01]][[S02]]
+- **Objects and assemblies.** 3MF can reference reusable objects as components with transforms and requires manufacturing consumers to respect component-relative positions. This encodes model composition, not CAD constraints, mates, editable feature history, or a promise that a slicer will retain the same object tree. Name each body/component and state whether parts are separate, nested, touching, interlocked, or meant to be assembled after printing. STEP can be a useful alternate source, but direct PrusaSlicer import produces a triangle mesh; test the receiving version. [[S01]][[S04]]
+- **Material intent and appearance.** Core 3MF base-material names are expressly intended to convey design intent and help users map to print materials; they are not machine-specific assignments. displaycolor is for rendering, and the Core spec says it does not determine actual printed color. Full-color/multi-material features are in published optional extensions and therefore need receiver support. The project author owns intended material(s); the technician chooses an available, appropriate filament/resin for a specific printer. [[S01]][[S09]]
+- **Application settings.** A slicer project saved as 3MF can be a snapshot of its objects, settings, modifiers, and parameters. Prusa documents that opening such a project can transfer the saved printer/material/print setup. These are application- and machine-context settings, not universal instructions. For this handoff, separate design intent from print setup; any saved slicer project should be conspicuously identified as a review artifact or local example, not approved machine instructions. The workshop technician owns machine settings. [[S10]]
+
+## Relevant compatibility history
+
+PrusaSlicer 2.5.0’s official release notes introduced STEP import. A contemporaneous issue (#8998; PrusaSlicer 2.5.0) reported 127 open edges and a visibly missing hinge region when importing a STEP model that sliced correctly from STL; the issue discussion attributed quality to the OpenCASCADE importer path and recorded a later report against 2.5.0. This is a bounded example, not proof that current versions have the same defect: the pilot should use a small set of representative geometric sentinels and compare output shape after each receiving-tool import. [[S05]][[S06]]
+
+Two more recent reports sharpen the pilot checks. Issue #15545 records a reproducible PrusaSlicer 2.9.6 case where inch vertices were scaled to millimetres but build-item/component transform translations were left unscaled; the reported shape could land off-plate. The issue was later closed by inactivity and links no fix, so it is not evidence of a released repair. For pilot files, export in millimetres and verify both size and placement; include a non-millimetre transform case only as a deliberate test. Issue #15662 reports that PrusaSlicer 3.0.0-alpha11 did not import Bambu Studio object names stored in its private Metadata/model_settings.config; the names were not lost from a Core object name field because they had not been written there. That distinction supports using Core names plus a human-readable parts list, and checking names in the selected receiving matrix. [[S07]][[S08]]
+
+## Optional reviewer support
+
+Retain the authorized **package preview image and human-readable project note** as supported optional scope. Core 3MF allows a JPEG/PNG package thumbnail and a model Description; these are optional and can be viewed by external preview agents or extracted from the ZIP package. Put a short plain-language note in standard Description metadata and include a sidecar README.txt/.md when the receiving UI does not surface it. The note should say: project/revision; author; explicit units and expected bounds; named parts and their relationship; intended material(s); any assembly sequence or fit; and that machine settings remain the technician’s choice. A preview helps identify the intended geometry but is not a dimensional, fit, or print validation. Do not exclude the option on technical grounds; do require one end-to-end preservation/readability check before claiming that a chosen app exposes it. [[S01]]
+
+## Pilot proposal and decision ownership
+
+For ten noncritical decorative projects, standardize a compact, app-neutral handoff: project.3mf in millimetres, with Core object names and material-intent labels; an optional standard thumbnail and Description; and a sidecar human note if needed for reliable reading. Permit a paired STEP source only when the lead’s selected receiving matrix demonstrates why it adds value. Do not bundle a slicer-generated project as if its print profile were universal. Keep the author’s native CAD file optional and clearly source-app/version-labelled if shared, because neutral exports do not preserve parametric history.
+
+The project author decides intended units, material intent, which bodies are parts, and design/assembly relationships. The workshop technician decides printer profile, nozzle, bed, temperatures, supports, and other machine settings. The pilot lead selects and publishes the tested receiving matrix by CAD exporter/version → slicer/version; one passing cell must not be called universal compatibility.
+
+No safety-critical design, printer operation, purchases, accounts, installs, or production access is in scope. No slicer setting in a package is approved for every machine. Reviewers should only inspect the package geometry and intent.
+
+## Validation status
+
+No product import, package inspection, geometry comparison, or print was executed during discovery. The source review above is research evidence, not product validation. Proposed pilot checks belong in the complete draft after the released plan is read.

@@ -1,0 +1,10 @@
+URL: https://help.prusa3d.com/article/saving-projects-as-3mf_1773?product=sl1
+Original locator: ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I08.txt
+Original SHA256: bfceec6e73df08119b6d28f2eb3023a6f8c0dca8398a38fd9bee3cf582681f5a
+Original numbered lines; gaps omitted. Not full response.
+
+223: Menu -> File -> Save Project as saves a 3MF file containing all objects, settings, modifiers, and their parameters. It’s essentially a complete snapshot of PrusaSlicer.
+224: When you open a project file on a different computer, it should still produce the same G-code.
+225: We always save project files when we slice something (unless we're 100% sure it's a one-time thing). If you revisit the project later on and want to modify something, it's handy that you can instantly load all the same settings you used when you first printed it. Plus it's the best way to share the model with someone who also owns a Prusa printer.
+226: 3MF file format
+227: Unlike an STL file, which only stores the geometry of an object (as a series of surface triangles), a 3MF file can store a variety of different files in a single archive, such as:

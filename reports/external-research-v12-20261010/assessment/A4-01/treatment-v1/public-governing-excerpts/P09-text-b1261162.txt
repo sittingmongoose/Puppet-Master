@@ -1,0 +1,38 @@
+URL: https://tus.io/protocols/resumable-upload
+Original locator: ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P09-text.txt
+Original SHA256: b1261162c4ec94b4122124d912dbdf7a9d60195aa9479f45d56a78728106f505
+Original numbered lines; gaps omitted. Not full response.
+
+30: Checksum
+36: Version: 1.0.0 (SemVer)
+90: authors and collaborators will be listed as such in the protocol header.
+112: A HEAD request is used to determine the offset at which the upload should be
+117: HEAD /files/24e533e02ec3bc40c387f1a0e460e216 HTTP/1.1
+137: Headers
+139: The Upload-Offset request and response header indicates a byte offset within a
+142: The Upload-Length request and response header indicates the size of the entire
+170: HEAD
+172: HEAD request, even if the offset is 0, or the upload is already considered
+177: The Server SHOULD acknowledge successful HEAD requests with a 200 OK or
+190: match, the Server MUST respond with the 409 Conflict status without modifying
+195: Checksum extension is used.
+227: Tus-Version: 1.0.0,0.2.2,0.2.1
+282: responses to HEAD requests.
+291: contains additional metadata, responses to HEAD requests MUST include the
+376: Checksum
+378: integrity of each PATCH request. If supported, the Server MUST add checksum
+380: A Client MAY include the Upload-Checksum header in a PATCH request. Once the
+382: against the provided checksum using the specified algorithm. Depending on the
+385: 460 Checksum Mismatch if the checksums mismatch or
+392: The Tus-Checksum-Algorithm header MUST be included in the response to an
+400: Tus-Checksum-Algorithm
+401: The Tus-Checksum-Algorithm response header MUST be a comma-separated list of
+403: Upload-Checksum
+404: The Upload-Checksum request header contains information about the checksum of
+414: Tus-Version: 1.0.0
+416: Tus-Checksum-Algorithm: md5,sha1,crc32
+422: Upload-Checksum: sha1 Kq5sNclPz7QV2+lfQIuc6R7oRu0=
+478: The response to a HEAD request for a final upload SHOULD NOT contain the
+483: The response to a HEAD request for a partial upload MUST contain the
+486: can be calculated at the time of the request. Response to HEAD request against
+536: HEAD /files/ab HTTP/1.1

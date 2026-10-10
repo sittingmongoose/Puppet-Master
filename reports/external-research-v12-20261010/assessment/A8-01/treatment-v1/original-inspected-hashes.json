@@ -1,0 +1,301 @@
+{
+  "captured_utc": "2026-10-10T04:39:45.544439+00:00",
+  "scope": "A8-01 treatment only; all original stage files inventoried, content-inspection completion recorded in assessment",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A8-01/brief.md",
+      "bytes": 3458,
+      "sha256": "33a97f960ac3e92a24cfeaa5e170a0adb51428d699f49be026f40a909e648c47",
+      "mtime_ns": 1791605469530856617,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A8-01/plan.md",
+      "bytes": 6136,
+      "sha256": "6964f85a4fdd4b74e4a40cbda44e93524aec1b8ed3860fa5ddec434dd8a2fdca",
+      "mtime_ns": 1791605469530976394,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/terminal-science-freeze-root.json",
+      "bytes": 9011,
+      "sha256": "c3f262936b20f451016e2c02e08d9b9533744811e889731e8aa95dad28137180",
+      "mtime_ns": 1791607129380768527,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/inputs/brief.md",
+      "bytes": 3458,
+      "sha256": "33a97f960ac3e92a24cfeaa5e170a0adb51428d699f49be026f40a909e648c47",
+      "mtime_ns": 1791605474437000478,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/assignment.md",
+      "bytes": 6709,
+      "sha256": "b293485191784992768bfc8f1d2236405a6c7c7ef7756b47ed7ef5c3bf0323dc",
+      "mtime_ns": 1791605870370916167,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/critique.md",
+      "bytes": 13712,
+      "sha256": "9bd06b82fa828f1bea56e9448ab90c95e392986cdde4d0bb14663480d746b10b",
+      "mtime_ns": 1791606556992036942,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/dispatch.json",
+      "bytes": 4156,
+      "sha256": "a02261639377a656304c30b68d096607c0a0465b09f2b1e0a38aaf7d770cc705",
+      "mtime_ns": 1791605871135680953,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/freeze.json",
+      "bytes": 3465,
+      "sha256": "4814acec1d7987ec735edfeccb210d9feeace2ff1339783afa3e6e893223179d",
+      "mtime_ns": 1791605870371778010,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/input-map.json",
+      "bytes": 1410,
+      "sha256": "afbb868f0a10670b1f671d06c96639651245375a1a4f90ef745727c29453d28f",
+      "mtime_ns": 1791605870370657435,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/request.json",
+      "bytes": 898,
+      "sha256": "192b58931dc9090a47f892bdc76a453acdbfb55c943cdf97f50f0cb0b38ac0f2",
+      "mtime_ns": 1791605870372074237,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/source-map.json",
+      "bytes": 7176,
+      "sha256": "21ec44bf61bc8d698e236675f515d7135bc92ae038e8bc735e642bff5dc22ab4",
+      "mtime_ns": 1791606584294191801,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/sources/index.md",
+      "bytes": 1777,
+      "sha256": "b3bf7c85a920a96da3f65f1eeda4acd68863a8ffad2976ff89b85c00a8f1d60f",
+      "mtime_ns": 1791606584307191875,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/status.json",
+      "bytes": 3342,
+      "sha256": "0b27b30fc203d8278eddddbe3bf1eab1b6bb5122199e6e71003ca266adde8ee0",
+      "mtime_ns": 1791606611634261736,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/assignment.md",
+      "bytes": 3710,
+      "sha256": "464e98672d46ecc3a11ff8c582fae4fd671b9b932d548d12a6b0ecce84449639",
+      "mtime_ns": 1791605474437862112,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/discovery.md",
+      "bytes": 9012,
+      "sha256": "baef8ae18b8f568005def64e37525a34857771fd3ca7e1ce09548b680646430e",
+      "mtime_ns": 1791605759831825367,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/dispatch.json",
+      "bytes": 4252,
+      "sha256": "9a0262656358dad52179f22d21807653fef1fe58b080b2a9f5cd5b24e72d36f9",
+      "mtime_ns": 1791605475056175829,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/draft.md",
+      "bytes": 22534,
+      "sha256": "0af43bf0c4c5fdcdf703052e68fd11214c99a7dfa70715ab1f106cf0f66544df",
+      "mtime_ns": 1791605824889341301,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/freeze.json",
+      "bytes": 1668,
+      "sha256": "fa670426b20a8be18796bdc3818e0e70afc35bf2f2f27eae5933dc0353804102",
+      "mtime_ns": 1791605474438482219,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/input-map.json",
+      "bytes": 722,
+      "sha256": "b994ad74eb3b52aadc1ffd92b7f6a338ee2890cfa463cbdc3d73b64aeb5d85d5",
+      "mtime_ns": 1791605474437671920,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/plan-reveal.json",
+      "bytes": 428,
+      "sha256": "c71db7d937329294db97f04470c59b94c80dac6ffb167492a9066e3157895afa",
+      "mtime_ns": 1791605766720715394,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/request.json",
+      "bytes": 922,
+      "sha256": "ebe208acd3a3f4d208ea49b4a275d62eb4a8b73972bc6fcc60af3e6b9b387b15",
+      "mtime_ns": 1791605474438788665,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 6136,
+      "sha256": "6964f85a4fdd4b74e4a40cbda44e93524aec1b8ed3860fa5ddec434dd8a2fdca",
+      "mtime_ns": 1791605766720593630,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/source-map.json",
+      "bytes": 8295,
+      "sha256": "116008968cd18bbb54e5224b3320e3b547674fe568c43548bbbf1d4a15b40c1b",
+      "mtime_ns": 1791605759838825437,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/sources/S01-bagit-rfc8493.md",
+      "bytes": 2809,
+      "sha256": "514a32e6f471a9a111a4ad04f26a3e126b159e7afdb0c4aa891e32940dd74702",
+      "mtime_ns": 1791605759794824994,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/sources/S02-ocfl-spec-1.1.md",
+      "bytes": 1988,
+      "sha256": "867b9b0ebd37ba4399fe9254aa52b905d43a3b80da5db44dc29bb27c873e6686",
+      "mtime_ns": 1791605759798825035,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/sources/S03-ocfl-issue-538.md",
+      "bytes": 1360,
+      "sha256": "1fa0960eec4d2e5b7dad80ad5bd473502531d5b9a6c1cfd72a49a72f26b5335d",
+      "mtime_ns": 1791605759805825105,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/sources/S04-ocfl-release-history.md",
+      "bytes": 1577,
+      "sha256": "03b857ecb0bb73a10cc63b5aaea42568b7b3604148836ad2aa4360e207a5a184",
+      "mtime_ns": 1791605759811825166,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/sources/S05-premis-3.0.md",
+      "bytes": 1588,
+      "sha256": "f7f9b4d3046ad59f1594028ef63dd48cc1b7ab237ae0001ca672be7895dff912",
+      "mtime_ns": 1791605759820825256,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/sources/S06-git-annex.md",
+      "bytes": 1630,
+      "sha256": "7185168ec2ebc4b2de5b11178b7abef4980c36fe2072672455457b7811acde20",
+      "mtime_ns": 1791605759827825326,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/sources/index.md",
+      "bytes": 1693,
+      "sha256": "f38ec81b7d85259d6ad3ab95da1311b4537616b83cf1a1ca1c8f7bd7eb242db9",
+      "mtime_ns": 1791605759787824924,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/status.json",
+      "bytes": 4482,
+      "sha256": "7ef29f841e15cb8e34486e56045a41846e79883012312d28c2d93239c22557b2",
+      "mtime_ns": 1791605870053691312,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/assignment.md",
+      "bytes": 5006,
+      "sha256": "8c74f4d66311597371dad2546d94183f1bcbdfd6d5d0c9eda9c6c9a3a24eb3ca",
+      "mtime_ns": 1791606612031560274,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/dispatch.json",
+      "bytes": 4172,
+      "sha256": "fe8793ed663b21c81f9da27aed0e1063098212bdbe647453c73cd33aaf0bf14d",
+      "mtime_ns": 1791606612680615087,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+      "bytes": 36351,
+      "sha256": "064113d7792459e3f86ba0901b558d015c65a5b9c88f87747e409b0410be349f",
+      "mtime_ns": 1791607000123223122,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/freeze.json",
+      "bytes": 4244,
+      "sha256": "32abe04a0fad68d897e5f26ec7adb54ac98059370578c06934273ed0d423f0b7",
+      "mtime_ns": 1791606612032536451,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/input-map.json",
+      "bytes": 1727,
+      "sha256": "985eb9a20682732389aa744218a64b4c4af632103b51d6729e9ce8aed55bdec0",
+      "mtime_ns": 1791606612031301347,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/request.json",
+      "bytes": 902,
+      "sha256": "9fbc3e1ec0ee7e8054e0eb46f8f8b8b623db5610d287d84d7140255b8a6a8ea8",
+      "mtime_ns": 1791606612032872377,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/source-map.json",
+      "bytes": 17624,
+      "sha256": "46a320cacdd70bd9c16074e7aa613ecc29312b3b476c179cae80092b22408e8e",
+      "mtime_ns": 1791607061558774796,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/sources/index.md",
+      "bytes": 2497,
+      "sha256": "eb457b6aa8ea38dc8d168fd362535081c935f3345aee9e9dafeafa8aa4f3e4c2",
+      "mtime_ns": 1791607045186627779,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/methods/A8/critic_prompt_delta.txt",
+      "bytes": 3398,
+      "sha256": "6ca210592ebaffd1228f390855af2dcbb7b338dcbb3e00c9fb57f0bdc8672c0d",
+      "mtime_ns": 1791604541744895060,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    },
+    {
+      "path": "ER12_RUNTIME/methods/A8/reviser_prompt_delta.txt",
+      "bytes": 1715,
+      "sha256": "31b0b79da9d1a99d81103a485448bbd2d518e5c48cd56b15a1a1a9cb9d11e087",
+      "mtime_ns": 1791604541744994813,
+      "content_inspection": "FULL; primary governing evidence separately assessed"
+    }
+  ],
+  "inspection_note": "Every listed original has now been read in full. No control/run.json or other arms were inspected."
+}

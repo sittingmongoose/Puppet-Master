@@ -1,0 +1,292 @@
+{
+  "observed_at_utc": "2026-10-10T04:52:45.934829+00:00",
+  "basis": "root observed terminal final T3 task/no pending; separate from native proof",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/checks.json",
+      "bytes": 6822,
+      "sha256": "799a33df5b0769e5e606449b74e7304addc6c0d7a70cc7533bf9daf7e339bea3",
+      "mtime_ns": 1791607255231660258
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/critique-dispositions.json",
+      "bytes": 3739,
+      "sha256": "b0ae2a1914b98d8e1e14cac2e4d26f1490c00043558e5b0dbcbc0227e9d56784",
+      "mtime_ns": 1791607515923709560
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/critique-index.json",
+      "bytes": 153,
+      "sha256": "a14556b10b580911548aca0b2e4ed43fb1ad3a8acf66b4b573d3feb0d5125c44",
+      "mtime_ns": 1791607255231135003
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/critique.md",
+      "bytes": 13527,
+      "sha256": "ee3f528beee5a948bb2f0f2076694cfe6598f6ed79894b60bb0392d83f1b4fd4",
+      "mtime_ns": 1791607255230950431
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/final.md",
+      "bytes": 25122,
+      "sha256": "3571f30137e3e7abee055360f231dd50b99a5fc98219ca762ddf914d5cbeff08",
+      "mtime_ns": 1791607726007362870
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/source-map.json",
+      "bytes": 18504,
+      "sha256": "2cc897c9524936757b9b6828db0a2d85d68ccc9c2f5ccfa8e4d0d4aae538e410",
+      "mtime_ns": 1791607255231451726
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/README.md",
+      "bytes": 3169,
+      "sha256": "25e7fc5051e65af32d7cc5fbb4b169c0bf7cbcfb62524f4de65d00da5fe4eb0d",
+      "mtime_ns": 1791607255234967711
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S01-3mf-core.md",
+      "bytes": 1644,
+      "sha256": "40042bd200feb9e25c63dc80b5be6240747096d74a232c60dae4b4506b526fba",
+      "mtime_ns": 1791607255233496768
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S02-fusion-mesh.md",
+      "bytes": 813,
+      "sha256": "c0e580f2cb357d077905f1959c4dea7c14889d66b17156b1e9c5b4027f9589bd",
+      "mtime_ns": 1791607255233579540
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S03-fusion-export.md",
+      "bytes": 815,
+      "sha256": "53e7a5da7917c92724cb4a287bc5e4aa1017f7a9fd80f259e3236ac660131e6d",
+      "mtime_ns": 1791607255233651515
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S04-prusa-formats.md",
+      "bytes": 806,
+      "sha256": "f376b0160978f01753abcbe39ef72c2c4020f16fc17ffc0f3fb76b49f18811a7",
+      "mtime_ns": 1791607255233766453
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S05-prusaslicer-250.md",
+      "bytes": 646,
+      "sha256": "c019cc32c6b7d7d95d16847b21d3f0f35d4af2712b79f53ce01e07757d8a4564",
+      "mtime_ns": 1791607255233874092
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S06-step-issue-8998.md",
+      "bytes": 1397,
+      "sha256": "9547c29ff57246af3c97df35f971db601c94b5b1a3fe1be2f22d91d4ab7cd887",
+      "mtime_ns": 1791607255234007987
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S07-unit-issue-15545.md",
+      "bytes": 1104,
+      "sha256": "316c8d3e277e8ace25f6e430775ebba7facd2ff5f3f65f29c79d09f98c8ffb92",
+      "mtime_ns": 1791607255234135516
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S08-bambu-names-issue.md",
+      "bytes": 903,
+      "sha256": "7ecb71da556cb9583a4d09365278268cd2ca64f7149682d559fae95b956b4972",
+      "mtime_ns": 1791607255234241463
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S09-3mf-spec-index.md",
+      "bytes": 785,
+      "sha256": "f0cc63189c64550542c08a10bbf4e1849893337e0f01f13d6262767af9558c7f",
+      "mtime_ns": 1791607255234337322
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S10-prusa-project-3mf.md",
+      "bytes": 945,
+      "sha256": "0374f45f67cb3392f905cd1179b7afe8dbf5cccc19fe30105cdf71c4af9c9fd9",
+      "mtime_ns": 1791607255234403493
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S11-cura-570-release.md",
+      "bytes": 998,
+      "sha256": "24e16aac50ca4cf654f3fa3c61420858dfa7cab9090ede8f85c2353a0839c14f",
+      "mtime_ns": 1791607255234474897
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S12-cura-3mf-position-issue.md",
+      "bytes": 1203,
+      "sha256": "8460307a91b5f66feb841d52da6c6008fac190c696a236e6889beb2501c90ab2",
+      "mtime_ns": 1791607255234539578
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S13-cura-object-name-issue.md",
+      "bytes": 738,
+      "sha256": "b69154f69984d83567b6cad0965204f913b43b273f2e5226772962715a1dc4b5",
+      "mtime_ns": 1791607255234605190
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S14-cura-releases.md",
+      "bytes": 728,
+      "sha256": "72c55a30e28002de60f5808d8109955f62f2fc37f3e553683f7eb10104aaadf0",
+      "mtime_ns": 1791607255234697479
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S15-prusaslicer-releases.md",
+      "bytes": 720,
+      "sha256": "1988a085d51af21e317f10c6804fb9248120c5d81cf4749edea3e129adeda892",
+      "mtime_ns": 1791607255234759927
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S16-3mf-materials-extension.md",
+      "bytes": 1129,
+      "sha256": "4bdd80f2700a7793f17bf8f4fe933f202c69d99547ea625fef4f2992fc32a100",
+      "mtime_ns": 1791607255234839290
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S17-cura-514-alpha.md",
+      "bytes": 941,
+      "sha256": "2a73fb6b2caae6995a8ce7513660932d8d4b1886a7ced683a465fede012a0045",
+      "mtime_ns": 1791607255234904257
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/discovery.md",
+      "bytes": 9644,
+      "sha256": "419a380cc972621488d814158939cfe7150dd018a23dcfba696664d66acec8ff",
+      "mtime_ns": 1791605802481173344
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/draft.md",
+      "bytes": 24147,
+      "sha256": "9f6d66b6842f698692d59fa0737894d78cdfcf0927555ba8d41de67aeb5cd846",
+      "mtime_ns": 1791606256166598437
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 6015,
+      "sha256": "b9063b147acff997c7c788eac44d2149ca6946fa4ee2a3ce6f0bdf80789397e7",
+      "mtime_ns": 1791605814380756554
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/source-map.json",
+      "bytes": 15686,
+      "sha256": "764f7abfe399eaad6a6fcc4e9f45df2f6ad2eb93b9eb4c59dfcbbe16238dcbf6",
+      "mtime_ns": 1791606256170424626
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/README.md",
+      "bytes": 3801,
+      "sha256": "1024802883343dcf360f2e9c88ebfd43fe29e25c68276eac74afc48e0547d429",
+      "mtime_ns": 1791605964486289787
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S01-3mf-core.md",
+      "bytes": 1356,
+      "sha256": "b89d7799963de7c317479a8aa7dac7d76a7028f2286c2ecd51d72c2778291158",
+      "mtime_ns": 1791606256166997544
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S02-fusion-mesh.md",
+      "bytes": 679,
+      "sha256": "2f24c205f7be2de6d5d96cdd0ecdd33b61e444f9f05454f873f4c1436fa6f5a5",
+      "mtime_ns": 1791605802508173547
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S03-fusion-export.md",
+      "bytes": 713,
+      "sha256": "3aa71f40ade5109e8b51e99d2f0f697b37575b70e014603b520faff2b6c70d41",
+      "mtime_ns": 1791605802515173599
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S04-prusa-formats.md",
+      "bytes": 693,
+      "sha256": "27168f078229656e170146e8fe9220c982fb84dfe28e3cc9fa0a712efb1f77c4",
+      "mtime_ns": 1791605802522173652
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S05-prusaslicer-250.md",
+      "bytes": 487,
+      "sha256": "02d3548f20e8070faa591701a224d63c333d57f27d182372b43127577ec972bb",
+      "mtime_ns": 1791605802528173697
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S06-step-issue-8998.md",
+      "bytes": 872,
+      "sha256": "b57175041d61ac0c5c55f4b66ce049d82cce9f419ff114627498188d3d608a01",
+      "mtime_ns": 1791605802535173749
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S07-unit-issue-15545.md",
+      "bytes": 1032,
+      "sha256": "352ddaf44d0e938acf785479b4df276e20b8d3503e5550b7d3abae0cd829049a",
+      "mtime_ns": 1791605802542173802
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S08-bambu-names-issue.md",
+      "bytes": 931,
+      "sha256": "63883086c34cdb10e7ab6606afc4c3e8b0af084c6294090b697ac54dce073d00",
+      "mtime_ns": 1791605802549173854
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S09-3mf-spec-index.md",
+      "bytes": 632,
+      "sha256": "914ca3c0620e377d000c5932f6052092d7353a292eba8c29ad889bf03cbf434a",
+      "mtime_ns": 1791605802559173929
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S10-prusa-project-3mf.md",
+      "bytes": 810,
+      "sha256": "4093bb0a29d33bca2e1c70b4e48f1c50b316ea45b82abd8a8d9e879a5b929b15",
+      "mtime_ns": 1791605802566173982
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S11-cura-570-release.md",
+      "bytes": 1060,
+      "sha256": "0660ac8e5e5e35b9e091b6566afecc1aff994ed9a2d63c1a46f0daba022bdf53",
+      "mtime_ns": 1791605964493289803
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S12-cura-3mf-position-issue.md",
+      "bytes": 1055,
+      "sha256": "582256aef60f160c185fe3c42dfaf988f65fa0210e933b6d5e058262bce8e3ec",
+      "mtime_ns": 1791605964497289812
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S13-cura-object-name-issue.md",
+      "bytes": 870,
+      "sha256": "23eca2eeddc832da9c6d03fa9c7305f3c6ba358c61a9e6397ba4428c42284aac",
+      "mtime_ns": 1791605964500289819
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S14-cura-releases.md",
+      "bytes": 544,
+      "sha256": "e8a371d01cd31e35774b1c370ef3ac601b29bfd9ad630f5f981076553c38cc35",
+      "mtime_ns": 1791605964506289833
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S15-prusaslicer-releases.md",
+      "bytes": 551,
+      "sha256": "e7748ad281c9a6bb09a4dc6bff0948c0a3892a41b21cdccb3e9be7f7f733d2f1",
+      "mtime_ns": 1791605964512289847
+    }
+  ],
+  "final_stage_task": {
+    "slot": "A7-01",
+    "arm": "treatment",
+    "stage": "critic-finalizer",
+    "helper": "ER12_RUNTIME/helpers/topology-v1",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-01-treatment-critic-finalizer-topology-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-01-treatment-critic-finalizer-topology-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-01-treatment-critic-finalizer-topology-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-01-treatment-critic-finalizer-topology-v1",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-01-treatment-critic-finalizer-topology-v1:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "The native Goal is now **blocked**. The required gate tools were unavailable for three consecutive Goal turns: `check-input`, `freeze-review`, and `seal-final` are absent from the current PATH and tool catalog. The fresh Goal response was supplied to the seal attempt, which returned \u201ccommand not found.\u201d No official gate receipt or Goal completion is claimed.\n\nThe proposal and review artifacts remain saved: [final.md](<ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/final.md>), [critique.md](<ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/critique.md>), and [stage-control.json](<ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/stage-control.json>). Manual integrity and artifact-structure checks passed; they do not replace the missing official gates.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-01-treatment-critic-finalizer-topology-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:7672ff0e-e0a8-4375-9778-2642452b71fe",
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "summary": "The native Goal is now **blocked**. The required gate tools were unavailable for three consecutive Goal turns: `check-input`, `freeze-review`, and `seal-final` are absent from the current PATH and tool catalog. The fresh Goal response was supplied to the seal attempt, which returned \u201ccommand not found.\u201d No official gate receipt or Goal completion is claimed.\n\nThe proposal and review artifacts remain saved: [final.md](<ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/final.md>), [critique.md](<ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/critique.md>), and [stage-control.json](<ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/stage-control.json>). Manual integrity and artifact-structure checks passed; they do not replace the missing official gates.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-01-treatment-critic-finalizer-topology-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:7672ff0e-e0a8-4375-9778-2642452b71fe",
+    "waitTimedOut": false
+  }
+}

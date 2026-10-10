@@ -1,0 +1,209 @@
+{
+  "observed_at_utc": "2026-10-10T04:31:51.585716+00:00",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A6-01/brief.md",
+      "bytes": 3323,
+      "sha256": "ef82ee81df37c62d0db64103e2891322a1161eed74e0edbd5663f0da1bdbd14c",
+      "mtime_ns": 1791604605954230558
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A6-01/plan.md",
+      "bytes": 5984,
+      "sha256": "8656d21b801ae5c4905cb19f08fb8b9262058c9916bbc257537bd35353e55d97",
+      "mtime_ns": 1791604605954312423
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/terminal-science-freeze-root.json",
+      "bytes": 7199,
+      "sha256": "617b6c9abb967cc31cb166d60a63a7d126bcb49fbdd7e48d70e253d04ab1b92b",
+      "mtime_ns": 1791606613909328202
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/inputs/brief.md",
+      "bytes": 3323,
+      "sha256": "ef82ee81df37c62d0db64103e2891322a1161eed74e0edbd5663f0da1bdbd14c",
+      "mtime_ns": 1791604641410968282
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/assignment.md",
+      "bytes": 3759,
+      "sha256": "6f480e9fc8baea74a66c949d4ad5b90d4f3e0e0d34ebcd421ca19d91d89dd035",
+      "mtime_ns": 1791606103614220572
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/dispatch.json",
+      "bytes": 4172,
+      "sha256": "5526907296bcce000ad5ec58da1ac5fd7308778b46eb4501f2817f3ee5e04ba4",
+      "mtime_ns": 1791606104203001882
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/freeze.json",
+      "bytes": 4333,
+      "sha256": "57a86219360ba03d57c4eeb7c447e4acefd4b263e3d33b37defab59bfea67e3e",
+      "mtime_ns": 1791606103614978794
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/request.json",
+      "bytes": 902,
+      "sha256": "3a476751215ed64291c0a8c56640918413714c6c9b14b196d5bc6f6a47379634",
+      "mtime_ns": 1791606103615159451
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/input-map.json",
+      "bytes": 1727,
+      "sha256": "2576cdfd8e64825cedeaed1f08e4903bee1b45ddc685a33ebbc58c1d99a920f5",
+      "mtime_ns": 1791606103613986106
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+      "bytes": 37690,
+      "sha256": "d05d6271b28fa96d51ab939dade5c68f9426cafd432170e707e659f3f344e527",
+      "mtime_ns": 1791606569650108736
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/source-map.json",
+      "bytes": 42928,
+      "sha256": "6ba5c001834d64eb1300ca7ee414f5e498292ca2deae3444a4cf3ee3554ead1e",
+      "mtime_ns": 1791606569652931923
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/critic/assignment.md",
+      "bytes": 3779,
+      "sha256": "b8b825660309ab385ad6417fed2a03d90b7f61e8ba72aa5108a7d8463b316f57",
+      "mtime_ns": 1791605504399968974
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/critic/dispatch.json",
+      "bytes": 4156,
+      "sha256": "0d59f2c83724eccf4c2c449d543d1d79c61a8821444a2e1ef4e4f65aff6464fb",
+      "mtime_ns": 1791605504987357609
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/critic/freeze.json",
+      "bytes": 3554,
+      "sha256": "963ece6565eaf4692327fed17a2b4e3929e364fe2a794625e0835e1fcda39ec2",
+      "mtime_ns": 1791605504400588687
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/critic/request.json",
+      "bytes": 898,
+      "sha256": "1ca971e24b0695c23794b26b5d336599c9cf3cf4c2adfe2757cc76099eeb12f0",
+      "mtime_ns": 1791605504400742614
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/critic/input-map.json",
+      "bytes": 1410,
+      "sha256": "0c21b11b60ac26ce0130655c5c91fca482b6abfa461c6f248aef36736b4f9064",
+      "mtime_ns": 1791605504399755853
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/critic/status.json",
+      "bytes": 3650,
+      "sha256": "e4f20737b867cf0ad3a4f83d710451d7dce5997a88f28176571742743a2e7b0a",
+      "mtime_ns": 1791606103237836877
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/critic/source-map.json",
+      "bytes": 31899,
+      "sha256": "7e8b2b8def8ffccf5f9e5d9728e0cf89690360ec8469352c1699d60b1b22cf61",
+      "mtime_ns": 1791606069020324872
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/critic/critique.md",
+      "bytes": 12007,
+      "sha256": "4354bc34d541d2650866c9dd62679322e86e67fc731331c24a1ffdeb11cda692",
+      "mtime_ns": 1791606052685388589
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 5984,
+      "sha256": "8656d21b801ae5c4905cb19f08fb8b9262058c9916bbc257537bd35353e55d97",
+      "mtime_ns": 1791605038659244337
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/assignment.md",
+      "bytes": 4189,
+      "sha256": "d947f5dc13d745f6307eb4a5d06e3e7ab9e65d6205e4d678cf401e75f7824165",
+      "mtime_ns": 1791604641411922437
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/dispatch.json",
+      "bytes": 4252,
+      "sha256": "feceaf3b24479d8fc95b110dc17df38e0e0605620b654f53e08d79c07aa25de7",
+      "mtime_ns": 1791604642065561494
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/draft.md",
+      "bytes": 27259,
+      "sha256": "21ab4dd676871710cd840aaf6405dc226618a46d117342ef82efbc9102288fa2",
+      "mtime_ns": 1791605390500065067
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/plan-reveal.json",
+      "bytes": 429,
+      "sha256": "ce460a6e55c49b57d6ebbfd789f4c244003253ae6111acb6bc5376ee92dcdbec",
+      "mtime_ns": 1791605038659398430
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/freeze.json",
+      "bytes": 2059,
+      "sha256": "ff62314c3f258a3c33bef687f7822bb307861ac0512be5baf2ff98cb02af0b71",
+      "mtime_ns": 1791604641412231614
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/request.json",
+      "bytes": 922,
+      "sha256": "e6c142b699fee33dc57251ed549ea72b4f57f35db34d0989be687d01baebfc71",
+      "mtime_ns": 1791604641412351723
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/discovery.md",
+      "bytes": 10099,
+      "sha256": "d5f36d6bc95da49ab23e4ac186eb4ac330e86ff590c881726a35c2be1206fcef",
+      "mtime_ns": 1791605033716235642
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/input-map.json",
+      "bytes": 722,
+      "sha256": "98353207ad8fb4bc32f8feb47d5a6ffb52f2388ddee749dff151f5a5e7614a8d",
+      "mtime_ns": 1791604641411721320
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/status.json",
+      "bytes": 3380,
+      "sha256": "c8c79b15db269d52337b78275fe625c5f41bd72b897c892429de930d32d9f96c",
+      "mtime_ns": 1791605504082787905
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/source-map.json",
+      "bytes": 22198,
+      "sha256": "ec1cb1fcb9f728c6330bb2d738b9655b7f5eb8fde8f983df7fe29aee78d136e8",
+      "mtime_ns": 1791605299846910063
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/sources/index.md",
+      "bytes": 11788,
+      "sha256": "4e9f4a89e6948a52ddb0d9d83aa9f098bcf3fd68eba6ac23fe045cc3adfc4fd9",
+      "mtime_ns": 1791605299858724674
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/critic/sources/index.md",
+      "bytes": 2658,
+      "sha256": "869007a4d97d66fd7da5fe5a80c7e526373491093f42976d9a517a2ecf8b4726",
+      "mtime_ns": 1791605906736933017
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/sources/index.md",
+      "bytes": 15313,
+      "sha256": "59706af4ef497120b8a95acf3d0dbd0a680df655b30aad3fd11f57a108730dcc",
+      "mtime_ns": 1791606507857311041
+    }
+  ]
+}

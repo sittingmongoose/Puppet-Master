@@ -1,0 +1,200 @@
+{
+  "operations": [
+    {
+      "source_id": "FROZEN-HANDOFF",
+      "locator": "freeze.json frozen_inputs; input-map.json handoff paths",
+      "observed_operation": "Ran sha256sum over all 11 frozen members; separately attempted required check-input command, which was absent from PATH.",
+      "accessed_at_utc": "2026-10-10T04:48:20Z",
+      "result": "Every computed hash matched its frozen expected SHA-256. check-input exited 127, command not found; manual hashes are not the intake gate."
+    },
+    {
+      "source_id": "S01",
+      "locator": "Add Item by Identifier; metadata verification notes",
+      "observed_operation": "Direct read-only open; inspected Add Item by Identifier, metadata verification, and connector/PDF behavior.",
+      "accessed_at_utc": "2026-10-10T04:47:49Z",
+      "result": "Identifier intake is supported; Zotero warns to verify metadata, and the Connector may save accessible/open-access PDFs."
+    },
+    {
+      "source_id": "S02",
+      "locator": "Duplicate detection and merge behavior",
+      "observed_operation": "Direct read-only open; inspected duplicate rule, merge behavior, library scope, and page date.",
+      "accessed_at_utc": "2026-10-10T04:47:49Z",
+      "result": "Page still documents title/DOI/ISBN plus year/creator heuristics and says false positives cannot be marked nonduplicates; last updated 2017-11-25, so current-build behavior remains uncertain."
+    },
+    {
+      "source_id": "S03",
+      "locator": "Preprint and Journal Article item type definitions; DOI field availability",
+      "observed_operation": "Direct read-only open and targeted passage review for item types.",
+      "accessed_at_utc": "2026-10-10T04:47:49Z",
+      "result": "Preprint and Journal Article are distinct item types with different publication-status descriptions."
+    },
+    {
+      "source_id": "S04",
+      "locator": "Supported standardized input formats",
+      "observed_operation": "Direct read-only open and targeted passage review for supported input formats.",
+      "accessed_at_utc": "2026-10-10T04:47:49Z",
+      "result": "RIS, BibTeX, BibLaTeX, and CSL JSON are documented import formats."
+    },
+    {
+      "source_id": "S05",
+      "locator": "Export library, collection, or items; export limitations",
+      "observed_operation": "Direct read-only open and targeted passage review for export limitations.",
+      "accessed_at_utc": "2026-10-10T04:47:49Z",
+      "result": "Export is not a backup; reimport may change or omit fields."
+    },
+    {
+      "source_id": "S06",
+      "locator": "Quick Copy and bibliography output formats",
+      "observed_operation": "Direct read-only open and targeted passage review for Quick Copy.",
+      "accessed_at_utc": "2026-10-10T04:47:49Z",
+      "result": "Quick Copy supports BibTeX and RIS as export formats; no bibliography was generated."
+    },
+    {
+      "source_id": "S07",
+      "locator": "Exporter output and Export Files/Notes/Tags options",
+      "observed_operation": "Direct read-only open and targeted passage review for translator export options.",
+      "accessed_at_utc": "2026-10-10T04:47:49Z",
+      "result": "File, note, and tag checkboxes depend on translator properties; defaults can be checked or unchecked."
+    },
+    {
+      "source_id": "S08",
+      "locator": "Import steps; Skip duplicates; duplicate rows within one input file",
+      "observed_operation": "Direct read-only open and targeted passage review for duplicate import and PDF options.",
+      "accessed_at_utc": "2026-10-10T04:47:49Z",
+      "result": "Skip duplicates is on by default; later duplicates in one file are skipped; PDFs may be uploaded alongside RIS/BibTeX."
+    },
+    {
+      "source_id": "S09",
+      "locator": "Candidate identity rules, dismissing false match, merge behavior",
+      "observed_operation": "Direct read-only open and targeted passage review for duplicate handling.",
+      "accessed_at_utc": "2026-10-10T04:47:49Z",
+      "result": "False matches can be dismissed; differing records without a shared supported identifier may be missed."
+    },
+    {
+      "source_id": "S10",
+      "locator": "Supported BibTeX, RIS, CSV, JSON; limitations",
+      "observed_operation": "Direct read-only open and targeted passage review for formats and PDF behavior.",
+      "accessed_at_utc": "2026-10-10T04:47:49Z",
+      "result": "RIS/BibTeX are transfer options; Paperpile JSON is internal and not reimportable; library-data export excludes PDFs."
+    },
+    {
+      "source_id": "S11",
+      "locator": "Online search fields and add/result actions",
+      "observed_operation": "Direct read-only open; inspected search fields and add-result behavior.",
+      "accessed_at_utc": "2026-10-10T04:47:49Z",
+      "result": "Search accepts title, authors, URL and identifiers; users add selected results."
+    },
+    {
+      "source_id": "S12",
+      "locator": "Manual and bulk update outcomes; candidate and field-difference workflow",
+      "observed_operation": "Attempted direct read-only open of the official Auto Update page; HTTP 502. Prior frozen source map records an official indexed result.",
+      "accessed_at_utc": "2026-10-10T04:47:55Z",
+      "result": "Current page could not be independently read; indexed-result flow remains unverified product behavior."
+    },
+    {
+      "source_id": "S13",
+      "locator": "Candidate lists, scores, user choice, original cell value and matched link",
+      "observed_operation": "Direct read-only open and targeted passage review for reconciliation choices and original-cell behavior.",
+      "accessed_at_utc": "2026-10-10T04:47:49Z",
+      "result": "Confident matches may be auto-matched; original cell text remains with the matched link; ambiguous candidates may require selection and best-candidate bulk action exists."
+    },
+    {
+      "source_id": "S14",
+      "locator": "Candidate ranking, query, type/property constraints, previews",
+      "observed_operation": "Direct read-only open and targeted passage review for the reconciliation-service response.",
+      "accessed_at_utc": "2026-10-10T04:47:49Z",
+      "result": "API is documented to return a ranked list of potential entities, with optional additional details."
+    },
+    {
+      "source_id": "S15",
+      "locator": "Text clustering methods and fingerprint caveats",
+      "observed_operation": "Direct read-only open and targeted passage review for clustering methods.",
+      "accessed_at_utc": "2026-10-10T04:47:49Z",
+      "result": "Documentation describes string-similarity clustering methods; this is an analogy for variants, not evidence of scholarly identity."
+    },
+    {
+      "source_id": "S16",
+      "locator": "Single/batch citation query and ambiguous/no-match outcomes",
+      "observed_operation": "Direct read-only open and targeted passage review for Simple Text Query results.",
+      "accessed_at_utc": "2026-10-10T04:47:49Z",
+      "result": "Crossref documents multiple possible DOIs and insufficient metadata for a single match; no query was run."
+    },
+    {
+      "source_id": "S17",
+      "locator": "Public metadata model; deposited metadata and relations",
+      "observed_operation": "Direct read-only open and targeted passage review for metadata sources and access.",
+      "accessed_at_utc": "2026-10-10T04:47:49Z",
+      "result": "Crossref metadata is public, comes primarily from member deposits, and may include Crossref enrichment/matching; no endpoint was queried."
+    },
+    {
+      "source_id": "S18",
+      "locator": "Public and polite pool access, limits, backoff",
+      "observed_operation": "Direct read-only open and targeted passage review for access, pools, limits, and backoff.",
+      "accessed_at_utc": "2026-10-10T04:47:49Z",
+      "result": "REST API requires no signup; public and polite pools have different limits; documented good practice includes identification, caching, and backoff."
+    },
+    {
+      "source_id": "S19",
+      "locator": "Typed `isPreprintOf` / `hasPreprint` relationships and related identifiers",
+      "observed_operation": "Direct read-only open and targeted passage review for typed relationship terms.",
+      "accessed_at_utc": "2026-10-10T04:47:49Z",
+      "result": "Crossref lists preprint and version relation types; relations connect records and do not imply merge."
+    },
+    {
+      "source_id": "S20",
+      "locator": "Major/minor version DOI and relation behavior",
+      "observed_operation": "Direct read-only open and targeted passage review for DOI version guidance.",
+      "accessed_at_utc": "2026-10-10T04:47:49Z",
+      "result": "DataCite recommends same DOI for minor changes and new DOI plus relation for major versions; stewards decide major/minor."
+    },
+    {
+      "source_id": "S21",
+      "locator": "Different manuscript versions may have distinct DOIs; IsVersionOf relation guidance",
+      "observed_operation": "Direct read-only open and targeted passage review for manuscript version relations.",
+      "accessed_at_utc": "2026-10-10T04:47:49Z",
+      "result": "Different manuscript versions may have distinct DOIs; guidance normally uses IsVersionOf where appropriate."
+    },
+    {
+      "source_id": "S22",
+      "locator": "Reproduction and affected BibTeX page range/RIS fields",
+      "observed_operation": "Direct read-only open; inspected issue report, reported environment, reproduction, and development-build checkbox.",
+      "accessed_at_utc": "2026-10-10T04:47:49Z",
+      "result": "Reporter states JabRef 5.15 on Ubuntu 24.04.4 and says the then-latest development build still showed the page-range defect; this is a report, not independent reproduction."
+    },
+    {
+      "source_id": "S23",
+      "locator": "Fix description and tests for ASCII/en/em dash page-range splitting",
+      "observed_operation": "Direct read-only open; inspected linked PR description, test steps, merge state, and commit.",
+      "accessed_at_utc": "2026-10-10T04:47:49Z",
+      "result": "PR #15315 extends the split pattern for en/em dashes, gives expected RIS SP/EP values, and merged as d687c08 on 2026-03-13; tests were not run in this stage."
+    },
+    {
+      "source_id": "S24",
+      "locator": "Release notes entry for fix #15106",
+      "observed_operation": "Direct read-only open and targeted release-note review.",
+      "accessed_at_utc": "2026-10-10T04:47:49Z",
+      "result": "v6.0-alpha.6 is a prerelease tagged 6d24100, released 2026-05-14, and lists #15106 as fixed."
+    },
+    {
+      "source_id": "STAGE-GATES",
+      "locator": "Initial bare PATH invocation: check-input --config ... --stage critic-finalizer",
+      "observed_operation": "Attempted the documented name as a shell executable before learning it is a Python helper subcommand.",
+      "accessed_at_utc": "UNKNOWN (exact timestamp not captured)",
+      "result": "/bin/bash: line 1: check-input: command not found; exit 127. This incorrect invocation is preserved, not treated as a successful gate."
+    },
+    {
+      "source_id": "STAGE-GATES",
+      "locator": "Initial bare PATH invocation: freeze-review --stage critic-finalizer",
+      "observed_operation": "Attempted the documented name as a shell executable before learning it is a Python helper subcommand.",
+      "accessed_at_utc": "UNKNOWN (exact timestamp not captured)",
+      "result": "/bin/bash: line 1: freeze-review: command not found; exit 127. This incorrect invocation is preserved, not treated as a successful review."
+    },
+    {
+      "source_id": "STAGE-GATES",
+      "locator": "Corrected helper intake: prepare.py check-input --config ER12_RUNTIME/configs/A7-02-treatment.json --stage critic-finalizer",
+      "observed_operation": "Ran the existing Python helper subcommand after preserving the prematurely authored final as a provisional diagnostic.",
+      "accessed_at_utc": "2026-10-10T04:59:40.814Z",
+      "result": "SUCCESS; checked_at_utc 2026-10-10T04:59:40.814Z; complete_member_count 7; manifest SHA-256 matched; complete_bytes_verified true; comprehension_proven false; source_truth_proven false."
+    }
+  ]
+}

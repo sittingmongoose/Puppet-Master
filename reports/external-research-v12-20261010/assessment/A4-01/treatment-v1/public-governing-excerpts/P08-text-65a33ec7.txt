@@ -1,0 +1,14 @@
+URL: https://uppy.io/docs/golden-retriever/
+Original locator: ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P08-text.txt
+Original SHA256: 65a33ec7ef7580a28b838ca4636dde2550515973938de1274301e62e4ce4fdc0
+Original numbered lines; gaps omitted. Not full response.
+
+36: Service Worker (optional) for all files because, unlike IndexedDB,
+37: Service Worker can keep references to large files. Service Worker storage is
+39: restarts. It works well, however, for accidental refreshes or closed tabs.
+82: LocalStorage, but local files require the optional Service Worker storage to be
+84: Enabling Service Worker​
+85: With the Service Worker storage, Golden Retriever will be able to temporary
+87: Bundle your own service worker sw.js file with Uppy GoldenRetriever’s
+135: Whether to enable Service Worker storage (boolean, default: false).
+144: Enabling Service Worker

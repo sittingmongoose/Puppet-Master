@@ -1,0 +1,8 @@
+URL: https://raw.githubusercontent.com/tus/tusd/v2.10.1/pkg/s3store/s3store.go
+Original locator: ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P28-text.txt
+Original SHA256: 7b3a7df5fb82f8d575f57d1f7970c6e14586fb2bf62836c273f4983f3d24db12
+Original numbered lines; gaps omitted. Not full response.
+
+634: func (upload *s3Upload) getInternalInfo(ctx context.Context) (info handler.FileInfo, parts []*s3Part, incompletePartSize int64, err error) {
+850: func (upload s3Upload) FinishUpload(ctx context.Context) error {
+881: 		case partsSize+incompletePartSize == info.Size:

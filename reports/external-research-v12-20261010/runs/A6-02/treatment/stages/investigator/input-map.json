@@ -1,0 +1,21 @@
+{
+  "run_id": "A6-02-treatment",
+  "stage": "investigator",
+  "brief": "ER12_RUNTIME/runs/A6-02/treatment/inputs/brief.md",
+  "predecessors": [],
+  "source_roots": [
+    "ER12_RUNTIME/runs/A6-02/treatment/stages/investigator/sources"
+  ],
+  "allowed_write_root": "ER12_RUNTIME/runs/A6-02/treatment/stages/investigator",
+  "stage_deadline_utc": "2026-10-10T05:09:57.192Z",
+  "whole_deadline_utc": "2026-10-10T05:39:56.996Z",
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "prospective_service_tier_revision": "user-standard-20261010-v1"
+}

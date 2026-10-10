@@ -1,0 +1,44 @@
+{
+  "schema": "er12-role-fixture-v1",
+  "slot_id": "B-DISC-G-01",
+  "case_id": "ER12-B-DISC-G-01-FRESH",
+  "role": "Brief-only discovery",
+  "title": "Bounded offline collaborative text convergence",
+  "control": {
+    "provider": "codex_authorized",
+    "model": "Luna Max",
+    "input": "identical frozen role package to challenger"
+  },
+  "treatment": {
+    "provider": "muse_code",
+    "model": "GLM 5.3 Flash Max",
+    "input": "identical frozen role package to Luna"
+  },
+  "whole_arm_seconds": 900,
+  "investigation_seconds_max": 600,
+  "writing_reserve_seconds": 300,
+  "counts_as_full_pipeline": false,
+  "status": "READY_FROZEN_NOT_DISPATCHED",
+  "frozen_at": "2026-10-10T03:56:03.650292+00:00",
+  "assignment": "assignment.md",
+  "input_files": [
+    {
+      "path": "assignment.md",
+      "sha256": "848cd2e8b9ef3078e2333ae05a62a8e04662b2b1628f5c9b3b34b1c6c896a83b"
+    }
+  ],
+  "input_sha256": "0bac759e8f04ed28f83bd8b331ae91162f859e0852fc5fd219ca12cc9637f29d",
+  "no_assessor_answers": true,
+  "source_versions": [],
+  "prospective_reallocation": {
+    "path": "ER12_RUNTIME/mechanics/REALLOCATIONS-v1.json",
+    "sha256": "c23179d51040c38e05606f43f0ed76df943abdda8e0eafd6fe3359474d07b91d",
+    "schema": "er12.prospective_reallocation.v1",
+    "before_inference": true,
+    "slot_id": "B-DISC-G-01",
+    "original_treatment_provider": "AUTHORIZED_PROVIDER_INSTANCE",
+    "replacement_treatment_provider": "muse_code",
+    "original_model_label_preserved": true,
+    "requested_route_authority": "helpers/role-v2/prepare-role.py ROUTES[muse_code]"
+  }
+}

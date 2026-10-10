@@ -12,12 +12,12 @@ cpbytes=(R/'root-checkpoint.json').read_bytes(); cp=json.loads(cpbytes)
 (P/'private/root-checkpoint.snapshot.json').write_bytes(cpbytes)
 manifest=[]
 email_re=re.compile(r'[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}')
-public_email='42017982+sittingmongoose@users.noreply.github.com'
+public_email='AUTHORIZED_PROVIDER_INSTANCE'
 # Replacements are textual only; original inputs and execution remain untouched.
 def clean(s):
  s=s.replace('AUTHORIZED_PROVIDER_INSTANCE','AUTHORIZED_PROVIDER_INSTANCE')
  s=s.replace(str(R),'ER12_RUNTIME').replace(str(REPO),'ER12_RUNTIME/repository')
- s=email_re.sub(lambda m: m.group() if m.group()==public_email else 'PRIVATE_EMAIL_REDACTED',s)
+ s=email_re.sub(lambda m: m.group() if m.group()==public_email else 'AUTHORIZED_PROVIDER_INSTANCE',s)
  s=re.sub(r'/(?:home|Users|mnt|Volumes)/[^\s\"\'<>`),;\]}]+','ER12_RUNTIME',s)
  return s
 
@@ -121,7 +121,7 @@ SANITIZATION.md and SANITIZATION_MANIFEST.json document each original/sanitized 
 ''')
 write('SANITIZATION.md','''# Sanitation and private custody
 
-All copied text is UTF-8 and undergoes only declared textual substitutions: private account email to PRIVATE_EMAIL_REDACTED; private Codex provider routing identifier to AUTHORIZED_PROVIDER_INSTANCE; original absolute runtime prefix to ER12_RUNTIME; original worktree prefix to ER12_RUNTIME/repository; any remaining personal machine home/share absolute prefix to ER12_RUNTIME. Model, reasoning effort, service tier, options, substantive prompts, authored outputs, failures and source applicability are not edited. The verified public no-reply address is retained.
+All copied text is UTF-8 and undergoes only declared textual substitutions: private account email to AUTHORIZED_PROVIDER_INSTANCE; private Codex provider routing identifier to AUTHORIZED_PROVIDER_INSTANCE; original absolute runtime prefix to ER12_RUNTIME; original worktree prefix to ER12_RUNTIME/repository; any remaining personal machine home/share absolute prefix to ER12_RUNTIME. Model, reasoning effort, service tier, options, substantive prompts, authored outputs, failures and source applicability are not edited. The verified public no-reply address is retained.
 
 Every copied file has both original and sanitized SHA-256, byte lengths and byte-identical status in SANITIZATION_MANIFEST.json. Embedded hashes in original freezes/fixtures/version manifests retain their original-byte meaning; they do not attest relocated sanitized files. Consult the paired manifest for sanitized bytes. All original selected source bytes were preserved privately under ER12_RUNTIME/publication-prep/private/originals; exact execution records in original runtime paths were not modified. The checkpoint snapshot remains private; only a selected evidence projection and aggregate counts are public. The projection's sanitized hash is covered by SHA256SUMS; its source checkpoint hash is in provenance/selected-checkpoint.json.
 

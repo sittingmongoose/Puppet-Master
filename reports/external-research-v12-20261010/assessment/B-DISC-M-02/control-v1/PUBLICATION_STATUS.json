@@ -1,0 +1,32 @@
+{
+  "slot": "B-DISC-M-02",
+  "arm": "control",
+  "snapshot_task": {
+    "key": "er12-eval-B-DISC-M-02-control-v1",
+    "slot": "B-DISC-M-02",
+    "arm": "control",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-DISC-M-02-control-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-DISC-M-02-control-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-eval-B-DISC-M-02-control-v1:ordinal:1",
+    "status": "completed",
+    "hasPendingChildRuns": false,
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6.1-sol",
+    "latestTerminalStatus": "completed",
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-eval-B-DISC-M-02-control-v1:ordinal:1"
+  },
+  "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "included_files": [
+    "assessment/B-DISC-M-02/control-v1/assessment-artifact-hashes.json",
+    "assessment/B-DISC-M-02/control-v1/assessment.json",
+    "assessment/B-DISC-M-02/control-v1/assessment.md",
+    "assessment/B-DISC-M-02/control-v1/inspected-hashes.json",
+    "assessment/B-DISC-M-02/control-v1/primary-retrieval.json",
+    "assessment/B-DISC-M-02/control-v1/primary/index.md",
+    "assessment/B-DISC-M-02/control-v1/reviewer-goal-completion-receipt.json",
+    "assessment/B-DISC-M-02/control-v1/reviewer-goal-observation.json",
+    "assessment/B-DISC-M-02/control-v1/root-review-request.json",
+    "assessment/B-DISC-M-02/control-v1/source-map.json"
+  ]
+}

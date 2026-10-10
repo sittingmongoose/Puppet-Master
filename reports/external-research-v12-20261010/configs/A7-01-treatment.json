@@ -1,0 +1,26 @@
+{
+  "run_id": "A7-01-treatment",
+  "topology": "A7",
+  "dispatch_owner": "root",
+  "runtime_root": "ER12_RUNTIME/runs/A7-01/treatment",
+  "brief_path": "ER12_RUNTIME/frozen-inputs/A7-01/brief.md",
+  "plan_path": "ER12_RUNTIME/frozen-inputs/A7-01/plan.md",
+  "whole_deadline_utc": "2026-10-10T05:11:09.530492+00:00",
+  "phase_budgets_s": [
+    1800,
+    1800
+  ],
+  "stage_budgets_s": {
+    "investigator": 1800,
+    "critic-finalizer": 1800
+  },
+  "provider": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    }
+  },
+  "runtime_mode": "full-access"
+}

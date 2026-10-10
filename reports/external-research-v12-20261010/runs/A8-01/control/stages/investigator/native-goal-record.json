@@ -1,0 +1,33 @@
+{
+  "objective": "ER12 investigator stage, run A8-01-control: execute ER12_RUNTIME/runs/A8-01/control/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+  "threadId": "01a12402-0259-7d43-94be-8600f39acfe1",
+  "native_goal_status_at_creation_observed": "active",
+  "native_goal_status_preterminal_observed": "active",
+  "creation_response": {
+    "tokensUsed": 0,
+    "timeUsedSeconds": 0,
+    "createdAt": 1791605502,
+    "updatedAt": 1791605502,
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "latest_preterminal_get_goal_response": {
+    "threadId": "01a12402-0259-7d43-94be-8600f39acfe1",
+    "objective": "ER12 investigator stage, run A8-01-control: execute ER12_RUNTIME/runs/A8-01/control/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+    "status": "active",
+    "tokensUsed": 246149,
+    "timeUsedSeconds": 832,
+    "createdAt": 1791605502,
+    "updatedAt": 1791606335,
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "goal_terminal_status": "NOT_YET_OBSERVED; will be taken from the native Goal completion result",
+  "unavailable_fields": {
+    "distinct_activation_receipt": "UNKNOWN; create_goal directly returned status=active, but no separate receipt field was exposed",
+    "activation_timestamp": "UNKNOWN; no activation-specific timestamp was exposed",
+    "timestamp_timezone_or_semantics": "UNKNOWN; raw createdAt and updatedAt values are preserved exactly as returned",
+    "additional_goal_provenance": "UNKNOWN; no further native provenance fields were exposed"
+  },
+  "source": "Direct create_goal and get_goal tool results; no receipt or timestamp was fabricated."
+}

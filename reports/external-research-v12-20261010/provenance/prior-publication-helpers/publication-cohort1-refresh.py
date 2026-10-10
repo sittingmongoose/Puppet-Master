@@ -7,13 +7,13 @@ P=R/'mechanics/publication-cohort1'
 now=datetime.datetime.now(datetime.timezone.utc).isoformat()
 sha=lambda b:hashlib.sha256(b).hexdigest()
 email=re.compile(r'[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}')
-public='42017982+sittingmongoose@users.noreply.github.com'
+public='AUTHORIZED_PROVIDER_INSTANCE'
 def clean(s):
  s=s.replace('AUTHORIZED_PROVIDER_INSTANCE','AUTHORIZED_PROVIDER_INSTANCE')
  s=email.sub(lambda m:m.group() if m.group()==public else 'AUTHORIZED_PROVIDER_INSTANCE',s)
  s=s.replace(str(R),'ER12_RUNTIME').replace(str(REPO),'ER12_RUNTIME/repository')
  s=re.sub(r'/(?:home|Users|mnt|Volumes|tmp|var/tmp)/[^\s\"\'<>`),;\]}]+','ER12_RUNTIME',s)
- s=s.replace('PRIVATE_EMAIL_REDACTED','AUTHORIZED_PROVIDER_INSTANCE').replace('ER12_RUNTIME','ER12_RUNTIME').replace('ER12_RUNTIME/repository','ER12_RUNTIME/repository')
+ s=s.replace('AUTHORIZED_PROVIDER_INSTANCE','AUTHORIZED_PROVIDER_INSTANCE').replace('ER12_RUNTIME','ER12_RUNTIME').replace('ER12_RUNTIME/repository','ER12_RUNTIME/repository')
  return s
 manifest={}
 def write(rel,s):
@@ -156,7 +156,7 @@ scan=json.loads((B/'PRIVACY_SCAN.json').read_text());scan['scanned_files']=len(f
 write('SHA256SUMS',''.join(f'{sha((B/x).read_bytes())}  {x}\n' for x in files if x!='SHA256SUMS'))
 for rel in files:
  p=B/rel;s=p.read_text()
- assert 'AUTHORIZED_PROVIDER_INSTANCE' not in s and 'PRIVATE_EMAIL_REDACTED' not in s
+ assert 'AUTHORIZED_PROVIDER_INSTANCE' not in s and 'AUTHORIZED_PROVIDER_INSTANCE' not in s
  assert not re.search(r'/(?:home|Users|mnt|Volumes|tmp|var/tmp)/',s),rel
  assert all(m.group()==public for m in email.finditer(s)),rel
  assert not re.search(r'(?i)(ghp_|github_pat_|sk-[A-Za-z0-9]{20})',s),rel

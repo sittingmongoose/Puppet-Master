@@ -1,0 +1,90 @@
+{
+  "sources": [
+    {
+      "relative_path": "sources/helpers/er12-screen-v1/prepare.py",
+      "sha256": "3af25138aa7fc20123c238e8485df3210d9a4f3f2bf6419a256d73a1c4176fdc",
+      "bytes": 23592,
+      "source_logical_path": "helpers/er12-screen-v1/prepare.py",
+      "actual_current_sha256": "bb38b943536f5039018da2616afce260a88baf9aafa8412a1590180420f047da",
+      "normalization": [
+        "runtime path -> ER12_RUNTIME",
+        "route -> AUTHORIZED_PROVIDER_INSTANCE"
+      ],
+      "published_reference_sha256": "3af25138aa7fc20123c238e8485df3210d9a4f3f2bf6419a256d73a1c4176fdc",
+      "original_byte_equivalence_claimed": false,
+      "prior_published_sha256": "3af25138aa7fc20123c238e8485df3210d9a4f3f2bf6419a256d73a1c4176fdc"
+    },
+    {
+      "relative_path": "sources/helpers/er12-screen-v1/reveal.py",
+      "sha256": "ec9579204af96aa6a45caba1eef94c6ca1a799c296a2363b179af359bd908abe",
+      "bytes": 2880,
+      "source_logical_path": "helpers/er12-screen-v1/reveal.py",
+      "actual_current_sha256": "ec9579204af96aa6a45caba1eef94c6ca1a799c296a2363b179af359bd908abe",
+      "normalization": [
+        "runtime path -> ER12_RUNTIME",
+        "route -> AUTHORIZED_PROVIDER_INSTANCE"
+      ],
+      "published_reference_sha256": "ec9579204af96aa6a45caba1eef94c6ca1a799c296a2363b179af359bd908abe",
+      "original_byte_equivalence_claimed": false,
+      "prior_published_sha256": "ec9579204af96aa6a45caba1eef94c6ca1a799c296a2363b179af359bd908abe"
+    },
+    {
+      "relative_path": "sources/helpers/er12-screen-v1/bootstrap.js",
+      "sha256": "67b8667f5f7d09b854541f95c8453b977f3514a4243d679fdb24a26335fa4c56",
+      "bytes": 4352,
+      "source_logical_path": "helpers/er12-screen-v1/bootstrap.js",
+      "actual_current_sha256": "42d76b4a90d073e64fa25b730fe78a1810e25224c8acc1089f85e6c6786f3056",
+      "normalization": [
+        "runtime path -> ER12_RUNTIME",
+        "route -> AUTHORIZED_PROVIDER_INSTANCE"
+      ],
+      "published_reference_sha256": "67b8667f5f7d09b854541f95c8453b977f3514a4243d679fdb24a26335fa4c56",
+      "original_byte_equivalence_claimed": false,
+      "prior_published_sha256": "67b8667f5f7d09b854541f95c8453b977f3514a4243d679fdb24a26335fa4c56"
+    },
+    {
+      "relative_path": "sources/mechanics/native-root-code-mode/standardSpecJS.js",
+      "sha256": "02821bc77b08aae08c50203213e88556da8ab50401dc675c1425e0abbe503b92",
+      "bytes": 2503,
+      "source_logical_path": "mechanics/native-root-code-mode/standardSpecJS.js",
+      "actual_current_sha256": "803f679454dd062b9d11ec54c7adf04172b0c5330bc949ca115161672315fac6",
+      "normalization": [
+        "runtime path -> ER12_RUNTIME",
+        "route -> AUTHORIZED_PROVIDER_INSTANCE"
+      ],
+      "published_reference_sha256": "02821bc77b08aae08c50203213e88556da8ab50401dc675c1425e0abbe503b92",
+      "original_byte_equivalence_claimed": false,
+      "prior_published_sha256": "02821bc77b08aae08c50203213e88556da8ab50401dc675c1425e0abbe503b92"
+    },
+    {
+      "relative_path": "sources/mechanics/native-root-code-mode/clarifySpecJS.js",
+      "sha256": "bb25e8ec79588d59aad269b9adff256ed9ea0bf7e4c28080245a2a45ea74556a",
+      "bytes": 380,
+      "source_logical_path": "mechanics/native-root-code-mode/clarifySpecJS.js",
+      "actual_current_sha256": "9bf15a8f4835128f27ceedd63d7267e0c99cd8f3cccf5c2da8f6600589d41588",
+      "normalization": [
+        "runtime path -> ER12_RUNTIME",
+        "route -> AUTHORIZED_PROVIDER_INSTANCE"
+      ],
+      "published_reference_sha256": null,
+      "original_byte_equivalence_claimed": false,
+      "prior_published_sha256": "bb25e8ec79588d59aad269b9adff256ed9ea0bf7e4c28080245a2a45ea74556a"
+    },
+    {
+      "relative_path": "sources/mechanics/invocation-clarification-v1/transform.py",
+      "sha256": "40d7052fffa5e8830c8c738c751755a0bfb25a63fa68ee4f2518a30dc1716594",
+      "bytes": 12009,
+      "source_logical_path": "mechanics/invocation-clarification-v1/transform.py",
+      "actual_current_sha256": "40d7052fffa5e8830c8c738c751755a0bfb25a63fa68ee4f2518a30dc1716594",
+      "normalization": [
+        "runtime path -> ER12_RUNTIME",
+        "route -> AUTHORIZED_PROVIDER_INSTANCE"
+      ],
+      "published_reference_sha256": null,
+      "original_byte_equivalence_claimed": false,
+      "prior_published_sha256": "40d7052fffa5e8830c8c738c751755a0bfb25a63fa68ee4f2518a30dc1716594"
+    }
+  ],
+  "scope": "R0/A1 only; no topology/role/A8 dependencies loaded or closed",
+  "publication_projection": "Cohort3 sanitation; prior hashes retained, current public inputs repinned."
+}

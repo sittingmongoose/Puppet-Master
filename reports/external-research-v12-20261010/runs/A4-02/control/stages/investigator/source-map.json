@@ -1,0 +1,173 @@
+{
+  "run_id": "A4-02-control",
+  "stage": "investigator",
+  "built_from": "The complete brief only; the exact plan was not released or consulted before this file was saved.",
+  "access_clock_basis": "UTC clock sampled immediately before the 2026-10-10 04:58:26Z batch of web source reopens; dateutil source code was fetched read-only at 2026-10-10 04:59:39Z. Browser retrieval timestamps are not exposed to finer precision.",
+  "sources": [
+    {
+      "source_id": "S01",
+      "title": "RFC 5545 — Internet Calendaring and Scheduling Core Object Specification (iCalendar)",
+      "url": "https://datatracker.ietf.org/doc/html/rfc5545",
+      "released_version_or_commit": "RFC 5545, Standards Track, September 2009",
+      "locator": "§3.2.19 TZID; §3.3.5 DATE-TIME; §3.8.2.4 DTSTART; §3.8.3.1 TZID; §3.8.4.4 RECURRENCE-ID; §3.8.4.7 UID; §3.8.5.1 EXDATE; §3.8.5.3 RRULE; §3.8.7.4 SEQUENCE",
+      "access_utc": "2026-10-10T04:58:26Z",
+      "observed_operation": "Read the normative recurrence, identifier, time-zone, exception and revision sections; no implementation was executed.",
+      "governing_condition_default_exception": "A local DATE-TIME without TZID is floating; fixed local times use UTC or local time with time-zone reference. Each TZID used requires a matching VTIMEZONE with valid coverage for every recurrence. RECURRENCE-ID names the original occurrence start. EXDATE excludes values from the recurrence set. UID is persistent and globally unique. SEQUENCE is initialized at 0 and monotonically increments on significant revisions when used.",
+      "applicability": "Normative iCalendar semantics for the proposed feed and optional .ics snapshot; does not establish that any named commercial client implements every recurrence feature identically."
+    },
+    {
+      "source_id": "S02",
+      "title": "Subscribe to someone else’s calendar — Google Calendar Help",
+      "url": "https://support.google.com/calendar/answer/37100?hl=en-IN",
+      "released_version_or_commit": "Current Google Calendar Help content accessed 2026-10-10; Google Calendar SaaS build/release not exposed.",
+      "locator": "§ Use a link to add a public calendar; lines 54–61 in retrieved page",
+      "access_utc": "2026-10-10T04:58:26Z",
+      "observed_operation": "Observed official steps: computer browser → Other calendars → Add other calendars → From URL → paste published calendar URL → Add calendar.",
+      "governing_condition_default_exception": "A link can be added only if the calendar is public. New URL subscriptions are set up on a computer browser; the same Help page says the mobile Google Calendar apps do not support subscribing to a new calendar.",
+      "applicability": "Google Calendar's documented public-feed subscription flow, not a promise about all Google client versions or refresh cadence."
+    },
+    {
+      "source_id": "S03",
+      "title": "Create & manage a public Google calendar — Google Calendar Help",
+      "url": "https://support.google.com/calendar/answer/37083?hl=en-CA",
+      "released_version_or_commit": "Current Google Calendar Help content accessed 2026-10-10; SaaS build/release not exposed.",
+      "locator": "Share your public calendar; public iCal address; access-permission removal propagation at lines 48–79",
+      "access_utc": "2026-10-10T04:58:26Z",
+      "observed_operation": "Read official instructions for public link and public iCal address.",
+      "governing_condition_default_exception": "The public iCal address works only if calendar is public. Google says removing public access usually takes a few minutes but may take up to four hours. Calendar event defaults can themselves be public unless changed.",
+      "applicability": "Disclosure review for the proposed Google route. This supports treating public calendar content as publicly accessible, not as member-only."
+    },
+    {
+      "source_id": "S04",
+      "title": "Import events to Google Calendar — Computer — Google Calendar Help",
+      "url": "https://support.google.com/calendar/answer/37118?hl=en-7",
+      "released_version_or_commit": "Current Google Calendar Help content accessed 2026-10-10; SaaS build/release not exposed.",
+      "locator": "Import events; Import & Export workflow; recurrence note for CSV; iCalendar format at lines 18–60 and 119–138",
+      "access_utc": "2026-10-10T04:58:26Z",
+      "observed_operation": "Read documented file import route on a computer and the iCalendar file requirements.",
+      "governing_condition_default_exception": "Import is a file operation. Google notes that recurring events imported from CSV can become one-time events; this statement is not about iCalendar URL subscriptions.",
+      "applicability": "Optional downloadable snapshot context and a caution to use .ics rather than extrapolating from CSV behavior."
+    },
+    {
+      "source_id": "S05",
+      "title": "Import or subscribe to a calendar in Outlook.com or Outlook on the web — Microsoft Support",
+      "url": "https://support.microsoft.com/en-us/outlook/import-or-subscribe-to-a-calendar-in-outlook-com-or-outlook-on-the-web?kod=h60148d",
+      "released_version_or_commit": "Current Outlook.com support content accessed 2026-10-10; consumer service build not exposed. The page labels the article Applies To Outlook.com and has separate Outlook-on-the-web/work-school guidance later in the article.",
+      "locator": "Consumer Outlook.com section: Subscribe to a calendar, Upload a calendar from a file, and difference between importing and subscribing; lines 119–191",
+      "access_utc": "2026-10-10T04:58:26Z",
+      "observed_operation": "Observed official consumer route: sign in on web → Calendar → Add calendar → Subscribe from web → URL → Import. Also read Upload from file route.",
+      "governing_condition_default_exception": "Online subscription refreshes automatically, usually approximately every three hours but can take more than 24 hours. Uploading an .ics file is a snapshot and never refreshes the imported events. The separate work/school part of the page gives different cadence text and is out of the selected consumer scope.",
+      "applicability": "Only the documented Outlook.com consumer web operation and cadence. Does not establish desktop Outlook, all Outlook-on-the-web tenants, or third-party client cadence."
+    },
+    {
+      "source_id": "S06",
+      "title": "Use iCloud calendar subscriptions — Apple Support",
+      "url": "https://support.apple.com/en-ie/102301",
+      "released_version_or_commit": "Current Apple Support content accessed 2026-10-10. The page documents iOS/iPadOS 26+, iOS/iPadOS 18 or earlier and Mac; exact app build is not exposed.",
+      "locator": "Add a subscription calendar on iPhone/iPad, iOS/iPadOS version branches, and Mac; lines 26–72",
+      "access_utc": "2026-10-10T04:58:26Z",
+      "observed_operation": "Read official URL-subscription setup flows on iPhone/iPad and Mac.",
+      "governing_condition_default_exception": "For the subscription to appear across the user’s devices, Apple says to sign in with the same Apple Account and choose iCloud as the account/location in the documented flows. No refresh interval is stated.",
+      "applicability": "Supports Apple Calendar as a native client opportunity; not a reason to require account migration or promise refresh speed."
+    },
+    {
+      "source_id": "S07",
+      "title": "RFC 4791 — Calendaring Extensions to WebDAV (CalDAV)",
+      "url": "https://datatracker.ietf.org/doc/rfc4791/",
+      "released_version_or_commit": "RFC 4791, Standards Track, March 2007; updated by RFC 5689, 6638, 6764, 7809, 7953 and 8996 per RFC Editor metadata.",
+      "locator": "Abstract; §§3–5 and calendar-access data model",
+      "access_utc": "2026-10-10T04:58:26Z",
+      "observed_operation": "Read the standard's definition of calendar-aware WebDAV access and its calendar object/collection model.",
+      "governing_condition_default_exception": "CalDAV is a calendar access protocol over WebDAV and iCalendar calendar objects, requiring a server implementing the calendar-access feature; it is distinct from downloading one static .ics resource.",
+      "applicability": "Standards-level analogy for a more capable server-sync design. No deployment or selected commercial CalDAV server was tested."
+    },
+    {
+      "source_id": "S08",
+      "title": "RFC 6578 — Collection Synchronization for Web Distributed Authoring and Versioning (WebDAV)",
+      "url": "https://datatracker.ietf.org/doc/rfc6578/",
+      "released_version_or_commit": "RFC 6578, Standards Track, March 2012",
+      "locator": "Abstract; §3 synchronization-token overview; `sync-collection` operation and example reports",
+      "access_utc": "2026-10-10T04:58:26Z",
+      "observed_operation": "Read protocol definition and token-based routine synchronization example.",
+      "governing_condition_default_exception": "Client presents a previous sync token; server returns changed, added or deleted collection resources and a new token. First synchronization requests a full listing. It requires compatible WebDAV server and client support.",
+      "applicability": "Explains the distinction between change-aware server synchronization and periodic `.ics` feed polling."
+    },
+    {
+      "source_id": "S09",
+      "title": "Using the Calendar app — Nextcloud 36 User Manual",
+      "url": "https://docs.nextcloud.com/server/latest/user_manual/en/groupware/calendar.html",
+      "released_version_or_commit": "Page title identifies Nextcloud 36 User Manual; URL uses mutable `/server/latest/` alias. Exact server build is not asserted.",
+      "locator": "§ Publishing a calendar; § Subscribe to a Calendar; lines 106–136",
+      "access_utc": "2026-10-10T04:58:26Z",
+      "observed_operation": "Read public read-only link and external iCal read-only subscription operations.",
+      "governing_condition_default_exception": "Manual says external feed subscriptions are refreshed weekly by default; an administrator may change this setting. Public links expose a read-only calendar to external users.",
+      "applicability": "Unfamiliar alternative for an organization already running Nextcloud. The weekly default is relevant only to that documented product path, not to standard `.ics` clients generally."
+    },
+    {
+      "source_id": "S10",
+      "title": "dateutil issue #614 — TZID is not supported in rrule DTSTART",
+      "url": "https://github.com/dateutil/dateutil/issues/614",
+      "released_version_or_commit": "Issue opened 2018-01-18; milestone 2.7.0; later closed through PR #624.",
+      "locator": "Description and issue metadata; example is `DTSTART;TZID=America/New_York:20180119T130000Z`",
+      "access_utc": "2026-10-10T04:58:26Z",
+      "observed_operation": "Read issue report and linked resolution history.",
+      "governing_condition_default_exception": "The parser reportedly rejected the TZID parameter. The reporter's example combines TZID with a Z-suffixed UTC value, which RFC 5545 forbids; use a local DATE-TIME without Z for a standards-conforming test.",
+      "applicability": "Historical issue context for the dateutil parser only; explicitly not evidence of a Google/Microsoft/Apple defect."
+    },
+    {
+      "source_id": "S11",
+      "title": "dateutil PR #624 — Support for TZID= in rrulestr",
+      "url": "https://github.com/dateutil/dateutil/pull/624",
+      "released_version_or_commit": "Merged into dateutil master on 2018-03-11; linked to issue #614.",
+      "locator": "PR title and merge record; maintainer note that it fixes #614",
+      "access_utc": "2026-10-10T04:58:26Z",
+      "observed_operation": "Read PR merge and discussion metadata.",
+      "governing_condition_default_exception": "Fix added TZID support to `rrulestr`; success applies to the supported valid input form, not the malformed sample containing both TZID and Z.",
+      "applicability": "Issue/fix chain for recurrence parser history; requires version-specific qualification."
+    },
+    {
+      "source_id": "S12",
+      "title": "dateutil version 2.7.0 release",
+      "url": "https://github.com/dateutil/dateutil/releases/tag/2.7.0",
+      "released_version_or_commit": "dateutil 2.7.0, released 2018-03-11, tag commit `51bda94`.",
+      "locator": "Release note for TZID parameter support in `rrulestr`; release notes also identify tz database update 2018c.",
+      "access_utc": "2026-10-10T04:58:26Z",
+      "observed_operation": "Read official tagged release metadata and release notes.",
+      "governing_condition_default_exception": "The release record associates issue #614 and PR #624 with support for TZID on DTSTART; this is a library parser capability in that release.",
+      "applicability": "Demonstrates why generator/parser and time-zone data versions should be recorded; it does not establish current dateutil or calendar-client behavior."
+    },
+    {
+      "source_id": "S13",
+      "title": "dateutil 2.7.0 source: `dateutil/rrule.py`",
+      "url": "https://github.com/dateutil/dateutil/blob/2.7.0/dateutil/rrule.py#L1499-L1612",
+      "released_version_or_commit": "Tag 2.7.0 at commit `51bda94`; source code read without execution on 2026-10-10.",
+      "locator": "`rrulestr` / `_parse_rfc`, approximately source lines 1499–1612",
+      "access_utc": "2026-10-10T04:59:39Z",
+      "observed_operation": "Read-only fetch of the public tagged source lines; no source code or tests were executed.",
+      "governing_condition_default_exception": "Implementation builds a TZID name map, performs zone lookup, attaches the zone to a local parsed DTSTART and errors when the DTSTART already carries another time zone.",
+      "applicability": "Primary source-code evidence for S12's specific version and parser behavior; not evidence about unrelated client implementations."
+    },
+    {
+      "source_id": "S14",
+      "title": "IANA Time Zone Database Releases index",
+      "url": "https://www.iana.org/time-zones/releases",
+      "released_version_or_commit": "Release index observed on 2026-10-10; lists tzdb 2026e, released 2026-09-29, as Latest.",
+      "locator": "Newest release table lines 4–16",
+      "access_utc": "2026-10-10T04:58:26Z",
+      "observed_operation": "Read official release index and its current 2026e summary.",
+      "governing_condition_default_exception": "Index says Manitoba moves to permanent UTC−05 on 2026-10-31. Applicability depends on venue/member time-zone IDs and affected dates.",
+      "applicability": "Evidence that legislated time-zone data can change within a season; does not imply that the orchestra uses a Manitoba zone or that any client has adopted this release."
+    },
+    {
+      "source_id": "S15",
+      "title": "IANA Time Zone Database Release 2026e",
+      "url": "https://www.iana.org/time-zones/releases/2026e",
+      "released_version_or_commit": "tzdb 2026e, released 2026-09-29.",
+      "locator": "Release notes; direct page open returned an internal error, and the page's release summary was visible in the official IANA search result. Corroborated by the official releases index S14.",
+      "access_utc": "2026-10-10T04:58:26Z",
+      "observed_operation": "Attempted direct official-page open; used only official search-result summary, cross-checked against the directly opened official index.",
+      "governing_condition_default_exception": "Summary: Manitoba moves to permanent UTC−05 after 2026-10-31. Detailed temporary implementation notes were not relied on.",
+      "applicability": "Specific release context, conditional on the venue/member zone being affected. The directly opened index S14 is the primary corroborating source."
+    }
+  ]
+}

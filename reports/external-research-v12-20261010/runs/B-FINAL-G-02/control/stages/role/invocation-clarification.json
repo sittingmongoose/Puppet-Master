@@ -1,0 +1,43 @@
+{
+  "version": "invocation-clarification-v1",
+  "stageDir": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role",
+  "backupDir": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/.invocation-backup-a59096d98f7e4724ad338348a01fabd1",
+  "args": {
+    "clientRequestId": "er12-B-FINAL-G-02-control-role-v2",
+    "title": "ER12 B-FINAL-G-02 control role",
+    "role": "research",
+    "mode": "async",
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "target": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna",
+      "options": {
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      }
+    },
+    "task": "Execute exactly ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/assignment.md and input-map.json. Before common source/case input or inference, activate exactly ONE actual exposed native Goal referring to this assignment. If unavailable/unsupported, stop scientific inference and save the exact unsupported diagnostic; no simulated Goal. Save deliverables before native completion. Never start provider CLI/model/session in shell, nested assistance, other arms, account changes or parent history.\nBefore any case/source input or inference, activate exactly ONE actual exposed native Goal using this exact immutable freeze.native_goal_objective string: \"ER12 B-FINAL-G-02/control: execute ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/assignment.md; save the complete bounded role output and source map before completing this actual native Goal.\"\nNo case input is needed for activation. Preserve the exact native activation response; if unsupported, stop before inference and preserve the exact diagnostic. No second or replacement Goal. Original Goal lifecycle and scope remain binding. Follow the appended ROOT MECHANICS CLARIFICATION v1 in the assignment.\n"
+  },
+  "config": null,
+  "commands": [],
+  "original_sha256": {
+    "request.json": "7fe30079f510b339183189e289c404d61d01ccd5c82ebe13055a374734ffacc6",
+    "freeze.json": "8ef388f1c7f08ffdc8ac9b03d69dbcecdcfea7a2f1a1a114ce8e2ec26697e9f6",
+    "input-map.json": "3a9866ee8f3773a744c22c720030645a690ab75c58720bb1beab08aeee19f283",
+    "assignment.md": "7f9c430b8d3ee2074f44ef280f95f5341bab8b956c07ca2627d28117661b90a1"
+  },
+  "updated_sha256": {
+    "request.json": "0c938d14a964f578252d115e1536ae83411c21f7faf1b3d388715625293a5c00",
+    "freeze.json": "2fb7ebb7295663cff0a6fdf926f075176e34dae14d8ae7f24c9371d095c4852b",
+    "input-map.json": "3a9866ee8f3773a744c22c720030645a690ab75c58720bb1beab08aeee19f283",
+    "assignment.md": "9025ff6c548dbb96c78095a8652f34481492f671bf63248cf7e00500f482c40d"
+  },
+  "helper_pins": {
+    "ER12_RUNTIME/helpers/topology-v1/prepare.py": "3cf320737c60b45de8c524fea0484f78a688bf720a0f60b9becc5e2873f8dbf0",
+    "ER12_RUNTIME/helpers/role-v2/prepare-role.py": "83cebd8dc762eb780fa04399676a39c709654995f6e2a22e934a1f821af78478"
+  },
+  "root_only_integration": true,
+  "dispatch_performed": false,
+  "idempotent": false
+}

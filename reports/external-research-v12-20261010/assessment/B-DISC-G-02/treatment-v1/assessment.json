@@ -1,0 +1,676 @@
+{
+  "schema": "er12.independent.bounded-role-assessment.v1",
+  "assessment_version": "treatment-v1",
+  "slot_id": "B-DISC-G-02",
+  "arm": "treatment",
+  "case_id": "ER12-B-DISC-G-02-FRESH",
+  "role_scope": "Brief-only discovery (DISC)",
+  "rubric": "RUBRIC-v1.md",
+  "judgment_saved_at_utc": "2026-10-10T05:15:17.404585+00:00",
+  "source_judgment": "FAIL",
+  "source_judgment_basis": [
+    "F01",
+    "F02"
+  ],
+  "full_pipeline_qualified": false,
+  "delivery": {
+    "status": "DELIVERED",
+    "required_science": "discovery.md",
+    "word_count": 779,
+    "word_count_method": "Unicode text split on whitespace",
+    "word_range": [
+      700,
+      1000
+    ],
+    "four_items": true,
+    "two_implementation_leads": true,
+    "historical_lead": true,
+    "tradeoff_comparison": true,
+    "three_prospective_questions_or_tests": true,
+    "source_map_and_all_six_members_present": true,
+    "final_section": "NOT_REQUIRED_FOR_DISC"
+  },
+  "coverage": {
+    "status": "PARTIAL_SEMANTIC_COVERAGE",
+    "axes": [
+      {
+        "axis": "Original obligations and negative constraints",
+        "status": "COVERED_WITH_PROSPECTIVE_ORACLE_LIMITATION",
+        "basis": "779 whitespace-delimited words; four diverse items; two inspectable leads; historical/version lead; compact comparison; three questions/tests; six listed URLs across four projects; uncertainty and next step. Scope exclusions and no universal winner preserved. L02."
+      },
+      {
+        "axis": "Consequential source conditions and applicability",
+        "status": "MATERIAL_GAPS",
+        "finding_ids": [
+          "F01",
+          "F02"
+        ],
+        "basis": "Verified primary conditions by version, subject digest, provenance predicate, signer/builder trust, dependency completeness, operation and exceptions. L01/L05/L06 remain distinct."
+      },
+      {
+        "axis": "Useful unfamiliar mechanisms, alternatives and implementation/history",
+        "status": "SUBSTANTIALLY_COVERED_WITH_DEPTH_LIMITATIONS",
+        "basis": "SLSA claims, Sigstore authentication/transparency, in-toto step policies and TUF channel freshness offer different functions. Named verifier/generator and cosign leads are inspectable, not code-inspected. SLSA retirement/major predicate/migration lead corroborated. L04."
+      },
+      {
+        "axis": "Discriminating prospective checks and actual validation",
+        "status": "PARTIAL",
+        "basis": "Three useful adversarial themes are proposed. Missing-provenance oracle is conditional and dependency oracle under-specified (L02/L03). No semantic test, installer deployment or service check is claimed executed or required."
+      },
+      {
+        "axis": "Capabilities versus product choices; uncertainty and bounded next step",
+        "status": "PARTIAL",
+        "basis": "Builder policy, missing-provenance policy, parameter policy and offline roots explicitly open; unresolved TUF/in-toto/Cosign/version reads plus bounded next step. Central SLSA conditions in F01/F02 are not preserved as uncertainty."
+      },
+      {
+        "axis": "Critique/plan dispositions and supported-scope preservation",
+        "status": "NOT_APPLICABLE_FOR_SEEDED_DISPOSITIONS; REVIEWED_FOR_SHORTLIST",
+        "basis": "Brief-only stage has no supplied plan, critique or rejected historical candidate. No imagined disposition demanded. Preserve the valid shortlist contributions while limiting their claimed coverage."
+      },
+      {
+        "axis": "Full-pipeline/final-section qualification",
+        "status": "NOT_ASSIGNED",
+        "basis": "No final-section file is required for this DISC role. No missing-final semantic FAIL and no full-pipeline qualification inferred."
+      }
+    ]
+  },
+  "material_findings": [
+    {
+      "id": "F01",
+      "severity": "MATERIAL",
+      "type": "unsupported_consequential_capability_and_missing_failure_boundary",
+      "title": "Signed provenance is overstated as protection against a compromised job",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/discovery.md",
+          "line": 7,
+          "exact_text": "Inference: covers the compromised-job claim via signed source, resolved deps, and builder ID."
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/discovery.md",
+          "line": 17,
+          "exact_text": "Minimal check: digest-match subject, verify DSSE signature, enforce trusted `builder.id` set, compare source digest and buildType."
+        }
+      ],
+      "primary_locators": [
+        {
+          "source": "P07",
+          "section": "Provenance generation / Authentic / Unforgeable",
+          "lines": [
+            251,
+            315
+          ]
+        },
+        {
+          "source": "P02",
+          "section": "Step 1: Check SLSA Build level",
+          "lines": [
+            181,
+            205
+          ]
+        }
+      ],
+      "finding": "Authenticity does not establish tenant-resistant generation. The cited recipe omits generation/control-plane and trusted-level conditions needed to address the brief\u2019s compromised-job threat. Stolen keys and off-map builders do not exhaust this boundary.",
+      "materiality": "A job-controlled claim can remain validly signed by an expected identity without demonstrating the dependency actually used. The assigned mechanism must bound that threat, rather than merely authenticate the statement.",
+      "supported_scope_to_preserve": "Artifact digest, signature, predicate, identity and build-parameter expectations remain useful. No supplier certification, new deployment or universal SLSA level is required by this review.",
+      "status": "OPEN; frozen candidate not repaired"
+    },
+    {
+      "id": "F02",
+      "severity": "MATERIAL",
+      "type": "missing_consequential_coverage_condition",
+      "title": "Dependency binding omits the best-effort coverage boundary",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/discovery.md",
+          "line": 7,
+          "exact_text": "Inference: covers the compromised-job claim via signed source, resolved deps, and builder ID."
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/discovery.md",
+          "line": 29,
+          "exact_text": "| SLSA provenance | source, deps, builder | trust map, sig verify, expectation match | expectation maintenance | missing/untrusted provenance |"
+        }
+      ],
+      "primary_locators": [
+        {
+          "source": "P01",
+          "section": "BuildDefinition / resolvedDependencies",
+          "lines": [
+            626,
+            634
+          ]
+        },
+        {
+          "source": "P02",
+          "section": "Step 3: (Optional) Check dependencies recursively",
+          "lines": [
+            263,
+            277
+          ]
+        }
+      ],
+      "finding": "The dependency coverage is best effort even through Build L3. A valid statement can omit a consequential dependency; the candidate never records this boundary while crediting dependency binding.",
+      "materiality": "The brief expressly concerns using a different dependency while claiming the correct source. Signed listed dependencies are not a complete account of actual dependencies.",
+      "supported_scope_to_preserve": "Recorded dependencies can be compared against independently selected expectations. The review does not require recursive verification of every dependency or a nonexistent hermetic deployment.",
+      "status": "OPEN; frozen candidate not repaired"
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L01",
+      "candidate_line": 19,
+      "sources": [
+        "P04",
+        "P11"
+      ],
+      "issue": "The named cosign verify-attestation lead is documented for images; local artifact/bundle transport and issuer policy remain unverified. Counted as an implementation lead, not a proven portable installer command; candidate explicitly leaves flags unresolved."
+    },
+    {
+      "id": "L02",
+      "candidate_lines": [
+        36,
+        42
+      ],
+      "sources": [
+        "shared assignment"
+      ],
+      "issue": "Missing-provenance test assumes a blocked install while block-or-warn remains a product choice. Treat this oracle as conditional, not a decided requirement."
+    },
+    {
+      "id": "L03",
+      "candidate_line": 37,
+      "sources": [
+        "P02",
+        "P04"
+      ],
+      "issue": "Lockfile/digest mutation does not specify an independent expected dependency or a valid re-attested variant. It could exercise signature, source or subject mismatch instead of dependency policy. This is a prospective ambiguity, not an observed test failure."
+    },
+    {
+      "id": "L04",
+      "candidate_lines": [
+        11,
+        13,
+        46
+      ],
+      "sources": [
+        "P08",
+        "P09",
+        "P10"
+      ],
+      "issue": "in-toto and TUF are real, useful leads with openly acknowledged shallow retrieval. Their field-level applicability was not established by candidate index/overview excerpts; do not credit an executed layout or updater check."
+    },
+    {
+      "id": "L05",
+      "candidate_lines": [
+        17,
+        42
+      ],
+      "sources": [
+        "P01",
+        "P02"
+      ],
+      "issue": "The minimal SLSA recipe does not spell out authorized signer-builder pairing or level-specific trust. A correctly configured trust map could supply this, so no deployed authorization bypass is asserted."
+    },
+    {
+      "id": "L06",
+      "candidate_line": 9,
+      "sources": [
+        "P03"
+      ],
+      "issue": "Rekor is principally a signing-event record, not merely a certificate-issuance record. The candidate correctly distinguishes transparency from build correctness; wording alone is not material."
+    }
+  ],
+  "useful_discoveries": [
+    {
+      "candidate_lines": [
+        7,
+        17,
+        23
+      ],
+      "sources": [
+        "P01",
+        "P02"
+      ],
+      "meaning": "An artifact subject and provenance predicate connect claims to bytes; parsing-version identity is distinct from builder trust."
+    },
+    {
+      "candidate_lines": [
+        9,
+        19
+      ],
+      "sources": [
+        "P03",
+        "P04",
+        "P11"
+      ],
+      "meaning": "Ephemeral identity credentials and signing-event evidence are separable from semantic build policy; Cosign is an inspectable lead."
+    },
+    {
+      "candidate_line": 11,
+      "sources": [
+        "P06",
+        "P08",
+        "P09"
+      ],
+      "meaning": "Layout/functionary policy is a distinct alternative; material/product checks connect steps. Formats are separately specified."
+    },
+    {
+      "candidate_line": 13,
+      "sources": [
+        "P05",
+        "P10"
+      ],
+      "meaning": "TUF contributes channel freshness and authenticated metadata, complementary to build provenance."
+    }
+  ],
+  "source_claims_reviewed": [
+    {
+      "candidate_line": 7,
+      "disposition": "SLSA predicate/field and expectation claims corroborated; compromised-job and dependency coverage limited by F01/F02"
+    },
+    {
+      "candidate_line": 9,
+      "disposition": "Sigstore identity and transparency mechanism corroborated; Rekor wording L06"
+    },
+    {
+      "candidate_line": 11,
+      "disposition": "Layout policy mechanism independently corroborated; candidate depth and separate format limits L04"
+    },
+    {
+      "candidate_line": 13,
+      "disposition": "TUF purpose and rollback/freshness complement corroborated; not a replacement for provenance"
+    },
+    {
+      "candidate_line": 17,
+      "disposition": "Source documentation provides inspectable verifier lead; not code inspection or proof of sufficient threat coverage"
+    },
+    {
+      "candidate_line": 19,
+      "disposition": "Real Cosign lead; exact artifact operation/issuer policy not established, L01"
+    },
+    {
+      "candidate_line": 23,
+      "disposition": "Retired v1.0 header, current v1.2 pointer, major predicate and migration history corroborated; v1.2 diff not executed"
+    },
+    {
+      "candidate_lines": [
+        29,
+        30,
+        31,
+        32
+      ],
+      "disposition": "Comparison preserves distinct functions; SLSA dependency binding overbroad F02"
+    },
+    {
+      "candidate_lines": [
+        36,
+        37,
+        38
+      ],
+      "disposition": "Prospective themes useful, zero executed semantic tests; L02/L03"
+    },
+    {
+      "candidate_lines": [
+        42,
+        46
+      ],
+      "disposition": "Open product choices and explicit depth limits preserved; no unsupported universal winner"
+    }
+  ],
+  "proposed_vs_executed": {
+    "candidate_proposed": [
+      "Three prospective negative tests (missing provenance, changed dependency, untrusted builder)",
+      "Read TUF roles/in-toto spec/SLSA v1.2 differences next",
+      "Inspect implementation repositories/bundle/OIDC guidance"
+    ],
+    "candidate_observed_delivered": [
+      "Complete 779-word discovery",
+      "Source map and six authored bounded excerpt files",
+      "Saved native active receipt"
+    ],
+    "candidate_reported_executed": "Six primary web_fetch pages, HTTP 200; exact per-source times unknown; no raw candidate tool transcript in permitted frozen package.",
+    "candidate_executed_semantic_tests": "NONE_REPORTED_OR_EVIDENCED; exact transcript unavailable",
+    "candidate_execution_corroboration": "UNKNOWN for exact HTTP retrieval sequence/count; independently verified that cited primary pages and core supported claims exist. Do not convert proposals into executed checks.",
+    "reviewer_executed": [
+      "Full required frozen reads",
+      "Independent web primary retrieval and eleven saved HTTPS captures",
+      "SHA-256/byte comparison against 16 terminal artifacts and five input hashes",
+      "Read relevant primary sections; semantic review",
+      "JSON/local locator validation"
+    ],
+    "candidate_semantic_tests_observed": 0,
+    "candidate_semantic_tests_reported_as_executed": 0
+  },
+  "native": {
+    "overall_status": "UNKNOWN",
+    "activation_record": {
+      "status_in_saved_receipt": "active",
+      "goal_id": "goal-01a1242b-ab1e-76d1-be3e-054d7bbb20a6",
+      "objective_matches_wrapper": true,
+      "created_at_ms": 1791608204062,
+      "evidence_path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/native-goal-receipt.json",
+      "evidence_limit": "Saved purported activation response is present; no independently observed provider tool transcript was supplied in permitted files."
+    },
+    "actual_completion": "UNKNOWN",
+    "exactly_one_goal_and_activation_before_inference": "UNKNOWN",
+    "completion_claim": "T3 terminal summary reports same goal completed after saves at 05:01:02Z; summary is not a native terminal receipt.",
+    "t3_terminal_status": "completed",
+    "t3_pending_children": false,
+    "t3_basis": "Root-verified terminal snapshot supplied for this arm; kept separate from native proof",
+    "reviewer_goal": "One actual create_goal call at 2026-10-10T05:04:16Z. Live get_goal response saved in reviewer-native-goal-active.json. Must complete only after judgment saves."
+  },
+  "model_provenance": {
+    "fixture_nominal_label": "GLM 5.3 Flash Max",
+    "requested_provider_instance": "AUTHORIZED_PROVIDER_INSTANCE",
+    "requested_model": "muse-spark-1.3-contributor",
+    "requested_reasoning_effort": "max",
+    "t3_dispatch_echo": "AUTHORIZED_PROVIDER_INSTANCE / muse-spark-1.3-contributor",
+    "effective_model": "UNKNOWN",
+    "effective_reasoning_effort": "UNKNOWN",
+    "billing": "UNKNOWN",
+    "account": "UNKNOWN",
+    "basis": "Dispatch/request record route and orchestration echoes, not provider effective-model/account/billing telemetry."
+  },
+  "protocol": {
+    "status": "PARTIALLY_OBSERVABLE; UNVERIFIED_FIELDS_UNKNOWN",
+    "unauthorized_assistance": "NO_EVIDENCE_IN_INSPECTED_PACKAGE; not proven absent without transcript",
+    "native_gate_and_save_before_completion": "UNKNOWN",
+    "page_budget": "Six reported vs max eight; exact retrieval execution unverified",
+    "input_and_terminal_integrity": "ALL_INSPECTED_HASHES_MATCH",
+    "reviewer_constraints": "No delegation, candidate feedback/repair, account operations, Git/publication, other arms/history/roster or ER11 reads. Unique identity; own inbox only."
+  },
+  "time": {
+    "candidate_deadline_utc": "2026-10-10T05:11:04.161000+00:00",
+    "whole_arm_seconds": 900,
+    "investigation_max_seconds": 600,
+    "writing_reserve_seconds": 300,
+    "request_utc": "2026-10-10T04:56:04.161000+00:00",
+    "root_completed_observation_utc": "2026-10-10T05:04:01.523549+00:00",
+    "request_to_completed_observation_upper_bound_seconds": 477.362549,
+    "delivery_before_deadline": "CORROBORATED_BY_ROOT_COMPLETED_OBSERVATION_AND_FROZEN_ARTIFACT_MTIMES",
+    "actual_completion_timestamp": "UNKNOWN",
+    "exact_occupancy_latency_billing_savings": "UNKNOWN; no comparative inference",
+    "reviewer_start_utc": "2026-10-10T05:04:16+00:00",
+    "reviewer_deadline_utc": "2026-10-10T05:29:16+00:00",
+    "judgment_saved_utc": "2026-10-10T05:15:17.404585+00:00"
+  },
+  "unknowns": [
+    "Candidate actual native terminal receipt and exact activation/read/save order",
+    "Effective provider/model/reasoning/account/billing",
+    "Exact candidate per-source retrieval times and full web_fetch outputs",
+    "Candidate implementation-code inspection (explicitly not performed)",
+    "Cosign release, artifact/attestation transport and offline trust-root handling",
+    "Builder-specific generation guarantees, expected dependency baseline and completeness (not supplied)",
+    "Selected block-or-warn policy; no installer deployment exists in the brief"
+  ],
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "bytes": 2790,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": null,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/input-map.json",
+      "sha256": "672d301a188a5f86b7dd56c705aef41894ceaf62b963055780fcba18d46f0b32",
+      "bytes": 507,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": true,
+      "input_freeze_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/assignment.md",
+      "sha256": "c70c939ce8aa6671ad8fc9adea48f357570ab7c411f398fa82d4089cdf98984a",
+      "bytes": 2383,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": true,
+      "input_freeze_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/freeze.json",
+      "sha256": "3cbf11a47170d2eadf44fd5ad682785f5cbb0253e8d0a2ebc32e452e13980fc8",
+      "bytes": 2193,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": true,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/inputs/assignment.md",
+      "sha256": "599616a793cbad684a884396d85246ca2ab2a72cd0030379da4abe004f75357c",
+      "bytes": 2635,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": null,
+      "input_freeze_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/inputs/fixture.json",
+      "sha256": "8bd7bc2d640033063d6db3d4c31343f3e88d9ae0366a231c6f525a355c62d583",
+      "bytes": 1575,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": null,
+      "input_freeze_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/inputs/manifest.json",
+      "sha256": "f806e440e8fb13f91018cdd184ac9b533c6d1098387284a6e7f624fe942b064d",
+      "bytes": 241,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": null,
+      "input_freeze_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/discovery.md",
+      "sha256": "683fb7869b0013df2e756c434f8f057893789297cc45e12ef004815566501543",
+      "bytes": 6066,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": true,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/source-map.json",
+      "sha256": "b57047dc6e605145436f9f15d1fc6a9e8b149e3b55f2338af4ce05d62f532df0",
+      "bytes": 4925,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": true,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/terminal-science-freeze-root.json",
+      "sha256": "c40c9dd5f0aba0f721257f45f8037673ec256717fe6240217fcc747b6ae7c07f",
+      "bytes": 9599,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": null,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/native-goal-receipt.json",
+      "sha256": "1ec20a9b2df4dee87f18d7d819373ebc8ab2af21c8c7b74cae9022f9c4f6dd4f",
+      "bytes": 566,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": true,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/dispatch.json",
+      "sha256": "ec5b8aec5ddef51abca1dbfa6b0f7446059ce16faba3a5b4adca1aa369710461",
+      "bytes": 4381,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": true,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/raw-dispatch.json",
+      "sha256": "259cf35bbc769b7d4986633f043e59252cf2b911c08c8c79db7cc7796142353f",
+      "bytes": 2130,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": true,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/request.json",
+      "sha256": "9396fcafe6e2fa26432f4cd5aaabcfcc269d24e88994e6775994b7fd9b990545",
+      "bytes": 1076,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": true,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/sources/s01-slsa-provenance-v1.json",
+      "sha256": "ca468eaebb1d69c21fedec116f3e7d7135340f7f53a8d685aa066cefe5b648ea",
+      "bytes": 852,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": true,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/sources/s02-slsa-verifying-artifacts.json",
+      "sha256": "1fbf02623ad1d4a5393853a9e33185dee449cabbdd1113caa93b9302a8bbd788",
+      "bytes": 815,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": true,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/sources/s03-sigstore-overview.json",
+      "sha256": "e1c702691add835d6e979c0b4a80b4cd704e718e6571b01ef7bca3527d2dfde7",
+      "bytes": 677,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": true,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/sources/s04-cosign-attestation.json",
+      "sha256": "02023384e48351046d4b7e9920c3339542bbd71cb0dfa38c95e2bbfc22094f9c",
+      "bytes": 657,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": true,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/sources/s05-tuf-overview.json",
+      "sha256": "0a02d15d76a9b04e13cb24ebc25e38d5652630052f0f246445f4d41793c0b764",
+      "bytes": 747,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": true,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/sources/s06-intoto-docs.json",
+      "sha256": "058415a0f38a36c347827a7cb0931602a4e0ec73a408acb7c2cfaea55edd7e4d",
+      "bytes": 637,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": true,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/records/dispatch-20261010T045605491599-357b05138c794cde84c9dcd7e7e083f0.json",
+      "sha256": "ec5b8aec5ddef51abca1dbfa6b0f7446059ce16faba3a5b4adca1aa369710461",
+      "bytes": 4381,
+      "inspection": "hash_checked; byte-identical duplicate of fully read dispatch.json",
+      "terminal_freeze_match": true
+    }
+  ],
+  "terminal_science_freeze": {
+    "path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/terminal-science-freeze-root.json",
+    "all_sixteen_artifact_hashes_and_bytes_match": true,
+    "all_five_frozen_input_hashes_and_bytes_match": true,
+    "does_not_establish_semantics_or_native_completion": true
+  },
+  "primary_sources": [
+    {
+      "id": "P01",
+      "url": "https://slsa.dev/spec/v1.0/provenance",
+      "version": "SLSA v1.0 retired",
+      "retrieval_utc": "2026-10-10T05:07:11.524403+00:00",
+      "sha256": "a5d8066c3a299dc95ac748cce71bf32d029b5fa31085a415fd4c49d0eac5c92e",
+      "local_evidence": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P01.view.html"
+    },
+    {
+      "id": "P02",
+      "url": "https://slsa.dev/spec/v1.0/verifying-artifacts",
+      "version": "SLSA v1.0 retired",
+      "retrieval_utc": "2026-10-10T05:07:11.629735+00:00",
+      "sha256": "01052856dda6d2ad681cfa371e3cefae2495c5f05453281e6710ad862e9b2d85",
+      "local_evidence": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P02.view.html"
+    },
+    {
+      "id": "P03",
+      "url": "https://docs.sigstore.dev/about/overview/",
+      "version": "Live documentation; release version unspecified",
+      "retrieval_utc": "2026-10-10T05:07:11.353821+00:00",
+      "sha256": "ba8e1be8b7ffd811ca6ec0f2b2a8fe7134afea623c83501ffecbef26878fb3a1",
+      "local_evidence": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P03.view.html"
+    },
+    {
+      "id": "P04",
+      "url": "https://docs.sigstore.dev/cosign/verifying/attestation/",
+      "version": "Live documentation; Cosign release unspecified",
+      "retrieval_utc": "2026-10-10T05:07:11.323591+00:00",
+      "sha256": "acccc72850ed293f8cb8b065b9864cd57a8912c8486966081e46c59ba4f76935",
+      "local_evidence": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P04.view.html"
+    },
+    {
+      "id": "P05",
+      "url": "https://theupdateframework.io/docs/overview/",
+      "version": "Live overview; release version unspecified",
+      "retrieval_utc": "2026-10-10T05:07:11.372462+00:00",
+      "sha256": "c461b95395c7b2bb2d3e634679ff687faf935c064a4984bf1f55db25a47d16b2",
+      "local_evidence": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P05.view.html"
+    },
+    {
+      "id": "P06",
+      "url": "https://in-toto.io/docs/",
+      "version": "Live documentation index; release version unspecified",
+      "retrieval_utc": "2026-10-10T05:07:11.353944+00:00",
+      "sha256": "892c5a7edf83d48f7532ff808e3a390492597e47db298f449c2632727ad83f4f",
+      "local_evidence": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P06.view.html"
+    },
+    {
+      "id": "P07",
+      "url": "https://slsa.dev/spec/v1.0/requirements",
+      "version": "SLSA v1.0 retired",
+      "retrieval_utc": "2026-10-10T05:07:11.535554+00:00",
+      "sha256": "e419a99cab563e8e0592750141f93217f9ddabddce29e03cc289b6e31766ab03",
+      "local_evidence": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P07.view.html"
+    },
+    {
+      "id": "P08",
+      "url": "https://in-toto.io/docs/specs/",
+      "version": "Live spec index selecting stable v1.0",
+      "retrieval_utc": "2026-10-10T05:07:11.449377+00:00",
+      "sha256": "f9da83e4ae574a9d7212c204c90490829057d6b44d6c650c9fb3090660eb31e2",
+      "local_evidence": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P08.view.html"
+    },
+    {
+      "id": "P09",
+      "url": "https://raw.githubusercontent.com/in-toto/specification/v1.0/in-toto-spec.md",
+      "version": "in-toto specification v1.0",
+      "retrieval_utc": "2026-10-10T05:07:11.537835+00:00",
+      "sha256": "17d3326e4cf58234619dbfe821cdc5187e55e2c89f7b63f03699c46588322097",
+      "local_evidence": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P09.view.html"
+    },
+    {
+      "id": "P10",
+      "url": "https://theupdateframework.io/docs/metadata/",
+      "version": "Live roles/metadata; release version unspecified",
+      "retrieval_utc": "2026-10-10T05:07:11.458265+00:00",
+      "sha256": "ea6fbaf7970cc70eb5d717575cdfa7e101d2159216cac90c56054a71d832db23",
+      "local_evidence": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P10.view.html"
+    },
+    {
+      "id": "P11",
+      "url": "https://docs.sigstore.dev/cosign/verifying/verify/",
+      "version": "Live documentation; Cosign release unspecified",
+      "retrieval_utc": "2026-10-10T05:07:11.596315+00:00",
+      "sha256": "cddc158241a16c414589b05f77674d24902660e61c722f9630414c16a753e298",
+      "local_evidence": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P11.view.html"
+    }
+  ],
+  "evidence_index": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary-evidence.md",
+  "source_map": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/source-map.json",
+  "inspected_hash_manifest": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/inspected-artifacts.json",
+  "independence": "Only assigned treatment reviewed. No paired comparison, other outcome/status labels, unauthorized assistance, full-pipeline inference or ER11 rescore. No candidate changes."
+}

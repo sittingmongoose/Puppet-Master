@@ -1,0 +1,650 @@
+{
+  "schema": "er12-reviser-source-map-v1",
+  "run_id": "A4-01-treatment",
+  "stage": "reviser",
+  "source_id_scopes": {
+    "investigator": "S01-S19; IDs and metadata preserved from investigator/source-map.json",
+    "critic": "C01-C19; IDs and metadata preserved from critic/source-map.json and not rebound to investigator IDs",
+    "reviser": "R01; new primary source introduced for the distinct resumable-transfer analogy"
+  },
+  "reviewed_input_manifest": {
+    "note": "Copied from this stage's freeze.json. Hashes are expected frozen-input values; this stage did not recompute them.",
+    "inputs": [
+      {
+        "path": "ER12_RUNTIME/runs/A4-01/treatment/inputs/brief.md",
+        "sha256": "486a9334b9ac3a036f3955522821424396a7cde74c3516f59ca821cc171e6e10",
+        "bytes": 3375
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/assignment.md",
+        "sha256": "9cfc612f3fde4e36d4cd0288d9f8aa7f3499bdec9911be3fd8ca7ac8a7c7c121",
+        "bytes": 3706
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/input-map.json",
+        "sha256": "f7931dcc544b4e7a326548c5beb7b79a6ef4efefee965805cd77bfb934af25e5",
+        "bytes": 1727
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/discovery.md",
+        "sha256": "42a82081247090e0679e0826c3d84a8f1d6a55a5314c6f8c07c35f6b7ecf5bc9",
+        "bytes": 11323
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/draft.md",
+        "sha256": "ce68079f8f2d1f42d114faabd4acd3427fd960c05401a8e708ed2e490c400548",
+        "bytes": 14386
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/source-map.json",
+        "sha256": "fc066ae420da2aca73a66cf80f1242623a7d0bec88947937bb1b6aa34c9ca6e1",
+        "bytes": 17909
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/revealed-plan.md",
+        "sha256": "13c9e444018c0578380616e96b0a5df493431b8ba1148aec08fdb68c50b05c7f",
+        "bytes": 5986
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/plan-reveal.json",
+        "sha256": "3e26968b4c07fd10239046ea3080b42f4950751bccccba27dc7aff702d570a9b",
+        "bytes": 429
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/critic/critique.md",
+        "sha256": "8c089f40e37e5270788aee52a93ea38d5e6dfbae2be1e30a0f31cd719a2df1f4",
+        "bytes": 11549
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/critic/source-map.json",
+        "sha256": "2d71d54bde4f8789a88110f5e4f5aeeeb3172f3ead2aaf0b67864c1b470cfe30",
+        "bytes": 16957
+      }
+    ]
+  },
+  "source_sets": {
+    "investigator": {
+      "schema": "er12-source-map-v1",
+      "stage": "investigator",
+      "run_id": "A4-01-treatment",
+      "access_time_note": "UTC times are the observed grouped page-review times from this investigation; items in a group were opened/reviewed in the same read-only batch.",
+      "sources": [
+        {
+          "id": "S01",
+          "title": "Amazon S3: Uploading objects",
+          "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/upload-objects.html",
+          "version_or_commit": "AWS S3 User Guide, live documentation; page version not stated",
+          "locator": "Upload a single object; Upload an object in parts; Console upload limits",
+          "access_utc": "2026-10-10T04:04:52Z",
+          "observed_operation": "Amazon S3 single PUT/PutObject; multipart upload; separate S3 console upload workflow",
+          "claim_scope": "The page states a 5 GB limit for a single PUT request, a 160 GB limit for the console workflow, and describes multipart objects from 5 MB to 50 TB.",
+          "conditions_defaults_exceptions": "The single-request and console statements govern different operations. Units in the multipart summary differ from the quota page's binary expression. These are AWS S3 statements only.",
+          "applicability": "Comparison baseline only; archive provider and supported subset are unknown."
+        },
+        {
+          "id": "S02",
+          "title": "Amazon S3: Amazon S3 quotas",
+          "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/qfacts.html",
+          "version_or_commit": "AWS S3 User Guide, live documentation; page version not stated",
+          "locator": "Multipart upload and object size limits",
+          "access_utc": "2026-10-10T04:04:52Z",
+          "observed_operation": "Amazon S3 multipart upload quotas",
+          "claim_scope": "Maximum object size 48.8 TiB; 10,000 parts numbered 1–10,000; part sizes 5 MiB–5 GiB; no minimum size for the final part.",
+          "conditions_defaults_exceptions": "AWS quota facts only. ListParts and ListMultipartUploads listing limits are 1,000 per response and require pagination.",
+          "applicability": "Comparison baseline only; not an archive-provider limit."
+        },
+        {
+          "id": "S03",
+          "title": "Amazon S3: Multipart upload overview",
+          "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html",
+          "version_or_commit": "AWS S3 User Guide, live documentation; page version not stated",
+          "locator": "Multipart upload process; listing parts; completing and aborting multipart uploads",
+          "access_utc": "2026-10-10T04:04:52Z",
+          "observed_operation": "CreateMultipartUpload, UploadPart, ListParts, CompleteMultipartUpload, AbortMultipartUpload",
+          "claim_scope": "Multipart uploads have an upload ID; reusing a part number replaces that part; completion assembles selected parts in ascending order; multipart ETag is not necessarily MD5 of the object.",
+          "conditions_defaults_exceptions": "ListParts is paginated at 1,000 and used for verification, not as the completion manifest. Incomplete uploads do not expire by default; explicitly complete or abort. Stored parts are billed until completion/abort.",
+          "applicability": "Amazon S3 behavior only; reconcile the provider's actual part state and use an application-owned part plan."
+        },
+        {
+          "id": "S04",
+          "title": "Amazon S3: Lifecycle configuration examples",
+          "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/lifecycle-configuration-examples.html",
+          "version_or_commit": "AWS S3 User Guide, live documentation; page version not stated",
+          "locator": "Abort incomplete multipart uploads example; AbortIncompleteMultipartUpload action",
+          "access_utc": "2026-10-10T04:04:52Z",
+          "observed_operation": "S3 lifecycle cleanup of incomplete multipart upload parts",
+          "claim_scope": "A lifecycle rule can abort incomplete MPUs after configured DaysAfterInitiation; documentation gives a seven-day example.",
+          "conditions_defaults_exceptions": "Seven days is an example configuration, not a universal AWS default or retention recommendation.",
+          "applicability": "Use only after owner chooses policy and provider confirms lifecycle support."
+        },
+        {
+          "id": "S05",
+          "title": "Amazon S3: Checking object integrity during upload",
+          "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity-upload.html",
+          "version_or_commit": "AWS S3 User Guide, live documentation; page version not stated",
+          "locator": "Multipart uploads; full-object checksums; checksum algorithm behavior",
+          "access_utc": "2026-10-10T04:04:52Z",
+          "observed_operation": "Amazon S3 multipart checksum initiation, UploadPart, completion and checksum retrieval",
+          "claim_scope": "Multipart full-object checksums support CRC64NVME, CRC32, and CRC32C; SHA-256 is composite-only; multipart ETag is not full-object MD5; documented checksum part numbers are consecutive starting at 1.",
+          "conditions_defaults_exceptions": "If checksum algorithm is omitted at CreateMultipartUpload, some completion checksum headers can be accepted without being validated or stored. AWS validates and stores a supplied full-object CRC checksum under documented conditions.",
+          "applicability": "AWS-specific; choose only after the archive provider's end-to-end checksum support and scope are confirmed."
+        },
+        {
+          "id": "S06",
+          "title": "Amazon S3 API: CompleteMultipartUpload",
+          "url": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_CompleteMultipartUpload.html",
+          "version_or_commit": "AWS S3 API reference, live documentation; API reference version not stated",
+          "locator": "Response behavior and errors",
+          "access_utc": "2026-10-10T04:04:52Z",
+          "observed_operation": "Direct REST CompleteMultipartUpload response",
+          "claim_scope": "A response can begin with HTTP 200 and later contain an embedded Error in the response body; completion can take minutes.",
+          "conditions_defaults_exceptions": "AWS SDKs handle this response behavior; a direct REST client must parse the body instead of trusting the initial status alone.",
+          "applicability": "AWS REST behavior; test the selected provider and SDK/client."
+        },
+        {
+          "id": "S07",
+          "title": "Uppy AWS S3 plugin documentation",
+          "url": "https://uppy.io/docs/aws-s3/",
+          "version_or_commit": "Current unversioned documentation; page includes CDN example pinned to Uppy v5.2.1",
+          "locator": "Multipart uploads; signing; CORS; shouldUseMultipart; headersToExpose",
+          "access_utc": "2026-10-10T04:04:57Z",
+          "observed_operation": "Browser client signing and S3 multipart operations",
+          "claim_scope": "Docs describe per-operation signing, CORS requirements including exposed ETag and permitted required headers/methods, and a default multipart threshold of 100 MiB.",
+          "conditions_defaults_exceptions": "Threshold is Uppy configuration behavior in current unversioned docs; exact plugin release and service compatibility must be pinned and tested. Signing belongs on a server-side endpoint; do not expose long-lived credentials.",
+          "applicability": "Candidate browser implementation, not an established archive dependency or provider compatibility guarantee."
+        },
+        {
+          "id": "S08",
+          "title": "Uppy Golden Retriever documentation",
+          "url": "https://uppy.io/docs/golden-retriever/",
+          "version_or_commit": "Current unversioned documentation",
+          "locator": "Recovery after browser restart; IndexedDB; service worker behavior",
+          "access_utc": "2026-10-10T04:04:57Z",
+          "observed_operation": "Browser-side file and upload recovery",
+          "claim_scope": "IndexedDB saves file data up to a 10 MiB default; large file references use temporary browser storage and are not reliable across browser crash/restart.",
+          "conditions_defaults_exceptions": "Recovery can require the user to reselect the original file. This is a browser persistence behavior, separate from object-store MPU part limits.",
+          "applicability": "Browser UX/recovery consideration; confirm exact pinned library behavior."
+        },
+        {
+          "id": "S09",
+          "title": "tus Resumable Upload Protocol 1.0.0",
+          "url": "https://tus.io/protocols/resumable-upload",
+          "version_or_commit": "Protocol 1.0.0, dated 2016-03-25",
+          "locator": "Core protocol: Upload-Length, HEAD, PATCH, Upload-Offset; checksum, expiration and termination extensions",
+          "access_utc": "2026-10-10T04:04:57Z",
+          "observed_operation": "HTTP resumable upload protocol",
+          "claim_scope": "Client discovers current offset with HEAD and sends PATCH at Upload-Offset; Upload-Length provides known size. Checksum, expiry and termination are optional extensions that servers advertise.",
+          "conditions_defaults_exceptions": "Checksum extension verifies individual PATCH body/chunk, not a whole-file digest by itself. Client must honor advertised extensions and current offset.",
+          "applicability": "Analogous resumable transfer mechanism; does not by itself specify final archival integrity or storage semantics."
+        },
+        {
+          "id": "S10",
+          "title": "tusd v2.10.1 S3 storage backend",
+          "url": "https://github.com/tus/tusd/blob/v2.10.1/docs/_storage-backends/aws-s3.md",
+          "version_or_commit": "tusd tag v2.10.1",
+          "locator": "S3 backend requirements; metadata; temporary part handling; R2-specific part sizing",
+          "access_utc": "2026-10-10T04:04:57Z",
+          "observed_operation": "tusd S3-compatible backend with multipart upload",
+          "claim_scope": "Backend stores .info metadata, uses S3 multipart upload, and does not expose the final object until completion; PATCH bodies use temporary disk.",
+          "conditions_defaults_exceptions": "Requires strong read-after-write consistency; multiple instances need distributed locking. Docs specify R2 equal-sized nonfinal parts and recommend 50 MiB optimal part size for R2. Inspect API logs for incompatible S3 service behavior.",
+          "applicability": "Server-relay/resumable alternative; additional disk, consistency and locking operations; confirm deployed backend."
+        },
+        {
+          "id": "S11",
+          "title": "Amazon S3: Conditional writes",
+          "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/conditional-writes.html",
+          "version_or_commit": "AWS S3 User Guide, live documentation; page version not stated",
+          "locator": "If-None-Match and If-Match conditions for PutObject and CompleteMultipartUpload",
+          "access_utc": "2026-10-10T04:04:52Z",
+          "observed_operation": "Conditional PutObject and CompleteMultipartUpload",
+          "claim_scope": "AWS supports conditional write conditions for PutObject and CompleteMultipartUpload.",
+          "conditions_defaults_exceptions": "CreateMultipartUpload and UploadPart do not accept the conditions; in-progress MPUs do not count as existing objects; concurrent outcomes include conflict/precondition responses. AWS-specific.",
+          "applicability": "Supplement application idempotency and unique keys; provider support must be confirmed."
+        },
+        {
+          "id": "S12",
+          "title": "Cloudflare R2: Upload objects",
+          "url": "https://developers.cloudflare.com/r2/objects/upload-objects/",
+          "version_or_commit": "R2 docs live page; last updated 2026-07-29",
+          "locator": "Single PUT; multipart limits; incomplete multipart cleanup",
+          "access_utc": "2026-10-10T04:04:57Z",
+          "observed_operation": "Cloudflare R2 single PUT and multipart upload",
+          "claim_scope": "Single PUT maximum 5 GiB; multipart up to 5 TiB and 10,000 parts, part size 5 MiB–5 GiB; all nonfinal parts same size; incomplete MPUs auto-abort after seven days by default.",
+          "conditions_defaults_exceptions": "Cloudflare R2 only. ETag is part-based for multipart. A separate R2 page expresses the maximum differently (S13).",
+          "applicability": "Illustrative compatibility-specific example only; not the archive provider."
+        },
+        {
+          "id": "S13",
+          "title": "Cloudflare R2 platform limits",
+          "url": "https://developers.cloudflare.com/r2/platform/limits/",
+          "version_or_commit": "R2 docs live page; last updated 2026-06-08",
+          "locator": "Multipart upload limits",
+          "access_utc": "2026-10-10T04:04:57Z",
+          "observed_operation": "Cloudflare R2 multipart object size limit",
+          "claim_scope": "Page lists multipart upload maximum as 4.995 TiB and uses base-2 units.",
+          "conditions_defaults_exceptions": "R2 limits page differs from its upload guide's 5 TiB expression; retain both claims and seek clarification for operations near the bound.",
+          "applicability": "Illustrative R2 documentation discrepancy, not an archive-provider bound."
+        },
+        {
+          "id": "S14",
+          "title": "AWS CLI v2 S3 configuration",
+          "url": "https://docs.aws.amazon.com/cli/latest/topic/s3-config.html",
+          "version_or_commit": "AWS CLI v2 docs, page identifies current release v2.37.6",
+          "locator": "Multipart threshold, multipart chunksize and minimum upload part size",
+          "access_utc": "2026-10-10T04:04:57Z",
+          "observed_operation": "AWS CLI v2 high-level S3 transfer configuration",
+          "claim_scope": "Default multipart threshold and chunk size are 8 MB; minimum upload part size is 5 MB; CLI can auto-adjust invalid part size.",
+          "conditions_defaults_exceptions": "CLI configuration behavior, not a storage-service quota; specific S3 transfer behavior and exact installed CLI release must be checked."
+        },
+        {
+          "id": "S15",
+          "title": "AWS CLI v2 S3 FAQ",
+          "url": "https://docs.aws.amazon.com/cli/latest/topic/s3-faq.html",
+          "version_or_commit": "AWS CLI v2 docs, page identifies current release v2.37.5",
+          "locator": "Checksum calculation and defaults",
+          "access_utc": "2026-10-10T04:04:57Z",
+          "observed_operation": "AWS CLI v2 upload/download checksum behavior",
+          "claim_scope": "CLI v2 calculates/checksums transfers by default and documents CRC64NVME as default with supported alternatives.",
+          "conditions_defaults_exceptions": "CLI release-specific; page describes AWS S3 context. The page's version differs from S14 and must not imply a single pinned release.",
+          "applicability": "Optional fallback candidate only after exact CLI release/provider compatibility and auth are confirmed."
+        },
+        {
+          "id": "S16",
+          "title": "AWS CLI v2 cp command reference",
+          "url": "https://docs.aws.amazon.com/cli/latest/reference/s3/cp.html",
+          "version_or_commit": "AWS CLI v2 docs, page identifies current release v2.37.10",
+          "locator": "Options: endpoint URL, profile, region, checksum controls",
+          "access_utc": "2026-10-10T04:05:23Z",
+          "observed_operation": "AWS CLI v2 cp command options",
+          "claim_scope": "Command reference exposes endpoint URL, profile, region and checksum-related options.",
+          "conditions_defaults_exceptions": "An endpoint flag is an invocation capability, not proof of API or checksum compatibility with an arbitrary provider.",
+          "applicability": "Possible curator-authorized fallback, not an executed transfer."
+        },
+        {
+          "id": "S17",
+          "title": "MinIO issue #20455: trailing checksum missing from later object responses",
+          "url": "https://github.com/minio/minio/issues/20455",
+          "version_or_commit": "Issue reports MinIO RELEASE.2024-09-13T20-26-02Z; repository archived 2026-04-25",
+          "locator": "Original report and reproduction: PutObject then ListObjectsV2/GetObject/GetObjectAttributes",
+          "access_utc": "2026-10-10T04:04:57Z",
+          "observed_operation": "AWS .NET SDK single PutObject with trailing SHA-256 checksum, then object listing/get/attributes",
+          "claim_scope": "Reporter says PutObject response included checksum while later MinIO object responses omitted it; same code worked against AWS S3.",
+          "conditions_defaults_exceptions": "Public issue report, not independent live reproduction. It concerns single PutObject and retrieval, not multipart; the affected release is the reporter's server version.",
+          "applicability": "Bounded example of API-level compatibility drift; not evidence about archive provider."
+        },
+        {
+          "id": "S18",
+          "title": "MinIO PR #20456 and fix commit f246ee7",
+          "url": "https://github.com/minio/minio/commit/f246ee7",
+          "version_or_commit": "Commit f246ee7; PR #20456 merged to master 2024-09-19; no containing release tag identified",
+          "locator": "Fix for issue #20455: persist checksum validated from trailing checksum on PutObject",
+          "access_utc": "2026-10-10T04:04:57Z",
+          "observed_operation": "MinIO code fix for PutObject trailing checksum persistence",
+          "claim_scope": "Fix persists the trailing checksum that PutObject verified but did not store for later metadata responses.",
+          "conditions_defaults_exceptions": "Merged code is not proof that any packaged release includes it; no release tag was found during this bounded review.",
+          "applicability": "Code-level compatibility fix only; deployment/version must be verified."
+        },
+        {
+          "id": "S19",
+          "title": "tusd v2.10.1 release",
+          "url": "https://github.com/tus/tusd/releases/tag/v2.10.1",
+          "version_or_commit": "Tag v2.10.1, commit 388a27c; released 2026-09-16",
+          "locator": "Release notes reference PR #1385",
+          "access_utc": "2026-10-10T04:04:57Z",
+          "observed_operation": "tusd S3 store deferred-length upload release history",
+          "claim_scope": "Release includes PR #1385 fixing silent truncation of deferred-length S3-store uploads.",
+          "conditions_defaults_exceptions": "Applies to the released tusd version and deferred-length S3 store path; not evidence of archive deployment or all upload modes.",
+          "applicability": "Released failure/fix chain to include in version-pinned validation."
+        }
+      ]
+    },
+    "critic": {
+      "schema": "er12-critic-source-map-v1",
+      "stage": "critic",
+      "run_id": "A4-01-treatment",
+      "access_time_note": "Access UTC is the timestamp immediately before grouped read-only opens; pages in each group were opened together. Source IDs C01-C19 are critic-stage IDs and do not rebind investigator IDs S01-S19. No account, product, or archive system was accessed.",
+      "sources": [
+        {
+          "id": "C01",
+          "investigator_source_ids": [
+            "S01"
+          ],
+          "title": "Amazon S3: Uploading objects",
+          "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/upload-objects.html",
+          "version_or_commit": "AWS S3 User Guide live documentation; page version not stated",
+          "locator": "Size-dependent upload options; single PUT and console workflow",
+          "access_utc": "2026-10-10T04:19:31Z",
+          "observed_operation": "Amazon S3 single PUT/PutObject; S3 console upload; multipart API upload",
+          "conditions_defaults_exceptions": "The page assigns up to 5 GB to a single PUT, 160 GB to the separate console workflow, and 5 MB to 50 TB to multipart. These are distinct operations and live AWS documentation statements.",
+          "applicability": "AWS comparison baseline only; not an archive-provider limit."
+        },
+        {
+          "id": "C02",
+          "investigator_source_ids": [
+            "S02"
+          ],
+          "title": "Amazon S3 multipart upload limits",
+          "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/qfacts.html",
+          "version_or_commit": "AWS S3 User Guide live documentation; page version not stated",
+          "locator": "Multipart upload core specifications",
+          "access_utc": "2026-10-10T04:19:31Z",
+          "observed_operation": "Amazon S3 multipart upload object and part limits",
+          "conditions_defaults_exceptions": "The page lists 48.8 TiB maximum object size, 10,000 part numbers, 5 MiB to 5 GiB part size, no minimum on the final part, and 1,000 parts per ListParts response. AWS-specific values.",
+          "applicability": "Comparison baseline only; the archive provider and API subset are unknown."
+        },
+        {
+          "id": "C03",
+          "investigator_source_ids": [
+            "S05"
+          ],
+          "title": "Checking object integrity for data uploads in Amazon S3",
+          "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity-upload.html",
+          "version_or_commit": "AWS S3 User Guide live documentation; page version not stated",
+          "locator": "Multipart uploads; checksum type matrix; full-object checksum conditions",
+          "access_utc": "2026-10-10T04:19:31Z",
+          "observed_operation": "AWS multipart initiation, part upload, completion, checksum validation and retrieval",
+          "conditions_defaults_exceptions": "Full-object multipart validation is available for CRC64NVME, CRC32 and CRC32C; SHA-256 is composite-only. Multipart ETag is not a whole-object MD5. When using checksum mode, part numbers must be consecutive from 1. For existing algorithms, a completion checksum header can be accepted but not validated or stored if the algorithm was omitted at initiation.",
+          "applicability": "AWS checksum behavior only; exact provider, operation, algorithm and checksum scope require confirmation."
+        },
+        {
+          "id": "C04",
+          "investigator_source_ids": [
+            "S06"
+          ],
+          "title": "Amazon S3 CompleteMultipartUpload API",
+          "url": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_CompleteMultipartUpload.html",
+          "version_or_commit": "AWS S3 API reference live documentation; page version not stated",
+          "locator": "Response behavior and embedded error example",
+          "access_utc": "2026-10-10T04:19:31Z",
+          "observed_operation": "Direct REST CompleteMultipartUpload",
+          "conditions_defaults_exceptions": "AWS may start a response with HTTP 200 and later embed an Error in its body. Direct REST clients must parse the response body; AWS SDKs handle the condition.",
+          "applicability": "AWS REST behavior only; verify the chosen provider and client."
+        },
+        {
+          "id": "C05",
+          "investigator_source_ids": [
+            "S07"
+          ],
+          "title": "Uppy AWS S3 plugin documentation",
+          "url": "https://uppy.io/docs/aws-s3/",
+          "version_or_commit": "Current unversioned documentation; page example pins CDN files to Uppy v5.2.1",
+          "locator": "shouldUseMultipart default; signing operation table; bucket CORS setup",
+          "access_utc": "2026-10-10T04:19:31Z",
+          "observed_operation": "Browser client selecting single or multipart S3 upload, per-operation signing and CORS",
+          "conditions_defaults_exceptions": "Current docs default to multipart for files larger than 100 MiB; the threshold is configurable. Multipart requires exposed ETag and CORS permissions for required headers/methods. Signing endpoints and exact library release are implementation choices.",
+          "applicability": "Browser-library behavior and candidate only; does not establish archive dependency or service compatibility."
+        },
+        {
+          "id": "C06",
+          "investigator_source_ids": [
+            "S08"
+          ],
+          "title": "Uppy Golden Retriever documentation",
+          "url": "https://uppy.io/docs/golden-retriever/",
+          "version_or_commit": "Current unversioned documentation; page example pins Uppy v5.2.1",
+          "locator": "IndexedDB, optional Service Worker storage, restore behavior",
+          "access_utc": "2026-10-10T04:19:31Z",
+          "observed_operation": "Browser-side persistence and restoration of selected files and Uppy state",
+          "conditions_defaults_exceptions": "IndexedDB stores file data up to 10 MiB per file by default. Optional Service Worker storage can temporarily retain references to larger files, but these do not persist through browser crashes or restarts; failed restores can offer reselection.",
+          "applicability": "Browser recovery behavior, separate from storage-service part limits; pin and test deployed library."
+        },
+        {
+          "id": "C07",
+          "investigator_source_ids": [
+            "S09"
+          ],
+          "title": "tus Resumable Upload Protocol 1.0.x",
+          "url": "https://tus.io/protocols/resumable-upload",
+          "version_or_commit": "tus protocol 1.0.0, dated 2016-03-25",
+          "locator": "Upload-Length, HEAD, PATCH, Upload-Offset; checksum, expiration and termination extensions",
+          "access_utc": "2026-10-10T04:19:31Z",
+          "observed_operation": "HTTP resumable upload protocol",
+          "conditions_defaults_exceptions": "HEAD reports the current offset and PATCH continues at that offset. Checksum, expiration and termination are optional extensions that a server must advertise. The checksum extension verifies each PATCH body, not the complete file by itself.",
+          "applicability": "Analogous resumability mechanism; does not define object-store compatibility or final archival verification."
+        },
+        {
+          "id": "C08",
+          "investigator_source_ids": [
+            "S10"
+          ],
+          "title": "tusd v2.10.1 S3 storage backend",
+          "url": "https://github.com/tus/tusd/blob/v2.10.1/docs/_storage-backends/aws-s3.md",
+          "version_or_commit": "tusd tag v2.10.1",
+          "locator": "Storage format; temporary disk; consistency and locking; R2 part sizing",
+          "access_utc": "2026-10-10T04:19:39Z",
+          "observed_operation": "tusd S3-compatible multipart backend",
+          "conditions_defaults_exceptions": "The backend stores metadata and multipart parts; the final object appears only after completion. PATCH bodies may use temporary disk. It requires strong read-after-write consistency; multiple instances sharing a bucket require distributed locking. R2 needs equal-sized nonfinal parts and the docs recommend 50 MiB part sizing in that R2 context.",
+          "applicability": "Version-specific server-route requirements; compatible API behavior and operations must be tested against the selected provider."
+        },
+        {
+          "id": "C09",
+          "investigator_source_ids": [
+            "S19"
+          ],
+          "title": "tusd v2.10.1 release",
+          "url": "https://github.com/tus/tusd/releases/tag/v2.10.1",
+          "version_or_commit": "Tag v2.10.1, commit 388a27c; released 2026-09-16",
+          "locator": "What's Changed: s3store PR #1385",
+          "access_utc": "2026-10-10T04:19:39Z",
+          "observed_operation": "tusd S3 store deferred-length upload release history",
+          "conditions_defaults_exceptions": "Release notes list PR #1385 fixing silent truncation of deferred-length uploads in the S3 store.",
+          "applicability": "Applies to the tagged tusd version and deferred-length S3-store path; does not establish archive deployment."
+        },
+        {
+          "id": "C10",
+          "investigator_source_ids": [
+            "S17"
+          ],
+          "title": "MinIO issue #20455: trailing checksum not retrievable",
+          "url": "https://github.com/minio/minio/issues/20455",
+          "version_or_commit": "Public issue report; reporter used RELEASE.2024-09-13T20-26-02Z",
+          "locator": "Expected/current behavior and issue activity",
+          "access_utc": "2026-10-10T04:19:39Z",
+          "observed_operation": "AWS .NET SDK single PutObject with trailing SHA-256, followed by listing/get/attributes",
+          "conditions_defaults_exceptions": "Reporter states the PutObject response included the checksum but later MinIO responses omitted it, while AWS S3 returned it. This is a reported repro, not an independent live test; it concerns PutObject and retrieval, not multipart.",
+          "applicability": "Bounded compatibility-history example; does not describe the unknown archive service."
+        },
+        {
+          "id": "C11",
+          "investigator_source_ids": [
+            "S18"
+          ],
+          "title": "MinIO commit f246ee7: Fix PutObject Trailing checksum",
+          "url": "https://github.com/minio/minio/commit/f246ee7",
+          "version_or_commit": "Commit f246ee7; commit message links issue #20455; no containing release tag established by this page",
+          "locator": "Commit summary and diff",
+          "access_utc": "2026-10-10T04:19:39Z",
+          "observed_operation": "Code fix to persist checksum verified from a trailing PutObject checksum",
+          "conditions_defaults_exceptions": "Commit states PutObject verified trailing checksums but did not store them; this commit changes the code. A commit is not evidence of a packaged release containing it.",
+          "applicability": "Code-level fix only; not evidence for a deployed MinIO or archive release."
+        },
+        {
+          "id": "C12",
+          "investigator_source_ids": [
+            "S03"
+          ],
+          "title": "Amazon S3 multipart upload overview",
+          "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html",
+          "version_or_commit": "AWS S3 User Guide live documentation; page version not stated",
+          "locator": "ListParts; completion manifest; concurrent uploads; multipart pricing",
+          "access_utc": "2026-10-10T04:19:39Z",
+          "observed_operation": "CreateMultipartUpload, UploadPart, ListParts, CompleteMultipartUpload and abort",
+          "conditions_defaults_exceptions": "ListParts returns at most 1,000 and must be paginated. AWS says to maintain the part-number/ETag list used for completion rather than using a listing as the completion payload. In-progress part storage is billed until complete or abort; lifecycle cleanup is recommended.",
+          "applicability": "AWS workflow only; reconcile and test provider-specific behavior."
+        },
+        {
+          "id": "C13",
+          "investigator_source_ids": [
+            "S11"
+          ],
+          "title": "Amazon S3 conditional writes",
+          "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/conditional-writes.html",
+          "version_or_commit": "AWS S3 User Guide live documentation; page version not stated",
+          "locator": "If-None-Match and If-Match conditional writes; concurrent outcomes",
+          "access_utc": "2026-10-10T04:19:39Z",
+          "observed_operation": "Conditional PutObject and CompleteMultipartUpload",
+          "conditions_defaults_exceptions": "AWS documents final-write conditional behavior and 412/409 race responses. Conditions do not reserve an in-progress multipart upload at initiation or on UploadPart; a 409 on completion may require restarting the MPU.",
+          "applicability": "AWS-specific supplementary race control, not a replacement for application idempotency or archive-provider confirmation."
+        },
+        {
+          "id": "C14",
+          "investigator_source_ids": [
+            "S14"
+          ],
+          "title": "AWS CLI v2 S3 configuration",
+          "url": "https://docs.aws.amazon.com/cli/latest/topic/s3-config.html",
+          "version_or_commit": "AWS CLI v2 reference page identifies v2.37.6",
+          "locator": "multipart_threshold and multipart_chunksize defaults",
+          "access_utc": "2026-10-10T04:19:39Z",
+          "observed_operation": "AWS CLI high-level S3 transfer configuration",
+          "conditions_defaults_exceptions": "The page states 8 MB defaults for threshold and chunksize and 5 MB minimum upload chunksize; invalid part sizes may be adjusted. These are CLI configuration behaviors, not a universal storage-service quota.",
+          "applicability": "CLI candidate only; exact package and provider behavior remain to be checked."
+        },
+        {
+          "id": "C15",
+          "investigator_source_ids": [
+            "S15"
+          ],
+          "title": "AWS CLI v2 S3 FAQ: checksum validation",
+          "url": "https://docs.aws.amazon.com/cli/latest/topic/s3-faq.html",
+          "version_or_commit": "AWS CLI v2 reference page identifies v2.37.5",
+          "locator": "Does the AWS CLI validate checksums? Upload section",
+          "access_utc": "2026-10-10T04:19:39Z",
+          "observed_operation": "AWS CLI v2 uploads and downloads using S3 commands",
+          "conditions_defaults_exceptions": "The page says CLI v2 calculates upload checksums by default, with CRC64NVME as default and alternate algorithms selectable. It describes AWS S3 behavior; the page's version differs from adjacent current CLI docs.",
+          "applicability": "Possible fallback behavior only; no archive endpoint or local CLI execution verified."
+        },
+        {
+          "id": "C16",
+          "investigator_source_ids": [
+            "S16"
+          ],
+          "title": "AWS CLI v2 cp command reference",
+          "url": "https://docs.aws.amazon.com/cli/latest/reference/s3/cp.html",
+          "version_or_commit": "AWS CLI v2 reference page identifies v2.37.10",
+          "locator": "Global options endpoint-url, profile, region and checksum options",
+          "access_utc": "2026-10-10T04:19:39Z",
+          "observed_operation": "AWS CLI high-level cp command options",
+          "conditions_defaults_exceptions": "Options can direct the command to an endpoint and select a profile/region; having an endpoint option does not establish API/checksum compatibility with an arbitrary S3-compatible service.",
+          "applicability": "Candidate CLI fallback controls only; no transfer was run."
+        },
+        {
+          "id": "C17",
+          "investigator_source_ids": [
+            "S12"
+          ],
+          "title": "Cloudflare R2 upload objects",
+          "url": "https://developers.cloudflare.com/r2/objects/upload-objects/",
+          "version_or_commit": "Live R2 page last updated 2026-07-29",
+          "locator": "Upload method comparison; multipart limits and incomplete upload lifecycles",
+          "access_utc": "2026-10-10T04:19:47Z",
+          "observed_operation": "Cloudflare R2 single PUT and multipart upload",
+          "conditions_defaults_exceptions": "Page says 5 GiB single PUT, 5 TiB multipart with up to 10,000 parts, 5 MiB–5 GiB parts, equal nonfinal part sizes, and automatic abort of incomplete uploads after 7 days by default.",
+          "applicability": "R2-specific example only; not an archive-provider limit or retention default."
+        },
+        {
+          "id": "C18",
+          "investigator_source_ids": [
+            "S13"
+          ],
+          "title": "Cloudflare R2 platform limits",
+          "url": "https://developers.cloudflare.com/r2/platform/limits/",
+          "version_or_commit": "Live R2 page last updated 2026-06-08",
+          "locator": "Object and multipart upload limit table; unit note and footnotes",
+          "access_utc": "2026-10-10T04:19:47Z",
+          "observed_operation": "Cloudflare R2 maximum upload size",
+          "conditions_defaults_exceptions": "The table lists multipart upload maximum as 4.995 TiB and explains base-2 units. Its upload guide says 5 TiB; preserve both expressions and their source context.",
+          "applicability": "R2 documentation discrepancy only; 40 GB is below both stated bounds."
+        },
+        {
+          "id": "C19",
+          "investigator_source_ids": [
+            "S04"
+          ],
+          "title": "Amazon S3 Lifecycle configuration examples",
+          "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/lifecycle-configuration-examples.html",
+          "version_or_commit": "AWS S3 User Guide live documentation; page version not stated",
+          "locator": "Lifecycle configuration to abort multipart uploads",
+          "access_utc": "2026-10-10T04:21:23Z",
+          "observed_operation": "AbortIncompleteMultipartUpload lifecycle action",
+          "conditions_defaults_exceptions": "A lifecycle rule can abort incomplete MPUs after a configured number of days; seven days is an example, not a universal default or policy recommendation.",
+          "applicability": "AWS-only cleanup behavior; the archive owner must confirm provider support and set retention."
+        }
+      ]
+    }
+  },
+  "reviser_sources": [
+    {
+      "id": "R01",
+      "title": "Resumable uploads | Cloud Storage | Google Cloud Documentation",
+      "url": "https://cloud.google.com/storage/docs/resumable-uploads",
+      "canonical_url_after_redirect": "https://docs.cloud.google.com/storage/docs/resumable-uploads",
+      "version_or_commit": "Live Google Cloud documentation; page/API version not stated",
+      "locator": "JSON API and XML API resumable initiation; browser CORS at session creation; querying the persisted offset; session URI handling and expiry; integrity checks",
+      "access_utc": "2026-10-10T04:33:03Z",
+      "observed_operation": "Google Cloud Storage JSON API resumable upload: POST Object with uploadType=resumable, receive a session URI, then issue one or more PUT Object requests; query persisted offset and resume after an error",
+      "claim_scope": "The session URI is used for upload requests and expires after one week; after an error, a client can query the persisted offset and resume. The documentation recommends final-object integrity checking and states intermediate portions/chunks cannot be integrity-checked.",
+      "conditions_defaults_exceptions": "For browser cross-origin uploads, include Origin when initiating the session or subsequent browser requests may lack CORS response headers. The session URI acts as a bearer authentication token and should be protected and used over HTTPS. These are Google Cloud Storage JSON/XML API behaviors.",
+      "applicability": "Distinct resumability analogy only, added to satisfy an additive reading of the brief. It is not an archive intake route, provider recommendation, or evidence that the archive endpoint supports these operations."
+    }
+  ],
+  "reviser_rechecks": [
+    {
+      "id": "RC01",
+      "source_ref": "critic:C03",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity-upload.html",
+      "version_or_commit": "AWS S3 User Guide live documentation; page version not stated",
+      "locator": "Multipart integrity guide, composite/part-level checksum note and checksum type table",
+      "access_utc": "2026-10-10T04:33:03Z",
+      "subject_operation": "AWS multipart upload using composite (part-level) checksums",
+      "units_type_domain": "Integer part numbers; must start at 1 and be consecutive in the stated composite/part-level checksum mode.",
+      "governing_condition_default_exception": "AWS documentation says nonconsecutive numbers can produce HTTP 500 at CompleteMultipartUpload. The condition is scoped to composite or part-level checksums.",
+      "observed_result": "Confirmed the omitted condition and narrowed the critic's shorthand 'when using checksum mode' to the primary source's exact checksum type.",
+      "applicability": "AWS documentation only. The source does not establish the same rule for the unknown archive provider or extend this condition to full-object checksum mode."
+    },
+    {
+      "id": "RC02",
+      "source_ref": "critic:C05",
+      "url": "https://uppy.io/docs/aws-s3/",
+      "version_or_commit": "Current unversioned documentation; page example pins CDN files to Uppy v5.2.1",
+      "locator": "shouldUseMultipart(file) option and default",
+      "access_utc": "2026-10-10T04:33:03Z",
+      "subject_operation": "Uppy AWS S3 plugin selection between single-request and multipart upload",
+      "units_type_domain": "Default multipart predicate is files larger than 100 MiB; the threshold is configurable.",
+      "governing_condition_default_exception": "Under the documented default, a 20 MB pilot file uses the single-request path. A configured threshold can change that selection; this is browser-library behavior, not an object-store limit.",
+      "observed_result": "Confirmed the critic's threshold finding and made the pilot's small-file selection policy explicit.",
+      "applicability": "Candidate browser library only. Pin the deployed release and confirm endpoint behavior; no archive dependency is established."
+    },
+    {
+      "id": "RC03",
+      "source_ref": "reviser:R01",
+      "url": "https://cloud.google.com/storage/docs/resumable-uploads",
+      "canonical_url_after_redirect": "https://docs.cloud.google.com/storage/docs/resumable-uploads",
+      "version_or_commit": "Live documentation; page/API version not stated",
+      "locator": "REST APIs, session URI, offset recovery, expiry, integrity, and browser CORS",
+      "access_utc": "2026-10-10T04:33:03Z",
+      "subject_operation": "Google Cloud Storage JSON API resumable session initiation and later data PUTs",
+      "units_type_domain": "Session URI, byte offset, and one-week session lifetime as documented.",
+      "governing_condition_default_exception": "The URI is a bearer capability; browser CORS depends on Origin at initiation. After error the client can query the persisted offset. The session URI expires after one week.",
+      "observed_result": "Primary documentation supports a distinct session-URI resumability analogy, separate from the two proposed archive routes.",
+      "applicability": "Analogy only; no Google service use or archive compatibility claim."
+    }
+  ],
+  "reviser_calculations": [
+    {
+      "subject": "AWS 5 MiB minimum part sizing illustration",
+      "units": "Bytes, where MiB is binary",
+      "decimal_40_GB": {
+        "file_bytes": 40000000000,
+        "minimum_part_bytes": 5242880,
+        "ceiling_part_count": 7630
+      },
+      "binary_40_GiB": {
+        "file_bytes": 42949672960,
+        "minimum_part_bytes": 5242880,
+        "ceiling_part_count": 8192
+      },
+      "applicability": "Arithmetic illustration only; exact file bytes and confirmed provider rules control. AWS allows the final part to be below the minimum."
+    }
+  ]
+}

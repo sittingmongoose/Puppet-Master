@@ -1,0 +1,94 @@
+{
+  "observed_at_utc": "2026-10-10T04:46:40.695145+00:00",
+  "basis": "root observed terminal final T3 task/no pending; separate from native proof",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/critic/critique.md",
+      "bytes": 9813,
+      "sha256": "dbedfb9d79363bde1debddcc5566a66cb8de13959d9ef70e082c5edd12e4a6ca",
+      "mtime_ns": 1791606846019948743
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/critic/source-map.json",
+      "bytes": 13884,
+      "sha256": "7204ed066db5f0e0a1983fb997f3010fc9e1fd7fc1583102e708834780b4e05c",
+      "mtime_ns": 1791606873216158971
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/critic/sources/index.md",
+      "bytes": 2962,
+      "sha256": "54fc0a0fdeb16de59ac8cfa01d7c1c4e27b3c1e07d4147ca4b0759a859181c2f",
+      "mtime_ns": 1791606879480207393
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/discovery.md",
+      "bytes": 10175,
+      "sha256": "6e1f863f80f94caf851622885353b113f755cde02ae88eb67ba0510926c2aa80",
+      "mtime_ns": 1791606279311621795
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/draft.md",
+      "bytes": 23750,
+      "sha256": "10bf7a652992cdfe13054c57ad06a22e6f55749827645f046efc8c4901b9709b",
+      "mtime_ns": 1791606540812945493
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 6139,
+      "sha256": "b80e30c3938344528a49c1b43144af18f14b0d8ed27a2603b845042467e4e067",
+      "mtime_ns": 1791606312781651465
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/source-map.json",
+      "bytes": 15841,
+      "sha256": "96139a7b0799b3159b1a75d24b2ecdf368cb826b1b356d90605d8506f46ac7f8",
+      "mtime_ns": 1791606296243699112
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/sources/index.md",
+      "bytes": 2996,
+      "sha256": "b882b2bba50bb368183a1ecae04f5dc39883caece4c766b90fa412501b364755",
+      "mtime_ns": 1791606299033711852
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/final.md",
+      "bytes": 25805,
+      "sha256": "39e3e803c8b82db918ab3272dc424c18f3a1509b25967bc21584dae6c791d6a9",
+      "mtime_ns": 1791607532412796185
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/source-map.json",
+      "bytes": 36783,
+      "sha256": "639b9cc791624837e0925fbac46eaf138dfa54b280582a63640af205721d7d35",
+      "mtime_ns": 1791607402119490145
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/sources/index.md",
+      "bytes": 3845,
+      "sha256": "037a79065a391808d0b84bec684f0c2d5553c85631ba41902e635decddf62597",
+      "mtime_ns": 1791607402119751076
+    }
+  ],
+  "final_stage_task": {
+    "slot": "A5-01",
+    "arm": "treatment",
+    "stage": "reviser",
+    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A5-01-treatment-reviser-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A5-01-treatment-reviser-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A5-01-treatment-reviser-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A5-01-treatment-reviser-v1",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A5-01-treatment-reviser-v1:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "Completed the assigned reviser stage. The full proposal, source map, and navigable source index are saved in the assigned directory:\n\n- [final.md](ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/sources/index.md)\n\nThe proposal addresses all eight obligations and dispositions every critic finding, including the interviewer-notes gap and independent checks of EBU, BagIt, and MetaEdit claims. Required outputs were saved before native Goal completion. The Goal tool returned **complete** (thread ID `01a12419-a02a-7732-b1e5-4f218af5b4bd`); no nested agents or parent-history sources were used.\n\nNative Goal usage: 99,889 tokens over 8m 15s.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A5-01-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:64f14fbb-c005-4b26-9799-59bed332752c",
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "summary": "Completed the assigned reviser stage. The full proposal, source map, and navigable source index are saved in the assigned directory:\n\n- [final.md](ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/sources/index.md)\n\nThe proposal addresses all eight obligations and dispositions every critic finding, including the interviewer-notes gap and independent checks of EBU, BagIt, and MetaEdit claims. Required outputs were saved before native Goal completion. The Goal tool returned **complete** (thread ID `01a12419-a02a-7732-b1e5-4f218af5b4bd`); no nested agents or parent-history sources were used.\n\nNative Goal usage: 99,889 tokens over 8m 15s.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A5-01-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:64f14fbb-c005-4b26-9799-59bed332752c",
+    "waitTimedOut": false
+  }
+}

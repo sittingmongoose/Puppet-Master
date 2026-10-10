@@ -1,0 +1,191 @@
+[
+  {
+    "freeze_stage": "investigator",
+    "path": "ER12_RUNTIME/runs/A5-01/control/inputs/brief.md",
+    "declared_sha256": "e26ff5f138c34638ec94bc7d4ff3bf93a23f27ddca1a17cca3090868737430e8",
+    "observed_sha256": "e26ff5f138c34638ec94bc7d4ff3bf93a23f27ddca1a17cca3090868737430e8",
+    "declared_bytes": 3440,
+    "observed_bytes": 3440,
+    "matches": true
+  },
+  {
+    "freeze_stage": "investigator",
+    "path": "ER12_RUNTIME/runs/A5-01/control/stages/investigator/assignment.md",
+    "declared_sha256": "a70f58babd29a06d1d86b0c5f6ddc12ac6ee783ee27b8f5eb4536fb39c8674be",
+    "observed_sha256": "a70f58babd29a06d1d86b0c5f6ddc12ac6ee783ee27b8f5eb4536fb39c8674be",
+    "declared_bytes": 3712,
+    "observed_bytes": 3712,
+    "matches": true
+  },
+  {
+    "freeze_stage": "investigator",
+    "path": "ER12_RUNTIME/runs/A5-01/control/stages/investigator/input-map.json",
+    "declared_sha256": "fab423b91e59d7e686a1cd7b8bc7aae71a5b994a7cb64640548564145c4c83fb",
+    "observed_sha256": "fab423b91e59d7e686a1cd7b8bc7aae71a5b994a7cb64640548564145c4c83fb",
+    "declared_bytes": 714,
+    "observed_bytes": 714,
+    "matches": true
+  },
+  {
+    "freeze_stage": "critic",
+    "path": "ER12_RUNTIME/runs/A5-01/control/inputs/brief.md",
+    "declared_sha256": "e26ff5f138c34638ec94bc7d4ff3bf93a23f27ddca1a17cca3090868737430e8",
+    "observed_sha256": "e26ff5f138c34638ec94bc7d4ff3bf93a23f27ddca1a17cca3090868737430e8",
+    "declared_bytes": 3440,
+    "observed_bytes": 3440,
+    "matches": true
+  },
+  {
+    "freeze_stage": "critic",
+    "path": "ER12_RUNTIME/runs/A5-01/control/stages/critic/assignment.md",
+    "declared_sha256": "18861ab244da5be515ce905986d75df8f4740b88fc4ab84a476c0742fbae53a4",
+    "observed_sha256": "18861ab244da5be515ce905986d75df8f4740b88fc4ab84a476c0742fbae53a4",
+    "declared_bytes": 3306,
+    "observed_bytes": 3306,
+    "matches": true
+  },
+  {
+    "freeze_stage": "critic",
+    "path": "ER12_RUNTIME/runs/A5-01/control/stages/critic/input-map.json",
+    "declared_sha256": "4451c974279525cf72629935c3210397c1b3c94957b3c2bdd5afc98ff550006a",
+    "observed_sha256": "4451c974279525cf72629935c3210397c1b3c94957b3c2bdd5afc98ff550006a",
+    "declared_bytes": 1390,
+    "observed_bytes": 1390,
+    "matches": true
+  },
+  {
+    "freeze_stage": "critic",
+    "path": "ER12_RUNTIME/runs/A5-01/control/stages/investigator/discovery.md",
+    "declared_sha256": "da02e0037cc5846af2a4ae08375b5ea8f2684f297034daefed00d9e1a0c17051",
+    "observed_sha256": "da02e0037cc5846af2a4ae08375b5ea8f2684f297034daefed00d9e1a0c17051",
+    "declared_bytes": 8637,
+    "observed_bytes": 8637,
+    "matches": true
+  },
+  {
+    "freeze_stage": "critic",
+    "path": "ER12_RUNTIME/runs/A5-01/control/stages/investigator/draft.md",
+    "declared_sha256": "e41ae67002ae66424e0df685a71cf1d935ad55acd6c3d4eee3165d1ad60c29f8",
+    "observed_sha256": "e41ae67002ae66424e0df685a71cf1d935ad55acd6c3d4eee3165d1ad60c29f8",
+    "declared_bytes": 22491,
+    "observed_bytes": 22491,
+    "matches": true
+  },
+  {
+    "freeze_stage": "critic",
+    "path": "ER12_RUNTIME/runs/A5-01/control/stages/investigator/source-map.json",
+    "declared_sha256": "989bfca95595aa52a37d498dde4ccd8c63aed4c763010faf9a3ff09541f8edd2",
+    "observed_sha256": "989bfca95595aa52a37d498dde4ccd8c63aed4c763010faf9a3ff09541f8edd2",
+    "declared_bytes": 14278,
+    "observed_bytes": 14278,
+    "matches": true
+  },
+  {
+    "freeze_stage": "critic",
+    "path": "ER12_RUNTIME/runs/A5-01/control/stages/investigator/revealed-plan.md",
+    "declared_sha256": "b80e30c3938344528a49c1b43144af18f14b0d8ed27a2603b845042467e4e067",
+    "observed_sha256": "b80e30c3938344528a49c1b43144af18f14b0d8ed27a2603b845042467e4e067",
+    "declared_bytes": 6139,
+    "observed_bytes": 6139,
+    "matches": true
+  },
+  {
+    "freeze_stage": "critic",
+    "path": "ER12_RUNTIME/runs/A5-01/control/stages/investigator/plan-reveal.json",
+    "declared_sha256": "520c07ec1924ad4535b2d78143ee48f184e60baea6dd049c2289c2eadc03ade4",
+    "observed_sha256": "520c07ec1924ad4535b2d78143ee48f184e60baea6dd049c2289c2eadc03ade4",
+    "declared_bytes": 426,
+    "observed_bytes": 426,
+    "matches": true
+  },
+  {
+    "freeze_stage": "reviser",
+    "path": "ER12_RUNTIME/runs/A5-01/control/inputs/brief.md",
+    "declared_sha256": "e26ff5f138c34638ec94bc7d4ff3bf93a23f27ddca1a17cca3090868737430e8",
+    "observed_sha256": "e26ff5f138c34638ec94bc7d4ff3bf93a23f27ddca1a17cca3090868737430e8",
+    "declared_bytes": 3440,
+    "observed_bytes": 3440,
+    "matches": true
+  },
+  {
+    "freeze_stage": "reviser",
+    "path": "ER12_RUNTIME/runs/A5-01/control/stages/reviser/assignment.md",
+    "declared_sha256": "dd8f4e22a3b4163e3c12e9cce26f170f8b6b6d745811db0f35537b361fe15a79",
+    "observed_sha256": "dd8f4e22a3b4163e3c12e9cce26f170f8b6b6d745811db0f35537b361fe15a79",
+    "declared_bytes": 3286,
+    "observed_bytes": 3286,
+    "matches": true
+  },
+  {
+    "freeze_stage": "reviser",
+    "path": "ER12_RUNTIME/runs/A5-01/control/stages/reviser/input-map.json",
+    "declared_sha256": "723c4fe4cbefb17e7b3b5bdabc9281c18804f7ae4e2ab0c502ffb9ebe95c3421",
+    "observed_sha256": "723c4fe4cbefb17e7b3b5bdabc9281c18804f7ae4e2ab0c502ffb9ebe95c3421",
+    "declared_bytes": 1768,
+    "observed_bytes": 1768,
+    "matches": true
+  },
+  {
+    "freeze_stage": "reviser",
+    "path": "ER12_RUNTIME/runs/A5-01/control/stages/investigator/discovery.md",
+    "declared_sha256": "da02e0037cc5846af2a4ae08375b5ea8f2684f297034daefed00d9e1a0c17051",
+    "observed_sha256": "da02e0037cc5846af2a4ae08375b5ea8f2684f297034daefed00d9e1a0c17051",
+    "declared_bytes": 8637,
+    "observed_bytes": 8637,
+    "matches": true
+  },
+  {
+    "freeze_stage": "reviser",
+    "path": "ER12_RUNTIME/runs/A5-01/control/stages/investigator/draft.md",
+    "declared_sha256": "e41ae67002ae66424e0df685a71cf1d935ad55acd6c3d4eee3165d1ad60c29f8",
+    "observed_sha256": "e41ae67002ae66424e0df685a71cf1d935ad55acd6c3d4eee3165d1ad60c29f8",
+    "declared_bytes": 22491,
+    "observed_bytes": 22491,
+    "matches": true
+  },
+  {
+    "freeze_stage": "reviser",
+    "path": "ER12_RUNTIME/runs/A5-01/control/stages/investigator/source-map.json",
+    "declared_sha256": "989bfca95595aa52a37d498dde4ccd8c63aed4c763010faf9a3ff09541f8edd2",
+    "observed_sha256": "989bfca95595aa52a37d498dde4ccd8c63aed4c763010faf9a3ff09541f8edd2",
+    "declared_bytes": 14278,
+    "observed_bytes": 14278,
+    "matches": true
+  },
+  {
+    "freeze_stage": "reviser",
+    "path": "ER12_RUNTIME/runs/A5-01/control/stages/investigator/revealed-plan.md",
+    "declared_sha256": "b80e30c3938344528a49c1b43144af18f14b0d8ed27a2603b845042467e4e067",
+    "observed_sha256": "b80e30c3938344528a49c1b43144af18f14b0d8ed27a2603b845042467e4e067",
+    "declared_bytes": 6139,
+    "observed_bytes": 6139,
+    "matches": true
+  },
+  {
+    "freeze_stage": "reviser",
+    "path": "ER12_RUNTIME/runs/A5-01/control/stages/investigator/plan-reveal.json",
+    "declared_sha256": "520c07ec1924ad4535b2d78143ee48f184e60baea6dd049c2289c2eadc03ade4",
+    "observed_sha256": "520c07ec1924ad4535b2d78143ee48f184e60baea6dd049c2289c2eadc03ade4",
+    "declared_bytes": 426,
+    "observed_bytes": 426,
+    "matches": true
+  },
+  {
+    "freeze_stage": "reviser",
+    "path": "ER12_RUNTIME/runs/A5-01/control/stages/critic/critique.md",
+    "declared_sha256": "a68cfe869644775d1a1894702a8877941e7e95b7353bcf4861cd32cd641bcf34",
+    "observed_sha256": "a68cfe869644775d1a1894702a8877941e7e95b7353bcf4861cd32cd641bcf34",
+    "declared_bytes": 13212,
+    "observed_bytes": 13212,
+    "matches": true
+  },
+  {
+    "freeze_stage": "reviser",
+    "path": "ER12_RUNTIME/runs/A5-01/control/stages/critic/source-map.json",
+    "declared_sha256": "121caa291545a4943864e069fbe18b21df1007ee8df0298d9f6188a44ffd073d",
+    "observed_sha256": "121caa291545a4943864e069fbe18b21df1007ee8df0298d9f6188a44ffd073d",
+    "declared_bytes": 16086,
+    "observed_bytes": 16086,
+    "matches": true
+  }
+]

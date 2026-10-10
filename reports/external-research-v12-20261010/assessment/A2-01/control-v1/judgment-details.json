@@ -1,0 +1,316 @@
+{
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Original obligations and negative constraints",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS",
+      "basis": "All eight exact obligations are substantively addressed. Coordinator visibility is connectivity-bounded; original/correction history, optional CSV scope, both owner authorities and all four exclusions remain binding.",
+      "final_lines": [
+        25,
+        107
+      ],
+      "evidence_ids": [
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E09",
+        "E12",
+        "E18",
+        "E19"
+      ],
+      "material_remaining": []
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source claims and exact applicability",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "Independent primary retrieval checks the client-edit version/default and exceptions; REST versus OpenRosa operations; string identities/versions and timestamps; server receipt versus observation time; layer/export/permission conditions; CSV loading; and historical fix scope. No unsupported operational capability or product validation is represented as established.",
+      "evidence_ids": [
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E06",
+        "E07",
+        "E08",
+        "E09",
+        "E10",
+        "E11",
+        "E12",
+        "E13",
+        "E14",
+        "E15",
+        "E16",
+        "E17",
+        "E18",
+        "E19",
+        "E20",
+        "E21",
+        "E22",
+        "E23",
+        "E24"
+      ],
+      "limitations": [
+        "L01",
+        "L02",
+        "L03"
+      ],
+      "material_remaining": []
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar discovery, alternatives, implementation/history, and opportunity breadth",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS",
+      "basis": "ODK and Survey123 provide two meaningful full candidates, CouchDB a version-pinned analogy, and Kobo a further screened option. Client-edit versus separate correction form, old-field exports, XML/CSV adapter routes and the EXIF image-append exclusion are actionable discoveries. Source/commit/release history is bounded and directly relevant.",
+      "evidence_ids": [
+        "E01",
+        "E03",
+        "E06",
+        "E07",
+        "E08",
+        "E13",
+        "E14",
+        "E15",
+        "E16",
+        "E18",
+        "E20",
+        "E21"
+      ],
+      "material_remaining": []
+    },
+    {
+      "axis": 4,
+      "name": "Wrong criticism/corrections/rejections and exact plan dispositions",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS",
+      "basis": "Each of the eight exact clauses and four criticisms has an explicit, evidence-based disposition. C-01/C-03 are corrected draft defects; C-02 expands research without demanding deployment or deleting the option; C-04 is a locator correction. No false material correction or unsupported scope rejection remains.",
+      "evidence_ids": [
+        "E01",
+        "E04",
+        "E05",
+        "E09",
+        "E12",
+        "E17",
+        "E18",
+        "E19"
+      ],
+      "material_remaining": []
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning preserved discovery/draft/critique/final",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "The final is a complete proposal retaining fit hypotheses, IDs/time/attachments, correction alternatives, optional import, owner choices, negatives, applicability, history and validation status. Complete inherited source records are preserved; important conditions are less prominent in final prose but remain in the carried source map. No selected workflow depends on bypassing those conditions.",
+      "limitations": [
+        "L01",
+        "L03"
+      ],
+      "evidence_ids": [
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E12",
+        "E14",
+        "E15",
+        "E16",
+        "E18",
+        "E19"
+      ],
+      "material_remaining": []
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed versus executed validation and oracle applicability",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "Source review/reveal plumbing are separated from unrun product checks. Interruption timing, same-ID versus different-ID records, edit order/version, bad legacy rows/reruns, and clock/EXIF scenarios discriminate the proposed mechanisms. The record model supplies expected identity/payload/photo/no-overwrite/history outcomes. Historical source and stub tests are not a current-product oracle.",
+      "limitations": [
+        "L04"
+      ],
+      "evidence_ids": [
+        "E01",
+        "E05",
+        "E06",
+        "E07",
+        "E08",
+        "E18",
+        "E19",
+        "E20",
+        "E21"
+      ],
+      "executed_product_validation": "NONE_REPORTED; NONE_PERFORMED_BY_REVIEWER",
+      "material_remaining": []
+    }
+  ],
+  "criticisms": [
+    {
+      "id": "C-01",
+      "original_classification": "Material incomplete",
+      "reviewer_assessment": "SUPPORTED draft visibility gap",
+      "draft_lines": [
+        60,
+        63
+      ],
+      "final_disposition": "ACCEPT",
+      "final_lines": [
+        25,
+        38,
+        47,
+        56
+      ],
+      "evidence_ids": [
+        "E01",
+        "E04",
+        "E05",
+        "E09",
+        "E19"
+      ],
+      "resolution": "Disconnected queue/receipt-unknown facts stay client-local; a durable later-sent client event is required for shared labels, otherwise apparent observation/receipt delay only. No built-in coordinator feed is claimed.",
+      "remaining_material": false
+    },
+    {
+      "id": "C-02",
+      "original_classification": "Material incomplete",
+      "reviewer_assessment": "Useful research expansion; severity bounded by optional scope",
+      "draft_lines": [
+        41,
+        85,
+        89
+      ],
+      "final_disposition": "AMEND_AND_RETAIN_UNCERTAINTY",
+      "final_lines": [
+        29,
+        39,
+        85,
+        95
+      ],
+      "evidence_ids": [
+        "E05",
+        "E17",
+        "E18",
+        "E19"
+      ],
+      "resolution": "Staff XML-plus-attachment adapter and advertised CSV Append building blocks investigated. Schema/identity/photos/reruns/no-overwrite conditions specified. Legacy shape/owner need and operational feasibility may honestly remain unknown; no scope removal or native importer claim.",
+      "remaining_material": false
+    },
+    {
+      "id": "C-03",
+      "original_classification": "Material incomplete",
+      "reviewer_assessment": "SUPPORTED missing deployment/export caveat",
+      "draft_lines": [
+        13,
+        51
+      ],
+      "final_disposition": "ACCEPT",
+      "final_lines": [
+        13,
+        26,
+        40,
+        63
+      ],
+      "evidence_ids": [
+        "E12"
+      ],
+      "resolution": "ArcGIS Server feature-layer surveys cannot use the Survey123 website download path; preserve Enterprise candidate and confirm exact layer/export route.",
+      "remaining_material": false
+    },
+    {
+      "id": "C-04",
+      "original_classification": "Minor locator/wording",
+      "reviewer_assessment": "SUPPORTED locator imprecision only",
+      "draft_locator": "investigator/source-map.json:S04.locator",
+      "final_disposition": "ACCEPT_AND_CORRECT_LOCATOR",
+      "final_lines": [
+        41
+      ],
+      "evidence_ids": [
+        "E04"
+      ],
+      "resolution": "Correct CSV ZIP section is supplied while inherited S04 identity/URL remain stable. New precise retrieval supplements rather than rebinds it.",
+      "remaining_material": false
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L01",
+      "type": "condition_prominence_and_preservation",
+      "material": false,
+      "locators": [
+        "final.md:62,64,107",
+        "reviser/source-map.json:S01,S16"
+      ],
+      "evidence_ids": [
+        "E01",
+        "E16"
+      ],
+      "description": "Central-side edits block subsequent Collect edits of that submission; Kobo web edits use the latest form and may remove old-field answers. These are compressed out of final prose but carried explicitly in the complete source map. Correction route/roles/history remain prospective owner choices, so no finalized incompatible workflow or claim of lossless Kobo edits remains."
+    },
+    {
+      "id": "L02",
+      "type": "operation_and_default_precision",
+      "material": false,
+      "locators": [
+        "final.md:50,62–63,91–92"
+      ],
+      "evidence_ids": [
+        "E05",
+        "E10",
+        "E18",
+        "E19"
+      ],
+      "description": "REST existing-ID 409 differs from OpenRosa changed-XML/deleted-ID 409. Sync-off describes newly published feature layers. ArcGIS upsert is blocked with sync/changeTracking; non-upsert allocates system IDs. Safe reconciliation and the conditional no-overwrite importer do not rely on broader incorrect interpretations."
+    },
+    {
+      "id": "L03",
+      "type": "bounded_analogy_and_alternative",
+      "material": false,
+      "locators": [
+        "final.md:15–17,64–65"
+      ],
+      "evidence_ids": [
+        "E14",
+        "E16"
+      ],
+      "description": "CouchDB revision leaves are not unlimited past-body retention after compaction. Kobo also offers project history logs alongside recommended external logs/comments. Candidate does not deploy CouchDB as an audit store or categorically ban Kobo; two fully compared products meet the comparison requirement."
+    },
+    {
+      "id": "L04",
+      "type": "prospective_validation_detail",
+      "material": false,
+      "locators": [
+        "final.md:111–120"
+      ],
+      "evidence_ids": [
+        "E19",
+        "E20",
+        "E21"
+      ],
+      "description": "Validation scenarios are meaningful but pass/fail cells and priorities are mostly implicit in the proposed identity/history/no-overwrite model and adoption gates. No executable prototype or live deployment was required. All product checks remain NOT_RUN."
+    },
+    {
+      "id": "L05",
+      "type": "provenance_only",
+      "material": false,
+      "locators": [
+        "stages/critic/status.json",
+        "terminal-science-freeze-root.json",
+        "final.md:126",
+        "reviser/source-map.json:native_goal"
+      ],
+      "evidence_ids": [],
+      "description": "Allowed artifacts lack raw native stage tool receipts and effective/billing telemetry. Reviser native-ID strings differ between b9d and b09d. Critic frozen artifact mtimes exceed its stage cap. These limits are separate from semantic source qualification."
+    }
+  ],
+  "material_findings": [],
+  "unassessed_axes": []
+}

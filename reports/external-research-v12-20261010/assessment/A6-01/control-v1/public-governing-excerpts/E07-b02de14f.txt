@@ -1,0 +1,18 @@
+URL: https://gtfs.org/documentation/realtime/change-history/revision-history/
+Original locator: ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E07.txt
+Original SHA256: b02de14fa99a9b0e85f94e9548accdc877667b93d60d5b3b3a6d79ee087df34b
+Original numbered lines; gaps omitted. Not full response.
+
+239: June 2026¶
+240: Added two new fields into Service Alerts: communication_period and impact_period to better define active_period. See discussion
+241: Added new SPECIAL_EVENT Cause to Cause list in Service Alerts. See discussion
+242: April 2026¶
+243: Fixed typos in gtfs-realtime.proto. See discussion.
+244: February 2026¶
+245: Corrected trip_ids requirement and cardinality for selectedTrips. See discussion.
+246: Added missing spaces. See discussion.
+247: May 2025¶
+248: Deprecates schedule_relationship ADDED in favour of NEW and adds REPLACEMENT. See discussion.
+249: Further clarifications to trip modifications. See discussion.
+250: December 2024¶
+251: Added new string field that matches feed_info.feed_version from the GTFS Schedule feed that the realtime data is based on. See discussion.

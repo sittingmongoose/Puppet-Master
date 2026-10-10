@@ -1,0 +1,94 @@
+{
+  "observed_at_utc": "2026-10-10T04:50:32.488075+00:00",
+  "basis": "root observed terminal final T3 task/no pending; separate from native proof",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/control/stages/critic/critique.md",
+      "bytes": 13212,
+      "sha256": "a68cfe869644775d1a1894702a8877941e7e95b7353bcf4861cd32cd641bcf34",
+      "mtime_ns": 1791607113030438451
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/control/stages/critic/source-map.json",
+      "bytes": 16086,
+      "sha256": "121caa291545a4943864e069fbe18b21df1007ee8df0298d9f6188a44ffd073d",
+      "mtime_ns": 1791607113030885521
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/control/stages/critic/sources/index.md",
+      "bytes": 8050,
+      "sha256": "0f01b1f353975e6a175627ca04fc84206a3555e039002646c66120137e9937bd",
+      "mtime_ns": 1791607113031270068
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/control/stages/investigator/discovery.md",
+      "bytes": 8637,
+      "sha256": "da02e0037cc5846af2a4ae08375b5ea8f2684f297034daefed00d9e1a0c17051",
+      "mtime_ns": 1791606223164365405
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/control/stages/investigator/draft.md",
+      "bytes": 22491,
+      "sha256": "e41ae67002ae66424e0df685a71cf1d935ad55acd6c3d4eee3165d1ad60c29f8",
+      "mtime_ns": 1791606480150273892
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/control/stages/investigator/revealed-plan.md",
+      "bytes": 6139,
+      "sha256": "b80e30c3938344528a49c1b43144af18f14b0d8ed27a2603b845042467e4e067",
+      "mtime_ns": 1791606229613673460
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/control/stages/investigator/source-map.json",
+      "bytes": 14278,
+      "sha256": "989bfca95595aa52a37d498dde4ccd8c63aed4c763010faf9a3ff09541f8edd2",
+      "mtime_ns": 1791606223165598329
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/control/stages/investigator/sources/index.md",
+      "bytes": 3009,
+      "sha256": "2141fb8f54e78439aa8118c05ea55ba45472441531324a9dd23d973bf6c1b7fd",
+      "mtime_ns": 1791606223165798867
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/control/stages/reviser/final.md",
+      "bytes": 30277,
+      "sha256": "dbe19a591e0be226109bb3b20f2b9bb34687c101be5ad0753eef31b187a1dbdf",
+      "mtime_ns": 1791607694262125786
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/control/stages/reviser/source-map.json",
+      "bytes": 30666,
+      "sha256": "20008d9003339f32b9ed0eb1851a7f255a4a3c1a4944f619473233146d17ac8d",
+      "mtime_ns": 1791607759520549483
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/control/stages/reviser/sources/index.md",
+      "bytes": 25582,
+      "sha256": "e60f1ec1c346e5b3827672995093e53e32a82cbb4284266cd00f0afffcfdf611",
+      "mtime_ns": 1791607759521675507
+    }
+  ],
+  "final_stage_task": {
+    "slot": "A5-01",
+    "arm": "control",
+    "stage": "reviser",
+    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A5-01-control-reviser-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A5-01-control-reviser-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A5-01-control-reviser-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A5-01-control-reviser-v1",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A5-01-control-reviser-v1:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "The assigned reviser stage is complete. The full proposal, source map, and navigable source index are saved here:\n\n- [final.md](ER12_RUNTIME/runs/A5-01/control/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A5-01/control/stages/reviser/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A5-01/control/stages/reviser/sources/index.md)\n\nThe revision addresses all eight obligations and dispositions C1\u2013C6, including the #29 release link, BagIt coverage for sidecars, transcript wording, and separation of preservation and access storage. Artifact checks passed for all eight clauses and 15 source IDs. Product and media checks remain **NOT_RUN**.\n\nThe native Goal was created from the frozen objective and its terminal update returned `complete` (thread `01a1241b-b841-7d30-8e31-d7818dccd012`; 153,891 tokens; 611 seconds). Provider/model provenance and UTC-converted timestamps are recorded as **UNKNOWN**; raw timestamp fields are preserved in the source map.\n\nDisclosure: I inadvertently opened `critic/status.json`, which was outside the input map\u2019s listed paths. I did not use its contents in the proposal. No nested agents or parent history were used.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A5-01-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:04af2084-b596-4102-860f-3839b4590cf3",
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "summary": "The assigned reviser stage is complete. The full proposal, source map, and navigable source index are saved here:\n\n- [final.md](ER12_RUNTIME/runs/A5-01/control/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A5-01/control/stages/reviser/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A5-01/control/stages/reviser/sources/index.md)\n\nThe revision addresses all eight obligations and dispositions C1\u2013C6, including the #29 release link, BagIt coverage for sidecars, transcript wording, and separation of preservation and access storage. Artifact checks passed for all eight clauses and 15 source IDs. Product and media checks remain **NOT_RUN**.\n\nThe native Goal was created from the frozen objective and its terminal update returned `complete` (thread `01a1241b-b841-7d30-8e31-d7818dccd012`; 153,891 tokens; 611 seconds). Provider/model provenance and UTC-converted timestamps are recorded as **UNKNOWN**; raw timestamp fields are preserved in the source map.\n\nDisclosure: I inadvertently opened `critic/status.json`, which was outside the input map\u2019s listed paths. I did not use its contents in the proposal. No nested agents or parent history were used.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A5-01-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:04af2084-b596-4102-860f-3839b4590cf3",
+    "waitTimedOut": false
+  }
+}

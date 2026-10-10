@@ -1,0 +1,100 @@
+{
+  "observed_at_utc": "2026-10-10T05:03:11.687656+00:00",
+  "basis": "root observed terminal final T3 task/no pending; separate from native proof",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/checks.json",
+      "bytes": 12114,
+      "sha256": "da9f1f3a21b83ea24fc72ee144b7440a8073bf03e4642960a8cbbf36be6d1634",
+      "mtime_ns": 1791608393889290544
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/critique-dispositions.json",
+      "bytes": 4407,
+      "sha256": "05175340b4801e8f4ea3093b890709baedf282c99caa7b13f0305b3bb4542db5",
+      "mtime_ns": 1791608451698096603
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/critique-index.json",
+      "bytes": 153,
+      "sha256": "a14556b10b580911548aca0b2e4ed43fb1ad3a8acf66b4b573d3feb0d5125c44",
+      "mtime_ns": 1791607841714250823
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/critique.md",
+      "bytes": 7837,
+      "sha256": "cbd23bac4618222be9d567fbb2e6147719422b15e3de1b131ebcb81fef48e186",
+      "mtime_ns": 1791607760977558969
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+      "bytes": 22479,
+      "sha256": "87c78f9d594f1506980830ea7cdd802c701a088a010d049b5d8381cb673045dd",
+      "mtime_ns": 1791608437624994920
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/source-map.json",
+      "bytes": 33549,
+      "sha256": "f886568ecf01a0689219f7bcd52a0cfbc49c086eaa44b50cd289f56f6a3abd25",
+      "mtime_ns": 1791608476618263387
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/sources/index.md",
+      "bytes": 4551,
+      "sha256": "0d05a15c1bb586f90481873ba9fffe5f336f7d8494e2b9fa21badda1192e0143",
+      "mtime_ns": 1791607841714750308
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/discovery.md",
+      "bytes": 10141,
+      "sha256": "c56e9944bf942d767ea1066e8ae2e624dd7c44f996f441c9598e12388bf4bfd1",
+      "mtime_ns": 1791607116092264504
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/draft.md",
+      "bytes": 22205,
+      "sha256": "68b62f1221b5c477438c9828ac3a136f75fda5cd5090ec567da6bab0ce1fa0ec",
+      "mtime_ns": 1791607220831128323
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 5916,
+      "sha256": "03928ccee4efbf0f624b296c0d8e7f21ce0d491a5aa52eca4e763ffd08d42131",
+      "mtime_ns": 1791607130080682710
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/source-map.json",
+      "bytes": 19332,
+      "sha256": "d95f1a689daca5fe13a60764082d507f877d08cf2a30d88fcf3469775b2586fb",
+      "mtime_ns": 1791607116100264576
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/sources/index.md",
+      "bytes": 3594,
+      "sha256": "c6dabd7fa0ffd40c983f9448086d178d379f147876ca2272a85314f13e355d2b",
+      "mtime_ns": 1791607116106264630
+    }
+  ],
+  "final_stage_task": {
+    "slot": "A7-02",
+    "arm": "treatment",
+    "stage": "critic-finalizer",
+    "helper": "ER12_RUNTIME/helpers/topology-v1",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-critic-finalizer-topology-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-critic-finalizer-topology-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-critic-finalizer-topology-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-critic-finalizer-topology-v1",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-critic-finalizer-topology-v1:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "The reference stage is sealed and its native Goal is complete.\n\nThe corrected helper sequence succeeded in order: `check-input` at 04:59:40.814Z, `freeze-review` at 04:59:59.252Z, then a newly authored `final.md` and `seal-final` at 05:01:22.855Z. The earlier premature draft remains preserved with its original hash and metadata. The initial bare-command errors are retained in `checks.json`.\n\n- [Final proposal](<ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md>)\n- [Critique and dispositions](<ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/critique.md>) \u00b7 [dispositions JSON](<ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/critique-dispositions.json>)\n- [Source map](<ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/source-map.json>) \u00b7 [source index](<ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/sources/index.md>)\n- [Checks](<ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/checks.json>) \u00b7 [process correction record](<ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/stage-process.md>) \u00b7 [preserved provisional diagnostic](<ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/provisional-final-diagnostic.md>)\n\nThe seal helper reported six dispositions and `scope_fidelity_proven=false`, `source_truth_proven=false`, and `native_provenance_attested_by_helper=false`; I make no claim that it proved those points. The directly observed native Goal completed with status `complete` (thread `01a1241d-3055-7802-b068-8c27557a5ae6`; 211,438 tokens; 1,225 seconds).",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-critic-finalizer-topology-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:56bf84d1-82f5-47be-a162-69c39a21bad2",
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "summary": "The reference stage is sealed and its native Goal is complete.\n\nThe corrected helper sequence succeeded in order: `check-input` at 04:59:40.814Z, `freeze-review` at 04:59:59.252Z, then a newly authored `final.md` and `seal-final` at 05:01:22.855Z. The earlier premature draft remains preserved with its original hash and metadata. The initial bare-command errors are retained in `checks.json`.\n\n- [Final proposal](<ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md>)\n- [Critique and dispositions](<ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/critique.md>) \u00b7 [dispositions JSON](<ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/critique-dispositions.json>)\n- [Source map](<ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/source-map.json>) \u00b7 [source index](<ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/sources/index.md>)\n- [Checks](<ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/checks.json>) \u00b7 [process correction record](<ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/stage-process.md>) \u00b7 [preserved provisional diagnostic](<ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/provisional-final-diagnostic.md>)\n\nThe seal helper reported six dispositions and `scope_fidelity_proven=false`, `source_truth_proven=false`, and `native_provenance_attested_by_helper=false`; I make no claim that it proved those points. The directly observed native Goal completed with status `complete` (thread `01a1241d-3055-7802-b068-8c27557a5ae6`; 211,438 tokens; 1,225 seconds).",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-critic-finalizer-topology-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:56bf84d1-82f5-47be-a162-69c39a21bad2",
+    "waitTimedOut": false
+  }
+}

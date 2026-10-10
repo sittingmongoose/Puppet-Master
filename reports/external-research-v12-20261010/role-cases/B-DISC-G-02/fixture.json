@@ -1,0 +1,33 @@
+{
+  "schema": "er12-role-fixture-v1",
+  "slot_id": "B-DISC-G-02",
+  "case_id": "ER12-B-DISC-G-02-FRESH",
+  "role": "Brief-only discovery",
+  "title": "Portable build provenance verification",
+  "control": {
+    "provider": "codex_authorized",
+    "model": "Luna Max",
+    "input": "identical frozen role package to challenger"
+  },
+  "treatment": {
+    "provider": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "GLM 5.3 Flash Max",
+    "input": "identical frozen role package to Luna"
+  },
+  "whole_arm_seconds": 900,
+  "investigation_seconds_max": 600,
+  "writing_reserve_seconds": 300,
+  "counts_as_full_pipeline": false,
+  "status": "READY_FROZEN_NOT_DISPATCHED",
+  "frozen_at": "2026-10-10T03:56:03.651608+00:00",
+  "assignment": "assignment.md",
+  "input_files": [
+    {
+      "path": "assignment.md",
+      "sha256": "599616a793cbad684a884396d85246ca2ab2a72cd0030379da4abe004f75357c"
+    }
+  ],
+  "input_sha256": "b700b50ec2374ac4d60e376f20140f6e5a67cf83b5973fa4ccad2ece2b894176",
+  "no_assessor_answers": true,
+  "source_versions": []
+}

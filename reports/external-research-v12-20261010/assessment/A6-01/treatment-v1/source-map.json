@@ -1,0 +1,1538 @@
+{
+  "schema_version": "ER12-independent-evidence-map-v1",
+  "assessment_id": "A6-01-treatment-v1",
+  "access_method": "Reviewer read-only urllib public retrieval and web source inspection; retained raw bytes and text, never candidate re-authored evidence.",
+  "semantic_judgment": "PASS_WITH_LIMITATIONS",
+  "integrity_not_semantics": true,
+  "sources": [
+    {
+      "id": "E01",
+      "requested_url": "https://gtfs.org/documentation/schedule/reference/",
+      "access_started_utc": "2026-10-10T04:31:51.808819+00:00",
+      "http_status": 200,
+      "final_url": "https://gtfs.org/documentation/schedule/reference/",
+      "content_type": "text/html",
+      "etag": null,
+      "last_modified": "Thu, 01 Oct 2026 14:47:39 GMT",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E01.html",
+      "raw_sha256": "00fd991d705e8a24298cb8395ef8cf73b2b3116fc50aba74d20f3914319fb8cb",
+      "bytes": 298318,
+      "text_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E01.txt",
+      "text_sha256": "a500173952669a1692e01003336758b049e22192fd2e24b56eb8a48002e45d0f",
+      "access_finished_utc": "2026-10-10T04:31:52.436977+00:00",
+      "version_or_commit": "GTFS Schedule maintained reference",
+      "governing_locator": "Term Definitions; agency.txt; routes.txt; trips.txt; stop_times.txt; calendar/calendar_dates; feed_info",
+      "independent_semantic_observation": "IDs/calendar/time rules and ferry applicability verified; actual publisher data unknown.",
+      "inspection_scope": "Consequential governing context inspected; full retrieved bytes retained, not a claim that every unrelated page clause was assessed."
+    },
+    {
+      "id": "E02",
+      "requested_url": "https://gtfs.org/documentation/overview/",
+      "access_started_utc": "2026-10-10T04:31:51.810772+00:00",
+      "http_status": 200,
+      "final_url": "https://gtfs.org/documentation/overview/",
+      "content_type": "text/html",
+      "etag": null,
+      "last_modified": "Thu, 01 Oct 2026 14:47:39 GMT",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E02.html",
+      "raw_sha256": "28d34f6a0c713745f123983879f289542f43a441315de41eead00da7666ecdda",
+      "bytes": 103607,
+      "text_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E02.txt",
+      "text_sha256": "dd812260dff4728cb658d5e0a4d8d821bdf085390691160a7abc5a9252742bcf",
+      "access_finished_utc": "2026-10-10T04:31:52.227557+00:00",
+      "version_or_commit": "Maintained GTFS overview",
+      "governing_locator": "Schedule and Realtime overview",
+      "independent_semantic_observation": "Supports format/entity families, not individual partner capability.",
+      "inspection_scope": "Consequential governing context inspected; full retrieved bytes retained, not a claim that every unrelated page clause was assessed."
+    },
+    {
+      "id": "E03",
+      "requested_url": "https://gtfs.org/documentation/realtime/reference/",
+      "access_started_utc": "2026-10-10T04:31:51.811991+00:00",
+      "http_status": 200,
+      "final_url": "https://gtfs.org/documentation/realtime/reference/",
+      "content_type": "text/html",
+      "etag": null,
+      "last_modified": "Thu, 01 Oct 2026 14:47:39 GMT",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E03.html",
+      "raw_sha256": "299e760ee7d412603b7316e061cd8fca096522d9d07628260797bc6c5339fdac",
+      "bytes": 240916,
+      "text_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E03.txt",
+      "text_sha256": "738b2d9cc115db348e76627f623cecb764f219d1036cd9d05dbf809fe48f0616",
+      "access_finished_utc": "2026-10-10T04:31:52.224920+00:00",
+      "version_or_commit": "GTFS Realtime 2.0 maintained reference",
+      "governing_locator": "FeedHeader; Incrementality; TripUpdate; StopTimeEvent/Update; TripDescriptor; Alert/EntitySelector",
+      "independent_semantic_observation": "Conditional identity and new/replacement/NO_DATA rules verified; enum-wide experimental wording is overbroad.",
+      "inspection_scope": "Consequential governing context inspected; full retrieved bytes retained, not a claim that every unrelated page clause was assessed."
+    },
+    {
+      "id": "E04",
+      "requested_url": "https://gtfs.org/documentation/realtime/realtime-best-practices/",
+      "access_started_utc": "2026-10-10T04:31:51.813196+00:00",
+      "http_status": 200,
+      "final_url": "https://gtfs.org/documentation/realtime/realtime-best-practices/",
+      "content_type": "text/html",
+      "etag": null,
+      "last_modified": "Thu, 01 Oct 2026 14:47:39 GMT",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E04.html",
+      "raw_sha256": "acf9424c8ce46422d57f0890913a7554762f8eb4433443a321691d90a6744b61",
+      "bytes": 130903,
+      "text_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E04.txt",
+      "text_sha256": "335de8bd03476de944e87b01350049754981796005f026150482b80ab20b4d72",
+      "access_finished_utc": "2026-10-10T04:31:52.226619+00:00",
+      "version_or_commit": "Maintained GTFS Realtime best practices",
+      "governing_locator": "Feed Publishing; FeedEntity; TripUpdate timestamps",
+      "independent_semantic_observation": "30-second refresh, 90-second TU/VP and 10-minute alert recommendations; content age differs from fetch/header age.",
+      "inspection_scope": "Consequential governing context inspected; full retrieved bytes retained, not a claim that every unrelated page clause was assessed."
+    },
+    {
+      "id": "E05",
+      "requested_url": "https://gtfs.org/documentation/realtime/feed-entities/trip-updates/",
+      "access_started_utc": "2026-10-10T04:31:51.814240+00:00",
+      "http_status": 200,
+      "final_url": "https://gtfs.org/documentation/realtime/feed-entities/trip-updates/",
+      "content_type": "text/html",
+      "etag": null,
+      "last_modified": "Thu, 01 Oct 2026 14:47:39 GMT",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E05.html",
+      "raw_sha256": "d93bce35639b9d9df8768bf981351b4403999fc9dba6d6e8734058e5e91a5e7a",
+      "bytes": 112551,
+      "text_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E05.txt",
+      "text_sha256": "74fcb32e4b78cf405a42030271f8b47869dedbcdc4f19ec60baeb43356d31b95",
+      "access_finished_utc": "2026-10-10T04:31:52.324066+00:00",
+      "version_or_commit": "Maintained Trip Updates guidance",
+      "governing_locator": "StopTimeUpdate propagation examples; TripDescriptor matching",
+      "independent_semantic_observation": "Missing trip update is no prediction. Omitted later stop updates can inherit delay, unlike explicit NO_DATA.",
+      "inspection_scope": "Consequential governing context inspected; full retrieved bytes retained, not a claim that every unrelated page clause was assessed."
+    },
+    {
+      "id": "E06",
+      "requested_url": "https://gtfs.org/documentation/realtime/feed-entities/service-alerts/",
+      "access_started_utc": "2026-10-10T04:31:51.815461+00:00",
+      "http_status": 200,
+      "final_url": "https://gtfs.org/documentation/realtime/feed-entities/service-alerts/",
+      "content_type": "text/html",
+      "etag": null,
+      "last_modified": "Thu, 01 Oct 2026 14:47:39 GMT",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E06.html",
+      "raw_sha256": "33ef0e23e4db1ee051eddcbbd074cf091a9697e09548dde2ce2a388a4fe9ae63",
+      "bytes": 105023,
+      "text_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E06.txt",
+      "text_sha256": "848485518a8e3121eebdfa15e5853e92a49968203725dd7043621a5e79e152bc",
+      "access_finished_utc": "2026-10-10T04:31:52.030630+00:00",
+      "version_or_commit": "Maintained Service Alerts guidance",
+      "governing_locator": "TimeRange and EntitySelector",
+      "independent_semantic_observation": "Single-selector conjunction versus separate scopes verified; alerts are not trip timing updates.",
+      "inspection_scope": "Consequential governing context inspected; full retrieved bytes retained, not a claim that every unrelated page clause was assessed."
+    },
+    {
+      "id": "E07",
+      "requested_url": "https://gtfs.org/documentation/realtime/change-history/revision-history/",
+      "access_started_utc": "2026-10-10T04:31:51.817484+00:00",
+      "http_status": 200,
+      "final_url": "https://gtfs.org/documentation/realtime/change-history/revision-history/",
+      "content_type": "text/html",
+      "etag": null,
+      "last_modified": "Thu, 01 Oct 2026 14:47:39 GMT",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E07.html",
+      "raw_sha256": "d25bab4a7a366f820a53cc37afa6f833206101f41efbad4fa7614642b0bdade1",
+      "bytes": 124419,
+      "text_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E07.txt",
+      "text_sha256": "b02de14fa99a9b0e85f94e9548accdc877667b93d60d5b3b3a6d79ee087df34b",
+      "access_finished_utc": "2026-10-10T04:31:52.307697+00:00",
+      "version_or_commit": "GTFS RT revision history through June 2026",
+      "governing_locator": "December 2024; May 2025; June 2026",
+      "independent_semantic_observation": "Version linkage and added/replacement changes adopted; history does not establish partner support.",
+      "inspection_scope": "Consequential governing context inspected; full retrieved bytes retained, not a claim that every unrelated page clause was assessed."
+    },
+    {
+      "id": "E08",
+      "requested_url": "https://api.github.com/repos/google/transit/pulls/434",
+      "access_started_utc": "2026-10-10T04:31:51.818722+00:00",
+      "http_status": 200,
+      "final_url": "https://api.github.com/repos/google/transit/pulls/434",
+      "content_type": "application/json; charset=utf-8",
+      "etag": "\"9dcb497e66b32eaae99bc1215d1b24e3b05f016d55a9a20f6b5fe9ca60733a53\"",
+      "last_modified": "Sat, 28 Mar 2026 01:46:13 GMT",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E08.json",
+      "raw_sha256": "571d23ddc9349d2d44865dda4433a505871ba77d325a9f0188739981ba601427",
+      "bytes": 18293,
+      "text_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E08.txt",
+      "text_sha256": "c5d37a1d34d75ffbe936eaa586a57d1fb2a8228ba2dad791ec67b237b40be9e2",
+      "access_finished_utc": "2026-10-10T04:31:52.221545+00:00",
+      "version_or_commit": "PR #434 merged 2024-12-05; merge 7b9f229dfa0b539c3fcf461986638890024feb06",
+      "governing_locator": "body; merged_at; merge_commit_sha",
+      "independent_semantic_observation": "Initial version+URL proposal and final merge verified.",
+      "inspection_scope": "Consequential governing context inspected; full retrieved bytes retained, not a claim that every unrelated page clause was assessed."
+    },
+    {
+      "id": "E09",
+      "requested_url": "https://api.github.com/repos/google/transit/issues/434/comments?per_page=100",
+      "access_started_utc": "2026-10-10T04:31:52.030781+00:00",
+      "http_status": 200,
+      "final_url": "https://api.github.com/repos/google/transit/issues/434/comments?per_page=100",
+      "content_type": "application/json; charset=utf-8",
+      "etag": "W/\"0d3075d25b51ef1ef82b68cd7be0e5c5dfae6c0f539c32c35ef8a01f2c94c584\"",
+      "last_modified": null,
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E09.json",
+      "raw_sha256": "b956681b0eedd4c1e483fb68a21daddce6f807647a34c571850a889f7ceaa319",
+      "bytes": 58960,
+      "text_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E09.txt",
+      "text_sha256": "76abeec8e675481ff031837f475276c74365acfa3731df170204b1228abdd60c",
+      "access_finished_utc": "2026-10-10T04:31:52.440331+00:00",
+      "version_or_commit": "Public PR #434 discussion, 2024",
+      "governing_locator": "issuecomment-2047103219; 2378152559; 2441790800; 2453012128",
+      "independent_semantic_observation": "Different publication/activation times and participant-reported Swiss/TransSee uses verified as attributed reports.",
+      "inspection_scope": "Consequential governing context inspected; full retrieved bytes retained, not a claim that every unrelated page clause was assessed."
+    },
+    {
+      "id": "E10",
+      "requested_url": "https://api.github.com/repos/google/transit/issues/362",
+      "access_started_utc": "2026-10-10T04:31:52.221660+00:00",
+      "http_status": 200,
+      "final_url": "https://api.github.com/repos/google/transit/issues/362",
+      "content_type": "application/json; charset=utf-8",
+      "etag": "W/\"9399e8706d6824a5a7326b02dc67e87c155f3f996c583f2dac73247ec07b9d4c\"",
+      "last_modified": "Tue, 04 Aug 2026 18:55:19 GMT",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E10.json",
+      "raw_sha256": "5bca4baec2ffea11a378c4e769f59fb3207804c3d5d211c5f2ae75fddacd89eb",
+      "bytes": 4696,
+      "text_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E10.txt",
+      "text_sha256": "65042d3ff54a9dfaafb7fda6fc40b56b6b4223bc0ad7691d34696338381864a0",
+      "access_finished_utc": "2026-10-10T04:31:52.439872+00:00",
+      "version_or_commit": "Issue #362, opened 2022-12-12",
+      "governing_locator": "title and body",
+      "independent_semantic_observation": "Winter-schedule mismatch incident is reporter evidence; does not demonstrate operator behavior.",
+      "inspection_scope": "Consequential governing context inspected; full retrieved bytes retained, not a claim that every unrelated page clause was assessed."
+    },
+    {
+      "id": "E11",
+      "requested_url": "https://raw.githubusercontent.com/OneBusAway/onebusaway-application-modules/main/README.md",
+      "access_started_utc": "2026-10-10T04:31:52.225363+00:00",
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/OneBusAway/onebusaway-application-modules/main/README.md",
+      "content_type": "text/plain; charset=utf-8",
+      "etag": "\"6f769c0ff0ca0bd6d490db7e151eae5dddc21f33197a99f860e3686536ff2e08\"",
+      "last_modified": null,
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E11.md",
+      "raw_sha256": "827c0670ca41dbf813c377d6f772dcd1af83d2317dbc675f3b9230ad96e905dc",
+      "bytes": 12818,
+      "text_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E11.txt",
+      "text_sha256": "866b859d55758506394411385fa02daa702bb9d7a8b078d2ab797128d0397eb9",
+      "access_finished_utc": "2026-10-10T04:31:52.438909+00:00",
+      "version_or_commit": "OneBusAway moving main README",
+      "governing_locator": "Application Suite/sign-mode; GTFS Data/Realtime Data Changes",
+      "independent_semantic_observation": "Sign-mode and separate RT endpoints verified; no tagged ferry/staleness/editor capability inferred.",
+      "inspection_scope": "Consequential governing context inspected; full retrieved bytes retained, not a claim that every unrelated page clause was assessed."
+    },
+    {
+      "id": "E12",
+      "requested_url": "https://api.github.com/repos/OneBusAway/onebusaway-application-modules/releases/latest",
+      "access_started_utc": "2026-10-10T04:31:52.226822+00:00",
+      "http_status": 200,
+      "final_url": "https://api.github.com/repos/OneBusAway/onebusaway-application-modules/releases/latest",
+      "content_type": "application/json; charset=utf-8",
+      "etag": "W/\"cd35e3e8b8923b5a8adf5c6ac67e60e7f8bd1b17fcfa13cfb1cf84da56b3b639\"",
+      "last_modified": "Sun, 08 Feb 2026 05:32:08 GMT",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E12.json",
+      "raw_sha256": "9dfccec3b4840cf89b4c76cd0ad3f84dac05aeb7bd73612d9a2ca3667acc6dff",
+      "bytes": 2532,
+      "text_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E12.txt",
+      "text_sha256": "e2243db11f6b486b276f5cf3cfbc00954817a20b26b2ae81f657b758fc6d7185",
+      "access_finished_utc": "2026-10-10T04:31:52.431654+00:00",
+      "version_or_commit": "OBA v2.7.1 latest release, published 2026-02-08",
+      "governing_locator": "tag_name; published_at; body",
+      "independent_semantic_observation": "Release label verified independently; not a release pin for moving README semantics.",
+      "inspection_scope": "Consequential governing context inspected; full retrieved bytes retained, not a claim that every unrelated page clause was assessed."
+    },
+    {
+      "id": "E13",
+      "requested_url": "https://www.gov.uk/government/publications/technical-guidance-publishing-location-data-using-the-bus-open-data-service-siri-vm/technical-guidance-siri-vm",
+      "access_started_utc": "2026-10-10T04:31:52.227702+00:00",
+      "http_status": 200,
+      "final_url": "https://www.gov.uk/government/publications/technical-guidance-publishing-location-data-using-the-bus-open-data-service-siri-vm/technical-guidance-siri-vm",
+      "content_type": "text/html; charset=utf-8",
+      "etag": "W/\"df15cb95ba2914b7c9514580f02d1c38\"",
+      "last_modified": null,
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E13.html",
+      "raw_sha256": "df15cb95ba2914b7c9514580f02d1c388248117764cf774fafacade1741fd675",
+      "bytes": 146746,
+      "text_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E13.txt",
+      "text_sha256": "e81ba3b1194dfbfd6cc44c988aec63cc9e80715cbcae8dd7a0d33a03daf119dd",
+      "access_finished_utc": "2026-10-10T04:31:52.717251+00:00",
+      "version_or_commit": "DfT SIRI-VM 2.0(Q) BODS profile, published 2020-10-21",
+      "governing_locator": "SIRI standards family; Real-time information; Heartbeat; profile; UTC; identity fields",
+      "independent_semantic_observation": "Bus-specific modular analogue, 30-second producer update/heartbeat, distinct central consumer polling and timestamp conditions verified.",
+      "inspection_scope": "Consequential governing context inspected; full retrieved bytes retained, not a claim that every unrelated page clause was assessed."
+    },
+    {
+      "id": "E14",
+      "requested_url": "https://www.gov.uk/government/publications/bus-open-data-implementation-guide/bus-open-data-implementation-guide",
+      "access_started_utc": "2026-10-10T04:31:52.307877+00:00",
+      "http_status": 200,
+      "final_url": "https://www.gov.uk/government/publications/bus-open-data-implementation-guide/bus-open-data-implementation-guide",
+      "content_type": "text/html; charset=utf-8",
+      "etag": "W/\"c0629de815a4e761c66bfbf9e43c8373\"",
+      "last_modified": null,
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E14.html",
+      "raw_sha256": "c0629de815a4e761c66bfbf9e43c83733453a5b12dc2b0d758e8092a87c95f53",
+      "bytes": 379212,
+      "text_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E14.txt",
+      "text_sha256": "dc30cc5f35e461e873b066c475a91d95ba96158208e6ccc41e482d6b2e441531",
+      "access_finished_utc": "2026-10-10T04:31:52.854707+00:00",
+      "version_or_commit": "DfT implementation guide: TxC 2.4, SIRI-VM 2.0/2.0Q",
+      "governing_locator": "Publishing location data; Location Matching; Time Synchronisation",
+      "independent_semantic_observation": "Shared identifiers and revised TxC on operational identifier changes verified; bus applicability only.",
+      "inspection_scope": "Consequential governing context inspected; full retrieved bytes retained, not a claim that every unrelated page clause was assessed."
+    },
+    {
+      "id": "E15",
+      "requested_url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/releases/tags/v2.10.0",
+      "access_started_utc": "2026-10-10T04:31:52.324215+00:00",
+      "http_status": 200,
+      "final_url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/releases/tags/v2.10.0",
+      "content_type": "application/json; charset=utf-8",
+      "etag": "W/\"c5ccd9dcb36f23548cc857c59ca9c7eaab5a17b11e28c4ebe51071fca1deae14\"",
+      "last_modified": "Wed, 09 Sep 2026 09:20:56 GMT",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E15.json",
+      "raw_sha256": "0fe611aae453367a94f9e9537880926c2540088e3e370f53f42c73ba6274d73a",
+      "bytes": 6766,
+      "text_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E15.txt",
+      "text_sha256": "6b718ad25fc51d45b0353eb0141d6f549aa089323ff779b085bb411a7403b20a",
+      "access_finished_utc": "2026-10-10T04:31:52.585569+00:00",
+      "version_or_commit": "OTP v2.10.0 release, published 2026-09-09",
+      "governing_locator": "tag_name; published_at; body",
+      "independent_semantic_observation": "Candidate release date and link to versioned changelog verified.",
+      "inspection_scope": "Consequential governing context inspected; full retrieved bytes retained, not a claim that every unrelated page clause was assessed."
+    },
+    {
+      "id": "E16",
+      "requested_url": "https://docs.opentripplanner.org/en/v2.10.0/Changelog/",
+      "access_started_utc": "2026-10-10T04:31:52.431735+00:00",
+      "http_status": 200,
+      "final_url": "https://docs.opentripplanner.org/en/v2.10.0/Changelog/",
+      "content_type": "text/html; charset=utf-8",
+      "etag": "\"6abf6a23-34fc2\"",
+      "last_modified": "Fri, 02 Oct 2026 08:24:03 GMT",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E16.html",
+      "raw_sha256": "2b562ca78a01d9bdf8bb6bcd733d1bcc2313e6150467ffa66f8ae1e646141f94",
+      "bytes": 217026,
+      "text_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E16.txt",
+      "text_sha256": "7e81044b8f973a16aebce4e9bd126a72141660c231217bb3a72026984a5e97cb",
+      "access_finished_utc": "2026-10-10T04:31:52.721932+00:00",
+      "version_or_commit": "OTP v2.10.0 changelog",
+      "governing_locator": "2.10.0 #7445; 2.8.0 #6523 and #6028",
+      "independent_semantic_observation": "Release inclusions verified. #6523 is positions cleanup; #6028 also records released NEW/REPLACEMENT support.",
+      "inspection_scope": "Consequential governing context inspected; full retrieved bytes retained, not a claim that every unrelated page clause was assessed."
+    },
+    {
+      "id": "E17",
+      "requested_url": "https://docs.opentripplanner.org/en/v2.10.0/GTFS-RT-Config/",
+      "access_started_utc": "2026-10-10T04:31:52.437747+00:00",
+      "http_status": 200,
+      "final_url": "https://docs.opentripplanner.org/en/v2.10.0/GTFS-RT-Config/",
+      "content_type": "text/html; charset=utf-8",
+      "etag": "\"6abf6a22-13838\"",
+      "last_modified": "Fri, 02 Oct 2026 08:24:02 GMT",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E17.html",
+      "raw_sha256": "29f34e7533968d5a1aa9a18ab0cbc4beb7a54ebdc2063d4154c49974beb92b45",
+      "bytes": 79928,
+      "text_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E17.txt",
+      "text_sha256": "6cb07a72d1ea69c49f21bf237539fbc90ff3fc4ed62fb2203a6e6be3228c7420",
+      "access_finished_utc": "2026-10-10T04:31:52.583054+00:00",
+      "version_or_commit": "OTP v2.10.0 versioned updater documentation",
+      "governing_locator": "Alerts; TripUpdates HTTP; Vehicle Positions; delay propagation",
+      "independent_semantic_observation": "feedId required, frequency duration PT1M, fuzzyTripMatching boolean false; backwards required-no-data and forwards default verified.",
+      "inspection_scope": "Consequential governing context inspected; full retrieved bytes retained, not a claim that every unrelated page clause was assessed."
+    },
+    {
+      "id": "E18",
+      "requested_url": "https://docs.opentripplanner.org/en/v2.10.0/features-explained/Feed-ID/",
+      "access_started_utc": "2026-10-10T04:31:52.439008+00:00",
+      "http_status": 200,
+      "final_url": "https://docs.opentripplanner.org/en/v2.10.0/features-explained/Feed-ID/",
+      "content_type": "text/html; charset=utf-8",
+      "etag": "\"6abf6a22-c359\"",
+      "last_modified": "Fri, 02 Oct 2026 08:24:02 GMT",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E18.html",
+      "raw_sha256": "f1c6fa86039a5021847792de6368f06bc33f3a90adefe98240a4f5ac2ed1ff35",
+      "bytes": 50009,
+      "text_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E18.txt",
+      "text_sha256": "4e4493c662f1e054ad89f826374daa0e780428e2a6679035a26536359a9ae65d",
+      "access_finished_utc": "2026-10-10T04:31:52.718305+00:00",
+      "version_or_commit": "OTP v2.10.0 Feed ID documentation",
+      "governing_locator": "Determining feedId and GTFS priority",
+      "independent_semantic_observation": "Graph-build namespace, build-config priority, nonstandard feed_id, numeric fallback verified; not feed_version.",
+      "inspection_scope": "Consequential governing context inspected; full retrieved bytes retained, not a claim that every unrelated page clause was assessed."
+    },
+    {
+      "id": "E19",
+      "requested_url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/pulls/6523",
+      "access_started_utc": "2026-10-10T04:31:52.439938+00:00",
+      "http_status": 200,
+      "final_url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/pulls/6523",
+      "content_type": "application/json; charset=utf-8",
+      "etag": "\"7d1f001270579deaa28a5948d7a1ab06c8508820cc685fbb3d67896505412b8d\"",
+      "last_modified": "Tue, 06 Oct 2026 08:14:33 GMT",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E19.json",
+      "raw_sha256": "44a4b1f6280c7507ef017e9e5e90a4629461f1dc865ae8c3bbf5458f670e6460",
+      "bytes": 22599,
+      "text_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E19.txt",
+      "text_sha256": "daf0cab08cc3d304c21cb327753663052875fb5bb548280bbda7fc990872e11f",
+      "access_finished_utc": "2026-10-10T04:31:52.721538+00:00",
+      "version_or_commit": "OTP PR #6523 merged 2025-03-14; 273f879efaa8b8f43bfbce271611c40ed7b765cf",
+      "governing_locator": "body and merge fields",
+      "independent_semantic_observation": "Per-download position cleanup and ISO timestamp change verified at PR level.",
+      "inspection_scope": "Consequential governing context inspected; full retrieved bytes retained, not a claim that every unrelated page clause was assessed."
+    },
+    {
+      "id": "E20",
+      "requested_url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/pulls/6523/files?per_page=100",
+      "access_started_utc": "2026-10-10T04:31:52.440411+00:00",
+      "http_status": 200,
+      "final_url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/pulls/6523/files?per_page=100",
+      "content_type": "application/json; charset=utf-8",
+      "etag": "W/\"65be05dd9469d59fcd8f9967c0bd401d3ff31fc40675deb23a0831c271e92608\"",
+      "last_modified": "Tue, 06 Oct 2026 08:14:33 GMT",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E20.json",
+      "raw_sha256": "7aa299c547c654c73223ff4dd8ead32c6c1f0cbe8dc61a214201bd8787f7e142",
+      "bytes": 34889,
+      "text_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E20.txt",
+      "text_sha256": "9d51a26022c864fc30abebbc7d50de43ef4ac8ab53fc16c3eb733b75a934b48d",
+      "access_finished_utc": "2026-10-10T04:31:52.745177+00:00",
+      "version_or_commit": "PR #6523 changed source files at head 9892fe617715a52525ff96aff5665ce32b8ffa12",
+      "governing_locator": "DefaultRealtimeVehicleService; RealtimeVehiclePatternMatcher; VehiclePositionImpl; schema; tests",
+      "independent_semantic_observation": "Code removes prior records per feed before immutable replacement. ISO lastUpdate is vehicle observation time; no generic TU/Alert age or revision guard demonstrated.",
+      "inspection_scope": "Consequential governing context inspected; full retrieved bytes retained, not a claim that every unrelated page clause was assessed."
+    },
+    {
+      "id": "E21",
+      "requested_url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/pulls/7445",
+      "access_started_utc": "2026-10-10T04:31:52.583193+00:00",
+      "http_status": 200,
+      "final_url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/pulls/7445",
+      "content_type": "application/json; charset=utf-8",
+      "etag": "\"76644841bbe0ba75574b9a72475b556ce4b2073585f78c6c4ec19ab26f98f742\"",
+      "last_modified": "Wed, 07 Oct 2026 05:08:17 GMT",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E21.json",
+      "raw_sha256": "6c35fd0a27a87b35914ea133fbe7673f477ba3386d8c92fe4ceb43a210960427",
+      "bytes": 23225,
+      "text_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E21.txt",
+      "text_sha256": "57a49cc6a6201b4657ae2b61579ebb3bc78d3af11a8a83e375edcf70c476a58a",
+      "access_finished_utc": "2026-10-10T04:31:52.883942+00:00",
+      "version_or_commit": "OTP PR #7445 merged 2026-03-30; 630a12684be707732052002ac23042d09c3ccaab",
+      "governing_locator": "body and merge fields",
+      "independent_semantic_observation": "Static feed-version exposure verified; no automatic RT-header reconciliation claim supported.",
+      "inspection_scope": "Consequential governing context inspected; full retrieved bytes retained, not a claim that every unrelated page clause was assessed."
+    },
+    {
+      "id": "E22",
+      "requested_url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/pulls/7445/files?per_page=100",
+      "access_started_utc": "2026-10-10T04:31:52.585633+00:00",
+      "http_status": 200,
+      "final_url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/pulls/7445/files?per_page=100",
+      "content_type": "application/json; charset=utf-8",
+      "etag": "W/\"7ed0fda170a51f9525bb7f6ecc01ab8d24d4956989cfb42230402d806a902f05\"",
+      "last_modified": "Wed, 07 Oct 2026 05:08:17 GMT",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E22.json",
+      "raw_sha256": "6591ff1926fd6973d2e0692e06e81b38f5fa43b5969cfd1d3b912191722638c3",
+      "bytes": 6743,
+      "text_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E22.txt",
+      "text_sha256": "553804ec40f9faffa0048bb55a43d2f8ad3b80f0df17a369d2325f5483c3ff2f",
+      "access_finished_utc": "2026-10-10T04:31:52.989900+00:00",
+      "version_or_commit": "PR #7445 changed files at head 23dfb2646afffc67d7c4e3d71b50bc930df4672f",
+      "governing_locator": "FeedImpl.version; schema Feed.version; integration expectations",
+      "independent_semantic_observation": "Actual added GraphQL field is version, not feedVersion; the exposure capability is supported.",
+      "inspection_scope": "Consequential governing context inspected; full retrieved bytes retained, not a claim that every unrelated page clause was assessed."
+    },
+    {
+      "id": "E23",
+      "requested_url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/issues/4058",
+      "access_started_utc": "2026-10-10T04:31:52.717444+00:00",
+      "http_status": 200,
+      "final_url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/issues/4058",
+      "content_type": "application/json; charset=utf-8",
+      "etag": "W/\"8ff538c3916a8fa1d1f5363f006c922cdfd2068bd524a3adbfed6349570f3ddb\"",
+      "last_modified": "Fri, 28 Aug 2026 13:44:22 GMT",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E23.json",
+      "raw_sha256": "32b4109be0632eca52ee2408ee13995377759110fd3a1ec1da40b7b4fb402ec4",
+      "bytes": 5883,
+      "text_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E23.txt",
+      "text_sha256": "8d9de616f43c575c1661ebd1a61cf957b76d492f9dcc0d1ec459a81eb19e0243",
+      "access_finished_utc": "2026-10-10T04:31:52.888363+00:00",
+      "version_or_commit": "OTP issue #4058, reported against b0c9829e3bfe10daddae72485a09a7f48b0be8ff",
+      "governing_locator": "Observed behavior; reported version/config; closed_at",
+      "independent_semantic_observation": "Missing-start_date VehiclePositions failure is verified historical reporter evidence.",
+      "inspection_scope": "Consequential governing context inspected; full retrieved bytes retained, not a claim that every unrelated page clause was assessed."
+    },
+    {
+      "id": "E24",
+      "requested_url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/issues/4058/comments?per_page=100",
+      "access_started_utc": "2026-10-10T04:31:52.718422+00:00",
+      "http_status": 200,
+      "final_url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/issues/4058/comments?per_page=100",
+      "content_type": "application/json; charset=utf-8",
+      "etag": "W/\"49ebe28ac6a24bf739a8cf59f128dd19fc26dc00e00072b0f757011aa8437267\"",
+      "last_modified": null,
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E24.json",
+      "raw_sha256": "f90fc5a7d0044d0ba5ec3280df3f9f6b1728a68caa0f46f46f33eae9c29ca6ea",
+      "bytes": 18225,
+      "text_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E24.txt",
+      "text_sha256": "73dfa0f121d4191e3ac6b09b3ed1fd0f6299069263a4b2344664c654dfcd2a14",
+      "access_finished_utc": "2026-10-10T04:31:52.875122+00:00",
+      "version_or_commit": "OTP issue #4058 discussion, April 2022",
+      "governing_locator": "issuecomment-1086669607; 1088357382; 1088359207; 1088721291",
+      "independent_semantic_observation": "Service-date/internal trip association and proposed inference explained; first tagged fix release remains unestablished in candidate.",
+      "inspection_scope": "Consequential governing context inspected; full retrieved bytes retained, not a claim that every unrelated page clause was assessed."
+    },
+    {
+      "id": "E25",
+      "requested_url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/pulls/4066",
+      "access_started_utc": "2026-10-10T04:31:52.721605+00:00",
+      "http_status": 200,
+      "final_url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/pulls/4066",
+      "content_type": "application/json; charset=utf-8",
+      "etag": "\"79567067ffbb4e4b4af94c420ab3776ac28133cb4cbd9c86193580bf8f4fce21\"",
+      "last_modified": "Tue, 06 Oct 2026 08:14:33 GMT",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E25.json",
+      "raw_sha256": "0bb8d9787223abe3d530babb6a06776f5a72c09db2e7e9c587b7d0e15aadbbf8",
+      "bytes": 22015,
+      "text_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E25.txt",
+      "text_sha256": "b807ec5b7af4dfe42b184b38f01e8ee162cabaae3ff77d6d6f0c759c0c24acb1",
+      "access_finished_utc": "2026-10-10T04:31:52.938942+00:00",
+      "version_or_commit": "OTP PR #4066 merged 2022-04-22; d9bf0bbec860c66591a993ee62760447b9f00537",
+      "governing_locator": "body; closes #4058; merge fields",
+      "independent_semantic_observation": "Linked inference fix verified; changelog explicitly skipped, matching bounded uncertainty.",
+      "inspection_scope": "Consequential governing context inspected; full retrieved bytes retained, not a claim that every unrelated page clause was assessed."
+    },
+    {
+      "id": "E26",
+      "requested_url": "https://docs.opentripplanner.org/en/v2.10.0/SIRI-Config/",
+      "access_started_utc": "2026-10-10T04:31:52.722490+00:00",
+      "http_status": 200,
+      "final_url": "https://docs.opentripplanner.org/en/v2.10.0/SIRI-Config/",
+      "content_type": "text/html; charset=utf-8",
+      "etag": "\"6abf6a22-1291d\"",
+      "last_modified": "Fri, 02 Oct 2026 08:24:02 GMT",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E26.html",
+      "raw_sha256": "f8009e23007270c3701cf064e923413d9d50b29be035cf639058cfe03709abc3",
+      "bytes": 76061,
+      "text_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E26.txt",
+      "text_sha256": "05f98e4b38dabbfd84d22515a6f52a746acd0e05bb8ec0ee4f0d44a67c8bbe7e",
+      "access_finished_utc": "2026-10-10T04:31:52.864676+00:00",
+      "version_or_commit": "OTP v2.10.0 SIRI configuration",
+      "governing_locator": "Overview; ET and SX request/response tables",
+      "independent_semantic_observation": "Nordic/EPIP subset profiles; required feedId and default PT1M; partner profile unknown.",
+      "inspection_scope": "Consequential governing context inspected; full retrieved bytes retained, not a claim that every unrelated page clause was assessed."
+    },
+    {
+      "id": "E27",
+      "requested_url": "https://raw.githubusercontent.com/opentripplanner/OpenTripPlanner/v2.10.0/README.md",
+      "access_started_utc": "2026-10-10T04:31:52.745248+00:00",
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/opentripplanner/OpenTripPlanner/v2.10.0/README.md",
+      "content_type": "text/plain; charset=utf-8",
+      "etag": "\"88cf06690da21be348f9d9eb62e3b242fc33959beb4b0a869cd14f14759882b8\"",
+      "last_modified": null,
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E27.md",
+      "raw_sha256": "5d74bd0936fd43a489eec2bc087d20f3384d546063e231a219f759e8ee73305e",
+      "bytes": 4462,
+      "text_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E27.txt",
+      "text_sha256": "ab76460a7eebe4133e41a14c3dbba0a8c888ff0047c8e759d5929866524bf32f",
+      "access_finished_utc": "2026-10-10T04:31:52.876544+00:00",
+      "version_or_commit": "OTP v2.10.0 tagged README",
+      "governing_locator": "Overview; Repository Layout",
+      "independent_semantic_observation": "GraphQL multimodal backend and customary separate clients verified; no turnkey ferry-board promise.",
+      "inspection_scope": "Consequential governing context inspected; full retrieved bytes retained, not a claim that every unrelated page clause was assessed."
+    },
+    {
+      "id": "E28",
+      "requested_url": "https://gtfs.org/blog/2024/03/01/gtfs-digest---february-2024/",
+      "access_started_utc": "2026-10-10T04:31:52.854921+00:00",
+      "http_status": 200,
+      "final_url": "https://gtfs.org/blog/2024/03/01/gtfs-digest---february-2024/",
+      "content_type": "text/html",
+      "etag": null,
+      "last_modified": "Thu, 01 Oct 2026 14:47:39 GMT",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E28.html",
+      "raw_sha256": "f7f8b53d3af54f264b19c10dc069ef807c8119e27459a3ee3e37737e9d085764",
+      "bytes": 117321,
+      "text_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E28.txt",
+      "text_sha256": "70eca6cccbdc4ea98f660d76d10724ce320ba0f80e566e72792070f0bd90486d",
+      "access_finished_utc": "2026-10-10T04:31:52.990357+00:00",
+      "version_or_commit": "Official February 2024 GTFS Digest, posted 2024-03-01",
+      "governing_locator": "Active Proposals #434",
+      "independent_semantic_observation": "Initial version+URL proposal verified separately from adopted field.",
+      "inspection_scope": "Consequential governing context inspected; full retrieved bytes retained, not a claim that every unrelated page clause was assessed."
+    },
+    {
+      "id": "E29",
+      "requested_url": "https://raw.githubusercontent.com/opentripplanner/OpenTripPlanner/v2.10.0/application/src/main/resources/org/opentripplanner/apis/gtfs/schema.graphqls",
+      "access_started_utc": "2026-10-10T04:33:21.572339+00:00",
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/opentripplanner/OpenTripPlanner/v2.10.0/application/src/main/resources/org/opentripplanner/apis/gtfs/schema.graphqls",
+      "content_type": "text/plain; charset=utf-8",
+      "etag": "\"02499c8622e3fd5e67c31266f2db1f1f2a964f2d20e313e2b485ef0025b7a448\"",
+      "last_modified": null,
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E29.txt",
+      "raw_sha256": "ee5c42d5fd6346b6062d057030f8cb2062517b31e93add66ca5a92cae247aac4",
+      "bytes": 215288,
+      "text_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E29.txt",
+      "text_sha256": "ee5c42d5fd6346b6062d057030f8cb2062517b31e93add66ca5a92cae247aac4",
+      "access_finished_utc": "2026-10-10T04:33:21.727709+00:00",
+      "version_or_commit": "OTP v2.10.0 tagged GTFS GraphQL schema",
+      "governing_locator": "type Feed lines 756-770",
+      "independent_semantic_observation": "Feed.version is nullable String; feedId is String!. No feedVersion property in this schema.",
+      "inspection_scope": "Consequential governing context inspected; full retrieved bytes retained, not a claim that every unrelated page clause was assessed."
+    },
+    {
+      "id": "E30",
+      "requested_url": "https://raw.githubusercontent.com/opentripplanner/OpenTripPlanner/v2.10.0/application/src/main/java/org/opentripplanner/apis/gtfs/datafetchers/FeedImpl.java",
+      "access_started_utc": "2026-10-10T04:33:21.573665+00:00",
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/opentripplanner/OpenTripPlanner/v2.10.0/application/src/main/java/org/opentripplanner/apis/gtfs/datafetchers/FeedImpl.java",
+      "content_type": "text/plain; charset=utf-8",
+      "etag": "\"84393b53cd3e26e6be2f62ecafa6c7164605df684424143dacccad6abcfe5036\"",
+      "last_modified": null,
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E30.txt",
+      "raw_sha256": "ce32b00f3eb3463bc8e5a441b4b5c4c755cdd2af31ac7e48452794ae77e10be6",
+      "bytes": 3746,
+      "text_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E30.txt",
+      "text_sha256": "ce32b00f3eb3463bc8e5a441b4b5c4c755cdd2af31ac7e48452794ae77e10be6",
+      "access_finished_utc": "2026-10-10T04:33:21.710102+00:00",
+      "version_or_commit": "OTP v2.10.0 tagged FeedImpl.java",
+      "governing_locator": "version() lines 69-72",
+      "independent_semantic_observation": "Fetches loaded static FeedInfo.version; not realtime header version.",
+      "inspection_scope": "Consequential governing context inspected; full retrieved bytes retained, not a claim that every unrelated page clause was assessed."
+    },
+    {
+      "id": "E31",
+      "requested_url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/git/ref/tags/v2.10.0",
+      "access_started_utc": "2026-10-10T04:33:21.575130+00:00",
+      "http_status": 200,
+      "final_url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/git/ref/tags/v2.10.0",
+      "content_type": "application/json; charset=utf-8",
+      "etag": "W/\"5ad175ea6659af2c86569d29544cdedf2a9ff419bbaef999dcf60c6e68109f0c\"",
+      "last_modified": "Fri, 09 Oct 2026 15:56:16 GMT",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E31.json",
+      "raw_sha256": "5ad175ea6659af2c86569d29544cdedf2a9ff419bbaef999dcf60c6e68109f0c",
+      "bytes": 367,
+      "text_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E31.json",
+      "text_sha256": "5ad175ea6659af2c86569d29544cdedf2a9ff419bbaef999dcf60c6e68109f0c",
+      "access_finished_utc": "2026-10-10T04:33:21.733797+00:00",
+      "version_or_commit": "OTP v2.10.0 annotated tag reference",
+      "governing_locator": "object.sha and object.type",
+      "independent_semantic_observation": "Tag points to tag object 35d23ad9b23321685bdc49351c744004044611be; peeled by E34.",
+      "inspection_scope": "Consequential governing context inspected; full retrieved bytes retained, not a claim that every unrelated page clause was assessed."
+    },
+    {
+      "id": "E32",
+      "requested_url": "https://api.github.com/repos/OneBusAway/onebusaway-application-modules/git/ref/tags/v2.7.1",
+      "access_started_utc": "2026-10-10T04:33:21.576371+00:00",
+      "http_status": 200,
+      "final_url": "https://api.github.com/repos/OneBusAway/onebusaway-application-modules/git/ref/tags/v2.7.1",
+      "content_type": "application/json; charset=utf-8",
+      "etag": "W/\"f5edc94432ab220fa1b48969b481fdea4ea820bd94906cb15ce8c92d65469373\"",
+      "last_modified": "Thu, 24 Sep 2026 19:08:06 GMT",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E32.json",
+      "raw_sha256": "f5edc94432ab220fa1b48969b481fdea4ea820bd94906cb15ce8c92d65469373",
+      "bytes": 387,
+      "text_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E32.json",
+      "text_sha256": "f5edc94432ab220fa1b48969b481fdea4ea820bd94906cb15ce8c92d65469373",
+      "access_finished_utc": "2026-10-10T04:33:21.755537+00:00",
+      "version_or_commit": "OBA v2.7.1 tag reference",
+      "governing_locator": "object.sha",
+      "independent_semantic_observation": "Tag commit 095bf1ac3aeb7009b9f78e7f1cb4c65bd38b988a verified.",
+      "inspection_scope": "Consequential governing context inspected; full retrieved bytes retained, not a claim that every unrelated page clause was assessed."
+    },
+    {
+      "id": "E33",
+      "requested_url": "https://raw.githubusercontent.com/google/transit/master/gtfs-realtime/proto/gtfs-realtime.proto",
+      "access_started_utc": "2026-10-10T04:33:21.578091+00:00",
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/google/transit/master/gtfs-realtime/proto/gtfs-realtime.proto",
+      "content_type": "text/plain; charset=utf-8",
+      "etag": "\"bcdbfaed17d533fda30c54ee340edb266cce84fc55302723ef2cc57966c17d04\"",
+      "last_modified": null,
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E33.txt",
+      "raw_sha256": "8feff2c5499e0ff08777e203e49ef702e07be0a8376b8bb2126add311a709299",
+      "bytes": 65237,
+      "text_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E33.txt",
+      "text_sha256": "8feff2c5499e0ff08777e203e49ef702e07be0a8376b8bb2126add311a709299",
+      "access_finished_utc": "2026-10-10T04:33:21.717691+00:00",
+      "version_or_commit": "GTFS Realtime proto on mutable master",
+      "governing_locator": "FeedHeader; TripDescriptor relationship enum; StopTimeUpdate",
+      "independent_semantic_observation": "Wire types and individual experimental NEW/REPLACEMENT markers corroborate current reference; prose comments can lag maintained reference.",
+      "inspection_scope": "Consequential governing context inspected; full retrieved bytes retained, not a claim that every unrelated page clause was assessed."
+    },
+    {
+      "id": "E34",
+      "requested_url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/git/tags/35d23ad9b23321685bdc49351c744004044611be",
+      "final_url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/git/tags/35d23ad9b23321685bdc49351c744004044611be",
+      "access_started_utc": "2026-10-10T04:34:05.463925+00:00",
+      "access_finished_utc": "2026-10-10T04:34:05.608249+00:00",
+      "http_status": 200,
+      "content_type": "application/json",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E34.json",
+      "raw_sha256": "fb4905799593bbf1769bff1efa90d34d907920454e14fd6bc7f1ca39f69acc2d",
+      "bytes": 695,
+      "text_path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/evidence/E34.json",
+      "text_sha256": "fb4905799593bbf1769bff1efa90d34d907920454e14fd6bc7f1ca39f69acc2d",
+      "version_or_commit": "OTP v2.10.0 tag object",
+      "governing_locator": "object.sha",
+      "independent_semantic_observation": "Peeled release commit 521cd5d8acaae628878f43bf5946f4942c118548 verified.",
+      "inspection_scope": "Consequential governing context inspected; full retrieved bytes retained, not a claim that every unrelated page clause was assessed."
+    }
+  ],
+  "claim_evidence_links": [
+    {
+      "claim_id": "SC01",
+      "evidence_ids": [
+        "E01",
+        "E02"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 40,
+          "section": "Static schedule and trip/service identity"
+        }
+      ]
+    },
+    {
+      "claim_id": "SC02",
+      "evidence_ids": [
+        "E01",
+        "E23",
+        "E24",
+        "E25"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 42,
+          "section": "Observed standard behavior"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 44,
+          "section": "Board choice"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 74,
+          "section": "Distinct rules"
+        }
+      ]
+    },
+    {
+      "claim_id": "SC03",
+      "evidence_ids": [
+        "E03",
+        "E08",
+        "E09",
+        "E10",
+        "E33"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 58,
+          "section": "Freshness"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 60,
+          "section": "Local fallback and mismatch"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 72,
+          "section": "Version fields"
+        }
+      ]
+    },
+    {
+      "claim_id": "SC04",
+      "evidence_ids": [
+        "E03",
+        "E05"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 46,
+          "section": "Observed realtime identity"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 48,
+          "section": "Correction to plan"
+        }
+      ]
+    },
+    {
+      "claim_id": "SC05",
+      "evidence_ids": [
+        "E03",
+        "E05",
+        "E33"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 46,
+          "section": "Identity"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 56,
+          "section": "Added relationships"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 134,
+          "section": "Matching validation"
+        }
+      ]
+    },
+    {
+      "claim_id": "SC06",
+      "evidence_ids": [
+        "E03",
+        "E05",
+        "E06"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 50,
+          "section": "Realtime messages"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 60,
+          "section": "Fallback"
+        }
+      ]
+    },
+    {
+      "claim_id": "SC07",
+      "evidence_ids": [
+        "E03",
+        "E07",
+        "E33"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 23,
+          "section": "C1 disposition"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 56,
+          "section": "Added relationships"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 116,
+          "section": "Acceptance cases"
+        }
+      ]
+    },
+    {
+      "claim_id": "SC08",
+      "evidence_ids": [
+        "E03",
+        "E05",
+        "E17",
+        "E33"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 52,
+          "section": "Realtime meaning"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 66,
+          "section": "NO_DATA fallback"
+        }
+      ]
+    },
+    {
+      "claim_id": "SC09",
+      "evidence_ids": [
+        "E04",
+        "E03",
+        "E17"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 58,
+          "section": "Freshness"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 135,
+          "section": "Stale/empty validation"
+        }
+      ]
+    },
+    {
+      "claim_id": "SC10",
+      "evidence_ids": [
+        "E03",
+        "E06",
+        "E07"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 54,
+          "section": "Alert semantics"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 84,
+          "section": "Alert applicability"
+        }
+      ]
+    },
+    {
+      "claim_id": "SC11",
+      "evidence_ids": [
+        "E03",
+        "E04",
+        "E20"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 64,
+          "section": "Missing trip fallback"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 90,
+          "section": "Position history"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 135,
+          "section": "Missing/empty checks"
+        }
+      ]
+    },
+    {
+      "claim_id": "SC12",
+      "evidence_ids": [
+        "E15",
+        "E16",
+        "E27",
+        "E31",
+        "E34"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 11,
+          "section": "OTP recommendation"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 33,
+          "section": "Route B"
+        }
+      ]
+    },
+    {
+      "claim_id": "SC13",
+      "evidence_ids": [
+        "E17",
+        "E18"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 24,
+          "section": "C2 disposition"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 48,
+          "section": "Namespace"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 134,
+          "section": "Validation distinction"
+        }
+      ]
+    },
+    {
+      "claim_id": "SC14",
+      "evidence_ids": [
+        "E16",
+        "E19",
+        "E20"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 90,
+          "section": "Released position history"
+        }
+      ]
+    },
+    {
+      "claim_id": "SC15",
+      "evidence_ids": [
+        "E16",
+        "E21",
+        "E22",
+        "E29",
+        "E30"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 72,
+          "section": "Static version observability"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 91,
+          "section": "Released history"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 136,
+          "section": "Version validation"
+        }
+      ]
+    },
+    {
+      "claim_id": "SC16",
+      "evidence_ids": [
+        "E11",
+        "E12",
+        "E32"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 13,
+          "section": "OBA discovery"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 137,
+          "section": "Candidate fit"
+        }
+      ]
+    },
+    {
+      "claim_id": "SC17",
+      "evidence_ids": [
+        "E13",
+        "E14",
+        "E26"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 15,
+          "section": "Analogue"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 34,
+          "section": "Comparison"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 105,
+          "section": "Clause 1"
+        }
+      ]
+    },
+    {
+      "claim_id": "SC18",
+      "evidence_ids": [
+        "E07",
+        "E08",
+        "E09",
+        "E10",
+        "E28"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 26,
+          "section": "C4 disposition"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 89,
+          "section": "Revision history"
+        }
+      ]
+    },
+    {
+      "claim_id": "SC19",
+      "evidence_ids": [
+        "ORIGINAL_BRIEF",
+        "ORIGINAL_PLAN",
+        "E11",
+        "E17",
+        "E26"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 25,
+          "section": "C3 disposition"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 93,
+          "section": "Optional advisory"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 118,
+          "section": "Owners"
+        }
+      ]
+    }
+  ],
+  "original_artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A6-01/brief.md",
+      "bytes": 3323,
+      "sha256": "ef82ee81df37c62d0db64103e2891322a1161eed74e0edbd5663f0da1bdbd14c",
+      "mtime_ns": 1791604605954230558
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A6-01/plan.md",
+      "bytes": 5984,
+      "sha256": "8656d21b801ae5c4905cb19f08fb8b9262058c9916bbc257537bd35353e55d97",
+      "mtime_ns": 1791604605954312423
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/terminal-science-freeze-root.json",
+      "bytes": 7199,
+      "sha256": "617b6c9abb967cc31cb166d60a63a7d126bcb49fbdd7e48d70e253d04ab1b92b",
+      "mtime_ns": 1791606613909328202
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/inputs/brief.md",
+      "bytes": 3323,
+      "sha256": "ef82ee81df37c62d0db64103e2891322a1161eed74e0edbd5663f0da1bdbd14c",
+      "mtime_ns": 1791604641410968282
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/assignment.md",
+      "bytes": 3759,
+      "sha256": "6f480e9fc8baea74a66c949d4ad5b90d4f3e0e0d34ebcd421ca19d91d89dd035",
+      "mtime_ns": 1791606103614220572
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/dispatch.json",
+      "bytes": 4172,
+      "sha256": "5526907296bcce000ad5ec58da1ac5fd7308778b46eb4501f2817f3ee5e04ba4",
+      "mtime_ns": 1791606104203001882
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/freeze.json",
+      "bytes": 4333,
+      "sha256": "57a86219360ba03d57c4eeb7c447e4acefd4b263e3d33b37defab59bfea67e3e",
+      "mtime_ns": 1791606103614978794
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/request.json",
+      "bytes": 902,
+      "sha256": "3a476751215ed64291c0a8c56640918413714c6c9b14b196d5bc6f6a47379634",
+      "mtime_ns": 1791606103615159451
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/input-map.json",
+      "bytes": 1727,
+      "sha256": "2576cdfd8e64825cedeaed1f08e4903bee1b45ddc685a33ebbc58c1d99a920f5",
+      "mtime_ns": 1791606103613986106
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+      "bytes": 37690,
+      "sha256": "d05d6271b28fa96d51ab939dade5c68f9426cafd432170e707e659f3f344e527",
+      "mtime_ns": 1791606569650108736
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/source-map.json",
+      "bytes": 42928,
+      "sha256": "6ba5c001834d64eb1300ca7ee414f5e498292ca2deae3444a4cf3ee3554ead1e",
+      "mtime_ns": 1791606569652931923
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/critic/assignment.md",
+      "bytes": 3779,
+      "sha256": "b8b825660309ab385ad6417fed2a03d90b7f61e8ba72aa5108a7d8463b316f57",
+      "mtime_ns": 1791605504399968974
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/critic/dispatch.json",
+      "bytes": 4156,
+      "sha256": "0d59f2c83724eccf4c2c449d543d1d79c61a8821444a2e1ef4e4f65aff6464fb",
+      "mtime_ns": 1791605504987357609
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/critic/freeze.json",
+      "bytes": 3554,
+      "sha256": "963ece6565eaf4692327fed17a2b4e3929e364fe2a794625e0835e1fcda39ec2",
+      "mtime_ns": 1791605504400588687
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/critic/request.json",
+      "bytes": 898,
+      "sha256": "1ca971e24b0695c23794b26b5d336599c9cf3cf4c2adfe2757cc76099eeb12f0",
+      "mtime_ns": 1791605504400742614
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/critic/input-map.json",
+      "bytes": 1410,
+      "sha256": "0c21b11b60ac26ce0130655c5c91fca482b6abfa461c6f248aef36736b4f9064",
+      "mtime_ns": 1791605504399755853
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/critic/status.json",
+      "bytes": 3650,
+      "sha256": "e4f20737b867cf0ad3a4f83d710451d7dce5997a88f28176571742743a2e7b0a",
+      "mtime_ns": 1791606103237836877
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/critic/source-map.json",
+      "bytes": 31899,
+      "sha256": "7e8b2b8def8ffccf5f9e5d9728e0cf89690360ec8469352c1699d60b1b22cf61",
+      "mtime_ns": 1791606069020324872
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/critic/critique.md",
+      "bytes": 12007,
+      "sha256": "4354bc34d541d2650866c9dd62679322e86e67fc731331c24a1ffdeb11cda692",
+      "mtime_ns": 1791606052685388589
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 5984,
+      "sha256": "8656d21b801ae5c4905cb19f08fb8b9262058c9916bbc257537bd35353e55d97",
+      "mtime_ns": 1791605038659244337
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/assignment.md",
+      "bytes": 4189,
+      "sha256": "d947f5dc13d745f6307eb4a5d06e3e7ab9e65d6205e4d678cf401e75f7824165",
+      "mtime_ns": 1791604641411922437
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/dispatch.json",
+      "bytes": 4252,
+      "sha256": "feceaf3b24479d8fc95b110dc17df38e0e0605620b654f53e08d79c07aa25de7",
+      "mtime_ns": 1791604642065561494
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/draft.md",
+      "bytes": 27259,
+      "sha256": "21ab4dd676871710cd840aaf6405dc226618a46d117342ef82efbc9102288fa2",
+      "mtime_ns": 1791605390500065067
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/plan-reveal.json",
+      "bytes": 429,
+      "sha256": "ce460a6e55c49b57d6ebbfd789f4c244003253ae6111acb6bc5376ee92dcdbec",
+      "mtime_ns": 1791605038659398430
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/freeze.json",
+      "bytes": 2059,
+      "sha256": "ff62314c3f258a3c33bef687f7822bb307861ac0512be5baf2ff98cb02af0b71",
+      "mtime_ns": 1791604641412231614
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/request.json",
+      "bytes": 922,
+      "sha256": "e6c142b699fee33dc57251ed549ea72b4f57f35db34d0989be687d01baebfc71",
+      "mtime_ns": 1791604641412351723
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/discovery.md",
+      "bytes": 10099,
+      "sha256": "d5f36d6bc95da49ab23e4ac186eb4ac330e86ff590c881726a35c2be1206fcef",
+      "mtime_ns": 1791605033716235642
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/input-map.json",
+      "bytes": 722,
+      "sha256": "98353207ad8fb4bc32f8feb47d5a6ffb52f2388ddee749dff151f5a5e7614a8d",
+      "mtime_ns": 1791604641411721320
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/status.json",
+      "bytes": 3380,
+      "sha256": "c8c79b15db269d52337b78275fe625c5f41bd72b897c892429de930d32d9f96c",
+      "mtime_ns": 1791605504082787905
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/source-map.json",
+      "bytes": 22198,
+      "sha256": "ec1cb1fcb9f728c6330bb2d738b9655b7f5eb8fde8f983df7fe29aee78d136e8",
+      "mtime_ns": 1791605299846910063
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/sources/index.md",
+      "bytes": 11788,
+      "sha256": "4e9f4a89e6948a52ddb0d9d83aa9f098bcf3fd68eba6ac23fe045cc3adfc4fd9",
+      "mtime_ns": 1791605299858724674
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/critic/sources/index.md",
+      "bytes": 2658,
+      "sha256": "869007a4d97d66fd7da5fe5a80c7e526373491093f42976d9a517a2ecf8b4726",
+      "mtime_ns": 1791605906736933017
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/sources/index.md",
+      "bytes": 15313,
+      "sha256": "59706af4ef497120b8a95acf3d0dbd0a680df655b30aad3fd11f57a108730dcc",
+      "mtime_ns": 1791606507857311041
+    }
+  ],
+  "original_artifact_integrity": "evidence/artifact-integrity-checks.json",
+  "exact_plan_clause_evidence": "evidence/exact-input-clauses.json",
+  "authored_source_evidence_scope": "Complete investigator, critic and reviser source-map.json and sources/index.md read. These are the only files in assigned authored source directories; no raw candidate captures supplied.",
+  "discovery_source_id_crosswalk": [
+    {
+      "discovery_ids": "S06/S07",
+      "meaning": "Feed-version history/PR",
+      "retained_map_ids": "S07/S08",
+      "independent_evidence": [
+        "E07",
+        "E08",
+        "E09"
+      ]
+    },
+    {
+      "discovery_ids": "S08/S09",
+      "meaning": "OBA README/release",
+      "retained_map_ids": "S09/S10",
+      "independent_evidence": [
+        "E11",
+        "E12",
+        "E32"
+      ]
+    },
+    {
+      "discovery_ids": "S10/S11",
+      "meaning": "DfT SIRI/implementation",
+      "retained_map_ids": "S11/S12",
+      "independent_evidence": [
+        "E13",
+        "E14"
+      ]
+    }
+  ],
+  "limits": [
+    {
+      "id": "L1",
+      "category": "minor exact API locator",
+      "remaining": true,
+      "material": false,
+      "description": "Final and carried S17 call OTP static GraphQL field feedVersion. Tagged v2.10.0 schema defines Feed.version: String and datafetcher version().",
+      "why_nonmaterial": "The exact named field is wrong, but the promised static-version observation exists and its operation/applicability is correct. No executable query, deployed integration, or passing product test is asserted; this is a planning locator/wording error, not an unsupported capability or backend selection.",
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 72,
+          "section": "Version observability"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 91,
+          "section": "#7445 history"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 136,
+          "section": "Version check"
+        }
+      ],
+      "evidence_ids": [
+        "E22",
+        "E29",
+        "E30"
+      ]
+    },
+    {
+      "id": "L2",
+      "category": "retained source-note paraphrase error",
+      "remaining": true,
+      "material": false,
+      "description": "S05 condition_default_exception in all retained maps says missing stop updates and NO_DATA mean unknown, without the delay-propagation exception. Later omitted stops can inherit an earlier delay; explicit NO_DATA stops propagation.",
+      "why_nonmaterial": "This evidence note is factually overbroad and remains uncorrected. The final only orders no prediction for missing entire TripUpdates or explicit NO_DATA/ambiguous cases; it does not instruct suppression solely because a later StopTimeUpdate is omitted. Its recommended decision and stated display oracles therefore do not rely on the false blanket note.",
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/source-map.json",
+          "json_pointer": "/sources/4/condition_default_exception"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 52,
+          "section": "No TripUpdate and NO_DATA"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 60,
+          "section": "Fallback"
+        }
+      ],
+      "evidence_ids": [
+        "E05",
+        "E17"
+      ]
+    },
+    {
+      "id": "L3",
+      "category": "frozen discovery citation provenance",
+      "remaining": true,
+      "material": false,
+      "description": "Discovery S06/S07 are used for version history, S08 for OBA and S09 for its release, S10/S11 for DfT. Retained investigator map instead binds S06 Alerts, S07 history, S08 PR #434, S09 OBA, S10 OBA release, S11 DfT SIRI and S12 DfT guide. No pre-reveal map snapshot is provided to reconstruct the original binding.",
+      "why_nonmaterial": "This is an actual lineage navigation defect, not semantic proof of failed research. Correct claims and alternatives persist in final with coherent current map; independent evidence crosswalk restores assessment navigation without changing frozen artifacts. Do not claim all frozen discovery citations remained stable.",
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/discovery.md",
+          "line": 13,
+          "section": "OBA"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/discovery.md",
+          "line": 15,
+          "section": "Analogue"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/discovery.md",
+          "line": 31,
+          "section": "Feed-version history"
+        }
+      ],
+      "evidence_ids": [
+        "E07",
+        "E08",
+        "E11",
+        "E12",
+        "E13",
+        "E14"
+      ]
+    },
+    {
+      "id": "L4",
+      "category": "minor experimental-scope wording",
+      "remaining": true,
+      "material": false,
+      "description": "C1 disposition/final say ScheduleRelationship itself is experimental. Current reference/proto mark particular values, including NEW and REPLACEMENT, rather than all schedule relationships.",
+      "why_nonmaterial": "The added cases do carry experimental caveats and final still states their concrete requirements; it does not reject standard scheduled/canceled messages or downgrade their binding semantics.",
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 23,
+          "section": "C1"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 56,
+          "section": "Added relationship cases"
+        }
+      ],
+      "evidence_ids": [
+        "E03",
+        "E33"
+      ]
+    },
+    {
+      "id": "L5",
+      "category": "prospective oracle specificity",
+      "remaining": true,
+      "material": false,
+      "description": "Discovery expressly proposed full-dataset feed snapshots. Final includes missing/empty cases and correct OTP snapshot history but does not spell out a populated FULL_DATASET followed by a smaller populated snapshot, nor unsupported DIFFERENTIAL handling.",
+      "why_nonmaterial": "The final rejects indefinite message retention and requires schedule-only fallback for missing updates; no contrary incremental merge algorithm is recommended. This is a specificity limit of proposed future validation, not a demonstrated erroneous consumer or missing required deployment.",
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/discovery.md",
+          "line": 44,
+          "section": "Proposed checks"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 90,
+          "section": "Snapshot history"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 135,
+          "section": "Missing/empty tests"
+        }
+      ],
+      "evidence_ids": [
+        "E03",
+        "E04",
+        "E20"
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "id": "U1",
+      "subject": "Operator/publisher/partner facts",
+      "status": "UNKNOWN",
+      "detail": "Actual export format, IDs, seasonal calendar/timezone, version field/activation policy, feed messages, cadence/authentication and relationship/profile support remain legitimate owner inputs after public investigation."
+    },
+    {
+      "id": "U2",
+      "subject": "Selected consumer/UI/editor behavior",
+      "status": "NOT_RUN_UNKNOWN",
+      "detail": "No local product/feed/device/manager workflow; OTP/OBA ferry/stale/banner compatibility unvalidated. Optional proposal does not assert existing capability."
+    },
+    {
+      "id": "U3",
+      "subject": "Candidate source-reading/helper/parser execution",
+      "status": "PARTLY_RECORDED_NOT_INDEPENDENTLY_WITNESSED",
+      "detail": "Authored maps/indexes/reveal record carry claims. Independent retrieval verifies source content but cannot prove every candidate retrieval/execution happened."
+    },
+    {
+      "id": "U4",
+      "subject": "Candidate native Goal activation/terminal/provenance",
+      "status": "UNKNOWN_INDEPENDENT_NATIVE_VERIFICATION",
+      "detail": "Investigator terminal summary reports Goal; critic/reviser maps carry native fields and active observations; T3 summaries report completion. No independent raw candidate native terminal receipt is present in the assigned freeze. T3 completion is separate."
+    },
+    {
+      "id": "U5",
+      "subject": "Effective candidate configuration and billing",
+      "status": "UNKNOWN",
+      "detail": "Requested route and T3 returned metadata name AUTHORIZED_PROVIDER_INSTANCE/gpt-6-luna/max/priority. Actual provider execution, reasoning/tier enforcement, inference occupancy, billable tokens and cost are not established by those labels or self-reported Goal usage."
+    },
+    {
+      "id": "U6",
+      "subject": "First release for OTP #4066",
+      "status": "UNCONFIRMED",
+      "detail": "Merged linked historical fix confirmed; candidate explicitly withholds first release claim. Other released chains satisfy the required history investigation."
+    }
+  ]
+}

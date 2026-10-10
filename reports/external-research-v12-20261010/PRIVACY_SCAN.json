@@ -1,21 +1,25 @@
 {
   "status": "PASS",
-  "scanned_files": 915,
-  "JSON_parse_checks": 550,
-  "Python_AST_checks": 19,
-  "JavaScript_module_syntax_checks": 19,
-  "scope": "Full final file contents; emails, provider routes, machine paths, secret patterns; JSON/Python/JS syntax, exact inventories and checksums. Individually inspected authored corpus capsules/indexes allowed; raw fetched mirrors excluded.",
+  "scanned_files": 2895,
+  "complete_parse_checks": {
+    "json": 1852,
+    "python": 35,
+    "javascript": 27
+  },
+  "scan_categories": [
+    "email",
+    "machine_path",
+    "provider_instance",
+    "token_secret",
+    "encoded_body",
+    "machine_prefix"
+  ],
+  "findings": [],
   "empty_original_json_placeholders": [
     "runs/B-APPL-G-01/treatment/stages/role/goal_activation.json"
   ],
-  "findings": [],
-  "root_parse_review": {
-    "all_nonempty_JSON_parse": true,
-    "one_preserved_empty_diagnostic": "runs/B-APPL-G-01/treatment/stages/role/goal_activation.json",
-    "exception_manifest": "validation/JSON_PARSE_EXCEPTIONS.json",
-    "empty_file_is_not_native_proof": true
-  },
-  "preserved_non_JSON_diagnostic_files": 1,
-  "checksum_entries": 914,
-  "root_full_file_private_identity_check": "PASS after documented precommit corrections"
+  "malformed_original_json_diagnostics": [
+    "runs/A3-02/control/stages/reviser/native-goal-active-confirmation.json"
+  ],
+  "scope": "All final public file contents, including receipts/prompts/nested source JSON strings, manifests/checksums; Explicit actual source JSON exceptions are preserved in validation/JSON_PARSE_EXCEPTIONS.json, including the zero-byte GLM diagnostic and the extra-data native confirmation diagnostic."
 }

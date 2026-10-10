@@ -1,0 +1,13 @@
+{
+  "goal": {
+    "threadId": "01a12421-c2be-7710-a87c-7d8ba83a6135",
+    "objective": "Perform the independent bounded ER12 Track B semantic review for B-DISC-M-02/control exactly as assigned: read the complete rubric, input map and all mapped frozen assignment, fixture, corpus and candidate discovery/source inputs; independently retrieve governing primary evidence; assess only assigned role axes and exact obligations with supported findings, preserved scope and separate source/coverage/delivery/native/protocol/time status; hash inspected science/input and verify existing terminal freeze; save assessment.md, assessment.json, source-map and navigable primary evidence only under ER12_RUNTIME/assessment/B-DISC-M-02/control-v1 before completing this Goal. No delegation, candidate feedback/repair, accounts, Git/publication, other arms/history or ER11 rescore. Complete within 25 minutes.",
+    "status": "complete",
+    "tokensUsed": 161679,
+    "timeUsedSeconds": 551,
+    "createdAt": 1791607565,
+    "updatedAt": 1791608117
+  },
+  "remainingTokens": null,
+  "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+}

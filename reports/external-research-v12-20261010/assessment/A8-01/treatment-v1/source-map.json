@@ -1,0 +1,1488 @@
+{
+  "assessment_id": "ER12-A8-01-treatment-v1",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "evidence_index": "evidence/index.md",
+  "original_inspected_hashes": "original-inspected-hashes.json",
+  "identity_policy": "Independent E01–E17 IDs never rebind candidate S01–S06. Candidate sources are original authored lineage evidence; independent raw primary sources support the judgments.",
+  "candidate_to_independent_source_bindings": {
+    "S01": [
+      "E01-bagit-rfc8493"
+    ],
+    "S02": [
+      "E02-ocfl-spec",
+      "E16-ocfl-release-pinned-spec"
+    ],
+    "S03": [
+      "E04-ocfl-issue538",
+      "E05-ocfl-pr547",
+      "E06-ocfl-pr547-files"
+    ],
+    "S04": [
+      "E03-ocfl-change-log",
+      "E07-ocfl-release11",
+      "E08-ocfl-release111",
+      "E13-ocfl-tag11",
+      "E14-ocfl-tag111",
+      "E15-ocfl-latest-release"
+    ],
+    "S05": [
+      "E09-premis30"
+    ],
+    "S06": [
+      "E10-annex-whereis",
+      "E11-annex-fsck",
+      "E12-annex-log"
+    ]
+  },
+  "primary_evidence": [
+    {
+      "id": "E01-bagit-rfc8493",
+      "url": "https://www.rfc-editor.org/rfc/rfc8493.html",
+      "final_url": "https://www.rfc-editor.org/rfc/rfc8493.html",
+      "access_start_utc": "2026-10-10T04:41:13.501007+00:00",
+      "access_finish_utc": "2026-10-10T04:41:13.671252+00:00",
+      "http_status": 200,
+      "content_type": "text/html",
+      "raw_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E01-bagit-rfc8493.html",
+      "sha256": "f801a6d8685e3910354079fe2194b223f574343b74f0897d505a32bf313925f2",
+      "bytes": 63600,
+      "text_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E01-bagit-rfc8493.txt",
+      "text_sha256": "ba089d070ad037879c53b2ac6b6306c7678d9c52b7dd3ac3224750745f65424f",
+      "text_lines": 859
+    },
+    {
+      "id": "E02-ocfl-spec",
+      "url": "https://ocfl.io/1.1/spec/",
+      "final_url": "https://ocfl.io/1.1/spec/",
+      "access_start_utc": "2026-10-10T04:41:13.502387+00:00",
+      "access_finish_utc": "2026-10-10T04:41:13.910104+00:00",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E02-ocfl-spec.html",
+      "sha256": "82bb493ba4c919ead82db7e99adbcc93a54bde73af320059826b26e6df6106ad",
+      "bytes": 139510,
+      "text_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E02-ocfl-spec.txt",
+      "text_sha256": "bbb6521fa1c343b79d5b8390bec0f197ea9a8abd0e60b2c998b0ae6995b3ed41",
+      "text_lines": 1060
+    },
+    {
+      "id": "E03-ocfl-change-log",
+      "url": "https://ocfl.io/1.1/spec/change-log.html",
+      "final_url": "https://ocfl.io/1.1/spec/change-log.html",
+      "access_start_utc": "2026-10-10T04:41:13.503180+00:00",
+      "access_finish_utc": "2026-10-10T04:41:13.861086+00:00",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E03-ocfl-change-log.html",
+      "sha256": "261b6b0e847e7caaf321f8c33a3925b08cda6a397f28b044acba53b857429248",
+      "bytes": 18766,
+      "text_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E03-ocfl-change-log.txt",
+      "text_sha256": "b7321289ebc4e186abeb4f69610c5dc6b88b3c03e32d2b6ee0858ea70054f792",
+      "text_lines": 76
+    },
+    {
+      "id": "E04-ocfl-issue538",
+      "url": "https://api.github.com/repos/OCFL/spec/issues/538",
+      "final_url": "https://api.github.com/repos/OCFL/spec/issues/538",
+      "access_start_utc": "2026-10-10T04:41:13.508557+00:00",
+      "access_finish_utc": "2026-10-10T04:41:13.726016+00:00",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E04-ocfl-issue538.json",
+      "sha256": "38dac1c6e3d97928f1a8ae817caa0316d62122f3ca33b50caec0f530392f900a",
+      "bytes": 6667
+    },
+    {
+      "id": "E05-ocfl-pr547",
+      "url": "https://api.github.com/repos/OCFL/spec/pulls/547",
+      "final_url": "https://api.github.com/repos/OCFL/spec/pulls/547",
+      "access_start_utc": "2026-10-10T04:41:13.511328+00:00",
+      "access_finish_utc": "2026-10-10T04:41:13.734372+00:00",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E05-ocfl-pr547.json",
+      "sha256": "02d9f7cc6e9cd24099bbdd1ba440bf1086c7ed43558a3d1b424e77d994111902",
+      "bytes": 16423
+    },
+    {
+      "id": "E06-ocfl-pr547-files",
+      "url": "https://api.github.com/repos/OCFL/spec/pulls/547/files",
+      "final_url": "https://api.github.com/repos/OCFL/spec/pulls/547/files",
+      "access_start_utc": "2026-10-10T04:41:13.515104+00:00",
+      "access_finish_utc": "2026-10-10T04:41:13.821996+00:00",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E06-ocfl-pr547-files.json",
+      "sha256": "2530c9e0a89a8b29e14d90d1d9077331f90d54485316e4fd0a268a7e3406ad20",
+      "bytes": 2853
+    },
+    {
+      "id": "E07-ocfl-release11",
+      "url": "https://api.github.com/repos/OCFL/spec/releases/tags/1.1",
+      "final_url": "https://api.github.com/repos/OCFL/spec/releases/tags/1.1",
+      "access_start_utc": "2026-10-10T04:41:13.517185+00:00",
+      "access_finish_utc": "2026-10-10T04:41:13.687692+00:00",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E07-ocfl-release11.json",
+      "sha256": "70d8c1e908d11621a4fe42268c9345b99ec5b210d222f826b0d66b6880f187ff",
+      "bytes": 3917
+    },
+    {
+      "id": "E08-ocfl-release111",
+      "url": "https://api.github.com/repos/OCFL/spec/releases/tags/1.1.1",
+      "final_url": "https://api.github.com/repos/OCFL/spec/releases/tags/1.1.1",
+      "access_start_utc": "2026-10-10T04:41:13.519304+00:00",
+      "access_finish_utc": "2026-10-10T04:41:13.687338+00:00",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E08-ocfl-release111.json",
+      "sha256": "cdb3bea7a287a3102380e6f74bce0f9d7b23862b00fa7921b18c7c7c2a6a6ba4",
+      "bytes": 2774
+    },
+    {
+      "id": "E09-premis30",
+      "url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+      "final_url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+      "access_start_utc": "2026-10-10T04:41:13.689515+00:00",
+      "access_finish_utc": "2026-10-10T04:41:13.989492+00:00",
+      "http_status": 200,
+      "content_type": "application/pdf",
+      "raw_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E09-premis30.pdf",
+      "sha256": "2e3e3fe001798f3f43d26b4aed03e8737310fa044ee001af2493f7c72517b0e0",
+      "bytes": 2176353,
+      "text_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E09-premis30.txt",
+      "text_sha256": "1029138c1f86a603a399f11c361c8bb33b357071ca5ba0bbdc4b78908fb0a683",
+      "text_locator_convention": "physical newline lines as counted by rg/sed; printed PDF page numbers also provided"
+    },
+    {
+      "id": "E10-annex-whereis",
+      "url": "https://git-annex.branchable.com/git-annex-whereis/",
+      "final_url": "https://git-annex.branchable.com/git-annex-whereis/",
+      "access_start_utc": "2026-10-10T04:41:13.692949+00:00",
+      "access_finish_utc": "2026-10-10T04:41:13.782343+00:00",
+      "http_status": 200,
+      "content_type": "text/html",
+      "raw_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E10-annex-whereis.html",
+      "sha256": "e812d30340382ffd2771adc14e35123c327feab0f7b9a3aef818525d0658a5a6",
+      "bytes": 13160,
+      "text_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E10-annex-whereis.txt",
+      "text_sha256": "d56dbdca2e1846fa1d25cba480df7978aab03f48fee3cd87951cce10ce38554a",
+      "text_lines": 140
+    },
+    {
+      "id": "E11-annex-fsck",
+      "url": "https://git-annex.branchable.com/git-annex-fsck/",
+      "final_url": "https://git-annex.branchable.com/git-annex-fsck/",
+      "access_start_utc": "2026-10-10T04:41:13.696205+00:00",
+      "access_finish_utc": "2026-10-10T04:41:13.771012+00:00",
+      "http_status": 200,
+      "content_type": "text/html",
+      "raw_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E11-annex-fsck.html",
+      "sha256": "7b972df5a21fcc8ca4fac5574594885ff4d2936c79c70dd4a8787775801254a3",
+      "bytes": 16749,
+      "text_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E11-annex-fsck.txt",
+      "text_sha256": "594c0b1fa51df8773efeb8127c6363f8e71e06ef24cf2a73540af9ded2ccf16d",
+      "text_lines": 179
+    },
+    {
+      "id": "E12-annex-log",
+      "url": "https://git-annex.branchable.com/git-annex-log/",
+      "final_url": "https://git-annex.branchable.com/git-annex-log/",
+      "access_start_utc": "2026-10-10T04:41:13.727829+00:00",
+      "access_finish_utc": "2026-10-10T04:41:13.793350+00:00",
+      "http_status": 200,
+      "content_type": "text/html",
+      "raw_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E12-annex-log.html",
+      "sha256": "dbff8ef434d9289fe2918d27e876ebab3fb4ac416757405c7edbf69377d33f14",
+      "bytes": 9122,
+      "text_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E12-annex-log.txt",
+      "text_sha256": "ec090a3001eb9bd2bbd399082fffada540976ce3dda9c03f74171852d1261549",
+      "text_lines": 120
+    },
+    {
+      "id": "E13-ocfl-tag11",
+      "url": "https://api.github.com/repos/OCFL/spec/git/ref/tags/1.1",
+      "final_url": "https://api.github.com/repos/OCFL/spec/git/ref/tags/1.1",
+      "access_start_utc": "2026-10-10T04:41:13.736324+00:00",
+      "access_finish_utc": "2026-10-10T04:41:13.955615+00:00",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E13-ocfl-tag11.json",
+      "sha256": "acfd10f8362d994adb88513c190f07808bbfd852e5ad33a5bc81f4cbf6aeb2ab",
+      "bytes": 317
+    },
+    {
+      "id": "E14-ocfl-tag111",
+      "url": "https://api.github.com/repos/OCFL/spec/git/ref/tags/1.1.1",
+      "final_url": "https://api.github.com/repos/OCFL/spec/git/ref/tags/1.1.1",
+      "access_start_utc": "2026-10-10T04:41:13.783920+00:00",
+      "access_finish_utc": "2026-10-10T04:41:13.981303+00:00",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E14-ocfl-tag111.json",
+      "sha256": "53b8b8602aadf422931670a7e1188fa30d13ab6c077be4eb63a7fcdd83f24345",
+      "bytes": 325
+    },
+    {
+      "id": "E15-ocfl-latest-release",
+      "url": "https://api.github.com/repos/OCFL/spec/releases/latest",
+      "final_url": "https://api.github.com/repos/OCFL/spec/releases/latest",
+      "access_start_utc": "2026-10-10T04:43:52.293683+00:00",
+      "access_finish_utc": "2026-10-10T04:43:52.457466+00:00",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E15-ocfl-latest-release.json",
+      "sha256": "cdb3bea7a287a3102380e6f74bce0f9d7b23862b00fa7921b18c7c7c2a6a6ba4",
+      "bytes": 2774
+    },
+    {
+      "id": "E16-ocfl-release-pinned-spec",
+      "url": "https://raw.githubusercontent.com/OCFL/spec/c3f88b31ab8c82c37a190a4f0e5b9bc3c9f01010/1.1/spec/index.md",
+      "final_url": "https://raw.githubusercontent.com/OCFL/spec/c3f88b31ab8c82c37a190a4f0e5b9bc3c9f01010/1.1/spec/index.md",
+      "access_start_utc": "2026-10-10T04:43:52.457589+00:00",
+      "access_finish_utc": "2026-10-10T04:43:52.637604+00:00",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E16-ocfl-release-pinned-spec.md",
+      "sha256": "3d02c6c68e542f471d9252cf1f02cd97e94615e3063930507fb2c33aa31d8f6e",
+      "bytes": 74506
+    },
+    {
+      "id": "E17-ocfl-release-pinned-inventory-schema",
+      "url": "https://raw.githubusercontent.com/OCFL/spec/c3f88b31ab8c82c37a190a4f0e5b9bc3c9f01010/1.1/spec/inventory_schema.json",
+      "final_url": "https://raw.githubusercontent.com/OCFL/spec/c3f88b31ab8c82c37a190a4f0e5b9bc3c9f01010/1.1/spec/inventory_schema.json",
+      "access_start_utc": "2026-10-10T04:54:00.509381+00:00",
+      "access_finish_utc": "2026-10-10T04:54:00.647142+00:00",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/inventory_schema.json",
+      "sha256": "3f87a36951c25464824a25273e1480fd68448668f05ee7fa5af0115716b0b82c",
+      "bytes": 4297,
+      "role": "Supplemental context: preserves the relative schema link in the unmodified release-pinned source. No validator executed; JSON shape corroboration only."
+    }
+  ],
+  "consequential_claims": [
+    {
+      "id": "C01",
+      "consequential_claim": "BagIt is a directory transfer/storage format with data/, bagit.txt and payload manifests; the standard has no native sequence of corrected asset states.",
+      "evidence_ids": [
+        "E01-bagit-rfc8493"
+      ],
+      "primary_locators": [
+        "RFC 8493 §§1.1, 1.3, 2.1; text lines 89–259"
+      ],
+      "semantic_judgment": "SUPPORTED",
+      "scope_conditions_and_exceptions": "The payload is opaque; a local register can add version relationships. The lack of a native version model does not prohibit snapshots, ZIP serialization, or additional local metadata. This is BagIt 1.0, not a claim about every product using BagIt.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+        "lines": [
+          76
+        ]
+      }
+    },
+    {
+      "id": "C02",
+      "consequential_claim": "Each BagIt 1.0 payload manifest lists every payload filename exactly once, and completeness includes both listed-file presence and the actual payload file set.",
+      "evidence_ids": [
+        "E01-bagit-rfc8493"
+      ],
+      "primary_locators": [
+        "§2.1.3, §3; text lines 220–259, 462–475"
+      ],
+      "semantic_judgment": "SUPPORTED",
+      "scope_conditions_and_exceptions": "Every manifest, not a union of manifests, must enumerate the payload in 1.0. Filenames are relative to the bag base and include data/; slash separators and special-character encoding rules apply. Older BagIt rules differ. The final proposes complete local packages, not unresolved fetch.txt holes.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+        "lines": [
+          76,
+          99,
+          101,
+          106
+        ]
+      }
+    },
+    {
+      "id": "C03",
+      "consequential_claim": "A valid bag is complete and all payload/tag manifest checksums verify; missing paths, unlisted payload paths and byte mismatches are different failure observations.",
+      "evidence_ids": [
+        "E01-bagit-rfc8493"
+      ],
+      "primary_locators": [
+        "§3; text lines 462–475; §6.1.1.3 lines 650–657"
+      ],
+      "semantic_judgment": "SUPPORTED",
+      "scope_conditions_and_exceptions": "A true unlisted payload violates 1.0 completeness. Normalization-equivalent paths need the RFC-recommended tolerant comparison, which the final expressly acknowledges. These checks do not catch an intended item omitted from both manifest and deposited content.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+        "lines": [
+          101,
+          106,
+          108,
+          110
+        ]
+      }
+    },
+    {
+      "id": "C04",
+      "consequential_claim": "Fixity against a trusted reference does not establish intended exhibition completeness, authorship, live remote possession, or backup recoverability.",
+      "evidence_ids": [
+        "E01-bagit-rfc8493",
+        "E09-premis30",
+        "E10-annex-whereis"
+      ],
+      "primary_locators": [
+        "BagIt §§1.1, 3, 5.4; PREMIS §1.5.2 p.59, special topic p.258; whereis description lines 34–36"
+      ],
+      "semantic_judgment": "SUPPORTED",
+      "scope_conditions_and_exceptions": "The governing standards concern reference bytes and preservation metadata. Registrar intent and custody/restore observations are separate controls. A whole archive digest can demonstrate archive-byte agreement with an established reference; the rejected plan had improperly promoted that to proof of expected contents and recovery.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+        "lines": [
+          12,
+          20,
+          63,
+          64,
+          106,
+          110
+        ]
+      }
+    },
+    {
+      "id": "C05",
+      "consequential_claim": "bag-info.txt is optional human-use metadata, additional tags are permitted, and custom CSV field meanings are local. Manifesting an inventory protects its bytes, not its truth.",
+      "evidence_ids": [
+        "E01-bagit-rfc8493"
+      ],
+      "primary_locators": [
+        "§§2.2.1, 2.2.2, 2.2.4; text lines 261–290, 411–415; §2.1.2"
+      ],
+      "semantic_judgment": "SUPPORTED",
+      "scope_conditions_and_exceptions": "Tagmanifest checks cover a listed tag; the RFC otherwise says to ignore custom tag contents. Putting CSV/README in data/ makes them payload bytes. Ordinary staff readability and registrar maintenance are proposed pilot checks, not established interoperability or catalogue integration.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+        "lines": [
+          22,
+          37,
+          65,
+          93,
+          122
+        ]
+      }
+    },
+    {
+      "id": "C06",
+      "consequential_claim": "BagIt 1.0 creation/validation tools MUST support SHA-256 and SHA-512; SHA-512 is a SHOULD default for new bags, and the gallery may choose the algorithm.",
+      "evidence_ids": [
+        "E01-bagit-rfc8493"
+      ],
+      "primary_locators": [
+        "§2.4; text lines 435–461, especially 455–459"
+      ],
+      "semantic_judgment": "SUPPORTED",
+      "scope_conditions_and_exceptions": "The support obligation concerns tools. It does not require every bag to contain both algorithms, make SHA-512 a MUST, or prove any untested tool implements its default. Legacy algorithm support is separately recommended. No numeric hash length or unit is incorrectly substituted in the final.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+        "lines": [
+          23,
+          36,
+          88,
+          128
+        ]
+      }
+    },
+    {
+      "id": "C07",
+      "consequential_claim": "Filename normalization, case and target-platform path rules can alter manifest lookup; actual filesystem and transfer-tool conditions matter.",
+      "evidence_ids": [
+        "E01-bagit-rfc8493"
+      ],
+      "primary_locators": [
+        "§§6.1.1.1–6.1.1.3, 6.1.2; text lines 583–679"
+      ],
+      "semantic_judgment": "SUPPORTED",
+      "scope_conditions_and_exceptions": "The witnessed failure is a filename normalization change after manifest writing. It is not universal failure across all copies or proof of safety/failure on a single unchanged filesystem. The final avoids adopting the RFC’s dated numeric Windows length statement as a universal current limit and requests actual-platform fixtures.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+        "lines": [
+          38,
+          93,
+          108,
+          118
+        ]
+      }
+    },
+    {
+      "id": "C08",
+      "consequential_claim": "OCFL uses stable local object IDs and continuous version directories with expected immutable earlier content.",
+      "evidence_ids": [
+        "E02-ocfl-spec",
+        "E16-ocfl-release-pinned-spec"
+      ],
+      "primary_locators": [
+        "§§3, 3.3, 3.5.1, 3.7.1; released source lines 238–282, 377–402, 595–607"
+      ],
+      "semantic_judgment": "SUPPORTED",
+      "scope_conditions_and_exceptions": "The ID MUST remain stable and unique locally and SHOULD be a URI; no assertion of resolvability. Directory numbers are positive continuous integers with specified zero-padding rules. Immutability is the expected versioning model, not automatically enforced by ordinary disks. The final correctly says expected immutable.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+        "lines": [
+          10,
+          77,
+          114,
+          116
+        ]
+      }
+    },
+    {
+      "id": "C09",
+      "consequential_claim": "OCFL inventories map digests to arrays of stored content paths and version states to arrays of logical paths; they record current and historical states.",
+      "evidence_ids": [
+        "E02-ocfl-spec",
+        "E16-ocfl-release-pinned-spec"
+      ],
+      "primary_locators": [
+        "§§2, 3.4, 3.5.1–3.5.3, 3.7"
+      ],
+      "semantic_judgment": "SUPPORTED",
+      "scope_conditions_and_exceptions": "The inventory is UTF-8 JSON with required manifest/versions blocks. Digests connect physical and logical paths and can deduplicate unchanged content. Safe relative slash-separated paths prohibit empty, dot and parent segments and conflicts. The final does not mistake a logical asset ID for a checksum or OCFL object ID.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+        "lines": [
+          35,
+          77,
+          85,
+          116
+        ]
+      }
+    },
+    {
+      "id": "C10",
+      "consequential_claim": "The OCFL root inventory is required; inventories in version directories are SHOULD; every inventory present requires its digest sidecar.",
+      "evidence_ids": [
+        "E02-ocfl-spec",
+        "E16-ocfl-release-pinned-spec"
+      ],
+      "primary_locators": [
+        "§§3.6–3.7; HTML text lines 404–433; release-pinned source lines 556–593"
+      ],
+      "semantic_judgment": "SUPPORTED_FINAL_CORRECTED_DRAFT",
+      "scope_conditions_and_exceptions": "The condition is every occurrence of an inventory, not every directory whether it has an inventory or not. If a latest-version inventory is present it must match the root. Optional per-version inventories retain redundancy. This corrects investigator draft line 69 and the critic’s supported material finding.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+        "lines": [
+          35,
+          47,
+          77,
+          116
+        ]
+      }
+    },
+    {
+      "id": "C11",
+      "consequential_claim": "Inventory sidecar digest is written after inventory edits, using the inventory digestAlgorithm. OCFL logs/ may hold local action records with format outside the specification.",
+      "evidence_ids": [
+        "E02-ocfl-spec",
+        "E16-ocfl-release-pinned-spec"
+      ],
+      "primary_locators": [
+        "§§3.6, 3.8; text lines 404–414, 434–445"
+      ],
+      "semantic_judgment": "SUPPORTED",
+      "scope_conditions_and_exceptions": "A sidecar does not permit changing historic inventories without respecting version requirements. The optional logs directory is a designated object-root directory; arbitrary extra root files are not implied. The final does not claim the local CSV is an OCFL-native exhibition catalogue.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+        "lines": [
+          77,
+          95,
+          116
+        ]
+      }
+    },
+    {
+      "id": "C12",
+      "consequential_claim": "OCFL #538 was an inventory-referent ambiguity resolved by PR #547 and released in the 1.1.0 clarification; it was not a reported gallery loss or implementation failure.",
+      "evidence_ids": [
+        "E03-ocfl-change-log",
+        "E04-ocfl-issue538",
+        "E05-ocfl-pr547",
+        "E06-ocfl-pr547-files"
+      ],
+      "primary_locators": [
+        "Change log v1.0→v1.1.0 historical inventory entry lines 34–35; issue body/milestone/dates; PR body, merged_at and merge_commit_sha; PR files[0].patch"
+      ],
+      "semantic_judgment": "SUPPORTED",
+      "scope_conditions_and_exceptions": "Issue opened 2021-04-02; PR merged 2021-06-10, merge commit 8b13af6edbac68fe1144ce0d398ac978627af314. The patch changes the inventory referent to that version’s inventory. Copying a whole object is a justified local preservation inference, not the PR’s empirical recovery finding and not a rule governing BagIt.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+        "lines": [
+          21,
+          35,
+          47,
+          114,
+          116,
+          118
+        ]
+      }
+    },
+    {
+      "id": "C13",
+      "consequential_claim": "OCFL release tag 1.1 refers to 4b05472; 1.1.1 refers to c3f88b3 and is the latest listed release inspected.",
+      "evidence_ids": [
+        "E07-ocfl-release11",
+        "E08-ocfl-release111",
+        "E13-ocfl-tag11",
+        "E14-ocfl-tag111",
+        "E15-ocfl-latest-release"
+      ],
+      "primary_locators": [
+        "Official release bodies/tag_name/published_at; Git reference object.sha; latest release tag_name"
+      ],
+      "semantic_judgment": "SUPPORTED",
+      "scope_conditions_and_exceptions": "Full commits: 4b0547244d54967d1404c8c1e7bdba403ac08fb7 and c3f88b31ab8c82c37a190a4f0e5b9bc3c9f01010. Releases published 2022-10-07 and 2024-11-22. The 1.1 URL now renders the 1.1.1 series; rules were also checked against the release-pinned source.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+        "lines": [
+          114
+        ]
+      }
+    },
+    {
+      "id": "C14",
+      "consequential_claim": "PREMIS 3.0 separates file/bitstream fixity from the fixity-check Event/date/outcome and permits backup-copy actions to be recorded in system logs.",
+      "evidence_ids": [
+        "E09-premis30"
+      ],
+      "primary_locators": [
+        "§1.5.2 printed pp.59–60, extracted physical lines 2838–2888; Event Entity p.137, lines 5713–5755; data model pp.6–7"
+      ],
+      "semantic_judgment": "SUPPORTED",
+      "scope_conditions_and_exceptions": "The fixity container applies to File/Bitstream and its digestAlgorithm/value are required when that container is supplied. Event identifier/type/datetime are mandatory; outcome is optional generally. Events relate to objects and may relate to agents. A gallery log is expressly PREMIS-inspired, not formal conformance or a mandatory new platform.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+        "lines": [
+          12,
+          78,
+          95
+        ]
+      }
+    },
+    {
+      "id": "C15",
+      "consequential_claim": "git-annex whereis uses last-received location records and does not contact remotes; log may lack historic data and is about content currently at the paths.",
+      "evidence_ids": [
+        "E10-annex-whereis",
+        "E12-annex-log"
+      ],
+      "primary_locators": [
+        "whereis Description lines 24–36; log Description/options lines 24–37"
+      ],
+      "semantic_judgment": "SUPPORTED_WITH_VERSION_LIMIT",
+      "scope_conditions_and_exceptions": "Current official manuals, with no inspected release identifier. Private/forget/uncommitted history conditions are disclosed in the source maps. It is an optional alternative, not a selected production dependency or live custody guarantee.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+        "lines": [
+          78,
+          95
+        ]
+      }
+    },
+    {
+      "id": "C16",
+      "consequential_claim": "git-annex fsck --from normally copies remote contents for checks; --fast skips expensive checksums/transfers and checks expected presence.",
+      "evidence_ids": [
+        "E11-annex-fsck"
+      ],
+      "primary_locators": [
+        "Description lines 24–32; --from/--fast lines 34–42; --all lines 71–74"
+      ],
+      "semantic_judgment": "SUPPORTED_WITH_VERSION_LIMIT",
+      "scope_conditions_and_exceptions": "This is remote fsck operation, not whereis. With ordinary parameters only selected/current-branch files are checked; --all expands version coverage. No selected annex execution is proposed as proof of every prior asset state. Current manuals remain version-sensitive and no product run occurred.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+        "lines": [
+          78,
+          95
+        ]
+      }
+    },
+    {
+      "id": "C17",
+      "consequential_claim": "Use new full BagIt snapshots, stable local gallery IDs, a shallow role layout and SHA-512 as a conditional pilot recommendation.",
+      "evidence_ids": [
+        "E01-bagit-rfc8493",
+        "E02-ocfl-spec",
+        "E09-premis30"
+      ],
+      "primary_locators": [
+        "BagIt §1.1/§2.1.2; OCFL version/state model; PREMIS data model; original brief scale/owner clauses"
+      ],
+      "semantic_judgment": "SUPPORTED_LOCAL_CHOICE",
+      "scope_conditions_and_exceptions": "Standards establish mechanics; inspectability and simpler full-snapshot restore are design inferences, trading duplicate bytes for fewer delta assumptions. No measured effort, storage, performance or revision threshold is claimed. Owners must decide volume, maintenance, toolchain, algorithm and depth. A reasonable local proposal need not be an externally benchmarked universal winner.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+        "lines": [
+          8,
+          10,
+          33,
+          66,
+          76,
+          126,
+          128,
+          130
+        ]
+      }
+    },
+    {
+      "id": "C18",
+      "consequential_claim": "The retained CSV/README inventory is optional and useful without specialist repository software under readability and maintenance conditions.",
+      "evidence_ids": [
+        "E01-bagit-rfc8493"
+      ],
+      "primary_locators": [
+        "§§1.1, 2.1.2, 2.2.2, 2.2.4; original brief obligation 5"
+      ],
+      "semantic_judgment": "SUPPORTED_CONDITIONAL_OPTION",
+      "scope_conditions_and_exceptions": "A plain-text CSV is a local representation, not an automatic BagIt/OCFL catalogue capability. The final explicitly retains its optional status and explains exclusion only on observed drift/maintenance facts. Staff-tool compatibility remains NOT_RUN. The main procedure is written for the recommended configuration with the option adopted; see limitation L03.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+        "lines": [
+          22,
+          37,
+          65,
+          99,
+          122
+        ]
+      }
+    },
+    {
+      "id": "C19",
+      "consequential_claim": "Validation is a bounded future source/destination/restore procedure using known reference manifests plus registrar intent, not an executed demonstration.",
+      "evidence_ids": [
+        "E01-bagit-rfc8493",
+        "E09-premis30",
+        "E10-annex-whereis"
+      ],
+      "primary_locators": [
+        "BagIt §3; PREMIS fixity/event distinction; original brief obligations 3 and 8"
+      ],
+      "semantic_judgment": "SUPPORTED_PROSPECTIVE_DESIGN",
+      "scope_conditions_and_exceptions": "Missing, extra and renamed files and byte mismatches block acceptance; normalization-only differences are reviewed separately. Preserve suspect copies, do not regenerate their reference as proof, verify destination, restore into staging and open representative files. Sample opening proves only the selected files/use context, and the final does not generalize it to guaranteed recovery.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+        "lines": [
+          99,
+          101,
+          102,
+          103,
+          104,
+          106,
+          108,
+          110,
+          134,
+          138,
+          143,
+          145,
+          146
+        ]
+      }
+    }
+  ],
+  "plan_clause_claim_links": [
+    {
+      "plan_clause": 1,
+      "claim_ids": [
+        "C01",
+        "C08",
+        "C17"
+      ],
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A8-01/plan.md",
+        "heading_line": 15,
+        "treatment_line": 17
+      },
+      "final_lines": [
+        18,
+        61,
+        76,
+        91
+      ]
+    },
+    {
+      "plan_clause": 2,
+      "claim_ids": [
+        "C01",
+        "C08",
+        "C09",
+        "C14"
+      ],
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A8-01/plan.md",
+        "heading_line": 19,
+        "treatment_line": 21
+      },
+      "final_lines": [
+        19,
+        62,
+        76,
+        77,
+        84
+      ]
+    },
+    {
+      "plan_clause": 3,
+      "claim_ids": [
+        "C02",
+        "C03",
+        "C04",
+        "C18",
+        "C19"
+      ],
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A8-01/plan.md",
+        "heading_line": 23,
+        "treatment_line": 25
+      },
+      "final_lines": [
+        20,
+        63,
+        99,
+        106,
+        108,
+        110
+      ]
+    },
+    {
+      "plan_clause": 4,
+      "claim_ids": [
+        "C04",
+        "C10",
+        "C12",
+        "C13",
+        "C19"
+      ],
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A8-01/plan.md",
+        "heading_line": 27,
+        "treatment_line": 29
+      },
+      "final_lines": [
+        21,
+        64,
+        114,
+        116,
+        118
+      ]
+    },
+    {
+      "plan_clause": 5,
+      "claim_ids": [
+        "C05",
+        "C18"
+      ],
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A8-01/plan.md",
+        "heading_line": 31,
+        "treatment_line": 33
+      },
+      "final_lines": [
+        22,
+        37,
+        65,
+        122,
+        145
+      ]
+    },
+    {
+      "plan_clause": 6,
+      "claim_ids": [
+        "C06",
+        "C17"
+      ],
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A8-01/plan.md",
+        "heading_line": 35,
+        "treatment_line": 37
+      },
+      "final_lines": [
+        23,
+        36,
+        66,
+        126,
+        128,
+        130
+      ]
+    },
+    {
+      "plan_clause": 7,
+      "claim_ids": [
+        "C04",
+        "C17",
+        "C19"
+      ],
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A8-01/plan.md",
+        "heading_line": 39,
+        "treatment_line": 41
+      },
+      "final_lines": [
+        24,
+        67,
+        100,
+        102,
+        149
+      ]
+    },
+    {
+      "plan_clause": 8,
+      "claim_ids": [
+        "C01",
+        "C12",
+        "C17",
+        "C18",
+        "C19"
+      ],
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A8-01/plan.md",
+        "heading_line": 43,
+        "treatment_line": 45
+      },
+      "final_lines": [
+        25,
+        68,
+        70,
+        132,
+        134,
+        136,
+        138,
+        140
+      ]
+    }
+  ],
+  "critic_disposition_claim_links": [
+    {
+      "id": "SCW-1",
+      "claim_ids": [
+        "C01",
+        "C08",
+        "C17"
+      ],
+      "critic_line": 22,
+      "final_line": 33
+    },
+    {
+      "id": "SCW-2",
+      "claim_ids": [
+        "C01",
+        "C08",
+        "C09"
+      ],
+      "critic_line": 30,
+      "final_line": 34
+    },
+    {
+      "id": "SCW-3",
+      "claim_ids": [
+        "C09",
+        "C10",
+        "C12"
+      ],
+      "critic_line": 38,
+      "final_line": 35
+    },
+    {
+      "id": "SCW-4",
+      "claim_ids": [
+        "C06"
+      ],
+      "critic_line": 46,
+      "final_line": 36
+    },
+    {
+      "id": "SCW-5",
+      "claim_ids": [
+        "C05",
+        "C18"
+      ],
+      "critic_line": 54,
+      "final_line": 37
+    },
+    {
+      "id": "SCW-6",
+      "claim_ids": [
+        "C07"
+      ],
+      "critic_line": 62,
+      "final_line": 38
+    },
+    {
+      "id": "ORD-1",
+      "claim_ids": [
+        "C01",
+        "C08",
+        "C17"
+      ],
+      "critic_line": 74,
+      "final_line": 44
+    },
+    {
+      "id": "ORD-2",
+      "claim_ids": [
+        "C01",
+        "C08",
+        "C09",
+        "C14"
+      ],
+      "critic_line": 75,
+      "final_line": 45
+    },
+    {
+      "id": "ORD-3",
+      "claim_ids": [
+        "C02",
+        "C03",
+        "C04",
+        "C18",
+        "C19"
+      ],
+      "critic_line": 76,
+      "final_line": 46
+    },
+    {
+      "id": "ORD-4",
+      "claim_ids": [
+        "C04",
+        "C10",
+        "C12",
+        "C13",
+        "C19"
+      ],
+      "critic_line": 77,
+      "final_line": 47
+    },
+    {
+      "id": "ORD-5",
+      "claim_ids": [
+        "C05",
+        "C18"
+      ],
+      "critic_line": 78,
+      "final_line": 48
+    },
+    {
+      "id": "ORD-6",
+      "claim_ids": [
+        "C06",
+        "C17"
+      ],
+      "critic_line": 79,
+      "final_line": 49
+    },
+    {
+      "id": "ORD-7",
+      "claim_ids": [
+        "C04",
+        "C17",
+        "C19"
+      ],
+      "critic_line": 80,
+      "final_line": 50
+    },
+    {
+      "id": "ORD-8",
+      "claim_ids": [
+        "C01",
+        "C12",
+        "C17",
+        "C18",
+        "C19"
+      ],
+      "critic_line": 81,
+      "final_line": 51
+    },
+    {
+      "id": "ORD-outside-sidecar",
+      "claim_ids": [
+        "C10"
+      ],
+      "critic_line": 85,
+      "final_line": 47
+    },
+    {
+      "id": "ORD-outside-cost",
+      "claim_ids": [
+        "C17"
+      ],
+      "critic_line": 86,
+      "final_line": 52
+    },
+    {
+      "id": "ORD-no-scope-reduction",
+      "claim_ids": [
+        "C17",
+        "C18",
+        "C19"
+      ],
+      "critic_line": 87,
+      "final_line": 53
+    }
+  ],
+  "original_artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "authored scientific output/source evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A8-01/brief.md",
+      "bytes": 3458,
+      "sha256": "33a97f960ac3e92a24cfeaa5e170a0adb51428d699f49be026f40a909e648c47",
+      "mtime_ns": 1791605469530856617,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A8-01/plan.md",
+      "bytes": 6136,
+      "sha256": "6964f85a4fdd4b74e4a40cbda44e93524aec1b8ed3860fa5ddec434dd8a2fdca",
+      "mtime_ns": 1791605469530976394,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/terminal-science-freeze-root.json",
+      "bytes": 9011,
+      "sha256": "c3f262936b20f451016e2c02e08d9b9533744811e889731e8aa95dad28137180",
+      "mtime_ns": 1791607129380768527,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/inputs/brief.md",
+      "bytes": 3458,
+      "sha256": "33a97f960ac3e92a24cfeaa5e170a0adb51428d699f49be026f40a909e648c47",
+      "mtime_ns": 1791605474437000478,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/assignment.md",
+      "bytes": 6709,
+      "sha256": "b293485191784992768bfc8f1d2236405a6c7c7ef7756b47ed7ef5c3bf0323dc",
+      "mtime_ns": 1791605870370916167,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/critique.md",
+      "bytes": 13712,
+      "sha256": "9bd06b82fa828f1bea56e9448ab90c95e392986cdde4d0bb14663480d746b10b",
+      "mtime_ns": 1791606556992036942,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "authored scientific output/source evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/dispatch.json",
+      "bytes": 4156,
+      "sha256": "a02261639377a656304c30b68d096607c0a0465b09f2b1e0a38aaf7d770cc705",
+      "mtime_ns": 1791605871135680953,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/freeze.json",
+      "bytes": 3465,
+      "sha256": "4814acec1d7987ec735edfeccb210d9feeace2ff1339783afa3e6e893223179d",
+      "mtime_ns": 1791605870371778010,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/input-map.json",
+      "bytes": 1410,
+      "sha256": "afbb868f0a10670b1f671d06c96639651245375a1a4f90ef745727c29453d28f",
+      "mtime_ns": 1791605870370657435,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/request.json",
+      "bytes": 898,
+      "sha256": "192b58931dc9090a47f892bdc76a453acdbfb55c943cdf97f50f0cb0b38ac0f2",
+      "mtime_ns": 1791605870372074237,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/source-map.json",
+      "bytes": 7176,
+      "sha256": "21ec44bf61bc8d698e236675f515d7135bc92ae038e8bc735e642bff5dc22ab4",
+      "mtime_ns": 1791606584294191801,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/sources/index.md",
+      "bytes": 1777,
+      "sha256": "b3bf7c85a920a96da3f65f1eeda4acd68863a8ffad2976ff89b85c00a8f1d60f",
+      "mtime_ns": 1791606584307191875,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "authored scientific output/source evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/status.json",
+      "bytes": 3342,
+      "sha256": "0b27b30fc203d8278eddddbe3bf1eab1b6bb5122199e6e71003ca266adde8ee0",
+      "mtime_ns": 1791606611634261736,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/assignment.md",
+      "bytes": 3710,
+      "sha256": "464e98672d46ecc3a11ff8c582fae4fd671b9b932d548d12a6b0ecce84449639",
+      "mtime_ns": 1791605474437862112,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/discovery.md",
+      "bytes": 9012,
+      "sha256": "baef8ae18b8f568005def64e37525a34857771fd3ca7e1ce09548b680646430e",
+      "mtime_ns": 1791605759831825367,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "authored scientific output/source evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/dispatch.json",
+      "bytes": 4252,
+      "sha256": "9a0262656358dad52179f22d21807653fef1fe58b080b2a9f5cd5b24e72d36f9",
+      "mtime_ns": 1791605475056175829,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/draft.md",
+      "bytes": 22534,
+      "sha256": "0af43bf0c4c5fdcdf703052e68fd11214c99a7dfa70715ab1f106cf0f66544df",
+      "mtime_ns": 1791605824889341301,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "authored scientific output/source evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/freeze.json",
+      "bytes": 1668,
+      "sha256": "fa670426b20a8be18796bdc3818e0e70afc35bf2f2f27eae5933dc0353804102",
+      "mtime_ns": 1791605474438482219,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/input-map.json",
+      "bytes": 722,
+      "sha256": "b994ad74eb3b52aadc1ffd92b7f6a338ee2890cfa463cbdc3d73b64aeb5d85d5",
+      "mtime_ns": 1791605474437671920,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/plan-reveal.json",
+      "bytes": 428,
+      "sha256": "c71db7d937329294db97f04470c59b94c80dac6ffb167492a9066e3157895afa",
+      "mtime_ns": 1791605766720715394,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/request.json",
+      "bytes": 922,
+      "sha256": "ebe208acd3a3f4d208ea49b4a275d62eb4a8b73972bc6fcc60af3e6b9b387b15",
+      "mtime_ns": 1791605474438788665,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 6136,
+      "sha256": "6964f85a4fdd4b74e4a40cbda44e93524aec1b8ed3860fa5ddec434dd8a2fdca",
+      "mtime_ns": 1791605766720593630,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/source-map.json",
+      "bytes": 8295,
+      "sha256": "116008968cd18bbb54e5224b3320e3b547674fe568c43548bbbf1d4a15b40c1b",
+      "mtime_ns": 1791605759838825437,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/sources/S01-bagit-rfc8493.md",
+      "bytes": 2809,
+      "sha256": "514a32e6f471a9a111a4ad04f26a3e126b159e7afdb0c4aa891e32940dd74702",
+      "mtime_ns": 1791605759794824994,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "authored scientific output/source evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/sources/S02-ocfl-spec-1.1.md",
+      "bytes": 1988,
+      "sha256": "867b9b0ebd37ba4399fe9254aa52b905d43a3b80da5db44dc29bb27c873e6686",
+      "mtime_ns": 1791605759798825035,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "authored scientific output/source evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/sources/S03-ocfl-issue-538.md",
+      "bytes": 1360,
+      "sha256": "1fa0960eec4d2e5b7dad80ad5bd473502531d5b9a6c1cfd72a49a72f26b5335d",
+      "mtime_ns": 1791605759805825105,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "authored scientific output/source evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/sources/S04-ocfl-release-history.md",
+      "bytes": 1577,
+      "sha256": "03b857ecb0bb73a10cc63b5aaea42568b7b3604148836ad2aa4360e207a5a184",
+      "mtime_ns": 1791605759811825166,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "authored scientific output/source evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/sources/S05-premis-3.0.md",
+      "bytes": 1588,
+      "sha256": "f7f9b4d3046ad59f1594028ef63dd48cc1b7ab237ae0001ca672be7895dff912",
+      "mtime_ns": 1791605759820825256,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "authored scientific output/source evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/sources/S06-git-annex.md",
+      "bytes": 1630,
+      "sha256": "7185168ec2ebc4b2de5b11178b7abef4980c36fe2072672455457b7811acde20",
+      "mtime_ns": 1791605759827825326,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "authored scientific output/source evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/sources/index.md",
+      "bytes": 1693,
+      "sha256": "f38ec81b7d85259d6ad3ab95da1311b4537616b83cf1a1ca1c8f7bd7eb242db9",
+      "mtime_ns": 1791605759787824924,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "authored scientific output/source evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/status.json",
+      "bytes": 4482,
+      "sha256": "7ef29f841e15cb8e34486e56045a41846e79883012312d28c2d93239c22557b2",
+      "mtime_ns": 1791605870053691312,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/assignment.md",
+      "bytes": 5006,
+      "sha256": "8c74f4d66311597371dad2546d94183f1bcbdfd6d5d0c9eda9c6c9a3a24eb3ca",
+      "mtime_ns": 1791606612031560274,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/dispatch.json",
+      "bytes": 4172,
+      "sha256": "fe8793ed663b21c81f9da27aed0e1063098212bdbe647453c73cd33aaf0bf14d",
+      "mtime_ns": 1791606612680615087,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+      "bytes": 36351,
+      "sha256": "064113d7792459e3f86ba0901b558d015c65a5b9c88f87747e409b0410be349f",
+      "mtime_ns": 1791607000123223122,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "authored scientific output/source evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/freeze.json",
+      "bytes": 4244,
+      "sha256": "32abe04a0fad68d897e5f26ec7adb54ac98059370578c06934273ed0d423f0b7",
+      "mtime_ns": 1791606612032536451,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/input-map.json",
+      "bytes": 1727,
+      "sha256": "985eb9a20682732389aa744218a64b4c4af632103b51d6729e9ce8aed55bdec0",
+      "mtime_ns": 1791606612031301347,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/request.json",
+      "bytes": 902,
+      "sha256": "9fbc3e1ec0ee7e8054e0eb46f8f8b8b623db5610d287d84d7140255b8a6a8ea8",
+      "mtime_ns": 1791606612032872377,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/source-map.json",
+      "bytes": 17624,
+      "sha256": "46a320cacdd70bd9c16074e7aa613ecc29312b3b476c179cae80092b22408e8e",
+      "mtime_ns": 1791607061558774796,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/sources/index.md",
+      "bytes": 2497,
+      "sha256": "eb457b6aa8ea38dc8d168fd362535081c935f3345aee9e9dafeafa8aa4f3e4c2",
+      "mtime_ns": 1791607045186627779,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "authored scientific output/source evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/methods/A8/critic_prompt_delta.txt",
+      "bytes": 3398,
+      "sha256": "6ca210592ebaffd1228f390855af2dcbb7b338dcbb3e00c9fb57f0bdc8672c0d",
+      "mtime_ns": 1791604541744895060,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/methods/A8/reviser_prompt_delta.txt",
+      "bytes": 1715,
+      "sha256": "31b0b79da9d1a99d81103a485448bbd2d518e5c48cd56b15a1a1a9cb9d11e087",
+      "mtime_ns": 1791604541744994813,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    }
+  ],
+  "finding_links": [
+    {
+      "id": "D-L01",
+      "severity": "material wrong in investigator draft",
+      "remaining_in_final": false,
+      "candidate_locator": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/draft.md:69",
+      "exact_defect": "Current 1.1 text also requires the stable object ID across versions, continuous version numbering, immutable existing version directories, and per-version inventory sidecars.",
+      "finding": "As written, the per-version sidecar claim makes optional per-version inventories look universally required. Root inventory MUST; per-version inventories SHOULD; every inventory that exists MUST have its digest sidecar.",
+      "primary_locator": "OCFL §§3.6–3.7; release-pinned source lines 556–593",
+      "evidence_ids": [
+        "E02-ocfl-spec",
+        "E16-ocfl-release-pinned-spec"
+      ],
+      "critic_disposition": "Material wrong at critique line 77 and SCW_NOT_RUN line 85",
+      "final_resolution": "Corrected explicitly at final lines 35, 47, 77 and 116."
+    },
+    {
+      "id": "D-L02",
+      "severity": "minor modality overstatement in investigator draft",
+      "remaining_in_final": false,
+      "candidate_locator": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/draft.md:69",
+      "exact_defect": "The same requires list unqualifiedly includes immutable existing version directories.",
+      "finding": "OCFL describes existing version contents as expected/intended immutable; ordinary filesystem writes do not automatically enforce that property. Preserving older states unchanged is a legitimate stricter local policy.",
+      "primary_locator": "OCFL §§3.3, 3.7.1; release-pinned source lines 280–282 and 595–607",
+      "evidence_ids": [
+        "E02-ocfl-spec",
+        "E16-ocfl-release-pinned-spec"
+      ],
+      "critic_disposition": "No distinct criticism; critic focused on inventory/sidecar modality.",
+      "final_resolution": "The comparison correctly says expected immutable (final line 77); immutable BagIt snapshots remain expressly a local design policy."
+    },
+    {
+      "id": "P01",
+      "classification": "observed A8 method deliverable deviation",
+      "source_judgment_effect": "none; governing source meaning independently assessed",
+      "requirement_locator": "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/assignment.md:18",
+      "requirement": "Preserve scope-bearing excerpt(s); keep source text authentic.",
+      "observed": "All six SCW evidence entries give narrative paraphrases and section IDs, not authentic scope-bearing source excerpts. The critic source index explicitly labels them excerpt paraphrases. The complete authored source tree has no separate authentic excerpt capture.",
+      "artifact_locators": [
+        "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/critique.md:25",
+        "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/critique.md:33",
+        "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/critique.md:41",
+        "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/critique.md:49",
+        "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/critique.md:57",
+        "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/critique.md:65",
+        "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/sources/index.md:14"
+      ]
+    },
+    {
+      "id": "P02",
+      "classification": "observed A8 diagnostic construction deviation",
+      "source_judgment_effect": "none; optional CSV retained on applicable primary evidence",
+      "requirement_locator": "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/assignment.md:16",
+      "requirement": "C* changes exactly one selector and preserves all other factual components.",
+      "observed": "SCW-5 changes generic/unextended to locally extended, but also changes ignoring custom tag contents into assigning standard BagIt semantics to gallery CSV fields and drops the other conjuncts. It is not the same claim with only a processor selector changed. The final’s uncertainty about an untested local extension is cautious but cannot certify this as a valid one-selector witness.",
+      "artifact_locators": [
+        "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/critique.md:56",
+        "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md:37"
+      ]
+    }
+  ],
+  "retrieval_method": "Independent reviewer read-only web opens plus unauthenticated requests to official URLs/API; raw content saved inside this review root. No fetched code executed. Public specification-source patch inspected as text only.",
+  "access_utc_semantics": "Actual Python retrieval start/finish clocks for preserved independent captures. Earlier web-run reads are corroborating opens, not falsified as precise per-request UTC.",
+  "inspection_limits": [
+    {
+      "id": "L01",
+      "classification": "source/version limitation",
+      "material": false,
+      "description": "Official git-annex manuals are unversioned in the authored evidence; exact implementation-release behavior remains unknown. The final discloses this and keeps annex optional.",
+      "candidate_locator": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/source-map.json:131",
+      "evidence_ids": [
+        "E10-annex-whereis",
+        "E11-annex-fsck",
+        "E12-annex-log"
+      ]
+    },
+    {
+      "id": "L02",
+      "classification": "locator/time provenance limitation",
+      "material": false,
+      "description": "Critic/reviser per-request source access UTC is UNKNOWN and their preserved notes are paraphrases. This limits replication of the historical retrieval session, not the independently verified specification meaning. Reviewer retrievals have separate real access metadata and saved raw evidence.",
+      "candidate_locator": "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/sources/index.md:3",
+      "evidence_ids": [
+        "E01-bagit-rfc8493",
+        "E02-ocfl-spec"
+      ]
+    },
+    {
+      "id": "L03",
+      "classification": "minor wording/option framing",
+      "material": false,
+      "description": "The main procedure directly uses inventory.csv without repeating an if-adopted qualifier. Read with the explicit optional/conditional status at final lines 22, 65 and 122, this is the recommended configuration, not a decision that the authorized option became mandatory. The registrar’s completeness responsibility is mandatory regardless of a CSV representation.",
+      "candidate_locator": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md:99",
+      "evidence_ids": [
+        "E01-bagit-rfc8493"
+      ]
+    },
+    {
+      "id": "L04",
+      "classification": "implementation-selection breadth limit",
+      "material": false,
+      "description": "The research compares concrete mechanisms/specifications but does not nominate or inspect source for a particular BagIt/OCFL validator. It does not assert that any implementation conforms or has been installed. Because this is a planning proposal and the toolchain is an explicit owner input, a named implementation is not invented as an extra deliverable. Released specification source/history is substantive and independently verified.",
+      "candidate_locator": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md:130",
+      "evidence_ids": [
+        "E06-ocfl-pr547-files",
+        "E16-ocfl-release-pinned-spec"
+      ]
+    },
+    {
+      "id": "L05",
+      "classification": "prospective-check granularity limit",
+      "material": false,
+      "description": "A separate interruption fault-injection row is not named. The proposed path-set/digest acceptance controls and preservation of failed copies cover incomplete interrupted copies at design level; the pilot walkthrough remains proposed. No executed interruption test, atomic copy guarantee or universal restore capability is claimed.",
+      "candidate_locator": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md:101",
+      "evidence_ids": [
+        "E01-bagit-rfc8493"
+      ]
+    }
+  ],
+  "time_and_native_provenance": "assessment.json separates retained candidate records, T3 evidence, direct reviewer native observations and UNKNOWN fields."
+}

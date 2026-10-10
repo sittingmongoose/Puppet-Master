@@ -1,0 +1,163 @@
+{
+  "stage": "investigator",
+  "run_id": "A5-01-treatment",
+  "source_ids_are_immutable": true,
+  "sources": [
+    {
+      "source_id": "FADGI",
+      "title": "Guidelines for Embedding Metadata in Broadcast WAVE Files",
+      "publisher": "Federal Agencies Digital Guidelines Initiative Audio-Visual Working Group",
+      "exact_url": "https://www.digitizationguidelines.gov/audio-visual/documents/BWF_Embed_Guideline_v3_2021.pdf",
+      "version_or_commit": "Version 3; approved 2021-04-26; current status verified on FADGI guide page",
+      "locator": "PDF pp. 2-3 (scope and revisions), pp. 6-10 (Originator, OriginatorReference, Description and dates), pp. 12-15 (CodingHistory), pp. 22-25 (cue, adtl, ltxt, Purpose=tran and ASCII text)",
+      "access_utc": "2026-10-10T04:23:04Z",
+      "observed_operation": "Opened the official PDF and inspected its table of contents, field definitions, constraints, applicability labels, revision notes, and transcript-purpose section; no sample file or application was run.",
+      "governing_condition_default_exception": "The guideline applies to metadata embedded in Broadcast WAVE; specific fields are strongly recommended, recommended, or optional. BEXT identifier fields have ASCII and fixed-length constraints. ltxt Purpose is recommended when implementing ltxt; tran is a permitted purpose, while its free text is ASCII and RIFF requires null termination/padding. FADGI notes BEXT origination date/time represents local archival-entity time, not unambiguous UTC.",
+      "applicability": "Technical guidance for optional BWF embedding in this pilot; not a requirement for volunteer recorder applications or all WAV files. Local field authority remains an owner decision."
+    },
+    {
+      "source_id": "FADGI-INDEX",
+      "title": "Guidelines: Embedding Metadata in Broadcast WAVE Files",
+      "publisher": "Federal Agencies Digital Guidelines Initiative",
+      "exact_url": "https://www.digitizationguidelines.gov/guidelines/digitize-embedding.html",
+      "version_or_commit": "Live guide; identifies Version 3 as current, approved 2021-04-26; page last updated 2025-02-26",
+      "locator": "Lines 22-31 (scope/current version), 37-50 (changes), 69-80 (MetaEdit support and functions)",
+      "access_utc": "2026-10-10T04:23:04Z",
+      "observed_operation": "Opened the official FADGI guide and read current version, date, linked PDF, field scope, MetaEdit support and checksum caveat.",
+      "governing_condition_default_exception": "The guide says embedded metadata can work in synergy with organizational databases; current BWF guidance references bext, INFO, cue and adtl. MetaEdit v21.07+ supports cue/adtl additions. The advertised MetaEdit MD5 is for the WAVE data/audio bitstream and is an ad hoc chunk.",
+      "applicability": "Supports optional BWF workflow and preserves distinction between embedded convenience metadata and organizational authority; not a recorder-compatibility guarantee."
+    },
+    {
+      "source_id": "EBU",
+      "title": "EBU Tech 3285 v2: Broadcast Wave Format Specification",
+      "publisher": "European Broadcasting Union",
+      "exact_url": "https://tech.ebu.ch/docs/tech/tech3285.pdf",
+      "version_or_commit": "Tech 3285 version 2, 2011-05-20",
+      "locator": "PDF pp. 7-10 (version compatibility and BEXT fields), pp. 6, 14-19 (RIFF/WAVE chunks and optional/unknown chunks)",
+      "access_utc": "2026-10-10T04:23:04Z",
+      "observed_operation": "Opened the EBU-hosted PDF and inspected version compatibility, BEXT field layout, and RIFF unknown/optional chunk handling.",
+      "governing_condition_default_exception": "BWF is based on RIFF/WAVE plus a BEXT chunk. Optional chunks are not supported by all applications; unknown chunks are expected to be ignored. BWF v2 is backward-compatible in the limited sense that older readers may ignore UMID or loudness metadata.",
+      "applicability": "Primary format evidence for optional BWF embedding and compatibility tradeoffs; it does not establish behavior of any untested volunteer recorder or editor."
+    },
+    {
+      "source_id": "METAEDIT",
+      "title": "BWF MetaEdit project page",
+      "publisher": "MediaArea",
+      "exact_url": "https://mediaarea.net/BWFMetaEdit",
+      "version_or_commit": "Live project page listed version 26.08.1 at access; page does not pin the help text to a code commit",
+      "locator": "Lines 37-40 (purpose/platform provenance), 59-69 (current version and supported operations), 83-88 (help/workflow links)",
+      "access_utc": "2026-10-10T04:23:04Z",
+      "observed_operation": "Opened the official project page and read its listed version, platform availability, metadata operations, export formats, validation and checksum scope.",
+      "governing_condition_default_exception": "Tool supports specified BWF metadata import/edit/embed/export and CSV/XML extraction; MD5 evaluates/verifies/embeds a digest of the audio data chunk only, not a full-file hash.",
+      "applicability": "A plausible post-ingest working-copy tool, not a requirement and not a substitute for an independent full-file fixity manifest."
+    },
+    {
+      "source_id": "BEXT",
+      "title": "BWF MetaEdit help: BEXT Audio Metadata Information",
+      "publisher": "MediaArea",
+      "exact_url": "https://mediaarea.net/BWFMetaEdit/bext",
+      "version_or_commit": "Unversioned rolling help page; project page listed BWF MetaEdit 26.08.1 at access; documentation commit unavailable",
+      "locator": "Description, Originator, OriginatorReference and OriginationDate/Time entries; especially Description and OriginatorReference constraints and security note",
+      "access_utc": "2026-10-10T04:23:04Z",
+      "observed_operation": "Opened the help page and inspected field definitions and FADGI application notes.",
+      "governing_condition_default_exception": "EBU BEXT fields use bounded ASCII structures; FADGI suggests short principal identifiers and pointers to external metadata, while warning against sensitive pathnames. FADGI guidance may differ from underlying EBU requirements/recommendations.",
+      "applicability": "Useful optional field mapping only after the archivist selects field authority; do not force long or Unicode-rich prose into these fields."
+    },
+    {
+      "source_id": "LISTINFO",
+      "title": "BWF MetaEdit help: LIST-INFO Audio Metadata Information",
+      "publisher": "MediaArea",
+      "exact_url": "https://mediaarea.net/BWFMetaEdit/listinfo",
+      "version_or_commit": "Unversioned rolling help page; documentation commit unavailable",
+      "locator": "IARL, ICMT, ICOP and INAM entries; FADGI warning that embedded values can be stale; optional labels and relation to BEXT",
+      "access_utc": "2026-10-10T04:23:04Z",
+      "observed_operation": "Opened the help page and read the INFO field descriptions and notes about changing descriptive metadata.",
+      "governing_condition_default_exception": "Many LIST-INFO fields are optional; if present, specific guidance may call for consistency with BEXT. The docs say embedded values may not be the latest/best and direct readers to identifiers for newer information.",
+      "applicability": "Supports keeping a linked external authoritative record for later descriptive corrections; it does not select the society's authority policy."
+    },
+    {
+      "source_id": "CORE",
+      "title": "BWF MetaEdit help: CORE Document",
+      "publisher": "MediaArea",
+      "exact_url": "https://mediaarea.net/BWFMetaEdit/core_doc_help",
+      "version_or_commit": "Unversioned rolling help page; documentation commit unavailable",
+      "locator": "Lines 36-56 and CSV/XML format sections (exchange purpose, filepath association, one row per audio file, ASCII constraints)",
+      "access_utc": "2026-10-10T04:23:04Z",
+      "observed_operation": "Opened the official help page and inspected CORE document import/export behavior, file association, and CSV field constraints.",
+      "governing_condition_default_exception": "CORE is BEXT/LIST-INFO exchange; records associate file paths with values and may be imported for embedding. Fields such as Description/Originator/OriginatorReference are constrained ASCII lengths.",
+      "applicability": "A plausible batch workflow on a copy, but paths are not a stable cross-package identity; the local proposal uses IDs/checksums as authority and tests CSV/XML round trips."
+    },
+    {
+      "source_id": "XML",
+      "title": "BWF MetaEdit help: XML Chunks",
+      "publisher": "MediaArea",
+      "exact_url": "https://mediaarea.net/BWFMetaEdit/xml_chunks",
+      "version_or_commit": "Unversioned rolling help page; documentation commit unavailable",
+      "locator": "Warning section on aXML, iXML and XMP editing",
+      "access_utc": "2026-10-10T04:23:04Z",
+      "observed_operation": "Opened the official help page and inspected its explicit XML validation and undo warning.",
+      "governing_condition_default_exception": "The current help says it does not verify that entered aXML/iXML/XMP content is valid XML or valid instances and offers no undo for such edits.",
+      "applicability": "A direct caution against assuming all embedded chunk editors validate schemas or provide reversible edits; XML chunks are outside a minimal pilot unless separately validated."
+    },
+    {
+      "source_id": "HISTORY",
+      "title": "BWF MetaEdit GUI release history",
+      "publisher": "MediaArea / BWFMetaEdit repository on GitHub",
+      "exact_url": "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/master/History_GUI.txt",
+      "version_or_commit": "Mutable master view; commit hash was not exposed in the retrieved content. Historical entries identify Version 25.04 (2025-04-30), 23.04 (2023-04-10), 21.07 (2021-07-09), 20.08 (2020-08-11), 0.2.2 (2009-12-22), and earlier fixes.",
+      "locator": "Lines 11-15: Version 25.04 ISO8859-1 core-file fallback; lines 42-47: Version 23.04 field code-page and CSET support; lines 54-90: Version 21.07 XML UNICODE=1 import fixes; lines 91-103: Version 20.08 XMP/aXML/iXML valid-XML support; lines 268-277: Version 0.2.2 XML CR/special-character fixes and complete-file-write issue; lines 287-300: Version 0.2.0 conditional no-complete-rewrite capability.",
+      "access_utc": "2026-10-10T04:24:27Z",
+      "observed_operation": "Opened the official raw release-history text and read the versioned entries. A follow-up attempt to open version-tag URLs timed out, so no immutable commit pin is claimed.",
+      "governing_condition_default_exception": "Entries are release-history claims for named tool versions, not proof that every other version or application has the same behavior. Encoding support and fallback are scoped to described codepaths/fields; the page is on a moving branch.",
+      "applicability": "Released history demonstrates actual XML/encoding edge cases and version-specific repairs relevant to metadata exchange; local versions and sample inputs require independent tests."
+    },
+    {
+      "source_id": "BAGIT",
+      "title": "RFC 8493: The BagIt File Packaging Format (V1.0)",
+      "publisher": "RFC Editor / IETF Datatracker; independent submission",
+      "exact_url": "https://datatracker.ietf.org/doc/html/rfc8493",
+      "version_or_commit": "RFC 8493, BagIt v1.0, October 2018; informational RFC, not IETF Standards Track",
+      "locator": "Sections 2.1.1-2.1.3 (UTF-8 tag default, opaque payload, mandatory checksum manifests), 2.2.1 and 2.2.2 (optional tag manifest/bag-info), 5.4 (security boundary), 6.1 (filename interoperability)",
+      "access_utc": "2026-10-10T04:23:04Z",
+      "observed_operation": "Opened RFC HTML and inspected required/optional elements, checksum rules, encoding defaults and security limitations.",
+      "governing_condition_default_exception": "Every bag requires at least one payload manifest listing each payload file once. UTF-8 is recommended for remaining tag files. Tag manifest and bag-info are optional. Checksums detect corruption but are not designed to secure against active attacks.",
+      "applicability": "Lightweight, portable package/fixity option for audio plus sidecars/derivatives; it does not validate WAV semantics, provenance authority, consent or accessibility."
+    },
+    {
+      "source_id": "PREMIS",
+      "title": "PREMIS Data Dictionary for Preservation Metadata, Version 3.0",
+      "publisher": "PREMIS Editorial Committee / Library of Congress",
+      "exact_url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+      "version_or_commit": "Version 3.0; PDF updated November 2015",
+      "locator": "Introduction pp. 14-19 (structural/derivation relationships, source and event links); Data Dictionary pp. 117-120 (relationshipType, relationshipSubType, relatedObjectIdentifier)",
+      "access_utc": "2026-10-10T04:23:04Z",
+      "observed_operation": "Opened the Library of Congress PDF and inspected relationship explanations and semantic units; no PREMIS XML was authored or validated.",
+      "governing_condition_default_exception": "PREMIS gives a preservation-metadata model; relationship vocabulary and event associations are expressive design elements, not an obligation that this small pilot adopt the entire standard. Unambiguous identifiers and relationship/event context matter.",
+      "applicability": "Conceptual model for linking original, transcript revisions and access copies, with a simpler local ledger acceptable at pilot scale."
+    },
+    {
+      "source_id": "W3C",
+      "title": "Making Audio and Video Media Accessible",
+      "publisher": "World Wide Web Consortium, Web Accessibility Initiative",
+      "exact_url": "https://www.w3.org/WAI/media/av/",
+      "version_or_commit": "WAI guidance page; latest revision shown as 2024-09-17; not itself a product conformance result",
+      "locator": "Transcripts and Media Players sections; related planning page lists separate transcript for prerecorded audio-only media and WCAG levels",
+      "access_utc": "2026-10-10T04:23:04Z",
+      "observed_operation": "Opened the official W3C guidance and inspected transcript definition, media-player recommendation and planning resource.",
+      "governing_condition_default_exception": "Guidance calls for text of speech and non-speech audio and an accessible player; the exact accessibility features depend on media and user needs. The source does not validate any proposed player or file.",
+      "applicability": "Supports retaining a human-reviewed transcript and accessibility-minded listening copy as an optional feature and a proposed validation target; no claim of conformance is made."
+    },
+    {
+      "source_id": "W3C-PLAN",
+      "title": "Planning Audio and Video Media",
+      "publisher": "World Wide Web Consortium, Web Accessibility Initiative",
+      "exact_url": "https://www.w3.org/WAI/media/av/planning/",
+      "version_or_commit": "WAI guidance page in the Making Audio and Video Media Accessible resource; latest resource revision shown as 2024-09-17",
+      "locator": "Audio-only checklist and WCAG levels: separate transcript for prerecorded audio-only media; user needs and budget/time constraints influence accessibility features; transcripts support deaf-blind users using braille.",
+      "access_utc": "2026-10-10T04:24:49Z",
+      "observed_operation": "Opened the official W3C page and inspected its audio-only checklist, WCAG levels, transcript context, and accessible-player references.",
+      "governing_condition_default_exception": "The page distinguishes Level A, AA and AAA WCAG items and accessibility features beyond WCAG; transcript selection depends on audio-only vs video and use context.",
+      "applicability": "Supports the optional transcript and accessibility validation proposal; it is not a result for any local player or transcript."
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-investigator-v1",
+  "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-investigator-v1",
+  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-investigator-v1:ordinal:1",
+  "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-investigator-v1",
+  "status": "completed",
+  "workState": "result_available",
+  "hasPendingChildRuns": false,
+  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-investigator-v1:ordinal:1",
+  "latestTerminalStatus": "completed",
+  "latestTerminalSummary": "Completed the investigator stage. The helper ran exactly once, revealed the plan, and the discovery file still matches its frozen SHA-256. Product validation remains **NOT_RUN**; the documented product, source-history, and release review was research only.\n\n- [Draft proposal](<ER12_RUNTIME/runs/A2-01/control/stages/investigator/draft.md>)\n- [Independent discovery](<ER12_RUNTIME/runs/A2-01/control/stages/investigator/discovery.md>)\n- [Source map](<ER12_RUNTIME/runs/A2-01/control/stages/investigator/source-map.json>) · [Source index](<ER12_RUNTIME/runs/A2-01/control/stages/investigator/sources/index.md>)\n- [Released plan copy](<ER12_RUNTIME/runs/A2-01/control/stages/investigator/revealed-plan.md>)\n\nThe single native Goal is **complete** (thread `01a12401-f364-7642-9ce6-0e342871af49`): 256,095 tokens used; 878 seconds elapsed.",
+  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-investigator-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:8e533841-40e7-465d-a58e-f53c59a409a1",
+  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+  "model": "gpt-6-luna",
+  "summary": "Completed the investigator stage. The helper ran exactly once, revealed the plan, and the discovery file still matches its frozen SHA-256. Product validation remains **NOT_RUN**; the documented product, source-history, and release review was research only.\n\n- [Draft proposal](<ER12_RUNTIME/runs/A2-01/control/stages/investigator/draft.md>)\n- [Independent discovery](<ER12_RUNTIME/runs/A2-01/control/stages/investigator/discovery.md>)\n- [Source map](<ER12_RUNTIME/runs/A2-01/control/stages/investigator/source-map.json>) · [Source index](<ER12_RUNTIME/runs/A2-01/control/stages/investigator/sources/index.md>)\n- [Released plan copy](<ER12_RUNTIME/runs/A2-01/control/stages/investigator/revealed-plan.md>)\n\nThe single native Goal is **complete** (thread `01a12401-f364-7642-9ce6-0e342871af49`): 256,095 tokens used; 878 seconds elapsed.",
+  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-investigator-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:8e533841-40e7-465d-a58e-f53c59a409a1",
+  "waitTimedOut": false
+}

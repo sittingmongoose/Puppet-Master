@@ -1,0 +1,12 @@
+URL: https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html
+Original locator: ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P03-text.txt
+Original SHA256: 45e147610791e831a80b1f6e29a0ff4035e240abea93e4617a9f3cd93bb94e9e
+Original numbered lines; gaps omitted. Not full response.
+
+57: need to be in a consecutive sequence (for example, it can be 1, 5, and 14). Be aware that if
+58: you upload a new part using the same part number as a previously uploaded part, the
+59: previously uploaded part gets overwritten.
+112: Do not use the result of
+136: (in the multipart upload) must use consecutive part numbers and begin with 1. When using Checksums,
+137: if you try to complete a multipart upload request with nonconsecutive part numbers, Amazon S3 generates an
+169: After you initiate a multipart upload, Amazon S3 retains all the parts until you either

@@ -1,0 +1,1253 @@
+{
+  "schema_version": "er12-independent-semantic-assessment-v1",
+  "assessment_id": "A6-01-control-v1",
+  "reviewer": "codex-er12-a601-review-1010",
+  "review_started_at_utc": "2026-10-10T04:37:25Z",
+  "saved_at_utc": "2026-10-10T04:57:41.398147+00:00",
+  "review_deadline_utc": "2026-10-10T05:22:25Z",
+  "review_envelope_seconds": 2700,
+  "capped": false,
+  "unassessed_axes": [],
+  "arm": "control",
+  "slot": "A6-01",
+  "pipeline": "investigator -> critic -> reviser; ordinary final stages/reviser/final.md",
+  "source_judgment": "FAIL",
+  "full_pipeline_qualification": "FAIL",
+  "reason": "F-01 remains material in the final. Good delivery, source breadth and corrected lineage defects do not override this remaining consequential NEW acceptance conflict.",
+  "axes": [
+    {
+      "id": 1,
+      "name": "Original obligations and negative constraints",
+      "coverage": "ASSESSED_COMPLETE",
+      "judgment": "FAIL",
+      "findings": [
+        "F-01"
+      ],
+      "analysis": "All eight obligations have substantial explicit treatment and every negative constraint is retained. One route/two terminals, planning-only scope, optional staff advisory and owner authority are preserved. Obligation 2 remains materially compromised by the contradictory acceptance rule for conditionally supported NEW trips. The failure is not an invented requirement to build or support every enum."
+    },
+    {
+      "id": 2,
+      "name": "Consequential source claims and exact applicability",
+      "coverage": "ASSESSED_COMPLETE",
+      "judgment": "FAIL",
+      "findings": [
+        "F-01"
+      ],
+      "analysis": "Independently retrieved all 19 declared primary URLs and seven source/API supplements. Static identifiers, date rules, agency timezone, DST, frequency distinction, version metadata, absent-update/NO_DATA semantics, alert selectors, freshness guidance, OTP release/default/flag/test scope, and SIRI versions are substantially supported. The final omits the NEW exception when prescribing its universal static-instance gate. This is the one remaining material source-condition error."
+    },
+    {
+      "id": 3,
+      "name": "Useful unfamiliar discovery, alternatives, implementation/history and opportunities",
+      "coverage": "ASSESSED_COMPLETE",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "findings": [],
+      "analysis": "The direct adapter versus OTP comparison is operationally meaningful at pilot scale, and NeTEx/SIRI is a bounded schedule-plus-update/situation analogue rather than an unsupported partner claim. The work finds optional schedule-version linkage, GraphQL feed-version visibility, polling backpressure/default/configuration risk, narrow test provenance, DST and frequency implications, and advisory provenance. The #6252 -> #6262 -> 2.7.0 chain identifies the affected operation and honestly reports that no timetable revision is named. An exhaustive product catalogue was not required. Actual partner and owner choices remain unknown."
+    },
+    {
+      "id": 4,
+      "name": "Wrong criticism, corrections/rejections and exact plan dispositions",
+      "coverage": "ASSESSED_COMPLETE",
+      "judgment": "FAIL",
+      "findings": [
+        "F-01"
+      ],
+      "analysis": "Every original numbered plan clause and C-01 through C-05 has an explicit disposition. Trip-ID-only matching, indefinite last-message display, all-disruptions-as-delays and calendar-day assumptions are correctly rejected. Optional banner and ownership are correctly retained. All five criticisms are substantially source-supported; none falsely demands removing authorized scope. The C-04 acceptance expands the enum inventory correctly but does not reconcile the NEW exception with the final acceptance rule, creating F-01. Critic agreement is not credited as proof."
+    },
+    {
+      "id": 5,
+      "name": "Supported meaning preserved through discovery/draft/critique/final",
+      "coverage": "ASSESSED_COMPLETE",
+      "judgment": "FAIL",
+      "findings": [
+        "F-01"
+      ],
+      "analysis": "The final is self-contained and preserves route alternatives, useful history, mismatch as local policy, uncertainty, all owner rights, advisory conditions and actual validation status. The frequency/DST/SIRI/test qualifications are real final improvements, and their predecessor defects are retained separately as lineage. However, the draft scheduled-trip qualifier is lost in the final global acceptance gate, so supported NEW scope and correct instance-matching meaning are not coherently preserved."
+    },
+    {
+      "id": 6,
+      "name": "Meaningful proposed versus executed validation and oracle applicability",
+      "coverage": "ASSESSED_COMPLETE",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "findings": [],
+      "analysis": "Public retrieval and released code/test reading are correctly described as executed research. No operator feed, parser, prototype, pilot product test or deployment is claimed executed. Proposed checks are discriminating: version match/mismatch/omission, repeat/frequency and late-day identity, DST and calendar exceptions, freshness/NO_DATA/skip/cancel, independent alert scope/removal, OTP configuration/load/recovery and advisory expiry/retraction. Their oracles are applicable only to actual supported relationships, exact feeds and selected release/configuration. Merely proposing all relationships does not resolve F-01 or establish a correct NEW oracle. Reading the two OTP test methods does not establish execution or load performance."
+    }
+  ],
+  "exact_plan_clauses": [
+    {
+      "number": 1,
+      "exact_clause": "Compare two realistic display/ingestion routes and an analogous schedule-plus-event-stream mechanism.",
+      "exact_plan_treatment": "Use trip IDs alone to join every realtime message to the current timetable. Display the last received message until another arrives.",
+      "final_disposition": "CORRECTED WITH REMAINING MATERIAL CONFLICT",
+      "assessment": "The universal trip-ID join and indefinite display are properly rejected; direct adapter, OTP and SIRI/NeTEx are compared. The final corrects ordinary instance matching and freshness, but F-01 remains for NEW acceptance.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/final.md",
+        "line": 88,
+        "text": "1. **“Compare two realistic display/ingestion routes and an analogous schedule-plus-event-stream mechanism.”** The plan's trip-ID-only join and indefinite last-message display are rejected. Compare the direct adapter and OTP, with NeTEx/SIRI conditional on partner support. Resolve exact trip instance, version, entity scope and age; do not leave expired data looking current. **Disposition: CORRECTED.** [S01–S10, S14–S18]"
+      },
+      "primary_evidence_ids": [
+        "E01",
+        "E02",
+        "E05",
+        "E08",
+        "E09",
+        "E14",
+        "E20"
+      ],
+      "material_finding_ids": [
+        "F-01"
+      ]
+    },
+    {
+      "number": 2,
+      "exact_clause": "Explain static trip/service identity, realtime message types, freshness and mismatch behavior without inventing predicted departures.",
+      "exact_plan_treatment": "OpenTripPlanner is the first candidate; a lightweight custom display is the second route pending research. Neither is approved for deployment.",
+      "final_disposition": "CORRECTED WITH REMAINING MATERIAL CONFLICT",
+      "assessment": "OTP remains an unselected alternative; evaluating the thin board first is an explicit scale-based local recommendation. Trip/service identity, absence, freshness and version policy are explained. F-01 affects conditional message handling.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/final.md",
+        "line": 89,
+        "text": "2. **“Explain static trip/service identity, realtime message types, freshness and mismatch behavior without inventing predicted departures.”** The plan omits valid matching and mismatch handling. Distinguish trip from service date and trip instance, protocol version from schedule version, no update from on-time status, and fresh prediction from schedule. Apply the proposed fail-closed mismatch policy as a local choice, not a GTFS mandate. **Disposition: CORRECTED.** [S01–S07]"
+      },
+      "primary_evidence_ids": [
+        "E01",
+        "E02",
+        "E03",
+        "E05",
+        "E06"
+      ],
+      "material_finding_ids": [
+        "F-01"
+      ]
+    },
+    {
+      "number": 3,
+      "exact_clause": "Investigate related identifier, service-day/time-zone and alert-applicability conditions together, while preserving their distinct semantics.",
+      "exact_plan_treatment": "Treat all disruption messages as delayed departures and assume times fit within a calendar day. Service-day, timezone and alert scope are deferred.",
+      "final_disposition": "CORRECTED",
+      "assessment": "Rejecting disruption-as-delay and calendar-day assumptions is supported. Service_id/calendar activation, GTFS Time/timezone/DST, instance identity and alert selectors retain distinct semantics and joint validation.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/final.md",
+        "line": 90,
+        "text": "3. **“Investigate related identifier, service-day/time-zone and alert-applicability conditions together, while preserving their distinct semantics.”** The plan's calendar-day assumption and “all disruptions as delays” treatment are rejected. Jointly check static IDs, service calendars/date exceptions, agency timezone and DST/time semantics, frequency representation, and Alert time/scope selectors while preserving their separate meanings. **Disposition: CORRECTED AND EXPANDED.** [S01–S04]"
+      },
+      "primary_evidence_ids": [
+        "E01",
+        "E02",
+        "E04"
+      ],
+      "material_finding_ids": []
+    },
+    {
+      "number": 4,
+      "exact_clause": "Trace a relevant released feed/consumer change or failure/fix chain, identifying the operations and timetable revisions it governs.",
+      "exact_plan_treatment": "No consumer history is attached. The manual banner is retained, but its precedence and disclosure relative to feed data are unspecified.",
+      "final_disposition": "CORRECTED",
+      "assessment": "The released OTP polling chain is supplied and no exact timetable revision is fabricated. Manual/feed contradiction handling and attribution are supplied in the advisory section; duty-manager resolution is a local policy, not a GTFS precedence mandate.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/final.md",
+        "line": 91,
+        "text": "4. **“Trace a relevant released feed/consumer change or failure/fix chain, identifying the operations and timetable revisions it governs.”** The plan's missing history is corrected with #6252 → #6262 → OTP 2.7.0 and the v2.10.0 feature configuration, while explicitly stating that the issue names no exact timetable revision. The optional GTFS-RT feed-version signal is a separate schedule-alignment development. **Disposition: CORRECTED.** [S02, S06, S07, S11–S13, S16–S19]"
+      },
+      "primary_evidence_ids": [
+        "E11",
+        "E12",
+        "E13",
+        "E20",
+        "E24",
+        "E25"
+      ],
+      "material_finding_ids": []
+    },
+    {
+      "number": 5,
+      "exact_clause": "Preserve and investigate this supported optional scope: a staff-authored advisory banner when machine-readable disruption data is unavailable. It is an authorized option, not a mandatory feature or an established technical capability; recommend conditions, retain it when supported, and explain any evidence-based exclusion.",
+      "exact_plan_treatment": "Retain a staff-authored advisory banner when machine-readable disruption data is unavailable as supported owner-authorized optional scope. Support here means that the brief explicitly permits it; technical support, conditions and interoperability still need research. Do not remove it merely because the baseline route lacks it, or silently promote it to mandatory scope.",
+      "final_disposition": "RETAINED OPTIONAL; CONDITIONS INVESTIGATED",
+      "assessment": "Authorization is kept distinct from an existing capability. Separate provenance, duty-manager approval, affected scope, validity, expiry, audit, correction and retraction are proposed. Lack of an identified existing publishing tool remains an honest owner input; the option is neither excluded nor made mandatory.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/final.md",
+        "line": 92,
+        "text": "5. **“Preserve and investigate this supported optional scope: a staff-authored advisory banner when machine-readable disruption data is unavailable. It is an authorized option, not a mandatory feature or an established technical capability; recommend conditions, retain it when supported, and explain any evidence-based exclusion.”** The plan correctly states that permission does not establish technical support. Retain the option with duty-manager workflow, scope, attribution, expiry, audit and retraction conditions. No evidence-based exclusion or existing-tool claim is made. **Disposition: RETAIN OPTIONAL SCOPE; CONDITION ITS USE.** [Brief; product proposal]"
+      },
+      "primary_evidence_ids": [
+        "INPUT-BRIEF"
+      ],
+      "material_finding_ids": []
+    },
+    {
+      "number": 6,
+      "exact_clause": "Make owner decisions explicit: The schedule publisher owns timetable versions; the duty manager owns manual advisories and stale-data wording. The regional partner must confirm which realtime messages it actually supplies.",
+      "exact_plan_treatment": "Owner authority is reserved as follows: The schedule publisher owns timetable versions; the duty manager owns manual advisories and stale-data wording. The regional partner must confirm which realtime messages it actually supplies. The draft has not obtained these decisions. Its tentative implementation assumptions cannot substitute for them.",
+      "final_disposition": "RETAINED OWNER AUTHORITY; INPUT REQUIRED",
+      "assessment": "Schedule publisher still owns versions and rollback; duty manager still owns advisories and stale wording; regional partner still confirms actual realtime coverage. No generic documentation is treated as proof of partner capability.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/final.md",
+        "line": 93,
+        "text": "6. **“Make owner decisions explicit: The schedule publisher owns timetable versions; the duty manager owns manual advisories and stale-data wording. The regional partner must confirm which realtime messages it actually supplies.”** Preserve these decision rights. The proposal does not choose the schedule revision, public wording or partner coverage. **Disposition: OWNER INPUT REQUIRED; AUTHORITIES RETAINED.**"
+      },
+      "primary_evidence_ids": [
+        "INPUT-BRIEF"
+      ],
+      "material_finding_ids": []
+    },
+    {
+      "number": 7,
+      "exact_clause": "Preserve negative constraints: Do not dispatch vessels, infer an ETA from missing data, treat service alerts as trip updates, or present a manual advisory as a realtime feed observation.",
+      "exact_plan_treatment": "Binding exclusions: Do not dispatch vessels, infer an ETA from missing data, treat service alerts as trip updates, or present a manual advisory as a realtime feed observation. The draft has no complete trace showing that its assumptions comply; revise the proposal wherever necessary to preserve these exclusions.",
+      "final_disposition": "RETAINED BINDING NEGATIVE CONSTRAINTS",
+      "assessment": "No dispatch, ETA from missing data, alerts converted into trip updates, or manual notice as feed observation is authorized by the final. NEW timings, if supplied, are producer data rather than invented ETAs.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/final.md",
+        "line": 94,
+        "text": "7. **“Preserve negative constraints: Do not dispatch vessels, infer an ETA from missing data, treat service alerts as trip updates, or present a manual advisory as a realtime feed observation.”** The board remains display-only. A missing/stale prediction yields no ETA; alerts remain separate; staff notices retain provenance. **Disposition: RETAINED AS BINDING CONSTRAINTS.** [S02–S05; brief]"
+      },
+      "primary_evidence_ids": [
+        "INPUT-BRIEF",
+        "E02",
+        "E03",
+        "E04"
+      ],
+      "material_finding_ids": []
+    },
+    {
+      "number": 8,
+      "exact_clause": "Deliver one coherent evidence-backed research proposal covering obligations 1–8, with recommendations, source/version applicability, useful discoveries, unresolved owner inputs, and a validation table separating checks actually executed from checks merely proposed. Do not report research sources or future tests as executed product validation.",
+      "exact_plan_treatment": "The draft currently contains no coherent evidence-backed final proposal. Its proposed demos are research/validation ideas only. A complete revision must preserve every obligation, disclose corrections and retained options, and not confuse documentation review with successful product operation.",
+      "final_disposition": "DELIVERED; SEMANTIC QUALIFICATION FAILS ON F-01",
+      "assessment": "A full coherent proposal, comparison, sources, history, owners and proposed/executed validation table are delivered. Delivery does not establish source correctness; F-01 prevents a source pass. Documentation and future pilot tests are not misreported as product operation.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/final.md",
+        "line": 95,
+        "text": "8. **“Deliver one coherent evidence-backed research proposal covering obligations 1–8, with recommendations, source/version applicability, useful discoveries, unresolved owner inputs, and a validation table separating checks actually executed from checks merely proposed. Do not report research sources or future tests as executed product validation.”** This document consolidates recommendations, alternatives, evidence, owner inputs and explicit check status. Read-only primary-source retrieval and source-code/release inspection are research; they are not product validation. **Disposition: COMPLETED AS A RESEARCH PROPOSAL; NO PRODUCT VALIDATION CLAIMED.**"
+      },
+      "primary_evidence_ids": [
+        "INPUT-BRIEF",
+        "E01",
+        "E02",
+        "E08",
+        "E24"
+      ],
+      "material_finding_ids": [
+        "F-01"
+      ]
+    }
+  ],
+  "other_original_plan_constraints": {
+    "pilot_scale": "One route and two terminals retained.",
+    "lead_status": "OTP remains an investigation lead/alternative, not an approved winner or deployment.",
+    "access_and_freeze": "Original plan was concealed before discovery by contract; reveal record and unchanged bytes retained. Actual unlogged access order UNKNOWN.",
+    "validation_handoff": "Original five validation rows are reconciled: external docs/history are reported executed research; scenario/option/product operation remain proposed/NOT_RUN."
+  },
+  "criticism_dispositions": [
+    {
+      "id": "C-01",
+      "claim": "Static headway service lacks a display qualification",
+      "independent_disposition": "SUPPORTED; FINAL ADDRESSES",
+      "final_disposition": "Accept",
+      "source_ids": [
+        "E01",
+        "E02"
+      ],
+      "assessment": "The draft does not expressly guard exact_times=0 static service against invented fixed departures. Final static schedule section distinguishes headway-based 0 from compressed schedule-based 1, conditions presentation on owner choice, and keeps actual applicability unknown. This is a corrected predecessor gap, not an additional remaining final failure.",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/A6-01/control/stages/critic/critique.md",
+        "line": 17,
+        "text": "### C-01 — Material incomplete: headway-based static service display"
+      },
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/final.md",
+        "line": 101,
+        "text": "- **C-01, static frequency service:** **Accept.** The draft did not say what to display for `exact_times=0` headway service. Inspect `frequencies.txt`; do not invent individual departure times from a headway/template. Preserve a headway representation or other display choice as an owner/product decision. `exact_times=1` is compressed schedule-based service, not the same condition. No ferry feed was provided, so applicability is unknown. [S01; direct recheck in source map]"
+      }
+    },
+    {
+      "id": "C-02",
+      "claim": "DST service-day time basis is omitted",
+      "independent_disposition": "SUPPORTED; FINAL ADDRESSES",
+      "final_disposition": "Accept",
+      "source_ids": [
+        "E01"
+      ],
+      "assessment": "GTFS Time uses a service-day basis whose DST behavior differs from ordinary midnight plus elapsed seconds. Final explicitly states it and proposes spring/fall checks for the actual timezone/export. No calculation or product test is claimed. The seasonal brief does not establish that DST applies; the conditional investigation is appropriate.",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/A6-01/control/stages/critic/critique.md",
+        "line": 25,
+        "text": "### C-02 — Material incomplete: daylight-saving time edge"
+      },
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/final.md",
+        "line": 102,
+        "text": "- **C-02, daylight-saving transition:** **Accept.** GTFS Time is measured from service-day “noon minus 12h”, effectively midnight except on DST-transition days. Add spring/fall transition cases for the exact export/timezone to proposed validation. Do not claim this was tested or impose a ferry-specific clock rule without the data. [S01; direct recheck in source map]"
+      }
+    },
+    {
+      "id": "C-03",
+      "claim": "SIRI current schema versus CEN-compatible branch is incomplete",
+      "independent_disposition": "SUPPORTED; FINAL ADDRESSES",
+      "final_disposition": "Accept and amend",
+      "source_ids": [
+        "E15",
+        "E26"
+      ],
+      "assessment": "The current primary repository distinguishes functional v2.3 from CEN-matching v2.2 and recommends releases. It lists v2.2.1/v2.3 in October 2026. The investigator map calls v2.3-wip development, a stale/incomplete observation. Final preserves that earlier record separately and gives the current branch/release distinction without selecting a partner profile.",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/A6-01/control/stages/critic/critique.md",
+        "line": 33,
+        "text": "### C-03 — Material incomplete: current SIRI schema/version distinction"
+      },
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/final.md",
+        "line": 103,
+        "text": "- **C-03, SIRI version distinction:** **Accept and amend.** The current repository table observed on 2026-10-10 separates v2.3 (latest XML-schema branch with functional improvements) from v2.2 (latest branch matching CEN documentation, bug fixes only). The releases table lists v2.2.1 and v2.3 releases in October 2026. Use a release for a schema matching a published CEN document; ask for the partner's national profile and exact release. This corrects the draft's incomplete “v2.2 stable branch” wording without selecting a partner version. [S15; direct recheck in source map]"
+      }
+    },
+    {
+      "id": "C-04",
+      "claim": "Current relationship inventory/conditions are incomplete",
+      "independent_disposition": "SUPPORTED; FINAL PARTIAL WITH F-01",
+      "final_disposition": "Accept and expand",
+      "source_ids": [
+        "E02",
+        "E03",
+        "E07"
+      ],
+      "assessment": "The criticism correctly distinguishes exact_times=0 UNSCHEDULED, NEW, DUPLICATED and REPLACEMENT and conditions cases on partner support. The final substantially supplies the missing enum meanings and DELETED; however its all-TripUpdate static matching gate still conflicts with NEW. The valid criticism is not itself a wrong correction; F-01 is in final consolidation of the remedy.",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/A6-01/control/stages/critic/critique.md",
+        "line": 41,
+        "text": "### C-04 — Material incomplete: current trip relationship coverage"
+      },
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/final.md",
+        "line": 104,
+        "text": "- **C-04, GTFS-RT trip relationships:** **Accept and expand.** Add conditional handling/validation inventory for `UNSCHEDULED` only with frequency `exact_times=0`, `DUPLICATED`, `NEW`, `REPLACEMENT` and `DELETED`, with `ADDED` deprecated and relationship-specific semantics. Run only cases actually supported by the partner; no such feed was available. [S02, S03, S07; direct recheck in source map]"
+      }
+    },
+    {
+      "id": "C-05",
+      "claim": "PR test summary needs qualification by actual test code",
+      "independent_disposition": "SUPPORTED; FINAL ADDRESSES",
+      "final_disposition": "Accept and clarify",
+      "source_ids": [
+        "E12",
+        "E23",
+        "E24",
+        "E25"
+      ],
+      "assessment": "PR body reports no unit tests, while commit 69ac4854678bb964715d4b7d143e457cc6b77dda adds two feature-on/off methods with an asynchronous callback. Final correctly distinguishes that narrow code from load/integration/ferry evidence, and says the tests were read rather than run.",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/A6-01/control/stages/critic/critique.md",
+        "line": 49,
+        "text": "### C-05 — Minor locator/wording: OTP PR testing record"
+      },
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/final.md",
+        "line": 105,
+        "text": "- **C-05, OTP test wording:** **Accept and clarify.** The PR summary says no unit tests; commit 69ac485 in its merged changes adds two narrow feature-on/off async graph-writer tests. This reconciles the records. They are not load, integration or ferry tests, and were not executed here. [S12, S18, S19; direct recheck in source map]"
+      }
+    }
+  ],
+  "material_findings": [
+    {
+      "id": "F-01",
+      "severity": "MATERIAL",
+      "classification": "material wrong / unsupported consequential acceptance rule",
+      "title": "Universal static-trip matching gate conflicts with conditionally supported NEW trips",
+      "remaining_in_final": true,
+      "source_backed": true,
+      "axes": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/final.md",
+          "line": 31,
+          "text": "Resolve each TripUpdate to exactly one trip instance in the exact approved schedule:"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/final.md",
+          "line": 35,
+          "text": "- The specification permits a fallback combination of `route_id`, `direction_id`, `start_time` and `start_date` only if it resolves uniquely. If a descriptor resolves to zero or multiple instances, reject or quarantine that entity and report realtime unavailable for it. [S02, S03]"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/final.md",
+          "line": 44,
+          "text": "- `NEW`: an unrelated added trip with its full stop/time journey specified."
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/draft.md",
+          "line": 21,
+          "text": "Use only message types the regional partner confirms it actually supplies. For a scheduled trip, accept a TripUpdate only when it matches the exact trip instance and an approved schedule version. Display the published schedule time and, where a valid fresh producer time exists, a clearly separate “Realtime update” time/status. GTFS-RT event times can be producer estimates; without partner semantics do not label one an observed vessel position or a guaranteed ETA. [S02, S03]"
+        }
+      ],
+      "primary_evidence_ids": [
+        "E02",
+        "E03",
+        "E06"
+      ],
+      "governing_primary_locators": [
+        {
+          "url": "https://gtfs.org/documentation/realtime/reference/#message-tripdescriptor",
+          "path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E02.txt",
+          "lines": [
+            974,
+            984
+          ],
+          "condition": "TripDescriptor distinguishes NEW from identifying an existing GTFS trip. NEW trip_id must be absent from static GTFS; route_id must exist in routes.txt."
+        },
+        {
+          "url": "https://gtfs.org/documentation/realtime/reference/#message-tripdescriptor",
+          "path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E02.txt",
+          "lines": [
+            991,
+            1000
+          ],
+          "condition": "The trip_id field has relationship-specific identity rules; NEW is not an existing-static-trip lookup."
+        },
+        {
+          "url": "https://gtfs.org/documentation/realtime/reference/#enum-schedulerelationship-1",
+          "path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E02.txt",
+          "lines": [
+            1039,
+            1044
+          ],
+          "condition": "NEW supplies its complete journey through StopTimeUpdates; REPLACEMENT also supplies its own journey."
+        }
+      ],
+      "analysis": "The final directs every TripUpdate to resolve to one instance in the exact approved schedule and directs zero-match descriptors to be rejected/quarantined. It later explicitly includes NEW in the conditional support inventory and describes the full journey correctly, but never makes NEW an exception to the prior static-trip acceptance gate. A valid NEW trip necessarily has no static trip_id match. Thus the stated gate would hide an otherwise valid partner-supported extra ferry service. This is a conflict in the proposal, not a claim that the unknown ferry partner supplies NEW.",
+      "analytical_counterexample": {
+        "status": "PROSPECTIVE SEMANTIC COUNTEREXAMPLE; NOT AN EXECUTED PRODUCT TEST",
+        "inputs": "An approved static dataset with route R and two known terminal stop IDs, plus a fresh version-bound NEW TripUpdate whose novel trip_id N is not in trips.txt and whose complete StopTimeUpdates specify the journey.",
+        "source_permitted_behavior": "NEW identifies a new trip using N and existing route/stop references; absence of N in trips.txt is required rather than invalid.",
+        "proposal_gate_behavior": "N produces zero existing-static-trip matches and is quarantined by the universal gate.",
+        "material_effect": "Declared extra service can disappear from the public board even when its source binding, freshness, route, stops and relationship support are valid."
+      },
+      "counterevidence_considered": "The final correctly says NEW is unrelated to an existing trip and supplies a full journey; it also says REPLACEMENT does not use the original static schedule. Those are credited. They do not state which acceptance gate bypasses the explicit each-TripUpdate/static-schedule/zero-match rejection rule. Reading the latter as ordinary scheduled trips only would import an exception the final no longer states.",
+      "lineage": "The draft explicitly limited this acceptance statement to a scheduled trip. The final broadens it to each TripUpdate while expanding the relationship inventory. C-04 correctly requested relationship-specific semantics, but its final treatment leaves this consequential acceptance conflict.",
+      "not_required": "This finding does not require NEW support when the partner does not supply it, a prototype, an implementation, or a deployment. It evaluates the proposal on its own declared conditional support."
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L-01",
+      "classification": "minor wording",
+      "detail": "Final history says the issue reports up to 20 minutes of lag; the primary issue says 20 minutes or more. The proposal does not claim a bound, guaranteed performance, or dimension hardware from that number; this does not drive the FAIL.",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/final.md",
+        "line": 74,
+        "text": "OTP issue #6252 reported up to 20 minutes of realtime lag under load on OTP 2.7.0-SNAPSHOT using National Rail GTFS and GTFS-RT. Its sample configuration polled Alerts each minute and TripUpdates every 27 seconds (with other pollers). The issue attributed the accumulation to a new poll starting before the prior asynchronous graph application finished. It supplies no exact static zip hash, `feed_info.feed_version`, commit or timetable revision; the report is about polling/update processing, not a particular schedule version. [S11]"
+      },
+      "source_ids": [
+        "E11",
+        "E22"
+      ]
+    },
+    {
+      "id": "L-02",
+      "classification": "minor history ambiguity",
+      "detail": "The final May 2025 relationship sentence should not be read as introducing DUPLICATED then. Primary revision history already records DUPLICATED support in July 2020. May 2025 records ADDED deprecation/NEW/REPLACEMENT. The final current DUPLICATED meaning is substantially correct; this historical compression is not a material remaining decision.",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/final.md",
+        "line": 80,
+        "text": "Separately, GTFS-RT added optional Header `feed_version` in December 2024 as a static-feed pairing signal; it is still optional. The May 2025 relationship changes deprecate `ADDED` and define `NEW`, `DUPLICATED` and `REPLACEMENT`; the June 2026 alert changes add communication and impact periods. These changes make the partner's exact protocol/version and supported message inventory material. They are distinct from the OTP polling fix. [S02, S07]"
+      },
+      "source_ids": [
+        "E07"
+      ]
+    },
+    {
+      "id": "L-03",
+      "classification": "honestly unresolved external input",
+      "detail": "Exact static dataset/version/IDs/calendar/timezone/frequency representation, partner endpoint/profile/message inventory/version binding, and duty-manager workflow/wording/thresholds are unavailable. Publicly answerable standards/history were investigated; no actual external choice or deployment is invented.",
+      "source_ids": [
+        "INPUT-BRIEF"
+      ]
+    },
+    {
+      "id": "L-04",
+      "classification": "source provenance / source breadth boundary",
+      "detail": "Authored source evidence consists of the three source maps and three navigable indexes. No retained raw stage retrieval captures were declared or present. Their statements that retrieval was executed are recorded as authored claims. The independent reviewer supplies separate fresh captures; these verify current primary meaning and cannot retroactively prove each candidate request. Latest OTP/living GTFS/SIRI sources are time-dependent; exact OTP tag/commit supplements are retained."
+    },
+    {
+      "id": "L-05",
+      "classification": "protocol telemetry boundary",
+      "detail": "A separate reviser status.json is absent in the bounded run inventory; root terminal freeze contains its recorded T3 terminal task state. No independent candidate native transport receipts, full tool trace or billing receipt were available in scope. Native/effective/protocol conclusions are qualified below; this absence does not change the source judgment."
+    }
+  ],
+  "lineage_findings": [
+    {
+      "id": "H-01",
+      "stage": "discovery/draft",
+      "status": "CORRECTED IN FINAL",
+      "detail": "Headway-based static representation and DST service-day time edge are omitted/incomplete in predecessor prose. C-01/C-02 add appropriate conditional investigation; final includes both."
+    },
+    {
+      "id": "H-02",
+      "stage": "investigator source map/index",
+      "status": "CORRECTED IN FINAL; ORIGINAL RETAINED",
+      "detail": "SIRI observation incompletely treats v2.3-wip as development and v2.2 as current stable. Current branch distinction is rechecked and the original S15 observation is retained under predecessor_observations."
+    },
+    {
+      "id": "H-03",
+      "stage": "discovery/draft",
+      "status": "CORRECTED IN FINAL",
+      "detail": "Trip relationship inventory is incomplete and OTP testing summary lacks narrow-test detail. Final adds the relationship meanings and reconciles PR text with two methods."
+    },
+    {
+      "id": "H-04",
+      "stage": "reviser final",
+      "status": "REMAINING MATERIAL REGRESSION",
+      "detail": "Draft acceptance rule explicitly says scheduled trip; final says each TripUpdate in exact approved schedule and zero-match rejection. NEW exception is not incorporated into that gate. F-01 remains notwithstanding the enum inventory correction."
+    }
+  ],
+  "useful_discoveries": [
+    {
+      "id": "D-01",
+      "discovery": "Timetable revision metadata is separate from protocol version and IDs",
+      "sources": [
+        "E01",
+        "E02",
+        "E06",
+        "E07"
+      ],
+      "use": "Supports explicit source-pair handoff and mismatch disclosure; missing optional fields require external binding, not a claim that IDs prove alignment.",
+      "preservation": "discovery -> draft -> final; local fail-closed policy label retained"
+    },
+    {
+      "id": "D-02",
+      "discovery": "Two ingestion/display routes have different operational burdens",
+      "sources": [
+        "E08",
+        "E09",
+        "E20",
+        "E21"
+      ],
+      "use": "Thin board owns all joins; OTP adds graph/service/updaters but provides a maintained API and metadata. Pilot-scale first evaluation is an inference, not an observed deployment result.",
+      "preservation": "Both routes and conditional selection criteria survive final"
+    },
+    {
+      "id": "D-03",
+      "discovery": "NeTEx/SIRI separates timetable, expected journeys and situation messages",
+      "sources": [
+        "E14",
+        "E15",
+        "E26"
+      ],
+      "use": "A meaningful alternative ecosystem if the partner already publishes it; tutorial/profile does not establish ferry support.",
+      "preservation": "Analogue retained; branch applicability corrected rather than option deleted"
+    },
+    {
+      "id": "D-04",
+      "discovery": "A released polling-backpressure fix does not validate feed identity or eliminate all lag",
+      "sources": [
+        "E11",
+        "E12",
+        "E13",
+        "E20",
+        "E24",
+        "E25"
+      ],
+      "use": "History produces an exact configuration/load check, including a true default and override condition and a narrow test oracle.",
+      "preservation": "History, missing timetable revision and limited test scope survive final"
+    },
+    {
+      "id": "D-05",
+      "discovery": "Service-day, DST and headway representation affect static display independently of realtime identity",
+      "sources": [
+        "E01",
+        "E02"
+      ],
+      "use": "Prevents a headway template or incorrectly mapped service-day time from becoming a fabricated departure.",
+      "preservation": "Original service-day meaning retained; critic adds DST/frequency conditions in final"
+    },
+    {
+      "id": "D-06",
+      "discovery": "Manual editorial notices can be preserved without pretending they are partner observations",
+      "sources": [
+        "INPUT-BRIEF"
+      ],
+      "use": "Distinct record/workflow, approval, expiry, scope, correction and retraction preserve authorized optional scope.",
+      "preservation": "Kept optional through all stages; no existing CMS or mandatory launch promise invented"
+    }
+  ],
+  "consequential_claim_checks": [
+    {
+      "id": "SC-01",
+      "subject_operation": "Static identity/date activation",
+      "evidence_ids": [
+        "E01"
+      ],
+      "judgment": "SUPPORTED",
+      "independent_assessment": "route_id/trip_id/service_id and stop IDs are distinct; service_id dates are calendar rules plus exceptions. Calendar-only or dates-only forms exist.",
+      "conditions_types_units_domain_exceptions": "IDs are CSV strings/foreign references; service dates use YYYYMMDD; not realtime instance IDs."
+    },
+    {
+      "id": "SC-02",
+      "subject_operation": "GTFS Time and timezone",
+      "evidence_ids": [
+        "E01"
+      ],
+      "judgment": "SUPPORTED",
+      "independent_assessment": "Agency timezone governs stop_times; service day can extend beyond 24 hours; DST basis differs from naive midnight arithmetic.",
+      "conditions_types_units_domain_exceptions": "GTFS HH:MM:SS Time is not POSIX time. Stop timezone is not the timetable timezone."
+    },
+    {
+      "id": "SC-03",
+      "subject_operation": "Frequency representation",
+      "evidence_ids": [
+        "E01",
+        "E02"
+      ],
+      "judgment": "SUPPORTED IN FINAL; PREDECESSOR GAP CORRECTED",
+      "independent_assessment": "exact_times=0/empty is headway service; 1 is schedule-based compression. Exact_times=0 does not authorize invented exact static departures.",
+      "conditions_types_units_domain_exceptions": "headway_secs is a positive integer in seconds; exact_times optional default 0/empty."
+    },
+    {
+      "id": "SC-04",
+      "subject_operation": "TripDescriptor matching",
+      "evidence_ids": [
+        "E02",
+        "E03"
+      ],
+      "judgment": "FAIL ON NEW EXCEPTION",
+      "independent_assessment": "Ordinary static trips may use trip_id; frequency instances need date/time; long/late collisions require date; alternate nonfrequency key must be unique. NEW is explicitly outside an existing-static-trip lookup.",
+      "conditions_types_units_domain_exceptions": "NEW requires novel trip_id plus existing route_id; zero static match is expected for that relationship, not invalid. F-01."
+    },
+    {
+      "id": "SC-05",
+      "subject_operation": "Version metadata and mismatch policy",
+      "evidence_ids": [
+        "E01",
+        "E02",
+        "E06",
+        "E07"
+      ],
+      "judgment": "SUPPORTED",
+      "independent_assessment": "Realtime protocol version and static revision are different. RT feed_version is optional and matches static publisher text. Missing version is not verified alignment.",
+      "conditions_types_units_domain_exceptions": "Static feed_version Text is recommended; RT field string optional. Fail-closed display is a local proposal, not a mandatory consumer behavior."
+    },
+    {
+      "id": "SC-06",
+      "subject_operation": "Prediction/absence/NO_DATA",
+      "evidence_ids": [
+        "E02",
+        "E03",
+        "E05"
+      ],
+      "judgment": "SUPPORTED",
+      "independent_assessment": "Missing TripUpdate is not on-time evidence; NO_DATA has no realtime timing; cancellation/skip is status, not invented time.",
+      "conditions_types_units_domain_exceptions": "StopTimeEvent.time is int64 POSIX seconds; delay is int32 signed seconds; NO_DATA forbids prediction time/delay, while NEW/REPLACEMENT can still carry scheduled_time."
+    },
+    {
+      "id": "SC-07",
+      "subject_operation": "Relationship-specific identity and journey semantics",
+      "evidence_ids": [
+        "E02",
+        "E07"
+      ],
+      "judgment": "INVENTORY SUBSTANTIALLY SUPPORTED; F-01",
+      "independent_assessment": "UNSCHEDULED only exact_times=0; NEW supplies a complete journey; REPLACEMENT identifies original but supplies alternate stop/times; DUPLICATED references source through TripDescriptor and new identity through TripProperties; DELETED differs from CANCELED.",
+      "conditions_types_units_domain_exceptions": "DUPLICATED also has a source-service-within-next-30-days condition and forbids frequency exact_times=0/empty. The final is a scoped proposal, not a full protobuf parser specification; omitted exhaustive field rules are not separately invented obligations."
+    },
+    {
+      "id": "SC-08",
+      "subject_operation": "Alert applicability",
+      "evidence_ids": [
+        "E02",
+        "E04",
+        "E07"
+      ],
+      "judgment": "SUPPORTED",
+      "independent_assessment": "AND within selector; multiple selectors cover independent scopes; active ranges and route/stop/trip scope are separate from TripUpdate.",
+      "conditions_types_units_domain_exceptions": "EntitySelector.route_id is the route-wide field; absent active_period is displayable while in feed. Optional communication/impact fields have distinct purposes; impact ranges must fit communication ranges when supplied."
+    },
+    {
+      "id": "SC-09",
+      "subject_operation": "Freshness",
+      "evidence_ids": [
+        "E05"
+      ],
+      "judgment": "SUPPORTED",
+      "independent_assessment": "Producer refresh/age guidance is accurately used as candidate thresholds requiring owner approval, not partner performance or protocol mandates.",
+      "conditions_types_units_domain_exceptions": "30 seconds or content change, whichever more frequent; entity ages 90 seconds for TU/VP, 10 minutes for Alerts. Refreshed header does not by itself freshen entities."
+    },
+    {
+      "id": "SC-10",
+      "subject_operation": "OTP API route",
+      "evidence_ids": [
+        "E08",
+        "E09"
+      ],
+      "judgment": "SUPPORTED WITH VERSION LIMIT",
+      "independent_assessment": "A general-purpose GTFS GraphQL API and separate realtime Alert/TU updater configuration are real mechanisms; custom board UI and source policies remain necessary.",
+      "conditions_types_units_domain_exceptions": "Latest docs are moving; API enabled by default there. No server installation or pilot query was executed."
+    },
+    {
+      "id": "SC-11",
+      "subject_operation": "OTP poller defaults/types",
+      "evidence_ids": [
+        "E09"
+      ],
+      "judgment": "SUPPORTED FOR OBSERVED DOCS",
+      "independent_assessment": "HTTP Alerts and TU pollers require feedId/url; poll frequency is duration with PT1M default; fuzzy matching defaults false; alert earlyStartSec integer defaults zero.",
+      "conditions_types_units_domain_exceptions": "PT1M means one minute. These are current-doc observations, not all-protocol or all-release defaults."
+    },
+    {
+      "id": "SC-12",
+      "subject_operation": "OTP 2.10.0 release metadata",
+      "evidence_ids": [
+        "E10",
+        "E17",
+        "E21"
+      ],
+      "judgment": "SUPPORTED",
+      "independent_assessment": "Versioned changelog dates 2.10.0 at 2026-09-09 and includes feed-version GraphQL exposure and service-date grouping fix.",
+      "conditions_types_units_domain_exceptions": "Release inclusion is not validation of the actual ferry export or transformed API response."
+    },
+    {
+      "id": "SC-13",
+      "subject_operation": "OTP load issue",
+      "evidence_ids": [
+        "E11",
+        "E22"
+      ],
+      "judgment": "SUPPORTED WITH L-01",
+      "independent_assessment": "Issue #6252 records 2.7.0-SNAPSHOT/National Rail GTFS+RT, 1-minute Alerts and 27-second TU polling and async-update accumulation. No exact static revision is named.",
+      "conditions_types_units_domain_exceptions": "Reporter says 20 minutes or more; slow-server/large-dataset/poll interval context. Reported external behavior, not a reviewer-run load test."
+    },
+    {
+      "id": "SC-14",
+      "subject_operation": "Polling fix operation",
+      "evidence_ids": [
+        "E12",
+        "E18",
+        "E23",
+        "E25"
+      ],
+      "judgment": "SUPPORTED",
+      "independent_assessment": "PR #6262 fixes #6252, merged 2025-01-09 into dev-2.x; future wait is feature-gated across polling updater classes.",
+      "conditions_types_units_domain_exceptions": "Actual merge_commit_sha in API is b0b8661b6ea617a611b1af622d2b1c9249dcadbd. The map final-listed commit is not treated as the merge identity."
+    },
+    {
+      "id": "SC-15",
+      "subject_operation": "Released inclusion/default/config override",
+      "evidence_ids": [
+        "E13",
+        "E20",
+        "E21"
+      ],
+      "judgment": "SUPPORTED",
+      "independent_assessment": "2.7.0 release on 2025-03-12 includes #6262. Exact v2.10.0 OTPFeature sets wait default true, non-sandbox, with optional feature override.",
+      "conditions_types_units_domain_exceptions": "Enabled source default is conditional on configuration; no zero-lag promise or schedule-version binding is established."
+    },
+    {
+      "id": "SC-16",
+      "subject_operation": "OTP test oracle",
+      "evidence_ids": [
+        "E19",
+        "E24",
+        "E25"
+      ],
+      "judgment": "SUPPORTED",
+      "independent_assessment": "Commit 69ac4854678bb964715d4b7d143e457cc6b77dda adds two methods; one asserts completion after wait-on, one asserts incompletion after wait-off using a short async task.",
+      "conditions_types_units_domain_exceptions": "Source uses 100 ms callback sleep and fake/null graph context. Reading this code is not executing it and is not performance, feed integration or ferry validation."
+    },
+    {
+      "id": "SC-17",
+      "subject_operation": "NeTEx/SIRI analogue",
+      "evidence_ids": [
+        "E14",
+        "E26"
+      ],
+      "judgment": "SUPPORTED",
+      "independent_assessment": "OTP tutorial builds NeTEx timetable data and configures SIRI-ET and SIRI-SX separately using Transmodel references.",
+      "conditions_types_units_domain_exceptions": "Norwegian/Entur example is conditional; polling example is not proof of partner streams, endpoint access, profile or ferry compatibility."
+    },
+    {
+      "id": "SC-18",
+      "subject_operation": "SIRI schema versus CEN release",
+      "evidence_ids": [
+        "E15",
+        "E26"
+      ],
+      "judgment": "SUPPORTED IN FINAL; PREDECESSOR OBSERVATION INCOMPLETE",
+      "independent_assessment": "README distinguishes v2.3 functional branch and CEN-matching v2.2; releases table lists October 2026 v2.2.1/v2.3.",
+      "conditions_types_units_domain_exceptions": "Use releases for published CEN document matching; exact partner profile/version remains unknown."
+    },
+    {
+      "id": "SC-19",
+      "subject_operation": "Optional staff advisory",
+      "evidence_ids": [
+        "INPUT-BRIEF"
+      ],
+      "judgment": "SUPPORTED LOCAL OPTION",
+      "independent_assessment": "The original brief authorizes an optional staff banner; proposed separate provenance/workflow does not claim GTFS or OTP provides an authoring tool.",
+      "conditions_types_units_domain_exceptions": "No existing CMS, staff workflow or launch selection is proven. Owners decide technical support and optional inclusion."
+    }
+  ],
+  "operational_dimensions": {
+    "delivery": {
+      "judgment": "DELIVERED",
+      "ordinary_final": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/final.md",
+      "root_snapshot_observed_utc": "2026-10-10T04:37:05.387145+00:00",
+      "required_stage_science_present": true,
+      "mapped_authored_evidence_complete": true
+    },
+    "source": {
+      "judgment": "FAIL",
+      "material_remaining_finding_ids": [
+        "F-01"
+      ],
+      "lineage_is_separate": true
+    },
+    "coverage": {
+      "judgment": "ASSESSED_COMPLETE",
+      "axes_assessed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "unassessed_axes": [],
+      "capped": false,
+      "exact_numbered_plan_clauses_assessed": 8,
+      "critic_items_assessed": 5
+    },
+    "native": {
+      "investigator": {
+        "activation": "UNKNOWN",
+        "terminal": "UNKNOWN",
+        "evidence": "status.json contains the candidate authored terminal summary saying native completion/about 15 minutes. No independent native receipt or native ID/terminal structured result is retained in these science files."
+      },
+      "critic": {
+        "activation": "UNKNOWN independently; authored activation fields present",
+        "terminal": "UNKNOWN independently; authored completion summary present",
+        "reported_goal_id": "01a12405-708e-7960-aee8-6bb901d7a6e1",
+        "reported_tokens": 195929,
+        "reported_seconds": 470,
+        "evidence": "critique.md transcribes activation; status.json embeds completion claim. These are not an independently captured native transport result."
+      },
+      "reviser": {
+        "activation": "UNKNOWN independently; authored structured fields present",
+        "terminal": "UNKNOWN independently; authored structured fields present",
+        "reported_goal_id": "01a1240e-2764-7262-9ca9-11666df4d6bf",
+        "reported_tokens": 173100,
+        "reported_seconds": 446,
+        "evidence": "final.md and source-map.json carry activation/preterminal/terminal transcriptions. Root freeze shows T3 completion and an authored summary, not a native receipt."
+      },
+      "distinction": "Candidate native fields are retained as reported evidence, not silently discarded or promoted to independent proof. UNKNOWN means the bounded reviewer cannot authenticate activation, order, completion or accounting. This does not assert they never occurred."
+    },
+    "t3": {
+      "judgment": "RECORDED_TERMINAL_DELIVERY",
+      "evidence": "Investigator/critic status.json and root final_stage_task record completed/result_available, hasPendingChildRuns=false. These are retained T3 snapshots; no live task status was queried by this reviewer.",
+      "root_final_status": "completed",
+      "root_final_pending": false
+    },
+    "protocol": {
+      "judgment": "UNKNOWN for full candidate runtime compliance",
+      "observed": "Assignments/maps prescribe separate stages, no nested delegation/history, one native Goal, discovery-before-plan reveal and outputs-before-native completion. All frozen input/root-science hash checks pass; discovery and revealed-plan digests match the reveal record.",
+      "not_proven": "Byte consistency and an input map do not establish hidden-file access, complete tool history, independent context enforcement, exactly-one native Goal or save-before-native-terminal order. No unauthorized feedback or assistance was observed in the bounded artifacts; absence of a full trace is not proof of an actual violation.",
+      "reviewer": "No delegation, candidate feedback/repair, account change, Git/publication, other-arm/result/history reading or ER11 rescoring was performed."
+    },
+    "time": {
+      "judgment": "RECORDED WALL-CLOCK OBSERVATION; NATIVE/INFERENCE TIME UNKNOWN",
+      "initialized_at_utc": "2026-10-10T03:57:22.231Z",
+      "whole_deadline_utc": "2026-10-10T04:57:17.174Z",
+      "root_terminal_observed_at_utc": "2026-10-10T04:37:05.387145+00:00",
+      "initialization_to_root_observation_seconds": 2383.156145,
+      "note": "This subtraction is a record-based wall span including root observation/handoff, not native inference occupancy, billed time or a paired speed comparison. Terminal science is recorded before the full deadline. Exact candidate tool/runtime timing and reserve-quarter compliance are UNKNOWN."
+    },
+    "effective": {
+      "judgment": "UNKNOWN",
+      "requested_and_t3_reported_provider": "AUTHORIZED_PROVIDER_INSTANCE",
+      "requested_and_t3_reported_model": "gpt-6-luna",
+      "requested_options": {
+        "reasoningEffort": "max",
+        "serviceTier": "priority"
+      },
+      "note": "Requested route and returned T3 identifiers agree. Actual backend model/options/service tier and native method provenance are not exposed by independent transport evidence in scope."
+    },
+    "billing": {
+      "judgment": "UNKNOWN",
+      "note": "Reported native token counters are retained as candidate claims, not invoices or effective inference tokens. No cost, savings or billing comparison is inferred."
+    }
+  },
+  "validation": {
+    "candidate_executed_product_validation": "NONE CLAIMED; NONE ESTABLISHED",
+    "candidate_executed_research": "Reported primary retrieval/source-code/history reading; independently checked primary meaning by reviewer.",
+    "reviewer_executed_checks": [
+      "Full bounded artifact reading",
+      "Independent retrieval/inspection of all 19 candidate primary URLs plus seven API/raw supplements",
+      "Read-only original/freeze byte-integrity comparison (32 checks, no mismatch)",
+      "Assessment structure, links and preservation verification"
+    ],
+    "analytical_counterexample_status": "F-01 is source-grounded textual/semantic analysis; no ferry parser or product was run.",
+    "oracle_limits": [
+      "No actual operator export or partner contract supplied",
+      "Exact timezone/feed/release support governs proposed scenarios",
+      "Two OTP methods are narrow feature-behavior source, not load or integration results",
+      "A matching static-feed version does not turn NEW into an existing static trip"
+    ]
+  },
+  "unknowns": [
+    "Candidate independent native activation/completion/order and native method provenance",
+    "Actual effective backend model/options/service tier",
+    "Billing/cost and effective inference occupancy",
+    "Complete candidate tool/history access and reserve-quarter timing",
+    "Exact operator export, realtime support and partner profile/version",
+    "Actual staff publishing tool and owner launch choices"
+  ],
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A6-01/READY.json",
+      "bytes": 290,
+      "sha256": "ff7498e5d6ee7b37d4eb4cf87188eb5db473d7c5f173cb04b0dbcc699ddf0dd6"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A6-01/brief.md",
+      "bytes": 3323,
+      "sha256": "ef82ee81df37c62d0db64103e2891322a1161eed74e0edbd5663f0da1bdbd14c"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A6-01/plan.md",
+      "bytes": 5984,
+      "sha256": "8656d21b801ae5c4905cb19f08fb8b9262058c9916bbc257537bd35353e55d97"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/control/run.json",
+      "bytes": 580,
+      "sha256": "13c8dc5b80bb29ffbab444b0d09fe0dbdb5eaa6bfc3bc1f019840fd852eed65b"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/inputs/brief.md",
+      "bytes": 3323,
+      "sha256": "ef82ee81df37c62d0db64103e2891322a1161eed74e0edbd5663f0da1bdbd14c"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/critic/assignment.md",
+      "bytes": 3306,
+      "sha256": "ede739df7da189924cc229a3a8033c89693da923f5782421ec36a688bdd026c3"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/critic/critique.md",
+      "bytes": 11419,
+      "sha256": "51c973c39dbefe617915a75a894c585aa819b9504b4d8c21ec52c2e532274783"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/critic/dispatch.json",
+      "bytes": 4124,
+      "sha256": "44673feadb283463f7b2cd0a49bef9b1c34bdb8af1b694d7db95dc3ee1e54722"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/critic/freeze.json",
+      "bytes": 3135,
+      "sha256": "f21edb682e2dfc75adf6168175e22bee9f53f20099b877846c32bbe5f2591f69"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/critic/input-map.json",
+      "bytes": 1390,
+      "sha256": "681fa0dc9da94d514cfc599cf6f620e4f3beeb545976d787dfeeb56238339556"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/critic/request.json",
+      "bytes": 890,
+      "sha256": "8981732c4fa009422793ced7850f37bbcca86cb4cf6d2d43d881c0f57e29b23b"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/critic/source-map.json",
+      "bytes": 26000,
+      "sha256": "fe7636a876ff6b98fdd4f669463332a76b2da043c245a702857498bdaba485ef"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/critic/sources/index.md",
+      "bytes": 4987,
+      "sha256": "08a5e63151239f70c6c1c69298d4eec2c183515790bf1179fbaf0143ee71cfc3"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/critic/status.json",
+      "bytes": 4406,
+      "sha256": "965c0b80e39cf57cb15ee1afee80720cd98083b60b0602cc53e21d8543de66be"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/assignment.md",
+      "bytes": 3712,
+      "sha256": "eb322662379fb3b87ae8ceab629e556a00efa9832fcd7c0ebee8f7c2b185fd07"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/discovery.md",
+      "bytes": 16039,
+      "sha256": "2528c9e269ab744712570a20287d85abd1214a128a8fce3d720fa7f1f839a1b4"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/dispatch.json",
+      "bytes": 4220,
+      "sha256": "75cad33ceccf5f2712381c7d4b9b62a05b207822c38375a0ca724c327b9e0756"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/draft.md",
+      "bytes": 23006,
+      "sha256": "ae7bae1e494a90c625c4a6aee55c1ec8490fc8270b964fada87cb4c18385e47b"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/freeze.json",
+      "bytes": 1654,
+      "sha256": "0014e54088dd0da1f3bb08fcb5c085126113e9f229625ebf22a71426fbec21b6"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/input-map.json",
+      "bytes": 714,
+      "sha256": "f897fda9f72a7aa451088877367114484d292b8fb6dfa8c5ec1eebe123a7e1dc"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/plan-reveal.json",
+      "bytes": 427,
+      "sha256": "8a2196ac8d0b966f15b3c4e458a50e4ae449b7476d74000f1da5f8721c0acd5d"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/request.json",
+      "bytes": 914,
+      "sha256": "d86f1cc79c2e8b62beba106ad3ee129e218b318de13be20ee26e1d092b5042de"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/revealed-plan.md",
+      "bytes": 5984,
+      "sha256": "8656d21b801ae5c4905cb19f08fb8b9262058c9916bbc257537bd35353e55d97"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/source-map.json",
+      "bytes": 20291,
+      "sha256": "f24cd24a3e59d50022a32ac0827d20460029ba6f114c70a034c248f1172e955e"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/sources/index.md",
+      "bytes": 4864,
+      "sha256": "5f0454d89f43366f4a55ed48792c55909536421299b29487f03682be9fe076e0"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/status.json",
+      "bytes": 3066,
+      "sha256": "e6bf73cdafeac039ded2cd9546dc8a71191c6d21f83d1f2fff74d8bd902eb108"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/assignment.md",
+      "bytes": 3286,
+      "sha256": "32aebb4ea2f66960a5ac89819f8422cc147e6261a8288b474cd70ea7d6020f96"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/dispatch.json",
+      "bytes": 4140,
+      "sha256": "d8aa43e71740c1303a727f32ac2bbf4ed56d4466a4f6e659cf7de05b8831c79d"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/final.md",
+      "bytes": 28212,
+      "sha256": "a660dcf2af9b2aaf1d65bb86b137ad696a29498f1f4ef1fbfd4b3b495c00e270"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/freeze.json",
+      "bytes": 3906,
+      "sha256": "505a799434f229847e373f3771e3f93535d544948e2b4b008e0f595cc83fb359"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/input-map.json",
+      "bytes": 1701,
+      "sha256": "328df8c6b5b979343c418f890179af27b7d1a3cc95c42280beeca3f3eb7da10f"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/request.json",
+      "bytes": 894,
+      "sha256": "af90f61e9c21092fcd6e7c275631d0edae5dbd4bf624af66fa2fc6225ea022fe"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/source-map.json",
+      "bytes": 38613,
+      "sha256": "cf2550bc5f5c3bea4bf5874bb6e2a25f838a2106462fec3c8086c04589042e76"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/sources/index.md",
+      "bytes": 7973,
+      "sha256": "6e0d55204a02b82318ebe57773ca1e12d6b7973bb17ad6f9c674ee61221ea2e7"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/terminal-science-freeze-root.json",
+      "bytes": 7827,
+      "sha256": "9369ce170ff717ea702cfca2b82d65394670acc2322f4d5f84b66456aa8c8207"
+    }
+  ],
+  "urls_and_versions": [
+    {
+      "id": "E01",
+      "url": "https://gtfs.org/documentation/schedule/reference/",
+      "version": "GTFS Schedule living reference revised 2026-04-27; observed 2026-10-10",
+      "access_utc": "2026-10-10T04:39:00.101848+00:00"
+    },
+    {
+      "id": "E02",
+      "url": "https://gtfs.org/documentation/realtime/reference/",
+      "version": "GTFS RT current reference, protocol 2.0; fields/history through June 2026; observed 2026-10-10",
+      "access_utc": "2026-10-10T04:39:00.103849+00:00"
+    },
+    {
+      "id": "E03",
+      "url": "https://gtfs.org/documentation/realtime/feed-entities/trip-updates/",
+      "version": "Living primary page/repository observed 2026-10-10; see precise scope in linked claim records",
+      "access_utc": "2026-10-10T04:39:00.108195+00:00"
+    },
+    {
+      "id": "E04",
+      "url": "https://gtfs.org/documentation/realtime/feed-entities/service-alerts/",
+      "version": "Living primary page/repository observed 2026-10-10; see precise scope in linked claim records",
+      "access_utc": "2026-10-10T04:39:00.109327+00:00"
+    },
+    {
+      "id": "E05",
+      "url": "https://gtfs.org/documentation/realtime/realtime-best-practices/",
+      "version": "Living primary page/repository observed 2026-10-10; see precise scope in linked claim records",
+      "access_utc": "2026-10-10T04:39:00.110963+00:00"
+    },
+    {
+      "id": "E06",
+      "url": "https://gtfs.org/resources/mobilitydata-recommendations/gtfs-schedule-vs-gtfs-realtime/",
+      "version": "Living primary page/repository observed 2026-10-10; see precise scope in linked claim records",
+      "access_utc": "2026-10-10T04:39:00.112109+00:00"
+    },
+    {
+      "id": "E07",
+      "url": "https://gtfs.org/documentation/realtime/change-history/revision-history/",
+      "version": "Living primary page/repository observed 2026-10-10; see precise scope in linked claim records",
+      "access_utc": "2026-10-10T04:39:00.348614+00:00"
+    },
+    {
+      "id": "E08",
+      "url": "https://docs.opentripplanner.org/en/latest/apis/GTFS-GraphQL-API/",
+      "version": "Living primary page/repository observed 2026-10-10; see precise scope in linked claim records",
+      "access_utc": "2026-10-10T04:39:00.418248+00:00"
+    },
+    {
+      "id": "E09",
+      "url": "https://docs.opentripplanner.org/en/latest/GTFS-RT-Config/",
+      "version": "Living primary page/repository observed 2026-10-10; see precise scope in linked claim records",
+      "access_utc": "2026-10-10T04:39:00.442274+00:00"
+    },
+    {
+      "id": "E10",
+      "url": "https://docs.opentripplanner.org/en/latest/Changelog/",
+      "version": "Living primary page/repository observed 2026-10-10; see precise scope in linked claim records",
+      "access_utc": "2026-10-10T04:39:00.492239+00:00"
+    },
+    {
+      "id": "E11",
+      "url": "https://github.com/opentripplanner/OpenTripPlanner/issues/6252",
+      "version": "Living primary page/repository observed 2026-10-10; see precise scope in linked claim records",
+      "access_utc": "2026-10-10T04:39:00.508775+00:00"
+    },
+    {
+      "id": "E12",
+      "url": "https://github.com/opentripplanner/OpenTripPlanner/pull/6262",
+      "version": "Living primary page/repository observed 2026-10-10; see precise scope in linked claim records",
+      "access_utc": "2026-10-10T04:39:00.601132+00:00"
+    },
+    {
+      "id": "E13",
+      "url": "https://docs.opentripplanner.org/en/v2.7.0/Changelog/",
+      "version": "OTP v2.7.0 release 2025-03-12",
+      "access_utc": "2026-10-10T04:39:00.670027+00:00"
+    },
+    {
+      "id": "E14",
+      "url": "https://docs.opentripplanner.org/en/latest/Netex-Tutorial/",
+      "version": "Living primary page/repository observed 2026-10-10; see precise scope in linked claim records",
+      "access_utc": "2026-10-10T04:39:00.687196+00:00"
+    },
+    {
+      "id": "E15",
+      "url": "https://github.com/TransmodelEcosystem/SIRI",
+      "version": "Living primary page/repository observed 2026-10-10; see precise scope in linked claim records",
+      "access_utc": "2026-10-10T04:39:00.714148+00:00"
+    },
+    {
+      "id": "E16",
+      "url": "https://github.com/opentripplanner/OpenTripPlanner/blob/v2.10.0/application/src/main/java/org/opentripplanner/framework/application/OTPFeature.java",
+      "version": "OTP exact tag v2.10.0",
+      "access_utc": "2026-10-10T04:39:00.730965+00:00"
+    },
+    {
+      "id": "E17",
+      "url": "https://github.com/opentripplanner/OpenTripPlanner/blob/v2.10.0/doc/user/Changelog.md",
+      "version": "OTP exact tag v2.10.0",
+      "access_utc": "2026-10-10T04:39:00.846470+00:00"
+    },
+    {
+      "id": "E18",
+      "url": "https://github.com/opentripplanner/OpenTripPlanner/pull/6262/files",
+      "version": "Living primary page/repository observed 2026-10-10; see precise scope in linked claim records",
+      "access_utc": "2026-10-10T04:39:00.872196+00:00"
+    },
+    {
+      "id": "E19",
+      "url": "https://github.com/opentripplanner/OpenTripPlanner/commit/69ac485",
+      "version": "OTP commit 69ac4854678bb964715d4b7d143e457cc6b77dda",
+      "access_utc": "2026-10-10T04:39:01.014697+00:00"
+    },
+    {
+      "id": "E20",
+      "url": "https://raw.githubusercontent.com/opentripplanner/OpenTripPlanner/v2.10.0/application/src/main/java/org/opentripplanner/framework/application/OTPFeature.java",
+      "version": "OTP exact tag v2.10.0",
+      "access_utc": "2026-10-10T04:39:01.203408+00:00"
+    },
+    {
+      "id": "E21",
+      "url": "https://raw.githubusercontent.com/opentripplanner/OpenTripPlanner/v2.10.0/doc/user/Changelog.md",
+      "version": "OTP exact tag v2.10.0",
+      "access_utc": "2026-10-10T04:39:01.321613+00:00"
+    },
+    {
+      "id": "E22",
+      "url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/issues/6252",
+      "version": "OTP issue #6252, opened 2024-11-14; reported 2.7.0-SNAPSHOT",
+      "access_utc": "2026-10-10T04:39:01.322155+00:00"
+    },
+    {
+      "id": "E23",
+      "url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/pulls/6262",
+      "version": "OTP PR #6262, merged 2025-01-09; merge b0b8661b6ea617a611b1af622d2b1c9249dcadbd",
+      "access_utc": "2026-10-10T04:39:01.437198+00:00"
+    },
+    {
+      "id": "E24",
+      "url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/commits/69ac485",
+      "version": "OTP commit 69ac4854678bb964715d4b7d143e457cc6b77dda",
+      "access_utc": "2026-10-10T04:39:01.460235+00:00"
+    },
+    {
+      "id": "E25",
+      "url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/pulls/6262/files",
+      "version": "OTP PR #6262 current changed-file representation, observed 2026-10-10",
+      "access_utc": "2026-10-10T04:39:01.520121+00:00"
+    },
+    {
+      "id": "E26",
+      "url": "https://raw.githubusercontent.com/TransmodelEcosystem/SIRI/master/README.md",
+      "version": "Living SIRI master README; observed 2026-10-10; v2.3 functional, v2.2 CEN; Oct 2026 releases",
+      "access_utc": "2026-10-10T04:39:01.750630+00:00"
+    }
+  ],
+  "original_freeze_preserved": true,
+  "evidence_source_map": "source-map.json",
+  "navigable_evidence": "evidence/index.md",
+  "reviewer_native_goal": {
+    "id": "01a12419-b1fc-7692-bc61-8c0004486198",
+    "status_at_judgment_save": "active",
+    "completion_rule": "Full assessment saved and verified before native completion; actual completion result will be retained separately, without rewriting this judgment."
+  }
+}

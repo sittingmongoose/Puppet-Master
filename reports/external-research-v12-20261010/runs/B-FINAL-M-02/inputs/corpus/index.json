@@ -1,0 +1,27 @@
+{
+  "sources": [
+    {
+      "source_id": "S1",
+      "title": "PostgreSQL INSERT",
+      "url": "https://www.postgresql.org/docs/17/sql-insert.html",
+      "version": "PostgreSQL major version 17 documentation; target PostgreSQL 17",
+      "retrieved_at": "2026-10-10T03:54:10Z",
+      "navigation": "ON CONFLICT Clause; conflict_target; condition; RETURNING; deterministic statements",
+      "file": "corpus/S1.md",
+      "sha256": "abe9113df5303a6896c0efcffb0f053cef56cc5a6d0e2f3f8784a1ef5248cd0b",
+      "verbatim_word_count": 11
+    },
+    {
+      "source_id": "S2",
+      "title": "PostgreSQL transaction isolation",
+      "url": "https://www.postgresql.org/docs/17/transaction-iso.html",
+      "version": "PostgreSQL major version 17 documentation; target Read Committed",
+      "retrieved_at": "2026-10-10T03:54:10Z",
+      "navigation": "13.2.1 Read Committed; ON CONFLICT discussion; transaction retries",
+      "file": "corpus/S2.md",
+      "sha256": "82283c7ceb2bde2011bf62f375f02e452fdc66d7dbe9be299af2d18cb2e72cef",
+      "verbatim_word_count": 9
+    }
+  ],
+  "retrieval_policy": "Both arms may follow the listed URLs and retrieve up to eight additional primary pages within the same 600-second investigation allowance. Snapshots are short excerpts and attributed paraphrases, not complete manuals."
+}

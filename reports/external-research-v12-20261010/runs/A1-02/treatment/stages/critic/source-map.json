@@ -1,0 +1,214 @@
+{
+  "schema": "er12-source-map-v1",
+  "run_id": "A1-02-treatment",
+  "stage": "critic",
+  "frozen_brief_sha256": "40b8aba4c7352fb60b8744d134fe902d1cc9b88e1043eecb306cfd6c3428b4dc",
+  "frozen_inputs_verified": {
+    "brief": "40b8aba4c7352fb60b8744d134fe902d1cc9b88e1043eecb306cfd6c3428b4dc",
+    "assignment": "3abedc5e10449ca7eef8ff76ec63e6bf23395c69c6b524fe72ec7215881c9ba3",
+    "input_map": "ea03ba6755d63efe092a4ef1f25c81f72eaccdb87a7728a71b5470f4f2df1faa",
+    "discovery": "2f46926e64db4b894da1e811660633779e763b368614de0b6df0522664e9be27",
+    "draft": "bd3112dbdd14fe71f651caf12fc716b6407f046751c38514451b3c90ac9ab580",
+    "investigator_source_map": "eee17672f713aab23d88670b9e054c1f929a2bf3488a4931af7817af863742ea",
+    "revealed_plan": "e585d3899d830686e266298ad05246a0d9409ef106762c5fe85674321cf57258",
+    "plan_reveal": "b9ce08017b7ac538fff841925304f0d4adf40d068eee8d0833d786c36705ebb9"
+  },
+  "access_clock_basis": "2026-10-10T04:22:08Z was the observed UTC clock immediately after grouped direct source checks. Each access_utc records that grouped observation, not publication time.",
+  "source_id_policy": "S01–S11 retain the investigator package’s original source identities and URLs; S12 is a new RFC Editor erratum source. S01’s corrected recurrence-gap interpretation is cross-referenced to S12.",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "RFC 5545 — iCalendar",
+      "exact_url": "https://www.rfc-editor.org/rfc/rfc5545.html",
+      "version_or_commit": "RFC 5545, Standards Track, September 2009; recurrence gap text corrected by verified Erratum 4271 (S12)",
+      "locator": [
+        "§3.2.19 TZID, HTML lines 1448–1475",
+        "§3.2.20 VALUE parameter and unknown value-type tokens, HTML lines 1508–1550",
+        "§3.3.5 DATE-TIME fold/gap, HTML lines 1725–1807",
+        "§3.3.10 RRULE grammar, HTML lines 2016–2024",
+        "§3.3.10 RRULE UNTIL/COUNT, HTML lines 2156–2175; invalid date/nonexistent local time, lines 2277–2288; computed local recurrence time, lines 2386–2390",
+        "§3.6.5 VTIMEZONE recurrence coverage, HTML lines 3471–3478",
+        "§3.8.4.4 RECURRENCE-ID, HTML lines 6029–6086; §3.8.4.7 UID, lines 6264–6282",
+        "§3.8.5.1 EXDATE, HTML lines 6368–6392; §3.8.5.3 recurrence set and duration, lines 6553–6598",
+        "§3.8.8.1–.2 IANA/X-name properties, HTML lines 7496–7558"
+      ],
+      "observed_operation": "Reopened the RFC Editor HTML directly and inspected the listed sections for identity, recurrence algebra, time zones, DST, duration, VALUE parameters, and extension properties.",
+      "governing_condition_default_exception": "UID is the persistent component identifier; RECURRENCE-ID is the original slot and retains its value type; DTSTART/RRULE/RDATE minus EXDATE defines the set, EXDATE wins, and unsynchronized DTSTART/RRULE is undefined. For TZID DTSTART, UNTIL is UTC. DATE-TIME folds select the first instant and explicit gaps use the pre-gap offset. Apply Erratum 4271 (S12) to RRULE-generated gap candidates. Section 3.2.20 covers unknown value-type tokens, not general property-name preservation; sections 3.8.8.1–.2 allow generic consumers to ignore IANA/X-name properties. The RRULE grammar permits UNTIL or COUNT, not both, and COUNT includes DTSTART as its first occurrence.",
+      "applicability": "Primary file-format contract for the requested adapter; it does not select the product subset, duplicate policy, or guarantee cross-reader behavior.",
+      "evidence_note": "sources/S01.md",
+      "access_utc": "2026-10-10T04:22:08Z"
+    },
+    {
+      "id": "S02",
+      "title": "RFC 5546 — iTIP",
+      "exact_url": "https://www.rfc-editor.org/rfc/rfc5546.html",
+      "version_or_commit": "RFC 5546, Standards Track, December 2009",
+      "locator": [
+        "§3.2.5 CANCEL",
+        "§3.7.1 Working With Recurrence Instances",
+        "§4.4.3 Cancel an Instance"
+      ],
+      "observed_operation": "Reopened RFC Editor HTML and inspected the iTIP cancellation and recurrence-instance procedures.",
+      "governing_condition_default_exception": "CANCEL is a scheduling message from an organizer to affected attendees; a single-instance operation identifies the component with UID and RECURRENCE-ID. It carries scheduling/attendee behavior absent from a local file snapshot edit.",
+      "applicability": "Supports the draft’s distinction between changing a local .ics export and notifying meeting attendees.",
+      "evidence_note": "sources/S02.md",
+      "access_utc": "2026-10-10T04:22:08Z"
+    },
+    {
+      "id": "S03",
+      "title": "Google Calendar API — Recurring events",
+      "exact_url": "https://developers.google.com/workspace/calendar/api/guides/recurringevents",
+      "version_or_commit": "Google Calendar API v3 guide; live documentation with no immutable revision stated",
+      "locator": [
+        "Instance-specific fields, lines 224–225",
+        "Modify or delete instances and authorized update, lines 226–236",
+        "Cancellation example, lines 305–327"
+      ],
+      "observed_operation": "Reopened the first-party guide and checked instance retrieval/update and cancellation examples.",
+      "governing_condition_default_exception": "originalStartTime is the scheduled slot, remains distinct from current start after rescheduling, and uniquely identifies an instance within its series. Editing requires an authorized API update to the retrieved instance.",
+      "applicability": "Operation-level comparator for original-slot identity and separate move/cancel; Google IDs and JSON status do not transfer to iCalendar.",
+      "evidence_note": "sources/S03.md",
+      "access_utc": "2026-10-10T04:22:08Z"
+    },
+    {
+      "id": "S04",
+      "title": "Microsoft Graph — event resource",
+      "exact_url": "https://learn.microsoft.com/en-us/graph/api/resources/event?view=graph-rest-1.0",
+      "version_or_commit": "Microsoft Graph REST v1.0 event resource; live documentation, page last updated 2025-05-15",
+      "locator": [
+        "cancelledOccurrences and exceptionOccurrences, lines 83 and 146–148",
+        "originalStart and seriesMasterId, lines 111–120",
+        "type values and instance collections, lines 125 and 146–150"
+      ],
+      "observed_operation": "Reopened Microsoft Learn event-resource documentation and checked recurrence fields and navigation collections.",
+      "governing_condition_default_exception": "originalStart is a UTC timestamp for an occurrence/exception; seriesMasterId links to a recurring master; event type distinguishes singleInstance, occurrence, exception, and seriesMaster. Exception/instance collections omit canceled occurrences.",
+      "applicability": "Provider model comparator only; its IDs and UTC timestamp representation do not replace UID/RID/TZID.",
+      "evidence_note": "sources/S04.md",
+      "access_utc": "2026-10-10T04:22:08Z"
+    },
+    {
+      "id": "S05",
+      "title": "Microsoft Graph — event: cancel",
+      "exact_url": "https://learn.microsoft.com/en-us/graph/api/event-cancel?view=graph-rest-1.0",
+      "version_or_commit": "Microsoft Graph REST v1.0 action; live documentation",
+      "locator": [
+        "Description and operation conditions, lines 31–38",
+        "POST request and permissions sections"
+      ],
+      "observed_operation": "Reopened the first-party action page and inspected the cancel action’s permissions and occurrence behavior.",
+      "governing_condition_default_exception": "Organizer sends cancellation and may target one recurring occurrence by its event ID; attendee invocation fails; the organizer may send a custom attendee message.",
+      "applicability": "Shows provider-side cancellation is a permissioned messaging operation and cannot be claimed by an offline export.",
+      "evidence_note": "sources/S05.md",
+      "access_utc": "2026-10-10T04:22:08Z"
+    },
+    {
+      "id": "S06",
+      "title": "Microsoft Graph — update event",
+      "exact_url": "https://learn.microsoft.com/en-us/graph/api/event-update?view=graph-rest-1.0",
+      "version_or_commit": "Microsoft Graph REST v1.0 PATCH operation; live documentation",
+      "locator": [
+        "PATCH update semantics",
+        "ErrorOccurrenceCrossingBoundary note, line 116",
+        "Master and separately edited-instance notification note, lines 110–112"
+      ],
+      "observed_operation": "Reopened Microsoft Learn update documentation and inspected the PATCH and recurrence exception notes.",
+      "governing_condition_default_exception": "Graph/Outlook may reject an exception moved to/before the previous occurrence’s day or to/after the following occurrence’s day; a master update with separately changed instances can send multiple notifications.",
+      "applicability": "Provider-specific comparator; the adjacent-day restriction is not an iCalendar rule.",
+      "evidence_note": "sources/S06.md",
+      "access_utc": "2026-10-10T04:22:08Z"
+    },
+    {
+      "id": "S07",
+      "title": "Microsoft Graph — list instances",
+      "exact_url": "https://learn.microsoft.com/en-us/graph/api/event-list-instances?view=graph-rest-1.0",
+      "version_or_commit": "Microsoft Graph REST v1.0 method; live documentation",
+      "locator": [
+        "Description, lines 31–35",
+        "GET /events/{id}/instances and range parameters, lines 50–64",
+        "Prefer: outlook.timezone response-time note, lines 74–79"
+      ],
+      "observed_operation": "Reopened Microsoft Learn list-instances documentation and inspected range query and response timezone conditions.",
+      "governing_condition_default_exception": "The request requires a time range; response start/end values default to UTC, and the optional Prefer header selects a supported response timezone.",
+      "applicability": "Comparator for locating an instance before a live edit; requires authenticated provider access outside the product scope.",
+      "evidence_note": "sources/S07.md",
+      "access_utc": "2026-10-10T04:22:08Z"
+    },
+    {
+      "id": "S08",
+      "title": "caldata Rust crate",
+      "exact_url": "https://docs.rs/crate/caldata/0.17.3",
+      "version_or_commit": "caldata 0.17.3; docs.rs lists release 2026-09-20",
+      "locator": [
+        "Crate package metadata and documentation coverage",
+        "Owner note describing fork and recurrence implementation",
+        "Crate docs at https://docs.rs/caldata/0.17.3/caldata/"
+      ],
+      "observed_operation": "Reopened the pinned docs.rs crate page and checked release metadata, coverage, and the rust-rrule fork note.",
+      "governing_condition_default_exception": "The crate describes strict parsing, typed date-times, and recurrence expansion, including a modified copied rust-rrule for local timezone calculations in UTC. Inspected metadata does not establish opaque property/raw-byte round trips.",
+      "applicability": "Pinned prototype candidate only; run subset-specific preservation and DST tests before selecting.",
+      "evidence_note": "sources/S08.md",
+      "access_utc": "2026-10-10T04:22:08Z"
+    },
+    {
+      "id": "S09",
+      "title": "pimalaya/ical Rust repository README",
+      "exact_url": "https://github.com/pimalaya/ical",
+      "version_or_commit": "Repository main page; no release tag or immutable commit established",
+      "locator": [
+        "README Features and RFC coverage"
+      ],
+      "observed_operation": "Reopened the repository README and checked its whole-tree/byte-faithful editing and recurrence/time-zone claims.",
+      "governing_condition_default_exception": "README describes byte-faithful editing and whole nested tree round trip, but the inspected page is an unpinned repository claim rather than a released artifact.",
+      "applicability": "Architecture lead for evaluation, not a selected dependency or experimentally verified capability.",
+      "evidence_note": "sources/S09.md",
+      "access_utc": "2026-10-10T04:22:08Z"
+    },
+    {
+      "id": "S10",
+      "title": "collective/icalendar 7.3.0 implementation history",
+      "exact_url": "https://github.com/collective/icalendar/blob/v7.3.0/CHANGES.rst",
+      "version_or_commit": "icalendar 7.3.0, tagged v7.3.0, dated 2026-08-19; commit SHA not recorded",
+      "locator": [
+        "7.3.0 release heading",
+        "Unknown/X property value round-trip fix, lines 219–220",
+        "Vendor-prefixed TZID resolution, line 217",
+        "TZID/RDATE offset correction, line 231"
+      ],
+      "observed_operation": "Reopened the tagged changelog and checked version-specific unknown-property, TZID, and offset fixes.",
+      "governing_condition_default_exception": "Release history records Python icalendar fixes; it does not establish a Rust candidate defect. Fixes are scoped to this released package.",
+      "applicability": "Concrete implementation-history reason to test opaque values, parameters, and zones in chosen Rust release; not an interoperability proof.",
+      "evidence_note": "sources/S10.md",
+      "access_utc": "2026-10-10T04:22:08Z"
+    },
+    {
+      "id": "S11",
+      "title": "Peltoche ical Rust parser documentation and archived repository",
+      "exact_url": "https://docs.rs/ical/0.11.0/ical/",
+      "version_or_commit": "ical crate 0.11.0; related upstream https://github.com/Peltoche/ical-rs archived 2024-08-17",
+      "locator": [
+        "docs.rs crate overview and parser description, lines 17–40",
+        "GitHub archive banner, lines 113–115"
+      ],
+      "observed_operation": "Reopened docs.rs and the related GitHub repository; checked parser scope and archived status.",
+      "governing_condition_default_exception": "Documentation describes content parsing without validity checks; upstream repository is read-only/archived.",
+      "applicability": "Historical parser alternative only; insufficient alone for the required recurrence and timezone contract.",
+      "evidence_note": "sources/S11.md",
+      "access_utc": "2026-10-10T04:22:08Z"
+    },
+    {
+      "id": "S12",
+      "title": "RFC Editor — RFC 5545 Erratum 4271",
+      "exact_url": "https://www.rfc-editor.org/errata/eid4271",
+      "version_or_commit": "Verified Technical erratum for RFC 5545; reported 2015-02-12 and verified 2015-02-17",
+      "locator": [
+        "RFC Editor erratum report: Section 3.3.10 correction and verifier notes",
+        "Correction directs nonexistent local recurrence times to RFC 5545 §3.3.5"
+      ],
+      "observed_operation": "Retrieved the official RFC Editor report through its search result; a later direct open returned an internal error, so no direct-open receipt is claimed.",
+      "governing_condition_default_exception": "Verified correction removes nonexistent local recurrence times from the ignored/not-counted rule and handles them according to §3.3.5; invalid dates remain ignored. Section 3.3.5 selects the first fold occurrence and interprets gap times using the pre-gap UTC offset.",
+      "applicability": "Governing correction for DST-gap recurrence behavior in this review; it changes the package’s C3 recommendation and proposed matrix.",
+      "evidence_note": "sources/S12.md",
+      "access_utc": "2026-10-10T04:22:08Z"
+    }
+  ]
+}

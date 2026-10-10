@@ -35,7 +35,7 @@ Routine scope-preserving engineering and selection decisions require no further 
 | Muse candidates | Muse 1.3 Contributor Max through **Muse Code provider** |
 | GLM candidates | GLM 5.3 Flash Max through **AUTHORIZED_PROVIDER_INSTANCE provider** |
 
-**All Codex contexts—including root, Luna, helpers, and evaluators—must use the existing `PRIVATE_EMAIL_REDACTED` T3 account.** The previously observed provider instance is `AUTHORIZED_PROVIDER_INSTANCE`; verify the current supported mapping instead of trusting a string alone. This account instruction is private operator configuration: redact it from public copies of this handoff and commit metadata. Do not select an unrelated default account. No Claude/Opus product assistance is authorized.
+**All Codex contexts—including root, Luna, helpers, and evaluators—must use the existing `AUTHORIZED_PROVIDER_INSTANCE` T3 account.** The previously observed provider instance is `AUTHORIZED_PROVIDER_INSTANCE`; verify the current supported mapping instead of trusting a string alone. This account instruction is private operator configuration: redact it from public copies of this handoff and commit metadata. Do not select an unrelated default account. No Claude/Opus product assistance is authorized.
 
 Concurrency ceilings: **five campaign-owned Muse contexts and three campaign-owned GLM contexts**, counting all candidate stages and helpers on those routes. Luna and Sol have no user-imposed thread-count ceiling. Scale their useful work to real provider, host, memory, and T3 capacity, while reserving capacity for finishing stages and evaluation. Respect shared-pool occupancy without touching foreign jobs. These are ceilings, not a requirement to fill idle slots with redundant work.
 

@@ -1,0 +1,24 @@
+{
+  "record_type": "actual reviewer update_goal completion response; full semantic judgment saved before this call",
+  "completion_response": {
+    "goal": {
+      "threadId": "01a12415-4e4e-76d0-ac58-a70866aaf80c",
+      "objective": "Independently assess the single completed ER12 A3-01 control full pipeline under ER12_RUNTIME. Read the full RUBRIC-v1, original frozen brief/plan, terminal science freeze, all original authored stages and complete actual assignment/input/source/freeze maps and authored evidence. Assess all six semantic axes and every exact plan clause, criticism dispositions, lineage preservation, discoveries/alternatives and validation meaning; independently retrieve governing primary evidence for consequential claims. Do not inspect other arms/results/history, rescore ER11, delegate, repair candidates, alter accounts or Git/publish. Preserve originals. Within a finite 45-minute envelope save complete assessment.md, assessment.json and navigable independent source-map/evidence ONLY under assessment/A3-01/control-v1, then complete this native Goal and report judgment and paths. Material remaining issues require source-backed FAIL; UNKNOWN for unevidenced telemetry.",
+      "status": "complete",
+      "tokensUsed": 215520,
+      "timeUsedSeconds": 672,
+      "createdAt": 1791606750,
+      "updatedAt": 1791607423
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+  },
+  "objective_chars": 1001,
+  "assessment_files": [
+    "assessment.md",
+    "assessment.json",
+    "source-map.json",
+    "evidence/index.md"
+  ],
+  "billing_interpretation": "Native reported usage is retained as returned; no billable-token or cost inference."
+}

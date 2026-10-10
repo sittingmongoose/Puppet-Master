@@ -1,0 +1,31 @@
+{
+  "run_id": "A2-01-treatment",
+  "stage": "critic",
+  "brief": "ER12_RUNTIME/runs/A2-01/treatment/handoff/inputs/brief.md",
+  "predecessors": [
+    "ER12_RUNTIME/runs/A2-01/treatment/handoff/inputs/brief.md",
+    "ER12_RUNTIME/runs/A2-01/treatment/handoff/stages/investigator/discovery.md",
+    "ER12_RUNTIME/runs/A2-01/treatment/handoff/stages/investigator/draft.md",
+    "ER12_RUNTIME/runs/A2-01/treatment/handoff/stages/investigator/source-map.json",
+    "ER12_RUNTIME/runs/A2-01/treatment/handoff/stages/investigator/revealed-plan.md",
+    "ER12_RUNTIME/runs/A2-01/treatment/handoff/stages/investigator/plan-reveal.json",
+    "ER12_RUNTIME/runs/A2-01/treatment/handoff/stages/investigator/sources/index.md",
+    "ER12_RUNTIME/runs/A2-01/treatment/handoff/manifest.json",
+    "ER12_RUNTIME/runs/A2-01/treatment/control/handoff-binding.json"
+  ],
+  "source_roots": [
+    "ER12_RUNTIME/runs/A2-01/treatment/handoff/stages/investigator/sources"
+  ],
+  "allowed_write_root": "ER12_RUNTIME/runs/A2-01/treatment/stages/critic",
+  "stage_deadline_utc": "2026-10-10T04:38:05.761Z",
+  "whole_deadline_utc": "2026-10-10T04:54:23.145Z",
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    }
+  },
+  "revealed_plan": "ER12_RUNTIME/runs/A2-01/treatment/handoff/stages/investigator/revealed-plan.md"
+}

@@ -1,0 +1,17 @@
+{
+  "observation_utc": "2026-10-10T04:54:11Z",
+  "activation_observed": true,
+  "current_observation": {
+    "goal": {
+      "threadId": "01a12429-1836-74c3-b8f3-bc08adce41fc",
+      "objective": "Independently assess exactly the completed ER12 A7-01 control pipeline within a finite 45-minute envelope, including saving. Read the full rubric, original frozen brief/plan, terminal science freeze, all authored stage artifacts, source maps, critique dispositions/checks, per-stage assignments/input maps/freezes and authored source evidence through actual maps. Assess all six rubric axes and every exact plan clause, distinguish corrected lineage defects from final issues, independently retrieve governing primary evidence for consequential claims and decisions, and report missing/unknown evidence honestly. No nested delegation, candidate feedback or repair, account changes, Git/publication, other arms/results/history, or ER11 rescore. Write complete assessment.md, assessment.json and navigable independent source-map/evidence only under ER12_RUNTIME/assessment/A7-01/control-v1, preserve source freeze, then complete this Goal and report judgment and paths.",
+      "status": "active",
+      "tokensUsed": 109157,
+      "timeUsedSeconds": 125,
+      "createdAt": 1791608051,
+      "updatedAt": 1791608177
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  }
+}

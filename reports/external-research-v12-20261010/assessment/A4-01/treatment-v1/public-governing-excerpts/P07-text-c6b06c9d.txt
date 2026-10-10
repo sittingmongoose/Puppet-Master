@@ -1,0 +1,26 @@
+URL: https://uppy.io/docs/aws-s3/
+Original locator: ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P07-text.txt
+Original SHA256: c6b06c9dbeeec754407021898b520eeff276cb8c16f8e1e4eb7eeec4302de7b5
+Original numbered lines; gaps omitted. Not full response.
+
+37: signRequestyour own codean endpoint returning a presigned URL per operation
+57: requests themselves. For a file of a couple of kilobytes with 100 ms
+59: default shouldUseMultipart, which uses multipart only for large files.
+61: signRequest keeps your credentials on your server and
+96: async signRequest({ method, key, uploadId, partNumber }) {
+109: bucket, and object key. See signRequest for the
+173: shouldUseMultipart(file)​
+176: (boolean | function, default: files larger than 100 MiB).
+179: shouldUseMultipart(file) {
+180: return file.size > 100 * 2 ** 20;
+204: return Math.max(5 * 2 ** 20, file.size / 1000);
+214: The key generated here is a proposal. With signRequest,
+218: signRequest(request)​
+238: in your bucket’s CORS AllowedHeaders (see
+248: If shouldUseMultipart is false for every file,
+269: use signRequest or
+300: you use signRequest or
+314: signRequest there is nothing to configure, as your
+347: "AllowedHeaders": ["content-type"],
+365: AllowedHeaders has to list every header Uppy sets on the request. That is
+366: content-type, plus any header your signRequest

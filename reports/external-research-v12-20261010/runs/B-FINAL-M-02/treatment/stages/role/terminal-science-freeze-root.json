@@ -1,0 +1,136 @@
+{
+  "observed_at_utc": "2026-10-10T05:22:51.502144+00:00",
+  "basis": "root actual T3 completed/no pending before independent review; not native Goal proof",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/.invocation-backup-2d7b34fde33a48e49a43cc2ac9e5fb5a/assignment.md",
+      "sha256": "2f4ae9506d59eb24f5428e891bcd118208a85fff2bfd1623e42c8ee817a4edc6",
+      "bytes": 2387,
+      "mtime_ns": 1791609446033646145
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/.invocation-backup-2d7b34fde33a48e49a43cc2ac9e5fb5a/freeze.json",
+      "sha256": "5664418be0d769ca5df60e485f360311978f3fba6d066dd40c5f022283cef4b3",
+      "bytes": 2872,
+      "mtime_ns": 1791609446033428636
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/.invocation-backup-2d7b34fde33a48e49a43cc2ac9e5fb5a/input-map.json",
+      "sha256": "0e40e69aaa51103b418103e5e2eb88c5f7db18dc55f900ad9bed0360e4544392",
+      "bytes": 626,
+      "mtime_ns": 1791609446033554451
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/.invocation-backup-2d7b34fde33a48e49a43cc2ac9e5fb5a/request.json",
+      "sha256": "496c73132118e0312cbf11c1c9d2fdbe4091413bba8548291fe0eafafa06aaaf",
+      "bytes": 1080,
+      "mtime_ns": 1791609446033296558
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/assignment.md",
+      "sha256": "81e9d2a081c411da64bf901e717d11a11ac51625841d8da01156057ce3b5f369",
+      "bytes": 3188,
+      "mtime_ns": 1791609446034718636
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/dispatch.json",
+      "sha256": "6b484dc047ba17357a896e5e8865cdff61f789f8d8a97daafb2e4da58ced35cd",
+      "bytes": 5111,
+      "mtime_ns": 1791609447267339227
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+      "sha256": "fe1b8e7e9f474f6cfa0a6368b76bdd00a705d2a4eb31341d99ed24e44930e992",
+      "bytes": 5732,
+      "mtime_ns": 1791609645577954917
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/freeze.json",
+      "sha256": "3b90901cc3498057e14bc7c65a9f6b0eff101af5615b76c4496c28cf91003d83",
+      "bytes": 2872,
+      "mtime_ns": 1791609446034437349
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/input-map.json",
+      "sha256": "0e40e69aaa51103b418103e5e2eb88c5f7db18dc55f900ad9bed0360e4544392",
+      "bytes": 626,
+      "mtime_ns": 1791609446034586193
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/invocation-clarification.json",
+      "sha256": "7573d74991fd6662b0aa9af87be9b8fafb0c600d4ad0d109f3c37e0823dc146b",
+      "bytes": 3211,
+      "mtime_ns": 1791609446034926006
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/native-goal-activation.json",
+      "sha256": "378e5b813274f2f85027a0246d9edef4e16616d9f2a9e22375112e34df4bd9f4",
+      "bytes": 950,
+      "mtime_ns": 1791609598644667159
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/native-goal-completion.json",
+      "sha256": "feb34b5fa4769e7a5be4c5362ed449389ccca38b92c96e34e8c7665cb4624e51",
+      "bytes": 878,
+      "mtime_ns": 1791609706842372674
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/raw-dispatch.json",
+      "sha256": "12b77645c4642c529704281e43d96e5e8a8f5313470870d7e044ba3b23472390",
+      "bytes": 2138,
+      "mtime_ns": 1791609447069960462
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/records/dispatch-20261010T051727266870-da13e45f43024ef79e7de30c0e0af8ed.json",
+      "sha256": "6b484dc047ba17357a896e5e8865cdff61f789f8d8a97daafb2e4da58ced35cd",
+      "bytes": 5111,
+      "mtime_ns": 1791609447267117225
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/request.json",
+      "sha256": "6cb14b261a0dc139f8b4b0eaac2a3e76cf512a61980df8940edfcd754b5cff36",
+      "bytes": 1794,
+      "mtime_ns": 1791609446034215541
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/source-map.json",
+      "sha256": "4b5aaae299dbcb13dd2a7d63c85c7f2bbd8b90b13c3150d55c31677a2d294dd4",
+      "bytes": 4457,
+      "mtime_ns": 1791609664000077347
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/sources/S1-excerpt.md",
+      "sha256": "8b162faa61c3eabeb29fce249280809119a619f573a8ea24a9291524636da3ce",
+      "bytes": 1851,
+      "mtime_ns": 1791609606759716913
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/sources/S2-excerpt.md",
+      "sha256": "712e462d06574383d6039b45daa0ac1ec3596b184e2fc4dfe480cc7e97d86e36",
+      "bytes": 1444,
+      "mtime_ns": 1791609614719765718
+    }
+  ],
+  "terminal_task": {
+    "slot": "B-FINAL-M-02",
+    "arm": "treatment",
+    "stage": "role",
+    "helper": "ER12_RUNTIME/helpers/role-v2",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-M-02-treatment-role-v2",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-M-02-treatment-role-v2",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-M-02-treatment-role-v2:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-M-02-treatment-role-v2",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-M-02-treatment-role-v2:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "Complete. Single native Goal activated before any case input, all science saved before completion, then that same Goal completed.\n\nNative Goal:\n- ID `goal-01a1243e-de66-7830-90b9-d690014bf472`, objective verbatim as frozen\n- Activation: `active`, preserved in `native-goal-activation.json`\n- Completion: `complete` / 100, preserved in `native-goal-completion.json`\n- No second or replacement Goal; no provider CLI/session, delegation, or cross-arm contact\n\nDeliverables in `ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/`:\n- [final-section.md](ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md) \u2014 section 523 words (400\u2013650), total 767 words (<1100); title `Latest-reading ingestion`; exact tokens `duplicate_policy=reject_batch`, `stale_policy=keep_newer`, `max_batch_rows=100` preserved; pre-SQL reject-batch, strictly-newer predicate, skipped-update/RETURNING accounting, uniqueness/concurrency conditions without unconditional success, 3 prospective checks, failure reporting, unresolved evidence, no executed-test claim; dispositions accept 1/3/5, reject 2/4/6 with primary citations; remaining-uncertainty statement included\n- [source-map.json](ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/source-map.json) \u2014 URL/version/locator, retrieval UTC/operation, conditions/exceptions, applicability, proposed-vs-executed kept distinct; 2 listed URLs followed, 0 additional pages, no local probes, no failures\n- [S1-excerpt.md](ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/sources/S1-excerpt.md), [S2-excerpt.md](ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/sources/S2-excerpt.md) \u2014 bounded verbatim excerpts from PostgreSQL 17 INSERT and 13.2.1 Read Committed with source-vs-inference notes\n\nVerification observed: `ls` shows all files; JSON loads OK for source map and activation receipt; word/token counts via `wc`/`python3`; finished 2026-10-10T05:21:42Z, before the 05:32:25Z deadline.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-M-02-treatment-role-v2:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:bc79a179-33f7-4bb6-931c-9357511e7ae0",
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "muse-spark-1.3-contributor",
+    "summary": "Complete. Single native Goal activated before any case input, all science saved before completion, then that same Goal completed.\n\nNative Goal:\n- ID `goal-01a1243e-de66-7830-90b9-d690014bf472`, objective verbatim as frozen\n- Activation: `active`, preserved in `native-goal-activation.json`\n- Completion: `complete` / 100, preserved in `native-goal-completion.json`\n- No second or replacement Goal; no provider CLI/session, delegation, or cross-arm contact\n\nDeliverables in `ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/`:\n- [final-section.md](ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md) \u2014 section 523 words (400\u2013650), total 767 words (<1100); title `Latest-reading ingestion`; exact tokens `duplicate_policy=reject_batch`, `stale_policy=keep_newer`, `max_batch_rows=100` preserved; pre-SQL reject-batch, strictly-newer predicate, skipped-update/RETURNING accounting, uniqueness/concurrency conditions without unconditional success, 3 prospective checks, failure reporting, unresolved evidence, no executed-test claim; dispositions accept 1/3/5, reject 2/4/6 with primary citations; remaining-uncertainty statement included\n- [source-map.json](ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/source-map.json) \u2014 URL/version/locator, retrieval UTC/operation, conditions/exceptions, applicability, proposed-vs-executed kept distinct; 2 listed URLs followed, 0 additional pages, no local probes, no failures\n- [S1-excerpt.md](ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/sources/S1-excerpt.md), [S2-excerpt.md](ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/sources/S2-excerpt.md) \u2014 bounded verbatim excerpts from PostgreSQL 17 INSERT and 13.2.1 Read Committed with source-vs-inference notes\n\nVerification observed: `ls` shows all files; JSON loads OK for source map and activation receipt; word/token counts via `wc`/`python3`; finished 2026-10-10T05:21:42Z, before the 05:32:25Z deadline.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-M-02-treatment-role-v2:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:bc79a179-33f7-4bb6-931c-9357511e7ae0",
+    "waitTimedOut": false
+  }
+}

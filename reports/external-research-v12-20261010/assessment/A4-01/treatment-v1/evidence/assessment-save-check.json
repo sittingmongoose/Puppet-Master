@@ -1,0 +1,35 @@
+{
+  "verified_at_utc": "2026-10-10T04:53:37.673598+00:00",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "axes_assessed": 6,
+  "exact_clauses_assessed": 8,
+  "critic_dispositions": 5,
+  "primary_sources": 33,
+  "original_inspected_count": 36,
+  "unchanged_originals": true,
+  "changed_originals": [],
+  "missing_links": [],
+  "errors": [],
+  "required_saved_artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/assessment.md",
+      "bytes": 52298,
+      "sha256": "43a1696883c0de06cc65f0803947e9f9016d88f30235d8b823b68db9983f58bd"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/assessment.json",
+      "bytes": 64444,
+      "sha256": "8b88e1b5f4a7ea99c563200d42a7c21f05ccdd4b3c2352908c75af2cbdc08664"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/source-map.json",
+      "bytes": 79640,
+      "sha256": "46125670f9f8bf81f803cefecdb7ff5f6f9087399c9ad404af6578798b42f891"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/index.md",
+      "bytes": 8156,
+      "sha256": "27de7feab3f18d7220fbc128e06748b87f553b2190f2da63aee16b353f3cdbc1"
+    }
+  ]
+}

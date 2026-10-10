@@ -1,0 +1,285 @@
+{
+  "captured_at_utc": "2026-10-10T04:30:51.898547+00:00",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266,
+      "kind": "pipeline_artifact",
+      "inspection": "complete_text_read"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A1-01/brief.md",
+      "bytes": 3091,
+      "sha256": "505c23fb5b94201ac9ee19b23a559a1612cc265f0e019b8d90569e357869072d",
+      "mtime_ns": 1791604397505752597,
+      "kind": "pipeline_artifact",
+      "inspection": "complete_text_read"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A1-01/plan.md",
+      "bytes": 2670,
+      "sha256": "7fa2ceee5be512708f8125956cd243bf887cae2c1ef1349b36d9ac1770c4595f",
+      "mtime_ns": 1791604397506066070,
+      "kind": "pipeline_artifact",
+      "inspection": "complete_text_read"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/terminal-science-freeze-root.json",
+      "bytes": 7327,
+      "sha256": "6f9bc5cde18b772d840e8bd32b2785e3e13a88e50c37e735619a54e07897176f",
+      "mtime_ns": 1791606494324381836,
+      "kind": "pipeline_artifact",
+      "inspection": "complete_text_read"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/inputs/brief.md",
+      "bytes": 3091,
+      "sha256": "505c23fb5b94201ac9ee19b23a559a1612cc265f0e019b8d90569e357869072d",
+      "mtime_ns": 1791604457291497158,
+      "kind": "pipeline_artifact",
+      "inspection": "complete_text_read"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A1-01/treatment-v1/root-review-request.json",
+      "bytes": 3431,
+      "sha256": "a7ccb2e9a67fa1a8fa54ae2098677023637b90de1a860aa59f982dc404061ed8",
+      "mtime_ns": 1791606494484192529,
+      "kind": "pipeline_artifact",
+      "inspection": "complete_text_read"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/assignment.md",
+      "bytes": 3720,
+      "sha256": "a9d774f79caf89cea56c19ef6f635f9894915f75fd2d20a180999738bead1889",
+      "mtime_ns": 1791604457292581519,
+      "kind": "pipeline_artifact",
+      "inspection": "complete_text_read"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/discovery.md",
+      "bytes": 7948,
+      "sha256": "827f1c0ddbc4ef8f5fdf68c4b91abc50d2af362e28a1b2f75d1e268fcb175316",
+      "mtime_ns": 1791604649051407753,
+      "kind": "pipeline_artifact",
+      "inspection": "complete_text_read"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/dispatch.json",
+      "bytes": 4252,
+      "sha256": "36a9332285d7139af7d37869bc984b979d7615b0c0a60ab3391ffb3965ebd8d4",
+      "mtime_ns": 1791604458209869749,
+      "kind": "pipeline_artifact",
+      "inspection": "complete_text_read"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/draft.md",
+      "bytes": 23899,
+      "sha256": "de9b6706ba316b2829b4adfa3779fa243743cc4bd26d8d8b7e59aa9293f0118f",
+      "mtime_ns": 1791605011893910062,
+      "kind": "pipeline_artifact",
+      "inspection": "complete_text_read"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/freeze.json",
+      "bytes": 2666,
+      "sha256": "a77e3549f16b00932ca2e11ec205d32178ebc7bf35642f585ecde47a534ef35a",
+      "mtime_ns": 1791604966441552310,
+      "kind": "pipeline_artifact",
+      "inspection": "complete_text_read"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/input-map.json",
+      "bytes": 722,
+      "sha256": "d58f2987dc19a401297807e522dbf5ae727c3d7a18b32483dac4db576f10f7da",
+      "mtime_ns": 1791604457292329142,
+      "kind": "pipeline_artifact",
+      "inspection": "complete_text_read"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/plan-reveal.json",
+      "bytes": 428,
+      "sha256": "89b0196975f4c41c5e50d2e6caf780aa3d8e4ea4a86d2f47bf3795836e27f692",
+      "mtime_ns": 1791604676121698937,
+      "kind": "pipeline_artifact",
+      "inspection": "complete_text_read"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/request.json",
+      "bytes": 922,
+      "sha256": "cf81e10fbbc3d8c3ecc2330f1461a633a37cbe8e301c5f6f482613598f833085",
+      "mtime_ns": 1791604457292949731,
+      "kind": "pipeline_artifact",
+      "inspection": "complete_text_read"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 2670,
+      "sha256": "7fa2ceee5be512708f8125956cd243bf887cae2c1ef1349b36d9ac1770c4595f",
+      "mtime_ns": 1791604676121566860,
+      "kind": "pipeline_artifact",
+      "inspection": "complete_text_read"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/source-map.json",
+      "bytes": 10060,
+      "sha256": "386b0c661e61d732e3223978a206c05aeed35436a910c4be0630ae36a9498357",
+      "mtime_ns": 1791605020606612075,
+      "kind": "pipeline_artifact",
+      "inspection": "complete_text_read"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/sources/index.md",
+      "bytes": 2076,
+      "sha256": "5dac4044e63465fce0977e22c5cf7a237fa8b4133e2fbc35cafb268397dbaf58",
+      "mtime_ns": 1791604671070551755,
+      "kind": "authored_source_evidence",
+      "inspection": "complete_text_read"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/status.json",
+      "bytes": 3738,
+      "sha256": "59949202c8ef40b71bfd1b6075769c797ce548c56da41dc0317d535c7ca13b74",
+      "mtime_ns": 1791605066581456470,
+      "kind": "pipeline_artifact",
+      "inspection": "complete_text_read"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/critic/assignment.md",
+      "bytes": 3310,
+      "sha256": "c75b67218fa8dd06073852774dd2477001dee81c20e058dab90c79e65cb5ded3",
+      "mtime_ns": 1791605066787722772,
+      "kind": "pipeline_artifact",
+      "inspection": "complete_text_read"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/critic/critique.md",
+      "bytes": 9743,
+      "sha256": "b3d9b95c88682e058b7431f1315e30f2ab04904d8810e95d040fa242a00232b4",
+      "mtime_ns": 1791605773644957213,
+      "kind": "pipeline_artifact",
+      "inspection": "complete_text_read"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/critic/dispatch.json",
+      "bytes": 4156,
+      "sha256": "8e2b42f08cd4b820128650e3540a0251da69bbd9033b57de24083130509d8512",
+      "mtime_ns": 1791605067424137239,
+      "kind": "pipeline_artifact",
+      "inspection": "complete_text_read"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/critic/freeze.json",
+      "bytes": 3168,
+      "sha256": "ef6e5fd4585a8be3a1dad4742b3cf493010691aef9164a6da197c481fd5baf25",
+      "mtime_ns": 1791605066788319796,
+      "kind": "pipeline_artifact",
+      "inspection": "complete_text_read"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/critic/input-map.json",
+      "bytes": 1410,
+      "sha256": "00a40532b71cb5d82cf3dc69387cb22b4d127d51e7181ea77e1f4bc122d507c0",
+      "mtime_ns": 1791605066787498681,
+      "kind": "pipeline_artifact",
+      "inspection": "complete_text_read"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/critic/request.json",
+      "bytes": 898,
+      "sha256": "c1e6797db465aadcecbca2777be20ca67d1958736aab59dafddef6865bd29948",
+      "mtime_ns": 1791605066788452096,
+      "kind": "pipeline_artifact",
+      "inspection": "complete_text_read"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/critic/source-map.json",
+      "bytes": 14463,
+      "sha256": "0b351b209aad8010f9a8ade144dc6485bcc84013b2ed093a2223d7a55948e2b8",
+      "mtime_ns": 1791605919056931565,
+      "kind": "pipeline_artifact",
+      "inspection": "complete_text_read"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/critic/sources/index.md",
+      "bytes": 2697,
+      "sha256": "bfa5089c109ebe139997f34dcd519d2b2dca3a2b291e05c3af3f9fbfe3456cea",
+      "mtime_ns": 1791605773648957243,
+      "kind": "authored_source_evidence",
+      "inspection": "complete_text_read"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/critic/status.json",
+      "bytes": 4016,
+      "sha256": "e3797737b1e981465fc6e7ab90e1bb8de3e611cd9dee770d437c1956ee2ef097",
+      "mtime_ns": 1791605985516725609,
+      "kind": "pipeline_artifact",
+      "inspection": "complete_text_read"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/assignment.md",
+      "bytes": 3290,
+      "sha256": "752b21187a5ac0718ee69cd2c32e0d70076db5b72e3534a3407b4740f053f749",
+      "mtime_ns": 1791605985909424756,
+      "kind": "pipeline_artifact",
+      "inspection": "complete_text_read"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/dispatch.json",
+      "bytes": 4172,
+      "sha256": "1b471a13eaf4cfbf69052b6ccb2a42a549867e30fdc406d913180d31c31056a2",
+      "mtime_ns": 1791605986459788033,
+      "kind": "pipeline_artifact",
+      "inspection": "complete_text_read"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+      "bytes": 30224,
+      "sha256": "8f49f36c41ce0bd7ce36ee9263233744ea1523379b147715c3f3c5104e9751ff",
+      "mtime_ns": 1791606300915720446,
+      "kind": "pipeline_artifact",
+      "inspection": "complete_text_read"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/freeze.json",
+      "bytes": 3944,
+      "sha256": "a0e8e69ab0fc09b1e04e638b3c29beb501f9343479dee74ba67bf59134fbfb30",
+      "mtime_ns": 1791605985910350873,
+      "kind": "pipeline_artifact",
+      "inspection": "complete_text_read"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/input-map.json",
+      "bytes": 1727,
+      "sha256": "5ff13f567f745812a89560d9fc54fba97aa8d66bcf956b7dd742f2a09367c395",
+      "mtime_ns": 1791605985909194340,
+      "kind": "pipeline_artifact",
+      "inspection": "complete_text_read"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/request.json",
+      "bytes": 902,
+      "sha256": "e4f8b89867e42d3a799eff7ecc7a55b9beb40543a127c9c5b21f902d29dfd5f7",
+      "mtime_ns": 1791605985910575820,
+      "kind": "pipeline_artifact",
+      "inspection": "complete_text_read"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/source-map.json",
+      "bytes": 18375,
+      "sha256": "911478f639cec9ac4dfd2c686446fee732e8c82339acd7cad4d85d7ff0aedcfe",
+      "mtime_ns": 1791606443947267105,
+      "kind": "pipeline_artifact",
+      "inspection": "complete_text_read"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/sources/index.md",
+      "bytes": 2919,
+      "sha256": "7c819a4ab7b695de4ded96996ef093f69eb76d68b46bf5ca2635b98441ba7835",
+      "mtime_ns": 1791606307864752178,
+      "kind": "authored_source_evidence",
+      "inspection": "complete_text_read"
+    }
+  ]
+}

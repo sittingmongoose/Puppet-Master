@@ -1,0 +1,2016 @@
+{
+  "schema_version": "ER12-independent-full-assessment-v1",
+  "assessment_id": "A6-01-treatment-v1",
+  "arm": "treatment",
+  "pipeline": "A6-01",
+  "reviewer_identity": "codex-er12-a6-review-1010",
+  "rubric_path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "final_qualification": "PASS_WITH_LIMITATIONS",
+  "material_remaining_findings": [],
+  "judgment_basis": "All six axes independently assessed. No remaining material wrong claim, omission or unsupported consequential decision found in final. Localized nonmaterial defects retained in limitations; corrected material lineage issue remains visible. Hash matches are integrity only, not semantic proof.",
+  "axes": [
+    {
+      "id": 1,
+      "name": "Original obligations and negative constraints",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS",
+      "conclusion": "All eight original obligations and all four exclusions preserved; one route/two terminals, planning-only scope, named owners and optional advisory remain intact. No implementation/deployment requirement invented.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 28,
+          "section": "Comparison"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 93,
+          "section": "Optional scope"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 99,
+          "section": "Binding exclusions"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 101,
+          "section": "Clauses"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 118,
+          "section": "Owner inputs"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 125,
+          "section": "Validation"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Consequential claims, exact conditions and applicability",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "conclusion": "Independent primary documentation and actual released code/history support the consequential recommendation and corrections. Three localized remaining wording/provenance defects (L1/L2/L4) do not change the supported final decision or acceptance meaning. Claims SC01-SC19 resolve subject/operation/version/default/unit/type/domain/exceptions.",
+      "claim_ids": [
+        "SC01",
+        "SC02",
+        "SC03",
+        "SC04",
+        "SC05",
+        "SC06",
+        "SC07",
+        "SC08",
+        "SC09",
+        "SC10",
+        "SC11",
+        "SC12",
+        "SC13",
+        "SC14",
+        "SC15",
+        "SC16",
+        "SC17",
+        "SC18",
+        "SC19"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Useful unfamiliar discovery, alternatives, implementation/history, opportunity breadth",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS",
+      "conclusion": "Brief-only discovery proposes custom board versus OBA sign-mode with SIRI/TxC analogue before OTP is revealed; draft/final compare custom versus conditional OTP, retain OBA, and preserve profile-limited SIRI opportunity. Feed-version and released OTP fixes are concrete mechanisms/history rather than vacuous caution.",
+      "evidence_ids": [
+        "E08",
+        "E09",
+        "E11",
+        "E13",
+        "E14",
+        "E16",
+        "E20",
+        "E22",
+        "E25",
+        "E26",
+        "E27"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Wrong criticism/corrections/rejections and exact plan dispositions",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "conclusion": "C1-C4 are independently adjudicated; no criticism causes an unsupported rejection or scope reduction. C1 is valid draft incompleteness and is corrected substantively; C2/C3 are valid clarifications; C4 access gap is resolved with attributed reports. Exact plan placement is recorded because final clause table follows brief numbering rather than original assumption placement.",
+      "criticism_ids": [
+        "C1",
+        "C2",
+        "C3",
+        "C4"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Supported meaning preserved through discovery/draft/critique/final",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "conclusion": "All supported recommendations, alternatives, owner-authorized scope, exclusions, uncertainty and unrun-check meaning survive. C1 material lineage omission is corrected; frozen discovery remains unchanged. Discovery numeric citations are stale against retained map (L3), and one explicit snapshot test is less direct in final (L5); supported semantic substance is recoverable and independently verified."
+    },
+    {
+      "id": 6,
+      "name": "Meaningful proposed versus executed validation and applicable oracles",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "conclusion": "Final separates research/artifact operations from product validation. Proposed identity, dates/DST, stale/missing/empty data, mismatch, NEW/REPLACEMENT, alert intersections and manual lifecycle have discriminating observations. Product checks remain NOT_RUN. L1 is an exact API locator defect, L5 an oracle specificity limit; no purported successful product operation or unsuitable deployment oracle."
+    }
+  ],
+  "unassessed_axes": [],
+  "exact_plan_clauses": [
+    {
+      "id": 1,
+      "exact_obligation": "Compare two realistic display/ingestion routes and an analogous schedule-plus-event-stream mechanism.",
+      "exact_plan_treatment": "Use trip IDs alone to join every realtime message to the current timetable. Display the last received message until another arrives.",
+      "original_plan_line": 15,
+      "judgment": "SATISFIED_WITH_CORRECTION",
+      "independent_disposition": "Compare custom versus conditional OTP plus OBA opportunity and SIRI analogue. Original clause 1 assumptions trip-id-only and indefinite retention are explicitly rejected under identity/freshness and final clause 2; no assumption survives.",
+      "claim_ids": [
+        "SC03",
+        "SC04",
+        "SC05",
+        "SC09",
+        "SC12",
+        "SC16",
+        "SC17"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 28,
+          "section": "Relevant final passage"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 46,
+          "section": "Relevant final passage"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 48,
+          "section": "Relevant final passage"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 58,
+          "section": "Relevant final passage"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 60,
+          "section": "Relevant final passage"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 106,
+          "section": "Relevant final passage"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "exact_obligation": "Explain static trip/service identity, realtime message types, freshness and mismatch behavior without inventing predicted departures.",
+      "exact_plan_treatment": "OpenTripPlanner is the first candidate; a lightweight custom display is the second route pending research. Neither is approved for deployment.",
+      "original_plan_line": 19,
+      "judgment": "SATISFIED_RETAINED_AS_OPTIONS",
+      "independent_disposition": "Original clause 2 candidate ordering is tentative only. OTP and lightweight board remain investigated choices, with direct board preferred by pilot scope and OTP conditional on existing operations/reuse; neither is approved for deployment. Message families/identity/mismatch are explained separately.",
+      "claim_ids": [
+        "SC01",
+        "SC04",
+        "SC06",
+        "SC07",
+        "SC09",
+        "SC12"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 7,
+          "section": "Relevant final passage"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 28,
+          "section": "Relevant final passage"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 40,
+          "section": "Relevant final passage"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 50,
+          "section": "Relevant final passage"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 60,
+          "section": "Relevant final passage"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "exact_obligation": "Investigate related identifier, service-day/time-zone and alert-applicability conditions together, while preserving their distinct semantics.",
+      "exact_plan_treatment": "Treat all disruption messages as delayed departures and assume times fit within a calendar day. Service-day, timezone and alert scope are deferred.",
+      "original_plan_line": 23,
+      "judgment": "SATISFIED_WITH_CORRECTION",
+      "independent_disposition": "Reject all-disruptions-as-delay and calendar-day-only assumptions. Restore distinct service date, agency zone, overnight/DST, instance and alert scope rules; do not defer publicly answerable semantics.",
+      "claim_ids": [
+        "SC02",
+        "SC04",
+        "SC10"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 40,
+          "section": "Relevant final passage"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 50,
+          "section": "Relevant final passage"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 54,
+          "section": "Relevant final passage"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 74,
+          "section": "Relevant final passage"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "exact_obligation": "Trace a relevant released feed/consumer change or failure/fix chain, identifying the operations and timetable revisions it governs.",
+      "exact_plan_treatment": "No consumer history is attached. The manual banner is retained, but its precedence and disclosure relative to feed data are unspecified.",
+      "original_plan_line": 27,
+      "judgment": "SATISFIED_WITH_INVESTIGATION",
+      "independent_disposition": "Fill absent history using #362/#434 adoption and OTP #6523/#7445 released chains. Retain manual advisory and make provenance/conflict review explicit; exact first release #4066 honestly unconfirmed.",
+      "claim_ids": [
+        "SC14",
+        "SC15",
+        "SC18",
+        "SC19"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 85,
+          "section": "Relevant final passage"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 87,
+          "section": "Relevant final passage"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 93,
+          "section": "Relevant final passage"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "exact_obligation": "Preserve and investigate this supported optional scope: a staff-authored advisory banner when machine-readable disruption data is unavailable. It is an authorized option, not a mandatory feature or an established technical capability; recommend conditions, retain it when supported, and explain any evidence-based exclusion.",
+      "exact_plan_treatment": "Retain a staff-authored advisory banner when machine-readable disruption data is unavailable as supported owner-authorized optional scope. Support here means that the brief explicitly permits it; technical support, conditions and interoperability still need research. Do not remove it merely because the baseline route lacks it, or silently promote it to mandatory scope.",
+      "original_plan_line": 31,
+      "judgment": "SATISFIED_OPTION_PRESERVED",
+      "independent_disposition": "Keep staff-authored banner optional and owner-authorized; technical/editor capability not proven. Set proposed conditions, separate feed/manual provenance, expiry and conflict review. No evidence-based exclusion found or invented.",
+      "claim_ids": [
+        "SC19"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 25,
+          "section": "Relevant final passage"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 93,
+          "section": "Relevant final passage"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 97,
+          "section": "Relevant final passage"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 109,
+          "section": "Relevant final passage"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "exact_obligation": "Make owner decisions explicit: The schedule publisher owns timetable versions; the duty manager owns manual advisories and stale-data wording. The regional partner must confirm which realtime messages it actually supplies.",
+      "exact_plan_treatment": "Owner authority is reserved as follows: The schedule publisher owns timetable versions; the duty manager owns manual advisories and stale-data wording. The regional partner must confirm which realtime messages it actually supplies. The draft has not obtained these decisions. Its tentative implementation assumptions cannot substitute for them.",
+      "original_plan_line": 35,
+      "judgment": "SATISFIED_OWNER_DECISIONS_OPEN",
+      "independent_disposition": "Preserve schedule publisher, duty manager and partner authorities; actual versions, message types, cadence/cutover and stale wording remain owner inputs. No proposed implementation supplants authority.",
+      "claim_ids": [
+        "SC03",
+        "SC09",
+        "SC19"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 118,
+          "section": "Relevant final passage"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 120,
+          "section": "Relevant final passage"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 121,
+          "section": "Relevant final passage"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 122,
+          "section": "Relevant final passage"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "exact_obligation": "Preserve negative constraints: Do not dispatch vessels, infer an ETA from missing data, treat service alerts as trip updates, or present a manual advisory as a realtime feed observation.",
+      "exact_plan_treatment": "Binding exclusions: Do not dispatch vessels, infer an ETA from missing data, treat service alerts as trip updates, or present a manual advisory as a realtime feed observation. The draft has no complete trace showing that its assumptions comply; revise the proposal wherever necessary to preserve these exclusions.",
+      "original_plan_line": 39,
+      "judgment": "SATISFIED_ALL_EXCLUSIONS",
+      "independent_disposition": "No vessel dispatch, invented ETA from missing data, Alert-as-TripUpdate, or manual-as-feed observation. Explicit exclusions and scenario oracles retain each.",
+      "claim_ids": [
+        "SC06",
+        "SC07",
+        "SC10",
+        "SC19"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 50,
+          "section": "Relevant final passage"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 54,
+          "section": "Relevant final passage"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 60,
+          "section": "Relevant final passage"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 99,
+          "section": "Relevant final passage"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 138,
+          "section": "Relevant final passage"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "exact_obligation": "Deliver one coherent evidence-backed research proposal covering obligations 1–8, with recommendations, source/version applicability, useful discoveries, unresolved owner inputs, and a validation table separating checks actually executed from checks merely proposed. Do not report research sources or future tests as executed product validation.",
+      "exact_plan_treatment": "The draft currently contains no coherent evidence-backed final proposal. Its proposed demos are research/validation ideas only. A complete revision must preserve every obligation, disclose corrections and retained options, and not confuse documentation review with successful product operation.",
+      "original_plan_line": 43,
+      "judgment": "SATISFIED_COMPLETE_PROPOSAL",
+      "independent_disposition": "Self-contained recommendation, comparison, governing semantics/release applicability, useful discoveries, all corrections, owner decisions and validation table provided. Research and syntax/reveal operations are distinguished from future product checks.",
+      "claim_ids": [
+        "SC01",
+        "SC12",
+        "SC16",
+        "SC17",
+        "SC18",
+        "SC19"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 7,
+          "section": "Relevant final passage"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 17,
+          "section": "Relevant final passage"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 28,
+          "section": "Relevant final passage"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 101,
+          "section": "Relevant final passage"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 125,
+          "section": "Relevant final passage"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 140,
+          "section": "Relevant final passage"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 146,
+          "section": "Relevant final passage"
+        }
+      ]
+    }
+  ],
+  "non_numbered_input_dispositions": {
+    "pilot_scope": "One route/two terminals; seasonal static schedule and optional partner RT; understandable absent/stale/revision states preserved.",
+    "plan_product_lead": "OTP retained as investigation lead, not winner; independent OBA/SIRI discovery retained.",
+    "plan_validation_handoff": "NOT_RUN source/history preparation does not become product operation. Pilot walkthrough, optional compatibility and E2E remain prospective; table preserves actual boundaries.",
+    "no_installs_accounts_purchases_live_writes": "Preserved; no prototype/deployment required.",
+    "prioritization": "Implementation dependencies place publisher/partner identity/version/calendar/policy before optional rendering checks; explicit ranked priority labels are not provided."
+  },
+  "critic_dispositions": [
+    {
+      "id": "C1",
+      "original_classification": "material incomplete",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/critic/critique.md",
+        "line": 14,
+        "section": "NEW/REPLACEMENT"
+      },
+      "candidate_disposition": "accept",
+      "independent_disposition": "SUPPORTED_CORRECTED",
+      "reason": "Draft lacks operational NEW versus REPLACEMENT conditions and discriminating samples despite current source history; not evidence of actual partner supply. Final adds complete journey, field/retention requirements, display choice, migration distinction and NOT_RUN cases. The enum-wide experimental phrase remains only a wording limit.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 23,
+          "section": "C1"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 56,
+          "section": "Relationships"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 116,
+          "section": "Checks"
+        }
+      ],
+      "evidence_ids": [
+        "E03",
+        "E07",
+        "E33"
+      ]
+    },
+    {
+      "id": "C2",
+      "original_classification": "minor wording",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/critic/critique.md",
+        "line": 22,
+        "section": "OTP feedId"
+      },
+      "candidate_disposition": "accept_and_amend",
+      "independent_disposition": "SUPPORTED_CORRECTED",
+      "reason": "The earlier feedId+trip formulation was ambiguous, not an established wrong wire field. Final separates OTP dataset association from actual GTFS keys.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 24,
+          "section": "C2"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 134,
+          "section": "Matching checks"
+        }
+      ],
+      "evidence_ids": [
+        "E03",
+        "E17",
+        "E18"
+      ]
+    },
+    {
+      "id": "C3",
+      "original_classification": "minor wording / owner input",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/critic/critique.md",
+        "line": 28,
+        "section": "Advisory trigger"
+      },
+      "candidate_disposition": "accept",
+      "independent_disposition": "SUPPORTED_CLARIFIED",
+      "reason": "Broader unusable-data triggers are reasonable proposals but not approved policy. Final retains them for duty-manager review, preserving the optional banner and provenance.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 25,
+          "section": "C3"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 93,
+          "section": "Staff advisory"
+        }
+      ],
+      "evidence_ids": [
+        "ORIGINAL_BRIEF",
+        "ORIGINAL_PLAN"
+      ]
+    },
+    {
+      "id": "C4",
+      "original_classification": "honestly unresolved external input / retrieval gap",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/critic/critique.md",
+        "line": 34,
+        "section": "PR #434"
+      },
+      "candidate_disposition": "amend_with_attribution_limit",
+      "independent_disposition": "SUPPORTED_GAP_RESOLVED_WITH_ATTRIBUTION",
+      "reason": "Reviewer independently retrieved full relevant PR comment context and confirms actual cited rationale/use reports. Critic timeout is not a counterclaim. Participant reports remain reports and do not validate Swiss/TransSee or ferry deployments.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 26,
+          "section": "C4"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 89,
+          "section": "History"
+        }
+      ],
+      "evidence_ids": [
+        "E08",
+        "E09",
+        "E10",
+        "E28"
+      ]
+    }
+  ],
+  "lineage_material_findings": [
+    {
+      "id": "LINEAGE-C1",
+      "stage": "investigator draft",
+      "status": "CORRECTED_IN_FINAL",
+      "classification": "material incomplete",
+      "finding": "Current NEW/REPLACEMENT operational distinctions and sample acceptance coverage were absent/too high-level.",
+      "critic_id": "C1",
+      "evidence_ids": [
+        "E03",
+        "E07"
+      ],
+      "final_resolution_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 56,
+          "section": "Relationship semantics"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 116,
+          "section": "Proposed acceptance cases"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L1",
+      "category": "minor exact API locator",
+      "remaining": true,
+      "material": false,
+      "description": "Final and carried S17 call OTP static GraphQL field feedVersion. Tagged v2.10.0 schema defines Feed.version: String and datafetcher version().",
+      "why_nonmaterial": "The exact named field is wrong, but the promised static-version observation exists and its operation/applicability is correct. No executable query, deployed integration, or passing product test is asserted; this is a planning locator/wording error, not an unsupported capability or backend selection.",
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 72,
+          "section": "Version observability"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 91,
+          "section": "#7445 history"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 136,
+          "section": "Version check"
+        }
+      ],
+      "evidence_ids": [
+        "E22",
+        "E29",
+        "E30"
+      ]
+    },
+    {
+      "id": "L2",
+      "category": "retained source-note paraphrase error",
+      "remaining": true,
+      "material": false,
+      "description": "S05 condition_default_exception in all retained maps says missing stop updates and NO_DATA mean unknown, without the delay-propagation exception. Later omitted stops can inherit an earlier delay; explicit NO_DATA stops propagation.",
+      "why_nonmaterial": "This evidence note is factually overbroad and remains uncorrected. The final only orders no prediction for missing entire TripUpdates or explicit NO_DATA/ambiguous cases; it does not instruct suppression solely because a later StopTimeUpdate is omitted. Its recommended decision and stated display oracles therefore do not rely on the false blanket note.",
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/source-map.json",
+          "json_pointer": "/sources/4/condition_default_exception"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 52,
+          "section": "No TripUpdate and NO_DATA"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 60,
+          "section": "Fallback"
+        }
+      ],
+      "evidence_ids": [
+        "E05",
+        "E17"
+      ]
+    },
+    {
+      "id": "L3",
+      "category": "frozen discovery citation provenance",
+      "remaining": true,
+      "material": false,
+      "description": "Discovery S06/S07 are used for version history, S08 for OBA and S09 for its release, S10/S11 for DfT. Retained investigator map instead binds S06 Alerts, S07 history, S08 PR #434, S09 OBA, S10 OBA release, S11 DfT SIRI and S12 DfT guide. No pre-reveal map snapshot is provided to reconstruct the original binding.",
+      "why_nonmaterial": "This is an actual lineage navigation defect, not semantic proof of failed research. Correct claims and alternatives persist in final with coherent current map; independent evidence crosswalk restores assessment navigation without changing frozen artifacts. Do not claim all frozen discovery citations remained stable.",
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/discovery.md",
+          "line": 13,
+          "section": "OBA"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/discovery.md",
+          "line": 15,
+          "section": "Analogue"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/discovery.md",
+          "line": 31,
+          "section": "Feed-version history"
+        }
+      ],
+      "evidence_ids": [
+        "E07",
+        "E08",
+        "E11",
+        "E12",
+        "E13",
+        "E14"
+      ]
+    },
+    {
+      "id": "L4",
+      "category": "minor experimental-scope wording",
+      "remaining": true,
+      "material": false,
+      "description": "C1 disposition/final say ScheduleRelationship itself is experimental. Current reference/proto mark particular values, including NEW and REPLACEMENT, rather than all schedule relationships.",
+      "why_nonmaterial": "The added cases do carry experimental caveats and final still states their concrete requirements; it does not reject standard scheduled/canceled messages or downgrade their binding semantics.",
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 23,
+          "section": "C1"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 56,
+          "section": "Added relationship cases"
+        }
+      ],
+      "evidence_ids": [
+        "E03",
+        "E33"
+      ]
+    },
+    {
+      "id": "L5",
+      "category": "prospective oracle specificity",
+      "remaining": true,
+      "material": false,
+      "description": "Discovery expressly proposed full-dataset feed snapshots. Final includes missing/empty cases and correct OTP snapshot history but does not spell out a populated FULL_DATASET followed by a smaller populated snapshot, nor unsupported DIFFERENTIAL handling.",
+      "why_nonmaterial": "The final rejects indefinite message retention and requires schedule-only fallback for missing updates; no contrary incremental merge algorithm is recommended. This is a specificity limit of proposed future validation, not a demonstrated erroneous consumer or missing required deployment.",
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/discovery.md",
+          "line": 44,
+          "section": "Proposed checks"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 90,
+          "section": "Snapshot history"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 135,
+          "section": "Missing/empty tests"
+        }
+      ],
+      "evidence_ids": [
+        "E03",
+        "E04",
+        "E20"
+      ]
+    }
+  ],
+  "consequential_source_claims": [
+    {
+      "id": "SC01",
+      "subject": "GTFS static identity, calendars and ferry domain",
+      "judgment": "SUPPORTED",
+      "assessment": "route_type is enum 4 for ferry; trips connect route/service IDs to stop_times. Calendar exceptions or calendar_dates-only service determine dates; no actual operator identifiers inferred.",
+      "evidence_ids": [
+        "E01",
+        "E02"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 40,
+          "section": "Static schedule and trip/service identity"
+        }
+      ]
+    },
+    {
+      "id": "SC02",
+      "subject": "Service date, timezone and clock semantics",
+      "judgment": "SUPPORTED",
+      "assessment": "Service date differs from civil date; HH:MM:SS may exceed 24 hours. GTFS schedule stop times use agency_timezone and noon-minus-12h DST semantics. Proposed date/DST checks apply to actual feed, not server date.",
+      "evidence_ids": [
+        "E01",
+        "E23",
+        "E24",
+        "E25"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 42,
+          "section": "Observed standard behavior"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 44,
+          "section": "Board choice"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 74,
+          "section": "Distinct rules"
+        }
+      ]
+    },
+    {
+      "id": "SC03",
+      "subject": "RT feed header and schedule revision",
+      "judgment": "SUPPORTED",
+      "assessment": "Header generation timestamp is uint64 POSIX seconds; optional string feed_version matches static feed_info.feed_version. Namespace or URL does not prove revision equality. Suppression and owner fallback are explicitly local choices.",
+      "evidence_ids": [
+        "E03",
+        "E08",
+        "E09",
+        "E10",
+        "E33"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 58,
+          "section": "Freshness"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 60,
+          "section": "Local fallback and mismatch"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 72,
+          "section": "Version fields"
+        }
+      ]
+    },
+    {
+      "id": "SC04",
+      "subject": "TripDescriptor instance conditions",
+      "judgment": "SUPPORTED_WITH_BOUNDED_DETAIL",
+      "assessment": "Frequency requires trip/date/start time; late overlapping instances require date; absent trip_id requires route/direction/date/time and unique resolution. Unknown-trip stop IDs and absolute event times are further reference conditions not itemized in final; its as-required/valid-message policy does not assert an incompatible acceptance rule.",
+      "evidence_ids": [
+        "E03",
+        "E05"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 46,
+          "section": "Observed realtime identity"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 48,
+          "section": "Correction to plan"
+        }
+      ]
+    },
+    {
+      "id": "SC05",
+      "subject": "Stop identity and repeated calls",
+      "judgment": "SUPPORTED",
+      "assessment": "Stop ID or sequence resolves the call; repeated stop requires sequence in the proposed matching rule. NEW/REPLACEMENT require both; unidentified trips require stop IDs and absolute times. No ETA from ambiguous matching.",
+      "evidence_ids": [
+        "E03",
+        "E05",
+        "E33"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 46,
+          "section": "Identity"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 56,
+          "section": "Added relationships"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 134,
+          "section": "Matching validation"
+        }
+      ]
+    },
+    {
+      "id": "SC06",
+      "subject": "Message families and no-update meaning",
+      "judgment": "SUPPORTED",
+      "assessment": "TripUpdates, Alerts and VehiclePositions remain distinct; missing TripUpdate means no prediction, not on-time. Canceled updates are tested separately from notices; trip modifications are named without unproved partner support.",
+      "evidence_ids": [
+        "E03",
+        "E05",
+        "E06"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 50,
+          "section": "Realtime messages"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 60,
+          "section": "Fallback"
+        }
+      ]
+    },
+    {
+      "id": "SC07",
+      "subject": "NEW, REPLACEMENT, DUPLICATED and NO_DATA",
+      "judgment": "SUPPORTED_WITH_MINOR_WORDING_LIMIT",
+      "assessment": "NEW is unrelated non-static trip; REPLACEMENT uses a named static instance and full replacement stops/times. Required stop IDs/sequences/arrival/departure and past-stop retention are resolved; NO_DATA preserves supplied schedule without prediction. DUPLICATED differs from NEW; legacy ADDED requires version-aware migration. Experimental status belongs to individual values, not the entire enum.",
+      "evidence_ids": [
+        "E03",
+        "E07",
+        "E33"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 23,
+          "section": "C1 disposition"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 56,
+          "section": "Added relationships"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 116,
+          "section": "Acceptance cases"
+        }
+      ]
+    },
+    {
+      "id": "SC08",
+      "subject": "Timing units/types and propagation evidence note",
+      "judgment": "NONMATERIAL_RETAINED_NOTE_DEFECT",
+      "assessment": "Delay is signed seconds; event/scheduled_time are absolute POSIX seconds. Candidate source-map S05 wrongly equates all missing stop updates with unknown: prior delays can propagate until another update/NO_DATA. Final does not prescribe that false universal omission rule; see L2.",
+      "evidence_ids": [
+        "E03",
+        "E05",
+        "E17",
+        "E33"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 52,
+          "section": "Realtime meaning"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 66,
+          "section": "NO_DATA fallback"
+        }
+      ]
+    },
+    {
+      "id": "SC09",
+      "subject": "Freshness recommendations versus SLA",
+      "judgment": "SUPPORTED",
+      "assessment": "30 seconds refresh, 90 seconds TripUpdates/VehiclePositions, and 10 minutes Alerts are best-practice recommendations. Header/fetch success is distinct from record age. Local age cutoff and wording require owners; unrun tests exercise stale header and embedded event.",
+      "evidence_ids": [
+        "E04",
+        "E03",
+        "E17"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 58,
+          "section": "Freshness"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 135,
+          "section": "Stale/empty validation"
+        }
+      ]
+    },
+    {
+      "id": "SC10",
+      "subject": "Alert applicability and temporal domain",
+      "judgment": "SUPPORTED",
+      "assessment": "Fields inside a selector intersect; separate selectors independently apply. Alert active_period governs display, not departure prediction. Current communication_period/impact_period are distinct added fields, not claimed as deployed; missing TimeRange rule is bounded to documented alert display.",
+      "evidence_ids": [
+        "E03",
+        "E06",
+        "E07"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 54,
+          "section": "Alert semantics"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 84,
+          "section": "Alert applicability"
+        }
+      ]
+    },
+    {
+      "id": "SC11",
+      "subject": "Full snapshot disappearance",
+      "judgment": "SUPPORTED_WITH_ORACLE_LIMIT",
+      "assessment": "FULL_DATASET replaces preceding state; DIFFERENTIAL remains unspecified. Discovery proposes a full-dataset snapshot check; final tests missing/empty data and preserves OTP cleanup history, but does not name a successive-partial-snapshot assertion. No final keep-until-next-trip-message rule survives.",
+      "evidence_ids": [
+        "E03",
+        "E04",
+        "E20"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 64,
+          "section": "Missing trip fallback"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 90,
+          "section": "Position history"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 135,
+          "section": "Missing/empty checks"
+        }
+      ]
+    },
+    {
+      "id": "SC12",
+      "subject": "OTP release and backend fit",
+      "judgment": "SUPPORTED",
+      "assessment": "v2.10.0 is released 2026-09-09 at 521cd5d8acaae628878f43bf5946f4942c118548. Purpose is multimodal APIs; separate board is an inference supported by actual architecture, not turnkey deployment evidence.",
+      "evidence_ids": [
+        "E15",
+        "E16",
+        "E27",
+        "E31",
+        "E34"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 11,
+          "section": "OTP recommendation"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 33,
+          "section": "Route B"
+        }
+      ]
+    },
+    {
+      "id": "SC13",
+      "subject": "OTP namespace/configuration defaults",
+      "judgment": "SUPPORTED",
+      "assessment": "feedId is graph-build dataset namespace; build-config precedes nonstandard feed_id then numeric fallback. HTTP TU/Alert/VP frequency is duration PT1M; fuzzy matching boolean false. Backwards default required-no-data and forwards default are separately conditioned. No feed-version protection inferred.",
+      "evidence_ids": [
+        "E17",
+        "E18"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 24,
+          "section": "C2 disposition"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 48,
+          "section": "Namespace"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 134,
+          "section": "Validation distinction"
+        }
+      ]
+    },
+    {
+      "id": "SC14",
+      "subject": "OTP positions failure/fix and timestamp operation",
+      "judgment": "SUPPORTED",
+      "assessment": "PR #6523 merged 2025-03-14, listed v2.8.0 2025-09-10. Code replaces per-feed prior positions using immutable copy. ISO lastUpdate is recorded vehicle time, not poll-success time; no TU/Alert expiry or revision guard is derived.",
+      "evidence_ids": [
+        "E16",
+        "E19",
+        "E20"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 90,
+          "section": "Released position history"
+        }
+      ]
+    },
+    {
+      "id": "SC15",
+      "subject": "OTP static version GraphQL field",
+      "judgment": "NONMATERIAL_LOCATOR_DEFECT",
+      "assessment": "PR #7445 and v2.10.0 expose static version through nullable Feed.version: String, resolved by FeedImpl.version(). Final calls it feedVersion; capability and static-vs-RT distinction are correct but exact field locator is wrong. No executable query or product test claimed.",
+      "evidence_ids": [
+        "E16",
+        "E21",
+        "E22",
+        "E29",
+        "E30"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 72,
+          "section": "Static version observability"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 91,
+          "section": "Released history"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 136,
+          "section": "Version validation"
+        }
+      ]
+    },
+    {
+      "id": "SC16",
+      "subject": "OneBusAway alternative and version applicability",
+      "judgment": "SUPPORTED",
+      "assessment": "Moving README documents sign-mode and separately configured TU/VP/Alert sources. Latest release v2.7.1 commit 095bf1a is independently verified. Main docs are not silently declared identical to release; ferry/stale/editor compatibility remain unknown.",
+      "evidence_ids": [
+        "E11",
+        "E12",
+        "E32"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 13,
+          "section": "OBA discovery"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 137,
+          "section": "Candidate fit"
+        }
+      ]
+    },
+    {
+      "id": "SC17",
+      "subject": "TransXChange/SIRI analogue and conditions",
+      "judgment": "SUPPORTED",
+      "assessment": "DfT bus profile combines TxC schedule with subscribed SIRI-VM, shared IDs, UTC recorded/validity fields and producer/heartbeat cadence; ID changes can require revised timetable. OTP ET/SX supports Nordic/EPIP subsets with required feedId/PT1M. Profile-specific analogue is not ferry support or dispatch.",
+      "evidence_ids": [
+        "E13",
+        "E14",
+        "E26"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 15,
+          "section": "Analogue"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 34,
+          "section": "Comparison"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 105,
+          "section": "Clause 1"
+        }
+      ]
+    },
+    {
+      "id": "SC18",
+      "subject": "Released feed-version history and anecdotes",
+      "judgment": "SUPPORTED",
+      "assessment": "Issue #362 winter timetable mismatch leads to #434 optional field, merged 2024-12-05. Discussion explains different publication/activation times; Swiss/TransSee details are attributed participant reports, not audited deployments.",
+      "evidence_ids": [
+        "E07",
+        "E08",
+        "E09",
+        "E10",
+        "E28"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 26,
+          "section": "C4 disposition"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 89,
+          "section": "Revision history"
+        }
+      ]
+    },
+    {
+      "id": "SC19",
+      "subject": "Optional editorial advisory and owner authority",
+      "judgment": "SUPPORTED",
+      "assessment": "The original brief authorizes an option, not existing backend capability. Final keeps separate editorial label/times/review/expiry, proposes expanded triggers for manager decision, and retains all named owners/exclusions. No unjustified exclusion or mandatory promotion.",
+      "evidence_ids": [
+        "ORIGINAL_BRIEF",
+        "ORIGINAL_PLAN",
+        "E11",
+        "E17",
+        "E26"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 25,
+          "section": "C3 disposition"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 93,
+          "section": "Optional advisory"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 118,
+          "section": "Owners"
+        }
+      ]
+    }
+  ],
+  "useful_discoveries": [
+    {
+      "name": "Custom board recommendation",
+      "lineage": "Discovery candidate 1; draft recommendation",
+      "final_meaning": "Retained preferred pilot, still an inference",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 9,
+          "section": "Preserved meaning"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 28,
+          "section": "Preserved meaning"
+        }
+      ],
+      "evidence_ids": [
+        "E01",
+        "E03"
+      ]
+    },
+    {
+      "name": "OBA sign-mode/API opportunity",
+      "lineage": "Discovery candidate 2; draft additional product",
+      "final_meaning": "Retained useful alternative, not falsely validated or excluded",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 13,
+          "section": "Preserved meaning"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 105,
+          "section": "Preserved meaning"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 137,
+          "section": "Preserved meaning"
+        }
+      ],
+      "evidence_ids": [
+        "E11",
+        "E12"
+      ]
+    },
+    {
+      "name": "SIRI/TxC analogue and profile limits",
+      "lineage": "Discovery analogue; draft mechanism comparison",
+      "final_meaning": "Retained including separate ET/SX opportunity and bus/ferry boundary",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 15,
+          "section": "Preserved meaning"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 34,
+          "section": "Preserved meaning"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 105,
+          "section": "Preserved meaning"
+        }
+      ],
+      "evidence_ids": [
+        "E13",
+        "E14",
+        "E26"
+      ]
+    }
+  ],
+  "preservation": [
+    {
+      "meaning": "Custom board recommendation",
+      "lineage": "Discovery candidate 1; draft recommendation",
+      "final_disposition": "Retained preferred pilot, still an inference",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 9,
+          "section": "Preserved meaning"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 28,
+          "section": "Preserved meaning"
+        }
+      ],
+      "evidence_ids": [
+        "E01",
+        "E03"
+      ]
+    },
+    {
+      "meaning": "OBA sign-mode/API opportunity",
+      "lineage": "Discovery candidate 2; draft additional product",
+      "final_disposition": "Retained useful alternative, not falsely validated or excluded",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 13,
+          "section": "Preserved meaning"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 105,
+          "section": "Preserved meaning"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 137,
+          "section": "Preserved meaning"
+        }
+      ],
+      "evidence_ids": [
+        "E11",
+        "E12"
+      ]
+    },
+    {
+      "meaning": "SIRI/TxC analogue and profile limits",
+      "lineage": "Discovery analogue; draft mechanism comparison",
+      "final_disposition": "Retained including separate ET/SX opportunity and bus/ferry boundary",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 15,
+          "section": "Preserved meaning"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 34,
+          "section": "Preserved meaning"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 105,
+          "section": "Preserved meaning"
+        }
+      ],
+      "evidence_ids": [
+        "E13",
+        "E14",
+        "E26"
+      ]
+    },
+    {
+      "meaning": "Service-date/clock/identity distinctions",
+      "lineage": "Discovery grouped semantics; draft matching correction",
+      "final_disposition": "Retained overnight, DST, frequency, repeated-stop and alert intersection conditions",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 40,
+          "section": "Preserved meaning"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 74,
+          "section": "Preserved meaning"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 134,
+          "section": "Preserved meaning"
+        }
+      ],
+      "evidence_ids": [
+        "E01",
+        "E03",
+        "E06"
+      ]
+    },
+    {
+      "meaning": "Freshness/version unknown fallback",
+      "lineage": "Discovery RT semantics/version chain; draft table",
+      "final_disposition": "Retained recommendations as recommendations, no fabricated ETA, optional version and owners",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 58,
+          "section": "Preserved meaning"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 60,
+          "section": "Preserved meaning"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 72,
+          "section": "Preserved meaning"
+        }
+      ],
+      "evidence_ids": [
+        "E03",
+        "E04",
+        "E08",
+        "E09"
+      ]
+    },
+    {
+      "meaning": "Feed/consumer histories",
+      "lineage": "Discovery #362/#434; draft OTP #6523/#7445/#4058",
+      "final_disposition": "Retained precise operation/release domains and attributed anecdotes",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 85,
+          "section": "Preserved meaning"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 87,
+          "section": "Preserved meaning"
+        }
+      ],
+      "evidence_ids": [
+        "E08",
+        "E09",
+        "E16",
+        "E20",
+        "E22",
+        "E25"
+      ]
+    },
+    {
+      "meaning": "Authorized optional banner and negatives",
+      "lineage": "Discovery owner/safety; draft advisory/owners",
+      "final_disposition": "Retained option and all authorities/exclusions, triggers clarified",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 93,
+          "section": "Preserved meaning"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 99,
+          "section": "Preserved meaning"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 118,
+          "section": "Preserved meaning"
+        }
+      ],
+      "evidence_ids": [
+        "ORIGINAL_BRIEF",
+        "ORIGINAL_PLAN"
+      ]
+    },
+    {
+      "meaning": "Validation epistemic boundary",
+      "lineage": "Discovery checks NOT_RUN; draft table; critic boundary",
+      "final_disposition": "Retained as proposed product work; syntax/source reading not product validation",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 125,
+          "section": "Preserved meaning"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 140,
+          "section": "Preserved meaning"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+          "line": 146,
+          "section": "Preserved meaning"
+        }
+      ],
+      "evidence_ids": [
+        "ORIGINAL_BRIEF"
+      ]
+    }
+  ],
+  "validation": [
+    {
+      "check": "Source/document/version research",
+      "candidate_status": "REPORTED_EXECUTED_RESEARCH",
+      "reviewer_status": "INDEPENDENT_PRIMARY_RETRIEVAL_EXECUTED",
+      "oracle": "Documentation/released code governs claim, not actual ferry support. Full candidate source execution transcript unavailable."
+    },
+    {
+      "check": "Plan reveal and immutable discovery",
+      "candidate_status": "INVESTIGATOR_REPORTED_EXECUTED",
+      "reviewer_status": "REVEAL_RECORD_AND_BYTE_MATCH_CHECKED; HELPER_NOT_RERUN",
+      "oracle": "Frozen discovery hash and revealed original plan equality, not evidence of prior context isolation."
+    },
+    {
+      "check": "Map syntax",
+      "candidate_status": "REPORTED_EXECUTED_ARTIFACT_ONLY",
+      "reviewer_status": "ALL THREE MAPS PARSED DURING FULL READING",
+      "oracle": "JSON syntax only; no semantic/product pass inferred."
+    },
+    {
+      "check": "Actual GTFS identity/service/DST/terminal data",
+      "candidate_status": "NOT_RUN",
+      "reviewer_status": "NOT_RUN",
+      "oracle": "Feed fixtures must establish publisher calendar/date/agency time, exact trip instance and terminal; public docs alone cannot do so."
+    },
+    {
+      "check": "Partner semantics/alerts/NEW/REPLACEMENT",
+      "candidate_status": "PROPOSED_NOT_RUN",
+      "reviewer_status": "ORACLES_SOURCE_CHECKED_ONLY",
+      "oracle": "Scheduled delay/cancel distinct from alert; AND scope; valid new instance vs exact replaced instance; complete timing and NO_DATA schedule/prediction distinction."
+    },
+    {
+      "check": "Absent/stale/empty/missing update and revision cutover",
+      "candidate_status": "PROPOSED_NOT_RUN",
+      "reviewer_status": "ORACLES_SOURCE_CHECKED_ONLY",
+      "oracle": "Schedule available, no on-time/ETA inference; header and record ages distinct; owner-approved mismatch behavior. L5 records explicit snapshot-test specificity."
+    },
+    {
+      "check": "Candidate fit: OTP/OBA/SIRI",
+      "candidate_status": "NOT_RUN",
+      "reviewer_status": "NOT_RUN",
+      "oracle": "Pin release/profile then test actual display/backend behavior. OTP version observation is Feed.version; L1 identifies wrong candidate label."
+    },
+    {
+      "check": "Manual manager publish/update/revoke/expiry and conflicts",
+      "candidate_status": "PROPOSED_NOT_RUN",
+      "reviewer_status": "NOT_RUN",
+      "oracle": "Source label and manager authority separate from feed observation. Editorial integration is optional local design."
+    },
+    {
+      "check": "Product deployment or end-to-end operation",
+      "candidate_status": "NOT_RUN",
+      "reviewer_status": "NOT_RUN",
+      "oracle": "Not required or authorized by the planning brief; no installation/prototype/live write invented."
+    }
+  ],
+  "unknowns": [
+    {
+      "id": "U1",
+      "subject": "Operator/publisher/partner facts",
+      "status": "UNKNOWN",
+      "detail": "Actual export format, IDs, seasonal calendar/timezone, version field/activation policy, feed messages, cadence/authentication and relationship/profile support remain legitimate owner inputs after public investigation."
+    },
+    {
+      "id": "U2",
+      "subject": "Selected consumer/UI/editor behavior",
+      "status": "NOT_RUN_UNKNOWN",
+      "detail": "No local product/feed/device/manager workflow; OTP/OBA ferry/stale/banner compatibility unvalidated. Optional proposal does not assert existing capability."
+    },
+    {
+      "id": "U3",
+      "subject": "Candidate source-reading/helper/parser execution",
+      "status": "PARTLY_RECORDED_NOT_INDEPENDENTLY_WITNESSED",
+      "detail": "Authored maps/indexes/reveal record carry claims. Independent retrieval verifies source content but cannot prove every candidate retrieval/execution happened."
+    },
+    {
+      "id": "U4",
+      "subject": "Candidate native Goal activation/terminal/provenance",
+      "status": "UNKNOWN_INDEPENDENT_NATIVE_VERIFICATION",
+      "detail": "Investigator terminal summary reports Goal; critic/reviser maps carry native fields and active observations; T3 summaries report completion. No independent raw candidate native terminal receipt is present in the assigned freeze. T3 completion is separate."
+    },
+    {
+      "id": "U5",
+      "subject": "Effective candidate configuration and billing",
+      "status": "UNKNOWN",
+      "detail": "Requested route and T3 returned metadata name AUTHORIZED_PROVIDER_INSTANCE/gpt-6-luna/max/priority. Actual provider execution, reasoning/tier enforcement, inference occupancy, billable tokens and cost are not established by those labels or self-reported Goal usage."
+    },
+    {
+      "id": "U6",
+      "subject": "First release for OTP #4066",
+      "status": "UNCONFIRMED",
+      "detail": "Merged linked historical fix confirmed; candidate explicitly withholds first release claim. Other released chains satisfy the required history investigation."
+    }
+  ],
+  "delivery_native_protocol_time": {
+    "source_judgment_separate": true,
+    "delivery": {
+      "status": "COMPLETE_FROZEN_FINAL_PRESENT",
+      "final_path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+      "root_terminal_observed_at_utc": "2026-10-10T04:30:13.909008+00:00",
+      "t3_final_stage_status": "completed",
+      "t3_has_pending_child_runs": false
+    },
+    "stages": {
+      "investigator": {
+        "prepared_at_utc": "2026-10-10T03:57:21.411Z",
+        "deadline_utc": "2026-10-10T04:27:21.411Z",
+        "requested_route": {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna",
+          "options": {
+            "reasoningEffort": "max",
+            "serviceTier": "priority"
+          }
+        },
+        "t3_returned_metadata": {
+          "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-treatment-investigator-v1",
+          "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-treatment-investigator-v1",
+          "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-01-treatment-investigator-v1:ordinal:1",
+          "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-treatment-investigator-v1",
+          "status": "running",
+          "workState": "working",
+          "hasPendingChildRuns": false,
+          "latestTerminalRunId": null,
+          "latestTerminalStatus": null,
+          "latestTerminalSummary": null,
+          "latestTerminalResultContextTransferId": null,
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna",
+          "summary": null,
+          "resultContextTransferId": null,
+          "waitTimedOut": false
+        },
+        "native_independent_status": "UNKNOWN",
+        "science_map_native_record": "No native fields in investigator source map"
+      },
+      "critic": {
+        "prepared_at_utc": "2026-10-10T04:11:44.399Z",
+        "deadline_utc": "2026-10-10T04:23:44.399Z",
+        "requested_route": {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna",
+          "options": {
+            "reasoningEffort": "max",
+            "serviceTier": "priority"
+          }
+        },
+        "t3_returned_metadata": {
+          "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-treatment-critic-v1",
+          "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-treatment-critic-v1",
+          "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-01-treatment-critic-v1:ordinal:1",
+          "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-treatment-critic-v1",
+          "status": "running",
+          "workState": "working",
+          "hasPendingChildRuns": false,
+          "latestTerminalRunId": null,
+          "latestTerminalStatus": null,
+          "latestTerminalSummary": null,
+          "latestTerminalResultContextTransferId": null,
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna",
+          "summary": null,
+          "resultContextTransferId": null,
+          "waitTimedOut": false
+        },
+        "native_independent_status": "UNKNOWN",
+        "science_map_native_record": "Authored native Goal record present; not an independent terminal receipt"
+      },
+      "reviser": {
+        "prepared_at_utc": "2026-10-10T04:21:43.613Z",
+        "deadline_utc": "2026-10-10T04:39:43.613Z",
+        "requested_route": {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna",
+          "options": {
+            "reasoningEffort": "max",
+            "serviceTier": "priority"
+          }
+        },
+        "t3_returned_metadata": {
+          "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-treatment-reviser-v1",
+          "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-treatment-reviser-v1",
+          "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-01-treatment-reviser-v1:ordinal:1",
+          "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-treatment-reviser-v1",
+          "status": "running",
+          "workState": "working",
+          "hasPendingChildRuns": false,
+          "latestTerminalRunId": null,
+          "latestTerminalStatus": null,
+          "latestTerminalSummary": null,
+          "latestTerminalResultContextTransferId": null,
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna",
+          "summary": null,
+          "resultContextTransferId": null,
+          "waitTimedOut": false
+        },
+        "native_independent_status": "UNKNOWN",
+        "science_map_native_record": "Authored native Goal record present; not an independent terminal receipt"
+      }
+    },
+    "time": {
+      "candidate_whole_deadline_utc": "2026-10-10T04:57:17.174Z",
+      "root_terminal_observation_utc": "2026-10-10T04:30:13.909008+00:00",
+      "initial_investigator_request_utc": "2026-10-10T03:57:21.411Z",
+      "request_to_terminal_observation_seconds": 1972.498008,
+      "interpretation": "Recorded dispatch-to-root-observation wall interval, not inference occupancy, cost, or comparative speed. Science mtime_ns is before each recorded stage cap. Complete execution chronology/clock provenance remain unknown."
+    },
+    "native_timestamp_defect": {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/source-map.json",
+      "json_pointer": "/native_goal/last_get_goal_updatedAt_utc_derived",
+      "raw_updatedAt": 1791606330,
+      "correct_derived_utc": "2026-10-10T04:25:30Z",
+      "recorded_derived_utc": "2026-10-10T04:29:21Z",
+      "semantic_source_impact": "none; do not use misconverted label for timing claims"
+    },
+    "effective_configuration": "UNKNOWN beyond requested/T3-returned labels",
+    "billing": "UNKNOWN",
+    "comparative_speed_or_savings_claim": "NONE; no other arm compared"
+  },
+  "protocol": {
+    "reviewer_nested_delegation": false,
+    "candidate_feedback_or_repair": false,
+    "account_changes": false,
+    "git_or_publication": false,
+    "other_science_or_assessment_files_opened": false,
+    "er11_rescore": false,
+    "strict_visibility_status": "DEVIATION_DISCLOSED",
+    "visibility_deviation": "Required pm-mail who coordination roster incidentally exposed unrelated about/status lines, including peer outcome labels. No other candidate/assessment document or history was opened; those roster labels were not used in semantic scoring. A strict ban encompassing incidental result-label visibility is not fully met; keep independent source diagnostic separate from method protocol qualification.",
+    "candidate_unauthorized_assistance": "UNKNOWN; no such assistance shown in bounded packet",
+    "candidate_context_isolation": "UNKNOWN; frozen maps/discovery hash support handoff structure, not a complete access audit",
+    "source_id_stability": "LIMITED_BY_L3",
+    "write_scope": "Only assigned assessment destination; original science untouched; existing root-review-request.json preserved"
+  },
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266,
+      "read_scope": "FULL original bytes and content inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A6-01/brief.md",
+      "bytes": 3323,
+      "sha256": "ef82ee81df37c62d0db64103e2891322a1161eed74e0edbd5663f0da1bdbd14c",
+      "mtime_ns": 1791604605954230558,
+      "read_scope": "FULL original bytes and content inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A6-01/plan.md",
+      "bytes": 5984,
+      "sha256": "8656d21b801ae5c4905cb19f08fb8b9262058c9916bbc257537bd35353e55d97",
+      "mtime_ns": 1791604605954312423,
+      "read_scope": "FULL original bytes and content inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/terminal-science-freeze-root.json",
+      "bytes": 7199,
+      "sha256": "617b6c9abb967cc31cb166d60a63a7d126bcb49fbdd7e48d70e253d04ab1b92b",
+      "mtime_ns": 1791606613909328202,
+      "read_scope": "FULL original bytes and content inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/inputs/brief.md",
+      "bytes": 3323,
+      "sha256": "ef82ee81df37c62d0db64103e2891322a1161eed74e0edbd5663f0da1bdbd14c",
+      "mtime_ns": 1791604641410968282,
+      "read_scope": "FULL original bytes and content inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/assignment.md",
+      "bytes": 3759,
+      "sha256": "6f480e9fc8baea74a66c949d4ad5b90d4f3e0e0d34ebcd421ca19d91d89dd035",
+      "mtime_ns": 1791606103614220572,
+      "read_scope": "FULL original bytes and content inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/dispatch.json",
+      "bytes": 4172,
+      "sha256": "5526907296bcce000ad5ec58da1ac5fd7308778b46eb4501f2817f3ee5e04ba4",
+      "mtime_ns": 1791606104203001882,
+      "read_scope": "FULL original bytes and content inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/freeze.json",
+      "bytes": 4333,
+      "sha256": "57a86219360ba03d57c4eeb7c447e4acefd4b263e3d33b37defab59bfea67e3e",
+      "mtime_ns": 1791606103614978794,
+      "read_scope": "FULL original bytes and content inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/request.json",
+      "bytes": 902,
+      "sha256": "3a476751215ed64291c0a8c56640918413714c6c9b14b196d5bc6f6a47379634",
+      "mtime_ns": 1791606103615159451,
+      "read_scope": "FULL original bytes and content inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/input-map.json",
+      "bytes": 1727,
+      "sha256": "2576cdfd8e64825cedeaed1f08e4903bee1b45ddc685a33ebbc58c1d99a920f5",
+      "mtime_ns": 1791606103613986106,
+      "read_scope": "FULL original bytes and content inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+      "bytes": 37690,
+      "sha256": "d05d6271b28fa96d51ab939dade5c68f9426cafd432170e707e659f3f344e527",
+      "mtime_ns": 1791606569650108736,
+      "read_scope": "FULL original bytes and content inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/source-map.json",
+      "bytes": 42928,
+      "sha256": "6ba5c001834d64eb1300ca7ee414f5e498292ca2deae3444a4cf3ee3554ead1e",
+      "mtime_ns": 1791606569652931923,
+      "read_scope": "FULL original bytes and content inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/critic/assignment.md",
+      "bytes": 3779,
+      "sha256": "b8b825660309ab385ad6417fed2a03d90b7f61e8ba72aa5108a7d8463b316f57",
+      "mtime_ns": 1791605504399968974,
+      "read_scope": "FULL original bytes and content inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/critic/dispatch.json",
+      "bytes": 4156,
+      "sha256": "0d59f2c83724eccf4c2c449d543d1d79c61a8821444a2e1ef4e4f65aff6464fb",
+      "mtime_ns": 1791605504987357609,
+      "read_scope": "FULL original bytes and content inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/critic/freeze.json",
+      "bytes": 3554,
+      "sha256": "963ece6565eaf4692327fed17a2b4e3929e364fe2a794625e0835e1fcda39ec2",
+      "mtime_ns": 1791605504400588687,
+      "read_scope": "FULL original bytes and content inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/critic/request.json",
+      "bytes": 898,
+      "sha256": "1ca971e24b0695c23794b26b5d336599c9cf3cf4c2adfe2757cc76099eeb12f0",
+      "mtime_ns": 1791605504400742614,
+      "read_scope": "FULL original bytes and content inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/critic/input-map.json",
+      "bytes": 1410,
+      "sha256": "0c21b11b60ac26ce0130655c5c91fca482b6abfa461c6f248aef36736b4f9064",
+      "mtime_ns": 1791605504399755853,
+      "read_scope": "FULL original bytes and content inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/critic/status.json",
+      "bytes": 3650,
+      "sha256": "e4f20737b867cf0ad3a4f83d710451d7dce5997a88f28176571742743a2e7b0a",
+      "mtime_ns": 1791606103237836877,
+      "read_scope": "FULL original bytes and content inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/critic/source-map.json",
+      "bytes": 31899,
+      "sha256": "7e8b2b8def8ffccf5f9e5d9728e0cf89690360ec8469352c1699d60b1b22cf61",
+      "mtime_ns": 1791606069020324872,
+      "read_scope": "FULL original bytes and content inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/critic/critique.md",
+      "bytes": 12007,
+      "sha256": "4354bc34d541d2650866c9dd62679322e86e67fc731331c24a1ffdeb11cda692",
+      "mtime_ns": 1791606052685388589,
+      "read_scope": "FULL original bytes and content inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 5984,
+      "sha256": "8656d21b801ae5c4905cb19f08fb8b9262058c9916bbc257537bd35353e55d97",
+      "mtime_ns": 1791605038659244337,
+      "read_scope": "FULL original bytes and content inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/assignment.md",
+      "bytes": 4189,
+      "sha256": "d947f5dc13d745f6307eb4a5d06e3e7ab9e65d6205e4d678cf401e75f7824165",
+      "mtime_ns": 1791604641411922437,
+      "read_scope": "FULL original bytes and content inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/dispatch.json",
+      "bytes": 4252,
+      "sha256": "feceaf3b24479d8fc95b110dc17df38e0e0605620b654f53e08d79c07aa25de7",
+      "mtime_ns": 1791604642065561494,
+      "read_scope": "FULL original bytes and content inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/draft.md",
+      "bytes": 27259,
+      "sha256": "21ab4dd676871710cd840aaf6405dc226618a46d117342ef82efbc9102288fa2",
+      "mtime_ns": 1791605390500065067,
+      "read_scope": "FULL original bytes and content inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/plan-reveal.json",
+      "bytes": 429,
+      "sha256": "ce460a6e55c49b57d6ebbfd789f4c244003253ae6111acb6bc5376ee92dcdbec",
+      "mtime_ns": 1791605038659398430,
+      "read_scope": "FULL original bytes and content inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/freeze.json",
+      "bytes": 2059,
+      "sha256": "ff62314c3f258a3c33bef687f7822bb307861ac0512be5baf2ff98cb02af0b71",
+      "mtime_ns": 1791604641412231614,
+      "read_scope": "FULL original bytes and content inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/request.json",
+      "bytes": 922,
+      "sha256": "e6c142b699fee33dc57251ed549ea72b4f57f35db34d0989be687d01baebfc71",
+      "mtime_ns": 1791604641412351723,
+      "read_scope": "FULL original bytes and content inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/discovery.md",
+      "bytes": 10099,
+      "sha256": "d5f36d6bc95da49ab23e4ac186eb4ac330e86ff590c881726a35c2be1206fcef",
+      "mtime_ns": 1791605033716235642,
+      "read_scope": "FULL original bytes and content inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/input-map.json",
+      "bytes": 722,
+      "sha256": "98353207ad8fb4bc32f8feb47d5a6ffb52f2388ddee749dff151f5a5e7614a8d",
+      "mtime_ns": 1791604641411721320,
+      "read_scope": "FULL original bytes and content inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/status.json",
+      "bytes": 3380,
+      "sha256": "c8c79b15db269d52337b78275fe625c5f41bd72b897c892429de930d32d9f96c",
+      "mtime_ns": 1791605504082787905,
+      "read_scope": "FULL original bytes and content inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/source-map.json",
+      "bytes": 22198,
+      "sha256": "ec1cb1fcb9f728c6330bb2d738b9655b7f5eb8fde8f983df7fe29aee78d136e8",
+      "mtime_ns": 1791605299846910063,
+      "read_scope": "FULL original bytes and content inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/sources/index.md",
+      "bytes": 11788,
+      "sha256": "4e9f4a89e6948a52ddb0d9d83aa9f098bcf3fd68eba6ac23fe045cc3adfc4fd9",
+      "mtime_ns": 1791605299858724674,
+      "read_scope": "FULL original bytes and content inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/critic/sources/index.md",
+      "bytes": 2658,
+      "sha256": "869007a4d97d66fd7da5fe5a80c7e526373491093f42976d9a517a2ecf8b4726",
+      "mtime_ns": 1791605906736933017,
+      "read_scope": "FULL original bytes and content inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/sources/index.md",
+      "bytes": 15313,
+      "sha256": "59706af4ef497120b8a95acf3d0dbd0a680df655b30aad3fd11f57a108730dcc",
+      "mtime_ns": 1791606507857311041,
+      "read_scope": "FULL original bytes and content inspected"
+    }
+  ],
+  "original_source_freeze_preserved": true,
+  "source_inventory": "source-map.json",
+  "independent_primary_evidence": {
+    "count": 34,
+    "http_results": "All 34 retrievals HTTP 200; no downloaded program executed",
+    "index": "evidence/index.md",
+    "manifest": "evidence/retrieval-manifest.json"
+  },
+  "review_envelope": {
+    "start_utc": "2026-10-10T04:30:27Z",
+    "deadline_utc": "2026-10-10T05:15:27Z",
+    "judgment_saved_at_utc": "2026-10-10T04:39:00.980377+00:00",
+    "cap_reached": false,
+    "scope_completed": true
+  },
+  "reviewer_native_goal": {
+    "threadId": "01a12413-6a9b-7083-b7b0-9c18b4201fae",
+    "direct_before_save_receipt": "evidence/reviewer-native-before-save.json",
+    "science_saved_before_native_completion": true,
+    "completion_receipt": "evidence/reviewer-native-completion.json (to be written after completion; not evidence until present)"
+  },
+  "assessment_not_candidate_repair": true
+}

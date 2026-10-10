@@ -1,0 +1,18 @@
+{
+  "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-02-treatment-critic-v1",
+  "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-02-treatment-critic-v1",
+  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-02-treatment-critic-v1:ordinal:1",
+  "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-02-treatment-critic-v1",
+  "status": "completed",
+  "workState": "result_available",
+  "hasPendingChildRuns": false,
+  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-02-treatment-critic-v1:ordinal:1",
+  "latestTerminalStatus": "completed",
+  "latestTerminalSummary": "Completed only the assigned critic stage. The native Goal used the exact frozen objective and reached `complete`.\n\nSaved the review before Goal completion, along with its source map and evidence index:\n\n- [Critique](<ER12_RUNTIME/runs/A1-02/treatment/stages/critic/critique.md>)\n- [Source map](<ER12_RUNTIME/runs/A1-02/treatment/stages/critic/source-map.json>)\n- [Evidence index](<ER12_RUNTIME/runs/A1-02/treatment/stages/critic/sources/README.md>)\n- [Native Goal terminal observation](<ER12_RUNTIME/runs/A1-02/treatment/stages/critic/native-goal-terminal.json>)\n\nThe critique flags the verified RFC erratum that changes generated DST-gap handling, an overbroad RFC claim about unknown-property preservation, duration-form ambiguity, and a missing `UNTIL` condition. [RFC Erratum 4271](https://www.rfc-editor.org/errata/eid4271), [RFC 5545](https://www.rfc-editor.org/rfc/rfc5545.html). No importer/exporter or provider validation was run.",
+  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-02-treatment-critic-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:0ce2558f-5804-4ed0-8bf9-f11b55e04899",
+  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+  "model": "gpt-6-luna",
+  "summary": "Completed only the assigned critic stage. The native Goal used the exact frozen objective and reached `complete`.\n\nSaved the review before Goal completion, along with its source map and evidence index:\n\n- [Critique](<ER12_RUNTIME/runs/A1-02/treatment/stages/critic/critique.md>)\n- [Source map](<ER12_RUNTIME/runs/A1-02/treatment/stages/critic/source-map.json>)\n- [Evidence index](<ER12_RUNTIME/runs/A1-02/treatment/stages/critic/sources/README.md>)\n- [Native Goal terminal observation](<ER12_RUNTIME/runs/A1-02/treatment/stages/critic/native-goal-terminal.json>)\n\nThe critique flags the verified RFC erratum that changes generated DST-gap handling, an overbroad RFC claim about unknown-property preservation, duration-form ambiguity, and a missing `UNTIL` condition. [RFC Erratum 4271](https://www.rfc-editor.org/errata/eid4271), [RFC 5545](https://www.rfc-editor.org/rfc/rfc5545.html). No importer/exporter or provider validation was run.",
+  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-02-treatment-critic-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:0ce2558f-5804-4ed0-8bf9-f11b55e04899",
+  "waitTimedOut": false
+}

@@ -1,0 +1,620 @@
+{
+  "independent_retrieval": true,
+  "records": [
+    {
+      "id": "E01",
+      "requested_url": "https://www.sqlite.org/fts5.html",
+      "resolved_url": "https://www.sqlite.org/fts5.html",
+      "accessed_utc": "2026-10-10T04:39:32.127542+00:00",
+      "http_status": 200,
+      "bytes": 215354,
+      "sha256": "92b7e721147d5119781a80273b43708f2f146314d150abb4d3e6eff1503d6fe6",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E01.html",
+      "candidate_source_ids": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "C01"
+      ],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E01.txt",
+      "text_sha256": "6c14ff0b1739bf3045af75d6d7b03e0672a0466802abca2a946e75d0a5d33797"
+    },
+    {
+      "id": "E02",
+      "requested_url": "https://www.sqlite.org/transactional.html",
+      "resolved_url": "https://www.sqlite.org/transactional.html",
+      "accessed_utc": "2026-10-10T04:39:32.128498+00:00",
+      "http_status": 200,
+      "bytes": 4609,
+      "sha256": "3d6a66c925d32e66fb28872c0e0c32b1936d46f996995c1a30fe591173bc6266",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E02.html",
+      "candidate_source_ids": [
+        "S05",
+        "C11"
+      ],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E02.txt",
+      "text_sha256": "dafff200d7ca85ec85f75668a6b9ddba6a8a6aef4ed64c2e6686807ff9787c5b"
+    },
+    {
+      "id": "E03",
+      "requested_url": "https://sqlite.org/releaselog/3_53_4.html",
+      "resolved_url": "https://sqlite.org/releaselog/3_53_4.html",
+      "accessed_utc": "2026-10-10T04:39:32.129421+00:00",
+      "http_status": 200,
+      "bytes": 12926,
+      "sha256": "c8d12ef674ac295edba47c341cb18b5913795ba94a78474c68e4213970d128ac",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E03.html",
+      "candidate_source_ids": [
+        "S06"
+      ],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E03.txt",
+      "text_sha256": "663b910674ee5b194c02cdafcfc291182545347719a87a8a99db7947482eca55"
+    },
+    {
+      "id": "E04",
+      "requested_url": "https://github.com/quickwit-oss/tantivy/commit/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d",
+      "resolved_url": "https://github.com/quickwit-oss/tantivy/commit/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d",
+      "accessed_utc": "2026-10-10T04:39:32.135676+00:00",
+      "http_status": 200,
+      "bytes": 422143,
+      "sha256": "06a42fed55ac3253a5d083e85d7527a76d5a26b8f2822206d260c466bf314e62",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E04.html",
+      "candidate_source_ids": [
+        "S07"
+      ],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E04.txt",
+      "text_sha256": "5ebb013f9bf791aded1302e5d2b5c80a931bff34b9fbbb891bff0ed5d23787f1"
+    },
+    {
+      "id": "E05",
+      "requested_url": "https://docs.rs/crate/tantivy/0.26.2",
+      "resolved_url": "https://docs.rs/crate/tantivy/0.26.2",
+      "accessed_utc": "2026-10-10T04:39:32.137526+00:00",
+      "http_status": 200,
+      "bytes": 64090,
+      "sha256": "6e1b947d72168c7337323c14918ada52893f437a62ce300780eb6400fa780dab",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E05.html",
+      "candidate_source_ids": [
+        "S07"
+      ],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E05.txt",
+      "text_sha256": "70c4a63b331a2ba07b71957ffe27f776e0a814f0c0a7b1fc06e85a51d32910bf"
+    },
+    {
+      "id": "E06",
+      "requested_url": "https://docs.rs/tantivy/0.26.2/tantivy/indexer/struct.IndexWriter.html",
+      "resolved_url": "https://docs.rs/tantivy/0.26.2/tantivy/indexer/struct.IndexWriter.html",
+      "accessed_utc": "2026-10-10T04:39:32.139295+00:00",
+      "http_status": 200,
+      "bytes": 111454,
+      "sha256": "f2b22513e42f73f9efb998d901bc8cb33cf7f804a2a92a9faece3a55abfd72bf",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E06.html",
+      "candidate_source_ids": [
+        "S08",
+        "C05",
+        "R06"
+      ],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E06.txt",
+      "text_sha256": "c8e3c90327c00857b5514f509afc76668c0cbe1ee1df24947d4efb5d53e9b480"
+    },
+    {
+      "id": "E07",
+      "requested_url": "https://docs.rs/tantivy/0.26.2/tantivy/struct.IndexReader.html",
+      "resolved_url": "https://docs.rs/tantivy/0.26.2/tantivy/struct.IndexReader.html",
+      "accessed_utc": "2026-10-10T04:39:32.309965+00:00",
+      "http_status": 200,
+      "bytes": 92582,
+      "sha256": "17d235524009bad02d1530776248ae192cbde2482dfcb53a6c03e4b6d7a44eae",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E07.html",
+      "candidate_source_ids": [
+        "S08",
+        "S18",
+        "C06"
+      ],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E07.txt",
+      "text_sha256": "30d578c02367fbc21a8af16db10f26fbb81f66c079acbc480ba6e944aa41c4a4"
+    },
+    {
+      "id": "E08",
+      "requested_url": "https://docs.rs/tantivy/0.26.2/tantivy/tokenizer/index.html",
+      "resolved_url": "https://docs.rs/tantivy/0.26.2/tantivy/tokenizer/index.html",
+      "accessed_utc": "2026-10-10T04:39:32.352095+00:00",
+      "http_status": 200,
+      "bytes": 47675,
+      "sha256": "28f76a147756bc1247bc8c0a03f6eb54e8bb542b433ad27e83fcfc7b017dc57e",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E08.html",
+      "candidate_source_ids": [
+        "S09",
+        "C07"
+      ],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E08.txt",
+      "text_sha256": "dc7d20c15a3bf277431aaea579b2be7b82d5ed4577ac7a42ac345758f547aebf"
+    },
+    {
+      "id": "E09",
+      "requested_url": "https://docs.rs/tantivy/latest/src/tantivy/query/query_parser/query_parser.rs.html",
+      "resolved_url": "https://docs.rs/tantivy/latest/src/tantivy/query/query_parser/query_parser.rs.html",
+      "accessed_utc": "2026-10-10T04:39:32.363907+00:00",
+      "http_status": 200,
+      "bytes": 253417,
+      "sha256": "8cc89ab4797f0b442694b37190c9a6c8d61f78834976404aae7236dd51cd272a",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E09.html",
+      "candidate_source_ids": [
+        "S10"
+      ],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E09.txt",
+      "text_sha256": "def833c67d9bf48d8f67ea33cae9d322962e57789cc6b358dbb686887c971e72"
+    },
+    {
+      "id": "E10",
+      "requested_url": "https://docs.rs/tantivy/latest/tantivy/query/enum.QueryParserError.html",
+      "resolved_url": "https://docs.rs/tantivy/latest/tantivy/query/enum.QueryParserError.html",
+      "accessed_utc": "2026-10-10T04:39:32.424351+00:00",
+      "http_status": 200,
+      "bytes": 123296,
+      "sha256": "989e12ea05ef523efff34896df34a0b1018479bfa617ca3d747d6124428ac2f7",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E10.html",
+      "candidate_source_ids": [
+        "S10"
+      ],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E10.txt",
+      "text_sha256": "10713a889211c687d5573cff6609660e46b5f2d615a9029bff9fac191f3a1fdf"
+    },
+    {
+      "id": "E11",
+      "requested_url": "https://docs.rs/tantivy/0.26.2/tantivy/collector/struct.TopDocs.html",
+      "resolved_url": "https://docs.rs/tantivy/0.26.2/tantivy/collector/struct.TopDocs.html",
+      "accessed_utc": "2026-10-10T04:39:32.441156+00:00",
+      "http_status": 200,
+      "bytes": 114082,
+      "sha256": "045ca07362ee79de6e93dcb81fa4afc5777887cbe0d584e2f41d67a13f9ceb93",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E11.html",
+      "candidate_source_ids": [
+        "S11",
+        "C08"
+      ],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E11.txt",
+      "text_sha256": "4fca554e9e94ebc6155d9b4aa1dececb36e61d9d7ccf6265e960ec7eed8fdc72"
+    },
+    {
+      "id": "E12",
+      "requested_url": "https://docs.rs/tantivy/0.26.2/tantivy/snippet/struct.Snippet.html",
+      "resolved_url": "https://docs.rs/tantivy/0.26.2/tantivy/snippet/struct.Snippet.html",
+      "accessed_utc": "2026-10-10T04:39:32.499457+00:00",
+      "http_status": 200,
+      "bytes": 86851,
+      "sha256": "40485be7928ba9ad69d894083afd27ff0de87159e1e01f59ce05c5a6f10abc59",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E12.html",
+      "candidate_source_ids": [
+        "S12"
+      ],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E12.txt",
+      "text_sha256": "79838ee8abd2a5747f81573ccc4f2a8562b310c59bad1498b1830dcfa5b120df"
+    },
+    {
+      "id": "E13",
+      "requested_url": "https://github.com/quickwit-oss/tantivy/issues/2847",
+      "resolved_url": "https://github.com/quickwit-oss/tantivy/issues/2847",
+      "accessed_utc": "2026-10-10T04:39:32.532823+00:00",
+      "http_status": 200,
+      "bytes": 362492,
+      "sha256": "515098f03638425adf8dfbd0c01fd5fd6e037d2e42aafa303df87e6f2b668541",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E13.html",
+      "candidate_source_ids": [
+        "S13"
+      ],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E13.txt",
+      "text_sha256": "d5fbada35a3ffdaaa774c0c4d1046d8b899cd56a40aa2246bb8361a309a36a03"
+    },
+    {
+      "id": "E14",
+      "requested_url": "https://github.com/quickwit-oss/tantivy/issues/3079",
+      "resolved_url": "https://github.com/quickwit-oss/tantivy/issues/3079",
+      "accessed_utc": "2026-10-10T04:39:32.551973+00:00",
+      "http_status": 200,
+      "bytes": 276291,
+      "sha256": "844605379a424b3dff1db67546c9988533ecab3a4821179698fb4e23017097db",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E14.html",
+      "candidate_source_ids": [
+        "S14"
+      ],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E14.txt",
+      "text_sha256": "db06d9204b1a8ce2e409c99613114c1903c6420858156faf162d777858560857"
+    },
+    {
+      "id": "E15",
+      "requested_url": "https://github.com/quickwit-oss/tantivy/issues/3031",
+      "resolved_url": "https://github.com/quickwit-oss/tantivy/issues/3031",
+      "accessed_utc": "2026-10-10T04:39:32.590856+00:00",
+      "http_status": 200,
+      "bytes": 309882,
+      "sha256": "3f66cedbb94ba897c83777225c30b25798eb46642975405d1c315bb298f6eb6c",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E15.html",
+      "candidate_source_ids": [
+        "S15",
+        "C09"
+      ],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E15.txt",
+      "text_sha256": "0d73b581cb5b68a96eb3cc1ecafcf257ea549b1483480cdf0728f740a142cb32"
+    },
+    {
+      "id": "E16",
+      "requested_url": "https://github.com/puretechteam/tantivy/commit/28b2ed185381b59c17530bb37cb9e481921ac1f2",
+      "resolved_url": "https://github.com/puretechteam/tantivy/commit/28b2ed185381b59c17530bb37cb9e481921ac1f2",
+      "accessed_utc": "2026-10-10T04:39:32.614991+00:00",
+      "http_status": 200,
+      "bytes": 508600,
+      "sha256": "9d7dce9b2b002715a13d0b3144a7b8792db834ce7aeca01531fea2df769d000e",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E16.html",
+      "candidate_source_ids": [
+        "S15"
+      ],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E16.txt",
+      "text_sha256": "703cd9ce802ee1bdaa2fba8bbdee4a5062abcedea48436f8a22400b61fa28d69"
+    },
+    {
+      "id": "E17",
+      "requested_url": "https://www.sqlite.org/wal.html",
+      "resolved_url": "https://www.sqlite.org/wal.html",
+      "accessed_utc": "2026-10-10T04:39:32.675085+00:00",
+      "http_status": 200,
+      "bytes": 42143,
+      "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E17.html",
+      "candidate_source_ids": [
+        "S16",
+        "C10"
+      ],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E17.txt",
+      "text_sha256": "fdc7fc5b109ae3cafa6dd399de9ad60c79d38f18ccb6207e527fa895533c84fb"
+    },
+    {
+      "id": "E18",
+      "requested_url": "https://www.sqlite.org/atomiccommit.html",
+      "resolved_url": "https://www.sqlite.org/atomiccommit.html",
+      "accessed_utc": "2026-10-10T04:39:32.730087+00:00",
+      "http_status": 200,
+      "bytes": 77968,
+      "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E18.html",
+      "candidate_source_ids": [
+        "S17"
+      ],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E18.txt",
+      "text_sha256": "8237badd62e3d59705b11436985f520d584ef158aaf11c40d10bf17cef1f1ee6"
+    },
+    {
+      "id": "E19",
+      "requested_url": "https://docs.rs/tantivy/0.26.2/tantivy/snippet/index.html",
+      "resolved_url": "https://docs.rs/tantivy/0.26.2/tantivy/snippet/index.html",
+      "accessed_utc": "2026-10-10T04:39:32.862922+00:00",
+      "http_status": 200,
+      "bytes": 37823,
+      "sha256": "3c44040b03607bbc62958ba04a5b5a24dbd3ec154db8533df468e974bf612762",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E19.html",
+      "candidate_source_ids": [
+        "S19"
+      ],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E19.txt",
+      "text_sha256": "1ef1e208246c48bee5249beaeddd5452e0e11395866772de49b14400ed7a4712"
+    },
+    {
+      "id": "E20",
+      "requested_url": "https://www.sqlite.org/releaselog/3_43_0.html",
+      "resolved_url": "https://www.sqlite.org/releaselog/3_43_0.html",
+      "accessed_utc": "2026-10-10T04:39:32.907541+00:00",
+      "http_status": 200,
+      "bytes": 6966,
+      "sha256": "a3a5619b15570a64c864514ce4716c37929d7f8918e68ee5bec63ecc40cd87d9",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E20.html",
+      "candidate_source_ids": [
+        "C02"
+      ],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E20.txt",
+      "text_sha256": "39ff3c5a009fd384930bdbbd2a617538436f91611241b04bd1db404beb03f047"
+    },
+    {
+      "id": "E21",
+      "requested_url": "https://www.sqlite.org/lang_conflict.html",
+      "resolved_url": "https://www.sqlite.org/lang_conflict.html",
+      "accessed_utc": "2026-10-10T04:39:33.001838+00:00",
+      "http_status": 200,
+      "bytes": 15964,
+      "sha256": "772b9b3f407bed4cdf59a32f1dd5828c3bc8293744bc40a3f25d07e15973b75f",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E21.html",
+      "candidate_source_ids": [
+        "C03",
+        "R01"
+      ],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E21.txt",
+      "text_sha256": "07432e8bd9cbb355aeac42c8cc3e00b6475fa58aa53940e35186e8e9c995154d"
+    },
+    {
+      "id": "E22",
+      "requested_url": "https://www.sqlite.org/pragma.html#pragma_recursive_triggers",
+      "resolved_url": "https://www.sqlite.org/pragma.html#pragma_recursive_triggers",
+      "accessed_utc": "2026-10-10T04:39:33.042131+00:00",
+      "http_status": 200,
+      "bytes": 139936,
+      "sha256": "af75d7d7ab00c29e6eea98618cb1259a3919c308af60a6173215bf9798706034",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E22.html",
+      "candidate_source_ids": [
+        "C04",
+        "R02"
+      ],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E22.txt",
+      "text_sha256": "24f05033645c1f9824f4b76f543dae6ae2031e489f0bad9cc599ee9fd2c6df66"
+    },
+    {
+      "id": "E23",
+      "requested_url": "https://www.sqlite.org/releaselog/3_6_18.html",
+      "resolved_url": "https://www.sqlite.org/releaselog/3_6_18.html",
+      "accessed_utc": "2026-10-10T04:39:33.052569+00:00",
+      "http_status": 200,
+      "bytes": 5490,
+      "sha256": "66faa369a3b1893193ac24c20698b9a2452d295dd93a3865d2b844def6797267",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E23.html",
+      "candidate_source_ids": [
+        "R03"
+      ],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E23.txt",
+      "text_sha256": "b42fe700693994a04cbc859d366c6a029dfaaffd317d9d57787e1abb0610e9f2"
+    },
+    {
+      "id": "E24",
+      "requested_url": "https://www.sqlite.org/releaselog/3_7_0.html",
+      "resolved_url": "https://www.sqlite.org/releaselog/3_7_0.html",
+      "accessed_utc": "2026-10-10T04:39:33.063531+00:00",
+      "http_status": 200,
+      "bytes": 4733,
+      "sha256": "494f7be7133a4fd6f839f55ccc0550d30b6e02308aba791187ae9272547077c5",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E24.html",
+      "candidate_source_ids": [
+        "R04"
+      ],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E24.txt",
+      "text_sha256": "cbd83c412b455411cd6a353149747a075198bc9954b0cd5b7ddc01c42e46009e"
+    },
+    {
+      "id": "E25",
+      "requested_url": "https://www.sqlite.org/oldnews.html",
+      "resolved_url": "https://www.sqlite.org/oldnews.html",
+      "accessed_utc": "2026-10-10T04:39:33.091626+00:00",
+      "http_status": 200,
+      "bytes": 118466,
+      "sha256": "94c04284bf044c1e7fceb3ddc5787bc1ed965c56b6e89dfb967f64c05a8391fc",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E25.html",
+      "candidate_source_ids": [
+        "R05"
+      ],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E25.txt",
+      "text_sha256": "7838838b83e31fb0eff326fa026b3e975e8dba9f1310924a8c87bc55f8149412"
+    },
+    {
+      "id": "E26",
+      "requested_url": "https://docs.rs/tantivy/0.26.2/tantivy/query/struct.QueryParser.html",
+      "resolved_url": "https://docs.rs/tantivy/0.26.2/tantivy/query/struct.QueryParser.html",
+      "accessed_utc": "2026-10-10T04:39:33.156437+00:00",
+      "http_status": 200,
+      "bytes": 105877,
+      "sha256": "eba1289a3923d0067246421375c95424ae5d6c748ab1e22a67b9c9eb99938cb3",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E26.html",
+      "candidate_source_ids": [
+        "R07"
+      ],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E26.txt",
+      "text_sha256": "c3531226556c0f479b222e8522e07ed96ab9ca2ef6cc0118eb0cf24a04a2c66f"
+    },
+    {
+      "id": "E27",
+      "requested_url": "https://sqlite.org/releaselog/3_43_0.html",
+      "resolved_url": "https://sqlite.org/releaselog/3_43_0.html",
+      "accessed_utc": "2026-10-10T04:39:33.161761+00:00",
+      "http_status": 200,
+      "bytes": 6966,
+      "sha256": "a3a5619b15570a64c864514ce4716c37929d7f8918e68ee5bec63ecc40cd87d9",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E27.html",
+      "candidate_source_ids": [
+        "R08"
+      ],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E27.txt",
+      "text_sha256": "39ff3c5a009fd384930bdbbd2a617538436f91611241b04bd1db404beb03f047"
+    },
+    {
+      "id": "E28",
+      "requested_url": "https://www.sqlite.org/src/artifact/a54f839859",
+      "resolved_url": "https://www.sqlite.org/src/artifact/a54f839859",
+      "accessed_utc": "2026-10-10T04:39:33.217423+00:00",
+      "http_status": 200,
+      "bytes": 269099,
+      "sha256": "98671d710b784784fa1c8e479368e2201a2fd74c43461dc272a03c267e28079f",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E28.html",
+      "candidate_source_ids": [
+        "R09"
+      ],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E28.txt",
+      "text_sha256": "3840e185ba49cf4ba13a0d391fc33645809bfaa87d77e7e004351a943350664e"
+    },
+    {
+      "id": "E29",
+      "requested_url": "https://docs.rs/tantivy/0.26.2/tantivy/tokenizer/struct.RemoveLongFilter.html",
+      "resolved_url": "https://docs.rs/tantivy/0.26.2/tantivy/tokenizer/struct.RemoveLongFilter.html",
+      "accessed_utc": "2026-10-10T04:39:33.225099+00:00",
+      "http_status": 200,
+      "bytes": 91815,
+      "sha256": "70b10e68c0c0aeed375da1cc57dc8a3eab949ec8fd02ec7553eb677fa67ba991",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E29.html",
+      "candidate_source_ids": [],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E29.txt",
+      "text_sha256": "d2eb0e1a0c2309a3d16c8a3244491c578c53f30f0b3d3cef14131cbc1fac874f"
+    },
+    {
+      "id": "E30",
+      "requested_url": "https://docs.rs/tantivy/0.26.2/src/tantivy/tokenizer/remove_long.rs.html",
+      "resolved_url": "https://docs.rs/tantivy/0.26.2/src/tantivy/tokenizer/remove_long.rs.html",
+      "accessed_utc": "2026-10-10T04:39:33.241184+00:00",
+      "http_status": 200,
+      "bytes": 44547,
+      "sha256": "1e2bdd10c02aeaee5492ca81c4dae9e3b9f7d31f0090bf1744a3919e7a62cc53",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E30.html",
+      "candidate_source_ids": [],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E30.txt",
+      "text_sha256": "7b06f30bd3e6f1afc7d891fd9a43146a4e421f60a2c937619e1cf15eb31ac59d"
+    },
+    {
+      "id": "E31",
+      "requested_url": "https://docs.rs/tantivy/0.26.2/src/tantivy/snippet/mod.rs.html",
+      "resolved_url": "https://docs.rs/tantivy/0.26.2/src/tantivy/snippet/mod.rs.html",
+      "accessed_utc": "2026-10-10T04:39:33.300685+00:00",
+      "http_status": 200,
+      "bytes": 128452,
+      "sha256": "32384bccc8a7e34d7161e91d68d1a9bf03ae29268d10664bd42405bbcab8b6bf",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E31.html",
+      "candidate_source_ids": [],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E31.txt",
+      "text_sha256": "3dfa928c79fc70ab291b02532197428866ac6fff184f0a064a5e91c895747516"
+    },
+    {
+      "id": "E32",
+      "requested_url": "https://docs.rs/tantivy/0.26.2/src/tantivy/tokenizer/simple_tokenizer.rs.html",
+      "resolved_url": "https://docs.rs/tantivy/0.26.2/src/tantivy/tokenizer/simple_tokenizer.rs.html",
+      "accessed_utc": "2026-10-10T04:39:33.318027+00:00",
+      "http_status": 200,
+      "bytes": 43423,
+      "sha256": "7ab7b5201c8da6346f5950c45202532bb9d698d8f9f103ef8b11c03570b06e5d",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E32.html",
+      "candidate_source_ids": [],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E32.txt",
+      "text_sha256": "bb2ea9baa64b6abfc186f7c8ec1adc5a340cda2d738b031a01d2b734e65a90af"
+    },
+    {
+      "id": "E33",
+      "requested_url": "https://docs.rs/tantivy/0.26.2/src/tantivy/tokenizer/tokenizer_manager.rs.html",
+      "resolved_url": "https://docs.rs/tantivy/0.26.2/src/tantivy/tokenizer/tokenizer_manager.rs.html",
+      "accessed_utc": "2026-10-10T04:39:33.338084+00:00",
+      "http_status": 200,
+      "bytes": 41126,
+      "sha256": "3de53d21084011783d7c69e4f453a67efe6a86510dafde05e1e0948364d680d6",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E33.html",
+      "candidate_source_ids": [],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E33.txt",
+      "text_sha256": "cd02bf1367ab0768347225d6bb4218283679399f856240b272c2f48a0352777f"
+    },
+    {
+      "id": "E34",
+      "requested_url": "https://github.com/quickwit-oss/tantivy/pull/3075",
+      "resolved_url": "https://github.com/quickwit-oss/tantivy/pull/3075",
+      "http_status": 200,
+      "accessed_utc": "2026-10-10T04:41:48.129537+00:00",
+      "bytes": 370198,
+      "sha256": "7966eb6c7dc36e5bc332c4c532623a6562ee7a7d8b18ce78e9594c64369d214b",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E34.html",
+      "candidate_source_ids": [],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E34.txt",
+      "text_sha256": "fd5f73eb623fed0c729d906a7322296d7e37f790cc71fe3e952bb0281a76dda7"
+    },
+    {
+      "id": "E35",
+      "requested_url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/Cargo.toml",
+      "resolved_url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/Cargo.toml",
+      "http_status": 200,
+      "accessed_utc": "2026-10-10T04:41:48.926560+00:00",
+      "bytes": 5289,
+      "sha256": "86580e1a8bde15d2b0e0b9eb9ffef5b02fb745fa2f1b01ffe7717841f48bd9d5",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E35.txt",
+      "candidate_source_ids": [],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E35.txt",
+      "text_sha256": "86580e1a8bde15d2b0e0b9eb9ffef5b02fb745fa2f1b01ffe7717841f48bd9d5"
+    },
+    {
+      "id": "E36",
+      "requested_url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/.cargo_vcs_info.json",
+      "resolved_url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/.cargo_vcs_info.json",
+      "http_status": 404,
+      "accessed_utc": "2026-10-10T04:41:49.093400+00:00",
+      "bytes": 14,
+      "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E36.txt",
+      "candidate_source_ids": []
+    },
+    {
+      "id": "E37",
+      "requested_url": "https://docs.rs/tantivy/0.26.2/tantivy/snippet/struct.SnippetGenerator.html",
+      "resolved_url": "https://docs.rs/tantivy/0.26.2/tantivy/snippet/struct.SnippetGenerator.html",
+      "http_status": 200,
+      "accessed_utc": "2026-10-10T04:41:49.204228+00:00",
+      "bytes": 87300,
+      "sha256": "fdab17557804f76c0d828801be38a3ed908cb449adc8c3c83bc3b506d5fe979b",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E37.html",
+      "candidate_source_ids": [],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E37.txt",
+      "text_sha256": "2c80e4ea3f3079aa9a6b1369445cf2433da1190a67848c0ee1609acdc1deaeeb"
+    },
+    {
+      "id": "E38",
+      "requested_url": "https://docs.rs/crate/tantivy-query-grammar/0.26.0/source/src/user_input_ast.rs",
+      "resolved_url": "https://docs.rs/crate/tantivy-query-grammar/0.26.0/source/src/user_input_ast.rs",
+      "http_status": 200,
+      "accessed_utc": "2026-10-10T04:41:49.402440+00:00",
+      "bytes": 299019,
+      "sha256": "4682b0ae238f08d725ca2a809bb9ca810b86654b51a3068a309834a18dc09dc1",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E38.html",
+      "candidate_source_ids": [],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E38.txt",
+      "text_sha256": "837243f3235f0938efc242ace61bb12b73f31f21913a6c819fd38e21528e64a7"
+    },
+    {
+      "id": "E39",
+      "requested_url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/CHANGELOG.md",
+      "resolved_url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/CHANGELOG.md",
+      "http_status": 200,
+      "accessed_utc": "2026-10-10T04:41:49.645105+00:00",
+      "bytes": 59164,
+      "sha256": "702320ebbfe1ab5057d646c7647a834024e07c5741ab040a4113f5d3e446c645",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E39.txt",
+      "candidate_source_ids": [],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E39.txt",
+      "text_sha256": "702320ebbfe1ab5057d646c7647a834024e07c5741ab040a4113f5d3e446c645"
+    },
+    {
+      "id": "E40",
+      "requested_url": "https://docs.rs/crate/tantivy/0.26.2/source/.cargo_vcs_info.json",
+      "resolved_url": "https://docs.rs/crate/tantivy/0.26.2/source/.cargo_vcs_info.json",
+      "http_status": 200,
+      "accessed_utc": "2026-10-10T04:44:20.144576+00:00",
+      "bytes": 24193,
+      "sha256": "905b09e0ff6cf25d7eeefcbf755a4850d6e1acc3e36655cdf95cd4d8ebf07f9a",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E40.html",
+      "candidate_source_ids": [],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E40.txt",
+      "text_sha256": "667986398b460515e490602f89b19afd4c90553340522dea12f5845443800861"
+    },
+    {
+      "id": "E41",
+      "requested_url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/query-grammar/src/query_grammar.rs",
+      "resolved_url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/query-grammar/src/query_grammar.rs",
+      "http_status": 200,
+      "accessed_utc": "2026-10-10T04:44:20.403402+00:00",
+      "bytes": 69276,
+      "sha256": "8c1590bbfdb84da3a547eace9f74bb2aa755ed865383b2e302d6f0cea73e17fa",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E41.txt",
+      "candidate_source_ids": [],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E41.txt",
+      "text_sha256": "8c1590bbfdb84da3a547eace9f74bb2aa755ed865383b2e302d6f0cea73e17fa"
+    },
+    {
+      "id": "E42",
+      "requested_url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/src/tokenizer/remove_long.rs",
+      "resolved_url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/src/tokenizer/remove_long.rs",
+      "http_status": 200,
+      "accessed_utc": "2026-10-10T04:44:20.555323+00:00",
+      "bytes": 3366,
+      "sha256": "d36c4183a9df3a512ec40c64b993b5ada656c018b588f18341ffec0aa2384d9c",
+      "capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E42.txt",
+      "candidate_source_ids": [],
+      "text_capture": "ER12_RUNTIME/assessment/A3-01/treatment-v1/evidence/E42.txt",
+      "text_sha256": "d36c4183a9df3a512ec40c64b993b5ada656c018b588f18341ffec0aa2384d9c"
+    }
+  ]
+}

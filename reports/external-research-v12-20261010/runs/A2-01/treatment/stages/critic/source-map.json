@@ -1,0 +1,398 @@
+{
+  "stage": "critic",
+  "run_id": "A2-01-treatment",
+  "prepared_before_plan_release": true,
+  "index": "sources/index.md",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "ODK Collect release v2026.3.5",
+      "url": "https://github.com/getodk/collect/releases/tag/v2026.3.5",
+      "released_version_or_commit": "ODK Collect v2026.3.5; commit 87bf04e; released 2026-09-28",
+      "locator": "Release title, date, verified commit, and What's Changed; lines 129-170.",
+      "access_utc": "2026-10-10T04:15:37Z",
+      "observed_operation": "Read-only web open of official getodk/collect GitHub release page; no APK installed or code executed.",
+      "governing_condition_default_exception": "Identifies tag/commit only; no claim this build was tested for the proposed workflow.",
+      "applicability": "Current release context for the ODK Collect candidate; pin and validate a pilot build separately.",
+      "critic_review": {
+        "operation": "Read-only web.open/web.find against this entry’s exact URL; selected locator excerpt checked.",
+        "critic_locator_checked": "Release title/date/verified commit and latest release tag.",
+        "critic_observation": "Tag v2026.3.5, commit 87bf04e, released 2026-09-28; release notes checked only for release identity, not workflow behavior.",
+        "product_validation": false,
+        "recheck_timestamp_precision": "Individual request timestamp unavailable; see critic_review_window_observed_bounds_utc."
+      }
+    },
+    {
+      "id": "S02",
+      "title": "ODK Central release list and v2026.3.1 metadata",
+      "url": "https://github.com/getodk/central/releases",
+      "released_version_or_commit": "ODK Central v2026.3.1; commit 7d6de62; released 2026-09-28; latest tag listed at access",
+      "locator": "Release list and latest release metadata; lines 129-180.",
+      "access_utc": "2026-10-10T04:15:37Z",
+      "observed_operation": "Read-only web open of official getodk/central releases page; no server installed or code executed.",
+      "governing_condition_default_exception": "Release listing is time-dependent; no claim this exact server build was exercised.",
+      "applicability": "Current release context, not proof that every living documentation detail matches this binary.",
+      "critic_review": {
+        "operation": "Read-only web.open/web.find against this entry’s exact URL; selected locator excerpt checked.",
+        "critic_locator_checked": "Latest release metadata in release list.",
+        "critic_observation": "Tag v2026.3.1, commit 7d6de62, released 2026-09-28; no server was installed or exercised.",
+        "product_validation": false,
+        "recheck_timestamp_precision": "Individual request timestamp unavailable; see critic_review_window_observed_bounds_utc."
+      }
+    },
+    {
+      "id": "S03",
+      "title": "Managing Forms in Collect",
+      "url": "https://docs.getodk.org/collect-forms/",
+      "released_version_or_commit": "Current ODK Docs page at access; not pinned to a Collect release.",
+      "locator": "Draft/finalize sections, lines 137-150; send finalized forms lines 164-178.",
+      "access_utc": "2026-10-10T04:15:37Z",
+      "observed_operation": "Read-only open of official ODK documentation; no form created or submitted.",
+      "governing_condition_default_exception": "Drafts may be edited. Offline finalized forms wait in Ready to send and are not editable by default; a form definition can permit edits. Bulk finalization cannot be undone and is incompatible with submission encryption.",
+      "applicability": "Supports offline states and makes post-finalize correction an explicit configuration decision.",
+      "critic_review": {
+        "operation": "Read-only web.open/web.find against this entry’s exact URL; selected locator excerpt checked.",
+        "critic_locator_checked": "Download forms; draft/finalize/send; editing finalized or sent forms, lines 124–198.",
+        "critic_observation": "Offline finalized forms enter Ready to send; edits are configurable. Current page adds editing since Collect v2025.2.0/Central v2025.1.4, off by default, only on-device, original form version, Central activity, ordered sends.",
+        "product_validation": false,
+        "recheck_timestamp_precision": "Individual request timestamp unavailable; see critic_review_window_observed_bounds_utc."
+      }
+    },
+    {
+      "id": "S04",
+      "title": "Managing Submissions in Central",
+      "url": "https://docs.getodk.org/central-submissions/",
+      "released_version_or_commit": "Current ODK Docs page; review states identified as available since Central v1.2.",
+      "locator": "IDs/attachment status lines 180-188; CSV ZIP/media/OData lines 201-241; review states/edit history lines 291-317.",
+      "access_utc": "2026-10-10T04:15:37Z",
+      "observed_operation": "Read-only open of official ODK documentation; no Central instance used.",
+      "governing_condition_default_exception": "Received is the incoming default; edits become Edited; Has Issues/Approved/Rejected are staff-assigned and do not automatically affect exports. CSV ZIP carries root/repeat tables and per-instance media; OData is live but media must be fetched. Web edits create a new version; change comments are optional.",
+      "applicability": "Useful review/export base, but custom duplicate/correction semantics remain necessary.",
+      "critic_review": {
+        "operation": "Read-only web.open/web.find against this entry’s exact URL; selected locator excerpt checked.",
+        "critic_locator_checked": "Review states, attachment warnings, exports/media, OData and submission edits; lines 180–241, 294–317.",
+        "critic_observation": "System Received/Edited vs staff review states; no automatic action; attachment warnings, CSV ZIP root/repeat/files, live OData, and edit activity checked.",
+        "product_validation": false,
+        "recheck_timestamp_precision": "Individual request timestamp unavailable; see critic_review_window_observed_bounds_utc."
+      }
+    },
+    {
+      "id": "S05",
+      "title": "Managing Forms in Central",
+      "url": "https://docs.getodk.org/central-forms/",
+      "released_version_or_commit": "Current ODK Docs page at access; no binary version pinned.",
+      "locator": "Form-version naming and previous submission preservation, lines 248-261.",
+      "access_utc": "2026-10-10T04:15:37Z",
+      "observed_operation": "Read-only open of official ODK documentation.",
+      "governing_condition_default_exception": "Publishing a changed form requires a changed version. Prior submissions remain unchanged, but default exports use the current definition and may omit removed fields unless export options include old fields.",
+      "applicability": "Store form version per observation and test exports across form updates.",
+      "critic_review": {
+        "operation": "Read-only web.open/web.find against this entry’s exact URL; selected locator excerpt checked.",
+        "critic_locator_checked": "Form version naming and previous submissions/exports; lines 248–261.",
+        "critic_observation": "Previous submissions remain unchanged after publishing a new form; current-definition exports can omit removed fields unless configured.",
+        "product_validation": false,
+        "recheck_timestamp_precision": "Individual request timestamp unavailable; see critic_review_window_observed_bounds_utc."
+      }
+    },
+    {
+      "id": "S06",
+      "title": "OpenRosa Metadata Scheme",
+      "url": "https://docs.getodk.org/openrosa-metadata/",
+      "released_version_or_commit": "Current ODK protocol documentation; no client build pinned.",
+      "locator": "Completed form metadata fields and ID formats, lines 177-232.",
+      "access_utc": "2026-10-10T04:15:37Z",
+      "observed_operation": "Read-only open of official ODK/OpenRosa documentation.",
+      "governing_condition_default_exception": "Unique instanceID is required. Start/end, user/device IDs, and deprecatedID linking a revision are optional. IDs use scheme:id form.",
+      "applicability": "Grounds stable record identity/revision linkage; optional metadata must not be assumed present.",
+      "critic_review": {
+        "operation": "Read-only web.open/web.find against this entry’s exact URL; selected locator excerpt checked.",
+        "critic_locator_checked": "Required/optional OpenRosa metadata and revision linkage; lines 193–232.",
+        "critic_observation": "instanceID required; start/end/userID/deviceID/deprecatedID optional; deprecatedID points to a prior submission instance.",
+        "product_validation": false,
+        "recheck_timestamp_precision": "Individual request timestamp unavailable; see critic_review_window_observed_bounds_utc."
+      }
+    },
+    {
+      "id": "S07",
+      "title": "ODK Question Types: metadata",
+      "url": "https://docs.getodk.org/form-question-types/",
+      "released_version_or_commit": "Current ODK Docs page; behavior depends on form/client configuration.",
+      "locator": "Hidden questions > Metadata, lines 2406-2432.",
+      "access_utc": "2026-10-10T04:15:37Z",
+      "observed_operation": "Read-only open of official ODK documentation.",
+      "governing_condition_default_exception": "start/end/today rely on possibly incorrect device time. start-geopoint is separate. Collect deviceid is installation-tied and changes on reinstall.",
+      "applicability": "Keep observed time, device time, and server receipt distinct; do not require phone-setting changes.",
+      "critic_review": {
+        "operation": "Read-only web.open/web.find against this entry’s exact URL; selected locator excerpt checked.",
+        "critic_locator_checked": "Metadata question section on start/end/today; lines 2406–2432.",
+        "critic_observation": "Device-time values can be wrong depending on hardware, OS, clock and network; this is distinct from server receipt time.",
+        "product_validation": false,
+        "recheck_timestamp_precision": "Individual request timestamp unavailable; see critic_review_window_observed_bounds_utc."
+      }
+    },
+    {
+      "id": "S08",
+      "title": "Installing ODK Central",
+      "url": "https://docs.getodk.org/central-install/",
+      "released_version_or_commit": "Current ODK Docs page; one benchmark example on page is explicitly from 2018.",
+      "locator": "ODK Cloud/self-host tradeoffs, lines 119-132 and self-hosting section thereafter.",
+      "access_utc": "2026-10-10T04:15:37Z",
+      "observed_operation": "Read-only open of official ODK installation docs; no deployment performed.",
+      "governing_condition_default_exception": "ODK Cloud is paid managed/support. Central software can be self-hosted free, but infrastructure, maintenance, and security remain the operator's responsibility.",
+      "applicability": "Compare support/staffing cost as well as software price.",
+      "critic_review": {
+        "operation": "Read-only web.open/web.find against this entry’s exact URL; selected locator excerpt checked.",
+        "critic_locator_checked": "Managed hosting vs self-hosting; lines 119–164.",
+        "critic_observation": "ODK Cloud is paid, managed and supported; Central can be self-hosted without license cost, with infrastructure and maintenance responsibilities.",
+        "product_validation": false,
+        "recheck_timestamp_precision": "Individual request timestamp unavailable; see critic_review_window_observed_bounds_utc."
+      }
+    },
+    {
+      "id": "S09",
+      "title": "Collecting data using KoboCollect",
+      "url": "https://support.kobotoolbox.org/data_collection_kobocollect.html",
+      "released_version_or_commit": "Kobo help article last updated 2026-07-17; exact KoboCollect build unstated.",
+      "locator": "Offline and draft/finalize/send, lines 49-78; queued uploads lines 79-91; retention section lines 92-115.",
+      "access_utc": "2026-10-10T04:15:37Z",
+      "observed_operation": "Read-only open of official KoboToolbox documentation; no account/app used.",
+      "governing_condition_default_exception": "Downloaded forms support offline collection. Drafts are editable; finalized forms are not; auto-send may queue until online. Device data stays unless Delete after send is enabled.",
+      "applicability": "Good intermittent-connectivity fit; keep auto-delete off and verify app settings.",
+      "critic_review": {
+        "operation": "Read-only web.open/web.find against this entry’s exact URL; selected locator excerpt checked.",
+        "critic_locator_checked": "Offline collection, queue/finalize and Delete after send; lines 49–115.",
+        "critic_observation": "Downloaded forms support offline work; finalized forms queue/send; default retains forms/data on-device unless Delete after send is enabled.",
+        "product_validation": false,
+        "recheck_timestamp_precision": "Individual request timestamp unavailable; see critic_review_window_observed_bounds_utc."
+      }
+    },
+    {
+      "id": "S10",
+      "title": "Viewing and validating Kobo data",
+      "url": "https://support.kobotoolbox.org/viewing_validating_data.html",
+      "released_version_or_commit": "Kobo help article last updated 2026-09-08; server build unstated.",
+      "locator": "System-generated submission fields, lines 54-65.",
+      "access_utc": "2026-10-10T04:15:37Z",
+      "observed_operation": "Read-only open of official KoboToolbox documentation.",
+      "governing_condition_default_exception": "__version__ identifies form version; _id is server-generated; _uuid can change on edit; _submission_time is server receipt in UTC in exports; rootUuid remains stable across edits.",
+      "applicability": "Platform provenance is useful, but add a charity-owned ID and correction lineage.",
+      "critic_review": {
+        "operation": "Read-only web.open/web.find against this entry’s exact URL; selected locator excerpt checked.",
+        "critic_locator_checked": "System-generated submission fields; lines 54–65.",
+        "critic_observation": "Form version, server ID, mutable _uuid, UTC server receipt time, submitter condition, and stable rootUuid checked.",
+        "product_validation": false,
+        "recheck_timestamp_precision": "Individual request timestamp unavailable; see critic_review_window_observed_bounds_utc."
+      }
+    },
+    {
+      "id": "S11",
+      "title": "Editing and deleting Kobo data",
+      "url": "https://support.kobotoolbox.org/editing_deleting_data.html",
+      "released_version_or_commit": "Kobo help article last updated 2026-05-06; server build unstated.",
+      "locator": "Individual editing and metadata effects, lines 15-61; further troubleshooting below.",
+      "access_utc": "2026-10-10T04:15:37Z",
+      "observed_operation": "Read-only open of official KoboToolbox documentation.",
+      "governing_condition_default_exception": "Web-form edits use the latest form and can recalculate/delete values. Raw edits bypass logic, cannot be undone, and should be tracked externally. Both update _uuid; rootUuid and _submission_time remain. Deletion is permanent.",
+      "applicability": "Correction requires before-image, reason, actor, and form-version care; native edits are not immutable event history.",
+      "critic_review": {
+        "operation": "Read-only web.open/web.find against this entry’s exact URL; selected locator excerpt checked.",
+        "critic_locator_checked": "Web/raw edit paths and edit side effects; lines 10–11, 44–61, 122–131.",
+        "critic_observation": "Post-send Collect records are changed in KoboToolbox; raw edits bypass logic, cannot be undone and should be logged; web edits can alter/remove values under current form logic.",
+        "product_validation": false,
+        "recheck_timestamp_precision": "Individual request timestamp unavailable; see critic_review_window_observed_bounds_utc."
+      }
+    },
+    {
+      "id": "S12",
+      "title": "Exporting and downloading Kobo data",
+      "url": "https://support.kobotoolbox.org/export_download.html",
+      "released_version_or_commit": "Kobo help article last updated 2026-05-06; export options may change.",
+      "locator": "Export types, lines 28-40; format settings later on page.",
+      "access_utc": "2026-10-10T04:15:37Z",
+      "observed_operation": "Read-only open of official KoboToolbox documentation.",
+      "governing_condition_default_exception": "XLSX is recommended for repeat groups; CSV suits data management; media is a separate ZIP. Legacy XLS/CSV exporters are slated for removal.",
+      "applicability": "Confirm repeat/photo relations with sample exports; do not assume flat CSV includes all attachment structure.",
+      "critic_review": {
+        "operation": "Read-only web.open/web.find against this entry’s exact URL; selected locator excerpt checked.",
+        "critic_locator_checked": "Export types/repeats/media/timezone; lines 30–40, 67–74.",
+        "critic_observation": "XLS is an .xlsx export recommended for repeats; CSV omits repeat data; media ZIP is separate; XLS timezone data is removed unless dates are exported as text. This supports CR-02.",
+        "product_validation": false,
+        "recheck_timestamp_precision": "Individual request timestamp unavailable; see critic_review_window_observed_bounds_utc."
+      }
+    },
+    {
+      "id": "S13",
+      "title": "Manually uploading submissions to KoboToolbox",
+      "url": "https://support.kobotoolbox.org/manual_upload.html",
+      "released_version_or_commit": "Kobo help article last updated 2026-07-22; feature explicitly experimental; no app/server tag pinned.",
+      "locator": "Cautions lines 7-12; instance-folder ZIP recovery and import steps lines 23-46.",
+      "access_utc": "2026-10-10T04:15:37Z",
+      "observed_operation": "Read-only open of official KoboToolbox documentation; no upload attempted.",
+      "governing_condition_default_exception": "Route packages actual KoboCollect instance folders or offline web-form exports as ZIP and assumes an existing target form. Intro says duplicates are not prevented, while final sentence says duplicates will be rejected.",
+      "applicability": "Recovery for app data, not arbitrary CSV-row import; duplicate behavior must not be relied on without testing.",
+      "critic_review": {
+        "operation": "Read-only web.open/web.find against this entry’s exact URL; selected locator excerpt checked.",
+        "critic_locator_checked": "Experimental warning, app-instance ZIP recovery and duplicate wording; lines 7–46.",
+        "critic_observation": "Page says duplicate submissions are not prevented, then says same records uploaded twice will be rejected; contradiction correctly retained as uncertainty.",
+        "product_validation": false,
+        "recheck_timestamp_precision": "Individual request timestamp unavailable; see critic_review_window_observed_bounds_utc."
+      }
+    },
+    {
+      "id": "S14",
+      "title": "Pulling data from an external CSV",
+      "url": "https://support.kobotoolbox.org/pull_data_kobotoolbox.html",
+      "released_version_or_commit": "Kobo help article last updated 2026-05-06; app build unstated.",
+      "locator": "CSV lookup/preload purpose, lines 7-18; upload workflow later on page.",
+      "access_utc": "2026-10-10T04:15:37Z",
+      "observed_operation": "Read-only open of official KoboToolbox documentation.",
+      "governing_condition_default_exception": "CSV is a form-time lookup source keyed by a unique index; linked project datasets are an alternative. This is not documented as importing old rows as new submissions.",
+      "applicability": "Do not mistake reference-data CSV support for legacy observation import.",
+      "critic_review": {
+        "operation": "Read-only web.open/web.find against this entry’s exact URL; selected locator excerpt checked.",
+        "critic_locator_checked": "pulldata external CSV purpose, index and upload flow; lines 14–31, 45–80.",
+        "critic_observation": "CSV is a form-time lookup/preload dataset with a matching index, not documented as importing legacy rows as submissions.",
+        "product_validation": false,
+        "recheck_timestamp_precision": "Individual request timestamp unavailable; see critic_review_window_observed_bounds_utc."
+      }
+    },
+    {
+      "id": "S15",
+      "title": "Creating a KoboToolbox account",
+      "url": "https://support.kobotoolbox.org/creating_account.html",
+      "released_version_or_commit": "Kobo help article last updated 2026-10-03; plan/server details current at access.",
+      "locator": "Public servers, private server note, Community Plan, lines 7-50.",
+      "access_utc": "2026-10-10T04:15:37Z",
+      "observed_operation": "Read-only open of official KoboToolbox docs; no account created.",
+      "governing_condition_default_exception": "Global and EU public servers are separate; collaborators must choose the same server. Free Community Plan follows activation; upgrade options add limits/features; some large organizations use private server.",
+      "applicability": "Hosting option; verify current limits and data-location needs before choosing.",
+      "critic_review": {
+        "operation": "Read-only web.open/web.find against this entry’s exact URL; selected locator excerpt checked.",
+        "critic_locator_checked": "Global/EU servers, Community Plan and collaboration; lines 7–50.",
+        "critic_observation": "Free Community Plan follows account activation; Global and EU server data cannot be shared and collaborators need the same server.",
+        "product_validation": false,
+        "recheck_timestamp_precision": "Individual request timestamp unavailable; see critic_review_window_observed_bounds_utc."
+      }
+    },
+    {
+      "id": "S16",
+      "title": "Apache CouchDB 3.5.1 replication and conflict model",
+      "url": "https://docs.couchdb.org/en/3.5.1/replication/conflicts.html",
+      "released_version_or_commit": "Apache CouchDB documentation for version 3.5.1.",
+      "locator": "Conflict winner/visibility/resolution, sections 2.3.1–2.3.4; page lines 51-135.",
+      "access_utc": "2026-10-10T04:15:37Z",
+      "observed_operation": "Read-only open of version-pinned Apache docs; no database used.",
+      "governing_condition_default_exception": "Concurrent edits may remain as conflict leaves, but normal reads show one deterministic winner; caller must request conflict details. Apps must display or resolve leaves. A stale revision write to one node returns 409.",
+      "applicability": "Sync/conflict analogue, not a complete survey product or authority for auto-selecting the charity's current view.",
+      "critic_review": {
+        "operation": "Read-only web.open/web.find against this entry’s exact URL; selected locator excerpt checked.",
+        "critic_locator_checked": "Default deterministic winner, conflict visibility and resolution; sections 2.3.1–2.3.4.",
+        "critic_observation": "Normal reads select a deterministic winner; other conflicting revisions must be requested and surfaced/resolved by the application.",
+        "product_validation": false,
+        "recheck_timestamp_precision": "Individual request timestamp unavailable; see critic_review_window_observed_bounds_utc."
+      }
+    },
+    {
+      "id": "S17",
+      "title": "ODK Collect issue #4589: failed submission editing",
+      "url": "https://github.com/getodk/collect/issues/4589",
+      "released_version_or_commit": "Opened 2021-06-02; closed completed 2021-07-07 through linked #4655; issue does not identify its release tag.",
+      "locator": "Issue description and server error lines 150-164; close activity lines 426-439.",
+      "access_utc": "2026-10-10T04:15:37Z",
+      "observed_operation": "Read-only open of official issue/activity; linked pull request fetch was unavailable and is not represented as inspected.",
+      "governing_condition_default_exception": "A same-ID retry with changed XML while attaching media could be rejected because the server had already received that ID; issue proposed preventing edits of failed finalized submissions and closed via #4655.",
+      "applicability": "Historical retry/correction mechanism lesson; not evidence of a current release regression.",
+      "critic_review": {
+        "operation": "Read-only web.open/web.find against this entry’s exact URL; selected locator excerpt checked.",
+        "critic_locator_checked": "Issue description/error and closure activity; lines 150–164, 426–439.",
+        "critic_observation": "Historical same-ID/different-XML retry with multimedia error checked; issue closed completed through #4655 on 2021-07-07.",
+        "product_validation": false,
+        "recheck_timestamp_precision": "Individual request timestamp unavailable; see critic_review_window_observed_bounds_utc."
+      }
+    },
+    {
+      "id": "S18",
+      "title": "ODK forum report: failed submissions no longer editable",
+      "url": "https://forum.getodk.org/t/unable-to-edit-forms-that-fail-to-send/34867",
+      "released_version_or_commit": "User report: Collect v2021.2.4, Android 10, 2021-08-26; maintainer reply 2021-08-31 confirmed intentional change.",
+      "locator": "Version/problem lines 7-25; maintainer confirmation and field-work impact lines 31-43.",
+      "access_utc": "2026-10-10T04:15:37Z",
+      "observed_operation": "Read-only open of public ODK forum; incident report, not controlled reproduction.",
+      "governing_condition_default_exception": "Server-rejected finalized form was non-editable in the described setup; user described poor-signal teams unable to revisit photos/geopoints/barcodes. Depends on form/server context.",
+      "applicability": "Shows cost of immutability and motivates a separate correction event; not present-day behavior evidence.",
+      "critic_review": {
+        "operation": "Read-only web.open/web.find against this entry’s exact URL; selected locator excerpt checked.",
+        "critic_locator_checked": "Version, failed-send behavior, field impact and maintainer response; lines 15–43.",
+        "critic_observation": "User report ties non-editable failed finalized submission to Collect v2021.2.4/Android 10 and describes poor-signal impact; historical report, not controlled test.",
+        "product_validation": false,
+        "recheck_timestamp_precision": "Individual request timestamp unavailable; see critic_review_window_observed_bounds_utc."
+      }
+    },
+    {
+      "id": "S19",
+      "title": "ODK Central API changelog",
+      "url": "https://docs.getodk.org/central-api-changelog/",
+      "released_version_or_commit": "Current docs changelog with explicit feature introductions for Central v1.2-v1.4; not pinned to a current binary.",
+      "locator": "v1.4 formVersion/deviceId lines 366-381; v1.3 edit diffs lines 382-398; v1.2 edit/version/review features lines 402-429.",
+      "access_utc": "2026-10-10T04:15:37Z",
+      "observed_operation": "Read-only open of official ODK API changelog.",
+      "governing_condition_default_exception": "Metadata and edit/review history are release-dependent; device/user metadata only exists when supported and transmitted.",
+      "applicability": "Use release introduction notes for minimum-version questions; verify populated metadata on chosen deployment.",
+      "critic_review": {
+        "operation": "Read-only web.open/web.find against this entry’s exact URL; selected locator excerpt checked.",
+        "critic_locator_checked": "Central API changelog: formVersion/edit/version/review feature notes.",
+        "critic_observation": "Official changelog entry for formVersion and prior API feature introductions checked; release-dependent metadata remains conditional.",
+        "product_validation": false,
+        "recheck_timestamp_precision": "Individual request timestamp unavailable; see critic_review_window_observed_bounds_utc."
+      }
+    },
+    {
+      "id": "S20",
+      "title": "KoboToolbox data storage",
+      "url": "https://support.kobotoolbox.org/data_storage.html",
+      "released_version_or_commit": "Kobo help article last updated 2026-07-22; current public server policy at access.",
+      "locator": "Storage and export retention, lines 7-15.",
+      "access_utc": "2026-10-10T04:18:50Z",
+      "observed_operation": "Read-only open of official KoboToolbox documentation.",
+      "governing_condition_default_exception": "Global and EU public server data is stored on AWS: form data in DB and attachments in S3. Up to ten exports per project are retained; creating an eleventh deletes the oldest. Data deletion/storage policies apply.",
+      "applicability": "Deployment location and export-retention tradeoff; create independent archived exports if required and confirm current policy.",
+      "critic_review": {
+        "operation": "Read-only web.open/web.find against this entry’s exact URL; selected locator excerpt checked.",
+        "critic_locator_checked": "AWS storage and export retention; lines 7–15.",
+        "critic_observation": "Official page states Global/EU data and attachments reside on AWS and only ten exports/project are retained.",
+        "product_validation": false,
+        "recheck_timestamp_precision": "Individual request timestamp unavailable; see critic_review_window_observed_bounds_utc."
+      }
+    },
+    {
+      "id": "S21",
+      "title": "ODK Central issue #1612 with backend attachment-purge test code",
+      "url": "https://github.com/getodk/central/issues/1612",
+      "released_version_or_commit": "Issue opened 2026-01-20 and closed with linked getodk/central-backend#1754; no release tag stated on issue.",
+      "locator": "Issue condition and test-code introduction lines 172-178; code posts a new deprecatedID/instanceID version and checks attachment/blob counts lines 213-263.",
+      "access_utc": "2026-10-10T04:22:00Z",
+      "observed_operation": "Read-only open of official ODK Central public issue; inspected test code rendered in issue body, did not run the test or clone/execute source.",
+      "governing_condition_default_exception": "The embedded regression test shows a submission edit carrying blobs forward to a new submission definition. Clearing an attachment from one version does not reclaim the blob while another revision references it; purge behavior depends on which version is current.",
+      "applicability": "A bounded source-code/test example that attachment/version retention can affect storage. It supports planning media retention/export and preserving version lineage; it does not justify remote deletion and does not establish current product validation.",
+      "critic_review": {
+        "operation": "Read-only web.open/web.find against this entry’s exact URL; selected locator excerpt checked.",
+        "critic_locator_checked": "Issue condition and embedded backend test; lines 159–263.",
+        "critic_observation": "Read test code in the issue: edited revision carries blob references; an old-version reference keeps the blob through purge. Code was inspected, not run.",
+        "product_validation": false,
+        "recheck_timestamp_precision": "Individual request timestamp unavailable; see critic_review_window_observed_bounds_utc."
+      }
+    }
+  ],
+  "critic_review_window_observed_bounds_utc": {
+    "earliest_clock_sample": "2026-10-10T04:27:30Z",
+    "latest_clock_sample": "2026-10-10T04:31:44Z",
+    "interpretation": "Read-only web.open/web.find source checks occurred within these observed clock bounds; individual web-request UTC timestamps were not exposed. Original per-source access_utc values are preserved as supplied."
+  },
+  "critic_lineage": {
+    "input_source_map": "ER12_RUNTIME/runs/A2-01/treatment/handoff/stages/investigator/source-map.json",
+    "input_source_map_sha256": "2ebcfa0707a1dfd4d67f911adf00ca8fa242ea06ce20cde8ab746584b4154e29",
+    "source_ids_preserved_without_rebinding": true,
+    "source_id_count": 21,
+    "independent_recheck_mode": "Read-only browser opens/finds on the exact listed primary-source URLs; no product operation or code execution."
+  }
+}

@@ -8,14 +8,28 @@
     "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A3-01-control-full-v1",
     "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A3-01-control-full-v1",
     "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-eval-A3-01-control-full-v1:ordinal:1",
-    "status": "running",
+    "status": "completed",
     "hasPendingChildRuns": false,
     "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
     "model": "gpt-6.1-sol",
-    "latestTerminalStatus": null,
-    "latestTerminalRunId": null
+    "latestTerminalStatus": "completed",
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-eval-A3-01-control-full-v1:ordinal:1"
   },
-  "state": "SOURCE_PENDING",
-  "source_judgment": null,
-  "included_files": []
+  "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+  "source_judgment": "FAIL",
+  "included_files": [
+    "assessment/A3-01/control-v1/assessment.json",
+    "assessment/A3-01/control-v1/assessment.md",
+    "assessment/A3-01/control-v1/delivery-manifest.json",
+    "assessment/A3-01/control-v1/evidence/assessment-verification.json",
+    "assessment/A3-01/control-v1/evidence/freeze-verification.json",
+    "assessment/A3-01/control-v1/evidence/index.md",
+    "assessment/A3-01/control-v1/evidence/retrievals.json",
+    "assessment/A3-01/control-v1/evidence/reviewer-native-goal-active.json",
+    "assessment/A3-01/control-v1/evidence/reviewer-native-goal-terminal.json",
+    "assessment/A3-01/control-v1/evidence/reviewer-synthetic-fts5.json",
+    "assessment/A3-01/control-v1/original-inspected-manifest.json",
+    "assessment/A3-01/control-v1/root-review-request.json",
+    "assessment/A3-01/control-v1/source-map.json"
+  ]
 }

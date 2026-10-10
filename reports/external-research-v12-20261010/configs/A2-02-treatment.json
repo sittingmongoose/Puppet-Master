@@ -1,0 +1,27 @@
+{
+  "run_id": "A2-02-treatment",
+  "topology": "A2",
+  "dispatch_owner": "root",
+  "runtime_root": "ER12_RUNTIME/runs/A2-02/treatment",
+  "brief_path": "ER12_RUNTIME/frozen-inputs/A2-02/brief.md",
+  "plan_path": "ER12_RUNTIME/frozen-inputs/A2-02/plan.md",
+  "whole_deadline_utc": "2026-10-10T06:08:29.904220+00:00",
+  "phase_budgets_s": [
+    1800,
+    1800
+  ],
+  "stage_budgets_s": {
+    "investigator": 1800,
+    "critic": 720,
+    "retained-final": 1080
+  },
+  "provider": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    }
+  },
+  "runtime_mode": "full-access"
+}

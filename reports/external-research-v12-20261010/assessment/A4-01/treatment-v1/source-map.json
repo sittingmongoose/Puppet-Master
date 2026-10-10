@@ -1,0 +1,1672 @@
+{
+  "schema": "er12-independent-assessor-source-map-v1",
+  "assignment": "A4-01 treatment only",
+  "reviewer_identity": "codex-er12-a401-semrev-0439",
+  "created_utc": "2026-10-10T04:50:54.367094+00:00",
+  "source_ids": "P01-P33 are assessor-local and do not rebind original S/C/R IDs. P01-P19 follow investigator URL order, P20 is reviser R01; extra IDs investigate governing context.",
+  "sources": [
+    {
+      "id": "P01",
+      "original_id": "S01",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/upload-objects.html",
+      "accessed_utc": "2026-10-10T04:41:53.995377+00:00",
+      "status": 200,
+      "resolved_url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/upload-objects.html",
+      "content_type": "text/html",
+      "raw_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P01-raw.html",
+      "raw_sha256": "7f357e85a92522406db6217e92d21d43ae5a1bd492f2c58c5a5e788746740b4e",
+      "bytes": 31817,
+      "text_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P01-text.txt",
+      "text_sha256": "902b2ee6b84a09d4ab1b1da623de15bd19ca074513363ae36ff41e2c6c9a029b",
+      "lines": 205,
+      "text_encoding": "UTF-8 decoded from original raw bytes",
+      "version_or_commit_observed": "AWS S3 live User Guide, release not stated",
+      "locator": "Upload options / PutObject, console, multipart",
+      "locators": [
+        {
+          "anchor": "single PUT",
+          "text_lines": [
+            20
+          ],
+          "primary_heading_or_json_field": "Upload options / PutObject, console, multipart"
+        },
+        {
+          "anchor": "single object up",
+          "text_lines": [
+            21,
+            22
+          ],
+          "primary_heading_or_json_field": "Upload options / PutObject, console, multipart"
+        },
+        {
+          "anchor": "50 TB",
+          "text_lines": [
+            26,
+            30
+          ],
+          "primary_heading_or_json_field": "Upload options / PutObject, console, multipart"
+        }
+      ],
+      "independent_semantic_reading": "PUT up to 5 GB; console up to 160 GB; guide multipart 5 MB–50 TB.",
+      "conditions_defaults_units_types_exceptions": "Different operations and units; >5 TB client guidance is outside this 40 GB pilot. Unknown compatible provider inherits no limit.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "semantic_review_status": "ASSESSED",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    },
+    {
+      "id": "P02",
+      "original_id": "S02",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/qfacts.html",
+      "accessed_utc": "2026-10-10T04:41:53.996523+00:00",
+      "status": 200,
+      "resolved_url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/qfacts.html",
+      "content_type": "text/html",
+      "raw_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P02-raw.html",
+      "raw_sha256": "387c24248a3e09a9e067c15cd7d4f5786ff739db309b5306a987d884caee34f9",
+      "bytes": 13796,
+      "text_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P02-text.txt",
+      "text_sha256": "f0a4327e411756df798913c974c7be20f5d5c407df68e9d88c76a6a7efa4ce1f",
+      "lines": 41,
+      "text_encoding": "UTF-8 decoded from original raw bytes",
+      "version_or_commit_observed": "AWS S3 live User Guide, release not stated",
+      "locator": "Multipart core specifications",
+      "locators": [
+        {
+          "anchor": "48.8 TiB",
+          "text_lines": [
+            17
+          ],
+          "primary_heading_or_json_field": "Multipart core specifications"
+        },
+        {
+          "anchor": "10,000",
+          "text_lines": [
+            19,
+            21
+          ],
+          "primary_heading_or_json_field": "Multipart core specifications"
+        },
+        {
+          "anchor": "last part",
+          "text_lines": [
+            13,
+            23
+          ],
+          "primary_heading_or_json_field": "Multipart core specifications"
+        }
+      ],
+      "independent_semantic_reading": "48.8 TiB maximum; 10,000 parts; inclusive 1–10,000 numbers; 5 MiB–5 GiB part sizes.",
+      "conditions_defaults_units_types_exceptions": "Last part has no minimum; ListParts and upload listings have 1,000-response limits. 40 GB counts must use exact bytes.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "semantic_review_status": "ASSESSED",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    },
+    {
+      "id": "P03",
+      "original_id": "S03",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html",
+      "accessed_utc": "2026-10-10T04:41:54.000433+00:00",
+      "status": 200,
+      "resolved_url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html",
+      "content_type": "text/html",
+      "raw_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P03-raw.html",
+      "raw_sha256": "69c3cbba7a976efc7d37f933d113a2f48eff409ff27800614db1c4b08aee95b4",
+      "bytes": 53219,
+      "text_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P03-text.txt",
+      "text_sha256": "45e147610791e831a80b1f6e29a0ff4035e240abea93e4617a9f3cd93bb94e9e",
+      "lines": 411,
+      "text_encoding": "UTF-8 decoded from original raw bytes",
+      "version_or_commit_observed": "AWS S3 live User Guide, release not stated",
+      "locator": "Multipart creation/part replacement/completion/listings/pricing",
+      "locators": [
+        {
+          "anchor": "previously uploaded part",
+          "text_lines": [
+            58,
+            59
+          ],
+          "primary_heading_or_json_field": "Multipart creation/part replacement/completion/listings/pricing"
+        },
+        {
+          "anchor": "Do not use",
+          "text_lines": [
+            112
+          ],
+          "primary_heading_or_json_field": "Multipart creation/part replacement/completion/listings/pricing"
+        },
+        {
+          "anchor": "consecutive",
+          "text_lines": [
+            57,
+            136,
+            137
+          ],
+          "primary_heading_or_json_field": "Multipart creation/part replacement/completion/listings/pricing"
+        },
+        {
+          "anchor": "retains all",
+          "text_lines": [
+            169
+          ],
+          "primary_heading_or_json_field": "Multipart creation/part replacement/completion/listings/pricing"
+        }
+      ],
+      "independent_semantic_reading": "Upload IDs and own completion part/ETag list support resumability; repeat part number replaces its bytes; listing is for verification.",
+      "conditions_defaults_units_types_exceptions": "Ascending completion order; checksum-specific consecutive condition; in-flight work can outlive abort; parts retained/billed until termination. Storage-class pricing exceptions do not supply an archive cost estimate.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "semantic_review_status": "ASSESSED",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    },
+    {
+      "id": "P04",
+      "original_id": "S04",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/lifecycle-configuration-examples.html",
+      "accessed_utc": "2026-10-10T04:41:54.004476+00:00",
+      "status": 200,
+      "resolved_url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/lifecycle-configuration-examples.html",
+      "content_type": "text/html",
+      "raw_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P04-raw.html",
+      "raw_sha256": "916007f60cb1790ef0669ff2df47f7472e83145defb176f311e9d2e721453276",
+      "bytes": 54370,
+      "text_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P04-text.txt",
+      "text_sha256": "61080337dbbda438268a86fee2e460da7be21017ae857b40132bc836b1e1d1b9",
+      "lines": 532,
+      "text_encoding": "UTF-8 decoded from original raw bytes",
+      "version_or_commit_observed": "AWS S3 live User Guide, release not stated",
+      "locator": "AbortIncompleteMultipartUpload lifecycle example",
+      "locators": [
+        {
+          "anchor": "seven days",
+          "text_lines": [
+            407
+          ],
+          "primary_heading_or_json_field": "AbortIncompleteMultipartUpload lifecycle example"
+        },
+        {
+          "anchor": "DaysAfterInitiation",
+          "text_lines": [
+            416
+          ],
+          "primary_heading_or_json_field": "AbortIncompleteMultipartUpload lifecycle example"
+        },
+        {
+          "anchor": "tag-based",
+          "text_lines": [
+            392,
+            404
+          ],
+          "primary_heading_or_json_field": "AbortIncompleteMultipartUpload lifecycle example"
+        }
+      ],
+      "independent_semantic_reading": "Incomplete uploads can be aborted by a configured DaysAfterInitiation rule.",
+      "conditions_defaults_units_types_exceptions": "Seven days is an example, not a default. This action has no tag-based filter. Provider support and owner policy remain external.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "semantic_review_status": "ASSESSED",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    },
+    {
+      "id": "P05",
+      "original_id": "S05",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity-upload.html",
+      "accessed_utc": "2026-10-10T04:41:54.005755+00:00",
+      "status": 200,
+      "resolved_url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity-upload.html",
+      "content_type": "text/html",
+      "raw_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P05-raw.html",
+      "raw_sha256": "120bba4c5fffd1ffa8a57aa6e08d1adad866decadc331a77ab195afb27d73c11",
+      "bytes": 83175,
+      "text_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P05-text.txt",
+      "text_sha256": "c3bfe27835cf348ec6f84de4e7f5ff0ad7657cab4d32d69a95de75cf02b95475",
+      "lines": 741,
+      "text_encoding": "UTF-8 decoded from original raw bytes",
+      "version_or_commit_observed": "AWS S3 live User Guide, release not stated",
+      "locator": "Checksum type table / composite numbering / initiation notes",
+      "locators": [
+        {
+          "anchor": "part-level) checksums",
+          "text_lines": [
+            86
+          ],
+          "primary_heading_or_json_field": "Checksum type table / composite numbering / initiation notes"
+        },
+        {
+          "anchor": "SHA-256 (SHA256)",
+          "text_lines": [
+            37,
+            144
+          ],
+          "primary_heading_or_json_field": "Checksum type table / composite numbering / initiation notes"
+        },
+        {
+          "anchor": "For existing checksum",
+          "text_lines": [
+            199
+          ],
+          "primary_heading_or_json_field": "Checksum type table / composite numbering / initiation notes"
+        },
+        {
+          "anchor": "InvalidRequest",
+          "text_lines": [
+            197
+          ],
+          "primary_heading_or_json_field": "Checksum type table / composite numbering / initiation notes"
+        }
+      ],
+      "independent_semantic_reading": "Multipart FULL_OBJECT supports CRC64NVME/CRC32/CRC32C; SHA256 is COMPOSITE. Existing CRC32/CRC32C/SHA1/SHA256 completion headers may be accepted without validation/storage if initiation omitted the algorithm.",
+      "conditions_defaults_units_types_exceptions": "Composite/part-level numbering begins at 1 and is consecutive; guide mentions HTTP 500. New MD5/XXHash/SHA512 omission is InvalidRequest, not the older-algorithm behavior. Full-object and composite values are distinct; use expected source checksum/appropriate scope.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "semantic_review_status": "ASSESSED",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    },
+    {
+      "id": "P06",
+      "original_id": "S06",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_CompleteMultipartUpload.html",
+      "accessed_utc": "2026-10-10T04:41:54.008226+00:00",
+      "status": 200,
+      "resolved_url": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_CompleteMultipartUpload.html",
+      "content_type": "text/html",
+      "raw_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P06-raw.html",
+      "raw_sha256": "1f308a018c0679f7aac9f444888c409721ba63965d902aef8fd498957cc7a9f1",
+      "bytes": 80875,
+      "text_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P06-text.txt",
+      "text_sha256": "83cb4e79f7e882bdf3b1e956f4f7f04c51fd4e739a14bce5309d896d59f6c4c6",
+      "lines": 513,
+      "text_encoding": "UTF-8 decoded from original raw bytes",
+      "version_or_commit_observed": "AWS S3 live API reference, release not stated",
+      "locator": "CompleteMultipartUpload response processing and request conditions",
+      "locators": [
+        {
+          "anchor": "200 OK",
+          "text_lines": [
+            20,
+            21,
+            22,
+            34,
+            444,
+            476
+          ],
+          "primary_heading_or_json_field": "CompleteMultipartUpload response processing and request conditions"
+        },
+        {
+          "anchor": "embedded",
+          "text_lines": [
+            22,
+            24
+          ],
+          "primary_heading_or_json_field": "CompleteMultipartUpload response processing and request conditions"
+        },
+        {
+          "anchor": "ascending",
+          "text_lines": [
+            12,
+            66
+          ],
+          "primary_heading_or_json_field": "CompleteMultipartUpload response processing and request conditions"
+        },
+        {
+          "anchor": "InvalidPartOrder",
+          "text_lines": [
+            65
+          ],
+          "primary_heading_or_json_field": "CompleteMultipartUpload response processing and request conditions"
+        }
+      ],
+      "independent_semantic_reading": "Initial 200 can contain an embedded Error; SDKs detect it, direct REST must inspect the body.",
+      "conditions_defaults_units_types_exceptions": "Completion requires ordered part numbers and returned ETags; SDK error handling is configuration-dependent. Directory/Zonal, encryption and permission conditions are additional product-specific domains, not archive facts.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "semantic_review_status": "ASSESSED",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    },
+    {
+      "id": "P07",
+      "original_id": "S07",
+      "url": "https://uppy.io/docs/aws-s3/",
+      "accessed_utc": "2026-10-10T04:41:54.143885+00:00",
+      "status": 200,
+      "resolved_url": "https://uppy.io/docs/aws-s3/",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P07-raw.html",
+      "raw_sha256": "45778b7c13a16383e07d910c9f770f87e2585836cebacbe66579ec3e42e6bea9",
+      "bytes": 124790,
+      "text_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P07-text.txt",
+      "text_sha256": "c6b06c9dbeeec754407021898b520eeff276cb8c16f8e1e4eb7eeec4302de7b5",
+      "lines": 439,
+      "text_encoding": "UTF-8 decoded from original raw bytes",
+      "version_or_commit_observed": "Live unversioned Uppy AWS S3 docs; CDN example v5.2.1 is not a page-version pin",
+      "locator": "Signing/CORS / shouldUseMultipart / getChunkSize",
+      "locators": [
+        {
+          "anchor": "100",
+          "text_lines": [
+            57,
+            176,
+            180,
+            204
+          ],
+          "primary_heading_or_json_field": "Signing/CORS / shouldUseMultipart / getChunkSize"
+        },
+        {
+          "anchor": "shouldUseMultipart",
+          "text_lines": [
+            59,
+            173,
+            179,
+            248
+          ],
+          "primary_heading_or_json_field": "Signing/CORS / shouldUseMultipart / getChunkSize"
+        },
+        {
+          "anchor": "signRequest",
+          "text_lines": [
+            37,
+            61,
+            96,
+            109,
+            214,
+            218
+          ],
+          "primary_heading_or_json_field": "Signing/CORS / shouldUseMultipart / getChunkSize"
+        },
+        {
+          "anchor": "AllowedHeaders",
+          "text_lines": [
+            238,
+            347,
+            365
+          ],
+          "primary_heading_or_json_field": "Signing/CORS / shouldUseMultipart / getChunkSize"
+        }
+      ],
+      "independent_semantic_reading": "Direct browser signing and configurable >100 MiB multipart default are documented; only failed parts need retry.",
+      "conditions_defaults_units_types_exceptions": "Use exactly one signing mode; browser-forbidden headers cannot be signed for JavaScript setting; CORS/exposed ETag and client release must match. Empty files use single request; final pilot starts at 20 MB.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "semantic_review_status": "ASSESSED",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    },
+    {
+      "id": "P08",
+      "original_id": "S08",
+      "url": "https://uppy.io/docs/golden-retriever/",
+      "accessed_utc": "2026-10-10T04:41:54.211132+00:00",
+      "status": 200,
+      "resolved_url": "https://uppy.io/docs/golden-retriever/",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P08-raw.html",
+      "raw_sha256": "c4dde59701d5975bd25f029afb1e8660d7ac60e34ffb76835a54bdebff6f441c",
+      "bytes": 54858,
+      "text_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P08-text.txt",
+      "text_sha256": "65a33ec7ef7580a28b838ca4636dde2550515973938de1274301e62e4ce4fdc0",
+      "lines": 175,
+      "text_encoding": "UTF-8 decoded from original raw bytes",
+      "version_or_commit_observed": "Live unversioned Uppy Golden Retriever docs",
+      "locator": "Storage/recovery defaults",
+      "locators": [
+        {
+          "anchor": "10 MiB",
+          "text_lines": [],
+          "primary_heading_or_json_field": "Storage/recovery defaults"
+        },
+        {
+          "anchor": "restarts",
+          "text_lines": [
+            39
+          ],
+          "primary_heading_or_json_field": "Storage/recovery defaults"
+        },
+        {
+          "anchor": "Service Worker",
+          "text_lines": [
+            36,
+            37,
+            82,
+            84,
+            85,
+            87
+          ],
+          "primary_heading_or_json_field": "Storage/recovery defaults"
+        },
+        {
+          "anchor": "false",
+          "text_lines": [
+            135
+          ],
+          "primary_heading_or_json_field": "Storage/recovery defaults"
+        }
+      ],
+      "independent_semantic_reading": "Default IndexedDB stores selected local data up to 10 MiB; larger references can use optional service-worker storage.",
+      "conditions_defaults_units_types_exceptions": "Service-worker storage defaults false and temporary references do not survive browser crash/restart; recovery may require reselection. This is not a storage-service part limit.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "semantic_review_status": "ASSESSED",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    },
+    {
+      "id": "P09",
+      "original_id": "S09",
+      "url": "https://tus.io/protocols/resumable-upload",
+      "accessed_utc": "2026-10-10T04:41:54.230608+00:00",
+      "status": 200,
+      "resolved_url": "https://tus.io/protocols/resumable-upload",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P09-raw.html",
+      "raw_sha256": "868947ec6573ff745f31649d730616bfcd7d154af0c22ab39f1af4937f3e3a21",
+      "bytes": 210884,
+      "text_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P09-text.txt",
+      "text_sha256": "b1261162c4ec94b4122124d912dbdf7a9d60195aa9479f45d56a78728106f505",
+      "lines": 546,
+      "text_encoding": "UTF-8 decoded from original raw bytes",
+      "version_or_commit_observed": "tus protocol 1.0.0, dated 2016-03-25",
+      "locator": "Core HEAD/PATCH/offset and optional extensions",
+      "locators": [
+        {
+          "anchor": "Version: 1.0.0",
+          "text_lines": [
+            36,
+            227,
+            414
+          ],
+          "primary_heading_or_json_field": "Core HEAD/PATCH/offset and optional extensions"
+        },
+        {
+          "anchor": "HEAD",
+          "text_lines": [
+            90,
+            112,
+            117,
+            137,
+            139,
+            142
+          ],
+          "primary_heading_or_json_field": "Core HEAD/PATCH/offset and optional extensions"
+        },
+        {
+          "anchor": "409 Conflict",
+          "text_lines": [
+            190
+          ],
+          "primary_heading_or_json_field": "Core HEAD/PATCH/offset and optional extensions"
+        },
+        {
+          "anchor": "Checksum",
+          "text_lines": [
+            30,
+            195,
+            376,
+            378,
+            380,
+            382
+          ],
+          "primary_heading_or_json_field": "Core HEAD/PATCH/offset and optional extensions"
+        }
+      ],
+      "independent_semantic_reading": "HEAD returns stored byte offset; PATCH must use matching nonnegative integer offset. Checksum verifies each PATCH body.",
+      "conditions_defaults_units_types_exceptions": "Offset mismatch yields 409 without modification; version/header requirements apply; checksum/expiry/termination are advertised optional extensions, not inherent whole-file verification. Authentication is server-owned.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "semantic_review_status": "ASSESSED",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    },
+    {
+      "id": "P10",
+      "original_id": "S10",
+      "url": "https://github.com/tus/tusd/blob/v2.10.1/docs/_storage-backends/aws-s3.md",
+      "accessed_utc": "2026-10-10T04:41:54.249898+00:00",
+      "status": 200,
+      "resolved_url": "https://github.com/tus/tusd/blob/v2.10.1/docs/_storage-backends/aws-s3.md",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P10-raw.html",
+      "raw_sha256": "6896c9a1919fb040c5088dc0a85a9f154b81e54d7abf252f2f6eed3528550a22",
+      "bytes": 301730,
+      "text_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P10-text.txt",
+      "text_sha256": "5358e08997e3adce64725a6beef0548a62c39299574ec751bd9704ed121d0258",
+      "lines": 248,
+      "text_encoding": "UTF-8 decoded from original raw bytes",
+      "version_or_commit_observed": "tusd v2.10.1 tagged documentation",
+      "locator": "S3 backend docs on GitHub",
+      "locators": [
+        {
+          "anchor": "S3 storage",
+          "text_lines": [
+            151,
+            233
+          ],
+          "primary_heading_or_json_field": "S3 backend docs on GitHub"
+        },
+        {
+          "anchor": "Storage format",
+          "text_lines": [
+            183
+          ],
+          "primary_heading_or_json_field": "S3 backend docs on GitHub"
+        }
+      ],
+      "independent_semantic_reading": "Documented backend uses MPU and .info metadata; final file object appears after completion.",
+      "conditions_defaults_units_types_exceptions": "Use raw P21 for complete stable code-document text; temporary .part objects, disk, consistency and locking conditions matter.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "semantic_review_status": "ASSESSED",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    },
+    {
+      "id": "P11",
+      "original_id": "S11",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/conditional-writes.html",
+      "accessed_utc": "2026-10-10T04:41:54.292890+00:00",
+      "status": 200,
+      "resolved_url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/conditional-writes.html",
+      "content_type": "text/html",
+      "raw_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P11-raw.html",
+      "raw_sha256": "8333d943dbbd7455a65791449d7e83816e62a3c4a9d006292ca59aa7602f394e",
+      "bytes": 36281,
+      "text_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P11-text.txt",
+      "text_sha256": "00f4ac295ea1631c8e6e03b0b2e4f6c1d7aae9ede6bc9962c06889d764a42b2e",
+      "lines": 191,
+      "text_encoding": "UTF-8 decoded from original raw bytes",
+      "version_or_commit_observed": "AWS S3 live User Guide, release not stated",
+      "locator": "Conditional writes / multipart races",
+      "locators": [
+        {
+          "anchor": "in-progress",
+          "text_lines": [
+            151
+          ],
+          "primary_heading_or_json_field": "Conditional writes / multipart races"
+        },
+        {
+          "anchor": "412",
+          "text_lines": [
+            114,
+            119,
+            122,
+            136,
+            157
+          ],
+          "primary_heading_or_json_field": "Conditional writes / multipart races"
+        },
+        {
+          "anchor": "409",
+          "text_lines": [
+            123,
+            127,
+            130,
+            137,
+            163,
+            168
+          ],
+          "primary_heading_or_json_field": "Conditional writes / multipart races"
+        },
+        {
+          "anchor": "re-initiated",
+          "text_lines": [
+            129
+          ],
+          "primary_heading_or_json_field": "Conditional writes / multipart races"
+        }
+      ],
+      "independent_semantic_reading": "Final PutObject and CompleteMultipartUpload conditions supplement application reservation/idempotency; in-progress MPUs are not existing objects.",
+      "conditions_defaults_units_types_exceptions": "If-None-Match/If-Match outcomes depend on object/version/delete state. A 409 on completion can require a new MPU; do not generalize support to initiation/parts or compatible stores.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "semantic_review_status": "ASSESSED",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    },
+    {
+      "id": "P12",
+      "original_id": "S12",
+      "url": "https://developers.cloudflare.com/r2/objects/upload-objects/",
+      "accessed_utc": "2026-10-10T04:41:54.308146+00:00",
+      "status": 200,
+      "resolved_url": "https://developers.cloudflare.com/r2/objects/upload-objects/",
+      "content_type": "text/html",
+      "raw_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P12-raw.html",
+      "raw_sha256": "6d5071cf7bb2c8a0940909c91d552b7388e4c8818d4fab89a119e1b1ee938158",
+      "bytes": 284818,
+      "text_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P12-text.txt",
+      "text_sha256": "6ada739612de4ecbdb5c7724aba6d2761abe1c13c5e6fb29019d8ff8f60eed16",
+      "lines": 894,
+      "text_encoding": "UTF-8 decoded from original raw bytes",
+      "version_or_commit_observed": "Live Cloudflare R2 upload documentation",
+      "locator": "Method comparison and multipart restrictions",
+      "locators": [
+        {
+          "anchor": "5 TiB",
+          "text_lines": [
+            122
+          ],
+          "primary_heading_or_json_field": "Method comparison and multipart restrictions"
+        },
+        {
+          "anchor": "5 GiB",
+          "text_lines": [
+            121,
+            125,
+            832
+          ],
+          "primary_heading_or_json_field": "Method comparison and multipart restrictions"
+        },
+        {
+          "anchor": "same size",
+          "text_lines": [
+            834
+          ],
+          "primary_heading_or_json_field": "Method comparison and multipart restrictions"
+        },
+        {
+          "anchor": "7 days",
+          "text_lines": [
+            836
+          ],
+          "primary_heading_or_json_field": "Method comparison and multipart restrictions"
+        }
+      ],
+      "independent_semantic_reading": "Guide advertises single 5 GiB and multipart 5 TiB, 10,000 parts, 5 MiB–5 GiB part sizes; nonfinal parts equal-sized.",
+      "conditions_defaults_units_types_exceptions": "Incomplete MPU default auto-abort is seven days, configurable. P13 gives finer limits/footnotes. R2 is illustrative, not selected.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "semantic_review_status": "ASSESSED",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    },
+    {
+      "id": "P13",
+      "original_id": "S13",
+      "url": "https://developers.cloudflare.com/r2/platform/limits/",
+      "accessed_utc": "2026-10-10T04:41:54.376726+00:00",
+      "status": 200,
+      "resolved_url": "https://developers.cloudflare.com/r2/platform/limits/",
+      "content_type": "text/html",
+      "raw_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P13-raw.html",
+      "raw_sha256": "baeaafcf1e948ae9bfb79a871d3bba7945cb27e90f38e14fd567d90c9ec9b362",
+      "bytes": 113391,
+      "text_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P13-text.txt",
+      "text_sha256": "f9d0c7f1aa8d1a1d1b18daaf0f56e5d09963e61a0312904f95d7c1e2177207e9",
+      "lines": 182,
+      "text_encoding": "UTF-8 decoded from original raw bytes",
+      "version_or_commit_observed": "Live Cloudflare R2 limits documentation",
+      "locator": "Maximum upload size and numbered footnotes",
+      "locators": [
+        {
+          "anchor": "4.995 TiB",
+          "text_lines": [
+            132,
+            150
+          ],
+          "primary_heading_or_json_field": "Maximum upload size and numbered footnotes"
+        },
+        {
+          "anchor": "5 GiB less",
+          "text_lines": [
+            150
+          ],
+          "primary_heading_or_json_field": "Maximum upload size and numbered footnotes"
+        },
+        {
+          "anchor": "5 MiB less",
+          "text_lines": [
+            152
+          ],
+          "primary_heading_or_json_field": "Maximum upload size and numbered footnotes"
+        }
+      ],
+      "independent_semantic_reading": "Table gives single-part 5 GiB / multipart 4.995 TiB.",
+      "conditions_defaults_units_types_exceptions": "Footnotes explain 5 GiB less than 5 TiB, plus precise 5 MiB-less single/part request boundary. These matter near boundaries, not this unselected 40 GB illustration.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "semantic_review_status": "ASSESSED",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    },
+    {
+      "id": "P14",
+      "original_id": "S14",
+      "url": "https://docs.aws.amazon.com/cli/latest/topic/s3-config.html",
+      "accessed_utc": "2026-10-10T04:41:54.407283+00:00",
+      "status": 200,
+      "resolved_url": "https://docs.aws.amazon.com/cli/latest/topic/s3-config.html",
+      "content_type": "text/html",
+      "raw_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P14-raw.html",
+      "raw_sha256": "4bcc02d14b8856fc2affef9ea64b8cb444718643c7af60190e28c8bcf1d121e9",
+      "bytes": 57153,
+      "text_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P14-text.txt",
+      "text_sha256": "4ccb8a83377fadecd7dd92ec7448604f429a58da49afc83f929e29a9cd019abf",
+      "lines": 459,
+      "text_encoding": "UTF-8 decoded from original raw bytes",
+      "version_or_commit_observed": "Direct current page AWS CLI 2.37.12; cached web title 2.37.6",
+      "locator": "multipart_threshold / multipart_chunksize / transfer-client selection",
+      "locators": [
+        {
+          "anchor": "Default - 8MB",
+          "text_lines": [
+            174,
+            185
+          ],
+          "primary_heading_or_json_field": "multipart_threshold / multipart_chunksize / transfer-client selection"
+        },
+        {
+          "anchor": "Minimum For Uploads",
+          "text_lines": [
+            186
+          ],
+          "primary_heading_or_json_field": "multipart_threshold / multipart_chunksize / transfer-client selection"
+        },
+        {
+          "anchor": "preferred_transfer_client",
+          "text_lines": [
+            31,
+            286,
+            315,
+            319,
+            347,
+            355
+          ],
+          "primary_heading_or_json_field": "multipart_threshold / multipart_chunksize / transfer-client selection"
+        }
+      ],
+      "independent_semantic_reading": "Configuration docs give 8MB defaults, 5MB minimum upload chunk and auto-adjustment.",
+      "conditions_defaults_units_types_exceptions": "CLI configuration is not provider quota. MB syntax is binary in pinned code P32/P33; transfer-engine, source replayability and exact release affect other behavior.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "semantic_review_status": "ASSESSED",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    },
+    {
+      "id": "P15",
+      "original_id": "S15",
+      "url": "https://docs.aws.amazon.com/cli/latest/topic/s3-faq.html",
+      "accessed_utc": "2026-10-10T04:41:54.467117+00:00",
+      "status": 200,
+      "resolved_url": "https://docs.aws.amazon.com/cli/latest/topic/s3-faq.html",
+      "content_type": "text/html",
+      "raw_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P15-raw.html",
+      "raw_sha256": "31cacdf6ba7adea86bc7fbfce9f37075ca35ba09438a913d5c135baea5887f0b",
+      "bytes": 13411,
+      "text_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P15-text.txt",
+      "text_sha256": "ffa67ab12a09379e0bc5c25e05d01a25062c1945939123c2c73008b4344add8e",
+      "lines": 89,
+      "text_encoding": "UTF-8 decoded from original raw bytes",
+      "version_or_commit_observed": "Direct current page AWS CLI 2.37.12; cached web title 2.37.5",
+      "locator": "Upload checksum FAQ",
+      "locators": [
+        {
+          "anchor": "CRC64NVME",
+          "text_lines": [
+            43,
+            47
+          ],
+          "primary_heading_or_json_field": "Upload checksum FAQ"
+        },
+        {
+          "anchor": "does not match",
+          "text_lines": [
+            57
+          ],
+          "primary_heading_or_json_field": "Upload checksum FAQ"
+        },
+        {
+          "anchor": "when possible",
+          "text_lines": [
+            69
+          ],
+          "primary_heading_or_json_field": "Upload checksum FAQ"
+        }
+      ],
+      "independent_semantic_reading": "Upload checksum default CRC64NVME and selectable alternative are documented; validation mismatch fails AWS storage.",
+      "conditions_defaults_units_types_exceptions": "Download validation is conditional on returned checksum and command; none proves this unknown endpoint. Preserve mixed/latest-version uncertainty.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "semantic_review_status": "ASSESSED",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    },
+    {
+      "id": "P16",
+      "original_id": "S16",
+      "url": "https://docs.aws.amazon.com/cli/latest/reference/s3/cp.html",
+      "accessed_utc": "2026-10-10T04:41:54.525504+00:00",
+      "status": 200,
+      "resolved_url": "https://docs.aws.amazon.com/cli/latest/reference/s3/cp.html",
+      "content_type": "text/html",
+      "raw_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P16-raw.html",
+      "raw_sha256": "0551997f57e39c5a2e111ef3f4aa0d0f6cb87266eeb6eef280efd408f8dc9cd7",
+      "bytes": 72301,
+      "text_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P16-text.txt",
+      "text_sha256": "32b8532140ea9590cbb37add09d0c10748734122b2bc3237924de7cedb3200ed",
+      "lines": 408,
+      "text_encoding": "UTF-8 decoded from original raw bytes",
+      "version_or_commit_observed": "Direct current page AWS CLI 2.37.12; candidate/cached version labels may differ",
+      "locator": "cp global and checksum options",
+      "locators": [
+        {
+          "anchor": "--endpoint-url",
+          "text_lines": [
+            83,
+            215
+          ],
+          "primary_heading_or_json_field": "cp global and checksum options"
+        },
+        {
+          "anchor": "--checksum-mode",
+          "text_lines": [
+            73,
+            175
+          ],
+          "primary_heading_or_json_field": "cp global and checksum options"
+        },
+        {
+          "anchor": "--checksum-algorithm",
+          "text_lines": [
+            74,
+            177
+          ],
+          "primary_heading_or_json_field": "cp global and checksum options"
+        }
+      ],
+      "independent_semantic_reading": "cp exposes endpoint-url/profile/region/checksum-algorithm/checksum-mode.",
+      "conditions_defaults_units_types_exceptions": "Endpoint override is a client control, not API interoperability or automatic persistent restart proof. Checksum retrieval mode needs an actual stored checksum.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "semantic_review_status": "ASSESSED",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    },
+    {
+      "id": "P17",
+      "original_id": "S17",
+      "url": "https://github.com/minio/minio/issues/20455",
+      "accessed_utc": "2026-10-10T04:41:54.563766+00:00",
+      "status": 200,
+      "resolved_url": "https://github.com/minio/minio/issues/20455",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P17-raw.html",
+      "raw_sha256": "24d643916583efdd4c35ec1f808b9ef6b9b87d4a766d526bb2814ccd65045219",
+      "bytes": 446742,
+      "text_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P17-text.txt",
+      "text_sha256": "ad9e24c8f8a3fc8563a626ab3e0e09b7a0f133936fc15393ead9bbaf02d94ac3",
+      "lines": 300,
+      "text_encoding": "UTF-8 decoded from original raw bytes",
+      "version_or_commit_observed": "MinIO issue #20455; reported server RELEASE.2024-09-13T20-26-02Z",
+      "locator": "Expected/current behavior and environment",
+      "locators": [
+        {
+          "anchor": "RELEASE.2024-09-13",
+          "text_lines": [
+            139
+          ],
+          "primary_heading_or_json_field": "Expected/current behavior and environment"
+        },
+        {
+          "anchor": "ListObjectsV2",
+          "text_lines": [
+            129,
+            130,
+            133,
+            135,
+            159,
+            203
+          ],
+          "primary_heading_or_json_field": "Expected/current behavior and environment"
+        },
+        {
+          "anchor": "trailing checksum",
+          "text_lines": [
+            1,
+            109,
+            115,
+            126,
+            132,
+            162
+          ],
+          "primary_heading_or_json_field": "Expected/current behavior and environment"
+        }
+      ],
+      "independent_semantic_reading": "Reporter describes trailing SHA256 PutObject validation/response then missing later metadata.",
+      "conditions_defaults_units_types_exceptions": "GET/attributes lack value, ListObjectsV2 lacks algorithm. Precomputed checksum retrieval is a different case. Public report is not a reviewer reproduction. See P27 clean issue JSON.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "semantic_review_status": "ASSESSED",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    },
+    {
+      "id": "P18",
+      "original_id": "S18",
+      "url": "https://github.com/minio/minio/commit/f246ee7",
+      "accessed_utc": "2026-10-10T04:41:54.573451+00:00",
+      "status": 200,
+      "resolved_url": "https://github.com/minio/minio/commit/f246ee7",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P18-raw.html",
+      "raw_sha256": "826616fa0cd7786b8ef2ef0983170c5489d5fa01e51d5a8cc86bc1eacad9b71c",
+      "bytes": 412845,
+      "text_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P18-text.txt",
+      "text_sha256": "982fd7a35dc44cae81757bacb6310d1fa173fd4778d5f80793cb5658c944dc2e",
+      "lines": 289,
+      "text_encoding": "UTF-8 decoded from original raw bytes",
+      "version_or_commit_observed": "MinIO commit f246ee7f9ba1c3a133206e5726bfbb9d3bd86bf7, 2024-09-19",
+      "locator": "Fix PutObject Trailing checksum commit/diff",
+      "locators": [
+        {
+          "anchor": "PutObject would verify",
+          "text_lines": [
+            113
+          ],
+          "primary_heading_or_json_field": "Fix PutObject Trailing checksum commit/diff"
+        },
+        {
+          "anchor": "Checksum",
+          "text_lines": [
+            1,
+            112,
+            113,
+            127,
+            143,
+            147
+          ],
+          "primary_heading_or_json_field": "Fix PutObject Trailing checksum commit/diff"
+        }
+      ],
+      "independent_semantic_reading": "Code change persists the previously validated trailing checksum and propagates metadata.",
+      "conditions_defaults_units_types_exceptions": "Read the caller/definition diff in P25; code commit is not a containing packaged release.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "semantic_review_status": "ASSESSED",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    },
+    {
+      "id": "P19",
+      "original_id": "S19",
+      "url": "https://github.com/tus/tusd/releases/tag/v2.10.1",
+      "accessed_utc": "2026-10-10T04:41:54.646434+00:00",
+      "status": 200,
+      "resolved_url": "https://github.com/tus/tusd/releases/tag/v2.10.1",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P19-raw.html",
+      "raw_sha256": "850ff73251cbc5df8a99e558f208702149eecf300fad930212fbc6595a1f8757",
+      "bytes": 201852,
+      "text_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P19-text.txt",
+      "text_sha256": "ed0b6eb7c29101b17ab4fdaf5cbf0137b6d99149a7964b9a0e8fac3bebe53860",
+      "lines": 164,
+      "text_encoding": "UTF-8 decoded from original raw bytes",
+      "version_or_commit_observed": "tusd v2.10.1 release, 2026-09-16; tag resolves 388a27cb81c33b2349e0308b5e97e23797e86fd9",
+      "locator": "Release changes / PR #1385",
+      "locators": [
+        {
+          "anchor": "1385",
+          "text_lines": [
+            139
+          ],
+          "primary_heading_or_json_field": "Release changes / PR #1385"
+        },
+        {
+          "anchor": "388a27c",
+          "text_lines": [
+            131
+          ],
+          "primary_heading_or_json_field": "Release changes / PR #1385"
+        },
+        {
+          "anchor": "16 Sep",
+          "text_lines": [
+            125
+          ],
+          "primary_heading_or_json_field": "Release changes / PR #1385"
+        }
+      ],
+      "independent_semantic_reading": "Release notes explicitly include S3-store deferred-length silent-truncation fix.",
+      "conditions_defaults_units_types_exceptions": "Does not prove archive deployment or all-mode impact. Release API, PR and tagged implementation provide separate corroborating context.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "semantic_review_status": "ASSESSED",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    },
+    {
+      "id": "P20",
+      "original_id": "R01",
+      "url": "https://cloud.google.com/storage/docs/resumable-uploads",
+      "accessed_utc": "2026-10-10T04:41:54.748199+00:00",
+      "status": 200,
+      "resolved_url": "https://docs.cloud.google.com/storage/docs/resumable-uploads",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P20-raw.html",
+      "raw_sha256": "9e57136da636b8a45c5bd609e78d879868f1911c33b8f11e0905a57a2d1db572",
+      "bytes": 216300,
+      "text_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P20-text.txt",
+      "text_sha256": "06895dfb449d8b6fd3e5bc5475a3894c44c0ae45c0fa220dd7972e69eed31237",
+      "lines": 745,
+      "text_encoding": "UTF-8 decoded from original raw bytes",
+      "version_or_commit_observed": "Google Cloud Storage live documentation; last updated 2026-10-07",
+      "locator": "JSON initiation / CORS / session URI / integrity / retry",
+      "locators": [
+        {
+          "anchor": "uploadType=resumable",
+          "text_lines": [
+            588,
+            649
+          ],
+          "primary_heading_or_json_field": "JSON initiation / CORS / session URI / integrity / retry"
+        },
+        {
+          "anchor": "Origin",
+          "text_lines": [
+            158,
+            600,
+            601,
+            603,
+            605
+          ],
+          "primary_heading_or_json_field": "JSON initiation / CORS / session URI / integrity / retry"
+        },
+        {
+          "anchor": "one week",
+          "text_lines": [
+            656
+          ],
+          "primary_heading_or_json_field": "JSON initiation / CORS / session URI / integrity / retry"
+        },
+        {
+          "anchor": "Integrity checks",
+          "text_lines": [
+            666,
+            675
+          ],
+          "primary_heading_or_json_field": "JSON initiation / CORS / session URI / integrity / retry"
+        },
+        {
+          "anchor": "cannot be overwritten",
+          "text_lines": [
+            680
+          ],
+          "primary_heading_or_json_field": "JSON initiation / CORS / session URI / integrity / retry"
+        }
+      ],
+      "independent_semantic_reading": "POST with uploadType=resumable yields a bearer URI; subsequent PUTs and persisted-offset query enable recovery; lifetime is one week.",
+      "conditions_defaults_units_types_exceptions": "Origin must be included at cross-origin initiation, URI protected over HTTPS, final object checked against source. Intermediate chunks cannot be integrity-checked; persisted bytes cannot be overwritten; expired/lost URI restarts transfer. Analogy only.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "semantic_review_status": "ASSESSED",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    },
+    {
+      "id": "P21",
+      "original_id": null,
+      "url": "https://raw.githubusercontent.com/tus/tusd/v2.10.1/docs/_storage-backends/aws-s3.md",
+      "accessed_utc": "2026-10-10T04:41:54.757743+00:00",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/tus/tusd/v2.10.1/docs/_storage-backends/aws-s3.md",
+      "content_type": "text/plain; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P21-raw.txt",
+      "raw_sha256": "a348da4b3d52b7c721d8ee9ac452107ef8e94fa5fc363fbe5845614b7c8e680f",
+      "bytes": 10755,
+      "text_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P21-text.txt",
+      "text_sha256": "a348da4b3d52b7c721d8ee9ac452107ef8e94fa5fc363fbe5845614b7c8e680f",
+      "lines": 164,
+      "version_or_commit_observed": "tusd v2.10.1 raw tagged backend document",
+      "locator": "Storage format / Considerations / consistency / R2 configuration",
+      "locators": [
+        {
+          "anchor": "## Storage format",
+          "text_lines": [
+            67
+          ],
+          "primary_heading_or_json_field": "Storage format / Considerations / consistency / R2 configuration"
+        },
+        {
+          "anchor": "### Consistency",
+          "text_lines": [
+            98
+          ],
+          "primary_heading_or_json_field": "Storage format / Considerations / consistency / R2 configuration"
+        },
+        {
+          "anchor": "minimum part size",
+          "text_lines": [
+            96,
+            101,
+            148
+          ],
+          "primary_heading_or_json_field": "Storage format / Considerations / consistency / R2 configuration"
+        },
+        {
+          "anchor": "50 MiB",
+          "text_lines": [
+            150
+          ],
+          "primary_heading_or_json_field": "Storage format / Considerations / consistency / R2 configuration"
+        }
+      ],
+      "independent_semantic_reading": "Complete backend context supports .info, MPU, .part tail storage, final visibility, temporary disk, strong consistency and serialized uploads.",
+      "conditions_defaults_units_types_exceptions": "Distributed locks are for multiple instances sharing the bucket. R2 needs equal minimum and optimal part sizes; shown value retains global default optimal 50 MiB, not an independent measured tuning winner.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "semantic_review_status": "ASSESSED",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    },
+    {
+      "id": "P22",
+      "original_id": null,
+      "url": "https://api.github.com/repos/tus/tusd/releases/tags/v2.10.1",
+      "accessed_utc": "2026-10-10T04:41:54.762826+00:00",
+      "status": 200,
+      "resolved_url": "https://api.github.com/repos/tus/tusd/releases/tags/v2.10.1",
+      "content_type": "application/json; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P22-raw.json",
+      "raw_sha256": "49a2104ec3c87ae4398cb9dc24ff538abe76e475c8772a519791a3292c2a65bd",
+      "bytes": 31632,
+      "text_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P22-text.txt",
+      "text_sha256": "49a2104ec3c87ae4398cb9dc24ff538abe76e475c8772a519791a3292c2a65bd",
+      "lines": 1,
+      "version_or_commit_observed": "GitHub release API for tusd v2.10.1",
+      "locator": "published_at and body",
+      "locators": [
+        {
+          "anchor": "published_at",
+          "text_lines": [
+            1
+          ],
+          "primary_heading_or_json_field": "published_at and body"
+        },
+        {
+          "anchor": "1385",
+          "text_lines": [
+            1
+          ],
+          "primary_heading_or_json_field": "published_at and body"
+        }
+      ],
+      "independent_semantic_reading": "Release published 2026-09-16T17:42:31Z and body lists #1385.",
+      "conditions_defaults_units_types_exceptions": "Release created_at and tag commit are distinct fields; tag identity checked by P29. No product execution.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "semantic_review_status": "ASSESSED",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    },
+    {
+      "id": "P23",
+      "original_id": null,
+      "url": "https://api.github.com/repos/tus/tusd/pulls/1385",
+      "accessed_utc": "2026-10-10T04:41:54.904939+00:00",
+      "status": 200,
+      "resolved_url": "https://api.github.com/repos/tus/tusd/pulls/1385",
+      "content_type": "application/json; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P23-raw.json",
+      "raw_sha256": "0822a67e56ccab7554654001199e401a7c0ed09743bb5af62a54660fb75a28ac",
+      "bytes": 16737,
+      "text_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P23-text.txt",
+      "text_sha256": "0822a67e56ccab7554654001199e401a7c0ed09743bb5af62a54660fb75a28ac",
+      "lines": 1,
+      "version_or_commit_observed": "tusd PR #1385 primary author report; clean public API",
+      "locator": "Summary / root cause / fix / tests",
+      "locators": [
+        {
+          "anchor": "Root cause",
+          "text_lines": [
+            1
+          ],
+          "primary_heading_or_json_field": "Summary / root cause / fix / tests"
+        },
+        {
+          "anchor": "classic tus v1",
+          "text_lines": [
+            1
+          ],
+          "primary_heading_or_json_field": "Summary / root cause / fix / tests"
+        },
+        {
+          "anchor": "FinishUpload",
+          "text_lines": [
+            1
+          ],
+          "primary_heading_or_json_field": "Summary / root cause / fix / tests"
+        },
+        {
+          "anchor": "merged_at",
+          "text_lines": [
+            1
+          ],
+          "primary_heading_or_json_field": "Summary / root cause / fix / tests"
+        }
+      ],
+      "independent_semantic_reading": "Deferred sub-MinPartSize final tail could remain in .part while completion assembled only real MPU parts; fix promotes tail with declared-size guards and handles stale retries.",
+      "conditions_defaults_units_types_exceptions": "Report says classic tus v1 extra WriteChunk happened to avoid the gap while IETF Upload-Complete exposed it. PR API merged_at is null; released/tagged inclusion is established separately, not inferred from merged flag.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "semantic_review_status": "ASSESSED",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    },
+    {
+      "id": "P24",
+      "original_id": null,
+      "url": "https://api.github.com/repos/tus/tusd/pulls/1385/files",
+      "accessed_utc": "2026-10-10T04:41:54.915711+00:00",
+      "status": 200,
+      "resolved_url": "https://api.github.com/repos/tus/tusd/pulls/1385/files",
+      "content_type": "application/json; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P24-raw.json",
+      "raw_sha256": "1a6afbb264aae183e059fd6cd1c14bb89e14bff733d5b7c434e8e43d8f89fe02",
+      "bytes": 26985,
+      "text_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P24-text.txt",
+      "text_sha256": "1a6afbb264aae183e059fd6cd1c14bb89e14bff733d5b7c434e8e43d8f89fe02",
+      "lines": 1,
+      "version_or_commit_observed": "tusd PR #1385 public file patches",
+      "locator": "s3store.go FinishUpload plus regression tests",
+      "locators": [
+        {
+          "anchor": "FinishUpload",
+          "text_lines": [
+            1
+          ],
+          "primary_heading_or_json_field": "s3store.go FinishUpload plus regression tests"
+        },
+        {
+          "anchor": "TestFinishUploadPromotesIncompletePart",
+          "text_lines": [
+            1
+          ],
+          "primary_heading_or_json_field": "s3store.go FinishUpload plus regression tests"
+        },
+        {
+          "anchor": "declared size",
+          "text_lines": [
+            1
+          ],
+          "primary_heading_or_json_field": "s3store.go FinishUpload plus regression tests"
+        }
+      ],
+      "independent_semantic_reading": "Patch adds tail promotion, stale-tail deletion, mismatch rejection, and three regression scenarios.",
+      "conditions_defaults_units_types_exceptions": "Mock test inputs use tiny configured byte sizes to exercise control flow, not production S3 part quotas. Source inspection only; tests were not executed by reviewer or claimed executed by candidate.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "semantic_review_status": "ASSESSED",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    },
+    {
+      "id": "P25",
+      "original_id": null,
+      "url": "https://api.github.com/repos/minio/minio/commits/f246ee7",
+      "accessed_utc": "2026-10-10T04:41:55.120536+00:00",
+      "status": 200,
+      "resolved_url": "https://api.github.com/repos/minio/minio/commits/f246ee7",
+      "content_type": "application/json; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P25-raw.json",
+      "raw_sha256": "b9bc1ce9e78e8c95406653e239ee6c8172080833010ac75f3ff31cf749251d42",
+      "bytes": 8846,
+      "text_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P25-text.txt",
+      "text_sha256": "b9bc1ce9e78e8c95406653e239ee6c8172080833010ac75f3ff31cf749251d42",
+      "lines": 1,
+      "version_or_commit_observed": "MinIO commit f246ee7f9ba1c3a133206e5726bfbb9d3bd86bf7 primary API",
+      "locator": "commit and files[].patch caller/definition",
+      "locators": [
+        {
+          "anchor": "WantChecksum",
+          "text_lines": [
+            1
+          ],
+          "primary_heading_or_json_field": "commit and files[].patch caller/definition"
+        },
+        {
+          "anchor": "Trailing headers",
+          "text_lines": [
+            1
+          ],
+          "primary_heading_or_json_field": "commit and files[].patch caller/definition"
+        },
+        {
+          "anchor": "ChecksumTrailing",
+          "text_lines": [
+            1
+          ],
+          "primary_heading_or_json_field": "commit and files[].patch caller/definition"
+        }
+      ],
+      "independent_semantic_reading": "PutObjectHandler attaches hashReader.Checksum; Reader.Checksum returns checksum pointer; erasure put serializes after trailing fields fill and persists part metadata.",
+      "conditions_defaults_units_types_exceptions": "Checksum serialization removes trailing marker. Commit code review supports persistence change, not a complete compatibility certification or known packaged release.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "semantic_review_status": "ASSESSED",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    },
+    {
+      "id": "P26",
+      "original_id": null,
+      "url": "https://api.github.com/repos/minio/minio/pulls/20456",
+      "accessed_utc": "2026-10-10T04:41:55.174123+00:00",
+      "status": 200,
+      "resolved_url": "https://api.github.com/repos/minio/minio/pulls/20456",
+      "content_type": "application/json; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P26-raw.json",
+      "raw_sha256": "e5f638b89ad0219dd4784bc0d389876dedf0593e6a03420301515d82049c5217",
+      "bytes": 16788,
+      "text_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P26-text.txt",
+      "text_sha256": "e5f638b89ad0219dd4784bc0d389876dedf0593e6a03420301515d82049c5217",
+      "lines": 1,
+      "version_or_commit_observed": "MinIO PR #20456 primary API",
+      "locator": "merged_at / merge_commit_sha / body",
+      "locators": [
+        {
+          "anchor": "merged_at",
+          "text_lines": [
+            1
+          ],
+          "primary_heading_or_json_field": "merged_at / merge_commit_sha / body"
+        },
+        {
+          "anchor": "PutObject would verify",
+          "text_lines": [
+            1
+          ],
+          "primary_heading_or_json_field": "merged_at / merge_commit_sha / body"
+        }
+      ],
+      "independent_semantic_reading": "PR merged 2024-09-19T12:59:07Z, merge commit 05a6c170bf0c602d6fbd1bf2d536ef3b6eaf3b6e; describes trailing checksum not stored.",
+      "conditions_defaults_units_types_exceptions": "PR discussion mentions prospective functional test; this is not reviewer execution. Containing released package is not asserted.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "semantic_review_status": "ASSESSED",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    },
+    {
+      "id": "P27",
+      "original_id": null,
+      "url": "https://api.github.com/repos/minio/minio/issues/20455",
+      "accessed_utc": "2026-10-10T04:41:55.179237+00:00",
+      "status": 200,
+      "resolved_url": "https://api.github.com/repos/minio/minio/issues/20455",
+      "content_type": "application/json; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P27-raw.json",
+      "raw_sha256": "0c328720bc8e10aca2b5e23505d1ed3cdf876819c9c852451cb120dbd363ba0f",
+      "bytes": 7583,
+      "text_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P27-text.txt",
+      "text_sha256": "0c328720bc8e10aca2b5e23505d1ed3cdf876819c9c852451cb120dbd363ba0f",
+      "lines": 1,
+      "version_or_commit_observed": "MinIO issue #20455 primary API; reported RELEASE.2024-09-13T20-26-02Z",
+      "locator": "body Expected Behavior / Current Behavior / Environment",
+      "locators": [
+        {
+          "anchor": "ChecksumAlgorithm",
+          "text_lines": [
+            1
+          ],
+          "primary_heading_or_json_field": "body Expected Behavior / Current Behavior / Environment"
+        },
+        {
+          "anchor": "precalculated",
+          "text_lines": [
+            1
+          ],
+          "primary_heading_or_json_field": "body Expected Behavior / Current Behavior / Environment"
+        },
+        {
+          "anchor": "RELEASE.2024-09-13",
+          "text_lines": [
+            1
+          ],
+          "primary_heading_or_json_field": "body Expected Behavior / Current Behavior / Environment"
+        }
+      ],
+      "independent_semantic_reading": "Exact reproduction report distinguishes later checksum value versus algorithm and trailing versus precomputed input.",
+      "conditions_defaults_units_types_exceptions": "Reported .NET SDK single PutObject, not multipart. Subsequent GetObject requires checksum mode; attributes request names Checksum. No independent live reproduction.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "semantic_review_status": "ASSESSED",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    },
+    {
+      "id": "P28",
+      "original_id": null,
+      "url": "https://raw.githubusercontent.com/tus/tusd/v2.10.1/pkg/s3store/s3store.go",
+      "accessed_utc": "2026-10-10T04:41:55.238765+00:00",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/tus/tusd/v2.10.1/pkg/s3store/s3store.go",
+      "content_type": "text/plain; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P28-raw.txt",
+      "raw_sha256": "7b3a7df5fb82f8d575f57d1f7970c6e14586fb2bf62836c273f4983f3d24db12",
+      "bytes": 46082,
+      "text_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P28-text.txt",
+      "text_sha256": "7b3a7df5fb82f8d575f57d1f7970c6e14586fb2bf62836c273f4983f3d24db12",
+      "lines": 1335,
+      "version_or_commit_observed": "tusd v2.10.1 tagged s3store.go",
+      "locator": "FinishUpload lines 850 onward; WriteChunk and cached incomplete state",
+      "locators": [
+        {
+          "anchor": "func (upload s3Upload) FinishUpload",
+          "text_lines": [
+            850
+          ],
+          "primary_heading_or_json_field": "FinishUpload lines 850 onward; WriteChunk and cached incomplete state"
+        },
+        {
+          "anchor": "partsSize+incompletePartSize",
+          "text_lines": [
+            881
+          ],
+          "primary_heading_or_json_field": "FinishUpload lines 850 onward; WriteChunk and cached incomplete state"
+        },
+        {
+          "anchor": "func (upload *s3Upload) getInternalInfo",
+          "text_lines": [
+            634
+          ],
+          "primary_heading_or_json_field": "FinishUpload lines 850 onward; WriteChunk and cached incomplete state"
+        }
+      ],
+      "independent_semantic_reading": "Tagged implementation actually promotes lingering tail before completing and uses declared size to delete stale tail or reject mismatch.",
+      "conditions_defaults_units_types_exceptions": "Downloaded Go was inspected, not executed. getInternalInfo/fetchInfo retrieve declared state and part sizes; normal no-tail and concatenation paths are distinct.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "semantic_review_status": "ASSESSED",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    },
+    {
+      "id": "P29",
+      "url": "https://api.github.com/repos/tus/tusd/git/ref/tags/v2.10.1",
+      "original_id": null,
+      "accessed_utc": "2026-10-10T04:45:10.389787+00:00",
+      "status": 200,
+      "resolved_url": "https://api.github.com/repos/tus/tusd/git/ref/tags/v2.10.1",
+      "content_type": "application/json; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P29-raw.json",
+      "raw_sha256": "3f210b7110fe1e2515208e75ffe31216874f86824602db665e70837652fc5792",
+      "bytes": 327,
+      "text_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P29-text.txt",
+      "text_sha256": "3f210b7110fe1e2515208e75ffe31216874f86824602db665e70837652fc5792",
+      "lines": 1,
+      "version_or_commit_observed": "tusd v2.10.1 GitHub tag ref primary API",
+      "locator": "object.sha / object.type",
+      "locators": [
+        {
+          "anchor": "388a27cb",
+          "text_lines": [
+            1
+          ],
+          "primary_heading_or_json_field": "object.sha / object.type"
+        }
+      ],
+      "independent_semantic_reading": "Tag resolves to commit 388a27cb81c33b2349e0308b5e97e23797e86fd9.",
+      "conditions_defaults_units_types_exceptions": "Identity evidence complements semantic code/release inspection; hash itself is not proof of correct behavior.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "semantic_review_status": "ASSESSED",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    },
+    {
+      "id": "P30",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_CompletedPart.html",
+      "original_id": null,
+      "accessed_utc": "2026-10-10T04:45:10.541434+00:00",
+      "status": 200,
+      "resolved_url": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_CompletedPart.html",
+      "content_type": "text/html",
+      "raw_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P30-raw.html",
+      "raw_sha256": "2ba5a7c0a6ae7046a79940cdfb082f4555c0c472fc60ac0b6d70fac7d902240d",
+      "bytes": 21674,
+      "text_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P30-text.txt",
+      "text_sha256": "cf8b81236e0806507ef9e6fdff4d0996ee903ad7bc9b51c644a372da33a5d9da",
+      "lines": 113,
+      "text_encoding": "UTF-8 decoded from original raw bytes",
+      "version_or_commit_observed": "AWS S3 live CompletedPart API reference",
+      "locator": "PartNumber Note, general-purpose and directory buckets",
+      "locators": [
+        {
+          "anchor": "General purpose buckets",
+          "text_lines": [
+            86
+          ],
+          "primary_heading_or_json_field": "PartNumber Note, general-purpose and directory buckets"
+        },
+        {
+          "anchor": "Directory buckets",
+          "text_lines": [
+            93
+          ],
+          "primary_heading_or_json_field": "PartNumber Note, general-purpose and directory buckets"
+        },
+        {
+          "anchor": "InvalidPartOrder",
+          "text_lines": [
+            92
+          ],
+          "primary_heading_or_json_field": "PartNumber Note, general-purpose and directory buckets"
+        }
+      ],
+      "independent_semantic_reading": "General-purpose per-part additional checksums require consecutive numbers starting at 1; API describes HTTP400 InvalidPartOrder. Directory bucket rule is unconditional.",
+      "conditions_defaults_units_types_exceptions": "Per-part additional checksum use can coexist with full-object type. Do not infer full-object gaps are universally allowed or that guide HTTP500 is the only failure form.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "semantic_review_status": "ASSESSED",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    },
+    {
+      "id": "P31",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_UploadPart.html",
+      "original_id": null,
+      "accessed_utc": "2026-10-10T04:45:10.759544+00:00",
+      "status": 200,
+      "resolved_url": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_UploadPart.html",
+      "content_type": "text/html",
+      "raw_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P31-raw.html",
+      "raw_sha256": "99431e43cb9439f6d103bb647a25e6d1ef707191afbc45bc159ba70b0058dac1",
+      "bytes": 67235,
+      "text_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P31-text.txt",
+      "text_sha256": "e22760684a54cbeb4c9bc857d53eced0c158471b4f9d48096ae09f0602c0b8e0",
+      "lines": 425,
+      "text_encoding": "UTF-8 decoded from original raw bytes",
+      "version_or_commit_observed": "AWS S3 live UploadPart API reference",
+      "locator": "Part identification / checksum/encryption/endpoint conditions",
+      "locators": [
+        {
+          "anchor": "part number",
+          "text_lines": [
+            15,
+            17,
+            160,
+            362
+          ],
+          "primary_heading_or_json_field": "Part identification / checksum/encryption/endpoint conditions"
+        },
+        {
+          "anchor": "ChecksumAlgorithm",
+          "text_lines": [
+            113,
+            232
+          ],
+          "primary_heading_or_json_field": "Part identification / checksum/encryption/endpoint conditions"
+        },
+        {
+          "anchor": "Directory buckets",
+          "text_lines": [
+            29,
+            30,
+            31,
+            62,
+            89,
+            90
+          ],
+          "primary_heading_or_json_field": "Part identification / checksum/encryption/endpoint conditions"
+        }
+      ],
+      "independent_semantic_reading": "UploadPart uses existing upload ID and part number; same-number replacement and returned ETag/checksum apply within operation conditions.",
+      "conditions_defaults_units_types_exceptions": "Extra encryption, permissions and directory-bucket constraints are service-specific. No archive bucket type or encryption configuration is selected.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "semantic_review_status": "ASSESSED",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    },
+    {
+      "id": "P32",
+      "url": "https://raw.githubusercontent.com/aws/aws-cli/2.37.6/awscli/customizations/s3/transferconfig.py",
+      "original_id": null,
+      "accessed_utc": "2026-10-10T04:45:10.985180+00:00",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/aws/aws-cli/2.37.6/awscli/customizations/s3/transferconfig.py",
+      "content_type": "text/plain; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P32-raw.txt",
+      "raw_sha256": "c65e00699914ec652f9fb8e731b413f0ff8de6be6e4f5ae4dcfca5af89b23a04",
+      "bytes": 9770,
+      "text_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P32-text.txt",
+      "text_sha256": "c65e00699914ec652f9fb8e731b413f0ff8de6be6e4f5ae4dcfca5af89b23a04",
+      "lines": 264,
+      "version_or_commit_observed": "Released AWS CLI tag 2.37.6, commit not resolved",
+      "locator": "transferconfig.py DEFAULTS and conversion caller",
+      "locators": [
+        {
+          "anchor": "DEFAULTS",
+          "text_lines": [
+            26,
+            104,
+            105,
+            114,
+            120
+          ],
+          "primary_heading_or_json_field": "transferconfig.py DEFAULTS and conversion caller"
+        },
+        {
+          "anchor": "multipart_threshold",
+          "text_lines": [
+            27,
+            71,
+            81,
+            254
+          ],
+          "primary_heading_or_json_field": "transferconfig.py DEFAULTS and conversion caller"
+        },
+        {
+          "anchor": "_convert_human_readable_sizes",
+          "text_lines": [
+            123,
+            130
+          ],
+          "primary_heading_or_json_field": "transferconfig.py DEFAULTS and conversion caller"
+        }
+      ],
+      "independent_semantic_reading": "Threshold and chunk defaults are 8*(1024**2) bytes. RuntimeConfig converts human readable sizes through human_readable_to_int.",
+      "conditions_defaults_units_types_exceptions": "This is Python transfer configuration; pin transfer engine before extrapolating whole-client runtime behavior. Source was read, never imported or executed.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "semantic_review_status": "ASSESSED",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    },
+    {
+      "id": "P33",
+      "url": "https://raw.githubusercontent.com/aws/aws-cli/2.37.6/awscli/customizations/s3/utils.py",
+      "original_id": null,
+      "accessed_utc": "2026-10-10T04:45:11.121384+00:00",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/aws/aws-cli/2.37.6/awscli/customizations/s3/utils.py",
+      "content_type": "text/plain; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P33-raw.txt",
+      "raw_sha256": "f25353b4241749e56c1f76c6138f5d942eeea614baf1c606332e8e24cb360233",
+      "bytes": 31543,
+      "text_path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P33-text.txt",
+      "text_sha256": "f25353b4241749e56c1f76c6138f5d942eeea614baf1c606332e8e24cb360233",
+      "lines": 866,
+      "version_or_commit_observed": "Released AWS CLI tag 2.37.6, commit not resolved",
+      "locator": "utils.py SIZE_SUFFIX and human_readable_to_int",
+      "locators": [
+        {
+          "anchor": "SIZE_SUFFIX",
+          "text_lines": [
+            34,
+            116,
+            123
+          ],
+          "primary_heading_or_json_field": "utils.py SIZE_SUFFIX and human_readable_to_int"
+        },
+        {
+          "anchor": "def human_readable_to_int",
+          "text_lines": [
+            101
+          ],
+          "primary_heading_or_json_field": "utils.py SIZE_SUFFIX and human_readable_to_int"
+        },
+        {
+          "anchor": "multiplier",
+          "text_lines": [
+            123,
+            124
+          ],
+          "primary_heading_or_json_field": "utils.py SIZE_SUFFIX and human_readable_to_int"
+        }
+      ],
+      "independent_semantic_reading": "MB and MiB suffixes both map to 1024**2; no suffix denotes integer bytes.",
+      "conditions_defaults_units_types_exceptions": "This definition/caller resolves docs notation, not provider quota or live transfer performance. Source read without executing.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "semantic_review_status": "ASSESSED",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    }
+  ],
+  "original_artifact_manifest": "evidence/original-inspected-manifest.json",
+  "original_freeze_check": "evidence/freeze-and-path-check.json",
+  "reviewer_checks": "evidence/reviewer-checks.json",
+  "unknowns": "Original stage page snapshots and native raw tool receipts are absent from mapped evidence roots. Current retrieval is independent evidence, not proof of original retrieval chronology."
+}

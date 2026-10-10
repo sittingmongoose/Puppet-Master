@@ -1,0 +1,50 @@
+URL: https://docs.opentripplanner.org/en/latest/GTFS-RT-Config/
+Original locator: ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E09.txt
+Original SHA256: 6cb07a72d1ea69c49f21bf237539fbc90ff3fc4ed62fb2203a6e6be3228c7420
+Original numbered lines; gaps omitted. Not full response.
+
+129: Alerts
+130: Alerts are text messages attached to GTFS objects, informing riders of disruptions and changes. The
+131: information is downloaded in a single HTTP request and polled regularly.
+132: | Config Parameter
+133: | Type
+134: | Summary
+135: | Req./Opt.
+136: | Default Value
+137: | Since
+138: | type = "real-time-alerts"
+139: | enum
+140: | The type of the updater.
+141: | Required
+142: |
+143: | 1.5
+144: | earlyStartSec
+145: | integer
+146: | How long before the posted start of an event it should be displayed to users
+147: | Optional
+148: | 0
+149: | 1.5
+150: | feedId
+151: | string
+152: | The id of the feed to apply the alerts to.
+153: | Required
+154: |
+155: | 1.5
+156: | frequency
+157: | duration
+158: | How often the URL should be fetched.
+159: | Optional
+160: | "PT1M"
+161: | 1.5
+162: | fuzzyTripMatching
+163: | boolean
+164: | Whether to match trips fuzzily.
+165: | Optional
+166: | false
+167: | 1.5
+168: | url
+169: | string
+170: | URL to fetch the GTFS-RT feed from.
+171: | Required
+172: |
+173: | 1.5

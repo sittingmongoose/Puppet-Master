@@ -1,42 +1,67 @@
 [
   {
     "path": "ER12_RUNTIME/mechanics/native-root-code-mode/advanceJS.js",
+    "sha256": "fbf82fbad1121be21a3bab753a122059f8de06ec81b6100cc8a456dad3906b0a",
+    "bytes": 2661
+  },
+  {
+    "path": "ER12_RUNTIME/mechanics/native-root-code-mode/advanceJS.pre-invocation-clarification.js",
     "sha256": "4d268478254acf89b4c59eff5d37289fb9c298fe437f0e2d685462a5e1eaff40",
-    "scope": "root only explicit native caller using pinned helpers"
+    "bytes": 2618
+  },
+  {
+    "path": "ER12_RUNTIME/mechanics/native-root-code-mode/clarifySpecJS.js",
+    "sha256": "9bf15a8f4835128f27ceedd63d7267e0c99cd8f3cccf5c2da8f6600589d41588",
+    "bytes": 418
   },
   {
     "path": "ER12_RUNTIME/mechanics/native-root-code-mode/evalFullJS.js",
-    "sha256": "f926c952cd8bacc7ab0b330c0902cd5a7a173438797eca7e2f84abef5320e29a",
-    "scope": "root only explicit native caller using pinned helpers"
+    "sha256": "221760cd07b9154ae93d8928737ca5846aa15a93318178ddc1482c9200d01f34",
+    "bytes": 5468
   },
   {
     "path": "ER12_RUNTIME/mechanics/native-root-code-mode/evalRoleJS.js",
-    "sha256": "2d24c124621008a73d1775c157f2056949901bf42e5c4b46d9b67e96c5100a56",
-    "scope": "root only explicit native caller using pinned helpers"
+    "sha256": "990f149f8519f0b98efca49bfdcdb6e7d3118ab4dd71ffbc0a8ed3678276d680",
+    "bytes": 4281
+  },
+  {
+    "path": "ER12_RUNTIME/mechanics/native-root-code-mode/evalRoleJS.pre-root-role-custody.js",
+    "sha256": "bd1f9dac2e2b8b1fdbe892b869be48f93cd487a51e903bd2c5b5189dafacc05a",
+    "bytes": 3174
   },
   {
     "path": "ER12_RUNTIME/mechanics/native-root-code-mode/harvestJS.js",
     "sha256": "2af2a930d8db0ca4a5fc6a35f0e1b2848146dadc13744772c176439ae43e7184",
-    "scope": "root only explicit native caller using pinned helpers"
+    "bytes": 1082
   },
   {
     "path": "ER12_RUNTIME/mechanics/native-root-code-mode/saveStateJS.js",
     "sha256": "32fdd70f1b9704f4bb022b17907b19c7720c596532b8d4b86a0b8022969f4948",
-    "scope": "root only explicit native caller using pinned helpers"
+    "bytes": 2245
   },
   {
     "path": "ER12_RUNTIME/mechanics/native-root-code-mode/standardSpecJS.js",
     "sha256": "803f679454dd062b9d11ec54c7adf04172b0c5330bc949ca115161672315fac6",
-    "scope": "root only explicit native caller using pinned helpers"
+    "bytes": 2507
   },
   {
     "path": "ER12_RUNTIME/mechanics/native-root-code-mode/startPipelineJS.js",
-    "sha256": "8319326f83cf67ba412325583cddc1641063f6eef38c7dcea87b0e7df3b29f0e",
-    "scope": "root only explicit native caller using pinned helpers"
+    "sha256": "179e5095d99288f5b7f4bdba8a1c0db642f84f0ff9e10486f360635973129c40",
+    "bytes": 3669
+  },
+  {
+    "path": "ER12_RUNTIME/mechanics/native-root-code-mode/startPipelineJS.pre-invocation-clarification.js",
+    "sha256": "66c6e9ba5e5d057728b46a920c4792b14b95fad0463d9e025bdc80e792c1ee06",
+    "bytes": 3626
   },
   {
     "path": "ER12_RUNTIME/mechanics/native-root-code-mode/startRoleJS.js",
+    "sha256": "d82c635dd9ee0a1ef34f95f8cf8c810eb8a276c2e307d0d78340a208ea9d602d",
+    "bytes": 2492
+  },
+  {
+    "path": "ER12_RUNTIME/mechanics/native-root-code-mode/startRoleJS.pre-invocation-clarification.js",
     "sha256": "b0acd1aa7540771a183e48a388b9a8f3fb9e418293aca6eadfb9d4c4fe8d1a3c",
-    "scope": "root only explicit native caller using pinned helpers"
+    "bytes": 2449
   }
 ]

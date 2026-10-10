@@ -1,0 +1,26 @@
+{
+  "file": "E06-v160-bagit.py",
+  "operation": "Static AST parse only; downloaded code NOT_EXECUTED",
+  "definitions": [
+    {
+      "name": "FileNormalizationConflict",
+      "line": 878
+    },
+    {
+      "name": "build_unicode_normalized_lookup_dict",
+      "line": 921
+    }
+  ],
+  "call_sites": [
+    {
+      "name": "FileNormalizationConflict",
+      "line": 954
+    }
+  ],
+  "tests": {
+    "file": "E06-v160-test.py",
+    "operation": "Static AST parse only; downloaded code NOT_EXECUTED",
+    "definitions": [],
+    "call_sites": []
+  }
+}

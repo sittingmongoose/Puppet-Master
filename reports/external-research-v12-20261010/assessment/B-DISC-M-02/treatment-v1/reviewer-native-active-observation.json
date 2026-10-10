@@ -1,0 +1,16 @@
+{
+  "description": "Actual get_goal response observed after the reviewer created one native Goal. This is an active-state observation, not a reconstructed create_goal receipt and not candidate telemetry.",
+  "response": {
+    "goal": {
+      "threadId": "01a1241e-956d-7312-9bbd-c956570856e8",
+      "objective": "Complete the independent bounded ER12 Track B semantic review for B-DISC-M-02 treatment-v1 exactly as assigned: read the full RUBRIC-v1.md and treatment role input-map.json, assignment.md, freeze.json; follow the map to read the full shared assignment, fixture, every corpus member, authored role document, source-map.json, and every source member. Independently retrieve governing primary evidence and assess only the assigned role axes and exact obligations, distinguishing semantic judgment from source/coverage/delivery/native/protocol/time. Hash inspected science/input files and check the existing terminal freeze. Save complete assessment.md, assessment.json, source-map and navigable primary evidence only under ER12_RUNTIME/assessment/B-DISC-M-02/treatment-v1. No delegation, candidate feedback or repair, accounts, Git/publication, other arms/history, shared roster/status labels, or ER11 rescore. Native/effective/billing remain UNKNOWN absent actual evidence. Complete this Goal only after the saved judgment; report concise result and paths. Finish within 25 minutes.",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791607365,
+      "updatedAt": 1791607365
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  }
+}

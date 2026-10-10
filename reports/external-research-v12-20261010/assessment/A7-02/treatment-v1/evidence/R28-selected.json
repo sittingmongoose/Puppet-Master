@@ -1,0 +1,6 @@
+{
+  "html_url": "https://github.com/JabRef/jabref/issues/15106",
+  "created_at": "2026-02-13T18:48:51Z",
+  "closed_at": "2026-03-13T07:12:12Z",
+  "body": "### JabRef version\n\n5.15 (latest release)\n\n### Operating system\n\nGNU / Linux\n\n### Details on version and operating system\n\nUbuntu 24.04.4 LTS\n\n### Checked with the [latest development build](https://builds.jabref.org/main/) (copy version output from About dialog)\n\n- [x] I made a backup of my libraries before testing the latest development version.\n- [x] I have tested the latest development version and the problem persists\n\n### Steps to reproduce the behaviour\n\n1. Use double dash \"--\" in a page range in bibtex \"pages\" field. E.g. \"pages = {13905--13911}\"\n2. Export as RIS\n3. Fields SP and EP contain the whole range: \"SP  - 13905\u201313911\" and \"EP  - 13905\u201313911\"\n4. The correct behavior can only be achieved if a single dash \"-\" is used in the bibtex \"pages\" field.\n\n\n### Appendix\n\n...\n<details>\n\n<summary>Log File</summary>\n\n```\nPaste an excerpt of your log file here\n```\n\n</details>\n"
+}

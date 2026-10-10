@@ -1,0 +1,2328 @@
+{
+  "schema": "ER12-independent-semantic-assessment-v1",
+  "assignment": "ONE completed ER12 A7-02 treatment full pipeline",
+  "arm": "treatment",
+  "slot": "A7-02",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "source_correct": true,
+  "judgment_basis": "No remaining material source error, omission or unsupported consequential decision identified in the retained final after independent primary-source checking. Minor source/lineage limitations are preserved. This does not qualify the pipeline protocol/native/billing record.",
+  "material_findings": [],
+  "remaining_material_findings": [],
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Original obligations and negative constraints",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS",
+      "reason": "All eight obligations are substantively covered in a coherent proposal. The optional bibliography remains optional and conditional; DOI-less records, editor decisions, credit/raw text and version separation survive. Account creation and paper downloads are not recommended executions. Comparing a curator tool with a future account model does not create forbidden contributor accounts. Exact clauses and their draft assumptions are separately dispositioned below.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+          "line": 11,
+          "locator": "## Proposed pilot workflow"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+          "line": 90,
+          "locator": "## Exact revealed-plan disposition"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+          "line": 60,
+          "locator": "## Authority, owner choices"
+        }
+      ],
+      "sources": [
+        "S01",
+        "S04",
+        "S08",
+        "S10",
+        "S16",
+        "S19",
+        "S20",
+        "S21"
+      ]
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source claims and exact applicability",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "reason": "Independent primary retrieval supports the consequential product, identifier, relationship, lookup, export and released-fix claims. Operation/domain/default exceptions are recorded for every source. Neither a DOI nor a match is promoted to approval. The final limits Zotero matching to old documentation, Paperpile Auto Update to unavailable indexed evidence, and JabRef to a reported path and named prerelease. The broken Paperpile locator and S15 date cue are minor source-record limitations; no remaining consequential recommendation depends on an unsupported current UI promise.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+          "line": 23,
+          "locator": "## Reference-manager and reconciliation comparison"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+          "line": 34,
+          "locator": "## DOI-less citations"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+          "line": 54,
+          "locator": "## Released importer/exporter"
+        }
+      ],
+      "sources": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S07",
+        "S08",
+        "S09",
+        "S10",
+        "S11",
+        "S12",
+        "S13",
+        "S14",
+        "S15",
+        "S16",
+        "S17",
+        "S18",
+        "S19",
+        "S20",
+        "S21",
+        "S22",
+        "S23",
+        "S24"
+      ]
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar discovery, alternatives, implementation/history and opportunities",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "reason": "Paperpile adds a non-preselected manager comparison; its default skipping, dismiss controls and non-reimportable JSON have practical implications. OpenRefine supplies a bounded original-value-plus-link analogy, including provider variation and auto-match limits. DataCite/Crossref show version-aware identity and DOI-less lookup opportunities. A reviewed CSV route is a meaningful lower-dependency alternative. JabRef gives a concrete report/fix/prerelease chain and a discriminating page-range test. This is useful investigation, not merely requests to verify later. The stages did not investigate the reachable main-domain Auto Update article; that limits one discovery branch, while the final does not depend on it.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+          "line": 23,
+          "locator": "## Reference-manager"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+          "line": 44,
+          "locator": "## Optional enrichment"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+          "line": 54,
+          "locator": "## Released importer/exporter"
+        }
+      ],
+      "sources": [
+        "S08",
+        "S09",
+        "S10",
+        "S13",
+        "S14",
+        "S16",
+        "S19",
+        "S20",
+        "S21",
+        "S22",
+        "S23",
+        "S24"
+      ]
+    },
+    {
+      "axis": 4,
+      "name": "Wrong criticism/corrections/rejections and exact plan dispositions",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "reason": "The substantive rejections of title-only merges, automatically authoritative DOI metadata, exclusion of identifier-less records and generalization from three DOI imports are justified. All six indexed criticisms have final dispositions. Several severity labels overstate defects: the draft already acknowledged OpenRefine auto-match, file restrictions, NOT_RUN provider checks, and open owner choices. These are preserved as lineage limitations rather than treated as material final errors. The final contains no resulting false correction or harmful rejection of supported scope.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+          "line": 90,
+          "locator": "## Exact revealed-plan disposition"
+        }
+      ],
+      "sources": [
+        "S01",
+        "S02",
+        "S08",
+        "S13",
+        "S16",
+        "S20",
+        "S22",
+        "S23",
+        "S24"
+      ],
+      "criticism_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06"
+      ]
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning preserved from discovery through final",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "reason": "The final preserves the app-independent intake ledger, exact submissions/credit, DOI-optional manual path, candidate/approval distinction, independent version records, typed relations, two managers, OpenRefine, CSV fallback, optional RIS/BibTeX, export loss caveats, narrow JabRef chain, owner inputs and research-only execution status. It changes the draft preference for Zotero into two plausible candidates, consistent with unresolved selection. The premature final is separately retained. Some proposed interruption/backoff scenario wording is compressed out of the final validation table; no product test is falsely claimed and no original mandatory obligation is removed.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+          "line": 3,
+          "locator": "## Recommendation"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+          "line": 11,
+          "locator": "## Proposed pilot workflow"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+          "line": 72,
+          "locator": "## Validation status"
+        }
+      ],
+      "sources": [
+        "S05",
+        "S08",
+        "S13",
+        "S18",
+        "S19",
+        "S20",
+        "S22"
+      ]
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed versus executed validation and oracle applicability",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS",
+      "reason": "Executed claims are limited to research and mechanical handoff/review binding; product, API, import/export and pilot operation remain explicitly NOT_RUN. Prospective checks discriminate false positives, scholarly versions, DOI-less ambiguity, provenance/credit, format loss, attachments, optional controls and style. The JabRef raw SP/EP oracle applies to the exact simple range and selected build, not every pagination form or another manager. Source code/release notes and third-party tests are not represented as local execution. No implementation or deployment is an added prerequisite. Gate sequencing is a separate protocol finding.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+          "line": 72,
+          "locator": "## Validation status and prioritized plan"
+        }
+      ],
+      "sources": [
+        "S05",
+        "S08",
+        "S16",
+        "S18",
+        "S22",
+        "S23",
+        "S24"
+      ]
+    }
+  ],
+  "axis_coverage": {
+    "assessed": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "unassessed": [],
+    "capped": false
+  },
+  "exact_plan_clauses": [
+    {
+      "clause": 1,
+      "exact_original_obligation": "Compare two reference-management/export workflows and an analogous identity/reconciliation mechanism.",
+      "exact_original_plan_treatment": "Normalize titles and merge identical strings. If a DOI is present, treat its metadata as automatically authoritative and replace the submitted citation.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A7-02/plan.md",
+        "line": 15,
+        "locator": "### 1."
+      },
+      "independent_disposition": "Correct/reject unsafe assumptions; complete comparison",
+      "assessment": "PASS",
+      "rationale": "Zotero and Paperpile are compared, OpenRefine is analogous, and CSV is a fallback. Normalization can suggest candidates but cannot approve identity; DOI metadata cannot replace submitted citation automatically.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+        "line": 23,
+        "locator": "## Reference-manager"
+      },
+      "evidence_ids": [
+        "S01",
+        "S02",
+        "S09",
+        "S13",
+        "S16",
+        "S20"
+      ]
+    },
+    {
+      "clause": 2,
+      "exact_original_obligation": "Explain DOI-less records, preprint versus published version, duplicate detection and preservation of submitted versus corrected metadata.",
+      "exact_original_plan_treatment": "Zotero is the initial choice; JabRef is an unassessed alternative. Export format and round-trip loss are undecided.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A7-02/plan.md",
+        "line": 19,
+        "locator": "### 2."
+      },
+      "independent_disposition": "Revise tentative product preference; retain undecided format/fidelity",
+      "assessment": "PASS",
+      "rationale": "Neither Zotero nor JabRef is imposed as winner. Paperpile is independently compared; JabRef is investigated for history. Format and selected-reader fidelity remain owner/test conditions, and DOI-less/version/provenance needs are met.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+        "line": 34,
+        "locator": "## DOI-less citations"
+      },
+      "evidence_ids": [
+        "S03",
+        "S04",
+        "S05",
+        "S08",
+        "S10",
+        "S19",
+        "S20",
+        "S21"
+      ]
+    },
+    {
+      "clause": 3,
+      "exact_original_obligation": "Research optional export and identifier-enrichment paths, separating a lookup result from an authoritative user-approved correction.",
+      "exact_original_plan_treatment": "Keep a downloadable bibliography as authorized optional scope. Records without identifiers will be excluded from enrichment and have no manual path yet.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A7-02/plan.md",
+        "line": 23,
+        "locator": "### 3."
+      },
+      "independent_disposition": "Retain optional export; correct identifier-less exclusion",
+      "assessment": "PASS",
+      "rationale": "The bibliography remains optional. DOI-less records stay eligible for manual curation and approved citation search; returned fields are separately stored proposals until editor acceptance.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+        "line": 44,
+        "locator": "## Optional enrichment"
+      },
+      "evidence_ids": [
+        "S11",
+        "S16",
+        "S17",
+        "S18"
+      ]
+    },
+    {
+      "clause": 4,
+      "exact_original_obligation": "Investigate a relevant released importer/exporter or metadata-lookup failure chain and identify which records/versions it affects.",
+      "exact_original_plan_treatment": "No release or import/export history is attached. A successful import of three DOI records is proposed as general validation.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A7-02/plan.md",
+        "line": 27,
+        "locator": "### 4."
+      },
+      "independent_disposition": "Add narrow released history; reject three-DOI general-validation claim",
+      "assessment": "PASS",
+      "rationale": "A 5.15/development-build report, merged delimiter fix and named prerelease establish bounded history. Representative fixtures replace the proposed three-DOI generalization; none is claimed executed.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+        "line": 54,
+        "locator": "## Released importer/exporter"
+      },
+      "evidence_ids": [
+        "S22",
+        "S23",
+        "S24",
+        "R25",
+        "R26",
+        "R27",
+        "R28",
+        "R29",
+        "R30"
+      ]
+    },
+    {
+      "clause": 5,
+      "exact_original_obligation": "Preserve and investigate this supported optional scope: a downloadable bibliography in a commonly supported interchange format. It is an authorized option, not a mandatory feature or an established technical capability; recommend conditions, retain it when supported, and explain any evidence-based exclusion.",
+      "exact_original_plan_treatment": "Retain a downloadable bibliography in a commonly supported interchange format as supported owner-authorized optional scope. Support here means that the brief explicitly permits it; technical support, conditions and interoperability still need research. Do not remove it merely because the baseline route lacks it, or silently promote it to mandatory scope.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A7-02/plan.md",
+        "line": 31,
+        "locator": "### 5."
+      },
+      "independent_disposition": "Retain authorized optional capability conditionally",
+      "assessment": "PASS",
+      "rationale": "RIS/BibTeX technical paths are independently documented. Required-field/reader/build and attachment checks govern enabling. No format is mandatory, and no evidence-based reason to remove the option is asserted.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+        "line": 52,
+        "locator": "**Retention decision"
+      },
+      "evidence_ids": [
+        "S04",
+        "S05",
+        "S06",
+        "S07",
+        "S08",
+        "S10"
+      ]
+    },
+    {
+      "clause": 6,
+      "exact_original_obligation": "Make owner decisions explicit: The bibliography editor approves merges and corrections; submitters retain credit and original citation text. The group lead chooses presentation style and acceptable lookup providers.",
+      "exact_original_plan_treatment": "Owner authority is reserved as follows: The bibliography editor approves merges and corrections; submitters retain credit and original citation text. The group lead chooses presentation style and acceptable lookup providers. The draft has not obtained these decisions. Its tentative implementation assumptions cannot substitute for them.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A7-02/plan.md",
+        "line": 35,
+        "locator": "### 6."
+      },
+      "independent_disposition": "Retain explicit roles and unresolved concrete decisions",
+      "assessment": "PASS",
+      "rationale": "Editor approval and submitter rights are preserved. Group lead selects presentation/provider acceptability. Manager, exact format, fields and target readers stay open owner choices. The investigator draft overread the plan statement about unobtained decisions, but that accusation is absent from the final.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+        "line": 60,
+        "locator": "## Authority, owner choices"
+      },
+      "evidence_ids": [
+        "INPUT-BRIEF-6"
+      ]
+    },
+    {
+      "clause": 7,
+      "exact_original_obligation": "Preserve negative constraints: Do not download paywalled papers, create contributor accounts, presume a DOI uniquely identifies every scholarly version, or silently merge a preprint with a journal article.",
+      "exact_original_plan_treatment": "Binding exclusions: Do not download paywalled papers, create contributor accounts, presume a DOI uniquely identifies every scholarly version, or silently merge a preprint with a journal article. The draft has no complete trace showing that its assumptions comply; revise the proposal wherever necessary to preserve these exclusions.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A7-02/plan.md",
+        "line": 39,
+        "locator": "### 7."
+      },
+      "independent_disposition": "Retain all binding exclusions",
+      "assessment": "PASS",
+      "rationale": "No paywalled download, contributor-account creation, universal DOI/version rule or silent preprint/journal merge is proposed. The stricter no-PDF/Connector operating choice is a local way to maintain the citation-only pilot, not an invented original obligation.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+        "line": 70,
+        "locator": "Binding constraints:"
+      },
+      "evidence_ids": [
+        "S01",
+        "S08",
+        "S10",
+        "S19",
+        "S20",
+        "S21"
+      ]
+    },
+    {
+      "clause": 8,
+      "exact_original_obligation": "Deliver one coherent evidence-backed research proposal covering obligations 1–8, with recommendations, source/version applicability, useful discoveries, unresolved owner inputs, and a validation table separating checks actually executed from checks merely proposed. Do not report research sources or future tests as executed product validation.",
+      "exact_original_plan_treatment": "The draft currently contains no coherent evidence-backed final proposal. Its proposed demos are research/validation ideas only. A complete revision must preserve every obligation, disclose corrections and retained options, and not confuse documentation review with successful product operation.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A7-02/plan.md",
+        "line": 43,
+        "locator": "### 8."
+      },
+      "independent_disposition": "Replace incomplete draft with coherent scoped proposal",
+      "assessment": "PASS",
+      "rationale": "The final is self-contained; it includes recommendations, comparison, conditions, source maps, owner questions, preserved options and execution/proposal distinctions. It is not a patch list or product-operation claim.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+        "line": 3,
+        "locator": "## Recommendation and evidence"
+      },
+      "evidence_ids": [
+        "ALL-PRIMARY"
+      ]
+    }
+  ],
+  "plan_validation_rows": [
+    {
+      "exact_plan_row": "External documentation/version review | NOT_RUN | Investigator must retrieve relevant public primary evidence.",
+      "disposition": "Research is subsequently reported executed and independently source-checked here; original handoff NOT_RUN is historical, not current product validation."
+    },
+    {
+      "exact_plan_row": "Product comparison and history investigation | NOT_RUN | No winner, applicability conclusion or failure-chain finding is supplied.",
+      "disposition": "Subsequent comparative/history research is present; product operation remains NOT_RUN and no winner is imposed."
+    },
+    {
+      "exact_plan_row": "Pilot scenario walkthrough | PROPOSED | Walk through ordinary use, interruption, correction and incompatible/missing input.",
+      "disposition": "Ordinary/correction/missing/conflicting/version cases survive as proposed checks; explicit interruption/resume test wording is compressed (L04). No scenario walkthrough is reported executed."
+    },
+    {
+      "exact_plan_row": "Optional-path compatibility | PROPOSED | Check the option on its own terms, with conditions and owner choices.",
+      "disposition": "Retained as selected-reader/build/field round trip and attachment/optional-provider controls; PROPOSED/NOT_RUN."
+    },
+    {
+      "exact_plan_row": "End-to-end product operation | NOT_RUN | No installation, deployment or live system access is authorized by this fixture.",
+      "disposition": "Preserved as NOT_RUN; no implementation, account, deployment or service operation is an extra grading obligation."
+    }
+  ],
+  "criticism_dispositions": [
+    {
+      "id": "C01",
+      "candidate_disposition": {
+        "id": "C01",
+        "classification": "material incomplete",
+        "draft_locator": "Candidate workflows and tradeoffs; Workflow comparison and alternatives; DOI-less records, duplicates, and scholarly versions",
+        "evidence": "S13 Reconciling, Overview, match outcomes and Reconciliation actions; S14 Reconciliation API opening definition.",
+        "disposition": "accept",
+        "rationale": "The source permits confident auto-matches and bulk best-candidate actions while retaining original cell text. The proposal now states those observed behaviors and separately requires editor approval for this group.",
+        "final_locator": "Reference-manager and reconciliation comparison — OpenRefine row; DOI-less citations, duplicates, versions, and corrections"
+      },
+      "independent_result": "AMEND_SEVERITY; final clarification supported",
+      "independent_rationale": "The discovery summary could suggest mandatory selection, but the full draft OpenRefine row already says confident auto-match and explicitly configures editor review. The criticism is a useful emphasis change rather than established material incompleteness. The final correctly explains automatic/bulk behavior while retaining raw text and local approval.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+        "line": 29,
+        "locator": "OpenRefine reconciliation analogy"
+      },
+      "primary_evidence_ids": [
+        "S13",
+        "S14"
+      ]
+    },
+    {
+      "id": "C02",
+      "candidate_disposition": {
+        "id": "C02",
+        "classification": "material incomplete",
+        "draft_locator": "Recommendation; Workflow comparison and alternatives; Optional lookup and downloadable bibliography",
+        "evidence": "S01 Via your web browser and PDFs; S07 exporter options; S08 Uploading RIS and BibTeX files with PDFs; S10 library-data export behavior.",
+        "disposition": "accept",
+        "rationale": "The final explicitly excludes Zotero Connector/PDF save, Paperpile PDF/attachment import, and file export, while retaining metadata and links only.",
+        "final_locator": "Reference-manager and reconciliation comparison — Zotero and Paperpile rows; Optional enrichment and downloadable bibliography"
+      },
+      "independent_result": "SUPPORTED_CLARIFICATION; original materiality overstated",
+      "independent_rationale": "PDF/attachment paths are real documented possibilities. The full draft already excludes Connector/PDF download and disables file/note export. Repeating concrete exclusions in comparison and workflow improves usability without repairing a demonstrated material omission. Final retains both managers and optional export.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+        "line": 18,
+        "locator": "For Zotero, do not use"
+      },
+      "primary_evidence_ids": [
+        "S01",
+        "S07",
+        "S08",
+        "S10"
+      ]
+    },
+    {
+      "id": "C03",
+      "candidate_disposition": {
+        "id": "C03",
+        "classification": "unsupported",
+        "draft_locator": "Identity, version, correction, and export model; DOI-less records, duplicates, and scholarly versions; DOI-less enrichment validation row",
+        "evidence": "S16 Using Simple Text Query to match references with DOIs; no query was issued in this stage.",
+        "disposition": "accept",
+        "rationale": "The final attributes multiple or non-unique results to Crossref documentation and identifies a local no-candidate state as a proposed requirement, not an observed service screen.",
+        "final_locator": "DOI-less citations, duplicates, versions, and corrections; Validation status and prioritized plan — DOI-less lookup"
+      },
+      "independent_result": "REJECT_UNSUPPORTED-EXECUTION IMPLICATION; final wording harmless",
+      "independent_rationale": "Draft and discovery expressly say no query/API was issued; no-match cases are proposed handling/tests. S16 supports inability to find a unique match but not a demonstrated zero-result UI. The final sharper local no-candidate wording is accurate, but it does not establish that the draft falsely claimed execution.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+        "line": 36,
+        "locator": "A local “no candidate” state"
+      },
+      "primary_evidence_ids": [
+        "S16"
+      ]
+    },
+    {
+      "id": "C04",
+      "candidate_disposition": {
+        "id": "C04",
+        "classification": "minor locator/wording",
+        "draft_locator": "Proposed pilot workflow and record model, step 6; Optional lookup and downloadable bibliography; Authority and unresolved owner inputs",
+        "evidence": "Brief clause 6 assigns presentation style and lookup-provider acceptability to the group lead; clause 5 authorizes but does not require a commonly supported interchange download.",
+        "disposition": "accept",
+        "rationale": "The final keeps exact format and required fields as open owner choices and does not claim the brief delegates interchange format selection.",
+        "final_locator": "Optional enrichment and downloadable bibliography; Authority, owner choices, and negative constraints"
+      },
+      "independent_result": "ACCEPT_NARROW_AUTHORITY_CLARIFICATION",
+      "independent_rationale": "The brief assigns presentation style/provider choices, not exact interchange format. Draft allocation of format to the lead is reasonable as a suggested local choice but should not be presented as already delegated authority. Final confirms format with owners; this was a minor role-wording issue.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+        "line": 46,
+        "locator": "The exact interchange format"
+      },
+      "primary_evidence_ids": [
+        "INPUT-BRIEF-6"
+      ]
+    },
+    {
+      "id": "C05",
+      "candidate_disposition": {
+        "id": "C05",
+        "classification": "material incomplete",
+        "draft_locator": "Released importer/exporter failure chain; Affected scope; JabRef page-range regression validation row",
+        "evidence": "S22 #15106 reported version/environment and development-build statement; S23 #15315 merged fix; S24 v6.0-alpha.6 release note and tag.",
+        "disposition": "accept",
+        "rationale": "The final preserves the issue reporter's 5.15/Ubuntu and then-current development-build claim as a report, documents the narrow pages-to-RIS case, and limits the linked fix claim to the named alpha release.",
+        "final_locator": "Released importer/exporter defect chain; Validation status and prioritized plan — JabRef page-range regression"
+      },
+      "independent_result": "ACCEPT_VERSION-SCOPE_ADDITION; not broad release proof",
+      "independent_rationale": "Independent issue API confirms both development-build checkboxes are checked. Final restores that unpinned reporter claim, 5.15/Ubuntu context and named alpha limits. Original omission of an unspecified development build did not invalidate the narrow 5.15 failure chain, but addition improves applicability.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+        "line": 56,
+        "locator": "The reporter names JabRef 5.15"
+      },
+      "primary_evidence_ids": [
+        "S22",
+        "S23",
+        "S24",
+        "R28",
+        "R29",
+        "R30"
+      ]
+    },
+    {
+      "id": "C06",
+      "candidate_disposition": {
+        "id": "C06",
+        "classification": "honestly unresolved external input",
+        "draft_locator": "Paperpile workflow comparison; optional enrichment; uncertainty and validation statements",
+        "evidence": "S12 official Auto Update URL returned HTTP 502 on this review at 2026-10-10T04:47:55Z; frozen source map also records an official indexed result and prior direct failures.",
+        "disposition": "retain_uncertainty",
+        "rationale": "The live help page and interface remain unavailable; the final clearly marks the indexed-result flow as unverified and proposes a selected-build check.",
+        "final_locator": "Reference-manager and reconciliation comparison — Paperpile row; Optional enrichment and downloadable bibliography"
+      },
+      "independent_result": "RETAIN_HISTORICAL_FETCH_LIMIT; INVESTIGATION_LIMITATION",
+      "independent_rationale": "The exact www.api host still fails. R12 on paperpile.com is reachable and corroborates the manual preview/apply flow, while bulk updates have different background semantics. The final honestly qualifies its own failed retrieval and makes no committed all-operation review guarantee. Its unresolved product operation remains a future selected-build check; treating the article itself as wholly inaccessible reflects incomplete investigation.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+        "line": 48,
+        "locator": "Paperpile Auto Update may illustrate"
+      },
+      "primary_evidence_ids": [
+        "S12",
+        "R12"
+      ]
+    }
+  ],
+  "supported_meaning_preservation": [
+    {
+      "meaning": "One retained submission per contributor, exact raw citation, separate corrections and editor decisions",
+      "discovery": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/discovery.md",
+        "line": 16,
+        "locator": "Proposed data flow:"
+      },
+      "draft": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/draft.md",
+        "line": 11,
+        "locator": "Capture submissions."
+      },
+      "final": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+        "line": 13,
+        "locator": "Capture each submission."
+      },
+      "result": "PRESERVED"
+    },
+    {
+      "meaning": "DOI-less records/manual curation and lookup candidates separate from approved values",
+      "discovery": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/discovery.md",
+        "line": 14,
+        "locator": "DOI is optional;"
+      },
+      "draft": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/draft.md",
+        "line": 40,
+        "locator": "A record without DOI is not excluded."
+      },
+      "final": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+        "line": 36,
+        "locator": "A missing DOI does not exclude a citation."
+      },
+      "result": "PRESERVED_WITH_SHARPER_NO-CANDIDATE_QUALIFICATION"
+    },
+    {
+      "meaning": "Distinct scholarly versions and typed links; no automatic identity decision from title/DOI",
+      "discovery": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/discovery.md",
+        "line": 14,
+        "locator": "Treat a submitted citation,"
+      },
+      "draft": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/draft.md",
+        "line": 14,
+        "locator": "Keep identity and version links separate."
+      },
+      "final": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+        "line": 16,
+        "locator": "Represent record identity separately"
+      },
+      "result": "PRESERVED"
+    },
+    {
+      "meaning": "Two manager workflows, bounded OpenRefine analogy and CSV fallback",
+      "discovery": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/discovery.md",
+        "line": 6,
+        "locator": "## Candidate workflows"
+      },
+      "draft": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/draft.md",
+        "line": 20,
+        "locator": "## Workflow comparison"
+      },
+      "final": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+        "line": 23,
+        "locator": "## Reference-manager"
+      },
+      "result": "PRESERVED; ZOTERO_PREFERENCE_BECOMES_OPEN_CANDIDACY"
+    },
+    {
+      "meaning": "Optional metadata/link-only RIS/BibTeX, round-trip conditions and loss caveat",
+      "discovery": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/discovery.md",
+        "line": 18,
+        "locator": "Keep bibliography download optional"
+      },
+      "draft": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/draft.md",
+        "line": 52,
+        "locator": "### Evidence-based retention condition"
+      },
+      "final": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+        "line": 52,
+        "locator": "**Retention decision"
+      },
+      "result": "PRESERVED"
+    },
+    {
+      "meaning": "Bounded JabRef page-range report/fix/prerelease and NOT_RUN product checks",
+      "discovery": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/discovery.md",
+        "line": 20,
+        "locator": "## Released defect/fix"
+      },
+      "draft": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/draft.md",
+        "line": 56,
+        "locator": "## Released importer/exporter"
+      },
+      "final": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+        "line": 54,
+        "locator": "## Released importer/exporter"
+      },
+      "result": "PRESERVED_WITH_REPORTED_DEVELOPMENT_BUILD_ADDED"
+    },
+    {
+      "meaning": "Original owner roles, credit and negative constraints",
+      "discovery": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/discovery.md",
+        "line": 29,
+        "locator": "6. **Authority"
+      },
+      "draft": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/draft.md",
+        "line": 62,
+        "locator": "## Authority and unresolved"
+      },
+      "final": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+        "line": 60,
+        "locator": "## Authority, owner choices"
+      },
+      "result": "PRESERVED; FORMAT_OWNER_ASSUMPTION_SOFTENED"
+    }
+  ],
+  "useful_discoveries_and_alternatives": [
+    {
+      "finding": "Paperpile default skipping can hide contributed submissions; capture every input before manager import.",
+      "evidence_ids": [
+        "S08",
+        "S09"
+      ],
+      "use": "Concrete provenance safeguard with an alternative manager and dismissable false matches."
+    },
+    {
+      "finding": "Paperpile JSON export is internal and non-reimportable; select RIS/BibTeX for candidate interchange instead of assuming JSON backup.",
+      "evidence_ids": [
+        "S10"
+      ],
+      "use": "Practical alternative-format condition, not an endorsement of lossless transfer."
+    },
+    {
+      "finding": "OpenRefine preserves original strings beside entity links but can auto/bulk match; borrow its data separation and impose explicit group editor authority.",
+      "evidence_ids": [
+        "S13",
+        "S14",
+        "S15"
+      ],
+      "use": "Analogous mechanism with a domain/automation boundary."
+    },
+    {
+      "finding": "Crossref citation query can offer competing DOI candidates; DOI-less records can have a manual/search path.",
+      "evidence_ids": [
+        "S16",
+        "S17",
+        "S18"
+      ],
+      "use": "Investigated optional identifier enrichment, preserving uncertainty and approval."
+    },
+    {
+      "finding": "DataCite minor updates and canonical/version DOIs refute one-DOI/one-version identity; Crossref/DataCite typed relations connect rather than merge versions.",
+      "evidence_ids": [
+        "S19",
+        "S20",
+        "S21"
+      ],
+      "use": "Version-aware schema opportunity with explicit namespace and stewardship limits."
+    },
+    {
+      "finding": "JabRef ASCII-to-Unicode page-range boundary motivates an exact raw RIS SP/EP fixture, bounded to reported/released paths.",
+      "evidence_ids": [
+        "S22",
+        "S23",
+        "S24",
+        "R25",
+        "R26",
+        "R27"
+      ],
+      "use": "Useful implementation/history example and discriminating prospective oracle."
+    },
+    {
+      "finding": "A reviewed CSV intake ledger can avoid dependence on either manager while retaining the same audit/identity duties.",
+      "evidence_ids": [
+        "LOCAL-PROPOSAL"
+      ],
+      "use": "Meaningful competing local architecture, expressly unimplemented and unvalidated."
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L01",
+      "kind": "minor locator and investigation breadth",
+      "material": false,
+      "finding": "The stages repeatedly used a failing www.api Paperpile host. Main-domain R12 is independently reachable and documents both manual review/apply and different bulk-update semantics. Final retains an explicitly qualified analogy rather than committing to the unverified UI.",
+      "evidence_ids": [
+        "S12",
+        "R12"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+        "line": 48,
+        "locator": "Paperpile Auto Update may illustrate"
+      }
+    },
+    {
+      "id": "L02",
+      "kind": "criticism severity inflation / lineage",
+      "material": false,
+      "finding": "C01/C02/C03 label as material or unsupported matters already qualified in the complete draft. The investigator also called unobtained owner decisions misleading about roles although the plan itself explicitly preserves those roles. Final clarifications are accurate and no harmful correction remains.",
+      "evidence_ids": [
+        "S01",
+        "S08",
+        "S13",
+        "S16",
+        "INPUT-PLAN-6"
+      ],
+      "local_artifacts": [
+        "ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/draft.md",
+        "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/critique.md"
+      ]
+    },
+    {
+      "id": "L03",
+      "kind": "minor source version cue",
+      "material": false,
+      "finding": "S15 candidate maps list a 2025-01-17 update cue; the retrieved official cell-editing page reports 2026-01-28. Other unspecified date cues are exposed in this review. The final clustering claim remains supported.",
+      "evidence_ids": [
+        "S15"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+        "line": 29,
+        "locator": "Clustering groups similar strings"
+      }
+    },
+    {
+      "id": "L04",
+      "kind": "minor prospective-check compression",
+      "material": false,
+      "finding": "The original plan explicitly proposes interruption walkthroughs and discovery proposes backoff checks. Final retains provider-failure-safe design and service-policy advice but does not name interruption/resume or backoff tests in its validation table. These are useful retained prospective ideas, not required deployed validation; all eight mandatory obligations remain met.",
+      "evidence_ids": [
+        "S18"
+      ],
+      "local_artifacts": [
+        "ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/discovery.md",
+        "ER12_RUNTIME/frozen-inputs/A7-02/plan.md"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+        "line": 72,
+        "locator": "## Validation status"
+      }
+    },
+    {
+      "id": "L05",
+      "kind": "unresolved selected-build interoperability",
+      "material": false,
+      "finding": "Exact export format, required fields, target readers, relation fidelity, manager build and provider approval remain owner or future compatibility choices. The final investigated publicly available candidate paths and provides discriminating tests; this is appropriate for an unimplemented planning proposal.",
+      "evidence_ids": [
+        "S04",
+        "S05",
+        "S08",
+        "S10"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+        "line": 52,
+        "locator": "**Retention decision"
+      }
+    },
+    {
+      "id": "L06",
+      "kind": "execution/provenance evidence boundary",
+      "material": false,
+      "finding": "Authored source trees contain indexes/maps, not original response captures or product execution traces. This reviewer independently retrieved governing evidence, so semantic support does not depend on trusting source-count or operation assertions. Candidate research-execution particulars and absence of prohibited actions cannot be independently certified from these files alone.",
+      "local_artifacts": [
+        "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/checks.json",
+        "ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/sources/index.md",
+        "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/sources/index.md"
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "topic": "Candidate native terminal completion",
+      "status": "UNKNOWN",
+      "basis": "Assigned files contain raw-response active records and root T3 terminal evidence plus narrative native-completion claims; no independently retrieved native terminal receipt for either candidate Goal was inspected."
+    },
+    {
+      "topic": "Effective provider/model/reasoning/service tier and billing/inference consumption",
+      "status": "UNKNOWN",
+      "basis": "Dispatch records requested AUTHORIZED_PROVIDER_INSTANCE/gpt-6-luna/max; investigator priority and critic default. T3 responses return provider/model identifiers but no provider execution attestation or billing record. Native tokensUsed is not billed inference."
+    },
+    {
+      "topic": "Unauthorized assistance, hidden plan exposure or extra candidate Goals/workers",
+      "status": "UNKNOWN",
+      "basis": "Assignment prohibitions, reveal/freeze timing and authored records are visible; complete live transcripts/access telemetry are outside the bounded evidence. No violation of these kinds is asserted."
+    },
+    {
+      "topic": "Selected manager/build/format/provider/fields/readers and owner acceptance",
+      "status": "UNRESOLVED_OWNER_CHOICES",
+      "basis": "Correctly left open after documentation, workflow and history investigation. No deployment or account creation is required to grade the proposal."
+    },
+    {
+      "topic": "Product and service behavior against a real fixture",
+      "status": "NOT_RUN",
+      "basis": "No product/import/export/DOI-service tests are claimed. Documentation review, helper hashes and external contributor tests are distinct."
+    }
+  ],
+  "delivery": {
+    "judgment": "COMPLETE_PRESENT",
+    "retained_final": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+    "bytes": 22479,
+    "sha256": "87c78f9d594f1506980830ea7cdd802c701a088a010d049b5d8381cb673045dd",
+    "frozen_handoff_and_final_copies": "Full bytes equal to mapped original science; all original terminal-freeze artifact hashes match. See evidence/freeze-integrity.json.",
+    "missing_required_science_artifacts": [],
+    "source_evidence_capture": "Each authored source tree contains its complete index only; original fetched page responses are not present."
+  },
+  "native": {
+    "candidate_judgment": "RECORDED_ACTIVE; TERMINAL_UNKNOWN",
+    "investigator_active_record": "ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/goal-active.json",
+    "investigator_active_after_freeze_record": "ER12_RUNTIME/runs/A7-02/treatment/control/investigator-frozen-active.json",
+    "critic_active_record": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/goal-active.json",
+    "root_t3_terminal_record": "ER12_RUNTIME/runs/A7-02/treatment/terminal-science-freeze-root.json",
+    "reviewer_actual_goal_active_receipt": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/reviewer-goal-active.json",
+    "reviewer_goal_completion": "Performed only after complete assessment files saved; direct terminal receipt will be stored separately."
+  },
+  "protocol": {
+    "judgment": "FAIL_ORDERING; CORRECTED_BIND_AND_SEAL_RECORDED",
+    "source_judgment_unchanged": true,
+    "finding": "Critic assignment requires successful check-input before checks/final writing and freeze-review before final.md exists. Checks records source review at 04:47:49Z; intake succeeds only at 04:59:40.814Z. stage-process.md admits an initial final was authored before successful intake/review binding and preserves it as provisional-final-diagnostic.md. Later rename, binding and new retained final do not erase the initial ordering violation.",
+    "corrected_sequence": [
+      "check-input 2026-10-10T04:59:40.814Z",
+      "freeze-review 2026-10-10T04:59:59.252Z",
+      "retained final mtime 2026-10-10T05:00:37.624995Z",
+      "seal-final package frozen 2026-10-10T05:01:22.855Z"
+    ],
+    "evidence_paths": [
+      "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/assignment.md",
+      "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/checks.json",
+      "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/intake.json",
+      "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/review-binding.json",
+      "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/stage-process.md",
+      "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/provisional-final-record.json",
+      "ER12_RUNTIME/runs/A7-02/treatment/final-package/manifest.json"
+    ],
+    "assistance": "UNKNOWN; no cause or unauthorized feedback inferred from the corrected sequence",
+    "native": "Stored active native responses do not by themselves attest native terminal completion; T3 terminal status is separate."
+  },
+  "time": {
+    "review_started_at_utc": "2026-10-10T05:03:27Z",
+    "review_deadline_utc": "2026-10-10T05:48:27Z",
+    "judgment_saved_at_utc": "2026-10-10T05:18:01.231492+00:00",
+    "review_capped": false,
+    "unassessed_axes": [],
+    "candidate_investigator_requested_at_utc": "2026-10-10T04:28:56.084Z",
+    "candidate_handoff_frozen_at_utc": "2026-10-10T04:40:30.399Z",
+    "candidate_critic_requested_at_utc": "2026-10-10T04:40:54.317Z",
+    "candidate_final_sealed_at_utc": "2026-10-10T05:01:22.855Z",
+    "root_terminal_observed_at_utc": "2026-10-10T05:03:11.687656Z",
+    "deadline_observation": "Handoff and retained final are within their recorded assigned deadlines. Timeliness of bytes is supported; actual native terminal timing and effective compute/billing remain UNKNOWN. Earlier critic deadline is recorded, not treated as a restarted 60-minute clock.",
+    "latency_comparison": "NOT_ASSESSED; no other arm or paired result inspected; no speed or savings inference."
+  },
+  "requested_route": {
+    "investigator": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna",
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    },
+    "critic_finalizer": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna",
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    },
+    "effective": "UNKNOWN",
+    "billing": "UNKNOWN"
+  },
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A7-02/brief.md",
+      "bytes": 3324,
+      "sha256": "9614eaf2ea2e05c77b4ca739f614801595832fb20b1160fd1163f8e93ee73b02",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A7-02/plan.md",
+      "bytes": 5916,
+      "sha256": "03928ccee4efbf0f624b296c0d8e7f21ce0d491a5aa52eca4e763ffd08d42131",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/control/handoff-binding.json",
+      "bytes": 112,
+      "sha256": "ba33a82179132a9db92bb9f0eaa0e0feaa3de14d808345ccf98f0e38b07adc39",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/control/investigator-frozen-active.json",
+      "bytes": 736,
+      "sha256": "02ba1c4c898f0317d4b106db28556d3f38ca6d198cfd9360982e9294cabcef64",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/control/topology.json",
+      "bytes": 484,
+      "sha256": "fd4de368995c89f0c93e5e8c60a9a453d3d07b85e7b3f56e7627dc5969dcb3b1",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/final-package/checks.json",
+      "bytes": 12114,
+      "sha256": "da9f1f3a21b83ea24fc72ee144b7440a8073bf03e4642960a8cbbf36be6d1634",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/final-package/critique-dispositions.json",
+      "bytes": 4407,
+      "sha256": "05175340b4801e8f4ea3093b890709baedf282c99caa7b13f0305b3bb4542db5",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/final-package/critique-index.json",
+      "bytes": 153,
+      "sha256": "a14556b10b580911548aca0b2e4ed43fb1ad3a8acf66b4b573d3feb0d5125c44",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/final-package/critique.md",
+      "bytes": 7837,
+      "sha256": "cbd23bac4618222be9d567fbb2e6147719422b15e3de1b131ebcb81fef48e186",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/final-package/final.md",
+      "bytes": 22479,
+      "sha256": "87c78f9d594f1506980830ea7cdd802c701a088a010d049b5d8381cb673045dd",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/final-package/manifest.json",
+      "bytes": 4353,
+      "sha256": "8c76ab2425356413269f2d25a2c8f7592e26911eb2430eb98399409a45cfd8a5",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/final-package/review-binding.json",
+      "bytes": 923,
+      "sha256": "acffa9340691088b1cec849fc4e398b6e33c04edcbb00c161900612cc926278b",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/final-package/source-map.json",
+      "bytes": 33549,
+      "sha256": "f886568ecf01a0689219f7bcd52a0cfbc49c086eaa44b50cd289f56f6a3abd25",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/final-package/sources/index.md",
+      "bytes": 4551,
+      "sha256": "0d05a15c1bb586f90481873ba9fffe5f336f7d8494e2b9fa21badda1192e0143",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/handoff/inputs/brief.md",
+      "bytes": 3324,
+      "sha256": "9614eaf2ea2e05c77b4ca739f614801595832fb20b1160fd1163f8e93ee73b02",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/handoff/manifest.json",
+      "bytes": 4418,
+      "sha256": "3d15d98c9ff54bb2d692644907d517746fb8f2220cb64dbdc8c173d50c6d9d98",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/handoff/stages/investigator/discovery.md",
+      "bytes": 10141,
+      "sha256": "c56e9944bf942d767ea1066e8ae2e624dd7c44f996f441c9598e12388bf4bfd1",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/handoff/stages/investigator/draft.md",
+      "bytes": 22205,
+      "sha256": "68b62f1221b5c477438c9828ac3a136f75fda5cd5090ec567da6bab0ce1fa0ec",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/handoff/stages/investigator/plan-reveal.json",
+      "bytes": 429,
+      "sha256": "6513db8f98090934073adec6e97bf48ccb407a23875323d847ac8836af0cf235",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/handoff/stages/investigator/revealed-plan.md",
+      "bytes": 5916,
+      "sha256": "03928ccee4efbf0f624b296c0d8e7f21ce0d491a5aa52eca4e763ffd08d42131",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/handoff/stages/investigator/source-map.json",
+      "bytes": 19332,
+      "sha256": "d95f1a689daca5fe13a60764082d507f877d08cf2a30d88fcf3469775b2586fb",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/handoff/stages/investigator/sources/index.md",
+      "bytes": 3594,
+      "sha256": "c6dabd7fa0ffd40c983f9448086d178d379f147876ca2272a85314f13e355d2b",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/inputs/brief.md",
+      "bytes": 3324,
+      "sha256": "9614eaf2ea2e05c77b4ca739f614801595832fb20b1160fd1163f8e93ee73b02",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/assignment.md",
+      "bytes": 5967,
+      "sha256": "5041080fab6b2d6d465b5bbbdb200c8d7fe5554f4c33a0010d850e5becbb078a",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/checks.json",
+      "bytes": 12114,
+      "sha256": "da9f1f3a21b83ea24fc72ee144b7440a8073bf03e4642960a8cbbf36be6d1634",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/critique-dispositions.json",
+      "bytes": 4407,
+      "sha256": "05175340b4801e8f4ea3093b890709baedf282c99caa7b13f0305b3bb4542db5",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/critique-index.json",
+      "bytes": 153,
+      "sha256": "a14556b10b580911548aca0b2e4ed43fb1ad3a8acf66b4b573d3feb0d5125c44",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/critique.md",
+      "bytes": 7837,
+      "sha256": "cbd23bac4618222be9d567fbb2e6147719422b15e3de1b131ebcb81fef48e186",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/dispatch.json",
+      "bytes": 4434,
+      "sha256": "790499c1ff321c14beafae21ec02444e2d7a6c36da724661ce8aeb2837f30c63",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+      "bytes": 22479,
+      "sha256": "87c78f9d594f1506980830ea7cdd802c701a088a010d049b5d8381cb673045dd",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/freeze.json",
+      "bytes": 4168,
+      "sha256": "7c8b5b4d81b08dec7698a2f17422bcf7f326f467d47af94d01371cc4b16ededd",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/goal-active.json",
+      "bytes": 746,
+      "sha256": "bf7ae54736cc936013fb96bddc6e34dad647bb9e765b002bdd96a41ee50438da",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/input-map.json",
+      "bytes": 1997,
+      "sha256": "23faa2e86f3a17652f139ae11bf6aee7bfeeb6193e5e8f644b3990f51f98c951",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/intake.json",
+      "bytes": 270,
+      "sha256": "e4e85ae193c6473327edb9e7543ad1086f05903556e09cf312506138069d762a",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/provisional-final-diagnostic.md",
+      "bytes": 22158,
+      "sha256": "f94c95ab6fe811fb3286bdb5befa2cc603b2c64fc46c1fde5ea4fe8d9dc4de58",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/provisional-final-record.json",
+      "bytes": 778,
+      "sha256": "99d18818fc1987e75793c4f805bfd28708c0603b78b7ea9ee44cf9d6763bff50",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/review-binding.json",
+      "bytes": 923,
+      "sha256": "acffa9340691088b1cec849fc4e398b6e33c04edcbb00c161900612cc926278b",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/service-tier-change.json",
+      "bytes": 519,
+      "sha256": "f53345ac5af46de74bdb71131f07608c96ad9b4fbc35e4332397d006a84f8d62",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/source-map.json",
+      "bytes": 33549,
+      "sha256": "f886568ecf01a0689219f7bcd52a0cfbc49c086eaa44b50cd289f56f6a3abd25",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/sources/index.md",
+      "bytes": 4551,
+      "sha256": "0d05a15c1bb586f90481873ba9fffe5f336f7d8494e2b9fa21badda1192e0143",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/stage-process.md",
+      "bytes": 2497,
+      "sha256": "80371709d2d65e01eb0853c2603469569d132f456ce82bad6273d3538c01e3a2",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/assignment.md",
+      "bytes": 4598,
+      "sha256": "edc9c8c61fe72e2579ba14916f48f5c42429489a5a5ff24653705e15f34775c4",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/discovery.md",
+      "bytes": 10141,
+      "sha256": "c56e9944bf942d767ea1066e8ae2e624dd7c44f996f441c9598e12388bf4bfd1",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/dispatch.json",
+      "bytes": 4371,
+      "sha256": "0c5312e805e246be442ee203ae8ac81f48b3ec92f010a96ee9cadfa06ac70224",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/draft.md",
+      "bytes": 22205,
+      "sha256": "68b62f1221b5c477438c9828ac3a136f75fda5cd5090ec567da6bab0ce1fa0ec",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/freeze.json",
+      "bytes": 1526,
+      "sha256": "a11a0fcfce999a21b5bc1c929070daa123d2c71b65eb030e9cf2cd46bca19b6f",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/goal-active.json",
+      "bytes": 737,
+      "sha256": "67d042039edc7dedf66f7b36abfc747137aee58ee6115bc0d3a60c800c74130c",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/input-map.json",
+      "bytes": 722,
+      "sha256": "df8ce8ab4b5a1d68af1d25aca5c5e20cafbdb94b32686266b1affbb2db8443b0",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/plan-reveal.json",
+      "bytes": 429,
+      "sha256": "6513db8f98090934073adec6e97bf48ccb407a23875323d847ac8836af0cf235",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 5916,
+      "sha256": "03928ccee4efbf0f624b296c0d8e7f21ce0d491a5aa52eca4e763ffd08d42131",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/source-map.json",
+      "bytes": 19332,
+      "sha256": "d95f1a689daca5fe13a60764082d507f877d08cf2a30d88fcf3469775b2586fb",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/sources/index.md",
+      "bytes": 3594,
+      "sha256": "c6dabd7fa0ffd40c983f9448086d178d379f147876ca2272a85314f13e355d2b",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/terminal-science-freeze-root.json",
+      "bytes": 9407,
+      "sha256": "34f22abb5b6532b84e4ee66d1a6da8ccd5b0b13273a11eb1fc4e988c5564d512",
+      "inspection": "Full byte read; substantive original science and mapped handoff meaning reviewed. Dispatch is routing evidence only."
+    }
+  ],
+  "primary_urls_and_versions": [
+    {
+      "id": "S01",
+      "subject": "Zotero intake and metadata quality",
+      "exact_url": "https://www.zotero.org/support/adding_items_to_zotero",
+      "independently_observed_version": "Help updated 2026-02-11",
+      "locator": "Add Item by Identifier; Via your web browser; Verify and Edit Your Records",
+      "reviewer_observation": "ISBN/DOI/PMID/arXiv ID/ADS Bibcode intake is documented. Supplier metadata may be incomplete or incorrect; browser saving may also retrieve accessible PDFs.",
+      "condition_default_exception_domain": "Documentation only, not an operated current build. Avoiding Connector/PDF paths is a feasible local proposal, not a universal requirement.",
+      "observed_operation": "Read-only governing primary documentation/source/history retrieval; no application fixture, importer/exporter, DOI lookup or live write executed",
+      "retrieval": {
+        "id": "S01",
+        "requested_url": "https://www.zotero.org/support/adding_items_to_zotero",
+        "started_at_utc": "2026-10-10T05:05:11.621543+00:00",
+        "operation": "Unauthenticated read-only public HTTP GET; no manager/API fixture executed",
+        "status": 200,
+        "final_url": "https://www.zotero.org/support/adding_items_to_zotero",
+        "content_type": "text/html; charset=UTF-8",
+        "text_path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S01.txt",
+        "text_sha256": "d3a057e9de6242bd47e5b4306f24132babbcbbfaa15eba68e9e6871e5b339085",
+        "response_sha256": "365fcb7be207706604d4e2dbd9f5599eff806d1994a843689c8d045507e5bb8d",
+        "response_bytes": 57178,
+        "text_lines": 167,
+        "finished_at_utc": "2026-10-10T05:05:11.772643+00:00"
+      },
+      "local_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S01.txt",
+          "first_line": 60,
+          "last_line": 147
+        }
+      ],
+      "semantic_result": "SUPPORTED_WITH_LIMITS"
+    },
+    {
+      "id": "S02",
+      "subject": "Zotero duplicate detection and merge",
+      "exact_url": "https://www.zotero.org/support/duplicate_detection",
+      "independently_observed_version": "Help updated 2017-11-25",
+      "locator": "Finding Duplicates; Merging Duplicates",
+      "reviewer_observation": "Title/DOI/ISBN comparisons, publication years within one year, and at least one last-name/first-initial creator match are library-local heuristics. The page disallows marking false positives and allows manual conflict selection.",
+      "condition_default_exception_domain": "The 2017 help text does not certify any selected contemporary executable. Final expressly preserves that limitation.",
+      "observed_operation": "Read-only governing primary documentation/source/history retrieval; no application fixture, importer/exporter, DOI lookup or live write executed",
+      "retrieval": {
+        "id": "S02",
+        "requested_url": "https://www.zotero.org/support/duplicate_detection",
+        "started_at_utc": "2026-10-10T05:05:11.623294+00:00",
+        "operation": "Unauthenticated read-only public HTTP GET; no manager/API fixture executed",
+        "status": 200,
+        "final_url": "https://www.zotero.org/support/duplicate_detection",
+        "content_type": "text/html; charset=UTF-8",
+        "text_path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S02.txt",
+        "text_sha256": "31549a8506168e83d7fb0db4e9b1f173496e72703757ed8a3a9659a0bd450a23",
+        "response_sha256": "19bf61cb2f2849c41d2b7ae0d5cdf45e3c4b21cc32daa0efcffb9219ee9115f4",
+        "response_bytes": 38412,
+        "text_lines": 87,
+        "finished_at_utc": "2026-10-10T05:05:11.753701+00:00"
+      },
+      "local_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S02.txt",
+          "first_line": 60,
+          "last_line": 76
+        }
+      ],
+      "semantic_result": "SUPPORTED_WITH_LIMITS"
+    },
+    {
+      "id": "S03",
+      "subject": "Zotero citable item types and identifiers",
+      "exact_url": "https://www.zotero.org/support/kb/item_types_and_fields",
+      "independently_observed_version": "Help updated 2026-05-18",
+      "locator": "Journal Article; Preprint; DOI field",
+      "reviewer_observation": "Journal Article and Preprint are distinct types; a preprint can remain available after journal publication. DOI can be stored in Extra for other types.",
+      "condition_default_exception_domain": "These type definitions do not prove scholarly identity or make an identifier mandatory.",
+      "observed_operation": "Read-only governing primary documentation/source/history retrieval; no application fixture, importer/exporter, DOI lookup or live write executed",
+      "retrieval": {
+        "id": "S03",
+        "requested_url": "https://www.zotero.org/support/kb/item_types_and_fields",
+        "started_at_utc": "2026-10-10T05:05:11.624110+00:00",
+        "operation": "Unauthenticated read-only public HTTP GET; no manager/API fixture executed",
+        "status": 200,
+        "final_url": "https://www.zotero.org/support/kb/item_types_and_fields",
+        "content_type": "text/html; charset=UTF-8",
+        "text_path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S03.txt",
+        "text_sha256": "db579651a48dce640012974e90c57758934cd0a372189313114b2ecd3e5c7608",
+        "response_sha256": "682690bdfc2c4a8c4bf2c90990aca880b93cd1bada6a223c3fdd12f5901843f6",
+        "response_bytes": 78395,
+        "text_lines": 533,
+        "finished_at_utc": "2026-10-10T05:05:11.780775+00:00"
+      },
+      "local_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S03.txt",
+          "first_line": 103,
+          "last_line": 120
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S03.txt",
+          "first_line": 207,
+          "last_line": 215
+        }
+      ],
+      "semantic_result": "SUPPORTED_WITH_LIMITS"
+    },
+    {
+      "id": "S04",
+      "subject": "Zotero standardized import",
+      "exact_url": "https://www.zotero.org/support/kb/importing_standardized_formats",
+      "independently_observed_version": "Help updated 2018-11-04",
+      "locator": "Supported bibliographic formats",
+      "reviewer_observation": "RIS, BibTeX, BibLaTeX and CSL JSON are documented import formats.",
+      "condition_default_exception_domain": "Format recognition is not a field-preserving round-trip guarantee.",
+      "observed_operation": "Read-only governing primary documentation/source/history retrieval; no application fixture, importer/exporter, DOI lookup or live write executed",
+      "retrieval": {
+        "id": "S04",
+        "requested_url": "https://www.zotero.org/support/kb/importing_standardized_formats",
+        "started_at_utc": "2026-10-10T05:05:11.624829+00:00",
+        "operation": "Unauthenticated read-only public HTTP GET; no manager/API fixture executed",
+        "status": 200,
+        "final_url": "https://www.zotero.org/support/kb/importing_standardized_formats",
+        "content_type": "text/html; charset=UTF-8",
+        "text_path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S04.txt",
+        "text_sha256": "f0dc03ab72cdd5743042d73f1ad289bd0d2313481e90dd475bf68e8a910d6c22",
+        "response_sha256": "1508d6472b77597dc755e7943397ed86103443b301a843cdfec202531b214b7e",
+        "response_bytes": 36935,
+        "text_lines": 104,
+        "finished_at_utc": "2026-10-10T05:05:11.734286+00:00"
+      },
+      "local_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S04.txt",
+          "first_line": 60,
+          "last_line": 89
+        }
+      ],
+      "semantic_result": "SUPPORTED_WITH_LIMITS"
+    },
+    {
+      "id": "S05",
+      "subject": "Zotero export and round-trip limits",
+      "exact_url": "https://www.zotero.org/support/kb/exporting",
+      "independently_observed_version": "Help updated 2025-11-24",
+      "locator": "Export Library/Collection/Items and backup warning",
+      "reviewer_observation": "Exports can lose format-dependent fields, timestamps and document-citation links; export is not a backup.",
+      "condition_default_exception_domain": "Zotero RDF with files/notes is recommended for complete Zotero transfer, but that route is outside this metadata-only local proposal.",
+      "observed_operation": "Read-only governing primary documentation/source/history retrieval; no application fixture, importer/exporter, DOI lookup or live write executed",
+      "retrieval": {
+        "id": "S05",
+        "requested_url": "https://www.zotero.org/support/kb/exporting",
+        "started_at_utc": "2026-10-10T05:05:11.626057+00:00",
+        "operation": "Unauthenticated read-only public HTTP GET; no manager/API fixture executed",
+        "status": 200,
+        "final_url": "https://www.zotero.org/support/kb/exporting",
+        "content_type": "text/html; charset=UTF-8",
+        "text_path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S05.txt",
+        "text_sha256": "35608aa7965b52c9ed33e8abd0b79b1f76652e1d231f661ddb8105e06c249a69",
+        "response_sha256": "de961e97f9a3cd1ecae664c44f3dc7fb39d4f394328c1a33002fe4daf653732d",
+        "response_bytes": 35919,
+        "text_lines": 75,
+        "finished_at_utc": "2026-10-10T05:05:11.747529+00:00"
+      },
+      "local_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S05.txt",
+          "first_line": 60,
+          "last_line": 64
+        }
+      ],
+      "semantic_result": "SUPPORTED_WITH_LIMITS"
+    },
+    {
+      "id": "S06",
+      "subject": "Zotero bibliography versus interchange output",
+      "exact_url": "https://www.zotero.org/support/creating_bibliographies",
+      "independently_observed_version": "Help updated 2025-12-12",
+      "locator": "Quick Copy; Create Bibliography",
+      "reviewer_observation": "Quick Copy supports RIS/BibTeX in addition to styled output; bibliography creation can save RTF/HTML or copy/print.",
+      "condition_default_exception_domain": "Interchange format and presentation style are different choices. No output was generated here or by the reviewed stages.",
+      "observed_operation": "Read-only governing primary documentation/source/history retrieval; no application fixture, importer/exporter, DOI lookup or live write executed",
+      "retrieval": {
+        "id": "S06",
+        "requested_url": "https://www.zotero.org/support/creating_bibliographies",
+        "started_at_utc": "2026-10-10T05:05:11.627583+00:00",
+        "operation": "Unauthenticated read-only public HTTP GET; no manager/API fixture executed",
+        "status": 200,
+        "final_url": "https://www.zotero.org/support/creating_bibliographies",
+        "content_type": "text/html; charset=UTF-8",
+        "text_path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S06.txt",
+        "text_sha256": "ee1c2afb91f25463650a9ebeb1b7aeb51d3999292c8b31d0a9025ba0ca9a793c",
+        "response_sha256": "b5eba35d68232b7c56dbffef770c3620556b640de92899f700fda7ef4a611e35",
+        "response_bytes": 38461,
+        "text_lines": 96,
+        "finished_at_utc": "2026-10-10T05:05:11.779710+00:00"
+      },
+      "local_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S06.txt",
+          "first_line": 63,
+          "last_line": 76
+        }
+      ],
+      "semantic_result": "SUPPORTED_WITH_LIMITS"
+    },
+    {
+      "id": "S07",
+      "subject": "Zotero translator options and defaults",
+      "exact_url": "https://www.zotero.org/support/dev/translators",
+      "independently_observed_version": "Developer help updated 2026-05-12",
+      "locator": "Translator Types; displayOptions",
+      "reviewer_observation": "Import/export/search translators have different operations. Export file/note/tag checkboxes exist only for declared properties; true/false determines checked/unchecked defaults.",
+      "condition_default_exception_domain": "Final says exporters can expose these controls, not that every exporter has all controls or a safe default. Selected translator/build still needs inspection.",
+      "observed_operation": "Read-only governing primary documentation/source/history retrieval; no application fixture, importer/exporter, DOI lookup or live write executed",
+      "retrieval": {
+        "id": "S07",
+        "requested_url": "https://www.zotero.org/support/dev/translators",
+        "started_at_utc": "2026-10-10T05:05:11.734389+00:00",
+        "operation": "Unauthenticated read-only public HTTP GET; no manager/API fixture executed",
+        "status": 200,
+        "final_url": "https://www.zotero.org/support/dev/translators",
+        "content_type": "text/html; charset=UTF-8",
+        "text_path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S07.txt",
+        "text_sha256": "9e4f6c4a049522ac0f6b3a8c5112e2d04a69595629c2084b78e81bfd03f390cd",
+        "response_sha256": "34bae3a87001017d5ecee8515afa075ff27934cef45bb552213c570f28438bf3",
+        "response_bytes": 55827,
+        "text_lines": 185,
+        "finished_at_utc": "2026-10-10T05:05:11.879299+00:00"
+      },
+      "local_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S07.txt",
+          "first_line": 65,
+          "last_line": 78
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S07.txt",
+          "first_line": 100,
+          "last_line": 105
+        }
+      ],
+      "semantic_result": "SUPPORTED_WITH_LIMITS"
+    },
+    {
+      "id": "S08",
+      "subject": "Paperpile RIS/BibTeX upload",
+      "exact_url": "https://cdn.paperpile.com/h/import-ris-bibtex/",
+      "independently_observed_version": "Published 2025-06-26; updated 2026-10-02",
+      "locator": "Handling duplicates; Uploading files with PDFs",
+      "reviewer_observation": "Skip duplicates defaults on for existing-library matches; the article also says only the first duplicate in a file is imported. PDF attachment paths use RIS L1 or BibTeX file fields.",
+      "condition_default_exception_domain": "The intra-file statement is not explicitly conditioned on the toggle; do not infer toggle-off behavior from it. Final retains all intake rows independently and excludes file paths.",
+      "observed_operation": "Read-only governing primary documentation/source/history retrieval; no application fixture, importer/exporter, DOI lookup or live write executed",
+      "retrieval": {
+        "id": "S08",
+        "requested_url": "https://cdn.paperpile.com/h/import-ris-bibtex/",
+        "started_at_utc": "2026-10-10T05:05:11.747623+00:00",
+        "operation": "Unauthenticated read-only public HTTP GET; no manager/API fixture executed",
+        "status": 200,
+        "final_url": "https://cdn.paperpile.com/h/import-ris-bibtex/",
+        "content_type": "text/html",
+        "text_path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S08.txt",
+        "text_sha256": "8c5b16a9b8c6caefaaa3ad36aa30b2172c842e31f5a1d9db389c47555daf2419",
+        "response_sha256": "18687386bc9faf7f8f4b9bb855446c81d5dc2d70ab633286d6812fbc749fd656",
+        "response_bytes": 107604,
+        "text_lines": 61,
+        "finished_at_utc": "2026-10-10T05:05:11.850017+00:00"
+      },
+      "local_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S08.txt",
+          "first_line": 11,
+          "last_line": 18
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S08.txt",
+          "first_line": 33,
+          "last_line": 53
+        }
+      ],
+      "semantic_result": "SUPPORTED_WITH_LIMITS"
+    },
+    {
+      "id": "S09",
+      "subject": "Paperpile duplicate candidates and merges",
+      "exact_url": "https://paperpile.com/h/duplicates-explained/",
+      "independently_observed_version": "Help updated 2026-06-05",
+      "locator": "How Paperpile detects duplicates; Resolve duplicates",
+      "reviewer_observation": "Matches use shared DOI/arXiv ID/ISBN/PMID/PMC ID/patent number or exactly identical metadata. False positives can be dismissed; merging consolidates metadata/attachments/folders/labels and moves originals to Trash.",
+      "condition_default_exception_domain": "No common supported identifier plus differing metadata may cause misses. Neither heuristic nor Merge all is the group editor approval contract.",
+      "observed_operation": "Read-only governing primary documentation/source/history retrieval; no application fixture, importer/exporter, DOI lookup or live write executed",
+      "retrieval": {
+        "id": "S09",
+        "requested_url": "https://paperpile.com/h/duplicates-explained/",
+        "started_at_utc": "2026-10-10T05:05:11.753798+00:00",
+        "operation": "Unauthenticated read-only public HTTP GET; no manager/API fixture executed",
+        "status": 200,
+        "final_url": "https://paperpile.com/h/duplicates-explained/",
+        "content_type": "text/html",
+        "text_path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S09.txt",
+        "text_sha256": "4c3031c272695125498d2ade4dae573272eefb3d6dcb4b31b90a6385963af51e",
+        "response_sha256": "37d51348e92199e9bfcdaafd5388e50b55c4c9c9919e566acce244c2aaac90e2",
+        "response_bytes": 100135,
+        "text_lines": 34,
+        "finished_at_utc": "2026-10-10T05:05:11.878771+00:00"
+      },
+      "local_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S09.txt",
+          "first_line": 9,
+          "last_line": 27
+        }
+      ],
+      "semantic_result": "SUPPORTED_WITH_LIMITS"
+    },
+    {
+      "id": "S10",
+      "subject": "Paperpile library-data export",
+      "exact_url": "https://paperpile.com/h/export-library-data/",
+      "independently_observed_version": "Help updated 2026-03-12",
+      "locator": "Choose export format; Are PDFs exported?",
+      "reviewer_observation": "BibTeX/RIS/CSV/JSON are offered; internal JSON cannot currently be reimported. Library-data export excludes PDF bytes.",
+      "condition_default_exception_domain": "Separate PDF download/Drive paths exist. JSON can contain attachment metadata even though it excludes PDF bytes. Final proposes metadata/link-only RIS/BibTeX, not JSON archival fidelity.",
+      "observed_operation": "Read-only governing primary documentation/source/history retrieval; no application fixture, importer/exporter, DOI lookup or live write executed",
+      "retrieval": {
+        "id": "S10",
+        "requested_url": "https://paperpile.com/h/export-library-data/",
+        "started_at_utc": "2026-10-10T05:05:11.772763+00:00",
+        "operation": "Unauthenticated read-only public HTTP GET; no manager/API fixture executed",
+        "status": 200,
+        "final_url": "https://paperpile.com/h/export-library-data/",
+        "content_type": "text/html",
+        "text_path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S10.txt",
+        "text_sha256": "8d5ebe628febca514a54662ca7265276eaf5ffb68399c58460eabcc2d7f4663d",
+        "response_sha256": "235d64317cef4262312c972123c65903cd48cfc9248877288f99278037f43aac",
+        "response_bytes": 99230,
+        "text_lines": 52,
+        "finished_at_utc": "2026-10-10T05:05:11.879723+00:00"
+      },
+      "local_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S10.txt",
+          "first_line": 9,
+          "last_line": 45
+        }
+      ],
+      "semantic_result": "SUPPORTED_WITH_LIMITS"
+    },
+    {
+      "id": "S11",
+      "subject": "Paperpile online reference search",
+      "exact_url": "https://paperpile.com/h/search-online/",
+      "independently_observed_version": "Help updated 2025-11-18",
+      "locator": "Search inputs; Add references",
+      "reviewer_observation": "Search accepts title, author, URL and multiple identifier types; selected results can be added.",
+      "condition_default_exception_domain": "Finding a candidate is not identity proof, accepted correction, or evidence of a live search performed by these stages.",
+      "observed_operation": "Read-only governing primary documentation/source/history retrieval; no application fixture, importer/exporter, DOI lookup or live write executed",
+      "retrieval": {
+        "id": "S11",
+        "requested_url": "https://paperpile.com/h/search-online/",
+        "started_at_utc": "2026-10-10T05:05:11.779752+00:00",
+        "operation": "Unauthenticated read-only public HTTP GET; no manager/API fixture executed",
+        "status": 200,
+        "final_url": "https://paperpile.com/h/search-online/",
+        "content_type": "text/html",
+        "text_path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S11.txt",
+        "text_sha256": "d7e237519d9d74decdf748b28b71db217b2e5ea7f149d6cc0cc81efef329c5bb",
+        "response_sha256": "59b06ece48a9419e706f81562230b8f4c935bef8ff055130a92f790b5c41f261",
+        "response_bytes": 106053,
+        "text_lines": 56,
+        "finished_at_utc": "2026-10-10T05:05:11.875183+00:00"
+      },
+      "local_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S11.txt",
+          "first_line": 9,
+          "last_line": 34
+        }
+      ],
+      "semantic_result": "SUPPORTED_WITH_LIMITS"
+    },
+    {
+      "id": "S12",
+      "subject": "Paperpile metadata-update locator",
+      "exact_url": "https://www.api.paperpile.com/h/update-metadata-automatically/",
+      "independently_observed_version": "Original URL unavailable; main-domain help updated 2026-08-31",
+      "locator": "Original www.api URL; supplementary R12 main-domain article",
+      "reviewer_observation": "The frozen exact URL fails independently: web returned 502 and direct TLS verification found a hostname mismatch. The main-domain article is reachable and supports manual candidate selection, highlighted differences and Apply/Save controls.",
+      "condition_default_exception_domain": "Manual flows require review, while the bulk-update section describes background updates followed by a report. Final limits the unavailable-page claim to its own retrieval and does not promise all Paperpile operations require prior per-field approval.",
+      "observed_operation": "Read-only governing primary documentation/source/history retrieval; no application fixture, importer/exporter, DOI lookup or live write executed",
+      "retrieval": {
+        "id": "S12",
+        "requested_url": "https://www.api.paperpile.com/h/update-metadata-automatically/",
+        "started_at_utc": "2026-10-10T05:05:11.781016+00:00",
+        "operation": "Unauthenticated read-only public HTTP GET; no manager/API fixture executed",
+        "error": "URLError(SSLCertVerificationError(1, \"[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'www.api.paperpile.com'. (_ssl.c:1081)\"))",
+        "status": null,
+        "finished_at_utc": "2026-10-10T05:05:11.822284+00:00"
+      },
+      "local_locators": [],
+      "semantic_result": "ORIGINAL_LOCATOR_UNAVAILABLE; MANUAL-FLOW CLAIM SUPPORTED_BY_SEPARATE_R12",
+      "supplementary_primary_ids": [
+        "R12"
+      ]
+    },
+    {
+      "id": "S13",
+      "subject": "OpenRefine reconciliation analogy",
+      "exact_url": "https://openrefine.org/docs/manual/reconciling",
+      "independently_observed_version": "Manual updated 2026-01-28",
+      "locator": "Overview; match outcomes; Reconciliation actions",
+      "reviewer_observation": "Original string and matched entity link coexist. Confident matches can be auto-matched; ambiguous cases require selection; bulk best-candidate actions and judgment resets exist.",
+      "condition_default_exception_domain": "Provider scores differ. Borrowing raw value plus proposal is supported; the editor approval requirement is an explicit local choice.",
+      "observed_operation": "Read-only governing primary documentation/source/history retrieval; no application fixture, importer/exporter, DOI lookup or live write executed",
+      "retrieval": {
+        "id": "S13",
+        "requested_url": "https://openrefine.org/docs/manual/reconciling",
+        "started_at_utc": "2026-10-10T05:05:11.822338+00:00",
+        "operation": "Unauthenticated read-only public HTTP GET; no manager/API fixture executed",
+        "status": 200,
+        "final_url": "https://openrefine.org/docs/manual/reconciling",
+        "content_type": "text/html; charset=UTF-8",
+        "text_path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S13.txt",
+        "text_sha256": "461927ba0ac2d90d1fb140744108db2da23559bc0c4a5339b889c7ce9329e6fe",
+        "response_sha256": "4384e5cfb7aed83e753696bf3417d24e97645fd23886ce5327362c79575cc9e8",
+        "response_bytes": 62376,
+        "text_lines": 196,
+        "finished_at_utc": "2026-10-10T05:05:12.123775+00:00"
+      },
+      "local_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S13.txt",
+          "first_line": 24,
+          "last_line": 34
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S13.txt",
+          "first_line": 45,
+          "last_line": 85
+        }
+      ],
+      "semantic_result": "SUPPORTED_WITH_LIMITS"
+    },
+    {
+      "id": "S14",
+      "subject": "OpenRefine reconciliation protocol",
+      "exact_url": "https://openrefine.org/docs/technical-reference/reconciliation-api",
+      "independently_observed_version": "Manual updated 2026-06-06; API v0.2",
+      "locator": "API definition; API versions supported",
+      "reviewer_observation": "A service returns ranked potential entities in one identifier space, with optional type/property constraints and previews. API v0.2 is supported since OpenRefine 3.3.",
+      "condition_default_exception_domain": "This is a matching/search protocol, not a scholarly resolver or authoritative correction service.",
+      "observed_operation": "Read-only governing primary documentation/source/history retrieval; no application fixture, importer/exporter, DOI lookup or live write executed",
+      "retrieval": {
+        "id": "S14",
+        "requested_url": "https://openrefine.org/docs/technical-reference/reconciliation-api",
+        "started_at_utc": "2026-10-10T05:05:11.850133+00:00",
+        "operation": "Unauthenticated read-only public HTTP GET; no manager/API fixture executed",
+        "status": 200,
+        "final_url": "https://openrefine.org/docs/technical-reference/reconciliation-api",
+        "content_type": "text/html; charset=UTF-8",
+        "text_path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S14.txt",
+        "text_sha256": "31a15e277c69f8e3a44b211ffa8c57a6aef210a24141bb514c0698daa9f086fe",
+        "response_sha256": "4f891f386f1d6b2c68fe9798bd57c6483320dd6e89ae6942f419446647515491",
+        "response_bytes": 32346,
+        "text_lines": 90,
+        "finished_at_utc": "2026-10-10T05:05:12.199352+00:00"
+      },
+      "local_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S14.txt",
+          "first_line": 32,
+          "last_line": 55
+        }
+      ],
+      "semantic_result": "SUPPORTED_WITH_LIMITS"
+    },
+    {
+      "id": "S15",
+      "subject": "OpenRefine clustering analogy",
+      "exact_url": "https://openrefine.org/docs/manual/cellediting#clustering",
+      "independently_observed_version": "Retrieved manual updated 2026-01-28; candidate map says 2025-01-17",
+      "locator": "Cluster and edit; clustering methods",
+      "reviewer_observation": "String comparison finds spelling/format variants; users approve edits. Fingerprinting and distance methods can create false positives.",
+      "condition_default_exception_domain": "String clusters do not establish work/version identity. Candidate source-map update date differs from the independently retrieved page, without changing the final recommendation.",
+      "observed_operation": "Read-only governing primary documentation/source/history retrieval; no application fixture, importer/exporter, DOI lookup or live write executed",
+      "retrieval": {
+        "id": "S15",
+        "requested_url": "https://openrefine.org/docs/manual/cellediting#clustering",
+        "started_at_utc": "2026-10-10T05:05:11.875339+00:00",
+        "operation": "Unauthenticated read-only public HTTP GET; no manager/API fixture executed",
+        "status": 200,
+        "final_url": "https://openrefine.org/docs/manual/cellediting#clustering",
+        "content_type": "text/html; charset=UTF-8",
+        "text_path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S15.txt",
+        "text_sha256": "e56d6bb885c074751c5a9402b07b8ac539bdff195d9f5dfb9f7f29361f4112e0",
+        "response_sha256": "56532246286778761a7b8590eb312159a7463463835301889e1af76c76a4d83a",
+        "response_bytes": 56291,
+        "text_lines": 203,
+        "finished_at_utc": "2026-10-10T05:05:12.080490+00:00"
+      },
+      "local_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S15.txt",
+          "first_line": 68,
+          "last_line": 105
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S15.txt",
+          "first_line": 119,
+          "last_line": 128
+        }
+      ],
+      "semantic_result": "SUPPORTED_WITH_LIMITS"
+    },
+    {
+      "id": "S16",
+      "subject": "Crossref Simple Text Query",
+      "exact_url": "https://www.crossref.org/documentation/retrieve-metadata/simple-text-query/",
+      "independently_observed_version": "Help updated 2020-10-06",
+      "locator": "Using Simple Text Query to match references with DOIs",
+      "reviewer_observation": "The service attempts one DOI per citation; selecting List all possible DOIs returns alternatives for user evaluation. Insufficient citation/deposit metadata may prevent a unique match; input domain is journal articles, books and chapters.",
+      "condition_default_exception_domain": "No zero-result UI was operated. Local no-candidate and provider-failure handling are proposed states. This form is separate from REST-pool rate limits.",
+      "observed_operation": "Read-only governing primary documentation/source/history retrieval; no application fixture, importer/exporter, DOI lookup or live write executed",
+      "retrieval": {
+        "id": "S16",
+        "requested_url": "https://www.crossref.org/documentation/retrieve-metadata/simple-text-query/",
+        "started_at_utc": "2026-10-10T05:05:11.878953+00:00",
+        "operation": "Unauthenticated read-only public HTTP GET; no manager/API fixture executed",
+        "status": 200,
+        "final_url": "https://www.crossref.org/documentation/retrieve-metadata/simple-text-query/",
+        "content_type": "text/html",
+        "text_path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S16.txt",
+        "text_sha256": "bfbeeda6f1fdc69c1209f56dc69dcd77d89eb2588093d4042984e6bf0260c13e",
+        "response_sha256": "5c14fce9d87eeab25a866bc5fe159de4b51d9f585c2649c61df8681c26b20f40",
+        "response_bytes": 66591,
+        "text_lines": 332,
+        "finished_at_utc": "2026-10-10T05:05:12.030333+00:00"
+      },
+      "local_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S16.txt",
+          "first_line": 302,
+          "last_line": 315
+        }
+      ],
+      "semantic_result": "SUPPORTED_WITH_LIMITS"
+    },
+    {
+      "id": "S17",
+      "subject": "Crossref metadata provenance",
+      "exact_url": "https://www.crossref.org/documentation/retrieve-metadata/",
+      "independently_observed_version": "Help updated 2025-10-16",
+      "locator": "Sources of metadata; Enrichments; Licensing",
+      "reviewer_observation": "Metadata primarily comes from member deposits, with reciprocal relationships, alias information and matching/enrichment added by Crossref.",
+      "condition_default_exception_domain": "Public access is not curator approval. Abstracts have separate copyright conditions; the proposal exports citations/links and does not recommend abstracts or full text.",
+      "observed_operation": "Read-only governing primary documentation/source/history retrieval; no application fixture, importer/exporter, DOI lookup or live write executed",
+      "retrieval": {
+        "id": "S17",
+        "requested_url": "https://www.crossref.org/documentation/retrieve-metadata/",
+        "started_at_utc": "2026-10-10T05:05:11.879448+00:00",
+        "operation": "Unauthenticated read-only public HTTP GET; no manager/API fixture executed",
+        "status": 200,
+        "final_url": "https://www.crossref.org/documentation/retrieve-metadata/",
+        "content_type": "text/html",
+        "text_path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S17.txt",
+        "text_sha256": "28db97fbc6b9a835a0fc27d13399b4b4bd1a28c291d93cfc8d81928695c794ea",
+        "response_sha256": "80489f78573e18d7628cd34dfcb729c54065070f94e401930fe91a4f2857fb2e",
+        "response_bytes": 76547,
+        "text_lines": 395,
+        "finished_at_utc": "2026-10-10T05:05:11.999638+00:00"
+      },
+      "local_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S17.txt",
+          "first_line": 314,
+          "last_line": 346
+        }
+      ],
+      "semantic_result": "SUPPORTED_WITH_LIMITS"
+    },
+    {
+      "id": "S18",
+      "subject": "Crossref REST access and service conditions",
+      "exact_url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/access-and-authentication/",
+      "independently_observed_version": "Help updated 2025-10-16",
+      "locator": "Access; Request limits; Best practice",
+      "reviewer_observation": "Public access needs no signup; polite access identifies requests. Rate and concurrency limits are pool-specific and supplied in response headers; clients should cache and back off on failures/increasing response times.",
+      "condition_default_exception_domain": "The page rate table does not independently state the time unit; the final wisely supplies no invented requests-per-second number. No service endpoint query was executed by the stages or this reviewer.",
+      "observed_operation": "Read-only governing primary documentation/source/history retrieval; no application fixture, importer/exporter, DOI lookup or live write executed",
+      "retrieval": {
+        "id": "S18",
+        "requested_url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/access-and-authentication/",
+        "started_at_utc": "2026-10-10T05:05:11.879884+00:00",
+        "operation": "Unauthenticated read-only public HTTP GET; no manager/API fixture executed",
+        "status": 200,
+        "final_url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/access-and-authentication/",
+        "content_type": "text/html",
+        "text_path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S18.txt",
+        "text_sha256": "37b6d305ce529bd473ac7fbef03d1f57bc7fae87f13bc66fea871791c471302c",
+        "response_sha256": "b5629e0f250e6d6d181fdf3368198b51de845c860cb2f106b2829d599036eeb3",
+        "response_bytes": 68881,
+        "text_lines": 347,
+        "finished_at_utc": "2026-10-10T05:05:11.983061+00:00"
+      },
+      "local_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S18.txt",
+          "first_line": 302,
+          "last_line": 330
+        }
+      ],
+      "semantic_result": "SUPPORTED_WITH_LIMITS"
+    },
+    {
+      "id": "S19",
+      "subject": "Crossref typed version/preprint relationships",
+      "exact_url": "https://www.crossref.org/documentation/schema-library/markup-guide-metadata-segments/relationships/",
+      "independently_observed_version": "Schema guide updated 2020-04-08",
+      "locator": "Intra-work table; General typed relations",
+      "reviewer_observation": "isPreprintOf/hasPreprint and isVersionOf/hasVersion are distinct relation types. One endpoint is a Crossref DOI; another may be a DOI or non-DOI identifier. Non-DOI identifiers are not verified.",
+      "condition_default_exception_domain": "This is registry relationship metadata, not a merge command. The local proposed ledger can hold relations without writing to Crossref.",
+      "observed_operation": "Read-only governing primary documentation/source/history retrieval; no application fixture, importer/exporter, DOI lookup or live write executed",
+      "retrieval": {
+        "id": "S19",
+        "requested_url": "https://www.crossref.org/documentation/schema-library/markup-guide-metadata-segments/relationships/",
+        "started_at_utc": "2026-10-10T05:05:11.983180+00:00",
+        "operation": "Unauthenticated read-only public HTTP GET; no manager/API fixture executed",
+        "status": 200,
+        "final_url": "https://www.crossref.org/documentation/schema-library/markup-guide-metadata-segments/relationships/",
+        "content_type": "text/html",
+        "text_path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S19.txt",
+        "text_sha256": "be6911cbee94744d1c31bccf303650e6e55961affb89eb065cef2c8cd7ce61ba",
+        "response_sha256": "21e3f0918322210b44fbfcd0efcf087007e2ff03c525539209251f5a8620d1ba",
+        "response_bytes": 91390,
+        "text_lines": 679,
+        "finished_at_utc": "2026-10-10T05:05:12.123262+00:00"
+      },
+      "local_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S19.txt",
+          "first_line": 302,
+          "last_line": 348
+        }
+      ],
+      "semantic_result": "SUPPORTED_WITH_LIMITS"
+    },
+    {
+      "id": "S20",
+      "subject": "DataCite versioning domain and exceptions",
+      "exact_url": "https://support.datacite.org/docs/versioning",
+      "independently_observed_version": "Live official guidance accessed 2026-10-10; exact edition not exposed",
+      "locator": "Minor/major changes; canonical DOI",
+      "reviewer_observation": "Same DOI may cover minor updated content; major changes are recommended to get a new DOI plus relation. Stewards decide major/minor; a canonical DOI may represent multiple versions.",
+      "condition_default_exception_domain": "This governs DataCite stewardship practices, not permission to reuse a DOI for unrelated works. Final preserves the domain and does not make a universal scholarly-version claim.",
+      "observed_operation": "Read-only governing primary documentation/source/history retrieval; no application fixture, importer/exporter, DOI lookup or live write executed",
+      "retrieval": {
+        "id": "S20",
+        "requested_url": "https://support.datacite.org/docs/versioning",
+        "started_at_utc": "2026-10-10T05:05:11.999757+00:00",
+        "operation": "Unauthenticated read-only public HTTP GET; no manager/API fixture executed",
+        "status": 200,
+        "final_url": "https://support.datacite.org/docs/versioning",
+        "content_type": "text/html; charset=utf-8",
+        "text_path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S20.txt",
+        "text_sha256": "02137a978119b7a202d11b57bb1cfaaa3244402b11df4008a90a15c39d5b44e4",
+        "response_sha256": "e396590ffdb452438d6ac903608a5b1620ac27ac61b164cad55c39c9ccbc421f",
+        "response_bytes": 360680,
+        "text_lines": 347,
+        "finished_at_utc": "2026-10-10T05:05:13.462263+00:00"
+      },
+      "local_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S20.txt",
+          "first_line": 273,
+          "last_line": 301
+        }
+      ],
+      "semantic_result": "SUPPORTED_WITH_LIMITS"
+    },
+    {
+      "id": "S21",
+      "subject": "DataCite manuscript-version relations",
+      "exact_url": "https://support.datacite.org/docs/preprints-post-prints-and-author-manuscripts",
+      "independently_observed_version": "Live official guidance; page says updated 2 months ago",
+      "locator": "Preprints, post-prints and author manuscripts",
+      "reviewer_observation": "Distinct manuscript versions may receive different DOIs, including repository versions of journal articles with Crossref DOIs; suggested practice uses relatedIdentifier, normally IsVersionOf.",
+      "condition_default_exception_domain": "This is guidance, not proof that any pair in the pilot is identical or related. Both registry searches are recommended before assigning a DOI; the proposal does not assign DOIs.",
+      "observed_operation": "Read-only governing primary documentation/source/history retrieval; no application fixture, importer/exporter, DOI lookup or live write executed",
+      "retrieval": {
+        "id": "S21",
+        "requested_url": "https://support.datacite.org/docs/preprints-post-prints-and-author-manuscripts",
+        "started_at_utc": "2026-10-10T05:05:12.030425+00:00",
+        "operation": "Unauthenticated read-only public HTTP GET; no manager/API fixture executed",
+        "status": 200,
+        "final_url": "https://support.datacite.org/docs/preprints-post-prints-and-author-manuscripts",
+        "content_type": "text/html; charset=utf-8",
+        "text_path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S21.txt",
+        "text_sha256": "8e6bbffb1c396a7140de0797fef5817836f344c09dc2c3126113361189d7ea16",
+        "response_sha256": "efd13f3f65de64e5ccf822b90a6164c27d138097de63eedfb2ea74e64303ab94",
+        "response_bytes": 323938,
+        "text_lines": 283,
+        "finished_at_utc": "2026-10-10T05:05:12.818097+00:00"
+      },
+      "local_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S21.txt",
+          "first_line": 273,
+          "last_line": 277
+        }
+      ],
+      "semantic_result": "SUPPORTED_WITH_LIMITS"
+    },
+    {
+      "id": "S22",
+      "subject": "JabRef affected reported exporter path",
+      "exact_url": "https://github.com/JabRef/jabref/issues/15106",
+      "independently_observed_version": "Issue opened 2026-02-13; closed 2026-03-13",
+      "locator": "Issue #15106 body and checked development-build statement",
+      "reviewer_observation": "Reporter identifies 5.15 on Ubuntu 24.04.4 LTS and checked the statement that the then-latest development build also failed. BibTeX pages 13905--13911 reportedly became a whole en-dash range in both RIS SP/EP; single hyphen worked.",
+      "condition_default_exception_domain": "The development build is not pinned. This is a user report, not reviewer/stage reproduction or evidence about all versions, records, fields or managers.",
+      "observed_operation": "Read-only governing primary documentation/source/history retrieval; no application fixture, importer/exporter, DOI lookup or live write executed",
+      "retrieval": {
+        "id": "S22",
+        "requested_url": "https://github.com/JabRef/jabref/issues/15106",
+        "started_at_utc": "2026-10-10T05:05:12.080620+00:00",
+        "operation": "Unauthenticated read-only public HTTP GET; no manager/API fixture executed",
+        "status": 200,
+        "final_url": "https://github.com/JabRef/jabref/issues/15106",
+        "content_type": "text/html; charset=utf-8",
+        "text_path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S22.txt",
+        "text_sha256": "e219122830112191994ed9a4d24a4bf5dbd67558e8cf040dd040be381cd0cb2a",
+        "response_sha256": "83e305d8c0d346e6a2f717c01f46161ed48555bf7f6ad6312457de24fa44168a",
+        "response_bytes": 442842,
+        "text_lines": 310,
+        "finished_at_utc": "2026-10-10T05:05:13.204332+00:00"
+      },
+      "local_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S22.txt",
+          "first_line": 128,
+          "last_line": 145
+        }
+      ],
+      "semantic_result": "SUPPORTED_WITH_LIMITS",
+      "supplementary_primary_ids": [
+        "R28"
+      ]
+    },
+    {
+      "id": "S23",
+      "subject": "JabRef fix implementation",
+      "exact_url": "https://github.com/JabRef/jabref/pull/15315",
+      "independently_observed_version": "Merged 2026-03-13T07:12:10Z; d687c08",
+      "locator": "PR #15315 description, diff and merged commit",
+      "reviewer_observation": "PR closes #15106; FirstPage/LastPage split patterns add en/em dash support and tests. Actual diff and released-tag source corroborate the change. Merge is d687c0881840489f6147465da8d34a5fa9386826 on 2026-03-13.",
+      "condition_default_exception_domain": "Only the described simple two-endpoint page range is the oracle. It is not proof for multi-ranges, arbitrary pagination syntax or other exporters. External contributor tests are not this pipeline validation.",
+      "observed_operation": "Read-only governing primary documentation/source/history retrieval; no application fixture, importer/exporter, DOI lookup or live write executed",
+      "retrieval": {
+        "id": "S23",
+        "requested_url": "https://github.com/JabRef/jabref/pull/15315",
+        "started_at_utc": "2026-10-10T05:05:12.123389+00:00",
+        "operation": "Unauthenticated read-only public HTTP GET; no manager/API fixture executed",
+        "status": 200,
+        "final_url": "https://github.com/JabRef/jabref/pull/15315",
+        "content_type": "text/html; charset=utf-8",
+        "text_path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S23.txt",
+        "text_sha256": "7c2751c5ec75e9a6980bc29193a9fa4168a3946db474673ba54ef612793153a9",
+        "response_sha256": "db1b3bdca50e10dedd15594dfc5497cda18c02aa71ebe18d8b22573f8e415982",
+        "response_bytes": 831039,
+        "text_lines": 1855,
+        "finished_at_utc": "2026-10-10T05:05:13.784915+00:00"
+      },
+      "local_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S23.txt",
+          "first_line": 133,
+          "last_line": 144
+        }
+      ],
+      "semantic_result": "SUPPORTED_WITH_LIMITS",
+      "supplementary_primary_ids": [
+        "R25",
+        "R26",
+        "R27",
+        "R29"
+      ]
+    },
+    {
+      "id": "S24",
+      "subject": "JabRef released fix record",
+      "exact_url": "https://github.com/JabRef/jabref/releases/tag/v6.0-alpha.6",
+      "independently_observed_version": "v6.0-alpha.6; 6d24100; 2026-05-14",
+      "locator": "v6.0-alpha.6 release Fixed section",
+      "reviewer_observation": "The release names #15106 as fixed; API metadata confirms prerelease publication 2026-05-14T19:46:35Z. Page shows tag 6d24100; released-tag formatter source includes the delimiter change.",
+      "condition_default_exception_domain": "It is an alpha prerelease. No later/stable release or executable behavior is certified, and no deployment is required by the brief.",
+      "observed_operation": "Read-only governing primary documentation/source/history retrieval; no application fixture, importer/exporter, DOI lookup or live write executed",
+      "retrieval": {
+        "id": "S24",
+        "requested_url": "https://github.com/JabRef/jabref/releases/tag/v6.0-alpha.6",
+        "started_at_utc": "2026-10-10T05:05:12.123904+00:00",
+        "operation": "Unauthenticated read-only public HTTP GET; no manager/API fixture executed",
+        "status": 200,
+        "final_url": "https://github.com/JabRef/jabref/releases/tag/v6.0-alpha.6",
+        "content_type": "text/html; charset=utf-8",
+        "text_path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S24.txt",
+        "text_sha256": "2cefb081ec84ffe5191259637c9b4d4b1a36f9d255589df22ad5288a34bc3779",
+        "response_sha256": "8d6e6b2dfb1bebecb79ea328119d080538697d8a328fe4e0e44189381c910b1f",
+        "response_bytes": 221404,
+        "text_lines": 260,
+        "finished_at_utc": "2026-10-10T05:05:12.624623+00:00"
+      },
+      "local_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S24.txt",
+          "first_line": 109,
+          "last_line": 131
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S24.txt",
+          "first_line": 180,
+          "last_line": 226
+        }
+      ],
+      "semantic_result": "SUPPORTED_WITH_LIMITS",
+      "supplementary_primary_ids": [
+        "R26",
+        "R27",
+        "R30"
+      ]
+    }
+  ],
+  "local_authorities_and_groups": [
+    {
+      "id": "INPUT-BRIEF-6",
+      "kind": "original user authority",
+      "locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A7-02/brief.md",
+        "line": 16,
+        "locator": "6. Make owner decisions explicit:"
+      }
+    },
+    {
+      "id": "INPUT-PLAN-6",
+      "kind": "original fallible draft",
+      "locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A7-02/plan.md",
+        "line": 35,
+        "locator": "### 6."
+      }
+    },
+    {
+      "id": "LOCAL-PROPOSAL",
+      "kind": "proposed architecture, not external capability claim",
+      "locator": {
+        "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+        "line": 30,
+        "locator": "**Reviewed CSV plus generated interchange file**"
+      }
+    },
+    {
+      "id": "ALL-PRIMARY",
+      "kind": "navigable evidence group",
+      "members": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S07",
+        "S08",
+        "S09",
+        "S10",
+        "S11",
+        "S12",
+        "S13",
+        "S14",
+        "S15",
+        "S16",
+        "S17",
+        "S18",
+        "S19",
+        "S20",
+        "S21",
+        "S22",
+        "S23",
+        "S24"
+      ],
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/source-map.json"
+    }
+  ],
+  "supplementary_primary_sources": [
+    {
+      "id": "R12",
+      "requested_url": "https://paperpile.com/h/update-metadata-automatically/",
+      "started_at_utc": "2026-10-10T05:06:37.638574+00:00",
+      "operation": "Unauthenticated read-only public HTTP GET; no manager/API fixture executed",
+      "status": 200,
+      "final_url": "https://paperpile.com/h/update-metadata-automatically/",
+      "content_type": "text/html",
+      "text_path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/R12.txt",
+      "text_sha256": "6fe32f38d47d5049bbc1a27b520b0714360fdbab299e7370466b9e8c1d7cb014",
+      "response_sha256": "4e6017925bf80fb94664b9f8e2a51614c1b6339d2e929de4abe444250c063381",
+      "response_bytes": 104290,
+      "text_lines": 55,
+      "finished_at_utc": "2026-10-10T05:06:37.735658+00:00"
+    },
+    {
+      "id": "R25",
+      "requested_url": "https://github.com/JabRef/jabref/pull/15315.diff",
+      "started_at_utc": "2026-10-10T05:06:37.735729+00:00",
+      "operation": "Unauthenticated read-only public HTTP GET; no manager/API fixture executed",
+      "status": 200,
+      "final_url": "https://patch-diff.githubusercontent.com/raw/JabRef/jabref/pull/15315.diff",
+      "content_type": "text/plain; charset=utf-8",
+      "text_path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/R25.txt",
+      "text_sha256": "6f55b22cc5de43f4a9d1f536a3dfe126840489ae7941db7860b2b87587419b5b",
+      "response_sha256": "11974001e96c0a883d2d2b32b61a3783b2c60e1922024240473d9a9eb5a3ebc3",
+      "response_bytes": 3915,
+      "text_lines": 70,
+      "finished_at_utc": "2026-10-10T05:06:38.121407+00:00"
+    },
+    {
+      "id": "R26",
+      "requested_url": "https://raw.githubusercontent.com/JabRef/jabref/v6.0-alpha.6/jablib/src/main/java/org/jabref/logic/layout/format/FirstPage.java",
+      "started_at_utc": "2026-10-10T05:06:38.121480+00:00",
+      "operation": "Unauthenticated read-only public HTTP GET; no manager/API fixture executed",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/JabRef/jabref/v6.0-alpha.6/jablib/src/main/java/org/jabref/logic/layout/format/FirstPage.java",
+      "content_type": "text/plain; charset=utf-8",
+      "text_path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/R26.txt",
+      "text_sha256": "36a65d70bdcd250988eb8806a220b7140ee5d7d66d3f47bd69804ed6afb065de",
+      "response_sha256": "4e74dd66977f450dfda8bd2aa9ef779e6b5dbaa405b9c7df280adf0f15fdde37",
+      "response_bytes": 628,
+      "text_lines": 23,
+      "finished_at_utc": "2026-10-10T05:06:38.244888+00:00"
+    },
+    {
+      "id": "R27",
+      "requested_url": "https://raw.githubusercontent.com/JabRef/jabref/v6.0-alpha.6/jablib/src/main/java/org/jabref/logic/layout/format/LastPage.java",
+      "started_at_utc": "2026-10-10T05:06:38.244961+00:00",
+      "operation": "Unauthenticated read-only public HTTP GET; no manager/API fixture executed",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/JabRef/jabref/v6.0-alpha.6/jablib/src/main/java/org/jabref/logic/layout/format/LastPage.java",
+      "content_type": "text/plain; charset=utf-8",
+      "text_path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/R27.txt",
+      "text_sha256": "ae5cf8254d09dd487c12acd383bf2178152ad463d6c0388e4fbafdc7db232c27",
+      "response_sha256": "a589b4b6df3c2ccfdc41584b3fe58bb05b9feeb50f43dd5cdd6b4eea8a674f8b",
+      "response_bytes": 704,
+      "text_lines": 25,
+      "finished_at_utc": "2026-10-10T05:06:38.362982+00:00"
+    },
+    {
+      "id": "R28",
+      "requested_url": "https://api.github.com/repos/JabRef/jabref/issues/15106",
+      "started_at_utc": "2026-10-10T05:08:26.668032+00:00",
+      "operation": "Unauthenticated read-only public HTTP GET; no manager/API fixture executed",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/JabRef/jabref/issues/15106",
+      "content_type": "application/json; charset=utf-8",
+      "text_path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/R28.txt",
+      "text_sha256": "f659be5d823991be6a81ca7800506554cb7f60bb5545d305afc4469575f53f6b",
+      "response_sha256": "a58cd66bda22f08f5f6230d2f7429206f7a92ed43e0f0d518f67238cad574a93",
+      "response_bytes": 7138,
+      "text_lines": 1,
+      "finished_at_utc": "2026-10-10T05:08:26.880643+00:00"
+    },
+    {
+      "id": "R29",
+      "requested_url": "https://api.github.com/repos/JabRef/jabref/pulls/15315",
+      "started_at_utc": "2026-10-10T05:08:26.881705+00:00",
+      "operation": "Unauthenticated read-only public HTTP GET; no manager/API fixture executed",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/JabRef/jabref/pulls/15315",
+      "content_type": "application/json; charset=utf-8",
+      "text_path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/R29.txt",
+      "text_sha256": "7fee3f74ac0cfda4a420d2a9ec1ac8afc009e04d3bac58cfcda35e23d65b7c63",
+      "response_sha256": "ef4d57e1928643c7ff805bdb5ad2c21d1ad5b5ee79503c8cfe45034ce8c02857",
+      "response_bytes": 18619,
+      "text_lines": 1,
+      "finished_at_utc": "2026-10-10T05:08:27.129681+00:00"
+    },
+    {
+      "id": "R30",
+      "requested_url": "https://api.github.com/repos/JabRef/jabref/releases/tags/v6.0-alpha.6",
+      "started_at_utc": "2026-10-10T05:08:27.130712+00:00",
+      "operation": "Unauthenticated read-only public HTTP GET; no manager/API fixture executed",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/JabRef/jabref/releases/tags/v6.0-alpha.6",
+      "content_type": "application/json; charset=utf-8",
+      "text_path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/R30.txt",
+      "text_sha256": "eaf83212f0b5ff26c12b9c5d095ab9c48e5e3634ac389d5fc5067a111f014cd9",
+      "response_sha256": "997d83f6e91948824048c42499e06c4ac5d971b64a8765cb32c43d2f6fb3437a",
+      "response_bytes": 57578,
+      "text_lines": 1,
+      "finished_at_utc": "2026-10-10T05:08:27.317889+00:00"
+    }
+  ],
+  "reviewer_method": {
+    "nested_delegation": false,
+    "candidate_feedback_or_repair": false,
+    "other_arms_results_history_or_ER11_rescore": false,
+    "accounts_git_publication_or_live_product_writes": false,
+    "original_freeze_modified": false,
+    "allowed_output_root": "ER12_RUNTIME/assessment/A7-02/treatment-v1",
+    "mailbox_identity": "codex-er12-a702-review-v1",
+    "mailbox_scope": "Own inbox only; no roster or other reviewer status labels read",
+    "retrieval_method": "Public primary web opens plus independent read-only HTTP snapshots and PR/released-tag code inspection; no downloaded code executed",
+    "science_complete_before_native_completion": true
+  }
+}

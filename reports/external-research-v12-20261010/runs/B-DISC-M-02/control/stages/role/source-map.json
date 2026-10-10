@@ -1,0 +1,142 @@
+{
+  "case_id": "ER12-B-DISC-M-02-FRESH",
+  "role": "Brief-only discovery",
+  "retrieved_utc_window": "2026-10-10T04:38Z approximate; per-page UTC timestamps not exposed",
+  "operations": [
+    "web.search_query",
+    "web.open"
+  ],
+  "sources": [
+    {
+      "id": "restic_design_0_18_1",
+      "url": "https://restic.readthedocs.io/en/v0.18.1/design.html",
+      "version": "restic documentation v0.18.1",
+      "locator": [
+        "Backups and Deduplication",
+        "Threat Model"
+      ],
+      "retrieval_utc": "2026-10-10T04:38Z approximate",
+      "operation": "web.search_query then web.open",
+      "conditions_exceptions": "Specific version documents Rabin CDC parameters and 0.18.0 pack randomization; side-channel claims are scoped to its threat model.",
+      "applicability": "Evidence for a concrete Rabin baseline and historical mitigation; not universal CDC behavior.",
+      "evidence_file": "sources/evidence.md"
+    },
+    {
+      "id": "restic_references_0_19_1",
+      "url": "https://restic.readthedocs.io/en/stable/100_references.html",
+      "version": "restic documentation v0.19.1 stable",
+      "locator": [
+        "Keys, Encryption and MAC",
+        "config and masterkey descriptions"
+      ],
+      "retrieval_utc": "2026-10-10T04:38Z approximate",
+      "operation": "web.search_query then web.open",
+      "conditions_exceptions": "Password key files can change without re-encrypting stored data; this does not imply content master-key rotation.",
+      "applicability": "Illustrates distinction between credential rewrap and content-key rotation.",
+      "evidence_file": "sources/evidence.md"
+    },
+    {
+      "id": "borg_security_2_0_beta",
+      "url": "https://borgbackup.readthedocs.io/en/latest/internals/security.html",
+      "version": "Borg documentation 2.0.0b26.dev82 as titled at retrieval",
+      "locator": [
+        "Stored chunk sizes",
+        "buzhash and buzhash64",
+        "Secret key usage against fingerprinting"
+      ],
+      "retrieval_utc": "2026-10-10T04:38Z approximate",
+      "operation": "web.search_query then web.open",
+      "conditions_exceptions": "Beta/live documentation; stored chunk sizes are explicitly visible; exact implementation must be pinned before reuse.",
+      "applicability": "Inspectable keyed-Buzhash and keyed-ID design lead.",
+      "evidence_file": "sources/evidence.md"
+    },
+    {
+      "id": "kopia_encryption_docs",
+      "url": "https://kopia.io/docs/advanced/encryption/",
+      "version": "Live docs; page says last modified 2023-03-21; embedded sample buildVersion v0.3.0",
+      "locator": [
+        "format blob",
+        "encryptedBlockFormat",
+        "ContentFormat struct"
+      ],
+      "retrieval_utc": "2026-10-10T04:38Z approximate",
+      "operation": "web.search_query then web.open",
+      "conditions_exceptions": "Embedded example version is not asserted to be current or a default.",
+      "applicability": "Architecture lead for envelope separation and repository metadata.",
+      "evidence_file": "sources/evidence.md"
+    },
+    {
+      "id": "fastcdc_usenix_2016",
+      "url": "https://www.usenix.org/conference/atc16/technical-sessions/presentation/xia",
+      "version": "USENIX ATC '16 proceedings, 2016, pp. 101-114",
+      "locator": [
+        "abstract",
+        "paper summary"
+      ],
+      "retrieval_utc": "2026-10-10T04:38Z approximate",
+      "operation": "web.search_query then web.open",
+      "conditions_exceptions": "Throughput and ratio are reported for the paper's benchmark setup.",
+      "applicability": "Primary research evidence for FastCDC tradeoff, not a device-level prediction.",
+      "evidence_file": "sources/evidence.md"
+    },
+    {
+      "id": "cdc_attacks_preprint_2025",
+      "url": "https://arxiv.org/abs/2504.02095",
+      "version": "March 2025 author preprint, arXiv:2504.02095",
+      "locator": [
+        "abstract",
+        "sections 1, 2.1-2.2, 3.2-3.3, 5.1-5.2"
+      ],
+      "retrieval_utc": "2026-10-10T04:38Z approximate",
+      "operation": "web.search_query then web.open",
+      "conditions_exceptions": "Attacks depend on specific construction, version, visibility, and known/chosen-plaintext assumptions; preprint status.",
+      "applicability": "Threat-model evidence for parameter extraction and chunk-size leakage.",
+      "evidence_file": "sources/evidence.md"
+    },
+    {
+      "id": "mle_eurocrypt_2013",
+      "url": "https://iacr.org/archive/eurocrypt2013/78810294/78810294.pdf",
+      "version": "EUROCRYPT 2013 paper",
+      "locator": [
+        "sections 1.1-1.2"
+      ],
+      "retrieval_utc": "2026-10-10T04:38Z approximate",
+      "operation": "web.search_query then web.open",
+      "conditions_exceptions": "Formal MLE constructions/security definitions are not a validation of an arbitrary product scheme.",
+      "applicability": "Evidence for deterministic message-derived encryption and its deduplication purpose.",
+      "evidence_file": "sources/evidence.md"
+    }
+  ],
+  "retrieval_failures": [
+    {
+      "url": "https://eprint.iacr.org/2025/532.pdf",
+      "retrieval_utc": "2026-10-10T04:38Z approximate",
+      "operation": "web.open",
+      "exact_diagnostic": "Internal Error ()",
+      "disposition": "Opened the authors' arXiv HTML page instead; no technical claim relies on failed PDF."
+    }
+  ],
+  "implementation_leads": [
+    {
+      "name": "restic/chunker",
+      "url": "https://github.com/restic/chunker",
+      "status": "proposed inspection only; repository page not opened in this run"
+    },
+    {
+      "name": "Borg source",
+      "url": "https://github.com/borgbackup/borg",
+      "status": "proposed inspection only; repository page not opened in this run"
+    }
+  ],
+  "checks": {
+    "executed": [
+      "Opened the listed public primary documentation and paper pages, subject to the recorded PDF retrieval failure.",
+      "No local corpus, code implementation, benchmark, restore, or key-rotation experiment was executed."
+    ],
+    "proposed_not_executed": [
+      "Synthetic insertion, overwrite, and middle-edit comparison across four chunkers.",
+      "Synthetic object-store leakage review for IDs, sizes, timing, and guessed chunks.",
+      "Disposable-repository password rewrap versus content-key and ID-key rotation test."
+    ]
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "case_id": "ER12-B-FINAL-G-02-FRESH",
+  "role": "Criticism adjudication and complete bounded finalization",
+  "deliverable": "final-section.md",
+  "activation": {
+    "tool": "native Goal via functions.create_goal",
+    "objective": "ER12 B-FINAL-G-02/control: execute ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/assignment.md; save the complete bounded role output and source map before completing this actual native Goal.",
+    "status_observed": "active",
+    "thread_id": "01a12441-1dfa-74f1-9294-3781c8e831dc",
+    "receipt_file": "native-goal-activation.json",
+    "provider_or_model_in_activation_response": "UNKNOWN",
+    "completion_receipt_file": "native-goal-completion.json (exact response to be preserved after completing this same Goal)"
+  },
+  "local_inputs_read": [
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/inputs/assignment.md",
+      "operation": "cat after native Goal activation"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/inputs/fixture.json",
+      "operation": "cat after native Goal activation"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/inputs/corpus/index.json",
+      "operation": "cat after native Goal activation"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/inputs/corpus/S1.md",
+      "operation": "cat after native Goal activation"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/inputs/corpus/S2.md",
+      "operation": "cat after native Goal activation"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "S1",
+      "title": "Git sparse-checkout",
+      "url": "https://git-scm.com/docs/git-sparse-checkout/2.42.0",
+      "version": "Git manual 2.42.0; change list reports no manual changes 2.42.1–2.51.1, including target 2.43",
+      "locators": [
+        "set",
+        "reapply",
+        "disable",
+        "CONE MODE HANDLING",
+        "CONE PATTERN SET",
+        "SUBMODULES",
+        "--[no-]sparse-index"
+      ],
+      "retrieval_utc": "2026-10-10T05:21Z (minute precision)",
+      "operation": "web.open on official versioned manual; see bounded evidence in sources/git-sparse-checkout.md",
+      "conditions_and_exceptions": [
+        "Cone mode includes root and ancestor-level immediate files as well as all files under selected directories.",
+        "Selection updates the working tree; ignored files in emptied directories may be removed.",
+        "Merges/rebases/conflicts and local modifications can leave paths materialized outside the cone; reapply follows resolution or handling.",
+        "Submodule initialization is separate.",
+        "Sparse index concerns index representation/performance, not network transfer."
+      ],
+      "applicability": "Relevant manual statements are present in version 2.42.0; official version history reports no changes through 2.51.1, so they apply to target Git 2.43."
+    },
+    {
+      "source_id": "S2",
+      "title": "Git clone",
+      "url": "https://git-scm.com/docs/git-clone/2.43.0",
+      "version": "Git 2.43.0",
+      "locators": [
+        "--sparse",
+        "--filter",
+        "--depth"
+      ],
+      "retrieval_utc": "2026-10-10T05:20Z (minute precision)",
+      "operation": "web.open on official versioned manual; see bounded evidence in sources/git-clone.md",
+      "conditions_and_exceptions": [
+        "Sparse checkout controls initial working-tree population.",
+        "Partial-clone blob filtering is separate and can defer content until needed.",
+        "--depth truncates commit history."
+      ],
+      "applicability": "Exact target version Git 2.43.0."
+    }
+  ],
+  "retrieval_attempts": [
+    {
+      "url": "https://git-scm.com/docs/git-sparse-checkout/2.43.0",
+      "operation": "web.open",
+      "result": "Returned a redirect-only three-line response without manual content. Used the accessible versioned 2.42.0 manual and its change history for 2.43 applicability; no missing content was inferred from the redirect."
+    }
+  ],
+  "checks": {
+    "proposed_not_executed": [
+      "Compare materialized tracked files in the disposable clone to the expected cone set, including root and packages-level files; report missing/unexpected paths and sparse-checkout list.",
+      "In a disposable recovery scenario, verify local edits are preserved or selection change stops; trigger a merge-like materialization/conflict, resolve/handle it, run reapply, and report remaining paths, status, and diagnostics.",
+      "Run disable in the disposable clone and compare against all tracked files; report missing paths, conflicts, status, and exit code."
+    ],
+    "executed": [],
+    "git_commands_run": false,
+    "tests_run": false,
+    "network_bytes_measured": false,
+    "runtime_measured": false
+  },
+  "unknowns": [
+    "Native activation response does not identify provider/model: UNKNOWN.",
+    "Actual helper compatibility and data-safety behavior remain unverified until the proposed checks run on Git 2.43.",
+    "Network transfer and runtime remain unmeasured."
+  ],
+  "deliverables_saved_before_goal_completion_utc": "2026-10-10T05:24:16Z"
+}

@@ -1,0 +1,73 @@
+[
+  {
+    "id": "release-26.08-riff-handler.cpp",
+    "url": "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/318d800d92c4a3cc8a814f6fdceba0ed8b3416ec/Source/Riff/Riff_Handler.cpp",
+    "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/release-26.08-riff-handler.cpp",
+    "sha256": "b610951194f7100931c14bf834f38147a75b27924848d772cc3209249dea6af4",
+    "bytes": 184884,
+    "retrieved_at_utc": "2026-10-10T04:48:56.421356+00:00"
+  },
+  {
+    "id": "release-26.08-history.txt",
+    "url": "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/318d800d92c4a3cc8a814f6fdceba0ed8b3416ec/History_GUI.txt",
+    "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/release-26.08-history.txt",
+    "sha256": "88faeb6b107187959435d46c55a36f8538995bddea23953b62cc0b9b1a762b15",
+    "bytes": 15486,
+    "retrieved_at_utc": "2026-10-10T04:48:56.392005+00:00"
+  },
+  {
+    "id": "issue-125-comments.json",
+    "url": "https://api.github.com/repos/MediaArea/BWFMetaEdit/issues/125/comments",
+    "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/issue-125-comments.json",
+    "sha256": "61b5e232e0f66ef196d96b9f1c3f8a8d2feadecd94a95c8fbd64489a79640518",
+    "bytes": 3656,
+    "retrieved_at_utc": "2026-10-10T04:48:56.433949+00:00"
+  },
+  {
+    "id": "GUI_Main_xxxx_TextEditDialog.cpp",
+    "url": "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/318d800d92c4a3cc8a814f6fdceba0ed8b3416ec/Source/GUI/Qt/GUI_Main_xxxx_TextEditDialog.cpp",
+    "version": "v26.08",
+    "commit": "318d800d92c4a3cc8a814f6fdceba0ed8b3416ec",
+    "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/release-26.08-GUI_Main_xxxx_TextEditDialog.cpp",
+    "sha256": "6820925b88a89bc91e1f238985c0020893c5cce5e64df7e080e37ccc9af9a0ad",
+    "bytes": 9517,
+    "retrieved_at_utc": "2026-10-10T04:50:05.620483+00:00"
+  },
+  {
+    "id": "Core.cpp",
+    "url": "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/318d800d92c4a3cc8a814f6fdceba0ed8b3416ec/Source/Common/Core.cpp",
+    "version": "v26.08",
+    "commit": "318d800d92c4a3cc8a814f6fdceba0ed8b3416ec",
+    "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/release-26.08-Core.cpp",
+    "sha256": "bf8bda2de2abc7d2f75ff4574bca24dbc733ad8c429abea3651a0f2d0ee7c5d3",
+    "bytes": 90821,
+    "retrieved_at_utc": "2026-10-10T04:50:05.629557+00:00"
+  },
+  {
+    "id": "github-tags.json",
+    "url": "https://api.github.com/repos/MediaArea/BWFMetaEdit/tags?per_page=100",
+    "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/github-tags.json",
+    "bytes": 5545,
+    "sha256": "ec5da3e7b277683dd9a88ec48d31b0442bca56cc6276dfba0f170a17ad1ed4a9",
+    "retrieved_at_utc": "2026-10-10T04:48:45.656329+00:00",
+    "operation": "unauthenticated independent public API GET; no git checkout or account"
+  },
+  {
+    "id": "github-issue-125.json",
+    "url": "https://api.github.com/repos/MediaArea/BWFMetaEdit/issues/125",
+    "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/github-issue-125.json",
+    "bytes": 5695,
+    "sha256": "aad89d9ca2089966bb035c7826dce936348b44a9f66e71388d31eaed2e6334b9",
+    "retrieved_at_utc": "2026-10-10T04:48:45.840330+00:00",
+    "operation": "unauthenticated independent public API GET; no git checkout or account"
+  },
+  {
+    "id": "github-master-tree.json",
+    "url": "https://api.github.com/repos/MediaArea/BWFMetaEdit/git/trees/master?recursive=1",
+    "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/github-master-tree.json",
+    "bytes": 91830,
+    "sha256": "45e72b457088aacdf4fda3ae73f71b0cc01a59e466c5856dca3eac229a6e4050",
+    "retrieved_at_utc": "2026-10-10T04:48:46.037320+00:00",
+    "operation": "unauthenticated independent public API GET; no git checkout or account"
+  }
+]

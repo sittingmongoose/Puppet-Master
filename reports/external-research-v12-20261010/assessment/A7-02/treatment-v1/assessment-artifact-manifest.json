@@ -1,0 +1,285 @@
+{
+  "saved_at_utc": "2026-10-10T05:19:21.207667+00:00",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "protocol_judgment": "FAIL_ORDERING; corrected retained bind/seal recorded",
+  "native_reviewer_completion_receipt": "evidence/reviewer-goal-complete.json",
+  "original_assessment_preserved": true,
+  "files": [
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/assessment.json",
+      "relative_path": "assessment.json",
+      "bytes": 131722,
+      "sha256": "dd4ac34a188c413b6a0845d07152326cd9e631bf8564f5a1fcc611c509c88abe"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/assessment.md",
+      "relative_path": "assessment.md",
+      "bytes": 64907,
+      "sha256": "f912aa246f238ef682173dd721d3d2d02ceec326fef7357ddd36913eb5e955e6"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/R12.txt",
+      "relative_path": "evidence/R12.txt",
+      "bytes": 3836,
+      "sha256": "6fe32f38d47d5049bbc1a27b520b0714360fdbab299e7370466b9e8c1d7cb014"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/R25.txt",
+      "relative_path": "evidence/R25.txt",
+      "bytes": 4335,
+      "sha256": "6f55b22cc5de43f4a9d1f536a3dfe126840489ae7941db7860b2b87587419b5b"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/R26.txt",
+      "relative_path": "evidence/R26.txt",
+      "bytes": 766,
+      "sha256": "36a65d70bdcd250988eb8806a220b7140ee5d7d66d3f47bd69804ed6afb065de"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/R27.txt",
+      "relative_path": "evidence/R27.txt",
+      "bytes": 854,
+      "sha256": "ae5cf8254d09dd487c12acd383bf2178152ad463d6c0388e4fbafdc7db232c27"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/R28-selected.json",
+      "relative_path": "evidence/R28-selected.json",
+      "bytes": 1108,
+      "sha256": "132163b8c30deca0201c44010a7de84b5ed16708017b7f968b8b1a0a33ce9a02"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/R28.txt",
+      "relative_path": "evidence/R28.txt",
+      "bytes": 7145,
+      "sha256": "f659be5d823991be6a81ca7800506554cb7f60bb5545d305afc4469575f53f6b"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/R29-selected.json",
+      "relative_path": "evidence/R29-selected.json",
+      "bytes": 1770,
+      "sha256": "a5f363fd6c88e21263756974869207161be804141f1b1341e94ea01f16abcecd"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/R29.txt",
+      "relative_path": "evidence/R29.txt",
+      "bytes": 18626,
+      "sha256": "7fee3f74ac0cfda4a420d2a9ec1ac8afc009e04d3bac58cfcda35e23d65b7c63"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/R30-selected.json",
+      "relative_path": "evidence/R30-selected.json",
+      "bytes": 16038,
+      "sha256": "a50116aef8dee019a7e240a4168253d25c233d1dbfd24750ac91d59d89af4868"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/R30.txt",
+      "relative_path": "evidence/R30.txt",
+      "bytes": 57585,
+      "sha256": "eaf83212f0b5ff26c12b9c5d095ab9c48e5e3634ac389d5fc5067a111f014cd9"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S01.txt",
+      "relative_path": "evidence/S01.txt",
+      "bytes": 18277,
+      "sha256": "d3a057e9de6242bd47e5b4306f24132babbcbbfaa15eba68e9e6871e5b339085"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S02.txt",
+      "relative_path": "evidence/S02.txt",
+      "bytes": 4479,
+      "sha256": "31549a8506168e83d7fb0db4e9b1f173496e72703757ed8a3a9659a0bd450a23"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S03.txt",
+      "relative_path": "evidence/S03.txt",
+      "bytes": 32008,
+      "sha256": "db579651a48dce640012974e90c57758934cd0a372189313114b2ecd3e5c7608"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S04.txt",
+      "relative_path": "evidence/S04.txt",
+      "bytes": 3166,
+      "sha256": "f0dc03ab72cdd5743042d73f1ad289bd0d2313481e90dd475bf68e8a910d6c22"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S05.txt",
+      "relative_path": "evidence/S05.txt",
+      "bytes": 2700,
+      "sha256": "35608aa7965b52c9ed33e8abd0b79b1f76652e1d231f661ddb8105e06c249a69"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S06.txt",
+      "relative_path": "evidence/S06.txt",
+      "bytes": 4152,
+      "sha256": "ee1c2afb91f25463650a9ebeb1b7aeb51d3999292c8b31d0a9025ba0ca9a793c"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S07.txt",
+      "relative_path": "evidence/S07.txt",
+      "bytes": 17055,
+      "sha256": "9e4f6c4a049522ac0f6b3a8c5112e2d04a69595629c2084b78e81bfd03f390cd"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S08.txt",
+      "relative_path": "evidence/S08.txt",
+      "bytes": 4998,
+      "sha256": "8c5b16a9b8c6caefaaa3ad36aa30b2172c842e31f5a1d9db389c47555daf2419"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S09.txt",
+      "relative_path": "evidence/S09.txt",
+      "bytes": 3869,
+      "sha256": "4c3031c272695125498d2ade4dae573272eefb3d6dcb4b31b90a6385963af51e"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S10.txt",
+      "relative_path": "evidence/S10.txt",
+      "bytes": 3127,
+      "sha256": "8d5ebe628febca514a54662ca7265276eaf5ffb68399c58460eabcc2d7f4663d"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S11.txt",
+      "relative_path": "evidence/S11.txt",
+      "bytes": 3910,
+      "sha256": "d7e237519d9d74decdf748b28b71db217b2e5ea7f149d6cc0cc81efef329c5bb"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S13.txt",
+      "relative_path": "evidence/S13.txt",
+      "bytes": 25707,
+      "sha256": "461927ba0ac2d90d1fb140744108db2da23559bc0c4a5339b889c7ce9329e6fe"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S14.txt",
+      "relative_path": "evidence/S14.txt",
+      "bytes": 6055,
+      "sha256": "31a15e277c69f8e3a44b211ffa8c57a6aef210a24141bb514c0698daa9f086fe"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S15.txt",
+      "relative_path": "evidence/S15.txt",
+      "bytes": 23096,
+      "sha256": "e56d6bb885c074751c5a9402b07b8ac539bdff195d9f5dfb9f7f29361f4112e0"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S16.txt",
+      "relative_path": "evidence/S16.txt",
+      "bytes": 13335,
+      "sha256": "bfbeeda6f1fdc69c1209f56dc69dcd77d89eb2588093d4042984e6bf0260c13e"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S17.txt",
+      "relative_path": "evidence/S17.txt",
+      "bytes": 19692,
+      "sha256": "28db97fbc6b9a835a0fc27d13399b4b4bd1a28c291d93cfc8d81928695c794ea"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S18.txt",
+      "relative_path": "evidence/S18.txt",
+      "bytes": 14742,
+      "sha256": "37b6d305ce529bd473ac7fbef03d1f57bc7fae87f13bc66fea871791c471302c"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S19.txt",
+      "relative_path": "evidence/S19.txt",
+      "bytes": 28994,
+      "sha256": "be6911cbee94744d1c31bccf303650e6e55961affb89eb065cef2c8cd7ce61ba"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S20.txt",
+      "relative_path": "evidence/S20.txt",
+      "bytes": 19631,
+      "sha256": "02137a978119b7a202d11b57bb1cfaaa3244402b11df4008a90a15c39d5b44e4"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S21.txt",
+      "relative_path": "evidence/S21.txt",
+      "bytes": 14036,
+      "sha256": "8e6bbffb1c396a7140de0797fef5817836f344c09dc2c3126113361189d7ea16"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S22.txt",
+      "relative_path": "evidence/S22.txt",
+      "bytes": 11494,
+      "sha256": "e219122830112191994ed9a4d24a4bf5dbd67558e8cf040dd040be381cd0cb2a"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S23.txt",
+      "relative_path": "evidence/S23.txt",
+      "bytes": 96218,
+      "sha256": "7c2751c5ec75e9a6980bc29193a9fa4168a3946db474673ba54ef612793153a9"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/S24.txt",
+      "relative_path": "evidence/S24.txt",
+      "bytes": 15378,
+      "sha256": "2cefb081ec84ffe5191259637c9b4d4b1a36f9d255589df22ad5288a34bc3779"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/additional-retrievals.json",
+      "relative_path": "evidence/additional-retrievals.json",
+      "bytes": 5975,
+      "sha256": "2bdd897af1764ace13e61865d9f8de852d28a4e90c1576b83ece6b9795997a52"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/delivery-verification.json",
+      "relative_path": "evidence/delivery-verification.json",
+      "bytes": 16275,
+      "sha256": "5f98bc0accf97b8247f79d6e6fb63ce4bdaa795015fa44335f9bed8e004d2067"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/freeze-integrity.json",
+      "relative_path": "evidence/freeze-integrity.json",
+      "bytes": 18264,
+      "sha256": "b5c28b4a3d9804644ccb97ca20d0360aa882565c47e931d70b62c8f6c30e0c76"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/index.md",
+      "relative_path": "evidence/index.md",
+      "bytes": 8473,
+      "sha256": "909c34eb977df6e39cae8a59753623f4185eb13700539ad02c20062e9ffaa1d6"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/retrievals.json",
+      "relative_path": "evidence/retrievals.json",
+      "bytes": 19084,
+      "sha256": "fba1a7422f630c4462b7090ffc72bacd4a3b9a5561f0236bec1eeb4b12d20947"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/retrieve.py",
+      "relative_path": "evidence/retrieve.py",
+      "bytes": 2833,
+      "sha256": "d6bead66eab8499bcc9775cfe8c95dd532651586d8f4038b530009ac9382a660"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/reviewer-goal-active.json",
+      "relative_path": "evidence/reviewer-goal-active.json",
+      "bytes": 1177,
+      "sha256": "0994c31ca3eb7edaa3ee16df10b5f46606b2f39b2811ebdeea1d1a0faf24f3b7"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/evidence/reviewer-goal-complete.json",
+      "relative_path": "evidence/reviewer-goal-complete.json",
+      "bytes": 1499,
+      "sha256": "a49d3aecc2785d71221dadef6bec709b8f5b89222950b19c0bc7b5899aeeece4"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/original-inspected-hashes.json",
+      "relative_path": "original-inspected-hashes.json",
+      "bytes": 19906,
+      "sha256": "bf05d40ce02f7fa686118e2fb5aa3783055010e0e7a409d27fad375e50d16bc3"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/root-review-request.json",
+      "relative_path": "root-review-request.json",
+      "bytes": 3601,
+      "sha256": "4c896c8ba3f5cdf3b223ba7cbb07fdee3b3c77b8034e03ba560cf662e196d22a"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/source-map.json",
+      "relative_path": "source-map.json",
+      "bytes": 111017,
+      "sha256": "381eb97873b7d6917d9ff88a1f23ed5b963fd3b7a597053f09a582d17ec14dd8"
+    }
+  ]
+}

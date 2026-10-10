@@ -1,0 +1,88 @@
+{
+  "run_id": "A8-01-treatment",
+  "stage": "critic",
+  "access_window_utc": "UNKNOWN per-request time; read-only primary-source review completed by 2026-10-10T04:29:27Z",
+  "reviewed_inputs": [
+    "ER12_RUNTIME/runs/A8-01/treatment/inputs/brief.md",
+    "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/discovery.md",
+    "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/draft.md",
+    "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/source-map.json",
+    "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/revealed-plan.md",
+    "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/plan-reveal.json"
+  ],
+  "source_index": "sources/index.md",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "The BagIt File Packaging Format (V1.0)",
+      "exact_url": "https://www.rfc-editor.org/rfc/rfc8493.html",
+      "released_version_or_commit": "RFC 8493 / BagIt v1.0, October 2018",
+      "locator": ["§1.1", "§2.1.3", "§2.2.2–2.2.4", "§2.4", "§3", "§6.1.1–6.1.2"],
+      "access_utc": "UNKNOWN exact request time; reviewed during read-only browser session ending 2026-10-10T04:29:27Z",
+      "observed_operation": "Opened official RFC and inspected package scope, manifests/completeness, tag semantics, algorithms, and path interoperability; no product/validator run.",
+      "governing_condition_default_exception": "BagIt 1.0 tools MUST support SHA-256 and SHA-512 and SHOULD enable SHA-512 by default. Manifests list payload files; completeness and checksum validity are distinct. bag-info.txt is optional human-use metadata; arbitrary tags are allowed but unrecognized semantics are ignored. Filename normalization differs across systems/tools.",
+      "applicability": "Supports per-deposit packaging and path/integrity checks; does not define gallery intent or a native corrected-version history model."
+    },
+    {
+      "id": "S02",
+      "title": "Oxford Common File Layout Specification",
+      "exact_url": "https://ocfl.io/1.1/spec/",
+      "released_version_or_commit": "OCFL 1.1 specification family; 1.1.1 tag c3f88b3; 1.1 release tag 1.1 / commit 4b05472",
+      "locator": ["§3.3–3.6", "§3.7", "§3.8"],
+      "access_utc": "UNKNOWN exact request time; reviewed by 2026-10-10T04:29:27Z",
+      "observed_operation": "Opened official spec and checked version directories, manifest scope, inventories and sidecars; no validator/implementation run.",
+      "governing_condition_default_exception": "Objects use continuous version directories; each version's content files must appear in its inventory manifest. Every inventory file has a required digest sidecar; version-directory inventories SHOULD be included, while the root inventory MUST exist.",
+      "applicability": "Native filesystem object version history; full-object copy is an operational inference and validation remains necessary."
+    },
+    {
+      "id": "S03",
+      "title": "OCFL issue #538, historic inventory manifest wording",
+      "exact_url": "https://github.com/OCFL/spec/issues/538",
+      "released_version_or_commit": "Opened 2021-04-02; 1.1 milestone; closed via #547 in v1.1.0",
+      "locator": ["Issue description", "status/activity", "milestone"],
+      "access_utc": "UNKNOWN exact request time; reviewed by 2026-10-10T04:29:27Z",
+      "observed_operation": "Opened public issue and read description/status; no implementation incident claimed.",
+      "governing_condition_default_exception": "Issue describes ambiguity over manifests in historical inventories; release change log, not issue alone, establishes the wording clarification.",
+      "applicability": "Historical-inventory scope if OCFL is used; not evidence of data loss or a BagIt defect."
+    },
+    {
+      "id": "S04",
+      "title": "OCFL specification change log and release history",
+      "exact_url": "https://ocfl.io/1.1/spec/change-log.html",
+      "related_release_urls": ["https://github.com/OCFL/spec/releases/tag/1.1", "https://github.com/OCFL/spec/releases/tag/1.1.1"],
+      "released_version_or_commit": "v1.1 tag / commit 4b05472; v1.1.1 tag / commit c3f88b3",
+      "locator": ["v1.0 to v1.1.0", "Clarifications in v1.1.0", "Clarify manifest requirements in historic inventories"],
+      "access_utc": "UNKNOWN exact request time; reviewed by 2026-10-10T04:29:27Z",
+      "observed_operation": "Opened official change log and release pages; checked tag and commit identifiers.",
+      "governing_condition_default_exception": "v1.1.0 clarifies that every historical inventory manifest references every file in its own version directory. This is wording clarification, not proof third-party validators enforce it.",
+      "applicability": "Supports release-history finding and conditional OCFL copy/validation guidance."
+    },
+    {
+      "id": "S05",
+      "title": "PREMIS Data Dictionary for Preservation Metadata v3.0",
+      "exact_url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+      "released_version_or_commit": "PREMIS v3.0; full document updated November 2015 per Library of Congress",
+      "locator": ["§1.5.2 pp. 58–60", "§2 Event entity pp. 137–157"],
+      "access_utc": "UNKNOWN exact request time; reviewed by 2026-10-10T04:29:27Z",
+      "observed_operation": "Opened official LOC PDF and reviewed fixity/event outcome relationship; no PREMIS record or validator run.",
+      "governing_condition_default_exception": "Digest algorithm/value describe fixity; a check and date are an Event and result an outcome. Some backup-copy actions may instead be in system logs.",
+      "applicability": "Supports a PREMIS-inspired readable event log, not a claim of conformance."
+    },
+    {
+      "id": "S06",
+      "title": "git-annex whereis, log and fsck manuals",
+      "exact_url": "https://git-annex.branchable.com/git-annex-whereis/",
+      "related_urls": ["https://git-annex.branchable.com/git-annex-log/", "https://git-annex.branchable.com/git-annex-fsck/"],
+      "released_version_or_commit": "Online manuals do not identify an inspected release; version-sensitive documentation",
+      "locator": ["whereis description/note", "log description/path history", "fsck --from and --fast"],
+      "access_utc": "UNKNOWN exact request time; reviewed by 2026-10-10T04:29:27Z",
+      "observed_operation": "Opened official manuals; no install, configuration, or execution.",
+      "governing_condition_default_exception": "whereis reports last received location data and does not contact remotes; fsck --from normally reads content for checksum, whereas --fast avoids checksum/transfer.",
+      "applicability": "Higher-capability optional location/fixity mechanism; not selected for the no-new-platform pilot."
+    }
+  ],
+  "executed_research_operations": ["Read-only browser review of the primary pages above."],
+  "local_checks_executed": [],
+  "product_validation_executed": [],
+  "goal_provenance": "UNKNOWN except for create_goal/get_goal output recorded in critique.md"
+}

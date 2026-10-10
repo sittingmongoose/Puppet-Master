@@ -1,0 +1,21 @@
+{
+  "requested_at_utc": "2026-10-10T05:17:25.520000+00:00",
+  "clientRequestId": "er12-B-FINAL-M-02-control-role-v2",
+  "args": {
+    "clientRequestId": "er12-B-FINAL-M-02-control-role-v2",
+    "title": "ER12 B-FINAL-M-02 control role",
+    "role": "research",
+    "mode": "async",
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "target": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna",
+      "options": {
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      }
+    },
+    "task": "Execute exactly ER12_RUNTIME/runs/B-FINAL-M-02/control/stages/role/assignment.md and input-map.json. Before common source/case input or inference, activate exactly ONE actual exposed native Goal referring to this assignment. If unavailable/unsupported, stop scientific inference and save the exact unsupported diagnostic; no simulated Goal. Save deliverables before native completion. Never start provider CLI/model/session in shell, nested assistance, other arms, account changes or parent history."
+  }
+}

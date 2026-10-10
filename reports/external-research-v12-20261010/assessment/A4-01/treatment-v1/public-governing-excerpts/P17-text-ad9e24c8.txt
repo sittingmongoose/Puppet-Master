@@ -1,0 +1,19 @@
+URL: https://github.com/minio/minio/issues/20455
+Original locator: ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P17-text.txt
+Original SHA256: ad9e24c8f8a3fc8563a626ab3e0e09b7a0f133936fc15393ead9bbaf02d94ac3
+Original numbered lines; gaps omitted. Not full response.
+
+1: Checksum not retrievable when provided as a trailing checksum via the AWS S3 SDK · Issue #20455 · minio/minio · GitHub
+109: Checksum not retrievable when provided as a trailing checksum via the AWS S3 SDK #20455
+115: Checksum not retrievable when provided as a trailing checksum via the AWS S3 SDK#20455
+126: When putting an object via PutObject using the AWS S3 .NET SDK and requesting a trailing checksum by setting ChecksumAlgorithm (X-Amz-Sdk-Checksum-Algorithm) to "SHA256", I expect to be able to retrieve the checksum at a later point from either:
+129: The ChecksumAlgorithm should also be included in the ListObjectsV2 result but it too is missing.
+130: Note: when providing a precalculated checksum to PutObject, the checksum value is able to be retrieved later via GetObject and GetObjectAttributes, however ChecksumAlgoritm is still missing from the ListObjectsV2 result.
+132: When I upload a file via PutObject using a trailing checksum, I can see the X-Amz-Trailer request header correctly provided and I also see the trailing checksum correctly appended to the end of the upload request.  The PutObject response includes the X-Amz-Checksum-Sha256 response header as expected.
+133: However, subsequent calls to ListObjectsV2, GetObjectAttributes and GetObject fail to include the checksum value (or the checksum algorithm in the case of ListObjectsV2) in their respective responses.
+135: ListObjectsV2 includes 'ChecksumAlgorithm' in its xml response body
+139: Version: RELEASE.2024-09-13T20-26-02Z (go1.22.7 linux/amd64)
+159: ListObjectsV2 must have been added recently. Do not see it in API docs. Do you have an example of this working?
+162: Fix PutObject Trailing checksum
+203: ListObjectsV2 must have been added recently. Do not see it in API docs. Do you have an example of this working?
+230: @klauspost No, just a regular listing, looking at the AWS docs and in their SDK for ListObjectsV2 (and ListObjects for that matter) this header isn't an option.  From my testing, ChecksumAlgorithm will be included in the response whenever there is an additional checksum for the object.

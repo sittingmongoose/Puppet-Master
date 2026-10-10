@@ -1,0 +1,54 @@
+{
+  "schema": "er12-role-fixture-v1",
+  "slot_id": "B-FINAL-M-02",
+  "case_id": "ER12-B-FINAL-M-02-FRESH",
+  "role": "Criticism adjudication and complete bounded finalization",
+  "title": "PostgreSQL latest-reading batch upsert",
+  "control": {
+    "provider": "codex_authorized",
+    "model": "Luna Max",
+    "input": "identical frozen role package to challenger"
+  },
+  "treatment": {
+    "provider": "muse_code",
+    "model": "Muse 1.3 Contributor Max",
+    "input": "identical frozen role package to Luna"
+  },
+  "whole_arm_seconds": 900,
+  "investigation_seconds_max": 600,
+  "writing_reserve_seconds": 300,
+  "counts_as_full_pipeline": false,
+  "status": "READY_FROZEN_NOT_DISPATCHED",
+  "frozen_at": "2026-10-10T03:56:03.662589+00:00",
+  "assignment": "assignment.md",
+  "input_files": [
+    {
+      "path": "assignment.md",
+      "sha256": "ff2b636fc14365864262cef1330454a807288fe456febf8f0660a142b9521f2f"
+    },
+    {
+      "path": "corpus/S1.md",
+      "sha256": "abe9113df5303a6896c0efcffb0f053cef56cc5a6d0e2f3f8784a1ef5248cd0b"
+    },
+    {
+      "path": "corpus/S2.md",
+      "sha256": "82283c7ceb2bde2011bf62f375f02e452fdc66d7dbe9be299af2d18cb2e72cef"
+    },
+    {
+      "path": "corpus/index.json",
+      "sha256": "ba1dd888161f20c30b39b1019aac62a69750209beb91fbff93131b343d1b61b1"
+    }
+  ],
+  "input_sha256": "f02f41b1f75f369b0ad8ca185b94b92676690d4974b04eccdd74c26a308e0c09",
+  "no_assessor_answers": true,
+  "source_versions": [
+    [
+      "S1",
+      "PostgreSQL major version 17 documentation; target PostgreSQL 17"
+    ],
+    [
+      "S2",
+      "PostgreSQL major version 17 documentation; target Read Committed"
+    ]
+  ]
+}

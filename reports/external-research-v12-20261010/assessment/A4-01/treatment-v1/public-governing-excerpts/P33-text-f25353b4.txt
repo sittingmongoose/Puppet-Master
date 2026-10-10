@@ -1,0 +1,10 @@
+URL: https://raw.githubusercontent.com/aws/aws-cli/2.37.6/awscli/customizations/s3/utils.py
+Original locator: ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P33-text.txt
+Original SHA256: f25353b4241749e56c1f76c6138f5d942eeea614baf1c606332e8e24cb360233
+Original numbered lines; gaps omitted. Not full response.
+
+34: SIZE_SUFFIX = {
+101: def human_readable_to_int(value):
+116:     has_size_identifier = len(value) >= 2 and suffix in SIZE_SUFFIX
+123:         multiplier = SIZE_SUFFIX[suffix]
+124:         return int(value[: -len(suffix)]) * multiplier

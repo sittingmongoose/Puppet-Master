@@ -1,0 +1,1200 @@
+{
+  "schema": "er12-independent-full-pipeline-assessment-v1",
+  "assignment": "A4-01 treatment, one completed full pipeline, treatment-v1",
+  "reviewer_identity": "codex-er12-a401-semrev-0439",
+  "review_started_utc": "2026-10-10T04:39:31Z",
+  "review_deadline_utc": "2026-10-10T05:24:31Z",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "judgment_basis": "All six axes and all eight exact original obligations assessed independently. No remaining material error, omission, unsupported consequential decision or false exclusion was established in the frozen final. Earlier draft defects are retained as lineage findings. Source precision and reproducibility limits do not change the pilot recommendation or license provider compatibility. This is a planning-proposal qualification, not a deployed-system or native/protocol/billing qualification.",
+  "final_path": "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md",
+  "final_sha256": "d451bf92920f64778176d1d9efc7ba38a07b6e09429c45c301909c20a21ec29a",
+  "axis_coverage": [
+    {
+      "axis": 1,
+      "name": "Original obligations and negative constraints",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS",
+      "reason": "The self-contained final covers operation-specific single/multipart comparison, two actual intake routes, a distinct Google analogy, interruption/cleanup/integrity/duplicates/receipt, a released history chain, investigated conditional optional CLI, both named owner authorities, unresolved cost, all negative constraints, and separate proposed versus executed validation. Browser preference and 20 MB–40 GB scale remain. No implementation or live writes are required or claimed.",
+      "artifact_locators": [
+        "reviser/final.md:5",
+        "reviser/final.md:11",
+        "reviser/final.md:23",
+        "reviser/final.md:33",
+        "reviser/final.md:47",
+        "reviser/final.md:53",
+        "reviser/final.md:59",
+        "reviser/final.md:65",
+        "reviser/final.md:69"
+      ],
+      "evidence_ids": [
+        "P01",
+        "P02",
+        "P05",
+        "P07",
+        "P09",
+        "P20",
+        "P21",
+        "P22"
+      ]
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source claims: subject, operation, version, default, unit, type, domain, exceptions",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "reason": "Independently retrieved every primary URL carried by the investigator and reviser, plus governing API, released code and issue/fix context. AWS PutObject/console/multipart limits, part counts and last-part exception, CRC full-object versus SHA composite scope, initiation algorithm caveat, embedded completion errors, browser persistence/defaults, tus chunk scope/backend requirements, GCS session conditions, conditional writes, cleanup, and CLI controls are supported within their stated product domains. Pilot calculations are correct. Minor distinctions in L01–L05 remain; none establishes a materially unsupported deployment decision.",
+      "evidence_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07",
+        "P08",
+        "P09",
+        "P11",
+        "P12",
+        "P13",
+        "P14",
+        "P15",
+        "P16",
+        "P20",
+        "P21",
+        "P30",
+        "P31",
+        "P32",
+        "P33"
+      ]
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar discovery, competing/analogous approaches, implementation/history and opportunity breadth",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS",
+      "reason": "Discovery supplies usable mechanisms beyond generic caution: failed-part retry and durable manifests, browser file reselection, tus offset recovery and temporary .part storage, checksum type separation, conditional-write limitations, cleanup policy, two independent compatibility histories and a conditional CLI. The final preserves two genuinely different intake architectures and adds a distinct session-URI analogy. These are meaningful operational comparisons at pilot scale, not an exhaustive product catalogue. Tagged tusd source and release plus MinIO code/issue confirm implementation and history leads. No MinIO-client winner or provider switch is invented.",
+      "evidence_ids": [
+        "P07",
+        "P08",
+        "P09",
+        "P20",
+        "P21",
+        "P22",
+        "P23",
+        "P24",
+        "P25",
+        "P26",
+        "P27",
+        "P28",
+        "P29"
+      ]
+    },
+    {
+      "axis": 4,
+      "name": "Wrong criticism, corrections, rejections, and exact plan dispositions",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "reason": "All four CI findings receive explicit final dispositions. CI-01 identifies a real draft omission and the final carries the composite/part-level condition, while qualifying the critic's broader shorthand. CI-02 was an explicitly conditional additive interpretation, not an established falsehood; adding GCS resolves it without narrowing scope. CI-03 and CI-04 are valid precision improvements. The final correctly rejects the draft plan's global 5 GB limit, request-success acceptance and ETag-as-content-checksum, adds timely cleanup, and preserves optional CLI/owners/constraints. L05 records wider AWS API context rather than treating critic agreement as truth. No material wrong correction or evidence-based optional-scope exclusion remains.",
+      "evidence_ids": [
+        "P01",
+        "P02",
+        "P05",
+        "P06",
+        "P07",
+        "P20",
+        "P30"
+      ]
+    },
+    {
+      "axis": 5,
+      "name": "Supported discovery/draft/critique/final meaning preserved",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "reason": "Final text preserves supported recommendations and conditions, not merely predecessor IDs: source identity checks, durable upload/accession state, authoritative manifest, abort/lifecycle, checksum scope and final verification, race/idempotency, browser reselection, relay disk/consistency/locking, operation-bounded history, conditional CLI, owner authority, cost uncertainty and unrun tests. Source sets are retained without ID rebinding. The earlier consecutive-number omission and analogy ambiguity are documented as lineage, not erased by final qualification. Minor source-ID mistakes in discovery do not infect final links.",
+      "evidence_ids": [
+        "P03",
+        "P05",
+        "P08",
+        "P09",
+        "P11",
+        "P21",
+        "P25"
+      ],
+      "process_evidence": "evidence/freeze-and-path-check.json"
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed versus executed validation and oracle applicability",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS",
+      "reason": "Final validation table marks documentation/process review as research and provider/product/receipt tests NOT_RUN. Proposed synthetic size/threshold, interruption/completion, reselection, paginated reconciliation, orphan abort, checksum mismatch/retrieval, duplicate races and receipt ordering can discriminate important failures. Route-specific CORS, disk, locking, expiry, consistency and CLI checks apply only to selected supported versions/provider. Hash/JSON/helper checks identify artifacts and process only. No prototype, product deployment or synthetic upload is required. Authored claims of original retrieval/execution lack raw traces and remain separate evidentiary limits. Reviewer performed independent read-only retrieval and local arithmetic only.",
+      "artifact_locators": [
+        "reviser/final.md:69",
+        "reviser/final.md:73",
+        "reviser/final.md:76",
+        "reviser/final.md:81"
+      ],
+      "evidence_ids": [
+        "P02",
+        "P05",
+        "P06",
+        "P07",
+        "P08",
+        "P09",
+        "P11",
+        "P21",
+        "P23",
+        "P28"
+      ],
+      "reviewer_check_evidence": "evidence/reviewer-checks.json"
+    }
+  ],
+  "unassessed_axes": [],
+  "material_findings": [],
+  "lineage_findings": [
+    {
+      "id": "LF01",
+      "stage": "investigator draft",
+      "classification": "MATERIAL_OMISSION_CORRECTED_IN_FINAL",
+      "description": "Discovery S05 carries consecutive-from-1 numbering for checksummed multipart; draft prose omits it. CI-01 identifies the omission; final section 1 and CI-01 disposition restore composite/part-level scope. This correction does not retroactively make the draft complete.",
+      "evidence_ids": [
+        "P05",
+        "P30"
+      ],
+      "resolved_in_final": true
+    },
+    {
+      "id": "LF02",
+      "stage": "investigator discovery/draft",
+      "classification": "CONDITIONAL_SCOPE_AMBIGUITY_RESOLVED_IN_FINAL",
+      "description": "Tus is Route B and the claimed analogy in the draft. CI-02 correctly calls this incomplete only under an additive interpretation. Final adds a distinct GCS session-URI comparison while preserving both archive routes. This was not proof of route infeasibility or an unconditional material defect.",
+      "evidence_ids": [
+        "P09",
+        "P20"
+      ],
+      "resolved_in_final": true
+    },
+    {
+      "id": "LF03",
+      "stage": "investigator discovery/draft",
+      "classification": "MINOR_PRECISION_CORRECTED_IN_FINAL",
+      "description": "40 GiB/5 MiB yields 8,192; the brief says 40 GB. Final separates decimal 40 GB (7,630 parts) and binary 40 GiB. Recommendation is unchanged.",
+      "evidence_ids": [
+        "P02"
+      ],
+      "resolved_in_final": true
+    },
+    {
+      "id": "LF04",
+      "stage": "investigator draft",
+      "classification": "MINOR_POLICY_AMBIGUITY_CORRECTED_IN_FINAL",
+      "description": "Draft's multipart preference leaves the 20 MB case implicit despite the Uppy >100 MiB default. Final states default single-request behavior and leaves a configured archive threshold conditional on provider confirmation.",
+      "evidence_ids": [
+        "P07"
+      ],
+      "resolved_in_final": true
+    },
+    {
+      "id": "LF05",
+      "stage": "investigator discovery",
+      "classification": "MINOR_LOCATOR_DEFECT",
+      "description": "Discovery R2 row cites S13–S14 rather than S12–S13; the CLI row cites S15–S16 rather than including config S14. URLs/maps allow recovery. Final uses correct stage-scoped IDs and links.",
+      "evidence_ids": [
+        "P12",
+        "P13",
+        "P14",
+        "P15",
+        "P16"
+      ],
+      "resolved_in_final": true
+    }
+  ],
+  "critic_dispositions": [
+    {
+      "id": "CI-01",
+      "critic_classification": "material incomplete",
+      "final_disposition": "ACCEPT_WITH_SCOPE_REFINEMENT",
+      "independent_disposition": "VALID_OMISSION_RESTORED; API_CONTEXT_LIMITATION_L05",
+      "final_locator": "reviser/final.md:85",
+      "evidence_ids": [
+        "P05",
+        "P30"
+      ],
+      "remaining_material_issue": false
+    },
+    {
+      "id": "CI-02",
+      "critic_classification": "material incomplete on additive reading",
+      "final_disposition": "ACCEPT",
+      "independent_disposition": "REASONABLE_CONDITIONAL_INTERPRETATION_RESOLVED",
+      "final_locator": "reviser/final.md:86",
+      "evidence_ids": [
+        "P09",
+        "P20"
+      ],
+      "remaining_material_issue": false
+    },
+    {
+      "id": "CI-03",
+      "critic_classification": "minor locator/wording",
+      "final_disposition": "ACCEPT",
+      "independent_disposition": "CORRECT_ARITHMETIC_AND_UNIT_REFINEMENT",
+      "final_locator": "reviser/final.md:87",
+      "evidence_ids": [
+        "P02"
+      ],
+      "remaining_material_issue": false
+    },
+    {
+      "id": "CI-04",
+      "critic_classification": "minor locator/wording",
+      "final_disposition": "ACCEPT",
+      "independent_disposition": "SUPPORTED_DEFAULT_AND_LOCAL_POLICY_CLARIFICATION",
+      "final_locator": "reviser/final.md:88",
+      "evidence_ids": [
+        "P07"
+      ],
+      "remaining_material_issue": false
+    },
+    {
+      "id": "overall_classification",
+      "final_disposition": "RETAIN_WITH_CI01_QUALIFICATION",
+      "independent_disposition": "No additional material wrong or unsupported consequential final decision established. This is the assessor's independent conclusion, not an adoption of the critic's authority.",
+      "final_locator": "reviser/final.md:89",
+      "remaining_material_issue": false
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L01",
+      "material": false,
+      "kind": "LIVE_VERSION_AND_UNIT_PRECISION",
+      "description": "Original source maps identify mixed latest CLI docs v2.37.6/v2.37.5/v2.37.10, but save no page snapshots. Independent direct retrieval now identifies v2.37.12; cached web retrieval still shows the earlier labels. Behavioral defaults agree. Released 2.37.6 code gives 8,388,608-byte defaults and binary MB suffix parsing. Final quotes docs' MB without resolving this convention, but chooses no exact archive threshold or installed package and explicitly requires pinning/testing. Earlier page-header provenance cannot be recovered from maps alone.",
+      "locators": [
+        "reviser/final.md:55"
+      ],
+      "evidence_ids": [
+        "P14",
+        "P15",
+        "P16",
+        "P32",
+        "P33"
+      ]
+    },
+    {
+      "id": "L02",
+      "material": false,
+      "kind": "ORIGINAL_RETRIEVAL_AND_NATIVE_REPRODUCIBILITY",
+      "description": "Every authored source file in the mapped roots is an index.md; source maps retain URLs, version labels and review claims but no frozen raw webpages, tool receipts or product traces. Independent primary recheck substantiates semantic content, not original retrieval chronology, native completion, exact invocation count, forbidden-path absence or billing. These remain UNKNOWN where unsupported by actual records.",
+      "evidence_ids": [],
+      "process_evidence": "evidence/freeze-and-path-check.json"
+    },
+    {
+      "id": "L03",
+      "material": false,
+      "kind": "R2_BOUNDARY_CONTEXT",
+      "description": "R2 limits footnotes explain a 5 GiB reduction from 5 TiB and a 5 MiB reduction from 5 GiB for the corresponding precise limits. Final preserves upload-guide 5 TiB versus limits-table 4.995 TiB but omits this finer boundary context. R2 is illustrative only, not selected or asserted as the archive backend; 40 GB is far below either multipart bound and no boundary-sensitive decision is made.",
+      "locators": [
+        "reviser/final.md:17"
+      ],
+      "evidence_ids": [
+        "P12",
+        "P13"
+      ]
+    },
+    {
+      "id": "L04",
+      "material": false,
+      "kind": "MINIO_RESPONSE_FIELD_PRECISION",
+      "description": "Issue #20455 distinguishes missing checksum value for GetObject/GetObjectAttributes from missing ChecksumAlgorithm for ListObjectsV2; final groups them as not exposing the checksum. The trailing-versus-precomputed distinction also appears in the issue. Its claimed trailing-PutObject persistence mismatch and code-level fix are correct; no universal listing-digest or arbitrary packaged-release capability is asserted.",
+      "locators": [
+        "reviser/final.md:49"
+      ],
+      "evidence_ids": [
+        "P25",
+        "P26",
+        "P27"
+      ]
+    },
+    {
+      "id": "L05",
+      "material": false,
+      "kind": "AWS_GUIDE_AND_API_PART_NUMBER_CONTEXT",
+      "description": "Integrity guide supports final's composite/part-level consecutive-from-1 condition and mentions HTTP 500. CompletedPart API adds general-purpose per-part additional-checksum conditions (which can coexist with a full-object checksum type), HTTP 400 InvalidPartOrder, and unconditional consecutive numbering for directory buckets. Do not infer that a full-object upload permits gaps merely from the guide's narrower note. Final does not positively permit gaps, select a bucket class or claim uniform error status across APIs/providers; its provider confirmation and sequence planning remain conditional. Thus this is source precision/applicability context, not a demonstrated material wrong manifest decision.",
+      "locators": [
+        "reviser/final.md:19",
+        "reviser/final.md:85"
+      ],
+      "evidence_ids": [
+        "P03",
+        "P05",
+        "P30"
+      ]
+    }
+  ],
+  "useful_discoveries": [
+    {
+      "mechanism": "Browser direct multipart with durable application manifest",
+      "value": "Retry failed parts and resume provider state while separating transfer completion from acceptance.",
+      "conditions": "Exact API/CORS/signing/checksum/cleanup behavior must be confirmed; browser source may require reselection.",
+      "evidence_ids": [
+        "P03",
+        "P05",
+        "P06",
+        "P07",
+        "P08"
+      ]
+    },
+    {
+      "mechanism": "tus/tusd relay route",
+      "value": "Offset-based resumption and centralized accession policy offer a realistic competing architecture.",
+      "conditions": "Optional extension support, temporary disk, strong read-after-write consistency and multi-instance locks; object-store compatibility remains required.",
+      "evidence_ids": [
+        "P09",
+        "P21",
+        "P28"
+      ]
+    },
+    {
+      "mechanism": "GCS session-URI analogy",
+      "value": "A separate bearer-session/byte-offset recovery pattern meaningfully broadens the comparison.",
+      "conditions": "One-week lifetime, Origin at cross-origin initiation, final-object integrity and protected URI; analogy only.",
+      "evidence_ids": [
+        "P20"
+      ]
+    },
+    {
+      "mechanism": "Released deferred-length tail-promotion fix",
+      "value": "tusd v2.10.1 fixes a concrete .part-to-MPU promotion gap and retry/stale-tail cases; release identity is independently verified.",
+      "conditions": "The PR describes a deferred-length/storage completion path particularly exposed by IETF Upload-Complete; classic tus v1 had an extra WriteChunk. This is not a claim that every known-length browser flow was affected.",
+      "evidence_ids": [
+        "P22",
+        "P23",
+        "P24",
+        "P28",
+        "P29"
+      ]
+    },
+    {
+      "mechanism": "MinIO trailing-checksum persistence history",
+      "value": "Successful PutObject validation/response can differ from later checksum metadata retrieval, making exact operation support important.",
+      "conditions": "Reported RELEASE.2024-09-13T20-26-02Z, single PutObject and subsequent retrieval, public report rather than reproduction; containing packaged release unestablished.",
+      "evidence_ids": [
+        "P25",
+        "P26",
+        "P27"
+      ]
+    },
+    {
+      "mechanism": "Conditional final writes plus application idempotency",
+      "value": "Duplicate/race handling can avoid double accession without mistaking MPU initiation for reservation.",
+      "conditions": "AWS-specific final-write support, in-progress objects ignored and race responses; provider and curator must choose workflow.",
+      "evidence_ids": [
+        "P11"
+      ]
+    },
+    {
+      "mechanism": "Optional largest-file CLI",
+      "value": "A curator-authorized desktop transfer can be retained without being silently required or prematurely declared compatible.",
+      "conditions": "Exact release/client behavior, endpoint/checksum subset, narrow authorization, safe retry, support and shared receipt gate must be verified.",
+      "evidence_ids": [
+        "P14",
+        "P15",
+        "P16",
+        "P32",
+        "P33"
+      ]
+    }
+  ],
+  "unknowns": [
+    "Archive provider/product/deployed version, API subset, limits, checksum retrieval, CORS/signing/consistency/conditional writes and retention policy.",
+    "Curator's authoritative receipt rule, optional CLI enablement and exact package/library releases.",
+    "Costs and traffic/retention assumptions; no estimates inferred.",
+    "Original native Goal activation/completion raw telemetry, provenance, exactly-one count and save-before-terminal ordering: UNKNOWN; authored observations and summaries are preserved separately.",
+    "Original exact research invocation chronology, all forbidden-path absence and actual execution of asserted process checks without tool receipts: UNKNOWN.",
+    "Effective model compute, billed token usage, billing cost, inference savings, paired latency and other-arm comparisons: UNKNOWN/not assessed; no comparative claim authorized."
+  ],
+  "delivery": {
+    "status": "COMPLETE_SAVED_FINAL",
+    "evidence": "terminal-science-freeze-root.json plus matching final bytes; this is delivery evidence, not native or semantic proof"
+  },
+  "native": {
+    "candidate_status": "UNKNOWN",
+    "basis": "Authored get_goal fields and terminal T3 summaries are not raw native tool receipts.",
+    "reviewer_status_at_judgment_save": "ACTIVE_DIRECTLY_OBSERVED",
+    "reviewer_thread_id": "01a1241b-ad72-72a0-bf81-fb4218121b0c",
+    "reviewer_evidence": "evidence/reviewer-goal-active.json",
+    "reviewer_terminal_receipt_after_save": "evidence/reviewer-goal-terminal.json"
+  },
+  "t3": {
+    "status": "THREE_STAGES_RECORDED_COMPLETED",
+    "actual_route_recorded": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna"
+    },
+    "basis": "Stage dispatch raw responses record routing/running; investigator and critic status records and terminal root record completed/no pending. No task status was queried and no history was read. Backend effective model identity beyond this routing is UNKNOWN."
+  },
+  "protocol": {
+    "reviewer": "COMPLIANT_WITH_BOUNDED_ASSIGNMENT",
+    "candidate": "PARTIALLY_SUPPORTED_OTHER_FIELDS_UNKNOWN",
+    "evidence": "Original/used brief and original/revealed plan match. Release record hashes discovery before plan reveal and terminal frozen bytes match. No external candidate assistance observed. Files alone do not prove every read boundary, exactly-one helper/Goal invocation, or save-before-native-terminal.",
+    "nested_delegation_by_reviewer": false,
+    "candidate_feedback_or_repair": false,
+    "git_or_publication": false,
+    "accounts_or_live_writes": false,
+    "other_arms_results_history_or_ER11": false
+  },
+  "time": {
+    "candidate_artifact_deadlines": "WITHIN_RECORDED_ABSOLUTE_STAGE_AND_WHOLE_DEADLINES",
+    "basis": "Frozen artifact mtimes precede respective stage deadlines and root terminal observation 2026-10-10T04:39:14.636613Z precedes whole deadline 2026-10-10T04:57:17.173Z. This is artifact/delivery wall-clock evidence, not compute or billing.",
+    "full_candidate_elapsed_or_queue_decomposition": "UNKNOWN",
+    "reviewer_cap_hit": false
+  },
+  "effective_compute": "UNKNOWN",
+  "billing": "UNKNOWN",
+  "reviewer_validation": {
+    "executed": [
+      "Full scoped original artifact reading",
+      "Independent read-only HTTP primary-source retrieval",
+      "Released source and governing caller/definition inspection without execution",
+      "Original SHA-256 and freeze equality checks",
+      "Local decimal/binary part-count arithmetic",
+      "Assessment JSON and link/evidence consistency checks"
+    ],
+    "not_run": [
+      "Product installation",
+      "Any upload or service write",
+      "Provider compatibility",
+      "End-to-end receipt acceptance",
+      "Downloaded code execution"
+    ],
+    "oracle_limits": "Artifact hashes establish identity/integrity only; primary sources establish documented semantics within their domains; arithmetic establishes counts only; neither proves archive service behavior."
+  },
+  "preserve_original_freeze": true,
+  "all_exact_plan_clauses": [
+    {
+      "clause": 1,
+      "exact_obligation": "Compare single-request and multipart operations, binding any size, part-count, checksum or completion claim to the exact operation and product/version.",
+      "exact_original_draft_treatment": "Set a single 5 GB limit on every upload route because this is believed to be the object-store maximum. No operation-specific evidence is supplied.",
+      "independent_disposition": "CORRECT_REJECT_UNSUPPORTED_GLOBAL_LIMIT",
+      "assessment": "Final separates PutObject, console and MPU, adds type-scoped checksum/completion conditions, uses correct exact-byte counts and forbids borrowing limits for the unknown provider. Live-source precision limits L01/L03/L05 are nonmaterial at this pilot scope.",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "evidence_ids": [
+        "P01",
+        "P02",
+        "P05",
+        "P06"
+      ],
+      "final_locators": [
+        "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md:13",
+        "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md:15",
+        "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md:19",
+        "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md:21"
+      ]
+    },
+    {
+      "clause": 2,
+      "exact_obligation": "Compare two realistic intake routes and one analogous resumable-transfer mechanism; distinguish browser limitations from storage-service limits.",
+      "exact_original_draft_treatment": "Offer browser upload first. A MinIO client route is a possible fallback but its compatibility has not been checked.",
+      "independent_disposition": "EXPAND_COMPARISON_RETAIN_BROWSER_PREFERENCE",
+      "assessment": "Direct browser Uppy candidate versus tus/tusd relay are distinct intake architectures; GCS supplies a separate resumability analogy. Browser persistence and library thresholds are separated from storage limits. MinIO integration remains an unselected lead, not an unverified asserted capability.",
+      "judgment": "PASS",
+      "evidence_ids": [
+        "P07",
+        "P08",
+        "P09",
+        "P20",
+        "P21"
+      ],
+      "final_locators": [
+        "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md:7",
+        "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md:27",
+        "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md:28",
+        "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md:29"
+      ]
+    },
+    {
+      "clause": 3,
+      "exact_obligation": "Explain interrupted transfer, abandoned parts, checksum verification, duplicate accession and receipt issuance.",
+      "exact_original_draft_treatment": "Consider the upload complete when all requests return success; treat an ETag as the content checksum. Abandoned-part cleanup is a later task.",
+      "independent_disposition": "CORRECT_ACCEPTANCE_CHECKSUM_CLEANUP_AND_SPECIFY_RECOVERY",
+      "assessment": "Successful requests/ETag alone no longer mean accession accepted. Durable upload state, authoritative manifests, explicit abort/lifecycle, checksum scope, source identity, duplicate reservation and final verification precede the curator-owned idempotent receipt.",
+      "judgment": "PASS",
+      "evidence_ids": [
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P11"
+      ],
+      "final_locators": [
+        "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md:35",
+        "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md:37",
+        "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md:39",
+        "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md:41",
+        "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md:43",
+        "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md:45"
+      ]
+    },
+    {
+      "clause": 4,
+      "exact_obligation": "Investigate one relevant released compatibility change or failure/fix chain; avoid treating S3-compatible as identical to every AWS operation.",
+      "exact_original_draft_treatment": "Pin no provider version and cite no release history. A generic compatibility label is expected to cover browser and CLI paths.",
+      "independent_disposition": "ADD_VERSIONED_RELEASE_HISTORY_AND_OPERATION_SCOPE",
+      "assessment": "Final includes released tusd v2.10.1 deferred-length fix and separately bounded MinIO trailing PutObject persistence history. No arbitrary compatible service, deployed release or MinIO package is declared equivalent to AWS.",
+      "judgment": "PASS",
+      "evidence_ids": [
+        "P19",
+        "P21",
+        "P22",
+        "P23",
+        "P25",
+        "P26",
+        "P27",
+        "P28",
+        "P29"
+      ],
+      "final_locators": [
+        "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md:49",
+        "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md:51"
+      ]
+    },
+    {
+      "clause": 5,
+      "exact_obligation": "Preserve and investigate this supported optional scope: a curator-authorized command-line fallback for the largest files. It is an authorized option, not a mandatory feature or an established technical capability; recommend conditions, retain it when supported, and explain any evidence-based exclusion.",
+      "exact_original_draft_treatment": "Retain a curator-authorized command-line fallback for the largest files as supported owner-authorized optional scope. Support here means that the brief explicitly permits it; technical support, conditions and interoperability still need research. Do not remove it merely because the baseline route lacks it, or silently promote it to mandatory scope.",
+      "independent_disposition": "RETAIN_AUTHORIZED_OPTION_INVESTIGATED_CONDITIONALLY",
+      "assessment": "AWS CLI docs/source provide a realistic investigated candidate with endpoint/config/checksum controls. Enablement requires provider/API, exact package, authorization, support, retries and same receipt gate. Option remains optional; it is neither removed for being unknown nor promoted to required functionality.",
+      "judgment": "PASS",
+      "evidence_ids": [
+        "P14",
+        "P15",
+        "P16",
+        "P32",
+        "P33"
+      ],
+      "final_locators": [
+        "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md:55",
+        "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md:57"
+      ]
+    },
+    {
+      "clause": 6,
+      "exact_obligation": "Make owner decisions explicit: The archive storage owner confirms provider capabilities and retention policy; the accession curator owns the point at which a receipt becomes authoritative. Costs are unresolved input, not invented estimates.",
+      "exact_original_draft_treatment": "Owner authority is reserved as follows: The archive storage owner confirms provider capabilities and retention policy; the accession curator owns the point at which a receipt becomes authoritative. Costs are unresolved input, not invented estimates. The draft has not obtained these decisions. Its tentative implementation assumptions cannot substitute for them.",
+      "independent_disposition": "PRESERVE_NAMED_OWNER_AUTHORITY_AND_UNRESOLVED_COST",
+      "assessment": "Storage owner confirms product/API and retention; curator owns authoritative receipt evidence and duplicate policy. Cost stays unresolved with categories rather than invented estimates. These decisions cannot be answered by public documentation for this unidentified archive.",
+      "judgment": "PASS",
+      "evidence_ids": [
+        "P03",
+        "P11",
+        "P21"
+      ],
+      "final_locators": [
+        "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md:61",
+        "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md:62",
+        "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md:63"
+      ]
+    },
+    {
+      "clause": 7,
+      "exact_obligation": "Preserve negative constraints: Do not upload real films, create buckets or credentials, assume all S3-compatible services have identical limits, or mark a transfer accepted from a progress bar alone.",
+      "exact_original_draft_treatment": "Binding exclusions: Do not upload real films, create buckets or credentials, assume all S3-compatible services have identical limits, or mark a transfer accepted from a progress bar alone. The draft has no complete trace showing that its assumptions comply; revise the proposal wherever necessary to preserve these exclusions.",
+      "independent_disposition": "PRESERVE_ALL_NEGATIVE_CONSTRAINTS",
+      "assessment": "Final expressly forbids real-film uploads, bucket/credential creation, universal compatible-store assumptions and progress-based acceptance. Other install/account/live-write exclusions are also retained. Files contain no claim of product execution; complete absence of forbidden actions is not independently proved without execution traces.",
+      "judgment": "PASS",
+      "evidence_ids": [
+        "P05",
+        "P06"
+      ],
+      "final_locators": [
+        "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md:3",
+        "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md:43",
+        "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md:67"
+      ]
+    },
+    {
+      "clause": 8,
+      "exact_obligation": "Deliver one coherent evidence-backed research proposal covering obligations 1–8, with recommendations, source/version applicability, useful discoveries, unresolved owner inputs, and a validation table separating checks actually executed from checks merely proposed. Do not report research sources or future tests as executed product validation.",
+      "exact_original_draft_treatment": "The draft currently contains no coherent evidence-backed final proposal. Its proposed demos are research/validation ideas only. A complete revision must preserve every obligation, disclose corrections and retained options, and not confuse documentation review with successful product operation.",
+      "independent_disposition": "REPLACE_INCOMPLETE_PLAN_WITH_COHERENT_PROPOSAL",
+      "assessment": "Final stands alone with recommendation, compact comparison, version/operation conditions, useful discovery/history, owner decisions, limitations and validation table. Read-only research/process checks are never product-validation proof; integration and acceptance checks remain proposed/NOT_RUN.",
+      "judgment": "PASS",
+      "evidence_ids": [
+        "P01",
+        "P05",
+        "P07",
+        "P20",
+        "P21",
+        "P22"
+      ],
+      "final_locators": [
+        "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md:3",
+        "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md:5",
+        "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md:69",
+        "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md:73",
+        "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md:76",
+        "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md:77",
+        "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md:78",
+        "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md:79",
+        "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md:81"
+      ]
+    }
+  ],
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "bytes": 2790,
+      "lines": 12,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A4-01/brief.md",
+      "sha256": "486a9334b9ac3a036f3955522821424396a7cde74c3516f59ca821cc171e6e10",
+      "bytes": 3375,
+      "lines": 22,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A4-01/plan.md",
+      "sha256": "13c9e444018c0578380616e96b0a5df493431b8ba1148aec08fdb68c50b05c7f",
+      "bytes": 5986,
+      "lines": 57,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A4-01/READY.json",
+      "sha256": "8dae343c4271af5a2ed5709ae558e1420529238365d0dab5824abc44c3f9c025",
+      "bytes": 290,
+      "lines": 7,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/inputs/brief.md",
+      "sha256": "486a9334b9ac3a036f3955522821424396a7cde74c3516f59ca821cc171e6e10",
+      "bytes": 3375,
+      "lines": 22,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/terminal-science-freeze-root.json",
+      "sha256": "1542405b3998f09558bd785e187fadca395fe92fb1d395f5646ea92187cf7926",
+      "bytes": 6427,
+      "lines": 94,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/root-review-request.json",
+      "sha256": "fa251e66cde964e1505d50f6b1e09638d92e74ea0bebf56f66fff278d9bf99fc",
+      "bytes": 3430,
+      "lines": 17,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/critic/assignment.md",
+      "sha256": "8e33ef8f9340843e3102b1b4f78916d86e3cdda7f27d579f3cefef7a09c0e3f3",
+      "bytes": 3726,
+      "lines": 12,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/critic/critique.md",
+      "sha256": "8c089f40e37e5270788aee52a93ea38d5e6dfbae2be1e30a0f31cd719a2df1f4",
+      "bytes": 11549,
+      "lines": 70,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/critic/dispatch.json",
+      "sha256": "2e722742c0f6aa0d0525db696142ea933d20eee20f06011ea7575052bbc820c7",
+      "bytes": 4156,
+      "lines": 67,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/critic/freeze.json",
+      "sha256": "8d1fcee1994b016adc0b3b10a777948c813a450e689c7cb2fffa44f7fd542199",
+      "bytes": 3501,
+      "lines": 71,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/critic/input-map.json",
+      "sha256": "0e77d12edd121ca0a66d7524b42452b9eeb02bf76235be89f4a9460e95064e9e",
+      "bytes": 1410,
+      "lines": 27,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/critic/request.json",
+      "sha256": "73b974b8817a4dfe058755afcc4e298cf3b5c9cd6ff06b96caeb5c1f9958edeb",
+      "bytes": 898,
+      "lines": 21,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/critic/source-map.json",
+      "sha256": "2d71d54bde4f8789a88110f5e4f5aeeeb3172f3ead2aaf0b67864c1b470cfe30",
+      "bytes": 16957,
+      "lines": 236,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/critic/sources/index.md",
+      "sha256": "2592dcd06d90b95f15fb4b9e753db6ab9daada3b1a17785d1ed2e223cc404afc",
+      "bytes": 2983,
+      "lines": 15,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/critic/status.json",
+      "sha256": "5a625b40f8988d09bbb303cdf0b3cef02c8f742ccad51e9344b56ec8c40c5813",
+      "bytes": 3376,
+      "lines": 18,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/assignment.md",
+      "sha256": "99041f6c8e37f2c477d63b75acf860e805fcf0cd2c796a52ebdbe585b0d014af",
+      "bytes": 4136,
+      "lines": 12,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/discovery.md",
+      "sha256": "42a82081247090e0679e0826c3d84a8f1d6a55a5314c6f8c07c35f6b7ecf5bc9",
+      "bytes": 11323,
+      "lines": 44,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/dispatch.json",
+      "sha256": "c9e9bce5bd3c48233538cd2148465cbdad2ea9ade10a0cef6319824170692fdd",
+      "bytes": 4252,
+      "lines": 67,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/draft.md",
+      "sha256": "ce68079f8f2d1f42d114faabd4acd3427fd960c05401a8e708ed2e490c400548",
+      "bytes": 14386,
+      "lines": 85,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/freeze.json",
+      "sha256": "7109a6b9fa24f06b24d4efd19f458edf1ede3e31297de632646c65e02bcc9ffb",
+      "bytes": 2006,
+      "lines": 40,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/input-map.json",
+      "sha256": "b35d59c748e3ad1bd1ef72367f8cb468f3823e8af2429fa130b5ae735277858f",
+      "bytes": 722,
+      "lines": 20,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/plan-reveal.json",
+      "sha256": "3e26968b4c07fd10239046ea3080b42f4950751bccccba27dc7aff702d570a9b",
+      "bytes": 429,
+      "lines": 10,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/request.json",
+      "sha256": "cae69a99a260630912d825996799510622b80db52af104126d08c3f6190e4bab",
+      "bytes": 922,
+      "lines": 21,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/revealed-plan.md",
+      "sha256": "13c9e444018c0578380616e96b0a5df493431b8ba1148aec08fdb68c50b05c7f",
+      "bytes": 5986,
+      "lines": 57,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/source-map.json",
+      "sha256": "fc066ae420da2aca73a66cf80f1242623a7d0bec88947937bb1b6aa34c9ca6e1",
+      "bytes": 17909,
+      "lines": 235,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/sources/index.md",
+      "sha256": "cc2ba661f6b762da04202ee7f08ed11a31101851a76bdb5b54807173431c39e5",
+      "bytes": 2826,
+      "lines": 16,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/status.json",
+      "sha256": "79cccec837b4094915f85f4e39d3d225e138365e57444a0090c5820e8159c01d",
+      "bytes": 3900,
+      "lines": 18,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/assignment.md",
+      "sha256": "9cfc612f3fde4e36d4cd0288d9f8aa7f3499bdec9911be3fd8ca7ac8a7c7c121",
+      "bytes": 3706,
+      "lines": 12,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/dispatch.json",
+      "sha256": "a36b64dee4e9110af4fb64d5c5bb554386030596f0e75d84f3fdad4ba4053ffa",
+      "bytes": 4172,
+      "lines": 67,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md",
+      "sha256": "d451bf92920f64778176d1d9efc7ba38a07b6e09429c45c301909c20a21ec29a",
+      "bytes": 21573,
+      "lines": 98,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/freeze.json",
+      "sha256": "cf90b7c45dda97090e7a60ebf81a151aa3c7a6e7c83b34fa217bc7a585281fea",
+      "bytes": 4280,
+      "lines": 86,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/input-map.json",
+      "sha256": "f7931dcc544b4e7a326548c5beb7b79a6ef4efefee965805cd77bfb934af25e5",
+      "bytes": 1727,
+      "lines": 30,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/request.json",
+      "sha256": "0cbe9257ef21294e391140a5cf7ba2946c41a2f2d32e5c26015d7318779dc9b1",
+      "bytes": 902,
+      "lines": 21,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/source-map.json",
+      "sha256": "d0039986227f2fc46716fdb175b8aa036f4e174cbbda85d4d5bf8352740215dc",
+      "bytes": 46107,
+      "lines": 650,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/sources/index.md",
+      "sha256": "a6ea58fd49e1a664eccd268db90fb0fdbe691d267f527ac96ec0f08398dddac2",
+      "bytes": 3521,
+      "lines": 17,
+      "full_original_inspected": true
+    }
+  ],
+  "primary_sources": [
+    {
+      "id": "P01",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/upload-objects.html",
+      "version_or_commit_observed": "AWS S3 live User Guide, release not stated",
+      "retrieval_utc": "2026-10-10T04:41:53.995377+00:00",
+      "evidence_text": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P01-text.txt",
+      "raw_sha256": "7f357e85a92522406db6217e92d21d43ae5a1bd492f2c58c5a5e788746740b4e",
+      "locator": "Upload options / PutObject, console, multipart"
+    },
+    {
+      "id": "P02",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/qfacts.html",
+      "version_or_commit_observed": "AWS S3 live User Guide, release not stated",
+      "retrieval_utc": "2026-10-10T04:41:53.996523+00:00",
+      "evidence_text": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P02-text.txt",
+      "raw_sha256": "387c24248a3e09a9e067c15cd7d4f5786ff739db309b5306a987d884caee34f9",
+      "locator": "Multipart core specifications"
+    },
+    {
+      "id": "P03",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html",
+      "version_or_commit_observed": "AWS S3 live User Guide, release not stated",
+      "retrieval_utc": "2026-10-10T04:41:54.000433+00:00",
+      "evidence_text": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P03-text.txt",
+      "raw_sha256": "69c3cbba7a976efc7d37f933d113a2f48eff409ff27800614db1c4b08aee95b4",
+      "locator": "Multipart creation/part replacement/completion/listings/pricing"
+    },
+    {
+      "id": "P04",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/lifecycle-configuration-examples.html",
+      "version_or_commit_observed": "AWS S3 live User Guide, release not stated",
+      "retrieval_utc": "2026-10-10T04:41:54.004476+00:00",
+      "evidence_text": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P04-text.txt",
+      "raw_sha256": "916007f60cb1790ef0669ff2df47f7472e83145defb176f311e9d2e721453276",
+      "locator": "AbortIncompleteMultipartUpload lifecycle example"
+    },
+    {
+      "id": "P05",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity-upload.html",
+      "version_or_commit_observed": "AWS S3 live User Guide, release not stated",
+      "retrieval_utc": "2026-10-10T04:41:54.005755+00:00",
+      "evidence_text": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P05-text.txt",
+      "raw_sha256": "120bba4c5fffd1ffa8a57aa6e08d1adad866decadc331a77ab195afb27d73c11",
+      "locator": "Checksum type table / composite numbering / initiation notes"
+    },
+    {
+      "id": "P06",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_CompleteMultipartUpload.html",
+      "version_or_commit_observed": "AWS S3 live API reference, release not stated",
+      "retrieval_utc": "2026-10-10T04:41:54.008226+00:00",
+      "evidence_text": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P06-text.txt",
+      "raw_sha256": "1f308a018c0679f7aac9f444888c409721ba63965d902aef8fd498957cc7a9f1",
+      "locator": "CompleteMultipartUpload response processing and request conditions"
+    },
+    {
+      "id": "P07",
+      "url": "https://uppy.io/docs/aws-s3/",
+      "version_or_commit_observed": "Live unversioned Uppy AWS S3 docs; CDN example v5.2.1 is not a page-version pin",
+      "retrieval_utc": "2026-10-10T04:41:54.143885+00:00",
+      "evidence_text": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P07-text.txt",
+      "raw_sha256": "45778b7c13a16383e07d910c9f770f87e2585836cebacbe66579ec3e42e6bea9",
+      "locator": "Signing/CORS / shouldUseMultipart / getChunkSize"
+    },
+    {
+      "id": "P08",
+      "url": "https://uppy.io/docs/golden-retriever/",
+      "version_or_commit_observed": "Live unversioned Uppy Golden Retriever docs",
+      "retrieval_utc": "2026-10-10T04:41:54.211132+00:00",
+      "evidence_text": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P08-text.txt",
+      "raw_sha256": "c4dde59701d5975bd25f029afb1e8660d7ac60e34ffb76835a54bdebff6f441c",
+      "locator": "Storage/recovery defaults"
+    },
+    {
+      "id": "P09",
+      "url": "https://tus.io/protocols/resumable-upload",
+      "version_or_commit_observed": "tus protocol 1.0.0, dated 2016-03-25",
+      "retrieval_utc": "2026-10-10T04:41:54.230608+00:00",
+      "evidence_text": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P09-text.txt",
+      "raw_sha256": "868947ec6573ff745f31649d730616bfcd7d154af0c22ab39f1af4937f3e3a21",
+      "locator": "Core HEAD/PATCH/offset and optional extensions"
+    },
+    {
+      "id": "P10",
+      "url": "https://github.com/tus/tusd/blob/v2.10.1/docs/_storage-backends/aws-s3.md",
+      "version_or_commit_observed": "tusd v2.10.1 tagged documentation",
+      "retrieval_utc": "2026-10-10T04:41:54.249898+00:00",
+      "evidence_text": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P10-text.txt",
+      "raw_sha256": "6896c9a1919fb040c5088dc0a85a9f154b81e54d7abf252f2f6eed3528550a22",
+      "locator": "S3 backend docs on GitHub"
+    },
+    {
+      "id": "P11",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/conditional-writes.html",
+      "version_or_commit_observed": "AWS S3 live User Guide, release not stated",
+      "retrieval_utc": "2026-10-10T04:41:54.292890+00:00",
+      "evidence_text": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P11-text.txt",
+      "raw_sha256": "8333d943dbbd7455a65791449d7e83816e62a3c4a9d006292ca59aa7602f394e",
+      "locator": "Conditional writes / multipart races"
+    },
+    {
+      "id": "P12",
+      "url": "https://developers.cloudflare.com/r2/objects/upload-objects/",
+      "version_or_commit_observed": "Live Cloudflare R2 upload documentation",
+      "retrieval_utc": "2026-10-10T04:41:54.308146+00:00",
+      "evidence_text": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P12-text.txt",
+      "raw_sha256": "6d5071cf7bb2c8a0940909c91d552b7388e4c8818d4fab89a119e1b1ee938158",
+      "locator": "Method comparison and multipart restrictions"
+    },
+    {
+      "id": "P13",
+      "url": "https://developers.cloudflare.com/r2/platform/limits/",
+      "version_or_commit_observed": "Live Cloudflare R2 limits documentation",
+      "retrieval_utc": "2026-10-10T04:41:54.376726+00:00",
+      "evidence_text": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P13-text.txt",
+      "raw_sha256": "baeaafcf1e948ae9bfb79a871d3bba7945cb27e90f38e14fd567d90c9ec9b362",
+      "locator": "Maximum upload size and numbered footnotes"
+    },
+    {
+      "id": "P14",
+      "url": "https://docs.aws.amazon.com/cli/latest/topic/s3-config.html",
+      "version_or_commit_observed": "Direct current page AWS CLI 2.37.12; cached web title 2.37.6",
+      "retrieval_utc": "2026-10-10T04:41:54.407283+00:00",
+      "evidence_text": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P14-text.txt",
+      "raw_sha256": "4bcc02d14b8856fc2affef9ea64b8cb444718643c7af60190e28c8bcf1d121e9",
+      "locator": "multipart_threshold / multipart_chunksize / transfer-client selection"
+    },
+    {
+      "id": "P15",
+      "url": "https://docs.aws.amazon.com/cli/latest/topic/s3-faq.html",
+      "version_or_commit_observed": "Direct current page AWS CLI 2.37.12; cached web title 2.37.5",
+      "retrieval_utc": "2026-10-10T04:41:54.467117+00:00",
+      "evidence_text": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P15-text.txt",
+      "raw_sha256": "31cacdf6ba7adea86bc7fbfce9f37075ca35ba09438a913d5c135baea5887f0b",
+      "locator": "Upload checksum FAQ"
+    },
+    {
+      "id": "P16",
+      "url": "https://docs.aws.amazon.com/cli/latest/reference/s3/cp.html",
+      "version_or_commit_observed": "Direct current page AWS CLI 2.37.12; candidate/cached version labels may differ",
+      "retrieval_utc": "2026-10-10T04:41:54.525504+00:00",
+      "evidence_text": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P16-text.txt",
+      "raw_sha256": "0551997f57e39c5a2e111ef3f4aa0d0f6cb87266eeb6eef280efd408f8dc9cd7",
+      "locator": "cp global and checksum options"
+    },
+    {
+      "id": "P17",
+      "url": "https://github.com/minio/minio/issues/20455",
+      "version_or_commit_observed": "MinIO issue #20455; reported server RELEASE.2024-09-13T20-26-02Z",
+      "retrieval_utc": "2026-10-10T04:41:54.563766+00:00",
+      "evidence_text": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P17-text.txt",
+      "raw_sha256": "24d643916583efdd4c35ec1f808b9ef6b9b87d4a766d526bb2814ccd65045219",
+      "locator": "Expected/current behavior and environment"
+    },
+    {
+      "id": "P18",
+      "url": "https://github.com/minio/minio/commit/f246ee7",
+      "version_or_commit_observed": "MinIO commit f246ee7f9ba1c3a133206e5726bfbb9d3bd86bf7, 2024-09-19",
+      "retrieval_utc": "2026-10-10T04:41:54.573451+00:00",
+      "evidence_text": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P18-text.txt",
+      "raw_sha256": "826616fa0cd7786b8ef2ef0983170c5489d5fa01e51d5a8cc86bc1eacad9b71c",
+      "locator": "Fix PutObject Trailing checksum commit/diff"
+    },
+    {
+      "id": "P19",
+      "url": "https://github.com/tus/tusd/releases/tag/v2.10.1",
+      "version_or_commit_observed": "tusd v2.10.1 release, 2026-09-16; tag resolves 388a27cb81c33b2349e0308b5e97e23797e86fd9",
+      "retrieval_utc": "2026-10-10T04:41:54.646434+00:00",
+      "evidence_text": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P19-text.txt",
+      "raw_sha256": "850ff73251cbc5df8a99e558f208702149eecf300fad930212fbc6595a1f8757",
+      "locator": "Release changes / PR #1385"
+    },
+    {
+      "id": "P20",
+      "url": "https://cloud.google.com/storage/docs/resumable-uploads",
+      "version_or_commit_observed": "Google Cloud Storage live documentation; last updated 2026-10-07",
+      "retrieval_utc": "2026-10-10T04:41:54.748199+00:00",
+      "evidence_text": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P20-text.txt",
+      "raw_sha256": "9e57136da636b8a45c5bd609e78d879868f1911c33b8f11e0905a57a2d1db572",
+      "locator": "JSON initiation / CORS / session URI / integrity / retry"
+    },
+    {
+      "id": "P21",
+      "url": "https://raw.githubusercontent.com/tus/tusd/v2.10.1/docs/_storage-backends/aws-s3.md",
+      "version_or_commit_observed": "tusd v2.10.1 raw tagged backend document",
+      "retrieval_utc": "2026-10-10T04:41:54.757743+00:00",
+      "evidence_text": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P21-text.txt",
+      "raw_sha256": "a348da4b3d52b7c721d8ee9ac452107ef8e94fa5fc363fbe5845614b7c8e680f",
+      "locator": "Storage format / Considerations / consistency / R2 configuration"
+    },
+    {
+      "id": "P22",
+      "url": "https://api.github.com/repos/tus/tusd/releases/tags/v2.10.1",
+      "version_or_commit_observed": "GitHub release API for tusd v2.10.1",
+      "retrieval_utc": "2026-10-10T04:41:54.762826+00:00",
+      "evidence_text": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P22-text.txt",
+      "raw_sha256": "49a2104ec3c87ae4398cb9dc24ff538abe76e475c8772a519791a3292c2a65bd",
+      "locator": "published_at and body"
+    },
+    {
+      "id": "P23",
+      "url": "https://api.github.com/repos/tus/tusd/pulls/1385",
+      "version_or_commit_observed": "tusd PR #1385 primary author report; clean public API",
+      "retrieval_utc": "2026-10-10T04:41:54.904939+00:00",
+      "evidence_text": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P23-text.txt",
+      "raw_sha256": "0822a67e56ccab7554654001199e401a7c0ed09743bb5af62a54660fb75a28ac",
+      "locator": "Summary / root cause / fix / tests"
+    },
+    {
+      "id": "P24",
+      "url": "https://api.github.com/repos/tus/tusd/pulls/1385/files",
+      "version_or_commit_observed": "tusd PR #1385 public file patches",
+      "retrieval_utc": "2026-10-10T04:41:54.915711+00:00",
+      "evidence_text": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P24-text.txt",
+      "raw_sha256": "1a6afbb264aae183e059fd6cd1c14bb89e14bff733d5b7c434e8e43d8f89fe02",
+      "locator": "s3store.go FinishUpload plus regression tests"
+    },
+    {
+      "id": "P25",
+      "url": "https://api.github.com/repos/minio/minio/commits/f246ee7",
+      "version_or_commit_observed": "MinIO commit f246ee7f9ba1c3a133206e5726bfbb9d3bd86bf7 primary API",
+      "retrieval_utc": "2026-10-10T04:41:55.120536+00:00",
+      "evidence_text": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P25-text.txt",
+      "raw_sha256": "b9bc1ce9e78e8c95406653e239ee6c8172080833010ac75f3ff31cf749251d42",
+      "locator": "commit and files[].patch caller/definition"
+    },
+    {
+      "id": "P26",
+      "url": "https://api.github.com/repos/minio/minio/pulls/20456",
+      "version_or_commit_observed": "MinIO PR #20456 primary API",
+      "retrieval_utc": "2026-10-10T04:41:55.174123+00:00",
+      "evidence_text": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P26-text.txt",
+      "raw_sha256": "e5f638b89ad0219dd4784bc0d389876dedf0593e6a03420301515d82049c5217",
+      "locator": "merged_at / merge_commit_sha / body"
+    },
+    {
+      "id": "P27",
+      "url": "https://api.github.com/repos/minio/minio/issues/20455",
+      "version_or_commit_observed": "MinIO issue #20455 primary API; reported RELEASE.2024-09-13T20-26-02Z",
+      "retrieval_utc": "2026-10-10T04:41:55.179237+00:00",
+      "evidence_text": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P27-text.txt",
+      "raw_sha256": "0c328720bc8e10aca2b5e23505d1ed3cdf876819c9c852451cb120dbd363ba0f",
+      "locator": "body Expected Behavior / Current Behavior / Environment"
+    },
+    {
+      "id": "P28",
+      "url": "https://raw.githubusercontent.com/tus/tusd/v2.10.1/pkg/s3store/s3store.go",
+      "version_or_commit_observed": "tusd v2.10.1 tagged s3store.go",
+      "retrieval_utc": "2026-10-10T04:41:55.238765+00:00",
+      "evidence_text": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P28-text.txt",
+      "raw_sha256": "7b3a7df5fb82f8d575f57d1f7970c6e14586fb2bf62836c273f4983f3d24db12",
+      "locator": "FinishUpload lines 850 onward; WriteChunk and cached incomplete state"
+    },
+    {
+      "id": "P29",
+      "url": "https://api.github.com/repos/tus/tusd/git/ref/tags/v2.10.1",
+      "version_or_commit_observed": "tusd v2.10.1 GitHub tag ref primary API",
+      "retrieval_utc": "2026-10-10T04:45:10.389787+00:00",
+      "evidence_text": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P29-text.txt",
+      "raw_sha256": "3f210b7110fe1e2515208e75ffe31216874f86824602db665e70837652fc5792",
+      "locator": "object.sha / object.type"
+    },
+    {
+      "id": "P30",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_CompletedPart.html",
+      "version_or_commit_observed": "AWS S3 live CompletedPart API reference",
+      "retrieval_utc": "2026-10-10T04:45:10.541434+00:00",
+      "evidence_text": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P30-text.txt",
+      "raw_sha256": "2ba5a7c0a6ae7046a79940cdfb082f4555c0c472fc60ac0b6d70fac7d902240d",
+      "locator": "PartNumber Note, general-purpose and directory buckets"
+    },
+    {
+      "id": "P31",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_UploadPart.html",
+      "version_or_commit_observed": "AWS S3 live UploadPart API reference",
+      "retrieval_utc": "2026-10-10T04:45:10.759544+00:00",
+      "evidence_text": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P31-text.txt",
+      "raw_sha256": "99431e43cb9439f6d103bb647a25e6d1ef707191afbc45bc159ba70b0058dac1",
+      "locator": "Part identification / checksum/encryption/endpoint conditions"
+    },
+    {
+      "id": "P32",
+      "url": "https://raw.githubusercontent.com/aws/aws-cli/2.37.6/awscli/customizations/s3/transferconfig.py",
+      "version_or_commit_observed": "Released AWS CLI tag 2.37.6, commit not resolved",
+      "retrieval_utc": "2026-10-10T04:45:10.985180+00:00",
+      "evidence_text": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P32-text.txt",
+      "raw_sha256": "c65e00699914ec652f9fb8e731b413f0ff8de6be6e4f5ae4dcfca5af89b23a04",
+      "locator": "transferconfig.py DEFAULTS and conversion caller"
+    },
+    {
+      "id": "P33",
+      "url": "https://raw.githubusercontent.com/aws/aws-cli/2.37.6/awscli/customizations/s3/utils.py",
+      "version_or_commit_observed": "Released AWS CLI tag 2.37.6, commit not resolved",
+      "retrieval_utc": "2026-10-10T04:45:11.121384+00:00",
+      "evidence_text": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P33-text.txt",
+      "raw_sha256": "f25353b4241749e56c1f76c6138f5d942eeea614baf1c606332e8e24cb360233",
+      "locator": "utils.py SIZE_SUFFIX and human_readable_to_int"
+    }
+  ],
+  "source_map_path": "source-map.json",
+  "evidence_index_path": "evidence/index.md",
+  "assessment_saved_utc": "2026-10-10T04:53:09.852471+00:00"
+}

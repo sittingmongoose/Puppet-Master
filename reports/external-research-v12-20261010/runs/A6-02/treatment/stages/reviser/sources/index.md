@@ -1,0 +1,51 @@
+# Sources — A6-02-treatment reviser
+
+This is a bounded navigation index to the primary/public sources used in the frozen discovery and the reviser rechecks. Exact identity, source version/commit, locator, UTC access window, observed operation, governing condition/default/exception, and applicability are in [source-map.json](../source-map.json). No linked code was downloaded or run. Original numeric IDs are not merged: `INV:Sxx` and `CRT:Sxx` are separate frozen records.
+
+## Independent reviser rechecks
+
+- <a id="rev-r01"></a>[REV:R01 — RightsStatements.org: work and digital-object applicability guidance](https://rightsstatements.org/en/2018/12/where-statements-apply.html) — Sections “Rights statements for in copyright objects,” “Rights statements for objects that are not in copyright,” and “Other rights statements”; term-by-term lists distinguishing both work and digital object from digital-object-only terms.
+- <a id="rev-r02"></a>[REV:R02 — DPLA Metadata Application Profile landing page and embedded metadata policy](https://pro.dp.la/hubs/metadata-application-profile) — Opening “Download the MAP” text; “The current version is 4.0”; “Download the DPLA Metadata Application Profile, version 5.0”; embedded “Digital Public Library of America Policy Statement on Metadata,” especially “The DPLA’s Partners Share the DPLA’s Commitment” and “Free and Unencumbered Access to Metadata.”
+- <a id="rev-r03"></a>[REV:R03 — Europeana Licensing Framework](https://pro.europeana.eu/page/europeana-licensing-framework) — Numbered elements 1 “The Data Exchange Agreement,” 2 “The Creative Commons Zero Universal Public Domain Dedication (CC0),” and 4 “The edm:rights field of the Europeana Data Model.”
+- <a id="rev-r04"></a>[REV:R04 — RightsStatements.org Frequently Asked Questions](https://rightsstatements.org/en/documentation/faq.html) — General questions “What are rights statements?” and “How do they differ from the Creative Commons licenses?”; technical question “Why are there different versions of the URIs of the statements?”
+
+## Frozen investigator source map
+
+- <a id="inv-s01"></a>[INV:S01 — Open Archives Initiative Protocol for Metadata Harvesting](https://www.openarchives.org/OAI/openarchivesprotocol.html) — Sections 2.5.1 (Deleted records), 3.3.2 (UTC datestamps), 3.4 (metadataPrefix), and 3.5 (flow control/resumption tokens).
+- <a id="inv-s02"></a>[INV:S02 — DPLA Hub Network](https://pro.dp.la/hubs) — Sections Content and Service Hubs and Documentation and Tools.
+- <a id="inv-s03"></a>[INV:S03 — DPLA API Field Reference](https://pro.dp.la/developers/field-reference) — Metadata Application Profile introduction; definitions for originalRecord, sourceResource.rights, object.rights, provider, ingestDate, and sourceResource.
+- <a id="inv-s04"></a>[INV:S04 — DPLA Metadata Application Profile landing page](https://pro.dp.la/hubs/metadata-application-profile) — Opening description and Download the DPLA Metadata Application Profile, version 5.0.
+- <a id="inv-s05"></a>[INV:S05 — DPLA Requests and API policies](https://pro.dp.la/developers/requests) — Requests: Resource Types and examples; Policies: API Keys.
+- <a id="inv-s06"></a>[INV:S06 — Europeana Data Model Definition](https://pro.europeana.eu/files/Europeana_Professional/Share_your_data/Technical_requirements/EDM_Documentation/EDM_Definition_v5.2.7_042016.pdf) — EDM property edm:rights, definition table and occurrence row; also EDM class distinctions for ore:Aggregation, edm:ProvidedCHO, and edm:WebResource.
+- <a id="inv-s07"></a>[INV:S07 — Europeana Semantic Elements to EDM migration guidance](https://pro.europeana.eu/page/ese-documentation) — Default mapping section; ESE-to-EDM table; alternatives to accepting the default mapping.
+- <a id="inv-s08"></a>[INV:S08 — Europeana Licensing Framework](https://pro.europeana.eu/index.php/page/europeana-licensing-framework) — Sections Metadata published by Europeana and edm:rights field.
+- <a id="inv-s09"></a>[INV:S09 — Europeana Semantic Enrichment](https://pro.europeana.eu/page/europeana-semantic-enrichment) — Automatic semantic enrichment and linked-vocabulary guidance.
+- <a id="inv-s10"></a>[INV:S10 — RightsStatements.org: About and statement collections](https://rightsstatements.org/en/about.html) — About: standardized rights/reuse statements for cultural heritage; collection-other: CNE, UND, NKC; collection-ic: In Copyright examples; collection-nc: No Copyright - Other Known Legal Restrictions.
+- <a id="inv-s11"></a>[INV:S11 — Creative Commons licenses, CC0, and Public Domain Mark](https://creativecommons.org/share-your-work/use-remix/cc-licenses/) — CC Licenses: license conditions; Public Domain: CC0, PDM and distinction; Public Domain Mark 1.0 deed.
+- <a id="inv-s12"></a>[INV:S12 — IIIF Presentation API](https://iiif.io/api/presentation/3.0/) — requiredStatement, rights, provider, homepage/URI links, Manifest and JSON-LD considerations; sections on safe HTML handling.
+- <a id="inv-s13"></a>[INV:S13 — W3C SKOS Reference](https://www.w3.org/TR/skos-reference/) — Section 10 Mapping Properties, definitions of skos:exactMatch and skos:closeMatch; section 10.6.8 comparison with owl:sameAs.
+- <a id="inv-s14"></a>[INV:S14 — W3C PROV-O](https://www.w3.org/TR/prov-o/) — Starting-point classes Entity, Activity, Agent; properties wasDerivedFrom, wasAttributedTo, wasAssociatedWith, used, generatedAtTime, and invalidatedAtTime.
+- <a id="inv-s15"></a>[INV:S15 — Europeana API key registration guidance](https://pro.europeana.eu/page/get-api) — What changed since 28 May 2025; API key request requirements.
+- <a id="inv-s16"></a>[INV:S16 — DPLA ingestion3 NARA audit and deletion fix](https://github.com/dpla/ingestion3/commit/608ea023de200df48e8241ed08e0fa49466646f9) — Pinned README_NARA.md sections Data Delivery Format, Step 1 Preprocessing, Validation, History (lines 304-374, 511-552, 692-700); pinned commit patch to scripts/harvest/nara-ingest.sh preprocess_month and check_delete_gate.
+- <a id="inv-s17"></a>[INV:S17 — DPLA Bulk Download](https://pro.dp.la/developers/bulk-download) — Bulk Download introduction and format-change notes.
+- <a id="inv-s18"></a>[INV:S18 — Omeka S Resource Templates](https://omeka.org/s/docs/user-manual/content/resource-template/) — Base Resource template; value data types; external URI; Value Suggest; template export/import.
+- <a id="inv-s19"></a>[INV:S19 — Omeka S CSV Import module](https://omeka.org/s/modules/CSVImport/) — Module release/version table; manual sections Import type, Map to Omeka S data, matching/update actions and permissions.
+- <a id="inv-s20"></a>[INV:S20 — Omeka S REST API and import/export guidance](https://omeka.org/s/docs/developer/api/rest_api_reference/) — REST API Reference: Resource Values JSON-LD shape and is_public; Importing and Exporting: API JSON-LD/RDFXML formats and Output Formats module public exports.
+- <a id="inv-s21"></a>[INV:S21 — Europeana Aggregators Forum](https://pro.europeana.eu/page/aggregators) — Europeana aggregators overview; aggregator role and forum scope.
+
+## Frozen critic source map
+
+- <a id="crt-s01"></a>[CRT:S01 — Open Archives Initiative Protocol for Metadata Harvesting](https://www.openarchives.org/OAI/openarchivesprotocol.html) — Sections 2.5.1 deleted records, 3.3.2 UTC datestamps, 3.4 metadataPrefix, 3.5 flow control/resumption tokens, and Identify response.
+- <a id="crt-s02"></a>[CRT:S02 — DPLA Hub Network](https://pro.dp.la/hubs) — Content and Service Hubs description.
+- <a id="crt-s03"></a>[CRT:S03 — DPLA API Field Reference](https://pro.dp.la/developers/field-reference) — MAP introduction; originalRecord, sourceResource.rights, object.rights, and provider fields.
+- <a id="crt-s04"></a>[CRT:S04 — DPLA Metadata Application Profile landing page and metadata policy](https://pro.dp.la/hubs/metadata-application-profile) — Download the DPLA Metadata Application Profile; page's current-version label; Digital Public Library of America Policy Statement on Metadata, especially partners' terms and free reuse.
+- <a id="crt-s07"></a>[CRT:S07 — Europeana Semantic Elements to EDM migration guidance](https://pro.europeana.eu/page/ese-documentation) — Default ESE-to-EDM mapping and direct source-to-EDM mapping guidance; dc:date and dc:format ambiguity examples.
+- <a id="crt-s08"></a>[CRT:S08 — Europeana Licensing Framework](https://pro.europeana.eu/index.php/page/europeana-licensing-framework) — Metadata published by Europeana; Data Exchange Agreement; edm:rights field.
+- <a id="crt-s10"></a>[CRT:S10 — RightsStatements.org: Other rights statements](https://rightsstatements.org/page/collection-other/1.0/?language=en) — CNE, UND, NKC definitions and collection-level introduction.
+- <a id="crt-s11"></a>[CRT:S11 — Creative Commons public-domain tools](https://creativecommons.org/public-domain/) — CC0 vs. PDM; use restrictions; PDM not for uncertain or jurisdiction-specific status.
+- <a id="crt-s12"></a>[CRT:S12 — IIIF Presentation API](https://iiif.io/api/presentation/3.0/) — requiredStatement, rights, provider; machine-actionable and user-readable URI notes.
+- <a id="crt-s13"></a>[CRT:S13 — W3C SKOS Reference](https://www.w3.org/TR/skos-reference/) — Section 10 mapping properties; exactMatch and closeMatch semantics and transitivity.
+- <a id="crt-s16"></a>[CRT:S16 — DPLA ingestion3 Issue 739 NARA audit and deletion fix](https://github.com/dpla/ingestion3/commit/608ea023de200df48e8241ed08e0fa49466646f9) — Pinned README_NARA.md history and preprocessing sections; commit patch to delete-file preprocessing and zero-delete checks.
+- <a id="crt-s19"></a>[CRT:S19 — Omeka S CSV Import module documentation](https://omeka.org/s/docs/user-manual/modules/csvimport/) — Module scope, import/update strategies, permissions, PHP background-job prerequisite.
+- <a id="crt-s20"></a>[CRT:S20 — Omeka S REST API Reference](https://omeka.org/s/docs/developer/api/rest_api_reference/) — Resource Values JSON-LD; is_public and value-level visibility.
+- <a id="crt-s22"></a>[CRT:S22 — RightsStatements.org statement applicability guidance](https://rightsstatements.org/en/2018/12/where-statements-apply.html) — Sections for in-copyright statements, no-copyright statements, and Other statements; comparison of original work and digital object applicability.

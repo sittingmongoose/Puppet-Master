@@ -1,0 +1,258 @@
+{
+  "captured_utc": "2026-10-10T04:44:14.095034+00:00",
+  "basis": "Full scoped authored files were read in tool outputs; bytes hashed to identify inputs, not to prove semantics. No other arms/history inspected.",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "bytes": 2790,
+      "lines": 12,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A4-01/brief.md",
+      "sha256": "486a9334b9ac3a036f3955522821424396a7cde74c3516f59ca821cc171e6e10",
+      "bytes": 3375,
+      "lines": 22,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A4-01/plan.md",
+      "sha256": "13c9e444018c0578380616e96b0a5df493431b8ba1148aec08fdb68c50b05c7f",
+      "bytes": 5986,
+      "lines": 57,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A4-01/READY.json",
+      "sha256": "8dae343c4271af5a2ed5709ae558e1420529238365d0dab5824abc44c3f9c025",
+      "bytes": 290,
+      "lines": 7,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/inputs/brief.md",
+      "sha256": "486a9334b9ac3a036f3955522821424396a7cde74c3516f59ca821cc171e6e10",
+      "bytes": 3375,
+      "lines": 22,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/terminal-science-freeze-root.json",
+      "sha256": "1542405b3998f09558bd785e187fadca395fe92fb1d395f5646ea92187cf7926",
+      "bytes": 6427,
+      "lines": 94,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/root-review-request.json",
+      "sha256": "fa251e66cde964e1505d50f6b1e09638d92e74ea0bebf56f66fff278d9bf99fc",
+      "bytes": 3430,
+      "lines": 17,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/critic/assignment.md",
+      "sha256": "8e33ef8f9340843e3102b1b4f78916d86e3cdda7f27d579f3cefef7a09c0e3f3",
+      "bytes": 3726,
+      "lines": 12,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/critic/critique.md",
+      "sha256": "8c089f40e37e5270788aee52a93ea38d5e6dfbae2be1e30a0f31cd719a2df1f4",
+      "bytes": 11549,
+      "lines": 70,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/critic/dispatch.json",
+      "sha256": "2e722742c0f6aa0d0525db696142ea933d20eee20f06011ea7575052bbc820c7",
+      "bytes": 4156,
+      "lines": 67,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/critic/freeze.json",
+      "sha256": "8d1fcee1994b016adc0b3b10a777948c813a450e689c7cb2fffa44f7fd542199",
+      "bytes": 3501,
+      "lines": 71,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/critic/input-map.json",
+      "sha256": "0e77d12edd121ca0a66d7524b42452b9eeb02bf76235be89f4a9460e95064e9e",
+      "bytes": 1410,
+      "lines": 27,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/critic/request.json",
+      "sha256": "73b974b8817a4dfe058755afcc4e298cf3b5c9cd6ff06b96caeb5c1f9958edeb",
+      "bytes": 898,
+      "lines": 21,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/critic/source-map.json",
+      "sha256": "2d71d54bde4f8789a88110f5e4f5aeeeb3172f3ead2aaf0b67864c1b470cfe30",
+      "bytes": 16957,
+      "lines": 236,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/critic/sources/index.md",
+      "sha256": "2592dcd06d90b95f15fb4b9e753db6ab9daada3b1a17785d1ed2e223cc404afc",
+      "bytes": 2983,
+      "lines": 15,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/critic/status.json",
+      "sha256": "5a625b40f8988d09bbb303cdf0b3cef02c8f742ccad51e9344b56ec8c40c5813",
+      "bytes": 3376,
+      "lines": 18,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/assignment.md",
+      "sha256": "99041f6c8e37f2c477d63b75acf860e805fcf0cd2c796a52ebdbe585b0d014af",
+      "bytes": 4136,
+      "lines": 12,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/discovery.md",
+      "sha256": "42a82081247090e0679e0826c3d84a8f1d6a55a5314c6f8c07c35f6b7ecf5bc9",
+      "bytes": 11323,
+      "lines": 44,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/dispatch.json",
+      "sha256": "c9e9bce5bd3c48233538cd2148465cbdad2ea9ade10a0cef6319824170692fdd",
+      "bytes": 4252,
+      "lines": 67,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/draft.md",
+      "sha256": "ce68079f8f2d1f42d114faabd4acd3427fd960c05401a8e708ed2e490c400548",
+      "bytes": 14386,
+      "lines": 85,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/freeze.json",
+      "sha256": "7109a6b9fa24f06b24d4efd19f458edf1ede3e31297de632646c65e02bcc9ffb",
+      "bytes": 2006,
+      "lines": 40,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/input-map.json",
+      "sha256": "b35d59c748e3ad1bd1ef72367f8cb468f3823e8af2429fa130b5ae735277858f",
+      "bytes": 722,
+      "lines": 20,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/plan-reveal.json",
+      "sha256": "3e26968b4c07fd10239046ea3080b42f4950751bccccba27dc7aff702d570a9b",
+      "bytes": 429,
+      "lines": 10,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/request.json",
+      "sha256": "cae69a99a260630912d825996799510622b80db52af104126d08c3f6190e4bab",
+      "bytes": 922,
+      "lines": 21,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/revealed-plan.md",
+      "sha256": "13c9e444018c0578380616e96b0a5df493431b8ba1148aec08fdb68c50b05c7f",
+      "bytes": 5986,
+      "lines": 57,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/source-map.json",
+      "sha256": "fc066ae420da2aca73a66cf80f1242623a7d0bec88947937bb1b6aa34c9ca6e1",
+      "bytes": 17909,
+      "lines": 235,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/sources/index.md",
+      "sha256": "cc2ba661f6b762da04202ee7f08ed11a31101851a76bdb5b54807173431c39e5",
+      "bytes": 2826,
+      "lines": 16,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/status.json",
+      "sha256": "79cccec837b4094915f85f4e39d3d225e138365e57444a0090c5820e8159c01d",
+      "bytes": 3900,
+      "lines": 18,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/assignment.md",
+      "sha256": "9cfc612f3fde4e36d4cd0288d9f8aa7f3499bdec9911be3fd8ca7ac8a7c7c121",
+      "bytes": 3706,
+      "lines": 12,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/dispatch.json",
+      "sha256": "a36b64dee4e9110af4fb64d5c5bb554386030596f0e75d84f3fdad4ba4053ffa",
+      "bytes": 4172,
+      "lines": 67,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md",
+      "sha256": "d451bf92920f64778176d1d9efc7ba38a07b6e09429c45c301909c20a21ec29a",
+      "bytes": 21573,
+      "lines": 98,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/freeze.json",
+      "sha256": "cf90b7c45dda97090e7a60ebf81a151aa3c7a6e7c83b34fa217bc7a585281fea",
+      "bytes": 4280,
+      "lines": 86,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/input-map.json",
+      "sha256": "f7931dcc544b4e7a326548c5beb7b79a6ef4efefee965805cd77bfb934af25e5",
+      "bytes": 1727,
+      "lines": 30,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/request.json",
+      "sha256": "0cbe9257ef21294e391140a5cf7ba2946c41a2f2d32e5c26015d7318779dc9b1",
+      "bytes": 902,
+      "lines": 21,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/source-map.json",
+      "sha256": "d0039986227f2fc46716fdb175b8aa036f4e174cbbda85d4d5bf8352740215dc",
+      "bytes": 46107,
+      "lines": 650,
+      "full_original_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/sources/index.md",
+      "sha256": "a6ea58fd49e1a664eccd268db90fb0fdbe691d267f527ac96ec0f08398dddac2",
+      "bytes": 3521,
+      "lines": 17,
+      "full_original_inspected": true
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+URL: https://blog.prusa3d.com/prusaslicer-3-0-preview-built-for-the-future-of-3d-printing_137672/
+Original locator: ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I10.txt
+Original SHA256: a6028d3fb248ffcdcaba52955d92c42254c60b49d0a30adfa2782a40264f5c30
+Original numbered lines; gaps omitted. Not full response.
+
+91: Compatibility
+92: 3MF from PrusaSlicer 2.x: loads with both geometry and settings. Your modified values stay flagged as modified.
+93: 3MF from PrusaSlicer 3.x in 2.x: geometry loads, settings are discarded. PrusaSlicer 2.9.1+ will notify you about this.
+94: Third-party 3MF (Bambu Studio, OrcaSlicer): imported as geometry.
+95: STL, OBJ, STEP: work as expected.
+96: Side-by-side installation: PrusaSlicer 3.x saves profiles into a separate directory. It runs alongside 2.x with zero conflicts.
+97: What’s not ready yet
+98: This is an early preview, and not the kind of polished, nearly-ready alpha that we have shipped in the past. Some of the issues we know about, others we don’t. What you are seeing is not a production build, this is an unfinished alpha which aims to present the general direction we are taking.
+99: It is also worth noting that the preview build is not feature complete (when compared to 2.9.6). We are still working on porting various things from PrusaSlicer 2.x and sadly, some of them have to wait for 3.1.0 to be fully reimplemented. While we understand that this is a nuisance, a large part of the application was rewritten from scratch and reimplementing everything takes time and effort – PrusaSlicer has surprisingly many features.
+100: You can find the list of unfinished features at the end of this change log.

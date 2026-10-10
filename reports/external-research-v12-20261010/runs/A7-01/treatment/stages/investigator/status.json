@@ -1,0 +1,18 @@
+{
+  "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-01-treatment-investigator-topology-v1",
+  "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-01-treatment-investigator-topology-v1",
+  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-01-treatment-investigator-topology-v1:ordinal:1",
+  "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-01-treatment-investigator-topology-v1",
+  "status": "completed",
+  "workState": "result_available",
+  "hasPendingChildRuns": false,
+  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-01-treatment-investigator-topology-v1:ordinal:1",
+  "latestTerminalStatus": "completed",
+  "latestTerminalSummary": "Completed the assigned investigator stage. The single plan reveal ran, `discovery.md` retained its frozen SHA-256, and the native Goal was observed active for the handoff and complete afterward. The freeze is identity-only; its helper does not attest source truth or native provenance.\n\n- [Discovery](<ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/discovery.md>) · [Draft proposal](<ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/draft.md>) · [Source map](<ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/source-map.json>)\n- [Released plan](<ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/revealed-plan.md>) · [Source index](<ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/README.md>) and 15 source notes.\n\nNo product validation was run. The draft separates research already performed from proposed checks. The completed Goal reports 267,888 tokens and 15m 19s elapsed.",
+  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-01-treatment-investigator-topology-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:3aa73747-8383-408e-93c5-3d1318076517",
+  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+  "model": "gpt-6-luna",
+  "summary": "Completed the assigned investigator stage. The single plan reveal ran, `discovery.md` retained its frozen SHA-256, and the native Goal was observed active for the handoff and complete afterward. The freeze is identity-only; its helper does not attest source truth or native provenance.\n\n- [Discovery](<ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/discovery.md>) · [Draft proposal](<ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/draft.md>) · [Source map](<ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/source-map.json>)\n- [Released plan](<ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/revealed-plan.md>) · [Source index](<ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/README.md>) and 15 source notes.\n\nNo product validation was run. The draft separates research already performed from proposed checks. The completed Goal reports 267,888 tokens and 15m 19s elapsed.",
+  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-01-treatment-investigator-topology-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:3aa73747-8383-408e-93c5-3d1318076517",
+  "waitTimedOut": false
+}

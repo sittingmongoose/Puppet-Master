@@ -1,0 +1,21 @@
+{
+  "run_id": "A5-01-treatment",
+  "initialized_at_utc": "2026-10-10T04:20:16.960Z",
+  "whole_deadline_utc": "2026-10-10T05:20:14.471Z",
+  "brief_sha256": "e26ff5f138c34638ec94bc7d4ff3bf93a23f27ddca1a17cca3090868737430e8",
+  "brief_bytes": 3440,
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    }
+  },
+  "runtime_mode_requested": "full-access",
+  "native_goal_status": "UNKNOWN until directly observed",
+  "method_id": "A5",
+  "stage_prompt_deltas": {
+    "reviser": "Keep three stages. Have the finalizer specifically challenge criticism that removes a supported capability, alters a mandatory plan clause, creates a categorical limitation, or introduces a new consequential claim. Recheck the cited primary evidence and relevant exceptions, then accept/amend/reject the criticism with a short evidence-backed reason. Spend less effort restating already-supported prose; deliver the entire final, not just a patch list."
+  }
+}

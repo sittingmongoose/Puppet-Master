@@ -1,0 +1,776 @@
+{
+  "schema": "er12-independent-track-b-assessment-v1",
+  "case_id": "ER12-B-DISC-M-02-FRESH",
+  "slot_id": "B-DISC-M-02",
+  "arm": "treatment",
+  "review_version": "treatment-v1",
+  "reviewer_identity": "codex-er12-bdisc-m02-review-v1",
+  "role": "Brief-only discovery",
+  "scope": "Independent bounded Track B role review only; not a full-pipeline qualification or an ER11 rescore",
+  "source_judgment": "FAIL",
+  "reason": "F1 misstates Restic store-visible identity and confirmation-oracle applicability; F2 imposes unsupported universal dedup loss for true encryption re-keying. Either is material to the assigned leakage/rotation role.",
+  "axis_coverage": [
+    {
+      "id": "original_obligations_and_scope",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "coverage": "COMPLETE",
+      "candidate_lines": [
+        3,
+        7,
+        9,
+        19,
+        24,
+        28,
+        39,
+        45,
+        49
+      ],
+      "assessment": "Discovery artifact present, 973 whitespace-delimited words (942 lexical tokens); four alternatives, two implementation leads, one history/version lead, compact tradeoff comparison, exactly three prospective questions/tests, uncertainty and next step. Five substantive primary pages from three projects meet >=3 sources across >=2 projects. Scope stays on single-user chunk/encryption interaction; UI/scheduling/full restore excluded. Semantic issues are assessed separately in F1/F2."
+    },
+    {
+      "id": "consequential_source_conditions",
+      "judgment": "FAIL",
+      "coverage": "COMPLETE_FOR_BOUNDED_ROLE",
+      "finding_ids": [
+        "F1",
+        "F2"
+      ],
+      "limitation_ids": [
+        "L1",
+        "L2",
+        "L3",
+        "L4"
+      ],
+      "assessment": "Checked storage-ID versus plaintext-ID subjects, encrypted metadata, algorithm/nonce/key roles, KiB/MiB parameters, object/pack versus chunk observability, repository formats and version-limited mitigation, client/state assumptions and compromised-key operations."
+    },
+    {
+      "id": "unfamiliar_discovery_alternatives_implementation_history",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "coverage": "COMPLETE",
+      "candidate_lines": [
+        11,
+        13,
+        15,
+        17,
+        21,
+        22,
+        26
+      ],
+      "limitation_ids": [
+        "L3"
+      ],
+      "assessment": "Four-item diversity is reasonable across Rabin CDC, Buzhash/keyed IDs, Tarsnap context-based chunks/session envelopes, and fixed-block baseline. Two leads are inspectable and explicitly uninspected by candidate; reviewer inspected both implementations without executing them. Format-v2 compression is a real historical lead. No penalty for absent Kopia/Duplicacy/Bup comparison or full 2025-paper inspection."
+    },
+    {
+      "id": "wrong_corrections_rejections_exact_dispositions",
+      "judgment": "FAIL",
+      "coverage": "APPLICABLE_REJECTIONS_ASSESSED",
+      "finding_ids": [
+        "F1"
+      ],
+      "assessment": "No seeded claims, existing plan or critique is supplied; exact plan/critique dispositions are NOT_APPLICABLE. Fixed chunks as a front-insert baseline are justified. Restic is assigned an unsupported leakage failure boundary, materially corrupting the comparative disposition, though no universal winner is selected."
+    },
+    {
+      "id": "supported_scope_preservation",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "coverage": "ROLE_ONLY",
+      "assessment": "No upstream pipeline or prior supported draft exists. Preserve evidenced CDC/front-insert benefit, keyed naming, envelope/session-key lead, encrypted metadata, retention-before-GC upload consequence, cheap password re-wrap and separate identity-secret consequences. Do not convert semantic failure into rejection of all useful discoveries or full-pipeline grade."
+    },
+    {
+      "id": "prospective_checks_and_actual_validation",
+      "judgment": "FAIL",
+      "coverage": "COMPLETE",
+      "finding_ids": [
+        "F1",
+        "F2"
+      ],
+      "candidate_lines": [
+        41,
+        42,
+        43,
+        51
+      ],
+      "assessment": "Front-insert byte-upload comparison is useful and prospective. Oracle lookup needs store-only permissions and the actual store-visible identity domain; it is false for documented Restic when done as proposed. Rotation drill must distinguish wrapping, encryption, identity and chunker keys. Candidate explicitly says no local probe ran; source retrieval is not deployment, recovery or performance validation. No experimental results are fabricated in the science artifact."
+    }
+  ],
+  "material_findings": [
+    {
+      "id": "F1",
+      "severity": "MATERIAL",
+      "type": "INCORRECT_SOURCE_APPLICABILITY",
+      "title": "Restic plaintext blob hashes are incorrectly treated as exposed object-store identifiers",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/discovery.md",
+          "lines": [
+            11,
+            11
+          ],
+          "exact": "the store sees plaintext hashes, so (inference) a candidate chunk's presence is confirmable — identity doubles as a confirmation oracle."
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/discovery.md",
+          "lines": [
+            32,
+            32
+          ],
+          "exact": "Plaintext-hash oracle; sizes (mitigated)"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/discovery.md",
+          "lines": [
+            42,
+            42
+          ],
+          "exact": "Plaintext-hash IDs say yes, keyed/HMAC IDs say no. Test by hashing a known chunk and looking it up in a trial repository."
+        }
+      ],
+      "primary_locators": [
+        {
+          "source_id": "P1-restic-references",
+          "section": "Repository Format, Pack Format, Unpacked Data Format, Indexing",
+          "text_lines": [
+            [
+              89,
+              121
+            ],
+            [
+              187,
+              228
+            ],
+            [
+              244,
+              268
+            ],
+            [
+              303,
+              309
+            ]
+          ],
+          "urls": [
+            "https://restic.readthedocs.io/en/latest/100_references.html#repository-format",
+            "https://restic.readthedocs.io/en/latest/100_references.html#pack-format",
+            "https://restic.readthedocs.io/en/latest/100_references.html#unpacked-data-format"
+          ]
+        }
+      ],
+      "evidence_reasoning": "The source distinguishes client plaintext blob IDs from storage IDs. The plaintext hashes in pack headers are available after decryption; headers and index files are encrypted/authenticated. Store-visible file names hash the stored encrypted file/pack bytes. An untrusted store with no repository password cannot perform the proposed raw-plaintext-hash lookup against the client index. A password-bearing client lookup would not establish a store-side oracle.",
+      "materiality": "This false failure boundary is a central shortlist discriminator, appears in the leakage comparison, and invalidates the stated oracle test for the Restic pattern. The brief specifically requires leakage and chunk-identity/encryption interaction.",
+      "bounded_supported_meaning": "Restic uses plaintext SHA-256 blob identity internally while protecting it in encrypted metadata. A hypothetical design publishing those plaintext IDs would create a dictionary oracle, but this is not the cited Restic design. Size/access-pattern attacks are separate and remain possible under their documented conditions.",
+      "disposition": "FAIL; preserve CDC, random-IV authenticated encryption and password re-wrap discoveries; do not reject Restic on the stated raw-hash exposure premise."
+    },
+    {
+      "id": "F2",
+      "severity": "MATERIAL",
+      "type": "UNSUPPORTED_CONSEQUENTIAL_GENERALIZATION",
+      "title": "The rotation drill equates encryption-key rotation with mandatory loss of cross-epoch deduplication",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/discovery.md",
+          "lines": [
+            43,
+            43
+          ],
+          "exact": "Distinguishes re-wrap-only rotation (cheap, keeps data keys) from true re-keying (expensive, breaks cross-epoch dedup)."
+        }
+      ],
+      "primary_locators": [
+        {
+          "source_id": "P2-borg-security",
+          "section": "Encryption: independent keys and ID/encryption formulas",
+          "text_lines": [
+            [
+              113,
+              152
+            ]
+          ],
+          "urls": [
+            "https://borgbackup.readthedocs.io/en/stable/internals/security.html#encryption"
+          ]
+        },
+        {
+          "source_id": "P1-restic-references",
+          "section": "Keys / Threat Model leaked-key operation",
+          "text_lines": [
+            [
+              379,
+              381
+            ],
+            [
+              654,
+              656
+            ],
+            [
+              729,
+              736
+            ]
+          ],
+          "urls": [
+            "https://restic.readthedocs.io/en/latest/100_references.html#keys-encryption-and-mac",
+            "https://restic.readthedocs.io/en/latest/100_references.html#threat-model"
+          ]
+        },
+        {
+          "source_id": "P3-tarsnap-crypto",
+          "section": "Separate data/session keys and name keys",
+          "text_lines": [
+            [
+              18,
+              27
+            ],
+            [
+              39,
+              46
+            ]
+          ],
+          "urls": [
+            "https://www.tarsnap.com/crypto.html"
+          ]
+        }
+      ],
+      "evidence_reasoning": "Borg explicitly separates id_key, enc_key and authentication keys; its object ID depends on id_key and plaintext, not enc_key. Thus changing enc_key alone does not mathematically invalidate plaintext chunk identities. Keeping an identity domain while replacing ciphertext is a design possibility, distinct from whether an existing CLI implements it and from the cost of rewriting old ciphertext. Tarsnap also separates per-archive/session encryption from stable HMAC naming and deduplicates across archives. Restic password changes do not revoke a leaked master key; the documented master-key replacement path is copy into a new repository or a new backup.",
+      "materiality": "The brief asks for ability to change an encryption key and rotation consequences. This binary prospective oracle incorrectly forces dedup loss as a consequence of every true encryption re-key and omits the identity-key/boundary-domain distinction that determines reuse.",
+      "bounded_supported_meaning": "Changing a keyed identity secret changes IDs; changing a chunker seed/polynomial can change boundaries; replacing encryption keys may require re-encryption or key-epoch handling without necessarily changing plaintext IDs. This assessment does not assert that Borg supplies an in-place re-key command, or that revoking an already leaked key can undo plaintext access to ciphertext the attacker retained.",
+      "disposition": "FAIL; retain the correct line-13/line-33 statement about id_key rotation and cheap passphrase re-wrap, without generalizing it to all encryption-key changes."
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L1",
+      "candidate_lines": [
+        13
+      ],
+      "issue": "Borg confidentiality condition is client concurrency/state, not user count. No cross-user sharing does not itself guarantee one independently updating client. Persistent trusted security state and safe CTR counter reservation also matter.",
+      "primary_ids": [
+        "P2-borg-security"
+      ],
+      "primary_lines": [
+        [
+          37,
+          56
+        ],
+        [
+          153,
+          178
+        ]
+      ],
+      "materiality": "Scope qualification; no multi-client deployment is specified or required, so no invented deployment requirement or independent material failure is imposed."
+    },
+    {
+      "id": "L2",
+      "candidate_lines": [
+        15,
+        34
+      ],
+      "issue": "Per-archive AES session keys are evidenced, but archive-isolated blast radius is not established: archive lists reuse chunks, and the RSA unwrap key reaches session keys. The candidate does not explicitly claim complete archive isolation; the exact compromised-key subject remains unresolved.",
+      "primary_ids": [
+        "P3-tarsnap-crypto",
+        "P4-tarsnap-dedup"
+      ],
+      "primary_lines": [
+        [
+          18,
+          27
+        ],
+        [
+          3,
+          11
+        ]
+      ],
+      "materiality": "Preserve as a bounded lead; not graded as a separately proven material falsehood."
+    },
+    {
+      "id": "L3",
+      "candidate_lines": [
+        21,
+        26
+      ],
+      "issue": "Restic implementation lead lacks an exact code URL; historical compression lead is valid, but unsupported older readers are rejected, so the compatibility inference must be version-bounded. Candidate explicitly says code was not inspected.",
+      "primary_ids": [
+        "P1-restic-references",
+        "P6-restic-chunker-source"
+      ],
+      "primary_lines": [
+        [
+          129,
+          132
+        ],
+        [
+          252,
+          262
+        ],
+        [
+          737,
+          739
+        ]
+      ],
+      "materiality": "Locator/qualification limitations, not a requirement to inspect source code or implement a migration."
+    },
+    {
+      "id": "L4",
+      "candidate_lines": [
+        11,
+        32,
+        33,
+        34,
+        41,
+        51
+      ],
+      "issue": "CDC front-insert reuse is expected after resynchronization, not a guarantee of literally full reuse for every byte sequence. Restic nominal minimum has EOF-tail exceptions in the source. One file is a useful discriminating check, not proof that parameters are optimal for all workloads. Keyed IDs block a direct unkeyed dictionary comparison but do not hide all equality/access/size patterns.",
+      "primary_ids": [
+        "P6-restic-chunker-source",
+        "P2-borg-security"
+      ],
+      "primary_lines": [
+        [
+          159,
+          227
+        ],
+        [
+          332,
+          369
+        ],
+        [
+          305,
+          353
+        ]
+      ],
+      "materiality": "No run or universal winner is claimed. These are bounded wording and future-test applicability qualifications."
+    }
+  ],
+  "unknowns": [
+    "Candidate actual native Goal terminal completion, authentic engine linkage of the saved activation receipt, exactly-one activation count, activation-before-common-input order, and all-output-save-before-native-completion order are UNKNOWN absent authenticated native tool trace/completion receipt.",
+    "Effective candidate model, reasoning effort/service tier and billing/token spend are UNKNOWN; fixture and frozen request establish requested labels, while T3 response names the routed provider/model without proving billing provenance.",
+    "No terminal science/output hash freeze was found at inspected exact target-arm paths. Existing input freeze hashes all match; host T3 terminal completion is observed separately.",
+    "Candidate per-tool retrieval trace, full harness-truncated primary responses, failed-URL diagnostics and investigation/writing split are not independently authenticated by saved excerpts alone.",
+    "No backup installation, object-store account, production deployment, restoration exercise, performance benchmark or re-key drill was run or required for this discovery role.",
+    "Tarsnap exact rotation procedure, full 2025 chunking-paper preconditions and source-code release/commit versions for moving master remain unknown. Reviewer code captures are leads, not deployed behavior."
+  ],
+  "useful_discoveries": [
+    {
+      "id": "D1",
+      "description": "Restic protects internal plaintext hashes inside encrypted pack headers/indexes; storing a plaintext hash internally need not expose a raw-hash dictionary oracle to the store.",
+      "primary_ids": [
+        "P1-restic-references"
+      ],
+      "candidate_preservation": "Corrects F1 while preserving Restic CDC and encrypted chunk reuse."
+    },
+    {
+      "id": "D2",
+      "description": "Identity, encryption and wrapping key domains are separate decisions; Borg independent-key formulas expose which domain controls ID stability.",
+      "primary_ids": [
+        "P2-borg-security",
+        "P3-tarsnap-crypto"
+      ],
+      "candidate_preservation": "Preserve id_key-rotation consequence, remove F2 universal consequence."
+    },
+    {
+      "id": "D3",
+      "description": "Tarsnap content-dependent chunkify.c uses HMAC-derived chunker parameters and a distinct content-cycle rule with a chosen-plaintext safeguard; this is a genuinely inspectable alternative to Restic Rabin boundaries.",
+      "primary_ids": [
+        "P7-tarsnap-chunkify-source"
+      ],
+      "candidate_preservation": "Reviewer-only implementation detail, not retroactively credited as candidate inspection or required algorithm exposition."
+    },
+    {
+      "id": "D4",
+      "description": "Retention ordering can force re-upload after the last reference to a chunk is removed; creating the next archive first preserves reuse in the documented example.",
+      "primary_ids": [
+        "P4-tarsnap-dedup"
+      ],
+      "candidate_preservation": "Supported candidate discovery retained without prescribing full restore/GC architecture."
+    },
+    {
+      "id": "D5",
+      "description": "Restic format v2 compression and 0.18.0 randomized pack assignment are useful version leads; the mitigation concerns observable chunk-size association, separate from hash-identity exposure.",
+      "primary_ids": [
+        "P1-restic-references"
+      ],
+      "candidate_preservation": "Supported historical leads retained; full attack-paper investigation remains open."
+    }
+  ],
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "read_extent": "FULL",
+      "mtime_utc": "2026-10-10T03:56:48.938287+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/input-map.json",
+      "bytes": 507,
+      "sha256": "f4a640ccb6452e4cd03eb7d98160bf9cf8e4d686203d26f7cd0d0d5486668cec",
+      "read_extent": "FULL",
+      "mtime_utc": "2026-10-10T04:37:27.030965+00:00",
+      "input_freeze_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/assignment.md",
+      "bytes": 2383,
+      "sha256": "852ad7871bb8dee4ffc252b7155353eda796e2f71445b19642bc918b43fdaa6f",
+      "read_extent": "FULL",
+      "mtime_utc": "2026-10-10T04:37:27.031119+00:00",
+      "input_freeze_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/freeze.json",
+      "bytes": 2193,
+      "sha256": "fe1e33a7f696d49e8d49d63f492e42b1c1dced2be8df2f5f18c1d804f2318c1a",
+      "read_extent": "FULL",
+      "mtime_utc": "2026-10-10T04:37:27.031725+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/inputs/assignment.md",
+      "bytes": 2642,
+      "sha256": "96c86b7591b7a87ba61dac12c4c21a3daa8c20e9fd4b50e09266471d6d11a1db",
+      "read_extent": "FULL",
+      "mtime_utc": "2026-10-10T04:37:27.029994+00:00",
+      "input_freeze_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/inputs/fixture.json",
+      "bytes": 1033,
+      "sha256": "1b10c5fad028e42ff6e2367e5df37e6f550a4d28a27ead680c77c44d1b60c7f5",
+      "read_extent": "FULL",
+      "mtime_utc": "2026-10-10T04:37:27.030186+00:00",
+      "input_freeze_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/inputs/manifest.json",
+      "bytes": 241,
+      "sha256": "fe164e06074640cccbda200b67202cb2cc9dad08579ba478a1bbaa768dfcc595",
+      "read_extent": "FULL",
+      "mtime_utc": "2026-10-10T04:37:27.030359+00:00",
+      "input_freeze_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/discovery.md",
+      "bytes": 7046,
+      "sha256": "95154750f3d32e40e9dc4292bdc3b253dc143e29fd5a32ced69de1cd70ca136e",
+      "read_extent": "FULL",
+      "mtime_utc": "2026-10-10T04:41:09.682433+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/source-map.json",
+      "bytes": 4992,
+      "sha256": "78bb36f7d093648f17654c43f210de12805d4482f0da99df5d7d99dad21bf26c",
+      "read_extent": "FULL",
+      "mtime_utc": "2026-10-10T04:41:26.756540+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/records/goal-activation-receipt.json",
+      "bytes": 566,
+      "sha256": "8b1aca2cf30f310fb2750fd797dcb5ee5740fc7031a82068cf0931f67a5e4d99",
+      "read_extent": "FULL",
+      "mtime_utc": "2026-10-10T04:38:17.172095+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/dispatch.json",
+      "bytes": 4381,
+      "sha256": "fff24ae8ab8f70dc6dafc0a8ee37b79823af3ee7ab6056bb7685d021414b042c",
+      "read_extent": "FULL",
+      "mtime_utc": "2026-10-10T04:37:27.920687+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/mechanics/task-observations/er12-B-DISC-M-02-treatment-role-v2.json",
+      "bytes": 10342,
+      "sha256": "b35477ab967fec69ab6748684d816e2e10334ffef388d6ff708880498eb0bb2d",
+      "read_extent": "FULL",
+      "mtime_utc": "2026-10-10T04:42:21.826931+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-DISC-M-02/treatment-v1/root-review-request.json",
+      "bytes": 2616,
+      "sha256": "5e54462a5082082a508e8225474a42136c67b0f373cde0b6555af6fe69cf72fa",
+      "read_extent": "FULL",
+      "mtime_utc": "2026-10-10T04:42:22.865890+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/sources/borg-internals-security.excerpt.md",
+      "bytes": 2662,
+      "sha256": "9972c9d53641286a27c5adb8ac450402ac8ed5f79ab15e4ae50109028bbe36b7",
+      "read_extent": "FULL",
+      "mtime_utc": "2026-10-10T04:39:58.916991+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/sources/restic-references.excerpt.md",
+      "bytes": 2883,
+      "sha256": "7608005a07ccaf8e87a1f682c11116f06728b373f42379d87aa96e05b713c8e8",
+      "read_extent": "FULL",
+      "mtime_utc": "2026-10-10T04:39:52.387950+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/sources/retrieval-log.md",
+      "bytes": 2108,
+      "sha256": "c649192991ae8224fd5ad8ede7e0b8fdcdbef1266115f104b54ee40bd4f2c717",
+      "read_extent": "FULL",
+      "mtime_utc": "2026-10-10T04:40:17.199106+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/sources/tarsnap-crypto-dedup.excerpt.md",
+      "bytes": 3112,
+      "sha256": "0c8e83d23bf5795a0e43e442941a5ce26085f4f8a4ebe43b71c53df1e8ac5fb9",
+      "read_extent": "FULL",
+      "mtime_utc": "2026-10-10T04:40:09.567058+00:00"
+    }
+  ],
+  "primary_sources": [
+    {
+      "id": "P1-restic-references",
+      "url": "https://restic.readthedocs.io/en/latest/100_references.html",
+      "resolved_url": "https://restic.readthedocs.io/en/latest/100_references.html",
+      "retrieval_utc": "2026-10-10T04:44:20.600779+00:00",
+      "operation": "Python urllib HTTPS GET; no downloaded code executed",
+      "http_status": 200,
+      "html_path": "ER12_RUNTIME/assessment/B-DISC-M-02/treatment-v1/primary-evidence/P1-restic-references.html",
+      "html_sha256": "61ce1e4e6dceb128020b9c90be66d9ed0612712a4715f3a2b25634673971b060",
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-M-02/treatment-v1/primary-evidence/P1-restic-references.txt",
+      "text_sha256": "30bae0157aba94ea4f8859aaf37128e282bb7871435f6ffe7b3e7c61edca9246",
+      "version": "restic 0.19.1-dev latest documentation; repository formats 1/2; references restic 0.18.0 mitigation"
+    },
+    {
+      "id": "P2-borg-security",
+      "url": "https://borgbackup.readthedocs.io/en/stable/internals/security.html",
+      "resolved_url": "https://borgbackup.readthedocs.io/en/stable/internals/security.html",
+      "retrieval_utc": "2026-10-10T04:44:20.767535+00:00",
+      "operation": "Python urllib HTTPS GET; no downloaded code executed",
+      "http_status": 200,
+      "html_path": "ER12_RUNTIME/assessment/B-DISC-M-02/treatment-v1/primary-evidence/P2-borg-security.html",
+      "html_sha256": "b78019bf415078907f1c3640d39d099ad6b38f6e9f5159a0cb2860d090024c12",
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-M-02/treatment-v1/primary-evidence/P2-borg-security.txt",
+      "text_sha256": "5097c909535f81ead162eba5a519c8803cdcee845182da85b143acbb483f6234",
+      "version": "BorgBackup 1.4.5 stable documentation"
+    },
+    {
+      "id": "P3-tarsnap-crypto",
+      "url": "https://www.tarsnap.com/crypto.html",
+      "resolved_url": "https://www.tarsnap.com/crypto.html",
+      "retrieval_utc": "2026-10-10T04:44:20.877760+00:00",
+      "operation": "Python urllib HTTPS GET; no downloaded code executed",
+      "http_status": 200,
+      "html_path": "ER12_RUNTIME/assessment/B-DISC-M-02/treatment-v1/primary-evidence/P3-tarsnap-crypto.html",
+      "html_sha256": "66107302aa11d9d3e1b55275b58863cf212e96ac7027573cbbac133d2ff903ed",
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-M-02/treatment-v1/primary-evidence/P3-tarsnap-crypto.txt",
+      "text_sha256": "a42b7615278a7c317c9d04ac09a5b96b4da0dfa0e4ccb8879573c58fefd60d3c",
+      "version": "unversioned Tarsnap site as served at retrieval time"
+    },
+    {
+      "id": "P4-tarsnap-dedup",
+      "url": "https://www.tarsnap.com/deduplication-explanation.html",
+      "resolved_url": "https://www.tarsnap.com/deduplication-explanation.html",
+      "retrieval_utc": "2026-10-10T04:44:20.934441+00:00",
+      "operation": "Python urllib HTTPS GET; no downloaded code executed",
+      "http_status": 200,
+      "html_path": "ER12_RUNTIME/assessment/B-DISC-M-02/treatment-v1/primary-evidence/P4-tarsnap-dedup.html",
+      "html_sha256": "6ad4959e72452cad538e8b4f8142e3906af0669a9b88aa649e10a06c3aa8f1cf",
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-M-02/treatment-v1/primary-evidence/P4-tarsnap-dedup.txt",
+      "text_sha256": "eb2413bbf2ecb1dd890e18561380e260012c9e45ccbf594c0075407b056af053",
+      "version": "unversioned Tarsnap site as served at retrieval time"
+    },
+    {
+      "id": "P5-borg-internals",
+      "url": "https://borgbackup.readthedocs.io/en/stable/internals.html",
+      "resolved_url": "https://borgbackup.readthedocs.io/en/stable/internals.html",
+      "retrieval_utc": "2026-10-10T04:44:20.992635+00:00",
+      "operation": "Python urllib HTTPS GET; no downloaded code executed",
+      "http_status": 200,
+      "html_path": "ER12_RUNTIME/assessment/B-DISC-M-02/treatment-v1/primary-evidence/P5-borg-internals.html",
+      "html_sha256": "761ecb4d1a73f1c358a0f2e3462d150020ca206d324e4c1b88bc08fb261da56a",
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-M-02/treatment-v1/primary-evidence/P5-borg-internals.txt",
+      "text_sha256": "2c8f16098f82d26892c31949ac79978afa0027c3295b6dcd1e6f98eef2a472f4",
+      "version": "BorgBackup 1.4.5 stable documentation"
+    },
+    {
+      "id": "P6-restic-chunker-source",
+      "url": "https://raw.githubusercontent.com/restic/chunker/master/chunker.go",
+      "resolved_url": "https://raw.githubusercontent.com/restic/chunker/master/chunker.go",
+      "retrieval_utc": "2026-10-10T04:46:26.330374+00:00",
+      "operation": "HTTPS GET of source text; inspection only, no code execution",
+      "http_status": 200,
+      "raw_path": "ER12_RUNTIME/assessment/B-DISC-M-02/treatment-v1/primary-evidence/P6-restic-chunker-source.raw.txt",
+      "raw_sha256": "afecb8e18550518d9765bb782731e4bc8f24ca664853b2217bdda90979c73ca9",
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-M-02/treatment-v1/primary-evidence/P6-restic-chunker-source.txt",
+      "text_sha256": "2f8581caa44e0f798561f6ad522c5f08527d1be2ffd7c39e24980d503866c243",
+      "version": "moving master, commit UNKNOWN; exact inspected bytes fixed by SHA-256"
+    },
+    {
+      "id": "P7-tarsnap-chunkify-source",
+      "url": "https://raw.githubusercontent.com/Tarsnap/tarsnap/master/tar/multitape/chunkify.c",
+      "resolved_url": "https://raw.githubusercontent.com/Tarsnap/tarsnap/master/tar/multitape/chunkify.c",
+      "retrieval_utc": "2026-10-10T04:46:26.469938+00:00",
+      "operation": "HTTPS GET of source text; inspection only, no code execution",
+      "http_status": 200,
+      "raw_path": "ER12_RUNTIME/assessment/B-DISC-M-02/treatment-v1/primary-evidence/P7-tarsnap-chunkify-source.raw.txt",
+      "raw_sha256": "9d8c57486ce315846048d6916618a883993cd12e31c5533523bd87e663bd72a9",
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-M-02/treatment-v1/primary-evidence/P7-tarsnap-chunkify-source.txt",
+      "text_sha256": "147c98b0752917c3af0395e95d37dfe9ef913bd9b8dc3dd10089552cbccb0f76",
+      "version": "moving master, commit UNKNOWN; exact inspected bytes fixed by SHA-256"
+    },
+    {
+      "id": "P8-restic-v0180-reference",
+      "url": "https://raw.githubusercontent.com/restic/restic/v0.18.0/doc/100_references.rst",
+      "resolved_url": "https://raw.githubusercontent.com/restic/restic/v0.18.0/doc/100_references.rst",
+      "retrieval_utc": "2026-10-10T04:46:26.612312+00:00",
+      "operation": "HTTPS GET of source text; inspection only, no code execution",
+      "http_status": 200,
+      "raw_path": "ER12_RUNTIME/assessment/B-DISC-M-02/treatment-v1/primary-evidence/P8-restic-v0180-reference.raw.txt",
+      "raw_sha256": "b2e5956db36396abadc51932a799149d1de42254bbb07a0f816b1a0db21a7798",
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-M-02/treatment-v1/primary-evidence/P8-restic-v0180-reference.txt",
+      "text_sha256": "24876da2a5598ece7f6088c9d8bd9b9eb720993f4a2fa52737d3bf83a844570a",
+      "version": "restic tag v0.18.0, reference wrapper only; includes design.rst not retrieved"
+    }
+  ],
+  "delivery": {
+    "judgment": "DELIVERED",
+    "role_artifact": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/discovery.md",
+    "words_whitespace": 973,
+    "words_lexical": 942,
+    "required_sources_members_read_full": 4,
+    "source_map_valid_json": true,
+    "all_mapped_corpus_read": "NOT_APPLICABLE: corpus=null",
+    "task_terminal_evidence": "mechanics/task-observations/er12-B-DISC-M-02-treatment-role-v2.json actual_response.structuredContent: status=completed, workState=result_available, hasPendingChildRuns=false"
+  },
+  "coverage": {
+    "judgment": "COMPLETE_FOR_ASSIGNED_ROLE_WITH_MATERIAL_SEMANTIC_ERRORS",
+    "pipeline": "NOT_APPLICABLE",
+    "critique_dispositions": "NOT_APPLICABLE",
+    "mechanism_diverse_shortlist": 4,
+    "implementation_leads": 2,
+    "historical_version_leads": 1,
+    "questions_or_prospective_tests": 3,
+    "substantive_primary_pages_candidate_reported": 5,
+    "primary_projects_candidate": 3
+  },
+  "native": {
+    "candidate_activation": "SAVED_ACTIVE_RECEIPT_PRESENT; authentic actual-tool linkage UNKNOWN",
+    "candidate_receipt_path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/records/goal-activation-receipt.json",
+    "reported_goal_id": "goal-01a1241a-2b24-73b1-a3f6-a7f736014081",
+    "reported_status": "active",
+    "candidate_terminal_completion": "UNKNOWN",
+    "candidate_exactly_one_goal": "UNKNOWN",
+    "candidate_activation_before_inference": "UNKNOWN",
+    "candidate_saved_before_native_completion": "UNKNOWN",
+    "effective_model": "UNKNOWN",
+    "billing": "UNKNOWN",
+    "requested_route": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "muse-spark-1.3-contributor",
+      "reasoningEffort": "max"
+    },
+    "reviewer": "One actual native create_goal observed in this review before scientific inference; will complete only after assessment saved. Active-state observation is reviewer-native-active-observation.json."
+  },
+  "protocol": {
+    "candidate": "UNKNOWN beyond inspected artifacts/host T3 terminal observation; no evidence of unauthorized assistance found in inspected science; declarations alone do not authenticate a tool trace",
+    "reviewer": "No delegation, candidate feedback/repair, accounts, Git/publication or other candidate science/outcome labels read. Unique reviewer identity registered; own inbox only. Filename-only terminal-freeze locator search enumerated unrelated paths but no contents/status labels from those paths were read or used. No shared roster read. No native completion before saved judgment."
+  },
+  "freeze": {
+    "checked_at_utc": "2026-10-10T04:47:26.130752+00:00",
+    "input_freeze_path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/freeze.json",
+    "input_freeze_checks": [
+      {
+        "path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/assignment.md",
+        "expected_sha256": "852ad7871bb8dee4ffc252b7155353eda796e2f71445b19642bc918b43fdaa6f",
+        "actual_sha256": "852ad7871bb8dee4ffc252b7155353eda796e2f71445b19642bc918b43fdaa6f",
+        "expected_bytes": 2383,
+        "actual_bytes": 2383,
+        "match": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/input-map.json",
+        "expected_sha256": "f4a640ccb6452e4cd03eb7d98160bf9cf8e4d686203d26f7cd0d0d5486668cec",
+        "actual_sha256": "f4a640ccb6452e4cd03eb7d98160bf9cf8e4d686203d26f7cd0d0d5486668cec",
+        "expected_bytes": 507,
+        "actual_bytes": 507,
+        "match": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/B-DISC-M-02/inputs/fixture.json",
+        "expected_sha256": "1b10c5fad028e42ff6e2367e5df37e6f550a4d28a27ead680c77c44d1b60c7f5",
+        "actual_sha256": "1b10c5fad028e42ff6e2367e5df37e6f550a4d28a27ead680c77c44d1b60c7f5",
+        "expected_bytes": 1033,
+        "actual_bytes": 1033,
+        "match": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/B-DISC-M-02/inputs/manifest.json",
+        "expected_sha256": "fe164e06074640cccbda200b67202cb2cc9dad08579ba478a1bbaa768dfcc595",
+        "actual_sha256": "fe164e06074640cccbda200b67202cb2cc9dad08579ba478a1bbaa768dfcc595",
+        "expected_bytes": 241,
+        "actual_bytes": 241,
+        "match": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/B-DISC-M-02/inputs/assignment.md",
+        "expected_sha256": "96c86b7591b7a87ba61dac12c4c21a3daa8c20e9fd4b50e09266471d6d11a1db",
+        "actual_sha256": "96c86b7591b7a87ba61dac12c4c21a3daa8c20e9fd4b50e09266471d6d11a1db",
+        "expected_bytes": 2642,
+        "actual_bytes": 2642,
+        "match": true
+      }
+    ],
+    "all_input_freeze_checks_match": true,
+    "terminal_freeze_exact_path_checks": [
+      {
+        "path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/terminal-science-freeze.json",
+        "exists": false
+      },
+      {
+        "path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/terminal-science-freeze-root.json",
+        "exists": false
+      },
+      {
+        "path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/terminal-science-freeze.json",
+        "exists": false
+      }
+    ],
+    "terminal_science_freeze_status": "UNKNOWN: no terminal science freeze found at the inspected target-arm locations; input freeze is not a terminal output freeze",
+    "science_changed_since_initial_review_hash": [],
+    "host_terminal_observation": "ER12_RUNTIME/mechanics/task-observations/er12-B-DISC-M-02-treatment-role-v2.json",
+    "host_terminal_state": "completed; result_available; hasPendingChildRuns=false; observed 2026-10-10T04:42:21.697Z; distinct from native Goal completion"
+  },
+  "time": {
+    "candidate_requested_at_utc": "2026-10-10T04:37:26.708000+00:00",
+    "candidate_deadline_utc": "2026-10-10T04:52:26.708000+00:00",
+    "host_observed_completed_at_utc": "2026-10-10T04:42:21.697Z",
+    "completed_by_observation_seconds_from_request": 294.989,
+    "time_judgment": "T3 completed before whole-arm deadline. This is a completion-observation upper bound, not measured native/model occupancy. Investigation/writing split UNKNOWN.",
+    "no_speed_or_billing_savings_inferred": true,
+    "review_started_utc": "2026-10-10T04:42:45Z",
+    "review_limit_minutes": 25,
+    "assessment_saved_at_utc": "2026-10-10T04:49:52.212210+00:00"
+  },
+  "proposed_vs_executed": {
+    "candidate_proposed": [
+      "Front-insert bytes-upload comparison",
+      "Store confirmation question/lookup",
+      "Password/key rotation drill"
+    ],
+    "candidate_executed_reported": [
+      "Public primary retrievals and source comparison",
+      "No local probes"
+    ],
+    "reviewer_executed": [
+      "Full required local input/science/excerpt reads",
+      "SHA-256 and byte checks against frozen inputs",
+      "Eight independent primary retrievals, including two unexecuted source-code leads",
+      "Governing section/operation/applicability analysis"
+    ],
+    "not_executed": [
+      "Backup/chunker benchmark",
+      "Repository hash-oracle trial",
+      "Encryption re-key or restore drill",
+      "Deployment/account operation"
+    ]
+  },
+  "assessment_artifacts": [
+    "assessment.md",
+    "assessment.json",
+    "source-map.json",
+    "inspected-artifacts.json",
+    "freeze-check.json",
+    "primary-evidence/README.md",
+    "primary-evidence/retrievals.json"
+  ],
+  "saved_judgment_before_reviewer_native_completion": true
+}

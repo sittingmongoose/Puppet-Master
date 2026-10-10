@@ -1,0 +1,67 @@
+{
+  "run_id": "A7-01-treatment",
+  "stage": "critic-finalizer",
+  "check_input": {
+    "command": "check-input --config ER12_RUNTIME/configs/A7-01-treatment.json --stage critic-finalizer",
+    "status": "UNAVAILABLE_COMMAND_NOT_FOUND",
+    "actual_observation": "/bin/bash: check-input: command not found",
+    "official_gate_passed": false,
+    "manual_handoff_integrity": "input-integrity.json records the manual allowed-path check; it is not the official gate"
+  },
+  "freeze_review": {
+    "command": "freeze-review --stage critic-finalizer",
+    "status": "UNAVAILABLE_COMMAND_NOT_FOUND",
+    "actual_observation": "/bin/bash: freeze-review: command not found",
+    "attempted_before_final_md_existed": true,
+    "official_bind_passed": false,
+    "final_md_existed_after_attempt": false
+  },
+  "seal_final": {
+    "command": "seal-final --stage critic-finalizer",
+    "status": "UNAVAILABLE_COMMAND_NOT_FOUND",
+    "attempt": "Exact fresh active get_goal response was saved in goal-preseal.json and piped to the prescribed command.",
+    "actual_observation": "/bin/bash: seal-final: command not found",
+    "seal_passed": false,
+    "native_goal_completed": false
+  },
+  "final_outputs_saved": true,
+  "critique_dispositions_saved": true,
+  "native_goal_preseal_observation": {
+    "status": "active",
+    "threadId": "01a12411-20bd-7c10-82de-b2103d9617d5",
+    "objective": "ER11 critic-finalizer stage, run A7-01-treatment: execute ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+    "exact_response_file": "goal-preseal.json",
+    "sha256": "32a0f96d3241b79ecbbbe7d5bd51b2aae055ff04fca5112623e6334b0e2aaddf"
+  },
+  "last_native_goal_observation": {
+    "status": "active",
+    "threadId": "01a12411-20bd-7c10-82de-b2103d9617d5",
+    "exact_response_file": "goal-postseal-attempt.json",
+    "sha256": "b66b778b3ffdd5689e608c53bbd27cdb53ce2915698c5f00cc7dc48f05a257f5",
+    "observed_after_seal_command_failure": true
+  },
+  "runtime_recheck": {
+    "checked_at_utc": "2026-10-10T04:51:52Z",
+    "path_executable_scan": [
+      "check-input",
+      "freeze-review",
+      "seal-final"
+    ],
+    "result": "no prescribed executable is present in current PATH; current-turn check-input and seal-final attempts also returned command not found",
+    "available_native_gate_tools": [],
+    "actual_goal_response_file": "goal-final-attempt.json",
+    "actual_goal_response_sha256": "4bf87581ab6fd7fb83c9364ad1a9f9a824d62220180dda95623d30f53f3e1e46",
+    "goal_status": "active"
+  },
+  "blocked_audit": {
+    "consecutive_goal_turns_with_same_gate_tool_blocker": 3,
+    "evidence": [
+      "check-input command not found during intake attempt",
+      "freeze-review command not found on the required pre-final attempt",
+      "seal-final command not found when exact fresh active get_goal responses were piped to it",
+      "current PATH scan and native tool catalog expose no matching gate"
+    ],
+    "remaining_required_work": "official intake, freeze-review binding, and seal-final receipt before native Goal completion",
+    "external_change_required": "gate commands or equivalent official native gate capabilities must become available"
+  }
+}

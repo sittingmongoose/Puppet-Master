@@ -1,0 +1,2412 @@
+{
+  "schema": "er12-independent-full-pipeline-assessment-v1",
+  "slot": "A1-02",
+  "fixture": "ER12-A1-02-FRESH",
+  "arm": "treatment",
+  "assessment_version": "treatment-v1",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "per_arm": {
+    "treatment": {
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "remaining_material_findings": [],
+      "delivery": "FINAL_PRESENT",
+      "coverage": "ALL_SIX_AXES_FULL",
+      "native": "UNKNOWN/partial recorded evidence",
+      "protocol": "PARTIAL_EVIDENCE_UNKNOWN",
+      "time": "ROOT_OBSERVED_TERMINAL_BEFORE_ABSOLUTE_DEADLINE; actual occupancy UNKNOWN",
+      "billing": "UNKNOWN"
+    }
+  },
+  "judgment_basis": "Semantic inspection of full frozen original/stage package and independent primary evidence; hashes/counts/agreements are provenance or coverage only, never semantic proof. Corrected lineage defects retained separately from final qualification.",
+  "reviewer_identity": "codex-er12-a102-review-1010",
+  "review_started_utc": "2026-10-10T04:43:03Z",
+  "review_envelope_deadline_utc": "2026-10-10T05:28:03Z",
+  "assessment_saved_utc": "2026-10-10T04:55:17.339319+00:00",
+  "capped": false,
+  "unassessed_axes": [],
+  "axes": [
+    {
+      "id": 1,
+      "name": "Original obligations and negative constraints",
+      "coverage": "FULL",
+      "judgment": "PASS",
+      "assessment": "C1–C6 are substantively addressed, as are the six negative constraints. The final retains one trusted offline file, fictional Rust/local SQLite, existing UI, weekly named-zone recurrence crossing DST, a single occurrence action, an existing exception and opaque content. It gives a concrete identity/edit sketch and distinguishes a preview horizon from stored recurrence. Rejecting RDATE/multi-day patterns is an explicitly declared first-release subset, allowed by the brief; it is not a demand to support every recurrence form. Existing-target and unrelated exceptions are handled distinctly. Owner choices are proposed contracts, not implementation claims. No extra application, service, account operation or deployment obligation was invented.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+          "line": 15
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+          "line": 34
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+          "line": 49
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+          "line": 60
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+          "line": 76
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+          "line": 85
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+          "line": 115
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+          "line": 162
+        }
+      ],
+      "evidence_ids": [
+        "R01",
+        "R04",
+        "R05",
+        "R06",
+        "R07",
+        "R08",
+        "R09"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Consequential source claims and exact applicability conditions",
+      "coverage": "FULL",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "Independently retrieved governing RFC text, Verified Erratum 4271, Google/Graph operation/resource documentation and versioned library/history evidence. Final original-slot identity, exclusion precedence, named-zone behavior, generated-gap correction, fold policy, exact/nominal duration distinction, INTERVAL default, COUNT/UNTIL mutual exclusion and UTC UNTIL condition are supported. Types and operation domains remain distinct: Graph originalStart is UTC DateTimeOffset; provider event IDs are not ICS identity; Graph boundaries are not file rules; API/ITIP messaging is not a file export. Raw-byte preservation/upsert/tombstones are labeled product designs. The Python history summary omits narrow conditions and a blanket provider-messaging sentence is broader than the detailed operation table; neither drives a consequential unsupported final decision. All 21 consequential claim records are in source-map.json.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+          "line": 36
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+          "line": 51
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+          "line": 64
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+          "line": 68
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+          "line": 80
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+          "line": 87
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+          "line": 97
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+          "line": 101
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+          "line": 119
+        }
+      ],
+      "evidence_ids": [
+        "R01",
+        "R02",
+        "R03",
+        "R04",
+        "R05",
+        "R06",
+        "R07",
+        "R08",
+        "R09",
+        "R10",
+        "R11",
+        "R12",
+        "R13",
+        "R14",
+        "R15",
+        "R16"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Useful unfamiliar discovery, alternatives, history and opportunity breadth",
+      "coverage": "FULL",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "Discovery supplies actionable mechanisms rather than generic caution: original-slot detached exceptions; EXDATE snapshot exclusion versus iTIP organizer messaging; Google immutable original-slot fields versus Graph event/resource distinctions; Graph adjacent-occurrence-day restriction; raw component editing versus typed reserialization; exact versus nominal durations; and duplicate/import collision handling. Competing Rust leads have different compatibility tradeoffs: strict typed recurrence in caldata 0.17.3, byte-faithful/calendar-owned timezone architecture advertised by unpinned pimalaya/ical, and archived parser-only ical 0.11.0. Tagged Python icalendar history gives real opaque-value, URI-parameter and timezone regressions that motivate discriminating tests without alleging Rust defects. RDATE/multi-day recurrence remain optional future capabilities, and zone authority, crate choice and tombstone consumer behavior are investigated owner decisions. Breadth is adequate for this deliberately bounded feature; no full calendar/service research is required.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/discovery.md",
+          "line": 5
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/discovery.md",
+          "line": 11
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/discovery.md",
+          "line": 20
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/draft.md",
+          "line": 37
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/draft.md",
+          "line": 46
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+          "line": 76
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+          "line": 95
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+          "line": 127
+        }
+      ],
+      "evidence_ids": [
+        "R01",
+        "R03",
+        "R04",
+        "R05",
+        "R06",
+        "R08",
+        "R10",
+        "R11",
+        "R12",
+        "R13",
+        "R14",
+        "R15"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Wrong criticism/corrections/rejections and exact plan dispositions",
+      "coverage": "FULL",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "Every critic item F1–F4 and U1 has an explicit disposition, checked against primary evidence rather than critic agreement. F1/F2 correct real lineage source defects. F3 removes an actual representational ambiguity without alleging executed-code failure. F4 fills conditional grammar acceptance constraints rather than inventing a requirement to accept UNTIL. U1 remains honestly unverified, with concrete representation, preservation, observable checks and conditional test/defer choices. All 21 substantive exact plan sentences are mapped below, including the originally unspecified occurrence-key choice and all seven fixture classes. The final paraphrases the ambiguous first idea as current-start identity, a minor attribution overstatement; the chosen original-slot resolution is sound and requested. No materially wrong rejection or adopted correction remains.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+          "line": 19
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+          "line": 103
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/critique.md",
+          "line": 28
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/critique.md",
+          "line": 38
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/critique.md",
+          "line": 48
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/critique.md",
+          "line": 58
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/critique.md",
+          "line": 66
+        }
+      ],
+      "evidence_ids": [
+        "R01",
+        "R02",
+        "R03",
+        "R04",
+        "R05",
+        "R08",
+        "R12"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Supported meaning preserved across discovery/draft/critique/final",
+      "coverage": "FULL",
+      "judgment": "PASS",
+      "assessment": "The final remains self-contained and preserves the supported original-slot identity, master retention, exclusion/override distinctions, named-zone/DST model, preview-only expansion, existing-exception merge, raw owning-component property preservation, repeat-import/conflict design, provider operation comparison, all library/history leads and optional/owner choices. It does not replace science with predecessor IDs or merely enumerate edits. The original discovery/draft gap-skip statement is deliberately corrected, not silently regraded; unknown-property preservation remains required while its RFC attribution is narrowed. Duration and end-rule constraints are strengthened. The optional cancelled detached tombstone representation from early discovery is resolved into an explicitly local proposed EXDATE/removal/tombstone policy with retained consumer uncertainty; no proven alternate capability is erased. All original validation fixture classes and scope constraints survive.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/discovery.md",
+          "line": 7
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/discovery.md",
+          "line": 13
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/draft.md",
+          "line": 13
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/draft.md",
+          "line": 83
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/critique.md",
+          "line": 26
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+          "line": 34
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+          "line": 85
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+          "line": 103
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+          "line": 138
+        }
+      ],
+      "evidence_ids": [
+        "R01",
+        "R03",
+        "R04",
+        "R05",
+        "R06",
+        "R10",
+        "R11",
+        "R12"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Meaningful proposed versus executed validation and oracle applicability",
+      "coverage": "FULL",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "The final matrix has observable invariants for all required fixtures and additions: stable UID/original typed RID, no original phantom or duplicate override, one exclusion with master/neighbors intact, fixed local 18:30 with changing resolved offsets, preservation of raw opaque values/parameters/multiplicity/ownership, exact/nominal duration meaning, repeat-import stability, and no partial writes on unsupported/conflicting input. Generated-gap/count expectations are corrected using the verified erratum. Implementation, parser/exporter, SQLite, provider and independent-reader tests are explicitly proposed and unrun, consistent with the original assignment. Source rechecks and input hashes are research/provenance evidence only. A same-parser round-trip can expose regressions but is a weak self-oracle; it cannot prove live/provider compatibility, raw-byte preservation or a different reader. Independent permitted consumers and pinned-release fixtures are prospective compatibility oracles. Lack of nonexistent deployment tests is not a failure of this planning assignment.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/draft.md",
+          "line": 65
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/critique.md",
+          "line": 89
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+          "line": 138
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+          "line": 154
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+          "line": 156
+        }
+      ],
+      "evidence_ids": [
+        "R01",
+        "R03",
+        "R10",
+        "R11",
+        "R12",
+        "R15"
+      ]
+    }
+  ],
+  "required_clauses": [
+    {
+      "id": "C1",
+      "exact_clause": "C1: Define series and occurrence identity, including how a moved occurrence refers to its original position.",
+      "brief_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A1-02/brief.md",
+        "line": 11
+      },
+      "judgment": "PASS",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 36
+      },
+      "assessment": "UID scoped locally to source document; original typed RID remains fixed on a detached same-UID move; current start is not identity.",
+      "evidence_ids": [
+        "R01",
+        "R05",
+        "R06"
+      ]
+    },
+    {
+      "id": "C2",
+      "exact_clause": "C2: Explain cancellation versus moving an instance, and the relevant interactions between recurrence rules, exclusions, and overrides within the supported subset.",
+      "brief_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A1-02/brief.md",
+        "line": 12
+      },
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 51
+      },
+      "assessment": "Ordinary cancel adds original-slot EXDATE; move updates keyed detached override; master and neighbors remain; recurrence algebra/exclusion precedence explained. Existing moved-target cancel is a disclosed local tombstone proposal with consumer uncertainty, not an interoperability result.",
+      "evidence_ids": [
+        "R01",
+        "R04"
+      ]
+    },
+    {
+      "id": "C3",
+      "exact_clause": "C3: Specify local time/time-zone handling across a daylight-saving boundary and disclose ambiguous/nonexistent-time policy rather than assuming a fixed UTC offset.",
+      "brief_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A1-02/brief.md",
+        "line": 13
+      },
+      "judgment": "PASS",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 62
+      },
+      "assessment": "Named TZID/embedded VTIMEZONE retained, offsets derived per occurrence, fold/gap policy disclosed and corrected by erratum; no permanent UTC recurrence; duration forms covered.",
+      "evidence_ids": [
+        "R01",
+        "R02",
+        "R03"
+      ]
+    },
+    {
+      "id": "C4",
+      "exact_clause": "C4: Compare at least two provider/analogous mechanisms at the operation level and explain which concepts transfer to file interchange and which do not.",
+      "brief_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A1-02/brief.md",
+        "line": 14
+      },
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 80
+      },
+      "assessment": "Google retrieve/authorized update/status cancellation and Graph list/PATCH/organizer cancel compared at operation level; identity concepts transfer, IDs/UTC shape/notifications/provider boundary do not. Minor blanket messaging wording is qualified by the exact table and R16.",
+      "evidence_ids": [
+        "R05",
+        "R06",
+        "R07",
+        "R08",
+        "R09",
+        "R16"
+      ]
+    },
+    {
+      "id": "C5",
+      "exact_clause": "C5: Describe preservation of unknown properties, idempotent repeat import, and round-trip risks; connect a relevant implementation or history detail to the compatibility decision.",
+      "brief_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A1-02/brief.md",
+        "line": 15
+      },
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 87
+      },
+      "assessment": "Raw owning-component preservation, stable upserts, hashes as provenance, byte versus meaning risks, competing libraries and actual Python fix history connect to compatibility testing; exact history conditions are recorded independently.",
+      "evidence_ids": [
+        "R01",
+        "R10",
+        "R11",
+        "R12",
+        "R13",
+        "R14",
+        "R15"
+      ]
+    },
+    {
+      "id": "C6",
+      "exact_clause": "C6: Separate supported behavior, unverified assumptions, and proposed-versus-executed validation; state what unsupported inputs do.",
+      "brief_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A1-02/brief.md",
+        "line": 16
+      },
+      "judgment": "PASS",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 119
+      },
+      "assessment": "Proposed grammar and fail-closed list explicit; unverified owner choices/consumer/library assumptions disclosed; matrix unrun; source checks not implementation validation.",
+      "evidence_ids": [
+        "R01",
+        "R03",
+        "R10",
+        "R11",
+        "R12"
+      ]
+    }
+  ],
+  "negative_constraints": [
+    {
+      "id": "N1",
+      "exact_constraint": "no full calendar application",
+      "judgment": "PASS",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 15
+      }
+    },
+    {
+      "id": "N2",
+      "exact_constraint": "no account/API access",
+      "judgment": "PASS",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 83
+      }
+    },
+    {
+      "id": "N3",
+      "exact_constraint": "no mass editing of all future instances",
+      "judgment": "PASS",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 57
+      }
+    },
+    {
+      "id": "N4",
+      "exact_constraint": "no silent drop of unknown properties",
+      "judgment": "PASS",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 89
+      }
+    },
+    {
+      "id": "N5",
+      "exact_constraint": "no conversion of recurring local wall time into a permanent fixed UTC schedule",
+      "judgment": "PASS",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 62
+      }
+    },
+    {
+      "id": "N6",
+      "exact_constraint": "no claim of interoperability without testing",
+      "judgment": "PASS",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 154
+      }
+    }
+  ],
+  "exact_plan_dispositions": [
+    {
+      "id": "P01",
+      "exact_text": "My first idea stores the series UID and occurrence start timestamp as a composite key.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A1-02/plan.md",
+        "line": 6
+      },
+      "disposition": "RESOLVE/AMEND",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 36
+      },
+      "independent_assessment": "Original key proposal did not say current versus original start. Final resolves to source-document/UID/typed original RID; its table overstates the rejected hypothesis as current-start (minor L4).",
+      "evidence_ids": [
+        "R01",
+        "R05"
+      ]
+    },
+    {
+      "id": "P02",
+      "exact_text": "For a weekly 18:30 rehearsal, expand eight weeks in advance, convert starts to UTC, and keep those rows as the schedule.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A1-02/plan.md",
+        "line": 6
+      },
+      "disposition": "REJECT_SCHEDULE/RETAIN_PREVIEW",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 7
+      },
+      "independent_assessment": "Eight-week materialization cannot be durable schedule; final preserves RRULE beyond preview and uses UTC only as derived instant.",
+      "evidence_ids": [
+        "R01"
+      ]
+    },
+    {
+      "id": "P03",
+      "exact_text": "When staff cancel a row, remove it and add its start time to an exclusion list.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A1-02/plan.md",
+        "line": 6
+      },
+      "disposition": "AMEND",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 54
+      },
+      "independent_assessment": "Persist original-slot EXDATE, not deletion of a derived schedule row; preserve master; repeat cancel idempotent.",
+      "evidence_ids": [
+        "R01"
+      ]
+    },
+    {
+      "id": "P04",
+      "exact_text": "When they move a row, add a standalone event with a new UID and the replacement start.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A1-02/plan.md",
+        "line": 6
+      },
+      "disposition": "REJECT",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 40
+      },
+      "independent_assessment": "Moved instance is same-UID detached exception with original RID and replacement DTSTART/end, not unrelated UID.",
+      "evidence_ids": [
+        "R01",
+        "R04",
+        "R05"
+      ]
+    },
+    {
+      "id": "P05",
+      "exact_text": "I have not checked whether this preserves the relationship to the original instance or what re-import does.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A1-02/plan.md",
+        "line": 6
+      },
+      "disposition": "RESOLVE",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 91
+      },
+      "independent_assessment": "Identity and repeat-import uncertainty resolved with stable original-slot key/upsert and conflict policy; tests remain proposed.",
+      "evidence_ids": [
+        "R01"
+      ]
+    },
+    {
+      "id": "P06",
+      "exact_text": "I would like the first release to retain local 18:30 across clock changes.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A1-02/plan.md",
+        "line": 8
+      },
+      "disposition": "ACCEPT",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 62
+      },
+      "independent_assessment": "Named-zone local 18:30 preserved through offset changes.",
+      "evidence_ids": [
+        "R01"
+      ]
+    },
+    {
+      "id": "P07",
+      "exact_text": "The expansion window is a UI convenience, not an assertion that the series ends there.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A1-02/plan.md",
+        "line": 8
+      },
+      "disposition": "ACCEPT",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 7
+      },
+      "independent_assessment": "Preview horizon does not imply rule end.",
+      "evidence_ids": [
+        "R01"
+      ]
+    },
+    {
+      "id": "P08",
+      "exact_text": "The draft does not specify whether an occurrence key uses the originally scheduled start or the current moved start, and it does not explain how an already imported exception is merged.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A1-02/plan.md",
+        "line": 8
+      },
+      "disposition": "RESOLVE",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 40
+      },
+      "independent_assessment": "Choose original typed RID; update matching existing exception in place; disclose cancelled-target tombstone handling and conflict rejection.",
+      "evidence_ids": [
+        "R01"
+      ]
+    },
+    {
+      "id": "P09",
+      "exact_text": "Please resolve those choices rather than implementing the sketch literally.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A1-02/plan.md",
+        "line": 8
+      },
+      "disposition": "ACCEPT/RESOLVE",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 19
+      },
+      "independent_assessment": "Concrete alternative to literal sketch, without implementing the importer.",
+      "evidence_ids": [
+        "R01"
+      ]
+    },
+    {
+      "id": "P10",
+      "exact_text": "I remember provider APIs offering instance-edit operations, but do not know whether their event IDs or cancellation semantics can be carried unchanged into .ics files.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A1-02/plan.md",
+        "line": 10
+      },
+      "disposition": "INVESTIGATE_AND_BOUND",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 80
+      },
+      "independent_assessment": "Two provider mechanisms compared; IDs/cancellation fields are provider conventions rather than unchanged .ics tokens.",
+      "evidence_ids": [
+        "R05",
+        "R06",
+        "R07",
+        "R08"
+      ]
+    },
+    {
+      "id": "P11",
+      "exact_text": "Research the mechanism and conditions before treating an API operation as an interchange guarantee.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A1-02/plan.md",
+        "line": 10
+      },
+      "disposition": "ACCEPT",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 83
+      },
+      "independent_assessment": "Documentation comparison separated from interchange guarantee and unrun tests.",
+      "evidence_ids": [
+        "R04",
+        "R05",
+        "R07"
+      ]
+    },
+    {
+      "id": "P12",
+      "exact_text": "An existing Rust calendar library would be welcome if its actual support is adequate; I have not selected or installed one.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A1-02/plan.md",
+        "line": 10
+      },
+      "disposition": "ACCEPT_EVALUATION/NO_SELECTION",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 97
+      },
+      "independent_assessment": "Versioned strict recurrence candidate, unpinned byte-faithful architecture lead and historical parser option; no library selected/installed, tests prerequisite.",
+      "evidence_ids": [
+        "R10",
+        "R11",
+        "R13",
+        "R14",
+        "R15"
+      ]
+    },
+    {
+      "id": "P13",
+      "exact_text": "Preserve C1–C6 and all negative constraints.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A1-02/plan.md",
+        "line": 12
+      },
+      "disposition": "ACCEPT",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 34
+      },
+      "independent_assessment": "C1–C6 and all six negative constraints mapped separately; none silently removed.",
+      "evidence_ids": [
+        "R01"
+      ]
+    },
+    {
+      "id": "P14",
+      "exact_text": "Keep the feature to one supported weekly-series subset and a single-instance operation.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A1-02/plan.md",
+        "line": 12
+      },
+      "disposition": "ACCEPT",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 119
+      },
+      "independent_assessment": "One declared weekly subset and one occurrence operation, without general recurrence expansion obligation.",
+      "evidence_ids": [
+        "R01"
+      ]
+    },
+    {
+      "id": "P15",
+      "exact_text": "Preserve opaque properties verbatim where feasible; disclose any transformation that cannot safely round-trip.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A1-02/plan.md",
+        "line": 12
+      },
+      "disposition": "ACCEPT",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 89
+      },
+      "independent_assessment": "Raw unknown data retained where feasible; exact transformations/intentional canceled-component omission disclosed and preserved in tombstone.",
+      "evidence_ids": [
+        "R01",
+        "R12"
+      ]
+    },
+    {
+      "id": "P16",
+      "exact_text": "Unsupported recurrence forms should be surfaced explicitly without rewriting the original file.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A1-02/plan.md",
+        "line": 12
+      },
+      "disposition": "ACCEPT",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 125
+      },
+      "independent_assessment": "Unsupported/conflict reason with original available and no partial database/file rewrite.",
+      "evidence_ids": [
+        "R01"
+      ]
+    },
+    {
+      "id": "P17",
+      "exact_text": "No server synchronization or conflict resolution service is required.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A1-02/plan.md",
+        "line": 12
+      },
+      "disposition": "ACCEPT",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 134
+      },
+      "independent_assessment": "Local collision reporting, not server sync/conflict-resolution service.",
+      "evidence_ids": [
+        "R01"
+      ]
+    },
+    {
+      "id": "P18",
+      "exact_text": "Proposed validation only: synthetic weekly rehearsals around a clock change; one cancelled occurrence; one moved across a date boundary; an existing override; importing the same export twice; an unknown property; an unsupported recurrence form.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A1-02/plan.md",
+        "line": 14
+      },
+      "disposition": "RETAIN/EXPAND_PROPOSED_ONLY",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 142
+      },
+      "independent_assessment": "All seven requested fixture classes retained; adds fold/gap/count, duration forms, conflict negatives and pinned crate checks.",
+      "evidence_ids": [
+        "R01",
+        "R03",
+        "R12"
+      ]
+    },
+    {
+      "id": "P19",
+      "exact_text": "Define an observable identity/time/preservation invariant for each.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A1-02/plan.md",
+        "line": 14
+      },
+      "disposition": "ACCEPT",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 142
+      },
+      "independent_assessment": "Identity/time/preservation invariants attached to fixtures, including no phantom/duplicate and unaffected neighbors.",
+      "evidence_ids": [
+        "R01",
+        "R03"
+      ]
+    },
+    {
+      "id": "P20",
+      "exact_text": "A local parser round-trip would not prove compatibility with a live provider.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A1-02/plan.md",
+        "line": 14
+      },
+      "disposition": "ACCEPT",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 146
+      },
+      "independent_assessment": "Separate independent file-consumer/compatibility check; a local parser round-trip alone is insufficient.",
+      "evidence_ids": [
+        "R05",
+        "R07",
+        "R10",
+        "R11"
+      ]
+    },
+    {
+      "id": "P21",
+      "exact_text": "No files have been imported, exported, or tested yet.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A1-02/plan.md",
+        "line": 14
+      },
+      "disposition": "RETAIN_STATUS",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 154
+      },
+      "independent_assessment": "No implemented/imported/exported/tested product result is invented; all implementation validation remains proposed.",
+      "evidence_ids": [
+        "R01"
+      ]
+    }
+  ],
+  "critic_dispositions": [
+    {
+      "id": "F1",
+      "critic_classification": "Material wrong",
+      "original_locator": [
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/discovery.md",
+          "line": 15
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/draft.md",
+          "line": 33
+        }
+      ],
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/critique.md",
+        "line": 28
+      },
+      "final_disposition": "ACCEPT_AND_AMEND",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 64
+      },
+      "reviewer_verdict": "SUPPORTED_CORRECTION; original gap-skip/count oracle was wrong under Verified EID 4271; final imports/generated gaps use §3.3.5. New move gap rejection stays explicitly product policy.",
+      "lineage_status": "CORRECTED_MATERIAL_SOURCE_DEFECT",
+      "evidence_ids": [
+        "R01",
+        "R02",
+        "R03"
+      ]
+    },
+    {
+      "id": "F2",
+      "critic_classification": "Material wrong",
+      "original_locator": [
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/discovery.md",
+          "line": 17
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/draft.md",
+          "line": 48
+        }
+      ],
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/critique.md",
+        "line": 38
+      },
+      "final_disposition": "ACCEPT_AND_AMEND",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 87
+      },
+      "reviewer_verdict": "SUPPORTED_CORRECTION; §3.2.20 concerns unknown VALUE-type tokens and §3.8.8 allows generic consumers to ignore properties. Product preservation was always required by brief and survives the narrower RFC attribution.",
+      "lineage_status": "CORRECTED_OVERBROAD_RFC_ATTRIBUTION",
+      "evidence_ids": [
+        "R01"
+      ]
+    },
+    {
+      "id": "F3",
+      "critic_classification": "Material incomplete",
+      "original_locator": [
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/draft.md",
+          "line": 17
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/draft.md",
+          "line": 35
+        }
+      ],
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/critique.md",
+        "line": 48
+      },
+      "final_disposition": "ACCEPT_AND_AMEND",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 68
+      },
+      "reviewer_verdict": "SUPPORTED_REFINEMENT; draft universal DTSTART/DTEND sketch plus where-feasible preservation left nominal duration ambiguous. Final preserves inherited/explicit exact versus nominal duration and adds transition tests. No executed-code defect is asserted.",
+      "lineage_status": "REPRESENTATION_RISK_RESOLVED",
+      "evidence_ids": [
+        "R01"
+      ]
+    },
+    {
+      "id": "F4",
+      "critic_classification": "Material incomplete",
+      "original_locator": [
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/draft.md",
+          "line": 58
+        }
+      ],
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/critique.md",
+        "line": 58
+      },
+      "final_disposition": "ACCEPT_AND_AMEND",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 119
+      },
+      "reviewer_verdict": "SUPPORTED_CONDITIONAL_REFINEMENT; if UNTIL/COUNT accepted, exact type/UTC/mutual-exclusion/count-start constraints are required. Final adds them and rejects malformed forms. It does not force optional end-rule support or allege an implementation failure.",
+      "lineage_status": "CONDITIONAL_ACCEPTANCE_GAP_RESOLVED",
+      "evidence_ids": [
+        "R01"
+      ]
+    },
+    {
+      "id": "U1",
+      "critic_classification": "Honestly unresolved external input",
+      "original_locator": [
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/draft.md",
+          "line": 24
+        }
+      ],
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/critique.md",
+        "line": 66
+      },
+      "final_disposition": "RETAIN_UNCERTAINTY",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 56
+      },
+      "reviewer_verdict": "APPROPRIATE; EXDATE plus removed active detached component/local raw tombstone is explicit design, with tests and conditional deferral. RFC/API documents do not prove all independent consumers; the assignment asks for a plan, not nonexistent compatibility runs. This is investigated uncertainty, not a material unsupported claimed guarantee.",
+      "lineage_status": "HONEST_EXTERNAL_CHOICE_RETAINED",
+      "evidence_ids": [
+        "R01",
+        "R04"
+      ]
+    }
+  ],
+  "material_findings": [],
+  "lineage_findings": [
+    {
+      "id": "F1",
+      "critic_classification": "Material wrong",
+      "original_locator": [
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/discovery.md",
+          "line": 15
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/draft.md",
+          "line": 33
+        }
+      ],
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/critique.md",
+        "line": 28
+      },
+      "final_disposition": "ACCEPT_AND_AMEND",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 64
+      },
+      "reviewer_verdict": "SUPPORTED_CORRECTION; original gap-skip/count oracle was wrong under Verified EID 4271; final imports/generated gaps use §3.3.5. New move gap rejection stays explicitly product policy.",
+      "lineage_status": "CORRECTED_MATERIAL_SOURCE_DEFECT",
+      "evidence_ids": [
+        "R01",
+        "R02",
+        "R03"
+      ]
+    },
+    {
+      "id": "F2",
+      "critic_classification": "Material wrong",
+      "original_locator": [
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/discovery.md",
+          "line": 17
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/draft.md",
+          "line": 48
+        }
+      ],
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/critique.md",
+        "line": 38
+      },
+      "final_disposition": "ACCEPT_AND_AMEND",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 87
+      },
+      "reviewer_verdict": "SUPPORTED_CORRECTION; §3.2.20 concerns unknown VALUE-type tokens and §3.8.8 allows generic consumers to ignore properties. Product preservation was always required by brief and survives the narrower RFC attribution.",
+      "lineage_status": "CORRECTED_OVERBROAD_RFC_ATTRIBUTION",
+      "evidence_ids": [
+        "R01"
+      ]
+    },
+    {
+      "id": "F3",
+      "critic_classification": "Material incomplete",
+      "original_locator": [
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/draft.md",
+          "line": 17
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/draft.md",
+          "line": 35
+        }
+      ],
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/critique.md",
+        "line": 48
+      },
+      "final_disposition": "ACCEPT_AND_AMEND",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 68
+      },
+      "reviewer_verdict": "SUPPORTED_REFINEMENT; draft universal DTSTART/DTEND sketch plus where-feasible preservation left nominal duration ambiguous. Final preserves inherited/explicit exact versus nominal duration and adds transition tests. No executed-code defect is asserted.",
+      "lineage_status": "REPRESENTATION_RISK_RESOLVED",
+      "evidence_ids": [
+        "R01"
+      ]
+    },
+    {
+      "id": "F4",
+      "critic_classification": "Material incomplete",
+      "original_locator": [
+        {
+          "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/draft.md",
+          "line": 58
+        }
+      ],
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/critique.md",
+        "line": 58
+      },
+      "final_disposition": "ACCEPT_AND_AMEND",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 119
+      },
+      "reviewer_verdict": "SUPPORTED_CONDITIONAL_REFINEMENT; if UNTIL/COUNT accepted, exact type/UTC/mutual-exclusion/count-start constraints are required. Final adds them and rejects malformed forms. It does not force optional end-rule support or allege an implementation failure.",
+      "lineage_status": "CONDITIONAL_ACCEPTANCE_GAP_RESOLVED",
+      "evidence_ids": [
+        "R01"
+      ]
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L1",
+      "kind": "UNEXECUTED_IMPLEMENTATION_AND_EXTERNAL_CHOICES",
+      "material": false,
+      "locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 127
+      },
+      "detail": "Rust dependency, exact accepted grammar, authoritative timezone policy, changed-source conflict UX and consumer handling of cancelled moved exceptions remain proposed/unverified. Tests and owner choices are concrete, not vacuous caution. No compatibility/adoption guarantee or deployment is claimed.",
+      "evidence_ids": [
+        "R01",
+        "R10",
+        "R11",
+        "R12"
+      ]
+    },
+    {
+      "id": "L2",
+      "kind": "MINOR_SOURCE_CONDITION_SUMMARY",
+      "material": false,
+      "locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 101
+      },
+      "detail": "Tagged icalendar history conditions are narrower than the final summary: unknown/X escaping fix concerns properties without VALUE; TZID/RDATE DATE offset bug requires use_pytz and default zoneinfo was unaffected. The summary does not transfer these bugs to Rust or drive dependency selection, so no material unsupported decision remains.",
+      "evidence_ids": [
+        "R12"
+      ]
+    },
+    {
+      "id": "L3",
+      "kind": "MINOR_PROVIDER_WORDING",
+      "material": false,
+      "locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 58
+      },
+      "detail": "The blanket sentence that provider cancel actions are messaging operations is broader than the precise C4 table: Graph POST /cancel sends a cancellation message; Google instance status updates have sendUpdates choices including none. This matters as a wording qualification, not a different offline recommendation or claimed unconditional notification from an executed Google call.",
+      "evidence_ids": [
+        "R05",
+        "R07",
+        "R16"
+      ]
+    },
+    {
+      "id": "L4",
+      "kind": "MINOR_PLAN_ATTRIBUTION",
+      "material": false,
+      "locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 21
+      },
+      "detail": "The original plan explicitly leaves original versus current start unspecified; final table labels it current start. The correction chooses original typed RID as requested and supported, so this paraphrase does not cause a wrong plan rejection.",
+      "evidence_ids": [
+        "R01",
+        "R05"
+      ]
+    },
+    {
+      "id": "L5",
+      "kind": "MINOR_LOCATOR",
+      "material": false,
+      "locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 99
+      },
+      "detail": "ical field-validity warning is in the pinned parser module (R15), not the crate overview (R13) alone. Supplemental independent retrieval confirms the claim; source locator is imprecise rather than unsupported science.",
+      "evidence_ids": [
+        "R13",
+        "R15"
+      ]
+    }
+  ],
+  "useful_discoveries": [
+    {
+      "id": "D1",
+      "discovery": "Original-slot versus current-start identity",
+      "utility": "Detached same-UID/RID override retains a moved rehearsal relationship; independent Google/Graph concepts support comparison.",
+      "evidence_ids": [
+        "R01",
+        "R05",
+        "R06"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 36
+      }
+    },
+    {
+      "id": "D2",
+      "discovery": "Snapshot exclusion versus scheduling message",
+      "utility": "EXDATE edits the file recurrence set; iTIP/Graph cancellation involves organizer/attendee semantics absent from offline file.",
+      "evidence_ids": [
+        "R01",
+        "R04",
+        "R07"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 49
+      }
+    },
+    {
+      "id": "D3",
+      "discovery": "Generated-gap erratum and duration units",
+      "utility": "Verified gap correction changes prospective count oracle; DTEND exact duration differs from nominal day/week DURATION across transition.",
+      "evidence_ids": [
+        "R01",
+        "R03"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 60
+      }
+    },
+    {
+      "id": "D4",
+      "discovery": "Competing parser/editing approaches",
+      "utility": "caldata strict typed recurrence versus pimalaya raw-byte/nested-tree approach versus archived parser-only layer; no winner assumed from README.",
+      "evidence_ids": [
+        "R10",
+        "R11",
+        "R13",
+        "R14",
+        "R15"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 95
+      }
+    },
+    {
+      "id": "D5",
+      "discovery": "Real history discriminates preservation tests",
+      "utility": "Unknown values without VALUE, URI parameters, vendor TZID and pytz date offsets have release-documented failures; inspires exact preservation/zone fixtures.",
+      "evidence_ids": [
+        "R12"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 101
+      }
+    },
+    {
+      "id": "D6",
+      "discovery": "Provider operation boundary does not transfer",
+      "utility": "Graph adjacent occurrence-day restriction is distinct from one file move across a date boundary.",
+      "evidence_ids": [
+        "R08"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 81
+      }
+    },
+    {
+      "id": "D7",
+      "discovery": "Optional breadth and remaining choices",
+      "utility": "RDATE/multi-day patterns, IANA versus embedded zone authority, duplicate/conflict policy and cancelled-target tombstones retained as scoped choices.",
+      "evidence_ids": [
+        "R01",
+        "R10",
+        "R11"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 127
+      }
+    }
+  ],
+  "alternatives": [
+    {
+      "alternative": "Detached exception vs standalone UID",
+      "decision": "Same-UID original RID selected; new UID rejected for an occurrence move",
+      "evidence_ids": [
+        "R01",
+        "R05"
+      ]
+    },
+    {
+      "alternative": "EXDATE snapshot vs iTIP/provider transaction",
+      "decision": "Offline recurrence exclusion selected; no messaging/account operation",
+      "evidence_ids": [
+        "R01",
+        "R04",
+        "R07"
+      ]
+    },
+    {
+      "alternative": "Raw syntax-tree/line patching vs typed reserialization",
+      "decision": "Raw preservation preferred; byte/semantic distinction and tests retained",
+      "evidence_ids": [
+        "R10",
+        "R11",
+        "R12"
+      ]
+    },
+    {
+      "alternative": "Strict caldata vs byte-faithful pimalaya/ical vs historical ical parser",
+      "decision": "Candidates/leads retained, no dependency selected; different validation/preservation/maintenance tradeoffs",
+      "evidence_ids": [
+        "R10",
+        "R11",
+        "R13",
+        "R14",
+        "R15"
+      ]
+    },
+    {
+      "alternative": "Embedded VTIMEZONE vs separately versioned IANA tzdb",
+      "decision": "Embedded preserved/used in proposal; owner decision and insufficient-zone rejection explicit",
+      "evidence_ids": [
+        "R01"
+      ]
+    },
+    {
+      "alternative": "Cancelled moved-target EXDATE/removal/raw tombstone vs deferral pending independent readers",
+      "decision": "Investigated concrete local proposal with conditional test/defer choice; no proven cross-reader result",
+      "evidence_ids": [
+        "R01",
+        "R04"
+      ]
+    },
+    {
+      "alternative": "RDATE/multi-day weekly extension vs narrow first grammar",
+      "decision": "Declared unsupported first subset; optional future capability requires complete conditions/testing",
+      "evidence_ids": [
+        "R01"
+      ]
+    }
+  ],
+  "meaning_preservation": {
+    "supported_substance_preserved": true,
+    "corrected_lineage": [
+      "F1",
+      "F2",
+      "F3",
+      "F4"
+    ],
+    "retained_external_uncertainty": [
+      "U1"
+    ],
+    "silent_material_scope_loss_found": false
+  },
+  "validation": [
+    {
+      "id": "V1",
+      "fixture": "Weekly 18:30 spring/fall transitions and preview",
+      "locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 142
+      },
+      "invariant": "Local wall hour fixed; resolved instant/offset follows preserved VTIMEZONE; RRULE not truncated",
+      "oracle_applicability": "RFC/erratum plus independent resolved-time comparison, not host fixed offset",
+      "status": "PROPOSED_NOT_RUN",
+      "evidence_ids": [
+        "R01",
+        "R03"
+      ]
+    },
+    {
+      "id": "V2",
+      "fixture": "Move across date boundary",
+      "locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 143
+      },
+      "invariant": "Same UID/original typed RID; one override; no original phantom or later-instance changes",
+      "oracle_applicability": "Independent recurrence evaluation/consumer; Graph move rejection is not ICS oracle",
+      "status": "PROPOSED_NOT_RUN",
+      "evidence_ids": [
+        "R01",
+        "R08"
+      ]
+    },
+    {
+      "id": "V3",
+      "fixture": "Cancel and repeat cancel",
+      "locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 144
+      },
+      "invariant": "One original slot excluded; master/neighbors intact; repeat operation idempotent",
+      "oracle_applicability": "Recurrence set comparison before/after, not row count alone",
+      "status": "PROPOSED_NOT_RUN",
+      "evidence_ids": [
+        "R01"
+      ]
+    },
+    {
+      "id": "V4",
+      "fixture": "Existing target override and separate existing exception",
+      "locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 145
+      },
+      "invariant": "Update same key; retain unrelated component data",
+      "oracle_applicability": "Identity/effective event and raw component comparison",
+      "status": "PROPOSED_NOT_RUN",
+      "evidence_ids": [
+        "R01"
+      ]
+    },
+    {
+      "id": "V5",
+      "fixture": "Cancel moved target",
+      "locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 146
+      },
+      "invariant": "No active override beside exclusion; raw tombstone retained; omission disclosed",
+      "oracle_applicability": "Independent permitted file consumers needed for selected representation; local DB check alone insufficient",
+      "status": "PROPOSED_NOT_RUN",
+      "evidence_ids": [
+        "R01",
+        "R04"
+      ]
+    },
+    {
+      "id": "V6",
+      "fixture": "Fold, generated gap, new gap move",
+      "locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 147
+      },
+      "invariant": "First fold; generated gap resolved via pre-gap offset and count checked; new gap move refused",
+      "oracle_applicability": "Corrected RFC/EID 4271 oracle, not original draft skip expectation",
+      "status": "PROPOSED_NOT_RUN",
+      "evidence_ids": [
+        "R01",
+        "R03"
+      ]
+    },
+    {
+      "id": "V7",
+      "fixture": "DTEND vs DURATION and explicit exception duration",
+      "locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 148
+      },
+      "invariant": "Exact elapsed duration preserved vs same nominal duration/form; exception duration preserved",
+      "oracle_applicability": "Elapsed and nominal units checked separately on transition-crossing moves",
+      "status": "PROPOSED_NOT_RUN",
+      "evidence_ids": [
+        "R01"
+      ]
+    },
+    {
+      "id": "V8",
+      "fixture": "Unknown properties/parameters, repeats, folds",
+      "locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 149
+      },
+      "invariant": "Value, parameter, multiplicity and component ownership unchanged; bytes only if proved",
+      "oracle_applicability": "Raw bytes plus typed meaning comparison; same-parser self-round-trip not a full oracle",
+      "status": "PROPOSED_NOT_RUN",
+      "evidence_ids": [
+        "R01",
+        "R11",
+        "R12"
+      ]
+    },
+    {
+      "id": "V9",
+      "fixture": "Repeat original/export import and changed collision",
+      "locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 150
+      },
+      "invariant": "No duplicate UID/RID/exclusion; stable effective output; conflict not overwrite",
+      "oracle_applicability": "Stable-key/effective recurrence comparison; input hash is provenance only",
+      "status": "PROPOSED_NOT_RUN",
+      "evidence_ids": [
+        "R01"
+      ]
+    },
+    {
+      "id": "V10",
+      "fixture": "Unsupported rules and malformed/conflicting identity/zone",
+      "locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 151
+      },
+      "invariant": "Specific refusal; no partial DB/file write; original remains available",
+      "oracle_applicability": "Atomicity/source byte check and reason-specific negative fixtures",
+      "status": "PROPOSED_NOT_RUN",
+      "evidence_ids": [
+        "R01"
+      ]
+    },
+    {
+      "id": "V11",
+      "fixture": "Exact selected crate release",
+      "locator": {
+        "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+        "line": 152
+      },
+      "invariant": "All subset/preservation/zone/duration invariants pass on chosen pin",
+      "oracle_applicability": "Pinned implementation checks plus independent consumer oracle; metadata not validation",
+      "status": "PROPOSED_NOT_RUN",
+      "evidence_ids": [
+        "R10",
+        "R11",
+        "R12",
+        "R15"
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "id": "U-PRODUCT",
+      "scope": "Consumer behavior for chosen cancelled-target representation; actual input grammar and VTIMEZONE sufficiency; crate conformance/preservation; owner choices",
+      "effect": "No source failure: explicit investigated proposal uncertainties, not guarantees"
+    },
+    {
+      "id": "U-VALIDATION",
+      "scope": "All implementation/client/provider validation is proposed; actual test results absent",
+      "effect": "No source failure for research/plan assignment"
+    },
+    {
+      "id": "U-NATIVE",
+      "scope": "Candidate independently authenticated native Goal activation/completion/provenance",
+      "effect": "UNKNOWN, separate from source judgment"
+    },
+    {
+      "id": "U-RUNTIME",
+      "scope": "Actual effective route, active/inference/queue timing, billing and speed savings",
+      "effect": "UNKNOWN; no comparative claim"
+    }
+  ],
+  "metrics": {
+    "delivery": {
+      "final_present": true,
+      "ordinary_final_path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+      "root_terminal_observation_utc": "2026-10-10T04:42:46.074813+00:00",
+      "recorded_t3_task_status": "completed",
+      "recorded_pending_child_runs": false,
+      "basis": "Supplied root observation in terminal-science-freeze-root.json, not a reviewer T3 live query or native Goal proof."
+    },
+    "coverage": {
+      "all_six_axes": "FULL",
+      "exact_plan_sentences": 21,
+      "required_clauses": 6,
+      "negative_constraints": 6,
+      "unassessed_axes": []
+    },
+    "candidate_native": {
+      "overall": "UNKNOWN/partially recorded; no independent live candidate native telemetry in review",
+      "investigator": "UNKNOWN: inspected packet has no direct candidate Goal receipt",
+      "critic": {
+        "status": "complete in native-goal-terminal.json recorded functions.update_goal result",
+        "threadId": "01a12402-74d2-7362-ac92-3b54b3d6873d",
+        "recorded_tokensUsed": 244919,
+        "recorded_timeUsedSeconds": 827,
+        "provenance": "Authored saved observation; not independently authenticated against live native state",
+        "activation_timestamp": "UNKNOWN",
+        "terminal_timestamp": "UNKNOWN; updatedAt is exposed, not completedAt"
+      },
+      "reviser": {
+        "status": "active receipt described in source-map; completion claimed in root terminal summary",
+        "threadId": "01a12411-07bf-7bb2-b6ef-4e8874c8b103",
+        "recorded_terminal_summary_tokensUsed": 222994,
+        "recorded_terminal_summary_duration": "13m45s",
+        "actual_live_terminal_receipt": "UNKNOWN",
+        "activation_timestamp": "UNKNOWN",
+        "terminal_timestamp": "UNKNOWN"
+      }
+    },
+    "protocol": {
+      "reviewer": "One actual native Goal created before substantive inspection; no nested delegation, candidate feedback/repair, account changes, Git/publication, other-arm/campaign-history inspection or ER11 scoring. Unique pm-mail identity; only own inbox checked.",
+      "candidate": "Plan reveal record freezes discovery before release and frozen original copies agree. All original terminal and stage input hashes match. No unauthorized assistance observed in the bounded packet; complete runtime protocol compliance is UNKNOWN without authenticated action history. Source judgment is separate from that unknown.",
+      "discovery_frozen_before_plan_release": {
+        "recorded_reveal_utc": "2026-10-10T04:03:29.982Z",
+        "discovery_bytes": 10093,
+        "sha256": "2f46926e64db4b894da1e811660633779e763b368614de0b6df0522664e9be27"
+      }
+    },
+    "candidate_time": {
+      "whole_absolute_deadline_utc": "2026-10-10T04:57:17.172Z",
+      "root_observed_terminal_before_whole_deadline": true,
+      "actual_active_occupancy_queue_wait_inference_duration": "UNKNOWN",
+      "stage_budget_vs_absolute_deadline": "Frozen assignments use absolute T0 30/42/60 boundaries; early stage starts can have more remaining wall time than nominal per-stage budget. No inferred per-stage timing qualification or speed advantage."
+    },
+    "effective_route": {
+      "requested_providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "requested_model": "gpt-6-luna",
+      "requested_reasoningEffort": "max",
+      "requested_serviceTier": "priority",
+      "actual_effective_route": "UNKNOWN: configuration/terminal task label is not a provider execution/billing attestation"
+    },
+    "billing": {
+      "actual_cost": "UNKNOWN",
+      "inference_tokens_or_savings": "UNKNOWN; native tokensUsed records not billing proof",
+      "latency_or_speed_comparison": "NOT_ASSESSED; one arm only, no paired comparison"
+    },
+    "reviewer_native": {
+      "threadId": "01a1241e-ea98-77f1-84ce-0742fa7bc3ee",
+      "createdAt_epoch": 1791607383,
+      "createdAt_utc": "2026-10-10T04:43:03Z",
+      "create_goal_status": "active",
+      "objective_under_4000_chars": true,
+      "completion": "Pending only until saved judgment and artifact checks; exact terminal observation will be added to reviewer-native.json"
+    }
+  },
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A1-02/brief.md",
+      "bytes": 2879,
+      "sha256": "40b8aba4c7352fb60b8744d134fe902d1cc9b88e1043eecb306cfd6c3428b4dc",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A1-02/plan.md",
+      "bytes": 2413,
+      "sha256": "e585d3899d830686e266298ad05246a0d9409ef106762c5fe85674321cf57258",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/terminal-science-freeze-root.json",
+      "bytes": 16728,
+      "sha256": "82e5a1ccd50e9a25ec1b350547daa038347d978ef8fe1dade64452f70e61b3d4",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/inputs/brief.md",
+      "bytes": 2879,
+      "sha256": "40b8aba4c7352fb60b8744d134fe902d1cc9b88e1043eecb306cfd6c3428b4dc",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/assignment.md",
+      "bytes": 3720,
+      "sha256": "02c39b234664ce9710543bd20bb08bce9e4d4e960fec3a83dd6972b0fd0712aa",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/input-map.json",
+      "bytes": 722,
+      "sha256": "dd65f2445dc218ef3e658f96d0cc7d5d8cbbf172ed7c9ed7e6f78085ee16fdf4",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/freeze.json",
+      "bytes": 1673,
+      "sha256": "b385e6e6b62140540fa80536681112990b0075ec04db44dff764df07b6629292",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/source-map.json",
+      "bytes": 12475,
+      "sha256": "eee17672f713aab23d88670b9e054c1f929a2bf3488a4931af7817af863742ea",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/sources/README.md",
+      "bytes": 2946,
+      "sha256": "c40d73bbd6db4123a6319b16b16b36b8aa9ab267af266af92373fafe10206122",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/sources/S01-rfc5545.md",
+      "bytes": 2308,
+      "sha256": "a367de9f65346ec5bbe290940278949cbe3e3f2e8bb43dd453ec8cf0bd038d08",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/sources/S02-rfc5546.md",
+      "bytes": 802,
+      "sha256": "e2ec130577d968e8a83768b20a3b299ac966ea2b7fa37ef934c8d103c7d98b89",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/sources/S03-google.md",
+      "bytes": 1048,
+      "sha256": "fa613019ed366957373e8546e03e8d76a31eb2ecd4c4c748222fa503158c3860",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/sources/S04-graph-event.md",
+      "bytes": 1060,
+      "sha256": "edf23322b0a248fe41a7643c4c6230268df008127cbbe43e74eda9561b9aa7fb",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/sources/S05-graph-cancel.md",
+      "bytes": 919,
+      "sha256": "89c699a8adbc55cfc7a9742c77571c655498ac7184496aff0d8df1eac810c691",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/sources/S06-graph-update.md",
+      "bytes": 928,
+      "sha256": "c46e1b810d67e88e82cb5038d5ff58e7f4e4f24964106f6803d68d22fdff7a50",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/sources/S07-graph-instances.md",
+      "bytes": 796,
+      "sha256": "490020a95e31f0957c227eca3ce5a02e3146b8d2031a9705c105f6c80ddedfc4",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/sources/S08-caldata.md",
+      "bytes": 1010,
+      "sha256": "9bbc82d091e3eb2a053948d994b8b6d38668c54cd5047fcadc00944ccb7e68c4",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/sources/S09-pimalaya-ical.md",
+      "bytes": 810,
+      "sha256": "0a9ace2696a51614691f1be051c860b52bdc4fb37f185a6fa29b2fdcc3120cf2",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/sources/S10-icalendar-history.md",
+      "bytes": 964,
+      "sha256": "aa8cba2f5cd9129715824a8b71cd0dffb733e0c9ded4528bc42688d6c4aa5ea9",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/sources/S11-archived-rust-parser.md",
+      "bytes": 811,
+      "sha256": "013273c015bcde4014b24c6385b98cdcbd0c7a9ace4be917b4f86f8b4516c73e",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/assignment.md",
+      "bytes": 3310,
+      "sha256": "3abedc5e10449ca7eef8ff76ec63e6bf23395c69c6b524fe72ec7215881c9ba3",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/input-map.json",
+      "bytes": 1410,
+      "sha256": "ea03ba6755d63efe092a4ef1f25c81f72eaccdb87a7728a71b5470f4f2df1faa",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/freeze.json",
+      "bytes": 3169,
+      "sha256": "858674337bb8293f9b60f5f2436a7b27227d4e9d031f9f8fb360bb06e98be01b",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/source-map.json",
+      "bytes": 15224,
+      "sha256": "af14c1e4067717913d3b276f27b41b2d7fa037ded7e76fd785d0aaddfa64c190",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/sources/README.md",
+      "bytes": 3195,
+      "sha256": "ead1085dcdb38029f84cbfb551fc4caaac3acb8ba30019042bae80ccfa5e7667",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/sources/S01.md",
+      "bytes": 1885,
+      "sha256": "7922503ebbe9e6d72f70615cb9ce474422f17b0e108cdde50b1811379b865d28",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/sources/S02.md",
+      "bytes": 813,
+      "sha256": "5b5cad2f8a867e8fdd3e72774b3ef0ba41d2b5ab47a2359d9c20b90f2b04ebc5",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/sources/S03.md",
+      "bytes": 991,
+      "sha256": "ef68f9dd52dbb6c037fbc90f064053c709e595fd5d18b75dd3dcacbceb46104d",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/sources/S04.md",
+      "bytes": 1039,
+      "sha256": "333438ef785e8d6cb3faac919f2a46de89613f8eb29e38dbdf3ba6d4d1610800",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/sources/S05.md",
+      "bytes": 832,
+      "sha256": "7d34069bc6b25ab02379aafbf7b13b2b479c6b7a73134659320cfd40950756d6",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/sources/S06.md",
+      "bytes": 908,
+      "sha256": "ae3782b771059fa7131e7c2b117df02a8b532f5bf13c6b084c7f034b9a2ef0c6",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/sources/S07.md",
+      "bytes": 896,
+      "sha256": "03c3554ce0e347f9e4f57b8837096d2e086246859fd76b101e97fa1497a9fb49",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/sources/S08.md",
+      "bytes": 899,
+      "sha256": "81fc86b617e7f0cf61716e7ded86a54cf5fe2f971c75ae66520cb06abf5197ce",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/sources/S09.md",
+      "bytes": 734,
+      "sha256": "fa5f7bdab3ba2f9095f7e004e47a4cee58caa8d49d9c9a96a61a0601d1cf4d0b",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/sources/S10.md",
+      "bytes": 918,
+      "sha256": "2c674c5c7a613646f4c9a365cccf9476231e79fc779ec1138e213c3707eae59d",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/sources/S11.md",
+      "bytes": 788,
+      "sha256": "389459458982e4eb2516670a2dab5e6c4979bfc863f8b4cdc24a2696490f0264",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/sources/S12.md",
+      "bytes": 1058,
+      "sha256": "d48d93edef1ee223000806e341bacae494baac3d9f16ab655da055362e7f3375",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/assignment.md",
+      "bytes": 3290,
+      "sha256": "087ae3c1ab012c122cb766e63fe537cf654458caef9cb82fb32741b9f5b4111b",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/input-map.json",
+      "bytes": 1727,
+      "sha256": "6d2c0f6d7dcdf939fc1069546a72a1283e9b39e2e5fbe2d55ba8dc2db46bd650",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/freeze.json",
+      "bytes": 3947,
+      "sha256": "22a320a5a7b8a1f641ed756f5ae94e1cf1ae44c39756a9c5d88543e9b744dd3e",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/source-map.json",
+      "bytes": 24070,
+      "sha256": "1cf2efd6607143e14b0bd9a52f5ecc299ffbea17fbdb29979e1131ebeca575a5",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/sources/README.md",
+      "bytes": 3113,
+      "sha256": "d10ffc2adbdd2a2e4b78df7d3aa27ee769340379933e4709e0b29b715c564821",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/sources/S01.md",
+      "bytes": 2297,
+      "sha256": "90fa6dab68ff4fc2b106d131642047626a37379897499da7ab5ddcb57e93d572",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/sources/S02.md",
+      "bytes": 913,
+      "sha256": "4f5fcee7a9bd300be8364f9fdbd899790a2aa77d6c8b034ca6aaa4788fce234a",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/sources/S03.md",
+      "bytes": 1169,
+      "sha256": "25668de0805ea05fbf0505ad16cad3c1675c1e95d3d6262cbe3773f003cd05ba",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/sources/S04.md",
+      "bytes": 1185,
+      "sha256": "07f2ee0f19581d3d7517708d6df552ee7ae737a149564f2d6fc4a5de10b6e475",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/sources/S05.md",
+      "bytes": 971,
+      "sha256": "1b7aedda5695aa2b299b6ce8eea72811585c6fa0a5c86c964bf4cf0f9debaf22",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/sources/S06.md",
+      "bytes": 1038,
+      "sha256": "6fd9848147fb47c7e0c5c07757a8a2708d325e2f68867e3a32af57bf437bb658",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/sources/S07.md",
+      "bytes": 1060,
+      "sha256": "8d04183ad59e155b214678221f78d7ff270628f28cf8e30c0db8073e4cc08473",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/sources/S08.md",
+      "bytes": 1070,
+      "sha256": "4b4082cd03f4819969e3d28f09efb76a05bbdd2fcc56c119e31f9333a8017cd3",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/sources/S09.md",
+      "bytes": 875,
+      "sha256": "51ef2c4fb77dccfbad51ac350fecb1725c4668d93a95c18518641beb714193f1",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/sources/S10.md",
+      "bytes": 1140,
+      "sha256": "0701eb3d98c7471bb9fa1c65221e69364406d022b16f37ad87605829e5e0d9ab",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/sources/S11.md",
+      "bytes": 976,
+      "sha256": "a64b249c60c3d580f13000320b4f6596cbf17d259712748a1fb3c11bebb24e27",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/sources/S12.md",
+      "bytes": 1412,
+      "sha256": "7bca89d9f4fc1a24a03e7a80a92fa75d0e0d0342538d207eb41dc55d23875fae",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/discovery.md",
+      "bytes": 10093,
+      "sha256": "2f46926e64db4b894da1e811660633779e763b368614de0b6df0522664e9be27",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/draft.md",
+      "bytes": 18699,
+      "sha256": "bd3112dbdd14fe71f651caf12fc716b6407f046751c38514451b3c90ac9ab580",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 2413,
+      "sha256": "e585d3899d830686e266298ad05246a0d9409ef106762c5fe85674321cf57258",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/plan-reveal.json",
+      "bytes": 429,
+      "sha256": "b9ce08017b7ac538fff841925304f0d4adf40d068eee8d0833d786c36705ebb9",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/critique.md",
+      "bytes": 11086,
+      "sha256": "de2d80da4d39e854a5b5b42f688e32ca939d1d28b91a6ffd3a295104de1eafa6",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/native-goal-terminal.json",
+      "bytes": 725,
+      "sha256": "92f70e06b3845f09bbb4433fad47b423070c317a2131b7005b3203b6f350e968",
+      "full_content_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+      "bytes": 25039,
+      "sha256": "d635630d4404dfe2492461233e72c6f704c5897612a7a3074aa33d6583b72cd9",
+      "full_content_inspected": true
+    }
+  ],
+  "freeze_integrity": {
+    "all_terminal_hashes_match": true,
+    "all_stage_inputs_match": true,
+    "originals_equal_run_copies": true,
+    "manifest": "inspected-artifacts.json",
+    "source_freeze_modified_by_reviewer": false
+  },
+  "sources": [
+    {
+      "id": "R01",
+      "requested_url": "https://www.rfc-editor.org/rfc/rfc5545.html",
+      "request_started_utc": "2026-10-10T04:44:51.092457+00:00",
+      "http_status": 200,
+      "effective_url": "https://www.rfc-editor.org/rfc/rfc5545.html",
+      "retrieved_at_utc": "2026-10-10T04:44:51.243986+00:00",
+      "sha256": "8787267ca21cfbe6ae7290a0548336fb06506f90e06ba8cdd878e75b6dea6053",
+      "bytes": 409705,
+      "capture": "evidence/R01.html",
+      "text": "evidence/R01.txt",
+      "title": "RFC 5545 iCalendar",
+      "version_or_commit": "RFC 5545, September 2009, with R02/R03 for verified errata",
+      "locators": [
+        "§3.2.19",
+        "§3.2.20",
+        "§3.3.5",
+        "§3.3.6",
+        "§3.3.10",
+        "§3.6.1",
+        "§3.6.5",
+        "§3.8.4.4",
+        "§3.8.4.7",
+        "§3.8.5.1–.3",
+        "§3.8.8.1–.2"
+      ],
+      "governing_conditions": "UID is TEXT and identifies the component; RECURRENCE-ID defaults to DATE-TIME, matches master value type/local form, and identifies the original slot. EXDATE wins over RRULE/RDATE inclusions; duplicates collapse; an unsynchronized DTSTART/rule is undefined. INTERVAL is positive and defaults to 1. COUNT includes DTSTART; COUNT and UNTIL are mutually exclusive; UNTIL for TZID DATE-TIME DTSTART is UTC DATE-TIME and is inclusive. Missing recurrence fields derive from DTSTART. A matching VTIMEZONE must cover recurrence instances. Folds use the first instant; gaps use the preceding offset. DTEND gives exact recurrence duration; DURATION gives nominal duration, with day/week components differing across transitions. §3.2.20 preserves unknown VALUE-type data; generic readers may ignore extension properties. New VEVENTs need UID/DTSTAMP and, without METHOD, DTSTART.",
+      "applicability": "Governs the offline interchange design. Product subset, raw-byte preservation, upsert keys, tombstones and UI input rejection are product decisions. The earlier skip-gap text must be read with R03 and the later computed-time paragraph.",
+      "observation": "Independent read-only HTTP retrieval and semantic inspection of relevant surrounding primary context; no downloaded code executed.",
+      "note": "evidence/R01.md"
+    },
+    {
+      "id": "R02",
+      "requested_url": "https://www.rfc-editor.org/rfc/inline-errata/rfc5545.html",
+      "request_started_utc": "2026-10-10T04:44:51.094522+00:00",
+      "http_status": 200,
+      "effective_url": "https://www.rfc-editor.org/rfc/inline-errata/rfc5545.html",
+      "retrieved_at_utc": "2026-10-10T04:44:51.617189+00:00",
+      "sha256": "ef888bfee56c693a266f6055fae95a1edbe75f8f7fe2173f06f768cd827e978d",
+      "bytes": 391283,
+      "capture": "evidence/R02.html",
+      "text": "evidence/R02.txt",
+      "title": "RFC 5545 official inline errata",
+      "version_or_commit": "Official verified-errata rendering; EID 4271",
+      "locators": [
+        "#btn_4271",
+        "§3.3.10, correction and report",
+        "R02.txt lines 2595–2634"
+      ],
+      "governing_conditions": "EID 4271 is marked Verified. Corrected recurrence handling distinguishes invalid calendar dates, which are ignored/not counted, from nonexistent local times, which follow §3.3.5.",
+      "applicability": "Independent official rendering corroborates R03. It corrects original discovery/draft gap behavior; it is not execution evidence for any library.",
+      "observation": "Independent read-only HTTP retrieval and semantic inspection of relevant surrounding primary context; no downloaded code executed.",
+      "note": "evidence/R02.md"
+    },
+    {
+      "id": "R03",
+      "requested_url": "https://www.rfc-editor.org/errata/eid4271",
+      "request_started_utc": "2026-10-10T04:44:51.095808+00:00",
+      "http_status": 200,
+      "effective_url": "https://errata.rfc-editor.org/eid4271/",
+      "retrieved_at_utc": "2026-10-10T04:44:51.409075+00:00",
+      "sha256": "4f087bf6360fead31656e17b37dd92ebcaea2e9ee47a401dc8a0c83136fd744d",
+      "bytes": 8888,
+      "capture": "evidence/R03.html",
+      "text": "evidence/R03.txt",
+      "title": "RFC Editor Erratum 4271",
+      "version_or_commit": "Verified Technical; reported 2015-02-12; verified 2015-02-17 by Barry Leiba",
+      "locators": [
+        "Errata-ID and status",
+        "Section 3.3.10: original, corrected text, notes",
+        "R03.txt lines 75–169"
+      ],
+      "governing_conditions": "The corrected rule excludes invalid dates from the recurrence count but handles nonexistent local recurrence times under §3.3.5. Notes identify a contradictory later RFC paragraph and name major-client behavior; those notes are not a current interoperability test.",
+      "applicability": "Confirms critic F1 and final amendment. urllib retrieved the redirected official errata.rfc-editor.org endpoint successfully; web open of the legacy URL returned Internal Error. Both access outcomes are recorded.",
+      "observation": "Independent read-only HTTP retrieval and semantic inspection of relevant surrounding primary context; no downloaded code executed.",
+      "note": "evidence/R03.md"
+    },
+    {
+      "id": "R04",
+      "requested_url": "https://www.rfc-editor.org/rfc/rfc5546.html",
+      "request_started_utc": "2026-10-10T04:44:51.096913+00:00",
+      "http_status": 200,
+      "effective_url": "https://www.rfc-editor.org/rfc/rfc5546.html",
+      "retrieved_at_utc": "2026-10-10T04:44:51.341925+00:00",
+      "sha256": "32762457a681cfee1de53f545f5f08203558421a1b08444c5daf278c865e8d0a",
+      "bytes": 367813,
+      "capture": "evidence/R04.html",
+      "text": "evidence/R04.txt",
+      "title": "RFC 5546 iTIP",
+      "version_or_commit": "RFC 5546, December 2009",
+      "locators": [
+        "§3.2.5 CANCEL",
+        "§3.7.1",
+        "§4.4.3",
+        "R04.txt lines 1647–1760 and 5807 onward"
+      ],
+      "governing_conditions": "VEVENT CANCEL is an organizer scheduling notice to affected attendees. UID identifies a series; cancelling one instance requires RECURRENCE-ID, while whole-series cancellation omits it. The cancellation sequence increases; message/component and attendee constraints govern the transaction.",
+      "applicability": "A useful analogy for original-slot addressing; its notification and organizer obligations do not turn offline snapshot editing into an invitation cancellation.",
+      "observation": "Independent read-only HTTP retrieval and semantic inspection of relevant surrounding primary context; no downloaded code executed.",
+      "note": "evidence/R04.md"
+    },
+    {
+      "id": "R05",
+      "requested_url": "https://developers.google.com/workspace/calendar/api/guides/recurringevents",
+      "request_started_utc": "2026-10-10T04:44:51.098100+00:00",
+      "http_status": 200,
+      "effective_url": "https://developers.google.com/workspace/calendar/api/guides/recurringevents",
+      "retrieved_at_utc": "2026-10-10T04:44:51.521439+00:00",
+      "sha256": "f30e0309bf6af2782a9cbf35f4802fc73841f3c473cff9b2ea1d481125f64bc9",
+      "bytes": 190942,
+      "capture": "evidence/R05.html",
+      "text": "evidence/R05.txt",
+      "title": "Google Calendar recurring events",
+      "version_or_commit": "Calendar API v3 live guide; no immutable document commit",
+      "locators": [
+        "Access instances",
+        "Instance-specific fields",
+        "Modify or delete instances",
+        "Cancellation PUT example",
+        "R05.txt lines 2960–3108"
+      ],
+      "governing_conditions": "An instance has recurringEventId and originalStartTime; the original start identifies the scheduled slot even after a move. The guide retrieves an instance then sends an authorized PUT to update it; cancellation sets status=cancelled on that instance. Ordinary instance listing and recurrence-master listing have different defaults.",
+      "applicability": "Supports the operation-level comparison and rejection of new UID/current-start identity. It does not establish .ics representation or unconditional notification; see R16.",
+      "observation": "Independent read-only HTTP retrieval and semantic inspection of relevant surrounding primary context; no downloaded code executed.",
+      "note": "evidence/R05.md"
+    },
+    {
+      "id": "R06",
+      "requested_url": "https://learn.microsoft.com/en-us/graph/api/resources/event?view=graph-rest-1.0",
+      "request_started_utc": "2026-10-10T04:44:51.100094+00:00",
+      "http_status": 200,
+      "effective_url": "https://learn.microsoft.com/en-us/graph/api/resources/event?view=graph-rest-1.0",
+      "retrieved_at_utc": "2026-10-10T04:44:51.302857+00:00",
+      "sha256": "8db9371081b9de1d95a02f1540853b0c3175bdf74dfb04d2cce58ae441e35265",
+      "bytes": 81320,
+      "capture": "evidence/R06.html",
+      "text": "evidence/R06.txt",
+      "title": "Microsoft Graph event resource",
+      "version_or_commit": "Graph REST v1.0 live documentation",
+      "locators": [
+        "Properties: originalStart, seriesMasterId, type, cancelledOccurrences",
+        "Relationships: exceptionOccurrences, instances",
+        "R06.txt lines 759–764, 933–942, 982–984, 1017–1019, 1109–1128"
+      ],
+      "governing_conditions": "originalStart is DateTimeOffset in UTC for a recurring occurrence/exception, not a single instance. seriesMasterId is a String. Read-only type distinguishes singleInstance/occurrence/exception/seriesMaster. cancelledOccurrences holds occurrenceId strings on a master and requires $select/GET master ID. exceptionOccurrences needs $select/$expand on the master; exception and instance relationships omit cancelled instances. Event ID can change on a container move unless the ImmutableId preference is used.",
+      "applicability": "Comparator only: provider IDs and UTC field shape do not replace UID/typed RID. Retrieval selectors are conditions on provider diagnostics; no Graph integration is proposed.",
+      "observation": "Independent read-only HTTP retrieval and semantic inspection of relevant surrounding primary context; no downloaded code executed.",
+      "note": "evidence/R06.md"
+    },
+    {
+      "id": "R07",
+      "requested_url": "https://learn.microsoft.com/en-us/graph/api/event-cancel?view=graph-rest-1.0",
+      "request_started_utc": "2026-10-10T04:44:51.296988+00:00",
+      "http_status": 200,
+      "effective_url": "https://learn.microsoft.com/en-us/graph/api/event-cancel?view=graph-rest-1.0",
+      "retrieved_at_utc": "2026-10-10T04:44:51.439737+00:00",
+      "sha256": "2a44328b9dc74cd779a37ff3347030b18e7f1be2e907ba502fe0cab9fccedb35",
+      "bytes": 60395,
+      "capture": "evidence/R07.html",
+      "text": "evidence/R07.txt",
+      "title": "Microsoft Graph event cancel",
+      "version_or_commit": "Graph REST v1.0 action live documentation",
+      "locators": [
+        "Description",
+        "Permissions and HTTP request",
+        "R07.txt lines 477–489 and 561–573"
+      ],
+      "governing_conditions": "POST /events/{id}/cancel lets the meeting organizer cancel and send a cancellation message; an occurrence can be targeted by its occurrence event ID. Attendee invocation returns HTTP 400. The action moves the item to Deleted Items and supports an optional custom comment.",
+      "applicability": "Confirms the explicit Graph messaging and permission comparison, without granting account access or guaranteeing offline file behavior.",
+      "observation": "Independent read-only HTTP retrieval and semantic inspection of relevant surrounding primary context; no downloaded code executed.",
+      "note": "evidence/R07.md"
+    },
+    {
+      "id": "R08",
+      "requested_url": "https://learn.microsoft.com/en-us/graph/api/event-update?view=graph-rest-1.0",
+      "request_started_utc": "2026-10-10T04:44:51.328734+00:00",
+      "http_status": 200,
+      "effective_url": "https://learn.microsoft.com/en-us/graph/api/event-update?view=graph-rest-1.0",
+      "retrieved_at_utc": "2026-10-10T04:44:51.495665+00:00",
+      "sha256": "691d7d542cd3676b9154b6556658971e46b2f8e492ea406f0f3b55adb65ff87b",
+      "bytes": 72649,
+      "capture": "evidence/R08.html",
+      "text": "evidence/R08.txt",
+      "title": "Microsoft Graph update event",
+      "version_or_commit": "Graph REST v1.0 PATCH live documentation",
+      "locators": [
+        "HTTP request",
+        "Response / ErrorOccurrenceCrossingBoundary",
+        "R08.txt lines 599–611 and 792–805"
+      ],
+      "governing_conditions": "PATCH updates the event object at its ID. Outlook recurrence exceptions cannot move to/before the previous occurrence day or to/after the next occurrence day; the API can return HTTP 400 ErrorOccurrenceCrossingBoundary. Updating a master with multiple attendees and separately modified instances can emit separate notifications.",
+      "applicability": "Confirms the provider-specific restriction. It cannot be used to forbid an otherwise legal file-only move across a date boundary; the final keeps this distinction.",
+      "observation": "Independent read-only HTTP retrieval and semantic inspection of relevant surrounding primary context; no downloaded code executed.",
+      "note": "evidence/R08.md"
+    },
+    {
+      "id": "R09",
+      "requested_url": "https://learn.microsoft.com/en-us/graph/api/event-list-instances?view=graph-rest-1.0",
+      "request_started_utc": "2026-10-10T04:44:51.381389+00:00",
+      "http_status": 200,
+      "effective_url": "https://learn.microsoft.com/en-us/graph/api/event-list-instances?view=graph-rest-1.0",
+      "retrieved_at_utc": "2026-10-10T04:44:51.553137+00:00",
+      "sha256": "fbfcb6f5e099df50dc5d25f5a63d3d3a4b4ac8f48bcbe60f132ae3e4b7961929",
+      "bytes": 66517,
+      "capture": "evidence/R09.html",
+      "text": "evidence/R09.txt",
+      "title": "Microsoft Graph list instances",
+      "version_or_commit": "Graph REST v1.0 method live documentation",
+      "locators": [
+        "Description",
+        "Required query parameters",
+        "Prefer: outlook.timezone",
+        "R09.txt lines 479–483, 555–597, 627–629"
+      ],
+      "governing_conditions": "A seriesMaster instance request returns occurrences and exceptions in the required startDateTime/endDateTime range. Query bounds are ISO 8601 Strings. Response start/end times default to UTC; the optional Prefer header changes the response zone.",
+      "applicability": "Supports range-based retrieval as a comparator. It does not license replacing the recurring schedule with the preview interval or converting iCalendar RID to a Graph ID.",
+      "observation": "Independent read-only HTTP retrieval and semantic inspection of relevant surrounding primary context; no downloaded code executed.",
+      "note": "evidence/R09.md"
+    },
+    {
+      "id": "R10",
+      "requested_url": "https://docs.rs/crate/caldata/0.17.3",
+      "request_started_utc": "2026-10-10T04:44:51.412564+00:00",
+      "http_status": 200,
+      "effective_url": "https://docs.rs/crate/caldata/0.17.3",
+      "retrieved_at_utc": "2026-10-10T04:44:51.685289+00:00",
+      "sha256": "78d773900c30a1659fc1849a2d0b08ae650911ff7bd7fd6b48ac21b80dcb6d34",
+      "bytes": 27230,
+      "capture": "evidence/R10.html",
+      "text": "evidence/R10.txt",
+      "title": "caldata crate",
+      "version_or_commit": "Pinned package 0.17.3, docs.rs release date 2026-09-20",
+      "locators": [
+        "Version list",
+        "caldata-rs owner notes",
+        "Dependency list and documentation coverage"
+      ],
+      "governing_conditions": "The released metadata/README describes a divergent hard fork of archived ical-rs with strict validation, typed date-times and recurrence expansion. It includes a modified copy of rust-rrule to perform local-time calculations in UTC. Documentation coverage is 17.74%; chrono-tz is optional and vtimezones-rs is listed. The embedded install snippet still names 0.16, so the package URL/version is the pin.",
+      "applicability": "A real competing Rust candidate. README capabilities are not a measured opaque-property/DST/interoperability guarantee; final does not select the crate.",
+      "observation": "Independent read-only HTTP retrieval and semantic inspection of relevant surrounding primary context; no downloaded code executed.",
+      "note": "evidence/R10.md"
+    },
+    {
+      "id": "R11",
+      "requested_url": "https://github.com/pimalaya/ical",
+      "request_started_utc": "2026-10-10T04:44:51.458831+00:00",
+      "http_status": 200,
+      "effective_url": "https://github.com/pimalaya/ical",
+      "retrieved_at_utc": "2026-10-10T04:44:52.139471+00:00",
+      "sha256": "0bfdfdfa58667c4adb14aeb3afd0a8383578205b4b3f58598d2744a40ca67413",
+      "bytes": 368170,
+      "capture": "evidence/R11.html",
+      "text": "evidence/R11.txt",
+      "title": "pimalaya/ical repository",
+      "version_or_commit": "Live repository page, unpinned commit/release",
+      "locators": [
+        "README Features",
+        "README RFC coverage",
+        "R11.txt lines 1580–1613"
+      ],
+      "governing_conditions": "README claims nested-tree preservation, byte-faithful editing including line endings/folds, forgiving parsing, strict building/validation, recurrence expansion and offsets from calendar-owned rules. These are project claims at the current unpinned repository state.",
+      "applicability": "A useful distinct architecture lead; no immutable candidate artifact or implementation conformance is established. The final accurately retains the lead and its uncertainty.",
+      "observation": "Independent read-only HTTP retrieval and semantic inspection of relevant surrounding primary context; no downloaded code executed.",
+      "note": "evidence/R11.md"
+    },
+    {
+      "id": "R12",
+      "requested_url": "https://raw.githubusercontent.com/collective/icalendar/v7.3.0/CHANGES.rst",
+      "request_started_utc": "2026-10-10T04:44:51.519446+00:00",
+      "http_status": 200,
+      "effective_url": "https://raw.githubusercontent.com/collective/icalendar/v7.3.0/CHANGES.rst",
+      "retrieved_at_utc": "2026-10-10T04:44:51.700255+00:00",
+      "sha256": "041f5e4f962f057b81ec1354dd0e9a07896acbe340e230d1416515be09c79ce2",
+      "bytes": 115288,
+      "capture": "evidence/R12.rst",
+      "text": "evidence/R12.txt",
+      "title": "Python icalendar release history",
+      "version_or_commit": "Tagged v7.3.0 CHANGES.rst, 2026-08-19; commit SHA not independently pinned",
+      "locators": [
+        "7.3.0 Bug fixes",
+        "Raw CHANGES.rst lines 44–57",
+        "Issue #1445, #1526, #313, #1633 entries"
+      ],
+      "governing_conditions": "The unknown/X-property escaping fix applies to values without a VALUE parameter. URI parameters were lost on jCal conversion due to a positional-argument bug. Vendor-prefixed TZIDs were resolved instead of treated as naive. The TZID/RDATE DATE offset fix applies under use_pytz; default zoneinfo was unaffected. These are package/history-specific conditions.",
+      "applicability": "Supports concrete preservation and timezone regression risks, not a Rust defect. Final summary omits some exact conditions; this has no adoption or consumer guarantee consequence and is recorded as a minor limitation.",
+      "observation": "Independent read-only HTTP retrieval and semantic inspection of relevant surrounding primary context; no downloaded code executed.",
+      "note": "evidence/R12.md"
+    },
+    {
+      "id": "R13",
+      "requested_url": "https://docs.rs/ical/0.11.0/ical/",
+      "request_started_utc": "2026-10-10T04:44:51.599814+00:00",
+      "http_status": 200,
+      "effective_url": "https://docs.rs/ical/0.11.0/ical/",
+      "retrieved_at_utc": "2026-10-10T04:44:51.790397+00:00",
+      "sha256": "2f0d912c92139a5c14baa3ca5f1605c6d16da12497263684b67752a2d93f4b32",
+      "bytes": 19792,
+      "capture": "evidence/R13.html",
+      "text": "evidence/R13.txt",
+      "title": "Rust ical crate overview",
+      "version_or_commit": "Pinned docs URL ical 0.11.0; embedded README still says 0.7.0",
+      "locators": [
+        "Crate description",
+        "Modules and re-exports",
+        "R13.txt lines 335–379"
+      ],
+      "governing_conditions": "Overview documents a parsing library, exports LineReader/PropertyParser/IcalParser, and carries an old README version/install example. It does not alone expose the field-validity warning; R15 is the precise governing locator.",
+      "applicability": "The archived parser is a legitimate historical syntax-layer alternative, not proof of recurrence/timezone support. A stale README banner is not evidence of the actual selected dependency version.",
+      "observation": "Independent read-only HTTP retrieval and semantic inspection of relevant surrounding primary context; no downloaded code executed.",
+      "note": "evidence/R13.md"
+    },
+    {
+      "id": "R14",
+      "requested_url": "https://github.com/Peltoche/ical-rs",
+      "request_started_utc": "2026-10-10T04:44:51.600412+00:00",
+      "http_status": 200,
+      "effective_url": "https://github.com/Peltoche/ical-rs",
+      "retrieved_at_utc": "2026-10-10T04:44:52.044483+00:00",
+      "sha256": "8b1604dafc363e0b122fc8e6a8af0729d61fa456eb800060bfe94befae03882a",
+      "bytes": 333307,
+      "capture": "evidence/R14.html",
+      "text": "evidence/R14.txt",
+      "title": "Peltoche/ical-rs archived upstream",
+      "version_or_commit": "Repository archive banner, 2024-08-17",
+      "locators": [
+        "Archive banner",
+        "R14.txt line 663"
+      ],
+      "governing_conditions": "The repository was archived by its owner on 2024-08-17 and is read-only.",
+      "applicability": "Corroborates the maintenance-history caution and caldata fork lineage; no claim that archival itself makes all parser behavior incorrect.",
+      "observation": "Independent read-only HTTP retrieval and semantic inspection of relevant surrounding primary context; no downloaded code executed.",
+      "note": "evidence/R14.md"
+    },
+    {
+      "id": "R15",
+      "requested_url": "https://docs.rs/ical/0.11.0/ical/parser/index.html",
+      "request_started_utc": "2026-10-10T04:46:41.899911+00:00",
+      "http_status": 200,
+      "effective_url": "https://docs.rs/ical/0.11.0/ical/parser/index.html",
+      "retrieved_at_utc": "2026-10-10T04:46:42.087263+00:00",
+      "bytes": 18283,
+      "sha256": "969a93d49711d52588a346f8607baef78fe6ce2ec4b6bcc470c7ea39eea8f031",
+      "capture": "evidence/R15.html",
+      "text": "evidence/R15.txt",
+      "title": "ical parser module warning",
+      "version_or_commit": "ical 0.11.0 parser module docs",
+      "locators": [
+        "Warning",
+        "R15.txt lines 342–345"
+      ],
+      "governing_conditions": "IcalParser/VcardParser parse content and uppercase case-insensitive fields; they do not check field validity.",
+      "applicability": "Precise supplementary primary locator for the candidate parser-validation claim. Final characterization is supported, while the original source locator was less precise.",
+      "observation": "Independent read-only HTTP retrieval and semantic inspection of relevant surrounding primary context; no downloaded code executed.",
+      "note": "evidence/R15.md"
+    },
+    {
+      "id": "R16",
+      "requested_url": "https://developers.google.com/workspace/calendar/api/v3/reference/events/update",
+      "request_started_utc": "2026-10-10T04:46:42.095258+00:00",
+      "http_status": 200,
+      "effective_url": "https://developers.google.com/workspace/calendar/api/v3/reference/events/update",
+      "retrieved_at_utc": "2026-10-10T04:46:42.476478+00:00",
+      "bytes": 196331,
+      "sha256": "0807b7fc7fce38a4ecf28d375427f679a42c24b601303ace497a4f07cfedaf27",
+      "capture": "evidence/R16.html",
+      "text": "evidence/R16.txt",
+      "title": "Google events.update reference",
+      "version_or_commit": "Calendar API v3 live method documentation",
+      "locators": [
+        "sendNotifications/sendUpdates parameters",
+        "status cancelled-exception conditions",
+        "R16.txt lines 2943–2974 and 3586–3600"
+      ],
+      "governing_conditions": "sendUpdates is a String with all, externalOnly and none notification choices; deprecated sendNotifications defaults false and warns some email can still occur. Cancelled exceptions are retained for the parent lifetime and only id/recurringEventId/originalStartTime are guaranteed populated; other cancelled events have a different deletion/sync lifetime.",
+      "applicability": "Independent condition check of the blanket provider-messaging sentence. Google status update and Graph /cancel have distinct notification contracts. This does not alter the final offline recommendation or the accurate operation table.",
+      "observation": "Independent read-only HTTP retrieval and semantic inspection of relevant surrounding primary context; no downloaded code executed.",
+      "note": "evidence/R16.md"
+    }
+  ],
+  "source_map": "source-map.json",
+  "evidence_index": "evidence/README.md"
+}

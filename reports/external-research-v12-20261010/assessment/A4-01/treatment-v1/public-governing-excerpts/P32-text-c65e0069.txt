@@ -1,0 +1,22 @@
+URL: https://raw.githubusercontent.com/aws/aws-cli/2.37.6/awscli/customizations/s3/transferconfig.py
+Original locator: ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P32-text.txt
+Original SHA256: c65e00699914ec652f9fb8e731b413f0ff8de6be6e4f5ae4dcfca5af89b23a04
+Original numbered lines; gaps omitted. Not full response.
+
+26: DEFAULTS = {
+27:     'multipart_threshold': 8 * (1024**2),
+71:         'multipart_threshold',
+81:         'multipart_threshold',
+104:     def defaults():
+105:         return DEFAULTS.copy()
+114:         :param kwargs:  Any key in the ``DEFAULTS`` dict.
+120:         runtime_config = DEFAULTS.copy()
+123:         self._convert_human_readable_sizes(runtime_config)
+124:         self._convert_human_readable_rates(runtime_config)
+125:         self._convert_booleans(runtime_config)
+126:         self._resolve_choice_aliases(runtime_config)
+127:         self._validate_config(runtime_config)
+128:         return ResolvedRuntimeConfig(runtime_config, explicit_keys)
+129: 
+130:     def _convert_human_readable_sizes(self, runtime_config):
+254:         'multipart_threshold': 'multipart_threshold',

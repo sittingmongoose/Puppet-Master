@@ -1,0 +1,29 @@
+{
+  "validated_at_utc": "2026-10-10T04:52:12.007834+00:00",
+  "judgment_saved": "FAIL",
+  "assessment_json_valid": true,
+  "source_map_json_valid": true,
+  "assigned_axes": 6,
+  "material_findings": 2,
+  "primary_sources": 8,
+  "exact_candidate_quotes_verified": true,
+  "primary_capture_hashes_verified": true,
+  "local_report_links_verified": true,
+  "all_inspected_input_science_hashes_unchanged": true,
+  "all_frozen_inputs_match": true,
+  "terminal_freeze_exact_path_checks": [
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/terminal-science-freeze.json",
+      "exists": false
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/terminal-science-freeze-root.json",
+      "exists": false
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/terminal-science-freeze.json",
+      "exists": false
+    }
+  ],
+  "semantic_validation": "Independent primary-evidence reasoning in assessment.md/json; these artifact checks do not determine source judgment."
+}

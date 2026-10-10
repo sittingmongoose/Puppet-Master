@@ -1,0 +1,1443 @@
+{
+  "schema_version": "er12-independent-source-map-v1",
+  "reviewer": "codex-er12-a702-control-review-v1",
+  "assignment": "ER12 A7-02 control full pipeline only",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "identity_policy": "R01–R21 are independent reviewer records mapped to original S01–S21 exact URL bindings. R22–R24 are additional governing primary documentation. No original IDs/bytes were rewritten. Raw and numbered capture hashes establish evidence identity, not semantic proof.",
+  "sources": [
+    {
+      "id": "R01",
+      "predecessor_source_id": "S01",
+      "title": "Zotero Duplicate Detection",
+      "url": "https://www.zotero.org/support/duplicate_detection",
+      "supporting_urls": [],
+      "version_or_commit": "2017-11-25 documentation; no app release pinned",
+      "independent_locator": "Finding Duplicates / Merging Duplicates; numbered capture 64–70",
+      "retrieved_at_utc": "2026-10-10T05:14:09.765601+00:00",
+      "observed_operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution.",
+      "governing_conditions_defaults_types_units_exceptions": "Title/DOI/ISBN match or absence, publication years within one year, creator last name plus first initial; library-local candidates; no non-duplicate marking in served guide; master and alternative field values; merged tags/collections retained.",
+      "applicability_judgment": "The final accurately describes served documentation, not a verified current algorithm. It recommends human review; neither similarity nor a duplicate list proves identity.",
+      "capture": {
+        "id": "S01",
+        "url": "https://www.zotero.org/support/duplicate_detection",
+        "retrieved_at_utc": "2026-10-10T05:14:09.765601+00:00",
+        "http_status": 200,
+        "final_url": "https://www.zotero.org/support/duplicate_detection",
+        "content_type": "text/html; charset=UTF-8",
+        "raw_path": "evidence/S01.html",
+        "raw_bytes": 38412,
+        "raw_sha256": "747a16916cc1542a451a02eeb5ade689a9cce7b0cdd861bfbaafe198b3e84123",
+        "numbered_path": "evidence/S01-numbered.txt",
+        "numbered_sha256": "31549a8506168e83d7fb0db4e9b1f173496e72703757ed8a3a9659a0bd450a23",
+        "lines": 87,
+        "retrieval_error": null,
+        "operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution."
+      },
+      "supporting_captures": [],
+      "outcome": "SUPPORTED_WITH_STATED_VERSION_LIMIT"
+    },
+    {
+      "id": "R02",
+      "predecessor_source_id": "S02",
+      "title": "Zotero standardized import",
+      "url": "https://www.zotero.org/support/kb/importing_standardized_formats",
+      "supporting_urls": [],
+      "version_or_commit": "2018-11-04 documentation; no app release pinned",
+      "independent_locator": "Format list; numbered capture 61–75",
+      "retrieved_at_utc": "2026-10-10T05:14:09.767762+00:00",
+      "observed_operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution.",
+      "governing_conditions_defaults_types_units_exceptions": "RIS, BibTeX, BibLaTeX and CSL JSON are listed import formats; file support alone does not demonstrate field fidelity or round-trip success.",
+      "applicability_judgment": "Common interchange support is enough to investigate an optional file; final retains actual mapping tests.",
+      "capture": {
+        "id": "S02",
+        "url": "https://www.zotero.org/support/kb/importing_standardized_formats",
+        "retrieved_at_utc": "2026-10-10T05:14:09.767762+00:00",
+        "http_status": 200,
+        "final_url": "https://www.zotero.org/support/kb/importing_standardized_formats",
+        "content_type": "text/html; charset=UTF-8",
+        "raw_path": "evidence/S02.html",
+        "raw_bytes": 36935,
+        "raw_sha256": "f814602970bbadab622da22833f77f78250a92c7de8b186afac716bbe10a19be",
+        "numbered_path": "evidence/S02-numbered.txt",
+        "numbered_sha256": "f0dc03ab72cdd5743042d73f1ad289bd0d2313481e90dd475bf68e8a910d6c22",
+        "lines": 104,
+        "retrieval_error": null,
+        "operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution."
+      },
+      "supporting_captures": [],
+      "outcome": "SUPPORTED"
+    },
+    {
+      "id": "R03",
+      "predecessor_source_id": "S03",
+      "title": "Zotero Quick Copy/export preferences",
+      "url": "https://www.zotero.org/support/preferences/export",
+      "supporting_urls": [],
+      "version_or_commit": "2024-10-27 documentation; no app release pinned",
+      "independent_locator": "Quick Copy / Character Encoding; numbered capture 64–73",
+      "retrieved_at_utc": "2026-10-10T05:14:09.770608+00:00",
+      "observed_operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution.",
+      "governing_conditions_defaults_types_units_exceptions": "Output can be a citation style or bibliographic format. Text is default; dragging over 50 items can be disabled by its default threshold. Import encoding is auto-detected with manual override.",
+      "applicability_judgment": "Final uses the configurable mechanism without claiming unlimited drag capacity or default RIS. The threshold governs drag Quick Copy, not all bibliography exports.",
+      "capture": {
+        "id": "S03",
+        "url": "https://www.zotero.org/support/preferences/export",
+        "retrieved_at_utc": "2026-10-10T05:14:09.770608+00:00",
+        "http_status": 200,
+        "final_url": "https://www.zotero.org/support/preferences/export",
+        "content_type": "text/html; charset=UTF-8",
+        "raw_path": "evidence/S03.html",
+        "raw_bytes": 37861,
+        "raw_sha256": "0b22102eed5cdb738a150e09606d9a2e43d546da974f0e59365259721da9c514",
+        "numbered_path": "evidence/S03-numbered.txt",
+        "numbered_sha256": "0879c33a2e7585545c4fc16d1c2a481394c8b5fef5784d518ca34b29268bdab1",
+        "lines": 89,
+        "retrieval_error": null,
+        "operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution."
+      },
+      "supporting_captures": [],
+      "outcome": "SUPPORTED"
+    },
+    {
+      "id": "R04",
+      "predecessor_source_id": "S04",
+      "title": "Zotero field mappings and loss",
+      "url": "https://www.zotero.org/support/kb/field_mappings",
+      "supporting_urls": [],
+      "version_or_commit": "2017-11-22 documentation; no app release pinned",
+      "independent_locator": "Data loss and active-development warning; numbered capture 62–65",
+      "retrieved_at_utc": "2026-10-10T05:14:09.772291+00:00",
+      "observed_operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution.",
+      "governing_conditions_defaults_types_units_exceptions": "Whole-library transfer can lose word-processor links; RDF is least lossy; RIS/MODS can carry notes but do not carry attachment files or collections; mappings can become outdated.",
+      "applicability_judgment": "Final's warning does not forbid a public citation subset. It keeps provenance/version relations outside the interchange file and promises no lossless archive.",
+      "capture": {
+        "id": "S04",
+        "url": "https://www.zotero.org/support/kb/field_mappings",
+        "retrieved_at_utc": "2026-10-10T05:14:09.772291+00:00",
+        "http_status": 200,
+        "final_url": "https://www.zotero.org/support/kb/field_mappings",
+        "content_type": "text/html; charset=UTF-8",
+        "raw_path": "evidence/S04.html",
+        "raw_bytes": 38409,
+        "raw_sha256": "d9a5b05744430d1af17c45bd98dd602fedee13440d11f50b1e5f1cf7c633f3de",
+        "numbered_path": "evidence/S04-numbered.txt",
+        "numbered_sha256": "9efea1f5005f13def819175f258a627fcd209bb910507fd3885d3df57ddbb8e1",
+        "lines": 85,
+        "retrieval_error": null,
+        "operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution."
+      },
+      "supporting_captures": [],
+      "outcome": "SUPPORTED_WITH_STATED_LIMIT"
+    },
+    {
+      "id": "R05",
+      "predecessor_source_id": "S05",
+      "title": "Zotero bibliography modes/date",
+      "url": "https://www.zotero.org/support/creating_bibliographies",
+      "supporting_urls": [],
+      "version_or_commit": "2025-12-12 documentation; no app release pinned",
+      "independent_locator": "Quick Copy / right-click bibliography / footer; numbered capture 70–76 and 85",
+      "retrieved_at_utc": "2026-10-10T05:14:09.886472+00:00",
+      "observed_operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution.",
+      "governing_conditions_defaults_types_units_exceptions": "Quick Copy supports BibTeX and RIS. Styled bibliography has RTF, HTML, clipboard and print output. The footer date is 2025-12-12.",
+      "applicability_judgment": "The critic's documentation-date correction is justified. Styled output and manager interchange remain distinct operations.",
+      "capture": {
+        "id": "S05",
+        "url": "https://www.zotero.org/support/creating_bibliographies",
+        "retrieved_at_utc": "2026-10-10T05:14:09.886472+00:00",
+        "http_status": 200,
+        "final_url": "https://www.zotero.org/support/creating_bibliographies",
+        "content_type": "text/html; charset=UTF-8",
+        "raw_path": "evidence/S05.html",
+        "raw_bytes": 38461,
+        "raw_sha256": "8726f0138b69baaef1a5c2c0b0cf38f49ab2660a557098338d9e8ef587a86ace",
+        "numbered_path": "evidence/S05-numbered.txt",
+        "numbered_sha256": "ee1c2afb91f25463650a9ebeb1b7aeb51d3999292c8b31d0a9025ba0ca9a793c",
+        "lines": 96,
+        "retrieval_error": null,
+        "operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution."
+      },
+      "supporting_captures": [],
+      "outcome": "SUPPORTED; ORIGINAL_WORDING_CORRECTED"
+    },
+    {
+      "id": "R06",
+      "predecessor_source_id": "S06",
+      "title": "JabRef duplicate candidates",
+      "url": "https://docs.jabref.org/finding-sorting-and-cleaning-entries/findduplicates",
+      "supporting_urls": [],
+      "version_or_commit": "Living documentation, retrieved 2026-10-10; not pinned to beta",
+      "independent_locator": "Detection / Selecting which entry to keep; numbered capture 43–67",
+      "retrieved_at_utc": "2026-10-10T05:14:09.887652+00:00",
+      "observed_operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution.",
+      "governing_conditions_defaults_types_units_exceptions": "Edit distance gives additional weight to author/editor/title/journal. Choices include left/right/both/merged. Exact duplicate automatic removal is an offered action; keep-merged removes prior entries.",
+      "applicability_judgment": "Final does not convert offered exact removal to a mandated automatic policy; preserved source text is a separate local design.",
+      "capture": {
+        "id": "S06",
+        "url": "https://docs.jabref.org/finding-sorting-and-cleaning-entries/findduplicates",
+        "retrieved_at_utc": "2026-10-10T05:14:09.887652+00:00",
+        "http_status": 200,
+        "final_url": "https://docs.jabref.org/finding-sorting-and-cleaning-entries/findduplicates",
+        "content_type": "text/html; charset=utf-8",
+        "raw_path": "evidence/S06.html",
+        "raw_bytes": 495912,
+        "raw_sha256": "52a9fcc026838de638efae0d70fbbf159c3ce02988444dc07ebb44672141e8aa",
+        "numbered_path": "evidence/S06-numbered.txt",
+        "numbered_sha256": "48d9aed048d5cfcdd22ff96083623b2e6bb3423efb22edeb20d4c67f52bd29eb",
+        "lines": 76,
+        "retrieval_error": null,
+        "operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution."
+      },
+      "supporting_captures": [],
+      "outcome": "SUPPORTED_WITH_STATED_VERSION_LIMIT"
+    },
+    {
+      "id": "R07",
+      "predecessor_source_id": "S07",
+      "title": "JabRef field merge",
+      "url": "https://docs.jabref.org/finding-sorting-and-cleaning-entries/mergeentries",
+      "supporting_urls": [],
+      "version_or_commit": "Living documentation; no current app release pinned",
+      "independent_locator": "Selecting two records / field controls; numbered capture 43–66",
+      "retrieved_at_utc": "2026-10-10T05:14:09.914739+00:00",
+      "observed_operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution.",
+      "governing_conditions_defaults_types_units_exceptions": "User selects two entries; compares/chooses values or manually edits; selected fields can combine groups/keywords/comments/files; Merge or Cancel remains explicit.",
+      "applicability_judgment": "A manager merge is not an immutable audit log. The final correctly supplies a retained submission/provenance model as a local choice.",
+      "capture": {
+        "id": "S07",
+        "url": "https://docs.jabref.org/finding-sorting-and-cleaning-entries/mergeentries",
+        "retrieved_at_utc": "2026-10-10T05:14:09.914739+00:00",
+        "http_status": 200,
+        "final_url": "https://docs.jabref.org/finding-sorting-and-cleaning-entries/mergeentries",
+        "content_type": "text/html; charset=utf-8",
+        "raw_path": "evidence/S07.html",
+        "raw_bytes": 517224,
+        "raw_sha256": "49b97d1c6869d6a4e0f23ef83626acaa389d1d82a0c223ee4d3e0ad0eae3b8ef",
+        "numbered_path": "evidence/S07-numbered.txt",
+        "numbered_sha256": "446eb6cd0f9aa6ddd2597f1146dffb8b04e9f8d2ded72472b44c0fb5a1ee21ed",
+        "lines": 79,
+        "retrieval_error": null,
+        "operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution."
+      },
+      "supporting_captures": [],
+      "outcome": "SUPPORTED"
+    },
+    {
+      "id": "R08",
+      "predecessor_source_id": "S08",
+      "title": "JabRef identifier enrichment defaults",
+      "url": "https://docs.jabref.org/finding-sorting-and-cleaning-entries/getbibtexdatafromdoi",
+      "supporting_urls": [],
+      "version_or_commit": "Living documentation; illustrative image mentions 5.2, not a version pin",
+      "independent_locator": "Identifier discovery and DOI/ISBN completion; numbered capture 44–56",
+      "retrieved_at_utc": "2026-10-10T05:14:09.935449+00:00",
+      "observed_operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution.",
+      "governing_conditions_defaults_types_units_exceptions": "Identifier discovery needs sufficient accurate input and can fail. DOI/ISBN completion is disabled without an identifier. Original left fields are default; missing fields obtain DOI values in a merge view; final Merge/Cancel is explicit. Full-text search is a separate route.",
+      "applicability_judgment": "Final keeps lookup and editor approval distinct and does not misapply the identifier-completion prerequisite to separate DOI-less bibliographic search.",
+      "capture": {
+        "id": "S08",
+        "url": "https://docs.jabref.org/finding-sorting-and-cleaning-entries/getbibtexdatafromdoi",
+        "retrieved_at_utc": "2026-10-10T05:14:09.935449+00:00",
+        "http_status": 200,
+        "final_url": "https://docs.jabref.org/finding-sorting-and-cleaning-entries/getbibtexdatafromdoi",
+        "content_type": "text/html; charset=utf-8",
+        "raw_path": "evidence/S08.html",
+        "raw_bytes": 464814,
+        "raw_sha256": "69431f5e149d8754db6e3d8cfa5b7a8b441c34a8e69e5efa79d059f04a37443d",
+        "numbered_path": "evidence/S08-numbered.txt",
+        "numbered_sha256": "4079f6cf6666aa1d1fb69a94ebdfb2fc82cdfca5e7793bbc2e1bf29a500ffbb3",
+        "lines": 62,
+        "retrieval_error": null,
+        "operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution."
+      },
+      "supporting_captures": [],
+      "outcome": "SUPPORTED"
+    },
+    {
+      "id": "R09",
+      "predecessor_source_id": "S09",
+      "title": "JabRef CLI import/export",
+      "url": "https://docs.jabref.org/advanced/commandline",
+      "supporting_urls": [],
+      "version_or_commit": "Served docs say since 5.0; installed build not chosen",
+      "independent_locator": "Basics and Import/Export options; numbered capture 49 and 95–109",
+      "retrieved_at_utc": "2026-10-10T05:14:09.961127+00:00",
+      "observed_operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution.",
+      "governing_conditions_defaults_types_units_exceptions": "File conversion can run without GUI. -o defaults to BibTeX unless a filter is named. Import precedes export; without -i, last successfully loaded file is exported. One -i/-o file; a same-name custom filter takes precedence.",
+      "applicability_judgment": "Final recommends a version-pinned conversion option, not a command run or beta CLI guarantee. No field/default/unit is overgeneralized.",
+      "capture": {
+        "id": "S09",
+        "url": "https://docs.jabref.org/advanced/commandline",
+        "retrieved_at_utc": "2026-10-10T05:14:09.961127+00:00",
+        "http_status": 200,
+        "final_url": "https://docs.jabref.org/advanced/commandline",
+        "content_type": "text/html; charset=utf-8",
+        "raw_path": "evidence/S09.html",
+        "raw_bytes": 791631,
+        "raw_sha256": "f5b5b6af0b99c50e4c561133d65e6b95144c56ea352d9fa90fd4a00aa789f0ca",
+        "numbered_path": "evidence/S09-numbered.txt",
+        "numbered_sha256": "9cbdce93156b6a47ccffa493e5d6914eae9dcc714979446dc267b7132a584d15",
+        "lines": 200,
+        "retrieval_error": null,
+        "operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution."
+      },
+      "supporting_captures": [],
+      "outcome": "SUPPORTED_AS_LIVING_DOCS"
+    },
+    {
+      "id": "R10",
+      "predecessor_source_id": "S10",
+      "title": "JabRef beta release and CSL opportunity",
+      "url": "https://github.com/JabRef/jabref/releases/tag/v6.0-beta.1",
+      "supporting_urls": [],
+      "version_or_commit": "v6.0-beta.1, 3992b12; 2026-09-21T20:19:44Z; prerelease",
+      "independent_locator": "Release heading/commit and compatibility change; numbered capture 111–131 and 161; HTML relative-time",
+      "retrieved_at_utc": "2026-10-10T05:14:10.171383+00:00",
+      "observed_operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution.",
+      "governing_conditions_defaults_types_units_exceptions": "Release is beta/prerelease. Zotero Compatibility Mode is a preference for CSL citations emitted/read through LibreOffice, not general RIS fidelity.",
+      "applicability_judgment": "Conditional first testing and the alternative are reasonable. Chronology alone does not prove all alpha fixes survived; the final retains chosen-build validation.",
+      "capture": {
+        "id": "S10",
+        "url": "https://github.com/JabRef/jabref/releases/tag/v6.0-beta.1",
+        "retrieved_at_utc": "2026-10-10T05:14:10.171383+00:00",
+        "http_status": 200,
+        "final_url": "https://github.com/JabRef/jabref/releases/tag/v6.0-beta.1",
+        "content_type": "text/html; charset=utf-8",
+        "raw_path": "evidence/S10.html",
+        "raw_bytes": 281963,
+        "raw_sha256": "15e4cff9b9052cab18cc221eb3007a8c967ee6ab41a5d257b525ade220ed2282",
+        "numbered_path": "evidence/S10-numbered.txt",
+        "numbered_sha256": "5bf0b56ea6ee7778aafe12fc33b1ddac31e5860bd77d1e668a9e4738439e4176",
+        "lines": 458,
+        "retrieval_error": null,
+        "operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution."
+      },
+      "supporting_captures": [],
+      "outcome": "SUPPORTED"
+    },
+    {
+      "id": "R11",
+      "predecessor_source_id": "S11",
+      "title": "JabRef issue #15106",
+      "url": "https://github.com/JabRef/jabref/issues/15106",
+      "supporting_urls": [],
+      "version_or_commit": "Reported 2026-02-13 on 5.15, GNU/Linux, Ubuntu 24.04.4 LTS",
+      "independent_locator": "Issue description and closure; numbered capture 126–141 and 260",
+      "retrieved_at_utc": "2026-10-10T05:14:10.210447+00:00",
+      "observed_operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution.",
+      "governing_conditions_defaults_types_units_exceptions": "BibTeX pages 13905--13911 exported the complete normalized range into both RIS SP and EP; reporter says single '-' behaved correctly. Closed through #15315 on 2026-03-13.",
+      "applicability_judgment": "The final names the affected operation, fields, input and reported version. It does not claim all releases/fields/records fail.",
+      "capture": {
+        "id": "S11",
+        "url": "https://github.com/JabRef/jabref/issues/15106",
+        "retrieved_at_utc": "2026-10-10T05:14:10.210447+00:00",
+        "http_status": 200,
+        "final_url": "https://github.com/JabRef/jabref/issues/15106",
+        "content_type": "text/html; charset=utf-8",
+        "raw_path": "evidence/S11.html",
+        "raw_bytes": 442844,
+        "raw_sha256": "2aa39e47f3a8c7b5aea822d6aaa4ee7b7b847a59447f84ba3a5208ffc615590e",
+        "numbered_path": "evidence/S11-numbered.txt",
+        "numbered_sha256": "604e21a52bc83028de200faa74554dc9da1f73973544d1bc56ee6675368d414e",
+        "lines": 310,
+        "retrieval_error": null,
+        "operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution."
+      },
+      "supporting_captures": [],
+      "outcome": "SUPPORTED_AS_REPORTED_CASE"
+    },
+    {
+      "id": "R12",
+      "predecessor_source_id": "S12",
+      "title": "JabRef PR #15315",
+      "url": "https://github.com/JabRef/jabref/pull/15315",
+      "supporting_urls": [],
+      "version_or_commit": "Merged to main 2026-03-13 at d687c08",
+      "independent_locator": "PR description/test instructions and merge queue; numbered capture 134–140 and 894–896",
+      "retrieved_at_utc": "2026-10-10T05:14:10.285591+00:00",
+      "observed_operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution.",
+      "governing_conditions_defaults_types_units_exceptions": "Old helpers only split ASCII; change adds en/em dash. PR links #15106 and gives SP=13905/EP=13911 test instructions. Merge queue says d687c08 and 49/50 checks passed.",
+      "applicability_judgment": "Externally reported tests/check counts are not local semantic validation. Normalization between BibTeX and RIS matters; final explicitly preserves that check.",
+      "capture": {
+        "id": "S12",
+        "url": "https://github.com/JabRef/jabref/pull/15315",
+        "retrieved_at_utc": "2026-10-10T05:14:10.285591+00:00",
+        "http_status": 200,
+        "final_url": "https://github.com/JabRef/jabref/pull/15315",
+        "content_type": "text/html; charset=utf-8",
+        "raw_path": "evidence/S12.html",
+        "raw_bytes": 831036,
+        "raw_sha256": "aa11a1f0a6dfd8063a2236dd75fff3c47acaf2fe2fdcb65ed64f967472d30f0f",
+        "numbered_path": "evidence/S12-numbered.txt",
+        "numbered_sha256": "7d950cf3b86547916f11afe786d29e73bba7247cd36ea8cf9faa16cddb75534b",
+        "lines": 1855,
+        "retrieval_error": null,
+        "operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution."
+      },
+      "supporting_captures": [],
+      "outcome": "SUPPORTED_WITH_ORACLE_LIMIT"
+    },
+    {
+      "id": "R13",
+      "predecessor_source_id": "S13",
+      "title": "Crossref public API coverage/query",
+      "url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/",
+      "supporting_urls": [],
+      "version_or_commit": "Living documentation; no API schema version or service deployment pinned",
+      "independent_locator": "REST API description and endpoints; numbered capture 300–324",
+      "retrieved_at_utc": "2026-10-10T05:14:10.290170+00:00",
+      "observed_operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution.",
+      "governing_conditions_defaults_types_units_exceptions": "JSON metadata comes from members/trusted sources; no signup needed; /works search and /works/{doi} record retrieval concern Crossref records, not all DOI agencies or scholarly objects.",
+      "applicability_judgment": "A no-match is correctly treated as provider non-return, never invalidity/nonexistence. Broad bibliographic search is a realistic DOI-less candidate path.",
+      "capture": {
+        "id": "S13",
+        "url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/",
+        "retrieved_at_utc": "2026-10-10T05:14:10.290170+00:00",
+        "http_status": 200,
+        "final_url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/",
+        "content_type": "text/html",
+        "raw_path": "evidence/S13.html",
+        "raw_bytes": 70823,
+        "raw_sha256": "7fa3b2fcca9134b850c9f433516e4bedbf44b304d0cc914ecb615c72962875f8",
+        "numbered_path": "evidence/S13-numbered.txt",
+        "numbered_sha256": "bc80cef428e51b59bce5f78002859b67229765f6192352319cf219de6d507fbc",
+        "lines": 377,
+        "retrieval_error": null,
+        "operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution."
+      },
+      "supporting_captures": [],
+      "outcome": "SUPPORTED"
+    },
+    {
+      "id": "R14",
+      "predecessor_source_id": "S14",
+      "title": "Crossref access/limits",
+      "url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/access-and-authentication/",
+      "supporting_urls": [],
+      "version_or_commit": "Documentation updated 2025-10-16; limits are operational/header-dependent",
+      "independent_locator": "Access modes / Request limits / Best practice; numbered capture 303–338",
+      "retrieved_at_utc": "2026-10-10T05:14:10.399767+00:00",
+      "observed_operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution.",
+      "governing_conditions_defaults_types_units_exceptions": "Public access needs no authentication/identification. Polite mode supplies email through mailto or agent header; Plus is keyed/premium. Rate and interval headers and concurrency header govern requests. 429 calls for lower rate/concurrency; cache responses. Table values have no fixed interval stated in its cells.",
+      "applicability_judgment": "Final does not invent a requests-per-second quota, conflate public with polite, or require an account. Lead email/provider choice is an honest policy decision.",
+      "capture": {
+        "id": "S14",
+        "url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/access-and-authentication/",
+        "retrieved_at_utc": "2026-10-10T05:14:10.399767+00:00",
+        "http_status": 200,
+        "final_url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/access-and-authentication/",
+        "content_type": "text/html",
+        "raw_path": "evidence/S14.html",
+        "raw_bytes": 68881,
+        "raw_sha256": "b5629e0f250e6d6d181fdf3368198b51de845c860cb2f106b2829d599036eeb3",
+        "numbered_path": "evidence/S14-numbered.txt",
+        "numbered_sha256": "452618dba79c0b6457d71dd506fd73661c25944bc92c63d5f2c46d127984a409",
+        "lines": 356,
+        "retrieval_error": null,
+        "operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution."
+      },
+      "supporting_captures": [],
+      "outcome": "SUPPORTED"
+    },
+    {
+      "id": "R15",
+      "predecessor_source_id": "S15",
+      "title": "Crossref efficient API use",
+      "url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/tips-for-using-the-crossref-rest-api/",
+      "supporting_urls": [],
+      "version_or_commit": "Living documentation, retrieved 2026-10-10",
+      "independent_locator": "Rows/cursors and bulk-query cautions; numbered capture 329–339",
+      "retrieved_at_utc": "2026-10-10T05:14:10.497439+00:00",
+      "observed_operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution.",
+      "governing_conditions_defaults_types_units_exceptions": "Choose small useful result sets; cache; large queries can change due to reindexing; 429 requires backoff. These bulk conditions are not a claim that small pilot lookup always succeeds.",
+      "applicability_judgment": "The final's smallest-request/caching advice is bounded and not reported as an API check.",
+      "capture": {
+        "id": "S15",
+        "url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/tips-for-using-the-crossref-rest-api/",
+        "retrieved_at_utc": "2026-10-10T05:14:10.497439+00:00",
+        "http_status": 200,
+        "final_url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/tips-for-using-the-crossref-rest-api/",
+        "content_type": "text/html",
+        "raw_path": "evidence/S15.html",
+        "raw_bytes": 76629,
+        "raw_sha256": "4df4eca3812c8bcc76307855e4a39e513833dd26b8c4ebca1df94c22363a9bc9",
+        "numbered_path": "evidence/S15-numbered.txt",
+        "numbered_sha256": "a375e606296f4f22ff2a0d24084a118b1eefae83ac192ad30d36b834ef4a9243",
+        "lines": 381,
+        "retrieval_error": null,
+        "operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution."
+      },
+      "supporting_captures": [],
+      "outcome": "SUPPORTED"
+    },
+    {
+      "id": "R16",
+      "predecessor_source_id": "S16",
+      "title": "Crossref typed relations and identifiers",
+      "url": "https://www.crossref.org/documentation/schema-library/markup-guide-metadata-segments/relationships/",
+      "supporting_urls": [],
+      "version_or_commit": "Living relation-schema guide; schema release not pinned",
+      "independent_locator": "Vocabulary / General typed relations; numbered capture 322–340 and 372–394",
+      "retrieved_at_utc": "2026-10-10T05:14:10.612475+00:00",
+      "observed_operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution.",
+      "governing_conditions_defaults_types_units_exceptions": "Intra-work relation names include isPreprintOf/hasPreprint, isVersionOf/hasVersion, variant and manifestation. A typed relation can target another agency's DOI or non-DOI identifier. Missing DOI causes deposit failure; non-DOI identifiers are unverified. DOI deposits create reciprocal relations; the second item's own metadata need not assert it.",
+      "applicability_judgment": "Final uses an analogy and source-conditioned asserted links, not universal deduplication or consumer truth. Related manifestations remain separate.",
+      "capture": {
+        "id": "S16",
+        "url": "https://www.crossref.org/documentation/schema-library/markup-guide-metadata-segments/relationships/",
+        "retrieved_at_utc": "2026-10-10T05:14:10.612475+00:00",
+        "http_status": 200,
+        "final_url": "https://www.crossref.org/documentation/schema-library/markup-guide-metadata-segments/relationships/",
+        "content_type": "text/html",
+        "raw_path": "evidence/S16.html",
+        "raw_bytes": 91390,
+        "raw_sha256": "21e3f0918322210b44fbfcd0efcf087007e2ff03c525539209251f5a8620d1ba",
+        "numbered_path": "evidence/S16-numbered.txt",
+        "numbered_sha256": "2b6bbf0e79039b88cf36c00e769d0bda4ce5979999f974012751a5c7a8026c38",
+        "lines": 703,
+        "retrieval_error": null,
+        "operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution."
+      },
+      "supporting_captures": [],
+      "outcome": "SUPPORTED_WITH_PROVIDER_DOMAIN"
+    },
+    {
+      "id": "R17",
+      "predecessor_source_id": "S17",
+      "title": "Crossref posted-content schema",
+      "url": "https://www.crossref.org/documentation/schema-library/markup-guide-record-types/posted-content-includes-preprints/",
+      "supporting_urls": [],
+      "version_or_commit": "posted_content from schema 4.4.0; version/status from 5.4.0; served page 2025-07-12",
+      "independent_locator": "Purpose, metadata and AAM/VoR relations; numbered capture 303–350",
+      "retrieved_at_utc": "2026-10-10T05:14:10.718626+00:00",
+      "observed_operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution.",
+      "governing_conditions_defaults_types_units_exceptions": "Guide concerns member direct XML deposits; helper tools cannot register this record type. Preprint is a type enumeration. Status values are withdrawn/removed; version number/description and status are 5.4.0 additions. isPreprintOf links to AAM/VoR. Cited-by posted content inclusion defaults off, a different operation.",
+      "applicability_judgment": "Final does not assert that volunteers can deposit or that every repository supplies these fields. Its local publication-kind labels are not claimed as Crossref status enum values; Cited-by default is inapplicable to proposed REST lookup.",
+      "capture": {
+        "id": "S17",
+        "url": "https://www.crossref.org/documentation/schema-library/markup-guide-record-types/posted-content-includes-preprints/",
+        "retrieved_at_utc": "2026-10-10T05:14:10.718626+00:00",
+        "http_status": 200,
+        "final_url": "https://www.crossref.org/documentation/schema-library/markup-guide-record-types/posted-content-includes-preprints/",
+        "content_type": "text/html",
+        "raw_path": "evidence/S17.html",
+        "raw_bytes": 89234,
+        "raw_sha256": "429fb86acef76385341f20a73501be9554c07f4d1532714d5a0e5616791ac975",
+        "numbered_path": "evidence/S17-numbered.txt",
+        "numbered_sha256": "0a62f1f1d9f5fc5eaf92a04faeff4a4d8a687955634b10a11e8a36e80efce139",
+        "lines": 489,
+        "retrieval_error": null,
+        "operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution."
+      },
+      "supporting_captures": [],
+      "outcome": "SUPPORTED_WITH_EXACT_TYPE_DOMAIN"
+    },
+    {
+      "id": "R18",
+      "predecessor_source_id": "S18",
+      "title": "Crossref preprint obligations/notification",
+      "url": "https://www.crossref.org/documentation/research-nexus/posted-content-includes-preprints/",
+      "supporting_urls": [],
+      "version_or_commit": "Living documentation, page 2024-04-01",
+      "independent_locator": "Obligations / Associating preprints; numbered capture 303–333",
+      "retrieved_at_utc": "2026-10-10T05:14:10.886555+00:00",
+      "observed_operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution.",
+      "governing_conditions_defaults_types_units_exceptions": "Accepted manuscripts are not posted content. Crossref's preprint-provider rules use separate version DOIs/isVersionOf, above-fold label/link, and relationship updates after notification. Title/first-author matches are emailed review suggestions to the depositor.",
+      "applicability_judgment": "The final does not impose member deposit duties on the volunteer group or declare a universal DOI rule. Absent relations remain inconclusive.",
+      "capture": {
+        "id": "S18",
+        "url": "https://www.crossref.org/documentation/research-nexus/posted-content-includes-preprints/",
+        "retrieved_at_utc": "2026-10-10T05:14:10.886555+00:00",
+        "http_status": 200,
+        "final_url": "https://www.crossref.org/documentation/research-nexus/posted-content-includes-preprints/",
+        "content_type": "text/html",
+        "raw_path": "evidence/S18.html",
+        "raw_bytes": 73834,
+        "raw_sha256": "b5b3b4b59f3d49143dfd2a4b644e41d6ebdf89495af0b4feb56fd97c29b043da",
+        "numbered_path": "evidence/S18-numbered.txt",
+        "numbered_sha256": "2437172a875a81ec9a934e5a8349a1944eb8bd3f40f33da20123ed023f03af3a",
+        "lines": 360,
+        "retrieval_error": null,
+        "operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution."
+      },
+      "supporting_captures": [],
+      "outcome": "SUPPORTED_WITH_PROVIDER_SCOPE"
+    },
+    {
+      "id": "R19",
+      "predecessor_source_id": "S19",
+      "title": "Crossref historical matching strategy/dataset",
+      "url": "https://www.crossref.org/blog/discovering-relationships-between-preprints-and-journal-articles/",
+      "supporting_urls": [],
+      "version_or_commit": "Official post 2023-12-07; dataset records through 2023-08-31",
+      "independent_locator": "Introduction vs Matching strategy vs dataset; numbered capture 88–101, 119–139",
+      "retrieved_at_utc": "2026-10-10T05:14:10.932107+00:00",
+      "observed_operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution.",
+      "governing_conditions_defaults_types_units_exceptions": "The historical notification method uses exact title/first author. The same post introduces a newer bibliographic-query/fuzzy-title/author/year heuristic, explicit candidate thresholds, and an experimental journal-DOI-to-preprint API. Dataset filtering is posted-content subtype preprint and journal-article with both sides present by August 2023.",
+      "applicability_judgment": "Final's review-cue/incomplete-coverage conclusion is supported. It does not claim dataset performance or the new method as current production behavior; it leaves useful newer mechanism detail unexplored.",
+      "capture": {
+        "id": "S19",
+        "url": "https://www.crossref.org/blog/discovering-relationships-between-preprints-and-journal-articles/",
+        "retrieved_at_utc": "2026-10-10T05:14:10.932107+00:00",
+        "http_status": 200,
+        "final_url": "https://www.crossref.org/blog/discovering-relationships-between-preprints-and-journal-articles/",
+        "content_type": "text/html",
+        "raw_path": "evidence/S19.html",
+        "raw_bytes": 56862,
+        "raw_sha256": "2d28876ef39de2593a35e0eb2c93e9cffb4ce7e08f54dfdaf6ae58754fd11e79",
+        "numbered_path": "evidence/S19-numbered.txt",
+        "numbered_sha256": "9ab8ea34b6fa1dde0a4f82e03573eac116acb42e20622587f3a8c89c3076040c",
+        "lines": 264,
+        "retrieval_error": null,
+        "operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution."
+      },
+      "supporting_captures": [],
+      "outcome": "SUPPORTED_SELECTIVE_SUMMARY / BREADTH_LIMIT"
+    },
+    {
+      "id": "R20",
+      "predecessor_source_id": "S20",
+      "title": "JabRef alpha.6 fix release",
+      "url": "https://github.com/JabRef/jabref/releases/tag/v6.0-alpha.6",
+      "supporting_urls": [],
+      "version_or_commit": "v6.0-alpha.6, 6d24100; 2026-05-14T19:46:35Z; prerelease",
+      "independent_locator": "Release header/commit and Fixed #15106; numbered capture 111–131 and 193",
+      "retrieved_at_utc": "2026-10-10T05:14:10.988382+00:00",
+      "observed_operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution.",
+      "governing_conditions_defaults_types_units_exceptions": "Official prerelease note identifies the RIS full-range duplication into start/end fields as fixed and links #15106.",
+      "applicability_judgment": "Evidence of released fix intent/history, not this proposal's exporter run and not proof of arbitrary record correctness.",
+      "capture": {
+        "id": "S20",
+        "url": "https://github.com/JabRef/jabref/releases/tag/v6.0-alpha.6",
+        "retrieved_at_utc": "2026-10-10T05:14:10.988382+00:00",
+        "http_status": 200,
+        "final_url": "https://github.com/JabRef/jabref/releases/tag/v6.0-alpha.6",
+        "content_type": "text/html; charset=utf-8",
+        "raw_path": "evidence/S20.html",
+        "raw_bytes": 221405,
+        "raw_sha256": "e4a396baa89c48d889951a96936fbabb4866912d762eedffcdb604c9fbf434ac",
+        "numbered_path": "evidence/S20-numbered.txt",
+        "numbered_sha256": "918856eba15fd84ac64acff4a8b427b76adab2c5f95ad2d4203a3701633efb33",
+        "lines": 260,
+        "retrieval_error": null,
+        "operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution."
+      },
+      "supporting_captures": [],
+      "outcome": "SUPPORTED_AS_RELEASED_FIX_RECORD"
+    },
+    {
+      "id": "R21",
+      "predecessor_source_id": "S21",
+      "title": "JabRef formatter source/test domain",
+      "url": "https://raw.githubusercontent.com/JabRef/jabref/d687c08/jablib/src/main/java/org/jabref/logic/layout/format/FirstPage.java",
+      "supporting_urls": [
+        "https://raw.githubusercontent.com/JabRef/jabref/d687c08/jablib/src/main/java/org/jabref/logic/layout/format/LastPage.java",
+        "https://raw.githubusercontent.com/JabRef/jabref/d687c08/jablib/src/test/java/org/jabref/logic/layout/format/FirstPageTest.java",
+        "https://raw.githubusercontent.com/JabRef/jabref/d687c08/jablib/src/test/java/org/jabref/logic/layout/format/LastPageTest.java"
+      ],
+      "version_or_commit": "Raw text at merge commit d687c08",
+      "independent_locator": "FirstPage/LastPage format methods and FirstPageTest/LastPageTest provide arguments; all four captures complete",
+      "retrieved_at_utc": "2026-10-10T05:14:11.029471+00:00",
+      "observed_operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution.",
+      "governing_conditions_defaults_types_units_exceptions": "Regex splits spaces, ASCII hyphen and U+2013/U+2014. FirstPage takes first only for exactly two parts, otherwise input; LastPage takes last for two, first for other nonempty parts, empty for null/no parts. Tests cover 345 ASCII single/double ranges and 13905 Unicode ranges including spaced en dash.",
+      "applicability_judgment": "Final accurately limits tests to helpers and names full RIS normalization/export as unrun. It does not generalize to discontinuous ranges or every page field.",
+      "capture": {
+        "id": "S21",
+        "url": "https://raw.githubusercontent.com/JabRef/jabref/d687c08/jablib/src/main/java/org/jabref/logic/layout/format/FirstPage.java",
+        "retrieved_at_utc": "2026-10-10T05:14:11.029471+00:00",
+        "http_status": 200,
+        "final_url": "https://raw.githubusercontent.com/JabRef/jabref/d687c08/jablib/src/main/java/org/jabref/logic/layout/format/FirstPage.java",
+        "content_type": "text/plain; charset=utf-8",
+        "raw_path": "evidence/S21.txt",
+        "raw_bytes": 628,
+        "raw_sha256": "4e74dd66977f450dfda8bd2aa9ef779e6b5dbaa405b9c7df280adf0f15fdde37",
+        "numbered_path": "evidence/S21-numbered.txt",
+        "numbered_sha256": "b1e079f2ae6174ff80b854c7d7ddf8a08f5f848fce569ee1eb9dd3e99f9a85b0",
+        "lines": 20,
+        "retrieval_error": null,
+        "operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution."
+      },
+      "supporting_captures": [
+        {
+          "id": "S21-1",
+          "url": "https://raw.githubusercontent.com/JabRef/jabref/d687c08/jablib/src/main/java/org/jabref/logic/layout/format/LastPage.java",
+          "retrieved_at_utc": "2026-10-10T05:14:11.135830+00:00",
+          "http_status": 200,
+          "final_url": "https://raw.githubusercontent.com/JabRef/jabref/d687c08/jablib/src/main/java/org/jabref/logic/layout/format/LastPage.java",
+          "content_type": "text/plain; charset=utf-8",
+          "raw_path": "evidence/S21-1.txt",
+          "raw_bytes": 704,
+          "raw_sha256": "a589b4b6df3c2ccfdc41584b3fe58bb05b9feeb50f43dd5cdd6b4eea8a674f8b",
+          "numbered_path": "evidence/S21-1-numbered.txt",
+          "numbered_sha256": "7f0a4104b93dbe6290beb40949599cf7be1557f0af23d52e665c60cf31e6b579",
+          "lines": 22,
+          "retrieval_error": null,
+          "operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution."
+        },
+        {
+          "id": "S21-2",
+          "url": "https://raw.githubusercontent.com/JabRef/jabref/d687c08/jablib/src/test/java/org/jabref/logic/layout/format/FirstPageTest.java",
+          "retrieved_at_utc": "2026-10-10T05:14:11.235791+00:00",
+          "http_status": 200,
+          "final_url": "https://raw.githubusercontent.com/JabRef/jabref/d687c08/jablib/src/test/java/org/jabref/logic/layout/format/FirstPageTest.java",
+          "content_type": "text/plain; charset=utf-8",
+          "raw_path": "evidence/S21-2.txt",
+          "raw_bytes": 1162,
+          "raw_sha256": "15c6f4090ac25e2921b06ae8ca10858c27d5aca5bf1762083858f88ade94db57",
+          "numbered_path": "evidence/S21-2-numbered.txt",
+          "numbered_sha256": "e63e0a5448cbea20147d7065da0f645c874589c08f5c0ff63ff30f12737b73bf",
+          "lines": 27,
+          "retrieval_error": null,
+          "operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution."
+        },
+        {
+          "id": "S21-3",
+          "url": "https://raw.githubusercontent.com/JabRef/jabref/d687c08/jablib/src/test/java/org/jabref/logic/layout/format/LastPageTest.java",
+          "retrieved_at_utc": "2026-10-10T05:14:11.377474+00:00",
+          "http_status": 200,
+          "final_url": "https://raw.githubusercontent.com/JabRef/jabref/d687c08/jablib/src/test/java/org/jabref/logic/layout/format/LastPageTest.java",
+          "content_type": "text/plain; charset=utf-8",
+          "raw_path": "evidence/S21-3.txt",
+          "raw_bytes": 1197,
+          "raw_sha256": "142d7c84ce25a41ef4d80fe80c01ab68ecb2e400d25ba34d22232cebe1b83862",
+          "numbered_path": "evidence/S21-3-numbered.txt",
+          "numbered_sha256": "78bd5b064b4a0d1923e1c70e377eb9979eef95e88b265d07add0ddfe6e6f005e",
+          "lines": 28,
+          "retrieval_error": null,
+          "operation": "Read-only primary documentation/history/code retrieval. No application or API metadata lookup or downloaded-code execution."
+        }
+      ],
+      "outcome": "SUPPORTED_WITH_HELPER_ONLY_ORACLE"
+    },
+    {
+      "id": "R22",
+      "predecessor_source_id": null,
+      "title": "Zotero Privacy Policy",
+      "url": "https://www.zotero.org/support/privacy",
+      "version_or_commit": "Living page updated 2026-05-18",
+      "independent_locator": "Data We Collect / Disabling Automatic Requests",
+      "retrieved_at_utc": "2026-10-10T05:17:00.635759+00:00",
+      "observed_operation": "Independent read-only primary documentation retrieval to check local account-free recommendations.",
+      "governing_conditions_defaults_types_units_exceptions": "Local data and account-free use are documented; sync is optional and initially disabled. Attachment retrieval is a separate automatic setting which can be disabled. Final metadata-only/no-account policy is feasible; it is not a claim that unconfigured capture defaults were tested safe.",
+      "applicability_judgment": "Independently retrieved additional governing evidence for consequential local/manual/no-account recommendations. No candidate feedback or repair supplied.",
+      "capture": {
+        "id": "R22",
+        "url": "https://www.zotero.org/support/privacy",
+        "retrieved_at_utc": "2026-10-10T05:17:00.635759+00:00",
+        "http_status": 200,
+        "final_url": "https://www.zotero.org/support/privacy",
+        "content_type": "text/html; charset=UTF-8",
+        "raw_path": "evidence/R22.html",
+        "raw_bytes": 52219,
+        "raw_sha256": "aaec18ba26288b1c92416a8613f2e1427aa5faa6214c7acca41801dff3f01839",
+        "numbered_path": "evidence/R22-numbered.txt",
+        "numbered_sha256": "9b4c677d06ca3e556247a3059bff423abd6c5748116946c3ca87a69fd80c98cd",
+        "lines": 160,
+        "retrieval_error": null,
+        "operation": "Independent read-only primary documentation retrieval to check local account-free recommendations."
+      },
+      "supporting_captures": [],
+      "outcome": "SUPPORTED_WITH_CONDITIONS"
+    },
+    {
+      "id": "R23",
+      "predecessor_source_id": null,
+      "title": "Zotero Syncing",
+      "url": "https://www.zotero.org/support/sync",
+      "version_or_commit": "Living page updated 2026-06-17",
+      "independent_locator": "Opening paragraph and Data Syncing",
+      "retrieved_at_utc": "2026-10-10T05:17:00.743152+00:00",
+      "observed_operation": "Independent read-only primary documentation retrieval to check local account-free recommendations.",
+      "governing_conditions_defaults_types_units_exceptions": "Local storage is default; enabling server data sync requires a Zotero account. File sync is a distinct operation. The proposal leaves sync unconfigured and does not require contributor accounts.",
+      "applicability_judgment": "Independently retrieved additional governing evidence for consequential local/manual/no-account recommendations. No candidate feedback or repair supplied.",
+      "capture": {
+        "id": "R23",
+        "url": "https://www.zotero.org/support/sync",
+        "retrieved_at_utc": "2026-10-10T05:17:00.743152+00:00",
+        "http_status": 200,
+        "final_url": "https://www.zotero.org/support/sync",
+        "content_type": "text/html; charset=UTF-8",
+        "raw_path": "evidence/R23.html",
+        "raw_bytes": 42080,
+        "raw_sha256": "1a9f45b49bac152455c813e60b60a222cd8d4a0f754be57807c6f87ebe363224",
+        "numbered_path": "evidence/R23-numbered.txt",
+        "numbered_sha256": "5154c965629dab420cd631a40a7655391c5587dc1fd6821acd211c8923f27541",
+        "lines": 106,
+        "retrieval_error": null,
+        "operation": "Independent read-only primary documentation retrieval to check local account-free recommendations."
+      },
+      "supporting_captures": [],
+      "outcome": "SUPPORTED_WITH_CONDITIONS"
+    },
+    {
+      "id": "R24",
+      "predecessor_source_id": null,
+      "title": "JabRef Getting Started",
+      "url": "https://docs.jabref.org/getting-started",
+      "version_or_commit": "Living documentation; no application release pinned",
+      "independent_locator": "Creation of a new library / entry creation",
+      "retrieved_at_utc": "2026-10-10T05:17:00.837384+00:00",
+      "observed_operation": "Independent read-only primary documentation retrieval to check local account-free recommendations.",
+      "governing_conditions_defaults_types_units_exceptions": "The library is a text-based BibTeX file by default and can be created through File > New library with manual bibliographic entry. Supports the proposed local/manual workflow; actual field behavior remains unrun.",
+      "applicability_judgment": "Independently retrieved additional governing evidence for consequential local/manual/no-account recommendations. No candidate feedback or repair supplied.",
+      "capture": {
+        "id": "R24",
+        "url": "https://docs.jabref.org/getting-started",
+        "retrieved_at_utc": "2026-10-10T05:17:00.837384+00:00",
+        "http_status": 200,
+        "final_url": "https://docs.jabref.org/getting-started",
+        "content_type": "text/html; charset=utf-8",
+        "raw_path": "evidence/R24.html",
+        "raw_bytes": 627878,
+        "raw_sha256": "e79bacdeb312565485d8da8c1f51688e81294b712be1695ce898f5031c73335b",
+        "numbered_path": "evidence/R24-numbered.txt",
+        "numbered_sha256": "c33dc8e781099e219da331172dc19a305f2cfa67205341574927c82e78233498",
+        "lines": 97,
+        "retrieval_error": null,
+        "operation": "Independent read-only primary documentation retrieval to check local account-free recommendations."
+      },
+      "supporting_captures": [],
+      "outcome": "SUPPORTED_WITH_CONDITIONS"
+    }
+  ],
+  "claim_reviews": [
+    {
+      "id": "CLAIM-S01",
+      "primary_evidence_ids": [
+        "R01"
+      ],
+      "original_binding": "S01",
+      "authored_final_locator": "final.md:25",
+      "independent_governing_conditions": "Title/DOI/ISBN match or absence, publication years within one year, creator last name plus first initial; library-local candidates; no non-duplicate marking in served guide; master and alternative field values; merged tags/collections retained.",
+      "outcome": "SUPPORTED_WITH_STATED_VERSION_LIMIT",
+      "assessment": "The final accurately describes served documentation, not a verified current algorithm. It recommends human review; neither similarity nor a duplicate list proves identity."
+    },
+    {
+      "id": "CLAIM-S02",
+      "primary_evidence_ids": [
+        "R02"
+      ],
+      "original_binding": "S02",
+      "authored_final_locator": "final.md:25 and :46",
+      "independent_governing_conditions": "RIS, BibTeX, BibLaTeX and CSL JSON are listed import formats; file support alone does not demonstrate field fidelity or round-trip success.",
+      "outcome": "SUPPORTED",
+      "assessment": "Common interchange support is enough to investigate an optional file; final retains actual mapping tests."
+    },
+    {
+      "id": "CLAIM-S03",
+      "primary_evidence_ids": [
+        "R03"
+      ],
+      "original_binding": "S03",
+      "authored_final_locator": "final.md:25 and :46",
+      "independent_governing_conditions": "Output can be a citation style or bibliographic format. Text is default; dragging over 50 items can be disabled by its default threshold. Import encoding is auto-detected with manual override.",
+      "outcome": "SUPPORTED",
+      "assessment": "Final uses the configurable mechanism without claiming unlimited drag capacity or default RIS. The threshold governs drag Quick Copy, not all bibliography exports."
+    },
+    {
+      "id": "CLAIM-S04",
+      "primary_evidence_ids": [
+        "R04"
+      ],
+      "original_binding": "S04",
+      "authored_final_locator": "final.md:48",
+      "independent_governing_conditions": "Whole-library transfer can lose word-processor links; RDF is least lossy; RIS/MODS can carry notes but do not carry attachment files or collections; mappings can become outdated.",
+      "outcome": "SUPPORTED_WITH_STATED_LIMIT",
+      "assessment": "Final's warning does not forbid a public citation subset. It keeps provenance/version relations outside the interchange file and promises no lossless archive."
+    },
+    {
+      "id": "CLAIM-S05",
+      "primary_evidence_ids": [
+        "R05"
+      ],
+      "original_binding": "S05",
+      "authored_final_locator": "final.md:25 and :103",
+      "independent_governing_conditions": "Quick Copy supports BibTeX and RIS. Styled bibliography has RTF, HTML, clipboard and print output. The footer date is 2025-12-12.",
+      "outcome": "SUPPORTED; ORIGINAL_WORDING_CORRECTED",
+      "assessment": "The critic's documentation-date correction is justified. Styled output and manager interchange remain distinct operations."
+    },
+    {
+      "id": "CLAIM-S06",
+      "primary_evidence_ids": [
+        "R06"
+      ],
+      "original_binding": "S06",
+      "authored_final_locator": "final.md:27",
+      "independent_governing_conditions": "Edit distance gives additional weight to author/editor/title/journal. Choices include left/right/both/merged. Exact duplicate automatic removal is an offered action; keep-merged removes prior entries.",
+      "outcome": "SUPPORTED_WITH_STATED_VERSION_LIMIT",
+      "assessment": "Final does not convert offered exact removal to a mandated automatic policy; preserved source text is a separate local design."
+    },
+    {
+      "id": "CLAIM-S07",
+      "primary_evidence_ids": [
+        "R07"
+      ],
+      "original_binding": "S07",
+      "authored_final_locator": "final.md:27",
+      "independent_governing_conditions": "User selects two entries; compares/chooses values or manually edits; selected fields can combine groups/keywords/comments/files; Merge or Cancel remains explicit.",
+      "outcome": "SUPPORTED",
+      "assessment": "A manager merge is not an immutable audit log. The final correctly supplies a retained submission/provenance model as a local choice."
+    },
+    {
+      "id": "CLAIM-S08",
+      "primary_evidence_ids": [
+        "R08"
+      ],
+      "original_binding": "S08",
+      "authored_final_locator": "final.md:27 and :34",
+      "independent_governing_conditions": "Identifier discovery needs sufficient accurate input and can fail. DOI/ISBN completion is disabled without an identifier. Original left fields are default; missing fields obtain DOI values in a merge view; final Merge/Cancel is explicit. Full-text search is a separate route.",
+      "outcome": "SUPPORTED",
+      "assessment": "Final keeps lookup and editor approval distinct and does not misapply the identifier-completion prerequisite to separate DOI-less bibliographic search."
+    },
+    {
+      "id": "CLAIM-S09",
+      "primary_evidence_ids": [
+        "R09"
+      ],
+      "original_binding": "S09",
+      "authored_final_locator": "final.md:27, :46 and source index S09",
+      "independent_governing_conditions": "File conversion can run without GUI. -o defaults to BibTeX unless a filter is named. Import precedes export; without -i, last successfully loaded file is exported. One -i/-o file; a same-name custom filter takes precedence.",
+      "outcome": "SUPPORTED_AS_LIVING_DOCS",
+      "assessment": "Final recommends a version-pinned conversion option, not a command run or beta CLI guarantee. No field/default/unit is overgeneralized."
+    },
+    {
+      "id": "CLAIM-S10",
+      "primary_evidence_ids": [
+        "R10"
+      ],
+      "original_binding": "S10",
+      "authored_final_locator": "final.md:27",
+      "independent_governing_conditions": "Release is beta/prerelease. Zotero Compatibility Mode is a preference for CSL citations emitted/read through LibreOffice, not general RIS fidelity.",
+      "outcome": "SUPPORTED",
+      "assessment": "Conditional first testing and the alternative are reasonable. Chronology alone does not prove all alpha fixes survived; the final retains chosen-build validation."
+    },
+    {
+      "id": "CLAIM-S11",
+      "primary_evidence_ids": [
+        "R11"
+      ],
+      "original_binding": "S11",
+      "authored_final_locator": "final.md:40–42",
+      "independent_governing_conditions": "BibTeX pages 13905--13911 exported the complete normalized range into both RIS SP and EP; reporter says single '-' behaved correctly. Closed through #15315 on 2026-03-13.",
+      "outcome": "SUPPORTED_AS_REPORTED_CASE",
+      "assessment": "The final names the affected operation, fields, input and reported version. It does not claim all releases/fields/records fail."
+    },
+    {
+      "id": "CLAIM-S12",
+      "primary_evidence_ids": [
+        "R12"
+      ],
+      "original_binding": "S12",
+      "authored_final_locator": "final.md:40–42",
+      "independent_governing_conditions": "Old helpers only split ASCII; change adds en/em dash. PR links #15106 and gives SP=13905/EP=13911 test instructions. Merge queue says d687c08 and 49/50 checks passed.",
+      "outcome": "SUPPORTED_WITH_ORACLE_LIMIT",
+      "assessment": "Externally reported tests/check counts are not local semantic validation. Normalization between BibTeX and RIS matters; final explicitly preserves that check."
+    },
+    {
+      "id": "CLAIM-S13",
+      "primary_evidence_ids": [
+        "R13"
+      ],
+      "original_binding": "S13",
+      "authored_final_locator": "final.md:34–36",
+      "independent_governing_conditions": "JSON metadata comes from members/trusted sources; no signup needed; /works search and /works/{doi} record retrieval concern Crossref records, not all DOI agencies or scholarly objects.",
+      "outcome": "SUPPORTED",
+      "assessment": "A no-match is correctly treated as provider non-return, never invalidity/nonexistence. Broad bibliographic search is a realistic DOI-less candidate path."
+    },
+    {
+      "id": "CLAIM-S14",
+      "primary_evidence_ids": [
+        "R14"
+      ],
+      "original_binding": "S14",
+      "authored_final_locator": "final.md:36",
+      "independent_governing_conditions": "Public access needs no authentication/identification. Polite mode supplies email through mailto or agent header; Plus is keyed/premium. Rate and interval headers and concurrency header govern requests. 429 calls for lower rate/concurrency; cache responses. Table values have no fixed interval stated in its cells.",
+      "outcome": "SUPPORTED",
+      "assessment": "Final does not invent a requests-per-second quota, conflate public with polite, or require an account. Lead email/provider choice is an honest policy decision."
+    },
+    {
+      "id": "CLAIM-S15",
+      "primary_evidence_ids": [
+        "R15"
+      ],
+      "original_binding": "S15",
+      "authored_final_locator": "final.md:36",
+      "independent_governing_conditions": "Choose small useful result sets; cache; large queries can change due to reindexing; 429 requires backoff. These bulk conditions are not a claim that small pilot lookup always succeeds.",
+      "outcome": "SUPPORTED",
+      "assessment": "The final's smallest-request/caching advice is bounded and not reported as an API check."
+    },
+    {
+      "id": "CLAIM-S16",
+      "primary_evidence_ids": [
+        "R16"
+      ],
+      "original_binding": "S16",
+      "authored_final_locator": "final.md:28",
+      "independent_governing_conditions": "Intra-work relation names include isPreprintOf/hasPreprint, isVersionOf/hasVersion, variant and manifestation. A typed relation can target another agency's DOI or non-DOI identifier. Missing DOI causes deposit failure; non-DOI identifiers are unverified. DOI deposits create reciprocal relations; the second item's own metadata need not assert it.",
+      "outcome": "SUPPORTED_WITH_PROVIDER_DOMAIN",
+      "assessment": "Final uses an analogy and source-conditioned asserted links, not universal deduplication or consumer truth. Related manifestations remain separate."
+    },
+    {
+      "id": "CLAIM-S17",
+      "primary_evidence_ids": [
+        "R17"
+      ],
+      "original_binding": "S17",
+      "authored_final_locator": "final.md:28",
+      "independent_governing_conditions": "Guide concerns member direct XML deposits; helper tools cannot register this record type. Preprint is a type enumeration. Status values are withdrawn/removed; version number/description and status are 5.4.0 additions. isPreprintOf links to AAM/VoR. Cited-by posted content inclusion defaults off, a different operation.",
+      "outcome": "SUPPORTED_WITH_EXACT_TYPE_DOMAIN",
+      "assessment": "Final does not assert that volunteers can deposit or that every repository supplies these fields. Its local publication-kind labels are not claimed as Crossref status enum values; Cited-by default is inapplicable to proposed REST lookup."
+    },
+    {
+      "id": "CLAIM-S18",
+      "primary_evidence_ids": [
+        "R18"
+      ],
+      "original_binding": "S18",
+      "authored_final_locator": "final.md:28–30",
+      "independent_governing_conditions": "Accepted manuscripts are not posted content. Crossref's preprint-provider rules use separate version DOIs/isVersionOf, above-fold label/link, and relationship updates after notification. Title/first-author matches are emailed review suggestions to the depositor.",
+      "outcome": "SUPPORTED_WITH_PROVIDER_SCOPE",
+      "assessment": "The final does not impose member deposit duties on the volunteer group or declare a universal DOI rule. Absent relations remain inconclusive."
+    },
+    {
+      "id": "CLAIM-S19",
+      "primary_evidence_ids": [
+        "R19"
+      ],
+      "original_binding": "S19",
+      "authored_final_locator": "final.md:28–30; source index S19",
+      "independent_governing_conditions": "The historical notification method uses exact title/first author. The same post introduces a newer bibliographic-query/fuzzy-title/author/year heuristic, explicit candidate thresholds, and an experimental journal-DOI-to-preprint API. Dataset filtering is posted-content subtype preprint and journal-article with both sides present by August 2023.",
+      "outcome": "SUPPORTED_SELECTIVE_SUMMARY / BREADTH_LIMIT",
+      "assessment": "Final's review-cue/incomplete-coverage conclusion is supported. It does not claim dataset performance or the new method as current production behavior; it leaves useful newer mechanism detail unexplored."
+    },
+    {
+      "id": "CLAIM-S20",
+      "primary_evidence_ids": [
+        "R20"
+      ],
+      "original_binding": "S20",
+      "authored_final_locator": "final.md:40–42",
+      "independent_governing_conditions": "Official prerelease note identifies the RIS full-range duplication into start/end fields as fixed and links #15106.",
+      "outcome": "SUPPORTED_AS_RELEASED_FIX_RECORD",
+      "assessment": "Evidence of released fix intent/history, not this proposal's exporter run and not proof of arbitrary record correctness."
+    },
+    {
+      "id": "CLAIM-S21",
+      "primary_evidence_ids": [
+        "R21"
+      ],
+      "original_binding": "S21",
+      "authored_final_locator": "final.md:40–42; source index S21",
+      "independent_governing_conditions": "Regex splits spaces, ASCII hyphen and U+2013/U+2014. FirstPage takes first only for exactly two parts, otherwise input; LastPage takes last for two, first for other nonempty parts, empty for null/no parts. Tests cover 345 ASCII single/double ranges and 13905 Unicode ranges including spaced en dash.",
+      "outcome": "SUPPORTED_WITH_HELPER_ONLY_ORACLE",
+      "assessment": "Final accurately limits tests to helpers and names full RIS normalization/export as unrun. It does not generalize to discontinuous ranges or every page field."
+    },
+    {
+      "id": "CLAIM-R22",
+      "primary_evidence_ids": [
+        "R22"
+      ],
+      "original_binding": null,
+      "authored_final_locator": "final.md:5-19 and :25-27",
+      "independent_governing_conditions": "Local data and account-free use are documented; sync is optional and initially disabled. Attachment retrieval is a separate automatic setting which can be disabled. Final metadata-only/no-account policy is feasible; it is not a claim that unconfigured capture defaults were tested safe.",
+      "outcome": "SUPPORTED_WITH_CONDITIONS",
+      "assessment": "Checks the local/manual/account-free recommendation without claiming tested operation or prescribing a new mandatory feature."
+    },
+    {
+      "id": "CLAIM-R23",
+      "primary_evidence_ids": [
+        "R23"
+      ],
+      "original_binding": null,
+      "authored_final_locator": "final.md:5-19 and :25-27",
+      "independent_governing_conditions": "Local storage is default; enabling server data sync requires a Zotero account. File sync is a distinct operation. The proposal leaves sync unconfigured and does not require contributor accounts.",
+      "outcome": "SUPPORTED_WITH_CONDITIONS",
+      "assessment": "Checks the local/manual/account-free recommendation without claiming tested operation or prescribing a new mandatory feature."
+    },
+    {
+      "id": "CLAIM-R24",
+      "primary_evidence_ids": [
+        "R24"
+      ],
+      "original_binding": null,
+      "authored_final_locator": "final.md:5-19 and :25-27",
+      "independent_governing_conditions": "The library is a text-based BibTeX file by default and can be created through File > New library with manual bibliographic entry. Supports the proposed local/manual workflow; actual field behavior remains unrun.",
+      "outcome": "SUPPORTED_WITH_CONDITIONS",
+      "assessment": "Checks the local/manual/account-free recommendation without claiming tested operation or prescribing a new mandatory feature."
+    }
+  ],
+  "original_artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266,
+      "inspection": "complete original bytes read; source content semantically reviewed"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A7-02/brief.md",
+      "bytes": 3324,
+      "sha256": "9614eaf2ea2e05c77b4ca739f614801595832fb20b1160fd1163f8e93ee73b02",
+      "mtime_ns": 1791606535846696096,
+      "inspection": "complete original bytes read; source content semantically reviewed"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A7-02/plan.md",
+      "bytes": 5916,
+      "sha256": "03928ccee4efbf0f624b296c0d8e7f21ce0d491a5aa52eca4e763ffd08d42131",
+      "mtime_ns": 1791606535846842695,
+      "inspection": "complete original bytes read; source content semantically reviewed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/terminal-science-freeze-root.json",
+      "bytes": 7103,
+      "sha256": "3663940a8c8c40a98ade28ec2f7101860a6e15f952d6be11d2c0f0b0807016a8",
+      "mtime_ns": 1791609072934484045,
+      "inspection": "complete original bytes read; source content semantically reviewed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/inputs/brief.md",
+      "bytes": 3324,
+      "sha256": "9614eaf2ea2e05c77b4ca739f614801595832fb20b1160fd1163f8e93ee73b02",
+      "mtime_ns": 1791606537372625492,
+      "inspection": "complete original bytes read; source content semantically reviewed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/investigator/assignment.md",
+      "bytes": 3712,
+      "sha256": "cd18af08845b88510f5c0a40eb1d24415ebe7bb991640300694c892251d53ddb",
+      "mtime_ns": 1791606537373724607,
+      "inspection": "complete original bytes read; source content semantically reviewed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/investigator/input-map.json",
+      "bytes": 714,
+      "sha256": "f3c273a95b93155fafafc8736195f823bd4e5f41720b4abea63d396d246f876d",
+      "mtime_ns": 1791606537373512827,
+      "inspection": "complete original bytes read; source content semantically reviewed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/investigator/freeze.json",
+      "bytes": 1654,
+      "sha256": "8a66d38b76d2bb68665f22474d12405cf071da3b702cee946d8ed01e33e11d8f",
+      "mtime_ns": 1791606537374004445,
+      "inspection": "complete original bytes read; source content semantically reviewed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/investigator/source-map.json",
+      "bytes": 25136,
+      "sha256": "8df4105b92c662ed0b528294c92aca27437c02f8378972802be8f48badd675af",
+      "mtime_ns": 1791607555451332337,
+      "inspection": "complete original bytes read; source content semantically reviewed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/investigator/sources/index.md",
+      "bytes": 8710,
+      "sha256": "f40a0d140c25307488818fc28f7f92485864655b270a0dd08e8f89ef18d9e4f1",
+      "mtime_ns": 1791607531906396740,
+      "inspection": "complete original bytes read; source content semantically reviewed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/critic/assignment.md",
+      "bytes": 3306,
+      "sha256": "84906669a797dddc9afad64989864c4bcdf8f9e6a580ff33b7073c7933cb1a01",
+      "mtime_ns": 1791607760014141114,
+      "inspection": "complete original bytes read; source content semantically reviewed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/critic/input-map.json",
+      "bytes": 1457,
+      "sha256": "03e4aa33c172911475a5f04f645cbb8cc97d89dd5b3395fe66789460738fe2d7",
+      "mtime_ns": 1791607760149556215,
+      "inspection": "complete original bytes read; source content semantically reviewed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/critic/freeze.json",
+      "bytes": 3201,
+      "sha256": "01d2b8ebdf70a165da21b6397957ed2141071d1bb17d6559f4b0bb5dc31b3877",
+      "mtime_ns": 1791607760150194860,
+      "inspection": "complete original bytes read; source content semantically reviewed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/critic/source-map.json",
+      "bytes": 14122,
+      "sha256": "28aad9e1ea904d2f7712715d02add8e8751abc519968cb8d784b3372b8e94eb2",
+      "mtime_ns": 1791608413023837778,
+      "inspection": "complete original bytes read; source content semantically reviewed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/reviser/assignment.md",
+      "bytes": 3286,
+      "sha256": "e3708eadf5e03f4caaed30f608e36280244d747069b966f4c1e94f2556fd6b52",
+      "mtime_ns": 1791608590151043132,
+      "inspection": "complete original bytes read; source content semantically reviewed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/reviser/input-map.json",
+      "bytes": 1768,
+      "sha256": "a5105be77c54e8f922164374fd17cd8ce24741919032f596aaf2d311ee722921",
+      "mtime_ns": 1791608590314236819,
+      "inspection": "complete original bytes read; source content semantically reviewed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/reviser/freeze.json",
+      "bytes": 3972,
+      "sha256": "57f87d68be615deb4cd01d93ee09a673a74fe454dc95f94f963f2e36eeb4d894",
+      "mtime_ns": 1791608590314936068,
+      "inspection": "complete original bytes read; source content semantically reviewed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/reviser/source-map.json",
+      "bytes": 39035,
+      "sha256": "a202416f75c9fc69079d7288df4072ce1ad23988cd98d8b625e0dcc3a2a1b6a8",
+      "mtime_ns": 1791609042925841822,
+      "inspection": "complete original bytes read; source content semantically reviewed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/reviser/sources/index.md",
+      "bytes": 22584,
+      "sha256": "14083e269e884314bd98f62ff57787e6d7e20f1a1bf91446db89d90c026b9350",
+      "mtime_ns": 1791608920822399891,
+      "inspection": "complete original bytes read; source content semantically reviewed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/investigator/discovery.md",
+      "bytes": 9879,
+      "sha256": "4bc5116840da899c1967b5bb157e05c67e579b3a0634edb48f5f53aa48cf58b9",
+      "mtime_ns": 1791606785475541483,
+      "inspection": "complete original bytes read; source content semantically reviewed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/investigator/draft.md",
+      "bytes": 23136,
+      "sha256": "7a0786233b44b078654a35efbb9b42051ecb03fbe796de12b7e1c8720a5e68f9",
+      "mtime_ns": 1791607549792340584,
+      "inspection": "complete original bytes read; source content semantically reviewed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/investigator/revealed-plan.md",
+      "bytes": 5916,
+      "sha256": "03928ccee4efbf0f624b296c0d8e7f21ce0d491a5aa52eca4e763ffd08d42131",
+      "mtime_ns": 1791606795839279134,
+      "inspection": "complete original bytes read; source content semantically reviewed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/investigator/plan-reveal.json",
+      "bytes": 426,
+      "sha256": "34658fdfbaa1f4d16ef645c51b61d6defbbce4cf58d23ea162f0e18eb784f55a",
+      "mtime_ns": 1791606795839409471,
+      "inspection": "complete original bytes read; source content semantically reviewed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/critic/critique.md",
+      "bytes": 10531,
+      "sha256": "42d8a8a61b9d1ce94e09fec148870e0d5c679b6dfe8f5f6539002f4ce1b19b0d",
+      "mtime_ns": 1791608365273518215,
+      "inspection": "complete original bytes read; source content semantically reviewed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/reviser/final.md",
+      "bytes": 26563,
+      "sha256": "3c7da9f34980d358317532d7711dbcbc40257e1ccd3a0b0c4bb83bd8cfabe66a",
+      "mtime_ns": 1791609042924256910,
+      "inspection": "complete original bytes read; source content semantically reviewed"
+    }
+  ],
+  "freeze_checks": [
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/critic/critique.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/critic/source-map.json",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/investigator/discovery.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/investigator/draft.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/investigator/revealed-plan.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/investigator/source-map.json",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/investigator/sources/index.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/reviser/final.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/reviser/source-map.json",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/reviser/sources/index.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "freeze_stage": "investigator",
+      "path": "ER12_RUNTIME/runs/A7-02/control/inputs/brief.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "freeze_stage": "investigator",
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/investigator/assignment.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "freeze_stage": "investigator",
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/investigator/input-map.json",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/A7-02/control/inputs/brief.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/critic/assignment.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/critic/input-map.json",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/investigator/discovery.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/investigator/draft.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/investigator/source-map.json",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/investigator/revealed-plan.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/investigator/plan-reveal.json",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A7-02/control/inputs/brief.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/reviser/assignment.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/reviser/input-map.json",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/investigator/discovery.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/investigator/draft.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/investigator/source-map.json",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/investigator/revealed-plan.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/investigator/plan-reveal.json",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/critic/critique.md",
+      "sha256_matches": true,
+      "bytes_match": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/critic/source-map.json",
+      "sha256_matches": true,
+      "bytes_match": true
+    }
+  ],
+  "lineage_diff": "evidence/draft-to-final.diff",
+  "retrieval_manifest": "retrieval-manifest.json",
+  "web_tool_extracts": [
+    "evidence/evidence_code.json",
+    "evidence/evidence_conditions.json",
+    "evidence/evidence_context.json",
+    "evidence/evidence_crossref.json",
+    "evidence/evidence_deepconditions.json",
+    "evidence/evidence_history.json",
+    "evidence/evidence_jabref_docs.json",
+    "evidence/evidence_local_primary.json",
+    "evidence/evidence_local_use.json",
+    "evidence/evidence_zotero.json"
+  ],
+  "missing_or_incomplete": [
+    "stages/critic/sources (declared by reviser input-map but no directory; critic evidence is embedded in source-map.json)"
+  ],
+  "assessment": "assessment.md",
+  "structured_assessment": "assessment.json"
+}

@@ -1,0 +1,18 @@
+{
+  "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A8-A8-01-treatment-critic-v1",
+  "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A8-A8-01-treatment-critic-v1",
+  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A8-A8-01-treatment-critic-v1:ordinal:1",
+  "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A8-A8-01-treatment-critic-v1",
+  "status": "completed",
+  "workState": "result_available",
+  "hasPendingChildRuns": false,
+  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A8-A8-01-treatment-critic-v1:ordinal:1",
+  "latestTerminalStatus": "completed",
+  "latestTerminalSummary": "Completed the critic stage and saved the required outputs before completing the native Goal. Its directly observed terminal status is **complete**.\n\n- [critique.md](ER12_RUNTIME/runs/A8-01/treatment/stages/critic/critique.md)\n- [source-map.json](ER12_RUNTIME/runs/A8-01/treatment/stages/critic/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A8-01/treatment/stages/critic/sources/index.md)\n\nThe critique covers all eight brief obligations and six fixed SCW checks. Its main finding is that the draft overstates OCFL’s per-version inventories as required: the spec recommends them, while requiring a digest sidecar for each inventory that exists. No product or restore validation was run.",
+  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A8-A8-01-treatment-critic-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:cab99c8b-aa13-43e1-88b0-b84026939fa8",
+  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+  "model": "gpt-6-luna",
+  "summary": "Completed the critic stage and saved the required outputs before completing the native Goal. Its directly observed terminal status is **complete**.\n\n- [critique.md](ER12_RUNTIME/runs/A8-01/treatment/stages/critic/critique.md)\n- [source-map.json](ER12_RUNTIME/runs/A8-01/treatment/stages/critic/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A8-01/treatment/stages/critic/sources/index.md)\n\nThe critique covers all eight brief obligations and six fixed SCW checks. Its main finding is that the draft overstates OCFL’s per-version inventories as required: the spec recommends them, while requiring a digest sidecar for each inventory that exists. No product or restore validation was run.",
+  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A8-A8-01-treatment-critic-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:cab99c8b-aa13-43e1-88b0-b84026939fa8",
+  "waitTimedOut": false
+}

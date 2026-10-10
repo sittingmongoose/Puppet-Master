@@ -1,0 +1,110 @@
+{
+  "version": "invocation-clarification-v1",
+  "stageDir": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator",
+  "backupDir": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/.invocation-backup-9d45ce2fc417490d8bb066305d7570e5",
+  "args": {
+    "clientRequestId": "er12-A2-A2-02-treatment-investigator-topology-v1",
+    "mode": "async",
+    "role": "general",
+    "title": "ER12 A2 A2-02-treatment investigator",
+    "target": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna",
+      "options": {
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      }
+    },
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "task": "Execute only the assigned reference stage. Read ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/assignment.md and its input-map.json. Create one actual native Goal under 4,000 characters referring to the assignment; save required outputs before native terminal. No nested agents or parent-history use.\nBefore any case/source input or inference, activate exactly ONE actual exposed native Goal using this exact immutable freeze.native_goal_objective string: \"ER11 investigator stage, run A2-02-treatment: execute ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.\"\nNo case input is needed for activation. Preserve the exact native activation response; if unsupported, stop before inference and preserve the exact diagnostic. No second or replacement Goal. Original Goal lifecycle and scope remain binding. Follow the appended ROOT MECHANICS CLARIFICATION v1 in the assignment.\n"
+  },
+  "config": "ER12_RUNTIME/configs/A2-02-treatment.json",
+  "commands": [
+    {
+      "action": "freeze-investigator",
+      "argv_template": [
+        "python3",
+        "ER12_RUNTIME/helpers/topology-v1/prepare.py",
+        "freeze-investigator",
+        "--config",
+        "ER12_RUNTIME/configs/A2-02-treatment.json",
+        "--stage",
+        "investigator",
+        "--json",
+        "<exact fresh active native get_goal response JSON>"
+      ],
+      "shell_template": "python3 ER12_RUNTIME/helpers/topology-v1/prepare.py freeze-investigator --config ER12_RUNTIME/configs/A2-02-treatment.json --stage investigator --json '<exact fresh active native get_goal response JSON>'",
+      "requires_fresh_active_native_response": true
+    },
+    {
+      "action": "confirm-frozen-active",
+      "argv_template": [
+        "python3",
+        "ER12_RUNTIME/helpers/topology-v1/prepare.py",
+        "confirm-frozen-active",
+        "--config",
+        "ER12_RUNTIME/configs/A2-02-treatment.json",
+        "--stage",
+        "investigator",
+        "--json",
+        "<exact fresh active native get_goal response JSON>"
+      ],
+      "shell_template": "python3 ER12_RUNTIME/helpers/topology-v1/prepare.py confirm-frozen-active --config ER12_RUNTIME/configs/A2-02-treatment.json --stage investigator --json '<exact fresh active native get_goal response JSON>'",
+      "requires_fresh_active_native_response": true
+    },
+    {
+      "action": "author-intake",
+      "argv_template": [
+        "python3",
+        "ER12_RUNTIME/helpers/topology-v1/prepare.py",
+        "author-intake",
+        "--config",
+        "ER12_RUNTIME/configs/A2-02-treatment.json",
+        "--stage",
+        "investigator",
+        "--notification-sha256",
+        "<exact SHA-256 delivered by root>",
+        "--json",
+        "<exact fresh active native get_goal response JSON>"
+      ],
+      "shell_template": "python3 ER12_RUNTIME/helpers/topology-v1/prepare.py author-intake --config ER12_RUNTIME/configs/A2-02-treatment.json --stage investigator --notification-sha256 '<exact SHA-256 delivered by root>' --json '<exact fresh active native get_goal response JSON>'",
+      "requires_fresh_active_native_response": true
+    },
+    {
+      "action": "seal-final",
+      "argv_template": [
+        "python3",
+        "ER12_RUNTIME/helpers/topology-v1/prepare.py",
+        "seal-final",
+        "--config",
+        "ER12_RUNTIME/configs/A2-02-treatment.json",
+        "--stage",
+        "investigator",
+        "--json",
+        "<exact fresh active native get_goal response JSON>"
+      ],
+      "shell_template": "python3 ER12_RUNTIME/helpers/topology-v1/prepare.py seal-final --config ER12_RUNTIME/configs/A2-02-treatment.json --stage investigator --json '<exact fresh active native get_goal response JSON>'",
+      "requires_fresh_active_native_response": true
+    }
+  ],
+  "original_sha256": {
+    "request.json": "aae0ba8826752c64905a1760076fb9fc1c7e940f7087738d5f39dfabb6bb0e72",
+    "freeze.json": "a7de438be095b2466832adea436cb17219fc967648f576a2aacea08923dd132a",
+    "input-map.json": "761482ada2fee79e2d44583896f9885c0cfcfc83671e382a93865023f7fda1f2",
+    "assignment.md": "46e3bde1113289ce249ceef3c526cd3851bee4032ed4f39ca5c8124500a04562"
+  },
+  "updated_sha256": {
+    "request.json": "3d9e1109036c8187cc0386336ead4c00a466600a474040e8ad7ffb3c35a5e4ab",
+    "freeze.json": "bd11c241ed88102220650d617512fece29b11478f3c7c8221a6c0348302649bc",
+    "input-map.json": "761482ada2fee79e2d44583896f9885c0cfcfc83671e382a93865023f7fda1f2",
+    "assignment.md": "ffa2beee5a0d53a505930810c0fe7976210d01898e15e151f878c2d1b0fe0739"
+  },
+  "helper_pins": {
+    "ER12_RUNTIME/helpers/topology-v1/prepare.py": "3cf320737c60b45de8c524fea0484f78a688bf720a0f60b9becc5e2873f8dbf0",
+    "ER12_RUNTIME/helpers/role-v2/prepare-role.py": "83cebd8dc762eb780fa04399676a39c709654995f6e2a22e934a1f821af78478"
+  },
+  "root_only_integration": true,
+  "dispatch_performed": false,
+  "idempotent": false
+}

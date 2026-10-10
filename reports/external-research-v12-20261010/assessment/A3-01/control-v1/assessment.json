@@ -1,0 +1,2682 @@
+{
+  "schema": "ER12-independent-full-pipeline-assessment-v1",
+  "run_id": "A3-01-control",
+  "arm": "control",
+  "fixture_id": "ER12-A3-01-FRESH",
+  "reviewer": "codex-er12-a3-control-review-v1",
+  "assessment_saved_at_utc": "2026-10-10T04:42:39.981128+00:00",
+  "source_judgment": "FAIL",
+  "final_qualification": "FAIL",
+  "delivery": "COMPLETE_FROZEN_FINAL_PRESENT",
+  "source_judgment_basis": "Three remaining material source-backed findings, F1–F3. Corrected R1/R2 lineage defects are not counted as remaining errors. Hashes, record counts, critic agreement and T3/native delivery are not semantic proof.",
+  "coverage": {
+    "all_six_axes_assessed": true,
+    "unassessed_axes": [],
+    "exact_plan_sentences": 26,
+    "plan_subassumptions": 3,
+    "criticism_dispositions": 4,
+    "source_claim_groups": [
+      {
+        "id": "K01",
+        "subject": "FTS5 availability and release/build scope",
+        "judgment": "SUPPORTED_WITH_DEPLOYMENT_UNKNOWN",
+        "primary_evidence": [
+          "E01",
+          "E02",
+          "E05"
+        ],
+        "final_locators": [
+          {
+            "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+            "line": 7,
+            "detail": "FTS5 availability and release/build scope"
+          },
+          {
+            "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+            "line": 19,
+            "detail": "FTS5 availability and release/build scope"
+          },
+          {
+            "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+            "line": 125,
+            "detail": "FTS5 availability and release/build scope"
+          }
+        ]
+      },
+      {
+        "id": "K02",
+        "subject": "External-content same-database authority, disk tradeoff and row-ID mapping",
+        "judgment": "SUPPORTED",
+        "primary_evidence": [
+          "E01"
+        ],
+        "final_locators": [
+          {
+            "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+            "line": 7,
+            "detail": "External-content same-database authority, disk tradeoff and row-ID mapping"
+          },
+          {
+            "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+            "line": 40,
+            "detail": "External-content same-database authority, disk tradeoff and row-ID mapping"
+          },
+          {
+            "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+            "line": 50,
+            "detail": "External-content same-database authority, disk tradeoff and row-ID mapping"
+          },
+          {
+            "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+            "line": 65,
+            "detail": "External-content same-database authority, disk tradeoff and row-ID mapping"
+          }
+        ]
+      },
+      {
+        "id": "K03",
+        "subject": "Ordinary contentless versus contentless-delete operations and exceptions",
+        "judgment": "SUPPORTED_WITH_MINOR_WORDING_L1",
+        "primary_evidence": [
+          "E01",
+          "E05"
+        ],
+        "final_locators": [
+          {
+            "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+            "line": 52,
+            "detail": "Ordinary contentless versus contentless-delete operations and exceptions"
+          }
+        ]
+      },
+      {
+        "id": "K04",
+        "subject": "Unicode61 Unicode-6.1 categories, Latin folding and option-1 legacy bug",
+        "judgment": "SUPPORTED_EXCEPT_COMBINING_EXCEPTION_F1",
+        "primary_evidence": [
+          "E01",
+          "E15",
+          "E19"
+        ],
+        "final_locators": [
+          {
+            "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+            "line": 34,
+            "detail": "Unicode61 Unicode-6.1 categories, Latin folding and option-1 legacy bug"
+          }
+        ]
+      },
+      {
+        "id": "K05",
+        "subject": "Blanket combining marks become separators",
+        "judgment": "MATERIAL_WRONG_F1",
+        "primary_evidence": [
+          "E15",
+          "E19",
+          "E14"
+        ],
+        "final_locators": [
+          {
+            "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+            "line": 34,
+            "detail": "Blanket combining marks become separators"
+          }
+        ]
+      },
+      {
+        "id": "K06",
+        "subject": "Bounded parser, binding/escaping, FTS tokenizer API and field-local phrases",
+        "judgment": "SUPPORTED_PROPOSAL",
+        "primary_evidence": [
+          "E01"
+        ],
+        "final_locators": [
+          {
+            "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+            "line": 26,
+            "detail": "Bounded parser, binding/escaping, FTS tokenizer API and field-local phrases"
+          },
+          {
+            "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+            "line": 28,
+            "detail": "Bounded parser, binding/escaping, FTS tokenizer API and field-local phrases"
+          },
+          {
+            "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+            "line": 30,
+            "detail": "Bounded parser, binding/escaping, FTS tokenizer API and field-local phrases"
+          },
+          {
+            "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+            "line": 40,
+            "detail": "Bounded parser, binding/escaping, FTS tokenizer API and field-local phrases"
+          }
+        ]
+      },
+      {
+        "id": "K07",
+        "subject": "Tantivy analyzed terms/Boolean/position-bearing phrase construction",
+        "judgment": "SUPPORTED_EXCEPT_SINGLETON_F3",
+        "primary_evidence": [
+          "E06",
+          "E07",
+          "E08"
+        ],
+        "final_locators": [
+          {
+            "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+            "line": 30,
+            "detail": "Tantivy analyzed terms/Boolean/position-bearing phrase construction"
+          },
+          {
+            "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+            "line": 36,
+            "detail": "Tantivy analyzed terms/Boolean/position-bearing phrase construction"
+          },
+          {
+            "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+            "line": 73,
+            "detail": "Tantivy analyzed terms/Boolean/position-bearing phrase construction"
+          }
+        ]
+      },
+      {
+        "id": "K08",
+        "subject": "Score directions, rank types and public-ID tie stability",
+        "judgment": "SUPPORTED_PROPOSAL; NO_NUMERIC_ENGINE_EQUIVALENCE",
+        "primary_evidence": [
+          "E01",
+          "E12",
+          "E18"
+        ],
+        "final_locators": [
+          {
+            "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+            "line": 42,
+            "detail": "Score directions, rank types and public-ID tie stability"
+          }
+        ]
+      },
+      {
+        "id": "K09",
+        "subject": "Custom 160-Unicode-scalar excerpt and safe markup/current-content handling",
+        "judgment": "SUPPORTED_PROPOSAL; BUILTIN_BOUNDS_ARE_DIFFERENT",
+        "primary_evidence": [
+          "E01",
+          "E10"
+        ],
+        "final_locators": [
+          {
+            "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+            "line": 44,
+            "detail": "Custom 160-Unicode-scalar excerpt and safe markup/current-content handling"
+          }
+        ]
+      },
+      {
+        "id": "K10",
+        "subject": "Old-value trigger deletes, initial backfill, same-database commit and rollback",
+        "judgment": "SUPPORTED_CONDITIONAL_ON_TARGET_CONFIGURATION",
+        "primary_evidence": [
+          "E01",
+          "E03",
+          "E04"
+        ],
+        "final_locators": [
+          {
+            "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+            "line": 65,
+            "detail": "Old-value trigger deletes, initial backfill, same-database commit and rollback"
+          },
+          {
+            "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+            "line": 67,
+            "detail": "Old-value trigger deletes, initial backfill, same-database commit and rollback"
+          }
+        ]
+      },
+      {
+        "id": "K11",
+        "subject": "External integrity rank=1, derived-only rebuild and ready state",
+        "judgment": "SUPPORTED_FOR_FTS5_EXTERNAL_CONTENT",
+        "primary_evidence": [
+          "E01"
+        ],
+        "final_locators": [
+          {
+            "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+            "line": 69,
+            "detail": "External integrity rank=1, derived-only rebuild and ready state"
+          }
+        ]
+      },
+      {
+        "id": "K12",
+        "subject": "Tantivy serial delete-before-add, commit-before-ack and replay",
+        "judgment": "SUPPORTED_ARCHITECTURAL_PROPOSAL",
+        "primary_evidence": [
+          "E03",
+          "E09",
+          "E16"
+        ],
+        "final_locators": [
+          {
+            "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+            "line": 57,
+            "detail": "Tantivy serial delete-before-add, commit-before-ack and replay"
+          },
+          {
+            "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+            "line": 73,
+            "detail": "Tantivy serial delete-before-add, commit-before-ack and replay"
+          }
+        ]
+      },
+      {
+        "id": "K13",
+        "subject": "Per-generation retention, source-write fence and durable marker cutover",
+        "judgment": "SUPPORTED_ARCHITECTURAL_PROPOSAL; UNTESTED",
+        "primary_evidence": [
+          "E03",
+          "E09"
+        ],
+        "final_locators": [
+          {
+            "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+            "line": 77,
+            "detail": "Per-generation retention, source-write fence and durable marker cutover"
+          },
+          {
+            "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+            "line": 79,
+            "detail": "Per-generation retention, source-write fence and durable marker cutover"
+          }
+        ]
+      },
+      {
+        "id": "K14",
+        "subject": "Indexed collections require relationship events; source-side top-K needs completeness",
+        "judgment": "SUPPORTED_ARCHITECTURAL_PROPOSAL",
+        "primary_evidence": [
+          "E03",
+          "E07",
+          "E09"
+        ],
+        "final_locators": [
+          {
+            "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+            "line": 75,
+            "detail": "Indexed collections require relationship events; source-side top-K needs completeness"
+          }
+        ]
+      },
+      {
+        "id": "K15",
+        "subject": "Writer/source watermark equality proves results complete",
+        "judgment": "MATERIAL_INCOMPLETE_F2",
+        "primary_evidence": [
+          "E09",
+          "E13"
+        ],
+        "final_locators": [
+          {
+            "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+            "line": 73,
+            "detail": "Writer/source watermark equality proves results complete"
+          },
+          {
+            "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+            "line": 81,
+            "detail": "Writer/source watermark equality proves results complete"
+          }
+        ]
+      },
+      {
+        "id": "K16",
+        "subject": "FTS secure-delete default and format/forensic tradeoff",
+        "judgment": "SUPPORTED_OPTIONAL_POLICY",
+        "primary_evidence": [
+          "E01"
+        ],
+        "final_locators": [
+          {
+            "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+            "line": 69,
+            "detail": "FTS secure-delete default and format/forensic tradeoff"
+          },
+          {
+            "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+            "line": 121,
+            "detail": "FTS secure-delete default and format/forensic tradeoff"
+          }
+        ]
+      },
+      {
+        "id": "K17",
+        "subject": "Tantivy explicit folding pipeline differs from default and Unicode61",
+        "judgment": "SUPPORTED_WITH_F1_EXCEPTION",
+        "primary_evidence": [
+          "E06",
+          "E14",
+          "E17"
+        ],
+        "final_locators": [
+          {
+            "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+            "line": 36,
+            "detail": "Tantivy explicit folding pipeline differs from default and Unicode61"
+          }
+        ]
+      },
+      {
+        "id": "K18",
+        "subject": "Tantivy 0.20.1 Windows mmap history as reason for target validation",
+        "judgment": "SUPPORTED; NO_CURRENT_DEFECT_INFERRED",
+        "primary_evidence": [
+          "E11"
+        ],
+        "final_locators": [
+          {
+            "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+            "line": 19,
+            "detail": "Tantivy 0.20.1 Windows mmap history as reason for target validation"
+          },
+          {
+            "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+            "line": 97,
+            "detail": "Tantivy 0.20.1 Windows mmap history as reason for target validation"
+          }
+        ]
+      },
+      {
+        "id": "K19",
+        "subject": "Candidate app/build/tests/benchmarks not executed",
+        "judgment": "CONSISTENT_AUTHOR_REPORT; NO_EXECUTABLE_CANDIDATE_WITNESS_PRESENT",
+        "primary_evidence": [],
+        "final_locators": [
+          {
+            "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+            "line": 106,
+            "detail": "Candidate app/build/tests/benchmarks not executed"
+          }
+        ]
+      },
+      {
+        "id": "K20",
+        "subject": "Local single-adapter scope and no note export/destructive repair/semantic capability",
+        "judgment": "PRESERVED_DESIGN_CONSTRAINT",
+        "primary_evidence": [],
+        "final_locators": [
+          {
+            "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+            "line": 3,
+            "detail": "Local single-adapter scope and no note export/destructive repair/semantic capability"
+          },
+          {
+            "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+            "line": 123,
+            "detail": "Local single-adapter scope and no note export/destructive repair/semantic capability"
+          }
+        ]
+      }
+    ]
+  },
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Original obligations and negative constraints",
+      "coverage": "FULLY_ASSESSED",
+      "judgment": "FAIL",
+      "summary": "All S1–S6 sections and the seven negative constraints are explicitly represented. The single local adapter, 50,000-note scale, SQLite authority, Linux/Windows qualification, stable IDs, bounded excerpts, and meaningful two-engine comparison are preserved. Representation alone is insufficient: S1 has F1/F3 and completeness/recovery has F2. No hosted/export/editor/sync/semantic-search/destructive-repair proposal was found.",
+      "evidence": [
+        "E01",
+        "E03",
+        "E08",
+        "E13",
+        "E15",
+        "E19"
+      ],
+      "findings": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source claims, operations, versions, defaults, units, types, domains and exceptions",
+      "coverage": "FULLY_ASSESSED",
+      "judgment": "FAIL",
+      "summary": "Most important FTS5 claims and the plan-assumption corrections are supported with appropriate undeployed-version boundaries. Independent primary retrieval confirms external content, old-value deletion, backfill, rank=1 integrity checking, BM25 direction, contentless-delete restrictions and history, exact-ID tie policy, and separate Tantivy commits. Three operation/domain conditions remain material: Unicode61 recognized diacritics, loaded-reader visibility, and PhraseQuery arity.",
+      "evidence": [
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E06",
+        "E07",
+        "E08",
+        "E09",
+        "E10",
+        "E11",
+        "E12",
+        "E13",
+        "E14",
+        "E15",
+        "E16",
+        "E17",
+        "E18",
+        "E19"
+      ],
+      "findings": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar discovery, competing/analogous approaches, implementation/history and opportunity breadth",
+      "coverage": "FULLY_ASSESSED",
+      "judgment": "PASS",
+      "summary": "Discovery is substantive before reveal: FTS5 external content versus ordinary/contentless/contentless-delete configurations; integer-row mapping; trigger/backfill and integrity mechanisms; separate Tantivy analyzer/query/index lifecycle; outbox/replay/generation machinery; secure-delete tradeoffs; score versus public-ID ties. SQLite 3.43.0 and Tantivy 0.20.1 Windows mmap history are relevant and bounded. Switch conditions are architectural or prospective measurements, not a presumed performance winner. No third product or semantic-search expansion is required by this brief.",
+      "evidence": [
+        "E01",
+        "E05",
+        "E06",
+        "E09",
+        "E11",
+        "E12"
+      ],
+      "findings": []
+    },
+    {
+      "axis": 4,
+      "name": "Wrong criticism, corrections/rejections and every exact plan disposition",
+      "coverage": "FULLY_ASSESSED",
+      "judgment": "FAIL",
+      "summary": "R1 is a justified source-write/cutover architectural gap and is corrected at proposal level; R2 is justified conditionally for indexed membership and is corrected; R4 is a genuine minor range issue and is amended. R3 correctly called for query-time normalization detail, but its final resolution remains defective through F1 and F3. The three old user assumptions are corrected in the relevant released modes, and owner decisions/rejected expansions are not silently converted to facts. All 26 exact plan sentences and all three sub-assumptions are audited below.",
+      "evidence": [
+        "E01",
+        "E03",
+        "E05",
+        "E07",
+        "E08",
+        "E09",
+        "E13",
+        "E15",
+        "E19"
+      ],
+      "findings": [
+        "F1",
+        "F3"
+      ]
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning preserved across discovery, draft, critique and final",
+      "coverage": "FULLY_ASSESSED",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "summary": "The final is self-contained and retains the preferred architecture, meaningful alternative, disk goal, old-value deletion/rebuild mechanics, actual-build unknowns, identity/rank/excerpt contract, release history, optional secure-erasure question, and proposed-only validation. All original S and C record bindings are preserved without rebinding; that is lineage evidence, not semantic proof. R1/R2 are corrected lineage defects; R3 is only partly resolved. F1 is a new incorrect explanation; F2/F3 are remaining inherited/integration defects rather than supported findings lost by omission.",
+      "evidence": [
+        "E01",
+        "E03",
+        "E05",
+        "E06",
+        "E09",
+        "E11",
+        "E12"
+      ],
+      "findings": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed versus executed validation and oracle applicability",
+      "coverage": "FULLY_ASSESSED",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "summary": "The matrix has useful observable create/update/delete, rollback, backfill/mismatch, crash/outbox, phrase/punctuation/accent, malformed-bound, collection, tie, excerpt, platform, relationship and concurrent-cutover cases. Types distinguish pure query from recovery/build/UI integration. Candidate checks are consistently declared unrun, which is allowed for a recommendation. The accent row records behavior rather than fixing all equivalence outcomes, the exactly-once-per-revision wording is imprecise for latest-state replay, and the matrix lacks explicit singleton-phrase/loaded-reader cases implicated by F1–F3. No unrun validation is treated as proof. Reviewer synthetic FTS5 work is separately recorded and does not change candidate execution status.",
+      "evidence": [
+        "E01",
+        "E08",
+        "E09",
+        "E13",
+        "E15",
+        "E19"
+      ],
+      "findings": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    }
+  ],
+  "original_brief_obligations": [
+    {
+      "id": "S1",
+      "exact_clause": "S1: Describe a bounded query language, tokenization/normalization policy, and behavior for punctuation, accents, malformed queries, and a collection filter.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A3-01/brief.md",
+        "line": 11,
+        "detail": "S1"
+      },
+      "disposition": "Bounded scanner, explicit per-backend analysis, punctuation/accents/errors and exact collections at final lines 24–40; F1 and F3 remain.",
+      "judgment": "FAIL",
+      "material_findings": [
+        "F1",
+        "F3"
+      ]
+    },
+    {
+      "id": "S2",
+      "exact_clause": "S2: Compare indexing/update mechanisms and query semantics of the two approaches; explain the cost of keeping derived content consistent with the source database.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A3-01/brief.md",
+        "line": 12,
+        "detail": "S2"
+      },
+      "disposition": "Recommendation and lifecycle comparison at lines 7–19 and 63–81; integration cost is meaningfully compared; reader-visibility condition F2 remains.",
+      "judgment": "FAIL",
+      "material_findings": [
+        "F2"
+      ]
+    },
+    {
+      "id": "S3",
+      "exact_clause": "S3: Define create/update/delete, crash recovery, and rebuild behavior, including stale or missing search rows.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A3-01/brief.md",
+        "line": 13,
+        "detail": "S3"
+      },
+      "disposition": "Same-file trigger transactions, rebuild/integrity and serial outbox/generation recovery at lines 65–81; F2 affects ready/complete state.",
+      "judgment": "FAIL",
+      "material_findings": [
+        "F2"
+      ]
+    },
+    {
+      "id": "S4",
+      "exact_clause": "S4: Specify result identity, rank/order stability, and safe excerpt generation without claiming universal language quality.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A3-01/brief.md",
+        "line": 14,
+        "detail": "S4"
+      },
+      "disposition": "Public note ID, score direction and ID ties, bounded escaped current-text excerpt at lines 40–44; no universal language quality. F2 can omit committed candidates.",
+      "judgment": "FAIL",
+      "material_findings": [
+        "F2"
+      ]
+    },
+    {
+      "id": "S5",
+      "exact_clause": "S5: Tie capability and limitation claims to the actual component, deployed version, build/configuration, and operation. Include one relevant implementation or release/history detail.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A3-01/brief.md",
+        "line": 15,
+        "detail": "S5"
+      },
+      "disposition": "Build/version unknowns, component-specific table modes and history at lines 7,19,52,65–73,121–129; missing exceptions F1–F3 are source-applicability defects.",
+      "judgment": "FAIL",
+      "material_findings": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "id": "S6",
+      "exact_clause": "S6: Provide a small validation matrix and distinguish checks actually run from checks merely proposed; preserve explicit unresolved questions and decisions.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A3-01/brief.md",
+        "line": 16,
+        "detail": "S6"
+      },
+      "disposition": "Proposed-only matrix and actual record at lines 83–106; owner decisions and uncertainty at 119–125. Meaningful with noted oracle limitations; no tests falsely claimed.",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "material_findings": []
+    }
+  ],
+  "negative_constraints": [
+    {
+      "id": "N1",
+      "exact_constraint": "no hosted service",
+      "status": "PRESERVED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 123,
+          "detail": "Explicitly rejected expansion/behavior"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 3,
+          "detail": "Local scope and SQLite authority"
+        }
+      ]
+    },
+    {
+      "id": "N2",
+      "exact_constraint": "no network export of notes",
+      "status": "PRESERVED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 123,
+          "detail": "Explicitly rejected expansion/behavior"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 3,
+          "detail": "Local scope and SQLite authority"
+        }
+      ]
+    },
+    {
+      "id": "N3",
+      "exact_constraint": "no whole editor or sync build",
+      "status": "PRESERVED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 123,
+          "detail": "Explicitly rejected expansion/behavior"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 3,
+          "detail": "Local scope and SQLite authority"
+        }
+      ]
+    },
+    {
+      "id": "N4",
+      "exact_constraint": "no direct execution of user text as SQL",
+      "status": "PRESERVED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 123,
+          "detail": "Explicitly rejected expansion/behavior"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 3,
+          "detail": "Local scope and SQLite authority"
+        }
+      ]
+    },
+    {
+      "id": "N5",
+      "exact_constraint": "no claim that lexical search provides semantic understanding",
+      "status": "PRESERVED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 123,
+          "detail": "Explicitly rejected expansion/behavior"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 3,
+          "detail": "Local scope and SQLite authority"
+        }
+      ]
+    },
+    {
+      "id": "N6",
+      "exact_constraint": "no deletion of authoritative notes during index repair",
+      "status": "PRESERVED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 123,
+          "detail": "Explicitly rejected expansion/behavior"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 3,
+          "detail": "Local scope and SQLite authority"
+        }
+      ]
+    },
+    {
+      "id": "N7",
+      "exact_constraint": "no unsupported universal capability-absence claim",
+      "status": "PRESERVED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 123,
+          "detail": "Explicitly rejected expansion/behavior"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 3,
+          "detail": "Local scope and SQLite authority"
+        }
+      ]
+    }
+  ],
+  "exact_plan_clauses": [
+    {
+      "id": "P01",
+      "exact_clause": "Root releases this incomplete draft only after substantive discovery.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A3-01/plan.md",
+        "line": 4,
+        "detail": "Exact sentence P01"
+      },
+      "disposition": "PRESERVED_PROTOCOL_RECORD",
+      "assessment": "Discovery existed before the helper release; reveal manifest records 04:02:13Z and its unchanged discovery digest. Earlier concealed access cannot be independently proven absent from artifacts.",
+      "final_locators": [],
+      "material_findings": []
+    },
+    {
+      "id": "P02",
+      "exact_clause": "These are user preferences and unverified working assumptions, not established technical facts or evaluation answers.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A3-01/plan.md",
+        "line": 4,
+        "detail": "Exact sentence P02"
+      },
+      "disposition": "PRESERVED",
+      "assessment": "The final treats the sketch as revisable preferences and assumptions rather than established facts.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 46,
+          "detail": "Disposition evidence"
+        }
+      ],
+      "material_findings": []
+    },
+    {
+      "id": "P03",
+      "exact_clause": "I would prefer to reuse SQLite.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A3-01/plan.md",
+        "line": 6,
+        "detail": "Exact sentence P03"
+      },
+      "disposition": "ADOPTED",
+      "assessment": "External-content SQLite FTS5 is preferred, subject to actual FTS5 build qualification.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 7,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 9,
+          "detail": "Disposition evidence"
+        }
+      ],
+      "material_findings": []
+    },
+    {
+      "id": "P04",
+      "exact_clause": "My sketch creates a search table containing note ID, title, body, and collection, then rewrites a note's search row whenever the editor saves it.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A3-01/plan.md",
+        "line": 6,
+        "detail": "Exact sentence P04"
+      },
+      "disposition": "AMENDED",
+      "assessment": "Indexed title/body refer to authoritative SQLite content; stable integer row mapping joins public ID; exact collection relationship is filtered; database triggers replace save-callback dependence.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 40,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 50,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 65,
+          "detail": "Disposition evidence"
+        }
+      ],
+      "material_findings": []
+    },
+    {
+      "id": "P05",
+      "exact_clause": "I want to consider a mode that avoids duplicating full note bodies in the search index because laptop disk space is limited.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A3-01/plan.md",
+        "line": 6,
+        "detail": "Exact sentence P05"
+      },
+      "disposition": "ADOPTED_WITH_COST",
+      "assessment": "External content avoids a second full-body copy; postings and metadata still consume disk. No disk-size benchmark is claimed.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 7,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 50,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 51,
+          "detail": "Disposition evidence"
+        }
+      ],
+      "material_findings": []
+    },
+    {
+      "id": "P06",
+      "exact_clause": "I have not chosen a table configuration or checked the consequences.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A3-01/plan.md",
+        "line": 6,
+        "detail": "Exact sentence P06"
+      },
+      "disposition": "OWNER_DECISION_PRESERVED",
+      "assessment": "Proposed external-content configuration is explicit; deployed SQLite build, source schema and ID/filter mapping remain unselected and untested.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 7,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 40,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 121,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 125,
+          "detail": "Disposition evidence"
+        }
+      ],
+      "material_findings": []
+    },
+    {
+      "id": "P07",
+      "exact_clause": "My old working assumptions are that a contentless full-text index cannot support deletion or replacement, that excerpts require the text to live inside the index, and that changing tokenizer choices always forces replacing the database.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A3-01/plan.md",
+        "line": 8,
+        "detail": "Exact sentence P07"
+      },
+      "disposition": "CORRECTED_WITH_RELEASE_SCOPE",
+      "assessment": "Three sub-assumptions are separately corrected: old-text delete command and 3.43.0+ contentless-delete; source-fetched excerpts; derived-index tokenizer migration without replacing authoritative DB.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 52,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 53,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 54,
+          "detail": "Disposition evidence"
+        }
+      ],
+      "material_findings": []
+    },
+    {
+      "id": "P08",
+      "exact_clause": "If any assumption fails for an applicable released configuration, revise it with evidence.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A3-01/plan.md",
+        "line": 8,
+        "detail": "Exact sentence P08"
+      },
+      "disposition": "EVIDENCE_BASED_CORRECTIONS",
+      "assessment": "Released FTS5 manual/history supports each of the three corrections. There is no deployed-version extrapolation.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 52,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 53,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 54,
+          "detail": "Disposition evidence"
+        }
+      ],
+      "material_findings": []
+    },
+    {
+      "id": "P09",
+      "exact_clause": "Conversely, do not infer that a feature exists in the deployed build just because some newer release describes it.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A3-01/plan.md",
+        "line": 8,
+        "detail": "Exact sentence P09"
+      },
+      "disposition": "PRESERVED",
+      "assessment": "The final distinguishes consulted upstream releases from an unknown deployed binary and requires per-OS package qualification.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 7,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 19,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 106,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 125,
+          "detail": "Disposition evidence"
+        }
+      ],
+      "material_findings": []
+    },
+    {
+      "id": "P10",
+      "exact_clause": "There is no pinned deployment version yet.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A3-01/plan.md",
+        "line": 8,
+        "detail": "Exact sentence P10"
+      },
+      "disposition": "PRESERVED_UNKNOWN",
+      "assessment": "No deployment version is fabricated; actual SQLite/Tantivy versions/build features stay open.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 19,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 121,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 125,
+          "detail": "Disposition evidence"
+        }
+      ],
+      "material_findings": []
+    },
+    {
+      "id": "P11",
+      "exact_clause": "Draft queries split input on spaces and join words with AND.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A3-01/plan.md",
+        "line": 10,
+        "detail": "Exact sentence P11"
+      },
+      "disposition": "AMENDED",
+      "assessment": "Scanner plus selected tokenizer replaces space-only splitting; generated conjunctive terms preserve AND semantics while literal AND is data.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 26,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 28,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 30,
+          "detail": "Disposition evidence"
+        }
+      ],
+      "material_findings": []
+    },
+    {
+      "id": "P12",
+      "exact_clause": "Quoted input should become a phrase; collection is a separate filter.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A3-01/plan.md",
+        "line": 10,
+        "detail": "Exact sentence P12"
+      },
+      "disposition": "PARTLY_CORRECTED_MATERIAL_GAP",
+      "assessment": "Same-field adjacent phrases and exact separate collection filtering are specified, but the Tantivy mapping omits its one-term PhraseQuery exception (F3).",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 28,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 30,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 40,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 75,
+          "detail": "Disposition evidence"
+        }
+      ],
+      "material_findings": [
+        "F3"
+      ]
+    },
+    {
+      "id": "P13",
+      "exact_clause": "I have not handled literal punctuation, invalid query syntax, accent differences, or a user typing operators.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A3-01/plan.md",
+        "line": 10,
+        "detail": "Exact sentence P13"
+      },
+      "disposition": "PARTLY_CORRECTED_MATERIAL_ERROR",
+      "assessment": "Bounds, errors, operator treatment and punctuation are explicit; the positive FTS5 combining-mark separator claim is wrong (F1).",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 26,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 28,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 34,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 36,
+          "detail": "Disposition evidence"
+        }
+      ],
+      "material_findings": [
+        "F1"
+      ]
+    },
+    {
+      "id": "P14",
+      "exact_clause": "I assumed sorting by relevance is sufficient, but have not chosen a deterministic tie-breaker or checked score interpretation.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A3-01/plan.md",
+        "line": 10,
+        "detail": "Exact sentence P14"
+      },
+      "disposition": "CORRECTED",
+      "assessment": "FTS5 rank ascending, Tantivy similarity descending, canonical note-ID ascending ties before pagination; fixed-state scope and non-comparable engine scores.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 42,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 56,
+          "detail": "Disposition evidence"
+        }
+      ],
+      "material_findings": []
+    },
+    {
+      "id": "P15",
+      "exact_clause": "A separate library could own an index directory, updated after each database commit.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A3-01/plan.md",
+        "line": 12,
+        "detail": "Exact sentence P15"
+      },
+      "disposition": "AMENDED",
+      "assessment": "Tantivy keeps a local index directory but a source-transaction outbox bridges the post-DB-commit gap. Reader publication condition is not fully specified (F2).",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 57,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 73,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 77,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 81,
+          "detail": "Disposition evidence"
+        }
+      ],
+      "material_findings": [
+        "F2"
+      ]
+    },
+    {
+      "id": "P16",
+      "exact_clause": "I have not decided how it catches up after a crash between the database commit and index update.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A3-01/plan.md",
+        "line": 12,
+        "detail": "Exact sentence P16"
+      },
+      "disposition": "PARTLY_CORRECTED",
+      "assessment": "Serial delete-ID/add-current-state, commit-before-ack, replay and generation watermarks/fence address the crash gap. Query completeness still omits the loaded-reader condition (F2).",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 57,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 77,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 79,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 81,
+          "detail": "Disposition evidence"
+        }
+      ],
+      "material_findings": [
+        "F2"
+      ]
+    },
+    {
+      "id": "P17",
+      "exact_clause": "For SQLite too, the draft needs a clear authority and reconciliation rule rather than relying on every writer remembering a callback.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A3-01/plan.md",
+        "line": 12,
+        "detail": "Exact sentence P17"
+      },
+      "disposition": "CORRECTED",
+      "assessment": "Same-database triggers, initial backfill, rank=1 integrity comparison and derived-only rebuild remove callback-only reliance while preserving authoritative rows.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 58,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 65,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 67,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 69,
+          "detail": "Disposition evidence"
+        }
+      ],
+      "material_findings": []
+    },
+    {
+      "id": "P18",
+      "exact_clause": "Rebuilds must preserve authoritative notes and avoid presenting partial results as complete.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A3-01/plan.md",
+        "line": 12,
+        "detail": "Exact sentence P18"
+      },
+      "disposition": "PARTLY_CORRECTED_MATERIAL_GAP",
+      "assessment": "Source preservation and transactional FTS rebuild are covered; Tantivy source-write cutover fence is added. The complete-results rule still uses a writer watermark rather than a qualified loaded Searcher (F2).",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 58,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 69,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 79,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 81,
+          "detail": "Disposition evidence"
+        }
+      ],
+      "material_findings": [
+        "F2"
+      ]
+    },
+    {
+      "id": "P19",
+      "exact_clause": "Keep all S1–S6 clauses and negative constraints.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A3-01/plan.md",
+        "line": 14,
+        "detail": "Exact sentence P19"
+      },
+      "disposition": "STRUCTURALLY_PRESERVED_SEMANTIC_FAIL",
+      "assessment": "All required sections and seven negatives remain, but their semantic qualification is limited by F1–F3.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 13,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 123,
+          "detail": "Disposition evidence"
+        }
+      ],
+      "material_findings": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "id": "P20",
+      "exact_clause": "Produce one preferred approach plus conditions that would justify the other.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A3-01/plan.md",
+        "line": 14,
+        "detail": "Exact sentence P20"
+      },
+      "disposition": "FULFILLED",
+      "assessment": "FTS5 preferred for same-database integration; Tantivy conditions include unavailable/unmodifiable FTS5 or measured analyzer/ranking/performance need with accepted lifecycle cost.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 7,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 9,
+          "detail": "Disposition evidence"
+        }
+      ],
+      "material_findings": []
+    },
+    {
+      "id": "P21",
+      "exact_clause": "Disk savings are a goal, not permission to break deletion, excerpts, or recovery.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A3-01/plan.md",
+        "line": 14,
+        "detail": "Exact sentence P21"
+      },
+      "disposition": "PRESERVED",
+      "assessment": "Disk goal does not override deletion/excerpts/recovery. Remaining findings do not stem from selecting contentless disk savings.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 50,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 52,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 53,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 59,
+          "detail": "Disposition evidence"
+        }
+      ],
+      "material_findings": []
+    },
+    {
+      "id": "P22",
+      "exact_clause": "No benchmark or installed-build capability is currently verified.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A3-01/plan.md",
+        "line": 14,
+        "detail": "Exact sentence P22"
+      },
+      "disposition": "PRESERVED_UNKNOWN",
+      "assessment": "No benchmark or installed-build capability is claimed verified.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 9,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 106,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 125,
+          "detail": "Disposition evidence"
+        }
+      ],
+      "material_findings": []
+    },
+    {
+      "id": "P23",
+      "exact_clause": "Proposed validation only: synthetic notes with equal scores, accents, punctuation, phrase boundaries, and two collections; repeated edits and deletions; a missing index row; simulated interruption between source write and derived update; malformed input; an excerpt containing markup.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A3-01/plan.md",
+        "line": 16,
+        "detail": "Exact sentence P23"
+      },
+      "disposition": "COVERED_PROPOSED_ONLY",
+      "assessment": "Every listed synthetic case appears in the validation matrix; added tag-change and concurrent-cutover cases remain proposed.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 87,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 102,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 106,
+          "detail": "Disposition evidence"
+        }
+      ],
+      "material_findings": []
+    },
+    {
+      "id": "P24",
+      "exact_clause": "Specify observable outcomes before testing.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A3-01/plan.md",
+        "line": 16,
+        "detail": "Exact sentence P24"
+      },
+      "disposition": "FULFILLED_WITH_ORACLE_LIMITATIONS",
+      "assessment": "Most rows specify observable outcomes before testing. Accent equivalence is recorded rather than fully adjudicated; per-revision exactly-once wording is imprecise for latest-state replay. F1–F3 expose missing discriminating cases.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 87,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 102,
+          "detail": "Disposition evidence"
+        }
+      ],
+      "material_findings": []
+    },
+    {
+      "id": "P25",
+      "exact_clause": "Distinguish pure query checks from recovery integration checks.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A3-01/plan.md",
+        "line": 16,
+        "detail": "Exact sentence P25"
+      },
+      "disposition": "FULFILLED",
+      "assessment": "Matrix type labels separate pure query, recovery/concurrency, build and UI integration.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 85,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 102,
+          "detail": "Disposition evidence"
+        }
+      ],
+      "material_findings": []
+    },
+    {
+      "id": "P26",
+      "exact_clause": "No checks have been executed.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A3-01/plan.md",
+        "line": 16,
+        "detail": "Exact sentence P26"
+      },
+      "disposition": "PRESERVED",
+      "assessment": "No candidate validation matrix item, target build or benchmark was run. Reviewer witness is separate.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 104,
+          "detail": "Disposition evidence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 106,
+          "detail": "Disposition evidence"
+        }
+      ],
+      "material_findings": []
+    }
+  ],
+  "exact_plan_assumption_subclauses": [
+    {
+      "id": "P07a",
+      "exact_subclause": "a contentless full-text index cannot support deletion or replacement",
+      "disposition": "Corrected by distinct ordinary contentless special delete and 3.43.0+ contentless-delete semantics. Ordinary INSERT OR REPLACE is treated as INSERT rather than having replacement semantics; see minor wording limitation L1.",
+      "primary_evidence": [
+        "E01",
+        "E05"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+        "line": 52,
+        "detail": "Version-qualified modes"
+      }
+    },
+    {
+      "id": "P07b",
+      "exact_subclause": "excerpts require the text to live inside the index",
+      "disposition": "Corrected: fetch authoritative source text by stable ID; external-content mode itself reads its content table.",
+      "primary_evidence": [
+        "E01",
+        "E10"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+        "line": 53,
+        "detail": "Source-fetched excerpt"
+      }
+    },
+    {
+      "id": "P07c",
+      "exact_subclause": "changing tokenizer choices always forces replacing the database",
+      "disposition": "Corrected: rebuild/recreate the derived search schema/index while preserving notes and DB authority. Exact migration and outages remain implementation/owner choices.",
+      "primary_evidence": [
+        "E01",
+        "E06"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+        "line": 54,
+        "detail": "Derived-index migration"
+      }
+    }
+  ],
+  "criticism_dispositions": [
+    {
+      "id": "R1",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/control/stages/critic/critique.md",
+        "line": 19,
+        "detail": "Tantivy cutover write race"
+      },
+      "candidate_disposition": "accept",
+      "independent_assessment": "VALID_CRITICISM; CORRECTED_AT_PROPOSAL_LEVEL",
+      "explanation": "The old draft lacked coordination between last replay and marker switch. The final BEGIN IMMEDIATE fence, H watermark, commit-before-marker, old-generation retention and candidate-event retention close that stated source-write race. It remains untested and does not solve the separate loaded-reader gap F2.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 77,
+          "detail": "Per-generation retention"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 79,
+          "detail": "Write fence and marker"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 114,
+          "detail": "Explicit disposition"
+        }
+      ],
+      "primary_evidence": [
+        "E03",
+        "E09",
+        "E13"
+      ]
+    },
+    {
+      "id": "R2",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/control/stages/critic/critique.md",
+        "line": 31,
+        "detail": "Indexed collection maintenance"
+      },
+      "candidate_disposition": "accept conditionally and adopt",
+      "independent_assessment": "VALID_CONDITIONAL_CRITICISM; CORRECTED_AT_PROPOSAL_LEVEL",
+      "explanation": "If Tantivy indexes collection relationships, add/remove/rename events must update affected notes. The final covers transactionally enqueued membership/key mutations, current complete set re-read, affected-note rename handling and source-side filtering without premature top-K truncation. Unknown cardinality is correctly external.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 75,
+          "detail": "Collection lifecycle"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 115,
+          "detail": "Explicit disposition"
+        }
+      ],
+      "primary_evidence": [
+        "E03",
+        "E07",
+        "E09"
+      ]
+    },
+    {
+      "id": "R3",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/control/stages/critic/critique.md",
+        "line": 43,
+        "detail": "Query analysis and Unicode boundaries"
+      },
+      "candidate_disposition": "accept and resolve at proposal level; retain parity uncertainty",
+      "independent_assessment": "VALID_CRITICISM; PARTIAL_RESOLUTION_WITH_REMAINING_MATERIAL_ISSUES",
+      "explanation": "Explicit analyzer matching and same-field positions are improvements. The reviser adds the false Unicode61 separator statement F1 and omits the singleton PhraseQuery exception F3, so its full-resolution claim is not qualified. No universal canonical-equivalence expectation is imposed.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 30,
+          "detail": "Backend analysis/mapping"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 34,
+          "detail": "Unicode61 boundary"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 116,
+          "detail": "Resolution claim"
+        }
+      ],
+      "primary_evidence": [
+        "E01",
+        "E06",
+        "E08",
+        "E14",
+        "E15",
+        "E19"
+      ]
+    },
+    {
+      "id": "R4",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/control/stages/critic/critique.md",
+        "line": 55,
+        "detail": "S11 evidence-range mismatch"
+      },
+      "candidate_disposition": "amend",
+      "independent_assessment": "VALID_MINOR_ISSUE; CORRECTED",
+      "explanation": "Final actual-check record names S01–S11 and C01–C13; S11 latest-docs identity is preserved and pinned C12/C13 remain separate. TopDocs conclusion is independently supported.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 106,
+          "detail": "Full ranges"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 117,
+          "detail": "Explicit amendment"
+        }
+      ],
+      "primary_evidence": [
+        "E12",
+        "E18"
+      ]
+    }
+  ],
+  "material_findings": [
+    {
+      "id": "F1",
+      "classification": "material wrong",
+      "title": "The final blanket combining-mark separator claim is false for the proposed Unicode61 configuration",
+      "axes": [
+        1,
+        2,
+        4,
+        5,
+        6
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 34,
+          "detail": "Default category policy treats combining marks outside those token categories as separators"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 116,
+          "detail": "R3 is claimed resolved at proposal level"
+        }
+      ],
+      "authored_source_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/source-map.json",
+          "line": 1,
+          "detail": "reviser_direct_rechecks V02 repeats the separator claim"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/sources/index.md",
+          "line": 1,
+          "detail": "V02 governing condition repeats the claim"
+        }
+      ],
+      "primary_evidence": [
+        "E15",
+        "E19",
+        "E14"
+      ],
+      "reviewer_witness": "evidence/reviewer-synthetic-fts5.json",
+      "finding": "Unicode61 has an in-token diacritic exception beyond the L*/N*/Co category test. Recognized combining modifiers such as U+0301 continue the token, and remove_diacritics=2 removes the mark instead of ending the token. The final states the opposite as its tokenization policy.",
+      "counterexample": "ca + U+0301 + fe becomes the single FTS token cafe, not ca and fe. A reviewer-only in-memory SQLite 3.46.1 check independently observed that token and cafe-query match. Tantivy SimpleTokenizer splits non-alphanumeric combining marks before folding, so this is a meaningful comparator distinction.",
+      "materiality": "Accents and token/phrase boundaries are explicit S1 obligations. A wrong declared boundary changes expected lexical matches and prospective oracle outcomes; general caution about canonical equivalence does not qualify this positive blanket statement.",
+      "lineage": "Introduced in the reviser explanation and V02 while addressing a legitimate R3 incompleteness. The predecessor uncertainty about analyzer parity remains supported.",
+      "scope_limit": "The evidence proves the bounded recognized-diacritic exception in released SQLite 3.43.0 source and a local 3.46.1 corroborating witness. It does not establish universal normalization or a deployed application configuration."
+    },
+    {
+      "id": "F2",
+      "classification": "material incomplete / unsupported consequential completeness rule",
+      "title": "The Tantivy completeness rule does not bind its watermark to the loaded reader/searcher snapshot",
+      "axes": [
+        1,
+        2,
+        5,
+        6
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 73,
+          "detail": "Commit publication is used as the reader-visibility boundary"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 79,
+          "detail": "Candidate commit, durable watermark and active marker"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 81,
+          "detail": "Compare applied-through watermark with latest source sequence before calling results complete"
+        }
+      ],
+      "primary_evidence": [
+        "E13",
+        "E09"
+      ],
+      "finding": "Tantivy 0.26.2 commits publish index state, but IndexReader lends the last loaded Searcher. Its default reload is asynchronous and Manual needs an explicit reload. The final defines writer-applied and source sequences, without defining reader reload/acquisition or proving that the searcher used for a query has loaded that committed sequence.",
+      "counterexample": "An existing reader/searcher is at sequence 10. The outbox worker indexes a new matching note, commits sequence 11 and records applied-through=11; SQLite latest sequence is 11. Before the default delayed reload occurs, the final watermark equality succeeds while the searcher still uses sequence 10 and omits the note. Under Manual or a retained old Searcher, this can persist. Fetching current source text cannot discover a missing candidate.",
+      "materiality": "The original plan expressly prohibits presenting partial results as complete and requires update/recovery/rebuild behavior. This is a published-versus-loaded operation condition within the required alternative, not an invented deployment requirement or a demand for a running application.",
+      "lineage": "The publication-only boundary is inherited from discovery/draft/source records; the critic did not identify it. Final R1 fixes the source-write/cutover race, but its additional completeness rule leaves this separate reader condition unresolved.",
+      "scope_limit": "This is a source-backed architectural counterexample; no Tantivy dependency was built or run. The write fence and per-generation retention are otherwise sound proposal-level corrections."
+    },
+    {
+      "id": "F3",
+      "classification": "material incomplete / inapplicable proposed API operation",
+      "title": "Accepted one-term quoted input is routed to a PhraseQuery constructor that requires multiple terms",
+      "axes": [
+        1,
+        2,
+        4,
+        5,
+        6
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 26,
+          "detail": "Any balanced nonempty quoted segment is accepted subject to bounds"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 28,
+          "detail": "Quoted segment becomes a phrase"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+          "line": 30,
+          "detail": "Build a zero-slop Tantivy PhraseQuery from its analyzed terms"
+        }
+      ],
+      "primary_evidence": [
+        "E08",
+        "E06"
+      ],
+      "finding": "The bounded language permits a one-token quoted phrase such as \"café\". The specified Tantivy operation constructs a PhraseQuery for quoted spans, but 0.26.2 PhraseQuery::new and new_with_offset_and_slop require strictly more than one term and assert otherwise. The final supplies no singleton disposition or lowering.",
+      "counterexample": "\"café\" is balanced, nonempty and below both limits. The proposed analyzer emits cafe, one term. The prescribed PhraseQuery construction hits the documented/asserted arity restriction.",
+      "materiality": "Quoted input and malformed-query behavior are explicit S1 and exact-plan obligations. The plan presents a backend mapping for accepted input that is not applicable to an ordinary valid case. This is not merely a request for more implementation code.",
+      "lineage": "The generic typed-phrase proposal is inherited; the reviser made the mapping explicit while claiming R3 resolved. Its V05 source locator includes the constructor region but omits the arity condition in the recorded summary.",
+      "scope_limit": "No crash in a nonexistent application is asserted; the source proves the proposed operation is incomplete for this accepted domain."
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L1",
+      "type": "minor wording",
+      "description": "Final line 52 says ordinary contentless tables do not support INSERT OR REPLACE. The manual says that SQL form is treated as ordinary INSERT, without replacement semantics. The distinction should not be read as a syntax-rejection claim. The 3.43.0+ correction and preferred external-content design remain supported.",
+      "sources": [
+        "E01"
+      ]
+    },
+    {
+      "id": "L2",
+      "type": "minor lineage metadata",
+      "description": "The critic source-map verified_frozen_input_hashes value for plan-reveal.json is 94f6e6bef4fdd2f5315c89ef7bd45c70861115f1b256f002ddce880474c226b4c; actual and freeze manifests contain 94f6e6bef4fdd669a7440d7c6d5987c9331a94eff02697181017e6704c226b4c. This authored transcription defect remains. Actual reveal bytes, discovery and exact plan were independently verified; no source science was edited."
+    },
+    {
+      "id": "L3",
+      "type": "minor navigation",
+      "description": "Some code line locators in carried records reflect browser-extracted numbering and do not match raw source line numbers (for example C13’s comparator locator). Governing symbols and full pages are navigable; E12 supplies exact raw-symbol/line locators. No semantic rank/tie error follows."
+    },
+    {
+      "id": "L4",
+      "type": "validation oracle limitation",
+      "description": "The accent row asks to record behavior instead of declaring every equivalence outcome, which is reasonable while owner policy is open but is not a complete pass/fail oracle. The crash row says every source revision is represented exactly once logically, whereas latest-state re-read can coalesce intermediate revisions. The meaningful latest-state/no-duplicate-ID intent is inferable, but historical per-revision exposure is not promised by the proposed mechanism.",
+      "sources": [
+        "E09"
+      ]
+    },
+    {
+      "id": "L5",
+      "type": "evidence/provenance limit",
+      "description": "Authored source evidence contains navigable indexes and identity summaries, not frozen complete page captures or native terminal tool logs. This reviewer retrieved primary sources independently. Later living-document changes and native terminal provenance cannot be reconstructed from a hash or candidate summary."
+    },
+    {
+      "id": "L6",
+      "type": "external input",
+      "description": "Actual SQLite version/source ID/compile options per OS, Cargo pin/features, journal/VFS configuration, public-ID type/mutability, tag cardinality/key normalization, ranking weights/page limits, accent UX, write-pause/outage budget, secure-erasure policy and measured latency/disk use remain legitimately unresolved. No nonexistent deployment or benchmark is required."
+    }
+  ],
+  "unknowns": [
+    "Deployed dependency/build capabilities on Linux and Windows",
+    "Actual schema, stable note-ID mapping and collection cardinality",
+    "Target journal/VFS/filesystem crash behavior",
+    "Actual performance, disk footprint, language quality and acceptable rebuild/write-pause budgets",
+    "Independent raw candidate native Goal terminal receipts and exact native-save-terminal ordering",
+    "Effective reasoning/service-tier/runtime settings beyond requested/returned fields",
+    "Inference occupancy, billable tokens/cost and any speed or billing savings",
+    "Exhaustive candidate absence of out-of-scope reads/assistance without full tool traces"
+  ],
+  "useful_discoveries": [
+    {
+      "discovery": "FTS5 external content avoids a second body copy while retaining source-backed excerpts and rebuild",
+      "utility": "Directly addresses the disk goal without sacrificing authoritative notes or pretending postings are free.",
+      "sources": [
+        "E01"
+      ]
+    },
+    {
+      "discovery": "Ordinary contentless and 3.43.0+ contentless-delete have different deletion/replacement/update conditions",
+      "utility": "Corrects an old blanket absence assumption in the applicable released configuration.",
+      "sources": [
+        "E01",
+        "E05"
+      ]
+    },
+    {
+      "discovery": "Triggers do not backfill; rank=1 is required for external-content integrity comparison",
+      "utility": "Distinguishes apparent rows from actually searchable postings and gives a source-preserving repair oracle.",
+      "sources": [
+        "E01"
+      ]
+    },
+    {
+      "discovery": "A separate Tantivy commit needs durable source outbox, repeatable ID replacement and generation retention/cutover",
+      "utility": "Explains lifecycle cost of the alternative and why a post-commit callback is insufficient.",
+      "sources": [
+        "E03",
+        "E09"
+      ]
+    },
+    {
+      "discovery": "BM25 direction differs and Tantivy default ties use DocAddress",
+      "utility": "Makes explicit public-ID tie order necessary before page slicing; no cross-engine numeric rank equivalence.",
+      "sources": [
+        "E01",
+        "E12",
+        "E18"
+      ]
+    },
+    {
+      "discovery": "Tokenizer policies and query construction require exact analyzer/position conditions",
+      "utility": "Useful specificity beyond naming products; final shortcomings are F1/F3 rather than an absence of discovery.",
+      "sources": [
+        "E01",
+        "E06",
+        "E08",
+        "E14",
+        "E15",
+        "E19"
+      ]
+    },
+    {
+      "discovery": "SQLite 3.43.0 contentless-delete history and Tantivy 0.20.1 Windows mmap build fix",
+      "utility": "Relevant release/history investigation without assuming a present regression or deployment success.",
+      "sources": [
+        "E05",
+        "E11"
+      ]
+    }
+  ],
+  "alternatives": {
+    "preferred": "FTS5 external content in the existing SQLite database, conditionally qualified",
+    "meaningful_alternative": "Tantivy 0.26.2 documented candidate with explicit analyzer/typed queries, outbox and generation machinery",
+    "analogous_configurations": "Ordinary FTS5, external content, ordinary contentless and contentless-delete; source-side versus indexed collection filtering",
+    "switch_conditions": "Unavailable/unmodifiable FTS5 build, or measured analyzer/ranking/performance need sufficient to justify the second-store lifecycle cost; no benchmark winner claimed"
+  },
+  "lineage": {
+    "discovery": "Substantive comparator and mechanisms before reveal; bounded uncertainty preserved",
+    "draft": "Self-contained proposal with R1 cutover, R2 conditional collection and R3 query-analysis incompleteness; source correctness not established by stage completion",
+    "critique": "R1/R2/R3 legitimate at their stated scope; R4 minor; missed F2/F3 operation conditions; hash transcription defect L2",
+    "final": "R1/R2 corrected; R3 only partly resolved, with new F1 explanation and inherited F2/F3 conditions remaining; supported architecture and scope retained"
+  },
+  "validation": {
+    "candidate_executed": "None reported; no candidate executable witness is present",
+    "candidate_proposed": "Complete matrix at final lines 83–102; distinctions preserved",
+    "reviewer_executed": [
+      {
+        "path": "evidence/reviewer-synthetic-fts5.json",
+        "type": "Synthetic in-memory SQLite 3.46.1 tokenizer corroboration",
+        "scope": "Four fictional strings; no authoritative or personal note data; no target-deployment proof"
+      }
+    ],
+    "oracle_limits": [
+      "F1 combining-mark prediction",
+      "F2 actual reader snapshot versus writer watermark",
+      "F3 one-term quoted phrase",
+      "L4 accent/per-revision outcome wording"
+    ]
+  },
+  "native_t3_protocol_time_effective_billing": {
+    "candidate_native": {
+      "investigator": {
+        "activation": "UNKNOWN independent proof; status summary reports activation/completion, but investigator map contains no native receipt",
+        "terminal": "UNKNOWN"
+      },
+      "critic": {
+        "activation_record": "Candidate-authored creation_response records active at epoch 1791605453 and subsequent active observations",
+        "independent_raw_proof": "UNKNOWN",
+        "terminal": "UNKNOWN; T3 summary claims complete/560s but no native update_goal response is frozen"
+      },
+      "reviser": {
+        "activation_record": "Candidate-authored creation_response records active at epoch 1791606089 and active observation through epoch 1791606657",
+        "independent_raw_proof": "UNKNOWN",
+        "terminal": "UNKNOWN; root T3 summary claims complete/usage but no native terminal response is frozen"
+      }
+    },
+    "candidate_t3": {
+      "status": "COMPLETED_REPORTED_BY_FROZEN_T3_RECORDS",
+      "investigator_and_critic": "status.json completed, result_available, no pending child runs",
+      "reviser": "terminal-science-freeze-root.json.final_stage_task completed, result_available, hasPendingChildRuns=false",
+      "reviser_status_file": "No stages/reviser/status.json present; terminal root supplies final-task record",
+      "requested_route": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "reasoningEffort": "max",
+        "serviceTier": "priority",
+        "runtimeMode": "full-access"
+      },
+      "returned_route": "Frozen T3 fields report AUTHORIZED_PROVIDER_INSTANCE and gpt-6-luna; effective reasoning/service tier/runtime UNKNOWN"
+    },
+    "candidate_protocol": {
+      "status": "PARTIALLY_OBSERVABLE; STRICT_COMPLIANCE_UNKNOWN",
+      "discovery_reveal": "Discovery saved 04:01:35.671021Z; reveal recorded 04:02:13.030Z; discovery/revealed-plan/current frozen bytes match. No evidence of candidate repair after freeze. Earlier concealed reads cannot be ruled out from these files.",
+      "assistance": "No unauthorized assistance or nested delegation appears in inspected science, but complete candidate tool traces are absent.",
+      "native_ordering": "Save-before-terminal is self-reported and consistent with carried active observations, not independently established by raw terminal receipts."
+    },
+    "candidate_time": {
+      "status": "ARTIFACT_SAVE_CAPS_SATISFIED; EXACT_OCCUPANCY_UNKNOWN",
+      "investigator": {
+        "latest_required_save": "2026-10-10T04:06:09.424766Z",
+        "stage_deadline": "2026-10-10T04:25:47.140Z"
+      },
+      "critic": {
+        "latest_required_save": "2026-10-10T04:20:11.148516Z",
+        "stage_deadline": "2026-10-10T04:22:00.052Z"
+      },
+      "reviser": {
+        "latest_required_save": "2026-10-10T04:31:17.505713Z",
+        "stage_deadline": "2026-10-10T04:38:49.728Z"
+      },
+      "root_terminal_observation": "2026-10-10T04:32:17.421065Z",
+      "whole_deadline": "2026-10-10T04:55:46.107Z",
+      "interpretation": "Filesystem saves and root observation are within caps; exact activation/setup/inference/delivery occupancy cannot be inferred from mtime or native summary."
+    },
+    "effective_and_billing": {
+      "effective_settings": "UNKNOWN beyond returned provider/model fields",
+      "billable_tokens": "UNKNOWN",
+      "cost": "UNKNOWN",
+      "savings": "NO_COMPARISON_MADE"
+    },
+    "reviewer_protocol": {
+      "unique_identity": "codex-er12-a3-control-review-v1",
+      "native_goal": "Exactly one actual native Goal created at epoch 1791606750; actual get_goal response saved in evidence/reviewer-native-goal-active.json; terminal action will occur only after full assessment save",
+      "scope": "Only assigned control science and rubric/brief/plan/request, plus governing primary source evidence, were opened. No other-arm science/history files or ER11 scores were opened. No candidate feedback/repair, account change, Git/publication or delegation occurred.",
+      "isolation_deviation": "Operational pm-mail who directory output exposed unrelated agents’ about/status lines, including some outcome labels. No other-arm assessment artifacts were opened and those lines were excluded from semantic evidence. Strict result-label isolation was therefore not fully preserved; this diagnostic must not be represented as a fully blinded review.",
+      "strict_isolation_status": "DEVIATION_RECORDED",
+      "review_start_utc": "2026-10-10T04:32:30Z",
+      "review_deadline_utc": "2026-10-10T05:17:30Z",
+      "unassessed_axes": []
+    }
+  },
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/control/run.json",
+      "sha256": "6b3870eb39801ed0d7270c448bbd8e2c74e4ff36f9275d5f9d5e855be98b7599",
+      "bytes": 580,
+      "mtime_ns": 1791604547140011487,
+      "inspection": "FULL original authored file/control record read; bytes independently hashed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/inputs/brief.md",
+      "sha256": "ce8e377b5dbae266b408c6793e2336e145bea2e143511444a246ceaf5841fac4",
+      "bytes": 2897,
+      "mtime_ns": 1791604547139778767,
+      "inspection": "FULL original authored file/control record read; bytes independently hashed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/critic/assignment.md",
+      "sha256": "e5171a87450e572f6115c89ef7bd45c70861115f1b256f002ddce880474c486a",
+      "bytes": 3306,
+      "mtime_ns": 1791605400053083127,
+      "inspection": "FULL original authored file/control record read; bytes independently hashed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/critic/critique.md",
+      "sha256": "31330b7b4c5196bfcdfbcabe6e8daf73a3932fc10492e533f2939ca6b492434c",
+      "bytes": 12092,
+      "mtime_ns": 1791605949292821212,
+      "inspection": "FULL original authored file/control record read; bytes independently hashed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/critic/dispatch.json",
+      "sha256": "f07478ca517de51f8e22ff576d028c5936154688c477aae51f17db273af7fafb",
+      "bytes": 4124,
+      "mtime_ns": 1791605400487720334,
+      "inspection": "FULL original authored file/control record read; bytes independently hashed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/critic/freeze.json",
+      "sha256": "938bb20fd43877454359045305a477099a985fe9b092af4c930f4fd6dbd8217d",
+      "bytes": 3135,
+      "mtime_ns": 1791605400053546786,
+      "inspection": "FULL original authored file/control record read; bytes independently hashed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/critic/input-map.json",
+      "sha256": "56ac214ffaf9634b9d444a453d3ff56aaaacedb6f08e10938182d585e8e4690f",
+      "bytes": 1390,
+      "mtime_ns": 1791605400052843491,
+      "inspection": "FULL original authored file/control record read; bytes independently hashed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/critic/request.json",
+      "sha256": "634c91ad331072feb5035ab742c6c2774b46dc2d2a0eefbd12df6f47f2516168",
+      "bytes": 890,
+      "mtime_ns": 1791605400053679085,
+      "inspection": "FULL original authored file/control record read; bytes independently hashed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/critic/source-map.json",
+      "sha256": "533a4d78c4df2eae9e4053f04126233c22d64bc633117938cc8165dc71490cbb",
+      "bytes": 28947,
+      "mtime_ns": 1791606011148515699,
+      "inspection": "FULL original authored file/control record read; bytes independently hashed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/critic/sources/index.md",
+      "sha256": "e1906e941556ea0e34215198c5538b25a5041d25010ccdb76a4d3e5bfa84c70b",
+      "bytes": 2110,
+      "mtime_ns": 1791605949292706180,
+      "inspection": "FULL original authored file/control record read; bytes independently hashed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/critic/status.json",
+      "sha256": "cce16c85e066aed8091634abf0df019f0805c2309040c63bd64f9122302058a7",
+      "bytes": 2980,
+      "mtime_ns": 1791606049386646252,
+      "inspection": "FULL original authored file/control record read; bytes independently hashed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/assignment.md",
+      "sha256": "59428c82d954987922f563f18e4c3e83d8e76235e7ee5cdea69c3d0574c320ff",
+      "bytes": 3712,
+      "mtime_ns": 1791604547140595279,
+      "inspection": "FULL original authored file/control record read; bytes independently hashed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/discovery.md",
+      "sha256": "21699f340e71b5bb93439ca32aadd2f330d321ff0c64f70fbbb5b6369a107ad0",
+      "bytes": 11441,
+      "mtime_ns": 1791604895671020600,
+      "inspection": "FULL original authored file/control record read; bytes independently hashed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/dispatch.json",
+      "sha256": "3abdbb1be71b9dca6aa11c7cb602de22799655683a681321d23bcefe1e83502a",
+      "bytes": 4220,
+      "mtime_ns": 1791604548148057757,
+      "inspection": "FULL original authored file/control record read; bytes independently hashed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/draft.md",
+      "sha256": "002c140b7c4635163eecc30b1541953133ebe319b684ecb78c68c54a4b9b9cab",
+      "bytes": 22644,
+      "mtime_ns": 1791605169424766285,
+      "inspection": "FULL original authored file/control record read; bytes independently hashed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/freeze.json",
+      "sha256": "40fe05e34ed556afcba367d12eab1652fc52f4698828cb4445a50a6c64b2aac8",
+      "bytes": 1654,
+      "mtime_ns": 1791604547140848573,
+      "inspection": "FULL original authored file/control record read; bytes independently hashed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/input-map.json",
+      "sha256": "0600dbf4bd5d8e510871e7a219078ebc5ed06ac57bb6fe6f6ee7571b7873806a",
+      "bytes": 714,
+      "mtime_ns": 1791604547140403661,
+      "inspection": "FULL original authored file/control record read; bytes independently hashed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/plan-reveal.json",
+      "sha256": "94f6e6bef4fdd669a7440d7c6d5987c9331a94eff02697181017e6704c226b4c",
+      "bytes": 427,
+      "mtime_ns": 1791604933030476171,
+      "inspection": "FULL original authored file/control record read; bytes independently hashed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/request.json",
+      "sha256": "e66dbd8e1d50dd5269ef25b703ba14def3f3d89296424dc0f8573be37cdaa00f",
+      "bytes": 914,
+      "mtime_ns": 1791604547140947779,
+      "inspection": "FULL original authored file/control record read; bytes independently hashed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/revealed-plan.md",
+      "sha256": "d490464e9066ef07d933d5e8fb1b91980c28695182e280fc0e0722837e7d2718",
+      "bytes": 2623,
+      "mtime_ns": 1791604933030346316,
+      "inspection": "FULL original authored file/control record read; bytes independently hashed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/source-map.json",
+      "sha256": "16b1a6b88d236fc25da3dad049c43a4d6b14fa86dd71720032b5f5e4351e68d5",
+      "bytes": 12418,
+      "mtime_ns": 1791605143392688853,
+      "inspection": "FULL original authored file/control record read; bytes independently hashed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/sources/index.md",
+      "sha256": "65fb1e796bc6b4c2c9ef96660e729b877081b127520304d74775c053759c2303",
+      "bytes": 2149,
+      "mtime_ns": 1791605152259121190,
+      "inspection": "FULL original authored file/control record read; bytes independently hashed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/status.json",
+      "sha256": "d5a0142f40414771e5717023ecf8ad5eb83d4ecab36e04a00efa1b04c689290d",
+      "bytes": 3636,
+      "mtime_ns": 1791605376048031478,
+      "inspection": "FULL original authored file/control record read; bytes independently hashed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/assignment.md",
+      "sha256": "8d55ebb9d46de7128b1a8a025fe33e087566f975d3068152d5379a9e2e1eed55",
+      "bytes": 3286,
+      "mtime_ns": 1791606049729029686,
+      "inspection": "FULL original authored file/control record read; bytes independently hashed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/dispatch.json",
+      "sha256": "2d8a3d608f03195447301e558376ef6b3dd6a06f32ae8a150e47d5fb98e4beb6",
+      "bytes": 4140,
+      "mtime_ns": 1791606050279404834,
+      "inspection": "FULL original authored file/control record read; bytes independently hashed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+      "sha256": "e8c7dd3e5da59cd11b5cc6fbc3962f533d343ad7f7511661800443f4ef78a0e4",
+      "bytes": 32715,
+      "mtime_ns": 1791606654541456056,
+      "inspection": "FULL original authored file/control record read; bytes independently hashed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/freeze.json",
+      "sha256": "8a95838953ba8966a534ebd4fa696f196e0921c3560ebefbe0c439028e5dccf2",
+      "bytes": 3906,
+      "mtime_ns": 1791606049729750101,
+      "inspection": "FULL original authored file/control record read; bytes independently hashed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/input-map.json",
+      "sha256": "dc319ab7145f0a59b5d5904e22b835c75bf51f2338edc6e99fade0141017e8d8",
+      "bytes": 1701,
+      "mtime_ns": 1791606049728808845,
+      "inspection": "FULL original authored file/control record read; bytes independently hashed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/request.json",
+      "sha256": "345bad5c60d58bcd167309943195402bf87d993c045d144493d7cea86f46c812",
+      "bytes": 894,
+      "mtime_ns": 1791606049729924844,
+      "inspection": "FULL original authored file/control record read; bytes independently hashed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/source-map.json",
+      "sha256": "10e2f6ea5814374f3ec5e6d08fd8b7ca6008c07d4b7e15f0ea54a330834c4126",
+      "bytes": 41815,
+      "mtime_ns": 1791606677505712430,
+      "inspection": "FULL original authored file/control record read; bytes independently hashed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/sources/index.md",
+      "sha256": "b82d83c13ab6ff18e30c6c10f31349f3dc400b29affcd9cafdbe8614d0cc4e23",
+      "bytes": 29243,
+      "mtime_ns": 1791606573304269059,
+      "inspection": "FULL original authored file/control record read; bytes independently hashed"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/terminal-science-freeze-root.json",
+      "sha256": "9680404c42509988d004d745e48b09bace85875d36b357d0187eda571cf459ea",
+      "bytes": 6516,
+      "mtime_ns": 1791606737421384219,
+      "inspection": "FULL original authored file/control record read; bytes independently hashed"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "bytes": 2790,
+      "mtime_ns": 1791604608938287266,
+      "inspection": "FULL original authored file/control record read; bytes independently hashed"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A3-01/brief.md",
+      "sha256": "ce8e377b5dbae266b408c6793e2336e145bea2e143511444a246ceaf5841fac4",
+      "bytes": 2897,
+      "mtime_ns": 1791604432460311128,
+      "inspection": "FULL original authored file/control record read; bytes independently hashed"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A3-01/plan.md",
+      "sha256": "d490464e9066ef07d933d5e8fb1b91980c28695182e280fc0e0722837e7d2718",
+      "bytes": 2623,
+      "mtime_ns": 1791604432460621173,
+      "inspection": "FULL original authored file/control record read; bytes independently hashed"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A3-01/control-v1/root-review-request.json",
+      "sha256": "39c629dbee01bd92aef81ce1cb45932a0440d996bece45142af23fef7417634c",
+      "bytes": 3423,
+      "mtime_ns": 1791606737583151817,
+      "inspection": "FULL original authored file/control record read; bytes independently hashed"
+    }
+  ],
+  "freeze_verification": "evidence/freeze-verification.json",
+  "original_freeze_preservation": "All original terminal and per-stage hash checks matched; final no-change comparison is required before completion",
+  "primary_sources": [
+    {
+      "source_id": "E01",
+      "url": "https://www.sqlite.org/fts5.html",
+      "access_utc": "2026-10-10T04:34:32.861612+00:00",
+      "operation": "independent HTTPS GET; source data only",
+      "status": 200,
+      "resolved_url": "https://www.sqlite.org/fts5.html",
+      "content_type": "text/html; charset=utf-8",
+      "original_path": "ER12_RUNTIME/assessment/A3-01/control-v1/evidence/E01-original.html",
+      "readable_path": "ER12_RUNTIME/assessment/A3-01/control-v1/evidence/E01-readable.txt",
+      "sha256": "92b7e721147d5119781a80273b43708f2f146314d150abb4d3e6eff1503d6fe6",
+      "bytes": 215354,
+      "readable_sha256": "92e71507a1c8f939850280594fdd346c7424bc867515e04a38f9525552f8e0ae",
+      "component": "SQLite FTS5",
+      "released_version_or_commit": "Living official manual, accessed 2026-10-10; target dependency not selected",
+      "locator": "Sections 2.1, 3.1–3.7, 4.3.1, 4.4.1–4.4.4, 5.1, 6.7, 6.12–6.13, 7.1",
+      "semantic_operation_reviewed": "FTS5 build enablement, grammar, Unicode61, external-content lifecycle, ranking, excerpts, integrity, rebuild, tokenizer API",
+      "governing_condition_default_exception": "FTS5 amalgamation support starts at 3.9.0; build enablement is conditional. External content queries a same-database object and requires application synchronization. Default Unicode61 uses Unicode 6.1 L*/N*/Co categories and remove_diacritics=1; option 2 fixes a legacy multi-diacritic case. Category prose alone does not capture the combining-diacritic implementation exception (E15/E19). Contentless-delete starts in 3.43.0, supports DELETE/INSERT OR REPLACE and all-column UPDATE, and excludes the special delete command. External-content REPLACE uses ABORT. Rank=1 enables external-content integrity comparison; discrepancies produce SQLITE_CORRUPT_VTAB. Rebuild is unavailable for contentless tables. BM25 returns a real score with smaller being better. Snippet bound is tokens, 1–64, not the final custom 160-scalar limit. FTS secure-delete defaults to 0; enabling it affects format compatibility with pre-3.42.0 readers.",
+      "applicability": "Governs the preferred released-component proposal and old-plan corrections; does not establish any deployed binary or schema.",
+      "downloaded_code_executed": false
+    },
+    {
+      "source_id": "E02",
+      "url": "https://www.sqlite.org/compile.html",
+      "access_utc": "2026-10-10T04:34:32.866872+00:00",
+      "operation": "independent HTTPS GET; source data only",
+      "status": 200,
+      "resolved_url": "https://www.sqlite.org/compile.html",
+      "content_type": "text/html; charset=utf-8",
+      "original_path": "ER12_RUNTIME/assessment/A3-01/control-v1/evidence/E02-original.html",
+      "readable_path": "ER12_RUNTIME/assessment/A3-01/control-v1/evidence/E02-readable.txt",
+      "sha256": "c15500023d05072c838f9b9c5fdf3e14b150a485f9eed36d3dbe96877f78505e",
+      "bytes": 135471,
+      "readable_sha256": "6e510b9f81e98a1326b62bc08f0f0d6dc9d4f8bab5e7b40d68d1a9a863985311",
+      "component": "SQLite build options",
+      "released_version_or_commit": "Living official manual",
+      "locator": "SQLITE_ENABLE_FTS5 entry, readable lines 1348–1354",
+      "semantic_operation_reviewed": "Compile-time FTS5 enablement",
+      "governing_condition_default_exception": "Defining SQLITE_ENABLE_FTS5 in the amalgamation adds FTS5. The arbitrary system or bundled binary is not thereby qualified.",
+      "applicability": "Supports conditional recommendation and per-OS build qualification.",
+      "downloaded_code_executed": false
+    },
+    {
+      "source_id": "E03",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "access_utc": "2026-10-10T04:34:32.868233+00:00",
+      "operation": "independent HTTPS GET; source data only",
+      "status": 200,
+      "resolved_url": "https://www.sqlite.org/lang_transaction.html",
+      "content_type": "text/html; charset=utf-8",
+      "original_path": "ER12_RUNTIME/assessment/A3-01/control-v1/evidence/E03-original.html",
+      "readable_path": "ER12_RUNTIME/assessment/A3-01/control-v1/evidence/E03-readable.txt",
+      "sha256": "b65dc308fd9e0ce471844c97366a4f5ad3a1f42833a3b19486ad7d6555a8e24e",
+      "bytes": 27068,
+      "readable_sha256": "0497dd7da00cade8d4f3c5e37a6a1868f396a70b9a7d5f47055a1c862e79588f",
+      "component": "SQLite transactions",
+      "released_version_or_commit": "Living official manual, last-update text 2026-02-18",
+      "locator": "Sections 2.1–2.3 and 3",
+      "semantic_operation_reviewed": "Same-database write atomicity and BEGIN IMMEDIATE fence",
+      "governing_condition_default_exception": "One simultaneous write transaction, multiple readers. BEGIN IMMEDIATE takes the write transaction immediately or returns SQLITE_BUSY; existing read transactions see a historical snapshot. Commit may be busy and may require retry; errors can roll back a statement or whole transaction.",
+      "applicability": "Supports trigger/outbox transactions and cutover inference; not a cross-store atomicity guarantee.",
+      "downloaded_code_executed": false
+    },
+    {
+      "source_id": "E04",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "access_utc": "2026-10-10T04:34:32.869358+00:00",
+      "operation": "independent HTTPS GET; source data only",
+      "status": 200,
+      "resolved_url": "https://www.sqlite.org/atomiccommit.html",
+      "content_type": "text/html; charset=utf-8",
+      "original_path": "ER12_RUNTIME/assessment/A3-01/control-v1/evidence/E04-original.html",
+      "readable_path": "ER12_RUNTIME/assessment/A3-01/control-v1/evidence/E04-readable.txt",
+      "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+      "bytes": 77968,
+      "readable_sha256": "ac19a4509b4b1f7db6919e8f2698705e5dde82223c9f5f00062baaacd7e7d4bd",
+      "component": "SQLite atomic commit",
+      "released_version_or_commit": "Living official technical article",
+      "locator": "Introduction, sections 2–4 and 9.1–9.3",
+      "semantic_operation_reviewed": "Crash recovery and storage assumptions",
+      "governing_condition_default_exception": "The detailed article describes rollback mode, while WAL provides atomicity by a different mechanism. Locking, flush and filesystem assumptions matter.",
+      "applicability": "Supports qualified crash discussion; no target VFS/journal configuration has been tested.",
+      "downloaded_code_executed": false
+    },
+    {
+      "source_id": "E05",
+      "url": "https://www.sqlite.org/releaselog/3_43_0.html",
+      "access_utc": "2026-10-10T04:34:32.870537+00:00",
+      "operation": "independent HTTPS GET; source data only",
+      "status": 200,
+      "resolved_url": "https://www.sqlite.org/releaselog/3_43_0.html",
+      "content_type": "text/html; charset=utf-8",
+      "original_path": "ER12_RUNTIME/assessment/A3-01/control-v1/evidence/E05-original.html",
+      "readable_path": "ER12_RUNTIME/assessment/A3-01/control-v1/evidence/E05-readable.txt",
+      "sha256": "a3a5619b15570a64c864514ce4716c37929d7f8918e68ee5bec63ecc40cd87d9",
+      "bytes": 6966,
+      "readable_sha256": "f497d2dc6d90fca34adb4f6990987bb6ae6c47c520c0a195cd729160b3211ab2",
+      "component": "SQLite release history",
+      "released_version_or_commit": "SQLite 3.43.0, 2023-08-24",
+      "locator": "Release item 1; source-ID field",
+      "semantic_operation_reviewed": "Introduction of contentless-delete",
+      "governing_condition_default_exception": "3.43.0 adds contentless-delete FTS5 indexes. It is a distinct configuration from external content.",
+      "applicability": "Supports version-qualified correction without imposing a needless 3.43.0 minimum on the preferred mode.",
+      "downloaded_code_executed": false
+    },
+    {
+      "source_id": "E06",
+      "url": "https://docs.rs/tantivy/0.26.2/tantivy/tokenizer/index.html",
+      "access_utc": "2026-10-10T04:34:32.871734+00:00",
+      "operation": "independent HTTPS GET; source data only",
+      "status": 200,
+      "resolved_url": "https://docs.rs/tantivy/0.26.2/tantivy/tokenizer/index.html",
+      "content_type": "text/html; charset=utf-8",
+      "original_path": "ER12_RUNTIME/assessment/A3-01/control-v1/evidence/E06-original.html",
+      "readable_path": "ER12_RUNTIME/assessment/A3-01/control-v1/evidence/E06-readable.txt",
+      "sha256": "28f76a147756bc1247bc8c0a03f6eb54e8bb542b433ad27e83fcfc7b017dc57e",
+      "bytes": 47675,
+      "readable_sha256": "1a197d378be6f40b56116222efae73de3c26aeddcf7c496d30aaf52edead465d",
+      "component": "Tantivy tokenizer APIs",
+      "released_version_or_commit": "Tantivy 0.26.2",
+      "locator": "Default/raw/custom-tokenizer sections and filter list",
+      "semantic_operation_reviewed": "Per-field analyzers and typed-query normalization",
+      "governing_condition_default_exception": "Default analyzer lowercases and drops tokens over 40 characters; the final explicit SimpleTokenizer/LowerCaser/AsciiFoldingFilter pipeline does not include RemoveLongFilter. Field tokenizer names must be registered. Folding does not imply Unicode61 parity.",
+      "applicability": "Supports comparator and explicit analyzer proposal; target Cargo version/features remain open.",
+      "downloaded_code_executed": false
+    },
+    {
+      "source_id": "E07",
+      "url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/0.26.2/src/query/boolean_query/boolean_query.rs",
+      "access_utc": "2026-10-10T04:34:33.094711+00:00",
+      "operation": "independent HTTPS GET; source data only",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/0.26.2/src/query/boolean_query/boolean_query.rs",
+      "content_type": "text/plain; charset=utf-8",
+      "original_path": "ER12_RUNTIME/assessment/A3-01/control-v1/evidence/E07-original.txt",
+      "readable_path": "ER12_RUNTIME/assessment/A3-01/control-v1/evidence/E07-readable.txt",
+      "sha256": "6905f9a33c60c21dafd9c9329fce2c5ccc95c376e2346de456a05e89cca5160b",
+      "bytes": 17913,
+      "readable_sha256": "6905f9a33c60c21dafd9c9329fce2c5ccc95c376e2346de456a05e89cca5160b",
+      "component": "Tantivy BooleanQuery implementation",
+      "released_version_or_commit": "Upstream tag 0.26.2",
+      "locator": "BooleanQuery documentation; intersection/union methods, raw lines 218–230",
+      "semantic_operation_reviewed": "Nested typed Boolean queries",
+      "governing_condition_default_exception": "Must intersects required clauses; Should supports alternatives under the occurrence/minimum-required-clause rules. Typed terms are supplied by the caller rather than automatically analyzed by these constructors.",
+      "applicability": "Supports AND across atoms and title/body alternatives; no raw parser is needed.",
+      "downloaded_code_executed": false
+    },
+    {
+      "source_id": "E08",
+      "url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/0.26.2/src/query/phrase_query/phrase_query.rs",
+      "access_utc": "2026-10-10T04:34:33.121202+00:00",
+      "operation": "independent HTTPS GET; source data only",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/0.26.2/src/query/phrase_query/phrase_query.rs",
+      "content_type": "text/plain; charset=utf-8",
+      "original_path": "ER12_RUNTIME/assessment/A3-01/control-v1/evidence/E08-original.txt",
+      "readable_path": "ER12_RUNTIME/assessment/A3-01/control-v1/evidence/E08-readable.txt",
+      "sha256": "74fb5880b381da11a238f934879466dff81345d5b765b3b58bf8b51e318935c8",
+      "bytes": 5313,
+      "readable_sha256": "74fb5880b381da11a238f934879466dff81345d5b765b3b58bf8b51e318935c8",
+      "component": "Tantivy PhraseQuery implementation",
+      "released_version_or_commit": "Upstream tag 0.26.2",
+      "locator": "PhraseQuery::new, ::new_with_offset_and_slop, raw lines 29–57; phrase_weight position check",
+      "semantic_operation_reviewed": "Exact phrase construction and exceptions",
+      "governing_condition_default_exception": "All terms must share a field; positions must be indexed; slop defaults to zero. Constructors require more than one term and assert for a singleton/empty list.",
+      "applicability": "Governs final line 30; the unhandled one-term quoted phrase is F3.",
+      "downloaded_code_executed": false
+    },
+    {
+      "source_id": "E09",
+      "url": "https://docs.rs/tantivy/0.26.2/tantivy/indexer/struct.IndexWriter.html",
+      "access_utc": "2026-10-10T04:34:33.136184+00:00",
+      "operation": "independent HTTPS GET; source data only",
+      "status": 200,
+      "resolved_url": "https://docs.rs/tantivy/0.26.2/tantivy/indexer/struct.IndexWriter.html",
+      "content_type": "text/html; charset=utf-8",
+      "original_path": "ER12_RUNTIME/assessment/A3-01/control-v1/evidence/E09-original.html",
+      "readable_path": "ER12_RUNTIME/assessment/A3-01/control-v1/evidence/E09-readable.txt",
+      "sha256": "f2b22513e42f73f9efb998d901bc8cb33cf7f804a2a92a9faece3a55abfd72bf",
+      "bytes": 111454,
+      "readable_sha256": "4eec56f5f16ba49e0aa7bace6e34e12ae51a8a3ed0ab15b851cb13fb061069c8",
+      "component": "Tantivy IndexWriter API",
+      "released_version_or_commit": "Tantivy 0.26.2",
+      "locator": "add_document, delete_term, commit, commit_opstamp",
+      "semantic_operation_reviewed": "Mutation order, publication and persistence",
+      "governing_condition_default_exception": "Commit waits for pending documents to be published/persisted and returns an opstamp. delete_term affects prior documents and additions earlier in the same commit. Publication is not an automatic guarantee that an existing IndexReader/Searcher is reloaded (E13).",
+      "applicability": "Supports outbox replay and its cross-store boundary; also identifies the need to investigate reader visibility.",
+      "downloaded_code_executed": false
+    },
+    {
+      "source_id": "E10",
+      "url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/0.26.2/src/snippet/mod.rs",
+      "access_utc": "2026-10-10T04:34:33.147279+00:00",
+      "operation": "independent HTTPS GET; source data only",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/0.26.2/src/snippet/mod.rs",
+      "content_type": "text/plain; charset=utf-8",
+      "original_path": "ER12_RUNTIME/assessment/A3-01/control-v1/evidence/E10-original.txt",
+      "readable_path": "ER12_RUNTIME/assessment/A3-01/control-v1/evidence/E10-readable.txt",
+      "sha256": "7b2bda5b56fa47489f99253138fef66be62f71297f797ac4195aed70a97fdd94",
+      "bytes": 31929,
+      "readable_sha256": "7b2bda5b56fa47489f99253138fef66be62f71297f797ac4195aed70a97fdd94",
+      "component": "Tantivy snippet implementation",
+      "released_version_or_commit": "Upstream tag 0.26.2",
+      "locator": "Snippet::to_html raw lines 149–164; DEFAULT_MAX_NUM_CHARS and SnippetGenerator",
+      "semantic_operation_reviewed": "Excerpt safety and default bound",
+      "governing_condition_default_exception": "The default bound is documented as 150 characters. to_html escapes fragment text through encode_minimal, but inserts configured prefix/postfix markup. It does not provide authoritative current SQLite text.",
+      "applicability": "Final custom escaped/plain-text rendering is sound; no universal absence of safe built-in rendering is inferred.",
+      "downloaded_code_executed": false
+    },
+    {
+      "source_id": "E11",
+      "url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/0.26.2/CHANGELOG.md",
+      "access_utc": "2026-10-10T04:34:33.179727+00:00",
+      "operation": "independent HTTPS GET; source data only",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/0.26.2/CHANGELOG.md",
+      "content_type": "text/plain; charset=utf-8",
+      "original_path": "ER12_RUNTIME/assessment/A3-01/control-v1/evidence/E11-original.txt",
+      "readable_path": "ER12_RUNTIME/assessment/A3-01/control-v1/evidence/E11-readable.txt",
+      "sha256": "702320ebbfe1ab5057d646c7647a834024e07c5741ab040a4113f5d3e446c645",
+      "bytes": 59164,
+      "readable_sha256": "702320ebbfe1ab5057d646c7647a834024e07c5741ab040a4113f5d3e446c645",
+      "component": "Tantivy release history",
+      "released_version_or_commit": "Changelog at upstream tag 0.26.2; historical release 0.20.1",
+      "locator": "Raw lines 283–285",
+      "semantic_operation_reviewed": "Windows mmap build-fix history",
+      "governing_condition_default_exception": "The 0.20.1 entry records a Windows mmap build fix linked to issue 2070. It is not proof of a defect or successful target deployment at 0.26.2.",
+      "applicability": "Meets the implementation/history obligation and motivates per-OS validation.",
+      "downloaded_code_executed": false
+    },
+    {
+      "source_id": "E12",
+      "url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/0.26.2/src/collector/top_score_collector.rs",
+      "access_utc": "2026-10-10T04:34:33.195524+00:00",
+      "operation": "independent HTTPS GET; source data only",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/0.26.2/src/collector/top_score_collector.rs",
+      "content_type": "text/plain; charset=utf-8",
+      "original_path": "ER12_RUNTIME/assessment/A3-01/control-v1/evidence/E12-original.txt",
+      "readable_path": "ER12_RUNTIME/assessment/A3-01/control-v1/evidence/E12-readable.txt",
+      "sha256": "98e11e76083154af5a00e95e843df74b7163eef0f0e8b324e2b1f0ee3c352cce",
+      "bytes": 70605,
+      "readable_sha256": "98e11e76083154af5a00e95e843df74b7163eef0f0e8b324e2b1f0ee3c352cce",
+      "component": "Tantivy TopDocs implementation",
+      "released_version_or_commit": "Upstream tag 0.26.2",
+      "locator": "TopDocs doc comment raw lines 26–29; order_by_score lines 225–227",
+      "semantic_operation_reviewed": "Score direction and tie key",
+      "governing_condition_default_exception": "Score order is decreasing BM25 similarity; equal sort keys use ascending DocAddress. This is an index-location identity, not public note ID.",
+      "applicability": "Supports collecting/sorting by stable application ID before pagination.",
+      "downloaded_code_executed": false
+    },
+    {
+      "source_id": "E13",
+      "url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/0.26.2/src/reader/mod.rs",
+      "access_utc": "2026-10-10T04:34:33.258072+00:00",
+      "operation": "independent HTTPS GET; source data only",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/0.26.2/src/reader/mod.rs",
+      "content_type": "text/plain; charset=utf-8",
+      "original_path": "ER12_RUNTIME/assessment/A3-01/control-v1/evidence/E13-original.txt",
+      "readable_path": "ER12_RUNTIME/assessment/A3-01/control-v1/evidence/E13-readable.txt",
+      "sha256": "8a064863b7c59d829133652c7f5eae281381c939055a7f6681b368a487580b9d",
+      "bytes": 10474,
+      "readable_sha256": "8a064863b7c59d829133652c7f5eae281381c939055a7f6681b368a487580b9d",
+      "component": "Tantivy IndexReader implementation",
+      "released_version_or_commit": "Upstream tag 0.26.2",
+      "locator": "ReloadPolicy and default raw lines 15–29, 47–55; IndexReader::reload/searcher lines 277–303",
+      "semantic_operation_reviewed": "Committed versus loaded search state",
+      "governing_condition_default_exception": "Default OnCommitWithDelay asynchronously reloads after commit; Manual never automatically reloads. searcher() lends the last loaded segment snapshot, and a fresh searcher should be acquired for each query. A writer commit watermark can be newer than the actual searcher.",
+      "applicability": "Source-backed F2: writer-applied/source watermark equality alone does not prove query completeness.",
+      "downloaded_code_executed": false
+    },
+    {
+      "source_id": "E14",
+      "url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/0.26.2/src/tokenizer/simple_tokenizer.rs",
+      "access_utc": "2026-10-10T04:34:33.259664+00:00",
+      "operation": "independent HTTPS GET; source data only",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/0.26.2/src/tokenizer/simple_tokenizer.rs",
+      "content_type": "text/plain; charset=utf-8",
+      "original_path": "ER12_RUNTIME/assessment/A3-01/control-v1/evidence/E14-original.txt",
+      "readable_path": "ER12_RUNTIME/assessment/A3-01/control-v1/evidence/E14-readable.txt",
+      "sha256": "0c9d5fcf250ae4879c25a155133ec0baa947cf03e76db63523c004b6e28a0a34",
+      "bytes": 2641,
+      "readable_sha256": "0c9d5fcf250ae4879c25a155133ec0baa947cf03e76db63523c004b6e28a0a34",
+      "component": "Tantivy SimpleTokenizer implementation",
+      "released_version_or_commit": "Upstream tag 0.26.2",
+      "locator": "search_token_end and TokenStream::advance, raw lines 33–58",
+      "semantic_operation_reviewed": "Exact token boundaries",
+      "governing_condition_default_exception": "Token characters are selected through char::is_alphanumeric; other characters delimit tokens. Thus a decomposed combining mark can split a token before the later folding filter is applied.",
+      "applicability": "Shows why the comparator analyzers are not definitionally equivalent and why the Unicode61 exception matters.",
+      "downloaded_code_executed": false
+    },
+    {
+      "source_id": "E15",
+      "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.43.0/ext/fts5/fts5_tokenize.c",
+      "access_utc": "2026-10-10T04:34:33.282220+00:00",
+      "operation": "independent HTTPS GET; source data only",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.43.0/ext/fts5/fts5_tokenize.c",
+      "content_type": "text/plain; charset=utf-8",
+      "original_path": "ER12_RUNTIME/assessment/A3-01/control-v1/evidence/E15-original.txt",
+      "readable_path": "ER12_RUNTIME/assessment/A3-01/control-v1/evidence/E15-readable.txt",
+      "sha256": "e456059ed3af8cb57bd570fed345cab23942b122b3cc699d8c39b990ff02531b",
+      "bytes": 38035,
+      "readable_sha256": "e456059ed3af8cb57bd570fed345cab23942b122b3cc699d8c39b990ff02531b",
+      "component": "SQLite Unicode61 tokenizer implementation",
+      "released_version_or_commit": "SQLite source tag version-3.43.0",
+      "locator": "fts5UnicodeTokenize raw lines 507–517",
+      "semantic_operation_reviewed": "Combining-diacritic continuation",
+      "governing_condition_default_exception": "While inside a token, recognized diacritics are accepted independently of the category test and then folded. With removal enabled the mark can disappear without splitting the token.",
+      "applicability": "F1 governing released-source exception; not a claim that every combining mark or every spelling is canonically equivalent.",
+      "downloaded_code_executed": false
+    },
+    {
+      "source_id": "E16",
+      "url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/0.26.2/src/indexer/index_writer.rs",
+      "access_utc": "2026-10-10T04:34:33.303294+00:00",
+      "operation": "independent HTTPS GET; source data only",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/0.26.2/src/indexer/index_writer.rs",
+      "content_type": "text/plain; charset=utf-8",
+      "original_path": "ER12_RUNTIME/assessment/A3-01/control-v1/evidence/E16-original.txt",
+      "readable_path": "ER12_RUNTIME/assessment/A3-01/control-v1/evidence/E16-readable.txt",
+      "sha256": "c90b2fbb9e6b905de2cd24e655bfc2444d4943d2d60fcbd19cb1506f5a06422f",
+      "bytes": 98059,
+      "readable_sha256": "c90b2fbb9e6b905de2cd24e655bfc2444d4943d2d60fcbd19cb1506f5a06422f",
+      "component": "Tantivy IndexWriter implementation",
+      "released_version_or_commit": "Upstream tag 0.26.2",
+      "locator": "commit/delete_term/add_document methods",
+      "semantic_operation_reviewed": "Cross-check of API lifecycle",
+      "governing_condition_default_exception": "Writer operation ordering and its own commit boundary are implemented within the Tantivy index; there is no SQLite transaction integration here.",
+      "applicability": "Corroborates outbox inference; not executed code.",
+      "downloaded_code_executed": false
+    },
+    {
+      "source_id": "E17",
+      "url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/0.26.2/src/tokenizer/ascii_folding_filter.rs",
+      "access_utc": "2026-10-10T04:34:33.303662+00:00",
+      "operation": "independent HTTPS GET; source data only",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/0.26.2/src/tokenizer/ascii_folding_filter.rs",
+      "content_type": "text/plain; charset=utf-8",
+      "original_path": "ER12_RUNTIME/assessment/A3-01/control-v1/evidence/E17-original.txt",
+      "readable_path": "ER12_RUNTIME/assessment/A3-01/control-v1/evidence/E17-readable.txt",
+      "sha256": "403efac42fd2c33a4803f4cdecef32630f0b3a4ca099134bfe1629738274bbef",
+      "bytes": 203312,
+      "readable_sha256": "403efac42fd2c33a4803f4cdecef32630f0b3a4ca099134bfe1629738274bbef",
+      "component": "Tantivy ASCII folding implementation",
+      "released_version_or_commit": "Upstream tag 0.26.2",
+      "locator": "Filter declaration, transform and token stream; raw lines 5–70",
+      "semantic_operation_reviewed": "Folding after tokenization",
+      "governing_condition_default_exception": "Alphabetic, numeric and symbolic characters with ASCII equivalents can be transformed by this filter. The filter acts on emitted tokens and cannot reconnect tokens split by SimpleTokenizer.",
+      "applicability": "Supports bounded folding policy and lack of presumed backend parity.",
+      "downloaded_code_executed": false
+    },
+    {
+      "source_id": "E18",
+      "url": "https://docs.rs/tantivy/0.26.2/tantivy/collector/struct.TopDocs.html",
+      "access_utc": "2026-10-10T04:34:33.371124+00:00",
+      "operation": "independent HTTPS GET; source data only",
+      "status": 200,
+      "resolved_url": "https://docs.rs/tantivy/0.26.2/tantivy/collector/struct.TopDocs.html",
+      "content_type": "text/html; charset=utf-8",
+      "original_path": "ER12_RUNTIME/assessment/A3-01/control-v1/evidence/E18-original.html",
+      "readable_path": "ER12_RUNTIME/assessment/A3-01/control-v1/evidence/E18-readable.txt",
+      "sha256": "045ca07362ee79de6e93dcb81fa4afc5777887cbe0d584e2f41d67a13f9ceb93",
+      "bytes": 114082,
+      "readable_sha256": "944c9e157e88a6e20032a022bc571b687c28c211f66d5f9390bfdc4f66140e9d",
+      "component": "Tantivy TopDocs API",
+      "released_version_or_commit": "Tantivy 0.26.2",
+      "locator": "TopDocs/order_by_score",
+      "semantic_operation_reviewed": "Score-order API cross-check",
+      "governing_condition_default_exception": "The public collector exposes decreasing similarity-score ordering and DocAddress results.",
+      "applicability": "Independent pinned confirmation of original latest-docs S11 conclusion.",
+      "downloaded_code_executed": false
+    },
+    {
+      "source_id": "E19",
+      "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.43.0/ext/fts5/fts5_unicode2.c",
+      "access_utc": "2026-10-10T04:35:23.136995+00:00",
+      "status": 200,
+      "operation": "independent HTTPS GET; source data only",
+      "original_path": "ER12_RUNTIME/assessment/A3-01/control-v1/evidence/E19-original.txt",
+      "readable_path": "ER12_RUNTIME/assessment/A3-01/control-v1/evidence/E19-readable.txt",
+      "sha256": "e86bc679d585a927a4fd7dccac85bd02dcf6831ed973f76ec920cdbca1f64ed4",
+      "bytes": 42074,
+      "readable_sha256": "e86bc679d585a927a4fd7dccac85bd02dcf6831ed973f76ec920cdbca1f64ed4",
+      "component": "SQLite Unicode61 folding tables",
+      "released_version_or_commit": "SQLite source tag version-3.43.0",
+      "locator": "sqlite3Fts5UnicodeIsdiacritic raw lines 98–106; UnicodeFold lines 240–242; fts5_remove_diacritic mapping",
+      "semantic_operation_reviewed": "Recognized-diacritic domain and removal",
+      "governing_condition_default_exception": "A bitmap recognizes a bounded set of diacritical modifiers in U+0300–U+0331, including U+0301; enabled diacritic folding can map them to zero. Together with E15 this prevents the claimed separator behavior for that domain.",
+      "applicability": "F1 exact subject/domain/exception evidence; no universal language-quality claim.",
+      "downloaded_code_executed": false
+    }
+  ],
+  "source_map": "source-map.json",
+  "independent_evidence_index": "evidence/index.md",
+  "reviewer_native_completion_receipt": "evidence/reviewer-native-goal-terminal.json (to be saved after full judgment has been written)"
+}

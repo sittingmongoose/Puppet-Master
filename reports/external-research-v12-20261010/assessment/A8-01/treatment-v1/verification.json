@@ -1,0 +1,34 @@
+{
+  "verified_utc": "2026-10-10T04:54:58.044447+00:00",
+  "errors": [],
+  "original_inspected_hashes_unchanged": true,
+  "terminal_freeze_unchanged": true,
+  "all_six_axes_present": true,
+  "all_eight_exact_plan_clauses_present": true,
+  "all_six_scw_dispositions_present": true,
+  "JSON_parse_and_navigation_checked": true,
+  "semantic_proof_note": "These structural/identity checks do not establish source correctness; source judgment uses independent primary evidence in assessment.",
+  "assessment_files": [
+    {
+      "path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/assessment.md",
+      "bytes": 92177,
+      "sha256": "b812e2684d959cadd90e5b25bcae292653f448f1486ca75729a7188728280152"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/assessment.json",
+      "bytes": 116741,
+      "sha256": "8d47f5641f15cdf0a270196f22150e1f30a5fe7e151816df1666cb05d0b9459a"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/source-map.json",
+      "bytes": 64658,
+      "sha256": "3c62714669269d5be579c65288a9d46abcc16e8188e37193ae6697e705379c0b"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/index.md",
+      "bytes": 17414,
+      "sha256": "e38b195a440ae299d666426cfa214299b2d249d010f99faf3089b260a27d6f50"
+    }
+  ],
+  "native_goal_state_during_save": "active, directly observed reviewer Goal; completion occurs only afterward."
+}

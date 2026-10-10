@@ -1,0 +1,470 @@
+{
+  "schema": "er12.independent-semantic-assessment.v1",
+  "review_revision": "treatment-v1",
+  "case_id": "ER12-B-DISC-G-01-FRESH",
+  "slot_id": "B-DISC-G-01",
+  "track": "B",
+  "role": "DISC / Brief-only discovery",
+  "arm": "treatment",
+  "source_judgment": "FAIL",
+  "source_judgment_scope": "Bounded DISC role only; no full-pipeline qualification, paired comparison, latency or ER11 rescore.",
+  "judgment_basis": "F1 is a source-supported material omission in the shadow-sync failure/history boundary; F2 is a source-supported consequential applicability extension. Required artifacts are present.",
+  "assessment_started_at_utc": "2026-10-10T04:52:23+00:00",
+  "saved_at_utc": "2026-10-10T05:00:10.748998+00:00",
+  "review_deadline_utc": "2026-10-10T05:17:23+00:00",
+  "axis_coverage": [
+    {
+      "axis": "original_obligations_and_negative_constraints",
+      "status": "MOSTLY_MET_WITH_SEPARATE_SEMANTIC_FAILURES",
+      "evidence": "discovery.md lines 3\u201348; shared assignment Required output",
+      "assessment": "959 whitespace-separated words (926 regex words), four diverse mechanisms, two named inspectable implementation leads, one exact edition/date lead, comparison, three questions/tests, uncertainties and next step. Bounded to one <=20 KB plain-text note, offline edits, deletion and undo. No whole-product specification or universal winner. Observed artifacts show no scope expansion; hidden tool behavior is UNKNOWN."
+    },
+    {
+      "axis": "bounded_unfamiliar_discovery_and_meaningful_alternatives",
+      "status": "PARTIAL_WITH_MATERIAL_GAP",
+      "evidence": "discovery.md lines 7,9,11,13; F1/F2",
+      "assessment": "CRDT, server OT, fuzzy shadow synchronization and common-ancestor merge are meaningfully distinct. The shadow mechanism is useful unfamiliar discovery, but its delivery variants and edit-loss behavior are missing. The merge alternative is burdened with a conditional failure presented as inherent."
+    },
+    {
+      "axis": "consequential_source_conditions_version_subject_operation_unit_domain_exceptions",
+      "status": "FAIL",
+      "evidence": "F1/F2; primary-evidence/p1.md through p8.md",
+      "assessment": "Main Yjs/ShareDB features and UndoManager 500 ms default are supported. P4 governs missing diffsync conditions and overbroad merge applicability. Live Yjs/ShareDB versions remain UNKNOWN. 20 KB describes current note size, not history, CRDT metadata, undo stacks or serialized byte overhead; no measurements are available. Diff3 operation/options determine conflict behavior."
+    },
+    {
+      "axis": "implementation_and_history_leads",
+      "status": "MET_WITH_LIMITATIONS",
+      "evidence": "discovery.md lines 17,19,23; P1/P3/P5/P6/P8",
+      "assessment": "Yjs README/demos and ShareDB repository/type plugins/history APIs are inspectable leads. The assignment asks for leads, not deployed implementations or executed integrations. GNU Diffutils 3.12, 12 January 2025 is verified; the unsupported decades-of-unchanged-semantics extrapolation is not established by a current manual or copyright dates."
+    },
+    {
+      "axis": "compact_tradeoffs_and_capabilities_versus_product_input",
+      "status": "PRESENT_BUT_SEMANTICALLY_PARTIAL",
+      "evidence": "discovery.md lines 27\u201344; F1/F2",
+      "assessment": "Comparison covers offline operation, history, undo and conflict handling. User choice between automatic reconciliation and conflict resolution is left open; undo granularity and retention are recognized decisions. The diffsync history variant and generalized half-duplex claim materially distort the comparison."
+    },
+    {
+      "axis": "supported_scope_preservation_wrong_corrections_and_exact_dispositions",
+      "status": "SUPPORTED_SCOPE_PRESERVED_WITH_F1_F2; PLAN_CRITIQUE_DISPOSITIONS_NOT_APPLICABLE",
+      "evidence": "input-map corpus=null; brief only; discovery.md lines 3,44,48",
+      "assessment": "There is no supplied plan, seeded shortlist or critique requiring individual repairs/dispositions. No invented requirement for deployment, service account, infrastructure or full pipeline. Product uncertainties are retained. F1/F2 identify boundaries rather than prescribe a winner."
+    },
+    {
+      "axis": "discriminating_prospective_checks_actual_validation_and_oracle_applicability",
+      "status": "MET_AS_PROSPECTIVE_ONLY",
+      "evidence": "discovery.md lines 36,38,40,48; source-map.json",
+      "assessment": "Same-offset inserts, delete/remote-insert/undo, and an offline history-byte soak are useful discriminators. They are proposals; no runtime convergence, undo or soak evidence exists in the inspected artifacts. T1 expected categories are hypotheses, not guaranteed outcomes or a proof of explainability. Byte/workload/configuration choices remain necessary when executing T3. A subjective one-sentence explanation informs product choice; it is not a correctness oracle."
+    }
+  ],
+  "material_findings": [
+    {
+      "id": "F1",
+      "severity": "MATERIAL",
+      "type": "material_omission_and_unqualified_variant_cost",
+      "axis": "source_conditions_failure_boundaries_and_retained_history",
+      "summary": "The diffsync alternative omits consequential loss/recovery and delivery-variant conditions.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-G-01/treatment/stages/role/discovery.md",
+          "lines": [
+            11,
+            31,
+            44,
+            48
+          ],
+          "section": "Shortlist item 3; comparison row; product choices; next step",
+          "exact_text": "History cost: roughly two extra full-text copies (the shadow pair) per sync relationship plus in-flight diffs, trivial at 20 KB (inference from the shadow mechanism).",
+          "additional_exact_text": "Failure boundary: overlapping concurrent edits to the same region depend on patch-application heuristics and can misplace text, and cycles assume the devices eventually reconnect (inference)."
+        }
+      ],
+      "primary_locators": [
+        {
+          "source_id": "P4",
+          "url": "https://neil.fraser.name/writing/sync/",
+          "version": "January 2009",
+          "sections": [
+            "\u00a72 Differential Synchronization Overview, failed-patch paragraph and example",
+            "\u00a73 Dual Shadow Method, checksum/reinitialization paragraph",
+            "\u00a74 Guaranteed Delivery Method, packet loss, edit stack, backup shadow; Asymmetry"
+          ],
+          "evidence_file": "primary-evidence/p4.md"
+        }
+      ],
+      "primary_facts": "The simple protocol can lose edits; guaranteed delivery changes retained state. Failed patches can be reversed out, beyond misplacement.",
+      "consequence": "These distinctions affect the assigned offline failure boundary and history tradeoff. The report neither identifies the variant nor preserves this consequential uncertainty. No deployment or guaranteed-delivery implementation is demanded.",
+      "disposition": "Remaining material omission; prevents PASS/PASS_WITH_LIMITATIONS."
+    },
+    {
+      "id": "F2",
+      "severity": "MATERIAL",
+      "type": "source_applicability_overgeneralization",
+      "axis": "exact_subject_operation_domain_and_failure_boundary",
+      "summary": "A particular in-flight discard exchange is generalized into an inherent merge-based synchronization limit.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-G-01/treatment/stages/role/discovery.md",
+          "lines": [
+            13,
+            32
+          ],
+          "section": "Shortlist item 4; comparison row",
+          "exact_text": "merge-based sync is half-duplex: \"as long as one is typing, no changes are arriving\" [S3]",
+          "additional_exact_text": "Overlap always escalates; half-duplex"
+        }
+      ],
+      "primary_locators": [
+        {
+          "source_id": "P4",
+          "url": "https://neil.fraser.name/writing/sync/",
+          "version": "January 2009",
+          "sections": [
+            "\u00a71 Conventional Strategies, three-step server exchange and changes-during-flight condition"
+          ],
+          "evidence_file": "primary-evidence/p4.md"
+        },
+        {
+          "source_id": "P5",
+          "url": "https://www.gnu.org/software/diffutils/manual/diffutils.html#diff3-Merging",
+          "version": "GNU Diffutils 3.12, 12 January 2025",
+          "sections": [
+            "\u00a78 Merging From a Common Ancestor",
+            "\u00a78.3 Generating the Merged Output Directly"
+          ],
+          "evidence_file": "primary-evidence/p5.md"
+        }
+      ],
+      "primary_facts": "Fraser scopes that limit to an exchange that discards received text if local editing occurs during flight. GNU merge operates on supplied versions.",
+      "consequence": "The bounded alternative is merge on reconnect. Making this conditional exchange behavior its categorical characteristic failure can wrongly discount a legitimate alternative.",
+      "disposition": "Unsupported consequential scope extension; prevents PASS/PASS_WITH_LIMITATIONS."
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L1",
+      "candidate_locator": "discovery.md line 7 and table line 29",
+      "assessment": "Yjs metadata growth is a legitimate unresolved concern, but implementation GC/struct merging and the distinction between convergence and durable edit-history preservation are absent. The claimed absolute smallness cannot follow from a 20 KB current-text bound. Do not read this as a measured byte guarantee.",
+      "primary_ids": [
+        "P1",
+        "P6",
+        "P7"
+      ]
+    },
+    {
+      "id": "L2",
+      "candidate_locator": "discovery.md lines 9,30",
+      "assessment": "Generic event-passing loss warnings are accurate in their original context. The ShareDB implementation contains recovery/retry/version handling. Permanent op loss is different from an ordinary disconnected or dropped-message episode. The candidate does not specify the loss class; this caveat is not used as an independently decisive failure.",
+      "primary_ids": [
+        "P3",
+        "P4",
+        "P8"
+      ]
+    },
+    {
+      "id": "L3",
+      "candidate_locator": "discovery.md lines 13,32",
+      "assessment": "Conflict/overlap and escalation depend on merge granularity/options and product policy. Do not allege that GNU default -m necessarily accepts identical concurrent changes: it defaults to -A; -e/-E treat matching tips differently. No exact diff3 invocation was proposed or executed.",
+      "primary_ids": [
+        "P5"
+      ]
+    },
+    {
+      "id": "L4",
+      "candidate_locator": "discovery.md line 23",
+      "assessment": "The edition/date historical lead is sufficient. Copyright lineage is not evidence for every semantic rule remaining unchanged for decades.",
+      "primary_ids": [
+        "P5"
+      ]
+    },
+    {
+      "id": "L5",
+      "candidate_locator": "candidate source-map.json",
+      "assessment": "Candidate source records give retrieval date but not exact fetch UTC or pinned Yjs/ShareDB versions, and describe some displayed responses as truncated. Independent retrieval verifies governing content but does not reconstruct candidate execution history.",
+      "primary_ids": []
+    }
+  ],
+  "unknowns": [
+    "Actual effective treatment provider/model and billing/charged usage; fixture label and requested route are not execution evidence.",
+    "Authenticity and actual native-tool provenance of the candidate-saved Goal receipts; no provider history/server telemetry was inspected.",
+    "Actual native token count/metric semantics: completion-receipt tokens_used=860720 is an observed saved field only, not verified tokens or billing.",
+    "Terminal output freeze: none exists in the exact treatment tree or the scoped case-named freeze/terminal search at inspection; initial input freeze is not a terminal freeze.",
+    "Full treatment occupancy, host delivery timestamp, investigation/writing phase allocation and ordering of science writes relative to native completion.",
+    "Exact Yjs/ShareDB package or deployed version, measured retained history, operation durability across process restart, and actual concurrent undo outcomes.",
+    "Whether the selected product accepts automatic semantic loss, wants complete audit history, or wants user conflict resolution; the brief deliberately leaves choice open."
+  ],
+  "useful_discoveries": [
+    "Four-way mechanism comparison with automatic and user-resolved routes.",
+    "Yjs selective origin-scoped undo with an explicit 500 ms grouping default.",
+    "ShareDB offline syncing and document-history APIs as implementation leads.",
+    "Fraser shadow synchronization as an alternative to operation replay, despite missing variant conditions.",
+    "A version-located GNU diff3 merge lead and prospective concurrent-undo/history probes."
+  ],
+  "dimensions": {
+    "delivery": {
+      "status": "PRESENT",
+      "discovery_file": "ER12_RUNTIME/runs/B-DISC-G-01/treatment/stages/role/discovery.md",
+      "word_count_whitespace": 959,
+      "word_count_regex": 926,
+      "all_five_candidate_source_members_read_full": true,
+      "source_map_present": true,
+      "root_t3_verification": "User reports root verified T3 task completed, no pending; not independently re-polled or inferred from native completion.",
+      "terminal_freeze": "NOT_FOUND; terminal integrity qualification UNKNOWN"
+    },
+    "source": {
+      "status": "FAIL",
+      "finding_ids": [
+        "F1",
+        "F2"
+      ],
+      "independent_successful_primary_resources": 8,
+      "candidate_source_minimum": "Content-supported: five primary page identities across four projects/publishers. Candidate retrieval execution details not independently observed."
+    },
+    "coverage": {
+      "status": "STRUCTURAL_OBLIGATIONS_MET; SEMANTIC_BOUNDARIES_PARTIAL",
+      "missing_final": "NOT_APPLICABLE; discovery.md present; this is no FINAL assignment",
+      "full_pipeline": "NOT_ASSESSED"
+    },
+    "native": {
+      "status": "UNKNOWN",
+      "saved_receipt_states": [
+        "active",
+        "complete"
+      ],
+      "saved_receipt_same_goal_id": true,
+      "saved_goal_id": "goal-01a12422-2214-7eb3-a9a8-94bc49e06225",
+      "saved_session_id": "01a12421-d382-7000-a0c5-234f68fe479e",
+      "saved_objective_matches_frozen_objective": true,
+      "reported_completion_percent": 100,
+      "reported_tokens_used": 860720,
+      "actual_native_tool_provenance": "UNKNOWN; saved receipt fields observed, actual emitted tool telemetry not available in allowed materials",
+      "effective_provider": "UNKNOWN",
+      "effective_model": "UNKNOWN",
+      "billing": "UNKNOWN",
+      "requested_route_observed": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "muse-spark-1.3-contributor",
+        "options": {
+          "reasoningEffort": "max"
+        }
+      },
+      "fixture_model_label": "GLM 5.3 Flash Max; metadata label only"
+    },
+    "protocol": {
+      "status": "UNKNOWN_FOR_FULL_CANDIDATE_EXECUTION; REVIEW_BOUNDARIES_OBSERVED",
+      "observed": "Exact stage assignment, frozen input mapping, outputs/source members and saved native receipts inspected. All initial frozen members match. No observed evidence justifies an assistance violation finding.",
+      "unverified": "Candidate exact tool sequence, inference-after-activation, prohibited tool absence, page budget and save-before-complete ordering not independently reconstructable without prohibited history.",
+      "review_method": "One actual exposed Codex native Goal activated before common scientific input inspection; no delegation, candidate contact/repair, account use, Git/publication, other-arm/history/outcome/roster reads or ER11 rescore. Only own pm-mail inbox checked. All writes under reserved assessment root.",
+      "reviewer_goal": "reviewer-native-goal-observation.json; completion only after saved validated judgment"
+    },
+    "time": {
+      "status": "UNKNOWN_FOR_COMPLETE_HOST_OCCUPANCY",
+      "prepared_at_utc": "2026-10-10T04:45:54.708000+00:00",
+      "deadline_utc": "2026-10-10T05:00:54.708000+00:00",
+      "saved_receipt_activation_at_utc": "2026-10-10T04:46:19.156000+00:00",
+      "saved_receipt_completion_at_utc": "2026-10-10T04:50:39.376000+00:00",
+      "reported_native_receipt_span_seconds": 260.22,
+      "reported_preparation_to_native_complete_seconds": 284.668,
+      "reported_completion_precedes_deadline": true,
+      "observations_not_inferences": "Receipt times do not establish delivery/phase times, occupancy, actual tokens, billing savings or comparative speed. Root completion/no-pending is a separately supplied fact. Reviewer is within its 25-minute bound."
+    }
+  },
+  "validation": {
+    "candidate_proposed": [
+      "T1 concurrent same-offset inserts",
+      "T2 delete plus remote insertion then undo",
+      "T3 seven-day offline retained-byte soak"
+    ],
+    "candidate_executed_scientific_checks": "NONE_EVIDENCED",
+    "reviewer_executed": [
+      "Read full mapped assignment/fixture and every authored science/source file",
+      "Independent primary-source web/HTTPS retrievals",
+      "Static governing documentation and implementation inspection",
+      "SHA-256 and byte comparisons against all five initial frozen inputs",
+      "Rechecked every inspected artifact unchanged before saving"
+    ],
+    "reviewer_not_executed": [
+      "Convergence implementation",
+      "Concurrent undo test",
+      "Soak/benchmark",
+      "Account/service/deployment checks"
+    ]
+  },
+  "input_integrity": {
+    "all_initial_freeze_members_match": true,
+    "all_inspected_bytes_unchanged": true,
+    "terminal_freeze": {
+      "searched_exact_treatment_tree": "ER12_RUNTIME/runs/B-DISC-G-01/treatment",
+      "matching_files": [],
+      "status": "NOT_FOUND",
+      "last_checked_utc": "2026-10-10T05:00:10.748998+00:00"
+    },
+    "hash_manifest": "inspected-hashes.json",
+    "corpus": "null; no members listed or inferred"
+  },
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "bytes": 2790,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/treatment/stages/role/input-map.json",
+      "sha256": "cbfe13abc8728ec988675c793d20f76c277e9b5370f8e9cffc9c62cfef2161c3",
+      "bytes": 507,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/treatment/stages/role/assignment.md",
+      "sha256": "dc12ca7f67237612b6117220698527b05738c22d1a5f69b3f85936c2102ebb8a",
+      "bytes": 2383,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/treatment/stages/role/freeze.json",
+      "sha256": "3d1122a33b300c890ea11c8cfcffa09124de00cf9098ecc38b576b3deee2bb78",
+      "bytes": 2193,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/inputs/assignment.md",
+      "sha256": "848cd2e8b9ef3078e2333ae05a62a8e04662b2b1628f5c9b3b34b1c6c896a83b",
+      "bytes": 2583,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/inputs/fixture.json",
+      "sha256": "d9e63ea84e74f37b9e33e8087dcbff1359fed87ebb3401c22435573ec9598d4f",
+      "bytes": 1583,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/inputs/manifest.json",
+      "sha256": "7d9b298c18a2e876f1d41d4f4f94ce92c43f48db8ae8d95f622b91be30035d0c",
+      "bytes": 241,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/treatment/stages/role/discovery.md",
+      "sha256": "c773718f5d0dabfd06e8990ad797afdd7734a28a40c9bc4e08e2af0bbff2e2b6",
+      "bytes": 6830,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/treatment/stages/role/source-map.json",
+      "sha256": "9eaf4a8ee869e6e80006c4192d8703f1cea0bc88cfcdee619ec9623a8554ae78",
+      "bytes": 4001,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/treatment/stages/role/activation-receipt.json",
+      "sha256": "6bb1005526c0638ef42b621e88da76b5c0415085a56fa458416f13dd180087d6",
+      "bytes": 566,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/treatment/stages/role/completion-receipt.json",
+      "sha256": "8a49b77029bed5aa4e183b46a2f2123636700bbfb18cf48e4682ce5eeeb5c1d3",
+      "bytes": 575,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/treatment/stages/role/sources/ev-01-yjs-intro.md",
+      "sha256": "547cf37ca64e31265241e6191e6b7664233220f5b648f5f2550796f99223ba03",
+      "bytes": 998,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/treatment/stages/role/sources/ev-02-sharedb-intro.md",
+      "sha256": "f8e1b6af74a96053c013a05fe35fa127668f04cb684a7d87c06ad395d348c635",
+      "bytes": 743,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/treatment/stages/role/sources/ev-03-fraser-sync.md",
+      "sha256": "30dd6511f932b2d18962865900194c04f25e9fd2247c96f1c5bf9142ddd60968",
+      "bytes": 1135,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/treatment/stages/role/sources/ev-04-gnu-diffutils.md",
+      "sha256": "2ab24eca729da67f0fc417da9c680265b3a2cc76db9c644fe4d494f67c60352b",
+      "bytes": 860,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/treatment/stages/role/sources/ev-05-yjs-undo.md",
+      "sha256": "0947fda8a481b1e9538358e2506a05075c57bda65d149701266bbb5c836d8209",
+      "bytes": 785,
+      "read_full": true
+    }
+  ],
+  "primary_sources": [
+    {
+      "id": "P1",
+      "url": "https://docs.yjs.dev/#network-agnostic",
+      "version": "Unversioned live documentation retrieved 2026-10-10; package version UNKNOWN",
+      "retrieved_at_utc": "2026-10-10T04:54:05.951654+00:00",
+      "retrieved_sha256": "15e6b0a7004712329d9a88a22c8d4279d2552efd56b50ffd846894964ca11894",
+      "evidence_file": "primary-evidence/p1.md"
+    },
+    {
+      "id": "P2",
+      "url": "https://docs.yjs.dev/api/undo-manager",
+      "version": "Unversioned API documentation; package version UNKNOWN",
+      "retrieved_at_utc": "2026-10-10T04:54:05.953442+00:00",
+      "retrieved_sha256": "6bdb6e40bb41421b9784f52178e0d6caa7d3c02ea6e6c7d6b1fa6fafc8c6865b",
+      "evidence_file": "primary-evidence/p2.md"
+    },
+    {
+      "id": "P3",
+      "url": "https://share.github.io/sharedb/",
+      "version": "Unversioned project documentation; deployed/package version UNKNOWN",
+      "retrieved_at_utc": "2026-10-10T04:54:05.954705+00:00",
+      "retrieved_sha256": "8ea3e98ae34fe9ed887aba1024666fa3ab27ce2b10276754fb95f75255b4c91a",
+      "evidence_file": "primary-evidence/p3.md"
+    },
+    {
+      "id": "P4",
+      "url": "https://neil.fraser.name/writing/sync/",
+      "version": "January 2009 paper page",
+      "retrieved_at_utc": "2026-10-10T04:54:05.956323+00:00",
+      "retrieved_sha256": "ff4b4431ac193fd67fd71fe9d201d3517754dfb2915953b0e8cc55a2be4123cb",
+      "evidence_file": "primary-evidence/p4.md"
+    },
+    {
+      "id": "P5",
+      "url": "https://www.gnu.org/software/diffutils/manual/diffutils.html#diff3-Merging",
+      "version": "GNU Diffutils 3.12, 12 January 2025",
+      "retrieved_at_utc": "2026-10-10T04:54:05.958348+00:00",
+      "retrieved_sha256": "8494cfa2617cfc677c7492224aaf122775949b7a04e9adae074538125232cada",
+      "evidence_file": "primary-evidence/p5.md"
+    },
+    {
+      "id": "P6",
+      "url": "https://github.com/yjs/yjs#yjs-crdt-algorithm",
+      "version": "Mutable main README, retrieved 2026-10-10; commit/package version UNKNOWN; retrieved bytes hashed",
+      "retrieved_at_utc": "2026-10-10T04:54:05.961602+00:00",
+      "retrieved_sha256": "351afd08dc63ebb0e879c7c14e8bdd36c16354934c3ffaf392ff1671caad41bd",
+      "evidence_file": "primary-evidence/p6.md"
+    },
+    {
+      "id": "P7",
+      "url": "https://docs.yjs.dev/api/y.doc",
+      "version": "Unversioned API documentation; package version UNKNOWN",
+      "retrieved_at_utc": "2026-10-10T04:54:05.962903+00:00",
+      "retrieved_sha256": "5c115565036df407f2c40a4175690048a098679824719bf8e821c2e48458e122",
+      "evidence_file": "primary-evidence/p7.md"
+    },
+    {
+      "id": "P8",
+      "url": "https://github.com/share/sharedb/blob/master/lib/client/doc.js",
+      "version": "Mutable master lib/client/doc.js retrieved 2026-10-10; commit/package/deployment version UNKNOWN; retrieval hash recorded",
+      "retrieved_at_utc": "2026-10-10T04:54:05.963901+00:00",
+      "retrieved_sha256": "6b4916b4b4527bf270bbaa0565050b65672c4c1bdf81f3c99a9c5591b158c429",
+      "evidence_file": "primary-evidence/p8.md"
+    }
+  ],
+  "primary_source_map": "source-map.json",
+  "navigable_evidence": "primary-evidence/index.md",
+  "later_disputes": "Not part of this original saved judgment; preserve separately."
+}

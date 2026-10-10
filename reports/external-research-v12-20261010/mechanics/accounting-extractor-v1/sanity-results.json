@@ -1,0 +1,15 @@
+{
+  "schema": "er12.accounting-extractor.sanity.v1",
+  "status": "MECHANICAL_CHECKS_PASSED",
+  "semantic_or_native_pass": false,
+  "snapshot_sha256": "99955f24f917cd9a724e20a11989115431e31bd296a4c30115fe3a9695213e01",
+  "repeated_actual_goal_id": "goal-01a123fb-eb55-7382-bd26-2458e5b0fb95",
+  "terminal_meter_occurrences": 4,
+  "overlap_witness_task_ids": [
+    "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-01-control-investigator-v1",
+    "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-01-treatment-investigator-v1"
+  ],
+  "observed_context_sum_seconds": 18761.723001,
+  "observed_context_union_seconds": 2884.289,
+  "billing_inferred": false
+}

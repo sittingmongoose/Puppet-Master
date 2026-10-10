@@ -1,0 +1,20 @@
+[
+  {
+    "id": "CR-01",
+    "category": "material incomplete",
+    "draft_locator": "Recommendation; Proposed data and coordinator workflow states 6–7; Product and sync comparison; Validation table correction path",
+    "summary": "Clarify how the append-only correction event, event identity, and before-image are preserved across ODK and Kobo native edit paths; pin configuration and acceptance checks."
+  },
+  {
+    "id": "CR-02",
+    "category": "material incomplete",
+    "draft_locator": "Product and sync comparison Kobo row; Site/time handling; proposed Kobo export/restore rehearsal",
+    "summary": "Kobo XLS export may strip timezone information from Excel date/time fields unless dates are exported as text; connect this to preservation of the proposed observed-time offset."
+  },
+  {
+    "id": "CR-03",
+    "category": "minor locator/wording",
+    "draft_locator": "Conditions and local recommendation; Site/time/photo constraints",
+    "summary": "Label the no-GPS rule as a local minimization recommendation, not as the brief’s narrower prohibition on photo-derived precise location."
+  }
+]

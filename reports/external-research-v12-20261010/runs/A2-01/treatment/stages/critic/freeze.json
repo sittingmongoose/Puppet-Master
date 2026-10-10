@@ -1,0 +1,88 @@
+{
+  "prepared_at_utc": "2026-10-10T04:26:05.761Z",
+  "stage": "critic",
+  "stage_deadline_utc": "2026-10-10T04:38:05.761Z",
+  "whole_deadline_utc": "2026-10-10T04:54:23.145Z",
+  "stage_budget_s": 720,
+  "predecessors": [
+    {
+      "stage": "investigator",
+      "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A2-A2-01-treatment-investigator-topology-v1",
+      "statusPath": "ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/status.json",
+      "required_state": "original-active"
+    }
+  ],
+  "frozen_inputs": [
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/treatment/inputs/brief.md",
+      "sha256": "3715d3b3364ed8d47ed60b7d2f7c3e4ed0151f8c7e6ed26598de908a292b051f",
+      "bytes": 3292
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/treatment/stages/critic/assignment.md",
+      "sha256": "3f351e3d052faeabef5d999eb8d399632cea57e630f08e88ac389174a95a533b",
+      "bytes": 4370
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/treatment/stages/critic/input-map.json",
+      "sha256": "179787cce1e6bf7b9c598d55f8c7e6fcb60bb8c2724f43b8b6667e23e2634cb1",
+      "bytes": 1910
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/treatment/handoff/inputs/brief.md",
+      "sha256": "3715d3b3364ed8d47ed60b7d2f7c3e4ed0151f8c7e6ed26598de908a292b051f",
+      "bytes": 3292
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/treatment/handoff/stages/investigator/discovery.md",
+      "sha256": "c3f190e4f5a8606033b1aa5d73a958dbe67dbbe0607bc8a0284df78852daf0d7",
+      "bytes": 16771
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/treatment/handoff/stages/investigator/draft.md",
+      "sha256": "4d3113c12c5d8ce08f866095e223dafaddc20ab6ba1f8fa9ca26a30ec1161a07",
+      "bytes": 26362
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/treatment/handoff/stages/investigator/source-map.json",
+      "sha256": "2ebcfa0707a1dfd4d67f911adf00ca8fa242ea06ce20cde8ab746584b4154e29",
+      "bytes": 18629
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/treatment/handoff/stages/investigator/revealed-plan.md",
+      "sha256": "57c6e740ac94d7c3b783621e59b759460ff10e4d157288e72d590e3f1f41666b",
+      "bytes": 5925
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/treatment/handoff/stages/investigator/plan-reveal.json",
+      "sha256": "1903195b99f69fcf766996dce6024d80c4180213aa3eed72d2c1e6e9d2dcb77e",
+      "bytes": 429
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/treatment/handoff/stages/investigator/sources/index.md",
+      "sha256": "a445e06a1f4effda4181b2594675a6a2d782c70a0a905834b365f95c64309492",
+      "bytes": 3568
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/treatment/handoff/manifest.json",
+      "sha256": "2a22c47356262d1ba2293fce7a789d1c18b2802b807ca883eda12b19bec1e440",
+      "bytes": 4418
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/treatment/control/handoff-binding.json",
+      "sha256": "eac5f32494752e38c901b071acc03cfbcef0d0596830d0c09c91c5f955022fb5",
+      "bytes": 112
+    }
+  ],
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    }
+  },
+  "runtime_mode_requested": "full-access",
+  "native_goal_objective": "ER11 critic stage, run A2-01-treatment: execute ER12_RUNTIME/runs/A2-01/treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+  "native_goal_status": "UNKNOWN until directly observed"
+}

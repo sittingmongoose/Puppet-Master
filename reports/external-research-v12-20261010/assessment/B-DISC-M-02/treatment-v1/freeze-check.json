@@ -1,0 +1,65 @@
+{
+  "checked_at_utc": "2026-10-10T04:47:26.130752+00:00",
+  "input_freeze_path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/freeze.json",
+  "input_freeze_checks": [
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/assignment.md",
+      "expected_sha256": "852ad7871bb8dee4ffc252b7155353eda796e2f71445b19642bc918b43fdaa6f",
+      "actual_sha256": "852ad7871bb8dee4ffc252b7155353eda796e2f71445b19642bc918b43fdaa6f",
+      "expected_bytes": 2383,
+      "actual_bytes": 2383,
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/input-map.json",
+      "expected_sha256": "f4a640ccb6452e4cd03eb7d98160bf9cf8e4d686203d26f7cd0d0d5486668cec",
+      "actual_sha256": "f4a640ccb6452e4cd03eb7d98160bf9cf8e4d686203d26f7cd0d0d5486668cec",
+      "expected_bytes": 507,
+      "actual_bytes": 507,
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/inputs/fixture.json",
+      "expected_sha256": "1b10c5fad028e42ff6e2367e5df37e6f550a4d28a27ead680c77c44d1b60c7f5",
+      "actual_sha256": "1b10c5fad028e42ff6e2367e5df37e6f550a4d28a27ead680c77c44d1b60c7f5",
+      "expected_bytes": 1033,
+      "actual_bytes": 1033,
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/inputs/manifest.json",
+      "expected_sha256": "fe164e06074640cccbda200b67202cb2cc9dad08579ba478a1bbaa768dfcc595",
+      "actual_sha256": "fe164e06074640cccbda200b67202cb2cc9dad08579ba478a1bbaa768dfcc595",
+      "expected_bytes": 241,
+      "actual_bytes": 241,
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/inputs/assignment.md",
+      "expected_sha256": "96c86b7591b7a87ba61dac12c4c21a3daa8c20e9fd4b50e09266471d6d11a1db",
+      "actual_sha256": "96c86b7591b7a87ba61dac12c4c21a3daa8c20e9fd4b50e09266471d6d11a1db",
+      "expected_bytes": 2642,
+      "actual_bytes": 2642,
+      "match": true
+    }
+  ],
+  "all_input_freeze_checks_match": true,
+  "terminal_freeze_exact_path_checks": [
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/terminal-science-freeze.json",
+      "exists": false
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/terminal-science-freeze-root.json",
+      "exists": false
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/terminal-science-freeze.json",
+      "exists": false
+    }
+  ],
+  "terminal_science_freeze_status": "UNKNOWN: no terminal science freeze found at the inspected target-arm locations; input freeze is not a terminal output freeze",
+  "science_changed_since_initial_review_hash": [],
+  "host_terminal_observation": "ER12_RUNTIME/mechanics/task-observations/er12-B-DISC-M-02-treatment-role-v2.json",
+  "host_terminal_state": "completed; result_available; hasPendingChildRuns=false; observed 2026-10-10T04:42:21.697Z; distinct from native Goal completion"
+}

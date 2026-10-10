@@ -1,0 +1,18 @@
+{
+  "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A7-01-control-investigator-v1",
+  "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A7-01-control-investigator-v1",
+  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A7-01-control-investigator-v1:ordinal:1",
+  "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A7-01-control-investigator-v1",
+  "status": "completed",
+  "workState": "result_available",
+  "hasPendingChildRuns": false,
+  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A7-01-control-investigator-v1:ordinal:1",
+  "latestTerminalStatus": "completed",
+  "latestTerminalSummary": "Completed the investigator reference stage. The required files were saved before native Goal completion, and the discovery hash matches the release receipt.\n\n- [Discovery](<ER12_RUNTIME/runs/A7-01/control/stages/investigator/discovery.md>) · SHA-256: `17ff8435c3352da4d6ab501fb6a90272c342a2b04bedf7a04afb4eeaa6b04dfb`\n- [Source map](<ER12_RUNTIME/runs/A7-01/control/stages/investigator/source-map.json>) · [Source index](<ER12_RUNTIME/runs/A7-01/control/stages/investigator/sources/index.md>)\n- [Complete draft](<ER12_RUNTIME/runs/A7-01/control/stages/investigator/draft.md>)\n- [Release receipt](<ER12_RUNTIME/runs/A7-01/control/stages/investigator/release-receipt.json>) · [Goal observation](<ER12_RUNTIME/runs/A7-01/control/stages/investigator/goal-observation.json>)\n\nThe native Goal is `complete` (thread `01a12401-fc92-7e02-ba13-b0d64e19e5f1`). Final usage: 315,721 tokens and 14m 3s. Research was documentary only; product validation and printer operation were not performed.",
+  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A7-01-control-investigator-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:5bd78c42-9415-4b90-97fb-7940285712a1",
+  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+  "model": "gpt-6-luna",
+  "summary": "Completed the investigator reference stage. The required files were saved before native Goal completion, and the discovery hash matches the release receipt.\n\n- [Discovery](<ER12_RUNTIME/runs/A7-01/control/stages/investigator/discovery.md>) · SHA-256: `17ff8435c3352da4d6ab501fb6a90272c342a2b04bedf7a04afb4eeaa6b04dfb`\n- [Source map](<ER12_RUNTIME/runs/A7-01/control/stages/investigator/source-map.json>) · [Source index](<ER12_RUNTIME/runs/A7-01/control/stages/investigator/sources/index.md>)\n- [Complete draft](<ER12_RUNTIME/runs/A7-01/control/stages/investigator/draft.md>)\n- [Release receipt](<ER12_RUNTIME/runs/A7-01/control/stages/investigator/release-receipt.json>) · [Goal observation](<ER12_RUNTIME/runs/A7-01/control/stages/investigator/goal-observation.json>)\n\nThe native Goal is `complete` (thread `01a12401-fc92-7e02-ba13-b0d64e19e5f1`). Final usage: 315,721 tokens and 14m 3s. Research was documentary only; product validation and printer operation were not performed.",
+  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A7-01-control-investigator-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:5bd78c42-9415-4b90-97fb-7940285712a1",
+  "waitTimedOut": false
+}

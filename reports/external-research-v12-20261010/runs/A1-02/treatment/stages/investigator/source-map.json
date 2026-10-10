@@ -1,0 +1,179 @@
+{
+  "schema": "er12-source-map-v1",
+  "run_id": "A1-02-treatment",
+  "stage": "investigator",
+  "frozen_brief_sha256": "40b8aba4c7352fb60b8744d134fe902d1cc9b88e1043eecb306cfd6c3428b4dc",
+  "access_clock_basis": "Source pages were reopened directly in this session; access_utc is the UTC clock observation immediately after the grouped open that exposed them.",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "RFC 5545 — iCalendar",
+      "exact_url": "https://www.rfc-editor.org/rfc/rfc5545.html",
+      "version_or_commit": "RFC 5545, Standards Track, September 2009",
+      "access_utc": "2026-10-10T04:00:20Z",
+      "locator": [
+        "§3.2.19 TZID (printed pp. 27–28; web lines 1448–1497)",
+        "§3.3.5 DATE-TIME (pp. 32–34; lines 1725–1807)",
+        "§3.3.10 RRULE (pp. 37–39; lines 2277–2287)",
+        "§3.4–3.6.1 METHOD/snapshot and components (pp. 50–53; lines 2694–2766, 4123–4157)",
+        "§3.6.5 VTIMEZONE (pp. 62–64)",
+        "§3.8.4.4 RECURRENCE-ID (pp. 112–114; lines 6022–6086)",
+        "§3.8.4.7 UID (pp. 115–116; lines 6264–6282)",
+        "§3.8.5.1 EXDATE, §3.8.5.2 RDATE, §3.8.5.3 RRULE (pp. 118–123; lines 6368–6391, 6457–6491, 6546–6583)",
+        "§3.2.20 unknown IANA/X value preservation (lines 1543–1550)",
+        "§3.8.5.3 recurrence duration semantics (pp. 123; web lines 6585–6598)",
+        "§3.6.5 VTIMEZONE validity for recurring components (web lines 3471–3478)",
+        "§3.8.8.1–.2 IANA and non-standard properties (pp. 139–140; web lines 7496–7558)"
+      ],
+      "observed_operation": "Defines UID/RID identity; constructs recurrence set from DTSTART/RRULE/RDATE minus EXDATE; specifies time value forms, DST fold/gap, and time-zone definition references.",
+      "governing_condition_default_exception": "EXDATE takes precedence over RRULE/RDATE and duplicates collapse; DTSTART/RRULE mismatch is undefined. RECURRENCE-ID value type matches DTSTART; when moved, RID remains original scheduled time. TZID-local ambiguous values select first occurrence; explicit gap values use pre-gap offset, while rule-generated nonexistent local instances are ignored and not counted. Absent METHOD, do not assume scheduling transaction. Unknown IANA/X-name value data is preserved without interpretation.",
+      "applicability": "Primary file-format contract for the scoped weekly, named-zone, single-occurrence edit. Broader syntax is not thereby supported by this importer.",
+      "additional_access_utc": [
+        "2026-10-10T04:04:04Z",
+        "2026-10-10T04:07:07Z"
+      ]
+    },
+    {
+      "id": "S02",
+      "title": "RFC 5546 — iTIP",
+      "exact_url": "https://www.rfc-editor.org/rfc/rfc5546.html",
+      "version_or_commit": "RFC 5546, Standards Track, December 2009",
+      "access_utc": "2026-10-10T04:00:20Z",
+      "locator": [
+        "§3.2.5 CANCEL",
+        "§3.7.1 Working With Recurrence Instances",
+        "§4.4.3 Cancel an Instance"
+      ],
+      "observed_operation": "Defines organizer cancellation messages and instance reference behavior for scheduling transactions.",
+      "governing_condition_default_exception": "CANCEL of one recurring instance includes UID plus RECURRENCE-ID; cancellation of whole series omits RID. METHOD:CANCEL is an iTIP scheduling message and may convey attendee/organizer/sequence data.",
+      "applicability": "Use to distinguish a file snapshot edit from live invitation cancellation; its notification/negotiation behavior is out of scope."
+    },
+    {
+      "id": "S03",
+      "title": "Google Calendar API — Recurring events",
+      "exact_url": "https://developers.google.com/workspace/calendar/api/guides/recurringevents",
+      "version_or_commit": "Google Calendar API v3 guide (live documentation; no immutable release commit stated)",
+      "access_utc": "2026-10-10T04:00:20Z",
+      "locator": [
+        "Recurring events / instance-specific fields",
+        "Modify or delete instances",
+        "cancellation example"
+      ],
+      "observed_operation": "Retrieve an instance, update its instance resource; cancellation example sets status=cancelled.",
+      "governing_condition_default_exception": "originalStartTime is the scheduled slot, differs from actual start after move, and uniquely identifies the instance within its series. Instance edits/cancel require authorized API calls.",
+      "applicability": "Comparator for operation-level identity and separate move/cancel; IDs, auth and API resource semantics do not map directly into .ics."
+    },
+    {
+      "id": "S04",
+      "title": "Microsoft Graph — event resource",
+      "exact_url": "https://learn.microsoft.com/en-us/graph/api/resources/event?view=graph-rest-1.0",
+      "version_or_commit": "Microsoft Graph REST v1.0 event resource (live documentation)",
+      "access_utc": "2026-10-10T04:00:20Z",
+      "locator": [
+        "Properties: cancelledOccurrences, exceptionOccurrences, instances, originalStart, seriesMasterId, type"
+      ],
+      "observed_operation": "Defines event object fields and navigation collections for a series master, exceptions and cancelled occurrences.",
+      "governing_condition_default_exception": "type values are singleInstance/occurrence/exception/seriesMaster; originalStart is UTC for an occurrence/exception; exceptions differ in fields and are separate from cancelled occurrences; instances omits cancelled ones.",
+      "applicability": "Comparator for identity distinctions; its provider IDs and UTC property representation do not replace UID/RID/TZID."
+    },
+    {
+      "id": "S05",
+      "title": "Microsoft Graph — event: cancel",
+      "exact_url": "https://learn.microsoft.com/en-us/graph/api/event-cancel?view=graph-rest-1.0",
+      "version_or_commit": "Microsoft Graph REST v1.0 action (live documentation)",
+      "access_utc": "2026-10-10T04:00:20Z",
+      "locator": [
+        "Description, HTTP request, permissions, comment body"
+      ],
+      "observed_operation": "POST /events/{id}/cancel cancels event and sends comment to attendees.",
+      "governing_condition_default_exception": "Organizer only; an occurrence can be cancelled by supplying its occurrence event ID; differs from Delete because it supports organizer's custom attendee message.",
+      "applicability": "Shows provider-side cancellation is a permissioned scheduling operation; no analog call or attendee messaging in offline import/export."
+    },
+    {
+      "id": "S06",
+      "title": "Microsoft Graph — update event",
+      "exact_url": "https://learn.microsoft.com/en-us/graph/api/event-update?view=graph-rest-1.0",
+      "version_or_commit": "Microsoft Graph REST v1.0 PATCH operation (live documentation)",
+      "access_utc": "2026-10-10T04:00:20Z",
+      "locator": [
+        "Notes for updating properties; HTTP PATCH; occurrence-boundary response note"
+      ],
+      "observed_operation": "PATCH /events/{id} updates a particular event object; page documents master-vs-instance notification behavior and boundary failure.",
+      "governing_condition_default_exception": "An occurrence cannot move to/before the previous occurrence's day or to/after the following occurrence's day in the documented Outlook exception behavior; master update may notify separately for changed instances.",
+      "applicability": "Provider-specific comparator only; do not impose Graph's boundary restriction as an RFC rule."
+    },
+    {
+      "id": "S07",
+      "title": "Microsoft Graph — list instances",
+      "exact_url": "https://learn.microsoft.com/en-us/graph/api/event-list-instances?view=graph-rest-1.0",
+      "version_or_commit": "Microsoft Graph REST v1.0 method (live documentation)",
+      "access_utc": "2026-10-10T04:00:34Z",
+      "locator": [
+        "Description; GET /events/{id}/instances; startDateTime/endDateTime; Prefer: outlook.timezone"
+      ],
+      "observed_operation": "Lists occurrences and exceptions of a seriesMaster over a specified time range.",
+      "governing_condition_default_exception": "Date bounds required; response times are UTC unless Prefer: outlook.timezone supplies another supported zone.",
+      "applicability": "Comparator for retrieving a target instance before editing; requires authenticated provider access absent from product scope."
+    },
+    {
+      "id": "S08",
+      "title": "caldata Rust crate",
+      "exact_url": "https://docs.rs/crate/caldata/0.17.3",
+      "version_or_commit": "caldata 0.17.3, released 2026-09-20",
+      "access_utc": "2026-10-10T04:00:20Z",
+      "locator": [
+        "Crate metadata/version list; owner notes on fork and recurrence implementation; dependencies"
+      ],
+      "observed_operation": "Rust parser crate exposes iCalendar parsing modules and recurrence-rule module; project says fork adds strict parsing/accessors and recurrence expansion.",
+      "governing_condition_default_exception": "Project notes it is a divergent hard fork of archived ical-rs and includes a slightly modified/copy-pasted rust-rrule implementation to support local-time calculations in UTC. Docs coverage shown as 17.74%; the inspected source does not establish byte-faithful preservation of unknown fields.",
+      "applicability": "A pinned Rust candidate to prototype for weekly recurrence and zone behavior; not selected, and must be tested for opaque property round-trip, scope limits and release stability."
+    },
+    {
+      "id": "S09",
+      "title": "pimalaya/ical Rust repository README",
+      "exact_url": "https://github.com/pimalaya/ical",
+      "version_or_commit": "Unpinned repository main inspected; no release tag/commit established here",
+      "access_utc": "2026-10-10T04:00:20Z",
+      "locator": [
+        "README Features and RFC coverage"
+      ],
+      "observed_operation": "Describes parsing/editing/serialization plus syntax tree, recurrence and time-zone components.",
+      "governing_condition_default_exception": "Repository claims byte-faithful editing and whole-tree round-trip; current main page is not an immutable released artifact in this record.",
+      "applicability": "Useful architecture/evaluation lead for raw-tree editing, not a dependency recommendation or proven capability in this experiment."
+    },
+    {
+      "id": "S10",
+      "title": "collective/icalendar changelog",
+      "exact_url": "https://github.com/collective/icalendar/blob/v7.3.0/CHANGES.rst",
+      "version_or_commit": "icalendar 7.3.0, 2026-08-19",
+      "access_utc": "2026-10-10T04:00:20Z",
+      "locator": [
+        "7.3.0 bug-fixes: unknown properties/X-properties; TZID vendor prefix; adjacent URI parameter round-trip note"
+      ],
+      "observed_operation": "Release history documents previously changed escaping of unknown/X property values on parse/serialize/jCal round trips, later fixed to preserve values verbatim; also a TZID-prefix issue treated a zone as naive until fixed.",
+      "governing_condition_default_exception": "This is a Python library history, not evidence of a Rust crate defect; its fixes apply to the stated package version only.",
+      "applicability": "Concrete implementation-history caution motivating property-bag preservation and regression fixtures before claiming a Rust output is compatible."
+    },
+    {
+      "id": "S11",
+      "title": "Peltoche ical-rs Rust parser documentation and archived repository",
+      "exact_url": "https://docs.rs/ical/0.11.0/ical/",
+      "version_or_commit": "ical crate 0.11.0; repository archived 2024-08-17",
+      "related_url": "https://github.com/Peltoche/ical-rs",
+      "access_utc": "2026-10-10T04:00:34Z",
+      "locator": [
+        "Crate overview and parser warning; repository archive banner"
+      ],
+      "observed_operation": "Provides line/property/component parsing but documentation warns parsed fields are not validity-checked.",
+      "governing_condition_default_exception": "The upstream repository is read-only/archived; downstream caldata notes it forked and diverged.",
+      "applicability": "Historical parser alternative only; insufficient alone for this recurrence/timezone contract and not preferred for a new implementation."
+    }
+  ],
+  "plan_release": {
+    "revealed_copy": "revealed-plan.md",
+    "revealed_at_utc": "2026-10-10T04:03:29.982Z",
+    "sha256": "e585d3899d830686e266298ad05246a0d9409ef106762c5fe85674321cf57258",
+    "bytes": 2413,
+    "read_policy": "Only this released copy was read; the concealed source path was not opened."
+  }
+}

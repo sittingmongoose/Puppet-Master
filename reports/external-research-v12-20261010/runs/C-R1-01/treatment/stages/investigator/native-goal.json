@@ -1,0 +1,52 @@
+{
+  "native_goal_objective": "ER12 investigator stage, run C-R1-01-treatment: execute ER12_RUNTIME/runs/C-R1-01/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+  "create_goal_observation": {
+    "threadId": "01a1242c-febe-70f3-8426-445ad968661c",
+    "objective": "ER12 investigator stage, run C-R1-01-treatment: execute ER12_RUNTIME/runs/C-R1-01/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+    "status": "active",
+    "tokensUsed": 0,
+    "timeUsedSeconds": 0,
+    "createdAt": 1791608318,
+    "updatedAt": 1791608318,
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "get_goal_confirmation": {
+    "threadId": "01a1242c-febe-70f3-8426-445ad968661c",
+    "objective": "ER12 investigator stage, run C-R1-01-treatment: execute ER12_RUNTIME/runs/C-R1-01/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+    "status": "active",
+    "tokensUsed": 0,
+    "timeUsedSeconds": 0,
+    "createdAt": 1791608318,
+    "updatedAt": 1791608318,
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "actual_activation_confirmed": true,
+  "activation_time_utc": "UNKNOWN (native API exposed createdAt but no separate activation timestamp)",
+  "created_at_unix_seconds": 1791608318,
+  "provenance": "UNKNOWN (no provider/model/request provenance field was exposed by the native Goal API)",
+  "update_goal_terminal_observation": {
+    "threadId": "01a1242c-febe-70f3-8426-445ad968661c",
+    "objective": "ER12 investigator stage, run C-R1-01-treatment: execute ER12_RUNTIME/runs/C-R1-01/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+    "status": "complete",
+    "tokensUsed": 248982,
+    "timeUsedSeconds": 1372,
+    "createdAt": 1791608318,
+    "updatedAt": 1791609690,
+    "remainingTokens": null,
+    "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If goal.tokenBudget is present, include token usage from goal.tokensUsed and goal.tokenBudget. If goal.timeUsedSeconds is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+  },
+  "get_goal_terminal_confirmation": {
+    "threadId": "01a1242c-febe-70f3-8426-445ad968661c",
+    "objective": "ER12 investigator stage, run C-R1-01-treatment: execute ER12_RUNTIME/runs/C-R1-01/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+    "status": "complete",
+    "tokensUsed": 248982,
+    "timeUsedSeconds": 1372,
+    "createdAt": 1791608318,
+    "updatedAt": 1791609690,
+    "remainingTokens": null,
+    "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If goal.tokenBudget is present, include token usage from goal.tokensUsed and goal.tokenBudget. If goal.timeUsedSeconds is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+  },
+  "terminal_timestamp_utc": "UNKNOWN (native API exposed updatedAt as Unix seconds, not a separately named terminal timestamp)"
+}

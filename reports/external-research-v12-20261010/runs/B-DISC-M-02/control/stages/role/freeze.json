@@ -1,0 +1,47 @@
+{
+  "native_goal_objective": "ER12 B-DISC-M-02/control: execute ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/assignment.md; save the complete bounded role output and source map before completing this actual native Goal.",
+  "prepared_at_utc": "2026-10-10T04:37:26.708000+00:00",
+  "frozen_at_utc": "2026-10-10T04:37:28.128446+00:00",
+  "deadline_utc": "2026-10-10T04:52:26.708000+00:00",
+  "writing_start_utc": "2026-10-10T04:47:26.708000+00:00",
+  "frozen_inputs": [
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/assignment.md",
+      "sha256": "b53f04e4ed2b23019ef677e9907f39f0e608514500963fc0f5dd363640a4e1f2",
+      "bytes": 2375
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/input-map.json",
+      "sha256": "f068a95e995f4854d220d969afe5d1a95be3c9d5fa4f88a66ce2ca0ae9d8237f",
+      "bytes": 573
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/inputs/fixture.json",
+      "sha256": "1b10c5fad028e42ff6e2367e5df37e6f550a4d28a27ead680c77c44d1b60c7f5",
+      "bytes": 1033
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/inputs/manifest.json",
+      "sha256": "fe164e06074640cccbda200b67202cb2cc9dad08579ba478a1bbaa768dfcc595",
+      "bytes": 241
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/inputs/assignment.md",
+      "sha256": "96c86b7591b7a87ba61dac12c4c21a3daa8c20e9fd4b50e09266471d6d11a1db",
+      "bytes": 2642
+    }
+  ],
+  "request_sha256": "2ba8a5e118f66291b82698a86bcf1435785d7dede41393e33b85205f14d3ab57",
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "protocol": "role-v2; native Goal activation required before inference; advisory leaf controls",
+  "time_contract": "900 seconds absolute including setup/startup/tools/retries/writing/delivery; final 300 seconds writing",
+  "native_goal_status": "UNKNOWN until directly observed",
+  "prospective_service_tier_revision": "user-standard-20261010-v1"
+}

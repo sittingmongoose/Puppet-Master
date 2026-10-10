@@ -1,0 +1,22 @@
+{
+  "slot": "A2-01",
+  "arm": "treatment",
+  "stage": "critic",
+  "helper": "ER12_RUNTIME/helpers/topology-v1",
+  "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A2-A2-01-treatment-critic-topology-v1",
+  "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A2-A2-01-treatment-critic-topology-v1",
+  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A2-A2-01-treatment-critic-topology-v1:ordinal:1",
+  "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A2-A2-01-treatment-critic-topology-v1",
+  "status": "completed",
+  "workState": "result_available",
+  "hasPendingChildRuns": false,
+  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A2-A2-01-treatment-critic-topology-v1:ordinal:1",
+  "latestTerminalStatus": "completed",
+  "latestTerminalSummary": "Completed only the assigned critic stage. The intake gate verified seven frozen members; it does not claim to prove comprehension or source truth.\n\nSaved [critique.md](ER12_RUNTIME/runs/A2-01/treatment/stages/critic/critique.md), [source-map.json](ER12_RUNTIME/runs/A2-01/treatment/stages/critic/source-map.json), [sources/index.md](ER12_RUNTIME/runs/A2-01/treatment/stages/critic/sources/index.md), and [critique-dispositions.json](ER12_RUNTIME/runs/A2-01/treatment/stages/critic/critique-dispositions.json). The critique records three findings: correction-history preservation across native edits, Kobo XLS timezone export handling, and wording that extends the brief’s no-photo-location constraint to GPS generally. The primary-source checks were read-only; no product validation was run. [ODK edit documentation](https://docs.getodk.org/collect-forms/) and [Kobo export documentation](https://support.kobotoolbox.org/export_download.html) are linked in the critique.\n\nThe native Goal is **complete** (thread `01a1240f-9ff9-7dc3-9521-cd08aa95104e`): 178,452 tokens used, 422 seconds elapsed.",
+  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A2-A2-01-treatment-critic-topology-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:b57ef00d-d557-4dba-bae3-71bc491d5c65",
+  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+  "model": "gpt-6-luna",
+  "summary": "Completed only the assigned critic stage. The intake gate verified seven frozen members; it does not claim to prove comprehension or source truth.\n\nSaved [critique.md](ER12_RUNTIME/runs/A2-01/treatment/stages/critic/critique.md), [source-map.json](ER12_RUNTIME/runs/A2-01/treatment/stages/critic/source-map.json), [sources/index.md](ER12_RUNTIME/runs/A2-01/treatment/stages/critic/sources/index.md), and [critique-dispositions.json](ER12_RUNTIME/runs/A2-01/treatment/stages/critic/critique-dispositions.json). The critique records three findings: correction-history preservation across native edits, Kobo XLS timezone export handling, and wording that extends the brief’s no-photo-location constraint to GPS generally. The primary-source checks were read-only; no product validation was run. [ODK edit documentation](https://docs.getodk.org/collect-forms/) and [Kobo export documentation](https://support.kobotoolbox.org/export_download.html) are linked in the critique.\n\nThe native Goal is **complete** (thread `01a1240f-9ff9-7dc3-9521-cd08aa95104e`): 178,452 tokens used, 422 seconds elapsed.",
+  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A2-A2-01-treatment-critic-topology-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:b57ef00d-d557-4dba-bae3-71bc491d5c65",
+  "waitTimedOut": false
+}

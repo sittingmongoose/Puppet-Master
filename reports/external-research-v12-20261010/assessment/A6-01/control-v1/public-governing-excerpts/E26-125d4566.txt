@@ -1,0 +1,22 @@
+URL: https://raw.githubusercontent.com/TransmodelEcosystem/SIRI/master/README.md
+Original locator: ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E26.txt
+Original SHA256: 125d45666120e1b5dcc1869e6ecee6a1bc72b62470942662675948907114c088
+Original numbered lines; gaps omitted. Not full response.
+
+5: ## Overview 🔍
+6: 
+7: SIRI is a European Norm (EN) and CEN Technical Specification (CEN/TS). It is published as a series referenced as EN 15531 and CEN/TS 15531. It is dedicated to the exchange of real-time data for public transportation between different computer systems and open data. It is based on Transmodel V6.2 (EN 12896 series) and relates to NeTEx (CEN/TS 16614 series).
+8: 
+9: SIRI services are:
+10: - Discovery, general services to retrieve references for other services (e.g., list of lines)
+11: - Production Timetable (SIRI-PT), for the provision of information on the planned progress of vehicles operating a specific service, identified by the vehicle time of arrival and departure at specific stops on a planned route for a particular Operational Day,
+12: - Estimated Timetable (SIRI-ET), for the provision of information on the actual progress of Vehicle Journeys operating specific service lines, detailing expected arrival and departure times at specific stops on a planned route,
+13: - Stop Monitoring (SIRI-SM), for a stop-centric view of vehicle arrivals and departures at a designated stop,
+14: - Vehicle Monitoring (SIRI-VM), for the provision of information on the current location and status of a set of vehicles,
+15: - Connection Monitoriting (SIRI-CM), for the provision of information about the expected arrival of a feeder vehicle to the operator of a connecting distributor service,
+16: - General Message (SIRI-GM), for the exchange informative messages between identified individuals in free or an arbitrary structured format,
+17: - Facility Monitoring (SIRI-FM), for the exchange of information about alterations to the availability of facilities for passengers among systems, including equipment monitoring, real-time management and dissemination systems,
+18: - Situation Exchange (SIRI-SX), for the exchange of data about situations caused by planned and unplanned incidents and events, with situations being actual or potential perturbations to normal operation of a public transport network,
+19: - Control Actions (SIRI-CA), for the exchange of information about decision made concerning the real-time management of the operation of a transport system as performed by operators while operating the services.
+20: 
+21: _Note : Many SIRI concepts are taken directly from Transmodel. The definitions and explanation of these concepts are extracted directly from the respective standard and reused in SIRI, sometimes with adaptions in order to fit the SIRI context._

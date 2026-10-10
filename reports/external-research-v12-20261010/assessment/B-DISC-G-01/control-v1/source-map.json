@@ -1,0 +1,422 @@
+{
+  "schema": "er12-independent-assessment-source-map-v1",
+  "case_id": "ER12-B-DISC-G-01-FRESH",
+  "arm": "control",
+  "assessment_id": "B-DISC-G-01/control-v1",
+  "independent_retrieval": true,
+  "retrieval_operations": [
+    "official-page web open",
+    "independent HTTPS GET, no downloaded code execution"
+  ],
+  "primary_sources": [
+    {
+      "id": "P1",
+      "requested_url": "https://automerge.org/docs/reference/documents/text/",
+      "resolved_url": "https://automerge.org/docs/reference/documents/text/",
+      "retrieval_start_utc": "2026-10-10T04:58:02.013011+00:00",
+      "retrieval_end_utc": "2026-10-10T04:58:02.167881+00:00",
+      "operation": "independent HTTPS GET; bytes saved without execution",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "primary/P1.html",
+      "raw_sha256": "e1bbb655da1425ab936b64866644f9b953776289702c0992d41a42980f2c36c8",
+      "raw_bytes": 20796,
+      "readable_path": "primary/P1.txt",
+      "readable_sha256": "96f993ed36961ef21c7119b9d517cc654c1fd26bee3332c17e29df6d082e68a9",
+      "lines": 101,
+      "last_modified": "Fri, 04 Sep 2026 18:44:49 GMT",
+      "etag": null,
+      "version": "UNKNOWN; current unversioned primary documentation, no deployed binary/version checked",
+      "title": "Automerge Text",
+      "candidate_source_id": "S1",
+      "primary_locator": {
+        "section": "Text; Using updateText when you cannot use splice",
+        "numbered_text_lines": "58-77,98",
+        "navigable_path": "primary/P1-evidence.html#L58"
+      },
+      "conditions_exceptions": "String sequence edits use splice; whole-value updateText computes splices and depends on frequent calls. The example does not establish arbitrary adapter correctness.",
+      "subject_operation_domain": "JavaScript-facing APIs; current unpinned docs, no product release selected.",
+      "inspection_scope": "FULL substantive numbered text",
+      "executed_validation": "HTTPS source retrieval and reading only; no algorithm/library execution"
+    },
+    {
+      "id": "P2",
+      "requested_url": "https://automerge.org/docs/reference/documents/conflicts/",
+      "resolved_url": "https://automerge.org/docs/reference/documents/conflicts/",
+      "retrieval_start_utc": "2026-10-10T04:58:02.014313+00:00",
+      "retrieval_end_utc": "2026-10-10T04:58:02.180842+00:00",
+      "operation": "independent HTTPS GET; bytes saved without execution",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "primary/P2.html",
+      "raw_sha256": "29f685d69d6506f758b2fcdd8c2915491e353af5ed2af90cc9fe309c5e35cef8",
+      "raw_bytes": 16696,
+      "readable_path": "primary/P2.txt",
+      "readable_sha256": "9158c6a67f5dab1dd53fd7c474eb1571013b980e2b074938cba605e4d42a8ddb",
+      "lines": 101,
+      "last_modified": "Fri, 04 Sep 2026 18:44:49 GMT",
+      "etag": null,
+      "version": "UNKNOWN; current unversioned primary documentation, no deployed binary/version checked",
+      "title": "Automerge Conflicts",
+      "candidate_source_id": "S2",
+      "primary_locator": {
+        "section": "What is a Conflict?",
+        "numbered_text_lines": "63-69,82-98",
+        "navigable_path": "primary/P2-evidence.html#L63"
+      },
+      "conditions_exceptions": "Text/list concurrent insertions/deletions and same-position ordering differ from concurrent property/index writes. Scalar losers are inspectable; a subsequent assignment resolves that conflict. Ordering uses operation counter and actor ID, not wall-clock time.",
+      "subject_operation_domain": "Sequence operations versus register assignments must remain distinct.",
+      "inspection_scope": "FULL substantive numbered text",
+      "executed_validation": "HTTPS source retrieval and reading only; no algorithm/library execution"
+    },
+    {
+      "id": "P3",
+      "requested_url": "https://automerge.org/docs/reference/concepts/",
+      "resolved_url": "https://automerge.org/docs/reference/concepts/",
+      "retrieval_start_utc": "2026-10-10T04:58:02.017960+00:00",
+      "retrieval_end_utc": "2026-10-10T04:58:02.150015+00:00",
+      "operation": "independent HTTPS GET; bytes saved without execution",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "primary/P3.html",
+      "raw_sha256": "aa7ce62c35ad70624c40bbf31df6e79d72d20f6ea38cabe12f0df7e6d34ce1c7",
+      "raw_bytes": 14315,
+      "readable_path": "primary/P3.txt",
+      "readable_sha256": "74d305bd2885796e3a041306c7a40c46c9518d2b6996eda91525c64609ce5457",
+      "lines": 83,
+      "last_modified": "Fri, 04 Sep 2026 18:44:49 GMT",
+      "etag": null,
+      "version": "UNKNOWN; current unversioned primary documentation, no deployed binary/version checked",
+      "title": "Automerge Concepts",
+      "candidate_source_id": "S3",
+      "primary_locator": {
+        "section": "Intro; Documents; Repositories; Storage Format",
+        "numbered_text_lines": "58-68,77-80",
+        "navigable_path": "primary/P3-evidence.html#L58"
+      },
+      "conditions_exceptions": "Core CRDT and repository plumbing are separate. Compression permits history retention but gives no byte ceiling or pruning/undo guarantee.",
+      "subject_operation_domain": "The repository discussion is explicitly JavaScript-specific and may not transfer to another language.",
+      "inspection_scope": "FULL substantive numbered text",
+      "executed_validation": "HTTPS source retrieval and reading only; no algorithm/library execution"
+    },
+    {
+      "id": "P4",
+      "requested_url": "https://docs.yjs.dev/api/document-updates.md",
+      "resolved_url": "https://docs.yjs.dev/api/document-updates.md",
+      "retrieval_start_utc": "2026-10-10T04:58:02.019485+00:00",
+      "retrieval_end_utc": "2026-10-10T04:58:02.200146+00:00",
+      "operation": "independent HTTPS GET; bytes saved without execution",
+      "status": 200,
+      "content_type": "text/markdown; charset=utf-8",
+      "raw_path": "primary/P4.md",
+      "raw_sha256": "e46e2bc6d3c975aa0d4cd00c94a82bce0bb7b7d3a8a6483b8b144a7b8649a992",
+      "raw_bytes": 9262,
+      "readable_path": "primary/P4.txt",
+      "readable_sha256": "4f07e940c464ef0556568769472201ae447223bbec3ab92ad69a6d83cb79aedd",
+      "lines": 139,
+      "last_modified": null,
+      "etag": null,
+      "version": "UNKNOWN; current unversioned primary documentation, no deployed binary/version checked",
+      "title": "Yjs Document Updates",
+      "candidate_source_id": "S4",
+      "primary_locator": {
+        "section": "Document Updates; Update API; Alternative Update API; Syncing clients",
+        "numbered_text_lines": "4-24,58-76",
+        "navigable_path": "primary/P4-evidence.html#L4"
+      },
+      "conditions_exceptions": "Convergence requires receiving all needed updates. The update-only merge removes duplicates but does not garbage-collect deleted content. Loading a Y.Doc is necessary for the described size-reduction route, not proof of a measured storage bound.",
+      "subject_operation_domain": "Binary Uint8Array updates and state vectors; not a promise to keep every deleted character or provide undo history.",
+      "inspection_scope": "FULL substantive numbered text",
+      "executed_validation": "HTTPS source retrieval and reading only; no algorithm/library execution"
+    },
+    {
+      "id": "P5",
+      "requested_url": "https://share.github.io/sharedb/",
+      "resolved_url": "https://share.github.io/sharedb/",
+      "retrieval_start_utc": "2026-10-10T04:58:02.020501+00:00",
+      "retrieval_end_utc": "2026-10-10T04:58:02.138156+00:00",
+      "operation": "independent HTTPS GET; bytes saved without execution",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "primary/P5.html",
+      "raw_sha256": "8ea3e98ae34fe9ed887aba1024666fa3ab27ce2b10276754fb95f75255b4c91a",
+      "raw_bytes": 13403,
+      "readable_path": "primary/P5.txt",
+      "readable_sha256": "57dbeabc94a108713a986c02fdf71e5bf658c1ca8ed1c81ca94e8f55ddee2938",
+      "lines": 51,
+      "last_modified": "Fri, 09 Oct 2026 14:21:07 GMT",
+      "etag": "W/\"6ac8f853-345b\"",
+      "version": "UNKNOWN; current unversioned primary documentation, no deployed binary/version checked",
+      "title": "ShareDB Introduction",
+      "candidate_source_id": "S5",
+      "primary_locator": {
+        "section": "Introduction; Features",
+        "numbered_text_lines": "34-48",
+        "navigable_path": "primary/P5-evidence.html#L34"
+      },
+      "conditions_exceptions": "Node.js server coordinates commits; JavaScript clients use OT type plugins. Offline sync and historic versions are advertised; queue ceilings and plain-text undo are not specified.",
+      "subject_operation_domain": "Eventual reconnection and operation retention/type semantics remain dependencies.",
+      "inspection_scope": "FULL substantive numbered text",
+      "executed_validation": "HTTPS source retrieval and reading only; no algorithm/library execution"
+    },
+    {
+      "id": "P6",
+      "requested_url": "https://share.github.io/sharedb/types/",
+      "resolved_url": "https://share.github.io/sharedb/types/",
+      "retrieval_start_utc": "2026-10-10T04:58:02.022574+00:00",
+      "retrieval_end_utc": "2026-10-10T04:58:02.128059+00:00",
+      "operation": "independent HTTPS GET; bytes saved without execution",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "primary/P6.html",
+      "raw_sha256": "870cf3daf955c995022e22d85274b6e0ebf2095cea8e98daf62376d7c642c8c3",
+      "raw_bytes": 17116,
+      "readable_path": "primary/P6.txt",
+      "readable_sha256": "51a97cccff7daa467f3c9ec6fd25d4c0124c816b82179bf151e844732ca61119",
+      "lines": 61,
+      "last_modified": "Fri, 09 Oct 2026 14:21:07 GMT",
+      "etag": "W/\"6ac8f853-42dc\"",
+      "version": "UNKNOWN; current unversioned primary documentation, no deployed binary/version checked",
+      "title": "ShareDB OT Types",
+      "candidate_source_id": "S6",
+      "primary_locator": {
+        "section": "OT Types; Registering types; Using types",
+        "numbered_text_lines": "38-57",
+        "navigable_path": "primary/P6-evidence.html#L38"
+      },
+      "conditions_exceptions": "json0 is the default. Additional types require both client and server registration; a type can be selected by name or URI, with URI preferred to avoid clashes. The rich-text example is not a required plain-text choice.",
+      "subject_operation_domain": "The platform delegates transformation; no particular text type selected in the candidate.",
+      "inspection_scope": "FULL substantive numbered text",
+      "executed_validation": "HTTPS source retrieval and reading only; no algorithm/library execution"
+    },
+    {
+      "id": "P7",
+      "requested_url": "https://git-scm.com/docs/git-merge-file",
+      "resolved_url": "https://git-scm.com/docs/git-merge-file",
+      "retrieval_start_utc": "2026-10-10T04:58:02.025011+00:00",
+      "retrieval_end_utc": "2026-10-10T04:58:02.199182+00:00",
+      "operation": "independent HTTPS GET; bytes saved without execution",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "primary/P7.html",
+      "raw_sha256": "c4c8c933113ab955bf1b5d6ab1b74a34ce08dcf234339e1ad21e05d05fc007e9",
+      "raw_bytes": 35319,
+      "readable_path": "primary/P7.txt",
+      "readable_sha256": "d44287834fc492d4c5535580cdb08bb3bed992c16ca99b43c405e4b5531bc0bf",
+      "lines": 257,
+      "last_modified": "Thu, 08 Oct 2026 04:45:51 GMT",
+      "etag": "W/\"6ac71fff-89f7\"",
+      "version": "Manual last updated in 2.54.0; selector 2.55.0-2.56.0 no changes; no deployed/local version observed.",
+      "title": "Git git-merge-file manual",
+      "candidate_source_id": "S7",
+      "primary_locator": {
+        "section": "Manual version selector; DESCRIPTION; OPTIONS",
+        "numbered_text_lines": "147-166,176-205,225-241",
+        "navigable_path": "primary/P7-evidence.html#L147"
+      },
+      "conditions_exceptions": "Three inputs are current/base/other. Default output changes current; -p uses stdout. Line-segment conflicts normally leave markers unless ours/theirs/union is selected. diff3 is also a presentation option. Current diff algorithm is myers; histogram can avoid some matching-line mismerges.",
+      "subject_operation_domain": "Manual last updated in 2.54.0; selector includes 2.55.0-2.56.0 without changes. No local binary or selected deployment version verified.",
+      "inspection_scope": "FULL substantive numbered text",
+      "executed_validation": "HTTPS source retrieval and reading only; no algorithm/library execution"
+    },
+    {
+      "id": "P8",
+      "requested_url": "https://docs.yjs.dev/api/undo-manager.md",
+      "resolved_url": "https://docs.yjs.dev/api/undo-manager.md",
+      "retrieval_start_utc": "2026-10-10T04:58:02.026651+00:00",
+      "retrieval_end_utc": "2026-10-10T04:58:02.180670+00:00",
+      "operation": "independent HTTPS GET; bytes saved without execution",
+      "status": 200,
+      "content_type": "text/markdown; charset=utf-8",
+      "raw_path": "primary/P8.md",
+      "raw_sha256": "36afd93a0fa00fbf2969b719d17301d128ceed096db31d5495dcade12d30a3a6",
+      "raw_bytes": 5187,
+      "readable_path": "primary/P8.txt",
+      "readable_sha256": "aa03fecf082dc8fc7551d3232b27a0ec765532e490db544f3952447eb4cb605d",
+      "lines": 93,
+      "last_modified": null,
+      "etag": null,
+      "version": "UNKNOWN; current unversioned primary documentation, no deployed binary/version checked",
+      "title": "Yjs Y.UndoManager",
+      "candidate_source_id": "candidate retrieval failure only",
+      "primary_locator": {
+        "section": "Y.UndoManager; constructor; Stop Capturing; Specify tracked origins",
+        "numbered_text_lines": "3-24,31-47",
+        "navigable_path": "primary/P8-evidence.html#L3"
+      },
+      "conditions_exceptions": "Selective undo/redo is scoped to shared types and optionally origins. Defaults track local changes without a specified origin and group changes within 500 ms; zero timeout captures separately, and stopCapturing separates groups.",
+      "subject_operation_domain": "A documented capability does not decide the product policy or establish cross-device restart, stale-replica or storage behavior; no runtime execution.",
+      "inspection_scope": "FULL substantive numbered text",
+      "executed_validation": "HTTPS source retrieval and reading only; no algorithm/library execution"
+    },
+    {
+      "id": "P9",
+      "requested_url": "https://git-scm.com/docs/git-merge",
+      "resolved_url": "https://git-scm.com/docs/git-merge",
+      "retrieval_start_utc": "2026-10-10T04:59:14.479713+00:00",
+      "retrieval_end_utc": "2026-10-10T04:59:14.571391+00:00",
+      "operation": "independent HTTPS GET; bytes saved without execution",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "primary/P9.html",
+      "raw_sha256": "383e30fb307725412b16828ed4191f6e92c5411fb5f9e4a4771a7fc2cce7f3fa",
+      "raw_bytes": 142116,
+      "readable_path": "primary/P9.txt",
+      "readable_sha256": "9a320f7831697c6fb30baf7dde7866642c268e731b310fec60937f97ea7ac904",
+      "lines": 1012,
+      "version": "Manual last updated in 2.54.0; selector 2.55.0-2.56.0 no changes; no deployed/local version observed.",
+      "title": "Git git-merge manual",
+      "candidate_source_id": "independent corroboration for discovery line 11",
+      "primary_locator": {
+        "section": "TRUE MERGE; HOW CONFLICTS ARE PRESENTED; MERGE STRATEGIES",
+        "numbered_text_lines": "553-580,617-662,824-830",
+        "navigable_path": "primary/P9-evidence.html#L553"
+      },
+      "conditions_exceptions": "For conflicting paths, the index stores up to three versions: ancestor, HEAD and MERGE_HEAD. This is repository git merge behavior, not a retention guarantee of standalone merge-file. Three-way merge considers endpoints/base rather than individual commits, so a change later reverted on one side can reappear.",
+      "subject_operation_domain": "Corroborates the broad Git precedent; does not supply an application undo policy. Relevant sections inspected; full page bytes retained.",
+      "inspection_scope": "Relevant sections, as listed",
+      "executed_validation": "HTTPS source retrieval and reading only; no algorithm/library execution"
+    }
+  ],
+  "evidence_index": "primary/index.md",
+  "candidate_source_members_fully_read": [
+    "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/sources/evidence.md"
+  ],
+  "corpus": null,
+  "candidate_primary_page_accounting": "Seven successfully cited project pages plus one documented failed Yjs undo open; no other pages asserted as executed by candidate.",
+  "input_freeze_comparisons": [
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/assignment.md",
+      "expected_sha256": "0eecdb0431d80d9fb596bc8cdfba78ada961b86daef2b057268526a98b10c41a",
+      "observed_sha256": "0eecdb0431d80d9fb596bc8cdfba78ada961b86daef2b057268526a98b10c41a",
+      "hash_matches": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/input-map.json",
+      "expected_sha256": "feb5bafd0af6ab1d980c65a79eb872341d59cc0658360d98ba2b78fd145a2449",
+      "observed_sha256": "feb5bafd0af6ab1d980c65a79eb872341d59cc0658360d98ba2b78fd145a2449",
+      "hash_matches": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/inputs/fixture.json",
+      "expected_sha256": "d9e63ea84e74f37b9e33e8087dcbff1359fed87ebb3401c22435573ec9598d4f",
+      "observed_sha256": "d9e63ea84e74f37b9e33e8087dcbff1359fed87ebb3401c22435573ec9598d4f",
+      "hash_matches": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/inputs/manifest.json",
+      "expected_sha256": "7d9b298c18a2e876f1d41d4f4f94ce92c43f48db8ae8d95f622b91be30035d0c",
+      "observed_sha256": "7d9b298c18a2e876f1d41d4f4f94ce92c43f48db8ae8d95f622b91be30035d0c",
+      "hash_matches": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/inputs/assignment.md",
+      "expected_sha256": "848cd2e8b9ef3078e2333ae05a62a8e04662b2b1628f5c9b3b34b1c6c896a83b",
+      "observed_sha256": "848cd2e8b9ef3078e2333ae05a62a8e04662b2b1628f5c9b3b34b1c6c896a83b",
+      "hash_matches": true,
+      "bytes_match": true
+    }
+  ],
+  "terminal_freeze_check": {
+    "checked_utc": "2026-10-10T05:04:39.541613+00:00",
+    "searched_root": "ER12_RUNTIME/runs/B-DISC-G-01/control",
+    "terminal_freeze_paths": [],
+    "status": "UNKNOWN_NOT_FOUND",
+    "meaning": "Only the pre-dispatch input freeze was found. Root completion/no pending is a user-provided premise; no other outcome/status/history labels were read."
+  },
+  "material_findings": [
+    {
+      "id": "F1",
+      "severity": "MATERIAL_OMISSION",
+      "axis": "Bounded discovery / undo semantics",
+      "title": "Undo is deferred without discovering a sourced undo mechanism for any shortlisted option.",
+      "obligation": {
+        "path": "ER12_RUNTIME/runs/B-DISC-G-01/inputs/assignment.md",
+        "lines": [
+          11,
+          13,
+          16
+        ],
+        "exact_text": "Concurrent insertions, deletions and undo must be explainable.",
+        "bounded_aspect": "including retained-history costs and undo semantics"
+      },
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/discovery.md",
+          "lines": [
+            7,
+            17,
+            18,
+            19,
+            22,
+            29,
+            32
+          ],
+          "exact_text": [
+            "Neither retrieved source establishes the desired undo behavior for this product.",
+            "undo unspecified",
+            "undo unspecified here",
+            "undo is application-defined",
+            "Inspect the implementation and undo API before assuming its cross-device undo semantics."
+          ]
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/source-map.json",
+          "lines": [
+            96,
+            98,
+            100
+          ],
+          "exact_text": "empty page body; no source claim used"
+        }
+      ],
+      "primary_evidence": [
+        {
+          "source_id": "P8",
+          "url": "https://docs.yjs.dev/api/undo-manager.md",
+          "section": "Y.UndoManager constructor; Stop Capturing; Specify tracked origins",
+          "local_locator": "primary/P8-evidence.html#L16",
+          "numbered_text_lines": "3-24,31-47"
+        }
+      ],
+      "supported_finding": "The entire shortlist leaves undo as unspecified, application-defined, or future investigation. Its one concrete undo trace is a product-policy question, not a discovery of how an implementation can selectively reverse tracked operations. The primary Yjs API documents a scoped selective inverse-operation stack, origin tracking, and edit-grouping controls. These capabilities bear directly on the proposed one-undo-after-sync trace and differ from restoring an earlier whole-note snapshot.",
+      "materiality": "Undo is expressly inside the assigned bounded aspect. Leaving every implementation capability unknown deprives the mechanism comparison and prospective undo test of the distinction between selecting whose operations to reverse and reverting shared state. This is missing role discovery, not a requirement to choose the desired product policy, prove all cross-device behavior, deploy software, or execute a test.",
+      "qualification": "The candidate honestly documents the failed retrieval and does not falsely claim Yjs lacks undo. The failure is acknowledged; nevertheless, uncertainty about the desired product policy does not cover the omitted discoverable capability. The independently retrieved official Markdown rendition supplies bounded primary evidence. No particular API or exhaustive undo survey is mandated; this API establishes why the absent semantic distinction matters.",
+      "disposition": "Retain supported mechanism discoveries; the role source judgment fails for this material coverage omission. No candidate changes or feedback supplied."
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L1",
+      "kind": "MINOR_LOCATOR",
+      "candidate_locator": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/discovery.md:7",
+      "detail": "The CRDT paragraph makes Yjs update/garbage-collection claims but its trailing citations list S1-S3. S4 elsewhere in the saved map supports them.",
+      "primary_ids": [
+        "P4"
+      ]
+    },
+    {
+      "id": "L2",
+      "kind": "MINOR_SOURCE_ATTRIBUTION",
+      "candidate_locator": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/discovery.md:11",
+      "detail": "Git retaining base and both sides of an unresolved repository merge is true, but S7 is the standalone merge-file manual. Independent P9 TRUE MERGE gives the precise repository-index precedent. The candidate explicitly treats this as a precedent rather than a ready-made workflow.",
+      "primary_ids": [
+        "P7",
+        "P9"
+      ]
+    },
+    {
+      "id": "L3",
+      "kind": "BOUNDED_WORDING",
+      "candidate_locator": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/discovery.md:19",
+      "detail": "Automatic only for non-overlapping is a coarse boundary: identical changes by both sides may be resolved cleanly. The prose and next step do not make a consequential rejection or promise based on that simplification.",
+      "primary_ids": [
+        "P9"
+      ]
+    }
+  ]
+}

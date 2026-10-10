@@ -1,0 +1,151 @@
+# Final Research Proposal — Volunteer oral-history deposit package
+
+**Run/stage:** A5-01-control, reviser.  
+**Purpose:** a pilot-scale planning proposal for a local history society receiving volunteer WAV recordings, photographs, and interviewer notes. It is not an implementation, tool selection, consent determination, or product validation report. This revision incorporates the complete brief, investigator discovery and draft, the exact revealed plan, and independent critique. Source IDs are retained and resolve through [the source index](sources/index.md) and [source-map.json](source-map.json).
+
+## Recommendation
+
+Use a format-agnostic, sidecar-authoritative deposit package as the pilot baseline. Preserve each received file byte-for-byte as received, retain its submitted filename as a value, and assign stable local identities to the interview/event and every file. Store a UTF-8 descriptive record and relationship/revision log with the package. Place those records under the BagIt payload directory (`data/metadata/`) so the required payload manifest covers the authoritative sidecars as well as audio, photographs, notes, and any included transcript or access copy. A tag manifest can cover BagIt tag files, including the payload manifest; it is an optional BagIt element, not a substitute for placing the authoritative records in the payload.
+
+BagIt is a transfer/fixity envelope, not a description schema or a preservation program. A single transfer bag may contain clearly distinct preservation and access objects. After intake, keep the received master in the preservation storage tier and any listening copy in a separate access tier, with separate identities, permissions, and a recorded relationship. The transfer package must not silently decide access policy. Maintain independent storage copies and a defined fixity schedule as separate preservation responsibilities. [S06](sources/index.md#s06), [S07](sources/index.md#s07)
+
+Offer Broadcast WAVE Format (BWF) metadata embedding only as an optional staff operation on a working copy of a compatible WAVE file. The collections archivist first approves the field meanings and values; the exact tool/version and intended readers then pass a representative field and encoding round-trip check. The external sidecar remains authoritative for full descriptions, mixed-media relationships, transcript history, approvals, and access decisions. Do not require volunteers to use one recording application. Do not treat BWF metadata as universally displayed or preserved by every reader or rewrite path. [S01](sources/index.md#s01), [S02](sources/index.md#s02), [S03](sources/index.md#s03)
+
+Keep a human-reviewed plain-text transcript and an accessible listening copy as **authorized optional scope** alongside the preserved original. Offer them when staff capacity, actual source characteristics, the accessibility route, and the required consent/access review support them. They are not mandatory intake features or demonstrated capabilities of any selected product. When unavailable, record that fact and its reason; do not substitute automatic speech recognition or allow an unreviewed transcript to become authoritative. Interviewer approval is required for transcript corrections. [S08](sources/index.md#s08), [S09](sources/index.md#s09)
+
+## 1. Workflows and preservation analogue
+
+| Workflow | Proposed operation | Portability and recorder compatibility | Tradeoffs and fit |
+|---|---|---|---|
+| **A. Package-first sidecars (recommended baseline)** | Preserve mixed media as received; assign interview, file, and transcript-revision IDs; keep UTF-8 descriptive/relationship records under `data/metadata/`; build a BagIt 1.0 package with a documented payload checksum and verify it. | Independent of volunteer recorder metadata support. Audio, photographs, notes, transcripts, and access files can share a predictable, inspectable directory structure and relative paths. | The society must maintain a compact schema and keep records with the package. The payload manifest lists every payload file, including the sidecars when stored under `data/`; the optional tag manifest can cover tag files. Checksums show conformity to the manifest, not the truth of a description, permission to distribute, redundant storage, or long-term preservation. A mixed transfer bag does not erase the later separation between preservation and access tiers. [S06](sources/index.md#s06) |
+| **B. BWF-aware metadata on a working copy (optional enrichment)** | After intake and archivist approval, use a BWF-aware editor such as BWF MetaEdit on an identified copy of an accepted WAVE file. Embed only a small approved subset, export/inspect the fields, retain the sidecar as authority, and create a new whole-file manifest for the resulting object. | For a reader that understands the relevant BWF fields, the metadata travels with the WAVE file. Staff-side enrichment does not require all volunteers to select a common application. Ordinary audio rendering may work without a reader displaying all embedded metadata. | BWF field meanings, limits, optionality, chunk support, and character encoding matter. FADGI notes older BWF-aware devices may not recognize chunks defined later; exact rewrite retention by the society's possible tools is not established by the evidence reviewed here. A metadata write creates a distinct file whose content must be inspected. Use this route only if the sharing value justifies the extra copy and checks. [S01](sources/index.md#s01), [S02](sources/index.md#s02), [S03](sources/index.md#s03) |
+
+**Preservation analogue.** BagIt provides the package and manifest mechanism. PREMIS 3.0 is a complementary recordkeeping model for objects, events, rights, agents, and relationships such as derivation. A small pilot can borrow the pattern—record object ID, event type/date, operator/tool/version, source and result, approval, and outcome—without claiming to implement PREMIS. Neither mechanism alone guarantees preservation or access authorization. [S06](sources/index.md#s06), [S07](sources/index.md#s07)
+
+## 2. Identity, authority, transcript history, and access relationships
+
+Assign one stable local ID to each interview/event and a different file ID to every received recording, photograph, note, transcript revision, and derivative. Record each file ID's parent interview ID, submitted filename, relative path, observed format/codec details, date received, and source-supplied metadata. Preserve supplied and normalized/staff descriptions as distinct values when they disagree; retain enough provenance for an archivist to decide what is authoritative. Do not use a filename or a BWF comment as the sole link between objects.
+
+The **collections archivist decides descriptive-field authority**, including how donor, interviewer, recorder, and staff statements are reconciled and whether a short subset is repeated in BWF. The pilot records that owner decision; research has not obtained it.
+
+Represent each transcript correction as a separate revision ID or versioned text object. Link it to the interview and source recording. Record transcriber/editor, correction date, interviewer approval, a change summary, and any intentional wording differences from the recording. Retain prior revisions when available; never replace a correction without a trace. The **interviewer approves transcript corrections**, as required by the brief. LoC's Veterans History Project offers relevant guidance on transcriber/editor/date provenance and on marking differences, but that guidance does not replace this society's explicit owner assignment. [S07](sources/index.md#s07), [S08](sources/index.md#s08)
+
+Represent an access copy as its own object with its own ID and a `derived_from` link to the received source. Record the conversion or copy event, date, tool/version, source and output encodings, and relevant settings. If it is only a metadata-enriched copy, do not describe it as transcoded. If audio was transcoded, record that operation and its source/destination formats. Keep the preservation master in the preservation tier and the listening derivative in a distinct access tier after intake. A shared transfer bag is only a transport boundary; it does not decide storage, permissions, or public release. [S07](sources/index.md#s07)
+
+## 3. Conditions for optional embedded descriptive metadata
+
+BWF is a WAVE extension with a required `bext` chunk, but individual descriptive values are not all required. FADGI v3 (approved 2021-04-26) marks `Originator`, `OriginatorReference`, and `Description` as strongly recommended; the documented maximum lengths are 32, 32, and 256 characters respectively. The guideline cautions against identifiers that expose exact pathnames. It describes `OriginationDate` as the archival entity's local-time file-creation date; retain the interview/event date separately rather than repurposing that field. INFO fields also have field-specific recommended or optional status. Leave unknown or unsupported values empty instead of guessing. [S01](sources/index.md#s01)
+
+BWF MetaEdit documents importing/editing/embedding/exporting selected metadata, validation, reports, and an MD5 applied to the WAVE `data` chunk (the audio bitstream only). That MD5 is not a whole-file checksum. Use the BagIt payload checksum for complete file fixity and the audio-data digest only as a distinct bitstream comparison where applicable. BWF's ability to render audio does not mean a general WAV player will expose BWF metadata or that embedded transcript text is sufficiently structured for assistive technology. The LoC BWF description specifically notes that Labeled Text (`ltxt`) transcript content is not necessarily structured or screen-reader tagged. Keep the plain-text transcript as a separate access artifact. [S02](sources/index.md#s02), [S03](sources/index.md#s03)
+
+Only embed after all of these conditions are met:
+
+1. Identify the actual WAVE structure and codec and confirm that the selected tool accepts it. A `.wav` suffix alone does not establish codec, BWF conformance, or lossless behavior.
+2. Obtain the collections archivist's approval for field semantics, values, and authority.
+3. Keep values within field limits and exclude restricted information, especially private pathnames.
+4. Pin the selected tool/version and test representative values through the actual write/read chain, including the readers expected to be used.
+5. Work on a copy, record the whole-file fixity, inspect the output fields, compare an audio-data digest if supported, and test playback. Each check answers a different question.
+
+FADGI says CSET identifies the code page for text in internal metadata; when absent or zero, its documented default is ISO 8859/1. BWF MetaEdit's 23.04 history records read/write support for CP437, CP850, CP858, Windows-1252, ISO 8859-1/-2 and CSET; 25.04 added an ISO-8859-1 fallback when reading core files. These are tool-specific changes, not universal recorder/player guarantees. Keep the UTF-8 sidecar authoritative, and do not embed non-ASCII values until the exact chain preserves them as intended. [S01](sources/index.md#s01), [S04](sources/index.md#s04)
+
+## 4. Encoding issue and release history
+
+The BWF MetaEdit issue #29, opened in 2017, reports that open/close quote bytes `0x93`/`0x94` did not translate well and describes differences between GUI and command-line behavior for non-7-bit characters. The issue links to merged PR #34, titled “Implement same behavior in GUI as in CLI about text with accents”; the PR shows two commits merged to `master` on 2017-11-19, including a warning about non-ASCII text in BEXT/INFO fields. Issue #29 was later closed, and the 20.05 release history dated 2020-05-28 explicitly says “Improve ASCII support (Issue #29, #63).” The later 23.04 and 25.04 entries document additional code-page/CSET support and a fallback. This is a real, versioned encoding history, not merely a tool listing. [S04](sources/index.md#s04), [S05](sources/index.md#s05), [S15](sources/index.md#s15)
+
+The evidence supports saying that issue #29 is explicitly associated with ASCII-support changes and that related behavior changed across versions. It does **not** prove that the exact reported quote bytes now round-trip unchanged in every path, identify a universal first fixed release, or establish agreement among a volunteer recorder, editor, and downstream readers. Keep UTF-8 sidecars authoritative. If embedding is chosen, test names with accents, curly quotes, and expected scripts through a pinned chain, reopen and inspect the saved values, and omit an embedded value if the result is not confirmed. No such file-level test was run here.
+
+## 5. Supported optional transcript and listening copy
+
+Retain the brief's human-reviewed plain-text transcript and accessible listening copy as optional, supported scope. LoC VHP says transcripts are welcome but not required; it describes preserving the original recording and its transcript as complementary documentation, while also calling the transcript an access/reference substitute. For this proposal, “complementary” means the transcript adds a usable access route; it is not a preservation replacement for the recording. W3C WAI recommends a text version of speech and non-speech audio information and an accessible media player. The local proposal comes from the brief and these access considerations; neither source establishes that a particular player or file in this society is accessible. [S08](sources/index.md#s08), [S09](sources/index.md#s09)
+
+Keep the transcript as a separate UTF-8 object with its own revision and approval trail. Make a listening copy only as a separately identified derivative of the received master, after identifying the actual codec and selecting a tested target environment. Provide it through a player evaluated for the intended audience and pair it with the transcript. The brief does not specify audience, player, distribution route, source codec, or accessibility acceptance criteria; obtain those inputs before selecting an encoding or player. If staff capacity, permission, or a safe supported technical route is absent, preserve the original and record that the optional derivative is unavailable and why. This is a conditional implementation path, not evidence for excluding the option now. No automatic speech recognition is required.
+
+OHMS is a useful unfamiliar later access/discovery option: the University of Kentucky describes word-level searching linked to precise interview moments and offers a free account request. The viewer repository has an observed release tag v3.10.16 at commit `3343b78`; the release page displayed a December 15 date without exposing the year in the inspected view. This is a version anchor, not proof of compatibility, present hosting availability, consent fit, or accessibility for this society. Evaluate hosting, media linkage, maintenance, consent, and player accessibility only if the owners want that layer. Keep ordinary text/audio files usable independently of OHMS. No OHMS account, install, or service was used. [S10](sources/index.md#s10), [S11](sources/index.md#s11)
+
+## 6. Owner decisions and consent
+
+- **Collections archivist:** decides descriptive-field authority and any selected embedded subset.
+- **Interviewer:** approves transcript corrections.
+- **Consent review:** remains an external owner input. The review owner, evidence, allowed uses, and access actions have not been supplied. Possession of a recording does not establish consent to preserve, transcribe, create an access copy, or publish/listen publicly. Do not make those decisions with a software default.
+
+Until the relevant access decision is supplied, do not treat the recording as cleared for access-copy distribution. Any status vocabulary or review workflow must reflect an owner-approved policy. This is a boundary for the proposal, not a report of a society decision or existing consent state.
+
+## 7. Binding negative constraints
+
+- Do not alter received originals during this research. No audio was supplied or edited.
+- Do not promise lossless edits from a filename extension. Identify the actual codec and inspect the output; a matching audio-data digest alone is not full-file fixity or a playback test.
+- Do not require automatic speech recognition. The optional transcript is human-reviewed, and its corrections receive interviewer approval.
+- Do not infer consent from possession. Consent review remains an external owner input.
+
+The received original, a metadata-enriched copy, and a transcoded listening derivative are separate objects and must never be conflated. The proposal does not claim that any product preserves all metadata through rewrite. [S02](sources/index.md#s02), [S03](sources/index.md#s03), [S13](sources/index.md#s13)
+
+## 8. Exact obligation coverage and revealed-plan reconciliation
+
+The eight numbered obligations are the complete research scope. Each is retained below with its disposition. The revealed plan is a fallible sandbox draft, not authority: its one-comment-field, filename-link, universal-survival, current-listing-equals-compatibility, and replaceable-transcript assumptions are corrected where evidence or the brief requires. Its explicit optional-scope, owner, and negative-constraint clauses are preserved.
+
+| Exact obligation | Disposition and complete response |
+|---|---|
+| **1. Compare two realistic metadata/deposit workflows and an analogous preservation mechanism with portability and recorder compatibility tradeoffs.** | Replace the plan's one-WAV-comment and filename-link proposal with the two workflows above: package-first UTF-8 sidecars with BagIt as the recommended baseline, and optional BWF-aware copy enrichment. Explain recorder/tool compatibility and staff-schema tradeoffs. Use PREMIS as an analogous event/relationship model, not a packaging product or pilot requirement. |
+| **2. Explain recording identity, embedded/sidecar metadata authority, transcript revisions and links between originals and access copies.** | Give the interview and each item/revision its own ID and explicit relationships. Keep submitted and normalized descriptions with provenance. Sidecars remain authoritative under the archivist's decision. Retain transcript versions, correction approval, and source linkage. Store preservation masters and access derivatives in separate post-intake tiers and identify each derivative's source and process. |
+| **3. Research the conditions for optional embedded descriptive metadata without assuming every WAV tool supports the same fields or rewrite behavior.** | Keep embedding optional and copy-only. Apply field-specific FADGI status, limits, privacy checks, actual container/codec identification, archivist approval, pinned-version round-trip and output inspection. FADGI's old-reader caveat supports reader variation; generic rewrite loss remains an unverified risk, not an observed fact. |
+| **4. Investigate a relevant metadata round-trip/encoding issue or released change and explain how it affects this collection.** | Correct the investigator map's “no release/commit relationship confirmed” statement: the 20.05 history explicitly names issue #29, and the issue links to merged PR #34. Preserve uncertainty about the exact quote-byte case and inter-tool behavior; keep UTF-8 sidecars authoritative and propose a pinned-chain test. |
+| **5. Preserve and investigate this supported optional scope: a human-reviewed plain-text transcript and accessible listening copy alongside the preserved original. It is an authorized option, not a mandatory feature or an established technical capability; recommend conditions, retain it when supported, and explain any evidence-based exclusion.** | Retain the option explicitly and do not promote it to mandatory. Recommend a separately identified human-reviewed transcript and accessible listening derivative when staffing, source characteristics, player/accessibility checks, and external permission allow. No evidence supports excluding the option now; state conditions for later unavailability. |
+| **6. Make owner decisions explicit: The collections archivist decides descriptive-field authority; the interviewer approves transcript corrections. Consent review is an external owner input and cannot be replaced by a software default.** | Preserve each named owner exactly. No owner decision was obtained. Keep consent authority, evidence, permitted access, and publication unresolved until supplied externally; possession is not permission. |
+| **7. Preserve negative constraints: Do not alter received originals during this research, promise lossless edits from a filename extension alone, require automatic speech recognition, or infer consent from possession of a recording.** | All four are binding. No original was modified; no extension-based lossless claim is made; ASR is not required; possession does not imply consent. |
+| **8. Deliver one coherent evidence-backed research proposal covering obligations 1–8, with recommendations, source/version applicability, useful discoveries, unresolved owner inputs, and a validation table separating checks actually executed from checks merely proposed. Do not report research sources or future tests as executed product validation.** | This file supplies the complete proposal, source/version limits, OHMS as a later discovery, owner inputs, and the validation table below. Public source review is research only. Product and media checks remain proposed or NOT_RUN. |
+
+## Critique dispositions
+
+| Criticism | Disposition | Evidence-based resolution |
+|---|---|---|
+| **C1 — Issue #29 was materially underlinked to the 20.05 release.** | **Accept, with bounded wording.** | The official 20.05 history explicitly references #29; issue #29 links to merged PR #34. Correct the investigator's “no release/commit relationship confirmed” wording. The release-note and PR titles do not prove the exact curly-quote reproduction or universal resolution. [S04](sources/index.md#s04), [S05](sources/index.md#s05), [S15](sources/index.md#s15) |
+| **C2 — BagIt did not say where authoritative sidecars live or how they receive fixity.** | **Accept.** | Put the authoritative sidecars under `data/metadata/` as payload files covered by the required payload manifest. A tag manifest is a separate optional mechanism for tag files. Add both to the proposed package validation. [S06](sources/index.md#s06) |
+| **C3 — Rewrite loss was stated as established behavior without supporting evidence.** | **Accept and amend.** | Remove the general assertion that possible tools lose metadata on rewrite. State that exact write/read retention is unknown and must be tested. Preserve only the evidence-backed caveat that older BWF-aware devices may not recognize newer chunks. [S01](sources/index.md#s01), [S02](sources/index.md#s02), [S03](sources/index.md#s03) |
+| **C4 — VHP did not say transcripts are “complementary, not substitutes.”** | **Amend; reject the critique's claim that the page lacks complementary wording.** | The official page does describe preserving both original recording and transcript as “complementary documentation,” while also calling the transcript an access/reference substitute. State the distinction: complementary for preservation, useful access substitute, never a preservation replacement. Direct page open returned a retrieval error; official indexed page content exposed the text and was reviewed. [S08](sources/index.md#s08) |
+| **C5 — “Separate” originals/access copies was only clear at object level.** | **Accept and clarify.** | Make separate file identities and `derived_from` links explicit, then keep the received master and access derivative in separate post-intake preservation/access storage tiers. A mixed transfer bag is allowed as a transport envelope and does not decide post-intake storage or permissions. [S07](sources/index.md#s07) |
+| **C6 — OHMS release evidence should not imply current availability or compatibility.** | **Accept.** | Retain OHMS as a later candidate, preserve the exact observed v3.10.16 tag and `3343b78` commit, note that the displayed release date omitted its year, and report no compatibility or deployment test. [S10](sources/index.md#s10), [S11](sources/index.md#s11) |
+
+## Research discoveries, alternatives, and unresolved owner inputs
+
+**Useful findings.** The public evidence supports a portable BagIt package, a bounded optional BWF metadata path, a PREMIS-inspired event/relationship log, and a human-reviewed transcript/access route. The encoding history gives a concrete, relevant issue/release example; OHMS offers an unfamiliar optional discovery layer. These findings are more useful than assuming a single recording app or treating a tool's feature list as interoperability proof.
+
+**Alternatives retained.** The society may choose to use only the sidecar route; BWF embedding is not required. It may keep descriptive and relationship records in UTF-8 sidecars without repeating anything inside WAV files. It may include a human-reviewed transcript and accessible listening copy when supported, or record that the optional output is unavailable under the stated conditions. OHMS can be evaluated later or not adopted. BagIt is a packaging choice, while PREMIS is an optional record model; neither commits the society to a complete repository implementation.
+
+**Unresolved inputs for the owners.**
+
+1. Local ID format and the compact metadata/relationship schema.
+2. Archivist's field-authority/conflict policy and any approved BWF subset.
+3. Interviewer correction workflow and revision-retention practice.
+4. Consent reviewer, evidence, permissions, access restrictions, and publication route.
+5. Intended audiences, listening environment/player, accessibility acceptance criteria, and supported access encoding.
+6. Staff capacity for transcript review and derivative creation, and whether a hosted OHMS layer is worth its maintenance burden.
+7. The actual volunteer codecs, metadata chunks, readers, and edit paths, which are unknown until representative files/toolchains are available.
+
+These local inputs do not defer the publicly answerable claims about BagIt manifests, BWF field conditions, encoding history, or general transcript/access practices.
+
+## Validation status
+
+| Check | Status | What was observed or remains proposed |
+|---|---|---|
+| Brief, revealed plan, draft, discovery, critique, and source-map review | **EXECUTED — research review only** | The listed frozen materials were reviewed. This establishes scope and evidence lineage, not product behavior. |
+| Primary-source documentation and release/issue review | **EXECUTED — research only** | Official RFC, FADGI, LoC, W3C, University of Kentucky, and MediaArea pages/history were inspected as described in the source map. No source retrieval is product validation. |
+| Investigator's earlier reveal-helper operation | **RECORDED BY INVESTIGATOR; NOT RERUN HERE** | The frozen plan-reveal record contains the hashes and reveal time. The reviser did not run or independently validate that control operation. |
+| Native Goal activation | **EXECUTED — task-control record only** | Actual activation was returned by the native Goal tool; the receipt and pre-terminal snapshot are in `source-map.json`. It is not a product or media check. |
+| Local BagIt creation, payload/tag manifest generation, and fixity verification | **PROPOSED / NOT_RUN** | Use a non-production sample and verify all payload paths, including `data/metadata/`; include and verify a tag manifest if tag files are used. Test missing/renamed payload handling. |
+| Pilot intake scenario and identity/relationship walkthrough | **PROPOSED / NOT_RUN** | Walk a sample deposit through missing/conflicting metadata, photos/notes, duplicate or interrupted transfer, transcript correction, and access restriction. Confirm object links and that the received master remains unchanged. |
+| BWF field, encoding, and round-trip check | **PROPOSED / NOT_RUN** | On non-production fixtures, pin the writer/readers and test ASCII, accented names, curly quotes, and expected scripts. Inspect values after save/reopen; include absent/zero CSET only if relevant. Never use a received original. |
+| Original/audio-bitstream/derivative check | **PROPOSED / NOT_RUN** | Identify codec from the file structure; record whole-file fixity; use a data-chunk digest if supported; compare expected audio content and listen to the derivative. No single digest or extension establishes all of these properties. |
+| Transcript approval and accessibility review | **PROPOSED / NOT_RUN** | Have the interviewer confirm a correction trace and evaluate the chosen player/transcript route with intended users or accessibility tools. No transcript, player, or target audience was supplied. |
+| OHMS hosting, file compatibility, consent, and accessibility | **PROPOSED / NOT_RUN** | Consider only if owners want a web access layer; no account, deployment, or media linkage was attempted. |
+| End-to-end product/service operation or owner review | **NOT_RUN** | No install, account, production access, purchase, live write, consent review, or owner decision occurred. |
+
+No local discriminating media check was run, no received original was available or changed, and no executable or downloaded code was run. All product-facing tests in this table remain proposed or NOT_RUN.
+
+## Source access note
+
+The LoC Veterans History Project transcript page returned an internal retrieval error on direct open during the reviser's check. An official-domain search result exposed the expanded page text, including the complementary-documentation and access/reference-substitute language. The final wording reflects that distinction and retains the direct-access limitation in [S08](sources/index.md#s08).
+
+
+## Process disclosure
+
+During a batched read of the permitted critic source index and source map, I also opened `stages/critic/status.json`, which was not listed in `input-map.json`. That was an inadvertent scope deviation; its contents were not used in this proposal. No parent conversation/history, other candidate, or campaign-history material was used. The source map records this disclosure.

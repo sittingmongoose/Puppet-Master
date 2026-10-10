@@ -1,0 +1,1800 @@
+{
+  "schema_version": "ER12-independent-assessment-v1",
+  "run_id": "A3-01",
+  "arm": "treatment",
+  "fixture_id": "ER12-A3-01-FRESH",
+  "reviewer_identity": "codex-er12-a3-review-0437",
+  "rubric": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "final_qualification": "No remaining material error, omission or unsupported consequential final decision found in the declared full scope. This is a recommendation-grade semantic judgment, not certification of an unprovided application.",
+  "all_six_axes": [
+    {
+      "axis": 1,
+      "name": "Original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "analysis": "The final is a bounded recommendation for the fictional Rust/Linux/Windows adapter and 50,000 short notes, with SQLite authoritative. All S1–S6 clauses and seven negative constraints are substantively present. It defines a prospective grammar, evaluates both named engines, handles CRUD/drift/rebuild, stable IDs and ranking, safe excerpts, component applicability and proposed validation. A deployed build or completed application is not required by this brief. Open filter cardinality/selection and deployment choices are legitimate external decisions, supported by concrete alternatives and probes, not substitutes for investigation.",
+      "artifact_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+          "line": 5
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+          "line": 13
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+          "line": 27
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+          "line": 41
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+          "line": 67
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+          "line": 75
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+          "line": 117
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+          "line": 144
+        }
+      ],
+      "independent_evidence_ids": [
+        "E01",
+        "E06",
+        "E07",
+        "E20",
+        "E26"
+      ]
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source claims and exact applicability",
+      "coverage": "COMPLETE",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "analysis": "The governing sources support the conditional external-content preference and principal corrections. The final separates SQL UPDATE/DELETE from ordinary contentless special deletion, released contentless-delete from unknown app capability, canonical text from postings, and SQLite transactions from Tantivy commits/readers. It gets BM25 directions, stable-ID ties, unicode61 remove_diacritics 2, old-text FTS deletions, initial backfill, rank=1 external comparison and the REPLACE trigger condition right. No analyzer equivalence, universal language quality, current issue fix, installed capability or benchmark is asserted. See claim_checks for operation/version/default/type/units/exceptions. The draft’s concrete RemoveLongFilter::limit(40) mapping is wrong at the exact 40-byte boundary; the final specifies a generic 40-byte policy instead, leaving the API binding unselected. Some optional capability and release-history metadata is incomplete or imprecise; those limits do not undermine the chosen final architecture.",
+      "artifact_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/draft.md",
+          "line": 36
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+          "line": 17
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+          "line": 22
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+          "line": 47
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+          "line": 49
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+          "line": 71
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+          "line": 81
+        }
+      ],
+      "independent_evidence_ids": [
+        "E01",
+        "E06",
+        "E07",
+        "E11",
+        "E20",
+        "E21",
+        "E22",
+        "E30",
+        "E31",
+        "E37",
+        "E39",
+        "E40",
+        "E42"
+      ]
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar discovery, alternatives, implementation/history and opportunity breadth",
+      "coverage": "COMPLETE",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "analysis": "Discovery is substantive before the plan reveal: same-database external-content indexing versus a separate writer/reader sidecar, durable ordered outbox replay, reader visibility, canonical tie keys, runtime probes, rebuild/integrity operations, WAL/storage conditions, and bounded platform/parser history. Draft/final then investigate the disk-saving configurations and version-gated contentless-delete. These are useful unfamiliar mechanisms within the requested two-engine comparison, not a list of generic cautions. Alternatives include ordinary/internal/external/contentless-delete FTS configurations, stored versus canonical excerpts, typed queries versus a general parser, and custom collector versus sorting all candidates. Conditions for choosing Tantivy remain operationally meaningful. No extra product survey was required. The available built-in SnippetGenerator::snippet(&str) path and to_html implementation were not developed in the original package; the Windows issue’s competing comment was omitted, and its changelog summary is imprecise. These are bounded opportunity/source-depth limitations, not a material absent approach or unsupported rejection.",
+      "artifact_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/discovery.md",
+          "line": 9
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/discovery.md",
+          "line": 22
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/discovery.md",
+          "line": 32
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/discovery.md",
+          "line": 40
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/draft.md",
+          "line": 42
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/draft.md",
+          "line": 82
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+          "line": 5
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+          "line": 27
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+          "line": 79
+        }
+      ],
+      "independent_evidence_ids": [
+        "E01",
+        "E06",
+        "E07",
+        "E11",
+        "E13",
+        "E15",
+        "E16",
+        "E17",
+        "E20",
+        "E31",
+        "E37",
+        "E39"
+      ]
+    },
+    {
+      "axis": 4,
+      "name": "Wrong criticism, corrections/rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "analysis": "Every substantive sentence of the frozen plan is mapped below, including the three old assumptions separately. M1 and M2 are valid conditional architecture hardening, not proof of actual app defects. The draft already mentions checking replacement paths and collection edits; the critic correctly narrows its additional concern to the REPLACE condition and separately mutated membership. The final keeps those conditions explicit. U1 is a genuine product ambiguity, U2 corrects misleading labels without falsely accusing the implementation of violating constraints, and U3 pins parser evidence without rebinding S10. No wrong correction or unsupported material rejection remains. The critic did not identify the concrete long-filter boundary defect, and three C-series references in its prose are mis-keyed; those are retained as lineage/locator limitations.",
+      "artifact_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/critic/critique.md",
+          "line": 21
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/critic/critique.md",
+          "line": 22
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/critic/critique.md",
+          "line": 23
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/critic/critique.md",
+          "line": 24
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/critic/critique.md",
+          "line": 25
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+          "line": 88
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+          "line": 107
+        }
+      ],
+      "independent_evidence_ids": [
+        "E01",
+        "E06",
+        "E07",
+        "E21",
+        "E22",
+        "E26",
+        "E42"
+      ]
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning preserved across discovery/draft/critique/final",
+      "coverage": "COMPLETE",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "analysis": "The final stands alone: it carries the two-engine mechanisms, conditional preference, query/text contract, disk caveat, canonical IDs, engine score directions, text-safe excerpt policy, trigger/outbox recovery, stale-versus-missing distinction, old version issue limits, prospective checks and owner decisions. Supported meaning is not replaced with predecessor IDs. All 30 inherited S/C records are identical as parsed objects in the final map, and new R records do not rebind them; this is integrity evidence only, with semantic preservation assessed in the prose. M1/M2 and U2/U3 receive explicit final dispositions. The draft’s exact incorrect long-filter call is absent from the final, but it was not explicitly criticized or corrected: do not describe it as an executed or acknowledged repair. The final’s generic prospective boundary contract is independently implementable and has all-length checks; the omitted API binding remains a limitation. Other optional implementation leads are retained without falsely claiming confirmed deployment behavior.",
+      "artifact_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/discovery.md",
+          "line": 9
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/draft.md",
+          "line": 25
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/draft.md",
+          "line": 55
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/critic/critique.md",
+          "line": 17
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+          "line": 13
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+          "line": 41
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+          "line": 67
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+          "line": 75
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+          "line": 107
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+          "line": 129
+        }
+      ],
+      "independent_evidence_ids": [
+        "E01",
+        "E06",
+        "E07",
+        "E11",
+        "E42"
+      ]
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed versus executed validation and oracle applicability",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "analysis": "No product/synthetic/platform/build/benchmark check is represented as executed. The matrix defines discriminating observations: reject malformed/match-all input; exact collection membership; canonical identity and score direction with fixed-corpus tie ordering; source/index agreement across CRUD and conditional REPLACE paths; commit-before-ack replay; reader-visible freshness; drift detection and convergence without deleting source notes; text rendering and token/grapheme bounds. Pure parser/query behavior is distinct from transaction/recovery integration rows. FTS rank=1 compares actual external content, unlike an ordinary table SELECT/count that may bypass the FTS index. Tantivy hit suppression cannot establish completeness; sequence and content reconciliation plus rebuild are required. Counts alone would not prove indexed meaning, and the package does not present counts or metadata checks as executed semantic proof. Accent edge cases, filter any/all behavior and scale thresholds depend on named owner/pinning decisions before testing; no cross-engine equality or universal power-loss guarantee is required.",
+      "artifact_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/discovery.md",
+          "line": 46
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/draft.md",
+          "line": 118
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/critic/critique.md",
+          "line": 61
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+          "line": 144
+        }
+      ],
+      "independent_evidence_ids": [
+        "E01",
+        "E06",
+        "E07",
+        "E17",
+        "E18",
+        "E21",
+        "E22",
+        "E42"
+      ]
+    }
+  ],
+  "brief_clause_assessments": [
+    {
+      "id": "S1",
+      "exact_clause": "Describe a bounded query language, tokenization/normalization policy, and behavior for punctuation, accents, malformed queries, and a collection filter.",
+      "judgment": "SATISFIED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 13
+      },
+      "axis": 1
+    },
+    {
+      "id": "S2",
+      "exact_clause": "Compare indexing/update mechanisms and query semantics of the two approaches; explain the cost of keeping derived content consistent with the source database.",
+      "judgment": "SATISFIED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 27
+      },
+      "axis": 2
+    },
+    {
+      "id": "S3",
+      "exact_clause": "Define create/update/delete, crash recovery, and rebuild behavior, including stale or missing search rows.",
+      "judgment": "SATISFIED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 41
+      },
+      "axis": 1
+    },
+    {
+      "id": "S4",
+      "exact_clause": "Specify result identity, rank/order stability, and safe excerpt generation without claiming universal language quality.",
+      "judgment": "SATISFIED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 67
+      },
+      "axis": 1
+    },
+    {
+      "id": "S5",
+      "exact_clause": "Tie capability and limitation claims to the actual component, deployed version, build/configuration, and operation. Include one relevant implementation or release/history detail.",
+      "judgment": "SATISFIED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 75
+      },
+      "axis": 1
+    },
+    {
+      "id": "S6",
+      "exact_clause": "Provide a small validation matrix and distinguish checks actually run from checks merely proposed; preserve explicit unresolved questions and decisions.",
+      "judgment": "SATISFIED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 144
+      },
+      "axis": 1
+    }
+  ],
+  "negative_constraint_assessments": [
+    {
+      "exact_constraint": "no hosted service",
+      "judgment": "COMPLIED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 120
+      }
+    },
+    {
+      "exact_constraint": "no network export of notes",
+      "judgment": "COMPLIED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 121
+      }
+    },
+    {
+      "exact_constraint": "no whole editor or sync build",
+      "judgment": "COMPLIED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 122
+      }
+    },
+    {
+      "exact_constraint": "no direct execution of user text as SQL",
+      "judgment": "COMPLIED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 123
+      }
+    },
+    {
+      "exact_constraint": "no claim that lexical search provides semantic understanding",
+      "judgment": "COMPLIED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 124
+      }
+    },
+    {
+      "exact_constraint": "no deletion of authoritative notes during index repair",
+      "judgment": "COMPLIED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 125
+      }
+    },
+    {
+      "exact_constraint": "no unsupported universal capability-absence claim",
+      "judgment": "COMPLIED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 126
+      }
+    }
+  ],
+  "exact_plan_clause_assessments": [
+    {
+      "id": "P01",
+      "exact_clause": "I would prefer to reuse SQLite.",
+      "disposition": "ACCEPT_CONDITIONALLY",
+      "independent_assessment": "External-content FTS5 is first candidate, contingent on actual target capability and tested lexical contract.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 5
+      },
+      "evidence_ids": [
+        "E01"
+      ]
+    },
+    {
+      "id": "P02",
+      "exact_clause": "My sketch creates a search table containing note ID, title, body, and collection, then rewrites a note's search row whenever the editor saves it.",
+      "disposition": "AMEND",
+      "independent_assessment": "Title/body postings use external canonical content; public ID and collection remain canonical; DB triggers replace dependence on an editor callback.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 5
+      },
+      "evidence_ids": [
+        "E01",
+        "E21"
+      ]
+    },
+    {
+      "id": "P03",
+      "exact_clause": "I want to consider a mode that avoids duplicating full note bodies in the search index because laptop disk space is limited.",
+      "disposition": "ACCEPT",
+      "independent_assessment": "External content avoids a second full body copy; postings remain. Contentless-delete and canonical Tantivy excerpt retrieval are real optional configurations.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 7
+      },
+      "evidence_ids": [
+        "E01",
+        "E20",
+        "E37"
+      ]
+    },
+    {
+      "id": "P04",
+      "exact_clause": "I have not chosen a table configuration or checked the consequences.",
+      "disposition": "PRESERVE_AS_UNKNOWN",
+      "independent_assessment": "The final proposes a configuration but does not claim a deployed table, schema or build.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 11
+      },
+      "evidence_ids": [
+        "E01"
+      ]
+    },
+    {
+      "id": "P05",
+      "exact_clause": "My old working assumptions are that a contentless full-text index cannot support deletion or replacement, that excerpts require the text to live inside the index, and that changing tokenizer choices always forces replacing the database.",
+      "disposition": "THREE_SUPPORTED_CORRECTIONS",
+      "independent_assessment": "SQL operations differ by configuration; special ordinary-contentless deletion is distinct. Contentless-delete is version-gated. External/canonical text supports excerpts; derived index generations can change without replacing authoritative SQLite.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 81
+      },
+      "evidence_ids": [
+        "E01",
+        "E20",
+        "E37"
+      ]
+    },
+    {
+      "id": "P06",
+      "exact_clause": "If any assumption fails for an applicable released configuration, revise it with evidence.",
+      "disposition": "SATISFIED",
+      "independent_assessment": "Released 3.43.0 contentless-delete and live conditional external-content operations are documented. No installed-build claim substitutes for release evidence.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 81
+      },
+      "evidence_ids": [
+        "E20",
+        "E27"
+      ]
+    },
+    {
+      "id": "P07",
+      "exact_clause": "Conversely, do not infer that a feature exists in the deployed build just because some newer release describes it.",
+      "disposition": "COMPLIED",
+      "independent_assessment": "Runtime/version/source/build/FTS5 target probes remain pending.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 77
+      },
+      "evidence_ids": [
+        "E01",
+        "E03"
+      ]
+    },
+    {
+      "id": "P08",
+      "exact_clause": "There is no pinned deployment version yet.",
+      "disposition": "PRESERVED",
+      "independent_assessment": "SQLite 3.53.4 and Tantivy 0.26.2 are evidence references, not selected application dependencies.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 77
+      },
+      "evidence_ids": [
+        "E03",
+        "E05",
+        "E40"
+      ]
+    },
+    {
+      "id": "P09",
+      "exact_clause": "Draft queries split input on spaces and join words with AND.",
+      "disposition": "ACCEPT_AND_REFINE",
+      "independent_assessment": "Whitespace and punctuation separators; AND semantics via generated typed/quoted engine input.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 18
+      },
+      "evidence_ids": [
+        "E01",
+        "E26"
+      ]
+    },
+    {
+      "id": "P10",
+      "exact_clause": "Quoted input should become a phrase; collection is a separate filter.",
+      "disposition": "ACCEPT",
+      "independent_assessment": "Token adjacency is prospective; exact typed/bound filter stays outside query syntax. Tantivy phrase implementation needs positions in selected schema; no build is selected.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 18
+      },
+      "evidence_ids": [
+        "E01",
+        "E26"
+      ]
+    },
+    {
+      "id": "P11",
+      "exact_clause": "I have not handled literal punctuation, invalid query syntax, accent differences, or a user typing operators.",
+      "disposition": "ADDRESS",
+      "independent_assessment": "The final sets punctuation/quote/limit/error behavior, literal operator words and bounded accent policy; difficult language cases remain tests/owner decisions.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 17
+      },
+      "evidence_ids": [
+        "E01",
+        "E08",
+        "E26"
+      ]
+    },
+    {
+      "id": "P12",
+      "exact_clause": "I assumed sorting by relevance is sufficient, but have not chosen a deterministic tie-breaker or checked score interpretation.",
+      "disposition": "AMEND",
+      "independent_assessment": "FTS ascending BM25 and Tantivy descending BM25; fixed canonical-ID tie key, fixed corpus/config scope.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 71
+      },
+      "evidence_ids": [
+        "E01",
+        "E11"
+      ]
+    },
+    {
+      "id": "P13",
+      "exact_clause": "A separate library could own an index directory, updated after each database commit.",
+      "disposition": "AMEND",
+      "independent_assessment": "Tantivy remains local, but requires durable same-transaction change capture, commit-before-ack and reader-visible publication.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 55
+      },
+      "evidence_ids": [
+        "E06",
+        "E07"
+      ]
+    },
+    {
+      "id": "P14",
+      "exact_clause": "I have not decided how it catches up after a crash between the database commit and index update.",
+      "disposition": "ADDRESS",
+      "independent_assessment": "Ordered pending outbox replay, idempotent delete/add and snapshot/catch-up rebuild are specified prospectively.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 59
+      },
+      "evidence_ids": [
+        "E06",
+        "E07"
+      ]
+    },
+    {
+      "id": "P15",
+      "exact_clause": "For SQLite too, the draft needs a clear authority and reconciliation rule rather than relying on every writer remembering a callback.",
+      "disposition": "ADDRESS",
+      "independent_assessment": "Canonical SQLite plus DB triggers/backfill, external integrity rank=1 and rebuild; conditional REPLACE handling.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 47
+      },
+      "evidence_ids": [
+        "E01",
+        "E21",
+        "E22"
+      ]
+    },
+    {
+      "id": "P16",
+      "exact_clause": "Rebuilds must preserve authoritative notes and avoid presenting partial results as complete.",
+      "disposition": "COMPLIED",
+      "independent_assessment": "Derived generation/migration boundary for FTS; snapshot G/catch-up/read-visible watermark for Tantivy; no authoritative deletion.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 47
+      },
+      "evidence_ids": [
+        "E01",
+        "E06",
+        "E07"
+      ]
+    },
+    {
+      "id": "P17",
+      "exact_clause": "Keep all S1–S6 clauses and negative constraints.",
+      "disposition": "COMPLIED",
+      "independent_assessment": "All six clause and seven constraint mappings are separately reviewed.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 161
+      },
+      "evidence_ids": [
+        "E01",
+        "E06"
+      ]
+    },
+    {
+      "id": "P18",
+      "exact_clause": "Produce one preferred approach plus conditions that would justify the other.",
+      "disposition": "SATISFIED",
+      "independent_assessment": "Conditional FTS5 preference; unavailable/insufficient FTS5 or measured benefit justifies Tantivy lifecycle.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 5
+      },
+      "evidence_ids": [
+        "E01",
+        "E06"
+      ]
+    },
+    {
+      "id": "P19",
+      "exact_clause": "Disk savings are a goal, not permission to break deletion, excerpts, or recovery.",
+      "disposition": "COMPLIED",
+      "independent_assessment": "Posting/storage caveat, correct configuration-specific deletion, canonical excerpts and source-driven repair retained.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 7
+      },
+      "evidence_ids": [
+        "E01",
+        "E20",
+        "E37"
+      ]
+    },
+    {
+      "id": "P20",
+      "exact_clause": "No benchmark or installed-build capability is currently verified.",
+      "disposition": "PRESERVED",
+      "independent_assessment": "No performance winner or shipped target capability is asserted.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 77
+      },
+      "evidence_ids": [
+        "E01",
+        "E05"
+      ]
+    },
+    {
+      "id": "P21",
+      "exact_clause": "Proposed validation only: synthetic notes with equal scores, accents, punctuation, phrase boundaries, and two collections; repeated edits and deletions; a missing index row; simulated interruption between source write and derived update; malformed input; an excerpt containing markup.",
+      "disposition": "ALL_ITEMS_RETAINED_PROPOSED",
+      "independent_assessment": "Every listed fixture/operation appears in final matrix rows; none is credited as executed.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 150
+      },
+      "evidence_ids": [
+        "E01",
+        "E06",
+        "E07",
+        "E11"
+      ]
+    },
+    {
+      "id": "P22",
+      "exact_clause": "Specify observable outcomes before testing.",
+      "disposition": "SATISFIED_PROSPECTIVELY",
+      "independent_assessment": "Validation-error, exact membership, score/ID tie ordering, source convergence, no incomplete-as-complete results and safe rendering are observable oracles.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 151
+      },
+      "evidence_ids": [
+        "E01",
+        "E06",
+        "E07"
+      ]
+    },
+    {
+      "id": "P23",
+      "exact_clause": "Distinguish pure query checks from recovery integration checks.",
+      "disposition": "SATISFIED",
+      "independent_assessment": "Query-contract/filter/tie rows are distinct from CRUD coupling/crash/rebuild/freshness rows.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 151
+      },
+      "evidence_ids": [
+        "E01",
+        "E06",
+        "E07"
+      ]
+    },
+    {
+      "id": "P24",
+      "exact_clause": "No checks have been executed.",
+      "disposition": "PRESERVED",
+      "independent_assessment": "Documentation/history review is reported separately; all product checks are proposed/not run.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 146
+      },
+      "evidence_ids": []
+    },
+    {
+      "id": "P25",
+      "exact_clause": "Root releases this incomplete draft only after substantive discovery.",
+      "disposition": "PROTOCOL_CONTEXT",
+      "independent_assessment": "Discovery matches the reveal receipt hash and precedes reveal according to supplied timestamps. The original pre-reveal source-map bytes/receipt are not retained, so that part of concealment protocol is UNKNOWN.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 176
+      },
+      "evidence_ids": []
+    },
+    {
+      "id": "P26",
+      "exact_clause": "These are user preferences and unverified working assumptions, not established technical facts or evaluation answers.",
+      "disposition": "CONTEXT_PRESERVED",
+      "independent_assessment": "The final treats the original assumptions as hypotheses and owner preferences, with no assessor-provided solution or verified deployment inferred.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 88
+      },
+      "evidence_ids": []
+    }
+  ],
+  "criticism_dispositions": [
+    {
+      "id": "M1",
+      "original_classification": "Material incomplete, conditional",
+      "independent_disposition": "SUPPORTED_CONDITIONAL_HARDENING",
+      "final_disposition": "accept",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 49
+      },
+      "evidence_ids": [
+        "E21",
+        "E22",
+        "E23",
+        "E28"
+      ],
+      "assessment": "UNIQUE/PRIMARY KEY REPLACE deletes can omit delete triggers when recursive triggers are off. Final forbids that note-write path or explicitly configures/tests every shipped connection and conflict key. Unknown schema/SQL is not an observed defect. Ordinary source REPLACE and external-FTS REPLACE behavior must not be conflated."
+    },
+    {
+      "id": "M2",
+      "original_classification": "Material incomplete, conditional",
+      "independent_disposition": "SUPPORTED_CONDITIONAL_HARDENING",
+      "final_disposition": "accept",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 57
+      },
+      "evidence_ids": [
+        "E06",
+        "E07"
+      ],
+      "assessment": "If membership changes outside a note update and it is indexed in the document, that change needs durable capture. Final explicitly covers relation inserts/deletes and indexed renames or immutable IDs. This is an application architecture inference, not a documented existing app defect."
+    },
+    {
+      "id": "U1",
+      "original_classification": "Honestly unresolved external input",
+      "independent_disposition": "VALID_PRODUCT_UNCERTAINTY",
+      "final_disposition": "accept as unresolved",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 25
+      },
+      "evidence_ids": [],
+      "assessment": "The brief requires filtering capability, not mandatory filter selection or multi-tag any/all semantics. Leaving these owner decisions is appropriate."
+    },
+    {
+      "id": "U2",
+      "original_classification": "Minor locator/wording",
+      "independent_disposition": "VALID_POLARITY_AMBIGUITY",
+      "final_disposition": "accept and amend",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 117
+      },
+      "evidence_ids": [],
+      "assessment": "Draft rejection labels conflict with its compliant implementation proposal. Final accepts every negative constraint. This was a wording defect, not evidence of executed SQL injection/export/note deletion."
+    },
+    {
+      "id": "U3",
+      "original_classification": "Minor locator/wording",
+      "independent_disposition": "VALID_MUTABLE_LOCATOR_WARNING",
+      "final_disposition": "accept",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 86
+      },
+      "evidence_ids": [
+        "E09",
+        "E26"
+      ],
+      "assessment": "S10 remains a mutable observed page, while R07 provides exact 0.26.2 syntax. Source IDs are preserved. Critic C11 reference here is a locator error; C09/S15 govern issue #3031."
+    }
+  ],
+  "claim_checks": [
+    {
+      "id": "CC01",
+      "subject": "SQLite FTS5 module/build",
+      "operation": "Create and use FTS5 on shipped targets",
+      "assessment": "Conditional runtime probe is justified. Inclusion since 3.9.0, configure/amalgamation defaults and SQLITE_ENABLE_FTS5 matter; upstream version alone does not enable the app module.",
+      "version_configuration": "live docs; introduced 3.9.0",
+      "evidence_ids": [
+        "E01",
+        "E03"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 77
+      },
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "CC02",
+      "subject": "FTS5 MATCH query language",
+      "operation": "Generate quoted terms/phrases; bind fixed SQL",
+      "assessment": "Quoted AST generation hides Boolean/field/prefix grammar; MATCH value binding alone does not constrain it. Terms/phrases are tokenizer-derived.",
+      "version_configuration": "live FTS5 docs; actual release unpinned",
+      "evidence_ids": [
+        "E01"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 20
+      },
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "CC03",
+      "subject": "unicode61 tokenizer",
+      "operation": "Index/query accent and punctuation normalization",
+      "assessment": "Unicode 6.1 categories/case handling, Latin diacritics, default 1 versus multi-diacritic option 2 are correctly scoped; no cross-language or analyzer-equivalence guarantee.",
+      "version_configuration": "unicode61 remove_diacritics 2; live docs",
+      "evidence_ids": [
+        "E01"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 21
+      },
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "CC04",
+      "subject": "FTS5 content modes",
+      "operation": "Delete/update/replace and source value retrieval",
+      "assessment": "Ordinary contentless SQL restrictions differ from its original-text special delete and from contentless-delete SQL DELETE/REPLACE/all-column UPDATE. External content retrieves named source columns. Optional UNINDEXED persistence is separate.",
+      "version_configuration": "contentless_delete since 3.43.0; plain configurations",
+      "evidence_ids": [
+        "E01",
+        "E20",
+        "E27"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 81
+      },
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "CC05",
+      "subject": "FTS5 external-content triggers",
+      "operation": "Create/update/delete and initial population",
+      "assessment": "Old rowid/text deletes and new inserts match official trigger mechanism; triggers do not backfill. Source and FTS belong to one SQLite transaction.",
+      "version_configuration": "same database; integer rowid mapping; actual schema unknown",
+      "evidence_ids": [
+        "E01",
+        "E02"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 47
+      },
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "CC06",
+      "subject": "External-content reconciliation",
+      "operation": "Detect missing/stale rows and rebuild",
+      "assessment": "rank=1 compares external content. A non-MATCH SELECT may read canonical content without testing postings. Rebuild touches derived index; contentless needs explicit source reindex.",
+      "version_configuration": "FTS5 integrity-check/rebuild; external content",
+      "evidence_ids": [
+        "E01"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 47
+      },
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "CC07",
+      "subject": "SQLite source-table REPLACE",
+      "operation": "Conflict deletes and delete triggers",
+      "assessment": "UNIQUE/PRIMARY KEY conflict deletes fire delete triggers only if recursive_triggers enabled. This differs from REPLACE on the external FTS virtual table, which uses ABORT. Final offers forbid/configure/test, not an observed app defect.",
+      "version_configuration": "current documentation and 3.6.18 origin; connection setting/build unknown",
+      "evidence_ids": [
+        "E01",
+        "E21",
+        "E22",
+        "E23",
+        "E28"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 49
+      },
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "CC08",
+      "subject": "SQLite transaction durability",
+      "operation": "Crash/power failure and WAL configuration",
+      "assessment": "Single-store atomicity does not span Tantivy. WAL FULL commit sync versus NORMAL durability tradeoff, same-host shared memory and WAL companion lifecycle are supported. Rollback atomic-commit article is mode-specific and assumes working storage/VFS.",
+      "version_configuration": "journal_mode/synchronous/VFS/filesystem unselected",
+      "evidence_ids": [
+        "E02",
+        "E17",
+        "E18",
+        "E22"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 51
+      },
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "CC09",
+      "subject": "Tantivy IndexWriter",
+      "operation": "Add/delete/commit/replay",
+      "assessment": "0.26.2 commit blocks and persists/publishes changes, subject to spared storage; delete affects prior committed and earlier same-commit documents. Commit-before-ack ordered replay is an application inference; not cross-store atomicity.",
+      "version_configuration": "Tantivy 0.26.2",
+      "evidence_ids": [
+        "E06"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 59
+      },
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "CC10",
+      "subject": "Tantivy IndexReader",
+      "operation": "Make committed source watermark reader-visible",
+      "assessment": "Default OnCommitWithDelay may lag tens of milliseconds; explicit reload exists. Final barrier requires committed AND reader-visible state, not merely completed writer commit.",
+      "version_configuration": "Tantivy 0.26.2",
+      "evidence_ids": [
+        "E07"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 63
+      },
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "CC11",
+      "subject": "Collection membership and outbox",
+      "operation": "Track/filter exact collection state",
+      "assessment": "Indexed membership needs durable document refresh if canonical relations change separately. Exact-field configuration and any/all/cardinality are owner/schema choices. Source-side filtering must not silently drop a truncated top-K set.",
+      "version_configuration": "application architecture over Tantivy document API",
+      "evidence_ids": [
+        "E06",
+        "E07",
+        "E11"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 57
+      },
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "CC12",
+      "subject": "BM25 and public ordering",
+      "operation": "Sort and handle ties/rebuilds",
+      "assessment": "FTS lower score is better; Tantivy descending score. TopDocs uses ascending internal DocAddress ties; canonical IDs require explicit collector/full candidate sorting. Corpus/config changes may change scores.",
+      "version_configuration": "FTS live docs; Tantivy 0.26.2",
+      "evidence_ids": [
+        "E01",
+        "E11"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 71
+      },
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "CC13",
+      "subject": "Excerpt source/size/rendering",
+      "operation": "Bound and display source note text",
+      "assessment": "FTS snippet has positive <=64 token limit and external text lookup. Product 24-token/180-grapheme limit is a proposed extra bound. Tantivy accepts provided text; source HTML helper encodes note slices but custom markers are raw. Plain-text rendering remains a supported choice.",
+      "version_configuration": "FTS live docs; Tantivy 0.26.2",
+      "evidence_ids": [
+        "E01",
+        "E12",
+        "E19",
+        "E31",
+        "E37"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 73
+      },
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "CC14",
+      "subject": "Tantivy analyzer/default and token unit",
+      "operation": "Apply explicit byte policy to index and query",
+      "assessment": "SimpleTokenizer scans alphanumeric chars; explicit lowercase/folding are not FTS parity. Default docs say chars but API/source bytes; filter limit is exclusive, not inclusive. Draft exact API mapping has L03 defect; generic final policy does not bind that API.",
+      "version_configuration": "Tantivy 0.26.2 implementation",
+      "evidence_ids": [
+        "E08",
+        "E29",
+        "E30",
+        "E32",
+        "E33",
+        "E42"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 22
+      },
+      "status": "SUPPORTED_WITH_STATED_LIMITS"
+    },
+    {
+      "id": "CC15",
+      "subject": "Tantivy QueryParser/history",
+      "operation": "Broad engine grammar and malformed-input handling",
+      "assessment": "0.26.2 grammar has broader operators and phrase searches need indexed positions. Result return type proves no universal no-panic claim. #3031 reports older versions; fork/PR3075 is open, not a shipped fix. Independently retrieved grammar 0.26.0 retains the described expect path; no executable app outcome is claimed. Final typed wrapper avoids depending on arbitrary parser safety.",
+      "version_configuration": "Tantivy 0.26.2; grammar ^0.26.0 reference, app lock unknown",
+      "evidence_ids": [
+        "E09",
+        "E10",
+        "E15",
+        "E16",
+        "E26",
+        "E34",
+        "E35",
+        "E38",
+        "E41"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 84
+      },
+      "status": "SUPPORTED_WITH_STATED_LIMITS"
+    },
+    {
+      "id": "CC16",
+      "subject": "Release identity and issue scope",
+      "operation": "Tie reference source to release/history",
+      "assessment": "SQLite 3.53.4 source ID matches release page. Tantivy crate VCS metadata matches 72d1ef9a... and Cargo 0.26.2. #2847 is disputed old Windows report; #3079 is unversioned precommit question. Changelog metadata limitation does not establish a deployment failure/fix.",
+      "version_configuration": "SQLite 3.53.4 2026-07-24; Tantivy 0.26.2 2026-09-08",
+      "evidence_ids": [
+        "E03",
+        "E04",
+        "E05",
+        "E13",
+        "E14",
+        "E35",
+        "E39",
+        "E40"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 77
+      },
+      "status": "SUPPORTED_WITH_STATED_LIMITS"
+    },
+    {
+      "id": "CC17",
+      "subject": "Tokenizer migration",
+      "operation": "Change derived generation without deleting authority",
+      "assessment": "A new FTS table/schema/analyzer plus source-driven population or a Tantivy new generation preserves SQLite notes; a rebuild on an existing FTS table uses its current configuration. No migration was executed.",
+      "version_configuration": "planning inference from configured tables/source authority",
+      "evidence_ids": [
+        "E01",
+        "E06"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 53
+      },
+      "status": "SUPPORTED"
+    }
+  ],
+  "useful_discoveries": [
+    {
+      "discovery": "FTS external content can avoid duplicate body storage while using canonical excerpts and source rebuild.",
+      "value": "Disk goal without losing delete/reconciliation.",
+      "evidence_ids": [
+        "E01"
+      ]
+    },
+    {
+      "discovery": "Contentless-delete shipped in 3.43.0 with different SQL mutation semantics; ordinary contentless also has original-text special deletion.",
+      "value": "Corrects unqualified capability absence while preserving deployment version gate.",
+      "evidence_ids": [
+        "E01",
+        "E20"
+      ]
+    },
+    {
+      "discovery": "Tantivy document publication and reader reload are separate from SQLite source commits.",
+      "value": "Motivates ordered outbox, idempotent replay, commit-before-ack and visible watermark.",
+      "evidence_ids": [
+        "E06",
+        "E07"
+      ]
+    },
+    {
+      "discovery": "Canonical membership changes and stable note-ID tie keys need explicit adapter treatment.",
+      "value": "Prevents filter completeness and identity promises from relying on internal layouts or uncaptured relations.",
+      "evidence_ids": [
+        "E06",
+        "E11"
+      ]
+    },
+    {
+      "discovery": "SQLite REPLACE trigger behavior is conditional; historical default forecast is not deployment evidence.",
+      "value": "Discriminating write-path probes rather than universal default assumptions.",
+      "evidence_ids": [
+        "E21",
+        "E22",
+        "E23",
+        "E25",
+        "E28"
+      ]
+    },
+    {
+      "discovery": "Version-bounded issue/release history supports focused tests, not claims about every release.",
+      "value": "Preserves two viable engines and current-build uncertainty.",
+      "evidence_ids": [
+        "E13",
+        "E14",
+        "E15",
+        "E16",
+        "E34",
+        "E39"
+      ]
+    }
+  ],
+  "alternatives_and_analogous_mechanisms": [
+    {
+      "approaches": "FTS5 internal content / external content / ordinary contentless / contentless-delete",
+      "assessment": "External content is preferred conditionally for this existing authority and excerpt/rebuild needs. Other storage modes are meaningful optional configurations with mutation/reindex cost; no zero-storage claim.",
+      "evidence_ids": [
+        "E01",
+        "E20"
+      ]
+    },
+    {
+      "approaches": "Tantivy sidecar with durable ordered capture versus FTS5 co-transactional trigger index",
+      "assessment": "Sidecar remains justified by unavailable/insufficient FTS5 or measured benefit; no measured winner. Outbox is analogous to a transactional change log and solves the stated dual-write gap.",
+      "evidence_ids": [
+        "E01",
+        "E06",
+        "E07"
+      ]
+    },
+    {
+      "approaches": "Typed restricted query construction versus unrestricted QueryParser/MATCH grammar",
+      "assessment": "Bounded literal/phrase contract is well motivated; exposing the larger grammar is not required. No semantic-search claim.",
+      "evidence_ids": [
+        "E01",
+        "E26"
+      ]
+    },
+    {
+      "approaches": "Canonical-text snippet versus sidecar STORED text; safe plain text versus verified highlighting",
+      "assessment": "Both are possible. Independently discovered SnippetGenerator::snippet(&str) is a useful built-in canonical-text convenience absent from original detail. Custom prefix/postfix must remain trusted.",
+      "evidence_ids": [
+        "E31",
+        "E37"
+      ]
+    },
+    {
+      "approaches": "Canonical ID custom collector versus sorting all matches before truncation",
+      "assessment": "Both avoid internal DocAddress tie identity; top-K truncation before canonical filtering or tie handling can lose the promised set.",
+      "evidence_ids": [
+        "E11"
+      ]
+    }
+  ],
+  "material_findings": [],
+  "lineage_findings": [
+    {
+      "id": "L01",
+      "classification": "CONDITIONAL_MATERIAL_GAP_ADDRESSED_IN_FINAL",
+      "stage": "investigator draft",
+      "artifact_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/draft.md",
+        "line": 9
+      },
+      "issue": "REPLACE delete-trigger condition not explicitly named.",
+      "final_status": "M1 explicitly incorporated; no remaining material issue.",
+      "evidence_ids": [
+        "E21",
+        "E22"
+      ]
+    },
+    {
+      "id": "L02",
+      "classification": "CONDITIONAL_MATERIAL_GAP_ADDRESSED_IN_FINAL",
+      "stage": "investigator draft",
+      "artifact_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/draft.md",
+        "line": 68
+      },
+      "issue": "Separate membership-table changes not explicitly captured in the Tantivy outbox.",
+      "final_status": "M2 explicitly incorporated; source schema remains unknown.",
+      "evidence_ids": [
+        "E06"
+      ]
+    },
+    {
+      "id": "L03",
+      "classification": "CONCRETE_DRAFT_TECHNICAL_DEFECT",
+      "stage": "investigator draft; critic missed it",
+      "artifact_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/draft.md",
+        "line": 36
+      },
+      "issue": "Draft selects RemoveLongFilter::limit(40) while accepting searchable tokens of at most 40 UTF-8 bytes. In version 0.26.2 the predicate is len < limit, so an exact 40-byte token is discarded. Module prose says 40 chars while the API and source use bytes. This is a consequential draft mapping defect for the Tantivy alternative.",
+      "final_status": "Final line 22 specifies a generic 40-byte policy and pinning/filter-order work, with all-length prospective checks; it does not select the faulty limit(40) call. No explicit acknowledgment or correction exists, so do not label this a proved repair. The final contract itself can be implemented and no executable validation is claimed. Retained as a final implementation-binding/source-depth limitation, not an existing final API error.",
+      "evidence_ids": [
+        "E08",
+        "E29",
+        "E30",
+        "E33",
+        "E42"
+      ]
+    },
+    {
+      "id": "L04",
+      "classification": "MINOR_WORDING_CORRECTED",
+      "stage": "investigator draft",
+      "artifact_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/draft.md",
+        "line": 97
+      },
+      "issue": "Negative constraints were labelled rejected despite compliant explanatory text.",
+      "final_status": "U2 explicitly corrected; no final violation.",
+      "evidence_ids": []
+    },
+    {
+      "id": "L05",
+      "classification": "MINOR_LOCATOR_CORRECTED_WITH_LINEAGE_PRESERVED",
+      "stage": "investigator source map S10",
+      "artifact_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/source-map.json",
+        "line": 152
+      },
+      "issue": "Mutable latest parser page used for observed version.",
+      "final_status": "U3 adds pinned R07 and leaves S10 unchanged.",
+      "evidence_ids": [
+        "E09",
+        "E26"
+      ]
+    }
+  ],
+  "limitations": [
+    {
+      "id": "LIMIT01",
+      "material": false,
+      "title": "Tantivy exact token boundary not bound to a selected final API",
+      "analysis": "See L03. Final has a prospective generic policy, not the draft API call. The concrete boundary and filter order remain implementation choices, with no analyzer parity or executed result asserted.",
+      "evidence_ids": [
+        "E30",
+        "E42"
+      ],
+      "artifact_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 22
+      }
+    },
+    {
+      "id": "LIMIT02",
+      "material": false,
+      "title": "Optional Tantivy excerpt capability was under-investigated",
+      "analysis": "Versioned SnippetGenerator exposes snippet(&str), so canonical text can feed the built-in generator without a stored body. Source to_html encodes source slices with encode_minimal but inserts configurable prefix/postfix verbatim. The original package neither established these conveniences nor falsely claimed their absence; final chooses bounded plain-text/canonical retrieval. This is a useful missed convenience, not broken excerpt safety or forced duplication.",
+      "evidence_ids": [
+        "E31",
+        "E37"
+      ],
+      "artifact_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 73
+      }
+    },
+    {
+      "id": "LIMIT03",
+      "material": false,
+      "title": "Windows issue has omitted competing primary discussion",
+      "analysis": "Issue #2847 contains a 2026-07-28 comment disputing the claimed lock-scope race and reporting unsuccessful reproductions on then-main. Neither reporter nor commenter is execution evidence for this fictional app. Final labels the old issue a version-bounded report/test lead and does not assert the mechanism for 0.26.2 or reject Tantivy on that basis.",
+      "evidence_ids": [
+        "E13"
+      ],
+      "artifact_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 85
+      }
+    },
+    {
+      "id": "LIMIT04",
+      "material": false,
+      "title": "Release metadata summary and Fossil association wording are imprecise",
+      "analysis": "Inherited S07 says two aggregation bug fixes. Commit-pinned CHANGELOG 0.26.2 instead lists nested aggregation buffer flush and buffered-union seek fixes. R09 says the fetched artifact did not expose an exact release/commit association; the primary page identifies check-in 235cf6586b (2025-07-18 trunk), although that is still not a deployment/release pin. Neither point changes the final FTS preference, conditional REPLACE requirement or current app capability unknown.",
+      "evidence_ids": [
+        "E28",
+        "E39"
+      ],
+      "artifact_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 83
+      }
+    },
+    {
+      "id": "LIMIT05",
+      "material": false,
+      "title": "Critic source IDs contain three local citation errors",
+      "analysis": "critique.md line 25 and line 59 use C11 for the parser issue, but C11 is SQLite transactions (correct issue record C09/S15). Line 57 uses C09 for delayed reader reload, but C09 is the issue (correct reader C06/S18). The underlying claims are supported and the final map and prose provide working sources.",
+      "evidence_ids": [
+        "E07",
+        "E15"
+      ],
+      "artifact_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/critic/critique.md",
+        "line": 57
+      }
+    },
+    {
+      "id": "LIMIT06",
+      "material": false,
+      "title": "Documentation exceptions are scoped to proposed plain configurations",
+      "analysis": "FTS5 contentless_unindexed=1 permits persistence of UNINDEXED columns; therefore generic null-column wording should be read as the proposed plain contentless configuration/indexed title/body, not a universal statement about every contentless option. This optional storage exception does not invalidate the selected external-content plan or make it necessary to duplicate bodies.",
+      "evidence_ids": [
+        "E01"
+      ],
+      "artifact_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 81
+      }
+    }
+  ],
+  "unknowns": [
+    "Deployed SQLite/Tantivy dependency versions, actual Linux/Windows capability/build flags, binding, schema and integer key mapping: UNKNOWN; fictional app not supplied.",
+    "Owner choices: collection selection/cardinality/any-all/renames, precise analyzer/filter order and inclusive token implementation, difficult-script normalization, result limits/weights/collation, excerpt/grapheme library, lag and snapshot lifecycle, journal/durability/migration/measurement thresholds remain open.",
+    "Candidate native Goal activation/terminal state cannot be independently verified from actual native tool telemetry in this package. Authored raw-like fields and T3 summaries are self-reported, not substituted for raw receipts.",
+    "T3 task IDs, requested route and terminal statuses are captured for this arm. Actual provider execution, effective model/reasoning/service tier, billing and inference occupancy are UNKNOWN; requested/returned route labels do not prove backend execution.",
+    "Full concealment/read/access protocol, pre-reveal source-map bytes and save-before-native-terminal chronology are UNKNOWN beyond the supplied freeze/reveal/artifact evidence. No unauthorized assistance is observed in inspected artifacts, but transcript auditing was not performed or permitted.",
+    "Application tests/builds/benchmarks/platform probes are reported not run; no execution logs are present. This is not a missing required deployment or a reason for guessed FAIL.",
+    "Exact current malformed parser behavior in an application lock remains unexecuted. Reference grammar contains the described hazard; that observation is separate from an actual target test."
+  ],
+  "per_arm_dimensions": {
+    "delivery": {
+      "status": "COMPLETE",
+      "ordinary_final": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+      "bytes": 34830,
+      "sha256": "3efbe2d57a4cad1b12562b7b48adacd5545ecf7222c08de58eb8a25a15a3747d",
+      "basis": "full final inspected and root terminal capture present"
+    },
+    "source": {
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "remaining_material_findings": [],
+      "basis": "independent semantic inspection and primary retrieval, not hash/citation counts"
+    },
+    "coverage": {
+      "axes": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "unassessed_axes": [],
+      "time_capped": false
+    },
+    "native": {
+      "status": "UNKNOWN",
+      "candidate_reported_goal_threads": [
+        "01a123f3-dc9f-7d50-8b7e-2ed4d124bfdd",
+        "01a12408-0794-70a1-a4e0-05e8984e545e",
+        "01a1240e-3105-75a0-9bcf-55014555aa35"
+      ],
+      "candidate_reported_elapsed_seconds": [
+        1232,
+        315,
+        594
+      ],
+      "candidate_reported_tokens": [
+        391871,
+        171452,
+        240181
+      ],
+      "basis": "authored artifact fields and T3 summaries; no independently observed candidate native terminal receipt",
+      "do_not_infer_billing": true
+    },
+    "t3": {
+      "status": "REPORTED_COMPLETE_IN_CAPTURED_RECORDS",
+      "stage_task_ids": [
+        "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-01-treatment-investigator-v1",
+        "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-01-treatment-critic-v1",
+        "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-01-treatment-reviser-v1"
+      ],
+      "pending_child_runs_reported": [
+        false,
+        false,
+        false
+      ],
+      "root_capture_utc": "2026-10-10T04:37:04.508800+00:00",
+      "native_completion_proof": false
+    },
+    "protocol": {
+      "status": "PARTIALLY_EVIDENCED_REMAINDER_UNKNOWN",
+      "discovery_reveal_hash_matches": true,
+      "frozen_input_and_terminal_hash_checks": "32 matches; integrity only",
+      "candidate_feedback_or_repair_by_reviewer": "NONE",
+      "nested_delegation_by_reviewer": "NONE",
+      "other_arms_results_history_or_ER11_read": "NONE",
+      "concealment_access_and_native_terminal_order": "UNKNOWN without raw trace/pre-reveal source-map receipt"
+    },
+    "time": {
+      "status": "DOCUMENTED_CAPS_AND_OBSERVATION_TIMES_ONLY",
+      "stage_caps_seconds": [
+        1800,
+        720,
+        1080
+      ],
+      "whole_deadline_utc": "2026-10-10T04:55:46.107Z",
+      "first_stage_requested_utc": "2026-10-10T03:55:46.304Z",
+      "terminal_root_observed_utc": "2026-10-10T04:37:04.508800+00:00",
+      "request_to_root_freeze_seconds": 2478.2048,
+      "basis": "elapsed between two supplied timestamps; includes unknown queue/handoff/setup/observation delays; not actual inference latency or savings"
+    },
+    "effective_route": {
+      "status": "UNKNOWN",
+      "requested_route": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "reasoningEffort": "max",
+        "serviceTier": "priority"
+      },
+      "captured_t3_route_labels": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      },
+      "actual_execution_model_reasoning_tier": "UNKNOWN"
+    },
+    "billing": {
+      "status": "UNKNOWN",
+      "savings_claim": "NONE",
+      "paired_latency_or_arm_comparison": "NOT_PERFORMED"
+    }
+  },
+  "validation": {
+    "product_checks_executed": "NONE_REPORTED; no execution evidence present",
+    "reviewer_checks_executed": [
+      "Complete scoped artifact reading",
+      "Independent governing documentation/source/release/issue retrieval and semantic assessment",
+      "Original SHA-256/freeze comparison for preservation only",
+      "Output JSON/path/coverage and final unchanged-original checks"
+    ],
+    "product_oracles": "See axis 6 and claim_checks; no source hash, count, issue agreement, or citation presence is semantic proof.",
+    "pure_query_checks": [
+      "bounded grammar/errors",
+      "tokenization/accent policy",
+      "phrase adjacency",
+      "literal operators",
+      "exact filters",
+      "canonical IDs/score/ties"
+    ],
+    "integration_checks": [
+      "CRUD/triggers and conditional REPLACE",
+      "all membership changes",
+      "outbox crash commit/ack order",
+      "reader-visible watermark",
+      "missing/stale reconciliation",
+      "snapshot/catch-up rebuild",
+      "target platform/journal and network/rendering boundary"
+    ],
+    "not_required": [
+      "nonexistent deployed application test",
+      "dependency installation/build",
+      "benchmark execution",
+      "extra products outside the bounded alternative comparison"
+    ]
+  },
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A3-01/brief.md",
+      "bytes": 2897,
+      "sha256": "ce8e377b5dbae266b408c6793e2336e145bea2e143511444a246ceaf5841fac4",
+      "mtime_ns": 1791604432460311128
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A3-01/plan.md",
+      "bytes": 2623,
+      "sha256": "d490464e9066ef07d933d5e8fb1b91980c28695182e280fc0e0722837e7d2718",
+      "mtime_ns": 1791604432460621173
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/terminal-science-freeze-root.json",
+      "bytes": 7217,
+      "sha256": "25d57d8894c5438f710953f313f9ee637fafc2fc6d69aba905e961a398ec29df",
+      "mtime_ns": 1791607024508442096
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/inputs/brief.md",
+      "bytes": 2897,
+      "sha256": "ce8e377b5dbae266b408c6793e2336e145bea2e143511444a246ceaf5841fac4",
+      "mtime_ns": 1791604546304188974
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/critic/assignment.md",
+      "bytes": 3828,
+      "sha256": "fd96b8238241359791ed175d3c1891eb7f1157ca23b0de542b68adc1e4712e8b",
+      "mtime_ns": 1791605868017228429
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/critic/critique.md",
+      "bytes": 13061,
+      "sha256": "5f4e5005c300c0124b67be56623ee9ea9499dd5ae5f8cebe95e3232ed54c3aec",
+      "mtime_ns": 1791606197324785355
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/critic/dispatch.json",
+      "bytes": 4156,
+      "sha256": "81b21214bc0d5af3f73ff8ab7238894c2e643c84bf760098d90b2704d1fdfcc6",
+      "mtime_ns": 1791605868601662458
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/critic/freeze.json",
+      "bytes": 3603,
+      "sha256": "a61a86539bc9ceb7406286ab7070e301c2cf045c528523fb5e0b0e2ac577e808",
+      "mtime_ns": 1791605868017857697
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/critic/input-map.json",
+      "bytes": 1410,
+      "sha256": "d97e04c290ebd9f645529139a18a049695a8122f7ff8d5285b0c92e400c8e1f7",
+      "mtime_ns": 1791605868015658181
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/critic/request.json",
+      "bytes": 898,
+      "sha256": "93a5c9ec5e1e03380e12ea100c6b976908ccb114944b372c64331b3ee5ca0264",
+      "mtime_ns": 1791605868017986232
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/critic/source-map.json",
+      "bytes": 14799,
+      "sha256": "9a55a685e1606719539a1daacd5d8f02b2126fbda44e71ac9b85dccca91bc1b7",
+      "mtime_ns": 1791606197325271890
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/critic/sources/index.md",
+      "bytes": 2980,
+      "sha256": "e2263d411487d721011d1bed8595620cf1a893cd14e764d311d46a2de9189a4d",
+      "mtime_ns": 1791606197325570688
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/critic/status.json",
+      "bytes": 4294,
+      "sha256": "a3ecdb89bcff3fee7a2acec2e6995de83aa92d69f583e7f11458891e636f471c",
+      "mtime_ns": 1791606271412555885
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/assignment.md",
+      "bytes": 3720,
+      "sha256": "37e2e1b4cbccfc7a373f7746c9e8a846777c2b58bbc1fc594943e70af7d9e5a0",
+      "mtime_ns": 1791604546305028408
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/discovery.md",
+      "bytes": 16544,
+      "sha256": "2d2f70dfc0b31a2e0843faf7467d8da39e8980cdb7df7b8eb7253bdb96be4479",
+      "mtime_ns": 1791605064386179914
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/dispatch.json",
+      "bytes": 4252,
+      "sha256": "8e50cef5b33759d57e4516bb6290f520ed13f784038846e72c654a4d1eb03945",
+      "mtime_ns": 1791604546871790567
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/draft.md",
+      "bytes": 30049,
+      "sha256": "b2f66cf4aef587ddba915c4fca4466758ee8944a59bebd7d22c772c18e6feb5a",
+      "mtime_ns": 1791605803256956033
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/freeze.json",
+      "bytes": 1664,
+      "sha256": "b4e7d1a837682b0250acacece7f124e94633e154fe561d6dc0774edc3605b9a3",
+      "mtime_ns": 1791604546305296564
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/input-map.json",
+      "bytes": 722,
+      "sha256": "f8f4f55352533bd30120d947944c10ad01b61c666f470049c0af4a4ec48325a1",
+      "mtime_ns": 1791604546304828838
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/plan-reveal.json",
+      "bytes": 429,
+      "sha256": "a58ee4f820a6478ec2db608a36d6b0c9cedcbaf3206e9a2a4ce845b198f45094",
+      "mtime_ns": 1791605076848096443
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/request.json",
+      "bytes": 922,
+      "sha256": "cfb63e1ffa8355862c49659a80d6f6f3c72a50375634074df986ed4a92aeb0dd",
+      "mtime_ns": 1791604546305417296
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 2623,
+      "sha256": "d490464e9066ef07d933d5e8fb1b91980c28695182e280fc0e0722837e7d2718",
+      "mtime_ns": 1791605076847958178
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/source-map.json",
+      "bytes": 24002,
+      "sha256": "164aa96b563cf78d9dd77c6a51bf43c8e688ffee37cf7162de5ba2306df3d08f",
+      "mtime_ns": 1791605697064965915
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/sources/index.md",
+      "bytes": 4849,
+      "sha256": "e8271556dfaaa33098f130e80d4579af3ad2ff13a5834bb19e2e47169540abcf",
+      "mtime_ns": 1791605697065350385
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/status.json",
+      "bytes": 3818,
+      "sha256": "39f085ca6de94930876ce21c815d828766fd70ff085bd13c2ce607d90c58430d",
+      "mtime_ns": 1791605867696001747
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/assignment.md",
+      "bytes": 3808,
+      "sha256": "2bbad212736d81d28de46689b2f0381bbf2bfce950b1c03cf17c0ec1aebf774a",
+      "mtime_ns": 1791606271783313293
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/dispatch.json",
+      "bytes": 4172,
+      "sha256": "efecc4caf5720259ee38aa871190a6bfa3cbb3de2a3a280d873d673bb5f61c8a",
+      "mtime_ns": 1791606272330716078
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+      "bytes": 34830,
+      "sha256": "3efbe2d57a4cad1b12562b7b48adacd5545ecf7222c08de58eb8a25a15a3747d",
+      "mtime_ns": 1791606838441674013
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/freeze.json",
+      "bytes": 4382,
+      "sha256": "4028d54aadce070c5921d85327711a6693d9b7945638c83d4a86aa6180374791",
+      "mtime_ns": 1791606271784022602
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/input-map.json",
+      "bytes": 1727,
+      "sha256": "84688f4326367d9af78ae8381b81cd69dcd6a22bc9180701393d8b99685549f7",
+      "mtime_ns": 1791606271783081525
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/request.json",
+      "bytes": 902,
+      "sha256": "8b2eedf5940b52a34bdb67ecd6cbc9245bb2b424354ae0a9709ec591222eaaf2",
+      "mtime_ns": 1791606271784179230
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/source-map.json",
+      "bytes": 52832,
+      "sha256": "e6e7899b4b9fea80cd379d20759d34bae7c91682cefe7b513a58a022d5d0b86f",
+      "mtime_ns": 1791606838443429910
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/sources/index.md",
+      "bytes": 3894,
+      "sha256": "834e729370d901056b007df63734e79990a1b561942f8f2e29c64ade1ad95197",
+      "mtime_ns": 1791606865976458538
+    }
+  ],
+  "missing_or_incomplete": {
+    "required_science_artifacts": [],
+    "authored_source_evidence": "All carried evidence consists of full source maps and sources/index.md; no original raw captures exist, as explicitly disclosed. Those authored bytes were fully read; independent captures are provided here.",
+    "telemetry": "No standalone reviser/status.json and no raw candidate native terminal receipts; root terminal freeze supplies final T3 status only. Pre-reveal source-map bytes not retained."
+  },
+  "review_envelope": {
+    "start_utc": "2026-10-10T04:37:17Z",
+    "deadline_utc": "2026-10-10T05:22:17Z",
+    "duration_cap_seconds": 2700,
+    "saved_utc": "2026-10-10T04:52:00.114868+00:00",
+    "capped": false,
+    "unassessed_axes": [],
+    "completed_utc": "2026-10-10T04:52:40.627370+00:00",
+    "elapsed_to_completion_seconds": 923.62737,
+    "full_declared_scope_complete": true
+  },
+  "reviewer_native_goal": {
+    "threadId": "01a12419-ae65-7902-9d1d-5c233f91a379",
+    "status_at_judgment_save": "active; directly observed",
+    "observed_receipt": "evidence/reviewer-goal-observed.json",
+    "terminal_receipt_after_judgment_save": "evidence/reviewer-goal-terminal.json",
+    "actual_provider_model_fields": "UNKNOWN in native Goal response"
+  },
+  "original_freeze_preserved": true,
+  "preservation_evidence": "original-inspected-manifest.json and freeze-integrity-check.json; closing check saved separately",
+  "evidence_source_map": "source-map.json",
+  "evidence_index": "evidence/index.md",
+  "closing_preservation_check": "unchanged-original-check.json"
+}

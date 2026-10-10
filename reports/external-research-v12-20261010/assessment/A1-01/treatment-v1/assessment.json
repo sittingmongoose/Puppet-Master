@@ -1,0 +1,1989 @@
+{
+  "schema": "er12-independent-full-assessment-v1",
+  "assignment": "A1-01 treatment only",
+  "fixture_id": "ER12-A1-01-FRESH",
+  "assessment_version": "treatment-v1",
+  "reviewer_identity": "codex-er12-a101-review-v1",
+  "saved_at_utc": "2026-10-10 04:38:47 UTC",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "final_source_judgment": "PASS_WITH_LIMITATIONS",
+  "pipeline_final_qualification": "PASS_WITH_LIMITATIONS",
+  "semantic_assessment": "No remaining material error, omission or unsupported consequential decision found in the delivered final. C1/C2 are material-incomplete lineage defects explicitly corrected in final; small locator/applicability/disposition limitations remain.",
+  "coverage": {
+    "all_six_axes_assessed": true,
+    "axes_assessed": 6,
+    "axes_unassessed": [],
+    "capped": false,
+    "exact_plan_clauses_assessed": 31,
+    "scope_complete": true
+  },
+  "axes": [
+    {
+      "id": 1,
+      "name": "Original obligations and negative constraints",
+      "coverage": "ASSESSED_FULL",
+      "status": "PASS",
+      "assessment": "All U1–U6, eight negative constraints, fictional Rust/gateway/unknown vendor context, 20 MiB–6 GiB boundary, each released-plan clause, minimal state sketch and recovery/cleanup ownership are covered. Changed-file guards preserve the original fingerprint. Existing UI/auth/storage architecture is not redesigned. Honest gateway/vendor/platform decisions remain after investigation.",
+      "evidence_ids": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ],
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+          "line": 7
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+          "line": 27
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+          "line": 76
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+          "line": 124
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+          "line": 150
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Consequential claims and exact applicability",
+      "coverage": "ASSESSED_FULL",
+      "status": "PASS_WITH_LIMITATIONS",
+      "assessment": "Independent protocol, service, operation, checksum-type and issue-history retrieval supports the recommendation's conditional mechanism descriptions and C1/C2 corrections. Units and boundary arithmetic are correct. No arbitrary S3-compatible behavior or present deployment is inferred. L2 records the overview/dedicated-guide difference in consecutive-number scope; the proposed sequential design remains valid.",
+      "evidence_ids": [
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R6",
+        "R7",
+        "R8",
+        "R9"
+      ],
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+          "line": 43
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+          "line": 49
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+          "line": 55
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+          "line": 66
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+          "line": 92
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Useful unfamiliar discovery, alternatives, history and opportunity breadth",
+      "coverage": "ASSESSED_FULL",
+      "status": "PASS",
+      "assessment": "Discovery supplies useful unfamiliar Tus offset recovery and optional extensions, native multipart mechanics, checksums/ETags, crash/lost-response distinctions, cleanup races, a dated Rust compatibility change and an unresolved tusd completion lead. Both competing transfer approaches are substantial. Tus over multipart is a meaningful analogous composition; concatenation/per-request checksums and measured future concurrency are bounded opportunities. Scope does not require a catalog of every uploader or a deployed service. The conditional recommendation has investigated mechanisms and discriminating checks, not vacuous caution.",
+      "evidence_ids": [
+        "R1",
+        "R2",
+        "R5",
+        "R6"
+      ],
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/discovery.md",
+          "line": 6
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+          "line": 57
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+          "line": 92
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Wrong criticism/corrections/rejections and exact plan dispositions",
+      "coverage": "ASSESSED_FULL",
+      "status": "PASS_WITH_LIMITATIONS",
+      "assessment": "C1 and C2 are justified material-incomplete findings, not proof of a flat false assertion. Final accepts/amends both with supporting primary conditions. Largest-part and ETag assumptions are correctly rejected; user preferences are qualified rather than fabricated requirements. The synthetic 'Other criticism' rejection does not refer to an actual additional critic finding and is not counted as one. Exact plan dispositions are enumerated.",
+      "evidence_ids": [
+        "R1",
+        "R2",
+        "R7",
+        "R8",
+        "R9"
+      ],
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/critic/critique.md",
+          "line": 16
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+          "line": 116
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+          "line": 124
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Supported meaning preserved discovery → draft → critique → final",
+      "coverage": "ASSESSED_FULL",
+      "status": "PASS",
+      "assessment": "Final is self-contained and preserves source identity guards, both mechanisms, conditional boundary, source-derived conditions, optional features, original policy choices, owner decisions and actual/proposed distinction. C1/C2 gaps remain recorded as lineage defects and are substantively amended. Removal of an irrelevant maximum-object detail and explicit JSON wording does not drop a material obligation. The checksum extension stays available conditionally; omission of a mandatory per-PATCH feature is not a scope loss because the original source made it optional.",
+      "evidence_ids": [
+        "R1",
+        "R2",
+        "R9"
+      ],
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/discovery.md",
+          "line": 11
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/draft.md",
+          "line": 26
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+          "line": 27
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+          "line": 100
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Meaningful proposed/executed validation and oracle applicability",
+      "coverage": "ASSESSED_FULL",
+      "status": "PASS",
+      "assessment": "Seven proposed matrix rows expose observable invariants and identify real integration evidence still needed. Fakes can test client/state-machine decisions, but cannot establish gateway durability, real vendor listing/checksum/encryption/cleanup semantics or throughput. No transfer tests were required to run in this research-only fixture. Actual checks are source inspection and reported reveal/hash/JSON checks; reviewers independently verified frozen identities, not product behavior. No invented test or real upload is credited.",
+      "evidence_ids": [
+        "R1",
+        "R2",
+        "R3",
+        "R7",
+        "R8",
+        "R9"
+      ],
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+          "line": 150
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+          "line": 162
+        }
+      ]
+    }
+  ],
+  "original_obligations": [
+    {
+      "id": "U1",
+      "exact": "Define the upload identity, persisted recovery record, and behavior after each interruption, including a changed local file.",
+      "status": "PASS",
+      "reason": "Separate identities, private durable record, process/network/lost-response reconciliation, credential pause, changed/missing-source blocking and explicit replacement choice are defined.",
+      "locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 27
+      }
+    },
+    {
+      "id": "U2",
+      "exact": "Compare at least two meaningful approaches: a resumable HTTP upload service and the object store's native multipart mechanism. Explain a mechanism-level tradeoff, not a product-name list.",
+      "status": "PASS",
+      "reason": "Contiguous offset and durable gateway state are compared with independently numbered/parallel parts and provider bookkeeping; conditional native option remains.",
+      "locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 57
+      }
+    },
+    {
+      "id": "U3",
+      "exact": "Establish what completion and integrity mean; distinguish an acknowledged chunk, a completed remote object, and an independently verified byte match.",
+      "status": "PASS",
+      "reason": "Three outcomes are explicit; C1 closes material checksum/encryption conditions while strong byte-match is never silently substituted by CRC/composite.",
+      "locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 66
+      }
+    },
+    {
+      "id": "U4",
+      "exact": "Specify cancel, expiry, orphan cleanup, and retry ownership across client, gateway, and storage.",
+      "status": "PASS",
+      "reason": "Client/host/gateway/storage owners, five-attempt choice, finite expiry choice, cancellation race and late-part cleanup are defined.",
+      "locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 76
+      }
+    },
+    {
+      "id": "U5",
+      "exact": "Connect one relevant implementation or release/history detail to the recommended compatibility boundary, with version/date and remaining uncertainty.",
+      "status": "PASS",
+      "reason": "Rust S3 v1.69.0/2025-01-16 default change motivates exact library/endpoint qualification; tusd report is bounded and its version/root cause unknown.",
+      "locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 92
+      }
+    },
+    {
+      "id": "U6",
+      "exact": "Separate evidence-supported behavior, original design choices, and open questions. List proposed validation separately from validation actually executed.",
+      "status": "PASS",
+      "reason": "Evidence/choices/open decisions, C1/C2 dispositions, seven proposed rows and actual source/artifact-only checks are separated.",
+      "locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 100
+      }
+    }
+  ],
+  "negative_constraints": [
+    {
+      "id": "N1",
+      "exact": "no full uploader app",
+      "status": "PASS",
+      "locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 15
+      },
+      "reason": "Honored in delivered proposal and reported validation; absence of complete execution telemetry is tracked separately."
+    },
+    {
+      "id": "N2",
+      "exact": "no new authentication provider",
+      "status": "PASS",
+      "locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 15
+      },
+      "reason": "Honored in delivered proposal and reported validation; absence of complete execution telemetry is tracked separately."
+    },
+    {
+      "id": "N3",
+      "exact": "no production credentials",
+      "status": "PASS",
+      "locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 15
+      },
+      "reason": "Honored in delivered proposal and reported validation; absence of complete execution telemetry is tracked separately."
+    },
+    {
+      "id": "N4",
+      "exact": "no real uploads",
+      "status": "PASS",
+      "locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 162
+      },
+      "reason": "Honored in delivered proposal and reported validation; absence of complete execution telemetry is tracked separately."
+    },
+    {
+      "id": "N5",
+      "exact": "no silent file replacement",
+      "status": "PASS",
+      "locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 41
+      },
+      "reason": "Honored in delivered proposal and reported validation; absence of complete execution telemetry is tracked separately."
+    },
+    {
+      "id": "N6",
+      "exact": "no assumption that all S3-compatible vendors behave identically",
+      "status": "PASS",
+      "locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 11
+      },
+      "reason": "Honored in delivered proposal and reported validation; absence of complete execution telemetry is tracked separately."
+    },
+    {
+      "id": "N7",
+      "exact": "Do not invent throughput results",
+      "status": "PASS",
+      "locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 64
+      },
+      "reason": "Honored in delivered proposal and reported validation; absence of complete execution telemetry is tracked separately."
+    },
+    {
+      "id": "N8",
+      "exact": "Do not claim an unrun test passed",
+      "status": "PASS",
+      "locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 162
+      },
+      "reason": "Honored in delivered proposal and reported validation; absence of complete execution telemetry is tracked separately."
+    }
+  ],
+  "exact_plan_clause_dispositions": [
+    {
+      "id": "P00",
+      "exact_clause": "Release condition: root releases this document only after a substantive discovery handoff. It is an incomplete user plan, not an answer key. All external capability assumptions below require research.",
+      "disposition": "workflow_recorded",
+      "assessment": "Substantive discovery exists with its reveal-record digest. Revealed copy equals the original frozen plan. This supports recorded release ordering; complete access/tool history and exactly-once execution are UNKNOWN.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 162
+      },
+      "evidence_ids": []
+    },
+    {
+      "id": "P01",
+      "exact_clause": "I lean toward letting the desktop client send multipart pieces directly, with the existing gateway granting permission.",
+      "disposition": "considered_and_conditionally_displaced",
+      "assessment": "Initial preference is considered, with gateway-brokered multipart retained; Tus is an original conditional architecture recommendation.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 7
+      },
+      "evidence_ids": [
+        "R1",
+        "R2"
+      ]
+    },
+    {
+      "id": "P02",
+      "exact_clause": "A service implementing a resumable HTTP protocol is the alternative.",
+      "disposition": "retained",
+      "assessment": "Tus is compared with native multipart at mechanism level.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 57
+      },
+      "evidence_ids": [
+        "R1",
+        "R2"
+      ]
+    },
+    {
+      "id": "P03",
+      "exact_clause": "I would like to avoid introducing a second durable server if the storage API is sufficient, but I have not established that it is.",
+      "disposition": "honest_owner_decision",
+      "assessment": "Existing gateway must supply durable state. Feasibility is explicitly unresolved; no new separate deployed server is invented.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 9
+      },
+      "evidence_ids": [
+        "R1",
+        "R2"
+      ]
+    },
+    {
+      "id": "P04",
+      "exact_clause": "ask the gateway for a transfer identity",
+      "disposition": "retained_and_defined",
+      "assessment": "Stable transfer UUID, gateway session ID, and provider upload ID are separated; same-owner create uses an idempotency key.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 29
+      },
+      "evidence_ids": [
+        "R1"
+      ]
+    },
+    {
+      "id": "P05",
+      "exact_clause": "split the file into 16 MiB pieces",
+      "disposition": "retained_as_candidate",
+      "assessment": "Uses fixed source hash blocks and candidate backend part size, with exact AWS boundary arithmetic.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 31
+      },
+      "evidence_ids": [
+        "R3"
+      ]
+    },
+    {
+      "id": "P06",
+      "exact_clause": "save a local JSON record with the remote identity, filename, file size, modification time, and piece numbers",
+      "disposition": "strengthened",
+      "assessment": "Versioned private atomic recovery record retains path/size/mtime hints and adds digests, target, state, expiry, offset and multipart records. Final does not repeat JSON as a wire-format requirement; this is a minor wording omission, not a lost recovery obligation or a format rejection.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 33
+      },
+      "evidence_ids": []
+    },
+    {
+      "id": "P07",
+      "exact_clause": "Upload pieces with at most three concurrent requests.",
+      "disposition": "qualified_preference",
+      "assessment": "Initial Tus is sequential; up to three native requests remains an optional tested setting. No measured gain is asserted.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 64
+      },
+      "evidence_ids": [
+        "R1",
+        "R2"
+      ]
+    },
+    {
+      "id": "P08",
+      "exact_clause": "After restart, continue from the largest saved piece number; I have not addressed noncontiguous successful pieces.",
+      "disposition": "corrected",
+      "assessment": "Tus uses authoritative offset. Multipart retains/reconciles all successful parts, pending states and recorded ETags; no high-water mark resume.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 43
+      },
+      "evidence_ids": [
+        "R1",
+        "R2"
+      ]
+    },
+    {
+      "id": "P09",
+      "exact_clause": "Call the completion operation and mark the job done.",
+      "disposition": "corrected",
+      "assessment": "Acknowledged chunk, complete object and verified bytes are separate. Durable terminal status recovers a lost reply.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 66
+      },
+      "evidence_ids": [
+        "R2",
+        "R7"
+      ]
+    },
+    {
+      "id": "P10",
+      "exact_clause": "These sizes and concurrency limits are preferences, not measured optima.",
+      "disposition": "preserved",
+      "assessment": "16 MiB and concurrency are labeled original choices; no optimum or performance result is claimed.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 55
+      },
+      "evidence_ids": [
+        "R3"
+      ]
+    },
+    {
+      "id": "P11",
+      "exact_clause": "I was assuming an ETag could serve as the file's integrity check.",
+      "disposition": "correctly_rejected",
+      "assessment": "Opaque/composite multipart ETag is not accepted as a universal whole-file digest.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 70
+      },
+      "evidence_ids": [
+        "R2",
+        "R9"
+      ]
+    },
+    {
+      "id": "P12",
+      "exact_clause": "I do not know how that assumption changes for multipart uploads, encryption, or a compatible vendor.",
+      "disposition": "investigated_and_qualified",
+      "assessment": "C1 amendment states checksum types and KMS/SSE-C conditions; exact compatible provider stays open.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 72
+      },
+      "evidence_ids": [
+        "R2",
+        "R7",
+        "R9"
+      ]
+    },
+    {
+      "id": "P13",
+      "exact_clause": "The plan also does not yet say how a lost response is distinguished from a failed operation.",
+      "disposition": "resolved_in_design",
+      "assessment": "HEAD/session status and multipart operation states distinguish unknown from failed. Missing ListParts entry is not definitive failure.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 43
+      },
+      "evidence_ids": [
+        "R1",
+        "R2",
+        "R8"
+      ]
+    },
+    {
+      "id": "P14",
+      "exact_clause": "Please resolve those issues without silently choosing weaker integrity guarantees.",
+      "disposition": "preserved",
+      "assessment": "CRC/composite value cannot masquerade as local full-file SHA-256. Unverified completion is explicit and verification feasibility/cost is an owner decision.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 70
+      },
+      "evidence_ids": [
+        "R9"
+      ]
+    },
+    {
+      "id": "P15",
+      "exact_clause": "Keep the UI to progress, retry, and cancel.",
+      "disposition": "retained",
+      "assessment": "No full UI/app design is added; only state/outcome semantics needed for these controls.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 15
+      },
+      "evidence_ids": []
+    },
+    {
+      "id": "P16",
+      "exact_clause": "On cancellation I want remote temporary data removed, but the cleanup actor and retry behavior are undecided.",
+      "disposition": "defined",
+      "assessment": "Client owns cancel intent; gateway serializes/drains/aborts/sweeps; lifecycle is a qualified backstop. A committed object is a different outcome from temporary parts.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 80
+      },
+      "evidence_ids": [
+        "R4",
+        "R8"
+      ]
+    },
+    {
+      "id": "P17",
+      "exact_clause": "Gateway token expiry during an upload is also undecided.",
+      "disposition": "defined_with_external_contract_open",
+      "assessment": "Host refresh owns credentials; same-owner reconciliation resumes the session, account change cannot take over.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 47
+      },
+      "evidence_ids": []
+    },
+    {
+      "id": "P18",
+      "exact_clause": "A stale recovery file must never cause bytes from a changed source file to be accepted as the original upload.",
+      "disposition": "strengthened",
+      "assessment": "Full/block hashes, the same verified send buffer, blocked resume/finalization and explicit distinct transfer preserve the original fingerprint.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 37
+      },
+      "evidence_ids": []
+    },
+    {
+      "id": "P19",
+      "exact_clause": "Do not store credentials in that recovery file.",
+      "disposition": "retained",
+      "assessment": "No host credentials, gateway tokens or presigned capability URLs; resolve nonsecret session ID after auth.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 33
+      },
+      "evidence_ids": []
+    },
+    {
+      "id": "P20",
+      "exact_clause": "Required final clauses U1–U6 and the brief's negative constraints remain binding.",
+      "disposition": "covered",
+      "assessment": "All six obligations and each negative constraint separately assessed below.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 27
+      },
+      "evidence_ids": []
+    },
+    {
+      "id": "P21",
+      "exact_clause": "Preserve the option of a protocol service if research supports it; the initial preference is not a command to reject it.",
+      "disposition": "retained",
+      "assessment": "Both mechanisms remain available; conditional Tus choice is neither invented external mandate nor a wholesale rejection of native multipart.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 13
+      },
+      "evidence_ids": [
+        "R1",
+        "R2"
+      ]
+    },
+    {
+      "id": "P22",
+      "exact_clause": "The final plan needs a minimal state sketch, one owner for each recovery/cleanup action, and an explicit compatibility boundary.",
+      "disposition": "covered",
+      "assessment": "Client/gateway state sketch, ownership table and endpoint/library/version/encryption/cleanup qualification gate supplied.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 17
+      },
+      "evidence_ids": []
+    },
+    {
+      "id": "P23",
+      "exact_clause": "It does not need executable product code.",
+      "disposition": "honored",
+      "assessment": "Recommendation and repairable plan supplied; no unnecessary app or code execution required for semantic qualification.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 5
+      },
+      "evidence_ids": []
+    },
+    {
+      "id": "P24",
+      "exact_clause": "Proposed validation, not executed: a fake transport can lose requests and acknowledgments",
+      "disposition": "retained_proposed",
+      "assessment": "Matrix distinguishes lost request from lost reply and creation/PATCH reconciliation; actual gateway crash durability remains an integration oracle.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 150
+      },
+      "evidence_ids": [
+        "R1"
+      ]
+    },
+    {
+      "id": "P25",
+      "exact_clause": "a toy local file can change after some pieces",
+      "disposition": "retained_proposed",
+      "assessment": "Replace/truncate/same-size edits/missing file and mutation-between-check-and-send cases assert fingerprint preservation.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 155
+      },
+      "evidence_ids": []
+    },
+    {
+      "id": "P26",
+      "exact_clause": "a fake storage service can return a late completion result",
+      "disposition": "retained_proposed",
+      "assessment": "Unknown/late requests and lost completion are retained in multipart and terminal race rows. Their invariant is recorded/reconciled outcome, not a timeout counted as failure.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 156
+      },
+      "evidence_ids": [
+        "R2",
+        "R7"
+      ]
+    },
+    {
+      "id": "P27",
+      "exact_clause": "cancellation can race completion.",
+      "disposition": "retained_proposed",
+      "assessment": "Single reconciled terminal result; cannot falsely report committed object as canceled.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 158
+      },
+      "evidence_ids": [
+        "R4",
+        "R8"
+      ]
+    },
+    {
+      "id": "P28",
+      "exact_clause": "For each selected test, state the expected observable invariant and what a later integration test would still need to establish.",
+      "disposition": "covered",
+      "assessment": "Each of seven matrix rows has an invariant and later integration evidence. Fake oracles are bounded; no simulator pass is promoted to provider proof.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 150
+      },
+      "evidence_ids": []
+    },
+    {
+      "id": "P29",
+      "exact_clause": "Vendor compatibility and real throughput have not been tested.",
+      "disposition": "preserved",
+      "assessment": "Exact-provider and controlled concurrency checks remain future work.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 162
+      },
+      "evidence_ids": []
+    },
+    {
+      "id": "P30",
+      "exact_clause": "No current test results exist.",
+      "disposition": "preserved_for_product_behavior",
+      "assessment": "Source inspection and reveal/hash/JSON checks are artifact/research checks; no transfer test result is claimed.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 162
+      },
+      "evidence_ids": []
+    }
+  ],
+  "consequential_claim_checks": [
+    {
+      "id": "Q01",
+      "subject": "Tus 1.0.0 core; bytes",
+      "operation": "HEAD/PATCH recovery",
+      "governing_conditions": "Authoritative nonnegative integer offset; mismatch returns 409 without mutation; success acknowledges processed/stored range, not independent final-object verification.",
+      "result": "SUPPORTED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 43
+      },
+      "evidence_ids": [
+        "R1"
+      ]
+    },
+    {
+      "id": "Q02",
+      "subject": "Tus extension support",
+      "operation": "OPTIONS and feature selection",
+      "governing_conditions": "Creation, expiration, checksum, termination and concatenation are optional; auth/durable state/UUID create semantics are not implied by extension advertisement.",
+      "result": "SUPPORTED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 90
+      },
+      "evidence_ids": [
+        "R1"
+      ]
+    },
+    {
+      "id": "Q03",
+      "subject": "Tus expiration; absolute 30 days",
+      "operation": "Advertise/reject resume",
+      "governing_conditions": "Upload-Expires on PATCH and creation when known; known expired resource uses 410. Thirty days is a chosen policy, not a protocol default.",
+      "result": "SUPPORTED_DESIGN_SEPARATION",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 78
+      },
+      "evidence_ids": [
+        "R1"
+      ]
+    },
+    {
+      "id": "Q04",
+      "subject": "Tus PATCH-body integrity",
+      "operation": "Checksum extension",
+      "governing_conditions": "Advertised algorithms; at least sha1 if implemented; verifies request body, not assembled full-file hash.",
+      "result": "SUPPORTED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 74
+      },
+      "evidence_ids": [
+        "R1"
+      ]
+    },
+    {
+      "id": "Q05",
+      "subject": "AWS multipart IDs and parts",
+      "operation": "Initiate/upload/complete",
+      "governing_conditions": "Upload ID + per-part ETag/number manifest; numbered parts assembled in ascending order; same-number replacement; incomplete operations differ from object completion.",
+      "result": "SUPPORTED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 49
+      },
+      "evidence_ids": [
+        "R2",
+        "R7"
+      ]
+    },
+    {
+      "id": "Q06",
+      "subject": "AWS ListParts; 1,000 results",
+      "operation": "Restart/unknown-operation reconciliation",
+      "governing_conditions": "Paginate; omitted unfinished calls are not failed calls; retain own completion manifest. Listing alone cannot settle operation uncertainty.",
+      "result": "SUPPORTED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 51
+      },
+      "evidence_ids": [
+        "R2"
+      ]
+    },
+    {
+      "id": "Q07",
+      "subject": "AWS part sizes/count; MiB/GiB",
+      "operation": "16 MiB candidate sizing",
+      "governing_conditions": "5 MiB–5 GiB with last-part minimum exception; 10,000 parts. 6 GiB gives 384 full parts; 20 MiB gives 16+4 MiB. Not vendor/performance proof.",
+      "result": "SUPPORTED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 55
+      },
+      "evidence_ids": [
+        "R3"
+      ]
+    },
+    {
+      "id": "Q08",
+      "subject": "AWS multipart checksums",
+      "operation": "Consecutive numbering",
+      "governing_conditions": "Overview states a broad checksum rule; dedicated integrity guidance scopes the important note to composite/part-level checksums. Proposed consecutive numbering is safe regardless; broader explanatory applicability is not settled by the overview alone.",
+      "result": "MINOR_APPLICABILITY_LIMIT",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 55
+      },
+      "evidence_ids": [
+        "R2",
+        "R9"
+      ]
+    },
+    {
+      "id": "Q09",
+      "subject": "ETag and full-file SHA-256",
+      "operation": "Integrity labeling",
+      "governing_conditions": "Multipart ETag not assumed full-file MD5; storage-validated strong digest must describe the exact full byte sequence, or read-back SHA-256; CRC/composite cannot substitute silently.",
+      "result": "SUPPORTED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 70
+      },
+      "evidence_ids": [
+        "R2",
+        "R7",
+        "R9"
+      ]
+    },
+    {
+      "id": "Q10",
+      "subject": "AWS multipart SHA-256 versus full-object CRC",
+      "operation": "Checksum-type choice",
+      "governing_conditions": "SHA-256 composite; CRC64NVME/CRC32/CRC32C support full-object type. Algorithm/type/initiation/completion/retrieval must be qualified together.",
+      "result": "SUPPORTED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 72
+      },
+      "evidence_ids": [
+        "R2",
+        "R9"
+      ]
+    },
+    {
+      "id": "Q11",
+      "subject": "AWS SSE-KMS permissions",
+      "operation": "Upload/checksum retrieval",
+      "governing_conditions": "GenerateDataKey and Decrypt conditions; checksum access depends on permissions. Exact mode and permission path gate implementation.",
+      "result": "SUPPORTED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 72
+      },
+      "evidence_ids": [
+        "R2",
+        "R7"
+      ]
+    },
+    {
+      "id": "Q12",
+      "subject": "AWS SSE-C completion checksums",
+      "operation": "Encryption headers",
+      "governing_conditions": "Overview's checksum availability claim is supported in its context. API headers are conditional on checksum use/policy and SSE-C is unsupported in directory buckets. No blanket claim about the unspecified vendor is made.",
+      "result": "SUPPORTED_WITH_CONTEXT",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 72
+      },
+      "evidence_ids": [
+        "R2",
+        "R7"
+      ]
+    },
+    {
+      "id": "Q13",
+      "subject": "AWS in-flight UploadPart",
+      "operation": "Unknown retry, abort and cleanup",
+      "governing_conditions": "Unknown is not Failed; prevent same-number overlap and completion, settle or retire ID, preserve cleanup queue. Already in-flight requests can finish after abort; repeat cleanup/verify.",
+      "result": "SUPPORTED_DESIGN_RESPONSE",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 53
+      },
+      "evidence_ids": [
+        "R2",
+        "R8"
+      ]
+    },
+    {
+      "id": "Q14",
+      "subject": "Remote object versus HTTP result",
+      "operation": "Completion/cancel race",
+      "governing_conditions": "Actual operation success plus target/size/session checks required; AWS 200 can embed error. Final does not use HTTP status alone or cancel intent as proof of committed/aborted state.",
+      "result": "SUPPORTED_BOUNDARY",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 68
+      },
+      "evidence_ids": [
+        "R7",
+        "R4"
+      ]
+    },
+    {
+      "id": "Q15",
+      "subject": "Rust S3 client v1.69.0; 2025-01-16",
+      "operation": "Put/Get integrity defaults",
+      "governing_conditions": "Dated maintainer announcement and third-party caveat; relevant only if SDK is used. No current CRC default or deployed library pin is invented.",
+      "result": "SUPPORTED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 94
+      },
+      "evidence_ids": [
+        "R5"
+      ]
+    },
+    {
+      "id": "Q16",
+      "subject": "tusd #1315; 2025-09-03; latest",
+      "operation": "Completion-order history lead",
+      "governing_conditions": "One original open report with mutable tag and unresolved cause; cannot infer universal defect, known fix or version applicability.",
+      "result": "SUPPORTED_REPORT_QUALIFICATION",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 96
+      },
+      "evidence_ids": [
+        "R6"
+      ]
+    },
+    {
+      "id": "Q17",
+      "subject": "Fictional client/gateway",
+      "operation": "UUID, durable journal, same-owner state",
+      "governing_conditions": "Original design choices; no protocol source promises create idempotency, gateway crash persistence, host refresh or private filesystem semantics. Prospective qualification is explicit.",
+      "result": "SUPPORTED_AS_DESIGN_NOT_FACT",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 29
+      },
+      "evidence_ids": [
+        "R1"
+      ]
+    },
+    {
+      "id": "Q18",
+      "subject": "Original file identity",
+      "operation": "Content hashes and sending buffer",
+      "governing_conditions": "Strong content identity replaces size/mtime/high-water hints; same verified block buffer is sent; mismatch blocks resume/finalization. Platform implementation and races require proposed checks, not source-only runtime proof.",
+      "result": "COHERENT_PROPOSED_DESIGN",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 37
+      },
+      "evidence_ids": []
+    },
+    {
+      "id": "Q19",
+      "subject": "Retry/expiry/concurrency preferences",
+      "operation": "Five attempts, 30 days, one stream/optional three parts",
+      "governing_conditions": "Chosen bounded policies, not sourced defaults or measured optima; competing option remains available.",
+      "result": "SUPPORTED_DESIGN_SEPARATION",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 109
+      },
+      "evidence_ids": [
+        "R1",
+        "R2"
+      ]
+    },
+    {
+      "id": "Q20",
+      "subject": "S3-compatible storage",
+      "operation": "Adapter qualification",
+      "governing_conditions": "All AWS claims remain bounded to AWS; actual provider/version/endpoint/encryption/signing/checksums/cleanup UNKNOWN until discriminating integration tests.",
+      "result": "SUPPORTED_UNCERTAINTY",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 98
+      },
+      "evidence_ids": [
+        "R2",
+        "R3",
+        "R7",
+        "R8",
+        "R9"
+      ]
+    }
+  ],
+  "material_findings": [],
+  "lineage_material_findings": [
+    {
+      "id": "C1",
+      "stage_origin": "investigator discovery/draft",
+      "classification": "MATERIAL_INCOMPLETE",
+      "remaining_material": false,
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/critic/critique.md",
+        "line": 20
+      },
+      "draft_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/draft.md",
+        "line": 50
+      },
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 72
+      },
+      "disposition": "ACCEPT_AND_AMEND; CLOSED_IN_FINAL",
+      "assessment": "The prior text already made SHA-256 comparison conditional and offered read-back, so the critic correctly classifies missing algorithm/encryption conditions as incomplete rather than a flat false universal claim. Final adds checksum-type/permission distinctions and preserves explicit unverified status.",
+      "evidence_ids": [
+        "R2",
+        "R7",
+        "R9"
+      ]
+    },
+    {
+      "id": "C2",
+      "stage_origin": "investigator draft",
+      "classification": "MATERIAL_INCOMPLETE",
+      "remaining_material": false,
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/critic/critique.md",
+        "line": 21
+      },
+      "draft_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/draft.md",
+        "line": 33
+      },
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 53
+      },
+      "disposition": "ACCEPT_AND_AMEND; CLOSED_IN_FINAL",
+      "assessment": "Draft said query known storage state but did not define how absence from a list fails to settle an unfinished request. Final adds per-operation states, no overlap/commit while unknown, settlement or retirement and retained cleanup ownership. Conservative retirement is explicitly a design choice.",
+      "evidence_ids": [
+        "R2",
+        "R8"
+      ]
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L1",
+      "severity": "minor_locator",
+      "remaining_material": false,
+      "locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 68
+      },
+      "finding": "Final uses unresolved [S1]–[S6] labels and [sources/index.md] without Markdown destinations or reference definitions. Companion source-map/index preserves identities and navigable URLs; evidence is recoverable, but final prose alone does not provide clickable source references.",
+      "evidence_ids": []
+    },
+    {
+      "id": "L2",
+      "severity": "minor_applicability_wording",
+      "remaining_material": false,
+      "locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 55
+      },
+      "finding": "The all-multipart-checksums consecutive-number statement mirrors AWS's general overview. The independently inspected dedicated integrity guide states its note for composite/part-level checksums. The proposed sequential part numbering is safe and no material recommendation depends on nonconsecutive full-object uploads; exact mode applicability remains a qualification issue.",
+      "evidence_ids": [
+        "R2",
+        "R9"
+      ]
+    },
+    {
+      "id": "L3",
+      "severity": "minor_disposition_label",
+      "remaining_material": false,
+      "locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 122
+      },
+      "finding": "The 'Other criticism or a need to reverse the Tus recommendation' row is a synthetic caveat, not a third criticism actually found in critique.md. It is not credited as a criticism disposition or as evidence that Tus is suitable.",
+      "evidence_ids": []
+    }
+  ],
+  "useful_discoveries": [
+    {
+      "id": "D1",
+      "discovery": "Tus HEAD/PATCH offset and stale-offset recovery; optional extensions",
+      "use": "Changes recovery from a local part high-water mark to a server-authoritative position.",
+      "evidence_ids": [
+        "R1"
+      ]
+    },
+    {
+      "id": "D2",
+      "discovery": "Native multipart independent parts, manifest/ETags, late visibility and replacement",
+      "use": "Defines a real competing mechanism and explains why unknown in-flight work cannot be replayed blindly.",
+      "evidence_ids": [
+        "R2",
+        "R7",
+        "R8"
+      ]
+    },
+    {
+      "id": "D3",
+      "discovery": "Tus service can use native multipart underneath",
+      "use": "A useful composition: simple client protocol while retaining vendor-specific storage behavior at the gateway.",
+      "evidence_ids": [
+        "R1",
+        "R2"
+      ]
+    },
+    {
+      "id": "D4",
+      "discovery": "ETag / composite / full-object checksum and encryption boundaries",
+      "use": "Prevents a weaker or different integrity value from being mislabeled as the requested strong byte match.",
+      "evidence_ids": [
+        "R2",
+        "R7",
+        "R9"
+      ]
+    },
+    {
+      "id": "D5",
+      "discovery": "Dated Rust SDK checksum defaults and third-party caveat",
+      "use": "Concrete version/history basis for exact endpoint/library qualification.",
+      "evidence_ids": [
+        "R5"
+      ]
+    },
+    {
+      "id": "D6",
+      "discovery": "Open tusd completion-order report with mutable latest tag",
+      "use": "Bounded implementation lead; meaningful regression test motivation, with no false generalized defect claim.",
+      "evidence_ids": [
+        "R6"
+      ]
+    },
+    {
+      "id": "D7",
+      "discovery": "Concatenation, per-PATCH checksum, native parallelism and cleanup backstops",
+      "use": "Optional opportunities remain available with conditions and discriminating tests; no invented throughput outcome.",
+      "evidence_ids": [
+        "R1",
+        "R4",
+        "R8"
+      ]
+    }
+  ],
+  "preservation": {
+    "status": "PASS",
+    "preserved": [
+      "conditional Tus recommendation and native alternative",
+      "UUID/session/provider identity distinction",
+      "strong source fingerprint and same-buffer sends",
+      "server-authoritative recovery and noncontiguous multipart records",
+      "optional protocol capabilities/concurrency",
+      "expiry/retry/cleanup owner choices",
+      "dated implementation history and its uncertainty",
+      "proposed-versus-executed validation"
+    ],
+    "amended": [
+      "C1 algorithm/type and encryption conditions",
+      "C2 unknown in-flight part serialization, retirement and cleanup"
+    ],
+    "nonmaterial_changes": [
+      "irrelevant AWS maximum-object detail omitted from final; requested 6 GiB arithmetic remains",
+      "JSON word not repeated; recovery-record substance retained"
+    ],
+    "not_credited_as_actual_criticism": [
+      "synthetic Other criticism row"
+    ]
+  },
+  "validation": {
+    "proposed_matrix": [
+      {
+        "id": "V1",
+        "proposal": "Tus feature/create/HEAD/PATCH/restart/expiry/DELETE",
+        "oracle": "Authoritative durable offset and bytes; same-key same-owner identity; stale offset does not mutate.",
+        "applicability": "Fake transport covers local decisions only. Real gateway/auth/durable-store crash checks still needed.",
+        "executed": false,
+        "locator": {
+          "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+          "line": 154
+        }
+      },
+      {
+        "id": "V2",
+        "proposal": "Replace/truncate/same-size edit/missing source/mutation between check and send",
+        "oracle": "Mismatching source cannot resume/finalize; saved fingerprint stays fixed; new transfer is explicit.",
+        "applicability": "Platform file reads, local durable/private record and byte-race behavior still need integration evidence.",
+        "executed": false,
+        "locator": {
+          "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+          "line": 155
+        }
+      },
+      {
+        "id": "V3",
+        "proposal": "Multipart noncontiguous/late/unknown calls, pagination, ordering, lost completion",
+        "oracle": "No same-number retry or completion while pending/unknown; listing absence not failure; resolved recorded manifest only.",
+        "applicability": "Fake backend can expose race assumptions, not certify real ListParts/abort/replacement or terminal idempotency.",
+        "executed": false,
+        "locator": {
+          "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+          "line": 156
+        }
+      },
+      {
+        "id": "V4",
+        "proposal": "20 MiB/6 GiB boundaries, checksum/type/encryption modes",
+        "oracle": "Correct lengths/limits; composite/CRC not mislabeled SHA-256 match; mismatch detected or unavailable check marked unverified.",
+        "applicability": "Actual endpoint/library/encryption/permission path and read-back are necessary service oracles.",
+        "executed": false,
+        "locator": {
+          "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+          "line": 157
+        }
+      },
+      {
+        "id": "V5",
+        "proposal": "Cancel/expiry/in-flight/completion races",
+        "oracle": "One reconciled terminal outcome; committed object not falsely canceled; unfinished data eventually cleaned.",
+        "applicability": "Real service response and repeated cleanup/lifecycle behavior determine liveness; fake cleanup is not proof of freed storage.",
+        "executed": false,
+        "locator": {
+          "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+          "line": 158
+        }
+      },
+      {
+        "id": "V6",
+        "proposal": "Credential expiry/refresh/account change",
+        "oracle": "Same owner resumes same session; different account cannot take over; journal contains no credentials.",
+        "applicability": "Host credential contract and gateway authorization must be tested; no new provider required.",
+        "executed": false,
+        "locator": {
+          "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+          "line": 159
+        }
+      },
+      {
+        "id": "V7",
+        "proposal": "Optional sequential versus up-to-three-native-part measurement",
+        "oracle": "Controlled reproducible measurements before adopting a setting; no performance benefit presumed.",
+        "applicability": "Named vendor/network and actual runs needed; no throughput estimate or result is credited.",
+        "executed": false,
+        "locator": {
+          "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+          "line": 160
+        }
+      }
+    ],
+    "actually_executed_product_validation": "NOT_RUN",
+    "authored_actual_checks": [
+      "primary source page inspection",
+      "one-time reveal helper reported after discovery",
+      "discovery digest/size and JSON parse checks reported"
+    ],
+    "reviewer_actual_checks": [
+      "full artifact and authored evidence reading",
+      "independent governing primary-source retrieval",
+      "original/revealed plan and run/original brief identity comparisons",
+      "32 stored freeze identity checks",
+      "semantic all-six-axis, exact-plan and C1/C2 disposition review"
+    ],
+    "no_transfer_or_upload_executed_by_reviewer": true,
+    "oracle_limit": "Artifact identities and source-page inspection establish no deployed transfer behavior."
+  },
+  "unknowns": [
+    "Exact storage provider, endpoint, API/model version, signing mode, bucket/type, library pin, encryption, checksum and lifecycle contract.",
+    "Existing gateway durable Tus state, crash restoration, create/status idempotency, auth and extension feasibility.",
+    "Matching strong whole-object digest/read-back availability, cost and chosen verification policy.",
+    "Accepted finite expiry and cleanup windows; 30 days is only a proposal.",
+    "Host refresh/account-change contract and supported desktop platform private/atomic/durable file semantics.",
+    "Real provider, fake transport, checksum, crash/race and throughput execution results: none supplied or credited.",
+    "Original all-stage native activation/completion proof, complete role-isolation/helper execution history and effective inference/billing telemetry.",
+    "Precise external page edition/commit for mutable AWS docs and mutable tusd image tag."
+  ],
+  "artifact_inspection": {
+    "inventory_path": "evidence/original-inventory.json",
+    "freeze_checks_path": "evidence/freeze-checks.json",
+    "original_inspected_hashes": [
+      {
+        "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+        "bytes": 2790,
+        "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+        "mtime_ns": 1791604608938287400,
+        "kind": "pipeline_artifact",
+        "inspection": "complete_text_read"
+      },
+      {
+        "path": "ER12_RUNTIME/frozen-inputs/A1-01/brief.md",
+        "bytes": 3091,
+        "sha256": "505c23fb5b94201ac9ee19b23a559a1612cc265f0e019b8d90569e357869072d",
+        "mtime_ns": 1791604397505752600,
+        "kind": "pipeline_artifact",
+        "inspection": "complete_text_read"
+      },
+      {
+        "path": "ER12_RUNTIME/frozen-inputs/A1-01/plan.md",
+        "bytes": 2670,
+        "sha256": "7fa2ceee5be512708f8125956cd243bf887cae2c1ef1349b36d9ac1770c4595f",
+        "mtime_ns": 1791604397506066200,
+        "kind": "pipeline_artifact",
+        "inspection": "complete_text_read"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/terminal-science-freeze-root.json",
+        "bytes": 7327,
+        "sha256": "6f9bc5cde18b772d840e8bd32b2785e3e13a88e50c37e735619a54e07897176f",
+        "mtime_ns": 1791606494324382000,
+        "kind": "pipeline_artifact",
+        "inspection": "complete_text_read"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/inputs/brief.md",
+        "bytes": 3091,
+        "sha256": "505c23fb5b94201ac9ee19b23a559a1612cc265f0e019b8d90569e357869072d",
+        "mtime_ns": 1791604457291497200,
+        "kind": "pipeline_artifact",
+        "inspection": "complete_text_read"
+      },
+      {
+        "path": "ER12_RUNTIME/assessment/A1-01/treatment-v1/root-review-request.json",
+        "bytes": 3431,
+        "sha256": "a7ccb2e9a67fa1a8fa54ae2098677023637b90de1a860aa59f982dc404061ed8",
+        "mtime_ns": 1791606494484192500,
+        "kind": "pipeline_artifact",
+        "inspection": "complete_text_read"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/assignment.md",
+        "bytes": 3720,
+        "sha256": "a9d774f79caf89cea56c19ef6f635f9894915f75fd2d20a180999738bead1889",
+        "mtime_ns": 1791604457292581600,
+        "kind": "pipeline_artifact",
+        "inspection": "complete_text_read"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/discovery.md",
+        "bytes": 7948,
+        "sha256": "827f1c0ddbc4ef8f5fdf68c4b91abc50d2af362e28a1b2f75d1e268fcb175316",
+        "mtime_ns": 1791604649051408000,
+        "kind": "pipeline_artifact",
+        "inspection": "complete_text_read"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/dispatch.json",
+        "bytes": 4252,
+        "sha256": "36a9332285d7139af7d37869bc984b979d7615b0c0a60ab3391ffb3965ebd8d4",
+        "mtime_ns": 1791604458209869800,
+        "kind": "pipeline_artifact",
+        "inspection": "complete_text_read"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/draft.md",
+        "bytes": 23899,
+        "sha256": "de9b6706ba316b2829b4adfa3779fa243743cc4bd26d8d8b7e59aa9293f0118f",
+        "mtime_ns": 1791605011893910000,
+        "kind": "pipeline_artifact",
+        "inspection": "complete_text_read"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/freeze.json",
+        "bytes": 2666,
+        "sha256": "a77e3549f16b00932ca2e11ec205d32178ebc7bf35642f585ecde47a534ef35a",
+        "mtime_ns": 1791604966441552400,
+        "kind": "pipeline_artifact",
+        "inspection": "complete_text_read"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/input-map.json",
+        "bytes": 722,
+        "sha256": "d58f2987dc19a401297807e522dbf5ae727c3d7a18b32483dac4db576f10f7da",
+        "mtime_ns": 1791604457292329200,
+        "kind": "pipeline_artifact",
+        "inspection": "complete_text_read"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/plan-reveal.json",
+        "bytes": 428,
+        "sha256": "89b0196975f4c41c5e50d2e6caf780aa3d8e4ea4a86d2f47bf3795836e27f692",
+        "mtime_ns": 1791604676121698800,
+        "kind": "pipeline_artifact",
+        "inspection": "complete_text_read"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/request.json",
+        "bytes": 922,
+        "sha256": "cf81e10fbbc3d8c3ecc2330f1461a633a37cbe8e301c5f6f482613598f833085",
+        "mtime_ns": 1791604457292949800,
+        "kind": "pipeline_artifact",
+        "inspection": "complete_text_read"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/revealed-plan.md",
+        "bytes": 2670,
+        "sha256": "7fa2ceee5be512708f8125956cd243bf887cae2c1ef1349b36d9ac1770c4595f",
+        "mtime_ns": 1791604676121567000,
+        "kind": "pipeline_artifact",
+        "inspection": "complete_text_read"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/source-map.json",
+        "bytes": 10060,
+        "sha256": "386b0c661e61d732e3223978a206c05aeed35436a910c4be0630ae36a9498357",
+        "mtime_ns": 1791605020606612000,
+        "kind": "pipeline_artifact",
+        "inspection": "complete_text_read"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/sources/index.md",
+        "bytes": 2076,
+        "sha256": "5dac4044e63465fce0977e22c5cf7a237fa8b4133e2fbc35cafb268397dbaf58",
+        "mtime_ns": 1791604671070551800,
+        "kind": "authored_source_evidence",
+        "inspection": "complete_text_read"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/status.json",
+        "bytes": 3738,
+        "sha256": "59949202c8ef40b71bfd1b6075769c797ce548c56da41dc0317d535c7ca13b74",
+        "mtime_ns": 1791605066581456400,
+        "kind": "pipeline_artifact",
+        "inspection": "complete_text_read"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/critic/assignment.md",
+        "bytes": 3310,
+        "sha256": "c75b67218fa8dd06073852774dd2477001dee81c20e058dab90c79e65cb5ded3",
+        "mtime_ns": 1791605066787722800,
+        "kind": "pipeline_artifact",
+        "inspection": "complete_text_read"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/critic/critique.md",
+        "bytes": 9743,
+        "sha256": "b3d9b95c88682e058b7431f1315e30f2ab04904d8810e95d040fa242a00232b4",
+        "mtime_ns": 1791605773644957200,
+        "kind": "pipeline_artifact",
+        "inspection": "complete_text_read"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/critic/dispatch.json",
+        "bytes": 4156,
+        "sha256": "8e2b42f08cd4b820128650e3540a0251da69bbd9033b57de24083130509d8512",
+        "mtime_ns": 1791605067424137200,
+        "kind": "pipeline_artifact",
+        "inspection": "complete_text_read"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/critic/freeze.json",
+        "bytes": 3168,
+        "sha256": "ef6e5fd4585a8be3a1dad4742b3cf493010691aef9164a6da197c481fd5baf25",
+        "mtime_ns": 1791605066788319700,
+        "kind": "pipeline_artifact",
+        "inspection": "complete_text_read"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/critic/input-map.json",
+        "bytes": 1410,
+        "sha256": "00a40532b71cb5d82cf3dc69387cb22b4d127d51e7181ea77e1f4bc122d507c0",
+        "mtime_ns": 1791605066787498800,
+        "kind": "pipeline_artifact",
+        "inspection": "complete_text_read"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/critic/request.json",
+        "bytes": 898,
+        "sha256": "c1e6797db465aadcecbca2777be20ca67d1958736aab59dafddef6865bd29948",
+        "mtime_ns": 1791605066788452000,
+        "kind": "pipeline_artifact",
+        "inspection": "complete_text_read"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/critic/source-map.json",
+        "bytes": 14463,
+        "sha256": "0b351b209aad8010f9a8ade144dc6485bcc84013b2ed093a2223d7a55948e2b8",
+        "mtime_ns": 1791605919056931600,
+        "kind": "pipeline_artifact",
+        "inspection": "complete_text_read"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/critic/sources/index.md",
+        "bytes": 2697,
+        "sha256": "bfa5089c109ebe139997f34dcd519d2b2dca3a2b291e05c3af3f9fbfe3456cea",
+        "mtime_ns": 1791605773648957200,
+        "kind": "authored_source_evidence",
+        "inspection": "complete_text_read"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/critic/status.json",
+        "bytes": 4016,
+        "sha256": "e3797737b1e981465fc6e7ab90e1bb8de3e611cd9dee770d437c1956ee2ef097",
+        "mtime_ns": 1791605985516725500,
+        "kind": "pipeline_artifact",
+        "inspection": "complete_text_read"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/assignment.md",
+        "bytes": 3290,
+        "sha256": "752b21187a5ac0718ee69cd2c32e0d70076db5b72e3534a3407b4740f053f749",
+        "mtime_ns": 1791605985909424600,
+        "kind": "pipeline_artifact",
+        "inspection": "complete_text_read"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/dispatch.json",
+        "bytes": 4172,
+        "sha256": "1b471a13eaf4cfbf69052b6ccb2a42a549867e30fdc406d913180d31c31056a2",
+        "mtime_ns": 1791605986459788000,
+        "kind": "pipeline_artifact",
+        "inspection": "complete_text_read"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "bytes": 30224,
+        "sha256": "8f49f36c41ce0bd7ce36ee9263233744ea1523379b147715c3f3c5104e9751ff",
+        "mtime_ns": 1791606300915720400,
+        "kind": "pipeline_artifact",
+        "inspection": "complete_text_read"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/freeze.json",
+        "bytes": 3944,
+        "sha256": "a0e8e69ab0fc09b1e04e638b3c29beb501f9343479dee74ba67bf59134fbfb30",
+        "mtime_ns": 1791605985910350800,
+        "kind": "pipeline_artifact",
+        "inspection": "complete_text_read"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/input-map.json",
+        "bytes": 1727,
+        "sha256": "5ff13f567f745812a89560d9fc54fba97aa8d66bcf956b7dd742f2a09367c395",
+        "mtime_ns": 1791605985909194200,
+        "kind": "pipeline_artifact",
+        "inspection": "complete_text_read"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/request.json",
+        "bytes": 902,
+        "sha256": "e4f8b89867e42d3a799eff7ecc7a55b9beb40543a127c9c5b21f902d29dfd5f7",
+        "mtime_ns": 1791605985910575900,
+        "kind": "pipeline_artifact",
+        "inspection": "complete_text_read"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/source-map.json",
+        "bytes": 18375,
+        "sha256": "911478f639cec9ac4dfd2c686446fee732e8c82339acd7cad4d85d7ff0aedcfe",
+        "mtime_ns": 1791606443947267000,
+        "kind": "pipeline_artifact",
+        "inspection": "complete_text_read"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/sources/index.md",
+        "bytes": 2919,
+        "sha256": "7c819a4ab7b695de4ded96996ef093f69eb76d68b46bf5ca2635b98441ba7835",
+        "mtime_ns": 1791606307864752000,
+        "kind": "authored_source_evidence",
+        "inspection": "complete_text_read"
+      }
+    ],
+    "missing_required_science": [],
+    "standalone_critique_disposition_or_check_files": "None present; complete dispositions/check records are in critique.md, final.md and stage source maps."
+  },
+  "independent_primary_sources": [
+    {
+      "id": "R1",
+      "candidate_ids": [
+        "S1"
+      ],
+      "title": "Tus resumable upload protocol",
+      "url": "https://tus.io/protocols/resumable-upload",
+      "version": "1.0.0; 2016-03-25",
+      "kind": "governing protocol",
+      "locators": [
+        "About this version",
+        "Core Protocol > Headers / HEAD / PATCH / OPTIONS",
+        "Creation",
+        "Expiration",
+        "Checksum",
+        "Termination",
+        "Concatenation"
+      ],
+      "web_locators": [
+        "lines 34–35, 59–64, 102–148, 168–218, 246–297, 327–368"
+      ],
+      "observation": "Offset recovery, stale-offset rejection, optional extensions, and per-PATCH checks are supported. Protocol acknowledgements do not establish gateway crash durability or an assembled object's full-file hash. Authentication, URL structure, and the added idempotent session/status contract are implementation choices.",
+      "conditions": "Core required; creation/expiration/checksum/termination/concatenation optional and advertised. Expiry is known at creation for this chosen fixed policy. Termination resource cleanup is SHOULD; the stronger cleanup queue is an original design choice.",
+      "domains": "Tus client/server; byte offsets and upload lengths are nonnegative integer bytes.",
+      "excerpt": "the implementation of authentication and authorization is left for the Server to decide.",
+      "access_date_utc": "2026-10-10",
+      "exact_access_timestamp": "UNKNOWN; not separately timestamped per web call",
+      "retrieval_window_utc": [
+        "2026-10-10T04:28:26Z",
+        "2026-10-10 04:32:46 UTC"
+      ],
+      "method": "Independent web.open/find of governing and surrounding primary text; no candidate page copies treated as proof.",
+      "evidence_path": "evidence/R1.md"
+    },
+    {
+      "id": "R2",
+      "candidate_ids": [
+        "S2"
+      ],
+      "title": "Amazon S3 multipart upload overview",
+      "url": "https://docs.aws.amazon.com/us_en/AmazonS3/latest/userguide/mpuoverview.html",
+      "version": "Current User Guide; no semantic edition shown",
+      "kind": "first-party service documentation",
+      "locators": [
+        "Multipart upload process > Parts upload / Completion / Listings",
+        "Checksums with multipart upload operations",
+        "Multipart upload API and permissions"
+      ],
+      "web_locators": [
+        "lines 23–41, 51–67, 160–176"
+      ],
+      "observation": "The recorded multipart, listing, replacement, checksum-type, encryption, and in-flight conditions support the two critique findings. The full-object/composite table agrees with final C1, and unfinished listings do not settle an unknown UploadPart. This does not prove compatible-vendor behavior.",
+      "conditions": "AWS-specific; exact checksum algorithm/type and encryption permissions matter; full-object CRC and composite SHA-256 are distinct. Maintain the returned part-number/ETag record; a listing is verification, not a replacement manifest.",
+      "domains": "Amazon S3 multipart operations only; general-purpose/directory-bucket distinctions must be selected before implementation.",
+      "excerpt": "the returned list of parts doesn't include parts that haven't finished uploading.",
+      "access_date_utc": "2026-10-10",
+      "exact_access_timestamp": "UNKNOWN; not separately timestamped per web call",
+      "retrieval_window_utc": [
+        "2026-10-10T04:28:26Z",
+        "2026-10-10 04:32:46 UTC"
+      ],
+      "method": "Independent web.open/find of governing and surrounding primary text; no candidate page copies treated as proof.",
+      "evidence_path": "evidence/R2.md"
+    },
+    {
+      "id": "R3",
+      "candidate_ids": [
+        "S3"
+      ],
+      "title": "Amazon S3 multipart upload limits",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/qfacts.html",
+      "version": "Current User Guide; no semantic edition shown",
+      "kind": "first-party service documentation",
+      "locators": [
+        "Multipart upload core specifications table"
+      ],
+      "web_locators": [
+        "lines 5–13"
+      ],
+      "observation": "AWS lists 48.8 TiB object maximum, 10,000 parts, 5 MiB–5 GiB parts, and at most 1,000 listed parts per response. The last part has no minimum. Independently computed: 6 GiB / 16 MiB = 384; 20 MiB = 16 MiB + 4 MiB.",
+      "conditions": "Only the final part is exempt from the minimum; sizes use MiB/GiB, not decimal MB/GB. Proposed sizing is valid arithmetic, not a target-vendor conformance or throughput result.",
+      "domains": "Amazon S3 limits at review; unspecified S3-compatible service UNKNOWN.",
+      "excerpt": "There is no minimum size limit on the last part of your multipart upload.",
+      "access_date_utc": "2026-10-10",
+      "exact_access_timestamp": "UNKNOWN; not separately timestamped per web call",
+      "retrieval_window_utc": [
+        "2026-10-10T04:28:26Z",
+        "2026-10-10 04:32:46 UTC"
+      ],
+      "method": "Independent web.open/find of governing and surrounding primary text; no candidate page copies treated as proof.",
+      "evidence_path": "evidence/R3.md"
+    },
+    {
+      "id": "R4",
+      "candidate_ids": [
+        "S4"
+      ],
+      "title": "Aborting a multipart upload",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/abort-mpu.html",
+      "version": "Current User Guide; no semantic edition shown",
+      "kind": "first-party service documentation",
+      "locators": [
+        "Opening object/part-cost/lifecycle guidance",
+        "Abort by upload ID, bucket, key"
+      ],
+      "web_locators": [
+        "lines 4–13, 73–84"
+      ],
+      "observation": "AWS's object-completion and unfinished-part cleanup guidance supports separate completion and cancellation states. Lifecycle is an available AWS backstop; the gateway's finite expiry and sweeper ownership are choices, not service defaults.",
+      "conditions": "Stop/complete removes unfinished-part storage; lifecycle must be configured. Abort prevents additional new work on that upload ID; already in-flight work is governed by R2 and R8.",
+      "domains": "Amazon S3; not proof of the fictional gateway or unknown vendor.",
+      "excerpt": "you can't use the upload ID to upload additional parts.",
+      "access_date_utc": "2026-10-10",
+      "exact_access_timestamp": "UNKNOWN; not separately timestamped per web call",
+      "retrieval_window_utc": [
+        "2026-10-10T04:28:26Z",
+        "2026-10-10 04:32:46 UTC"
+      ],
+      "method": "Independent web.open/find of governing and surrounding primary text; no candidate page copies treated as proof.",
+      "evidence_path": "evidence/R4.md"
+    },
+    {
+      "id": "R5",
+      "candidate_ids": [
+        "S5"
+      ],
+      "title": "AWS SDK for Rust S3 default integrity announcement, issue 1240",
+      "url": "https://github.com/awslabs/aws-sdk-rust/issues/1240",
+      "version": "aws-sdk-s3 v1.69.0; announcement opened 2025-01-16",
+      "kind": "first-party maintainer announcement and issue history",
+      "locators": [
+        "Opening maintainer announcement",
+        "January 16–17 presigned PUT discussion / fix",
+        "January 27 CRC32 default discussion"
+      ],
+      "web_locators": [
+        "lines 155–162, 174–249, 270–286"
+      ],
+      "observation": "The dated default-checksum change and third-party compatibility caveat are accurately used as an adapter qualification rationale. Surrounding history also records a presigned PUT fix and a historical CRC32 default; the final neither recommends the affected release nor asserts a particular current algorithm.",
+      "conditions": "Relevant if a Rust component actually uses this SDK. WHEN_REQUIRED exists but is not recommended as an unconditional integrity remedy. A maintainer announcement does not establish this fictional gateway's library or vendor.",
+      "domains": "Specified Rust S3 client release history; Put/Get operations, not all storage operations.",
+      "excerpt": "we released changes to the S3 client that adopts new default integrity protections.",
+      "access_date_utc": "2026-10-10",
+      "exact_access_timestamp": "UNKNOWN; not separately timestamped per web call",
+      "retrieval_window_utc": [
+        "2026-10-10T04:28:26Z",
+        "2026-10-10 04:32:46 UTC"
+      ],
+      "method": "Independent web.open/find of governing and surrounding primary text; no candidate page copies treated as proof.",
+      "evidence_path": "evidence/R5.md"
+    },
+    {
+      "id": "R6",
+      "candidate_ids": [
+        "S6"
+      ],
+      "title": "tusd issue 1315: InvalidPartOrder at S3 completion",
+      "url": "https://github.com/tus/tusd/issues/1315",
+      "version": "Opened 2025-09-03; mutable tusproject/tusd:latest; exact version UNKNOWN",
+      "kind": "original user report on first-party project issue tracker",
+      "locators": [
+        "Status/opened date",
+        "Setup details",
+        "CompleteMultipartUpload error logs"
+      ],
+      "web_locators": [
+        "lines 140–178, 182–205"
+      ],
+      "observation": "The open report, mutable tag, AWS environment, and completion-order error are present. It is a useful implementation lead and test motivation, not governing evidence of a generalized defect or fixed release. Reported configuration and startup maximum-size values differ, so reproduction identity remains uncertain.",
+      "conditions": "One report; no established root cause or release pin. No claim that all tusd or compatible stores fail is supported.",
+      "domains": "Reporter's macOS Docker/AWS/Uppy configuration only.",
+      "excerpt": "Used tusd version: tusproject/tusd:latest",
+      "access_date_utc": "2026-10-10",
+      "exact_access_timestamp": "UNKNOWN; not separately timestamped per web call",
+      "retrieval_window_utc": [
+        "2026-10-10T04:28:26Z",
+        "2026-10-10 04:32:46 UTC"
+      ],
+      "method": "Independent web.open/find of governing and surrounding primary text; no candidate page copies treated as proof.",
+      "evidence_path": "evidence/R6.md"
+    },
+    {
+      "id": "R7",
+      "candidate_ids": [],
+      "title": "CompleteMultipartUpload API reference",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_CompleteMultipartUpload.html",
+      "version": "Current API reference; S3 API namespace 2006-03-01; document edition not pinned",
+      "kind": "governing operation reference",
+      "locators": [
+        "Opening completion/response handling",
+        "Permissions",
+        "SSECustomerAlgorithm / SSECustomerKey parameters",
+        "Response ChecksumSHA256"
+      ],
+      "web_locators": [
+        "lines 7–30, 223–246, 391–394"
+      ],
+      "observation": "Completion requires successful interpretation of the operation, not merely HTTP 200: the body can contain an error. SDKs handle embedded errors. SSE-C checksum header requirements have operation conditions and directory-bucket exceptions. The final requires operation success plus object/session checks and leaves exact adapter qualification open; it does not equate 200 with success.",
+      "conditions": "KMS permission and SSE-C paths depend on selected mode; SSE-C is unsupported for directory buckets. A completed multipart SHA-256 response can be derived from part checksums.",
+      "domains": "AWS CompleteMultipartUpload; exact compatible-vendor response/permission contract remains UNKNOWN.",
+      "excerpt": "a 200 OK response can contain either a success or an error.",
+      "access_date_utc": "2026-10-10",
+      "exact_access_timestamp": "UNKNOWN; not separately timestamped per web call",
+      "retrieval_window_utc": [
+        "2026-10-10T04:28:26Z",
+        "2026-10-10 04:32:46 UTC"
+      ],
+      "method": "Independent web.open/find of governing and surrounding primary text; no candidate page copies treated as proof.",
+      "evidence_path": "evidence/R7.md"
+    },
+    {
+      "id": "R8",
+      "candidate_ids": [],
+      "title": "AbortMultipartUpload API reference",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_AbortMultipartUpload.html",
+      "version": "Current API reference; no document edition shown",
+      "kind": "governing operation reference",
+      "locators": [
+        "Opening abort semantics",
+        "ListParts verification guidance"
+      ],
+      "web_locators": [
+        "lines 7–8"
+      ],
+      "observation": "Already in-flight part requests may succeed or fail after abort. Repeated abort may be necessary; checking that no parts remain is the API's cleanup verification. This supports preserving the cleanup queue after retiring or canceling an uncertain upload.",
+      "conditions": "An abort response alone cannot prove all storage has been released during an in-flight race. Exact provider behavior must be established.",
+      "domains": "AWS abort/list operations, not generalized vendor behavior.",
+      "excerpt": "it might be necessary to abort a given multipart upload multiple times",
+      "access_date_utc": "2026-10-10",
+      "exact_access_timestamp": "UNKNOWN; not separately timestamped per web call",
+      "retrieval_window_utc": [
+        "2026-10-10T04:28:26Z",
+        "2026-10-10 04:32:46 UTC"
+      ],
+      "method": "Independent web.open/find of governing and surrounding primary text; no candidate page copies treated as proof.",
+      "evidence_path": "evidence/R8.md"
+    },
+    {
+      "id": "R9",
+      "candidate_ids": [],
+      "title": "Checking object integrity for data uploads in Amazon S3",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity-upload.html",
+      "version": "Current User Guide; no semantic edition shown",
+      "kind": "first-party checksum type/operation documentation",
+      "locators": [
+        "Full object and composite checksum types",
+        "Multipart algorithm/type table",
+        "Using full object checksums",
+        "Composite consecutive-number important note"
+      ],
+      "web_locators": [
+        "lines 54–101"
+      ],
+      "observation": "The dedicated table confirms multipart SHA-256 is composite and full-object CRC algorithms differ. Its consecutive-number note is explicitly scoped to composite/part-level checksums, whereas the overview uses broader wording. It also warns that some completion checksum headers can be accepted without validation when the algorithm was not selected at initiation.",
+      "conditions": "Always qualify initiation, type, algorithm, completion, retrieval and encryption as a joined contract. Final's sequential numbering is safe; its generic all-checksums explanation should not be read as resolving narrower API applicability.",
+      "domains": "AWS multipart versus single PutObject distinction; no arbitrary vendor guarantee.",
+      "excerpt": "Checksums for composite (or part-level) checksums",
+      "access_date_utc": "2026-10-10",
+      "exact_access_timestamp": "UNKNOWN; not separately timestamped per web call",
+      "retrieval_window_utc": [
+        "2026-10-10T04:28:26Z",
+        "2026-10-10 04:32:46 UTC"
+      ],
+      "method": "Independent web.open/find of governing and surrounding primary text; no candidate page copies treated as proof.",
+      "evidence_path": "evidence/R9.md"
+    }
+  ],
+  "arm_records": {
+    "delivery": {
+      "status": "DELIVERED",
+      "final_path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+      "required_science_missing": [],
+      "inspection": "Full authored discovery, draft, critique, final, all three source maps/indexes and stage assignment/input-map/freeze read; all mapped predecessor files present.",
+      "source_evidence": "Authored source roots contain indexes and map paraphrases only; no raw original external-page captures are claimed to exist."
+    },
+    "t3": {
+      "status": "RECORDED_COMPLETED",
+      "basis": "Stored dispatch.json raw/returned T3 fields for all three stages, investigator/critic status.json and root terminal final-stage observation. No independent live task_status call.",
+      "reported_providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "reported_model": "gpt-6-luna",
+      "effective_provider_or_model": "UNKNOWN; dispatch metadata alone does not prove inference provenance",
+      "pending_final_child_runs": false
+    },
+    "native": {
+      "qualification": "UNKNOWN",
+      "basis": "Investigator freeze/source-map and critic source-map contain authored activation fields; investigator/critic terminal claims are in task summaries; reviser source-map embeds authored update_goal fields. The inspected package does not supply independently verifiable original native tool-event receipts for all stages. T3 completion is not native proof.",
+      "investigator": {
+        "threadId": "01a123f2-82b9-7a61-8920-b97650d6fcf4",
+        "authored_activation_status": "active",
+        "authored_terminal_status": "UNKNOWN in source-map; summary claims complete",
+        "terminal_receipt_independently_verified": false
+      },
+      "critic": {
+        "threadId": "01a123fb-ce24-7ff3-ae03-d43f19f86cb9",
+        "authored_activation_status": "active",
+        "authored_terminal_status": "UNKNOWN in source-map; summary claims complete",
+        "terminal_receipt_independently_verified": false
+      },
+      "reviser": {
+        "threadId": "01a12409-d444-7460-8bef-bb883ed31d29",
+        "authored_terminal_status": "complete",
+        "authored_update_goal_fields": {
+          "tokensUsed": 118165,
+          "timeUsedSeconds": 420,
+          "createdAt": 1791606013,
+          "updatedAt": 1791606433
+        },
+        "terminal_receipt_independently_verified": false
+      },
+      "separate_goal_ids_or_activation_receipts": "UNKNOWN",
+      "native_reported_usage_is_billing": false
+    },
+    "method": {
+      "status": "RECORDED_PROTOCOL_PARTIAL; no independent full execution audit",
+      "plan_reveal": "Stored release record and frozen discovery/plan identities match; copied revealed plan equals original. Exactly-once helper execution and absence of earlier plan access cannot be proved by hashes or an authored invocation count.",
+      "independent_roles": "Three mapped stage packages and three recorded T3 task IDs. Complete context isolation/absence of candidate assistance in original run UNKNOWN without full execution evidence.",
+      "reviewer": {
+        "nested_delegation": false,
+        "candidate_feedback_or_repair": false,
+        "account_changes": false,
+        "git_or_publication": false,
+        "other_arm_science_artifact_reads": false,
+        "other_arm_comparison": false,
+        "er11_rescore": false,
+        "scope_writes": "Only assigned treatment-v1 directory; original bytes preserved",
+        "isolation_caveat": "Required pm-mail who output displayed cross-thread registry metadata, including some other reviewers' completion labels. No other pipeline/assessment artifacts were opened or used, and no cross-result inference is made. This incidental visibility is disclosed rather than asserted away."
+      }
+    },
+    "time": {
+      "status": "RECORDED_DEADLINE_DELIVERY; actual inference time UNKNOWN",
+      "review_started_utc": "2026-10-10T04:28:26Z",
+      "review_deadline_utc": "2026-10-10T05:13:26Z",
+      "whole_pipeline_deadline_utc": "2026-10-10T04:54:16.197Z",
+      "root_terminal_observed_utc": "2026-10-10T04:28:14.324084+00:00",
+      "final_observed_before_whole_deadline": true,
+      "stage_envelopes": [
+        {
+          "stage": "investigator",
+          "prepared": "2026-10-10T03:54:17.292Z",
+          "deadline": "2026-10-10T04:24:17.291Z",
+          "stage_budget_s": 1800,
+          "available_at_prepare_s": 1799.998893
+        },
+        {
+          "stage": "critic",
+          "prepared": "2026-10-10T04:04:26.787Z",
+          "deadline": "2026-10-10T04:36:17.291Z",
+          "stage_budget_s": 720,
+          "available_at_prepare_s": 1910.503768
+        },
+        {
+          "stage": "reviser",
+          "prepared": "2026-10-10T04:19:45.908Z",
+          "deadline": "2026-10-10T04:54:16.197Z",
+          "stage_budget_s": 1080,
+          "available_at_prepare_s": 2070.28905
+        }
+      ],
+      "interpretation": "The frozen assignments use absolute T0_30_42_60 deadlines. Early dispatch gives later stages more available time than nominal budget fields; per-stage 30/12/18 elapsed compliance is not independently established. Earlier delivery is not a source-quality, inference, effective-route or billing comparison.",
+      "billing": "UNKNOWN",
+      "effective_latency": "UNKNOWN",
+      "speed_or_savings_claim": null
+    }
+  },
+  "reviewer_native_goal": {
+    "threadId": "01a12411-9743-70a3-a140-301ba5fe2db2",
+    "objective": "Independently assess exactly one completed ER12 A1-01 treatment pipeline against the full RUBRIC-v1 and original frozen brief/plan. Read complete terminal freeze, authored discovery/draft/critique/final, every stage source map, assignment/input/freeze, dispositions/checks and authored evidence by actual mappings. Judge all six axes and every plan clause; retrieve governing primary evidence for consequential claims/corrections; separate final qualification from lineage defects and semantic judgment from native/protocol/time/billing evidence. No delegation, candidate feedback or repairs, account changes, Git/publication, other arms/history, or ER11 rescoring. Within a finite 45-minute review envelope, save complete assessment.md, assessment.json, and independent navigable source map/evidence only under ER12_RUNTIME/assessment/A1-01/treatment-v1, preserve originals, then complete this Goal and report result/paths.",
+    "activation_tool": "create_goal",
+    "activation_observed": true,
+    "createdAt": 1791606506,
+    "status_at_science_save": "active",
+    "science_saved_before_completion": true,
+    "completion_receipt_path": "evidence/reviewer-goal-completion.json",
+    "billing_or_efficiency_inference": null
+  }
+}
+

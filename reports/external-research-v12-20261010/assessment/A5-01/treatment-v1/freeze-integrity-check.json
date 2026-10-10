@@ -1,0 +1,294 @@
+{
+  "checked_at_utc": "2026-10-10T04:50:44.425030+00:00",
+  "purpose": "byte lineage check only; not semantic proof",
+  "checks": [
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-01/treatment/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/critic/critique.md",
+      "declared_sha256": "dbedfb9d79363bde1debddcc5566a66cb8de13959d9ef70e082c5edd12e4a6ca",
+      "observed_sha256": "dbedfb9d79363bde1debddcc5566a66cb8de13959d9ef70e082c5edd12e4a6ca",
+      "declared_bytes": 9813,
+      "observed_bytes": 9813,
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-01/treatment/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/critic/source-map.json",
+      "declared_sha256": "7204ed066db5f0e0a1983fb997f3010fc9e1fd7fc1583102e708834780b4e05c",
+      "observed_sha256": "7204ed066db5f0e0a1983fb997f3010fc9e1fd7fc1583102e708834780b4e05c",
+      "declared_bytes": 13884,
+      "observed_bytes": 13884,
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-01/treatment/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/critic/sources/index.md",
+      "declared_sha256": "54fc0a0fdeb16de59ac8cfa01d7c1c4e27b3c1e07d4147ca4b0759a859181c2f",
+      "observed_sha256": "54fc0a0fdeb16de59ac8cfa01d7c1c4e27b3c1e07d4147ca4b0759a859181c2f",
+      "declared_bytes": 2962,
+      "observed_bytes": 2962,
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-01/treatment/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/discovery.md",
+      "declared_sha256": "6e1f863f80f94caf851622885353b113f755cde02ae88eb67ba0510926c2aa80",
+      "observed_sha256": "6e1f863f80f94caf851622885353b113f755cde02ae88eb67ba0510926c2aa80",
+      "declared_bytes": 10175,
+      "observed_bytes": 10175,
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-01/treatment/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/draft.md",
+      "declared_sha256": "10bf7a652992cdfe13054c57ad06a22e6f55749827645f046efc8c4901b9709b",
+      "observed_sha256": "10bf7a652992cdfe13054c57ad06a22e6f55749827645f046efc8c4901b9709b",
+      "declared_bytes": 23750,
+      "observed_bytes": 23750,
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-01/treatment/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/revealed-plan.md",
+      "declared_sha256": "b80e30c3938344528a49c1b43144af18f14b0d8ed27a2603b845042467e4e067",
+      "observed_sha256": "b80e30c3938344528a49c1b43144af18f14b0d8ed27a2603b845042467e4e067",
+      "declared_bytes": 6139,
+      "observed_bytes": 6139,
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-01/treatment/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/source-map.json",
+      "declared_sha256": "96139a7b0799b3159b1a75d24b2ecdf368cb826b1b356d90605d8506f46ac7f8",
+      "observed_sha256": "96139a7b0799b3159b1a75d24b2ecdf368cb826b1b356d90605d8506f46ac7f8",
+      "declared_bytes": 15841,
+      "observed_bytes": 15841,
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-01/treatment/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/sources/index.md",
+      "declared_sha256": "b882b2bba50bb368183a1ecae04f5dc39883caece4c766b90fa412501b364755",
+      "observed_sha256": "b882b2bba50bb368183a1ecae04f5dc39883caece4c766b90fa412501b364755",
+      "declared_bytes": 2996,
+      "observed_bytes": 2996,
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-01/treatment/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/final.md",
+      "declared_sha256": "39e3e803c8b82db918ab3272dc424c18f3a1509b25967bc21584dae6c791d6a9",
+      "observed_sha256": "39e3e803c8b82db918ab3272dc424c18f3a1509b25967bc21584dae6c791d6a9",
+      "declared_bytes": 25805,
+      "observed_bytes": 25805,
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-01/treatment/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/source-map.json",
+      "declared_sha256": "639b9cc791624837e0925fbac46eaf138dfa54b280582a63640af205721d7d35",
+      "observed_sha256": "639b9cc791624837e0925fbac46eaf138dfa54b280582a63640af205721d7d35",
+      "declared_bytes": 36783,
+      "observed_bytes": 36783,
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-01/treatment/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/sources/index.md",
+      "declared_sha256": "037a79065a391808d0b84bec684f0c2d5553c85631ba41902e635decddf62597",
+      "observed_sha256": "037a79065a391808d0b84bec684f0c2d5553c85631ba41902e635decddf62597",
+      "declared_bytes": 3845,
+      "observed_bytes": 3845,
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/inputs/brief.md",
+      "declared_sha256": "e26ff5f138c34638ec94bc7d4ff3bf93a23f27ddca1a17cca3090868737430e8",
+      "observed_sha256": "e26ff5f138c34638ec94bc7d4ff3bf93a23f27ddca1a17cca3090868737430e8",
+      "declared_bytes": 3440,
+      "observed_bytes": 3440,
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/assignment.md",
+      "declared_sha256": "9f66b7075d2654721267be7a8c3966de1266db7d67e280651c5f5f44d73209dc",
+      "observed_sha256": "9f66b7075d2654721267be7a8c3966de1266db7d67e280651c5f5f44d73209dc",
+      "declared_bytes": 3720,
+      "observed_bytes": 3720,
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/input-map.json",
+      "declared_sha256": "9b8185587e971c69763f65f17c966ba173b04ca7b554fa5586d065be60b4d819",
+      "observed_sha256": "9b8185587e971c69763f65f17c966ba173b04ca7b554fa5586d065be60b4d819",
+      "declared_bytes": 722,
+      "observed_bytes": 722,
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-01/treatment/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/inputs/brief.md",
+      "declared_sha256": "e26ff5f138c34638ec94bc7d4ff3bf93a23f27ddca1a17cca3090868737430e8",
+      "observed_sha256": "e26ff5f138c34638ec94bc7d4ff3bf93a23f27ddca1a17cca3090868737430e8",
+      "declared_bytes": 3440,
+      "observed_bytes": 3440,
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-01/treatment/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/critic/assignment.md",
+      "declared_sha256": "26cf0511ed925bd27956f093ea0ac44f86b1cdb3d7f8084b7f93a004d99504ad",
+      "observed_sha256": "26cf0511ed925bd27956f093ea0ac44f86b1cdb3d7f8084b7f93a004d99504ad",
+      "declared_bytes": 3310,
+      "observed_bytes": 3310,
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-01/treatment/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/critic/input-map.json",
+      "declared_sha256": "e129b9e9effaaa66bd015d2cc59f5342561fa432cbd75e0c5b469f1034e76b76",
+      "observed_sha256": "e129b9e9effaaa66bd015d2cc59f5342561fa432cbd75e0c5b469f1034e76b76",
+      "declared_bytes": 1410,
+      "observed_bytes": 1410,
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-01/treatment/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/discovery.md",
+      "declared_sha256": "6e1f863f80f94caf851622885353b113f755cde02ae88eb67ba0510926c2aa80",
+      "observed_sha256": "6e1f863f80f94caf851622885353b113f755cde02ae88eb67ba0510926c2aa80",
+      "declared_bytes": 10175,
+      "observed_bytes": 10175,
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-01/treatment/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/draft.md",
+      "declared_sha256": "10bf7a652992cdfe13054c57ad06a22e6f55749827645f046efc8c4901b9709b",
+      "observed_sha256": "10bf7a652992cdfe13054c57ad06a22e6f55749827645f046efc8c4901b9709b",
+      "declared_bytes": 23750,
+      "observed_bytes": 23750,
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-01/treatment/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/source-map.json",
+      "declared_sha256": "96139a7b0799b3159b1a75d24b2ecdf368cb826b1b356d90605d8506f46ac7f8",
+      "observed_sha256": "96139a7b0799b3159b1a75d24b2ecdf368cb826b1b356d90605d8506f46ac7f8",
+      "declared_bytes": 15841,
+      "observed_bytes": 15841,
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-01/treatment/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/revealed-plan.md",
+      "declared_sha256": "b80e30c3938344528a49c1b43144af18f14b0d8ed27a2603b845042467e4e067",
+      "observed_sha256": "b80e30c3938344528a49c1b43144af18f14b0d8ed27a2603b845042467e4e067",
+      "declared_bytes": 6139,
+      "observed_bytes": 6139,
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-01/treatment/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/plan-reveal.json",
+      "declared_sha256": "6263d26e84192838d3b031818eb29bfd4e594b978aca7534dec5cdf116800bf5",
+      "observed_sha256": "6263d26e84192838d3b031818eb29bfd4e594b978aca7534dec5cdf116800bf5",
+      "declared_bytes": 429,
+      "observed_bytes": 429,
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/inputs/brief.md",
+      "declared_sha256": "e26ff5f138c34638ec94bc7d4ff3bf93a23f27ddca1a17cca3090868737430e8",
+      "observed_sha256": "e26ff5f138c34638ec94bc7d4ff3bf93a23f27ddca1a17cca3090868737430e8",
+      "declared_bytes": 3440,
+      "observed_bytes": 3440,
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/assignment.md",
+      "declared_sha256": "2e9daffd7024b0daacaecf4bf1a0a0d9e49e684bffff4eb1e10b2a155bdc8f71",
+      "observed_sha256": "2e9daffd7024b0daacaecf4bf1a0a0d9e49e684bffff4eb1e10b2a155bdc8f71",
+      "declared_bytes": 3814,
+      "observed_bytes": 3814,
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/input-map.json",
+      "declared_sha256": "27dc77201deeaa0fc660c2ce28e0cf09d865cce9b4f78fabdf4dba116058db38",
+      "observed_sha256": "27dc77201deeaa0fc660c2ce28e0cf09d865cce9b4f78fabdf4dba116058db38",
+      "declared_bytes": 1794,
+      "observed_bytes": 1794,
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/discovery.md",
+      "declared_sha256": "6e1f863f80f94caf851622885353b113f755cde02ae88eb67ba0510926c2aa80",
+      "observed_sha256": "6e1f863f80f94caf851622885353b113f755cde02ae88eb67ba0510926c2aa80",
+      "declared_bytes": 10175,
+      "observed_bytes": 10175,
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/draft.md",
+      "declared_sha256": "10bf7a652992cdfe13054c57ad06a22e6f55749827645f046efc8c4901b9709b",
+      "observed_sha256": "10bf7a652992cdfe13054c57ad06a22e6f55749827645f046efc8c4901b9709b",
+      "declared_bytes": 23750,
+      "observed_bytes": 23750,
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/source-map.json",
+      "declared_sha256": "96139a7b0799b3159b1a75d24b2ecdf368cb826b1b356d90605d8506f46ac7f8",
+      "observed_sha256": "96139a7b0799b3159b1a75d24b2ecdf368cb826b1b356d90605d8506f46ac7f8",
+      "declared_bytes": 15841,
+      "observed_bytes": 15841,
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/revealed-plan.md",
+      "declared_sha256": "b80e30c3938344528a49c1b43144af18f14b0d8ed27a2603b845042467e4e067",
+      "observed_sha256": "b80e30c3938344528a49c1b43144af18f14b0d8ed27a2603b845042467e4e067",
+      "declared_bytes": 6139,
+      "observed_bytes": 6139,
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/plan-reveal.json",
+      "declared_sha256": "6263d26e84192838d3b031818eb29bfd4e594b978aca7534dec5cdf116800bf5",
+      "observed_sha256": "6263d26e84192838d3b031818eb29bfd4e594b978aca7534dec5cdf116800bf5",
+      "declared_bytes": 429,
+      "observed_bytes": 429,
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/critic/critique.md",
+      "declared_sha256": "dbedfb9d79363bde1debddcc5566a66cb8de13959d9ef70e082c5edd12e4a6ca",
+      "observed_sha256": "dbedfb9d79363bde1debddcc5566a66cb8de13959d9ef70e082c5edd12e4a6ca",
+      "declared_bytes": 9813,
+      "observed_bytes": 9813,
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/critic/source-map.json",
+      "declared_sha256": "7204ed066db5f0e0a1983fb997f3010fc9e1fd7fc1583102e708834780b4e05c",
+      "observed_sha256": "7204ed066db5f0e0a1983fb997f3010fc9e1fd7fc1583102e708834780b4e05c",
+      "declared_bytes": 13884,
+      "observed_bytes": 13884,
+      "match": true
+    }
+  ]
+}

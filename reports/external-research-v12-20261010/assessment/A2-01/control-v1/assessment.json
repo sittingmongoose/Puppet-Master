@@ -1,0 +1,1852 @@
+{
+  "schema_version": 1,
+  "assessment_id": "ER12-A2-01-control-v1",
+  "run_id": "A2-01",
+  "arm": "control",
+  "pipeline_kind": "ordinary investigator → critic → reviser",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "final_artifact": "ER12_RUNTIME/runs/A2-01/control/stages/reviser/final.md",
+  "delivery": "COMPLETE_FROZEN_FINAL_PRESENT",
+  "coverage": "ALL_SIX_AXES_AND_EVERY_EXACT_PLAN_CLAUSE",
+  "unassessed_axes": [],
+  "material_findings": [],
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Original obligations and negative constraints",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS",
+      "basis": "All eight exact obligations are substantively addressed. Coordinator visibility is connectivity-bounded; original/correction history, optional CSV scope, both owner authorities and all four exclusions remain binding.",
+      "final_lines": [
+        25,
+        107
+      ],
+      "evidence_ids": [
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E09",
+        "E12",
+        "E18",
+        "E19"
+      ],
+      "material_remaining": []
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source claims and exact applicability",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "Independent primary retrieval checks the client-edit version/default and exceptions; REST versus OpenRosa operations; string identities/versions and timestamps; server receipt versus observation time; layer/export/permission conditions; CSV loading; and historical fix scope. No unsupported operational capability or product validation is represented as established.",
+      "evidence_ids": [
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E06",
+        "E07",
+        "E08",
+        "E09",
+        "E10",
+        "E11",
+        "E12",
+        "E13",
+        "E14",
+        "E15",
+        "E16",
+        "E17",
+        "E18",
+        "E19",
+        "E20",
+        "E21",
+        "E22",
+        "E23",
+        "E24"
+      ],
+      "limitations": [
+        "L01",
+        "L02",
+        "L03"
+      ],
+      "material_remaining": []
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar discovery, alternatives, implementation/history, and opportunity breadth",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS",
+      "basis": "ODK and Survey123 provide two meaningful full candidates, CouchDB a version-pinned analogy, and Kobo a further screened option. Client-edit versus separate correction form, old-field exports, XML/CSV adapter routes and the EXIF image-append exclusion are actionable discoveries. Source/commit/release history is bounded and directly relevant.",
+      "evidence_ids": [
+        "E01",
+        "E03",
+        "E06",
+        "E07",
+        "E08",
+        "E13",
+        "E14",
+        "E15",
+        "E16",
+        "E18",
+        "E20",
+        "E21"
+      ],
+      "material_remaining": []
+    },
+    {
+      "axis": 4,
+      "name": "Wrong criticism/corrections/rejections and exact plan dispositions",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS",
+      "basis": "Each of the eight exact clauses and four criticisms has an explicit, evidence-based disposition. C-01/C-03 are corrected draft defects; C-02 expands research without demanding deployment or deleting the option; C-04 is a locator correction. No false material correction or unsupported scope rejection remains.",
+      "evidence_ids": [
+        "E01",
+        "E04",
+        "E05",
+        "E09",
+        "E12",
+        "E17",
+        "E18",
+        "E19"
+      ],
+      "material_remaining": []
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning preserved discovery/draft/critique/final",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "The final is a complete proposal retaining fit hypotheses, IDs/time/attachments, correction alternatives, optional import, owner choices, negatives, applicability, history and validation status. Complete inherited source records are preserved; important conditions are less prominent in final prose but remain in the carried source map. No selected workflow depends on bypassing those conditions.",
+      "limitations": [
+        "L01",
+        "L03"
+      ],
+      "evidence_ids": [
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E12",
+        "E14",
+        "E15",
+        "E16",
+        "E18",
+        "E19"
+      ],
+      "material_remaining": []
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed versus executed validation and oracle applicability",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "Source review/reveal plumbing are separated from unrun product checks. Interruption timing, same-ID versus different-ID records, edit order/version, bad legacy rows/reruns, and clock/EXIF scenarios discriminate the proposed mechanisms. The record model supplies expected identity/payload/photo/no-overwrite/history outcomes. Historical source and stub tests are not a current-product oracle.",
+      "limitations": [
+        "L04"
+      ],
+      "evidence_ids": [
+        "E01",
+        "E05",
+        "E06",
+        "E07",
+        "E08",
+        "E18",
+        "E19",
+        "E20",
+        "E21"
+      ],
+      "executed_product_validation": "NONE_REPORTED; NONE_PERFORMED_BY_REVIEWER",
+      "material_remaining": []
+    }
+  ],
+  "plan_clauses": [
+    {
+      "number": 1,
+      "exact_clause": "Explain how offline creation, retry, late arrival and an explicit correction become distinct coordinator-visible states.",
+      "original_draft_treatment": "Start with a single online form and instruct volunteers to retry failed sends. A retry is presumed to create the same record; identifiers and correction behavior are not yet specified.",
+      "final_disposition": "REWRITE",
+      "independent_judgment": "MET",
+      "basis": "Online-only/unspecified retry assumption replaced by local/shared lifecycle, immutable same-ID retry, distinct correction, and later client-event condition. C-01 corrected.",
+      "final_clause_line": 25,
+      "final_body_locator": "stages/reviser/final.md:43–56",
+      "evidence_ids": [
+        "E01",
+        "E05",
+        "E09",
+        "E19"
+      ],
+      "normative_authority": "ER12_RUNTIME/frozen-inputs/A2-01/brief.md",
+      "remaining_material_issue": false
+    },
+    {
+      "number": 2,
+      "exact_clause": "Compare two usable survey products and one analogous queue/synchronization mechanism, including deployment and export tradeoffs.",
+      "original_draft_treatment": "ODK is the initial shortlist entry. Kobo is named for later comparison; no deployment or export evidence has been inspected.",
+      "final_disposition": "REWRITE_WITH_EVIDENCE",
+      "independent_judgment": "MET",
+      "basis": "ODK/Central and Survey123 fully compared; CouchDB analogy; Kobo screened. Deployment/export tradeoffs and ArcGIS Server website exception supplied.",
+      "final_clause_line": 26,
+      "final_body_locator": "stages/reviser/final.md:58–65",
+      "evidence_ids": [
+        "E03",
+        "E04",
+        "E09",
+        "E10",
+        "E12",
+        "E13",
+        "E14",
+        "E15",
+        "E16",
+        "E22",
+        "E24"
+      ],
+      "normative_authority": "ER12_RUNTIME/frozen-inputs/A2-01/brief.md",
+      "remaining_material_issue": false
+    },
+    {
+      "number": 3,
+      "exact_clause": "Bind observations to site, visit, form version and attachment identity; address device-clock uncertainty and duplicate detection.",
+      "original_draft_treatment": "Use the device timestamp as visit identity and filename as photo identity. The coordinator will deduplicate a weekly export manually.",
+      "final_disposition": "REWRITE",
+      "independent_judgment": "MET",
+      "basis": "Reject time/filename primary keys; separate site/visit/event/form-version/correction/attachment identity; report/client/server time distinguished; human duplicate investigation.",
+      "final_clause_line": 27,
+      "final_body_locator": "stages/reviser/final.md:67–83",
+      "evidence_ids": [
+        "E02",
+        "E03",
+        "E05",
+        "E19"
+      ],
+      "normative_authority": "ER12_RUNTIME/frozen-inputs/A2-01/brief.md",
+      "remaining_material_issue": false
+    },
+    {
+      "number": 4,
+      "exact_clause": "Describe a bounded failure/release-history example relevant to reconnect or correction, and its actual applicability.",
+      "original_draft_treatment": "Assume a recent release resolves intermittent-network problems. No released-version or issue-chain investigation is attached.",
+      "final_disposition": "REWRITE",
+      "independent_judgment": "MET",
+      "basis": "Unspecified recent fix replaced by issue/commit/merged-PR/release chain, historically bounded. No current defect or exactly-once claim.",
+      "final_clause_line": 28,
+      "final_body_locator": "stages/reviser/final.md:97–101",
+      "evidence_ids": [
+        "E06",
+        "E07",
+        "E08",
+        "E20",
+        "E21"
+      ],
+      "normative_authority": "ER12_RUNTIME/frozen-inputs/A2-01/brief.md",
+      "remaining_material_issue": false
+    },
+    {
+      "number": 5,
+      "exact_clause": "Preserve and investigate this supported optional scope: coordinator-reviewed CSV import of legacy observations. It is an authorized option, not a mandatory feature or an established technical capability; recommend conditions, retain it when supported, and explain any evidence-based exclusion.",
+      "original_draft_treatment": "Retain coordinator-reviewed CSV import of legacy observations as supported owner-authorized optional scope. Support here means that the brief explicitly permits it; technical support, conditions and interoperability still need research. Do not remove it merely because the baseline route lacks it, or silently promote it to mandatory scope.",
+      "final_disposition": "RETAIN_OPTIONAL_AND_CONDITIONAL",
+      "independent_judgment": "MET",
+      "basis": "Authorized CSV option retained; XML/attachment and CSV Append routes investigated; lookup distinguished from import; schema/identity/rerun/photo/no-overwrite gates. No exclusion or mandatory promotion.",
+      "final_clause_line": 29,
+      "final_body_locator": "stages/reviser/final.md:85–95",
+      "evidence_ids": [
+        "E05",
+        "E17",
+        "E18",
+        "E19"
+      ],
+      "normative_authority": "ER12_RUNTIME/frozen-inputs/A2-01/brief.md",
+      "remaining_material_issue": false
+    },
+    {
+      "number": 6,
+      "exact_clause": "Make owner decisions explicit: The field coordinator accepts duplicates for investigation; the data steward decides whether a correction replaces the current view or appears beside it. No silent automatic merge is approved.",
+      "original_draft_treatment": "Owner authority is reserved as follows: The field coordinator accepts duplicates for investigation; the data steward decides whether a correction replaces the current view or appears beside it. No silent automatic merge is approved. The draft has not obtained these decisions. Its tentative implementation assumptions cannot substitute for them.",
+      "final_disposition": "RETAIN_AUTHORITY",
+      "independent_judgment": "MET",
+      "basis": "Coordinator accepts duplicate candidates for investigation; steward chooses current view or beside. Original/history retained either way. No automatic merge or inferred owner choice.",
+      "final_clause_line": 30,
+      "final_body_locator": "stages/reviser/final.md:30,52–54,105–107",
+      "evidence_ids": [],
+      "normative_authority": "ER12_RUNTIME/frozen-inputs/A2-01/brief.md",
+      "remaining_material_issue": false
+    },
+    {
+      "number": 7,
+      "exact_clause": "Preserve negative constraints: Do not require volunteers to remain online, infer precise location from photographs, change personal-device settings, or propose remote deletion of their originals.",
+      "original_draft_treatment": "Binding exclusions: Do not require volunteers to remain online, infer precise location from photographs, change personal-device settings, or propose remote deletion of their originals. The draft has no complete trace showing that its assumptions comply; revise the proposal wherever necessary to preserve these exclusions.",
+      "final_disposition": "RETAIN_NEGATIVE_CONSTRAINTS",
+      "independent_judgment": "MET",
+      "basis": "No continuous-online requirement, photo-location inference, personal-device setting change or remote original deletion. EXIF-derived image append excluded.",
+      "final_clause_line": 31,
+      "final_body_locator": "stages/reviser/final.md:31,47–56,79–83",
+      "evidence_ids": [
+        "E01",
+        "E09",
+        "E15",
+        "E18"
+      ],
+      "normative_authority": "ER12_RUNTIME/frozen-inputs/A2-01/brief.md",
+      "remaining_material_issue": false
+    },
+    {
+      "number": 8,
+      "exact_clause": "Deliver one coherent evidence-backed research proposal covering obligations 1–8, with recommendations, source/version applicability, useful discoveries, unresolved owner inputs, and a validation table separating checks actually executed from checks merely proposed. Do not report research sources or future tests as executed product validation.",
+      "original_draft_treatment": "The draft currently contains no coherent evidence-backed final proposal. Its proposed demos are research/validation ideas only. A complete revision must preserve every obligation, disclose corrections and retained options, and not confuse documentation review with successful product operation.",
+      "final_disposition": "COMPLETE_PROPOSAL",
+      "independent_judgment": "MET_WITH_PRESENTATION_LIMITATIONS",
+      "basis": "Complete scoped proposal plus source map, conditions, alternatives, owner inputs and prospective validation. Research distinguished from product execution. Validation priority/oracle detail is implicit, not materially absent.",
+      "final_clause_line": 32,
+      "final_body_locator": "stages/reviser/final.md:9–126",
+      "evidence_ids": [
+        "E01",
+        "E05",
+        "E18",
+        "E19",
+        "E20",
+        "E21"
+      ],
+      "normative_authority": "ER12_RUNTIME/frozen-inputs/A2-01/brief.md",
+      "remaining_material_issue": false
+    }
+  ],
+  "criticism_dispositions": [
+    {
+      "id": "C-01",
+      "original_classification": "Material incomplete",
+      "reviewer_assessment": "SUPPORTED draft visibility gap",
+      "draft_lines": [
+        60,
+        63
+      ],
+      "final_disposition": "ACCEPT",
+      "final_lines": [
+        25,
+        38,
+        47,
+        56
+      ],
+      "evidence_ids": [
+        "E01",
+        "E04",
+        "E05",
+        "E09",
+        "E19"
+      ],
+      "resolution": "Disconnected queue/receipt-unknown facts stay client-local; a durable later-sent client event is required for shared labels, otherwise apparent observation/receipt delay only. No built-in coordinator feed is claimed.",
+      "remaining_material": false
+    },
+    {
+      "id": "C-02",
+      "original_classification": "Material incomplete",
+      "reviewer_assessment": "Useful research expansion; severity bounded by optional scope",
+      "draft_lines": [
+        41,
+        85,
+        89
+      ],
+      "final_disposition": "AMEND_AND_RETAIN_UNCERTAINTY",
+      "final_lines": [
+        29,
+        39,
+        85,
+        95
+      ],
+      "evidence_ids": [
+        "E05",
+        "E17",
+        "E18",
+        "E19"
+      ],
+      "resolution": "Staff XML-plus-attachment adapter and advertised CSV Append building blocks investigated. Schema/identity/photos/reruns/no-overwrite conditions specified. Legacy shape/owner need and operational feasibility may honestly remain unknown; no scope removal or native importer claim.",
+      "remaining_material": false
+    },
+    {
+      "id": "C-03",
+      "original_classification": "Material incomplete",
+      "reviewer_assessment": "SUPPORTED missing deployment/export caveat",
+      "draft_lines": [
+        13,
+        51
+      ],
+      "final_disposition": "ACCEPT",
+      "final_lines": [
+        13,
+        26,
+        40,
+        63
+      ],
+      "evidence_ids": [
+        "E12"
+      ],
+      "resolution": "ArcGIS Server feature-layer surveys cannot use the Survey123 website download path; preserve Enterprise candidate and confirm exact layer/export route.",
+      "remaining_material": false
+    },
+    {
+      "id": "C-04",
+      "original_classification": "Minor locator/wording",
+      "reviewer_assessment": "SUPPORTED locator imprecision only",
+      "draft_locator": "investigator/source-map.json:S04.locator",
+      "final_disposition": "ACCEPT_AND_CORRECT_LOCATOR",
+      "final_lines": [
+        41
+      ],
+      "evidence_ids": [
+        "E04"
+      ],
+      "resolution": "Correct CSV ZIP section is supplied while inherited S04 identity/URL remain stable. New precise retrieval supplements rather than rebinds it.",
+      "remaining_material": false
+    }
+  ],
+  "lineage_defects": [
+    {
+      "id": "C-01",
+      "stage": "draft",
+      "kind": "Material incomplete",
+      "locator": [
+        60,
+        63
+      ],
+      "finding": "SUPPORTED draft visibility gap",
+      "final_disposition": "ACCEPT",
+      "final_resolution": "Disconnected queue/receipt-unknown facts stay client-local; a durable later-sent client event is required for shared labels, otherwise apparent observation/receipt delay only. No built-in coordinator feed is claimed.",
+      "still_material_in_final": false,
+      "evidence_ids": [
+        "E01",
+        "E04",
+        "E05",
+        "E09",
+        "E19"
+      ]
+    },
+    {
+      "id": "C-02",
+      "stage": "draft",
+      "kind": "Material incomplete",
+      "locator": [
+        41,
+        85,
+        89
+      ],
+      "finding": "Useful research expansion; severity bounded by optional scope",
+      "final_disposition": "AMEND_AND_RETAIN_UNCERTAINTY",
+      "final_resolution": "Staff XML-plus-attachment adapter and advertised CSV Append building blocks investigated. Schema/identity/photos/reruns/no-overwrite conditions specified. Legacy shape/owner need and operational feasibility may honestly remain unknown; no scope removal or native importer claim.",
+      "still_material_in_final": false,
+      "evidence_ids": [
+        "E05",
+        "E17",
+        "E18",
+        "E19"
+      ]
+    },
+    {
+      "id": "C-03",
+      "stage": "draft",
+      "kind": "Material incomplete",
+      "locator": [
+        13,
+        51
+      ],
+      "finding": "SUPPORTED missing deployment/export caveat",
+      "final_disposition": "ACCEPT",
+      "final_resolution": "ArcGIS Server feature-layer surveys cannot use the Survey123 website download path; preserve Enterprise candidate and confirm exact layer/export route.",
+      "still_material_in_final": false,
+      "evidence_ids": [
+        "E12"
+      ]
+    },
+    {
+      "id": "C-04",
+      "stage": "draft",
+      "kind": "Minor locator/wording",
+      "locator": "investigator/source-map.json:S04.locator",
+      "finding": "SUPPORTED locator imprecision only",
+      "final_disposition": "ACCEPT_AND_CORRECT_LOCATOR",
+      "final_resolution": "Correct CSV ZIP section is supplied while inherited S04 identity/URL remain stable. New precise retrieval supplements rather than rebinds it.",
+      "still_material_in_final": false,
+      "evidence_ids": [
+        "E04"
+      ]
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L01",
+      "type": "condition_prominence_and_preservation",
+      "material": false,
+      "locators": [
+        "final.md:62,64,107",
+        "reviser/source-map.json:S01,S16"
+      ],
+      "evidence_ids": [
+        "E01",
+        "E16"
+      ],
+      "description": "Central-side edits block subsequent Collect edits of that submission; Kobo web edits use the latest form and may remove old-field answers. These are compressed out of final prose but carried explicitly in the complete source map. Correction route/roles/history remain prospective owner choices, so no finalized incompatible workflow or claim of lossless Kobo edits remains."
+    },
+    {
+      "id": "L02",
+      "type": "operation_and_default_precision",
+      "material": false,
+      "locators": [
+        "final.md:50,62–63,91–92"
+      ],
+      "evidence_ids": [
+        "E05",
+        "E10",
+        "E18",
+        "E19"
+      ],
+      "description": "REST existing-ID 409 differs from OpenRosa changed-XML/deleted-ID 409. Sync-off describes newly published feature layers. ArcGIS upsert is blocked with sync/changeTracking; non-upsert allocates system IDs. Safe reconciliation and the conditional no-overwrite importer do not rely on broader incorrect interpretations."
+    },
+    {
+      "id": "L03",
+      "type": "bounded_analogy_and_alternative",
+      "material": false,
+      "locators": [
+        "final.md:15–17,64–65"
+      ],
+      "evidence_ids": [
+        "E14",
+        "E16"
+      ],
+      "description": "CouchDB revision leaves are not unlimited past-body retention after compaction. Kobo also offers project history logs alongside recommended external logs/comments. Candidate does not deploy CouchDB as an audit store or categorically ban Kobo; two fully compared products meet the comparison requirement."
+    },
+    {
+      "id": "L04",
+      "type": "prospective_validation_detail",
+      "material": false,
+      "locators": [
+        "final.md:111–120"
+      ],
+      "evidence_ids": [
+        "E19",
+        "E20",
+        "E21"
+      ],
+      "description": "Validation scenarios are meaningful but pass/fail cells and priorities are mostly implicit in the proposed identity/history/no-overwrite model and adoption gates. No executable prototype or live deployment was required. All product checks remain NOT_RUN."
+    },
+    {
+      "id": "L05",
+      "type": "provenance_only",
+      "material": false,
+      "locators": [
+        "stages/critic/status.json",
+        "terminal-science-freeze-root.json",
+        "final.md:126",
+        "reviser/source-map.json:native_goal"
+      ],
+      "evidence_ids": [],
+      "description": "Allowed artifacts lack raw native stage tool receipts and effective/billing telemetry. Reviser native-ID strings differ between b9d and b09d. Critic frozen artifact mtimes exceed its stage cap. These limits are separate from semantic source qualification."
+    }
+  ],
+  "unknowns": [
+    {
+      "category": "native_stage_proof",
+      "status": "UNKNOWN",
+      "basis": "Native stage events are reported in prose/summary; raw independent stage-native receipts absent from allowed package."
+    },
+    {
+      "category": "effective_provider_request",
+      "status": "UNKNOWN",
+      "basis": "Request/dispatch files express intent; T3 returned routing labels do not prove effective provider options."
+    },
+    {
+      "category": "billing_inference_savings",
+      "status": "UNKNOWN",
+      "basis": "No billing/effective inference telemetry. Reported Goal token/time fields are not invoices; no other-arm comparison."
+    },
+    {
+      "category": "unobserved_protocol_behavior",
+      "status": "UNKNOWN",
+      "basis": "No complete original tool trace inspected; no unauthorized assistance established in allowed artifacts."
+    },
+    {
+      "category": "real_product_operation",
+      "status": "NOT_RUN",
+      "basis": "No product install/account/production or end-to-end execution claimed or performed."
+    },
+    {
+      "category": "owner_and_legacy_inputs",
+      "status": "HONESTLY_UNRESOLVED",
+      "basis": "Actual view policy, infrastructure/roles/device versions, hosting/retention terms, legacy schema/photos and optional pilot need remain inputs."
+    }
+  ],
+  "useful_discoveries": [
+    {
+      "discovery": "Original-form opt-in client edits versus separate correction form",
+      "use": "Correction affordance with version/order/eligibility conditions",
+      "evidence_ids": [
+        "E01",
+        "E02",
+        "E05",
+        "E19"
+      ]
+    },
+    {
+      "discovery": "Removed fields may disappear from default export while old submissions persist",
+      "use": "Repeatable export needs explicit prior-field handling",
+      "evidence_ids": [
+        "E03",
+        "E04"
+      ]
+    },
+    {
+      "discovery": "Survey123 offline Outbox and existing-GIS fit",
+      "use": "Second full candidate with layer/access/export conditions",
+      "evidence_ids": [
+        "E09",
+        "E10",
+        "E11",
+        "E12",
+        "E24"
+      ]
+    },
+    {
+      "discovery": "Kobo UUID lineage and newest-form/raw edit risks",
+      "use": "Preserve screened option, do not assume retained history",
+      "evidence_ids": [
+        "E15",
+        "E16"
+      ]
+    },
+    {
+      "discovery": "Checkpoint recovery and conflict branches with a hidden winner",
+      "use": "Architectural analogy; preserve steward authority and avoid audit-store overreach",
+      "evidence_ids": [
+        "E13",
+        "E14"
+      ]
+    },
+    {
+      "discovery": "Released uncertain-response editing prevention",
+      "use": "Keep retry immutable; exact historical issue/patch/PR/release scope",
+      "evidence_ids": [
+        "E06",
+        "E07",
+        "E08",
+        "E20",
+        "E21"
+      ]
+    },
+    {
+      "discovery": "XML/attachment adapter and CSV Append building blocks",
+      "use": "Investigated optional import with schema/identity/rerun/no-overwrite/read-back gates",
+      "evidence_ids": [
+        "E05",
+        "E17",
+        "E18",
+        "E19"
+      ]
+    },
+    {
+      "discovery": "EXIF-derived imageCollection geometry",
+      "use": "Exclude photo-import shortcut without removing CSV option",
+      "evidence_ids": [
+        "E18"
+      ]
+    }
+  ],
+  "native": {
+    "stage_independent_proof": "UNKNOWN",
+    "reported_goal_ids": {
+      "investigator": "01a12401-f364-7642-9ce6-0e342871af49",
+      "critic": "01a12410-3a85-7750-8fef-665d3f05c2e4",
+      "reviser_inconsistent_strings": [
+        "01a1241c-d41c-7560-b9d-f72585b1404d",
+        "01a1241c-d41c-7560-b09d-f72585b1404d"
+      ]
+    },
+    "reported_terminal_usage_not_billing": {
+      "investigator": {
+        "tokensUsed": 256095,
+        "timeUsedSeconds": 878,
+        "source": "stages/investigator/status.json summary"
+      },
+      "critic": {
+        "tokensUsed": 164400,
+        "timeUsedSeconds": 742,
+        "source": "stages/critic/status.json summary"
+      },
+      "reviser": {
+        "tokensUsed": 153215,
+        "elapsed_summary": "11m 56s",
+        "source": "terminal-science-freeze-root.json summary"
+      }
+    },
+    "reviewer_direct_active_receipt": "reviewer-native-active.json"
+  },
+  "t3": {
+    "evidence": "Own-arm dispatch/status and terminal freeze",
+    "reported_stages_completed": [
+      "investigator",
+      "critic",
+      "reviser"
+    ],
+    "final_reported_pending_children": false,
+    "not_native_goal_proof": true
+  },
+  "protocol": {
+    "reviewer_identity": "codex-er12-a201-control-review",
+    "only_own_inbox_checked": true,
+    "no_roster_other_outcomes_history_or_ER11_read": true,
+    "no_nested_delegation": true,
+    "no_candidate_assistance_or_repair": true,
+    "no_git_publication_account_changes": true,
+    "original_freeze_unchanged": true,
+    "candidate_protocol": "PARTIALLY_EVIDENCED with documented critic stage-time deviation; unobserved behavior UNKNOWN",
+    "unauthorized_assistance_established": false,
+    "plan_release_sequence": "Discovery hash/mtime and reveal record support save before release; unseen earlier access UNKNOWN"
+  },
+  "time": {
+    "source_judgment_separate": true,
+    "whole_deadline_utc": "2026-10-10T05:11:09.528Z",
+    "root_terminal_observation_utc": "2026-10-10T04:53:55.022736+00:00",
+    "whole_terminal_within_envelope": true,
+    "critic_deadline_utc": "2026-10-10T04:38:44.265Z",
+    "critic_artifact_mtime_utc": [
+      "2026-10-10T04:39:34.613448Z",
+      "2026-10-10T04:39:34.613790Z"
+    ],
+    "critic_artifact_seconds_past_cap": [
+      50.348448,
+      50.34879
+    ],
+    "critic_reported_terminal_utc": "2026-10-10T04:39:53Z",
+    "critic_reported_terminal_seconds_past_cap": 68.735,
+    "stage_cap_compliance": "NONCOMPLIANT_CRITIC",
+    "effective_inference_time": "UNKNOWN",
+    "billing": "UNKNOWN"
+  },
+  "requested_routes": {
+    "provider": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "reasoningEffort": "max",
+    "investigator_serviceTier": "priority",
+    "critic_serviceTier": "priority",
+    "reviser_serviceTier": "default",
+    "effective_options": "UNKNOWN"
+  },
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A2-01/brief.md",
+      "bytes": 3292,
+      "sha256": "3715d3b3364ed8d47ed60b7d2f7c3e4ed0151f8c7e6ed26598de908a292b051f",
+      "mtime_ns": 1791605469528250475,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A2-01/plan.md",
+      "bytes": 5925,
+      "sha256": "57c6e740ac94d7c3b783621e59b759460ff10e4d157288e72d590e3f1f41666b",
+      "mtime_ns": 1791605469528563845,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/control/run.json",
+      "bytes": 580,
+      "sha256": "4991ca2a379deeb4af68ef31e3767babefeccf4c19014027e7039d2f70145e64",
+      "mtime_ns": 1791605469827560111,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/inputs/brief.md",
+      "bytes": 3292,
+      "sha256": "3715d3b3364ed8d47ed60b7d2f7c3e4ed0151f8c7e6ed26598de908a292b051f",
+      "mtime_ns": 1791605469827337144,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/critic/assignment.md",
+      "bytes": 3306,
+      "sha256": "fcc1f1ab6a4bf76955d9a9b21c9775f86e6f3ce00fd5391d300c6ff7ebc6bd99",
+      "mtime_ns": 1791606404265709326,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/critic/critique.md",
+      "bytes": 11268,
+      "sha256": "334b8b0b3f2ba4792ea6cb7b7f32fc87bc3ab002a616a6d1ae067fad77a331ab",
+      "mtime_ns": 1791607174613448344,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/critic/dispatch.json",
+      "bytes": 4124,
+      "sha256": "296cca1673e40b55e9b863be4fa470bbb69668f9b2a847ca0e628ad91894722a",
+      "mtime_ns": 1791606405866624525,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/critic/freeze.json",
+      "bytes": 3135,
+      "sha256": "0edc4b0c1e6920ce80545cabf81d13ccebe8e83ce715eccbfa07c28e17d23694",
+      "mtime_ns": 1791606404266237069,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/critic/input-map.json",
+      "bytes": 1390,
+      "sha256": "d43b7c722dd9f12bf91f8a3f1e0ff3501219805a2c55996dae823763aa80b6fe",
+      "mtime_ns": 1791606404265522974,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/critic/request.json",
+      "bytes": 890,
+      "sha256": "707a699cd4ee1d16a9802ec1ec09c2fb282aecc52ffae146812d578b1fd4a1ac",
+      "mtime_ns": 1791606404266385673,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/critic/source-map.json",
+      "bytes": 20526,
+      "sha256": "6c3fea6c34ccc155a023cacfda2ff5ad6a17f55ab982ef612a1d7bdd38f0db4e",
+      "mtime_ns": 1791607174613790011,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/critic/status.json",
+      "bytes": 3158,
+      "sha256": "d4f43c6a79636e2128178f6b47cc8a6641214db545575bf2cd238915b31c6085",
+      "mtime_ns": 1791607230520409826,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/assignment.md",
+      "bytes": 3712,
+      "sha256": "dfd3034f13b40a2c7f5cf45273b111115853d6f2feff34359c37463b2bdc22f7",
+      "mtime_ns": 1791605469828135877,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/discovery.md",
+      "bytes": 12992,
+      "sha256": "9d64b0fbf5433114a1fec7a69f783a9dfd784a241562d00898cc1e17eea98f75",
+      "mtime_ns": 1791605992463761416,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/dispatch.json",
+      "bytes": 4220,
+      "sha256": "05dba3fa0295478721df24e274582b802d2e53fc3d2050a2cbc29ad5563a1360",
+      "mtime_ns": 1791605470205234840,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/draft.md",
+      "bytes": 30687,
+      "sha256": "6fdde53b76200243d2532547221de3744ceddbab5f853d020aef02ed5fb1e610",
+      "mtime_ns": 1791606360325991731,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/freeze.json",
+      "bytes": 1654,
+      "sha256": "023cdfabdac1a0bc5c13d469dd3660544d8cacee65a13b88ee4d766a82129371",
+      "mtime_ns": 1791605469828382728,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/input-map.json",
+      "bytes": 714,
+      "sha256": "f35708c95d0ab4fe7447a79da9dee26a07872bbc8082aed9eba2c09c827f7993",
+      "mtime_ns": 1791605469827918225,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/plan-reveal.json",
+      "bytes": 427,
+      "sha256": "f1de6b356bfd658595613cb3c74d92b3b2856c7f1815a822c7ae1f3464f3ad10",
+      "mtime_ns": 1791606038661277218,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/request.json",
+      "bytes": 914,
+      "sha256": "c09c0ab69f93c9239ba78e55e41189ed3387b4874698f63f259f36e97417b872",
+      "mtime_ns": 1791605469828501591,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/revealed-plan.md",
+      "bytes": 5925,
+      "sha256": "57c6e740ac94d7c3b783621e59b759460ff10e4d157288e72d590e3f1f41666b",
+      "mtime_ns": 1791606038661158308,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/source-map.json",
+      "bytes": 18869,
+      "sha256": "ca2f489c77115d259ac336393577ecc9669d02b739eddd04ac0822079b9e1e10",
+      "mtime_ns": 1791606360330169288,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/sources/index.md",
+      "bytes": 7020,
+      "sha256": "c8d0e402ad4b0a2d40aa9a09aa9d78c80e044552ff9ca82affef16d4d5b30f46",
+      "mtime_ns": 1791606099197617519,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/status.json",
+      "bytes": 3802,
+      "sha256": "c7c832e2512051ec7a097c4c53deefe13051184d98e9f1c6d83807eb80cfd135",
+      "mtime_ns": 1791606403895218929,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/reviser/assignment.md",
+      "bytes": 3286,
+      "sha256": "d8d66aa4d64173f80356b7aa303f556c65ecbab17e5e9a41d4f6bf4996bc0fb3",
+      "mtime_ns": 1791607230881310577,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/reviser/dispatch.json",
+      "bytes": 4139,
+      "sha256": "aa742260b757cbd03800476538175f861b51032e5383b8147ccb2244e9dd26eb",
+      "mtime_ns": 1791607231687443189,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/reviser/final.md",
+      "bytes": 30258,
+      "sha256": "acf82a78824f59c9bbf06215d5324b593cf0638ef5ccae2422a579325ef3c45d",
+      "mtime_ns": 1791607967724769396,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/reviser/freeze.json",
+      "bytes": 3973,
+      "sha256": "5001bc2b3169f04f13b1aa266105b326e8f64ac70344516ed71a88f1b831d124",
+      "mtime_ns": 1791607231043613463,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/reviser/input-map.json",
+      "bytes": 1768,
+      "sha256": "bd89dc679bff69c7a5d11c01a41e908341f2533d996070257ae20ca90b50fdd0",
+      "mtime_ns": 1791607231042848090,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/reviser/request.json",
+      "bytes": 893,
+      "sha256": "aefdf9f4af0edfc5990d34ad73a4a27120c7f32ddcac4f8802f1c88b85a6ea0a",
+      "mtime_ns": 1791607231043101338,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/reviser/service-tier-change.json",
+      "bytes": 479,
+      "sha256": "165bce131771d336c93e0ff991b04675dfdb6425da64034339fe5de052ba0bd1",
+      "mtime_ns": 1791607231043809163,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/reviser/source-map.json",
+      "bytes": 53839,
+      "sha256": "51213a3189ee9ea3d8120150d06b2483e1421ccea2f2938762697943518fb6fb",
+      "mtime_ns": 1791607967723904894,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/reviser/sources/index.md",
+      "bytes": 5586,
+      "sha256": "508c2f50bc81398dcdab8255908c8872b587831742ad039b6fd2cf08cf2ca98b",
+      "mtime_ns": 1791607933111437622,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/terminal-science-freeze-root.json",
+      "bytes": 6801,
+      "sha256": "076845cf346bf37dfdca7c183958a335940d9a6ae5755b768c49e171c41d631c",
+      "mtime_ns": 1791608035022963186,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    }
+  ],
+  "freeze_integrity_checks": [
+    {
+      "freeze_path": "ER12_RUNTIME/runs/A2-01/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/critic/critique.md",
+      "present": true,
+      "actual_sha256": "334b8b0b3f2ba4792ea6cb7b7f32fc87bc3ab002a616a6d1ae067fad77a331ab",
+      "expected_sha256": "334b8b0b3f2ba4792ea6cb7b7f32fc87bc3ab002a616a6d1ae067fad77a331ab",
+      "hash_match": true
+    },
+    {
+      "freeze_path": "ER12_RUNTIME/runs/A2-01/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/critic/source-map.json",
+      "present": true,
+      "actual_sha256": "6c3fea6c34ccc155a023cacfda2ff5ad6a17f55ab982ef612a1d7bdd38f0db4e",
+      "expected_sha256": "6c3fea6c34ccc155a023cacfda2ff5ad6a17f55ab982ef612a1d7bdd38f0db4e",
+      "hash_match": true
+    },
+    {
+      "freeze_path": "ER12_RUNTIME/runs/A2-01/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/discovery.md",
+      "present": true,
+      "actual_sha256": "9d64b0fbf5433114a1fec7a69f783a9dfd784a241562d00898cc1e17eea98f75",
+      "expected_sha256": "9d64b0fbf5433114a1fec7a69f783a9dfd784a241562d00898cc1e17eea98f75",
+      "hash_match": true
+    },
+    {
+      "freeze_path": "ER12_RUNTIME/runs/A2-01/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/draft.md",
+      "present": true,
+      "actual_sha256": "6fdde53b76200243d2532547221de3744ceddbab5f853d020aef02ed5fb1e610",
+      "expected_sha256": "6fdde53b76200243d2532547221de3744ceddbab5f853d020aef02ed5fb1e610",
+      "hash_match": true
+    },
+    {
+      "freeze_path": "ER12_RUNTIME/runs/A2-01/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/revealed-plan.md",
+      "present": true,
+      "actual_sha256": "57c6e740ac94d7c3b783621e59b759460ff10e4d157288e72d590e3f1f41666b",
+      "expected_sha256": "57c6e740ac94d7c3b783621e59b759460ff10e4d157288e72d590e3f1f41666b",
+      "hash_match": true
+    },
+    {
+      "freeze_path": "ER12_RUNTIME/runs/A2-01/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/source-map.json",
+      "present": true,
+      "actual_sha256": "ca2f489c77115d259ac336393577ecc9669d02b739eddd04ac0822079b9e1e10",
+      "expected_sha256": "ca2f489c77115d259ac336393577ecc9669d02b739eddd04ac0822079b9e1e10",
+      "hash_match": true
+    },
+    {
+      "freeze_path": "ER12_RUNTIME/runs/A2-01/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/sources/index.md",
+      "present": true,
+      "actual_sha256": "c8d0e402ad4b0a2d40aa9a09aa9d78c80e044552ff9ca82affef16d4d5b30f46",
+      "expected_sha256": "c8d0e402ad4b0a2d40aa9a09aa9d78c80e044552ff9ca82affef16d4d5b30f46",
+      "hash_match": true
+    },
+    {
+      "freeze_path": "ER12_RUNTIME/runs/A2-01/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/reviser/final.md",
+      "present": true,
+      "actual_sha256": "acf82a78824f59c9bbf06215d5324b593cf0638ef5ccae2422a579325ef3c45d",
+      "expected_sha256": "acf82a78824f59c9bbf06215d5324b593cf0638ef5ccae2422a579325ef3c45d",
+      "hash_match": true
+    },
+    {
+      "freeze_path": "ER12_RUNTIME/runs/A2-01/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/reviser/source-map.json",
+      "present": true,
+      "actual_sha256": "51213a3189ee9ea3d8120150d06b2483e1421ccea2f2938762697943518fb6fb",
+      "expected_sha256": "51213a3189ee9ea3d8120150d06b2483e1421ccea2f2938762697943518fb6fb",
+      "hash_match": true
+    },
+    {
+      "freeze_path": "ER12_RUNTIME/runs/A2-01/control/terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/reviser/sources/index.md",
+      "present": true,
+      "actual_sha256": "508c2f50bc81398dcdab8255908c8872b587831742ad039b6fd2cf08cf2ca98b",
+      "expected_sha256": "508c2f50bc81398dcdab8255908c8872b587831742ad039b6fd2cf08cf2ca98b",
+      "hash_match": true
+    },
+    {
+      "freeze_path": "ER12_RUNTIME/runs/A2-01/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A2-01/control/inputs/brief.md",
+      "present": true,
+      "actual_sha256": "3715d3b3364ed8d47ed60b7d2f7c3e4ed0151f8c7e6ed26598de908a292b051f",
+      "expected_sha256": "3715d3b3364ed8d47ed60b7d2f7c3e4ed0151f8c7e6ed26598de908a292b051f",
+      "hash_match": true
+    },
+    {
+      "freeze_path": "ER12_RUNTIME/runs/A2-01/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/reviser/assignment.md",
+      "present": true,
+      "actual_sha256": "d8d66aa4d64173f80356b7aa303f556c65ecbab17e5e9a41d4f6bf4996bc0fb3",
+      "expected_sha256": "d8d66aa4d64173f80356b7aa303f556c65ecbab17e5e9a41d4f6bf4996bc0fb3",
+      "hash_match": true
+    },
+    {
+      "freeze_path": "ER12_RUNTIME/runs/A2-01/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/reviser/input-map.json",
+      "present": true,
+      "actual_sha256": "bd89dc679bff69c7a5d11c01a41e908341f2533d996070257ae20ca90b50fdd0",
+      "expected_sha256": "bd89dc679bff69c7a5d11c01a41e908341f2533d996070257ae20ca90b50fdd0",
+      "hash_match": true
+    },
+    {
+      "freeze_path": "ER12_RUNTIME/runs/A2-01/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/discovery.md",
+      "present": true,
+      "actual_sha256": "9d64b0fbf5433114a1fec7a69f783a9dfd784a241562d00898cc1e17eea98f75",
+      "expected_sha256": "9d64b0fbf5433114a1fec7a69f783a9dfd784a241562d00898cc1e17eea98f75",
+      "hash_match": true
+    },
+    {
+      "freeze_path": "ER12_RUNTIME/runs/A2-01/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/draft.md",
+      "present": true,
+      "actual_sha256": "6fdde53b76200243d2532547221de3744ceddbab5f853d020aef02ed5fb1e610",
+      "expected_sha256": "6fdde53b76200243d2532547221de3744ceddbab5f853d020aef02ed5fb1e610",
+      "hash_match": true
+    },
+    {
+      "freeze_path": "ER12_RUNTIME/runs/A2-01/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/source-map.json",
+      "present": true,
+      "actual_sha256": "ca2f489c77115d259ac336393577ecc9669d02b739eddd04ac0822079b9e1e10",
+      "expected_sha256": "ca2f489c77115d259ac336393577ecc9669d02b739eddd04ac0822079b9e1e10",
+      "hash_match": true
+    },
+    {
+      "freeze_path": "ER12_RUNTIME/runs/A2-01/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/revealed-plan.md",
+      "present": true,
+      "actual_sha256": "57c6e740ac94d7c3b783621e59b759460ff10e4d157288e72d590e3f1f41666b",
+      "expected_sha256": "57c6e740ac94d7c3b783621e59b759460ff10e4d157288e72d590e3f1f41666b",
+      "hash_match": true
+    },
+    {
+      "freeze_path": "ER12_RUNTIME/runs/A2-01/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/plan-reveal.json",
+      "present": true,
+      "actual_sha256": "f1de6b356bfd658595613cb3c74d92b3b2856c7f1815a822c7ae1f3464f3ad10",
+      "expected_sha256": "f1de6b356bfd658595613cb3c74d92b3b2856c7f1815a822c7ae1f3464f3ad10",
+      "hash_match": true
+    },
+    {
+      "freeze_path": "ER12_RUNTIME/runs/A2-01/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/critic/critique.md",
+      "present": true,
+      "actual_sha256": "334b8b0b3f2ba4792ea6cb7b7f32fc87bc3ab002a616a6d1ae067fad77a331ab",
+      "expected_sha256": "334b8b0b3f2ba4792ea6cb7b7f32fc87bc3ab002a616a6d1ae067fad77a331ab",
+      "hash_match": true
+    },
+    {
+      "freeze_path": "ER12_RUNTIME/runs/A2-01/control/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/critic/source-map.json",
+      "present": true,
+      "actual_sha256": "6c3fea6c34ccc155a023cacfda2ff5ad6a17f55ab982ef612a1d7bdd38f0db4e",
+      "expected_sha256": "6c3fea6c34ccc155a023cacfda2ff5ad6a17f55ab982ef612a1d7bdd38f0db4e",
+      "hash_match": true
+    },
+    {
+      "freeze_path": "ER12_RUNTIME/runs/A2-01/control/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A2-01/control/inputs/brief.md",
+      "present": true,
+      "actual_sha256": "3715d3b3364ed8d47ed60b7d2f7c3e4ed0151f8c7e6ed26598de908a292b051f",
+      "expected_sha256": "3715d3b3364ed8d47ed60b7d2f7c3e4ed0151f8c7e6ed26598de908a292b051f",
+      "hash_match": true
+    },
+    {
+      "freeze_path": "ER12_RUNTIME/runs/A2-01/control/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/critic/assignment.md",
+      "present": true,
+      "actual_sha256": "fcc1f1ab6a4bf76955d9a9b21c9775f86e6f3ce00fd5391d300c6ff7ebc6bd99",
+      "expected_sha256": "fcc1f1ab6a4bf76955d9a9b21c9775f86e6f3ce00fd5391d300c6ff7ebc6bd99",
+      "hash_match": true
+    },
+    {
+      "freeze_path": "ER12_RUNTIME/runs/A2-01/control/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/critic/input-map.json",
+      "present": true,
+      "actual_sha256": "d43b7c722dd9f12bf91f8a3f1e0ff3501219805a2c55996dae823763aa80b6fe",
+      "expected_sha256": "d43b7c722dd9f12bf91f8a3f1e0ff3501219805a2c55996dae823763aa80b6fe",
+      "hash_match": true
+    },
+    {
+      "freeze_path": "ER12_RUNTIME/runs/A2-01/control/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/discovery.md",
+      "present": true,
+      "actual_sha256": "9d64b0fbf5433114a1fec7a69f783a9dfd784a241562d00898cc1e17eea98f75",
+      "expected_sha256": "9d64b0fbf5433114a1fec7a69f783a9dfd784a241562d00898cc1e17eea98f75",
+      "hash_match": true
+    },
+    {
+      "freeze_path": "ER12_RUNTIME/runs/A2-01/control/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/draft.md",
+      "present": true,
+      "actual_sha256": "6fdde53b76200243d2532547221de3744ceddbab5f853d020aef02ed5fb1e610",
+      "expected_sha256": "6fdde53b76200243d2532547221de3744ceddbab5f853d020aef02ed5fb1e610",
+      "hash_match": true
+    },
+    {
+      "freeze_path": "ER12_RUNTIME/runs/A2-01/control/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/source-map.json",
+      "present": true,
+      "actual_sha256": "ca2f489c77115d259ac336393577ecc9669d02b739eddd04ac0822079b9e1e10",
+      "expected_sha256": "ca2f489c77115d259ac336393577ecc9669d02b739eddd04ac0822079b9e1e10",
+      "hash_match": true
+    },
+    {
+      "freeze_path": "ER12_RUNTIME/runs/A2-01/control/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/revealed-plan.md",
+      "present": true,
+      "actual_sha256": "57c6e740ac94d7c3b783621e59b759460ff10e4d157288e72d590e3f1f41666b",
+      "expected_sha256": "57c6e740ac94d7c3b783621e59b759460ff10e4d157288e72d590e3f1f41666b",
+      "hash_match": true
+    },
+    {
+      "freeze_path": "ER12_RUNTIME/runs/A2-01/control/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/plan-reveal.json",
+      "present": true,
+      "actual_sha256": "f1de6b356bfd658595613cb3c74d92b3b2856c7f1815a822c7ae1f3464f3ad10",
+      "expected_sha256": "f1de6b356bfd658595613cb3c74d92b3b2856c7f1815a822c7ae1f3464f3ad10",
+      "hash_match": true
+    },
+    {
+      "freeze_path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/freeze.json",
+      "path": "ER12_RUNTIME/runs/A2-01/control/inputs/brief.md",
+      "present": true,
+      "actual_sha256": "3715d3b3364ed8d47ed60b7d2f7c3e4ed0151f8c7e6ed26598de908a292b051f",
+      "expected_sha256": "3715d3b3364ed8d47ed60b7d2f7c3e4ed0151f8c7e6ed26598de908a292b051f",
+      "hash_match": true
+    },
+    {
+      "freeze_path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/freeze.json",
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/assignment.md",
+      "present": true,
+      "actual_sha256": "dfd3034f13b40a2c7f5cf45273b111115853d6f2feff34359c37463b2bdc22f7",
+      "expected_sha256": "dfd3034f13b40a2c7f5cf45273b111115853d6f2feff34359c37463b2bdc22f7",
+      "hash_match": true
+    },
+    {
+      "freeze_path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/freeze.json",
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/input-map.json",
+      "present": true,
+      "actual_sha256": "f35708c95d0ab4fe7447a79da9dee26a07872bbc8082aed9eba2c09c827f7993",
+      "expected_sha256": "f35708c95d0ab4fe7447a79da9dee26a07872bbc8082aed9eba2c09c827f7993",
+      "hash_match": true
+    }
+  ],
+  "missing_or_incomplete": {
+    "mapped_inputs": [],
+    "separate_critic_authored_source_files": [],
+    "raw_stage_native_receipts": "UNAVAILABLE_IN_ALLOWED_PACKAGE",
+    "raw_original_primary_retrievals": "UNAVAILABLE_IN_AUTHORED_SOURCE_DIRECTORIES"
+  },
+  "independent_sources": [
+    {
+      "id": "E01",
+      "url": "https://docs.getodk.org/collect-forms/",
+      "version": "Living docs; explicit Collect v2025.2.0 / Central v2025.1.4 feature gate",
+      "locators": [
+        {
+          "path": "evidence/E01.txt",
+          "lines": [
+            133,
+            166
+          ],
+          "section": "Finalizing drafts; Sending finalized forms; Editing finalized or sent forms"
+        }
+      ],
+      "access_started_utc": "2026-10-10T04:55:52.834275+00:00",
+      "raw_path": "evidence/E01.html",
+      "raw_sha256": "2f2023a20521a9ae3565317549d01cd92db24da3f15aedc1b75dc19419bf687e"
+    },
+    {
+      "id": "E02",
+      "url": "https://docs.getodk.org/openrosa-metadata/",
+      "version": "Living protocol documentation; no product build pinned",
+      "locators": [
+        {
+          "path": "evidence/E02.txt",
+          "lines": [
+            138,
+            205
+          ],
+          "section": "Form Identity; Version; Completed Form Metadata; ID constraints"
+        }
+      ],
+      "access_started_utc": "2026-10-10T04:55:52.835332+00:00",
+      "raw_path": "evidence/E02.html",
+      "raw_sha256": "974bf68eb0f2ed0a6aea5713f25716d928706e88974bdf97d410af44065bc080"
+    },
+    {
+      "id": "E03",
+      "url": "https://docs.getodk.org/central-forms/",
+      "version": "Living docs; drafting/version updates since Central 0.8",
+      "locators": [
+        {
+          "path": "evidence/E03.txt",
+          "lines": [
+            121,
+            150
+          ],
+          "section": "Forms; Drafts; App User access"
+        },
+        {
+          "path": "evidence/E03.txt",
+          "lines": [
+            189,
+            212
+          ],
+          "section": "Updating Forms; Older Versions"
+        }
+      ],
+      "access_started_utc": "2026-10-10T04:55:52.838646+00:00",
+      "raw_path": "evidence/E03.html",
+      "raw_sha256": "c852d7a6a8d1e2952d5f5c2f8dc89bcac4b5a30af61c374bc5480406f3415da9"
+    },
+    {
+      "id": "E04",
+      "url": "https://docs.getodk.org/central-submissions/",
+      "version": "Living docs; review states since Central 1.2; diff display since 1.3",
+      "locators": [
+        {
+          "path": "evidence/E04.txt",
+          "lines": [
+            172,
+            186
+          ],
+          "section": "Downloading Submissions as CSVs"
+        },
+        {
+          "path": "evidence/E04.txt",
+          "lines": [
+            218,
+            269
+          ],
+          "section": "Review States; Editing; Offline Web Forms"
+        }
+      ],
+      "access_started_utc": "2026-10-10T04:55:52.841741+00:00",
+      "raw_path": "evidence/E04.html",
+      "raw_sha256": "9867abb3f0294f65155bb8e56a91bdc4d9dec7f6630ca1560a3b1375050dd1db"
+    },
+    {
+      "id": "E05",
+      "url": "https://docs.getodk.org/central-api-submission-management/",
+      "version": "Living API; attachment upload since 0.4, versions since 1.2, device metadata since 1.4",
+      "locators": [
+        {
+          "path": "evidence/E05.txt",
+          "lines": [
+            119,
+            126
+          ],
+          "section": "Logical submission versus version identity"
+        },
+        {
+          "path": "evidence/E05.txt",
+          "lines": [
+            210,
+            220
+          ],
+          "section": "createdAt schema"
+        },
+        {
+          "path": "evidence/E05.txt",
+          "lines": [
+            397,
+            405
+          ],
+          "section": "Creating a Submission"
+        },
+        {
+          "path": "evidence/E05.txt",
+          "lines": [
+            2010,
+            2080
+          ],
+          "section": "Attachment upload; Submission Versions"
+        }
+      ],
+      "access_started_utc": "2026-10-10T04:55:52.844027+00:00",
+      "raw_path": "evidence/E05.html",
+      "raw_sha256": "3e2e4c1a31743f5bd3ae03e9e51dbcf1a375c5c1d23e09eda227f8bd0831c948"
+    },
+    {
+      "id": "E06",
+      "url": "https://github.com/getodk/collect/issues/4589",
+      "version": "Opened 2021-06-02; closed 2021-07-07 by #4655",
+      "locators": [
+        {
+          "path": "evidence/E06.txt",
+          "lines": [
+            119,
+            172
+          ],
+          "section": "Report and maintainer implementation lead"
+        },
+        {
+          "path": "evidence/E06.txt",
+          "lines": [
+            197,
+            284
+          ],
+          "section": "Ambiguous response; failed status; closure"
+        }
+      ],
+      "access_started_utc": "2026-10-10T04:55:52.953883+00:00",
+      "raw_path": "evidence/E06.html",
+      "raw_sha256": "88f77b8ed6de9b342c3e4758ed81cd9c6a5ad2c99e782ba385a89f5e567dcd68"
+    },
+    {
+      "id": "E07",
+      "url": "https://github.com/getodk/collect/commit/0bc6cde",
+      "version": "Full SHA independently recovered from E21: 0bc6cdefe1b49256218726e3fb0059498e450378; dated 2021-06-29",
+      "locators": [
+        {
+          "path": "evidence/E21.txt",
+          "lines": [
+            1,
+            218
+          ],
+          "section": "Complete commit patch, test and CursorLoaderFactory filter"
+        }
+      ],
+      "access_started_utc": "2026-10-10T04:55:53.243400+00:00",
+      "raw_path": "evidence/E07.html",
+      "raw_sha256": "7fa500883b0f0be483fa635a99e0be57d28d04f4ea3c88422839b01c9f603cb8"
+    },
+    {
+      "id": "E08",
+      "url": "https://github.com/getodk/collect/releases/tag/v2021.2.0",
+      "version": "v2021.2.0; raw release datetime 2021-07-27T20:59:18Z",
+      "locators": [
+        {
+          "path": "evidence/E08.txt",
+          "lines": [
+            108,
+            136
+          ],
+          "section": "Release tag"
+        },
+        {
+          "path": "evidence/E08.txt",
+          "lines": [
+            185,
+            199
+          ],
+          "section": "#4655 entry"
+        },
+        {
+          "path": "evidence/E08.html",
+          "selector": "relative-time[datetime='2021-07-27T20:59:18Z']",
+          "section": "Release publication timestamp"
+        }
+      ],
+      "access_started_utc": "2026-10-10T04:55:53.307754+00:00",
+      "raw_path": "evidence/E08.html",
+      "raw_sha256": "b8fb13b29638376e388cf264ce68c74687d9d591e9453924fa87cb66b1ea6030"
+    },
+    {
+      "id": "E09",
+      "url": "https://doc.arcgis.com/en/survey123/capture/field-app/submitsurveyresults.htm",
+      "version": "Living docs; field app path explicitly",
+      "locators": [
+        {
+          "path": "evidence/E09.txt",
+          "lines": [
+            4,
+            19
+          ],
+          "section": "Submit survey results"
+        }
+      ],
+      "access_started_utc": "2026-10-10T04:55:53.322684+00:00",
+      "raw_path": "evidence/E09.html",
+      "raw_sha256": "7438455df9f845097d553ac43579594be71fc17f316213ace3dcb85370f0c5ed"
+    },
+    {
+      "id": "E10",
+      "url": "https://doc.arcgis.com/en/survey123/create/connect/publishsurvey.htm",
+      "version": "Living docs; defaults apply to described publish workflow",
+      "locators": [
+        {
+          "path": "evidence/E10.txt",
+          "lines": [
+            41,
+            51
+          ],
+          "section": "Publish options"
+        },
+        {
+          "path": "evidence/E10.txt",
+          "lines": [
+            60,
+            67
+          ],
+          "section": "Sent folder"
+        }
+      ],
+      "access_started_utc": "2026-10-10T04:55:53.422264+00:00",
+      "raw_path": "evidence/E10.html",
+      "raw_sha256": "2595915a9f669c2f81b08db139ff060b8fcb74dcaf5f3d3dd63ff6f8e05adbde"
+    },
+    {
+      "id": "E11",
+      "url": "https://doc.arcgis.com/en/survey123/capture/web-app/editexistingdata.htm",
+      "version": "Global-ID URL editing from 3.9; older Enterprise attachment edit limit before 10.8.1",
+      "locators": [
+        {
+          "path": "evidence/E11.txt",
+          "lines": [
+            9,
+            19
+          ],
+          "section": "Table edits"
+        },
+        {
+          "path": "evidence/E11.txt",
+          "lines": [
+            29,
+            68
+          ],
+          "section": "Individual/web edits and limitations"
+        }
+      ],
+      "access_started_utc": "2026-10-10T04:55:53.846728+00:00",
+      "raw_path": "evidence/E11.html",
+      "raw_sha256": "09cc1ab659fde547b6e53782339462653ef6921539571b27786aa6929b1957b8"
+    },
+    {
+      "id": "E12",
+      "url": "https://doc.arcgis.com/en/survey123/analyze/viewresults.htm",
+      "version": "Living docs; no specific deployment pinned",
+      "locators": [
+        {
+          "path": "evidence/E12.txt",
+          "lines": [
+            42,
+            66
+          ],
+          "section": "View data; Download results"
+        }
+      ],
+      "access_started_utc": "2026-10-10T04:55:53.850942+00:00",
+      "raw_path": "evidence/E12.html",
+      "raw_sha256": "dba6c70476d4821369e623765051ae8df2ed8a6880ce0db9845ddc29164aaff6"
+    },
+    {
+      "id": "E13",
+      "url": "https://docs.couchdb.org/en/3.5.1/replication/intro.html",
+      "version": "Apache CouchDB 3.5.1 documentation",
+      "locators": [
+        {
+          "path": "evidence/E13.txt",
+          "lines": [
+            82,
+            109
+          ],
+          "section": "Replication Procedure; Master-Master Replication"
+        }
+      ],
+      "access_started_utc": "2026-10-10T04:55:54.011855+00:00",
+      "raw_path": "evidence/E13.html",
+      "raw_sha256": "f5ceaff9abe6d9260172469c66d0c85b9442b55e19196739b0d3f71864c721c1"
+    },
+    {
+      "id": "E14",
+      "url": "https://docs.couchdb.org/en/3.5.1/replication/conflicts.html",
+      "version": "Apache CouchDB 3.5.1 documentation",
+      "locators": [
+        {
+          "path": "evidence/E14.txt",
+          "lines": [
+            63,
+            136
+          ],
+          "section": "Replication conflicts and default winner"
+        },
+        {
+          "path": "evidence/E14.txt",
+          "lines": [
+            153,
+            223
+          ],
+          "section": "Revision tree; compaction; conflict reads"
+        },
+        {
+          "path": "evidence/E14.txt",
+          "lines": [
+            416,
+            438
+          ],
+          "section": "Old-body/diff limitation"
+        }
+      ],
+      "access_started_utc": "2026-10-10T04:55:54.015821+00:00",
+      "raw_path": "evidence/E14.html",
+      "raw_sha256": "30423a9a6159213eac7d251e5403b005a07580ceec5c5208970abb5ce7851536"
+    },
+    {
+      "id": "E15",
+      "url": "https://support.kobotoolbox.org/data_collection_kobocollect.html",
+      "version": "Support page last updated 2026-07-17; app build not pinned",
+      "locators": [
+        {
+          "path": "evidence/E15.txt",
+          "lines": [
+            16,
+            78
+          ],
+          "section": "Download; collect; ready-to-send; upload"
+        }
+      ],
+      "access_started_utc": "2026-10-10T04:55:54.113615+00:00",
+      "raw_path": "evidence/E15.html",
+      "raw_sha256": "82788080344a48991119da279ab97952cf6ac4334a31638a5089ba8d7e351e47"
+    },
+    {
+      "id": "E16",
+      "url": "https://support.kobotoolbox.org/editing_deleting_data.html",
+      "version": "Support page last updated 2026-05-06; app build not pinned",
+      "locators": [
+        {
+          "path": "evidence/E16.txt",
+          "lines": [
+            16,
+            45
+          ],
+          "section": "Post-submit edits; metadata; raw/web methods"
+        },
+        {
+          "path": "evidence/E16.txt",
+          "lines": [
+            61,
+            94
+          ],
+          "section": "History note and version/export troubleshooting"
+        }
+      ],
+      "access_started_utc": "2026-10-10T04:55:54.165535+00:00",
+      "raw_path": "evidence/E16.html",
+      "raw_sha256": "394277663ec886566754655763e75012490dbd78ce1e29859b61978f3294dcba"
+    },
+    {
+      "id": "E17",
+      "url": "https://doc.arcgis.com/en/survey123/create/main/xlsformformulas.htm",
+      "version": "Living docs; Connect/field-app capability, not Studio/Mobile",
+      "locators": [
+        {
+          "path": "evidence/E17.txt",
+          "lines": [
+            203,
+            208
+          ],
+          "section": "pulldata function"
+        },
+        {
+          "path": "evidence/E17.txt",
+          "lines": [
+            463,
+            480
+          ],
+          "section": "Retrieve a value from .csv"
+        }
+      ],
+      "access_started_utc": "2026-10-10T04:55:54.190789+00:00",
+      "raw_path": "evidence/E17.html",
+      "raw_sha256": "949b412395f4a70220bd9d697d3c4095c320d19fac6e8a8502e4267bbe144db2"
+    },
+    {
+      "id": "E18",
+      "url": "https://developers.arcgis.com/rest/services-reference/enterprise/append-feature-service-layer/",
+      "version": "Living Enterprise REST docs; capability gate 11.1; imageCollection 11.5; portal item 10.9+",
+      "locators": [
+        {
+          "path": "evidence/E18.txt",
+          "lines": [
+            142,
+            242
+          ],
+          "section": "Upsert; capability; supportsAppend; formats; sync; images"
+        },
+        {
+          "path": "evidence/E18.txt",
+          "lines": [
+            511,
+            519
+          ],
+          "section": "appendSourceInfo"
+        },
+        {
+          "path": "evidence/E18.txt",
+          "lines": [
+            769,
+            770
+          ],
+          "section": "Image collection default"
+        },
+        {
+          "path": "evidence/E18.txt",
+          "lines": [
+            937,
+            950
+          ],
+          "section": "CSV to nonspatial table example"
+        }
+      ],
+      "access_started_utc": "2026-10-10T04:55:54.297674+00:00",
+      "raw_path": "evidence/E18.html",
+      "raw_sha256": "bea9ac7d4207280e2cb8448b836c23c3776e94722921af0bfe6eddf745189f11"
+    },
+    {
+      "id": "E19",
+      "url": "https://docs.getodk.org/central-api-openrosa-endpoints/",
+      "version": "Living Central OpenRosa API; submission endpoint since 0.1",
+      "locators": [
+        {
+          "path": "evidence/E19.txt",
+          "lines": [
+            180,
+            231
+          ],
+          "section": "Form Submission API and updates"
+        }
+      ],
+      "access_started_utc": "2026-10-10T04:55:54.315280+00:00",
+      "raw_path": "evidence/E19.html",
+      "raw_sha256": "bbd456ff961bf8033988ddf1d373473581a84dc34e558c7b26b53722565479eb"
+    },
+    {
+      "id": "E20",
+      "url": "https://github.com/getodk/collect/pull/4655",
+      "version": "Merged 2021-07-07; six commits",
+      "locators": [
+        {
+          "path": "evidence/E20.txt",
+          "lines": [
+            108,
+            163
+          ],
+          "section": "Merge record and verification/design notes"
+        }
+      ],
+      "access_started_utc": "2026-10-10T04:55:54.342500+00:00",
+      "raw_path": "evidence/E20.html",
+      "raw_sha256": "9b21e3392f5006e7dac597722806fd56e53da56fe4336a07d021c3b94fc21ba3"
+    },
+    {
+      "id": "E21",
+      "url": "https://github.com/getodk/collect/commit/0bc6cde.patch",
+      "version": "0bc6cdefe1b49256218726e3fb0059498e450378",
+      "locators": [
+        {
+          "path": "evidence/E21.txt",
+          "lines": [
+            1,
+            218
+          ],
+          "section": "Entire patch"
+        }
+      ],
+      "access_started_utc": "2026-10-10T04:55:54.348331+00:00",
+      "raw_path": "evidence/E21.patch",
+      "raw_sha256": "f8d97d1c6edf6a776049f2955cc343421c2b2c99305b2d578ab112974b3a37b9"
+    },
+    {
+      "id": "E22",
+      "url": "https://docs.getodk.org/central-install/",
+      "version": "Living installation docs; no deployed build selected",
+      "locators": [
+        {
+          "path": "evidence/E22.txt",
+          "lines": [
+            119,
+            151
+          ],
+          "section": "Cloud; Self-hosting; installation requirements"
+        }
+      ],
+      "access_started_utc": "2026-10-10T04:55:54.537203+00:00",
+      "raw_path": "evidence/E22.html",
+      "raw_sha256": "ca8c180bae7b722627447e81a495a90825b435de7c74653a7433ddb25292fe61"
+    },
+    {
+      "id": "E23",
+      "url": "https://docs.getodk.org/central-users/",
+      "version": "Living Central user-management docs",
+      "locators": [
+        {
+          "path": "evidence/E23.txt",
+          "section": "User roles; Project Form Submissions; Project App Users",
+          "search_terms": [
+            "User roles",
+            "Project Form Submissions",
+            "Project App Users"
+          ]
+        }
+      ],
+      "access_started_utc": "2026-10-10T04:55:54.650016+00:00",
+      "raw_path": "evidence/E23.html",
+      "raw_sha256": "8e4f003d13115424e2bb42c7933c7347a9ce520109d063baff0e1e40ae2463dd"
+    },
+    {
+      "id": "E24",
+      "url": "https://doc.arcgis.com/en/survey123/get-started/systemrequirements.htm",
+      "version": "Living requirements; currently Enterprise 10.9.1+; field app Android 7+ distinct from Mobile Android13+",
+      "locators": [
+        {
+          "path": "evidence/E24.txt",
+          "section": "ArcGIS requirements; Supported operating systems for field app and Connect",
+          "search_terms": [
+            "Android 7.0",
+            "Android 13",
+            "10.9.1",
+            "Public surveys"
+          ]
+        }
+      ],
+      "access_started_utc": "2026-10-10T04:58:59.983764+00:00",
+      "raw_path": "evidence/E24.html",
+      "raw_sha256": "f067020541d815832b8654cf489f54e5576737150bab60b63682a773241f2685"
+    }
+  ],
+  "source_map": "source-map.json",
+  "original_manifest": "original-inspected-manifest.json",
+  "reviewer_envelope": {
+    "first_direct_clock_utc": "2026-10-10T04:54:11Z",
+    "latest_finish_from_that_observation": "2026-10-10T05:39:11Z",
+    "actual_request_delivery_time": "UNKNOWN",
+    "capped": false,
+    "finish_reason": "Full declared semantic scope complete; finish early",
+    "judgment_saved_utc": "2026-10-10T05:07:42.817948+00:00",
+    "native_completion_order": "All judgment and source artifacts saved before actual reviewer native completion"
+  }
+}

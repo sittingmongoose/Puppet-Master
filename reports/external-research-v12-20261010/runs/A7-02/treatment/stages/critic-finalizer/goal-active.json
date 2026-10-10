@@ -1,0 +1,17 @@
+{
+  "captured_at_utc": "2026-10-10T05:01:22.845Z",
+  "raw_native_response": {
+    "goal": {
+      "threadId": "01a1241d-3055-7802-b068-8c27557a5ae6",
+      "objective": "ER11 critic-finalizer stage, run A7-02-treatment: execute ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "status": "active",
+      "tokensUsed": 204761,
+      "timeUsedSeconds": 1193,
+      "createdAt": 1791607282,
+      "updatedAt": 1791608476
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "origin_requirement": "exact direct native tool response; not a hand-authored receipt"
+}

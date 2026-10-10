@@ -1,0 +1,1379 @@
+{
+  "schema_version": 1,
+  "assessment_id": "ER12-A2-01-control-v1",
+  "scope": "Only the single frozen A2-01 control full pipeline",
+  "source_id_policy": "Independent E IDs; candidate S/C/R bindings are cross-references, not reused or rebound",
+  "semantic_proof_note": "Primary context and semantic reasoning decide the judgment; hashes/counts/agreement establish integrity only",
+  "original_manifest": "original-inspected-manifest.json",
+  "sources": [
+    {
+      "id": "E01",
+      "url": "https://docs.getodk.org/collect-forms/",
+      "access_started_utc": "2026-10-10T04:55:52.834275+00:00",
+      "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+      "candidate_ids": [
+        "S01",
+        "C01",
+        "R01"
+      ],
+      "http_status": 200,
+      "effective_url": "https://docs.getodk.org/collect-forms/",
+      "raw_path": "evidence/E01.html",
+      "raw_sha256": "2f2023a20521a9ae3565317549d01cd92db24da3f15aedc1b75dc19419bf687e",
+      "text_path": "evidence/E01.txt",
+      "text_sha256": "e16ae7d185dd70a2ca3d18ef7fceb69d98b4767eec85b3692e8b52e7824d8323",
+      "response_headers": {
+        "Content-Type": "text/html; charset=utf-8",
+        "Last-Modified": "Fri, 03 Jul 2026 17:08:17 GMT",
+        "Date": "Sat, 10 Oct 2026 04:55:53 GMT",
+        "ETag": "\"e8e3bc6224427a6669cc8b0126b9f817\""
+      },
+      "access_finished_utc": "2026-10-10T04:55:53.158392+00:00",
+      "title": "ODK Collect form lifecycle and client edits",
+      "version": "Living docs; explicit Collect v2025.2.0 / Central v2025.1.4 feature gate",
+      "locators": [
+        {
+          "path": "evidence/E01.txt",
+          "lines": [
+            133,
+            166
+          ],
+          "section": "Finalizing drafts; Sending finalized forms; Editing finalized or sent forms"
+        }
+      ],
+      "subject_operation": "Collect device-local Draft/Ready to send/Sent; opt-in edits of retained finalized/sent submissions",
+      "conditions": "Off by default; settings.client_editable=true. Edits use the original form definition, are tracked in Central, and manually queued edits must be sent in order. A Central-side edit makes that submission no longer editable from Collect. Entities are not updated by these edits.",
+      "judgment": "VERIFIED",
+      "applies_to": "Final lines 11,25,38,47–56,62,101 and inherited S01/C01/R01. Conditional product fit and correction option are supported.",
+      "limits": "No deployed versions observed. Final prose compresses the Central-edit lockout, retained explicitly in inherited source-map S01. Queue visibility beyond the device is an inference/proposal, not built-in evidence."
+    },
+    {
+      "id": "E02",
+      "url": "https://docs.getodk.org/openrosa-metadata/",
+      "access_started_utc": "2026-10-10T04:55:52.835332+00:00",
+      "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+      "candidate_ids": [
+        "S02",
+        "C02"
+      ],
+      "http_status": 200,
+      "effective_url": "https://docs.getodk.org/openrosa-metadata/",
+      "raw_path": "evidence/E02.html",
+      "raw_sha256": "974bf68eb0f2ed0a6aea5713f25716d928706e88974bdf97d410af44065bc080",
+      "text_path": "evidence/E02.txt",
+      "text_sha256": "1f81c8593485ecc3bd7f6abaae6aa7cd2eb966456b6e147e4d88b7ab42d026a1",
+      "response_headers": {
+        "Content-Type": "text/html; charset=utf-8",
+        "Last-Modified": "Sat, 22 Aug 2026 17:48:45 GMT",
+        "Date": "Sat, 10 Oct 2026 04:55:54 GMT",
+        "ETag": "\"3f07479710034f916c8a93ed1f0f8c88\""
+      },
+      "access_finished_utc": "2026-10-10T04:55:53.292669+00:00",
+      "title": "OpenRosa metadata identity and client time",
+      "version": "Living protocol documentation; no product build pinned",
+      "locators": [
+        {
+          "path": "evidence/E02.txt",
+          "lines": [
+            138,
+            205
+          ],
+          "section": "Form Identity; Version; Completed Form Metadata; ID constraints"
+        }
+      ],
+      "subject_operation": "XForm identity/version and submission metadata",
+      "conditions": "Form version is a string. instanceID is required and universally unique; timeStart/timeEnd are optional ISO 8601 form-entry timestamps. deprecatedID identifies the preceding submission; consolidation is server behavior. IDs use scheme:value.",
+      "judgment": "VERIFIED",
+      "applies_to": "Final lines 71–81, S02/C02; separates site/visit/event, form definition, reported observation time, and unverified client clock.",
+      "limits": "Metadata is not proof of accurate device time, immutable audit history, or a correction display policy. Attachment IDs/digests are proposed application fields."
+    },
+    {
+      "id": "E03",
+      "url": "https://docs.getodk.org/central-forms/",
+      "access_started_utc": "2026-10-10T04:55:52.838646+00:00",
+      "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+      "candidate_ids": [
+        "S03",
+        "C03"
+      ],
+      "http_status": 200,
+      "effective_url": "https://docs.getodk.org/central-forms/",
+      "raw_path": "evidence/E03.html",
+      "raw_sha256": "c852d7a6a8d1e2952d5f5c2f8dc89bcac4b5a30af61c374bc5480406f3415da9",
+      "text_path": "evidence/E03.txt",
+      "text_sha256": "026807ce97c97e14e2cb6de802a8492a0d6fd652e8f322cfbc27b28b3b26761b",
+      "response_headers": {
+        "Content-Type": "text/html; charset=utf-8",
+        "Last-Modified": "Fri, 03 Jul 2026 21:39:08 GMT",
+        "Date": "Sat, 10 Oct 2026 04:55:18 GMT",
+        "ETag": "\"42035b9f2e98e79b2f010b663939f036\""
+      },
+      "access_finished_utc": "2026-10-10T04:55:52.951369+00:00",
+      "title": "Central form versions, access, and export schema",
+      "version": "Living docs; drafting/version updates since Central 0.8",
+      "locators": [
+        {
+          "path": "evidence/E03.txt",
+          "lines": [
+            121,
+            150
+          ],
+          "section": "Forms; Drafts; App User access"
+        },
+        {
+          "path": "evidence/E03.txt",
+          "lines": [
+            189,
+            212
+          ],
+          "section": "Updating Forms; Older Versions"
+        }
+      ],
+      "subject_operation": "Publishing a new form version and exporting old submissions",
+      "conditions": "Explicit App User access is required. Prior submissions remain unchanged after republishing; default export uses current fields, with an option for previously removed fields. Reused fields retain their datatype, except conversion to text.",
+      "judgment": "VERIFIED",
+      "applies_to": "Final 11,62,74 and S03/C03; version-preserving record model and export warning.",
+      "limits": "Actual old-form intake, roles, and deployed schema compatibility remain untested; no universal arbitrary schema migration is promised."
+    },
+    {
+      "id": "E04",
+      "url": "https://docs.getodk.org/central-submissions/",
+      "access_started_utc": "2026-10-10T04:55:52.841741+00:00",
+      "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+      "candidate_ids": [
+        "S04",
+        "C04",
+        "R02"
+      ],
+      "http_status": 200,
+      "effective_url": "https://docs.getodk.org/central-submissions/",
+      "raw_path": "evidence/E04.html",
+      "raw_sha256": "9867abb3f0294f65155bb8e56a91bdc4d9dec7f6630ca1560a3b1375050dd1db",
+      "text_path": "evidence/E04.txt",
+      "text_sha256": "8a7a3b51122fde273f4400119d34abc85f5844308f7d46065fa2793e8cd5b7ec",
+      "response_headers": {
+        "Content-Type": "text/html; charset=utf-8",
+        "Last-Modified": "Fri, 11 Sep 2026 16:20:32 GMT",
+        "Date": "Sat, 10 Oct 2026 04:55:53 GMT",
+        "ETag": "\"5c2f14eb314abfe50daadf2d2658bccc\""
+      },
+      "access_finished_utc": "2026-10-10T04:55:53.293224+00:00",
+      "title": "Central exports, review states, versions, and browser offline exception",
+      "version": "Living docs; review states since Central 1.2; diff display since 1.3",
+      "locators": [
+        {
+          "path": "evidence/E04.txt",
+          "lines": [
+            172,
+            186
+          ],
+          "section": "Downloading Submissions as CSVs"
+        },
+        {
+          "path": "evidence/E04.txt",
+          "lines": [
+            218,
+            269
+          ],
+          "section": "Review States; Editing; Offline Web Forms"
+        }
+      ],
+      "subject_operation": "CSV ZIP download and submission review/version workflow",
+      "conditions": "ZIP includes root/repeat join CSVs and files/submission-instanceId directories. Filters affect exports. Edits create versions and Edited state. ODK Web Forms need connectivity to submit; Enketo offline queue auto-send needs the form open.",
+      "judgment": "VERIFIED",
+      "applies_to": "Final 11,40–41,62; C-04 locator correction; inherited S04/C04/R02.",
+      "limits": "Ordinary CSV export is not an audit export of every correction; the final correctly proposes checking history/export and does not claim this test ran."
+    },
+    {
+      "id": "E05",
+      "url": "https://docs.getodk.org/central-api-submission-management/",
+      "access_started_utc": "2026-10-10T04:55:52.844027+00:00",
+      "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+      "candidate_ids": [
+        "S05",
+        "C05",
+        "R03"
+      ],
+      "http_status": 200,
+      "effective_url": "https://docs.getodk.org/central-api-submission-management/",
+      "raw_path": "evidence/E05.html",
+      "raw_sha256": "3e2e4c1a31743f5bd3ae03e9e51dbcf1a375c5c1d23e09eda227f8bd0831c948",
+      "text_path": "evidence/E05.txt",
+      "text_sha256": "63fccc42365d45b14b87881f53d6e8239b03ab804742381d211b7763ac025d9e",
+      "response_headers": {
+        "Content-Type": "text/html; charset=utf-8",
+        "Last-Modified": "Sat, 22 Aug 2026 17:48:45 GMT",
+        "Date": "Sat, 10 Oct 2026 04:55:52 GMT",
+        "ETag": "\"40917eb9991fc2a0d9deb8d3b9aa8388\""
+      },
+      "access_finished_utc": "2026-10-10T04:55:53.420514+00:00",
+      "title": "Central REST submission management",
+      "version": "Living API; attachment upload since 0.4, versions since 1.2, device metadata since 1.4",
+      "locators": [
+        {
+          "path": "evidence/E05.txt",
+          "lines": [
+            119,
+            126
+          ],
+          "section": "Logical submission versus version identity"
+        },
+        {
+          "path": "evidence/E05.txt",
+          "lines": [
+            210,
+            220
+          ],
+          "section": "createdAt schema"
+        },
+        {
+          "path": "evidence/E05.txt",
+          "lines": [
+            397,
+            405
+          ],
+          "section": "Creating a Submission"
+        },
+        {
+          "path": "evidence/E05.txt",
+          "lines": [
+            2010,
+            2080
+          ],
+          "section": "Attachment upload; Submission Versions"
+        }
+      ],
+      "subject_operation": "REST POST /v1/projects/{projectId}/forms/{xmlFormId}/submissions; expected attachment uploads; version retrieval",
+      "conditions": "POST requires XML Content-Type and creates from submission XML; attachments are separate expected slots. Existing instanceId returns 409. createdAt is ISO string server receive time, distinct from currentVersion.createdAt. Initial instanceId stays the logical submission ID; each version has its own ID.",
+      "judgment": "VERIFIED",
+      "applies_to": "Final 29,39,50,62,73,77,91,95 and S05/C05/R03.",
+      "limits": "Does not establish a native CSV importer. Different from Collect's OpenRosa retry endpoint (E19); the final's reconciliation advice is safe but its short 409 wording should be read with that endpoint scope."
+    },
+    {
+      "id": "E06",
+      "url": "https://github.com/getodk/collect/issues/4589",
+      "access_started_utc": "2026-10-10T04:55:52.953883+00:00",
+      "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+      "candidate_ids": [
+        "S06",
+        "C06"
+      ],
+      "http_status": 200,
+      "effective_url": "https://github.com/getodk/collect/issues/4589",
+      "raw_path": "evidence/E06.html",
+      "raw_sha256": "88f77b8ed6de9b342c3e4758ed81cd9c6a5ad2c99e782ba385a89f5e567dcd68",
+      "text_path": "evidence/E06.txt",
+      "text_sha256": "1286aef0bfff0e44076f66255924a31ef05d12fa724b41d811e1bd0a16612fc1",
+      "response_headers": {
+        "Date": "Sat, 10 Oct 2026 04:55:53 GMT",
+        "Content-Type": "text/html; charset=utf-8"
+      },
+      "access_finished_utc": "2026-10-10T04:55:54.009289+00:00",
+      "title": "Collect issue #4589 original report and discussion",
+      "version": "Opened 2021-06-02; closed 2021-07-07 by #4655",
+      "locators": [
+        {
+          "path": "evidence/E06.txt",
+          "lines": [
+            119,
+            172
+          ],
+          "section": "Report and maintainer implementation lead"
+        },
+        {
+          "path": "evidence/E06.txt",
+          "lines": [
+            197,
+            284
+          ],
+          "section": "Ambiguous response; failed status; closure"
+        }
+      ],
+      "subject_operation": "Lost server response followed by editing failed local XML and retrying the same instance ID",
+      "conditions": "A changed end timestamp can cause changed XML and server rejection. Maintainer analysis chooses failed-status edit exclusion rather than a blanket finalization lock. Discussion includes uncertainty and cancellation as another lead.",
+      "judgment": "VERIFIED",
+      "applies_to": "Final 28,99–101; S06/C06. Historical bounded example, not current deployment diagnosis.",
+      "limits": "Issue discussion is not a live reproduction or universal network guarantee."
+    },
+    {
+      "id": "E07",
+      "url": "https://github.com/getodk/collect/commit/0bc6cde",
+      "access_started_utc": "2026-10-10T04:55:53.243400+00:00",
+      "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+      "candidate_ids": [
+        "S07",
+        "C07"
+      ],
+      "http_status": 200,
+      "effective_url": "https://github.com/getodk/collect/commit/0bc6cde",
+      "raw_path": "evidence/E07.html",
+      "raw_sha256": "7fa500883b0f0be483fa635a99e0be57d28d04f4ea3c88422839b01c9f603cb8",
+      "text_path": "evidence/E07.txt",
+      "text_sha256": "a2565c4c9b68ae3b4b0c57c035b7c35002f0138f51ac4d2aa621c4d7094b1873",
+      "response_headers": {
+        "Date": "Sat, 10 Oct 2026 04:55:53 GMT",
+        "Content-Type": "text/html; charset=utf-8",
+        "ETag": "W/\"173385609ec72cd3570908bc06f9e0de\""
+      },
+      "access_finished_utc": "2026-10-10T04:55:53.848625+00:00",
+      "title": "Collect commit 0bc6cde page",
+      "version": "Full SHA independently recovered from E21: 0bc6cdefe1b49256218726e3fb0059498e450378; dated 2021-06-29",
+      "locators": [
+        {
+          "path": "evidence/E21.txt",
+          "lines": [
+            1,
+            218
+          ],
+          "section": "Complete commit patch, test and CursorLoaderFactory filter"
+        }
+      ],
+      "subject_operation": "Historical source change linked from issue #4589",
+      "conditions": "Patch adds FormResubmissionTest and excludes STATUS_SUBMISSION_FAILED in the single-argument unsent query. It is an intermediate commit, not by itself the full released change.",
+      "judgment": "VERIFIED",
+      "applies_to": "Final 28,99 and S07/C07. Patch wording supports the described narrow change.",
+      "limits": "No code was executed. The stub witness is not proof of production server acceptance before a lost acknowledgment; E20/E08 establish merged/released lineage."
+    },
+    {
+      "id": "E08",
+      "url": "https://github.com/getodk/collect/releases/tag/v2021.2.0",
+      "access_started_utc": "2026-10-10T04:55:53.307754+00:00",
+      "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+      "candidate_ids": [
+        "S08",
+        "C08"
+      ],
+      "http_status": 200,
+      "effective_url": "https://github.com/getodk/collect/releases/tag/v2021.2.0",
+      "raw_path": "evidence/E08.html",
+      "raw_sha256": "b8fb13b29638376e388cf264ce68c74687d9d591e9453924fa87cb66b1ea6030",
+      "text_path": "evidence/E08.txt",
+      "text_sha256": "a3b3c952ee9e0afb5371428ffe78df58ff5bcd07a7d197926ad1c945593310a1",
+      "response_headers": {
+        "Date": "Sat, 10 Oct 2026 04:55:54 GMT",
+        "Content-Type": "text/html; charset=utf-8",
+        "ETag": "W/\"5fef57e46b64e037449189b7e8335ed0\""
+      },
+      "access_finished_utc": "2026-10-10T04:55:54.110634+00:00",
+      "title": "Collect v2021.2.0 release",
+      "version": "v2021.2.0; raw release datetime 2021-07-27T20:59:18Z",
+      "locators": [
+        {
+          "path": "evidence/E08.txt",
+          "lines": [
+            108,
+            136
+          ],
+          "section": "Release tag"
+        },
+        {
+          "path": "evidence/E08.txt",
+          "lines": [
+            185,
+            199
+          ],
+          "section": "#4655 entry"
+        },
+        {
+          "path": "evidence/E08.html",
+          "selector": "relative-time[datetime='2021-07-27T20:59:18Z']",
+          "section": "Release publication timestamp"
+        }
+      ],
+      "subject_operation": "Released fix milestone",
+      "conditions": "Tagged release lists #4655 Prevent editing of submissions that failed to send.",
+      "judgment": "VERIFIED",
+      "applies_to": "Final 28,99; S08/C08.",
+      "limits": "A release note does not certify later product versions or the charity's installed build."
+    },
+    {
+      "id": "E09",
+      "url": "https://doc.arcgis.com/en/survey123/capture/field-app/submitsurveyresults.htm",
+      "access_started_utc": "2026-10-10T04:55:53.322684+00:00",
+      "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+      "candidate_ids": [
+        "S09",
+        "C09"
+      ],
+      "http_status": 200,
+      "effective_url": "https://doc.arcgis.com/en/survey123/capture/field-app/submitsurveyresults.htm",
+      "raw_path": "evidence/E09.html",
+      "raw_sha256": "7438455df9f845097d553ac43579594be71fc17f316213ace3dcb85370f0c5ed",
+      "text_path": "evidence/E09.txt",
+      "text_sha256": "16935d9a10ddbf1173591ece1f02d1ed87fae1b35b1a2889444d83859aa49ba8",
+      "response_headers": {
+        "Date": "Sat, 10 Oct 2026 04:55:53 GMT",
+        "Last-Modified": "Tue, 21 Jul 2026 06:45:48 GMT",
+        "ETag": "\"358c-657195f89670c\"",
+        "Content-Type": "text/html; charset=UTF-8"
+      },
+      "access_finished_utc": "2026-10-10T04:55:53.838789+00:00",
+      "title": "Survey123 field-app Outbox",
+      "version": "Living docs; field app path explicitly",
+      "locators": [
+        {
+          "path": "evidence/E09.txt",
+          "lines": [
+            4,
+            19
+          ],
+          "section": "Submit survey results"
+        }
+      ],
+      "subject_operation": "Offline response staging and later submission",
+      "conditions": "Save in Outbox when offline; responses can be edited before submission; Send after reconnection submits all unsent responses. Post-submit edits depend on configuration.",
+      "judgment": "VERIFIED",
+      "applies_to": "Final 13,48,63 and S09/C09.",
+      "limits": "No live coordinator pending-queue feed is established; offline collection is distinct from layer sync for offline maps."
+    },
+    {
+      "id": "E10",
+      "url": "https://doc.arcgis.com/en/survey123/create/connect/publishsurvey.htm",
+      "access_started_utc": "2026-10-10T04:55:53.422264+00:00",
+      "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+      "candidate_ids": [
+        "S10",
+        "C10"
+      ],
+      "http_status": 200,
+      "effective_url": "https://doc.arcgis.com/en/survey123/create/connect/publishsurvey.htm",
+      "raw_path": "evidence/E10.html",
+      "raw_sha256": "2595915a9f669c2f81b08db139ff060b8fcb74dcaf5f3d3dd63ff6f8e05adbde",
+      "text_path": "evidence/E10.txt",
+      "text_sha256": "087d6679dda0265517b7ea8a995cb5fab31a79a7df4a3f171d63aac1b4d91760",
+      "response_headers": {
+        "Date": "Sat, 10 Oct 2026 04:55:53 GMT",
+        "Last-Modified": "Mon, 20 Jul 2026 03:54:44 GMT",
+        "ETag": "\"7c3a-65702dde0f08c\"",
+        "Content-Type": "text/html; charset=UTF-8"
+      },
+      "access_finished_utc": "2026-10-10T04:55:54.009005+00:00",
+      "title": "Survey123 Connect publish and Sent options",
+      "version": "Living docs; defaults apply to described publish workflow",
+      "locators": [
+        {
+          "path": "evidence/E10.txt",
+          "lines": [
+            41,
+            51
+          ],
+          "section": "Publish options"
+        },
+        {
+          "path": "evidence/E10.txt",
+          "lines": [
+            60,
+            67
+          ],
+          "section": "Sent folder"
+        }
+      ],
+      "subject_operation": "Publish-time layer sync and field-app Sent editing",
+      "conditions": "Enable sync is off when publishing new feature layers; offline map areas need it. Only applicable publish options are shown for existing layers. Sent editing is off by default; Sent+Inbox can retain stale records changed elsewhere.",
+      "judgment": "VERIFIED",
+      "applies_to": "Final 13,63; S10/C10.",
+      "limits": "Final prose uses a compact default statement; no claim that existing charity layers are all sync-disabled or that Outbox needs sync is warranted."
+    },
+    {
+      "id": "E11",
+      "url": "https://doc.arcgis.com/en/survey123/capture/web-app/editexistingdata.htm",
+      "access_started_utc": "2026-10-10T04:55:53.846728+00:00",
+      "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+      "candidate_ids": [
+        "S11",
+        "C11"
+      ],
+      "http_status": 200,
+      "effective_url": "https://doc.arcgis.com/en/survey123/capture/web-app/editexistingdata.htm",
+      "raw_path": "evidence/E11.html",
+      "raw_sha256": "09cc1ab659fde547b6e53782339462653ef6921539571b27786aa6929b1957b8",
+      "text_path": "evidence/E11.txt",
+      "text_sha256": "fd30e68d8148fe233cfabdd244aca94548185c8e22198408ba221efb05c05938",
+      "response_headers": {
+        "Date": "Sat, 10 Oct 2026 04:55:54 GMT",
+        "Last-Modified": "Mon, 20 Jul 2026 21:37:02 GMT",
+        "ETag": "\"5f03-65711b4f1e4dd\"",
+        "Content-Type": "text/html; charset=UTF-8"
+      },
+      "access_finished_utc": "2026-10-10T04:55:54.339005+00:00",
+      "title": "Survey123 correction paths and limits",
+      "version": "Global-ID URL editing from 3.9; older Enterprise attachment edit limit before 10.8.1",
+      "locators": [
+        {
+          "path": "evidence/E11.txt",
+          "lines": [
+            9,
+            19
+          ],
+          "section": "Table edits"
+        },
+        {
+          "path": "evidence/E11.txt",
+          "lines": [
+            29,
+            68
+          ],
+          "section": "Individual/web edits and limitations"
+        }
+      ],
+      "subject_operation": "Editing an individual response versus directly editing table cells",
+      "conditions": "Individual response: submitter AND viewer plus add/update privileges. URL edit: submitter OR owner with add/update. Attachments editable in individual/web form paths; not in table cells. Nested repeats unsupported; older Enterprise attachment surveys unsupported. Table edits bypass constraints/calculations and cannot be undone.",
+      "judgment": "VERIFIED",
+      "applies_to": "Final 63 and S11/C11 conditional correction recommendation.",
+      "limits": "These are edit-path permissions, not proof of append-only history. Brief-authorized separate correction events remain a proposed route."
+    },
+    {
+      "id": "E12",
+      "url": "https://doc.arcgis.com/en/survey123/analyze/viewresults.htm",
+      "access_started_utc": "2026-10-10T04:55:53.850942+00:00",
+      "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+      "candidate_ids": [
+        "S12",
+        "C12",
+        "R04"
+      ],
+      "http_status": 200,
+      "effective_url": "https://doc.arcgis.com/en/survey123/analyze/viewresults.htm",
+      "raw_path": "evidence/E12.html",
+      "raw_sha256": "dba6c70476d4821369e623765051ae8df2ed8a6880ce0db9845ddc29164aaff6",
+      "text_path": "evidence/E12.txt",
+      "text_sha256": "bb9f5a9c9b464738d6a23d02df41d7840c11176f26b8c1f9726a24545b9386fe",
+      "response_headers": {
+        "Date": "Sat, 10 Oct 2026 04:55:54 GMT",
+        "Last-Modified": "Mon, 20 Jul 2026 04:08:25 GMT",
+        "ETag": "\"6413-657030eccb237\"",
+        "Content-Type": "text/html; charset=UTF-8"
+      },
+      "access_finished_utc": "2026-10-10T04:55:54.345338+00:00",
+      "title": "Survey123 export and attachment associations",
+      "version": "Living docs; no specific deployment pinned",
+      "locators": [
+        {
+          "path": "evidence/E12.txt",
+          "lines": [
+            42,
+            66
+          ],
+          "section": "View data; Download results"
+        }
+      ],
+      "subject_operation": "Survey123 website download of eligible survey results",
+      "conditions": "CSV, Excel, KML, shapefile, file geodatabase; choices use names rather than labels. FGDB removes attachment KEYWORD. ArcGIS Server feature-layer surveys cannot be downloaded in this website route; unmatched attachment keywords prevent website editing.",
+      "judgment": "VERIFIED",
+      "applies_to": "Final 13,26,40,63; C-03 corrected omission; S12/C12/R04.",
+      "limits": "Does not exclude all Enterprise exports. Final source-map retains keyword specifics; final prose gives a broader attachment warning."
+    },
+    {
+      "id": "E13",
+      "url": "https://docs.couchdb.org/en/3.5.1/replication/intro.html",
+      "access_started_utc": "2026-10-10T04:55:54.011855+00:00",
+      "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+      "candidate_ids": [
+        "S13",
+        "C15"
+      ],
+      "http_status": 200,
+      "effective_url": "https://docs.couchdb.org/en/3.5.1/replication/intro.html",
+      "raw_path": "evidence/E13.html",
+      "raw_sha256": "f5ceaff9abe6d9260172469c66d0c85b9442b55e19196739b0d3f71864c721c1",
+      "text_path": "evidence/E13.txt",
+      "text_sha256": "a61a10becbe07893375a6b1081a91ad9be6037b120bc825488d9f49cfc8241b2",
+      "response_headers": {
+        "Date": "Sat, 10 Oct 2026 04:55:54 GMT",
+        "Content-Type": "text/html; charset=utf-8",
+        "ETag": "\"080d19a3193a18cbfe12c97cfead5adc\"",
+        "Last-Modified": "Sun, 09 Nov 2025 05:11:06 GMT"
+      },
+      "access_finished_utc": "2026-10-10T04:55:54.188441+00:00",
+      "title": "CouchDB replication checkpoints",
+      "version": "Apache CouchDB 3.5.1 documentation",
+      "locators": [
+        {
+          "path": "evidence/E13.txt",
+          "lines": [
+            82,
+            109
+          ],
+          "section": "Replication Procedure; Master-Master Replication"
+        }
+      ],
+      "subject_operation": "One-way document replication and restart recovery",
+      "conditions": "Changes-feed batches compare existing revisions; checkpoints allow restarted tasks to resume. Persistent versus transient task lifecycle differs; two directions require two tasks.",
+      "judgment": "VERIFIED",
+      "applies_to": "Final 17,65; S13/C15. Architectural analogy only.",
+      "limits": "No custom sync implementation or exactly-once guarantee is established."
+    },
+    {
+      "id": "E14",
+      "url": "https://docs.couchdb.org/en/3.5.1/replication/conflicts.html",
+      "access_started_utc": "2026-10-10T04:55:54.015821+00:00",
+      "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+      "candidate_ids": [
+        "S14",
+        "C16"
+      ],
+      "http_status": 200,
+      "effective_url": "https://docs.couchdb.org/en/3.5.1/replication/conflicts.html",
+      "raw_path": "evidence/E14.html",
+      "raw_sha256": "30423a9a6159213eac7d251e5403b005a07580ceec5c5208970abb5ce7851536",
+      "text_path": "evidence/E14.txt",
+      "text_sha256": "6b07138458a2f3654f98bf6f1f1a74615d263f7a1d7f7163adb07a3bda1edb56",
+      "response_headers": {
+        "Date": "Sat, 10 Oct 2026 04:55:54 GMT",
+        "Content-Type": "text/html; charset=utf-8",
+        "ETag": "\"e848dfa97465512dc73b87713eed6a06\"",
+        "Last-Modified": "Sun, 09 Nov 2025 05:11:06 GMT"
+      },
+      "access_finished_utc": "2026-10-10T04:55:54.163671+00:00",
+      "title": "CouchDB conflict leaves and winner visibility",
+      "version": "Apache CouchDB 3.5.1 documentation",
+      "locators": [
+        {
+          "path": "evidence/E14.txt",
+          "lines": [
+            63,
+            136
+          ],
+          "section": "Replication conflicts and default winner"
+        },
+        {
+          "path": "evidence/E14.txt",
+          "lines": [
+            153,
+            223
+          ],
+          "section": "Revision tree; compaction; conflict reads"
+        },
+        {
+          "path": "evidence/E14.txt",
+          "lines": [
+            416,
+            438
+          ],
+          "section": "Old-body/diff limitation"
+        }
+      ],
+      "subject_operation": "Concurrent leaf revisions, ordinary reads, and explicit application conflict resolution",
+      "conditions": "Default reads/views expose only a deterministic winner; conflicts can be retrieved. Non-leaf bodies are discarded by compaction; revision pruning exists. Revision trees are not an unlimited immutable audit log.",
+      "judgment": "VERIFIED",
+      "applies_to": "Final 17,65; S14/C16. Keeps owner policy separate from database winner.",
+      "limits": "Candidate uses branches as an analogy, not an actual retention design. No material audit-history dependency on CouchDB is proposed."
+    },
+    {
+      "id": "E15",
+      "url": "https://support.kobotoolbox.org/data_collection_kobocollect.html",
+      "access_started_utc": "2026-10-10T04:55:54.113615+00:00",
+      "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+      "candidate_ids": [
+        "S15",
+        "C13",
+        "R07"
+      ],
+      "http_status": 200,
+      "effective_url": "https://support.kobotoolbox.org/data_collection_kobocollect.html",
+      "raw_path": "evidence/E15.html",
+      "raw_sha256": "82788080344a48991119da279ab97952cf6ac4334a31638a5089ba8d7e351e47",
+      "text_path": "evidence/E15.txt",
+      "text_sha256": "88646df23993227f158315e84c40805ca64d7879413636c378d984b0496a8954",
+      "response_headers": {
+        "Date": "Sat, 10 Oct 2026 04:55:54 GMT",
+        "Content-Type": "text/html; charset=utf-8",
+        "Last-Modified": "Tue, 06 Oct 2026 09:56:46 GMT",
+        "ETag": "W/\"6ac4c5de-ba5a\""
+      },
+      "access_finished_utc": "2026-10-10T04:55:54.284378+00:00",
+      "title": "KoboCollect offline Android alternative",
+      "version": "Support page last updated 2026-07-17; app build not pinned",
+      "locators": [
+        {
+          "path": "evidence/E15.txt",
+          "lines": [
+            16,
+            78
+          ],
+          "section": "Download; collect; ready-to-send; upload"
+        }
+      ],
+      "subject_operation": "Download forms online, collect offline, submit later",
+      "conditions": "Initial deployed/shared form and configured project needed. Updates need connectivity. Drafts editable; finalize/send conditions follow settings. Originals remain locally by default; optional Delete after send changes that.",
+      "judgment": "VERIFIED",
+      "applies_to": "Final 15,64,93; S15/C13/R07.",
+      "limits": "Original personal-phone retention policy is not selected or exercised. No native legacy CSV import conclusion follows."
+    },
+    {
+      "id": "E16",
+      "url": "https://support.kobotoolbox.org/editing_deleting_data.html",
+      "access_started_utc": "2026-10-10T04:55:54.165535+00:00",
+      "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+      "candidate_ids": [
+        "S16",
+        "C14",
+        "R08"
+      ],
+      "http_status": 200,
+      "effective_url": "https://support.kobotoolbox.org/editing_deleting_data.html",
+      "raw_path": "evidence/E16.html",
+      "raw_sha256": "394277663ec886566754655763e75012490dbd78ce1e29859b61978f3294dcba",
+      "text_path": "evidence/E16.txt",
+      "text_sha256": "1d9f25bba043a6735f4f49d5be5bfa079a0491fc830391f0d93541bec4d2bb47",
+      "response_headers": {
+        "Date": "Sat, 10 Oct 2026 04:55:54 GMT",
+        "Content-Type": "text/html; charset=utf-8",
+        "Last-Modified": "Tue, 06 Oct 2026 09:56:46 GMT",
+        "ETag": "W/\"6ac4c5de-a88c\""
+      },
+      "access_finished_utc": "2026-10-10T04:55:54.312484+00:00",
+      "title": "Kobo correction identity and history conditions",
+      "version": "Support page last updated 2026-05-06; app build not pinned",
+      "locators": [
+        {
+          "path": "evidence/E16.txt",
+          "lines": [
+            16,
+            45
+          ],
+          "section": "Post-submit edits; metadata; raw/web methods"
+        },
+        {
+          "path": "evidence/E16.txt",
+          "lines": [
+            61,
+            94
+          ],
+          "section": "History note and version/export troubleshooting"
+        }
+      ],
+      "subject_operation": "Server-side edits to submitted KoboCollect data",
+      "conditions": "No post-submit edit/delete in KoboCollect. Saved edits update _uuid; rootUuid stays stable. Web edits use latest form and can remove old fields. Raw edits cannot be undone; external log/comments recommended. Project history logs can track edit/deletion events.",
+      "judgment": "VERIFIED",
+      "applies_to": "Final 15,64,93; S16/C14/R08. Screening caveat is evidence-based.",
+      "limits": "External-log wording is stronger than the source's recommendation; built-in activity history is an additional opportunity, not demonstrated before/after retention. Conditional Kobo screening is not an evidence-based product ban."
+    },
+    {
+      "id": "E17",
+      "url": "https://doc.arcgis.com/en/survey123/create/main/xlsformformulas.htm",
+      "access_started_utc": "2026-10-10T04:55:54.190789+00:00",
+      "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+      "candidate_ids": [
+        "C17",
+        "R05"
+      ],
+      "http_status": 200,
+      "effective_url": "https://doc.arcgis.com/en/survey123/create/main/xlsformformulas.htm",
+      "raw_path": "evidence/E17.html",
+      "raw_sha256": "949b412395f4a70220bd9d697d3c4095c320d19fac6e8a8502e4267bbe144db2",
+      "text_path": "evidence/E17.txt",
+      "text_sha256": "1da5f9b7aeffbfab214b2be268183afc57b4bcb0593761da044d04886f850d31",
+      "response_headers": {
+        "Date": "Sat, 10 Oct 2026 04:55:54 GMT",
+        "Last-Modified": "Tue, 21 Jul 2026 01:25:40 GMT",
+        "ETag": "\"212ce-65714e6a3b134\"",
+        "Content-Type": "text/html; charset=UTF-8"
+      },
+      "access_finished_utc": "2026-10-10T04:55:54.927697+00:00",
+      "title": "Survey123 CSV lookup versus submission import",
+      "version": "Living docs; Connect/field-app capability, not Studio/Mobile",
+      "locators": [
+        {
+          "path": "evidence/E17.txt",
+          "lines": [
+            203,
+            208
+          ],
+          "section": "pulldata function"
+        },
+        {
+          "path": "evidence/E17.txt",
+          "lines": [
+            463,
+            480
+          ],
+          "section": "Retrieve a value from .csv"
+        }
+      ],
+      "subject_operation": "pulldata retrieves values into a form",
+      "conditions": "Four-argument CSV lookup; not bulk creation of legacy survey responses. Specific lookup limits include field lengths, keys, and select_multiple.",
+      "judgment": "VERIFIED",
+      "applies_to": "Final 29,39; C17/R05.",
+      "limits": "A lookup-only page cannot prove all ArcGIS import paths absent; final makes that distinction."
+    },
+    {
+      "id": "E18",
+      "url": "https://developers.arcgis.com/rest/services-reference/enterprise/append-feature-service-layer/",
+      "access_started_utc": "2026-10-10T04:55:54.297674+00:00",
+      "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+      "candidate_ids": [
+        "R06"
+      ],
+      "http_status": 200,
+      "effective_url": "https://developers.arcgis.com/rest/services-reference/enterprise/append-feature-service-layer/",
+      "raw_path": "evidence/E18.html",
+      "raw_sha256": "bea9ac7d4207280e2cb8448b836c23c3776e94722921af0bfe6eddf745189f11",
+      "text_path": "evidence/E18.txt",
+      "text_sha256": "16069a5b68f9a6f3020eec6cca2b874a5677c2e055c5d7a29e6e7035ad44a4ea",
+      "response_headers": {
+        "Content-Type": "text/html",
+        "Date": "Sat, 10 Oct 2026 04:42:51 GMT",
+        "Last-Modified": "Fri, 09 Oct 2026 21:27:27 GMT",
+        "ETag": "W/\"ddf1683be9b0af7c477494f5c8ca74ba\""
+      },
+      "access_finished_utc": "2026-10-10T04:55:54.534800+00:00",
+      "title": "ArcGIS feature-service Append route and photo exclusion",
+      "version": "Living Enterprise REST docs; capability gate 11.1; imageCollection 11.5; portal item 10.9+",
+      "locators": [
+        {
+          "path": "evidence/E18.txt",
+          "lines": [
+            142,
+            242
+          ],
+          "section": "Upsert; capability; supportsAppend; formats; sync; images"
+        },
+        {
+          "path": "evidence/E18.txt",
+          "lines": [
+            511,
+            519
+          ],
+          "section": "appendSourceInfo"
+        },
+        {
+          "path": "evidence/E18.txt",
+          "lines": [
+            769,
+            770
+          ],
+          "section": "Image collection default"
+        },
+        {
+          "path": "evidence/E18.txt",
+          "lines": [
+            937,
+            950
+          ],
+          "section": "CSV to nonspatial table example"
+        }
+      ],
+      "subject_operation": "Conditional CSV loading into a supported feature-service layer/table, separate from Survey123-native import",
+      "conditions": "Target must advertise supportsAppend and CSV in supportedAppendFormats. Owners/admins bypass needing Append capability; other callers need it. Upsert updates matching records and is blocked with sync/changeTracking. Non-upsert allocates new ObjectID/GlobalID. imageCollection creates geometry from EXIF; absent-location images skipped by default.",
+      "judgment": "VERIFIED",
+      "applies_to": "Final 29,31,39,63,92,95; R06. Proposed safe import and negative-constraint exclusion are supported.",
+      "limits": "No safe photo association, idempotency, schema, timestamps, or service configuration is established. Final proposes validating them and does not adopt upsert as the dedupe mechanism."
+    },
+    {
+      "id": "E19",
+      "url": "https://docs.getodk.org/central-api-openrosa-endpoints/",
+      "access_started_utc": "2026-10-10T04:55:54.315280+00:00",
+      "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+      "candidate_ids": [],
+      "http_status": 200,
+      "effective_url": "https://docs.getodk.org/central-api-openrosa-endpoints/",
+      "raw_path": "evidence/E19.html",
+      "raw_sha256": "bbd456ff961bf8033988ddf1d373473581a84dc34e558c7b26b53722565479eb",
+      "text_path": "evidence/E19.txt",
+      "text_sha256": "9cef1699d5be487056ff132b9759b0e49bfa4ed3ed5a195bd27d272750377938",
+      "response_headers": {
+        "Content-Type": "text/html; charset=utf-8",
+        "Last-Modified": "Sat, 22 Aug 2026 17:48:45 GMT",
+        "Date": "Sat, 10 Oct 2026 04:55:55 GMT",
+        "ETag": "\"e25a63d787cd0cabd49c87d5915c4077\""
+      },
+      "access_finished_utc": "2026-10-10T04:55:54.646680+00:00",
+      "title": "Central OpenRosa submission endpoint governing Collect retries",
+      "version": "Living Central OpenRosa API; submission endpoint since 0.1",
+      "locators": [
+        {
+          "path": "evidence/E19.txt",
+          "lines": [
+            180,
+            231
+          ],
+          "section": "Form Submission API and updates"
+        }
+      ],
+      "subject_operation": "Multipart OpenRosa POST, including repeated attachment requests and explicit updates",
+      "conditions": "Same-ID XML must stay identical across multipart/retry requests; changed XML or deleted submission returns 409. Explicit updates use deprecatedID, replace XML entirely, reject a stale predecessor, and carry media by filename reference.",
+      "judgment": "VERIFIED",
+      "applies_to": "Independently checks final 25,49–52,91,99–101 and E05 scope. Reinforces immutable retry and distinct corrections.",
+      "limits": "REST-create 409 is not the precise identical-payload Collect retry rule. No guaranteed success under every network failure is asserted."
+    },
+    {
+      "id": "E20",
+      "url": "https://github.com/getodk/collect/pull/4655",
+      "access_started_utc": "2026-10-10T04:55:54.342500+00:00",
+      "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+      "candidate_ids": [],
+      "http_status": 200,
+      "effective_url": "https://github.com/getodk/collect/pull/4655",
+      "raw_path": "evidence/E20.html",
+      "raw_sha256": "9b21e3392f5006e7dac597722806fd56e53da56fe4336a07d021c3b94fc21ba3",
+      "text_path": "evidence/E20.txt",
+      "text_sha256": "505e5e44f9ae1ed4a06551bcbb74c2dbd48e0e34f1b71530d5665625a2967e6e",
+      "response_headers": {
+        "Date": "Sat, 10 Oct 2026 04:55:55 GMT",
+        "Content-Type": "text/html; charset=utf-8"
+      },
+      "access_finished_utc": "2026-10-10T04:55:55.469291+00:00",
+      "title": "Merged Collect PR #4655",
+      "version": "Merged 2021-07-07; six commits",
+      "locators": [
+        {
+          "path": "evidence/E20.txt",
+          "lines": [
+            108,
+            163
+          ],
+          "section": "Merge record and verification/design notes"
+        }
+      ],
+      "subject_operation": "Final historical change and testing account",
+      "conditions": "Closes #4589; source author describes stub-based FormResubmissionTest and manual intervention. Combined with E08 establishes shipped milestone.",
+      "judgment": "VERIFIED",
+      "applies_to": "Final 28,99; historical lineage corroboration independent of candidate agreement.",
+      "limits": "Developer testing account is not reviewer execution and not a current app/server end-to-end oracle."
+    },
+    {
+      "id": "E21",
+      "url": "https://github.com/getodk/collect/commit/0bc6cde.patch",
+      "access_started_utc": "2026-10-10T04:55:54.348331+00:00",
+      "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+      "candidate_ids": [],
+      "http_status": 200,
+      "effective_url": "https://github.com/getodk/collect/commit/0bc6cde.patch",
+      "raw_path": "evidence/E21.patch",
+      "raw_sha256": "f8d97d1c6edf6a776049f2955cc343421c2b2c99305b2d578ab112974b3a37b9",
+      "text_path": "evidence/E21.txt",
+      "text_sha256": "91eeb5a3380e4cc49fdf4b07d2e1eda4e0409b5983b220cb39330e87c21da9c8",
+      "response_headers": {
+        "Date": "Sat, 10 Oct 2026 04:55:54 GMT",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "W/\"f8d97d1c6edf6a776049f2955cc34342\""
+      },
+      "access_finished_utc": "2026-10-10T04:55:54.646410+00:00",
+      "title": "Complete raw patch for 0bc6cde",
+      "version": "0bc6cdefe1b49256218726e3fb0059498e450378",
+      "locators": [
+        {
+          "path": "evidence/E21.txt",
+          "lines": [
+            1,
+            218
+          ],
+          "section": "Entire patch"
+        }
+      ],
+      "subject_operation": "Read-only source-code witness for E07",
+      "conditions": "Full patch read; UI test uses StubOpenRosaServer, simulated unavailable response, failed-item edit exclusion and later resend. Single-argument loader filter excludes failed status.",
+      "judgment": "VERIFIED",
+      "applies_to": "Final 99 and validation row115.",
+      "limits": "Downloaded as inert text, never executed; cannot substantiate production retry timing or complete current-product correctness."
+    },
+    {
+      "id": "E22",
+      "url": "https://docs.getodk.org/central-install/",
+      "access_started_utc": "2026-10-10T04:55:54.537203+00:00",
+      "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+      "candidate_ids": [],
+      "http_status": 200,
+      "effective_url": "https://docs.getodk.org/central-install/",
+      "raw_path": "evidence/E22.html",
+      "raw_sha256": "ca8c180bae7b722627447e81a495a90825b435de7c74653a7433ddb25292fe61",
+      "text_path": "evidence/E22.txt",
+      "text_sha256": "bd1e62bb75337ba946f6e4e505c051e46574ebc9658688daa92109e5bc99d3d3",
+      "response_headers": {
+        "Content-Type": "text/html; charset=utf-8",
+        "Last-Modified": "Fri, 03 Jul 2026 17:08:17 GMT",
+        "Date": "Sat, 10 Oct 2026 04:55:54 GMT",
+        "ETag": "\"833e536795823a3d83e156bb79b8a0ca\""
+      },
+      "access_finished_utc": "2026-10-10T04:55:54.647323+00:00",
+      "title": "ODK Central managed versus self-hosted deployment",
+      "version": "Living installation docs; no deployed build selected",
+      "locators": [
+        {
+          "path": "evidence/E22.txt",
+          "lines": [
+            119,
+            151
+          ],
+          "section": "Cloud; Self-hosting; installation requirements"
+        }
+      ],
+      "subject_operation": "ODK Cloud versus operator-owned self-hosting",
+      "conditions": "Official paid managed hosting and free software self-hosting are documented. Self-hosting needs Linux administration, infrastructure expenses, ongoing maintenance and a domain name.",
+      "judgment": "VERIFIED",
+      "applies_to": "Final 11,62; first-route deployment tradeoff.",
+      "limits": "No costs, subscription availability, capacity measurement, or charity hosting configuration is inferred from the old benchmark."
+    },
+    {
+      "id": "E23",
+      "url": "https://docs.getodk.org/central-users/",
+      "access_started_utc": "2026-10-10T04:55:54.650016+00:00",
+      "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+      "candidate_ids": [],
+      "http_status": 200,
+      "effective_url": "https://docs.getodk.org/central-users/",
+      "raw_path": "evidence/E23.html",
+      "raw_sha256": "8e4f003d13115424e2bb42c7933c7347a9ce520109d063baff0e1e40ae2463dd",
+      "text_path": "evidence/E23.txt",
+      "text_sha256": "72bc4f0dc3ecca2e4e453dbc386c71ccdea6572028be12e5b55cfad364854abf",
+      "response_headers": {
+        "Content-Type": "text/html; charset=utf-8",
+        "Last-Modified": "Fri, 11 Sep 2026 16:08:43 GMT",
+        "Date": "Sat, 10 Oct 2026 04:54:20 GMT",
+        "ETag": "\"af10046989edd100ce3dbcd099817be1\""
+      },
+      "access_finished_utc": "2026-10-10T04:55:54.750229+00:00",
+      "title": "Central user roles and access",
+      "version": "Living Central user-management docs",
+      "locators": [
+        {
+          "path": "evidence/E23.txt",
+          "section": "User roles; Project Form Submissions; Project App Users",
+          "search_terms": [
+            "User roles",
+            "Project Form Submissions",
+            "Project App Users"
+          ]
+        }
+      ],
+      "subject_operation": "Role access for coordinator/staff versus App User submission",
+      "conditions": "Documentation distinguishes management/review/download roles and App User form access. E03 explicitly requires granting form access after creation.",
+      "judgment": "VERIFIED",
+      "applies_to": "Final 11,62,107; roles remain an owner configuration input.",
+      "limits": "No live volunteer credentials/accounts or authorization configuration was examined."
+    },
+    {
+      "id": "E24",
+      "url": "https://doc.arcgis.com/en/survey123/get-started/systemrequirements.htm",
+      "access_started_utc": "2026-10-10T04:58:59.983764+00:00",
+      "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+      "candidate_ids": [],
+      "http_status": 200,
+      "effective_url": "https://doc.arcgis.com/en/survey123/get-started/systemrequirements.htm",
+      "raw_path": "evidence/E24.html",
+      "raw_sha256": "f067020541d815832b8654cf489f54e5576737150bab60b63682a773241f2685",
+      "text_path": "evidence/E24.txt",
+      "text_sha256": "8be6f9df704aa058ac892429c635437de9c2bcfea9b45234d113ee5055fd90bc",
+      "response_headers": {
+        "Date": "Sat, 10 Oct 2026 04:59:00 GMT",
+        "Last-Modified": "Wed, 19 Aug 2026 04:03:56 GMT",
+        "ETag": "\"e344-6595e7e0e89de\"",
+        "Content-Type": "text/html; charset=UTF-8"
+      },
+      "access_finished_utc": "2026-10-10T04:59:00.451556+00:00",
+      "title": "Survey123 Android and organization requirements",
+      "version": "Living requirements; currently Enterprise 10.9.1+; field app Android 7+ distinct from Mobile Android13+",
+      "locators": [
+        {
+          "path": "evidence/E24.txt",
+          "section": "ArcGIS requirements; Supported operating systems for field app and Connect",
+          "search_terms": [
+            "Android 7.0",
+            "Android 13",
+            "10.9.1",
+            "Public surveys"
+          ]
+        }
+      ],
+      "subject_operation": "Usability of the chosen Survey123 field app on Android and public versus private access",
+      "conditions": "Field app supports Android7+ ARMv7/ARMv8; newer Survey123 Mobile has different OS requirements. Organization roles control features; anonymous public surveys require no ArcGIS account. Internet is required to download/submit, not throughout offline collection.",
+      "judgment": "VERIFIED",
+      "applies_to": "Independent verification of final 13,63 and discovery/draft public-survey alternative.",
+      "limits": "Personal devices were not inventoried, and the charity's app/Enterprise version remains an honest external input."
+    }
+  ],
+  "original_artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A2-01/brief.md",
+      "bytes": 3292,
+      "sha256": "3715d3b3364ed8d47ed60b7d2f7c3e4ed0151f8c7e6ed26598de908a292b051f",
+      "mtime_ns": 1791605469528250475,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A2-01/plan.md",
+      "bytes": 5925,
+      "sha256": "57c6e740ac94d7c3b783621e59b759460ff10e4d157288e72d590e3f1f41666b",
+      "mtime_ns": 1791605469528563845,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/control/run.json",
+      "bytes": 580,
+      "sha256": "4991ca2a379deeb4af68ef31e3767babefeccf4c19014027e7039d2f70145e64",
+      "mtime_ns": 1791605469827560111,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/inputs/brief.md",
+      "bytes": 3292,
+      "sha256": "3715d3b3364ed8d47ed60b7d2f7c3e4ed0151f8c7e6ed26598de908a292b051f",
+      "mtime_ns": 1791605469827337144,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/critic/assignment.md",
+      "bytes": 3306,
+      "sha256": "fcc1f1ab6a4bf76955d9a9b21c9775f86e6f3ce00fd5391d300c6ff7ebc6bd99",
+      "mtime_ns": 1791606404265709326,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/critic/critique.md",
+      "bytes": 11268,
+      "sha256": "334b8b0b3f2ba4792ea6cb7b7f32fc87bc3ab002a616a6d1ae067fad77a331ab",
+      "mtime_ns": 1791607174613448344,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/critic/dispatch.json",
+      "bytes": 4124,
+      "sha256": "296cca1673e40b55e9b863be4fa470bbb69668f9b2a847ca0e628ad91894722a",
+      "mtime_ns": 1791606405866624525,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/critic/freeze.json",
+      "bytes": 3135,
+      "sha256": "0edc4b0c1e6920ce80545cabf81d13ccebe8e83ce715eccbfa07c28e17d23694",
+      "mtime_ns": 1791606404266237069,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/critic/input-map.json",
+      "bytes": 1390,
+      "sha256": "d43b7c722dd9f12bf91f8a3f1e0ff3501219805a2c55996dae823763aa80b6fe",
+      "mtime_ns": 1791606404265522974,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/critic/request.json",
+      "bytes": 890,
+      "sha256": "707a699cd4ee1d16a9802ec1ec09c2fb282aecc52ffae146812d578b1fd4a1ac",
+      "mtime_ns": 1791606404266385673,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/critic/source-map.json",
+      "bytes": 20526,
+      "sha256": "6c3fea6c34ccc155a023cacfda2ff5ad6a17f55ab982ef612a1d7bdd38f0db4e",
+      "mtime_ns": 1791607174613790011,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/critic/status.json",
+      "bytes": 3158,
+      "sha256": "d4f43c6a79636e2128178f6b47cc8a6641214db545575bf2cd238915b31c6085",
+      "mtime_ns": 1791607230520409826,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/assignment.md",
+      "bytes": 3712,
+      "sha256": "dfd3034f13b40a2c7f5cf45273b111115853d6f2feff34359c37463b2bdc22f7",
+      "mtime_ns": 1791605469828135877,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/discovery.md",
+      "bytes": 12992,
+      "sha256": "9d64b0fbf5433114a1fec7a69f783a9dfd784a241562d00898cc1e17eea98f75",
+      "mtime_ns": 1791605992463761416,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/dispatch.json",
+      "bytes": 4220,
+      "sha256": "05dba3fa0295478721df24e274582b802d2e53fc3d2050a2cbc29ad5563a1360",
+      "mtime_ns": 1791605470205234840,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/draft.md",
+      "bytes": 30687,
+      "sha256": "6fdde53b76200243d2532547221de3744ceddbab5f853d020aef02ed5fb1e610",
+      "mtime_ns": 1791606360325991731,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/freeze.json",
+      "bytes": 1654,
+      "sha256": "023cdfabdac1a0bc5c13d469dd3660544d8cacee65a13b88ee4d766a82129371",
+      "mtime_ns": 1791605469828382728,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/input-map.json",
+      "bytes": 714,
+      "sha256": "f35708c95d0ab4fe7447a79da9dee26a07872bbc8082aed9eba2c09c827f7993",
+      "mtime_ns": 1791605469827918225,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/plan-reveal.json",
+      "bytes": 427,
+      "sha256": "f1de6b356bfd658595613cb3c74d92b3b2856c7f1815a822c7ae1f3464f3ad10",
+      "mtime_ns": 1791606038661277218,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/request.json",
+      "bytes": 914,
+      "sha256": "c09c0ab69f93c9239ba78e55e41189ed3387b4874698f63f259f36e97417b872",
+      "mtime_ns": 1791605469828501591,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/revealed-plan.md",
+      "bytes": 5925,
+      "sha256": "57c6e740ac94d7c3b783621e59b759460ff10e4d157288e72d590e3f1f41666b",
+      "mtime_ns": 1791606038661158308,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/source-map.json",
+      "bytes": 18869,
+      "sha256": "ca2f489c77115d259ac336393577ecc9669d02b739eddd04ac0822079b9e1e10",
+      "mtime_ns": 1791606360330169288,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/sources/index.md",
+      "bytes": 7020,
+      "sha256": "c8d0e402ad4b0a2d40aa9a09aa9d78c80e044552ff9ca82affef16d4d5b30f46",
+      "mtime_ns": 1791606099197617519,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/status.json",
+      "bytes": 3802,
+      "sha256": "c7c832e2512051ec7a097c4c53deefe13051184d98e9f1c6d83807eb80cfd135",
+      "mtime_ns": 1791606403895218929,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/reviser/assignment.md",
+      "bytes": 3286,
+      "sha256": "d8d66aa4d64173f80356b7aa303f556c65ecbab17e5e9a41d4f6bf4996bc0fb3",
+      "mtime_ns": 1791607230881310577,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/reviser/dispatch.json",
+      "bytes": 4139,
+      "sha256": "aa742260b757cbd03800476538175f861b51032e5383b8147ccb2244e9dd26eb",
+      "mtime_ns": 1791607231687443189,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/reviser/final.md",
+      "bytes": 30258,
+      "sha256": "acf82a78824f59c9bbf06215d5324b593cf0638ef5ccae2422a579325ef3c45d",
+      "mtime_ns": 1791607967724769396,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/reviser/freeze.json",
+      "bytes": 3973,
+      "sha256": "5001bc2b3169f04f13b1aa266105b326e8f64ac70344516ed71a88f1b831d124",
+      "mtime_ns": 1791607231043613463,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/reviser/input-map.json",
+      "bytes": 1768,
+      "sha256": "bd89dc679bff69c7a5d11c01a41e908341f2533d996070257ae20ca90b50fdd0",
+      "mtime_ns": 1791607231042848090,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/reviser/request.json",
+      "bytes": 893,
+      "sha256": "aefdf9f4af0edfc5990d34ad73a4a27120c7f32ddcac4f8802f1c88b85a6ea0a",
+      "mtime_ns": 1791607231043101338,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/reviser/service-tier-change.json",
+      "bytes": 479,
+      "sha256": "165bce131771d336c93e0ff991b04675dfdb6425da64034339fe5de052ba0bd1",
+      "mtime_ns": 1791607231043809163,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/reviser/source-map.json",
+      "bytes": 53839,
+      "sha256": "51213a3189ee9ea3d8120150d06b2483e1421ccea2f2938762697943518fb6fb",
+      "mtime_ns": 1791607967723904894,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/reviser/sources/index.md",
+      "bytes": 5586,
+      "sha256": "508c2f50bc81398dcdab8255908c8872b587831742ad039b6fd2cf08cf2ca98b",
+      "mtime_ns": 1791607933111437622,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/control/terminal-science-freeze-root.json",
+      "bytes": 6801,
+      "sha256": "076845cf346bf37dfdca7c183958a335940d9a6ae5755b768c49e171c41d631c",
+      "mtime_ns": 1791608035022963186,
+      "inspection": "FULL text read in reviewer tool outputs; JSON dispatch duplicate content also read",
+      "original": true
+    }
+  ],
+  "authored_evidence_note": "Investigator and reviser have full authored sources/index.md files. Critic source directory has no authored files; its source evidence is in source-map.json. No original primary-response bodies were available in those directories.",
+  "reviewer_tool_evidence": [
+    {
+      "path": "evidence/web-odk-tool-return.json",
+      "kind": "Direct web tool return for four primary ODK pages"
+    },
+    {
+      "path": "reviewer-native-active.json",
+      "kind": "Direct native Goal snapshot in this reviewer context"
+    }
+  ]
+}

@@ -1,0 +1,216 @@
+{
+  "run_id": "A7-01-treatment",
+  "stage": "critic-finalizer",
+  "scope": "Independent read-only review of the immutable brief/plan/investigator package and direct primary-source rechecks. Source IDs S01-S15 preserve the predecessor's source identities and URLs; S16-S17 are new primary records. Access batch: 2026-10-10T04:39:48Z",
+  "sources": [
+    {
+      "source_id": "S01",
+      "title": "3MF Core Specification & Reference Guide",
+      "url": "https://github.com/3MFConsortium/spec_core/blob/master/3MF%20Core%20Specification.md",
+      "version_or_commit": "Published Core Specification v1.4.0 (change history dated 2025-02-06); live master page did not surface a commit hash.",
+      "locator": "Sections 1.1-2.1 (OPC/ZIP, parts, thumbnails, PrintTicket); 2.2.1-2.2.2 (recommended/reserved double extensions); 3.1-3.4 (unit, transforms, metadata); 4.2 (components); 5.1 (base materials); 6.1-6.2 (thumbnail/core properties); 2.3.2-2.3.3 (extension behavior).",
+      "accessed_at_utc": "2026-10-10T04:39:48Z",
+      "observed_operation": "Read-only browser open/find of the official 3MF Consortium specification; inspected the relevant sections. No implementation or package was run.",
+      "governing_condition_default_exception": "3MF is an OPC ZIP package. Model unit defaults to millimeter; declared alternatives are micron, centimeter, inch, foot and meter. Components reference objects and transforms; manufacturing devices must preserve their relative position. Base-material names convey portable design intent; PrintTicket maps to a consumer environment. Package thumbnail and Description metadata are optional. Core v1.4.0 recommends purpose-signalling suffixes such as .model.3mf and .project.3mf. Unsupported extension data may be ignored; producers should avoid requiring extensions unless key meaning depends on them.",
+      "applicability": "Format-level normative/recommended behavior only; does not guarantee a specific exporter or receiver writes, displays or preserves optional fields, extensions, names or project settings."
+    },
+    {
+      "source_id": "S02",
+      "title": "Fusion: Save bodies in a component as 3MF, OBJ, or STL files",
+      "url": "https://help.autodesk.com/view/fusion360/ENU/?contextId=MESH-SAVE-AS-MESH",
+      "version_or_commit": "Live Fusion help page; no exact product build/version stated.",
+      "locator": "Save As Mesh steps 1-9, especially Format, Unit Type and Structure (lines 20-55 in retrieved page).",
+      "accessed_at_utc": "2026-10-10T04:39:48Z",
+      "observed_operation": "Read-only open/find of Autodesk Fusion help; export was not performed.",
+      "governing_condition_default_exception": "The workflow offers 3MF, binary/ASCII STL and OBJ; units include cm, mm, m, inch and foot; a component's bodies can be saved as one file or one body per file.",
+      "applicability": "Documents one Fusion UI workflow, not received structure or round-trip fidelity."
+    },
+    {
+      "source_id": "S03",
+      "title": "Fusion: Export designs",
+      "url": "https://help.autodesk.com/view/fusion360/ENU/?contextId=ASM-EXPORT-DESIGN",
+      "version_or_commit": "Live Fusion help page; no exact product build/version stated.",
+      "locator": "Export format list and tips, especially 3MF/STEP and associativity (lines 21-61).",
+      "accessed_at_utc": "2026-10-10T04:39:48Z",
+      "observed_operation": "Read-only open/find of Autodesk Fusion help; no design was exported.",
+      "governing_condition_default_exception": "Fusion lists 3MF and STEP exports; 3MF is described as surface data including vertices, triangles, units, colors and textures. The help says exported designs do not maintain associativity with the original Fusion design.",
+      "applicability": "Fusion workflow only; does not define all STEP protocols or receiver behavior."
+    },
+    {
+      "source_id": "S04",
+      "title": "Prusa Knowledge Base: Supported file formats",
+      "url": "https://help.prusa3d.com/article/supported-file-formats_1772?product=cw1",
+      "version_or_commit": "PrusaSlicer 2.9 legacy documentation context; page does not identify an exact installed build.",
+      "locator": "3MF, STL, STEP, OBJ and AMF sections (retrieved lines 359-376).",
+      "accessed_at_utc": "2026-10-10T04:39:48Z",
+      "observed_operation": "Read-only open/find of Prusa's official help; no import was performed.",
+      "governing_condition_default_exception": "The article calls 3MF the preferred format, accepts ASCII/binary STL, says STEP is triangulated on import, and says OBJ material/texture is ignored on import.",
+      "applicability": "Prusa-documented behavior only; exact receiving release and mode still need pilot validation."
+    },
+    {
+      "source_id": "S05",
+      "title": "PrusaSlicer 2.5.0 release",
+      "url": "https://github.com/prusa3d/PrusaSlicer/releases/tag/version_2.5.0",
+      "version_or_commit": "Released PrusaSlicer 2.5.0, tag version_2.5.0, commit ec2f533.",
+      "locator": "Release summary (lines 151-165).",
+      "accessed_at_utc": "2026-10-10T04:39:48Z",
+      "observed_operation": "Read-only open of the official PrusaSlicer GitHub release; no binary was run.",
+      "governing_condition_default_exception": "The release says STEP import was introduced in 2.5.0; it makes no claim of universal STEP fidelity.",
+      "applicability": "Establishes when the product route appeared, not current importer quality."
+    },
+    {
+      "source_id": "S06",
+      "title": "PrusaSlicer issue #8998: STEP import excludes big chunk of part",
+      "url": "https://github.com/prusa3d/PrusaSlicer/issues/8998",
+      "version_or_commit": "Opened 2022-10-03 against PrusaSlicer 2.5.0. Sep 18 2026 follow-up says it reproduced on whatever Flathub beta version was installed that day; exact build is not named.",
+      "locator": "Description/repro and 2.5.0 version (lines 151-188); maintainer comments (lines 253-322); Dec 2022 follow-up (367-375); Sep 2026 beta report and issue relationships (395-447).",
+      "accessed_at_utc": "2026-10-10T04:39:48Z",
+      "observed_operation": "Read-only open of public GitHub issue and comments. No issue attachment, binary or generator was downloaded/run.",
+      "governing_condition_default_exception": "Original report says STEP imported into 2.5.0 had 127 open edges and missing hinge/conical features while a comparison STL worked. A maintainer attributed importer quality to OpenCASCADE. A later Sep 2026 report says the same Owl STEP case reproduced using the then-current Flathub beta, fresh MK3S profile and default STEP settings, but gives no exact build. The issue has no linked branch/PR in the current record.",
+      "applicability": "Reported behavior, not an independently reproduced product test. The latest report raises a current-beta signal with an unknown build; it does not establish behavior in stable 2.9.6 or every STEP file."
+    },
+    {
+      "source_id": "S07",
+      "title": "PrusaSlicer issue #15545: 3MF non-millimetre transform translations",
+      "url": "https://github.com/prusa3d/PrusaSlicer/issues/15545",
+      "version_or_commit": "Issue opened 2026-07-28; reproducer identifies PrusaSlicer 2.9.6 Windows x64 portable, SHA-256 7fd50b52d1cc3da87dbcb71e45e764412dd45688bea028f351333e86d9769704. Closed after inactivity on 2026-09-29; no fix/PR linked.",
+      "locator": "Minimal reproduction, expected/actual bounds and tested build (lines 158-223); close activity (lines 243-267).",
+      "accessed_at_utc": "2026-10-10T04:39:48Z",
+      "observed_operation": "Read-only open of the official GitHub issue; did not download the reproducer or run the app.",
+      "governing_condition_default_exception": "Reporter describes mesh vertices converted to mm while build-item/component translation terms from an inch model are not; translated geometry can be off-plate. The issue closes after an inactivity warning, not a documented repair.",
+      "applicability": "Specific reported 2.9.6 behavior, not independent verification or a claim about later builds; useful unit/transform sentinel."
+    },
+    {
+      "source_id": "S08",
+      "title": "PrusaSlicer issue #15662: Bambu Studio object names not imported",
+      "url": "https://github.com/prusa3d/PrusaSlicer/issues/15662",
+      "version_or_commit": "Opened 2026-09-02 against PrusaSlicer 3.0.0-alpha11; converted to discussion and locked on 2026-09-03.",
+      "locator": "Source path for names and alpha11 tested version (lines 158-199); issue activity (230-246).",
+      "accessed_at_utc": "2026-10-10T04:39:48Z",
+      "observed_operation": "Read-only open of the public issue; no project file was downloaded or tested.",
+      "governing_condition_default_exception": "Report says Bambu labels reside in vendor-specific Metadata/model_settings.config rather than Core object name fields and were not imported by the named alpha build.",
+      "applicability": "Cross-application project-metadata report in an alpha build; not evidence Core names are unsupported or stable PrusaSlicer has this behavior."
+    },
+    {
+      "source_id": "S09",
+      "title": "3MF Consortium specification index",
+      "url": "https://3mf.io/spec/",
+      "version_or_commit": "Index accessed 2026-10-10; table lists Core 1.4.0 and Materials and Properties 1.2.1 (updated 2025-02-27).",
+      "locator": "Specification Suite table, Core and Materials and Properties rows (lines 41-50).",
+      "accessed_at_utc": "2026-10-10T04:39:48Z",
+      "observed_operation": "Read-only open of the official 3MF Consortium index; read the full extension table.",
+      "governing_condition_default_exception": "The index describes Materials and Properties as published full-color and multi-material definitions, version 1.2.1, separately from Core.",
+      "applicability": "Version inventory/description only; the extension's own compatibility conditions are separate and require review."
+    },
+    {
+      "source_id": "S10",
+      "title": "Prusa Knowledge Base: Saving projects as 3MF",
+      "url": "https://help.prusa3d.com/article/saving-projects-as-3mf_1773?product=sl1",
+      "version_or_commit": "Prusa Knowledge Base under PrusaSlicer 2.9 legacy topics; no exact executable build stated.",
+      "locator": "Save Project and 3MF file format sections (lines 350-368).",
+      "accessed_at_utc": "2026-10-10T04:39:48Z",
+      "observed_operation": "Read-only open of Prusa's official help; no project was saved/opened.",
+      "governing_condition_default_exception": "Prusa describes its project 3MF as a snapshot of objects, settings, modifiers and parameters. It notes the same-G-code expectation on another computer and specifically recommends sharing with a Prusa printer; the format can include multiple models, slicer settings and thumbnails/colors/textures.",
+      "applicability": "Prusa application-project behavior, not a generic cross-vendor settings promise or technician approval."
+    },
+    {
+      "source_id": "S11",
+      "title": "UltiMaker Cura 5.7.0 release",
+      "url": "https://github.com/Ultimaker/Cura/releases/tag/5.7.0",
+      "version_or_commit": "Tag 5.7.0, commit 04ddb8e; release page prints 3 April but not the year in the retrieved view.",
+      "locator": "UCP feature lines 151-165; 3MF saved-position/import-mode change lines 192-205; UCP reset tip lines 244-247.",
+      "accessed_at_utc": "2026-10-10T04:39:48Z",
+      "observed_operation": "Read-only open of official Cura release notes; no binary or project was run.",
+      "governing_condition_default_exception": "Release says UCP contains models/settings and can be shared with people with different printers; it allows positional data and selected settings. It restores saved position when a 3MF project loads but Import Models ignores saved positions. The release recommends starting a new project after a UCP to reset its settings.",
+      "applicability": "Cura 5.7.0 workflow only; this is not cross-slicer interoperability or approval of loaded machine settings."
+    },
+    {
+      "source_id": "S12",
+      "title": "Cura issue #19456: 3MF multiple-object positions",
+      "url": "https://github.com/Ultimaker/Cura/issues/19456",
+      "version_or_commit": "Opened 2024-07-31 against Cura 5.7.2. Reporter updates cover 5.8.0, 5.8.1 and 5.9; on 2025-03-26 the reporter said the sample saved/loaded correctly in Cura 5.10.0 and closed the issue completed.",
+      "locator": "Initial repro/status (lines 148-190); later version/mode comments and 5.10.0 result/closure (lines 295-390); current issue metadata (lines 392-421).",
+      "accessed_at_utc": "2026-10-10T04:39:48Z",
+      "observed_operation": "Read-only open/find of the public GitHub issue and activity; attachment not downloaded and behavior not reproduced.",
+      "governing_condition_default_exception": "Initial report said a split-object 3MF moved/rotated after re-import. Comments distinguish opening as a project from Import Models; reporter later confirms this file worked in 5.10.0 and closes completed. Current GitHub metadata retains duplicate/under-investigation labels, but the activity outcome is completed; no branch/PR is linked.",
+      "applicability": "Bounded fix/report for the specific example, not proof every multi-object 3MF or import mode is fixed."
+    },
+    {
+      "source_id": "S13",
+      "title": "Cura issue #17110: Core object.name import",
+      "url": "https://github.com/Ultimaker/Cura/issues/17110",
+      "version_or_commit": "Opened 2023-10-26; issue does not state a tested Cura release.",
+      "locator": "Issue description, actual/expected behavior and status (lines 129-180).",
+      "accessed_at_utc": "2026-10-10T04:39:48Z",
+      "observed_operation": "Read-only open of the public issue; example attachment not downloaded or tested.",
+      "governing_condition_default_exception": "Reporter says Cura ignored incoming Core object.name and wrote filename-derived object labels; issue page marks Under Investigation.",
+      "applicability": "User report without an exact tested build; selected Cura release behavior remains unverified."
+    },
+    {
+      "source_id": "S14",
+      "title": "UltiMaker Cura release index",
+      "url": "https://github.com/Ultimaker/Cura/releases",
+      "version_or_commit": "At access the list shows stable Cura 5.13.0 (commit 1fb8a76) and pre-release 5.14.0-alpha.0 (commit 17e7b05).",
+      "locator": "Release list and stable/alpha labels/commits (lines 137-181, 243-274).",
+      "accessed_at_utc": "2026-10-10T04:39:48Z",
+      "observed_operation": "Read-only open/find of the official release index; no release was installed or run.",
+      "governing_condition_default_exception": "The 5.14.0-alpha.0 entry is explicitly a pre-release; 5.13.0 is labeled Latest in the retrieved list.",
+      "applicability": "Version snapshot for this access time; re-check when the pilot lead selects builds."
+    },
+    {
+      "source_id": "S15",
+      "title": "PrusaSlicer release index",
+      "url": "https://github.com/prusa3d/PrusaSlicer/releases",
+      "version_or_commit": "At access the list shows stable 2.9.6 (commit b028299) and pre-release 3.0.0-alpha12 (commit 30ef591).",
+      "locator": "Release list and stable/alpha labels/commits (lines 137-181, 376-409).",
+      "accessed_at_utc": "2026-10-10T04:39:48Z",
+      "observed_operation": "Read-only open/find of the official release index; no release was installed or run.",
+      "governing_condition_default_exception": "The 3.0.0-alpha12 entry is explicitly pre-release; 2.9.6 is labeled Latest in the retrieved list.",
+      "applicability": "Version snapshot for this access time; re-check when selecting the receiving matrix."
+    },
+    {
+      "source_id": "S16",
+      "title": "3MF Materials and Properties Extension",
+      "url": "https://github.com/3MFConsortium/spec_materials/blob/master/3MF%20Materials%20Extension.md",
+      "version_or_commit": "Published extension v1.2.1; live master page did not surface a commit hash.",
+      "locator": "Version/status and preface (lines 190-259); design-intent naming text (around line 580).",
+      "accessed_at_utc": "2026-10-10T04:39:48Z",
+      "observed_operation": "Opened the official GitHub extension text via the Consortium's index and read the version/preface and material naming condition; no data was generated or tested.",
+      "governing_condition_default_exception": "Extension is an addendum used a la carte, and its preface says it MUST be used only with Core specification 1.2. The current official index separately lists Core 1.4.0 and this extension v1.2.1. The stated pairing needs authoritative interpretation before recommending it with Core 1.4.0.",
+      "applicability": "Primary specification text and index reveal a version-pair question; do not infer that the extension is supported with the current Core release from the index description alone."
+    },
+    {
+      "source_id": "S17",
+      "title": "UltiMaker Cura 5.14.0-alpha.0 release",
+      "url": "https://github.com/Ultimaker/Cura/releases/tag/5.14.0-alpha.0",
+      "version_or_commit": "Pre-release tag 5.14.0-alpha.0, commit 17e7b05; released 25 June in the retrieved page (year not shown there).",
+      "locator": "Pre-release label and commit (lines 134-171); improvement for non-project multi-model 3MF positioning (lines 172-185).",
+      "accessed_at_utc": "2026-10-10T04:39:48Z",
+      "observed_operation": "Opened the official tag from the Cura release index and read release notes; no binary or project was run.",
+      "governing_condition_default_exception": "Notes say positioning was improved when loading multiple models from a non-project 3MF. Release is explicitly a pre-release and note does not say this fixes issue #19456's exact project/import case.",
+      "applicability": "Relevant future test lead only; not a stable pilot result or proof of a particular issue resolution."
+    }
+  ],
+  "interpretation_boundary": "Primary pages establish what specifications, documentation and issue reporters/maintainers state. Issue reports were not reproduced. No CAD export, package/archive inspection, slicer import, geometry comparison, print, install, account or live product validation was executed. Proposed validation remains proposed.",
+  "added_source_ids": [
+    "S16",
+    "S17"
+  ],
+  "preserved_source_ids": [
+    "S01",
+    "S02",
+    "S03",
+    "S04",
+    "S05",
+    "S06",
+    "S07",
+    "S08",
+    "S09",
+    "S10",
+    "S11",
+    "S12",
+    "S13",
+    "S14",
+    "S15"
+  ]
+}

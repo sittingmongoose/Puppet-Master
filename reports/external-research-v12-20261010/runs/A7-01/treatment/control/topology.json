@@ -1,0 +1,18 @@
+{
+  "version": "topology-v1",
+  "topology": "A7",
+  "dispatch_owner": "root",
+  "stage_budgets_s": {
+    "investigator": 1800,
+    "critic-finalizer": 1800
+  },
+  "phase_budgets_s": [
+    1800,
+    1800
+  ],
+  "pins": {
+    "prepare.py": "ae736bfb6748175284d2abbcc7f851f031593612b0de160d72df91dd11ae70a7",
+    "reveal.py": "ec9579204af96aa6a45caba1eef94c6ca1a799c296a2363b179af359bd908abe",
+    "bootstrap.js": "f8b21ce31ca521880adc9a362dda04bdaa5f5a4285d3a9d0b019f855e2623595"
+  }
+}

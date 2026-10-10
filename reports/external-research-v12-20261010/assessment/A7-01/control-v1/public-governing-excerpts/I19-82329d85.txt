@@ -1,0 +1,48 @@
+URL: https://help.autodesk.com/cloudhelp/ENU/Fusion-Assemble/files/ASM-COMPONENTS.htm
+Original locator: ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I19.txt
+Original SHA256: 82329d8506caf0a689ae4e51e766e5a6bf4a39a23edc42563831d244cca6ee5e
+Original numbered lines; gaps omitted. Not full response.
+
+1: Components
+2: Components
+3: In Fusion, you can create all of the components of your design in context, and define the mechanical relationships and motion between them, all within a single environment.
+4: A Component is a container for design elements like sketches, construction geometry, bodies, joints, origins, and even other components.
+5: A component can be:
+6: A single part design that can only contain one component.
+7: An sub-assembly that is a child component in another assembly.
+8: Each component is capable of motion and has its own unique:
+9: Origin
+10: Coordinate system
+11: Timeline
+12: Name, number, and description that will display in a parts list
+13: All components can contain the following elements:
+14: Origin
+15: Construction geometry
+16: Sketches
+17: Bodies
+18: Joint origins
+19: Other components
+37: External Components
+38: An External Component, or xref, is a component that is contained in a separate design and referenced into the assembly in the current design.
+39: External components make it easier to:
+40: Reuse components
+41: Collaborate concurrently with team members on complex assemblies
+42: Replace components
+43: When you create a new external component, Fusion automatically saves it in the same location as its parent.
+44: If the parent component is not selected, the default location matches the active project and folder in the Data Panel.
+45: If the parent component has not been saved yet, the default location matches the active project and folder in the Data Panel.
+46: When you edit an external component, the changes display in any assembly where it is referenced.
+47: You can use Edit In Place to edit external components in context and establish relationships between the external component and other components in the assembly.
+48: You can use Replace Component to replace one or all instances of an external component in an assembly. In Parametric Modeling mode, if you select a component that is an instance in a pattern, all instances in the pattern will be replaced.
+49: Resolve components
+50: There are several causes of unresolved external components, including:
+51: Archived projects
+52: Changes to permission
+53: Deleted source designs
+54: Upload or translation failures
+55: You can open designs with unresolved external components and resolve, replace, or remove the references.
+56: In the Browser, the Unresolved Component status displays next to each unresolved external component. The status also displays next to all of its parent components, to make nested unresolved components easier to find. When you hover over the Unresolved Component status, a tooltip lists the reason and any action you can take.
+57: Note: If a design is unresolved because you are not a member of the project where it is saved, a notification displays, giving you the option to Join Project.
+58: You can also open designs with unresolved derived design features and resolve them when:
+59: The source design for the derive feature is missing
+60: The source design for the derive feature contains missing external reference

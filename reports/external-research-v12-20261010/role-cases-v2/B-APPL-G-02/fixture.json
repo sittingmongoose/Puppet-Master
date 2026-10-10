@@ -1,0 +1,65 @@
+{
+  "schema": "er12-role-fixture-v1",
+  "slot_id": "B-APPL-G-02",
+  "case_id": "ER12-B-APPL-G-02-FRESH",
+  "role": "Applicability/exception verification",
+  "title": "systemd laptop maintenance timer",
+  "control": {
+    "provider": "codex_authorized",
+    "model": "Luna Max",
+    "input": "identical frozen role package to challenger"
+  },
+  "treatment": {
+    "provider": "muse_code",
+    "model": "GLM 5.3 Flash Max",
+    "input": "identical frozen role package to Luna"
+  },
+  "whole_arm_seconds": 900,
+  "investigation_seconds_max": 600,
+  "writing_reserve_seconds": 300,
+  "counts_as_full_pipeline": false,
+  "status": "READY_FROZEN_NOT_DISPATCHED",
+  "frozen_at": "2026-10-10T03:56:03.657867+00:00",
+  "assignment": "assignment.md",
+  "input_files": [
+    {
+      "path": "assignment.md",
+      "sha256": "3c7ab9e1ebcde0612e7e6e85a40f7eb8da73c42bf9d62b00bcc6f525fc447b38"
+    },
+    {
+      "path": "corpus/S1.md",
+      "sha256": "502f95d36e1da301057116c7d443c652463e7fd2b1f934b6b34e8b04334fc32a"
+    },
+    {
+      "path": "corpus/S2.md",
+      "sha256": "e58ec490cbdd3d90ae98b4c45bc8efd670f7d64f29f42a5f4a34a307e30a7409"
+    },
+    {
+      "path": "corpus/index.json",
+      "sha256": "5576572c6b3b0bc92f670f22d22f0256bac41d3a4988b8bd26184b5cf41f8f4f"
+    }
+  ],
+  "input_sha256": "922bc7b62453aba466f22c5eac9297ac78c3713f0e83d3351aac14f69d73d3fb",
+  "no_assessor_answers": true,
+  "source_versions": [
+    [
+      "S1",
+      "Pinned upstream tag v257; target systemd 257"
+    ],
+    [
+      "S2",
+      "Pinned upstream tag v257; target systemd 257"
+    ]
+  ],
+  "prospective_reallocation": {
+    "path": "ER12_RUNTIME/mechanics/REALLOCATIONS-v1.json",
+    "sha256": "c23179d51040c38e05606f43f0ed76df943abdda8e0eafd6fe3359474d07b91d",
+    "schema": "er12.prospective_reallocation.v1",
+    "before_inference": true,
+    "slot_id": "B-APPL-G-02",
+    "original_treatment_provider": "AUTHORIZED_PROVIDER_INSTANCE",
+    "replacement_treatment_provider": "muse_code",
+    "original_model_label_preserved": true,
+    "requested_route_authority": "helpers/role-v2/prepare-role.py ROUTES[muse_code]"
+  }
+}

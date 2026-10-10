@@ -1,0 +1,857 @@
+{
+  "schema": "er12-independent-assessment-v1",
+  "slot_id": "B-DISC-M-02",
+  "case_id": "ER12-B-DISC-M-02-FRESH",
+  "arm": "control",
+  "role": "DISC",
+  "role_scope": "Brief-only discovery",
+  "revision": "control-v1",
+  "reviewer": "codex-er12-bdisc-m02-review-0446",
+  "judgment": "PASS_WITH_LIMITATIONS",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "full_pipeline_qualification": "NOT_APPLICABLE_ROLE_ONLY",
+  "final_artifact_status": "PRESENT: discovery.md is the assigned role deliverable; no full-pipeline final graded",
+  "material_findings": [],
+  "limitations": [
+    {
+      "id": "L1",
+      "severity": "minor",
+      "kind": "source wording / subject scope",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+        "line": 25
+      },
+      "exact_candidate_text": "Message-locked/convergent encryption derives keys from plaintext and creates deterministic ciphertext, so equal messages deduplicate",
+      "primary_id": "P6",
+      "primary_url": "https://www.iacr.org/archive/eurocrypt2013/78810294/78810294.pdf#page=4",
+      "primary_locator": "EUROCRYPT 2013, §1.3 PDF page 4 (RCE randomization), §1.4 PDF page 5 (D-MLE vs R-MLE), §3 PDF page 8 (randomized encryption syntax)",
+      "evidence_locator": "primary/mle-observation.md",
+      "finding": "Deterministic ciphertext describes conventional convergent encryption, not every MLE scheme: the cited paper explicitly includes randomized RCE.",
+      "materiality_reason": "The sentence introduces a background alternative outside the selected same-user design. The candidate does not adopt CE, does not claim randomized encryption prevents same-user deduplication, and correctly preserves equality/guessing concerns. Its principal design and product questions do not depend on this family-level simplification. It is a non-material wording limitation, not a supported FAIL finding."
+    },
+    {
+      "id": "L2",
+      "severity": "minor",
+      "kind": "source reproducibility",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/source-map.json",
+        "line": 4
+      },
+      "exact_candidate_text": "2026-10-10T04:38Z approximate; per-page UTC timestamps not exposed",
+      "primary_ids": [
+        "P2",
+        "P3",
+        "P6"
+      ],
+      "finding": "Candidate evidence is a summary with approximate per-page times, and stable/latest URLs are mutable. Reviewer live Borg capture is dev100 rather than the recorded dev82. The MLE proceedings extraction was independently readable once but later live requests were 403; its original PDF byte hash is UNKNOWN.",
+      "materiality_reason": "The substantive Borg fixed/Buzhash/keyed-ID/visible-size claims remain supported; candidate already labels beta/live docs and requires pinning before adoption. No consequential default or universal security claim is drawn from the mutable version. The PDF retrieval limit is reviewer evidence availability, not a candidate factual failure."
+    }
+  ],
+  "axis_coverage": [
+    {
+      "id": "original_obligations_and_negative_constraints",
+      "status": "PASS",
+      "coverage": "COMPLETE",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 5
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 7
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 11
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 34
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 40
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 46
+        }
+      ],
+      "assessment": "Discovery is 914 whitespace-delimited words, within 700–1000. Four items; two named navigable implementation leads; one dated version lead; compact comparison; exactly three numbered prospective checks; uncertainty and bounded next step. Scope remains one-user chunking/identity/encryption; no scheduling, UI, full restore architecture, universal winner or cross-user feature requirement. Full map, fixture and common assignment read; corpus is null. Reported seven primary sources span at least Restic, Borg and USENIX, satisfying three-source/two-project minimum. Eight listed attempts including failure are consistent with candidate page cap, but absent full retrieval trace prevents certifying actual attempt count."
+    },
+    {
+      "id": "bounded_unfamiliar_mechanisms_and_meaningful_alternatives",
+      "status": "PASS",
+      "coverage": "COMPLETE",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 11
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 13
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 15
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 17
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 21
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 25
+        }
+      ],
+      "primary_ids": [
+        "P1",
+        "P3",
+        "P4",
+        "P5",
+        "P6"
+      ],
+      "assessment": "Fixed offsets, Rabin rolling CDC, Gear/FastCDC and secret-seeded Buzhash differ in boundary mechanism or optimization/security approach. Fixed is useful as the same-length-overwrite/control baseline; insertion failure is explicit. Ciphertext identity is separated from boundary identity, and conventional convergent encryption is discussed as an optional background alternative with guessability risk. No exhaustive-algorithm survey is required by this bounded four-item brief."
+    },
+    {
+      "id": "source_conditions_version_subject_operation_units_domain_exceptions",
+      "status": "PASS_WITH_LIMITATIONS",
+      "coverage": "COMPLETE",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 9
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 13
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 15
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 17
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 21
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 23
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 25
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 38
+        }
+      ],
+      "primary_ids": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7"
+      ],
+      "limitation_ids": [
+        "L1",
+        "L2"
+      ],
+      "assessment": "Restic window and binary units are accurate for the cited documentation; the unsplit-small-file exception is not needed to adopt a product default and no default is adopted. FastCDC speed/ratio is scoped to authors’ benchmarks. Seeded boundaries are not presented as cryptographic proof, visible stored sizes remain, and the preprint is construction/threat-model specific. Password wrapping, content/master-key changes, ID changes and compromise revocation are distinguished. HMAC+random-nonce AEAD is explicitly a design inference. Kopia example version is not treated as current/default. MLE determinism needs the narrow non-material wording limitation L1."
+    },
+    {
+      "id": "implementation_and_history_leads",
+      "status": "PASS",
+      "coverage": "COMPLETE",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 34
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 36
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 37
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 38
+        }
+      ],
+      "primary_ids": [
+        "P1",
+        "P8",
+        "P9"
+      ],
+      "assessment": "Restic/chunker and Borg source URLs are real and inspectable; reviewer independently opened their public project pages, including chunker.go and src/borg listings. Candidate correctly says code was not opened/audited. Restic v0.18.1 expressly dates pack randomization mitigation to 0.18.0. This is a useful history/version lead, not a deployment or attack validation claim."
+    },
+    {
+      "id": "tradeoffs_opportunity_coverage_and_product_input",
+      "status": "PASS",
+      "coverage": "COMPLETE",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 21
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 23
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 27
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 38
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 46
+        }
+      ],
+      "primary_ids": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5"
+      ],
+      "assessment": "The comparison addresses upload reuse after inserts, CPU/ratio/compatibility and visible equality/sizes. Key wrapping versus actual rotation and old-version recoverability are a useful product distinction. Workload, edit distribution, leakage tolerance and key-change semantics remain genuine external product decisions. No winner is chosen; the two-leading-candidate next step is prospective, not a hidden adoption decision."
+    },
+    {
+      "id": "correct_dispositions_and_supported_scope_preservation",
+      "status": "PASS",
+      "coverage": "COMPLETE_FOR_DISC",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 13
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 15
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 17
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 23
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 25
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 46
+        }
+      ],
+      "primary_ids": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6"
+      ],
+      "assessment": "Evidence supports retaining fixed as control and investigating CDC; no blanket rejection of CDC from the attack paper or extrapolation of a speed guarantee occurs. Cross-user sharing is not promoted into scope. Not requiring convergent encryption for one-user reuse is justified by independently keyed identity/randomized encryption. Restic mitigation and key-change distinctions remain in the output. No draft/critique/final chain or critique dispositions were supplied; those obligations are NOT_APPLICABLE rather than guessed passes."
+    },
+    {
+      "id": "discriminating_prospective_checks_and_actual_validation_status",
+      "status": "PASS",
+      "coverage": "COMPLETE",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 40
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 42
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 43
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 44
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+          "line": 46
+        }
+      ],
+      "primary_ids": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5"
+      ],
+      "assessment": "Front insertion, overwrite and middle edit compare actual reuse/CPU/upload at similar chunk sizes; a synthetic store-observer exercise targets leakage and guessed-content confirmation; disposable key-change tests distinguish wrapping/rotation and check old restores/credentials/rewrite volume. Candidate explicitly reports zero local implementation, benchmark, restore or rotation tests. Opened documentation is not an executable oracle. No nonexistent deployed service or whole-product test was required."
+    }
+  ],
+  "claim_dispositions": [
+    {
+      "candidate_line": 9,
+      "claim": "Chunk useful plaintext before strong encryption; store observes sizes and traffic",
+      "primary_ids": [
+        "P3",
+        "P5"
+      ],
+      "disposition": "SUPPORTED for incremental chunk reuse; not a universal statement about all cryptosystems"
+    },
+    {
+      "candidate_line": 11,
+      "claim": "Fixed-size insertion shifts suffix boundaries; fixed chunker exists",
+      "primary_ids": [
+        "P3",
+        "P5"
+      ],
+      "disposition": "SUPPORTED; residual final/header chunk exceptions do not defeat the comparison"
+    },
+    {
+      "candidate_line": 13,
+      "claim": "Restic Rabin 64-byte window; 512 KiB–8 MiB; approximate 1 MiB",
+      "primary_ids": [
+        "P1"
+      ],
+      "disposition": "SUPPORTED as documented v0.18.1 settings; files below 512 KiB remain single chunks"
+    },
+    {
+      "candidate_line": 13,
+      "claim": "Specific CDC parameter extraction and size leakage",
+      "primary_ids": [
+        "P5"
+      ],
+      "disposition": "SUPPORTED bounded warning; visibility/known or chosen plaintext/compression and simplified constructions matter"
+    },
+    {
+      "candidate_line": 15,
+      "claim": "Gear-based FastCDC techniques and approximate 10x benchmark result",
+      "primary_ids": [
+        "P4"
+      ],
+      "disposition": "SUPPORTED; authors’ comparison, no desktop or security guarantee"
+    },
+    {
+      "candidate_line": 17,
+      "claim": "Borg per-repository secret Buzhash seed and secret keyed IDs; size leakage",
+      "primary_ids": [
+        "P3"
+      ],
+      "disposition": "SUPPORTED mechanism; exact dev82 original bytes unknown; no claim that seed is a cryptographic PRF"
+    },
+    {
+      "candidate_line": 21,
+      "claim": "HMAC ID plus randomized AEAD, ID/format authentication",
+      "primary_ids": [
+        "P3"
+      ],
+      "disposition": "REASONABLE_EXPLICIT_INFERENCE, not claimed inspected code or completed security design"
+    },
+    {
+      "candidate_line": 23,
+      "claim": "Random nonce and password changes without rewriting; actual master-key change needs new repository in cited Restic",
+      "primary_ids": [
+        "P1",
+        "P2"
+      ],
+      "disposition": "SUPPORTED; same underlying master material, no leaked-key revocation from password change"
+    },
+    {
+      "candidate_line": 23,
+      "claim": "ID/content-key changes can incur rewrite/migration while preserving old snapshots",
+      "primary_ids": [
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "disposition": "SUPPORTED conditional design inference; no unconditional rewrite requirement"
+    },
+    {
+      "candidate_line": 25,
+      "claim": "Message-locked/convergent encryption is deterministic",
+      "primary_ids": [
+        "P6"
+      ],
+      "disposition": "MINOR_OVERBROAD_FAMILY_WORDING_L1; true of conventional CE, not randomized MLE"
+    },
+    {
+      "candidate_line": 25,
+      "claim": "Equality and guessable-message risks; convergence is not necessary for one-user reuse",
+      "primary_ids": [
+        "P3",
+        "P6"
+      ],
+      "disposition": "SUPPORTED bounded disposition; not proof of a custom scheme"
+    },
+    {
+      "candidate_line": 38,
+      "claim": "Restic 0.18.0 randomized chunk-to-pack mapping",
+      "primary_ids": [
+        "P1"
+      ],
+      "disposition": "SUPPORTED version/history lead; not disappearance of total size/network volume"
+    },
+    {
+      "candidate_path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/sources/evidence.md",
+      "candidate_line": 23,
+      "claim": "Kopia envelope configuration/example is an architecture lead",
+      "primary_ids": [
+        "P7"
+      ],
+      "disposition": "SUPPORTED without deriving current defaults; SIV-only MasterKey field was not generalized in discovery"
+    }
+  ],
+  "delivery": {
+    "status": "COMPLETE",
+    "artifact": "discovery.md",
+    "whitespace_delimited_word_count": 914,
+    "source_map_present": true,
+    "every_sources_member_read_full": true,
+    "corpus": "null; zero members",
+    "required_output_obligations_complete": true,
+    "t3_terminal": "Root reports task completed/no pending in exact assignment; not independently queried through other-thread history"
+  },
+  "coverage": {
+    "status": "COMPLETE_ASSIGNED_DISC_AXES",
+    "full_pipeline": "NOT_GRADED",
+    "applicability_claim_inventory_role": "NOT_APPLICABLE",
+    "finalization_critique_dispositions": "NOT_APPLICABLE; no critique supplied"
+  },
+  "native": {
+    "status": "COMPLETE_BY_SAVED_TOOL_RECEIPTS",
+    "activation_receipt": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/goal-activation-receipt.json",
+    "completion_receipt": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/goal-completion-receipt.json",
+    "observed_activation": {
+      "goal": {
+        "threadId": "01a1241a-0a7a-7381-aeda-76324fb9310e",
+        "objective": "ER12 B-DISC-M-02/control: execute ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/assignment.md; save the complete bounded role output and source map before completing this actual native Goal.",
+        "status": "active",
+        "tokensUsed": 0,
+        "timeUsedSeconds": 0,
+        "createdAt": 1791607073,
+        "updatedAt": 1791607073
+      },
+      "remainingTokens": null,
+      "completionBudgetReport": null
+    },
+    "observed_completion": {
+      "goal": {
+        "threadId": "01a1241a-0a7a-7381-aeda-76324fb9310e",
+        "objective": "ER12 B-DISC-M-02/control: execute ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/assignment.md; save the complete bounded role output and source map before completing this actual native Goal.",
+        "status": "complete",
+        "tokensUsed": 109519,
+        "timeUsedSeconds": 446,
+        "createdAt": 1791607073,
+        "updatedAt": 1791607520
+      },
+      "remainingTokens": null,
+      "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+    },
+    "matching_objective_and_thread": true,
+    "activation_before_scientific_input": "UNKNOWN: receipt timestamps are consistent; full action trace not read",
+    "exactly_one_candidate_goal": "UNKNOWN: two matching receipts evidence this Goal, not all invocations",
+    "receipt_tool_trace_authentication": "UNKNOWN: inspected saved exact-shaped receipts, not candidate transcript"
+  },
+  "provenance": {
+    "requested_route": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna",
+      "options": {
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      }
+    },
+    "dispatch_acceptance": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna",
+      "evidence": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/dispatch.json"
+    },
+    "effective_execution_model": "UNKNOWN",
+    "effective_reasoning_effort": "UNKNOWN",
+    "effective_service_tier": "UNKNOWN",
+    "billing_usage_cost": "UNKNOWN",
+    "reported_native_goal_tokensUsed": 109519,
+    "reported_tokens_are_billing": "UNKNOWN; no conversion/inference"
+  },
+  "protocol": {
+    "status": "PARTIALLY_VERIFIABLE; no observed breach",
+    "candidate_output_claims_no_execution": true,
+    "candidate_nested_assistance_history_or_accounts": "UNKNOWN absent execution trace; no observed evidence of unauthorized help",
+    "candidate_source_attempt_count": "Seven sources and one failure listed; consistent with eight-attempt cap, actual trace UNKNOWN",
+    "reviewer_native_goal": {
+      "threadId": "01a12421-c2be-7710-a87c-7d8ba83a6135",
+      "created_at_utc": "2026-10-10T04:46:05Z",
+      "observation_file": "reviewer-goal-observation.json",
+      "judgment_saved_before_completion": true
+    },
+    "reviewer_restrictions_observed": [
+      "No delegation",
+      "No candidate contact, repair or feedback",
+      "Only assigned arm, own review packet and public primary sources read",
+      "No account actions, Git commands/publication, old outcomes/history or ER11 rescore",
+      "Only unique reviewer inbox checked; no shared roster read",
+      "All task output under reserved control-v1 directory"
+    ]
+  },
+  "time": {
+    "candidate_prepared_utc": "2026-10-10T04:37:26.708000+00:00",
+    "candidate_deadline_utc": "2026-10-10T04:52:26.708000+00:00",
+    "candidate_writing_boundary_utc": "2026-10-10T04:47:26.708000+00:00",
+    "candidate_native_activation_utc": "2026-10-10T04:37:53Z",
+    "candidate_native_completion_utc": "2026-10-10T04:45:20Z",
+    "native_reported_timeUsedSeconds": 446,
+    "receipt_epoch_span_seconds": 447,
+    "prepared_to_completion_epoch_seconds": 473.292,
+    "all_science_artifact_mtimes_before_native_completion": true,
+    "observed_time_status": "ON_TIME by saved receipt and artifact timestamps; root reports T3 terminal",
+    "actual_investigation_and_writing_allocations": "UNKNOWN without trace; early completion is permitted",
+    "review_started_at_utc": "2026-10-10T04:46:05+00:00",
+    "review_judgment_saved_at_utc": "2026-10-10T04:54:21.444135+00:00",
+    "review_elapsed_seconds_at_judgment_save": 496.444,
+    "review_deadline_utc": "2026-10-10T05:11:05Z",
+    "no_latency_inference_or_billing_savings_claim": true
+  },
+  "freeze_integrity": {
+    "five_frozen_input_records_match": true,
+    "inspected_existing_freeze": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/freeze.json",
+    "freeze_kind": "INPUT_FREEZE_ONLY: five input hashes, no science output terminal manifest",
+    "own_arm_freeze_or_terminal_files_located": [
+      "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/freeze.json"
+    ],
+    "terminal_output_freeze": "NOT_FOUND in assigned own-arm tree or reserved review path at inspection; no host freeze synthesized",
+    "science_hashes_stable_during_review": true,
+    "science_output_hashes": [
+      {
+        "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+        "sha256": "5024038fd01ee33bc9ff2c453de5923be1e7984da16e377d791dbab300d8c43c",
+        "bytes": 6428
+      },
+      {
+        "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/source-map.json",
+        "sha256": "3c4a89a45a8d8a28a938c2757006b40c5d0cc75ac6c4c325c4781307d83d22d8",
+        "bytes": 6286
+      },
+      {
+        "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/sources/evidence.md",
+        "sha256": "a25e2634d921bcafad3a7e3780a20e9d34603383f5985765a7cc460ec5938757",
+        "bytes": 4788
+      }
+    ],
+    "complete_inspected_hashes_file": "inspected-hashes.json"
+  },
+  "unknowns": [
+    "Effective execution model/effort/tier and billed tokens/cost",
+    "Candidate full action order, total source attempts and investigation-versus-writing time allocation",
+    "Authenticity beyond saved native receipts and total native invocation count",
+    "Original candidate raw primary captures and exact per-page retrieval UTC; exact Borg dev82 bytes",
+    "Retained original MLE PDF bytes/hash; later requests blocked",
+    "Terminal science-output freeze not found; only input freeze inspected",
+    "Product workload, leakage tolerance, key-change semantics and performance targets remain deliberately external"
+  ],
+  "useful_discoveries": [
+    "Fixed-size chunking is a concrete control for insertion-induced suffix churn",
+    "FastCDC offers a benchmark-qualified CPU/ratio alternative, separate from secrecy",
+    "Secret chunk parameters do not alone establish resistance to identifiable-chunk/size attacks",
+    "Keyed IDs permit one-user deduplication without deterministic ciphertext but reveal repeat equality",
+    "Restic 0.18.0 pack randomization is a historical applicability boundary worth checking",
+    "Password rewrap differs from content/master-key/ID-key rotation and compromise revocation"
+  ],
+  "checks": {
+    "candidate_executed": "Source retrieval only as reported; no benchmark, code, restore or rotation experiment claimed",
+    "candidate_proposed_not_executed": [
+      "Three-edit comparison with reuse/upload/CPU metrics",
+      "Synthetic observer/guess-confirmation leakage exercise",
+      "Disposable password wrapping versus full key-change restoration and credential checks"
+    ],
+    "reviewer_executed": [
+      "Full required-file reads",
+      "Independent primary documentation/paper retrieval",
+      "Public implementation-lead page inspection only",
+      "Static word count, SHA-256 checks, input freeze comparison, science hash recheck",
+      "Output JSON/link integrity verification performed before native completion"
+    ],
+    "reviewer_not_executed": [
+      "No backup/restore benchmark",
+      "No code execution from sources",
+      "No deployed service tests"
+    ],
+    "reviewer_output_integrity_verification": {
+      "status": "PASS",
+      "at_utc": "2026-10-10T04:55:05.637121+00:00",
+      "checks": [
+        "assessment/source map/hash JSON parse",
+        "all inspected hashes unchanged",
+        "all five input-freeze hashes match",
+        "all source raw/text SHA-256 checks match",
+        "local Markdown evidence links exist",
+        "seven assigned-axis records and no material findings"
+      ]
+    }
+  },
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_utc": "2026-10-10T03:56:48.938287+00:00",
+      "freeze_sha256": null,
+      "freeze_match": null,
+      "read_full": true,
+      "recheck_sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "unchanged_during_review": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/assignment.md",
+      "bytes": 2375,
+      "sha256": "b53f04e4ed2b23019ef677e9907f39f0e608514500963fc0f5dd363640a4e1f2",
+      "mtime_utc": "2026-10-10T04:37:28.128265+00:00",
+      "freeze_sha256": "b53f04e4ed2b23019ef677e9907f39f0e608514500963fc0f5dd363640a4e1f2",
+      "freeze_match": true,
+      "read_full": true,
+      "recheck_sha256": "b53f04e4ed2b23019ef677e9907f39f0e608514500963fc0f5dd363640a4e1f2",
+      "unchanged_during_review": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/input-map.json",
+      "bytes": 573,
+      "sha256": "f068a95e995f4854d220d969afe5d1a95be3c9d5fa4f88a66ce2ca0ae9d8237f",
+      "mtime_utc": "2026-10-10T04:37:28.258622+00:00",
+      "freeze_sha256": "f068a95e995f4854d220d969afe5d1a95be3c9d5fa4f88a66ce2ca0ae9d8237f",
+      "freeze_match": true,
+      "read_full": true,
+      "recheck_sha256": "f068a95e995f4854d220d969afe5d1a95be3c9d5fa4f88a66ce2ca0ae9d8237f",
+      "unchanged_during_review": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/freeze.json",
+      "bytes": 2276,
+      "sha256": "309af8b680221ac8b418308795c179f8a016405eb77082c2d0392d0969743529",
+      "mtime_utc": "2026-10-10T04:37:28.259289+00:00",
+      "freeze_sha256": null,
+      "freeze_match": null,
+      "read_full": true,
+      "recheck_sha256": "309af8b680221ac8b418308795c179f8a016405eb77082c2d0392d0969743529",
+      "unchanged_during_review": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+      "bytes": 6428,
+      "sha256": "5024038fd01ee33bc9ff2c453de5923be1e7984da16e377d791dbab300d8c43c",
+      "mtime_utc": "2026-10-10T04:44:55.965854+00:00",
+      "freeze_sha256": null,
+      "freeze_match": null,
+      "read_full": true,
+      "recheck_sha256": "5024038fd01ee33bc9ff2c453de5923be1e7984da16e377d791dbab300d8c43c",
+      "unchanged_during_review": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/source-map.json",
+      "bytes": 6286,
+      "sha256": "3c4a89a45a8d8a28a938c2757006b40c5d0cc75ac6c4c325c4781307d83d22d8",
+      "mtime_utc": "2026-10-10T04:44:25.717415+00:00",
+      "freeze_sha256": null,
+      "freeze_match": null,
+      "read_full": true,
+      "recheck_sha256": "3c4a89a45a8d8a28a938c2757006b40c5d0cc75ac6c4c325c4781307d83d22d8",
+      "unchanged_during_review": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/goal-activation-receipt.json",
+      "bytes": 459,
+      "sha256": "761d24a17b3aa6f99f9780642fbc5edda66f41b3c73c1522fcfc86e8334ec079",
+      "mtime_utc": "2026-10-10T04:38:00.843150+00:00",
+      "freeze_sha256": null,
+      "freeze_match": null,
+      "read_full": true,
+      "recheck_sha256": "761d24a17b3aa6f99f9780642fbc5edda66f41b3c73c1522fcfc86e8334ec079",
+      "unchanged_during_review": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/goal-completion-receipt.json",
+      "bytes": 846,
+      "sha256": "e6deadbc472ca67a82f050baafc96750a07dbc3beadafcd6e2f0327784a6cadc",
+      "mtime_utc": "2026-10-10T04:45:20.448911+00:00",
+      "freeze_sha256": null,
+      "freeze_match": null,
+      "read_full": true,
+      "recheck_sha256": "e6deadbc472ca67a82f050baafc96750a07dbc3beadafcd6e2f0327784a6cadc",
+      "unchanged_during_review": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/sources/evidence.md",
+      "bytes": 4788,
+      "sha256": "a25e2634d921bcafad3a7e3780a20e9d34603383f5985765a7cc460ec5938757",
+      "mtime_utc": "2026-10-10T04:44:25.707995+00:00",
+      "freeze_sha256": null,
+      "freeze_match": null,
+      "read_full": true,
+      "recheck_sha256": "a25e2634d921bcafad3a7e3780a20e9d34603383f5985765a7cc460ec5938757",
+      "unchanged_during_review": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/inputs/fixture.json",
+      "bytes": 1033,
+      "sha256": "1b10c5fad028e42ff6e2367e5df37e6f550a4d28a27ead680c77c44d1b60c7f5",
+      "mtime_utc": "2026-10-10T04:37:27.030186+00:00",
+      "freeze_sha256": "1b10c5fad028e42ff6e2367e5df37e6f550a4d28a27ead680c77c44d1b60c7f5",
+      "freeze_match": true,
+      "read_full": true,
+      "recheck_sha256": "1b10c5fad028e42ff6e2367e5df37e6f550a4d28a27ead680c77c44d1b60c7f5",
+      "unchanged_during_review": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/inputs/manifest.json",
+      "bytes": 241,
+      "sha256": "fe164e06074640cccbda200b67202cb2cc9dad08579ba478a1bbaa768dfcc595",
+      "mtime_utc": "2026-10-10T04:37:27.030359+00:00",
+      "freeze_sha256": "fe164e06074640cccbda200b67202cb2cc9dad08579ba478a1bbaa768dfcc595",
+      "freeze_match": true,
+      "read_full": true,
+      "recheck_sha256": "fe164e06074640cccbda200b67202cb2cc9dad08579ba478a1bbaa768dfcc595",
+      "unchanged_during_review": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/inputs/assignment.md",
+      "bytes": 2642,
+      "sha256": "96c86b7591b7a87ba61dac12c4c21a3daa8c20e9fd4b50e09266471d6d11a1db",
+      "mtime_utc": "2026-10-10T04:37:27.029994+00:00",
+      "freeze_sha256": "96c86b7591b7a87ba61dac12c4c21a3daa8c20e9fd4b50e09266471d6d11a1db",
+      "freeze_match": true,
+      "read_full": true,
+      "recheck_sha256": "96c86b7591b7a87ba61dac12c4c21a3daa8c20e9fd4b50e09266471d6d11a1db",
+      "unchanged_during_review": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/dispatch.json",
+      "bytes": 4347,
+      "sha256": "657f61ce52ac878b04d5c07346c3ed765f33832511436de940e1b4406ec8bc41",
+      "read_full": true,
+      "kind": "own-arm provenance; not other outcomes",
+      "recheck_sha256": "657f61ce52ac878b04d5c07346c3ed765f33832511436de940e1b4406ec8bc41",
+      "unchanged_during_review": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/raw-dispatch.json",
+      "bytes": 2096,
+      "sha256": "4d4f86a3ea50396c84efce8b02ca4f94d9703327d7575623832ab76b049adbea",
+      "read_full": true,
+      "kind": "own-arm provenance; not other outcomes",
+      "recheck_sha256": "4d4f86a3ea50396c84efce8b02ca4f94d9703327d7575623832ab76b049adbea",
+      "unchanged_during_review": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/request.json",
+      "bytes": 1093,
+      "sha256": "2ba8a5e118f66291b82698a86bcf1435785d7dede41393e33b85205f14d3ab57",
+      "read_full": true,
+      "kind": "own-arm provenance; not other outcomes",
+      "recheck_sha256": "2ba8a5e118f66291b82698a86bcf1435785d7dede41393e33b85205f14d3ab57",
+      "unchanged_during_review": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/service-tier-change.json",
+      "bytes": 479,
+      "sha256": "553f1bc7f41a16f17e5e1a8b5274e7d8fb11169a434e9ea1c8f460683ff4d0e9",
+      "read_full": true,
+      "kind": "own-arm provenance; not other outcomes",
+      "recheck_sha256": "553f1bc7f41a16f17e5e1a8b5274e7d8fb11169a434e9ea1c8f460683ff4d0e9",
+      "unchanged_during_review": true
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-DISC-M-02/control-v1/root-review-request.json",
+      "bytes": 2608,
+      "sha256": "bc19237a871c551ea57a4efb23a611afb1c11250d9e0d231785b612dd80c892b",
+      "read_full": true,
+      "kind": "own review assignment",
+      "recheck_sha256": "bc19237a871c551ea57a4efb23a611afb1c11250d9e0d231785b612dd80c892b",
+      "unchanged_during_review": true
+    }
+  ],
+  "primary_sources": [
+    {
+      "id": "P1",
+      "url": "https://restic.readthedocs.io/en/v0.18.1/design.html",
+      "version": "Restic v0.18.1",
+      "locator": "Backups and Deduplication; Threat Model"
+    },
+    {
+      "id": "P2",
+      "url": "https://restic.readthedocs.io/en/stable/100_references.html",
+      "version": "Restic stable title 0.19.1 observed",
+      "locator": "Keys, Encryption and MAC"
+    },
+    {
+      "id": "P3",
+      "url": "https://borgbackup.readthedocs.io/en/latest/internals/security.html",
+      "version": "Borg live 2.0.0b26.dev100 observed; candidate recorded dev82",
+      "locator": "Encryption; Fingerprinting; Stored chunk sizes; buzhash and buzhash64; fixed chunker; Secret key usage against fingerprinting"
+    },
+    {
+      "id": "P4",
+      "url": "https://www.usenix.org/conference/atc16/technical-sessions/presentation/xia",
+      "version": "USENIX ATC 2016, pages 101–114",
+      "locator": "Official abstract and proceedings citation"
+    },
+    {
+      "id": "P5",
+      "url": "https://arxiv.org/html/2504.02095v1",
+      "version": "arXiv 2504.02095v1; manuscript March 2025",
+      "locator": "Sections 1, 2.1–2.3, 3.2–3.3, 4, 5.1–5.2"
+    },
+    {
+      "id": "P7",
+      "url": "https://kopia.io/docs/advanced/encryption/",
+      "version": "Live Kopia docs, modified March 21 2023; embedded v0.3.0 example",
+      "locator": "format blob; encryptedBlockFormat; ContentFormat; object Format"
+    },
+    {
+      "id": "P8",
+      "url": "https://github.com/restic/chunker",
+      "version": "Public restic/chunker repository, mutable master",
+      "locator": "README and root file listing"
+    },
+    {
+      "id": "P9",
+      "url": "https://github.com/borgbackup/borg",
+      "version": "Public Borg repository, unstable Borg2/master",
+      "locator": "README: This is borg2; supported chunkers; source directory"
+    },
+    {
+      "id": "P6",
+      "url": "https://www.iacr.org/archive/eurocrypt2013/78810294/78810294.pdf",
+      "version": "EUROCRYPT 2013 proceedings, 17 pages",
+      "locator": "1.1–1.4; 3"
+    }
+  ],
+  "navigation": {
+    "assessment": "assessment.md",
+    "source_map": "source-map.json",
+    "primary_evidence": "primary/index.md",
+    "hashes": "inspected-hashes.json"
+  },
+  "source_correct_semantic_review_not_hash_based": true
+}

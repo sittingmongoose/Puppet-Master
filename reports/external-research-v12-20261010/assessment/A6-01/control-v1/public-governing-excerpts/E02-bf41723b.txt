@@ -1,0 +1,7 @@
+URL: https://gtfs.org/documentation/realtime/reference/#enum-schedulerelationship-1
+Original locator: ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E02.txt
+Original SHA256: bf41723bbd0fdab269e255a4bf70ae3569bf6e78a2f41eb98553c22e6ae95c05
+Original numbered lines; gaps omitted. Not full response.
+
+1039: | REPLACEMENT
+1044: | An extra trip unrelated to any existing trips, for example, to respond to sudden passenger load. The complete journey of the new trip, including all stops and times, must be specified via StopTimeUpdates. Existing producers and consumers that were using the ADDED enumeration to represent new trips unrelated to the static GTFS must follow the migration guide to transition to the NEW enumeration.Caution: this field is still experimental, and subject to change. It may be formally adopted in the future.

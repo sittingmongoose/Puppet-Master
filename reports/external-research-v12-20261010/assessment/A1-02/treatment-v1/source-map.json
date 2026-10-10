@@ -1,0 +1,607 @@
+{
+  "schema": "er12-independent-assessment-source-map-v1",
+  "slot": "A1-02",
+  "arm": "treatment",
+  "scope": "One completed ordinary full pipeline; stages/reviser/final.md is final",
+  "independence": "Reviewer retrieved primary pages independently; stage notes are input claims, not primary proof. No other arm/result/history read, no candidate changes or nested delegation.",
+  "sources": [
+    {
+      "id": "R01",
+      "requested_url": "https://www.rfc-editor.org/rfc/rfc5545.html",
+      "request_started_utc": "2026-10-10T04:44:51.092457+00:00",
+      "http_status": 200,
+      "effective_url": "https://www.rfc-editor.org/rfc/rfc5545.html",
+      "retrieved_at_utc": "2026-10-10T04:44:51.243986+00:00",
+      "sha256": "8787267ca21cfbe6ae7290a0548336fb06506f90e06ba8cdd878e75b6dea6053",
+      "bytes": 409705,
+      "capture": "evidence/R01.html",
+      "text": "evidence/R01.txt",
+      "title": "RFC 5545 iCalendar",
+      "version_or_commit": "RFC 5545, September 2009, with R02/R03 for verified errata",
+      "locators": [
+        "\u00a73.2.19",
+        "\u00a73.2.20",
+        "\u00a73.3.5",
+        "\u00a73.3.6",
+        "\u00a73.3.10",
+        "\u00a73.6.1",
+        "\u00a73.6.5",
+        "\u00a73.8.4.4",
+        "\u00a73.8.4.7",
+        "\u00a73.8.5.1\u2013.3",
+        "\u00a73.8.8.1\u2013.2"
+      ],
+      "governing_conditions": "UID is TEXT and identifies the component; RECURRENCE-ID defaults to DATE-TIME, matches master value type/local form, and identifies the original slot. EXDATE wins over RRULE/RDATE inclusions; duplicates collapse; an unsynchronized DTSTART/rule is undefined. INTERVAL is positive and defaults to 1. COUNT includes DTSTART; COUNT and UNTIL are mutually exclusive; UNTIL for TZID DATE-TIME DTSTART is UTC DATE-TIME and is inclusive. Missing recurrence fields derive from DTSTART. A matching VTIMEZONE must cover recurrence instances. Folds use the first instant; gaps use the preceding offset. DTEND gives exact recurrence duration; DURATION gives nominal duration, with day/week components differing across transitions. \u00a73.2.20 preserves unknown VALUE-type data; generic readers may ignore extension properties. New VEVENTs need UID/DTSTAMP and, without METHOD, DTSTART.",
+      "applicability": "Governs the offline interchange design. Product subset, raw-byte preservation, upsert keys, tombstones and UI input rejection are product decisions. The earlier skip-gap text must be read with R03 and the later computed-time paragraph.",
+      "observation": "Independent read-only HTTP retrieval and semantic inspection of relevant surrounding primary context; no downloaded code executed.",
+      "note": "evidence/R01.md"
+    },
+    {
+      "id": "R02",
+      "requested_url": "https://www.rfc-editor.org/rfc/inline-errata/rfc5545.html",
+      "request_started_utc": "2026-10-10T04:44:51.094522+00:00",
+      "http_status": 200,
+      "effective_url": "https://www.rfc-editor.org/rfc/inline-errata/rfc5545.html",
+      "retrieved_at_utc": "2026-10-10T04:44:51.617189+00:00",
+      "sha256": "ef888bfee56c693a266f6055fae95a1edbe75f8f7fe2173f06f768cd827e978d",
+      "bytes": 391283,
+      "capture": "evidence/R02.html",
+      "text": "evidence/R02.txt",
+      "title": "RFC 5545 official inline errata",
+      "version_or_commit": "Official verified-errata rendering; EID 4271",
+      "locators": [
+        "#btn_4271",
+        "\u00a73.3.10, correction and report",
+        "R02.txt lines 2595\u20132634"
+      ],
+      "governing_conditions": "EID 4271 is marked Verified. Corrected recurrence handling distinguishes invalid calendar dates, which are ignored/not counted, from nonexistent local times, which follow \u00a73.3.5.",
+      "applicability": "Independent official rendering corroborates R03. It corrects original discovery/draft gap behavior; it is not execution evidence for any library.",
+      "observation": "Independent read-only HTTP retrieval and semantic inspection of relevant surrounding primary context; no downloaded code executed.",
+      "note": "evidence/R02.md"
+    },
+    {
+      "id": "R03",
+      "requested_url": "https://www.rfc-editor.org/errata/eid4271",
+      "request_started_utc": "2026-10-10T04:44:51.095808+00:00",
+      "http_status": 200,
+      "effective_url": "https://errata.rfc-editor.org/eid4271/",
+      "retrieved_at_utc": "2026-10-10T04:44:51.409075+00:00",
+      "sha256": "4f087bf6360fead31656e17b37dd92ebcaea2e9ee47a401dc8a0c83136fd744d",
+      "bytes": 8888,
+      "capture": "evidence/R03.html",
+      "text": "evidence/R03.txt",
+      "title": "RFC Editor Erratum 4271",
+      "version_or_commit": "Verified Technical; reported 2015-02-12; verified 2015-02-17 by Barry Leiba",
+      "locators": [
+        "Errata-ID and status",
+        "Section 3.3.10: original, corrected text, notes",
+        "R03.txt lines 75\u2013169"
+      ],
+      "governing_conditions": "The corrected rule excludes invalid dates from the recurrence count but handles nonexistent local recurrence times under \u00a73.3.5. Notes identify a contradictory later RFC paragraph and name major-client behavior; those notes are not a current interoperability test.",
+      "applicability": "Confirms critic F1 and final amendment. urllib retrieved the redirected official errata.rfc-editor.org endpoint successfully; web open of the legacy URL returned Internal Error. Both access outcomes are recorded.",
+      "observation": "Independent read-only HTTP retrieval and semantic inspection of relevant surrounding primary context; no downloaded code executed.",
+      "note": "evidence/R03.md"
+    },
+    {
+      "id": "R04",
+      "requested_url": "https://www.rfc-editor.org/rfc/rfc5546.html",
+      "request_started_utc": "2026-10-10T04:44:51.096913+00:00",
+      "http_status": 200,
+      "effective_url": "https://www.rfc-editor.org/rfc/rfc5546.html",
+      "retrieved_at_utc": "2026-10-10T04:44:51.341925+00:00",
+      "sha256": "32762457a681cfee1de53f545f5f08203558421a1b08444c5daf278c865e8d0a",
+      "bytes": 367813,
+      "capture": "evidence/R04.html",
+      "text": "evidence/R04.txt",
+      "title": "RFC 5546 iTIP",
+      "version_or_commit": "RFC 5546, December 2009",
+      "locators": [
+        "\u00a73.2.5 CANCEL",
+        "\u00a73.7.1",
+        "\u00a74.4.3",
+        "R04.txt lines 1647\u20131760 and 5807 onward"
+      ],
+      "governing_conditions": "VEVENT CANCEL is an organizer scheduling notice to affected attendees. UID identifies a series; cancelling one instance requires RECURRENCE-ID, while whole-series cancellation omits it. The cancellation sequence increases; message/component and attendee constraints govern the transaction.",
+      "applicability": "A useful analogy for original-slot addressing; its notification and organizer obligations do not turn offline snapshot editing into an invitation cancellation.",
+      "observation": "Independent read-only HTTP retrieval and semantic inspection of relevant surrounding primary context; no downloaded code executed.",
+      "note": "evidence/R04.md"
+    },
+    {
+      "id": "R05",
+      "requested_url": "https://developers.google.com/workspace/calendar/api/guides/recurringevents",
+      "request_started_utc": "2026-10-10T04:44:51.098100+00:00",
+      "http_status": 200,
+      "effective_url": "https://developers.google.com/workspace/calendar/api/guides/recurringevents",
+      "retrieved_at_utc": "2026-10-10T04:44:51.521439+00:00",
+      "sha256": "f30e0309bf6af2782a9cbf35f4802fc73841f3c473cff9b2ea1d481125f64bc9",
+      "bytes": 190942,
+      "capture": "evidence/R05.html",
+      "text": "evidence/R05.txt",
+      "title": "Google Calendar recurring events",
+      "version_or_commit": "Calendar API v3 live guide; no immutable document commit",
+      "locators": [
+        "Access instances",
+        "Instance-specific fields",
+        "Modify or delete instances",
+        "Cancellation PUT example",
+        "R05.txt lines 2960\u20133108"
+      ],
+      "governing_conditions": "An instance has recurringEventId and originalStartTime; the original start identifies the scheduled slot even after a move. The guide retrieves an instance then sends an authorized PUT to update it; cancellation sets status=cancelled on that instance. Ordinary instance listing and recurrence-master listing have different defaults.",
+      "applicability": "Supports the operation-level comparison and rejection of new UID/current-start identity. It does not establish .ics representation or unconditional notification; see R16.",
+      "observation": "Independent read-only HTTP retrieval and semantic inspection of relevant surrounding primary context; no downloaded code executed.",
+      "note": "evidence/R05.md"
+    },
+    {
+      "id": "R06",
+      "requested_url": "https://learn.microsoft.com/en-us/graph/api/resources/event?view=graph-rest-1.0",
+      "request_started_utc": "2026-10-10T04:44:51.100094+00:00",
+      "http_status": 200,
+      "effective_url": "https://learn.microsoft.com/en-us/graph/api/resources/event?view=graph-rest-1.0",
+      "retrieved_at_utc": "2026-10-10T04:44:51.302857+00:00",
+      "sha256": "8db9371081b9de1d95a02f1540853b0c3175bdf74dfb04d2cce58ae441e35265",
+      "bytes": 81320,
+      "capture": "evidence/R06.html",
+      "text": "evidence/R06.txt",
+      "title": "Microsoft Graph event resource",
+      "version_or_commit": "Graph REST v1.0 live documentation",
+      "locators": [
+        "Properties: originalStart, seriesMasterId, type, cancelledOccurrences",
+        "Relationships: exceptionOccurrences, instances",
+        "R06.txt lines 759\u2013764, 933\u2013942, 982\u2013984, 1017\u20131019, 1109\u20131128"
+      ],
+      "governing_conditions": "originalStart is DateTimeOffset in UTC for a recurring occurrence/exception, not a single instance. seriesMasterId is a String. Read-only type distinguishes singleInstance/occurrence/exception/seriesMaster. cancelledOccurrences holds occurrenceId strings on a master and requires $select/GET master ID. exceptionOccurrences needs $select/$expand on the master; exception and instance relationships omit cancelled instances. Event ID can change on a container move unless the ImmutableId preference is used.",
+      "applicability": "Comparator only: provider IDs and UTC field shape do not replace UID/typed RID. Retrieval selectors are conditions on provider diagnostics; no Graph integration is proposed.",
+      "observation": "Independent read-only HTTP retrieval and semantic inspection of relevant surrounding primary context; no downloaded code executed.",
+      "note": "evidence/R06.md"
+    },
+    {
+      "id": "R07",
+      "requested_url": "https://learn.microsoft.com/en-us/graph/api/event-cancel?view=graph-rest-1.0",
+      "request_started_utc": "2026-10-10T04:44:51.296988+00:00",
+      "http_status": 200,
+      "effective_url": "https://learn.microsoft.com/en-us/graph/api/event-cancel?view=graph-rest-1.0",
+      "retrieved_at_utc": "2026-10-10T04:44:51.439737+00:00",
+      "sha256": "2a44328b9dc74cd779a37ff3347030b18e7f1be2e907ba502fe0cab9fccedb35",
+      "bytes": 60395,
+      "capture": "evidence/R07.html",
+      "text": "evidence/R07.txt",
+      "title": "Microsoft Graph event cancel",
+      "version_or_commit": "Graph REST v1.0 action live documentation",
+      "locators": [
+        "Description",
+        "Permissions and HTTP request",
+        "R07.txt lines 477\u2013489 and 561\u2013573"
+      ],
+      "governing_conditions": "POST /events/{id}/cancel lets the meeting organizer cancel and send a cancellation message; an occurrence can be targeted by its occurrence event ID. Attendee invocation returns HTTP 400. The action moves the item to Deleted Items and supports an optional custom comment.",
+      "applicability": "Confirms the explicit Graph messaging and permission comparison, without granting account access or guaranteeing offline file behavior.",
+      "observation": "Independent read-only HTTP retrieval and semantic inspection of relevant surrounding primary context; no downloaded code executed.",
+      "note": "evidence/R07.md"
+    },
+    {
+      "id": "R08",
+      "requested_url": "https://learn.microsoft.com/en-us/graph/api/event-update?view=graph-rest-1.0",
+      "request_started_utc": "2026-10-10T04:44:51.328734+00:00",
+      "http_status": 200,
+      "effective_url": "https://learn.microsoft.com/en-us/graph/api/event-update?view=graph-rest-1.0",
+      "retrieved_at_utc": "2026-10-10T04:44:51.495665+00:00",
+      "sha256": "691d7d542cd3676b9154b6556658971e46b2f8e492ea406f0f3b55adb65ff87b",
+      "bytes": 72649,
+      "capture": "evidence/R08.html",
+      "text": "evidence/R08.txt",
+      "title": "Microsoft Graph update event",
+      "version_or_commit": "Graph REST v1.0 PATCH live documentation",
+      "locators": [
+        "HTTP request",
+        "Response / ErrorOccurrenceCrossingBoundary",
+        "R08.txt lines 599\u2013611 and 792\u2013805"
+      ],
+      "governing_conditions": "PATCH updates the event object at its ID. Outlook recurrence exceptions cannot move to/before the previous occurrence day or to/after the next occurrence day; the API can return HTTP 400 ErrorOccurrenceCrossingBoundary. Updating a master with multiple attendees and separately modified instances can emit separate notifications.",
+      "applicability": "Confirms the provider-specific restriction. It cannot be used to forbid an otherwise legal file-only move across a date boundary; the final keeps this distinction.",
+      "observation": "Independent read-only HTTP retrieval and semantic inspection of relevant surrounding primary context; no downloaded code executed.",
+      "note": "evidence/R08.md"
+    },
+    {
+      "id": "R09",
+      "requested_url": "https://learn.microsoft.com/en-us/graph/api/event-list-instances?view=graph-rest-1.0",
+      "request_started_utc": "2026-10-10T04:44:51.381389+00:00",
+      "http_status": 200,
+      "effective_url": "https://learn.microsoft.com/en-us/graph/api/event-list-instances?view=graph-rest-1.0",
+      "retrieved_at_utc": "2026-10-10T04:44:51.553137+00:00",
+      "sha256": "fbfcb6f5e099df50dc5d25f5a63d3d3a4b4ac8f48bcbe60f132ae3e4b7961929",
+      "bytes": 66517,
+      "capture": "evidence/R09.html",
+      "text": "evidence/R09.txt",
+      "title": "Microsoft Graph list instances",
+      "version_or_commit": "Graph REST v1.0 method live documentation",
+      "locators": [
+        "Description",
+        "Required query parameters",
+        "Prefer: outlook.timezone",
+        "R09.txt lines 479\u2013483, 555\u2013597, 627\u2013629"
+      ],
+      "governing_conditions": "A seriesMaster instance request returns occurrences and exceptions in the required startDateTime/endDateTime range. Query bounds are ISO 8601 Strings. Response start/end times default to UTC; the optional Prefer header changes the response zone.",
+      "applicability": "Supports range-based retrieval as a comparator. It does not license replacing the recurring schedule with the preview interval or converting iCalendar RID to a Graph ID.",
+      "observation": "Independent read-only HTTP retrieval and semantic inspection of relevant surrounding primary context; no downloaded code executed.",
+      "note": "evidence/R09.md"
+    },
+    {
+      "id": "R10",
+      "requested_url": "https://docs.rs/crate/caldata/0.17.3",
+      "request_started_utc": "2026-10-10T04:44:51.412564+00:00",
+      "http_status": 200,
+      "effective_url": "https://docs.rs/crate/caldata/0.17.3",
+      "retrieved_at_utc": "2026-10-10T04:44:51.685289+00:00",
+      "sha256": "78d773900c30a1659fc1849a2d0b08ae650911ff7bd7fd6b48ac21b80dcb6d34",
+      "bytes": 27230,
+      "capture": "evidence/R10.html",
+      "text": "evidence/R10.txt",
+      "title": "caldata crate",
+      "version_or_commit": "Pinned package 0.17.3, docs.rs release date 2026-09-20",
+      "locators": [
+        "Version list",
+        "caldata-rs owner notes",
+        "Dependency list and documentation coverage"
+      ],
+      "governing_conditions": "The released metadata/README describes a divergent hard fork of archived ical-rs with strict validation, typed date-times and recurrence expansion. It includes a modified copy of rust-rrule to perform local-time calculations in UTC. Documentation coverage is 17.74%; chrono-tz is optional and vtimezones-rs is listed. The embedded install snippet still names 0.16, so the package URL/version is the pin.",
+      "applicability": "A real competing Rust candidate. README capabilities are not a measured opaque-property/DST/interoperability guarantee; final does not select the crate.",
+      "observation": "Independent read-only HTTP retrieval and semantic inspection of relevant surrounding primary context; no downloaded code executed.",
+      "note": "evidence/R10.md"
+    },
+    {
+      "id": "R11",
+      "requested_url": "https://github.com/pimalaya/ical",
+      "request_started_utc": "2026-10-10T04:44:51.458831+00:00",
+      "http_status": 200,
+      "effective_url": "https://github.com/pimalaya/ical",
+      "retrieved_at_utc": "2026-10-10T04:44:52.139471+00:00",
+      "sha256": "0bfdfdfa58667c4adb14aeb3afd0a8383578205b4b3f58598d2744a40ca67413",
+      "bytes": 368170,
+      "capture": "evidence/R11.html",
+      "text": "evidence/R11.txt",
+      "title": "pimalaya/ical repository",
+      "version_or_commit": "Live repository page, unpinned commit/release",
+      "locators": [
+        "README Features",
+        "README RFC coverage",
+        "R11.txt lines 1580\u20131613"
+      ],
+      "governing_conditions": "README claims nested-tree preservation, byte-faithful editing including line endings/folds, forgiving parsing, strict building/validation, recurrence expansion and offsets from calendar-owned rules. These are project claims at the current unpinned repository state.",
+      "applicability": "A useful distinct architecture lead; no immutable candidate artifact or implementation conformance is established. The final accurately retains the lead and its uncertainty.",
+      "observation": "Independent read-only HTTP retrieval and semantic inspection of relevant surrounding primary context; no downloaded code executed.",
+      "note": "evidence/R11.md"
+    },
+    {
+      "id": "R12",
+      "requested_url": "https://raw.githubusercontent.com/collective/icalendar/v7.3.0/CHANGES.rst",
+      "request_started_utc": "2026-10-10T04:44:51.519446+00:00",
+      "http_status": 200,
+      "effective_url": "https://raw.githubusercontent.com/collective/icalendar/v7.3.0/CHANGES.rst",
+      "retrieved_at_utc": "2026-10-10T04:44:51.700255+00:00",
+      "sha256": "041f5e4f962f057b81ec1354dd0e9a07896acbe340e230d1416515be09c79ce2",
+      "bytes": 115288,
+      "capture": "evidence/R12.rst",
+      "text": "evidence/R12.txt",
+      "title": "Python icalendar release history",
+      "version_or_commit": "Tagged v7.3.0 CHANGES.rst, 2026-08-19; commit SHA not independently pinned",
+      "locators": [
+        "7.3.0 Bug fixes",
+        "Raw CHANGES.rst lines 44\u201357",
+        "Issue #1445, #1526, #313, #1633 entries"
+      ],
+      "governing_conditions": "The unknown/X-property escaping fix applies to values without a VALUE parameter. URI parameters were lost on jCal conversion due to a positional-argument bug. Vendor-prefixed TZIDs were resolved instead of treated as naive. The TZID/RDATE DATE offset fix applies under use_pytz; default zoneinfo was unaffected. These are package/history-specific conditions.",
+      "applicability": "Supports concrete preservation and timezone regression risks, not a Rust defect. Final summary omits some exact conditions; this has no adoption or consumer guarantee consequence and is recorded as a minor limitation.",
+      "observation": "Independent read-only HTTP retrieval and semantic inspection of relevant surrounding primary context; no downloaded code executed.",
+      "note": "evidence/R12.md"
+    },
+    {
+      "id": "R13",
+      "requested_url": "https://docs.rs/ical/0.11.0/ical/",
+      "request_started_utc": "2026-10-10T04:44:51.599814+00:00",
+      "http_status": 200,
+      "effective_url": "https://docs.rs/ical/0.11.0/ical/",
+      "retrieved_at_utc": "2026-10-10T04:44:51.790397+00:00",
+      "sha256": "2f0d912c92139a5c14baa3ca5f1605c6d16da12497263684b67752a2d93f4b32",
+      "bytes": 19792,
+      "capture": "evidence/R13.html",
+      "text": "evidence/R13.txt",
+      "title": "Rust ical crate overview",
+      "version_or_commit": "Pinned docs URL ical 0.11.0; embedded README still says 0.7.0",
+      "locators": [
+        "Crate description",
+        "Modules and re-exports",
+        "R13.txt lines 335\u2013379"
+      ],
+      "governing_conditions": "Overview documents a parsing library, exports LineReader/PropertyParser/IcalParser, and carries an old README version/install example. It does not alone expose the field-validity warning; R15 is the precise governing locator.",
+      "applicability": "The archived parser is a legitimate historical syntax-layer alternative, not proof of recurrence/timezone support. A stale README banner is not evidence of the actual selected dependency version.",
+      "observation": "Independent read-only HTTP retrieval and semantic inspection of relevant surrounding primary context; no downloaded code executed.",
+      "note": "evidence/R13.md"
+    },
+    {
+      "id": "R14",
+      "requested_url": "https://github.com/Peltoche/ical-rs",
+      "request_started_utc": "2026-10-10T04:44:51.600412+00:00",
+      "http_status": 200,
+      "effective_url": "https://github.com/Peltoche/ical-rs",
+      "retrieved_at_utc": "2026-10-10T04:44:52.044483+00:00",
+      "sha256": "8b1604dafc363e0b122fc8e6a8af0729d61fa456eb800060bfe94befae03882a",
+      "bytes": 333307,
+      "capture": "evidence/R14.html",
+      "text": "evidence/R14.txt",
+      "title": "Peltoche/ical-rs archived upstream",
+      "version_or_commit": "Repository archive banner, 2024-08-17",
+      "locators": [
+        "Archive banner",
+        "R14.txt line 663"
+      ],
+      "governing_conditions": "The repository was archived by its owner on 2024-08-17 and is read-only.",
+      "applicability": "Corroborates the maintenance-history caution and caldata fork lineage; no claim that archival itself makes all parser behavior incorrect.",
+      "observation": "Independent read-only HTTP retrieval and semantic inspection of relevant surrounding primary context; no downloaded code executed.",
+      "note": "evidence/R14.md"
+    },
+    {
+      "id": "R15",
+      "requested_url": "https://docs.rs/ical/0.11.0/ical/parser/index.html",
+      "request_started_utc": "2026-10-10T04:46:41.899911+00:00",
+      "http_status": 200,
+      "effective_url": "https://docs.rs/ical/0.11.0/ical/parser/index.html",
+      "retrieved_at_utc": "2026-10-10T04:46:42.087263+00:00",
+      "bytes": 18283,
+      "sha256": "969a93d49711d52588a346f8607baef78fe6ce2ec4b6bcc470c7ea39eea8f031",
+      "capture": "evidence/R15.html",
+      "text": "evidence/R15.txt",
+      "title": "ical parser module warning",
+      "version_or_commit": "ical 0.11.0 parser module docs",
+      "locators": [
+        "Warning",
+        "R15.txt lines 342\u2013345"
+      ],
+      "governing_conditions": "IcalParser/VcardParser parse content and uppercase case-insensitive fields; they do not check field validity.",
+      "applicability": "Precise supplementary primary locator for the candidate parser-validation claim. Final characterization is supported, while the original source locator was less precise.",
+      "observation": "Independent read-only HTTP retrieval and semantic inspection of relevant surrounding primary context; no downloaded code executed.",
+      "note": "evidence/R15.md"
+    },
+    {
+      "id": "R16",
+      "requested_url": "https://developers.google.com/workspace/calendar/api/v3/reference/events/update",
+      "request_started_utc": "2026-10-10T04:46:42.095258+00:00",
+      "http_status": 200,
+      "effective_url": "https://developers.google.com/workspace/calendar/api/v3/reference/events/update",
+      "retrieved_at_utc": "2026-10-10T04:46:42.476478+00:00",
+      "bytes": 196331,
+      "sha256": "0807b7fc7fce38a4ecf28d375427f679a42c24b601303ace497a4f07cfedaf27",
+      "capture": "evidence/R16.html",
+      "text": "evidence/R16.txt",
+      "title": "Google events.update reference",
+      "version_or_commit": "Calendar API v3 live method documentation",
+      "locators": [
+        "sendNotifications/sendUpdates parameters",
+        "status cancelled-exception conditions",
+        "R16.txt lines 2943\u20132974 and 3586\u20133600"
+      ],
+      "governing_conditions": "sendUpdates is a String with all, externalOnly and none notification choices; deprecated sendNotifications defaults false and warns some email can still occur. Cancelled exceptions are retained for the parent lifetime and only id/recurringEventId/originalStartTime are guaranteed populated; other cancelled events have a different deletion/sync lifetime.",
+      "applicability": "Independent condition check of the blanket provider-messaging sentence. Google status update and Graph /cancel have distinct notification contracts. This does not alter the final offline recommendation or the accurate operation table.",
+      "observation": "Independent read-only HTTP retrieval and semantic inspection of relevant surrounding primary context; no downloaded code executed.",
+      "note": "evidence/R16.md"
+    }
+  ],
+  "claims": [
+    {
+      "id": "K01",
+      "claim": "Series identity and move identity",
+      "candidate_locator": "C1; final lines 36\u201340",
+      "primary_locator": "R01 \u00a73.8.4.4/.7; R05 instance fields",
+      "condition_and_applicability": "UID is component identity; typed RID refers to original scheduled start even after a move. Source-document namespace is local product design; SEQUENCE stays revision metadata.",
+      "judgment": "SUPPORTED"
+    },
+    {
+      "id": "K02",
+      "claim": "Detached override, existing exception merge",
+      "candidate_locator": "C1/C2; final lines 40\u201342, 53",
+      "primary_locator": "R01 \u00a73.8.4.4; R04 \u00a73.7.1",
+      "condition_and_applicability": "Same UID/original RID; edit the existing keyed exception and preserve unrelated owning-component data; fail on duplicates/conflicts.",
+      "judgment": "SUPPORTED_PROPOSAL"
+    },
+    {
+      "id": "K03",
+      "claim": "Recurrence algebra and cancellation",
+      "candidate_locator": "C2; final lines 51\u201356",
+      "primary_locator": "R01 \u00a73.8.5.1/.3",
+      "condition_and_applicability": "DTSTART/RRULE/RDATE inclusion, EXDATE precedence, inclusion deduplication, retain anchor DTSTART; compatible typed original-slot exclusion.",
+      "judgment": "SUPPORTED"
+    },
+    {
+      "id": "K04",
+      "claim": "Cancel moved exception using EXDATE plus removed active override",
+      "candidate_locator": "C2; final line 56, critique U1",
+      "primary_locator": "R01 \u00a73.8.5.1; R04 \u00a73.2.5",
+      "condition_and_applicability": "Local tombstone/disclosed omission is a product proposal; no primary source or run here proves every consumer. Final retains uncertainty and a test/defer choice.",
+      "judgment": "HONEST_UNRESOLVED"
+    },
+    {
+      "id": "K05",
+      "claim": "No future/range edit or iTIP message",
+      "candidate_locator": "C2; final lines 57\u201358",
+      "primary_locator": "R01 \u00a73.8.4.4; R04 \u00a73.2.5",
+      "condition_and_applicability": "RANGE affects multiple occurrences; METHOD:CANCEL is organizer/attendee scheduling. Neither is the requested single offline operation.",
+      "judgment": "SUPPORTED"
+    },
+    {
+      "id": "K06",
+      "claim": "Zone authority and local recurrence",
+      "candidate_locator": "C3; final lines 62\u201364",
+      "primary_locator": "R01 \u00a73.2.19, \u00a73.6.5, \u00a73.8.5.3",
+      "condition_and_applicability": "Resolve file TZID to preserved matching VTIMEZONE covering the series; derive UTC instants rather than fix weekly UTC; no host-zone fallback.",
+      "judgment": "SUPPORTED"
+    },
+    {
+      "id": "K07",
+      "claim": "Fold/gap policy and count",
+      "candidate_locator": "C3; final lines 64\u201366; matrix line 147",
+      "primary_locator": "R01 \u00a73.3.5 and later \u00a73.3.10; R02/R03 EID 4271",
+      "condition_and_applicability": "First fold occurrence; imported/generated gaps use pre-gap offset; invalid dates still ignored. Rejecting a new entered gap destination is explicitly product policy.",
+      "judgment": "SUPPORTED_CORRECTION"
+    },
+    {
+      "id": "K08",
+      "claim": "Duration semantics",
+      "candidate_locator": "C3; final lines 68\u201374; matrix 148",
+      "primary_locator": "R01 \u00a73.3.6 and \u00a73.8.5.3",
+      "condition_and_applicability": "Master DTEND implies exact recurring duration; DURATION retains nominal form (day/week components can vary elapsed length); existing override explicit form/meaning retained.",
+      "judgment": "SUPPORTED_CORRECTION"
+    },
+    {
+      "id": "K09",
+      "claim": "Weekly grammar default and end constraints",
+      "candidate_locator": "C6; final lines 119, 125",
+      "primary_locator": "R01 \u00a73.3.10",
+      "condition_and_applicability": "WEEKLY, positive INTERVAL default 1, at most one matching BYDAY; optional COUNT xor UNTIL, COUNT includes DTSTART, TZID DTSTART UNTIL UTC DATE-TIME. Missing end bound is unbounded.",
+      "judgment": "SUPPORTED_CONDITIONAL_PROPOSAL"
+    },
+    {
+      "id": "K10",
+      "claim": "Google single-instance operation",
+      "candidate_locator": "C4; final lines 80\u201383",
+      "primary_locator": "R05 Modify/delete and originalStartTime; R16 parameters",
+      "condition_and_applicability": "Retrieve then authorized update of instance; status=cancelled marks cancellation. Provider IDs/status do not determine .ics syntax.",
+      "judgment": "SUPPORTED"
+    },
+    {
+      "id": "K11",
+      "claim": "Graph resource units/types/domain",
+      "candidate_locator": "C4; final line 81; authored S04/S07",
+      "primary_locator": "R06 fields; R09 range/preference",
+      "condition_and_applicability": "originalStart is DateTimeOffset/UTC for occurrence/exception; seriesMasterId String; types distinguish master/occurrence/exception. Instance/exception lists exclude cancelled; range required, response UTC unless Prefer zone.",
+      "judgment": "SUPPORTED"
+    },
+    {
+      "id": "K12",
+      "claim": "Graph cancel operation exception",
+      "candidate_locator": "C4; final line 81",
+      "primary_locator": "R07 description/request",
+      "condition_and_applicability": "Organizer-only POST /cancel can address occurrence event ID and sends cancellation message; attendee error HTTP 400.",
+      "judgment": "SUPPORTED"
+    },
+    {
+      "id": "K13",
+      "claim": "Graph moved-occurrence boundary",
+      "candidate_locator": "C4; final line 81",
+      "primary_locator": "R08 Response note",
+      "condition_and_applicability": "Cannot move to/before previous occurrence day or to/after following occurrence day; HTTP 400 ErrorOccurrenceCrossingBoundary. Provider restriction is not imposed on .ics.",
+      "judgment": "SUPPORTED"
+    },
+    {
+      "id": "K14",
+      "claim": "Unknown value types versus unknown properties",
+      "candidate_locator": "C5; final lines 87\u201389",
+      "primary_locator": "R01 \u00a73.2.20 and \u00a73.8.8.1/.2; frozen brief negative constraint",
+      "condition_and_applicability": "RFC preservation mandate concerns unknown VALUE type data; broader raw properties/parameters/folds preservation is this product contract.",
+      "judgment": "SUPPORTED_CORRECTION"
+    },
+    {
+      "id": "K15",
+      "claim": "Idempotence and round-trip",
+      "candidate_locator": "C5; final lines 91\u201393",
+      "primary_locator": "Local design grounded in R01 identity; R12 implementation history",
+      "condition_and_applicability": "Stable source-document/UID/typed RID upserts, input/export hashes, no silent conflict overwrite. Hashes are provenance, not semantic proof; byte identity distinct from meaning.",
+      "judgment": "SUPPORTED_PROPOSAL"
+    },
+    {
+      "id": "K16",
+      "claim": "caldata capability and version",
+      "candidate_locator": "C5; final line 97",
+      "primary_locator": "R10 pinned package metadata/owner notes",
+      "condition_and_applicability": "0.17.3 (2026-09-20), strict parsing/typed dates/recurrence described; opaque round-trip not demonstrated, no dependency selected.",
+      "judgment": "SUPPORTED_LEAD"
+    },
+    {
+      "id": "K17",
+      "claim": "Byte-faithful alternative",
+      "candidate_locator": "C5; final line 98",
+      "primary_locator": "R11 README Features",
+      "condition_and_applicability": "pimalaya/ical advertises whole-tree/byte-faithful editing, recurrence/calendar-owned timezone; unpinned repository claim remains research lead.",
+      "judgment": "SUPPORTED_LEAD_WITH_LIMIT"
+    },
+    {
+      "id": "K18",
+      "claim": "Archived parser scope",
+      "candidate_locator": "C5; final line 99",
+      "primary_locator": "R13 overview; R14 archive; R15 parser warning",
+      "condition_and_applicability": "ical 0.11.0 docs parser lacks validity checks; upstream archived 2024-08-17. Old embedded README banner/install snippet not treated as a new dependency pin.",
+      "judgment": "SUPPORTED_MINOR_LOCATOR_LIMIT"
+    },
+    {
+      "id": "K19",
+      "claim": "Implementation history conditions",
+      "candidate_locator": "C5; final line 101",
+      "primary_locator": "R12 7.3.0 Bug fixes, lines 44\u201357",
+      "condition_and_applicability": "Unknown/X escaping fix: without VALUE parameter. TZID/RDATE offset bug: use_pytz only, default zoneinfo unaffected. Different language/package; motivates tests, not Rust defect.",
+      "judgment": "SUPPORTED_WITH_MINOR_SUMMARY_LIMIT"
+    },
+    {
+      "id": "K20",
+      "claim": "Provider cancellation blanket messaging phrase",
+      "candidate_locator": "C2; final line 58, contrast C4 exact table",
+      "primary_locator": "R05 cancellation status update; R07 Graph /cancel; R16 sendUpdates",
+      "condition_and_applicability": "Graph /cancel sends a cancellation message; Google update notifications are parameter-dependent, including none. The blanket wording is broader than the precise comparator table.",
+      "judgment": "MINOR_WORDING_LIMIT"
+    },
+    {
+      "id": "K21",
+      "claim": "Unsupported inputs and validation status",
+      "candidate_locator": "C6; final 119\u2013154",
+      "primary_locator": "Frozen brief/plan; R01 scope conditions",
+      "condition_and_applicability": "Specific unsupported/conflict outcome without partial DB/export changes; implementations/client tests all explicitly not run; table gives prospective observables rather than results.",
+      "judgment": "SUPPORTED"
+    }
+  ],
+  "stage_id_crosswalk": {
+    "S01": [
+      "R01",
+      "R02",
+      "R03"
+    ],
+    "S02": [
+      "R04"
+    ],
+    "S03": [
+      "R05",
+      "R16"
+    ],
+    "S04": [
+      "R06"
+    ],
+    "S05": [
+      "R07"
+    ],
+    "S06": [
+      "R08"
+    ],
+    "S07": [
+      "R09"
+    ],
+    "S08": [
+      "R10"
+    ],
+    "S09": [
+      "R11"
+    ],
+    "S10": [
+      "R12"
+    ],
+    "S11": [
+      "R13",
+      "R14",
+      "R15"
+    ],
+    "S12": [
+      "R02",
+      "R03"
+    ]
+  },
+  "original_artifacts_manifest": "inspected-artifacts.json",
+  "web_access_note": {
+    "legacy_erratum_url": "web open returned Internal Error; urllib independently followed redirect and retrieved official erratum successfully",
+    "successful_raw_retrievals": 16,
+    "account_or_provider_api_execution": false
+  }
+}

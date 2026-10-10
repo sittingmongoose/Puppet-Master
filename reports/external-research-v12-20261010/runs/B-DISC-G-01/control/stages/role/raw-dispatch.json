@@ -1,0 +1,27 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"taskId\":\"node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-01-control-role-v2\",\"childThreadId\":\"thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-01-control-role-v2\",\"childRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-DISC-G-01-control-role-v2:ordinal:1\",\"childNodeId\":\"node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-01-control-role-v2\",\"status\":\"running\",\"workState\":\"working\",\"hasPendingChildRuns\":false,\"latestTerminalRunId\":null,\"latestTerminalStatus\":null,\"latestTerminalSummary\":null,\"latestTerminalResultContextTransferId\":null,\"providerInstanceId\":\"AUTHORIZED_PROVIDER_INSTANCE\",\"model\":\"gpt-6-luna\",\"summary\":null,\"resultContextTransferId\":null,\"waitTimedOut\":false}"
+    }
+  ],
+  "structuredContent": {
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-01-control-role-v2",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-01-control-role-v2",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-DISC-G-01-control-role-v2:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-01-control-role-v2",
+    "status": "running",
+    "workState": "working",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": null,
+    "latestTerminalStatus": null,
+    "latestTerminalSummary": null,
+    "latestTerminalResultContextTransferId": null,
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "summary": null,
+    "resultContextTransferId": null,
+    "waitTimedOut": false
+  },
+  "isError": false
+}

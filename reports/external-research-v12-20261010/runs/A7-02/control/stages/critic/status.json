@@ -1,0 +1,18 @@
+{
+  "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A7-02-control-critic-v1",
+  "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A7-02-control-critic-v1",
+  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A7-02-control-critic-v1:ordinal:1",
+  "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A7-02-control-critic-v1",
+  "status": "completed",
+  "workState": "result_available",
+  "hasPendingChildRuns": false,
+  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A7-02-control-critic-v1:ordinal:1",
+  "latestTerminalStatus": "completed",
+  "latestTerminalSummary": "Completed the critic stage and saved both required outputs:\n\n- [critique.md](ER12_RUNTIME/runs/A7-02/control/stages/critic/critique.md)\n- [source-map.json](ER12_RUNTIME/runs/A7-02/control/stages/critic/source-map.json)\n\nThe review found no material wrong, incomplete, or unsupported consequential claims. It records one minor source-date wording issue and leaves the group lead’s choices as unresolved owner inputs. The source map parsed successfully; no product or API tests were run.\n\nThe native Goal is **complete**: thread `01a12424-e6a2-7603-b28b-a9af750da8b9`, 137,514 tokens used, 624 seconds. Provider/model provenance and a separate terminal timestamp were unavailable (**UNKNOWN**); the returned `updatedAt` was `1791608418`.",
+  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A7-02-control-critic-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:12853cb0-9ad2-4c35-be2a-84e89c264ea1",
+  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+  "model": "gpt-6-luna",
+  "summary": "Completed the critic stage and saved both required outputs:\n\n- [critique.md](ER12_RUNTIME/runs/A7-02/control/stages/critic/critique.md)\n- [source-map.json](ER12_RUNTIME/runs/A7-02/control/stages/critic/source-map.json)\n\nThe review found no material wrong, incomplete, or unsupported consequential claims. It records one minor source-date wording issue and leaves the group lead’s choices as unresolved owner inputs. The source map parsed successfully; no product or API tests were run.\n\nThe native Goal is **complete**: thread `01a12424-e6a2-7603-b28b-a9af750da8b9`, 137,514 tokens used, 624 seconds. Provider/model provenance and a separate terminal timestamp were unavailable (**UNKNOWN**); the returned `updatedAt` was `1791608418`.",
+  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A7-02-control-critic-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:12853cb0-9ad2-4c35-be2a-84e89c264ea1",
+  "waitTimedOut": false
+}

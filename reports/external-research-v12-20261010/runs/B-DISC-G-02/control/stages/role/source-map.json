@@ -1,0 +1,110 @@
+{
+  "schema": "er12-source-map-v1",
+  "role": "Brief-only discovery",
+  "retrieval_observation_utc": "2026-10-10T04:59:27Z",
+  "retrieval_timestamp_note": "The web tool did not return per-page fetch timestamps; this is the UTC clock observation after the source retrieval batch.",
+  "operations": [
+    "web__run search_query for official SLSA, in-toto, Sigstore, and Reproducible Builds documentation",
+    "web__run open on five primary documentation pages",
+    "web__run click from the opened SLSA verifier and Reproducible Builds documentation pages, and open one SLSA provenance page"
+  ],
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://slsa.dev/spec/v1.2/verifying-artifacts",
+      "organization_project": "SLSA community / Linux Foundation",
+      "version_date": "SLSA specification v1.2; page status Approved",
+      "locator": "Build: Verifying artifacts; How to verify; Step 2: Check expectations; Step 3: Check dependencies recursively",
+      "retrieval_operation": "web search result followed by open",
+      "source_statement": "Verification includes signature, artifact subject digest, predicate type, trusted builder identity, source repository, buildType, and externalParameters checks; dependency recursion is optional and can be best effort.",
+      "conditions_exceptions": "Verifier expectations and roots of trust must be configured; the threat model assumes trust in selected build platforms and does not cover compromise of a trusted platform.",
+      "applicability_or_inference": "Direct fit for binding a supplied artifact to an accepted source and builder; mapping product names to expected repositories remains a product choice."
+    },
+    {
+      "id": "S2",
+      "url": "https://slsa.dev/spec/v1.2/provenance",
+      "organization_project": "SLSA community / Linux Foundation",
+      "version_date": "SLSA specification v1.2; page status Approved",
+      "locator": "Provenance definition; Build provenance and Source provenance entries",
+      "retrieval_operation": "web open",
+      "source_statement": "SLSA describes provenance as verifiable information about where, when, and how artifacts were produced; build provenance tracks output back to source code.",
+      "conditions_exceptions": "This page is a general definition and directs predicate-specific readers to Build Provenance.",
+      "applicability_or_inference": "Supports treating provenance as a claim set whose acceptance still depends on verification and expectations."
+    },
+    {
+      "id": "S3",
+      "url": "https://in-toto.io/docs/getting-started/",
+      "organization_project": "in-toto project",
+      "version_date": "Documentation page last modified 2024-12-13; release version not stated on page",
+      "locator": "Layout; Artifact Rules; in-toto-run; Verification",
+      "retrieval_operation": "web search result followed by open",
+      "source_statement": "Signed layouts define authorized functionaries and step rules; signed links carry step metadata; in-toto-verify checks signatures, expiry, authorized steps, rules, and inspections.",
+      "conditions_exceptions": "Only explicitly passed materials/products are recorded; default rules allow unspecified artifacts, and the docs recommend disallowing all remaining artifacts for most steps.",
+      "applicability_or_inference": "Fits a richer multi-step evidence chain when policy authors can maintain layouts and keys."
+    },
+    {
+      "id": "S4",
+      "url": "https://docs.sigstore.dev/cosign/verifying/verify/",
+      "organization_project": "Sigstore / Cosign",
+      "version_date": "Documentation as retrieved 2026-10-10; page did not state a release tag",
+      "locator": "Keyless verification using OpenID Connect; blob bundle verification; digest validation; Verify attestation",
+      "retrieval_operation": "web search result followed by open",
+      "source_statement": "Cosign supports identity/issuer constrained verification, bundle-based blob verification, digest checks, and an attestation verification command.",
+      "conditions_exceptions": "The docs warn that disabling claim checks leaves claims unverified; semantic policy over attestation predicates is still required.",
+      "applicability_or_inference": "Strong inspectable signing/identity component for detached installer artifacts; format-specific behavior must be confirmed."
+    },
+    {
+      "id": "S5",
+      "url": "https://reproducible-builds.org/docs/which-problems-do-reproducible-builds-solve/",
+      "organization_project": "Reproducible Builds project",
+      "version_date": "Documentation page; no release version stated",
+      "locator": "Motivation and identical-results discussion",
+      "retrieval_operation": "web click from the official documentation index",
+      "source_statement": "Identical outputs from a given source allow multiple parties to compare results and flag build deviations.",
+      "conditions_exceptions": "This detects output differences but does not itself specify accepted repository, builder identity, or dependency policy.",
+      "applicability_or_inference": "Candidate independent corroboration for build-job compromise, conditional on reproducibility."
+    },
+    {
+      "id": "S6",
+      "url": "https://reproducible-builds.org/docs/",
+      "organization_project": "Reproducible Builds project",
+      "version_date": "Documentation index; no release version stated",
+      "locator": "Introduction; Define a build environment; Verification",
+      "retrieval_operation": "web search result followed by open",
+      "source_statement": "The documentation notes that build-system changes and a strategy for recreating the environment may be needed.",
+      "conditions_exceptions": "The index links multiple techniques; this page alone does not establish that a particular project is reproducible.",
+      "applicability_or_inference": "Supports treating cost and feasibility as open product questions rather than assuming universal reproducibility."
+    },
+    {
+      "id": "S7",
+      "url": "https://github.com/in-toto/attestation/blob/main/docs/validation.md",
+      "organization_project": "in-toto Attestation Framework",
+      "version_date": "GitHub main branch as rendered; document did not state a release version",
+      "locator": "Validation model, single artifact/single attestation pseudocode, output to policy engine",
+      "retrieval_operation": "web click from the SLSA verification page’s verifier link",
+      "source_statement": "The validation pseudocode checks recognized attesters and a matching artifact digest, then outputs predicate data for a policy engine.",
+      "conditions_exceptions": "Page says its model is for one artifact and one attestation and leaves multiple-attestation handling as TODO.",
+      "applicability_or_inference": "Supports separating cryptographic validation from semantic product-policy evaluation."
+    },
+    {
+      "id": "S8",
+      "url": "https://slsa.dev/blog/2025/04/slsa-v1.1",
+      "organization_project": "SLSA community / Linux Foundation",
+      "version_date": "Release note dated 2025-04-21; SLSA v1.1",
+      "locator": "Release status, compatibility, and verifier-metadata changes",
+      "retrieval_operation": "web search result followed by open",
+      "source_statement": "The release note says v1.1 replaced v1.0, is backward compatible with v1.0, and adds verifier metadata to the VSA format.",
+      "conditions_exceptions": "Specification compatibility does not prove that a specific installed verifier implements all fields or versions.",
+      "applicability_or_inference": "Historical/version lead: test actual producer output against the installed verifier and record supported versions/fields."
+    }
+  ],
+  "checks": {
+    "executed": ["Retrieved and inspected the cited public documentation pages."],
+    "proposed_not_executed": [
+      "Negative cases for missing provenance, wrong source, wrong builder, changed parameters, digest mismatch, and dependency mismatch.",
+      "Cosign blob-bundle and in-toto verification prototypes against a bounded installer fixture matrix.",
+      "Compatibility check across the producer output and installed verifier versions."
+    ],
+    "not_performed": ["No code downloaded or executed; no software installed; no local artifact verification run."]
+  }
+}

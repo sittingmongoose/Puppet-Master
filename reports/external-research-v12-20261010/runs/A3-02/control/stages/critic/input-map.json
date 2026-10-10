@@ -1,0 +1,28 @@
+{
+  "run_id": "A3-02-control",
+  "stage": "critic",
+  "brief": "ER12_RUNTIME/runs/A3-02/control/inputs/brief.md",
+  "predecessors": [
+    "ER12_RUNTIME/runs/A3-02/control/stages/investigator/discovery.md",
+    "ER12_RUNTIME/runs/A3-02/control/stages/investigator/draft.md",
+    "ER12_RUNTIME/runs/A3-02/control/stages/investigator/source-map.json",
+    "ER12_RUNTIME/runs/A3-02/control/stages/investigator/revealed-plan.md",
+    "ER12_RUNTIME/runs/A3-02/control/stages/investigator/plan-reveal.json"
+  ],
+  "source_roots": [
+    "ER12_RUNTIME/runs/A3-02/control/stages/investigator/sources"
+  ],
+  "allowed_write_root": "ER12_RUNTIME/runs/A3-02/control/stages/critic",
+  "stage_deadline_utc": "2026-10-10T05:17:02.876Z",
+  "whole_deadline_utc": "2026-10-10T05:42:48.166Z",
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "revealed_plan": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/revealed-plan.md",
+  "prospective_service_tier_revision": "user-standard-20261010-v1"
+}

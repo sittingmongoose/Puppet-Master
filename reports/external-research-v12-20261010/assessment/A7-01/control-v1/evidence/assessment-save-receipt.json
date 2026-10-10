@@ -1,0 +1,40 @@
+{
+  "saved_before_native_completion": true,
+  "observed_at_utc": "2026-10-10T05:07:27.481850+00:00",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "axes_assessed": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "unassessed_axes": [],
+  "remaining_material_findings": [],
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/A7-01/control-v1/assessment.md",
+      "bytes": 51171,
+      "sha256": "af61d91f3324b4bb1bb30973af7290056de0df98606195f96a57cbd09476b065"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-01/control-v1/assessment.json",
+      "bytes": 71244,
+      "sha256": "381648046499f76c27b9ece715c4fae4d189a92ba0d4f8a20e4d7223c3954561"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-01/control-v1/source-map.json",
+      "bytes": 79739,
+      "sha256": "b23a395099314fceacb5d12dfa04befeaf69d3c322bc6d07b6dce8a6c3fc9084"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/index.md",
+      "bytes": 16719,
+      "sha256": "d4f3898efe22bd0ae311772efc51be7b1f2d7484d7349003a899018de8253a9c"
+    }
+  ],
+  "originals_rechecked_unchanged": true,
+  "reviewer_goal_id": "01a12429-1836-74c3-b8f3-bc08adce41fc",
+  "completion_not_yet_called": true
+}

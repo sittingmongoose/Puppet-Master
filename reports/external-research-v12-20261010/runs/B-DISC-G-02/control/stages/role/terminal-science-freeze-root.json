@@ -1,0 +1,106 @@
+{
+  "observed_at_utc": "2026-10-10T05:04:03.723503+00:00",
+  "basis": "root actual T3 completed/no pending before independent review; not native Goal proof",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/assignment.md",
+      "sha256": "80e061cf30bdfd97db56aebe1843d029592d2685c8af0697dba31fdc764b3322",
+      "bytes": 2375,
+      "mtime_ns": 1791608165691640460
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/discovery.md",
+      "sha256": "021b0a1e56c4cca4b4c67fd68aed2addd8fa07fa990cff99b28766910b42ffeb",
+      "bytes": 7675,
+      "mtime_ns": 1791608470283220989
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/dispatch.json",
+      "sha256": "e2da6bed9ec148f394a55db7e33b5b15635a6e16d8fe6a303404d200061d9cfd",
+      "bytes": 4347,
+      "mtime_ns": 1791608167047696714
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/freeze.json",
+      "sha256": "0ca65e83cfb4d904b21aef63d974607ecc30b912837e53578b1365e30d823090",
+      "bytes": 2276,
+      "mtime_ns": 1791608165834190945
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/input-map.json",
+      "sha256": "0196b3d44521e6e908c55cfe8c6bdd27aa8252fc0189bdefe7ab95e80233d735",
+      "bytes": 573,
+      "mtime_ns": 1791608165833688325
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/raw-dispatch.json",
+      "sha256": "5ae2fa6be0c283013356dcf43e02df06b66ae6fe42b1b3b88c536ea65751b261",
+      "bytes": 2096,
+      "mtime_ns": 1791608166847671272
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/records/dispatch-20261010T045607047236-5132b3486b7847d29cf33fb664b23a38.json",
+      "sha256": "e2da6bed9ec148f394a55db7e33b5b15635a6e16d8fe6a303404d200061d9cfd",
+      "bytes": 4347,
+      "mtime_ns": 1791608167047438678
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/records/native-goal-activation-response.json",
+      "sha256": "a882014b9c06f3874e9ca028442340ef23810e1662f29f99794a9499b69aaff4",
+      "bytes": 430,
+      "mtime_ns": 1791608242273695038
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/records/protocol-deviation.md",
+      "sha256": "cbb71c875f78a7cea83e32f9d757a343915061855ea179a7d3752ab5b8a8e028",
+      "bytes": 1425,
+      "mtime_ns": 1791608548302887522
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/request.json",
+      "sha256": "2f2a222bd8bb56ac47527ec8f66daa25f6683ff889417e83c14531a95f6fe63a",
+      "bytes": 1093,
+      "mtime_ns": 1791608165833887246
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/service-tier-change.json",
+      "sha256": "1bea1a32b6c2c7c6c2cd27ab63fda3d03150aa1c98a951cf65218c91500eb289",
+      "bytes": 479,
+      "mtime_ns": 1791608165834327143
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/source-map.json",
+      "sha256": "d72afc3e1c0f7dd80b8c9254d5714df6c7c754aa667aad018b00791468035eaa",
+      "bytes": 8324,
+      "mtime_ns": 1791608420781889699
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/sources/evidence.md",
+      "sha256": "ccbf5126df01d0cc3b2d82fcc0089febe4f7549e3d9bed68e326f57c379d366d",
+      "bytes": 2620,
+      "mtime_ns": 1791608420786889732
+    }
+  ],
+  "terminal_task": {
+    "slot": "B-DISC-G-02",
+    "arm": "control",
+    "stage": "role",
+    "helper": "ER12_RUNTIME/helpers/role-v2",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-02-control-role-v2",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-02-control-role-v2",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-DISC-G-02-control-role-v2:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-02-control-role-v2",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-DISC-G-02-control-role-v2:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "The native Goal is **blocked**. The exact objective required by the assignment differs from the sole active Goal\u2019s objective; the exposed controls cannot edit it, and creating another Goal would violate the one-Goal constraint. No native completion receipt is claimed.\n\nThe research deliverables are saved: [discovery.md](ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/discovery.md) (995 words), [source-map.json](ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/source-map.json), and [sources/evidence.md](ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/sources/evidence.md). The source map parsed successfully. The activation response and protocol deviation are recorded in the role output.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-DISC-G-02-control-role-v2:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:224a289c-affa-4cb8-ab38-868f43e7e1a1",
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "summary": "The native Goal is **blocked**. The exact objective required by the assignment differs from the sole active Goal\u2019s objective; the exposed controls cannot edit it, and creating another Goal would violate the one-Goal constraint. No native completion receipt is claimed.\n\nThe research deliverables are saved: [discovery.md](ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/discovery.md) (995 words), [source-map.json](ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/source-map.json), and [sources/evidence.md](ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/sources/evidence.md). The source map parsed successfully. The activation response and protocol deviation are recorded in the role output.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-DISC-G-02-control-role-v2:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:224a289c-affa-4cb8-ab38-868f43e7e1a1",
+    "waitTimedOut": false
+  }
+}

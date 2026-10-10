@@ -1,0 +1,13 @@
+URL: https://docs.aws.amazon.com/AmazonS3/latest/userguide/upload-objects.html
+Original locator: ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P01-text.txt
+Original SHA256: 902b2ee6b84a09d4ab1b1da623de15bd19ca074513363ae36ff41e2c6c9a029b
+Original numbered lines; gaps omitted. Not full response.
+
+20: REST API, or AWS CLI – With a single PUT operation, you can
+21: upload a single object up to 5 GB in size.
+22: Upload a single object by using the Amazon S3 console – With the Amazon S3 console, you can upload a single object up
+26: operation, you can upload a single large object, up to 50 TB in size.
+27: The multipart upload API operation is designed to improve the upload experience for
+28: larger objects. You can upload an object in parts. These object parts can be uploaded
+29: independently, in any order, and in parallel. You can use a multipart upload for objects
+30: from 5 MB to 50 TB in size. For more information, see Uploading and copying objects using multipart upload in Amazon S3.

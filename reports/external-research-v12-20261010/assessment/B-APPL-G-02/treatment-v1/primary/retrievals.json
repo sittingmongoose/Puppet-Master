@@ -1,0 +1,74 @@
+[
+  {
+    "id": "timer-manual",
+    "url": "https://raw.githubusercontent.com/systemd/systemd/v257/man/systemd.timer.xml",
+    "version": "v257",
+    "operation": "HTTPS GET via Python urllib.request; data only, no execution",
+    "retrieved_at_utc": "2026-10-10T05:13:44.012287+00:00",
+    "status": 200,
+    "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/systemd.timer.xml",
+    "sha256": "4862ce0331198c5b3d24b69af45fc8dd55b2c1ad98ce839b042b1cc70d01d9cc",
+    "bytes": 25003,
+    "lines": 435
+  },
+  {
+    "id": "time-manual",
+    "url": "https://raw.githubusercontent.com/systemd/systemd/v257/man/systemd.time.xml",
+    "version": "v257",
+    "operation": "HTTPS GET via Python urllib.request; data only, no execution",
+    "retrieved_at_utc": "2026-10-10T05:13:44.013739+00:00",
+    "status": 200,
+    "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/systemd.time.xml",
+    "sha256": "7973199a518696a838e2750d6b2a4a5420778a88c569086f27f1089481d61a09",
+    "bytes": 16766,
+    "lines": 329
+  },
+  {
+    "id": "timer-implementation",
+    "url": "https://raw.githubusercontent.com/systemd/systemd/v257/src/core/timer.c",
+    "version": "v257",
+    "operation": "HTTPS GET via Python urllib.request; data only, no execution",
+    "retrieved_at_utc": "2026-10-10T05:13:44.014510+00:00",
+    "status": 200,
+    "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/timer.c",
+    "sha256": "675b20653abc17d52632ce48e6c2cd1ebcbebcf72394f2bf5909180ee859ce12",
+    "bytes": 37452,
+    "lines": 1092
+  },
+  {
+    "id": "service-manual",
+    "url": "https://raw.githubusercontent.com/systemd/systemd/v257/man/systemd.service.xml",
+    "version": "v257",
+    "operation": "HTTPS GET via Python urllib.request; data only, no execution",
+    "retrieved_at_utc": "2026-10-10T05:13:44.015238+00:00",
+    "status": 200,
+    "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/systemd.service.xml",
+    "sha256": "80f479747740d98e20ec214231a710616013238323596ea619d9159b3649e584",
+    "bytes": 108781,
+    "lines": 1803
+  },
+  {
+    "id": "manager-manual",
+    "url": "https://raw.githubusercontent.com/systemd/systemd/v257/man/systemd-system.conf.xml",
+    "version": "v257",
+    "operation": "HTTPS GET via Python urllib.request; data only, no execution",
+    "retrieved_at_utc": "2026-10-10T05:13:44.016379+00:00",
+    "status": 200,
+    "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/systemd-system.conf.xml",
+    "sha256": "98e7e90852b484d5825281b512d733048529de45cb7da29160c4d5cab9308547",
+    "bytes": 41716,
+    "lines": 777
+  },
+  {
+    "id": "analyze-manual",
+    "url": "https://raw.githubusercontent.com/systemd/systemd/v257/man/systemd-analyze.xml",
+    "version": "v257",
+    "operation": "HTTPS GET via Python urllib.request; data only, no execution",
+    "retrieved_at_utc": "2026-10-10T05:13:44.017395+00:00",
+    "status": 200,
+    "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/systemd-analyze.xml",
+    "sha256": "b4a07750e3c89bc726a0ab54bdf862abcee730bb40c81fa9c21e0b8713267f80",
+    "bytes": 77808,
+    "lines": 1777
+  }
+]

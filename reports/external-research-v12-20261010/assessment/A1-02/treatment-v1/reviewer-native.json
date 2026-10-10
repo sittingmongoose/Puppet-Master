@@ -1,0 +1,41 @@
+{
+  "create_goal_observation": {
+    "threadId": "01a1241e-ea98-77f1-84ce-0742fa7bc3ee",
+    "status": "active",
+    "tokensUsed": 0,
+    "timeUsedSeconds": 0,
+    "createdAt": 1791607383,
+    "updatedAt": 1791607383
+  },
+  "pre_completion_observation": {
+    "goal": {
+      "threadId": "01a1241e-ea98-77f1-84ce-0742fa7bc3ee",
+      "objective": "Independently assess the ONE completed ER12 A1-02 treatment full pipeline under RUBRIC-v1, within a finite 45-minute envelope including saving. Read full frozen brief/plan, terminal freeze, original authored stages, maps, assignments/input-maps/freezes and authored evidence; inspect all six axes and every exact plan clause, critique disposition, claim conditions, discovery breadth, lineage meaning and validation/oracle applicability. Retrieve governing primary sources independently. Do not delegate, repair candidates, alter accounts, use Git/publication, inspect other arms/results/history, or rescore ER11. Preserve source freeze unchanged. Save complete assessment.md, assessment.json and navigable independent evidence/source-map only under ER12_RUNTIME/assessment/A1-02/treatment-v1; report material issues honestly, unassessed scope if capped, original inspected hashes, and native/protocol/time/billing only with evidence or UNKNOWN. Complete this native Goal only after judgment is saved.",
+      "status": "active",
+      "tokensUsed": 209285,
+      "timeUsedSeconds": 771,
+      "createdAt": 1791607383,
+      "updatedAt": 1791608154
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "completion_observation": {
+    "goal": {
+      "threadId": "01a1241e-ea98-77f1-84ce-0742fa7bc3ee",
+      "objective": "Independently assess the ONE completed ER12 A1-02 treatment full pipeline under RUBRIC-v1, within a finite 45-minute envelope including saving. Read full frozen brief/plan, terminal freeze, original authored stages, maps, assignments/input-maps/freezes and authored evidence; inspect all six axes and every exact plan clause, critique disposition, claim conditions, discovery breadth, lineage meaning and validation/oracle applicability. Retrieve governing primary sources independently. Do not delegate, repair candidates, alter accounts, use Git/publication, inspect other arms/results/history, or rescore ER11. Preserve source freeze unchanged. Save complete assessment.md, assessment.json and navigable independent evidence/source-map only under ER12_RUNTIME/assessment/A1-02/treatment-v1; report material issues honestly, unassessed scope if capped, original inspected hashes, and native/protocol/time/billing only with evidence or UNKNOWN. Complete this native Goal only after judgment is saved.",
+      "status": "complete",
+      "tokensUsed": 212245,
+      "timeUsedSeconds": 795,
+      "createdAt": 1791607383,
+      "updatedAt": 1791608179
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+  },
+  "completion_receipt_observed_utc": "2026-10-10 04:56:19 UTC",
+  "separate_activation_timestamp": "UNKNOWN; active status and createdAt observed",
+  "separate_terminal_timestamp": "UNKNOWN; complete status and updatedAt observed, no completedAt field",
+  "full_judgment_and_evidence_saved_before_native_completion": true,
+  "source_freeze_unchanged": true
+}

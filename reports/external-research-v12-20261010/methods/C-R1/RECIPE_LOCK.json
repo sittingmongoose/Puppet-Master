@@ -1,0 +1,100 @@
+{
+  "schema": "er12.C.recipe-lock.v1",
+  "frozen_at_utc": "2026-10-10T04:58:05.119114+00:00",
+  "recipe_id": "C-R1-A1-standard-v1",
+  "slots": [
+    "C-R1-01",
+    "C-R1-02"
+  ],
+  "classification": "complete single-account transferred-budget successor; source-quality and feasibility lead; no established20percent gain",
+  "components": [
+    "pinned R0 full substantive instructions/discovery-reveal boundary/independent critic/full fresh final",
+    "A1 absoluteT0+30,+42,+60 budget contract; no new semantic delta",
+    "user-authorized standard Codex service tier for both arms; requested per-stage override before dispatch"
+  ],
+  "selection_evidence": [
+    {
+      "slot": "A1-01",
+      "arms": {
+        "control": {
+          "original_independent_judgment": "PASS_WITH_LIMITATIONS",
+          "assessment_path": "ER12_RUNTIME/assessment/A1-01/control-v1/assessment.json",
+          "sha256": "2e8feaa4f758077eebe92a851cf36f74387aa67576f1877126ef24cd4b0c0e00",
+          "original_failure_preserved": true
+        },
+        "treatment": {
+          "original_independent_judgment": "PASS_WITH_LIMITATIONS",
+          "assessment_path": "ER12_RUNTIME/assessment/A1-01/treatment-v1/assessment.json",
+          "sha256": "ff4bb8e68753975444aa3f4d4caf5e356d1478ddd4e88cdbb174f88500b3e9eb",
+          "original_failure_preserved": true
+        }
+      }
+    },
+    {
+      "slot": "A1-02",
+      "arms": {
+        "control": {
+          "original_independent_judgment": "FAIL",
+          "assessment_path": "ER12_RUNTIME/assessment/A1-02/control-v1/assessment.json",
+          "sha256": "9e2292f269e56163d5c69b6dc8be900c24384c77072cc09707fdc72553f9dbce",
+          "original_failure_preserved": true
+        },
+        "treatment": {
+          "original_independent_judgment": "PASS_WITH_LIMITATIONS",
+          "assessment_path": "ER12_RUNTIME/assessment/A1-02/treatment-v1/assessment.json",
+          "sha256": "287e89fb780439a37e75f538942e324288957c74f63a18ff1625696ac93282bd",
+          "original_failure_preserved": true
+        }
+      }
+    }
+  ],
+  "quality_result": "A1treatment source2/2, control1/2; all original attempts included",
+  "known_latency_first_pair": {
+    "control_host_span_s": 2243.868,
+    "treatment_host_span_s": 1999.314,
+    "both_source_pass": true,
+    "treatment_shorter_fraction": 0.10898769446331058,
+    "limitations": "one conditional pair; scheduling/contention/native gaps; not causal or billing qualification"
+  },
+  "second_pair_latency": "control source-failed; no same-quality speed inference; actual treatment host timelines saved separately",
+  "control": "R0 30/12/18 fixed caps; three fresh Luna Max native contexts",
+  "treatment": "A1 three fresh Luna Max native contexts;30/42/60 absolute boundaries",
+  "whole_arm_s": 3600,
+  "occupied_agent_minute_ceiling": 90,
+  "new_worker_serviceTier": "default",
+  "billing_and_effective_settings": "UNKNOWN; do not infer affordability",
+  "input_policy": "fresh brief-only external discovery before pinned one-shot plan reveal; complete8clauses and alternatives/implementation/history; no manual winning sources or other results; same sources/tools/scope for both",
+  "assessment_policy": "full six-axis original rubric; independent fresh Solxhigh; source/coverage/delivery/native/protocol/time separate; all attempted failures included; bothpassing latencyconditional only",
+  "frozen_implementation": [
+    {
+      "path": "helpers/er12-screen-v1/prepare.py",
+      "sha256": "bb38b943536f5039018da2616afce260a88baf9aafa8412a1590180420f047da"
+    },
+    {
+      "path": "helpers/er11/prepare.py",
+      "sha256": "ae736bfb6748175284d2abbcc7f851f031593612b0de160d72df91dd11ae70a7"
+    },
+    {
+      "path": "helpers/er11/reveal.py",
+      "sha256": "ec9579204af96aa6a45caba1eef94c6ca1a799c296a2363b179af359bd908abe"
+    },
+    {
+      "path": "helpers/er11/bootstrap.js",
+      "sha256": "f8b21ce31ca521880adc9a362dda04bdaa5f5a4285d3a9d0b019f855e2623595"
+    },
+    {
+      "path": "mechanics/native-root-code-mode/standardSpecJS.js",
+      "sha256": "803f679454dd062b9d11ec54c7adf04172b0c5330bc949ca115161672315fac6"
+    },
+    {
+      "path": "methods/SELECTION-v1.md",
+      "sha256": "ce57140ef1243b50ed0c35ee7eec3763b51c415ea29160e6b1f6dbb5acd43137"
+    },
+    {
+      "path": "methods/SELECTION_FREEZE.json",
+      "sha256": "771e10adc0813a7170bfbd74feddb10b74f7041f9f4ade41e4f1f73eee5eaaa0"
+    }
+  ],
+  "case_access_before_lock": "root read outer future manifest IDs/domains/hashes only; no C scientific input opened",
+  "D_status": "not selected or locked; wait own C evidence before fresh D case access"
+}

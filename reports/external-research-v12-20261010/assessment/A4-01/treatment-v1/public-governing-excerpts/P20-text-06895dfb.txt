@@ -1,0 +1,80 @@
+URL: https://cloud.google.com/storage/docs/resumable-uploads
+Original locator: ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P20-text.txt
+Original SHA256: 06895dfb449d8b6fd3e5bc5475a3894c44c0ae45c0fa220dd7972e69eed31237
+Original numbered lines; gaps omitted. Not full response.
+
+158: Cross-origin resource sharing (CORS)
+588: includes the query parameter uploadType=resumable to initiate the
+589: resumable upload. This request returns as session URI that you
+590: then use in one or more PUT Object requests to upload the object data.
+591: For a step-by-step guide to building your own logic for resumable
+592: uploading, see Performing resumable uploads.
+593: XML API
+594: The Cloud Storage XML API uses a POST Object request that
+595: includes the header x-goog-resumable: start to initiate the
+596: resumable upload. This request returns as session URI that you
+597: then use in one or more PUT Object requests to upload the object data.
+598: For a step-by-step guide to building your own logic for resumable
+599: uploading, see Performing resumable uploads.
+600: If a cross-origin client (such as a web browser) will upload the data, include
+601: the client's Origin header in the initial request that creates the session.
+602: Cloud Storage determines CORS headers based on the initial
+603: request; if Origin is omitted during the initiation of the session,
+604: Cloud Storage won't include CORS headers in responses to subsequent
+605: upload requests, causing browser cross-origin requests to fail.
+606: Resumable uploads of unknown size
+607: The resumable upload mechanism supports transfers where the file size is not
+608: known in advance. This can be useful for cases like compressing an object
+609: on-the-fly while uploading, since it's difficult to predict the exact file size
+610: for the compressed file at the start of a transfer. The mechanism is useful
+611: either if you want to stream a transfer that can be resumed after being
+612: interrupted, or if chunked transfer encoding does not work for your application.
+613: For more information, see Streaming uploads.
+614: Upload performance
+615: Choosing session regions
+616: Resumable uploads are pinned in the region where you initiate them. For
+617: example, if you initiate a resumable upload in the US and give the session URI
+618: to a client in Asia, the upload still goes through the US. To reduce
+619: cross-region traffic and improve performance, you should keep a resumable upload
+620: session in the region in which it was created.
+621: If you use a Compute Engine instance to initiate a resumable upload, the
+622: instance should be in the same location as the Cloud Storage bucket
+623: you upload to. You can then use a geo IP service to pick the Compute Engine
+624: region to which you route customer requests, which helps keep traffic
+625: localized to a geo-region.
+626: Uploading in chunks
+627: If possible, avoid breaking a transfer into smaller chunks and instead upload
+628: the entire content in a single chunk. Avoiding chunking removes added latency
+629: costs and operations charges from querying the persisted offset of each chunk as
+630: well as improves throughput. However, you should consider uploading in chunks
+631: when:
+632: Your source data is being generated dynamically and you want to limit how
+633: much of it you need to buffer client-side in case the upload fails.
+634: Your clients have request size limitations, as is the case for many
+635: browsers.
+636: If you're using the JSON or XML API and your client receives an error, they can
+637: query the server for the persisted offset and resume uploading remaining
+638: bytes from that offset. The Google Cloud console, Google Cloud CLI, and client
+639: libraries handle this automatically on your behalf. See
+640: How tools and APIs use resumable uploads for more guidance on chunking for
+641: specific client libraries.
+642: Considerations
+643: This section is useful if you are building your own client that sends
+644: resumable upload requests directly to the JSON or XML API.
+645: Session URIs
+646: When you initiate a resumable upload, Cloud Storage returns a
+647: session URI, which you use in subsequent requests to upload the actual data.
+648: An example of a session URI in the JSON API is:
+649: https://storage.googleapis.com/upload/storage/v1/b/my-bucket/o?uploadType=resumable&name=my-file.jpg&upload_id=ABg5-UxlRQU75tqTINorGYDgM69mX06CzKO1NRFIMOiuTsu_mVsl3E-3uSVz65l65GYuyBuTPWWICWkinL1FWcbvvOA
+656: A session URI expires after one week but can be cancelled prior to
+666: Integrity checks
+667: We recommend that you request an integrity check of the final uploaded object
+668: to be sure that it matches the source file. You can do this by calculating the
+669: MD5 digest of the source file and adding it to the Content-MD5 request
+670: header.
+671: Checking the integrity of the uploaded file is particularly important if you are
+672: uploading a large file over a long period of time, because there is an increased
+673: likelihood of the source file being modified over the course of the upload
+674: operation.
+675: However, you can't perform integrity checks on intermediate portions or chunks
+680: cannot be overwritten, and Cloud Storage ignores attempts to do so.

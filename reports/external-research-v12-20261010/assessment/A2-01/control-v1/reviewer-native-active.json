@@ -1,0 +1,17 @@
+{
+  "evidence_kind": "Direct supported native get_goal return in this assessment context before saving the judgment",
+  "following_clock_utc": "2026-10-10T04:58:21Z",
+  "raw_return": {
+    "goal": {
+      "threadId": "01a12429-1ccc-7232-895b-863b6120f5a1",
+      "objective": "Independently assess the single completed ER12 A2-01 control full pipeline within a finite 45-minute envelope, using the complete assessment rubric, original frozen brief and plan, terminal science freeze, actual stage maps and authored evidence, plus independently retrieved governing primary evidence. Evaluate all six semantic axes and every exact plan clause; preserve corrected lineage defects separately from final qualification. Do not delegate, repair candidates, alter accounts, use Git/publication, inspect other arms/results/history or rescore ER11. Save full assessment.md, assessment.json, navigable independent source-map/evidence and original inspected hashes only under ER12_RUNTIME/assessment/A2-01/control-v1, preserving original freeze, then complete this Goal and report result and paths.",
+      "status": "active",
+      "tokensUsed": 163124,
+      "timeUsedSeconds": 220,
+      "createdAt": 1791608051,
+      "updatedAt": 1791608271
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  }
+}

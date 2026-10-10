@@ -1,0 +1,18 @@
+{
+  "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-02-treatment-investigator-v1",
+  "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-02-treatment-investigator-v1",
+  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-02-treatment-investigator-v1:ordinal:1",
+  "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-02-treatment-investigator-v1",
+  "status": "completed",
+  "workState": "result_available",
+  "hasPendingChildRuns": false,
+  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-02-treatment-investigator-v1:ordinal:1",
+  "latestTerminalStatus": "completed",
+  "latestTerminalSummary": "Completed only the assigned investigator stage. The native Goal is complete (`01a1242a-0c87-76d1-9893-ee82d13cdfcc`). Required outputs were saved before completion.\n\n- [Draft](<ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/draft.md>)\n- [Discovery](<ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/discovery.md>) — frozen hash verified\n- [Source map](<ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/source-map.json>) and [source index](<ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/sources/index.md>)\n- [Revealed plan](<ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/revealed-plan.md>)\n\nFinal checks confirmed all five artifacts are present, the source map has 16 entries, and the draft covers all eight clauses. Product operations and tests remain unrun, as documented in the draft.",
+  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-02-treatment-investigator-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:1ba796e7-05b6-4dbc-b2de-9adc99a38faf",
+  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+  "model": "gpt-6-luna",
+  "summary": "Completed only the assigned investigator stage. The native Goal is complete (`01a1242a-0c87-76d1-9893-ee82d13cdfcc`). Required outputs were saved before completion.\n\n- [Draft](<ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/draft.md>)\n- [Discovery](<ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/discovery.md>) — frozen hash verified\n- [Source map](<ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/source-map.json>) and [source index](<ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/sources/index.md>)\n- [Revealed plan](<ER12_RUNTIME/runs/A4-02/treatment/stages/investigator/revealed-plan.md>)\n\nFinal checks confirmed all five artifacts are present, the source map has 16 entries, and the draft covers all eight clauses. Product operations and tests remain unrun, as documented in the draft.",
+  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-02-treatment-investigator-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:1ba796e7-05b6-4dbc-b2de-9adc99a38faf",
+  "waitTimedOut": false
+}

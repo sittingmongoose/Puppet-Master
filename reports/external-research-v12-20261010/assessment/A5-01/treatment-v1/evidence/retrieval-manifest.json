@@ -1,0 +1,153 @@
+[
+  {
+    "source_id": "IND-FADGI",
+    "url": "https://www.digitizationguidelines.gov/audio-visual/documents/BWF_Embed_Guideline_v3_2021.pdf",
+    "resolved_url": "https://www.digitizationguidelines.gov/audio-visual/documents/BWF_Embed_Guideline_v3_2021.pdf",
+    "retrieved_at_utc": "2026-10-10T04:48:10.789784+00:00",
+    "http_status": 200,
+    "content_type": "application/pdf",
+    "bytes": 535236,
+    "sha256": "8072afec5ab3bfbfdf47b9625a8a983d622cb0012d744946eda0e7695e07e5bd",
+    "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/fadgi.pdf",
+    "text_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/fadgi.txt",
+    "retrieval": "reviewer independent urllib public GET; governing evidence, not candidate operation"
+  },
+  {
+    "source_id": "IND-FADGI-INDEX",
+    "url": "https://www.digitizationguidelines.gov/guidelines/digitize-embedding.html",
+    "resolved_url": "https://www.digitizationguidelines.gov/guidelines/digitize-embedding.html",
+    "retrieved_at_utc": "2026-10-10T04:48:10Z to 04:48:12Z",
+    "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/fadgi-index.html",
+    "text_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/fadgi-index.txt",
+    "bytes": 14886,
+    "sha256": "3aecbcf89b6f9356e48f6a4296f4f187c5c4f24bbf9250bb2eb05daf12138b6b",
+    "retrieval": "reviewer independent urllib GET; original capture retained; standard-library HTMLParser after unavailable bs4; web open corroborates 200 document"
+  },
+  {
+    "source_id": "IND-EBU",
+    "url": "https://tech.ebu.ch/docs/tech/tech3285.pdf",
+    "resolved_url": "https://tech.ebu.ch/docs/tech/tech3285.pdf",
+    "retrieved_at_utc": "2026-10-10T04:48:12.297275+00:00",
+    "http_status": 200,
+    "content_type": "application/pdf",
+    "bytes": 243500,
+    "sha256": "60f59140c7dfa4c4b26a9c05914da98a69b47c07d24f07fb02ac2c4b11a7321c",
+    "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/ebu.pdf",
+    "text_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/ebu.txt",
+    "retrieval": "reviewer independent urllib public GET; governing evidence, not candidate operation"
+  },
+  {
+    "source_id": "IND-METAEDIT",
+    "url": "https://mediaarea.net/BWFMetaEdit",
+    "resolved_url": "https://mediaarea.net/BWFMetaEdit",
+    "retrieved_at_utc": "2026-10-10T04:48:10Z to 04:48:12Z",
+    "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/metaedit.html",
+    "text_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/metaedit.txt",
+    "bytes": 20610,
+    "sha256": "7ec25815af64a1a912cbfb63fffe88de3610949bb768922e6d73c4a17c52ff70",
+    "retrieval": "reviewer independent urllib GET; original capture retained; standard-library HTMLParser after unavailable bs4; web open corroborates 200 document"
+  },
+  {
+    "source_id": "IND-BEXT",
+    "url": "https://mediaarea.net/BWFMetaEdit/bext",
+    "resolved_url": "https://mediaarea.net/BWFMetaEdit/bext",
+    "retrieved_at_utc": "2026-10-10T04:48:10Z to 04:48:12Z",
+    "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/bext.html",
+    "text_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/bext.txt",
+    "bytes": 24655,
+    "sha256": "bb7445b6a5f57b139fc86982fcd2565f2ed1ea9734b0bda4b49e88b7b28c5f97",
+    "retrieval": "reviewer independent urllib GET; original capture retained; standard-library HTMLParser after unavailable bs4; web open corroborates 200 document"
+  },
+  {
+    "source_id": "IND-LISTINFO",
+    "url": "https://mediaarea.net/BWFMetaEdit/listinfo",
+    "resolved_url": "https://mediaarea.net/BWFMetaEdit/listinfo",
+    "retrieved_at_utc": "2026-10-10T04:48:10Z to 04:48:12Z",
+    "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/listinfo.html",
+    "text_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/listinfo.txt",
+    "bytes": 20369,
+    "sha256": "d81760b5ecdff9bc2dcf382f996bf819fd3c7b349ea4bde6a4c279219f0e80c4",
+    "retrieval": "reviewer independent urllib GET; original capture retained; standard-library HTMLParser after unavailable bs4; web open corroborates 200 document"
+  },
+  {
+    "source_id": "IND-CORE",
+    "url": "https://mediaarea.net/BWFMetaEdit/core_doc_help",
+    "resolved_url": "https://mediaarea.net/BWFMetaEdit/core_doc_help",
+    "retrieved_at_utc": "2026-10-10T04:48:10Z to 04:48:12Z",
+    "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/core.html",
+    "text_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/core.txt",
+    "bytes": 17130,
+    "sha256": "2f23ac2b3cccc3dcba8cbe1640b655b0a08c754b977c720bdf6d2ef857721f9d",
+    "retrieval": "reviewer independent urllib GET; original capture retained; standard-library HTMLParser after unavailable bs4; web open corroborates 200 document"
+  },
+  {
+    "source_id": "IND-XML",
+    "url": "https://mediaarea.net/BWFMetaEdit/xml_chunks",
+    "resolved_url": "https://mediaarea.net/BWFMetaEdit/xml_chunks",
+    "retrieved_at_utc": "2026-10-10T04:48:10Z to 04:48:12Z",
+    "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/xml.html",
+    "text_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/xml.txt",
+    "bytes": 13719,
+    "sha256": "53b8f707fa8ddc57c8ddbeface5fcdc9489c7cbf4933bcd0050b64ec7721b6fd",
+    "retrieval": "reviewer independent urllib GET; original capture retained; standard-library HTMLParser after unavailable bs4; web open corroborates 200 document"
+  },
+  {
+    "source_id": "IND-HISTORY",
+    "url": "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/master/History_GUI.txt",
+    "resolved_url": "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/master/History_GUI.txt",
+    "retrieved_at_utc": "2026-10-10T04:48:11.533000+00:00",
+    "http_status": 200,
+    "content_type": "text/plain; charset=utf-8",
+    "bytes": 15486,
+    "sha256": "88faeb6b107187959435d46c55a36f8538995bddea23953b62cc0b9b1a762b15",
+    "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/history.txt",
+    "text_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/history.txt",
+    "retrieval": "reviewer independent urllib public GET; governing evidence, not candidate operation"
+  },
+  {
+    "source_id": "IND-BAGIT",
+    "url": "https://datatracker.ietf.org/doc/html/rfc8493",
+    "resolved_url": "https://datatracker.ietf.org/doc/html/rfc8493",
+    "retrieved_at_utc": "2026-10-10T04:48:10Z to 04:48:12Z",
+    "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/bagit.html",
+    "text_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/bagit.txt",
+    "bytes": 121173,
+    "sha256": "2b32dd7019a823c94344f562c684ea3dfd904dcc621f071634b5195e1ac2b65b",
+    "retrieval": "reviewer independent urllib GET; original capture retained; standard-library HTMLParser after unavailable bs4; web open corroborates 200 document"
+  },
+  {
+    "source_id": "IND-PREMIS",
+    "url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+    "resolved_url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+    "retrieved_at_utc": "2026-10-10T04:48:12.149311+00:00",
+    "http_status": 200,
+    "content_type": "application/pdf",
+    "bytes": 2176353,
+    "sha256": "2e3e3fe001798f3f43d26b4aed03e8737310fa044ee001af2493f7c72517b0e0",
+    "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/premis.pdf",
+    "text_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/premis.txt",
+    "retrieval": "reviewer independent urllib public GET; governing evidence, not candidate operation"
+  },
+  {
+    "source_id": "IND-W3C",
+    "url": "https://www.w3.org/WAI/media/av/",
+    "resolved_url": "https://www.w3.org/WAI/media/av/",
+    "retrieved_at_utc": "2026-10-10T04:48:10Z to 04:48:12Z",
+    "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/w3c.html",
+    "text_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/w3c.txt",
+    "bytes": 43349,
+    "sha256": "a03d29cc27e3c9af8da3d876d6acde6ced0b1c250290773e800a15aba28d11e9",
+    "retrieval": "reviewer independent urllib GET; original capture retained; standard-library HTMLParser after unavailable bs4; web open corroborates 200 document"
+  },
+  {
+    "source_id": "IND-W3C-PLAN",
+    "url": "https://www.w3.org/WAI/media/av/planning/",
+    "resolved_url": "https://www.w3.org/WAI/media/av/planning/",
+    "retrieved_at_utc": "2026-10-10T04:48:10Z to 04:48:12Z",
+    "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/w3c-plan.html",
+    "text_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/w3c-plan.txt",
+    "bytes": 58494,
+    "sha256": "0a9628cd43b56637c251bfd694f1d90778154eb670abe6d0d354327f5e85f06d",
+    "retrieval": "reviewer independent urllib GET; original capture retained; standard-library HTMLParser after unavailable bs4; web open corroborates 200 document"
+  }
+]

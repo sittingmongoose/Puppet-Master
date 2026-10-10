@@ -1,0 +1,521 @@
+{
+  "schema": "er12-independent-assessment-v1",
+  "case_id": "ER12-B-APPL-G-02-FRESH",
+  "slot": "B-APPL-G-02",
+  "arm": "control",
+  "role": "Applicability/exception verification",
+  "assessment_version": "control-v1",
+  "saved_at_utc": "2026-10-10T05:22:12.701203+00:00",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "semantic_grade_scope": "bounded applicability role only; not full-pipeline qualification",
+  "material_findings": [],
+  "limitations": [
+    {
+      "id": "L1",
+      "severity": "MINOR",
+      "candidate_locator": "verification.md:15 and :20",
+      "finding": "The text uses both the literal wall-clock deadline 00:00:02 and relative two seconds after boot. The acceptance trace should distinguish these clocks. Both interpretations remain correctly rejected on the supplied evidence.",
+      "primary_locators": [
+        "P2:249-268",
+        "P1:192-198",
+        "P1:354-362"
+      ],
+      "material": false
+    },
+    {
+      "id": "L2",
+      "severity": "MINOR",
+      "candidate_locator": "verification.md:20",
+      "finding": "The second acceptance check is concrete but leaves the calendar-versus-monotonic catch-up and no-overlap expectations implicit in the six claim paragraphs. It also uses active colloquially for a running oneshot, whose exact unit state can be activating. This reduces oracle precision without an unsupported conclusion or a claimed test pass.",
+      "primary_locators": [
+        "P1:50-56",
+        "P1:354-362",
+        "P3:209-219"
+      ],
+      "material": false
+    }
+  ],
+  "claims": [
+    {
+      "claim": 1,
+      "candidate_line": 5,
+      "candidate_disposition": "SUPPORTED_CALENDAR_ONLY",
+      "judgment": "PASS",
+      "primary": [
+        "P1:354-370",
+        "P1:50-56"
+      ],
+      "analysis": "Persistent=true stores the last-trigger timestamp on disk, applies only when OnCalendar is configured, and requests catch-up at timer activation if at least one event was missed. RandomizedDelaySec still applies. Candidate preserves activation versus successful run/completion, avoids per-missed-day replay, and does not promise an exact start. The already-active target condition is covered independently under claim 3.",
+      "conditions": [
+        "systemd 257",
+        "OnCalendar=daily",
+        "Persistent=true",
+        "timer activated after inactive interval",
+        "effective random delay and target state remain relevant"
+      ]
+    },
+    {
+      "claim": 2,
+      "candidate_line": 7,
+      "candidate_disposition": "REJECTED",
+      "judgment": "PASS",
+      "primary": [
+        "P1:115-186",
+        "P1:354-370",
+        "P1:374-394"
+      ],
+      "analysis": "Correctly rejects identical power-off persistence for OnUnitInactiveSec. Persistent has effect only with OnCalendar; a monotonic interval is distinct from realtime scheduling. WakeSystem can change suspend clock behavior and requires supported hardware/privileges, but cannot establish power-off catch-up. Candidate only invokes supported suspend wakeups, not a guarantee.",
+      "conditions": [
+        "systemd 257",
+        "OnUnitInactiveSec=10min",
+        "Persistent=true does not persist this monotonic schedule",
+        "suspend distinct from powered off"
+      ]
+    },
+    {
+      "claim": 3,
+      "candidate_line": 9,
+      "candidate_disposition": "REJECTED",
+      "judgment": "PASS",
+      "primary": [
+        "P1:50-56",
+        "P3:209-219",
+        "P3:332-337"
+      ],
+      "analysis": "Manual explicitly excludes restart/new instance when the target is already active. Candidate correctly preserves a possible later activation conditional on inactivity and the schedule. For a oneshot without RemainAfterExit, running is normally activating rather than literal active; this state distinction does not reverse the stated conditional or authorize parallel instances. RemainAfterExit=yes may leave a finished unit active; no value was supplied and candidate does not promise repeated runs.",
+      "conditions": [
+        "same target unit",
+        "already-active target at elapse",
+        "actual service/drop-ins unknown",
+        "later activation conditional on inactivity"
+      ]
+    },
+    {
+      "claim": 4,
+      "candidate_line": 11,
+      "candidate_disposition": "SUPPORTED_WITH_BOUNDS",
+      "judgment": "PASS",
+      "primary": [
+        "P1:229-289"
+      ],
+      "analysis": "AccuracySec defaults to 1min, defining an expiry window beginning at nominal elapse. Candidate preserves host-specific stable positioning and timer slack, and correctly separates RandomizedDelaySec default 0 and the order of random delay then coalescing. This is expiry accuracy, not a completion or dispatch-latency guarantee.",
+      "conditions": [
+        "systemd 257 defaults unless overridden",
+        "minute time unit",
+        "AccuracySec and RandomizedDelaySec distinct",
+        "TimerSlackNSec also relevant"
+      ]
+    },
+    {
+      "claim": 5,
+      "candidate_line": 13,
+      "candidate_disposition": "SUPPORTED",
+      "judgment": "PASS",
+      "primary": [
+        "P1:145-186"
+      ],
+      "analysis": "OnUnitInactiveSec is relative to last deactivation of the activated target unit, not timer activation, boot or midnight. Candidate retains the explicit ten-minute duration and accuracy/runtime qualification. It does not assert first activation or powered-off state survives. The immediate overdue-start exception documented for OnBootSec/OnStartupSec is not extended to this directive.",
+      "conditions": [
+        "systemd 257",
+        "last target-unit deactivation exists",
+        "10min plus relevant expiry accuracy",
+        "monotonic clock may pause during suspend"
+      ]
+    },
+    {
+      "claim": 6,
+      "candidate_line": 15,
+      "candidate_disposition": "REJECTED",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "primary": [
+        "P1:86-91",
+        "P1:192-225",
+        "P1:229-289",
+        "P1:354-370",
+        "P2:249-268",
+        "P2:311-314",
+        "P3:209-219",
+        "P3:602-611"
+      ],
+      "analysis": "daily is midnight in the applicable timezone; calendar syntax/next-occurrence validation says nothing about successful cleanup completion. Default accuracy, activation after downtime, clock/ordering, and possible three-minute runtime defeat the alleged two-second guarantee. Candidate names missing case evidence and does not invent run results. It retains the literal 00:00:02 but also uses relative two-seconds-after-boot wording: minor deadline ambiguity, not a changed verdict.",
+      "conditions": [
+        "systemd 257",
+        "daily wall-clock midnight",
+        "timezone and clock synchronization unknown",
+        "cleanup may take three minutes",
+        "00:00:02 is not intrinsically boot+2s"
+      ]
+    }
+  ],
+  "axis_coverage": [
+    {
+      "id": "original_obligations_and_constraints",
+      "judgment": "PASS",
+      "coverage": "Six independent numbered dispositions; scoped to supplied systemd 257, the two proposed timers, unchanged three-minute runtime, two-day power-off, defaults and missing case evidence. 566 whitespace-delimited words (<900), exactly two concluding acceptance checks. No redesign, candidate repair, or fictional deployment demanded."
+    },
+    {
+      "id": "consequential_source_applicability",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "coverage": "All six claims checked against independently retrieved pinned v257 primary manuals; version, subjects, operations, units, defaults, calendar/monotonic domains, active target, random delay, accuracy/slack, power-off versus suspend and completion distinct. L1-L2 are minor; no material error."
+    },
+    {
+      "id": "useful_discovery_alternatives_history",
+      "judgment": "PASS_BOUNDED_ROLE",
+      "coverage": "Useful distinction between calendar persistence and monotonic intervals, zero random-delay default versus one-minute accuracy, and suspend wakeup versus power-off catch-up. Both assigned alternatives remain compared. No separate discovery/history survey required for this applicability role. Reviewer checked v257 DeferReactivation history marker: calendar-only default false, relevant to runtime longer than interval; supplied daily/three-minute case does not establish that condition. No omission penalty for declining redesign."
+    },
+    {
+      "id": "dispositions_and_wrong_corrections",
+      "judgment": "PASS",
+      "coverage": "Supports 1,4,5; rejects 2,3,6. Each disposition supported. No unjustified rejection/correction of a supported claim, no invented canon/plan disposition."
+    },
+    {
+      "id": "supported_scope_and_uncertainty_preserved",
+      "judgment": "PASS",
+      "coverage": "Preserves target, both options, powered-off scenario, service duration and uncertainty about effective configuration, clocks, logs and hardware. Does not change catch-up into successful completion or one-run-per-missed-day replay. No discovery/draft/critique pipeline exists in this assigned bounded role; these artifacts were not required or graded."
+    },
+    {
+      "id": "proposed_executed_validation_oracle",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "coverage": "Two prospective service checks: configuration/version/calendar validation, and controlled power-off/boot plus running-target trace with service start/finish and clock synchronization timestamps. They are proposed, not executed. Syntax oracle is confined to syntax; runtime evidence and a justified bound are needed for a completion guarantee, and finite tests alone cannot establish every boot. L1-L2 affect precision only."
+    }
+  ],
+  "unknowns": [
+    "Effective host units, drop-ins, timer enablement/start state, stored persistence state, timezone, clock synchronization and hardware/runtime logs are absent; no deployment was tested.",
+    "Candidate retrieval and first-read ordering are described in saved artifacts but no full tool-event trace was supplied; actual activation-before-inference ordering cannot be independently proven from receipt files alone.",
+    "Effective provider/model/service tier and billing are UNKNOWN. Request/dispatch/terminal route labels do not establish backend execution or charge; native token counter is not a billing record.",
+    "Exact whole-task terminal time and investigation-versus-writing split are UNKNOWN; terminal root observation supplies an upper bound and timestamps show saved deliverables before the deadline."
+  ],
+  "delivery": {
+    "judgment": "PASS",
+    "authored_artifact": "ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/verification.md",
+    "present": true,
+    "word_count_whitespace": 566,
+    "limit_words": 900,
+    "source_map_present": true,
+    "every_candidate_source_member_read_full": true,
+    "root_terminal_status": "completed",
+    "root_has_pending_child_runs": false,
+    "root_basis": "terminal-science-freeze-root.json, supplied host verification; distinct from native Goal"
+  },
+  "coverage": {
+    "judgment": "PASS_BOUNDED_ROLE",
+    "claim_ids": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "checks_count": 2,
+    "full_pipeline_qualification": false
+  },
+  "native": {
+    "judgment": "FROZEN_RECEIPTS_REPORT_ACTIVE_TO_COMPLETE",
+    "activation_receipt": "ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/native-activation.json",
+    "completion_receipt": "ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/native-completion.json",
+    "same_thread_id": "01a12437-1471-7490-8f23-9675c8d34440",
+    "exact_assignment_objective_matches": true,
+    "created_at_epoch": 1791608959,
+    "completed_at_epoch": 1791609431,
+    "reported_tokens_used": 55501,
+    "reported_time_used_seconds": 472,
+    "provider_attestation_beyond_saved_receipts": "UNKNOWN",
+    "billing": "UNKNOWN"
+  },
+  "routing": {
+    "requested_provider": "AUTHORIZED_PROVIDER_INSTANCE",
+    "requested_model": "gpt-6-luna",
+    "requested_reasoning": "max",
+    "requested_service_tier": "default",
+    "observed_t3_route_labels": [
+      "AUTHORIZED_PROVIDER_INSTANCE",
+      "gpt-6-luna"
+    ],
+    "effective_provider": "UNKNOWN",
+    "effective_model": "UNKNOWN",
+    "effective_service_tier": "UNKNOWN",
+    "billing": "UNKNOWN"
+  },
+  "protocol": {
+    "judgment": "VISIBLE_ARTIFACTS_COMPATIBLE_FULL_ORDER_UNKNOWN",
+    "no_known_violation": true,
+    "root_terminal_before_review": true,
+    "deliverables_saved_before_reported_native_completion": true,
+    "activation_before_science_read_proven": "UNKNOWN",
+    "unsupported_assistance_observed": false,
+    "full_tool_trace_available": false,
+    "reviewer_no_delegation_feedback_repair_other_arms_history_git_publication_accounts": true
+  },
+  "time": {
+    "judgment": "WITHIN_DEADLINE_ON_AVAILABLE_TIMESTAMPS",
+    "whole_start_utc": "2026-10-10T05:09:08.505000+00:00",
+    "deadline_utc": "2026-10-10T05:24:08.505000+00:00",
+    "root_terminal_observed_utc": "2026-10-10T05:18:02.809464+00:00",
+    "whole_occupancy_upper_bound_seconds": 534.304464,
+    "native_lifecycle_reported_seconds": 472,
+    "exact_terminal_time": "UNKNOWN",
+    "investigation_writing_split": "UNKNOWN",
+    "billing_or_speed_savings_inferred": false
+  },
+  "freeze_validation": {
+    "inspected_artifacts": 20,
+    "inspected_terminal_entries_matched": 12,
+    "frozen_input_entries_matched": 8,
+    "mismatches": [],
+    "terminal_freeze_manifest_itself_hashed": true,
+    "unread_backup_or_other_mechanics_entries_not_semantically_inspected": true,
+    "hashes_file": "inspected-hashes.json"
+  },
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "inspection": "full content read",
+      "terminal_expected_sha256": null,
+      "terminal_match": null,
+      "input_freeze_expected_sha256": null,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/input-map.json",
+      "bytes": 668,
+      "sha256": "b5149794f62200bc647c04e1771fe12788e876d1e9046a6de0b2d33f694899c6",
+      "inspection": "full content read",
+      "terminal_expected_sha256": "b5149794f62200bc647c04e1771fe12788e876d1e9046a6de0b2d33f694899c6",
+      "terminal_match": true,
+      "input_freeze_expected_sha256": "b5149794f62200bc647c04e1771fe12788e876d1e9046a6de0b2d33f694899c6",
+      "input_freeze_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/assignment.md",
+      "bytes": 3170,
+      "sha256": "c54d8e7cc564c67056edfe762a9ff1d6dceee66e56187deb817be93290ab71ec",
+      "inspection": "full content read",
+      "terminal_expected_sha256": "c54d8e7cc564c67056edfe762a9ff1d6dceee66e56187deb817be93290ab71ec",
+      "terminal_match": true,
+      "input_freeze_expected_sha256": "c54d8e7cc564c67056edfe762a9ff1d6dceee66e56187deb817be93290ab71ec",
+      "input_freeze_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/freeze.json",
+      "bytes": 2945,
+      "sha256": "6bc7d643e10e1a8d5a7cac559c7a73582d07add9ed0a59c8a331e82730bc9683",
+      "inspection": "full content read",
+      "terminal_expected_sha256": "6bc7d643e10e1a8d5a7cac559c7a73582d07add9ed0a59c8a331e82730bc9683",
+      "terminal_match": true,
+      "input_freeze_expected_sha256": null,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-02/inputs/assignment.md",
+      "bytes": 2987,
+      "sha256": "3c7ab9e1ebcde0612e7e6e85a40f7eb8da73c42bf9d62b00bcc6f525fc447b38",
+      "inspection": "full content read",
+      "terminal_expected_sha256": null,
+      "terminal_match": null,
+      "input_freeze_expected_sha256": "3c7ab9e1ebcde0612e7e6e85a40f7eb8da73c42bf9d62b00bcc6f525fc447b38",
+      "input_freeze_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-02/inputs/fixture.json",
+      "bytes": 2126,
+      "sha256": "f6fe897c72b46a759ced5e5f9768a6f560bead0a4ed0b11c0f2a02415dd88727",
+      "inspection": "full content read",
+      "terminal_expected_sha256": null,
+      "terminal_match": null,
+      "input_freeze_expected_sha256": "f6fe897c72b46a759ced5e5f9768a6f560bead0a4ed0b11c0f2a02415dd88727",
+      "input_freeze_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-02/inputs/manifest.json",
+      "bytes": 624,
+      "sha256": "ae11e96d41df5e87c1821c5a3b199bb3a0695c145fc6b99acb64ee4e1d2739dc",
+      "inspection": "full content read",
+      "terminal_expected_sha256": null,
+      "terminal_match": null,
+      "input_freeze_expected_sha256": "ae11e96d41df5e87c1821c5a3b199bb3a0695c145fc6b99acb64ee4e1d2739dc",
+      "input_freeze_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-02/inputs/corpus/S1.md",
+      "bytes": 914,
+      "sha256": "502f95d36e1da301057116c7d443c652463e7fd2b1f934b6b34e8b04334fc32a",
+      "inspection": "full content read",
+      "terminal_expected_sha256": null,
+      "terminal_match": null,
+      "input_freeze_expected_sha256": "502f95d36e1da301057116c7d443c652463e7fd2b1f934b6b34e8b04334fc32a",
+      "input_freeze_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-02/inputs/corpus/S2.md",
+      "bytes": 859,
+      "sha256": "e58ec490cbdd3d90ae98b4c45bc8efd670f7d64f29f42a5f4a34a307e30a7409",
+      "inspection": "full content read",
+      "terminal_expected_sha256": null,
+      "terminal_match": null,
+      "input_freeze_expected_sha256": "e58ec490cbdd3d90ae98b4c45bc8efd670f7d64f29f42a5f4a34a307e30a7409",
+      "input_freeze_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-02/inputs/corpus/index.json",
+      "bytes": 1286,
+      "sha256": "5576572c6b3b0bc92f670f22d22f0256bac41d3a4988b8bd26184b5cf41f8f4f",
+      "inspection": "full content read",
+      "terminal_expected_sha256": null,
+      "terminal_match": null,
+      "input_freeze_expected_sha256": "5576572c6b3b0bc92f670f22d22f0256bac41d3a4988b8bd26184b5cf41f8f4f",
+      "input_freeze_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/verification.md",
+      "bytes": 4075,
+      "sha256": "f14d91ee366b5d371555d05d590b15d0358866147afc504881f0530a36fd6ef9",
+      "inspection": "full content read",
+      "terminal_expected_sha256": "f14d91ee366b5d371555d05d590b15d0358866147afc504881f0530a36fd6ef9",
+      "terminal_match": true,
+      "input_freeze_expected_sha256": null,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/source-map.json",
+      "bytes": 2291,
+      "sha256": "9ab5cb98e38ee2c820f742f9d538e5e83b18e3f7598a705ee900ba51c39932f8",
+      "inspection": "full content read",
+      "terminal_expected_sha256": "9ab5cb98e38ee2c820f742f9d538e5e83b18e3f7598a705ee900ba51c39932f8",
+      "terminal_match": true,
+      "input_freeze_expected_sha256": null,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/sources/S1-evidence.md",
+      "bytes": 1375,
+      "sha256": "5e43780061939d6c633ddb011b9347e413deaf4115513ccb9388fc801af4e58d",
+      "inspection": "full content read",
+      "terminal_expected_sha256": "5e43780061939d6c633ddb011b9347e413deaf4115513ccb9388fc801af4e58d",
+      "terminal_match": true,
+      "input_freeze_expected_sha256": null,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/sources/S2-evidence.md",
+      "bytes": 974,
+      "sha256": "5bef72bb9565cd01b218adae742c89efb3c9fa6e1aa7c755e39c0ec346e89df8",
+      "inspection": "full content read",
+      "terminal_expected_sha256": "5bef72bb9565cd01b218adae742c89efb3c9fa6e1aa7c755e39c0ec346e89df8",
+      "terminal_match": true,
+      "input_freeze_expected_sha256": null,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/native-activation.json",
+      "bytes": 460,
+      "sha256": "821422627239850f38950dd4c898e77e45307cef001814cf6e2a4a8aebdf6dff",
+      "inspection": "full content read",
+      "terminal_expected_sha256": "821422627239850f38950dd4c898e77e45307cef001814cf6e2a4a8aebdf6dff",
+      "terminal_match": true,
+      "input_freeze_expected_sha256": null,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/native-completion.json",
+      "bytes": 788,
+      "sha256": "982f34444d8da09518d0eb617196ffeb2586cd4eedc30057ba3aa0cfb5970ace",
+      "inspection": "full content read",
+      "terminal_expected_sha256": "982f34444d8da09518d0eb617196ffeb2586cd4eedc30057ba3aa0cfb5970ace",
+      "terminal_match": true,
+      "input_freeze_expected_sha256": null,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/request.json",
+      "bytes": 1801,
+      "sha256": "8e9019f3699a826b2782006abdc3c22644b03a9d04cd28c35c36443b8a13f3f1",
+      "inspection": "full content read",
+      "terminal_expected_sha256": "8e9019f3699a826b2782006abdc3c22644b03a9d04cd28c35c36443b8a13f3f1",
+      "terminal_match": true,
+      "input_freeze_expected_sha256": null,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/dispatch.json",
+      "bytes": 5055,
+      "sha256": "342e7a6efd3094585b2f32a8365995a14e04b5b4db3a4e788c3dd757db57ff48",
+      "inspection": "full content read",
+      "terminal_expected_sha256": "342e7a6efd3094585b2f32a8365995a14e04b5b4db3a4e788c3dd757db57ff48",
+      "terminal_match": true,
+      "input_freeze_expected_sha256": null,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/service-tier-change.json",
+      "bytes": 479,
+      "sha256": "23af4549829761d637f21ac7d7542602a7d65d0436500ccd81aaad4987df53a0",
+      "inspection": "full content read",
+      "terminal_expected_sha256": "23af4549829761d637f21ac7d7542602a7d65d0436500ccd81aaad4987df53a0",
+      "terminal_match": true,
+      "input_freeze_expected_sha256": null,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/terminal-science-freeze-root.json",
+      "bytes": 9962,
+      "sha256": "3a7f11cd51c10519b792b0f041806ce944702056ce26fb9abee48cdd0cb125d0",
+      "inspection": "full content read",
+      "terminal_expected_sha256": null,
+      "terminal_match": null,
+      "input_freeze_expected_sha256": null,
+      "input_freeze_match": null
+    }
+  ],
+  "primary_evidence": [
+    {
+      "id": "systemd.timer.xml",
+      "url": "https://raw.githubusercontent.com/systemd/systemd/v257/man/systemd.timer.xml",
+      "version": "v257",
+      "retrieved_at_utc": "2026-10-10T05:18:59.799151+00:00",
+      "operation": "HTTPS GET via Python standard library; no code execution",
+      "http_status": 200,
+      "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/control-v1/primary/systemd.timer.xml",
+      "sha256": "4862ce0331198c5b3d24b69af45fc8dd55b2c1ad98ce839b042b1cc70d01d9cc",
+      "bytes": 25003
+    },
+    {
+      "id": "systemd.time.xml",
+      "url": "https://raw.githubusercontent.com/systemd/systemd/v257/man/systemd.time.xml",
+      "version": "v257",
+      "retrieved_at_utc": "2026-10-10T05:18:59.889139+00:00",
+      "operation": "HTTPS GET via Python standard library; no code execution",
+      "http_status": 200,
+      "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/control-v1/primary/systemd.time.xml",
+      "sha256": "7973199a518696a838e2750d6b2a4a5420778a88c569086f27f1089481d61a09",
+      "bytes": 16766
+    },
+    {
+      "id": "systemd.service.xml",
+      "url": "https://raw.githubusercontent.com/systemd/systemd/v257/man/systemd.service.xml",
+      "version": "v257",
+      "retrieved_at_utc": "2026-10-10T05:18:59.979713+00:00",
+      "operation": "HTTPS GET via Python standard library; no code execution",
+      "http_status": 200,
+      "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/control-v1/primary/systemd.service.xml",
+      "sha256": "80f479747740d98e20ec214231a710616013238323596ea619d9159b3649e584",
+      "bytes": 108781
+    }
+  ],
+  "useful_discoveries": [
+    "Calendar-only persisted timestamp differs from monotonic recurrence.",
+    "Default random delay is zero; default accuracy is one minute, and slack is distinct.",
+    "Timer trigger, target activation and successful completion are separate events.",
+    "A oneshot may be activating while running, and RemainAfterExit can retain active state after its process finishes.",
+    "v257 adds calendar-only DeferReactivation, but the long-runtime/short-interval condition is not established by the supplied daily proposal."
+  ],
+  "reviewer_goal": {
+    "actual_native_activation_observed": true,
+    "thread_id": "01a1243f-3ab0-77a1-8260-72d4410c7720",
+    "created_at_epoch": 1791609499,
+    "completion_required_after_saved_judgment": true
+  },
+  "review_boundary": "Only assigned control role and its mapped inputs/evidence inspected. No ER11 rescore or other-arm result inspection."
+}

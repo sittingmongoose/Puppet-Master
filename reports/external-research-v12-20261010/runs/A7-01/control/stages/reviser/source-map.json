@@ -1,0 +1,936 @@
+{
+  "run_id": "A7-01-control",
+  "stage": "reviser",
+  "schema": "ER12-source-map-v1",
+  "source_index": "sources/index.md",
+  "source_ids_are_stable": true,
+  "access_method": "Read-only public web opens for reviser checks; local reads of input-map-listed predecessors/source indexes and the explicitly required freeze.json objective; no downloads, installs, accounts, product sessions, CAD/slicer files, or printer operation.",
+  "source_id_policy": "S01–S19 are carried unchanged from the frozen investigator source map. Reviser checks refer to those exact IDs and URLs; they do not silently rebind an ID. Critic-carried identities and its separate review records are preserved for lineage.",
+  "frozen_inputs": [
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/inputs/brief.md",
+      "sha256": "dcd62504463a57569adbc66d85753f8a178764bb5d80b7c17dad4f4088a1b1f5",
+      "bytes": 3358
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/assignment.md",
+      "sha256": "4b46b17b1a07bbc01312ddfc084f529e8af27137049412d3cdbd76b600f39916",
+      "bytes": 3286
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/input-map.json",
+      "sha256": "f1729d35c6e31cc008a513ea51092fa64321fe59929a7970fd5286bfa1436845",
+      "bytes": 1768
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/discovery.md",
+      "sha256": "17ff8435c3352da4d6ab501fb6a90272c342a2b04bedf7a04afb4eeaa6b04dfb",
+      "bytes": 14812
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/draft.md",
+      "sha256": "f187c5e9a18a4a5b3e30ef3e263704374bf08512bfb3cab116d106f6c3976442",
+      "bytes": 19339
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/source-map.json",
+      "sha256": "ca05e8dfe48e66a179c754a65a485593502eced26d1b38cd2613b94fd0c14fa1",
+      "bytes": 24810
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/revealed-plan.md",
+      "sha256": "b9063b147acff997c7c788eac44d2149ca6946fa4ee2a3ce6f0bdf80789397e7",
+      "bytes": 6015
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/plan-reveal.json",
+      "sha256": "20543cca5883a33b02c0f62452de58d027f5088edc5812f692a80c684eba099e",
+      "bytes": 427
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/critic/critique.md",
+      "sha256": "40986b4c2b3c438c13d13e20df811d58f1c7bced0e53439be957d30c660cb04d",
+      "bytes": 10330
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/critic/source-map.json",
+      "sha256": "372272951e49ffedfc5a1d0449b8d407ec5d9d7afc101ec9c67f1501ccfd3b82",
+      "bytes": 39383
+    }
+  ],
+  "carried_investigator_source_map": {
+    "run_id": "A7-01-control",
+    "stage": "investigator",
+    "schema": "ER12-source-map-v1",
+    "access_method": "Read-only public web search/open/find; no external downloads, installations, accounts, or product tests.",
+    "access_time_note": "Each access_utc is the local UTC second immediately before its web-open request; the web service does not expose a finer server-fetch timestamp. The response-completion second is included in each value.",
+    "source_index": "sources/index.md",
+    "source_ids_are_stable": true,
+    "sources": [
+      {
+        "id": "S01",
+        "title": "3MF Core Specification",
+        "publisher": "3MF Consortium",
+        "url": "https://github.com/3MFConsortium/spec_core/blob/1.4.0/3MF%20Core%20Specification.md",
+        "released_version_commit": "Published version 1.4.0; release tag 1.4.0, commit 997b385 (2025-02-06).",
+        "locator": "Sections 2.1.3–2.1.4; 2.2.1; 3.4.1; 4.2; 5.1; tables 2-1 and 3-1.",
+        "access_utc": "2026-10-10T04:17:08Z (web-open request initiated in this clock second; response returned by the 04:17:08Z sample).",
+        "observed_operation": "Read-only open of tagged specification and line-targeted find operations for units, metadata, thumbnails, PrintTicket, components, material names, and filename conventions.",
+        "governing_condition_default_exception": "Model unit defaults to millimeter, with micron/mm/cm/in/ft/m valid. Package/object JPEG or PNG thumbnails and core properties are optional. Title and Description are well-known metadata. PrintTicket semantics follow the consumer environment; absent or unsupported tickets leave consumers to apply their own defaults. Base-material names express design intent; displaycolor is rendering only. Components carry object references and transforms. Extension use is a-la-carte; unsupported required extensions block processing. Version 1.4.0 recommends double extensions that distinguish model, project, build, toolpath, and other file roles.",
+        "applicability": "Primary governing source for 3MF geometry, unit, assembly/component, material-intent, metadata, thumbnail, printer-settings, extension, and naming claims in this pilot proposal.",
+        "evidence_summary": "A standardized 3MF archive can carry unit-qualified triangular geometry, component/object relationships, optional metadata and preview, and consumer-governed print settings. Its file-role naming recommendation gives the pilot a way to label design data separately from machine-prepared projects.",
+        "evidentiary_limit": "Specifies format behavior, not whether any particular CAD or slicer correctly implements it."
+      },
+      {
+        "id": "S02",
+        "title": "3MF Materials and Properties Extension",
+        "publisher": "3MF Consortium",
+        "url": "https://github.com/3MFConsortium/spec_materials/blob/1.2.1/3MF%20Materials%20Extension.md",
+        "released_version_commit": "Published version 1.2.1; released 2025-02-27 according to the official specification index. Release commit not recorded in the accessed page.",
+        "locator": "Preface and sections 1–7, especially Color Groups, Texture 2D Groups, Composite Materials, Multiproperties, and Display Properties.",
+        "access_utc": "2026-10-10T04:21:51Z (version-tagged spec page opened in this clock second; response returned by the 04:21:52Z sample).",
+        "observed_operation": "Read-only open of the extension source and versioned release page; line-targeted find confirmed the published version and extension scope.",
+        "governing_condition_default_exception": "The extension is an add-on to Core, not a standalone format; the core defines extensions as a-la-carte. It adds rich color/material/texture/composite property constructs. The receiving software must support the applicable extension and version to preserve/use those properties.",
+        "applicability": "Optional for the decorative pilot; use only for properties shown to work in the pilot's chosen receiving-tool matrix.",
+        "evidence_summary": "3MF can encode richer appearance and material information through a published extension, but such capability is distinct from core-only support and cannot be assumed portable.",
+        "evidentiary_limit": "The versioned source was checked against the Consortium's release index; the GitHub file link is a version tag, not an application support guarantee."
+      },
+      {
+        "id": "S03",
+        "title": "3MF Compatibility Matrix",
+        "publisher": "3MF Consortium",
+        "url": "https://3mf.io/compatibility-matrix/",
+        "released_version_commit": "Live matrix; no product build/version timestamp supplied on the page.",
+        "locator": "Reading-the-matrix note and product rows for Bambu Studio, Cura, FreeCAD, Fusion 360, OrcaSlicer, and PrusaSlicer.",
+        "access_utc": "2026-10-10T04:16:53Z (web-open request initiated in this clock second; response returned by the 04:16:54Z sample).",
+        "observed_operation": "Read-only open and inspection of table rows.",
+        "governing_condition_default_exception": "The page defines Core import/export, Materials and extension columns, but says compatibility is self-reported by vendors and not independently verified. Core support does not imply extension support; some entries are marked Custom or partial.",
+        "applicability": "Discovery shortlist and initial matrix candidates only. Pilot lead must select exact tested versions and builds.",
+        "evidence_summary": "The ecosystem includes several candidate CAD/slicer tools, while feature support is not uniform even within 3MF.",
+        "evidentiary_limit": "No versions, configurations, or independent test results; do not use it to claim universal compatibility."
+      },
+      {
+        "id": "S04",
+        "title": "Autodesk Fusion Mesh Export",
+        "publisher": "Autodesk",
+        "url": "https://help.autodesk.com/cloudhelp/ENU/Fusion-Mesh/files/MESH-EXPORT-TOOLS.htm",
+        "released_version_commit": "Current online product documentation; article does not pin a Fusion build.",
+        "locator": "Save As Mesh and 3D Print sections.",
+        "access_utc": "2026-10-10T04:16:53Z (web-open request initiated in this clock second; response returned by the 04:16:54Z sample).",
+        "observed_operation": "Read-only open of official help.",
+        "governing_condition_default_exception": "Save As Mesh exports solid, surface, or mesh bodies to 3MF, STL, or OBJ; selecting a component exports all bodies in that component. The 3D Print command exports STL or sends to a utility.",
+        "applicability": "A concrete CAD-to-slicer 3MF route when Fusion is the author's tool; not a claim that all Fusion export settings or extensions survive.",
+        "evidence_summary": "Fusion has a direct 3MF mesh-export workflow and a component-level selection route.",
+        "evidentiary_limit": "The page does not document all 3MF semantics or receiving-slicer behavior."
+      },
+      {
+        "id": "S05",
+        "title": "Autodesk Fusion Export Designs",
+        "publisher": "Autodesk",
+        "url": "https://help.autodesk.com/view/fusion360/ENU/?contextId=ASM-EXPORT-DESIGN",
+        "released_version_commit": "Current online product documentation; no fixed Fusion release identified.",
+        "locator": "Export format list and Tips.",
+        "access_utc": "2026-10-10T04:16:53Z (web-open request initiated in this clock second; response returned by the 04:16:54Z sample).",
+        "observed_operation": "Read-only open of official help.",
+        "governing_condition_default_exception": "The document describes Fusion 3MF as an additive mesh carrying vertices, triangular faces, units, colors, and textures; STEP as an international 3D exchange format; STL as flat facets approximating the model. Exported designs lose associativity with the source Fusion design.",
+        "applicability": "Supports the distinction between mesh-to-slicer and neutral CAD-exchange routes; original CAD history/associativity remains in its native file.",
+        "evidence_summary": "3MF and STEP are different exchange layers. A mesh export makes a manufacturing-oriented representation, while STEP is a CAD-exchange alternative; neither is an associative continuation of the original Fusion design.",
+        "evidentiary_limit": "The page does not guarantee which STEP entities, assemblies, or attributes every importer preserves."
+      },
+      {
+        "id": "S06",
+        "title": "STL/OBJ files exported from Fusion are scaled incorrectly",
+        "publisher": "Autodesk",
+        "url": "https://help.autodesk.com/view/fusion360/ENU/?caas=caas/sfdcarticles/sfdcarticles/STL-files-exported-from-Fusion-360-are-scaled-down-in-3d-printing-software.html",
+        "released_version_commit": "Support article dated 2026-04-29.",
+        "locator": "Issue, causes, and unit-selection solution.",
+        "access_utc": "2026-10-10T04:17:08Z (web-open request initiated in this clock second; response returned by the 04:17:08Z sample).",
+        "observed_operation": "Read-only open of Autodesk support article.",
+        "governing_condition_default_exception": "Autodesk identifies STL as unitless and notes wrong or omitted export/import units, with millimeters often assumed by slicers; its prescribed workflow explicitly sets export units.",
+        "applicability": "Concrete basis for warning that STL is a geometry-only fallback requiring an explicit unit statement and size check.",
+        "evidence_summary": "The common unitless mesh route creates scale ambiguity even when its coordinates are numerically valid.",
+        "evidentiary_limit": "Autodesk's stated common slicer default is not a guarantee about each pilot receiver."
+      },
+      {
+        "id": "S07",
+        "title": "Supported file formats (PrusaSlicer 2.9 documentation)",
+        "publisher": "Prusa Research",
+        "url": "https://help.prusa3d.com/article/supported-file-formats_1772?product=cw1",
+        "released_version_commit": "Knowledge-base topic is PrusaSlicer 2.9 (legacy); exact point build is not specified on the page.",
+        "locator": "3MF, STL, STEP, and AMF sections.",
+        "access_utc": "2026-10-10T04:17:08Z (web-open request initiated in this clock second; response returned by the 04:17:08Z sample).",
+        "observed_operation": "Read-only open of the official supported-format page.",
+        "governing_condition_default_exception": "Prusa says 3MF is preferred and its project-file format; STL binary/ASCII are supported; STEP is triangulated during import; AMF is supported but Prusa suggests 3MF instead.",
+        "applicability": "Concrete receiving-slicer comparison at the 2.9 documentation baseline; version-specific behavior must still be checked for the selected build.",
+        "evidence_summary": "Prusa can receive either 3MF or STEP, but its STEP route ends in triangulated geometry. AMF remains an import alternative.",
+        "evidentiary_limit": "Single vendor's feature set; the page says nothing about other slicers or cross-tool project settings."
+      },
+      {
+        "id": "S08",
+        "title": "Saving projects as 3MF",
+        "publisher": "Prusa Research",
+        "url": "https://help.prusa3d.com/article/saving-projects-as-3mf_1773?product=sl1",
+        "released_version_commit": "Live Knowledge Base page, product-family examples; no exact application version pinned.",
+        "locator": "Save Project and 3MF file format sections.",
+        "access_utc": "2026-10-10T04:16:53Z (web-open request initiated in this clock second; response returned by the 04:16:54Z sample).",
+        "observed_operation": "Read-only open.",
+        "governing_condition_default_exception": "Prusa says its project save contains objects, settings, modifiers, and parameters; a second computer using PrusaSlicer should reproduce the same G-code. The page itself narrows the recommended sharing context to someone using a Prusa printer.",
+        "applicability": "Shows the distinction between a design-model handoff and a slicer-owned project snapshot.",
+        "evidence_summary": "A slicer project can package machine/process settings along with geometry, but that is useful within the matching slicer/printer context.",
+        "evidentiary_limit": "Vendor statement; not evidence of the same settings or G-code under another slicer, printer, profile, or release."
+      },
+      {
+        "id": "S09",
+        "title": "First print with PrusaSlicer 2.9",
+        "publisher": "Prusa Research",
+        "url": "https://help.prusa3d.com/article/first-print-with-prusaslicer-2-9_1753",
+        "released_version_commit": "PrusaSlicer 2.9 workflow documentation; exact point build not specified.",
+        "locator": "Model import, selecting printer, selecting material, and previewing G-code.",
+        "access_utc": "2026-10-10T04:17:08Z (web-open request initiated in this clock second; response returned by the 04:17:08Z sample).",
+        "observed_operation": "Read-only open.",
+        "governing_condition_default_exception": "The page lists STL, STEP, 3MF, OBJ, AMF imports; the user selects printer and material, and Prusa recommends inspecting G-code preview before export.",
+        "applicability": "Supports a separation between CAD's intended material and the technician's receiving-machine material/process selection, plus a non-operating visual check.",
+        "evidentiary_limit": "A slicer tutorial, not a certification or guarantee that a selected setting is safe or suitable."
+      },
+      {
+        "id": "S10",
+        "title": "PrusaSlicer 3.0 Preview compatibility notes",
+        "publisher": "Prusa Research",
+        "url": "https://blog.prusa3d.com/prusaslicer-3-0-preview-built-for-the-future-of-3d-printing_137672/",
+        "released_version_commit": "3.0.0 public preview announced 2026-09-01; explicitly an unfinished alpha, not a production build.",
+        "locator": "Compatibility and What’s not ready yet sections.",
+        "access_utc": "2026-10-10T04:16:53Z (web-open request initiated in this clock second; response returned by the 04:16:54Z sample).",
+        "observed_operation": "Read-only open of version announcement.",
+        "governing_condition_default_exception": "Prusa says 2.x project 3MF imports geometry plus settings into 3.x; 3.x 3MF opened in 2.x imports geometry while settings are discarded; third-party Bambu Studio and OrcaSlicer 3MF imports as geometry only. 2.9.1+ notifies when 3.x settings are discarded.",
+        "applicability": "Concrete, versioned evidence that geometry and slicer settings have distinct compatibility boundaries.",
+        "evidentiary_limit": "The 3.0 source is explicitly preview/alpha; do not treat it as the pilot's production receiving build."
+      },
+      {
+        "id": "S11",
+        "title": "3MF import from FreeCAD fails, issue 8401",
+        "publisher": "PrusaSlicer GitHub issue tracker",
+        "url": "https://github.com/prusa3d/PrusaSlicer/issues/8401",
+        "released_version_commit": "Issue opened 2022-06-13; reporter used FreeCAD 0.20 export and PrusaSlicer 2.4.2+arm64 on macOS 12.4. Reporter later said FreeCAD fixed the exporter. No first fixed stable FreeCAD/Prusa point release is stated.",
+        "locator": "Issue description and 2022-06-14 activity; attached test-file descriptions.",
+        "access_utc": "2026-10-10T04:16:53Z (web-open request initiated in this clock second; response returned by the 04:16:54Z sample).",
+        "observed_operation": "Read-only open of public issue and activity.",
+        "governing_condition_default_exception": "The reporter said the early FreeCAD 3MF silently failed in PrusaSlicer, an AMF from the same set loaded but at (0,0), and STL loaded as expected. The Prusa maintainer identified invalid relationship/path content (a leading slash should not be there), called the 3MF incorrect, and closed the issue after adding error handling.",
+        "applicability": "Bounded historical exporter/importer compatibility example for a CAD-to-slicer pilot; motivates testing actual exporter builds and checking that failed imports are explicit.",
+        "evidentiary_limit": "User report and maintainer diagnosis, not an independent reproduction in this research context; old builds and fixed exporter make it a test case, not evidence of a current defect."
+      },
+      {
+        "id": "S12",
+        "title": "PrusaSlicer commit 040a846: show error for invalid 3MF",
+        "publisher": "PrusaSlicer source repository",
+        "url": "https://github.com/prusa3d/PrusaSlicer/commit/040a846",
+        "released_version_commit": "Commit 040a846, 2022-06-14, linked by issue 8401.",
+        "locator": "Change to src/libslic3r/Format/3mf.cpp around load_3mf return condition.",
+        "access_utc": "2026-10-10T04:16:53Z (web-open request initiated in this clock second; response returned by the 04:16:54Z sample).",
+        "observed_operation": "Read-only open of commit diff.",
+        "governing_condition_default_exception": "Changed success result to true only when objects or configuration were loaded; commit title and issue discussion identify invalid 3MF diagnostics.",
+        "applicability": "Corroborates the receiving-importer fix path; the pilot should check both the geometry result and user-visible error handling.",
+        "evidentiary_limit": "Commit is a source change; the first release that contained it was not identified."
+      },
+      {
+        "id": "S13",
+        "title": "ISO/ASTM 52915-20 AMF 1.2",
+        "publisher": "ASTM International",
+        "url": "https://store.astm.org/f2915-20.html",
+        "released_version_commit": "Active ISO/ASTM 52915-20, AMF version 1.2; ASTM last updated 2020-08-14.",
+        "locator": "Standard abstract, scope, and version history.",
+        "access_utc": "2026-10-10T04:16:53Z (web-open request initiated in this clock second; response returned by the 04:16:54Z sample).",
+        "observed_operation": "Read-only open of public abstract and scope; full standard was not purchased or retrieved.",
+        "governing_condition_default_exception": "ASTM identifies XML/XSD conformance as necessary for standards-compliant interoperability; the standard notes additional relevant information is not covered in this version.",
+        "applicability": "An analogous formal AMF interchange alternative for this pilot, with weaker observed slicer support than the 3MF core route.",
+        "evidentiary_limit": "The full standard is paywalled; this research does not infer detailed AMF geometry/material/assembly clauses from the abstract."
+      },
+      {
+        "id": "S14",
+        "title": "PrusaSlicer 2.0 release notes",
+        "publisher": "Prusa Research",
+        "url": "https://blog.prusa3d.com/prusaslicer-2-release_30008/",
+        "released_version_commit": "PrusaSlicer 2.0 release announcement (2019).",
+        "locator": "Project file section.",
+        "access_utc": "2026-10-10T04:17:08Z (web-open request initiated in this clock second; response returned by the 04:17:08Z sample).",
+        "observed_operation": "Read-only open.",
+        "governing_condition_default_exception": "Prusa then selected 3MF for project saving due to support in Microsoft 3D Builder and Cura, while retaining AMF import; this is historic vendor rationale, not a current complete tool-support census.",
+        "applicability": "Historical explanation for preferring 3MF to AMF and a reason to treat AMF as a tested alternative, not the pilot default.",
+        "evidentiary_limit": "2019 support statements are date-scoped and should not be projected onto current product versions."
+      },
+      {
+        "id": "S15",
+        "title": "3MF Conformance Test Suites",
+        "publisher": "3MF Consortium",
+        "url": "https://github.com/3MFConsortium/test_suites",
+        "released_version_commit": "Published suite version 2.4.1; cases target Core 1.4.0, Materials 1.2.1, Production 1.2.0, Slice 1.0.2 and listed extension versions.",
+        "locator": "README version table and suite coverage table.",
+        "access_utc": "2026-10-10T04:16:53Z (web-open request initiated in this clock second; response returned by the 04:16:54Z sample).",
+        "observed_operation": "Read-only open of the public repository README.",
+        "governing_condition_default_exception": "Each suite covers a specific mix of Core and extension requirements. The suite is available as test material; this research did not download or run it.",
+        "applicability": "Useful proposed format-level conformance check for producer/receiver candidates; must be paired with real files and application-version tests.",
+        "evidentiary_limit": "Format conformance does not establish preservation of application-specific settings, project preview, or printer suitability."
+      },
+      {
+        "id": "S16",
+        "title": "3MF specification index",
+        "publisher": "3MF Consortium",
+        "url": "https://3mf.io/spec/",
+        "released_version_commit": "Live index; Materials and Properties 1.2.1 published 2025-02-27; Core release 1.4.0 separately pinned at S01.",
+        "locator": "Specification suite version and update table.",
+        "access_utc": "2026-10-10T04:17:24Z (web-open request initiated in this clock second; response returned by the 04:17:25Z sample).",
+        "observed_operation": "Read-only open/find of version table.",
+        "governing_condition_default_exception": "The page lists core and extension release versions separately; extension version is not the same as core version.",
+        "applicability": "Version provenance for optional materials/metadata-related extension choices.",
+        "evidentiary_limit": "Consortium index of releases, not a statement about what each receiving application implements."
+      },
+      {
+        "id": "S17",
+        "title": "3MF Consortium FAQ",
+        "publisher": "3MF Consortium",
+        "url": "https://3mf.io/resources/faq/",
+        "released_version_commit": "Live FAQ; publication version/date not stated.",
+        "locator": "FAQ sections comparing 3MF with STL, rendering formats, and CAD/STEP.",
+        "access_utc": "2026-10-10T04:17:51Z (web-open request initiated in this clock second; response returned by the 04:17:52Z sample).",
+        "observed_operation": "Read-only open.",
+        "governing_condition_default_exception": "Consortium says STL lacks color/material/property data and 3MF is not intended to replace higher-order CAD representations such as NURBS.",
+        "applicability": "Useful context for the mesh-versus-CAD boundary, interpreted alongside the formal core specification and Autodesk/Prusa implementation docs.",
+        "evidentiary_limit": "Consortium-authored positioning; do not use promotional comparisons as independent product validation."
+      },
+      {
+        "id": "S18",
+        "title": "PrusaSlicer 2.9.6 stable release",
+        "publisher": "PrusaSlicer source repository",
+        "url": "https://github.com/prusa3d/PrusaSlicer/releases/tag/version_2.9.6",
+        "released_version_commit": "PrusaSlicer 2.9.6 final release, tag version_2.9.6, commit b028299.",
+        "locator": "Release title and summary; 2.9.6 is contrasted with the public 3.0 preview in S10.",
+        "access_utc": "2026-10-10T04:17:51Z (web-open request initiated in this clock second; response returned by the 04:17:52Z sample).",
+        "observed_operation": "Read-only open of the tagged release page.",
+        "governing_condition_default_exception": "This is the final 2.9.6 release; the 3.0 source in S10 is a preview, not production.",
+        "applicability": "Candidate stable baseline for selecting exact Prusa receiving builds during the pilot.",
+        "evidentiary_limit": "A release tag alone does not validate a particular CAD-export/slicer-import pair."
+      },
+      {
+        "id": "S19",
+        "title": "Fusion component and assembly organization",
+        "publisher": "Autodesk",
+        "url": "https://help.autodesk.com/cloudhelp/ENU/Fusion-Assemble/files/ASM-COMPONENTS.htm",
+        "released_version_commit": "Current online Fusion documentation; no fixed product build stated.",
+        "locator": "Component definition, internal/external components, and hierarchy recommendations.",
+        "access_utc": "2026-10-10T04:21:51Z (web-open request initiated in this clock second; response returned by the 04:21:52Z sample).",
+        "observed_operation": "Read-only open of official Autodesk help.",
+        "governing_condition_default_exception": "Fusion components can contain sketches, bodies, joints, and child components, with names and their own coordinate systems. External components reference separate designs and can become unresolved when source projects, permissions, or translation fail.",
+        "applicability": "Context for preserving part names and nested assembly intent; do not require reviewer access to linked Fusion designs.",
+        "evidence_summary": "A native CAD assembly can contain relationships and external references that a portable manufacturing mesh cannot be assumed to retain.",
+        "evidentiary_limit": "The page documents Fusion authoring behavior, not the exact hierarchy written by a 3MF/STEP export."
+      }
+    ]
+  },
+  "carried_critic_identity_records": {
+    "path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/source-map.json",
+    "identities_copied_unchanged": true,
+    "access_method_note": "Read-only public web search/open/find; no external downloads, installations, accounts, or product tests.",
+    "access_time_note": "Each access_utc is the local UTC second immediately before its web-open request; the web service does not expose a finer server-fetch timestamp. The response-completion second is included in each value.",
+    "sources": [
+      {
+        "id": "S01",
+        "title": "3MF Core Specification",
+        "publisher": "3MF Consortium",
+        "url": "https://github.com/3MFConsortium/spec_core/blob/1.4.0/3MF%20Core%20Specification.md",
+        "released_version_commit": "Published version 1.4.0; release tag 1.4.0, commit 997b385 (2025-02-06).",
+        "locator": "Sections 2.1.3–2.1.4; 2.2.1; 3.4.1; 4.2; 5.1; tables 2-1 and 3-1.",
+        "access_utc": "2026-10-10T04:17:08Z (web-open request initiated in this clock second; response returned by the 04:17:08Z sample).",
+        "observed_operation": "Read-only open of tagged specification and line-targeted find operations for units, metadata, thumbnails, PrintTicket, components, material names, and filename conventions.",
+        "governing_condition_default_exception": "Model unit defaults to millimeter, with micron/mm/cm/in/ft/m valid. Package/object JPEG or PNG thumbnails and core properties are optional. Title and Description are well-known metadata. PrintTicket semantics follow the consumer environment; absent or unsupported tickets leave consumers to apply their own defaults. Base-material names express design intent; displaycolor is rendering only. Components carry object references and transforms. Extension use is a-la-carte; unsupported required extensions block processing. Version 1.4.0 recommends double extensions that distinguish model, project, build, toolpath, and other file roles.",
+        "applicability": "Primary governing source for 3MF geometry, unit, assembly/component, material-intent, metadata, thumbnail, printer-settings, extension, and naming claims in this pilot proposal.",
+        "evidence_summary": "A standardized 3MF archive can carry unit-qualified triangular geometry, component/object relationships, optional metadata and preview, and consumer-governed print settings. Its file-role naming recommendation gives the pilot a way to label design data separately from machine-prepared projects.",
+        "evidentiary_limit": "Specifies format behavior, not whether any particular CAD or slicer correctly implements it."
+      },
+      {
+        "id": "S02",
+        "title": "3MF Materials and Properties Extension",
+        "publisher": "3MF Consortium",
+        "url": "https://github.com/3MFConsortium/spec_materials/blob/1.2.1/3MF%20Materials%20Extension.md",
+        "released_version_commit": "Published version 1.2.1; released 2025-02-27 according to the official specification index. Release commit not recorded in the accessed page.",
+        "locator": "Preface and sections 1–7, especially Color Groups, Texture 2D Groups, Composite Materials, Multiproperties, and Display Properties.",
+        "access_utc": "2026-10-10T04:21:51Z (version-tagged spec page opened in this clock second; response returned by the 04:21:52Z sample).",
+        "observed_operation": "Read-only open of the extension source and versioned release page; line-targeted find confirmed the published version and extension scope.",
+        "governing_condition_default_exception": "The extension is an add-on to Core, not a standalone format; the core defines extensions as a-la-carte. It adds rich color/material/texture/composite property constructs. The receiving software must support the applicable extension and version to preserve/use those properties.",
+        "applicability": "Optional for the decorative pilot; use only for properties shown to work in the pilot's chosen receiving-tool matrix.",
+        "evidence_summary": "3MF can encode richer appearance and material information through a published extension, but such capability is distinct from core-only support and cannot be assumed portable.",
+        "evidentiary_limit": "The versioned source was checked against the Consortium's release index; the GitHub file link is a version tag, not an application support guarantee."
+      },
+      {
+        "id": "S03",
+        "title": "3MF Compatibility Matrix",
+        "publisher": "3MF Consortium",
+        "url": "https://3mf.io/compatibility-matrix/",
+        "released_version_commit": "Live matrix; no product build/version timestamp supplied on the page.",
+        "locator": "Reading-the-matrix note and product rows for Bambu Studio, Cura, FreeCAD, Fusion 360, OrcaSlicer, and PrusaSlicer.",
+        "access_utc": "2026-10-10T04:16:53Z (web-open request initiated in this clock second; response returned by the 04:16:54Z sample).",
+        "observed_operation": "Read-only open and inspection of table rows.",
+        "governing_condition_default_exception": "The page defines Core import/export, Materials and extension columns, but says compatibility is self-reported by vendors and not independently verified. Core support does not imply extension support; some entries are marked Custom or partial.",
+        "applicability": "Discovery shortlist and initial matrix candidates only. Pilot lead must select exact tested versions and builds.",
+        "evidence_summary": "The ecosystem includes several candidate CAD/slicer tools, while feature support is not uniform even within 3MF.",
+        "evidentiary_limit": "No versions, configurations, or independent test results; do not use it to claim universal compatibility."
+      },
+      {
+        "id": "S04",
+        "title": "Autodesk Fusion Mesh Export",
+        "publisher": "Autodesk",
+        "url": "https://help.autodesk.com/cloudhelp/ENU/Fusion-Mesh/files/MESH-EXPORT-TOOLS.htm",
+        "released_version_commit": "Current online product documentation; article does not pin a Fusion build.",
+        "locator": "Save As Mesh and 3D Print sections.",
+        "access_utc": "2026-10-10T04:16:53Z (web-open request initiated in this clock second; response returned by the 04:16:54Z sample).",
+        "observed_operation": "Read-only open of official help.",
+        "governing_condition_default_exception": "Save As Mesh exports solid, surface, or mesh bodies to 3MF, STL, or OBJ; selecting a component exports all bodies in that component. The 3D Print command exports STL or sends to a utility.",
+        "applicability": "A concrete CAD-to-slicer 3MF route when Fusion is the author's tool; not a claim that all Fusion export settings or extensions survive.",
+        "evidence_summary": "Fusion has a direct 3MF mesh-export workflow and a component-level selection route.",
+        "evidentiary_limit": "The page does not document all 3MF semantics or receiving-slicer behavior."
+      },
+      {
+        "id": "S05",
+        "title": "Autodesk Fusion Export Designs",
+        "publisher": "Autodesk",
+        "url": "https://help.autodesk.com/view/fusion360/ENU/?contextId=ASM-EXPORT-DESIGN",
+        "released_version_commit": "Current online product documentation; no fixed Fusion release identified.",
+        "locator": "Export format list and Tips.",
+        "access_utc": "2026-10-10T04:16:53Z (web-open request initiated in this clock second; response returned by the 04:16:54Z sample).",
+        "observed_operation": "Read-only open of official help.",
+        "governing_condition_default_exception": "The document describes Fusion 3MF as an additive mesh carrying vertices, triangular faces, units, colors, and textures; STEP as an international 3D exchange format; STL as flat facets approximating the model. Exported designs lose associativity with the source Fusion design.",
+        "applicability": "Supports the distinction between mesh-to-slicer and neutral CAD-exchange routes; original CAD history/associativity remains in its native file.",
+        "evidence_summary": "3MF and STEP are different exchange layers. A mesh export makes a manufacturing-oriented representation, while STEP is a CAD-exchange alternative; neither is an associative continuation of the original Fusion design.",
+        "evidentiary_limit": "The page does not guarantee which STEP entities, assemblies, or attributes every importer preserves."
+      },
+      {
+        "id": "S06",
+        "title": "STL/OBJ files exported from Fusion are scaled incorrectly",
+        "publisher": "Autodesk",
+        "url": "https://help.autodesk.com/view/fusion360/ENU/?caas=caas/sfdcarticles/sfdcarticles/STL-files-exported-from-Fusion-360-are-scaled-down-in-3d-printing-software.html",
+        "released_version_commit": "Support article dated 2026-04-29.",
+        "locator": "Issue, causes, and unit-selection solution.",
+        "access_utc": "2026-10-10T04:17:08Z (web-open request initiated in this clock second; response returned by the 04:17:08Z sample).",
+        "observed_operation": "Read-only open of Autodesk support article.",
+        "governing_condition_default_exception": "Autodesk identifies STL as unitless and notes wrong or omitted export/import units, with millimeters often assumed by slicers; its prescribed workflow explicitly sets export units.",
+        "applicability": "Concrete basis for warning that STL is a geometry-only fallback requiring an explicit unit statement and size check.",
+        "evidence_summary": "The common unitless mesh route creates scale ambiguity even when its coordinates are numerically valid.",
+        "evidentiary_limit": "Autodesk's stated common slicer default is not a guarantee about each pilot receiver."
+      },
+      {
+        "id": "S07",
+        "title": "Supported file formats (PrusaSlicer 2.9 documentation)",
+        "publisher": "Prusa Research",
+        "url": "https://help.prusa3d.com/article/supported-file-formats_1772?product=cw1",
+        "released_version_commit": "Knowledge-base topic is PrusaSlicer 2.9 (legacy); exact point build is not specified on the page.",
+        "locator": "3MF, STL, STEP, and AMF sections.",
+        "access_utc": "2026-10-10T04:17:08Z (web-open request initiated in this clock second; response returned by the 04:17:08Z sample).",
+        "observed_operation": "Read-only open of the official supported-format page.",
+        "governing_condition_default_exception": "Prusa says 3MF is preferred and its project-file format; STL binary/ASCII are supported; STEP is triangulated during import; AMF is supported but Prusa suggests 3MF instead.",
+        "applicability": "Concrete receiving-slicer comparison at the 2.9 documentation baseline; version-specific behavior must still be checked for the selected build.",
+        "evidence_summary": "Prusa can receive either 3MF or STEP, but its STEP route ends in triangulated geometry. AMF remains an import alternative.",
+        "evidentiary_limit": "Single vendor's feature set; the page says nothing about other slicers or cross-tool project settings."
+      },
+      {
+        "id": "S08",
+        "title": "Saving projects as 3MF",
+        "publisher": "Prusa Research",
+        "url": "https://help.prusa3d.com/article/saving-projects-as-3mf_1773?product=sl1",
+        "released_version_commit": "Live Knowledge Base page, product-family examples; no exact application version pinned.",
+        "locator": "Save Project and 3MF file format sections.",
+        "access_utc": "2026-10-10T04:16:53Z (web-open request initiated in this clock second; response returned by the 04:16:54Z sample).",
+        "observed_operation": "Read-only open.",
+        "governing_condition_default_exception": "Prusa says its project save contains objects, settings, modifiers, and parameters; a second computer using PrusaSlicer should reproduce the same G-code. The page itself narrows the recommended sharing context to someone using a Prusa printer.",
+        "applicability": "Shows the distinction between a design-model handoff and a slicer-owned project snapshot.",
+        "evidence_summary": "A slicer project can package machine/process settings along with geometry, but that is useful within the matching slicer/printer context.",
+        "evidentiary_limit": "Vendor statement; not evidence of the same settings or G-code under another slicer, printer, profile, or release."
+      },
+      {
+        "id": "S09",
+        "title": "First print with PrusaSlicer 2.9",
+        "publisher": "Prusa Research",
+        "url": "https://help.prusa3d.com/article/first-print-with-prusaslicer-2-9_1753",
+        "released_version_commit": "PrusaSlicer 2.9 workflow documentation; exact point build not specified.",
+        "locator": "Model import, selecting printer, selecting material, and previewing G-code.",
+        "access_utc": "2026-10-10T04:17:08Z (web-open request initiated in this clock second; response returned by the 04:17:08Z sample).",
+        "observed_operation": "Read-only open.",
+        "governing_condition_default_exception": "The page lists STL, STEP, 3MF, OBJ, AMF imports; the user selects printer and material, and Prusa recommends inspecting G-code preview before export.",
+        "applicability": "Supports a separation between CAD's intended material and the technician's receiving-machine material/process selection, plus a non-operating visual check.",
+        "evidentiary_limit": "A slicer tutorial, not a certification or guarantee that a selected setting is safe or suitable."
+      },
+      {
+        "id": "S10",
+        "title": "PrusaSlicer 3.0 Preview compatibility notes",
+        "publisher": "Prusa Research",
+        "url": "https://blog.prusa3d.com/prusaslicer-3-0-preview-built-for-the-future-of-3d-printing_137672/",
+        "released_version_commit": "3.0.0 public preview announced 2026-09-01; explicitly an unfinished alpha, not a production build.",
+        "locator": "Compatibility and What’s not ready yet sections.",
+        "access_utc": "2026-10-10T04:16:53Z (web-open request initiated in this clock second; response returned by the 04:16:54Z sample).",
+        "observed_operation": "Read-only open of version announcement.",
+        "governing_condition_default_exception": "Prusa says 2.x project 3MF imports geometry plus settings into 3.x; 3.x 3MF opened in 2.x imports geometry while settings are discarded; third-party Bambu Studio and OrcaSlicer 3MF imports as geometry only. 2.9.1+ notifies when 3.x settings are discarded.",
+        "applicability": "Concrete, versioned evidence that geometry and slicer settings have distinct compatibility boundaries.",
+        "evidentiary_limit": "The 3.0 source is explicitly preview/alpha; do not treat it as the pilot's production receiving build."
+      },
+      {
+        "id": "S11",
+        "title": "3MF import from FreeCAD fails, issue 8401",
+        "publisher": "PrusaSlicer GitHub issue tracker",
+        "url": "https://github.com/prusa3d/PrusaSlicer/issues/8401",
+        "released_version_commit": "Issue opened 2022-06-13; reporter used FreeCAD 0.20 export and PrusaSlicer 2.4.2+arm64 on macOS 12.4. Reporter later said FreeCAD fixed the exporter. No first fixed stable FreeCAD/Prusa point release is stated.",
+        "locator": "Issue description and 2022-06-14 activity; attached test-file descriptions.",
+        "access_utc": "2026-10-10T04:16:53Z (web-open request initiated in this clock second; response returned by the 04:16:54Z sample).",
+        "observed_operation": "Read-only open of public issue and activity.",
+        "governing_condition_default_exception": "The reporter said the early FreeCAD 3MF silently failed in PrusaSlicer, an AMF from the same set loaded but at (0,0), and STL loaded as expected. The Prusa maintainer identified invalid relationship/path content (a leading slash should not be there), called the 3MF incorrect, and closed the issue after adding error handling.",
+        "applicability": "Bounded historical exporter/importer compatibility example for a CAD-to-slicer pilot; motivates testing actual exporter builds and checking that failed imports are explicit.",
+        "evidentiary_limit": "User report and maintainer diagnosis, not an independent reproduction in this research context; old builds and fixed exporter make it a test case, not evidence of a current defect."
+      },
+      {
+        "id": "S12",
+        "title": "PrusaSlicer commit 040a846: show error for invalid 3MF",
+        "publisher": "PrusaSlicer source repository",
+        "url": "https://github.com/prusa3d/PrusaSlicer/commit/040a846",
+        "released_version_commit": "Commit 040a846, 2022-06-14, linked by issue 8401.",
+        "locator": "Change to src/libslic3r/Format/3mf.cpp around load_3mf return condition.",
+        "access_utc": "2026-10-10T04:16:53Z (web-open request initiated in this clock second; response returned by the 04:16:54Z sample).",
+        "observed_operation": "Read-only open of commit diff.",
+        "governing_condition_default_exception": "Changed success result to true only when objects or configuration were loaded; commit title and issue discussion identify invalid 3MF diagnostics.",
+        "applicability": "Corroborates the receiving-importer fix path; the pilot should check both the geometry result and user-visible error handling.",
+        "evidentiary_limit": "Commit is a source change; the first release that contained it was not identified."
+      },
+      {
+        "id": "S13",
+        "title": "ISO/ASTM 52915-20 AMF 1.2",
+        "publisher": "ASTM International",
+        "url": "https://store.astm.org/f2915-20.html",
+        "released_version_commit": "Active ISO/ASTM 52915-20, AMF version 1.2; ASTM last updated 2020-08-14.",
+        "locator": "Standard abstract, scope, and version history.",
+        "access_utc": "2026-10-10T04:16:53Z (web-open request initiated in this clock second; response returned by the 04:16:54Z sample).",
+        "observed_operation": "Read-only open of public abstract and scope; full standard was not purchased or retrieved.",
+        "governing_condition_default_exception": "ASTM identifies XML/XSD conformance as necessary for standards-compliant interoperability; the standard notes additional relevant information is not covered in this version.",
+        "applicability": "An analogous formal AMF interchange alternative for this pilot, with weaker observed slicer support than the 3MF core route.",
+        "evidentiary_limit": "The full standard is paywalled; this research does not infer detailed AMF geometry/material/assembly clauses from the abstract."
+      },
+      {
+        "id": "S14",
+        "title": "PrusaSlicer 2.0 release notes",
+        "publisher": "Prusa Research",
+        "url": "https://blog.prusa3d.com/prusaslicer-2-release_30008/",
+        "released_version_commit": "PrusaSlicer 2.0 release announcement (2019).",
+        "locator": "Project file section.",
+        "access_utc": "2026-10-10T04:17:08Z (web-open request initiated in this clock second; response returned by the 04:17:08Z sample).",
+        "observed_operation": "Read-only open.",
+        "governing_condition_default_exception": "Prusa then selected 3MF for project saving due to support in Microsoft 3D Builder and Cura, while retaining AMF import; this is historic vendor rationale, not a current complete tool-support census.",
+        "applicability": "Historical explanation for preferring 3MF to AMF and a reason to treat AMF as a tested alternative, not the pilot default.",
+        "evidentiary_limit": "2019 support statements are date-scoped and should not be projected onto current product versions."
+      },
+      {
+        "id": "S15",
+        "title": "3MF Conformance Test Suites",
+        "publisher": "3MF Consortium",
+        "url": "https://github.com/3MFConsortium/test_suites",
+        "released_version_commit": "Published suite version 2.4.1; cases target Core 1.4.0, Materials 1.2.1, Production 1.2.0, Slice 1.0.2 and listed extension versions.",
+        "locator": "README version table and suite coverage table.",
+        "access_utc": "2026-10-10T04:16:53Z (web-open request initiated in this clock second; response returned by the 04:16:54Z sample).",
+        "observed_operation": "Read-only open of the public repository README.",
+        "governing_condition_default_exception": "Each suite covers a specific mix of Core and extension requirements. The suite is available as test material; this research did not download or run it.",
+        "applicability": "Useful proposed format-level conformance check for producer/receiver candidates; must be paired with real files and application-version tests.",
+        "evidentiary_limit": "Format conformance does not establish preservation of application-specific settings, project preview, or printer suitability."
+      },
+      {
+        "id": "S16",
+        "title": "3MF specification index",
+        "publisher": "3MF Consortium",
+        "url": "https://3mf.io/spec/",
+        "released_version_commit": "Live index; Materials and Properties 1.2.1 published 2025-02-27; Core release 1.4.0 separately pinned at S01.",
+        "locator": "Specification suite version and update table.",
+        "access_utc": "2026-10-10T04:17:24Z (web-open request initiated in this clock second; response returned by the 04:17:25Z sample).",
+        "observed_operation": "Read-only open/find of version table.",
+        "governing_condition_default_exception": "The page lists core and extension release versions separately; extension version is not the same as core version.",
+        "applicability": "Version provenance for optional materials/metadata-related extension choices.",
+        "evidentiary_limit": "Consortium index of releases, not a statement about what each receiving application implements."
+      },
+      {
+        "id": "S17",
+        "title": "3MF Consortium FAQ",
+        "publisher": "3MF Consortium",
+        "url": "https://3mf.io/resources/faq/",
+        "released_version_commit": "Live FAQ; publication version/date not stated.",
+        "locator": "FAQ sections comparing 3MF with STL, rendering formats, and CAD/STEP.",
+        "access_utc": "2026-10-10T04:17:51Z (web-open request initiated in this clock second; response returned by the 04:17:52Z sample).",
+        "observed_operation": "Read-only open.",
+        "governing_condition_default_exception": "Consortium says STL lacks color/material/property data and 3MF is not intended to replace higher-order CAD representations such as NURBS.",
+        "applicability": "Useful context for the mesh-versus-CAD boundary, interpreted alongside the formal core specification and Autodesk/Prusa implementation docs.",
+        "evidentiary_limit": "Consortium-authored positioning; do not use promotional comparisons as independent product validation."
+      },
+      {
+        "id": "S18",
+        "title": "PrusaSlicer 2.9.6 stable release",
+        "publisher": "PrusaSlicer source repository",
+        "url": "https://github.com/prusa3d/PrusaSlicer/releases/tag/version_2.9.6",
+        "released_version_commit": "PrusaSlicer 2.9.6 final release, tag version_2.9.6, commit b028299.",
+        "locator": "Release title and summary; 2.9.6 is contrasted with the public 3.0 preview in S10.",
+        "access_utc": "2026-10-10T04:17:51Z (web-open request initiated in this clock second; response returned by the 04:17:52Z sample).",
+        "observed_operation": "Read-only open of the tagged release page.",
+        "governing_condition_default_exception": "This is the final 2.9.6 release; the 3.0 source in S10 is a preview, not production.",
+        "applicability": "Candidate stable baseline for selecting exact Prusa receiving builds during the pilot.",
+        "evidentiary_limit": "A release tag alone does not validate a particular CAD-export/slicer-import pair."
+      },
+      {
+        "id": "S19",
+        "title": "Fusion component and assembly organization",
+        "publisher": "Autodesk",
+        "url": "https://help.autodesk.com/cloudhelp/ENU/Fusion-Assemble/files/ASM-COMPONENTS.htm",
+        "released_version_commit": "Current online Fusion documentation; no fixed product build stated.",
+        "locator": "Component definition, internal/external components, and hierarchy recommendations.",
+        "access_utc": "2026-10-10T04:21:51Z (web-open request initiated in this clock second; response returned by the 04:21:52Z sample).",
+        "observed_operation": "Read-only open of official Autodesk help.",
+        "governing_condition_default_exception": "Fusion components can contain sketches, bodies, joints, and child components, with names and their own coordinate systems. External components reference separate designs and can become unresolved when source projects, permissions, or translation fail.",
+        "applicability": "Context for preserving part names and nested assembly intent; do not require reviewer access to linked Fusion designs.",
+        "evidence_summary": "A native CAD assembly can contain relationships and external references that a portable manufacturing mesh cannot be assumed to retain.",
+        "evidentiary_limit": "The page documents Fusion authoring behavior, not the exact hierarchy written by a 3MF/STEP export."
+      }
+    ]
+  },
+  "reviser_direct_source_rechecks": [
+    {
+      "review_id": "RV01",
+      "source_id": "S01",
+      "title": "3MF Core Specification",
+      "publisher": "3MF Consortium",
+      "url": "https://github.com/3MFConsortium/spec_core/blob/1.4.0/3MF%20Core%20Specification.md",
+      "released_version_commit": "Published version 1.4.0; release tag 1.4.0, commit 997b385 (2025-02-06).",
+      "locator": "Section 3.4 Model attributes table (unit attribute, default and valid values); section 2.2.3 part naming rules for absolute paths beginning with /. Rendered GitHub lines 479–481 and 401–411.",
+      "access_utc": "2026-10-10T04:44:52Z–2026-10-10T04:44:59Z (local clock sampled immediately before the grouped opens and after the responses)",
+      "observed_operation": "Read-only open of the tagged 1.4.0 specification at the unit table; surrounding context included optional/recommended extension processing and part-name rules.",
+      "governing_condition_default_exception": "The model unit defaults to millimeter and valid values include micron, millimeter, centimeter, inch, foot, and meter. Part names are absolute paths and must begin with /.",
+      "applicability": "Directly confirms the corrected unit locator and prevents the issue summary from treating a normal leading forward slash as invalid. It describes the format, not application conformance.",
+      "access_started_utc": "2026-10-10T04:44:52Z",
+      "access_completed_utc": "2026-10-10T04:44:59Z"
+    },
+    {
+      "review_id": "RV02",
+      "source_id": "S02",
+      "title": "3MF Materials and Properties Extension",
+      "publisher": "3MF Consortium",
+      "url": "https://github.com/3MFConsortium/spec_materials/blob/1.2.1/3MF%20Materials%20Extension.md",
+      "released_version_commit": "Published version 1.2.1; released 2025-02-27 according to the official specification index. Release commit not recorded in the accessed page.",
+      "locator": "Version/status header; Preface, About this Specification; lines 4–6, 56–64; surrounding extension overview at lines 83–85.",
+      "access_utc": "2026-10-10T04:44:52Z–2026-10-10T04:44:59Z (local clock sampled immediately before the grouped opens and after the responses)",
+      "observed_operation": "Read-only open of the raw version-pinned text for this stable S02 source identity and review of the surrounding preface/overview, not only the disputed sentence.",
+      "governing_condition_default_exception": "Version 1.2.1 is published and is an addendum, cannot stand alone, follows a-la-carte extension use, and states that it MUST only be used with Core specification 1.2. Producers may omit extension resources; consumers that claim support for this extension must support it.",
+      "applicability": "The stated Core 1.2 target conflicts with the Core 1.4.0/Materials 1.2.1 suite version listing in S15. This reviser could not find a clarification in the source context; keep the pairing unresolved and optional.",
+      "accessed_url": "https://raw.githubusercontent.com/3MFConsortium/spec_materials/1.2.1/3MF%20Materials%20Extension.md",
+      "access_started_utc": "2026-10-10T04:44:52Z",
+      "access_completed_utc": "2026-10-10T04:44:59Z"
+    },
+    {
+      "review_id": "RV03",
+      "source_id": "S15",
+      "title": "3MF Conformance Test Suites",
+      "publisher": "3MF Consortium",
+      "url": "https://github.com/3MFConsortium/test_suites",
+      "released_version_commit": "Published suite version 2.4.1; cases target Core 1.4.0, Materials 1.2.1, Production 1.2.0, Slice 1.0.2 and listed extension versions.",
+      "locator": "Version/status header; overview and suite coverage matrix; global specification-version list, README lines 212–248.",
+      "access_utc": "2026-10-10T04:44:52Z–2026-10-10T04:44:59Z (local clock sampled immediately before the grouped opens and after the responses)",
+      "observed_operation": "Read-only open of the published README, including adjacent suite descriptions, coverage matrix, and version list.",
+      "governing_condition_default_exception": "Suite v2.4.1 says each suite covers a specific combination; suites 2 and 6 mark both Core and Materials coverage. The common list states Core 1.4.0 and Materials 1.2.1 among versions used by test cases, but does not explain the S02 Core 1.2 restriction.",
+      "applicability": "Supports identifying a format-level candidate only; the apparent pairing discrepancy remains unclarified and the suite was not downloaded or run.",
+      "access_started_utc": "2026-10-10T04:44:52Z",
+      "access_completed_utc": "2026-10-10T04:44:59Z"
+    },
+    {
+      "review_id": "RV04",
+      "source_id": "S11",
+      "title": "3MF import from FreeCAD fails, issue 8401",
+      "publisher": "PrusaSlicer GitHub issue tracker",
+      "url": "https://github.com/prusa3d/PrusaSlicer/issues/8401",
+      "released_version_commit": "Issue opened 2022-06-13; reporter used FreeCAD 0.20 export and PrusaSlicer 2.4.2+arm64 on macOS 12.4. Reporter later said FreeCAD fixed the exporter. No first fixed stable FreeCAD/Prusa point release is stated.",
+      "locator": "Issue report, attached-file descriptions, maintainer comment and reporter follow-up on 2022-06-14; rendered lines 155–230.",
+      "access_utc": "2026-10-10T04:44:52Z–2026-10-10T04:44:59Z (local clock sampled immediately before the grouped opens and after the responses)",
+      "observed_operation": "Read-only open of the issue and surrounding report/activity. The attachment was not downloaded or inspected.",
+      "governing_condition_default_exception": "Reporter names FreeCAD 0.20 and PrusaSlicer 2.4.2+arm64, a silent 3MF import, AMF at (0,0) versus expected bed placement, and an STL import that worked in that report. Maintainer calls the 3MF incorrect and says ‘the slash shouldn’t be there’; reporter follow-up identifies the FreeCAD fix as a leading backslash.",
+      "applicability": "Historical user report and maintainer diagnosis only. Combined with S01 part-name rules, it does not support saying a valid leading / is an error. Exact attachment bytes, first fixed stable versions, and present-day product behavior remain unknown.",
+      "access_started_utc": "2026-10-10T04:44:52Z",
+      "access_completed_utc": "2026-10-10T04:44:59Z"
+    }
+  ],
+  "criticism_dispositions": [
+    {
+      "id": "C1",
+      "criticism": "Materials extension/Core version pairing is materially incomplete.",
+      "disposition": "accept; retain unresolved uncertainty",
+      "basis": [
+        "RV02 / S02",
+        "RV03 / S15"
+      ],
+      "effect": "Do not rely on Materials 1.2.1 with Core 1.4.0 unless official clarification resolves the mismatch and the exact pair is tested. Core-only default and optional preview/note remain."
+    },
+    {
+      "id": "C2",
+      "criticism": "S01 locator omitted the Core unit attribute clause.",
+      "disposition": "accept",
+      "basis": [
+        "RV01 / S01"
+      ],
+      "effect": "Final and source record locate the unit claim in Core 1.4.0 section 3.4 Model attributes."
+    },
+    {
+      "id": "C3",
+      "criticism": "Issue summary blurred slash and backslash and could conflict with valid Core part names.",
+      "disposition": "accept; amend interpretation",
+      "basis": [
+        "RV01 / S01",
+        "RV04 / S11"
+      ],
+      "effect": "Report the reporter’s leading-backslash follow-up, qualify the maintainer’s generic “slash” comment, note the attachment was not inspected, and do not call a required leading / invalid."
+    },
+    {
+      "id": "C4",
+      "criticism": "Draft claimed an unlisted release-receipt check.",
+      "disposition": "accept; remove unsupported trace claim",
+      "basis": [
+        "supplied plan-reveal.json; local SHA-256 observations"
+      ],
+      "effect": "Cite only the supplied plan-reveal.json record and matching local hashes. Treat as process integrity, not product validation; do not inspect release-receipt.json."
+    }
+  ],
+  "local_process_checks": {
+    "plan_reveal_hash_match": [
+      {
+        "input": "discovery",
+        "path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/discovery.md",
+        "expected_sha256_from_plan_reveal_json": "17ff8435c3352da4d6ab501fb6a90272c342a2b04bedf7a04afb4eeaa6b04dfb",
+        "observed_sha256": "17ff8435c3352da4d6ab501fb6a90272c342a2b04bedf7a04afb4eeaa6b04dfb",
+        "matches": true
+      },
+      {
+        "input": "revealed_plan",
+        "path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/revealed-plan.md",
+        "expected_sha256_from_plan_reveal_json": "b9063b147acff997c7c788eac44d2149ca6946fa4ee2a3ce6f0bdf80789397e7",
+        "observed_sha256": "b9063b147acff997c7c788eac44d2149ca6946fa4ee2a3ce6f0bdf80789397e7",
+        "matches": true
+      }
+    ],
+    "interpretation": "The supplied plan-reveal.json hashes for discovery.md and revealed-plan.md match local SHA-256 observations. This checks the supplied process record only; it is not product validation."
+  },
+  "validation_boundary": {
+    "executed": "Read-only document/source review; direct source rechecks S01, S02, S11, S15; local hash comparison against supplied plan-reveal.json.",
+    "not_run": [
+      "CAD export or STEP/3MF/STL/AMF import",
+      "application-specific metadata, thumbnail, or Materials-extension preservation",
+      "any receiving-tool matrix test",
+      "pilot project measurements",
+      "conformance suite execution",
+      "printer operation",
+      "safety-critical design validation"
+    ],
+    "limitations": [
+      "S13 full paid AMF standard was not reviewed; critic source map records an internal retrieval error during its separate pass.",
+      "Issue 8401 attachment was not retrieved; its exact bytes were not inspected.",
+      "The official Materials/Core pairing discrepancy remains unresolved.",
+      "No CAD/slicer product or pilot project was supplied or tested."
+    ]
+  },
+  "native_goal_observation": {
+    "tool": "functions.create_goal; confirmed by functions.get_goal",
+    "activation_confirmed": true,
+    "objective": "ER12 reviser stage, run A7-01-control: execute ER12_RUNTIME/runs/A7-01/control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+    "direct_response": {
+      "threadId": "01a1241e-b3f2-7102-91be-344bb0b66a8f",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791607380,
+      "updatedAt": 1791607380,
+      "remainingTokens": null,
+      "completionBudgetReport": null
+    },
+    "get_goal_confirmation": {
+      "threadId": "01a1241e-b3f2-7102-91be-344bb0b66a8f",
+      "status": "active"
+    },
+    "created_at_utc_derived_from_raw_unix_seconds": "2026-10-10T04:43:00Z",
+    "actual_provider_instance_id": "UNKNOWN (not exposed by native Goal response)",
+    "actual_model": "UNKNOWN (not exposed by native Goal response)",
+    "requested_route_from_freeze_only": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna",
+      "options": {
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      }
+    },
+    "provenance_note": "The requested route is preparation metadata, not proof of the actual Goal provider/model. Only directly returned Goal fields are reported as observed.",
+    "artifact_order": "final.md and source-map.json were saved before invoking native Goal completion; terminal fields were not yet observable when these artifacts were written."
+  },
+  "deadlines": {
+    "stage_deadline_utc": "2026-10-10T05:00:28.035Z",
+    "whole_deadline_utc": "2026-10-10T05:11:09.530Z"
+  },
+  "output_artifacts": [
+    "final.md",
+    "source-map.json",
+    "sources/index.md"
+  ],
+  "carried_critic_independent_review_records": {
+    "access_method": "Read-only public web opens/finds; no downloads, installations, accounts, CAD/slicer sessions, generated files, or product tests.",
+    "independent_primary_source_checks": [
+      {
+        "source_id": "S01",
+        "title": "3MF Core Specification",
+        "url": "https://github.com/3MFConsortium/spec_core/blob/1.4.0/3MF%20Core%20Specification.md",
+        "released_version_commit": "Published version 1.4.0; release tag 1.4.0, commit 997b385 (2025-02-06).",
+        "locator": "Sections 2.1.3–2.1.4; 2.2.1; 3.4.1; 4.2; 5.1; tables 2-1 and 3-1.",
+        "access_utc": "2026-10-10T04:31:08Z",
+        "observed_operation": "Opened the version-pinned Core specification; inspected document/package, thumbnail, PrintTicket, extension, component, and naming clauses.",
+        "governing_condition_default_exception": "The tagged Core 1.4.0 text describes optional parts and consumer-governed PrintTicket behavior; Components require relative positions to be respected.",
+        "applicability": "Format rules apply to conforming producers/consumers, not proof of application support."
+      },
+      {
+        "source_id": "S01",
+        "title": "3MF Core Specification",
+        "url": "https://github.com/3MFConsortium/spec_core/blob/1.4.0/3MF%20Core%20Specification.md",
+        "released_version_commit": "Published version 1.4.0; release tag 1.4.0, commit 997b385 (2025-02-06).",
+        "locator": "Sections 2.1.3–2.1.4; 2.2.1; 3.4.1; 4.2; 5.1; tables 2-1 and 3-1.",
+        "access_utc": "2026-10-10T04:33:04Z",
+        "observed_operation": "Read-only find on the tagged Core specification for the model unit attribute.",
+        "governing_condition_default_exception": "The model attribute table gives millimeter as default and lists micron, millimeter, centimeter, inch, foot, and meter.",
+        "applicability": "Supports the Core unit claim; does not validate an exporter or receiver."
+      },
+      {
+        "source_id": "S02",
+        "title": "3MF Materials and Properties Extension",
+        "url": "https://github.com/3MFConsortium/spec_materials/blob/1.2.1/3MF%20Materials%20Extension.md",
+        "released_version_commit": "Published version 1.2.1; released 2025-02-27 according to the official specification index. Release commit not recorded in the accessed page.",
+        "locator": "Preface and sections 1–7, especially Color Groups, Texture 2D Groups, Composite Materials, Multiproperties, and Display Properties.",
+        "access_utc": "2026-10-10T04:33:04Z",
+        "observed_operation": "Read-only find in the version-pinned raw extension text after the rendered page open returned an internal error.",
+        "governing_condition_default_exception": "The page identifies Materials and Properties 1.2.1 as a published addendum, and its Preface states a Core 1.2 target.",
+        "applicability": "The compatibility of that target with the S15 Core 1.4.0 suite listing was not resolved."
+      },
+      {
+        "source_id": "S03",
+        "title": "3MF Compatibility Matrix",
+        "url": "https://3mf.io/compatibility-matrix/",
+        "released_version_commit": "Live matrix; no product build/version timestamp supplied on the page.",
+        "locator": "Reading-the-matrix note and product rows for Bambu Studio, Cura, FreeCAD, Fusion 360, OrcaSlicer, and PrusaSlicer.",
+        "access_utc": "2026-10-10T04:32:41Z",
+        "observed_operation": "Opened the live Consortium compatibility matrix and read its matrix legend.",
+        "governing_condition_default_exception": "The page says vendor-reported support is not independently verified; core and extension support are separate columns.",
+        "applicability": "Candidate discovery aid only; no build-level guarantee."
+      },
+      {
+        "source_id": "S06",
+        "title": "STL/OBJ files exported from Fusion are scaled incorrectly",
+        "url": "https://help.autodesk.com/view/fusion360/ENU/?caas=caas/sfdcarticles/sfdcarticles/STL-files-exported-from-Fusion-360-are-scaled-down-in-3d-printing-software.html",
+        "released_version_commit": "Support article dated 2026-04-29.",
+        "locator": "Issue, causes, and unit-selection solution.",
+        "access_utc": "2026-10-10T04:32:41Z",
+        "observed_operation": "Opened Autodesk support article and read the issue, causes, and units solution.",
+        "governing_condition_default_exception": "Autodesk says STL is unitless and missing/wrong export or import units can cause scale errors; mm is often assumed.",
+        "applicability": "Vendor documentation, not every receiver default."
+      },
+      {
+        "source_id": "S07",
+        "title": "Supported file formats (PrusaSlicer 2.9 documentation)",
+        "url": "https://help.prusa3d.com/article/supported-file-formats_1772?product=cw1",
+        "released_version_commit": "Knowledge-base topic is PrusaSlicer 2.9 (legacy); exact point build is not specified on the page.",
+        "locator": "3MF, STL, STEP, and AMF sections.",
+        "access_utc": "2026-10-10T04:32:41Z",
+        "observed_operation": "Opened PrusaSlicer 2.9 supported-format page and read STEP/AMF sections.",
+        "governing_condition_default_exception": "Prusa documents STEP triangulation on import and supports AMF while recommending 3MF.",
+        "applicability": "One vendor 2.9 documentation; not cross-tool evidence."
+      },
+      {
+        "source_id": "S09",
+        "title": "First print with PrusaSlicer 2.9",
+        "url": "https://help.prusa3d.com/article/first-print-with-prusaslicer-2-9_1753",
+        "released_version_commit": "PrusaSlicer 2.9 workflow documentation; exact point build not specified.",
+        "locator": "Model import, selecting printer, selecting material, and previewing G-code.",
+        "access_utc": "2026-10-10T04:31:45Z",
+        "observed_operation": "Opened PrusaSlicer 2.9 first-print workflow and read model import, printer/material selection, and G-code preview sections.",
+        "governing_condition_default_exception": "The workflow has the user choose printer and material and inspect the G-code preview.",
+        "applicability": "Tutorial guidance, not safety or suitability certification."
+      },
+      {
+        "source_id": "S10",
+        "title": "PrusaSlicer 3.0 Preview compatibility notes",
+        "url": "https://blog.prusa3d.com/prusaslicer-3-0-preview-built-for-the-future-of-3d-printing_137672/",
+        "released_version_commit": "3.0.0 public preview announced 2026-09-01; explicitly an unfinished alpha, not a production build.",
+        "locator": "Compatibility and What’s not ready yet sections.",
+        "access_utc": "2026-10-10T04:32:41Z",
+        "observed_operation": "Opened the PrusaSlicer 3.0 preview announcement and read its compatibility and readiness sections.",
+        "governing_condition_default_exception": "The preview says version-origin settings differ, third-party 3MF imports as geometry, and the build is an unfinished alpha.",
+        "applicability": "Preview-only behavior; not a production baseline."
+      },
+      {
+        "source_id": "S11",
+        "title": "3MF import from FreeCAD fails, issue 8401",
+        "url": "https://github.com/prusa3d/PrusaSlicer/issues/8401",
+        "released_version_commit": "Issue opened 2022-06-13; reporter used FreeCAD 0.20 export and PrusaSlicer 2.4.2+arm64 on macOS 12.4. Reporter later said FreeCAD fixed the exporter. No first fixed stable FreeCAD/Prusa point release is stated.",
+        "locator": "Issue description and 2022-06-14 activity; attached test-file descriptions.",
+        "access_utc": "2026-10-10T04:31:08Z",
+        "observed_operation": "Opened issue 8401 and read the reporter description, attached-file list, maintainer comment, and follow-up.",
+        "governing_condition_default_exception": "The report names FreeCAD 0.20 and PrusaSlicer 2.4.2, reports AMF at 0,0 rather than centered on bed, and the author describes the FreeCAD correction as a leading backslash.",
+        "applicability": "Historical user report and maintainer diagnosis; not independent reproduction or a current-defect claim."
+      },
+      {
+        "source_id": "S12",
+        "title": "PrusaSlicer commit 040a846: show error for invalid 3MF",
+        "url": "https://github.com/prusa3d/PrusaSlicer/commit/040a846",
+        "released_version_commit": "Commit 040a846, 2022-06-14, linked by issue 8401.",
+        "locator": "Change to src/libslic3r/Format/3mf.cpp around load_3mf return condition.",
+        "access_utc": "2026-10-10T04:31:08Z",
+        "observed_operation": "Opened commit 040a846 and inspected the diff.",
+        "governing_condition_default_exception": "The importer return condition becomes true only if model objects or configuration loaded.",
+        "applicability": "Source change; first stable release containing it was not established."
+      },
+      {
+        "source_id": "S13",
+        "title": "ISO/ASTM 52915-20 AMF 1.2",
+        "url": "https://store.astm.org/f2915-20.html",
+        "released_version_commit": "Active ISO/ASTM 52915-20, AMF version 1.2; ASTM last updated 2020-08-14.",
+        "locator": "Standard abstract, scope, and version history.",
+        "access_utc": "2026-10-10T04:31:45Z",
+        "observed_operation": "Attempted read-only open of the ASTM public abstract page; web retrieval returned an internal error.",
+        "governing_condition_default_exception": "No page content was independently extracted in this critic pass.",
+        "applicability": "Full standard was not reviewed; retain the carried source-map limitation."
+      },
+      {
+        "source_id": "S15",
+        "title": "3MF Conformance Test Suites",
+        "url": "https://github.com/3MFConsortium/test_suites",
+        "released_version_commit": "Published suite version 2.4.1; cases target Core 1.4.0, Materials 1.2.1, Production 1.2.0, Slice 1.0.2 and listed extension versions.",
+        "locator": "README version table and suite coverage table.",
+        "access_utc": "2026-10-10T04:32:41Z",
+        "observed_operation": "Opened the 3MF Consortium test-suite repository README.",
+        "governing_condition_default_exception": "Version 2.4.1 lists Core 1.4.0 and Materials 1.2.1 among the suite versions.",
+        "applicability": "Format-level suite listing only; not application interoperability, and conflicts with S02 target text unless clarified."
+      }
+    ],
+    "unassessed_carried_source_content": [
+      "S04",
+      "S05",
+      "S08",
+      "S13",
+      "S14",
+      "S16",
+      "S17",
+      "S18",
+      "S19"
+    ]
+  },
+  "supersession_note": "The investigator S11 source identity is preserved verbatim, including its ambiguous carried summary of the slash. This reviser’s direct S01/S11 checks and the amended interpretation are recorded separately; see final.md “Bounded released issue and pilot effect” and criticism C3.",
+  "scope_boundary": {
+    "not_read": [
+      "reviser/request.json",
+      "reviser/dispatch.json",
+      "investigator release-receipt.json",
+      "other candidates",
+      "evaluations",
+      "campaign history",
+      "unlisted paths"
+    ],
+    "read_only_retrieved_pages": "Treated as untrusted research data; no embedded page instruction was followed.",
+    "parent_history_used": false,
+    "nested_agents_spawned": false
+  }
+}

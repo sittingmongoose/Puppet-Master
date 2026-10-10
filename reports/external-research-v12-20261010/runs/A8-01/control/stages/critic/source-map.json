@@ -1,0 +1,129 @@
+{
+  "run_id": "A8-01-control",
+  "stage": "critic",
+  "reviewed_sources": [
+    {
+      "id": "S01",
+      "title": "RFC 8493: The BagIt File Packaging Format (V1.0)",
+      "url": "https://www.rfc-editor.org/rfc/rfc8493",
+      "released_version_or_commit": "RFC 8493 v1.0, October 2018",
+      "locator": "Sections 1.1, 2.1.2–2.1.3, 2.2.1, 2.4, 3, 5.4, 6.1.1–6.1.2",
+      "access_utc": "2026-10-10T04:30:15Z",
+      "observed_operation": "Read-only web open/find of official RFC Editor HTML; checked direct file access, payload manifest requirements, complete/valid definitions, algorithm defaults, Payload-Oxum, security boundary, and path portability passages.",
+      "governing_condition_default_exception": "BagIt 1.0 tools must support SHA-256 and SHA-512 and should default to SHA-512 for new bags. A payload manifest must list every payload file exactly once. A complete bag has required elements, listed payload files and listed optional tag files; a valid bag is complete and verifies every manifest checksum. Payload-Oxum is only a quick incomplete-bag check and cannot substitute for checksum validation. Payloads are directly accessible. Path interoperability notes describe case, Unicode, separator and platform differences; the format is not designed against active attacks.",
+      "applicability": "Supports a readable filesystem deposit and per-file fixity, while leaving logical identity, completeness approval and retention practice to the gallery."
+    },
+    {
+      "id": "S02",
+      "title": "Oxford Common File Layout Specification v1.1",
+      "url": "https://ocfl.io/1.1.0/spec/",
+      "released_version_or_commit": "OCFL 1.1.0, 7 October 2022",
+      "locator": "Sections 3.1, 3.3–3.8, 5.2; object identity, version directories, inventory, inventory digest and log rules",
+      "access_utc": "2026-10-10T04:30:15Z",
+      "observed_operation": "Read-only open/find on the official version-pinned specification.",
+      "governing_condition_default_exception": "Object identity is stable across versions; sequential version directories and inventories record states and content paths. The root inventory is required, version-directory inventories are SHOULD, and logs are optional. Existing version directories are intended immutable when adding later versions; the specification also identifies rebuildability from the storage root as a goal.",
+      "applicability": "Supports OCFL as a transparent, more structured alternative for object-level version history; it does not decide gallery completeness or prove successful local recovery."
+    },
+    {
+      "id": "S03",
+      "title": "OCFL Specification v1.1 Change Log",
+      "url": "https://ocfl.io/1.1.0/spec/change-log.html",
+      "released_version_or_commit": "OCFL v1.1, 7 October 2022",
+      "locator": "Changes from v1.0 to v1.1, especially lines 13–47",
+      "access_utc": "2026-10-10T04:30:15Z",
+      "observed_operation": "Read-only open/find on the official pinned change log.",
+      "governing_condition_default_exception": "v1.1 is described as a minor correction/clarification update with backwards-compatible prior-version rules. It clarifies version-directory immutability and monotonic spec-version numbering, UTF-8 inventory encoding, historic inventory manifests, direct-child content directory, and stable object ID across versions.",
+      "applicability": "Supports the draft’s version-specific OCFL comparison; release history is not evidence that a gallery object was repaired."
+    },
+    {
+      "id": "S04",
+      "title": "Library of Congress bagit-python issue #51: validation warnings related to diacritics",
+      "url": "https://github.com/LibraryOfCongress/bagit-python/issues/51",
+      "released_version_or_commit": "Issue opened 20 January 2016; milestone 1.6; later closed after fix",
+      "locator": "Issue description lines 161–168; discussion lines 197–212, 271–298, 329–395",
+      "access_utc": "2026-10-10T04:30:15Z",
+      "observed_operation": "Read-only open/find of public issue and discussion.",
+      "governing_condition_default_exception": "Reporter says a bag validated on a Mac was copied to an Archivematica transfer server and emitted missing/unexpected paths for visually equivalent accented names; the reporter’s text does not identify that destination as Linux. A later maintainer comment separately describes an OS X/Linux reproduction and normalization discussion. The report also says fast validation passed while full path checking warned.",
+      "applicability": "Shows how ordinary copying across filesystems can reveal Unicode path representation mismatches; preserve and investigate paths instead of treating a fast size check as full validation."
+    },
+    {
+      "id": "S05",
+      "title": "bagit-python fix commit 16f34b6: Apply Unicode NFD normalization to filenames",
+      "url": "https://github.com/LibraryOfCongress/bagit-python/commit/16f34b6",
+      "released_version_or_commit": "Commit 16f34b6, March 2016",
+      "locator": "Commit description and diff lines 129–145, 180–219, 239–250",
+      "access_utc": "2026-10-10T04:30:15Z",
+      "observed_operation": "Read-only open/find of exact public code commit.",
+      "governing_condition_default_exception": "This commit added NFD normalization when reading/writing manifest names and a regression test; that commit-specific behavior is not a universal BagIt rule or a direction to rename gallery files.",
+      "applicability": "Provides the concrete fix associated with issue #51 and motivates testing the selected implementation’s actual release behavior."
+    },
+    {
+      "id": "S06",
+      "title": "bagit-python bagit.py at release v1.6.0",
+      "url": "https://github.com/LibraryOfCongress/bagit-python/blob/v1.6.0/bagit.py",
+      "released_version_or_commit": "v1.6.0 release tag, commit 43fd500",
+      "locator": "Normalization conflict and lookup helpers around lines 3464–3540; path comparison",
+      "access_utc": "2026-10-10T04:30:15Z",
+      "observed_operation": "Read-only open/find of release-tagged source code.",
+      "governing_condition_default_exception": "The released code compares normalized manifest/filesystem names, raises a conflict when filenames differ only by normalization, and uses NFC in this tag. The earlier fix commit used NFD; the claim here is release-specific normalization-aware comparison, not that the commit and release use the same form.",
+      "applicability": "Supports pinning and qualifying a particular validator release and explicitly checking collisions."
+    },
+    {
+      "id": "S07",
+      "title": "Library of Congress bagit-python release v1.9.0",
+      "url": "https://github.com/LibraryOfCongress/bagit-python/releases/tag/v1.9.0",
+      "released_version_or_commit": "v1.9.0, commit 861ddac, released 13 June 2025",
+      "locator": "Release notes, behavioral changes, lines 153–179",
+      "access_utc": "2026-10-10T04:30:15Z",
+      "observed_operation": "Read-only open of the exact GitHub release page.",
+      "governing_condition_default_exception": "Release notes list removal of environment-variable expansion from an unsafe-path check among other changes; that release note does not establish unrelated implementation behavior.",
+      "applicability": "Supports the narrow point that validator path-safety behavior evolves by version; not evidence that the gallery must install or use this package."
+    },
+    {
+      "id": "S08",
+      "title": "bagit-python merged PR #184: Remove expandvars call in unsafe path check",
+      "url": "https://github.com/LibraryOfCongress/bagit-python/pull/184",
+      "released_version_or_commit": "Merged 13 June 2025 as commit 753679c; included in v1.9.0 release notes",
+      "locator": "PR description and merge record, lines 130–186",
+      "access_utc": "2026-10-10T04:30:15Z",
+      "observed_operation": "Read-only open of public merged PR.",
+      "governing_condition_default_exception": "The change removes expandvars from the implementation’s unsafe-path check. It changes this implementation check, not BagIt manifest semantics.",
+      "applicability": "A bounded released path-safety history example for qualifying a tool; not a claim of gallery operation."
+    },
+    {
+      "id": "S09",
+      "title": "PREMIS Data Dictionary for Preservation Metadata, Version 3.0",
+      "url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+      "released_version_or_commit": "PREMIS v3.0, 2015 edition",
+      "locator": "Introduction/data model PDF pages 15–16; Section 1.5.2 fixity and “Fixity, integrity, authenticity” PDF pages 67–69 (PDF text around lines 6072–6090)",
+      "access_utc": "2026-10-10T04:30:15Z",
+      "observed_operation": "Read-only web open/find of official Library of Congress PDF.",
+      "governing_condition_default_exception": "The same algorithm producing equal digests at two points is evidence that bytes did not change during the interval. PREMIS records the fixity check as an event and says this procedure alone does not address object integrity or authenticity. The PDF describes four entities in its data model.",
+      "applicability": "Supports a simple actor/time/action/outcome log as an analogy, without claiming PREMIS conformance or checksum-based authorship."
+    },
+    {
+      "id": "S10",
+      "title": "PREMIS 3.0 hierarchical listing of semantic units",
+      "url": "https://www.loc.gov/standards/premis/v3/premis-hierarchical-3-0.html",
+      "released_version_or_commit": "Library of Congress PREMIS v3.0 semantic-unit listing",
+      "locator": "Introduction lines 5–9; Event/Agent semantic units around lines 100–140",
+      "access_utc": "2026-10-10T04:30:15Z",
+      "observed_operation": "Read-only web open/find of official Library of Congress page.",
+      "governing_condition_default_exception": "The page introduction describes five entities including Intellectual Entities, while the 2015 PDF describes four entities and discusses Intellectual Entity as an object category. The draft notes this difference and borrows only Event/Agent fields without making a conformance claim.",
+      "applicability": "Supports lightweight event log fields and makes the source-version/document difference visible rather than relying on entity counts."
+    },
+    {
+      "id": "S11",
+      "title": "git-annex whereis documentation",
+      "url": "https://git-annex.branchable.com/git-annex-whereis/",
+      "released_version_or_commit": "The inspected rolling manual page states no release version",
+      "locator": "DESCRIPTION, lines 24–45",
+      "access_utc": "2026-10-10T04:30:15Z",
+      "observed_operation": "Read-only open/find of public project manual.",
+      "governing_condition_default_exception": "whereis displays last-received information about where content is located; it does not contact remotes to verify current content.",
+      "applicability": "A bounded future location-history option, not copy validation or a restore test."
+    }
+  ],
+  "independent_review_scope": "Read-only primary-source review of every carried source ID S01–S11. No software was installed or executed; no account, service, repository, local assets, production system, offsite storage, package or restore was accessed.",
+  "critic_goal_id": "01a12410-fd0b-77a3-8df3-d0e84861fe88"
+}

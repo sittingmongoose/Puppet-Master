@@ -1,0 +1,33 @@
+{
+  "delivered_at_utc": "2026-10-10T04:42:11.365298+00:00",
+  "result": "PASS_WITH_LIMITATIONS",
+  "all_six_axes_assessed": true,
+  "remaining_material_findings": 0,
+  "unassessed_axes": [],
+  "original_freeze_unchanged": true,
+  "native_goal_status": "complete",
+  "native_terminal_evidence": "reviewer-native-terminal.json",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/A1-01/control-v1/assessment.md",
+      "bytes": 56583,
+      "sha256": "a66999527b9bf6af162d123b4c3414397e891b264b67fb4b71ca3de6a51c0bf7"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A1-01/control-v1/assessment.json",
+      "bytes": 73669,
+      "sha256": "2e8feaa4f758077eebe92a851cf36f74387aa67576f1877126ef24cd4b0c0e00"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A1-01/control-v1/source-map.json",
+      "bytes": 44540,
+      "sha256": "5866c012a3528ff882438b7a231339c1320224aa6f6ffdcbc5a9738f2e37e238"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A1-01/control-v1/evidence/index.md",
+      "bytes": 14956,
+      "sha256": "f0d32cec5d94e052664c79b1f9abf8edef929430083a6c5233ffab8ccce7e5ad"
+    }
+  ],
+  "full_judgment_saved_before_native_completion": true
+}

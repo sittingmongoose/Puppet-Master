@@ -1,0 +1,138 @@
+{
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_utc": "2026-10-10T03:56:48.938287+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/input-map.json",
+      "bytes": 573,
+      "sha256": "feb5bafd0af6ab1d980c65a79eb872341d59cc0658360d98ba2b78fd145a2449",
+      "mtime_utc": "2026-10-10T04:45:55.270600+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/assignment.md",
+      "bytes": 2375,
+      "sha256": "0eecdb0431d80d9fb596bc8cdfba78ada961b86daef2b057268526a98b10c41a",
+      "mtime_utc": "2026-10-10T04:45:55.037622+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/freeze.json",
+      "bytes": 2276,
+      "sha256": "6d387c53ecd5b5d9a5f789f3968c1748a742d7dc3b516ddc520f0329f37f2337",
+      "mtime_utc": "2026-10-10T04:45:55.271175+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/inputs/assignment.md",
+      "bytes": 2583,
+      "sha256": "848cd2e8b9ef3078e2333ae05a62a8e04662b2b1628f5c9b3b34b1c6c896a83b",
+      "mtime_utc": "2026-10-10T04:45:55.036655+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/inputs/fixture.json",
+      "bytes": 1583,
+      "sha256": "d9e63ea84e74f37b9e33e8087dcbff1359fed87ebb3401c22435573ec9598d4f",
+      "mtime_utc": "2026-10-10T04:45:55.036784+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/inputs/manifest.json",
+      "bytes": 241,
+      "sha256": "7d9b298c18a2e876f1d41d4f4f94ce92c43f48db8ae8d95f622b91be30035d0c",
+      "mtime_utc": "2026-10-10T04:45:55.036945+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/discovery.md",
+      "bytes": 6862,
+      "sha256": "953c7898fd84f292053f4ae63193d4209ede7b98d58329c334723ffc89679956",
+      "mtime_utc": "2026-10-10T04:53:45.786946+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/source-map.json",
+      "bytes": 7096,
+      "sha256": "fa04c62ad27adee545851d3aa613db2690ff44bd8d1f18c6a4a94c2a8f8b0a97",
+      "mtime_utc": "2026-10-10T04:53:05.661022+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/sources/evidence.md",
+      "bytes": 4969,
+      "sha256": "7174645e3fe876669c8ec478d5b58a07bea4044ce81274409c3c1d48c5b091e0",
+      "mtime_utc": "2026-10-10T04:53:05.654022+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/goal-activation-receipt.json",
+      "bytes": 399,
+      "sha256": "26a6b7db799d4313a31cbad9d4422bb3637605d9f32cad529d5d24a7a1f6fcbc",
+      "mtime_utc": "2026-10-10T04:49:50.300750+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/protocol-deviation.md",
+      "bytes": 735,
+      "sha256": "d0313d12ae3a02faec3d5f5d8ef3eeeed2806a38db9c7fa5ad81f6e80b45b29f",
+      "mtime_utc": "2026-10-10T04:53:05.668022+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/service-tier-change.json",
+      "bytes": 479,
+      "sha256": "9339d26821341415234084351a2b4e9348d06dadaeae24d4a05611b42f6914b4",
+      "mtime_utc": "2026-10-10T04:45:55.271339+00:00",
+      "read_scope": "FULL"
+    }
+  ],
+  "input_freeze_comparisons": [
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/assignment.md",
+      "expected_sha256": "0eecdb0431d80d9fb596bc8cdfba78ada961b86daef2b057268526a98b10c41a",
+      "observed_sha256": "0eecdb0431d80d9fb596bc8cdfba78ada961b86daef2b057268526a98b10c41a",
+      "hash_matches": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/input-map.json",
+      "expected_sha256": "feb5bafd0af6ab1d980c65a79eb872341d59cc0658360d98ba2b78fd145a2449",
+      "observed_sha256": "feb5bafd0af6ab1d980c65a79eb872341d59cc0658360d98ba2b78fd145a2449",
+      "hash_matches": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/inputs/fixture.json",
+      "expected_sha256": "d9e63ea84e74f37b9e33e8087dcbff1359fed87ebb3401c22435573ec9598d4f",
+      "observed_sha256": "d9e63ea84e74f37b9e33e8087dcbff1359fed87ebb3401c22435573ec9598d4f",
+      "hash_matches": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/inputs/manifest.json",
+      "expected_sha256": "7d9b298c18a2e876f1d41d4f4f94ce92c43f48db8ae8d95f622b91be30035d0c",
+      "observed_sha256": "7d9b298c18a2e876f1d41d4f4f94ce92c43f48db8ae8d95f622b91be30035d0c",
+      "hash_matches": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/inputs/assignment.md",
+      "expected_sha256": "848cd2e8b9ef3078e2333ae05a62a8e04662b2b1628f5c9b3b34b1c6c896a83b",
+      "observed_sha256": "848cd2e8b9ef3078e2333ae05a62a8e04662b2b1628f5c9b3b34b1c6c896a83b",
+      "hash_matches": true,
+      "bytes_match": true
+    }
+  ],
+  "terminal_freeze_check": {
+    "checked_utc": "2026-10-10T04:59:44.674748+00:00",
+    "searched_root": "ER12_RUNTIME/runs/B-DISC-G-01/control",
+    "terminal_freeze_paths": [],
+    "note": "No status/outcome payloads or other arms read. Existing freeze.json is pre-dispatch input freeze, not terminal science freeze."
+  }
+}

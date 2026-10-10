@@ -1,0 +1,94 @@
+{
+  "observed_at_utc": "2026-10-10T05:16:15.062685+00:00",
+  "basis": "root observed terminal final T3 task/no pending; separate from native proof",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/critic/critique.md",
+      "bytes": 12494,
+      "sha256": "cb1caad0601e7fd748001086f85fd7c490bc7de461c6c4e71cd9b064a8eb70a4",
+      "mtime_ns": 1791608570678783743
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/critic/source-map.json",
+      "bytes": 15709,
+      "sha256": "884b8dc448808de7aa18e2f1039b50e5f8baa5b46cbc80149b3bd780351f5dd0",
+      "mtime_ns": 1791608570681791903
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/critic/sources/index.md",
+      "bytes": 2627,
+      "sha256": "bff3b3acbb6682b3fcc7c509847f38fcf5e3689c19b3f0c64cc514c91c8f53be",
+      "mtime_ns": 1791608570697835418
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/investigator/discovery.md",
+      "bytes": 9957,
+      "sha256": "6ceb48b8cdcd2660861a3d0f651c005382a8313bb2d0ea227dd4644defd2a6e5",
+      "mtime_ns": 1791607636961242217
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/investigator/draft.md",
+      "bytes": 28318,
+      "sha256": "1377bda71ce8f1caf2ac46d56aed127b00d8a6ae2272266732bead508081f1d6",
+      "mtime_ns": 1791607921571988769
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 6071,
+      "sha256": "169aaf6153653975a15fc0bcb87130cf772fb7761f5c1abf2f80838b62a4a1db",
+      "mtime_ns": 1791607646093077428
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/investigator/source-map.json",
+      "bytes": 28217,
+      "sha256": "fec1b5c705917ba5ac2435fab7fb6266fa12e75823be987ee3aa9dff5eb955b9",
+      "mtime_ns": 1791607901071248994
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/investigator/sources/index.md",
+      "bytes": 4041,
+      "sha256": "b7a955c6717ac4b68acb29425ec2626275647dde3183c3783c9173018bfb0025",
+      "mtime_ns": 1791607730343844824
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/final.md",
+      "bytes": 35452,
+      "sha256": "8c420eef0702eaab80dc1e5fe23373a9c05eb12d2119b1a2175227f59cb482ab",
+      "mtime_ns": 1791609341008285841
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/source-map.json",
+      "bytes": 60726,
+      "sha256": "3cc2f8a6084c9dde1e1fa8533939823f92690296938140a468a34d853a8fefe8",
+      "mtime_ns": 1791609341007576431
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/sources/index.md",
+      "bytes": 10472,
+      "sha256": "57285e1edcf3e362ff1856d19637d9bca2f2ae696f014e7ed6d443ba401c91da",
+      "mtime_ns": 1791609157443233287
+    }
+  ],
+  "final_stage_task": {
+    "slot": "A6-02",
+    "arm": "treatment",
+    "stage": "reviser",
+    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-02-treatment-reviser-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-02-treatment-reviser-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-02-treatment-reviser-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-02-treatment-reviser-v1",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-02-treatment-reviser-v1:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "Completed the assigned reviser stage. The complete proposal, source map, and navigable source index are saved here:\n\n- [final.md](ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/sources/index.md)\n\nThe proposal addresses all eight clauses and dispositions C1\u2013C3 as accepted (C2 with amendment), while retaining uncertainty for C4. It incorporates the scope conditions in [RightsStatements.org guidance](https://rightsstatements.org/en/2018/12/where-statements-apply.html) and treats [DPLA\u2019s metadata policy](https://pro.dp.la/hubs/metadata-application-profile) and [Europeana\u2019s framework](https://pro.europeana.eu/page/europeana-licensing-framework) as specific to their own provider arrangements. Product and collection validation remain unrun.\n\nOne native Goal was created with the frozen objective, observed active, and completed after the required files were saved. Its final status was `complete` (thread `01a12432-56bc-7ae2-9d79-d258e650c52e`; 144,885 tokens; 678 seconds).",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-02-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:4fa29f15-4630-4861-adea-7813a424d087",
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "summary": "Completed the assigned reviser stage. The complete proposal, source map, and navigable source index are saved here:\n\n- [final.md](ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/sources/index.md)\n\nThe proposal addresses all eight clauses and dispositions C1\u2013C3 as accepted (C2 with amendment), while retaining uncertainty for C4. It incorporates the scope conditions in [RightsStatements.org guidance](https://rightsstatements.org/en/2018/12/where-statements-apply.html) and treats [DPLA\u2019s metadata policy](https://pro.dp.la/hubs/metadata-application-profile) and [Europeana\u2019s framework](https://pro.europeana.eu/page/europeana-licensing-framework) as specific to their own provider arrangements. Product and collection validation remain unrun.\n\nOne native Goal was created with the frozen objective, observed active, and completed after the required files were saved. Its final status was `complete` (thread `01a12432-56bc-7ae2-9d79-d258e650c52e`; 144,885 tokens; 678 seconds).",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-02-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:4fa29f15-4630-4861-adea-7813a424d087",
+    "waitTimedOut": false
+  }
+}

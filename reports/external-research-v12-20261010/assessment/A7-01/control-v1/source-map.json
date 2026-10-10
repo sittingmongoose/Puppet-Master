@@ -1,0 +1,1420 @@
+{
+  "schema": "ER12-independent-source-map-v1",
+  "assessment_id": "A7-01-control-v1",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "generated_at_utc": "2026-10-10T05:06:13.902872+00:00",
+  "independence": "Reviewer-created IDs I01–I22 are distinct from unchanged candidate S01–S19. Primary HTTP/web retrieval plus manual semantic interpretation; hashes establish identity only. No candidate assistance.",
+  "sources": [
+    {
+      "id": "I01",
+      "candidate_source_id": "S01",
+      "title": "3MF Core Specification",
+      "publisher": "3MF Consortium",
+      "retrieval": {
+        "id": "I01",
+        "candidate_source_id": "S01",
+        "url": "https://raw.githubusercontent.com/3MFConsortium/spec_core/1.4.0/3MF%20Core%20Specification.md",
+        "original_url": "https://github.com/3MFConsortium/spec_core/blob/1.4.0/3MF%20Core%20Specification.md",
+        "start_utc": "2026-10-10T04:56:16.120518+00:00",
+        "operation": "Independent read-only HTTP GET",
+        "status": 200,
+        "final_url": "https://raw.githubusercontent.com/3MFConsortium/spec_core/1.4.0/3MF%20Core%20Specification.md",
+        "content_type": "text/plain; charset=utf-8",
+        "etag": "\"d8d4076b97f9b8b96b246f1fcb979a8546fde5d9b9862c2cad3c88d5e6800434\"",
+        "body_path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I01.md",
+        "body_sha256": "4db7a7a13e7f757c6afc1a9ad731b56d8d068b1a766025692ff757d0f7f16940",
+        "body_bytes": 98038,
+        "text_path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I01.txt",
+        "text_sha256": "9c537c7ed4c222aee4f2a5fe8493b1148b8dfe3c148c12deda9d713844effb77",
+        "end_utc": "2026-10-10T04:56:16.258620+00:00"
+      },
+      "locator": "Core §§1.1; 2.1.3–2.1.5; 2.2.1/2.2.3; 2.3.1; 3.4/3.4.1; 4.2; 5.1; 6.1. Local original-text line locators are independent of web-rendered line numbers.",
+      "governing_conditions": [
+        {
+          "claim_id": "Q01",
+          "subject": "3MF package",
+          "operation": "Contain manufacturing geometry and defined package parts",
+          "version": "Core 1.4.0",
+          "conditions_defaults_types_domains_exceptions": "ZIP/OPC; format capability, not application interoperability. Optional fields and consumer-specific settings remain distinct.",
+          "judgment": "SUPPORTED"
+        },
+        {
+          "claim_id": "Q02",
+          "subject": "3MF model unit attribute",
+          "operation": "Interpret coordinates/measurements",
+          "version": "Core 1.4.0 §3.4",
+          "conditions_defaults_types_domains_exceptions": "ST_Unit; default millimeter; micron/millimeter/centimeter/inch/foot/meter. Application size checks still needed.",
+          "judgment": "SUPPORTED"
+        },
+        {
+          "claim_id": "Q04",
+          "subject": "3MF components and manufacturing devices",
+          "operation": "Represent object references/transforms and preserve relative positions during manufacturing",
+          "version": "Core 1.4.0 §4.2",
+          "conditions_defaults_types_domains_exceptions": "Device-specific MUST, not blanket viewer/slicer guarantee; overlapping components unite with ordered properties. No native CAD joints/history guarantee.",
+          "judgment": "SUPPORTED_WITH_MINOR_DOMAIN_WORDING"
+        },
+        {
+          "claim_id": "Q05",
+          "subject": "3MF base material and displaycolor",
+          "operation": "Express material intent versus rendering appearance",
+          "version": "Core 1.4.0 §5.1",
+          "conditions_defaults_types_domains_exceptions": "Name is xs:string design intent; displaycolor is render-only. Physical color intent needs a corresponding extension; printer mapping is separate.",
+          "judgment": "SUPPORTED"
+        },
+        {
+          "claim_id": "Q06",
+          "subject": "PrintTicket and receiving consumer",
+          "operation": "Apply device/settings intent",
+          "version": "Core 1.4.0 §2.1.4",
+          "conditions_defaults_types_domains_exceptions": "Optional ticket; environment-governed format. Unsupported/absent ticket leaves defaults to that consumer. Not universal saved-slicer settings.",
+          "judgment": "SUPPORTED"
+        },
+        {
+          "claim_id": "Q07",
+          "subject": "Core thumbnails and model metadata",
+          "operation": "Provide optional review content",
+          "version": "Core 1.4.0 §§2.1.3, 3.4.1, 6.1",
+          "conditions_defaults_types_domains_exceptions": "Package/object thumbnails are optional PNG/JPEG with relationships; JPEG excludes CMYK. Description is a well-known metadata field; type defaults xs:string, preserve defaults false. Format capability does not ensure every app displays/preserves it.",
+          "judgment": "SUPPORTED"
+        },
+        {
+          "claim_id": "Q08",
+          "subject": "3MF model extension declarations and materials extension",
+          "operation": "Qualify extension support and applicability",
+          "version": "Core 1.4.0; Materials 1.2.1",
+          "conditions_defaults_types_domains_exceptions": "Optional producer resources vs consumers claiming extension support. Unsupported required extensions prevent processing; recommended extensions call for warning/user input. Materials Preface explicitly targets Core 1.2. Final withholds disputed 1.4 pairing.",
+          "judgment": "HONESTLY_UNRESOLVED_WITH_SUPPORTED_RELIANCE_BOUNDARY"
+        },
+        {
+          "claim_id": "Q09",
+          "subject": "3MF document naming",
+          "operation": "Distinguish model/project/build roles",
+          "version": "Core 1.4.0 §2.2.1",
+          "conditions_defaults_types_domains_exceptions": "Recommended double extensions; model data vs printer-prepared plate vs comprehensive project. Not a guarantee tools enforce or honor names.",
+          "judgment": "SUPPORTED"
+        }
+      ],
+      "applicability": "Independent source meaning for a research proposal; actual selected CAD/slicer/file behavior remains NOT_RUN.",
+      "version_note": "Live docs are not build-pinned unless explicitly stated in linked claim."
+    },
+    {
+      "id": "I02",
+      "candidate_source_id": "S02",
+      "title": "3MF Materials and Properties Extension",
+      "publisher": "3MF Consortium",
+      "retrieval": {
+        "id": "I02",
+        "candidate_source_id": "S02",
+        "url": "https://raw.githubusercontent.com/3MFConsortium/spec_materials/1.2.1/3MF%20Materials%20Extension.md",
+        "original_url": "https://github.com/3MFConsortium/spec_materials/blob/1.2.1/3MF%20Materials%20Extension.md",
+        "start_utc": "2026-10-10T04:56:16.122313+00:00",
+        "operation": "Independent read-only HTTP GET",
+        "status": 200,
+        "final_url": "https://raw.githubusercontent.com/3MFConsortium/spec_materials/1.2.1/3MF%20Materials%20Extension.md",
+        "content_type": "text/plain; charset=utf-8",
+        "etag": "\"b2ac11abd3c6fa17aeebb8dd2503e79da0276e0e582be32b6399079376663d69\"",
+        "body_path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I02.md",
+        "body_sha256": "1821fe3bd6bdc021a1460ff9e3b01bd8f331b38d730707f199169d956329b772",
+        "body_bytes": 85720,
+        "text_path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I02.txt",
+        "text_sha256": "1821fe3bd6bdc021a1460ff9e3b01bd8f331b38d730707f199169d956329b772",
+        "end_utc": "2026-10-10T04:56:16.245351+00:00"
+      },
+      "locator": "Header 1.2.1 Published; Preface/About lines 64–73; Chapter 1 lines 91–100; chapter headings for richer properties.",
+      "governing_conditions": [
+        {
+          "claim_id": "Q08",
+          "subject": "3MF model extension declarations and materials extension",
+          "operation": "Qualify extension support and applicability",
+          "version": "Core 1.4.0; Materials 1.2.1",
+          "conditions_defaults_types_domains_exceptions": "Optional producer resources vs consumers claiming extension support. Unsupported required extensions prevent processing; recommended extensions call for warning/user input. Materials Preface explicitly targets Core 1.2. Final withholds disputed 1.4 pairing.",
+          "judgment": "HONESTLY_UNRESOLVED_WITH_SUPPORTED_RELIANCE_BOUNDARY"
+        }
+      ],
+      "applicability": "Independent source meaning for a research proposal; actual selected CAD/slicer/file behavior remains NOT_RUN.",
+      "version_note": "Original 1.2.1 release is 2019-09-27 (I20), not the carried 2025 index date."
+    },
+    {
+      "id": "I03",
+      "candidate_source_id": "S03",
+      "title": "3MF Compatibility Matrix",
+      "publisher": "3MF Consortium",
+      "retrieval": {
+        "id": "I03",
+        "candidate_source_id": "S03",
+        "url": "https://3mf.io/compatibility-matrix/",
+        "original_url": "https://3mf.io/compatibility-matrix/",
+        "start_utc": "2026-10-10T04:56:16.123480+00:00",
+        "operation": "Independent read-only HTTP GET",
+        "status": 200,
+        "final_url": "https://3mf.io/compatibility-matrix/",
+        "content_type": "text/html; charset=UTF-8",
+        "etag": null,
+        "body_path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I03.html",
+        "body_sha256": "bbc815dc4117b2a1343039c06d54f8f45b5ade8840c71963295089133303c30f",
+        "body_bytes": 140223,
+        "text_path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I03.txt",
+        "text_sha256": "eabb236baa1eae3148ee32b7902254dbe1ecec8802d40f6d0e694e0adfdb280b",
+        "end_utc": "2026-10-10T04:56:17.033147+00:00"
+      },
+      "locator": "Reading the matrix lines 27–36; product rows and separate column headings.",
+      "governing_conditions": [
+        {
+          "claim_id": "Q13",
+          "subject": "Consortium compatibility matrix",
+          "operation": "Seed candidate tool discovery",
+          "version": "Live matrix, build-level guarantees absent",
+          "conditions_defaults_types_domains_exceptions": "Self-reported, not independently verified; Core and extensions are separate. No universal compatibility claim.",
+          "judgment": "SUPPORTED"
+        }
+      ],
+      "applicability": "Independent source meaning for a research proposal; actual selected CAD/slicer/file behavior remains NOT_RUN.",
+      "version_note": "Live docs are not build-pinned unless explicitly stated in linked claim."
+    },
+    {
+      "id": "I04",
+      "candidate_source_id": "S04",
+      "title": "Autodesk Fusion Mesh Export",
+      "publisher": "Autodesk",
+      "retrieval": {
+        "id": "I04",
+        "candidate_source_id": "S04",
+        "url": "https://help.autodesk.com/cloudhelp/ENU/Fusion-Mesh/files/MESH-EXPORT-TOOLS.htm",
+        "original_url": "https://help.autodesk.com/cloudhelp/ENU/Fusion-Mesh/files/MESH-EXPORT-TOOLS.htm",
+        "start_utc": "2026-10-10T04:56:16.124013+00:00",
+        "operation": "Independent read-only HTTP GET",
+        "status": 200,
+        "final_url": "https://help.autodesk.com/cloudhelp/ENU/Fusion-Mesh/files/MESH-EXPORT-TOOLS.htm",
+        "content_type": "text/html; charset=UTF-8",
+        "etag": "\"d56-64f5dd8a33398-gzip\"",
+        "body_path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I04.html",
+        "body_sha256": "e2355b18ce768e89f8e31b3ea2f7cd98755628f98a96fc946d5ac2b9b812ffa9",
+        "body_bytes": 3414,
+        "text_path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I04.txt",
+        "text_sha256": "ebb1a793cd266be961f446055ad7c4e5b8d3c585af9da4a0d13ebaa254d621cc",
+        "end_utc": "2026-10-10T04:56:16.235080+00:00"
+      },
+      "locator": "Save As Mesh: body types, 3MF/STL/OBJ, component selection; 3D Print separate STL/utility operation.",
+      "governing_conditions": [
+        {
+          "claim_id": "Q10",
+          "subject": "Autodesk Fusion Save As Mesh",
+          "operation": "Export bodies/components to 3MF/STL/OBJ",
+          "version": "Live documentation, no build pinned",
+          "conditions_defaults_types_domains_exceptions": "Solid/surface/mesh body; component selection includes bodies. Does not guarantee all exporter assembly/material/extension semantics.",
+          "judgment": "SUPPORTED"
+        }
+      ],
+      "applicability": "Independent source meaning for a research proposal; actual selected CAD/slicer/file behavior remains NOT_RUN.",
+      "version_note": "Live docs are not build-pinned unless explicitly stated in linked claim."
+    },
+    {
+      "id": "I05",
+      "candidate_source_id": "S05",
+      "title": "Autodesk Fusion Export Designs",
+      "publisher": "Autodesk",
+      "retrieval": {
+        "id": "I05",
+        "candidate_source_id": "S05",
+        "url": "https://help.autodesk.com/view/fusion360/ENU/?contextId=ASM-EXPORT-DESIGN",
+        "original_url": "https://help.autodesk.com/view/fusion360/ENU/?contextId=ASM-EXPORT-DESIGN",
+        "start_utc": "2026-10-10T04:56:16.124626+00:00",
+        "operation": "Independent read-only HTTP GET",
+        "status": 200,
+        "final_url": "https://help.autodesk.com/view/fusion360/ENU/?contextId=ASM-EXPORT-DESIGN",
+        "content_type": "text/html; charset=UTF-8",
+        "etag": "\"19cf-659dc17fa2eef-gzip\"",
+        "body_path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I05.html",
+        "body_sha256": "d827b4a342c1fd7c19778957071ac9aaed67adeef228f36cc735c1a4dd0b26da",
+        "body_bytes": 6607,
+        "text_path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I05.txt",
+        "text_sha256": "b79cac926e0b2e347e72cc91d5174037c9e17ae7733fd7bdb570f71b10cd7bfc",
+        "end_utc": "2026-10-10T04:56:16.225642+00:00"
+      },
+      "locator": "Web-extracted Export designs lines 34–49 and Tips lines 59–61. Raw HTTP file is a SPA shell; primary_batch2.txt carries actual content.",
+      "governing_conditions": [
+        {
+          "claim_id": "Q11",
+          "subject": "Fusion STEP exchange and PrusaSlicer STEP import",
+          "operation": "Exchange CAD geometry then triangulate at slicer boundary",
+          "version": "Fusion live docs; PrusaSlicer 2.9 (Legacy) documentation, point build unpinned",
+          "conditions_defaults_types_domains_exceptions": "Export loses source associativity; no universal assembly/material/feature-history retention. Direct Prusa import triangulates. Exact protocol/build choices remain open.",
+          "judgment": "SUPPORTED"
+        }
+      ],
+      "applicability": "Independent source meaning for a research proposal; actual selected CAD/slicer/file behavior remains NOT_RUN.",
+      "version_note": "Live docs are not build-pinned unless explicitly stated in linked claim."
+    },
+    {
+      "id": "I06",
+      "candidate_source_id": "S06",
+      "title": "STL/OBJ files exported from Fusion are scaled incorrectly",
+      "publisher": "Autodesk",
+      "retrieval": {
+        "id": "I06",
+        "candidate_source_id": "S06",
+        "url": "https://help.autodesk.com/view/fusion360/ENU/?caas=caas/sfdcarticles/sfdcarticles/STL-files-exported-from-Fusion-360-are-scaled-down-in-3d-printing-software.html",
+        "original_url": "https://help.autodesk.com/view/fusion360/ENU/?caas=caas/sfdcarticles/sfdcarticles/STL-files-exported-from-Fusion-360-are-scaled-down-in-3d-printing-software.html",
+        "start_utc": "2026-10-10T04:56:16.225727+00:00",
+        "operation": "Independent read-only HTTP GET",
+        "status": 200,
+        "final_url": "https://help.autodesk.com/view/fusion360/ENU/?caas=caas/sfdcarticles/sfdcarticles/STL-files-exported-from-Fusion-360-are-scaled-down-in-3d-printing-software.html",
+        "content_type": "text/html; charset=UTF-8",
+        "etag": "\"19cf-659dc17fa2eef-gzip\"",
+        "body_path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I06.html",
+        "body_sha256": "d827b4a342c1fd7c19778957071ac9aaed67adeef228f36cc735c1a4dd0b26da",
+        "body_bytes": 6607,
+        "text_path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I06.txt",
+        "text_sha256": "b79cac926e0b2e347e72cc91d5174037c9e17ae7733fd7bdb570f71b10cd7bfc",
+        "end_utc": "2026-10-10T04:56:16.319232+00:00"
+      },
+      "locator": "Web-extracted article lines 21–44 (date, causes, explicit units). Raw HTTP file is a SPA shell; I06-web-extracted.txt carries actual content.",
+      "governing_conditions": [
+        {
+          "claim_id": "Q03",
+          "subject": "STL coordinates",
+          "operation": "Exchange a surface mesh without an encoded unit contract",
+          "version": "Autodesk support 2026-04-29; live vendor docs",
+          "conditions_defaults_types_domains_exceptions": "Export/import units and common mm assumptions are tool behavior. Does not preserve every project property.",
+          "judgment": "SUPPORTED"
+        }
+      ],
+      "applicability": "Independent source meaning for a research proposal; actual selected CAD/slicer/file behavior remains NOT_RUN.",
+      "version_note": "Live docs are not build-pinned unless explicitly stated in linked claim."
+    },
+    {
+      "id": "I07",
+      "candidate_source_id": "S07",
+      "title": "Supported file formats (PrusaSlicer 2.9 documentation)",
+      "publisher": "Prusa Research",
+      "retrieval": {
+        "id": "I07",
+        "candidate_source_id": "S07",
+        "url": "https://help.prusa3d.com/article/supported-file-formats_1772?product=cw1",
+        "original_url": "https://help.prusa3d.com/article/supported-file-formats_1772?product=cw1",
+        "start_utc": "2026-10-10T04:56:16.235139+00:00",
+        "operation": "Independent read-only HTTP GET",
+        "status": 200,
+        "final_url": "https://help.prusa3d.com/article/supported-file-formats_1772?product=cw1",
+        "content_type": "text/html; charset=utf-8",
+        "etag": null,
+        "body_path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I07.html",
+        "body_sha256": "dcd9c5f68d88390c4f7e167fca58f206cf3e04bde36eb8618fcd76fb117e994d",
+        "body_bytes": 1384040,
+        "text_path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I07.txt",
+        "text_sha256": "6a89930fa0ef6cbf7bd84d0e5cdb03a2d193f54555451ce3b1f7504a9405a65e",
+        "end_utc": "2026-10-10T04:56:17.030738+00:00"
+      },
+      "locator": "Supported file formats: 3MF, STL, STEP, AMF; Topics PrusaSlicer 2.9 (Legacy); text lines 227–250.",
+      "governing_conditions": [
+        {
+          "claim_id": "Q11",
+          "subject": "Fusion STEP exchange and PrusaSlicer STEP import",
+          "operation": "Exchange CAD geometry then triangulate at slicer boundary",
+          "version": "Fusion live docs; PrusaSlicer 2.9 (Legacy) documentation, point build unpinned",
+          "conditions_defaults_types_domains_exceptions": "Export loses source associativity; no universal assembly/material/feature-history retention. Direct Prusa import triangulates. Exact protocol/build choices remain open.",
+          "judgment": "SUPPORTED"
+        },
+        {
+          "claim_id": "Q15",
+          "subject": "AMF and historical Prusa format choice",
+          "operation": "Offer a bounded alternate interchange route",
+          "version": "ISO/ASTM52915-20 AMF 1.2 active public abstract; Prusa 2.0 announcement 2019; 2.9 docs",
+          "conditions_defaults_types_domains_exceptions": "XML schema conformance, public abstract only; no detailed full-standard claim. Historic 3MF preference/AMF support is not a current all-tool census.",
+          "judgment": "SUPPORTED"
+        }
+      ],
+      "applicability": "Independent source meaning for a research proposal; actual selected CAD/slicer/file behavior remains NOT_RUN.",
+      "version_note": "Live docs are not build-pinned unless explicitly stated in linked claim."
+    },
+    {
+      "id": "I08",
+      "candidate_source_id": "S08",
+      "title": "Saving projects as 3MF",
+      "publisher": "Prusa Research",
+      "retrieval": {
+        "id": "I08",
+        "candidate_source_id": "S08",
+        "url": "https://help.prusa3d.com/article/saving-projects-as-3mf_1773?product=sl1",
+        "original_url": "https://help.prusa3d.com/article/saving-projects-as-3mf_1773?product=sl1",
+        "start_utc": "2026-10-10T04:56:16.245434+00:00",
+        "operation": "Independent read-only HTTP GET",
+        "status": 200,
+        "final_url": "https://help.prusa3d.com/article/saving-projects-as-3mf_1773?product=sl1",
+        "content_type": "text/html; charset=utf-8",
+        "etag": null,
+        "body_path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I08.html",
+        "body_sha256": "f3438720c45d965a03680353a6f1e5d518965c1bf6e3d7beaa230ca558568ec6",
+        "body_bytes": 1414417,
+        "text_path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I08.txt",
+        "text_sha256": "bfceec6e73df08119b6d28f2eb3023a6f8c0dca8398a38fd9bee3cf582681f5a",
+        "end_utc": "2026-10-10T04:56:17.114670+00:00"
+      },
+      "locator": "Save Project as and 3MF file format; text lines 223–227.",
+      "governing_conditions": [
+        {
+          "claim_id": "Q03",
+          "subject": "STL coordinates",
+          "operation": "Exchange a surface mesh without an encoded unit contract",
+          "version": "Autodesk support 2026-04-29; live vendor docs",
+          "conditions_defaults_types_domains_exceptions": "Export/import units and common mm assumptions are tool behavior. Does not preserve every project property.",
+          "judgment": "SUPPORTED"
+        },
+        {
+          "claim_id": "Q12",
+          "subject": "Prusa saved project and 3.0 preview importer",
+          "operation": "Retain or discard application settings according to tool/version",
+          "version": "Prusa live Save Project docs; 3.0 unfinished alpha announcement 2026-09-01; 2.9.6 stable release",
+          "conditions_defaults_types_domains_exceptions": "Snapshot includes objects/settings/modifiers; cross-version and third-party settings behavior is scoped to preview. Bambu/Orca third-party geometry-only observation is not an all-slicer rule.",
+          "judgment": "SUPPORTED"
+        }
+      ],
+      "applicability": "Independent source meaning for a research proposal; actual selected CAD/slicer/file behavior remains NOT_RUN.",
+      "version_note": "Live docs are not build-pinned unless explicitly stated in linked claim."
+    },
+    {
+      "id": "I09",
+      "candidate_source_id": "S09",
+      "title": "First print with PrusaSlicer 2.9",
+      "publisher": "Prusa Research",
+      "retrieval": {
+        "id": "I09",
+        "candidate_source_id": "S09",
+        "url": "https://help.prusa3d.com/article/first-print-with-prusaslicer-2-9_1753",
+        "original_url": "https://help.prusa3d.com/article/first-print-with-prusaslicer-2-9_1753",
+        "start_utc": "2026-10-10T04:56:16.258722+00:00",
+        "operation": "Independent read-only HTTP GET",
+        "status": 200,
+        "final_url": "https://help.prusa3d.com/article/first-print-with-prusaslicer-2-9_1753",
+        "content_type": "text/html; charset=utf-8",
+        "etag": null,
+        "body_path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I09.html",
+        "body_sha256": "f39ca8a726bab758c6cdbaeaabacae0fab8c9e53dbb0e2e9ece2689d61281af3",
+        "body_bytes": 1461810,
+        "text_path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I09.txt",
+        "text_sha256": "acbaa88ce42919f239aa5c2e31e6146825d784477ae3d047c11daf1dfe9eb413",
+        "end_utc": "2026-10-10T04:56:17.010890+00:00"
+      },
+      "locator": "Model import, Selecting printer/material and Previewing G-code; text lines 234–255.",
+      "governing_conditions": [],
+      "applicability": "Independent source meaning for a research proposal; actual selected CAD/slicer/file behavior remains NOT_RUN.",
+      "version_note": "Live docs are not build-pinned unless explicitly stated in linked claim."
+    },
+    {
+      "id": "I10",
+      "candidate_source_id": "S10",
+      "title": "PrusaSlicer 3.0 Preview compatibility notes",
+      "publisher": "Prusa Research",
+      "retrieval": {
+        "id": "I10",
+        "candidate_source_id": "S10",
+        "url": "https://blog.prusa3d.com/prusaslicer-3-0-preview-built-for-the-future-of-3d-printing_137672/",
+        "original_url": "https://blog.prusa3d.com/prusaslicer-3-0-preview-built-for-the-future-of-3d-printing_137672/",
+        "start_utc": "2026-10-10T04:56:16.319310+00:00",
+        "operation": "Independent read-only HTTP GET",
+        "status": 200,
+        "final_url": "https://blog.prusa3d.com/prusaslicer-3-0-preview-built-for-the-future-of-3d-printing_137672/",
+        "content_type": "text/html; charset=UTF-8",
+        "etag": null,
+        "body_path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I10.html",
+        "body_sha256": "ee0601d6013bbe5674ccfff879688f358b70f38507817d12b8bbbcb1dac751f4",
+        "body_bytes": 182061,
+        "text_path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I10.txt",
+        "text_sha256": "a6028d3fb248ffcdcaba52955d92c42254c60b49d0a30adfa2782a40264f5c30",
+        "end_utc": "2026-10-10T04:56:16.512019+00:00"
+      },
+      "locator": "Announcement header/date; Compatibility lines 91–96; What is not ready lines 97–100. Reader comments are not treated as vendor authority.",
+      "governing_conditions": [
+        {
+          "claim_id": "Q12",
+          "subject": "Prusa saved project and 3.0 preview importer",
+          "operation": "Retain or discard application settings according to tool/version",
+          "version": "Prusa live Save Project docs; 3.0 unfinished alpha announcement 2026-09-01; 2.9.6 stable release",
+          "conditions_defaults_types_domains_exceptions": "Snapshot includes objects/settings/modifiers; cross-version and third-party settings behavior is scoped to preview. Bambu/Orca third-party geometry-only observation is not an all-slicer rule.",
+          "judgment": "SUPPORTED"
+        }
+      ],
+      "applicability": "Independent source meaning for a research proposal; actual selected CAD/slicer/file behavior remains NOT_RUN.",
+      "version_note": "Live docs are not build-pinned unless explicitly stated in linked claim."
+    },
+    {
+      "id": "I11",
+      "candidate_source_id": "S11",
+      "title": "3MF import from FreeCAD fails, issue 8401",
+      "publisher": "PrusaSlicer GitHub issue tracker",
+      "retrieval": {
+        "id": "I11",
+        "candidate_source_id": "S11",
+        "url": "https://github.com/prusa3d/PrusaSlicer/issues/8401",
+        "original_url": "https://github.com/prusa3d/PrusaSlicer/issues/8401",
+        "start_utc": "2026-10-10T04:56:16.512124+00:00",
+        "operation": "Independent read-only HTTP GET",
+        "status": 200,
+        "final_url": "https://github.com/prusa3d/PrusaSlicer/issues/8401",
+        "content_type": "text/html; charset=utf-8",
+        "etag": null,
+        "body_path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I11.html",
+        "body_sha256": "3d0ca2cec3f084ff87630227ab67fd3b2c17cfd9e2c56b19cd478779f9e603df",
+        "body_bytes": 309500,
+        "text_path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I11.txt",
+        "text_sha256": "1b7fed7b9a6cc721a48c8a7db7e2307edfd2b5cdee10b6a5539322fd5006a9ba",
+        "end_utc": "2026-10-10T04:56:17.346294+00:00"
+      },
+      "locator": "Issue report lines 119–139; maintainer/follow-up lines 149–161; distinction between submitted fix and released fix.",
+      "governing_conditions": [
+        {
+          "claim_id": "Q14",
+          "subject": "Prusa issue 8401 and linked importer commit",
+          "operation": "Report old silent import and improve error outcome",
+          "version": "2022-06-13 report; PrusaSlicer 2.4.2+arm64/macOS 12.4; non-stable FreeCAD 0.20 family; 040a8467bd0809bed7dad64cdf79ca6e5c340c20 dated 2022-06-14",
+          "conditions_defaults_types_domains_exceptions": "Reporter/maintainer account, not reproduction. AMF 0,0 and STL success are case-specific; leading-backslash fix submitted. Code returns nonempty model objects OR nonempty config. Attachments and first stable fixed versions remain unknown.",
+          "judgment": "SUPPORTED_WITH_HISTORICAL_LIMITS"
+        }
+      ],
+      "applicability": "Independent source meaning for a research proposal; actual selected CAD/slicer/file behavior remains NOT_RUN.",
+      "version_note": "Live docs are not build-pinned unless explicitly stated in linked claim."
+    },
+    {
+      "id": "I12",
+      "candidate_source_id": "S12",
+      "title": "PrusaSlicer commit 040a846: show error for invalid 3MF",
+      "publisher": "PrusaSlicer source repository",
+      "retrieval": {
+        "id": "I12",
+        "candidate_source_id": "S12",
+        "url": "https://api.github.com/repos/prusa3d/PrusaSlicer/commits/040a846",
+        "original_url": "https://github.com/prusa3d/PrusaSlicer/commit/040a846",
+        "start_utc": "2026-10-10T04:56:17.011462+00:00",
+        "operation": "Independent read-only HTTP GET",
+        "status": 200,
+        "final_url": "https://api.github.com/repos/prusa3d/PrusaSlicer/commits/040a846",
+        "content_type": "application/json; charset=utf-8",
+        "etag": "W/\"bdc28986a835352a90acf11cf6158618aaa29fbe628d32c89cbcae23bdb5085d\"",
+        "body_path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I12.json",
+        "body_sha256": "bdc28986a835352a90acf11cf6158618aaa29fbe628d32c89cbcae23bdb5085d",
+        "body_bytes": 4671,
+        "text_path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I12.txt",
+        "text_sha256": "bdc28986a835352a90acf11cf6158618aaa29fbe628d32c89cbcae23bdb5085d",
+        "end_utc": "2026-10-10T04:56:17.266441+00:00"
+      },
+      "locator": "Commit sha/author date/message; files[0].filename and files[0].patch at load_3mf return condition.",
+      "governing_conditions": [
+        {
+          "claim_id": "Q14",
+          "subject": "Prusa issue 8401 and linked importer commit",
+          "operation": "Report old silent import and improve error outcome",
+          "version": "2022-06-13 report; PrusaSlicer 2.4.2+arm64/macOS 12.4; non-stable FreeCAD 0.20 family; 040a8467bd0809bed7dad64cdf79ca6e5c340c20 dated 2022-06-14",
+          "conditions_defaults_types_domains_exceptions": "Reporter/maintainer account, not reproduction. AMF 0,0 and STL success are case-specific; leading-backslash fix submitted. Code returns nonempty model objects OR nonempty config. Attachments and first stable fixed versions remain unknown.",
+          "judgment": "SUPPORTED_WITH_HISTORICAL_LIMITS"
+        }
+      ],
+      "applicability": "Independent source meaning for a research proposal; actual selected CAD/slicer/file behavior remains NOT_RUN.",
+      "version_note": "Live docs are not build-pinned unless explicitly stated in linked claim."
+    },
+    {
+      "id": "I13",
+      "candidate_source_id": "S13",
+      "title": "ISO/ASTM 52915-20 AMF 1.2",
+      "publisher": "ASTM International",
+      "retrieval": {
+        "id": "I13",
+        "candidate_source_id": "S13",
+        "url": "https://store.astm.org/f2915-20.html",
+        "original_url": "https://store.astm.org/f2915-20.html",
+        "start_utc": "2026-10-10T04:56:17.031225+00:00",
+        "operation": "Independent read-only HTTP GET",
+        "status": 200,
+        "final_url": "https://store.astm.org/f2915-20.html",
+        "content_type": "text/html; charset=UTF-8",
+        "etag": null,
+        "body_path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I13.html",
+        "body_sha256": "1ba008665d53a38d083067ce977b55bda44d18b63b881c61d6f17603847d6d2e",
+        "body_bytes": 285745,
+        "text_path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I13.txt",
+        "text_sha256": "4dd0e813fe2fd04669a4db657927dcde4fc000b7f9a30822bfd9d0af9aa5e2d3",
+        "end_utc": "2026-10-10T04:56:19.449128+00:00"
+      },
+      "locator": "Public abstract and Scope §§1.1–1.4, text lines 149–181; full standard unavailable/not purchased.",
+      "governing_conditions": [
+        {
+          "claim_id": "Q15",
+          "subject": "AMF and historical Prusa format choice",
+          "operation": "Offer a bounded alternate interchange route",
+          "version": "ISO/ASTM52915-20 AMF 1.2 active public abstract; Prusa 2.0 announcement 2019; 2.9 docs",
+          "conditions_defaults_types_domains_exceptions": "XML schema conformance, public abstract only; no detailed full-standard claim. Historic 3MF preference/AMF support is not a current all-tool census.",
+          "judgment": "SUPPORTED"
+        }
+      ],
+      "applicability": "Independent source meaning for a research proposal; actual selected CAD/slicer/file behavior remains NOT_RUN.",
+      "version_note": "Live docs are not build-pinned unless explicitly stated in linked claim."
+    },
+    {
+      "id": "I14",
+      "candidate_source_id": "S14",
+      "title": "PrusaSlicer 2.0 release notes",
+      "publisher": "Prusa Research",
+      "retrieval": {
+        "id": "I14",
+        "candidate_source_id": "S14",
+        "url": "https://blog.prusa3d.com/prusaslicer-2-release_30008/",
+        "original_url": "https://blog.prusa3d.com/prusaslicer-2-release_30008/",
+        "start_utc": "2026-10-10T04:56:17.033259+00:00",
+        "operation": "Independent read-only HTTP GET",
+        "status": 200,
+        "final_url": "https://blog.prusa3d.com/prusaslicer-2-release_30008/",
+        "content_type": "text/html; charset=UTF-8",
+        "etag": null,
+        "body_path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I14.html",
+        "body_sha256": "f00fd5bc8a66377458ad7051e24f4ae462761e87e113d126806b26a59c4ab22a",
+        "body_bytes": 154179,
+        "text_path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I14.txt",
+        "text_sha256": "b3437f2d493610f92039a0f43ae39e356e5fe9d60385c515b552338cfdb4225e",
+        "end_utc": "2026-10-10T04:56:17.268159+00:00"
+      },
+      "locator": "2019 Project file section, text lines 86–87.",
+      "governing_conditions": [
+        {
+          "claim_id": "Q15",
+          "subject": "AMF and historical Prusa format choice",
+          "operation": "Offer a bounded alternate interchange route",
+          "version": "ISO/ASTM52915-20 AMF 1.2 active public abstract; Prusa 2.0 announcement 2019; 2.9 docs",
+          "conditions_defaults_types_domains_exceptions": "XML schema conformance, public abstract only; no detailed full-standard claim. Historic 3MF preference/AMF support is not a current all-tool census.",
+          "judgment": "SUPPORTED"
+        }
+      ],
+      "applicability": "Independent source meaning for a research proposal; actual selected CAD/slicer/file behavior remains NOT_RUN.",
+      "version_note": "Live docs are not build-pinned unless explicitly stated in linked claim."
+    },
+    {
+      "id": "I15",
+      "candidate_source_id": "S15",
+      "title": "3MF Conformance Test Suites",
+      "publisher": "3MF Consortium",
+      "retrieval": {
+        "id": "I15",
+        "candidate_source_id": "S15",
+        "url": "https://raw.githubusercontent.com/3MFConsortium/test_suites/master/README.md",
+        "original_url": "https://github.com/3MFConsortium/test_suites",
+        "start_utc": "2026-10-10T04:56:17.114781+00:00",
+        "operation": "Independent read-only HTTP GET",
+        "status": 200,
+        "final_url": "https://raw.githubusercontent.com/3MFConsortium/test_suites/master/README.md",
+        "content_type": "text/plain; charset=utf-8",
+        "etag": "\"d698d8f2acb0dba6fb0e111ec65c1d05d7a2c7a6af875381d497fdc6b7942329\"",
+        "body_path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I15.md",
+        "body_sha256": "34b48147785fd08e48305b74bb36584392d8ff12aa9828137928676135b461e5",
+        "body_bytes": 2766,
+        "text_path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I15.txt",
+        "text_sha256": "34b48147785fd08e48305b74bb36584392d8ff12aa9828137928676135b461e5",
+        "end_utc": "2026-10-10T04:56:17.265890+00:00"
+      },
+      "locator": "README version/status, coverage matrix lines 8–22, versions lines 27–36.",
+      "governing_conditions": [
+        {
+          "claim_id": "Q08",
+          "subject": "3MF model extension declarations and materials extension",
+          "operation": "Qualify extension support and applicability",
+          "version": "Core 1.4.0; Materials 1.2.1",
+          "conditions_defaults_types_domains_exceptions": "Optional producer resources vs consumers claiming extension support. Unsupported required extensions prevent processing; recommended extensions call for warning/user input. Materials Preface explicitly targets Core 1.2. Final withholds disputed 1.4 pairing.",
+          "judgment": "HONESTLY_UNRESOLVED_WITH_SUPPORTED_RELIANCE_BOUNDARY"
+        },
+        {
+          "claim_id": "Q16",
+          "subject": "3MF conformance suite",
+          "operation": "Supplement proposed format-level validation",
+          "version": "README suite 2.4.1; Core 1.4.0/Materials 1.2.1 listing",
+          "conditions_defaults_types_domains_exceptions": "Coverage groups, not application interoperability, optional display, exact project preservation, or printer suitability. Not executed. Pairing issue remains unresolved.",
+          "judgment": "SUPPORTED"
+        }
+      ],
+      "applicability": "Independent source meaning for a research proposal; actual selected CAD/slicer/file behavior remains NOT_RUN.",
+      "version_note": "Live docs are not build-pinned unless explicitly stated in linked claim."
+    },
+    {
+      "id": "I16",
+      "candidate_source_id": "S16",
+      "title": "3MF specification index",
+      "publisher": "3MF Consortium",
+      "retrieval": {
+        "id": "I16",
+        "candidate_source_id": "S16",
+        "url": "https://3mf.io/spec/",
+        "original_url": "https://3mf.io/spec/",
+        "start_utc": "2026-10-10T04:56:17.265981+00:00",
+        "operation": "Independent read-only HTTP GET",
+        "status": 200,
+        "final_url": "https://3mf.io/spec/",
+        "content_type": "text/html; charset=UTF-8",
+        "etag": null,
+        "body_path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I16.html",
+        "body_sha256": "45e57b4e13f4c9ab72afa6eee037ab6a6149e88f6bdf1f8c144bdf1cdb464443",
+        "body_bytes": 118502,
+        "text_path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I16.txt",
+        "text_sha256": "c52115fcdb4a8d5a1e8971b7021ae2bf88be8eb4444ecfb7522a1fbcba4ebc26",
+        "end_utc": "2026-10-10T04:56:17.763343+00:00"
+      },
+      "locator": "Live specification-index version/update table; index date is not proof of original tagged release date.",
+      "governing_conditions": [],
+      "applicability": "Independent source meaning for a research proposal; actual selected CAD/slicer/file behavior remains NOT_RUN.",
+      "version_note": "Original 1.2.1 release is 2019-09-27 (I20), not the carried 2025 index date."
+    },
+    {
+      "id": "I17",
+      "candidate_source_id": "S17",
+      "title": "3MF Consortium FAQ",
+      "publisher": "3MF Consortium",
+      "retrieval": {
+        "id": "I17",
+        "candidate_source_id": "S17",
+        "url": "https://3mf.io/resources/faq/",
+        "original_url": "https://3mf.io/resources/faq/",
+        "start_utc": "2026-10-10T04:56:17.266522+00:00",
+        "operation": "Independent read-only HTTP GET",
+        "status": 200,
+        "final_url": "https://3mf.io/resources/faq/",
+        "content_type": "text/html; charset=UTF-8",
+        "etag": null,
+        "body_path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I17.html",
+        "body_sha256": "3981644a92e403447d146733a64a35d33fa49ddb77aeb93df8d6b9058cd049d4",
+        "body_bytes": 100312,
+        "text_path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I17.txt",
+        "text_sha256": "917eff02da4b89e0ee08da64b2d1b8cfd1ad3847eb7e9e889f6232715f4a6240",
+        "end_utc": "2026-10-10T04:56:17.880458+00:00"
+      },
+      "locator": "FAQ comparisons STL, AMF, STEP/NURBS; vendor/consortium positioning, no application testing proof.",
+      "governing_conditions": [
+        {
+          "claim_id": "Q03",
+          "subject": "STL coordinates",
+          "operation": "Exchange a surface mesh without an encoded unit contract",
+          "version": "Autodesk support 2026-04-29; live vendor docs",
+          "conditions_defaults_types_domains_exceptions": "Export/import units and common mm assumptions are tool behavior. Does not preserve every project property.",
+          "judgment": "SUPPORTED"
+        },
+        {
+          "claim_id": "Q11",
+          "subject": "Fusion STEP exchange and PrusaSlicer STEP import",
+          "operation": "Exchange CAD geometry then triangulate at slicer boundary",
+          "version": "Fusion live docs; PrusaSlicer 2.9 (Legacy) documentation, point build unpinned",
+          "conditions_defaults_types_domains_exceptions": "Export loses source associativity; no universal assembly/material/feature-history retention. Direct Prusa import triangulates. Exact protocol/build choices remain open.",
+          "judgment": "SUPPORTED"
+        }
+      ],
+      "applicability": "Independent source meaning for a research proposal; actual selected CAD/slicer/file behavior remains NOT_RUN.",
+      "version_note": "Live docs are not build-pinned unless explicitly stated in linked claim."
+    },
+    {
+      "id": "I18",
+      "candidate_source_id": "S18",
+      "title": "PrusaSlicer 2.9.6 stable release",
+      "publisher": "PrusaSlicer source repository",
+      "retrieval": {
+        "id": "I18",
+        "candidate_source_id": "S18",
+        "url": "https://api.github.com/repos/prusa3d/PrusaSlicer/releases/tags/version_2.9.6",
+        "original_url": "https://github.com/prusa3d/PrusaSlicer/releases/tag/version_2.9.6",
+        "start_utc": "2026-10-10T04:56:17.268299+00:00",
+        "operation": "Independent read-only HTTP GET",
+        "status": 200,
+        "final_url": "https://api.github.com/repos/prusa3d/PrusaSlicer/releases/tags/version_2.9.6",
+        "content_type": "application/json; charset=utf-8",
+        "etag": "W/\"506966bf662c89a8294a4a0c17cc1ca63a1b07b80d5606dbcd0c45c6d6d3ae9e\"",
+        "body_path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I18.json",
+        "body_sha256": "506966bf662c89a8294a4a0c17cc1ca63a1b07b80d5606dbcd0c45c6d6d3ae9e",
+        "body_bytes": 7703,
+        "text_path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I18.txt",
+        "text_sha256": "506966bf662c89a8294a4a0c17cc1ca63a1b07b80d5606dbcd0c45c6d6d3ae9e",
+        "end_utc": "2026-10-10T04:56:17.401456+00:00"
+      },
+      "locator": "Release API name/tag/prerelease/published_at/body; 2.9.6 final, 2026-06-25, not a pair-test result.",
+      "governing_conditions": [
+        {
+          "claim_id": "Q12",
+          "subject": "Prusa saved project and 3.0 preview importer",
+          "operation": "Retain or discard application settings according to tool/version",
+          "version": "Prusa live Save Project docs; 3.0 unfinished alpha announcement 2026-09-01; 2.9.6 stable release",
+          "conditions_defaults_types_domains_exceptions": "Snapshot includes objects/settings/modifiers; cross-version and third-party settings behavior is scoped to preview. Bambu/Orca third-party geometry-only observation is not an all-slicer rule.",
+          "judgment": "SUPPORTED"
+        }
+      ],
+      "applicability": "Independent source meaning for a research proposal; actual selected CAD/slicer/file behavior remains NOT_RUN.",
+      "version_note": "Live docs are not build-pinned unless explicitly stated in linked claim."
+    },
+    {
+      "id": "I19",
+      "candidate_source_id": "S19",
+      "title": "Fusion component and assembly organization",
+      "publisher": "Autodesk",
+      "retrieval": {
+        "id": "I19",
+        "candidate_source_id": "S19",
+        "url": "https://help.autodesk.com/cloudhelp/ENU/Fusion-Assemble/files/ASM-COMPONENTS.htm",
+        "original_url": "https://help.autodesk.com/cloudhelp/ENU/Fusion-Assemble/files/ASM-COMPONENTS.htm",
+        "start_utc": "2026-10-10T04:56:17.346397+00:00",
+        "operation": "Independent read-only HTTP GET",
+        "status": 200,
+        "final_url": "https://help.autodesk.com/cloudhelp/ENU/Fusion-Assemble/files/ASM-COMPONENTS.htm",
+        "content_type": "text/html; charset=UTF-8",
+        "etag": "\"2e78-655f6b28c41a0-gzip\"",
+        "body_path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I19.html",
+        "body_sha256": "4cc7b44793b38e672ade779f318a107296775abc0b0068db8866380be364721c",
+        "body_bytes": 11896,
+        "text_path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I19.txt",
+        "text_sha256": "82329d8506caf0a689ae4e51e766e5a6bf4a39a23edc42563831d244cca6ee5e",
+        "end_utc": "2026-10-10T04:56:17.489059+00:00"
+      },
+      "locator": "Component definition lines 1–19 and External/Resolve components lines 37–60.",
+      "governing_conditions": [
+        {
+          "claim_id": "Q04",
+          "subject": "3MF components and manufacturing devices",
+          "operation": "Represent object references/transforms and preserve relative positions during manufacturing",
+          "version": "Core 1.4.0 §4.2",
+          "conditions_defaults_types_domains_exceptions": "Device-specific MUST, not blanket viewer/slicer guarantee; overlapping components unite with ordered properties. No native CAD joints/history guarantee.",
+          "judgment": "SUPPORTED_WITH_MINOR_DOMAIN_WORDING"
+        },
+        {
+          "claim_id": "Q17",
+          "subject": "Fusion native assembly components",
+          "operation": "Describe nested part intent and external references",
+          "version": "Live Autodesk assembly documentation, build unpinned",
+          "conditions_defaults_types_domains_exceptions": "Components can have own origins/coordinate systems/timeline; external references may fail from permissions, source deletion/archive or translation. Does not establish portable export retention.",
+          "judgment": "SUPPORTED"
+        }
+      ],
+      "applicability": "Independent source meaning for a research proposal; actual selected CAD/slicer/file behavior remains NOT_RUN.",
+      "version_note": "Live docs are not build-pinned unless explicitly stated in linked claim."
+    }
+  ],
+  "additional_primary_retrievals": [
+    {
+      "id": "I20-materials-release",
+      "url": "https://api.github.com/repos/3MFConsortium/spec_materials/releases/tags/1.2.1",
+      "start_utc": "2026-10-10T04:58:30.139356+00:00",
+      "operation": "Independent read-only public HTTP GET",
+      "status": 200,
+      "path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I20-materials-release.json",
+      "sha256": "299f238496fd8a6496b829b0c22e5d3768e577863f4f3cbae3739cfbacb80431",
+      "bytes": 3882,
+      "end_utc": "2026-10-10T04:58:30.291828+00:00",
+      "navigation_alias": "I20"
+    },
+    {
+      "id": "I21-materials-issues",
+      "url": "https://api.github.com/repos/3MFConsortium/spec_materials/issues?state=all&per_page=100",
+      "start_utc": "2026-10-10T04:58:30.291861+00:00",
+      "operation": "Independent read-only public HTTP GET",
+      "status": 200,
+      "path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I21-materials-issues.json",
+      "sha256": "e5bf1e19f09726d4f9af00077d06a11cb90ecad5056ec6c36c2320bf9364ecae",
+      "bytes": 59848,
+      "end_utc": "2026-10-10T04:58:30.558410+00:00",
+      "navigation_alias": "I21"
+    },
+    {
+      "id": "I22-core-tag",
+      "url": "https://api.github.com/repos/3MFConsortium/spec_core/git/ref/tags/1.4.0",
+      "start_utc": "2026-10-10T04:58:30.558450+00:00",
+      "operation": "Independent read-only public HTTP GET",
+      "status": 200,
+      "path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I22-core-tag.json",
+      "sha256": "6dd059f7a14b30516e2e49b747d6172a2098cd9a85383de274dd03a3ca3a0e91",
+      "bytes": 353,
+      "end_utc": "2026-10-10T04:58:30.686695+00:00",
+      "navigation_alias": "I22"
+    }
+  ],
+  "claim_assessments": [
+    {
+      "id": "Q01",
+      "exact_subject": "3MF package",
+      "operation": "Contain manufacturing geometry and defined package parts",
+      "version": "Core 1.4.0",
+      "default_unit_type_domain_exceptions": "ZIP/OPC; format capability, not application interoperability. Optional fields and consumer-specific settings remain distinct.",
+      "source_refs": [
+        "I01 §§1.1, 2.1"
+      ],
+      "final_locator": "Comparison: 3MF and wrapper",
+      "judgment": "SUPPORTED",
+      "independent_assessment": ""
+    },
+    {
+      "id": "Q02",
+      "exact_subject": "3MF model unit attribute",
+      "operation": "Interpret coordinates/measurements",
+      "version": "Core 1.4.0 §3.4",
+      "default_unit_type_domain_exceptions": "ST_Unit; default millimeter; micron/millimeter/centimeter/inch/foot/meter. Application size checks still needed.",
+      "source_refs": [
+        "I01 §3.4"
+      ],
+      "final_locator": "Units and geometry",
+      "judgment": "SUPPORTED",
+      "independent_assessment": ""
+    },
+    {
+      "id": "Q03",
+      "exact_subject": "STL coordinates",
+      "operation": "Exchange a surface mesh without an encoded unit contract",
+      "version": "Autodesk support 2026-04-29; live vendor docs",
+      "default_unit_type_domain_exceptions": "Export/import units and common mm assumptions are tool behavior. Does not preserve every project property.",
+      "source_refs": [
+        "I06",
+        "I08",
+        "I17"
+      ],
+      "final_locator": "STL fallback and units",
+      "judgment": "SUPPORTED",
+      "independent_assessment": ""
+    },
+    {
+      "id": "Q04",
+      "exact_subject": "3MF components and manufacturing devices",
+      "operation": "Represent object references/transforms and preserve relative positions during manufacturing",
+      "version": "Core 1.4.0 §4.2",
+      "default_unit_type_domain_exceptions": "Device-specific MUST, not blanket viewer/slicer guarantee; overlapping components unite with ordered properties. No native CAD joints/history guarantee.",
+      "source_refs": [
+        "I01 §4.2",
+        "I19"
+      ],
+      "final_locator": "Objects, parts, and assembly relationships",
+      "judgment": "SUPPORTED_WITH_MINOR_DOMAIN_WORDING",
+      "independent_assessment": "L01 records final's broader consumers wording; no tested placement claim follows from it."
+    },
+    {
+      "id": "Q05",
+      "exact_subject": "3MF base material and displaycolor",
+      "operation": "Express material intent versus rendering appearance",
+      "version": "Core 1.4.0 §5.1",
+      "default_unit_type_domain_exceptions": "Name is xs:string design intent; displaycolor is render-only. Physical color intent needs a corresponding extension; printer mapping is separate.",
+      "source_refs": [
+        "I01 §5.1"
+      ],
+      "final_locator": "Material intent",
+      "judgment": "SUPPORTED",
+      "independent_assessment": ""
+    },
+    {
+      "id": "Q06",
+      "exact_subject": "PrintTicket and receiving consumer",
+      "operation": "Apply device/settings intent",
+      "version": "Core 1.4.0 §2.1.4",
+      "default_unit_type_domain_exceptions": "Optional ticket; environment-governed format. Unsupported/absent ticket leaves defaults to that consumer. Not universal saved-slicer settings.",
+      "source_refs": [
+        "I01 §2.1.4"
+      ],
+      "final_locator": "Application-specific settings",
+      "judgment": "SUPPORTED",
+      "independent_assessment": ""
+    },
+    {
+      "id": "Q07",
+      "exact_subject": "Core thumbnails and model metadata",
+      "operation": "Provide optional review content",
+      "version": "Core 1.4.0 §§2.1.3, 3.4.1, 6.1",
+      "default_unit_type_domain_exceptions": "Package/object thumbnails are optional PNG/JPEG with relationships; JPEG excludes CMYK. Description is a well-known metadata field; type defaults xs:string, preserve defaults false. Format capability does not ensure every app displays/preserves it.",
+      "source_refs": [
+        "I01"
+      ],
+      "final_locator": "Optional preview and reviewer note",
+      "judgment": "SUPPORTED",
+      "independent_assessment": ""
+    },
+    {
+      "id": "Q08",
+      "exact_subject": "3MF model extension declarations and materials extension",
+      "operation": "Qualify extension support and applicability",
+      "version": "Core 1.4.0; Materials 1.2.1",
+      "default_unit_type_domain_exceptions": "Optional producer resources vs consumers claiming extension support. Unsupported required extensions prevent processing; recommended extensions call for warning/user input. Materials Preface explicitly targets Core 1.2. Final withholds disputed 1.4 pairing.",
+      "source_refs": [
+        "I01 §§2.3.1, 3.4",
+        "I02 Preface",
+        "I15",
+        "I20",
+        "I21"
+      ],
+      "final_locator": "Recommendation, material intent, C1",
+      "judgment": "HONESTLY_UNRESOLVED_WITH_SUPPORTED_RELIANCE_BOUNDARY",
+      "independent_assessment": "The index/suite combination does not establish conformance; no public target clarification found in bounded release/issues review."
+    },
+    {
+      "id": "Q09",
+      "exact_subject": "3MF document naming",
+      "operation": "Distinguish model/project/build roles",
+      "version": "Core 1.4.0 §2.2.1",
+      "default_unit_type_domain_exceptions": "Recommended double extensions; model data vs printer-prepared plate vs comprehensive project. Not a guarantee tools enforce or honor names.",
+      "source_refs": [
+        "I01 §2.2.1"
+      ],
+      "final_locator": "Recommendation and useful discovery",
+      "judgment": "SUPPORTED",
+      "independent_assessment": ""
+    },
+    {
+      "id": "Q10",
+      "exact_subject": "Autodesk Fusion Save As Mesh",
+      "operation": "Export bodies/components to 3MF/STL/OBJ",
+      "version": "Live documentation, no build pinned",
+      "default_unit_type_domain_exceptions": "Solid/surface/mesh body; component selection includes bodies. Does not guarantee all exporter assembly/material/extension semantics.",
+      "source_refs": [
+        "I04"
+      ],
+      "final_locator": "Default 3MF route",
+      "judgment": "SUPPORTED",
+      "independent_assessment": ""
+    },
+    {
+      "id": "Q11",
+      "exact_subject": "Fusion STEP exchange and PrusaSlicer STEP import",
+      "operation": "Exchange CAD geometry then triangulate at slicer boundary",
+      "version": "Fusion live docs; PrusaSlicer 2.9 (Legacy) documentation, point build unpinned",
+      "default_unit_type_domain_exceptions": "Export loses source associativity; no universal assembly/material/feature-history retention. Direct Prusa import triangulates. Exact protocol/build choices remain open.",
+      "source_refs": [
+        "I05",
+        "I07",
+        "I17"
+      ],
+      "final_locator": "STEP secondary route",
+      "judgment": "SUPPORTED",
+      "independent_assessment": ""
+    },
+    {
+      "id": "Q12",
+      "exact_subject": "Prusa saved project and 3.0 preview importer",
+      "operation": "Retain or discard application settings according to tool/version",
+      "version": "Prusa live Save Project docs; 3.0 unfinished alpha announcement 2026-09-01; 2.9.6 stable release",
+      "default_unit_type_domain_exceptions": "Snapshot includes objects/settings/modifiers; cross-version and third-party settings behavior is scoped to preview. Bambu/Orca third-party geometry-only observation is not an all-slicer rule.",
+      "source_refs": [
+        "I08",
+        "I10",
+        "I18"
+      ],
+      "final_locator": "Application-specific settings",
+      "judgment": "SUPPORTED",
+      "independent_assessment": ""
+    },
+    {
+      "id": "Q13",
+      "exact_subject": "Consortium compatibility matrix",
+      "operation": "Seed candidate tool discovery",
+      "version": "Live matrix, build-level guarantees absent",
+      "default_unit_type_domain_exceptions": "Self-reported, not independently verified; Core and extensions are separate. No universal compatibility claim.",
+      "source_refs": [
+        "I03"
+      ],
+      "final_locator": "Owner decisions and open inputs",
+      "judgment": "SUPPORTED",
+      "independent_assessment": ""
+    },
+    {
+      "id": "Q14",
+      "exact_subject": "Prusa issue 8401 and linked importer commit",
+      "operation": "Report old silent import and improve error outcome",
+      "version": "2022-06-13 report; PrusaSlicer 2.4.2+arm64/macOS 12.4; non-stable FreeCAD 0.20 family; 040a8467bd0809bed7dad64cdf79ca6e5c340c20 dated 2022-06-14",
+      "default_unit_type_domain_exceptions": "Reporter/maintainer account, not reproduction. AMF 0,0 and STL success are case-specific; leading-backslash fix submitted. Code returns nonempty model objects OR nonempty config. Attachments and first stable fixed versions remain unknown.",
+      "source_refs": [
+        "I11",
+        "I12"
+      ],
+      "final_locator": "Bounded released issue and pilot effect",
+      "judgment": "SUPPORTED_WITH_HISTORICAL_LIMITS",
+      "independent_assessment": "L03 supplies omitted non-stable qualifier. Intended geometry needs a separate oracle even if config loads."
+    },
+    {
+      "id": "Q15",
+      "exact_subject": "AMF and historical Prusa format choice",
+      "operation": "Offer a bounded alternate interchange route",
+      "version": "ISO/ASTM52915-20 AMF 1.2 active public abstract; Prusa 2.0 announcement 2019; 2.9 docs",
+      "default_unit_type_domain_exceptions": "XML schema conformance, public abstract only; no detailed full-standard claim. Historic 3MF preference/AMF support is not a current all-tool census.",
+      "source_refs": [
+        "I13",
+        "I14",
+        "I07"
+      ],
+      "final_locator": "AMF legacy comparator",
+      "judgment": "SUPPORTED",
+      "independent_assessment": ""
+    },
+    {
+      "id": "Q16",
+      "exact_subject": "3MF conformance suite",
+      "operation": "Supplement proposed format-level validation",
+      "version": "README suite 2.4.1; Core 1.4.0/Materials 1.2.1 listing",
+      "default_unit_type_domain_exceptions": "Coverage groups, not application interoperability, optional display, exact project preservation, or printer suitability. Not executed. Pairing issue remains unresolved.",
+      "source_refs": [
+        "I15"
+      ],
+      "final_locator": "Validation table and C1",
+      "judgment": "SUPPORTED",
+      "independent_assessment": ""
+    },
+    {
+      "id": "Q17",
+      "exact_subject": "Fusion native assembly components",
+      "operation": "Describe nested part intent and external references",
+      "version": "Live Autodesk assembly documentation, build unpinned",
+      "default_unit_type_domain_exceptions": "Components can have own origins/coordinate systems/timeline; external references may fail from permissions, source deletion/archive or translation. Does not establish portable export retention.",
+      "source_refs": [
+        "I19"
+      ],
+      "final_locator": "Objects, parts, and assembly relationships",
+      "judgment": "SUPPORTED",
+      "independent_assessment": ""
+    }
+  ],
+  "criticism_dispositions": [
+    {
+      "id": "C1",
+      "original_classification": "Material incomplete / honestly unresolved official version discrepancy",
+      "final_disposition": "Accept; preserve uncertainty",
+      "independent_judgment": "JUSTIFIED_FINAL_QUALIFICATION",
+      "basis": "I02 Preface explicitly targets Core 1.2; I15 README lists Core 1.4.0 and Materials 1.2.1 and marks combined suite coverage. Core §2.3.1 requires extensions to declare target versions. I20 release notes link Core 1.2.3 and I21 bounded repository issue/PR review yielded no explicit 1.4 target clarification. A suite listing does not override the published restriction. The final withholds reliance, keeps richer properties optional, and retains the independent Core preview/note capability. No assertion of actual incompatibility is necessary.",
+      "lineage_defect": "Draft failed to record the target condition while proposing the Materials path alongside Core 1.4.0.",
+      "remaining_material_issue": false,
+      "source_refs": [
+        "I01",
+        "I02",
+        "I15",
+        "I20",
+        "I21"
+      ]
+    },
+    {
+      "id": "C2",
+      "original_classification": "Minor locator/wording",
+      "final_disposition": "Accept; use Core §3.4",
+      "independent_judgment": "JUSTIFIED_WITH_CRITIC_LOCATOR_ERROR_CORRECTED",
+      "basis": "The attribute table is §3.4, not critic's §3.1. §3.1 discusses coordinate space. Final §3.4 locator and permitted unit/default statement are correct.",
+      "lineage_defect": "Original S01 omitted the direct unit table locator; critic introduced an incorrect locator in its correction.",
+      "remaining_material_issue": false,
+      "source_refs": [
+        "I01"
+      ]
+    },
+    {
+      "id": "C3",
+      "original_classification": "Minor slash/backslash ambiguity",
+      "final_disposition": "Accept; amend interpretation",
+      "independent_judgment": "JUSTIFIED",
+      "basis": "I11 reporter follow-up identifies a leading backslash. Core §2.2.3 requires absolute part names beginning with a forward slash. Exact relationship/ZIP entry context and attachment bytes remain uninspected. Final states this distinction and does not invent a file defect from an absent attachment.",
+      "lineage_defect": "Discovery and carried S11 summary blur slash and backslash; critic's part-name locator is also imprecise.",
+      "remaining_material_issue": false,
+      "source_refs": [
+        "I01",
+        "I11"
+      ]
+    },
+    {
+      "id": "C4",
+      "original_classification": "Unsupported non-product process trace because receipt outside critic frozen inputs",
+      "final_disposition": "Accept; cite listed plan-reveal hashes",
+      "independent_judgment": "VALID_ACCESS_LIMITATION_NOT_PROOF_OF_FALSE_RECEIPT",
+      "basis": "The original release-receipt.json actually exists, records successful helper execution, and matches plan-reveal hashes. The critic accurately says it did not inspect an unlisted path. Final reliance on its allowed plan-reveal record and matching hashes is appropriate. Neither receipt proves product validation. No claim that the original receipt was fabricated is supported.",
+      "lineage_defect": "Citation could not be corroborated within critic/reviser frozen input maps; not independently established as a false statement.",
+      "remaining_material_issue": false,
+      "source_refs": [
+        "original release-receipt.json",
+        "original plan-reveal.json",
+        "evidence/freeze-integrity-check.json"
+      ]
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L01",
+      "kind": "MINOR_REMAINING_SUBJECT_DOMAIN_OVERSTATEMENT",
+      "locator": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/final.md — Objects, parts, and assembly relationships",
+      "finding": "Final says Core requires consumers to respect component relative positions. The explicit §4.2 MUST addresses a 3D manufacturing device; Core Chapter 1 defines this as a consumer that produces a physical part. The discovery was narrower.",
+      "source_refs": [
+        "I01 §§1, 4.2; evidence/I01.txt line 141 and lines 742–752"
+      ],
+      "material": false,
+      "why_nonmaterial": "The final separately requires exact exporter/receiver tests for preserved placement and never declares every viewer/slicer conformant or tested. Its route choice rests on representable structure and a testing condition, not on this generalized MUST. This wording should not be used as a universal inspection-software guarantee."
+    },
+    {
+      "id": "L02",
+      "kind": "MINOR_CARRIED_RELEASE_DATE_ERROR",
+      "locator": "All stage source maps, carried S02/S16 released_version_commit; investigator sources/index.md S02",
+      "finding": "The carried source record says Materials 1.2.1 was released 2025-02-27 according to an index. The tagged release API gives published_at 2019-09-27T09:46:41Z and commit d4d42dd. A later specification-index date does not establish the original release date.",
+      "source_refs": [
+        "I20",
+        "I16"
+      ],
+      "material": false,
+      "why_nonmaterial": "Exact tagged 1.2.1 text is the source actually used; final does not depend on a 2025 release date or claim a newly released compatibility fix. The extension target issue remains supported independently."
+    },
+    {
+      "id": "L03",
+      "kind": "HISTORICAL_APPLICABILITY_LIMIT",
+      "locator": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/final.md — Bounded released issue and pilot effect",
+      "finding": "The maintainer specifically describes the FreeCAD exporter as non-stable, and the reporter says a fix was submitted rather than documenting a first stable fixed release. Final quotes the reported 0.20 family and does not include the non-stable qualifier explicitly.",
+      "source_refs": [
+        "I11 lines 119, 137–161",
+        "I12"
+      ],
+      "material": false,
+      "why_nonmaterial": "Final bounds the case to an old user report, leaves fixed-release containment unknown, does not claim a current defect, and requires exact pilot builds. The released receiving Prusa 2.4.2 case is still relevant."
+    },
+    {
+      "id": "L04",
+      "kind": "MINOR_VALIDATION_PROPOSAL_COMPRESSION",
+      "locator": "Discovery §8 proposed check (6); original plan validation table Pilot scenario walkthrough; final validation table",
+      "finding": "Final no longer names a technician G-code preview as a distinct proposed check and does not explicitly repeat interruption as a walkthrough scenario. It preserves technician process responsibility, import failure/recovery, revision identity, and owner choices.",
+      "source_refs": [
+        "original discovery.md §8",
+        "original plan.md validation table",
+        "I09",
+        "final.md validation table"
+      ],
+      "material": false,
+      "why_nonmaterial": "These were prospective optional validation ideas, not binding added feature/deployment obligations. The mandatory prioritized research validation table remains meaningful and no executed check is invented."
+    },
+    {
+      "id": "L05",
+      "kind": "ORIGINAL_EVIDENCE_GRANULARITY_LIMIT",
+      "locator": "All original stages/sources directories",
+      "finding": "Each original authored sources directory contains only index.md; authored maps provide observations but no local full-page captures or full execution transcripts. Independent primary retrieval verifies source meaning here, not every predecessor action.",
+      "source_refs": [
+        "original-inspected-manifest.json",
+        "independent source-map.json"
+      ],
+      "material": false,
+      "why_nonmaterial": "Assignments permit bounded navigable indexes; raw capture absence is not an invented delivery requirement. Native/session protocol and action claims remain separately limited."
+    }
+  ],
+  "original_artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A7-01/brief.md",
+      "bytes": 3358,
+      "sha256": "dcd62504463a57569adbc66d85753f8a178764bb5d80b7c17dad4f4088a1b1f5",
+      "mtime_ns": 1791605469529805464
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A7-01/plan.md",
+      "bytes": 6015,
+      "sha256": "b9063b147acff997c7c788eac44d2149ca6946fa4ee2a3ce6f0bdf80789397e7",
+      "mtime_ns": 1791605469529934211
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/inputs/brief.md",
+      "bytes": 3358,
+      "sha256": "dcd62504463a57569adbc66d85753f8a178764bb5d80b7c17dad4f4088a1b1f5",
+      "mtime_ns": 1791605471924383738
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/critic/assignment.md",
+      "bytes": 3306,
+      "sha256": "d8e3a0889d50555c7615bf105cc1c1a2542ab4a9b66306a3036ad28fce14774f",
+      "mtime_ns": 1791606401276839847
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/critic/critique.md",
+      "bytes": 10330,
+      "sha256": "40986b4c2b3c438c13d13e20df811d58f1c7bced0e53439be957d30c660cb04d",
+      "mtime_ns": 1791607270238436834
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/critic/dispatch.json",
+      "bytes": 4124,
+      "sha256": "c6276fee6a4f5eb3e5e7cd5b405ba29451e6349ea8d1087cbbcad20428b0922b",
+      "mtime_ns": 1791606402688962101
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/critic/freeze.json",
+      "bytes": 3135,
+      "sha256": "a4b760e6c89407250ce401fb9cc9ffb243d9e13f26e8a95743e3d228c36208d2",
+      "mtime_ns": 1791606401277412537
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/critic/input-map.json",
+      "bytes": 1390,
+      "sha256": "6a166cad1681f1bb0c23df32209db33dfa2848732b91b552834e567de83c32b9",
+      "mtime_ns": 1791606401276645982
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/critic/request.json",
+      "bytes": 890,
+      "sha256": "382ede9ea23c87925de3200a199fd359fef30877a9933d546806f1854d4d52eb",
+      "mtime_ns": 1791606401277557209
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/critic/source-map.json",
+      "bytes": 39383,
+      "sha256": "372272951e49ffedfc5a1d0449b8d407ec5d9d7afc101ec9c67f1501ccfd3b82",
+      "mtime_ns": 1791607323744932677
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/critic/sources/index.md",
+      "bytes": 4239,
+      "sha256": "37a4c73dc6b50c0c64defcd243589ca41807002face1e6698205dc0cab175ce0",
+      "mtime_ns": 1791607001988239869
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/assignment.md",
+      "bytes": 3712,
+      "sha256": "371b71cdd3a935fd693879a4a33e7e9398c34f2c23d31016dafff9b553ee5863",
+      "mtime_ns": 1791605471925254509
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/discovery.md",
+      "bytes": 14812,
+      "sha256": "17ff8435c3352da4d6ab501fb6a90272c342a2b04bedf7a04afb4eeaa6b04dfb",
+      "mtime_ns": 1791606156235060153
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/dispatch.json",
+      "bytes": 4220,
+      "sha256": "b3cd4e47e21eff073c18fd6a25008f19ec0830095286d4d75653f48806f65519",
+      "mtime_ns": 1791605472546951437
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/draft.md",
+      "bytes": 19339,
+      "sha256": "f187c5e9a18a4a5b3e30ef3e263704374bf08512bfb3cab116d106f6c3976442",
+      "mtime_ns": 1791606289646668988
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/freeze.json",
+      "bytes": 1654,
+      "sha256": "ef8af6d039339341c505a006c371f39da405370e238749b9490b0fb4f625c340",
+      "mtime_ns": 1791605471925543793
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/goal-observation.json",
+      "bytes": 1285,
+      "sha256": "96a4bbb302e93d3dab38ee1ad32268e5e056a9478dfb251b6535d756184a1ad6",
+      "mtime_ns": 1791606089358763735
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/input-map.json",
+      "bytes": 714,
+      "sha256": "e2fd6c96efe53f7f85d8582ddd3b51a7c76cf44c96a94be797feb598fc7dc0d6",
+      "mtime_ns": 1791605471925085435
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/plan-reveal.json",
+      "bytes": 427,
+      "sha256": "20543cca5883a33b02c0f62452de58d027f5088edc5812f692a80c684eba099e",
+      "mtime_ns": 1791606185319723429
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/release-receipt.json",
+      "bytes": 640,
+      "sha256": "e0aa2b019c4a6d839df6e9aaa477835a34114c01117696952a76e0f463bbc966",
+      "mtime_ns": 1791606196465243486
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/request.json",
+      "bytes": 914,
+      "sha256": "8942c71e6bf7fbf1bf93fdaff3692cd6932b6ff45e3e344d1fdb912d4d50bd84",
+      "mtime_ns": 1791605471925652242
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/revealed-plan.md",
+      "bytes": 6015,
+      "sha256": "b9063b147acff997c7c788eac44d2149ca6946fa4ee2a3ce6f0bdf80789397e7",
+      "mtime_ns": 1791606185319611415
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/source-map.json",
+      "bytes": 24810,
+      "sha256": "ca05e8dfe48e66a179c754a65a485593502eced26d1b38cd2613b94fd0c14fa1",
+      "mtime_ns": 1791606156234060149
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/sources/index.md",
+      "bytes": 6778,
+      "sha256": "3d85af0028365984a7432ad2b1194e0a3142141177e4b8b60d876ae5f7e65185",
+      "mtime_ns": 1791606156236060157
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/assignment.md",
+      "bytes": 3286,
+      "sha256": "4b46b17b1a07bbc01312ddfc084f529e8af27137049412d3cdbd76b600f39916",
+      "mtime_ns": 1791607348035855801
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/dispatch.json",
+      "bytes": 4139,
+      "sha256": "ed142ed6d6c99a873001cdada4cdfe46dda8c39e2bc430354016cae26fb1a028",
+      "mtime_ns": 1791607350279814747
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/final.md",
+      "bytes": 24904,
+      "sha256": "9b96a8ba94e1567069ad240b192f203ec7b7a360e7aaa95c1fa11c7c43793383",
+      "mtime_ns": 1791607903365579844
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/freeze.json",
+      "bytes": 3973,
+      "sha256": "3d797c5f08ed310c7e4c403eaf75ee715c4cb0eb8967cd8a8ecde9055e2b37db",
+      "mtime_ns": 1791607348188594415
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/input-map.json",
+      "bytes": 1768,
+      "sha256": "f1729d35c6e31cc008a513ea51092fa64321fe59929a7970fd5286bfa1436845",
+      "mtime_ns": 1791607348187953838
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/request.json",
+      "bytes": 893,
+      "sha256": "cb935010d7e52067e2ec41eebb44fb1903a2ebdaf7b6ed4a77de8ecf1869c855",
+      "mtime_ns": 1791607348188165279
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/service-tier-change.json",
+      "bytes": 479,
+      "sha256": "f796bff027638ba4a29e934f42cc13ac03f3eda3f4e63f5e18cd2c0d723c9786",
+      "mtime_ns": 1791607348188771887
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/source-map.json",
+      "bytes": 77043,
+      "sha256": "d825831ff50b46682ba6d9ceb261c4aafdf1c89fc7a700be5800c98b351cdfe6",
+      "mtime_ns": 1791607919751592587
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/sources/index.md",
+      "bytes": 14029,
+      "sha256": "18831167e2799780732bdaee807ee8d5dab003d5f5847a7f4e25903973cfb491",
+      "mtime_ns": 1791607919749413385
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/terminal-science-freeze-root.json",
+      "bytes": 7278,
+      "sha256": "adc8e46c3846027f983d0440699ababa7836ff542db2852e042ebb0ef61a651f",
+      "mtime_ns": 1791608033834948323
+    }
+  ],
+  "integrity_check": "evidence/freeze-integrity-check.json",
+  "map_lineage_check": "evidence/map-lineage-integrity.json",
+  "primary_web_evidence": [
+    "evidence/primary_batch1.txt",
+    "evidence/primary_batch2.txt",
+    "evidence/primary_find1.txt",
+    "evidence/checks_batch3_0.txt",
+    "evidence/I06-web-extracted.txt"
+  ],
+  "evidence_index": "evidence/index.md",
+  "unresolved_or_unavailable": [
+    "Actual native provider/model and effective service tiers of candidate stages.",
+    "Independently verifiable native terminal receipts for investigator/reviser and independent event audit for critic.",
+    "Complete predecessor session/action history, including blind discovery and initial-save/Goal-terminal ordering.",
+    "Effective inference time, token billing and cost; authored Goal tokens/elapsed values are not billing telemetry.",
+    "Materials 1.2.1 normative target for Core 1.4.0 remains unresolved after bounded primary-source investigation.",
+    "Exact issue attachment bytes and first stable FreeCAD/Prusa release containing the historical fixes.",
+    "Actual pilot samples, selected applications/builds/OS, STEP protocol options, native-source sharing and tolerances.",
+    "Actual export/import retention and no-CAD display behavior: all product checks NOT_RUN.",
+    "Full paid AMF standard not inspected; no unsupported detailed AMF clause is inferred."
+  ],
+  "reviewer_native_evidence": "evidence/reviewer-goal-active.json",
+  "note": "Full response captures contain page navigation/comments; only governing primary locators above were used as authority. Broad search returned unrelated hits, which were not relied on."
+}

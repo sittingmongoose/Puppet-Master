@@ -1,0 +1,16 @@
+{
+  "evidence_type": "direct get_goal receipt after actual update_goal(status=complete); full assessment and save-verification preceded completion",
+  "receipt": {
+    "goal": {
+      "threadId": "01a12422-7876-7390-a41c-b20cad2ed7c0",
+      "objective": "Independently assess the ONE completed ER12 A5-01 treatment full pipeline within a finite 45-minute envelope. Read full RUBRIC-v1, original frozen brief/plan, terminal science freeze, actual stage maps and all authored artifacts/evidence. Assess all six rubric axes and every exact plan clause; independently retrieve governing primary sources for consequential claims, criticism/corrections, recommendations and conditions. Distinguish corrected lineage defects from final issues. No delegation, candidate feedback/repair, account changes, Git/publication, other arms/results/history, or ER11 rescore. Save complete assessment.md, assessment.json and navigable independent evidence/source-map only under ER12_RUNTIME/assessment/A5-01/treatment-v1; preserve original freeze. Source-backed FAIL for any remaining material issue; PASS_WITH_LIMITATIONS only without material remaining issues. Record evidence-supported or UNKNOWN protocol/time/billing fields separately. Save full judgment before native Goal completion, then report result and paths.",
+      "status": "complete",
+      "tokensUsed": 228144,
+      "timeUsedSeconds": 846,
+      "createdAt": 1791607618,
+      "updatedAt": 1791608464
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  }
+}

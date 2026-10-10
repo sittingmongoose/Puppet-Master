@@ -1,0 +1,541 @@
+{
+  "schema": "er12.assessment_source_map.v1",
+  "assessment_id": "B-APPL-G-02/treatment-v1",
+  "reviewer_independent_retrievals": [
+    {
+      "id": "timer-manual",
+      "url": "https://raw.githubusercontent.com/systemd/systemd/v257/man/systemd.timer.xml",
+      "version": "v257",
+      "operation": "HTTPS GET via Python urllib.request; data only, no execution",
+      "retrieved_at_utc": "2026-10-10T05:13:44.012287+00:00",
+      "status": 200,
+      "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/systemd.timer.xml",
+      "sha256": "4862ce0331198c5b3d24b69af45fc8dd55b2c1ad98ce839b042b1cc70d01d9cc",
+      "bytes": 25003,
+      "lines": 435
+    },
+    {
+      "id": "time-manual",
+      "url": "https://raw.githubusercontent.com/systemd/systemd/v257/man/systemd.time.xml",
+      "version": "v257",
+      "operation": "HTTPS GET via Python urllib.request; data only, no execution",
+      "retrieved_at_utc": "2026-10-10T05:13:44.013739+00:00",
+      "status": 200,
+      "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/systemd.time.xml",
+      "sha256": "7973199a518696a838e2750d6b2a4a5420778a88c569086f27f1089481d61a09",
+      "bytes": 16766,
+      "lines": 329
+    },
+    {
+      "id": "timer-implementation",
+      "url": "https://raw.githubusercontent.com/systemd/systemd/v257/src/core/timer.c",
+      "version": "v257",
+      "operation": "HTTPS GET via Python urllib.request; data only, no execution",
+      "retrieved_at_utc": "2026-10-10T05:13:44.014510+00:00",
+      "status": 200,
+      "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/timer.c",
+      "sha256": "675b20653abc17d52632ce48e6c2cd1ebcbebcf72394f2bf5909180ee859ce12",
+      "bytes": 37452,
+      "lines": 1092
+    },
+    {
+      "id": "service-manual",
+      "url": "https://raw.githubusercontent.com/systemd/systemd/v257/man/systemd.service.xml",
+      "version": "v257",
+      "operation": "HTTPS GET via Python urllib.request; data only, no execution",
+      "retrieved_at_utc": "2026-10-10T05:13:44.015238+00:00",
+      "status": 200,
+      "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/systemd.service.xml",
+      "sha256": "80f479747740d98e20ec214231a710616013238323596ea619d9159b3649e584",
+      "bytes": 108781,
+      "lines": 1803
+    },
+    {
+      "id": "manager-manual",
+      "url": "https://raw.githubusercontent.com/systemd/systemd/v257/man/systemd-system.conf.xml",
+      "version": "v257",
+      "operation": "HTTPS GET via Python urllib.request; data only, no execution",
+      "retrieved_at_utc": "2026-10-10T05:13:44.016379+00:00",
+      "status": 200,
+      "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/systemd-system.conf.xml",
+      "sha256": "98e7e90852b484d5825281b512d733048529de45cb7da29160c4d5cab9308547",
+      "bytes": 41716,
+      "lines": 777
+    },
+    {
+      "id": "analyze-manual",
+      "url": "https://raw.githubusercontent.com/systemd/systemd/v257/man/systemd-analyze.xml",
+      "version": "v257",
+      "operation": "HTTPS GET via Python urllib.request; data only, no execution",
+      "retrieved_at_utc": "2026-10-10T05:13:44.017395+00:00",
+      "status": 200,
+      "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/systemd-analyze.xml",
+      "sha256": "b4a07750e3c89bc726a0ab54bdf862abcee730bb40c81fa9c21e0b8713267f80",
+      "bytes": 77808,
+      "lines": 1777
+    }
+  ],
+  "evidence_locators": [
+    {
+      "source_id": "timer-manual",
+      "version": "v257",
+      "section": "Persistent=",
+      "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/systemd.timer.xml",
+      "line_start": 353,
+      "line_end": 370,
+      "primary_locator": "https://github.com/systemd/systemd/blob/v257/man/systemd.timer.xml#L353-L370",
+      "sha256": "4862ce0331198c5b3d24b69af45fc8dd55b2c1ad98ce839b042b1cc70d01d9cc"
+    },
+    {
+      "source_id": "timer-manual",
+      "version": "v257",
+      "section": "AccuracySec=",
+      "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/systemd.timer.xml",
+      "line_start": 228,
+      "line_end": 253,
+      "primary_locator": "https://github.com/systemd/systemd/blob/v257/man/systemd.timer.xml#L228-L253",
+      "sha256": "4862ce0331198c5b3d24b69af45fc8dd55b2c1ad98ce839b042b1cc70d01d9cc"
+    },
+    {
+      "source_id": "timer-manual",
+      "version": "v257",
+      "section": "Automatic Dependencies / Default Dependencies",
+      "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/systemd.timer.xml",
+      "line_start": 73,
+      "line_end": 91,
+      "primary_locator": "https://github.com/systemd/systemd/blob/v257/man/systemd.timer.xml#L73-L91",
+      "sha256": "4862ce0331198c5b3d24b69af45fc8dd55b2c1ad98ce839b042b1cc70d01d9cc"
+    },
+    {
+      "source_id": "timer-manual",
+      "version": "v257",
+      "section": "Description / already-active target",
+      "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/systemd.timer.xml",
+      "line_start": 50,
+      "line_end": 56,
+      "primary_locator": "https://github.com/systemd/systemd/blob/v257/man/systemd.timer.xml#L50-L56",
+      "sha256": "4862ce0331198c5b3d24b69af45fc8dd55b2c1ad98ce839b042b1cc70d01d9cc"
+    },
+    {
+      "source_id": "timer-manual",
+      "version": "v257",
+      "section": "Options / OnUnitInactiveSec and monotonic clocks",
+      "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/systemd.timer.xml",
+      "line_start": 145,
+      "line_end": 177,
+      "primary_locator": "https://github.com/systemd/systemd/blob/v257/man/systemd.timer.xml#L145-L177",
+      "sha256": "4862ce0331198c5b3d24b69af45fc8dd55b2c1ad98ce839b042b1cc70d01d9cc"
+    },
+    {
+      "source_id": "timer-manual",
+      "version": "v257",
+      "section": "WakeSystem=",
+      "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/systemd.timer.xml",
+      "line_start": 374,
+      "line_end": 394,
+      "primary_locator": "https://github.com/systemd/systemd/blob/v257/man/systemd.timer.xml#L374-L394",
+      "sha256": "4862ce0331198c5b3d24b69af45fc8dd55b2c1ad98ce839b042b1cc70d01d9cc"
+    },
+    {
+      "source_id": "time-manual",
+      "version": "v257",
+      "section": "Calendar Events / daily normalization and analyzer scope",
+      "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/systemd.time.xml",
+      "line_start": 260,
+      "line_end": 315,
+      "primary_locator": "https://github.com/systemd/systemd/blob/v257/man/systemd.time.xml#L260-L315",
+      "sha256": "7973199a518696a838e2750d6b2a4a5420778a88c569086f27f1089481d61a09"
+    },
+    {
+      "source_id": "service-manual",
+      "version": "v257",
+      "section": "Type=oneshot",
+      "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/systemd.service.xml",
+      "line_start": 209,
+      "line_end": 219,
+      "primary_locator": "https://github.com/systemd/systemd/blob/v257/man/systemd.service.xml#L209-L219",
+      "sha256": "80f479747740d98e20ec214231a710616013238323596ea619d9159b3649e584"
+    },
+    {
+      "source_id": "service-manual",
+      "version": "v257",
+      "section": "ExecStartPre= / ExecStartPost=",
+      "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/systemd.service.xml",
+      "line_start": 409,
+      "line_end": 432,
+      "primary_locator": "https://github.com/systemd/systemd/blob/v257/man/systemd.service.xml#L409-L432",
+      "sha256": "80f479747740d98e20ec214231a710616013238323596ea619d9159b3649e584"
+    },
+    {
+      "source_id": "timer-implementation",
+      "version": "v257",
+      "section": "timer_enter_running / JOB_START submission",
+      "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/timer.c",
+      "line_start": 596,
+      "line_end": 635,
+      "primary_locator": "https://github.com/systemd/systemd/blob/v257/src/core/timer.c#L596-L635",
+      "sha256": "675b20653abc17d52632ce48e6c2cd1ebcbebcf72394f2bf5909180ee859ce12"
+    },
+    {
+      "source_id": "timer-implementation",
+      "version": "v257",
+      "section": "timer_start / persistent timestamp loading",
+      "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/timer.c",
+      "line_start": 642,
+      "line_end": 685,
+      "primary_locator": "https://github.com/systemd/systemd/blob/v257/src/core/timer.c#L642-L685",
+      "sha256": "675b20653abc17d52632ce48e6c2cd1ebcbebcf72394f2bf5909180ee859ce12"
+    },
+    {
+      "source_id": "timer-implementation",
+      "version": "v257",
+      "section": "timer_enter_waiting / TIMER_UNIT_INACTIVE",
+      "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/timer.c",
+      "line_start": 461,
+      "line_end": 479,
+      "primary_locator": "https://github.com/systemd/systemd/blob/v257/src/core/timer.c#L461-L479",
+      "sha256": "675b20653abc17d52632ce48e6c2cd1ebcbebcf72394f2bf5909180ee859ce12"
+    },
+    {
+      "source_id": "timer-implementation",
+      "version": "v257",
+      "section": "timer_enter_waiting / calendar base and boot rebasing",
+      "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/timer.c",
+      "line_start": 393,
+      "line_end": 431,
+      "primary_locator": "https://github.com/systemd/systemd/blob/v257/src/core/timer.c#L393-L431",
+      "sha256": "675b20653abc17d52632ce48e6c2cd1ebcbebcf72394f2bf5909180ee859ce12"
+    },
+    {
+      "source_id": "manager-manual",
+      "version": "v257",
+      "section": "DefaultTimerAccuracySec= / TimerSlackNSec=",
+      "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/systemd-system.conf.xml",
+      "line_start": 124,
+      "line_end": 160,
+      "primary_locator": "https://github.com/systemd/systemd/blob/v257/man/systemd-system.conf.xml#L124-L160",
+      "sha256": "98e7e90852b484d5825281b512d733048529de45cb7da29160c4d5cab9308547"
+    },
+    {
+      "source_id": "timer-manual",
+      "version": "v257",
+      "section": "DeferReactivation=; version-info v257",
+      "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/systemd.timer.xml",
+      "line_start": 308,
+      "line_end": 325,
+      "primary_locator": "https://github.com/systemd/systemd/blob/v257/man/systemd.timer.xml#L308-L325",
+      "sha256": "4862ce0331198c5b3d24b69af45fc8dd55b2c1ad98ce839b042b1cc70d01d9cc"
+    },
+    {
+      "source_id": "analyze-manual",
+      "version": "v257",
+      "section": "systemd-analyze calendar",
+      "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/systemd-analyze.xml",
+      "line_start": 555,
+      "line_end": 565,
+      "primary_locator": "https://github.com/systemd/systemd/blob/v257/man/systemd-analyze.xml#L555-L565",
+      "sha256": "b4a07750e3c89bc726a0ab54bdf862abcee730bb40c81fa9c21e0b8713267f80"
+    }
+  ],
+  "findings_to_sources": {
+    "M1": [
+      "https://github.com/systemd/systemd/blob/v257/man/systemd.timer.xml#L353-L370",
+      "https://github.com/systemd/systemd/blob/v257/man/systemd.timer.xml#L228-L253",
+      "https://github.com/systemd/systemd/blob/v257/man/systemd.timer.xml#L73-L91",
+      "https://github.com/systemd/systemd/blob/v257/src/core/timer.c#L596-L635",
+      "https://github.com/systemd/systemd/blob/v257/man/systemd.service.xml#L409-L432",
+      "https://github.com/systemd/systemd/blob/v257/man/systemd-system.conf.xml#L124-L160",
+      "https://github.com/systemd/systemd/blob/v257/src/core/timer.c#L642-L685",
+      "https://github.com/systemd/systemd/blob/v257/src/core/timer.c#L393-L431"
+    ]
+  },
+  "candidate_locators": {
+    "M1": {
+      "file": "ER12_RUNTIME/runs/B-APPL-G-02/treatment/stages/role/verification.md",
+      "lines": [
+        90,
+        93
+      ],
+      "sha256": "ce2bd9ec7cc9fb1bb2437bdf28db3e66931a4f2aff08a6255d75f967cff55d4a"
+    }
+  },
+  "claim_reviews": [
+    {
+      "claim": 1,
+      "candidate_disposition": "SUPPORTED with correction",
+      "review": "SUPPORTED_WITH_BOUNDED_CAVEATS",
+      "candidate_lines": "8-21",
+      "assessment": "Correctly restricts persistence to missed calendar activity and next timer activation, one catch-up rather than replaying each day, with randomized-delay and retained-state caveats. Active-target exclusion in claim 3 applies globally. The acceptance-check problem is separate.",
+      "evidence": [
+        {
+          "source_id": "timer-manual",
+          "version": "v257",
+          "section": "Persistent=",
+          "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/systemd.timer.xml",
+          "line_start": 353,
+          "line_end": 370,
+          "primary_locator": "https://github.com/systemd/systemd/blob/v257/man/systemd.timer.xml#L353-L370",
+          "sha256": "4862ce0331198c5b3d24b69af45fc8dd55b2c1ad98ce839b042b1cc70d01d9cc"
+        },
+        {
+          "source_id": "timer-manual",
+          "version": "v257",
+          "section": "Description / already-active target",
+          "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/systemd.timer.xml",
+          "line_start": 50,
+          "line_end": 56,
+          "primary_locator": "https://github.com/systemd/systemd/blob/v257/man/systemd.timer.xml#L50-L56",
+          "sha256": "4862ce0331198c5b3d24b69af45fc8dd55b2c1ad98ce839b042b1cc70d01d9cc"
+        },
+        {
+          "source_id": "timer-implementation",
+          "version": "v257",
+          "section": "timer_start / persistent timestamp loading",
+          "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/timer.c",
+          "line_start": 642,
+          "line_end": 685,
+          "primary_locator": "https://github.com/systemd/systemd/blob/v257/src/core/timer.c#L642-L685",
+          "sha256": "675b20653abc17d52632ce48e6c2cd1ebcbebcf72394f2bf5909180ee859ce12"
+        },
+        {
+          "source_id": "timer-implementation",
+          "version": "v257",
+          "section": "timer_enter_waiting / calendar base and boot rebasing",
+          "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/timer.c",
+          "line_start": 393,
+          "line_end": 431,
+          "primary_locator": "https://github.com/systemd/systemd/blob/v257/src/core/timer.c#L393-L431",
+          "sha256": "675b20653abc17d52632ce48e6c2cd1ebcbebcf72394f2bf5909180ee859ce12"
+        }
+      ]
+    },
+    {
+      "claim": 2,
+      "candidate_disposition": "REFUTED",
+      "review": "SUPPORTED_REFUTATION",
+      "candidate_lines": "23-35",
+      "assessment": "Correctly rejects identical powered-off catch-up for monotonic OnUnitInactiveSec. WakeSystem changes suspend clock behavior and does not preserve monotonic history across power-off. Its after-boot wording is conditional on an observed deactivation, not an invented automatic initial execution.",
+      "evidence": [
+        {
+          "source_id": "timer-manual",
+          "version": "v257",
+          "section": "Persistent=",
+          "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/systemd.timer.xml",
+          "line_start": 353,
+          "line_end": 370,
+          "primary_locator": "https://github.com/systemd/systemd/blob/v257/man/systemd.timer.xml#L353-L370",
+          "sha256": "4862ce0331198c5b3d24b69af45fc8dd55b2c1ad98ce839b042b1cc70d01d9cc"
+        },
+        {
+          "source_id": "timer-manual",
+          "version": "v257",
+          "section": "Options / OnUnitInactiveSec and monotonic clocks",
+          "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/systemd.timer.xml",
+          "line_start": 145,
+          "line_end": 177,
+          "primary_locator": "https://github.com/systemd/systemd/blob/v257/man/systemd.timer.xml#L145-L177",
+          "sha256": "4862ce0331198c5b3d24b69af45fc8dd55b2c1ad98ce839b042b1cc70d01d9cc"
+        },
+        {
+          "source_id": "timer-manual",
+          "version": "v257",
+          "section": "WakeSystem=",
+          "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/systemd.timer.xml",
+          "line_start": 374,
+          "line_end": 394,
+          "primary_locator": "https://github.com/systemd/systemd/blob/v257/man/systemd.timer.xml#L374-L394",
+          "sha256": "4862ce0331198c5b3d24b69af45fc8dd55b2c1ad98ce839b042b1cc70d01d9cc"
+        },
+        {
+          "source_id": "timer-implementation",
+          "version": "v257",
+          "section": "timer_enter_waiting / TIMER_UNIT_INACTIVE",
+          "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/timer.c",
+          "line_start": 461,
+          "line_end": 479,
+          "primary_locator": "https://github.com/systemd/systemd/blob/v257/src/core/timer.c#L461-L479",
+          "sha256": "675b20653abc17d52632ce48e6c2cd1ebcbebcf72394f2bf5909180ee859ce12"
+        }
+      ]
+    },
+    {
+      "claim": 3,
+      "candidate_disposition": "REFUTED",
+      "review": "SUPPORTED_REFUTATION_WITH_MINOR_TERMINOLOGY_LIMITATION",
+      "candidate_lines": "37-49",
+      "assessment": "Correctly rejects a concurrent additional service instance. A oneshot without RemainAfterExit is formally activating while running and normally never enters active; calling it active informally does not reverse the no-parallel-start decision. Later nonoverlapping runs remain possible.",
+      "evidence": [
+        {
+          "source_id": "timer-manual",
+          "version": "v257",
+          "section": "Description / already-active target",
+          "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/systemd.timer.xml",
+          "line_start": 50,
+          "line_end": 56,
+          "primary_locator": "https://github.com/systemd/systemd/blob/v257/man/systemd.timer.xml#L50-L56",
+          "sha256": "4862ce0331198c5b3d24b69af45fc8dd55b2c1ad98ce839b042b1cc70d01d9cc"
+        },
+        {
+          "source_id": "service-manual",
+          "version": "v257",
+          "section": "Type=oneshot",
+          "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/systemd.service.xml",
+          "line_start": 209,
+          "line_end": 219,
+          "primary_locator": "https://github.com/systemd/systemd/blob/v257/man/systemd.service.xml#L209-L219",
+          "sha256": "80f479747740d98e20ec214231a710616013238323596ea619d9159b3649e584"
+        },
+        {
+          "source_id": "timer-implementation",
+          "version": "v257",
+          "section": "timer_enter_running / JOB_START submission",
+          "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/timer.c",
+          "line_start": 596,
+          "line_end": 635,
+          "primary_locator": "https://github.com/systemd/systemd/blob/v257/src/core/timer.c#L596-L635",
+          "sha256": "675b20653abc17d52632ce48e6c2cd1ebcbebcf72394f2bf5909180ee859ce12"
+        }
+      ]
+    },
+    {
+      "claim": 4,
+      "candidate_disposition": "SUPPORTED",
+      "review": "SUPPORTED_WITH_CAVEATS_PRESERVED_IN_BODY",
+      "candidate_lines": "51-61",
+      "assessment": "Correct default 1min, host-specific stable placement, timer-elapse scope, 1us best-accuracy option, and slack/load caveats. Effective defaults can be overridden by manager DefaultTimerAccuracySec; candidate explicitly asks for manager defaults. RandomizedDelaySec defaults to 0.",
+      "evidence": [
+        {
+          "source_id": "timer-manual",
+          "version": "v257",
+          "section": "AccuracySec=",
+          "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/systemd.timer.xml",
+          "line_start": 228,
+          "line_end": 253,
+          "primary_locator": "https://github.com/systemd/systemd/blob/v257/man/systemd.timer.xml#L228-L253",
+          "sha256": "4862ce0331198c5b3d24b69af45fc8dd55b2c1ad98ce839b042b1cc70d01d9cc"
+        },
+        {
+          "source_id": "manager-manual",
+          "version": "v257",
+          "section": "DefaultTimerAccuracySec= / TimerSlackNSec=",
+          "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/systemd-system.conf.xml",
+          "line_start": 124,
+          "line_end": 160,
+          "primary_locator": "https://github.com/systemd/systemd/blob/v257/man/systemd-system.conf.xml#L124-L160",
+          "sha256": "98e7e90852b484d5825281b512d733048529de45cb7da29160c4d5cab9308547"
+        },
+        {
+          "source_id": "timer-manual",
+          "version": "v257",
+          "section": "RandomizedDelaySec=; default 0 and interaction with AccuracySec=",
+          "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/systemd.timer.xml",
+          "line_start": 263,
+          "line_end": 285,
+          "primary_locator": "https://github.com/systemd/systemd/blob/v257/man/systemd.timer.xml#L263-L285",
+          "sha256": "4862ce0331198c5b3d24b69af45fc8dd55b2c1ad98ce839b042b1cc70d01d9cc"
+        }
+      ]
+    },
+    {
+      "claim": 5,
+      "candidate_disposition": "SUPPORTED",
+      "review": "SUPPORTED_WITH_BOUNDED_CAVEATS",
+      "candidate_lines": "63-72",
+      "assessment": "Correct unit identity and last-deactivation basis. No promise of an automatic post-boot first run is justified; v257 code skips a TIMER_UNIT_INACTIVE value when its base is zero. Normal repeat timing after the target deactivates is interval plus scheduling tolerances.",
+      "evidence": [
+        {
+          "source_id": "timer-manual",
+          "version": "v257",
+          "section": "Options / OnUnitInactiveSec and monotonic clocks",
+          "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/systemd.timer.xml",
+          "line_start": 145,
+          "line_end": 177,
+          "primary_locator": "https://github.com/systemd/systemd/blob/v257/man/systemd.timer.xml#L145-L177",
+          "sha256": "4862ce0331198c5b3d24b69af45fc8dd55b2c1ad98ce839b042b1cc70d01d9cc"
+        },
+        {
+          "source_id": "timer-implementation",
+          "version": "v257",
+          "section": "timer_enter_waiting / TIMER_UNIT_INACTIVE",
+          "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/timer.c",
+          "line_start": 461,
+          "line_end": 479,
+          "primary_locator": "https://github.com/systemd/systemd/blob/v257/src/core/timer.c#L461-L479",
+          "sha256": "675b20653abc17d52632ce48e6c2cd1ebcbebcf72394f2bf5909180ee859ce12"
+        },
+        {
+          "source_id": "timer-manual",
+          "version": "v257",
+          "section": "Unit=",
+          "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/systemd.timer.xml",
+          "line_start": 340,
+          "line_end": 350,
+          "primary_locator": "https://github.com/systemd/systemd/blob/v257/man/systemd.timer.xml#L340-L350",
+          "sha256": "4862ce0331198c5b3d24b69af45fc8dd55b2c1ad98ce839b042b1cc70d01d9cc"
+        }
+      ]
+    },
+    {
+      "claim": 6,
+      "candidate_disposition": "REFUTED",
+      "review": "SUPPORTED_REFUTATION",
+      "candidate_lines": "74-86",
+      "assessment": "Correctly distinguishes daily midnight syntax/next-occurrence calculation from execution/completion, clock correctness and boot activation. A possible three-minute runtime is enough to disprove a universal two-second completion guarantee; actual runtime is unknown. The midnight \u00b1 wording is loose: AccuracySec adds a nonnegative window, not symmetric scheduling jitter. This is minor given claim 4\u2019s explicit after-time wording.",
+      "evidence": [
+        {
+          "source_id": "time-manual",
+          "version": "v257",
+          "section": "Calendar Events / daily normalization and analyzer scope",
+          "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/systemd.time.xml",
+          "line_start": 260,
+          "line_end": 315,
+          "primary_locator": "https://github.com/systemd/systemd/blob/v257/man/systemd.time.xml#L260-L315",
+          "sha256": "7973199a518696a838e2750d6b2a4a5420778a88c569086f27f1089481d61a09"
+        },
+        {
+          "source_id": "timer-manual",
+          "version": "v257",
+          "section": "AccuracySec=",
+          "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/systemd.timer.xml",
+          "line_start": 228,
+          "line_end": 253,
+          "primary_locator": "https://github.com/systemd/systemd/blob/v257/man/systemd.timer.xml#L228-L253",
+          "sha256": "4862ce0331198c5b3d24b69af45fc8dd55b2c1ad98ce839b042b1cc70d01d9cc"
+        },
+        {
+          "source_id": "timer-manual",
+          "version": "v257",
+          "section": "Persistent=",
+          "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/systemd.timer.xml",
+          "line_start": 353,
+          "line_end": 370,
+          "primary_locator": "https://github.com/systemd/systemd/blob/v257/man/systemd.timer.xml#L353-L370",
+          "sha256": "4862ce0331198c5b3d24b69af45fc8dd55b2c1ad98ce839b042b1cc70d01d9cc"
+        },
+        {
+          "source_id": "timer-manual",
+          "version": "v257",
+          "section": "Automatic Dependencies / Default Dependencies",
+          "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/systemd.timer.xml",
+          "line_start": 73,
+          "line_end": 91,
+          "primary_locator": "https://github.com/systemd/systemd/blob/v257/man/systemd.timer.xml#L73-L91",
+          "sha256": "4862ce0331198c5b3d24b69af45fc8dd55b2c1ad98ce839b042b1cc70d01d9cc"
+        },
+        {
+          "source_id": "service-manual",
+          "version": "v257",
+          "section": "Type=oneshot",
+          "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary/systemd.service.xml",
+          "line_start": 209,
+          "line_end": 219,
+          "primary_locator": "https://github.com/systemd/systemd/blob/v257/man/systemd.service.xml#L209-L219",
+          "sha256": "80f479747740d98e20ec214231a710616013238323596ea619d9159b3649e584"
+        }
+      ]
+    }
+  ],
+  "inspected_hashes": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/inspected-hashes.json",
+  "primary_evidence_directory": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/primary",
+  "scope": "This treatment APPL role only; no other arm, pipeline final or ER11 rescore."
+}

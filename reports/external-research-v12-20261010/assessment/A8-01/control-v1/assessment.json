@@ -1,0 +1,1103 @@
+{
+  "assessment_id": "ER12-A8-01-control-v1",
+  "rubric_version": "RUBRIC-v1",
+  "slot": "A8-01",
+  "arm": "control",
+  "scope": "ONE completed full pipeline; ordinary reviser final only",
+  "source_judgment": "FAIL",
+  "source_judgment_basis": "One remaining material wrong released normal-validation behavior claim M1, primary-source backed; no material omission separately found",
+  "delivery_judgment": "COMPLETE_MAPPED_SCIENCE",
+  "coverage": {
+    "all_six_axes": "FULL",
+    "axes_assessed": 6,
+    "exact_plan_clauses_assessed": 8,
+    "unassessed_axes": [],
+    "time_capped": false
+  },
+  "final_artifact": "ER12_RUNTIME/runs/A8-01/control/stages/reviser/final.md",
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Original obligations and negative constraints",
+      "coverage": "FULL",
+      "result": "PASS",
+      "assessment": "All eight brief obligations are covered in a complete planning proposal. Originals remain in place; accounts, checksum authorship/recovery proof and untested offsite replacement are excluded. Owners are explicit; hash/depth remain recommendations. Conditional human-readable inventory is preserved and investigated as arbitrary readable payload plus reconciliation/usability proposal, not established staff capability. No installation/deployment is required.",
+      "locators": [
+        "reviser/final.md:7",
+        "reviser/final.md:19",
+        "reviser/final.md:75",
+        "reviser/final.md:93",
+        "reviser/final.md:114"
+      ],
+      "evidence": [
+        "E01",
+        "E02",
+        "E09",
+        "E10",
+        "E11"
+      ],
+      "remaining_material_scope_omissions": []
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source claims, exact subject/operation/version/default/unit/type/domain/exceptions",
+      "coverage": "FULL",
+      "result": "FAIL",
+      "assessment": "All S01–S11 governing primary evidence independently retrieved. BagIt default/support, octet/file-count shortcut, complete/valid, optional tag manifests and opaque/direct payload conditions are supported. OCFL state/logical versus manifest/physical paths, inventory SHOULD/MUST and digest rules were examined. NFD commit versus NFC release, report versus successful Linux test, narrow unsafe-path change, PREMIS authenticity limits and whereis staleness were checked. M1 remains: unused collision helper is treated as effective released normal validation behavior.",
+      "locators": [
+        "reviser/final.md:34",
+        "reviser/final.md:40",
+        "reviser/source-map.json:125"
+      ],
+      "evidence": [
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E06",
+        "E07",
+        "E08",
+        "E09",
+        "E10",
+        "E11"
+      ],
+      "material_finding_ids": [
+        "M1"
+      ]
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar discovery, competing/analogous approaches, implementation/history and opportunities",
+      "coverage": "FULL",
+      "result": "COVERED_WITH_MATERIAL_SOURCE_DEFECT",
+      "assessment": "Substantive independently framed BagIt snapshots versus OCFL versions; PREMIS-shaped custody and optional git-annex location history; per-exhibition/per-asset depth and full snapshot duplication tradeoffs. Genuine normalization issue/fix/released mitigation and later unsafe-path history were investigated. Readable inventory, tag protection/reference custody and offsite retrieval are useful opportunities. No exhaustive catalogue or new platform obligation is invented. M1 impairs the collision-detection part of history, not the whole alternative comparison.",
+      "evidence": [
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E06",
+        "E07",
+        "E08",
+        "E09",
+        "E10",
+        "E11"
+      ],
+      "locators": [
+        "investigator/discovery.md:5",
+        "investigator/discovery.md:13",
+        "investigator/discovery.md:21",
+        "reviser/final.md:52",
+        "reviser/final.md:58",
+        "reviser/final.md:93"
+      ],
+      "material_finding_ids": [
+        "M1"
+      ]
+    },
+    {
+      "axis": 4,
+      "name": "Wrong criticism/corrections/rejections and exact plan dispositions",
+      "coverage": "FULL",
+      "result": "EXPLICIT_DISPOSITIONS_SUPPORTED_WITH_MISSED_M1",
+      "assessment": "C1–C3 accepted qualifications are justified; C4 is appropriate retained uncertainty. No false correction, improper scope removal or wrong criticism rejection is required to explain the final. Every exact original clause is checked below. Draft row5 misquoted clause3 but preserved clause5 meaning; final identifies correct optional scope. Critic source map and blanket agreement missed/carried M1; agreement is not proof.",
+      "locators": [
+        "critic/critique.md:24",
+        "critic/critique.md:50",
+        "reviser/final.md:19",
+        "reviser/final.md:106"
+      ],
+      "evidence": [
+        "E01",
+        "E02",
+        "E04",
+        "E06"
+      ],
+      "material_finding_ids": [
+        "M1"
+      ],
+      "wrong_demanded_corrections_found": []
+    },
+    {
+      "axis": 5,
+      "name": "Supported discovery/draft/critique/final meaning preserved",
+      "coverage": "FULL",
+      "result": "PASS_FOR_SUPPORTED_SCOPE_PRESERVATION",
+      "assessment": "Final remains self-contained and preserves supported findings, alternatives, optional inventory, negative constraints, owner authority and NOT_RUN distinction. Corrected unspecified restore origin, retention terminology and Linux-server attribution remain visible as lineage defects. Draft OCFL state/content-path imprecision no longer explicitly survives. M1 is false meaning retained, not loss of supported meaning.",
+      "locators": [
+        "investigator/discovery.md",
+        "investigator/draft.md",
+        "critic/critique.md",
+        "reviser/final.md"
+      ],
+      "evidence": [
+        "E01",
+        "E02",
+        "E04",
+        "E06"
+      ],
+      "supported_scope_losses": [],
+      "material_finding_ids": [
+        "M1"
+      ]
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed versus executed validation and oracle applicability",
+      "coverage": "FULL",
+      "result": "PASS_FOR_EXECUTION_HONESTY_AND_DESIGN_WITH_M1_ORACLE_LIMIT",
+      "assessment": "Public source review is research; every package/copy/restore/validator/usability test remains proposed/NOT_RUN. Separate registrar inventory, approved manifest/reference, version relationships and retrieval from existing offsite storage provide meaningful prospective oracles and ordered priorities. No prototype is required. Unused helper is not an effective stock oracle (M1). Reviewer source retrieval, PDF extraction, static parse and freeze comparisons were actually performed; no downloaded source/test execution.",
+      "locators": [
+        "reviser/final.md:75",
+        "reviser/final.md:82",
+        "reviser/final.md:84",
+        "reviser/final.md:114"
+      ],
+      "evidence": [
+        "E01",
+        "E04",
+        "E06",
+        "E09",
+        "E11"
+      ],
+      "candidate_executed_product_validation": "NONE_CLAIMED / NOT_RUN",
+      "reviewer_product_validation": "NOT_RUN",
+      "material_finding_ids": [
+        "M1"
+      ]
+    }
+  ],
+  "exact_plan_clauses": [
+    {
+      "clause": 1,
+      "exact_original_heading": "### 1. Compare two preservation packaging/versioning approaches and an analogous content-identity/custody mechanism suitable for a small gallery.",
+      "exact_original_draft_treatment": "Create a ZIP for each exhibition and call it immutable once named final. Overwrite a corrected caption inside the current ZIP.",
+      "original_locator": "ER12_RUNTIME/frozen-inputs/A8-01/plan.md:15",
+      "final_disposition": "Correct/reject in-place overwrite; retain exhibition grouping",
+      "independent_assessment": "Version-retained BagIt pilot with conditional ZIP transport wrapper, OCFL comparison and logical-ID/event-log analogy.",
+      "result": "PASS",
+      "final_locator": "ER12_RUNTIME/runs/A8-01/control/stages/reviser/final.md:23"
+    },
+    {
+      "clause": 2,
+      "exact_original_heading": "### 2. Explain logical asset identity, corrected versions, manifests and separation of integrity from provenance or completeness.",
+      "exact_original_draft_treatment": "BagIt is a candidate; OCFL is mentioned without comparing repository versus transfer-package responsibilities.",
+      "original_locator": "ER12_RUNTIME/frozen-inputs/A8-01/plan.md:19",
+      "final_disposition": "Expand incomplete comparison",
+      "independent_assessment": "Separate package manifests from object versioning and registrar semantic identity. Neither standard decides exhibition completeness.",
+      "result": "PASS",
+      "final_locator": "ER12_RUNTIME/runs/A8-01/control/stages/reviser/final.md:24"
+    },
+    {
+      "clause": 3,
+      "exact_original_heading": "### 3. Describe a bounded copy/restore validation design and explicit behavior for missing files, changed names or manifest mismatch.",
+      "exact_original_draft_treatment": "Use one archive checksum as proof that all expected assets are preserved. Retain the optional human inventory, but no reconciliation or restore procedure is specified.",
+      "original_locator": "ER12_RUNTIME/frozen-inputs/A8-01/plan.md:23",
+      "final_disposition": "Reject archive-digest completeness proof; supply validation",
+      "independent_assessment": "Approved expected inventory, per-file reference, local and offsite read-back, explicit existing-offsite origin for clean restore and failed/unresolved mismatch outcomes.",
+      "result": "PASS_FOR_PROPOSED_DESIGN",
+      "final_locator": "ER12_RUNTIME/runs/A8-01/control/stages/reviser/final.md:25"
+    },
+    {
+      "clause": 4,
+      "exact_original_heading": "### 4. Investigate a relevant released path/manifest/version-history issue and explain its impact on ordinary local/offsite storage.",
+      "exact_original_draft_treatment": "No path/manifest history has been investigated. A future successful copy is expected to establish provenance and recovery.",
+      "original_locator": "ER12_RUNTIME/frozen-inputs/A8-01/plan.md:27",
+      "final_disposition": "Investigate history; reject provenance/recovery inference",
+      "independent_assessment": "Real Unicode issue/fix and later narrow path-safety change provided, but normal released collision detection is wrongly claimed (M1).",
+      "result": "FAIL_M1",
+      "final_locator": "ER12_RUNTIME/runs/A8-01/control/stages/reviser/final.md:26"
+    },
+    {
+      "clause": 5,
+      "exact_original_heading": "### 5. Preserve and investigate this supported optional scope: a human-readable exhibition inventory that remains usable without specialist repository software. It is an authorized option, not a mandatory feature or an established technical capability; recommend conditions, retain it when supported, and explain any evidence-based exclusion.",
+      "exact_original_draft_treatment": "Retain a human-readable exhibition inventory that remains usable without specialist repository software as supported owner-authorized optional scope. Support here means that the brief explicitly permits it; technical support, conditions and interoperability still need research. Do not remove it merely because the baseline route lacks it, or silently promote it to mandatory scope.",
+      "original_locator": "ER12_RUNTIME/frozen-inputs/A8-01/plan.md:31",
+      "final_disposition": "Retain/investigate optional readable inventory",
+      "independent_assessment": "Arbitrary accessible payload supports inventory copy; CSV/field guide are proposals with registrar reconciliation and staff usability check. Equivalent-record condition preserves a usable view. Not presumed mandatory capability.",
+      "result": "PASS",
+      "final_locator": "ER12_RUNTIME/runs/A8-01/control/stages/reviser/final.md:27"
+    },
+    {
+      "clause": 6,
+      "exact_original_heading": "### 6. Make owner decisions explicit: The exhibition registrar owns completeness and version relationships; the storage custodian owns copy/restore practice. Hash algorithm and package depth are explicit recommendations for owner choice, not a presumed mandate.",
+      "exact_original_draft_treatment": "Owner authority is reserved as follows: The exhibition registrar owns completeness and version relationships; the storage custodian owns copy/restore practice. Hash algorithm and package depth are explicit recommendations for owner choice, not a presumed mandate. The draft has not obtained these decisions. Its tentative implementation assumptions cannot substitute for them.",
+      "original_locator": "ER12_RUNTIME/frozen-inputs/A8-01/plan.md:35",
+      "final_disposition": "Accept owner authority; operationalize recommendations",
+      "independent_assessment": "Registrar/custodian roles explicit; SHA-512 and full exhibition snapshot depth are recommendations pending owner choice, not obtained decisions.",
+      "result": "PASS",
+      "final_locator": "ER12_RUNTIME/runs/A8-01/control/stages/reviser/final.md:28"
+    },
+    {
+      "clause": 7,
+      "exact_original_heading": "### 7. Preserve negative constraints: Do not move gallery originals, create storage accounts, claim a checksum establishes authorship or backup recoverability, or replace the existing offsite copy with an untested platform.",
+      "exact_original_draft_treatment": "Binding exclusions: Do not move gallery originals, create storage accounts, claim a checksum establishes authorship or backup recoverability, or replace the existing offsite copy with an untested platform. The draft has no complete trace showing that its assumptions comply; revise the proposal wherever necessary to preserve these exclusions.",
+      "original_locator": "ER12_RUNTIME/frozen-inputs/A8-01/plan.md:39",
+      "final_disposition": "Accept binding constraints",
+      "independent_assessment": "Staging copies only, no accounts, no checksum authorship/backup proof, existing offsite retained. No untested replacement.",
+      "result": "PASS",
+      "final_locator": "ER12_RUNTIME/runs/A8-01/control/stages/reviser/final.md:29"
+    },
+    {
+      "clause": 8,
+      "exact_original_heading": "### 8. Deliver one coherent evidence-backed research proposal covering obligations 1–8, with recommendations, source/version applicability, useful discoveries, unresolved owner inputs, and a validation table separating checks actually executed from checks merely proposed. Do not report research sources or future tests as executed product validation.",
+      "exact_original_draft_treatment": "The draft currently contains no coherent evidence-backed final proposal. Its proposed demos are research/validation ideas only. A complete revision must preserve every obligation, disclose corrections and retained options, and not confuse documentation review with successful product operation.",
+      "original_locator": "ER12_RUNTIME/frozen-inputs/A8-01/plan.md:43",
+      "final_disposition": "Complete coherent proposal; preserve validation status",
+      "independent_assessment": "Complete recommendations, applicability, alternatives, open inputs and research-versus-NOT_RUN table. No executed operational success invented; source qualification fails separately for M1.",
+      "result": "DELIVERED_WITH_M1_SOURCE_FAILURE",
+      "final_locator": "ER12_RUNTIME/runs/A8-01/control/stages/reviser/final.md:30"
+    }
+  ],
+  "plan_global_dispositions": {
+    "access_status": "Fallible concealed leads, not assessor key; revelation identity checked, complete access chronology unavailable",
+    "pilot_intent": "Existing ordinary local/offsite copies and preserved earlier corrected versions retained",
+    "tentative_leads": "BagIt/OCFL compared, not treated as preselected winners; PREMIS/git-annex supply analogous opportunities",
+    "handoff_validation_table": "Original NOT_RUN/PROPOSED statuses not misreported as successful product operation; subsequent public research distinguished from future tests",
+    "interruption_walkthrough": "Failure/partial copy acceptance is covered by failed checks and preserving source/destination; plan demos are prospective ideas, not an extra deployment or executed-test obligation"
+  },
+  "critic_dispositions": [
+    {
+      "id": "C1",
+      "exact_original_heading": "### C1 — Material incomplete: restore source is not stated",
+      "complete_original_criticism": "**Location:** draft.md, “Bounded copy, restore and mismatch protocol,” step 6; also the proposed restore row in “Validation and execution record.”\n\nThe draft says to restore a selected package to a clean temporary destination, but does not say whether the restore starts from the new offsite copy or the local staging/package copy. This is material to the scope of the proposed validation: a local-source restore could pass while leaving the existing offsite copy’s retrieval path unexercised. The brief specifically asks for copy/restore validation in the context of an existing offsite copy, and forbids representing an untested copy as recoverable. State the source of the restore explicitly; the relevant rehearsal should retrieve from the existing offsite copy if it is meant to exercise that copy. This is a finding about proposal specificity, not evidence that the author intended a local source or that any restore occurred.\n\n**Evidence:** Brief obligations 3 and 8; draft step 5 copies to the existing offsite location, while step 6 names only the clean destination. BagIt’s manifest validates listed paths and bytes (S01); it does not itself demonstrate the custodian can retrieve from a particular location.",
+      "final_disposition": "accept_and_amend",
+      "independent_status": "SUPPORTED; material specificity defect corrected",
+      "assessment": "Draft restore destination was clean but source unspecified. Local restoration could leave offsite retrieval unexercised; not proof of local-source intent. Final step6 explicitly retrieves from existing offsite copy.",
+      "evidence_ids": [
+        "E01"
+      ],
+      "final_locator": "ER12_RUNTIME/runs/A8-01/control/stages/reviser/final.md:82"
+    },
+    {
+      "id": "C2",
+      "exact_original_heading": "### C2 — Minor locator/wording: qualify “immutable” as a local retention practice",
+      "complete_original_criticism": "**Location:** draft.md, opening recommendation (“immutable prior deposit”) and comparison table (“retain every accepted package unchanged”).\n\nThis is sound as an owner-controlled practice, but BagIt is a filesystem layout and manifest format; the RFC does not provide an immutability or access-control mechanism. The surrounding draft explains retaining a new deposit and keeping the old one, so this is not a material error. Clarify that “immutable” means the custodian’s documented retention procedure for the pilot, not a property enforced by BagIt. OCFL, by comparison, expressly describes its version directories as intended to remain unchanged when later versions are added (S02–S03).",
+      "final_disposition": "accept_and_amend",
+      "independent_status": "SUPPORTED; minor wording defect corrected",
+      "assessment": "BagIt itself does not enforce retention/write protection. Final attributes unchanged accepted deposits to custodian procedure.",
+      "evidence_ids": [
+        "E01",
+        "E02"
+      ],
+      "final_locator": "ER12_RUNTIME/runs/A8-01/control/stages/reviser/final.md:109"
+    },
+    {
+      "id": "C3",
+      "exact_original_heading": "### C3 — Minor locator/wording: distinguish the issue reporter’s destination from a Linux reproduction",
+      "complete_original_criticism": "**Location:** investigator/source-map.json, S04; carried sources/index.md, S04.\n\nThe issue reporter says a bag validated on a Mac was copied to an “Archivematica transfer server”; the issue text does not identify that server as Linux. A later maintainer comment describes a separate reproduction on Linux. The issue and fix remain directly relevant, and the draft itself says “another server,” so this does not undermine the conclusion. Keep those two observations distinct when describing the historic path. See S04.",
+      "final_disposition": "accept",
+      "independent_status": "SUPPORTED; minor report attribution corrected",
+      "assessment": "Reporter destination is Archivematica transfer server, not identified Linux. Separate comment173670998 reports successful OS X/Linux test. Final detailed disposition separates these.",
+      "evidence_ids": [
+        "E04"
+      ],
+      "final_locator": "ER12_RUNTIME/runs/A8-01/control/stages/reviser/final.md:110"
+    },
+    {
+      "id": "C4",
+      "exact_original_heading": "### C4 — Honestly unresolved external inputs; correctly left open",
+      "complete_original_criticism": "**Locations:** draft.md, “Owner inputs to resolve” and “Supported optional improvement.”\n\nThe authoritative inventory, asset-ID/version approval rules, staff usability of CSV, path mapping policy, selected digest policy, package depth, validator release, and check/restore cadence require gallery owner decisions or a local pilot. The draft identifies these as pending inputs rather than using them to avoid public research. They are legitimate open decisions, not findings of missing research.",
+      "final_disposition": "retain_uncertainty",
+      "independent_status": "SUPPORTED; external owner/pilot decisions",
+      "assessment": "Inventory authority, ID/version rules, staff usability, path mapping, digest/depth, release and cadence remain honest choices after substantive research.",
+      "evidence_ids": [
+        "E01",
+        "E02",
+        "E11"
+      ],
+      "final_locator": "ER12_RUNTIME/runs/A8-01/control/stages/reviser/final.md:111"
+    }
+  ],
+  "critic_blanket_agreement_assessment": "The no-material-wrong source conclusion is not adopted: E06 call-flow contradicts effective collision rejection and is carried through critic/final. Other explicit C1–C4 dispositions supported.",
+  "material_findings": [
+    {
+      "id": "M1",
+      "classification": "MATERIAL_WRONG / unsupported normal-operation applicability",
+      "status": "REMAINS_IN_FINAL",
+      "confidence": "HIGH for static stock call path; runtime NOT_RUN",
+      "claim": "v1.6.0 release-tagged code detects normalized-name conflicts",
+      "original_claim_exact": "The v1.6.0 release-tagged code uses NFC normalization-aware comparison and detects normalized-name conflicts.",
+      "final_locators": [
+        "ER12_RUNTIME/runs/A8-01/control/stages/reviser/final.md:40",
+        "ER12_RUNTIME/runs/A8-01/control/stages/reviser/source-map.json:125",
+        "ER12_RUNTIME/runs/A8-01/control/stages/reviser/sources/index.md:37"
+      ],
+      "lineage_locators": [
+        "ER12_RUNTIME/runs/A8-01/control/stages/investigator/discovery.md:23",
+        "ER12_RUNTIME/runs/A8-01/control/stages/investigator/draft.md:20",
+        "ER12_RUNTIME/runs/A8-01/control/stages/investigator/source-map.json:68",
+        "ER12_RUNTIME/runs/A8-01/control/stages/critic/source-map.json:68",
+        "ER12_RUNTIME/runs/A8-01/control/stages/critic/critique.md:50"
+      ],
+      "primary_evidence_ids": [
+        "E06"
+      ],
+      "source_backed_finding": "The helper build_unicode_normalized_lookup_dict raises FileNormalizationConflict only if called. The complete tagged bagit.py contains no calls to that helper; the normal open/validate/completeness/digest/CLI path uses normalized set/dictionary construction without collision rejection. Tagged test.py exercises transit normalization of one file, not equivalent-name collision rejection.",
+      "source_locators": [
+        "bagit.py:345–398 normalized sets/maps",
+        "bagit.py:519–537 and 669–685 validation dispatch",
+        "bagit.py:625–627 map update",
+        "bagit.py:727–761 completeness/digest path",
+        "bagit.py:878–959 exception/NFC/unused helper",
+        "test.py:751–786 single-name regression"
+      ],
+      "why_material": "Central released path-history and copy-validation evidence falsely credits a release with rejecting unsafe normalization collisions, confusing function existence with effective validation. Fail-closed local policy and future qualification do not correct that factual assertion. No selected deployment or actual gallery failure is alleged.",
+      "static_inference_example": "Two distinct canonically equivalent raw paths with identical bytes need not trigger the advertised exception on the stock path. This was NOT_RUN; it is reasoning from source flow, not a fabricated runtime result.",
+      "exceptions_and_limits": "A custom caller could explicitly use the helper; none is established. Other versions may differ. Normal NFC mitigation itself is supported. No downloaded code or product test executed.",
+      "candidate_repair_or_feedback": "NONE"
+    }
+  ],
+  "lineage_findings": [
+    {
+      "id": "L1",
+      "materiality": "MATERIAL_IN_DRAFT; corrected final",
+      "issue": "Restore source unspecified in discovery/draft",
+      "locators": [
+        "investigator/discovery.md:33",
+        "investigator/draft.md:54"
+      ],
+      "final_resolution": "reviser/final.md:82 explicitly existing offsite origin; C1 accepted",
+      "evidence_ids": [
+        "E01"
+      ]
+    },
+    {
+      "id": "L2",
+      "materiality": "MINOR; corrected final",
+      "issue": "BagIt immutability terminology not explicitly a retention procedure",
+      "locators": [
+        "investigator/draft.md:7"
+      ],
+      "final_resolution": "reviser/final.md:9 and :109 documented custodian retention",
+      "evidence_ids": [
+        "E01",
+        "E02"
+      ]
+    },
+    {
+      "id": "L3",
+      "materiality": "MINOR; corrected final",
+      "issue": "Discovery and investigator map attribute Linux to reporter destination",
+      "locators": [
+        "investigator/discovery.md:23",
+        "investigator/source-map.json S04"
+      ],
+      "final_resolution": "reviser/final.md:40 and :110 separate unstated reporter destination from successful OS X/Linux commenter test",
+      "evidence_ids": [
+        "E04"
+      ]
+    },
+    {
+      "id": "L4",
+      "materiality": "MINOR lineage imprecision",
+      "issue": "Draft clause5 quoted abbreviated clause3 treatment instead of original clause5",
+      "locators": [
+        "investigator/draft.md:21"
+      ],
+      "final_resolution": "Final clause5 preserves full optionality/conditions; exact original wording recorded here"
+    },
+    {
+      "id": "L5",
+      "materiality": "MINOR lineage imprecision",
+      "issue": "Draft OCFL version-state values called content paths rather than logical paths",
+      "locators": [
+        "investigator/draft.md:31"
+      ],
+      "final_resolution": "Final no longer explicitly makes this assignment; no OCFL implementation instructions or deployment chosen",
+      "evidence_ids": [
+        "E02"
+      ]
+    },
+    {
+      "id": "M1-lineage",
+      "materiality": "MATERIAL; NOT_CORRECTED",
+      "issue": "Unused conflict helper mistaken for effective released stock detection",
+      "final_resolution": "M1 remains across all stages; critic misses and carries it",
+      "evidence_ids": [
+        "E06"
+      ]
+    }
+  ],
+  "useful_discoveries_and_alternatives": [
+    {
+      "id": "D1",
+      "mechanism": "BagIt directly readable snapshots versus OCFL object versions",
+      "use": "Simpler independent handoff/restore versus native version history/deduplication and structural validation burden",
+      "evidence_ids": [
+        "E01",
+        "E02",
+        "E03"
+      ],
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "D2",
+      "mechanism": "Registrar logical asset/version identity independent of paths/digests",
+      "use": "Caption correction preserves identity and prior accepted state; renamed paths require mappings rather than silent identity changes",
+      "evidence_ids": [
+        "E01",
+        "E02"
+      ],
+      "status": "LOCAL_PRODUCT_CHOICE_SUPPORTED_BY_MECHANISM_LIMITS"
+    },
+    {
+      "id": "D3",
+      "mechanism": "PREMIS-shaped event/custody register",
+      "use": "Separates actor/time/action/outcome from byte fixity; human-readable fields without claiming conformance",
+      "evidence_ids": [
+        "E09",
+        "E10"
+      ],
+      "status": "SUPPORTED_ANALOGY"
+    },
+    {
+      "id": "D4",
+      "mechanism": "git-annex whereis last-known location information",
+      "use": "Potential future custody/location aid explicitly not live content validation",
+      "evidence_ids": [
+        "E11"
+      ],
+      "status": "SUPPORTED_BOUNDED_OPTION"
+    },
+    {
+      "id": "D5",
+      "mechanism": "Unicode transit normalization, NFD patch/NFC release distinction",
+      "use": "Real local/offsite path portability investigation; explicit collision preflight and release qualification remain proposed",
+      "evidence_ids": [
+        "E04",
+        "E05",
+        "E06"
+      ],
+      "status": "NORMALIZATION_SUPPORTED; COLLISION_DETECTION_CLAIM_M1_FAIL"
+    },
+    {
+      "id": "D6",
+      "mechanism": "Readable inventory in arbitrary payload plus approved reference/tag protection",
+      "use": "Inventory bytes can be checked without specialist repository UI; completeness comes from registrar and usability remains pending",
+      "evidence_ids": [
+        "E01"
+      ],
+      "status": "SUPPORTED_CONDITIONAL_OPTION"
+    },
+    {
+      "id": "D7",
+      "mechanism": "Per-exhibition full snapshots versus per-asset packages; optional ZIP transport wrapper",
+      "use": "Trade independent restores and simple reconciliation against duplicate bytes/package overhead, left for owners",
+      "evidence_ids": [
+        "E01",
+        "E02"
+      ],
+      "status": "SUPPORTED_LOCAL_RECOMMENDATION"
+    },
+    {
+      "id": "D8",
+      "mechanism": "Release-specific unsafe-path check changed in v1.9.0",
+      "use": "Narrow recent code/release history motivates pinning/qualification without claiming all path checks correct",
+      "evidence_ids": [
+        "E07",
+        "E08"
+      ],
+      "status": "SUPPORTED"
+    }
+  ],
+  "validation_and_oracles": [
+    {
+      "activity": "Public specifications/code/issues/releases and assigned packet review",
+      "candidate_status": "EXECUTED_RESEARCH_ASSERTED_IN_AUTHORED_DOSSIER",
+      "review_status": "Primary semantics independently verified; exact candidate network telemetry unavailable",
+      "oracle": "Governing primary text/code, not agreement or hashes"
+    },
+    {
+      "activity": "Create sample/gallery BagIt package",
+      "candidate_status": "PROPOSED / NOT_RUN",
+      "review_status": "No operational success claimed",
+      "oracle": "Full format/manifest check plus separately approved inventory"
+    },
+    {
+      "activity": "Local full validation and existing offsite read-back",
+      "candidate_status": "PROPOSED / NOT_RUN",
+      "review_status": "Meaningful designed check; M1 stock collision assertion incorrect",
+      "oracle": "Previously approved reference digest/path set and inventory, not rebuilt self-consistent manifest"
+    },
+    {
+      "activity": "Missing/unexpected/renamed paths and changed digest/metadata",
+      "candidate_status": "PROPOSED / NOT_RUN",
+      "review_status": "Explicit fail/unresolved handling, preserve copies and version decision",
+      "oracle": "Recorded reference and stable registrar identities"
+    },
+    {
+      "activity": "Clean restore from existing offsite location and representative opening",
+      "candidate_status": "PROPOSED / NOT_RUN",
+      "review_status": "C1 corrected; limited to exercised retrieval route and sampled renderability",
+      "oracle": "Actual offsite retrieval plus all path/digest and inventory checks; no future guarantee"
+    },
+    {
+      "activity": "CSV ordinary-tool staff usability, owner algorithm/depth choice",
+      "candidate_status": "PROPOSED / OWNER_INPUT",
+      "review_status": "Honest unresolved inputs, not mandatory observed capability",
+      "oracle": "Staff usability/reconciliation and documented owner decisions"
+    },
+    {
+      "activity": "Reviewer primary retrieval, PDF extraction, static AST/call-path inspection, frozen identity comparisons",
+      "candidate_status": "NOT_APPLICABLE",
+      "review_status": "EXECUTED, inputs/results saved",
+      "oracle": "Supports reviewer source judgment; not candidate product execution"
+    },
+    {
+      "activity": "Downloaded code execution, installed validator, account, production access, live copy/restore",
+      "candidate_status": "NOT_RUN / outside bounded planning assignment",
+      "review_status": "NOT_RUN"
+    }
+  ],
+  "source_records": [
+    {
+      "id": "E01",
+      "candidate_source_id": "S01",
+      "url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+      "version": "RFC 8493, BagIt 1.0, October 2018",
+      "locators": "§§1.1, 2.1.2–2.1.3, 2.2.1–2.2.4, 2.4, 3, 5.4, 6.1",
+      "semantic_result": "SUPPORTED"
+    },
+    {
+      "id": "E02",
+      "candidate_source_id": "S02",
+      "url": "https://ocfl.io/1.1.0/spec/",
+      "version": "OCFL 1.1.0, 7 October 2022",
+      "locators": "§§3.3–3.8; readable capture lines 201–240, 244–350, 402–438",
+      "semantic_result": "SUPPORTED_WITH_LINEAGE_LIMIT"
+    },
+    {
+      "id": "E03",
+      "candidate_source_id": "S03",
+      "url": "https://ocfl.io/1.1.0/spec/change-log.html",
+      "version": "OCFL 1.1, 7 October 2022",
+      "locators": "Changes from 1.0; readable lines 15–50",
+      "semantic_result": "SUPPORTED"
+    },
+    {
+      "id": "E04",
+      "candidate_source_id": "S04",
+      "url": "https://github.com/LibraryOfCongress/bagit-python/issues/51",
+      "version": "Opened 2016-01-20, closed 2017-02-24, milestone 1.6; report does not specify bagit release",
+      "locators": "Issue body; comments 173395149, 173397299, 173670998, 173694437, 197048716, 197074748",
+      "semantic_result": "SUPPORTED_AFTER_FINAL_QUALIFICATION"
+    },
+    {
+      "id": "E05",
+      "candidate_source_id": "S05",
+      "url": "https://github.com/LibraryOfCongress/bagit-python/commit/16f34b6",
+      "version": "16f34b64452628be82ee545401ea579c5e1e7bd1, 2016-03-15",
+      "locators": "commit.message; files[bagit.py].patch and files[test.py].patch",
+      "semantic_result": "SUPPORTED"
+    },
+    {
+      "id": "E06",
+      "candidate_source_id": "S06",
+      "url": "https://github.com/LibraryOfCongress/bagit-python/blob/v1.6.0/bagit.py",
+      "version": "v1.6.0 tag commit 43fd5007115fd0e24dd701518ac6f82271006acd",
+      "locators": "bagit.py lines 345–398, 519–537, 625–627, 669–685, 727–761, 878–959; test.py lines 751–786",
+      "semantic_result": "MATERIAL_WRONG_OPERATION_M1"
+    },
+    {
+      "id": "E07",
+      "candidate_source_id": "S07",
+      "url": "https://github.com/LibraryOfCongress/bagit-python/releases/tag/v1.9.0",
+      "version": "v1.9.0; 861ddacb339d5b92659f0187a402f501d841abbe; published 2025-06-13T17:43:22Z",
+      "locators": "release.body Behavioral changes, PR184; tag object.sha",
+      "semantic_result": "SUPPORTED"
+    },
+    {
+      "id": "E08",
+      "candidate_source_id": "S08",
+      "url": "https://github.com/LibraryOfCongress/bagit-python/pull/184",
+      "version": "Merged 2025-06-13T16:26:17Z, merge 753679c9b342660d038f65a8dc4f755ab95d679b",
+      "locators": "body, merged_at, merge_commit_sha; files[0].patch at _path_is_dangerous",
+      "semantic_result": "SUPPORTED"
+    },
+    {
+      "id": "E09",
+      "candidate_source_id": "S09",
+      "url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+      "version": "PREMIS 3.0, June 2015, revised November 2015",
+      "locators": "Printed pp.6–7, 59 (§1.5.2), 258–259; PDF zero-based pp.15–16,68,267–268; extracted text lines 452–480,2906–2963,9537–9590",
+      "semantic_result": "SUPPORTED"
+    },
+    {
+      "id": "E10",
+      "candidate_source_id": "S10",
+      "url": "https://www.loc.gov/standards/premis/v3/premis-hierarchical-3-0.html",
+      "version": "PREMIS 3.0 HTML listing; page footer 2022-01-28",
+      "locators": "Introduction lines 14–27; Event/Agent lines 117–148",
+      "semantic_result": "SUPPORTED"
+    },
+    {
+      "id": "E11",
+      "candidate_source_id": "S11",
+      "url": "https://git-annex.branchable.com/git-annex-whereis/",
+      "version": "Rolling official manual, release version not stated",
+      "locators": "DESCRIPTION; readable lines 24–36",
+      "semantic_result": "SUPPORTED"
+    }
+  ],
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A8-01/brief.md",
+      "bytes": 3458,
+      "sha256": "33a97f960ac3e92a24cfeaa5e170a0adb51428d699f49be026f40a909e648c47",
+      "mtime_ns": 1791605469530856617,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A8-01/plan.md",
+      "bytes": 6136,
+      "sha256": "6964f85a4fdd4b74e4a40cbda44e93524aec1b8ed3860fa5ddec434dd8a2fdca",
+      "mtime_ns": 1791605469530976394,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A8-01/control-v1/root-review-request.json",
+      "bytes": 3593,
+      "sha256": "6150fccf6ff688eb77af52c5fb7a974d859276e374a141cff0db94724ac7689a",
+      "mtime_ns": 1791607345568244470,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/control/run.json",
+      "bytes": 580,
+      "sha256": "ba5069ebd6459271074674da4c9b80d76008d9087a2f296ebad0ae23bfd39e23",
+      "mtime_ns": 1791605473469525514,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/inputs/brief.md",
+      "bytes": 3458,
+      "sha256": "33a97f960ac3e92a24cfeaa5e170a0adb51428d699f49be026f40a909e648c47",
+      "mtime_ns": 1791605473469249725,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/critic/assignment.md",
+      "bytes": 3306,
+      "sha256": "bc3ae6414a04d0a88a378a82474dcd563a40f19e56c5ea11a5ecb4372b3dca7e",
+      "mtime_ns": 1791606455162730047,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/critic/critique.md",
+      "bytes": 9203,
+      "sha256": "ca81a473a4bd3fe05fdfe6c3161e2443b8cd8fdfabf6351daab0216ab4b9aca6",
+      "mtime_ns": 1791606875278174910,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/critic/dispatch.json",
+      "bytes": 4124,
+      "sha256": "4a4a89d5bcc15ca103c39e5480b4c04bfa7f00cf12dee871808728252cc68b68",
+      "mtime_ns": 1791606455717467665,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/critic/freeze.json",
+      "bytes": 3135,
+      "sha256": "71bb0458086f4041df6492d874d60827e87a700d906895de70e6d0a3a5cbe07d",
+      "mtime_ns": 1791606455163857395,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/critic/input-map.json",
+      "bytes": 1390,
+      "sha256": "e01f74c84ba1dc03f29073c9143f2c4f8033dabf584cc0bf31dab79254746e2a",
+      "mtime_ns": 1791606455162543243,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/critic/request.json",
+      "bytes": 890,
+      "sha256": "c10801bcbc1f501cfa420dca3b9ca40f474af26c77200f63d1261fffc2ca88fc",
+      "mtime_ns": 1791606455164067065,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/critic/source-map.json",
+      "bytes": 11355,
+      "sha256": "3155117e1d1743976fcd931eb63d4b2579f311bc449ea416a5c78a0baff5498d",
+      "mtime_ns": 1791606875286174972,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/critic/sources/index.md",
+      "bytes": 6047,
+      "sha256": "a525ca596879f0ababd30261207d040cecc891d2dfa5875b66a2b5bda5352495",
+      "mtime_ns": 1791606953524804671,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/critic/status.json",
+      "bytes": 3174,
+      "sha256": "31b4079d4c701bd5793982884de67cd1d82514c82a4c65ba3d4d6f9007c529dd",
+      "mtime_ns": 1791607023077810878,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/investigator/assignment.md",
+      "bytes": 3712,
+      "sha256": "b84914b9e4301c05cc19843facd13089ea5c228077aa4a66b43b8fb14f5a593d",
+      "mtime_ns": 1791605473470428089,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/investigator/discovery.md",
+      "bytes": 10336,
+      "sha256": "dd80136d34f5fd176bd887efdd550f913784c959fb8cffe4de251f566bcd3cfa",
+      "mtime_ns": 1791605662485984069,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/investigator/dispatch.json",
+      "bytes": 4220,
+      "sha256": "d292533126d8dbcf1118dac22712ff22fc164b9ac8d40f50386dd01a4df1d9f8",
+      "mtime_ns": 1791605474046770993,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/investigator/draft.md",
+      "bytes": 26125,
+      "sha256": "20822d8274afb1a4a1bc8199b3866ce68ad3bfd3988f2b357d6050b71aaf6abf",
+      "mtime_ns": 1791606371059964535,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/investigator/freeze.json",
+      "bytes": 1654,
+      "sha256": "4eba851e396bd04b0575a86759de61943f30f003cb98719aa13e4a40cf4c624b",
+      "mtime_ns": 1791605473470750165,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/investigator/input-map.json",
+      "bytes": 714,
+      "sha256": "d428bd8458b76d97fa41a21ccfb9b68574e20d02735adb192487ea1eaa940426",
+      "mtime_ns": 1791605473470171685,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/investigator/native-goal-record.json",
+      "bytes": 1872,
+      "sha256": "a9805e33f78c7b787e832675b17f8cfe4a888d2c3fb935cc478423d6dc36707c",
+      "mtime_ns": 1791606371059278995,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/investigator/plan-reveal.json",
+      "bytes": 427,
+      "sha256": "f749d8c85748cb417b4bda14133e31446eb3ef68dcbf3eab06eb02e7710025bb",
+      "mtime_ns": 1791605815250113037,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/investigator/request.json",
+      "bytes": 914,
+      "sha256": "d7a519bb0edb3d1b4d50927e4198f9ec590007ccb1e9d25875f3b87bfc250794",
+      "mtime_ns": 1791605473470871370,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/investigator/revealed-plan.md",
+      "bytes": 6136,
+      "sha256": "6964f85a4fdd4b74e4a40cbda44e93524aec1b8ed3860fa5ddec434dd8a2fdca",
+      "mtime_ns": 1791605815249948393,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/investigator/source-map.json",
+      "bytes": 12602,
+      "sha256": "eb1e41887508d9c2a71c8917f217527292d506b36d6d0408f7b7dae02dc4b2db",
+      "mtime_ns": 1791606335340877642,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/investigator/sources/index.md",
+      "bytes": 8173,
+      "sha256": "bd06bcfd01ebc0781de6e198ab326dab517cb9f51abc447676e27f0b2b1473f3",
+      "mtime_ns": 1791606335341625448,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/investigator/status.json",
+      "bytes": 4288,
+      "sha256": "b6f0bb6085da6933129d0553e15d9ac18e5aa308bf51f9fc905aca223f8fbe00",
+      "mtime_ns": 1791606454825188028,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/reviser/assignment.md",
+      "bytes": 3286,
+      "sha256": "204194678ab2cf980dc91b3134ef27c9dcf6a7a09a78a4ddde70e9abcd19e82e",
+      "mtime_ns": 1791607023444261514,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/reviser/dispatch.json",
+      "bytes": 4139,
+      "sha256": "a7f70d2b456eb5f0dfb4111d7c7438f853956cbd8f43331d7cabfa9b23a0fc92",
+      "mtime_ns": 1791607024356632426,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/reviser/final.md",
+      "bytes": 26338,
+      "sha256": "1ef15b43b4015d0bed2bfb9a21113f8a2a892f19c5b4c44be13f4cef507595aa",
+      "mtime_ns": 1791607236473225997,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/reviser/freeze.json",
+      "bytes": 3972,
+      "sha256": "e43a61835fd77d25888fdbb6499c1c04015a875acc964c9d603e6aee8d2121a1",
+      "mtime_ns": 1791607023622734296,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/reviser/input-map.json",
+      "bytes": 1768,
+      "sha256": "c20cbdd310e0f26884e2bd3f2bcaff6ae0644ba573903eae887c393745e5bc9f",
+      "mtime_ns": 1791607023622113409,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/reviser/request.json",
+      "bytes": 893,
+      "sha256": "43e95c9e63c6122a776d688378db56e31d4a3d03de4cac5339f12d48bcfcfa31",
+      "mtime_ns": 1791607023622301731,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/reviser/service-tier-change.json",
+      "bytes": 479,
+      "sha256": "e52ea771eb25c1aa89006cf48d37052380f5cc4edb77556579e5bc17beb816cc",
+      "mtime_ns": 1791607023622932911,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/reviser/source-map.json",
+      "bytes": 16495,
+      "sha256": "4363bd3009110f8b18731d7f772bf5ae3748d729c6e771a3850503f0a1f15e60",
+      "mtime_ns": 1791607264997404106,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/reviser/sources/index.md",
+      "bytes": 6436,
+      "sha256": "bd4ec959f4c95cbe20cab9b038a713f5ed5af4bd6e7cdce119496d54bdbb54b0",
+      "mtime_ns": 1791607277015479152,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/terminal-science-freeze-root.json",
+      "bytes": 7608,
+      "sha256": "9c94fb7a5a51d5ba2e1ffeff6237ac5246ad97f2241fcab7a48623c9b729f483",
+      "mtime_ns": 1791607345405663767,
+      "read_status": "FULL"
+    }
+  ],
+  "artifact_inspection_status": "Full original authored discovery/draft/critique/final, all stage maps/assignments/input maps/freezes/source indexes and mapped own-arm records; only assigned inputs/rubric and own review request. Original source roots contain authored indexes, no raw primary capture files.",
+  "missing_or_incomplete": {
+    "required_mapped_science_files": [],
+    "standalone_critique_checks_or_dispositions": "No separate files present; dispositions fully inspected in final.md/source-map",
+    "candidate_native_terminal_receipts": "Not provided in inspected packet; UNKNOWN",
+    "candidate_complete_tool_and_access_logs": "Not provided; UNKNOWN"
+  },
+  "freeze_identity": {
+    "all_frozen_hash_and_size_comparisons_match": true,
+    "comparisons": 34,
+    "original_plan_equals_revealed_copy": true,
+    "original_brief_equals_mapped_copy": true,
+    "evidence": "freeze-verification.json",
+    "semantic_proof": false
+  },
+  "native_t3_protocol_time_billing": {
+    "candidate_t3_delivery": "Own-arm saved T3 statuses/root terminal freeze record completed/no pending; task completion not native completion proof",
+    "candidate_native": "UNKNOWN actual terminal receipt; authored active/preterminal field reports and completion summaries retained as assertions only",
+    "candidate_reported_native_data": {
+      "investigator": {
+        "objective": "ER12 investigator stage, run A8-01-control: execute ER12_RUNTIME/runs/A8-01/control/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+        "threadId": "01a12402-0259-7d43-94be-8600f39acfe1",
+        "native_goal_status_at_creation_observed": "active",
+        "native_goal_status_preterminal_observed": "active",
+        "creation_response": {
+          "tokensUsed": 0,
+          "timeUsedSeconds": 0,
+          "createdAt": 1791605502,
+          "updatedAt": 1791605502,
+          "remainingTokens": null,
+          "completionBudgetReport": null
+        },
+        "latest_preterminal_get_goal_response": {
+          "threadId": "01a12402-0259-7d43-94be-8600f39acfe1",
+          "objective": "ER12 investigator stage, run A8-01-control: execute ER12_RUNTIME/runs/A8-01/control/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "active",
+          "tokensUsed": 246149,
+          "timeUsedSeconds": 832,
+          "createdAt": 1791605502,
+          "updatedAt": 1791606335,
+          "remainingTokens": null,
+          "completionBudgetReport": null
+        },
+        "goal_terminal_status": "NOT_YET_OBSERVED; will be taken from the native Goal completion result",
+        "unavailable_fields": {
+          "distinct_activation_receipt": "UNKNOWN; create_goal directly returned status=active, but no separate receipt field was exposed",
+          "activation_timestamp": "UNKNOWN; no activation-specific timestamp was exposed",
+          "timestamp_timezone_or_semantics": "UNKNOWN; raw createdAt and updatedAt values are preserved exactly as returned",
+          "additional_goal_provenance": "UNKNOWN; no further native provenance fields were exposed"
+        },
+        "source": "Direct create_goal and get_goal tool results; no receipt or timestamp was fabricated."
+      },
+      "critic": "Authored critique: active Goal 01a12410-fd0b-77a3-8df3-d0e84861fe88; preterminal tokensUsed71038/timeUsedSeconds99. T3 summary self-reports completion/8m24s; no raw terminal native receipt.",
+      "reviser": "Authored final: active Goal 01a12419-aa75-7b82-ba66-7ec4c9bd564b; preterminal tokensUsed48120/timeUsedSeconds76. T3 summary self-reports complete/100450 tokens/239s; no raw terminal native receipt."
+    },
+    "stage_route_and_deadline_records": [
+      {
+        "stage": "investigator",
+        "requested_route": {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna",
+          "options": {
+            "reasoningEffort": "max",
+            "serviceTier": "priority"
+          }
+        },
+        "returned_t3_provider_and_model": {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna"
+        },
+        "prepared_at_utc": "2026-10-10T04:11:13.469Z",
+        "stage_deadline_utc": "2026-10-10T04:41:13.469Z",
+        "stage_budget_s": 1800,
+        "effective_reasoning_effort": "UNKNOWN",
+        "effective_service_tier": "UNKNOWN",
+        "actual_model_execution_attestation": "UNKNOWN",
+        "candidate_native_terminal_tool_receipt": "NOT_PRESENT / UNKNOWN"
+      },
+      {
+        "stage": "critic",
+        "requested_route": {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna",
+          "options": {
+            "reasoningEffort": "max",
+            "serviceTier": "priority"
+          }
+        },
+        "returned_t3_provider_and_model": {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna"
+        },
+        "prepared_at_utc": "2026-10-10T04:27:35.162Z",
+        "stage_deadline_utc": "2026-10-10T04:39:35.162Z",
+        "stage_budget_s": 720,
+        "effective_reasoning_effort": "UNKNOWN",
+        "effective_service_tier": "UNKNOWN",
+        "actual_model_execution_attestation": "UNKNOWN",
+        "candidate_native_terminal_tool_receipt": "NOT_PRESENT / UNKNOWN"
+      },
+      {
+        "stage": "reviser",
+        "requested_route": {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna",
+          "options": {
+            "reasoningEffort": "max",
+            "serviceTier": "default"
+          }
+        },
+        "returned_t3_provider_and_model": {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna"
+        },
+        "prepared_at_utc": "2026-10-10T04:37:03.443Z",
+        "stage_deadline_utc": "2026-10-10T04:55:03.443Z",
+        "stage_budget_s": 1080,
+        "effective_reasoning_effort": "UNKNOWN",
+        "effective_service_tier": "UNKNOWN",
+        "actual_model_execution_attestation": "UNKNOWN",
+        "candidate_native_terminal_tool_receipt": "NOT_PRESENT / UNKNOWN"
+      }
+    ],
+    "candidate_protocol_full_audit": "UNKNOWN; no complete access/assistance logs",
+    "discovery_reveal_evidence": "Discovery hash and single-use reveal record match, revelation04:16:55.249Z; discovery mtime04:14:22.485984Z. Later S01/S09/S10 source-map access times cannot prove original pre-reveal research chronology. Not proof of unauthorized early plan access.",
+    "stage_science_mtimes": "Investigator draft04:26:11.059964Z; critic critique04:34:35.278175Z; reviser final04:40:36.473226Z, before recorded stage caps. Local mtime/root observation is not exact native completion latency.",
+    "observed_arm_interval": {
+      "start_utc": "2026-10-10T04:11:13.469Z",
+      "terminal_root_observed_utc": "2026-10-10T04:42:25.405359+00:00",
+      "seconds": 1871.936359,
+      "kind": "Preparation-to-root-terminal-observation interval only; not exact inference/CPU/native execution/billing"
+    },
+    "exact_model_occupancy": "UNKNOWN",
+    "effective_model_reasoning_tier": "UNKNOWN beyond returned T3 model/provider and requested settings",
+    "billing_and_inference_savings": "UNKNOWN; none inferred",
+    "paired_latency_or_cross_arm_comparison": "NOT_ASSESSED / excluded",
+    "reviewer_native": {
+      "goal_id": "01a1241e-9770-76f0-be2b-4feb79d90666",
+      "objective_chars": 1006,
+      "activation": "DIRECT_NATIVE_TOOL_RETURNED_ACTIVE",
+      "preterminal_receipt": "evidence/reviewer-native-preterminal.json",
+      "full_judgment_saved_before_completion": true,
+      "terminal_receipt": "evidence/reviewer-native-terminal.json (written only after completion)"
+    },
+    "reviewer_protocol": {
+      "unique_pm_mail_identity": "codex-er12-a801-control-review",
+      "checked_only_own_inbox": true,
+      "nested_delegation": false,
+      "candidate_assistance_feedback_or_repair": false,
+      "accounts_git_publication_changes": false,
+      "other_arms_outcomes_roster_campaign_history_or_ER11_reads": false,
+      "writes": "Only reserved control-v1 assessment output plus explicitly requested pm-mail identity registration"
+    }
+  },
+  "limitations": [
+    {
+      "id": "LIMIT1",
+      "kind": "External honest decisions / operational NOT_RUN",
+      "detail": "Actual gallery filenames/filesystems, owner choices, selected validator, CSV staff usability and restoration remain untested; planning scope does not require deployment."
+    },
+    {
+      "id": "LIMIT2",
+      "kind": "Inherited locator quality",
+      "detail": "Some source-map line locators are extraction-line numbers rather than real code lines; some combined source-index headings do not match table fragments. Primary URLs/IDs resolve and independent dossier gives actual code/section locators."
+    },
+    {
+      "id": "LIMIT3",
+      "kind": "Protocol/native evidence",
+      "detail": "Candidate native terminal responses, effective settings, exact execution time and complete pre-reveal access logs are unavailable; UNKNOWN does not alter source judgment."
+    }
+  ],
+  "unknowns": [
+    "Candidate native terminal tool proof and distinct activation provenance",
+    "Effective service tier/reasoning and backend model attestation",
+    "Complete candidate isolation/access/assistance audit",
+    "Original pre-reveal retrieval chronology for late access-record references",
+    "Exact inference/model occupancy and billing",
+    "Gallery actual filesystems/filenames and CSV usability",
+    "Owner-approved executable, digest/depth and operational cadence",
+    "Any actual package/copy/restore/product outcome"
+  ],
+  "review_envelope": {
+    "start_utc": "2026-10-10T04:42:46Z",
+    "deadline_utc": "2026-10-10T05:27:46Z",
+    "finite_minutes": 45,
+    "judgment_saved_at_utc": "2026-10-10T04:53:45.552380+00:00",
+    "completed_all_declared_scope_early": true,
+    "unassessed_if_capped": []
+  },
+  "assessment_integrity": "Original stage/source freeze remains unchanged; no candidate repair. This v1 full judgment precedes reviewer Goal completion. Later dispute disposition would be separate."
+}

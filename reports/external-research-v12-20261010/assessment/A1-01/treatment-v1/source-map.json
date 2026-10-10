@@ -1,0 +1,634 @@
+{
+  "schema": "er12-independent-assessment-source-map-v1",
+  "assigned_run": "A1-01-treatment",
+  "assessment": "assessment.md",
+  "assessment_json": "assessment.json",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "source_id_policy": "Independent R1–R9 namespace; candidate S1–S6 bindings mapped explicitly and never treated as independent proof.",
+  "sources": [
+    {
+      "id": "R1",
+      "candidate_ids": [
+        "S1"
+      ],
+      "title": "Tus resumable upload protocol",
+      "url": "https://tus.io/protocols/resumable-upload",
+      "version": "1.0.0; 2016-03-25",
+      "kind": "governing protocol",
+      "locators": [
+        "About this version",
+        "Core Protocol > Headers / HEAD / PATCH / OPTIONS",
+        "Creation",
+        "Expiration",
+        "Checksum",
+        "Termination",
+        "Concatenation"
+      ],
+      "web_locators": [
+        "lines 34–35, 59–64, 102–148, 168–218, 246–297, 327–368"
+      ],
+      "observation": "Offset recovery, stale-offset rejection, optional extensions, and per-PATCH checks are supported. Protocol acknowledgements do not establish gateway crash durability or an assembled object's full-file hash. Authentication, URL structure, and the added idempotent session/status contract are implementation choices.",
+      "conditions": "Core required; creation/expiration/checksum/termination/concatenation optional and advertised. Expiry is known at creation for this chosen fixed policy. Termination resource cleanup is SHOULD; the stronger cleanup queue is an original design choice.",
+      "domains": "Tus client/server; byte offsets and upload lengths are nonnegative integer bytes.",
+      "excerpt": "the implementation of authentication and authorization is left for the Server to decide.",
+      "access_date_utc": "2026-10-10",
+      "exact_access_timestamp": "UNKNOWN; not separately timestamped per web call",
+      "retrieval_window_utc": [
+        "2026-10-10T04:28:26Z",
+        "2026-10-10 04:32:46 UTC"
+      ],
+      "method": "Independent web.open/find of governing and surrounding primary text; no candidate page copies treated as proof.",
+      "evidence_path": "evidence/R1.md"
+    },
+    {
+      "id": "R2",
+      "candidate_ids": [
+        "S2"
+      ],
+      "title": "Amazon S3 multipart upload overview",
+      "url": "https://docs.aws.amazon.com/us_en/AmazonS3/latest/userguide/mpuoverview.html",
+      "version": "Current User Guide; no semantic edition shown",
+      "kind": "first-party service documentation",
+      "locators": [
+        "Multipart upload process > Parts upload / Completion / Listings",
+        "Checksums with multipart upload operations",
+        "Multipart upload API and permissions"
+      ],
+      "web_locators": [
+        "lines 23–41, 51–67, 160–176"
+      ],
+      "observation": "The recorded multipart, listing, replacement, checksum-type, encryption, and in-flight conditions support the two critique findings. The full-object/composite table agrees with final C1, and unfinished listings do not settle an unknown UploadPart. This does not prove compatible-vendor behavior.",
+      "conditions": "AWS-specific; exact checksum algorithm/type and encryption permissions matter; full-object CRC and composite SHA-256 are distinct. Maintain the returned part-number/ETag record; a listing is verification, not a replacement manifest.",
+      "domains": "Amazon S3 multipart operations only; general-purpose/directory-bucket distinctions must be selected before implementation.",
+      "excerpt": "the returned list of parts doesn't include parts that haven't finished uploading.",
+      "access_date_utc": "2026-10-10",
+      "exact_access_timestamp": "UNKNOWN; not separately timestamped per web call",
+      "retrieval_window_utc": [
+        "2026-10-10T04:28:26Z",
+        "2026-10-10 04:32:46 UTC"
+      ],
+      "method": "Independent web.open/find of governing and surrounding primary text; no candidate page copies treated as proof.",
+      "evidence_path": "evidence/R2.md"
+    },
+    {
+      "id": "R3",
+      "candidate_ids": [
+        "S3"
+      ],
+      "title": "Amazon S3 multipart upload limits",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/qfacts.html",
+      "version": "Current User Guide; no semantic edition shown",
+      "kind": "first-party service documentation",
+      "locators": [
+        "Multipart upload core specifications table"
+      ],
+      "web_locators": [
+        "lines 5–13"
+      ],
+      "observation": "AWS lists 48.8 TiB object maximum, 10,000 parts, 5 MiB–5 GiB parts, and at most 1,000 listed parts per response. The last part has no minimum. Independently computed: 6 GiB / 16 MiB = 384; 20 MiB = 16 MiB + 4 MiB.",
+      "conditions": "Only the final part is exempt from the minimum; sizes use MiB/GiB, not decimal MB/GB. Proposed sizing is valid arithmetic, not a target-vendor conformance or throughput result.",
+      "domains": "Amazon S3 limits at review; unspecified S3-compatible service UNKNOWN.",
+      "excerpt": "There is no minimum size limit on the last part of your multipart upload.",
+      "access_date_utc": "2026-10-10",
+      "exact_access_timestamp": "UNKNOWN; not separately timestamped per web call",
+      "retrieval_window_utc": [
+        "2026-10-10T04:28:26Z",
+        "2026-10-10 04:32:46 UTC"
+      ],
+      "method": "Independent web.open/find of governing and surrounding primary text; no candidate page copies treated as proof.",
+      "evidence_path": "evidence/R3.md"
+    },
+    {
+      "id": "R4",
+      "candidate_ids": [
+        "S4"
+      ],
+      "title": "Aborting a multipart upload",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/abort-mpu.html",
+      "version": "Current User Guide; no semantic edition shown",
+      "kind": "first-party service documentation",
+      "locators": [
+        "Opening object/part-cost/lifecycle guidance",
+        "Abort by upload ID, bucket, key"
+      ],
+      "web_locators": [
+        "lines 4–13, 73–84"
+      ],
+      "observation": "AWS's object-completion and unfinished-part cleanup guidance supports separate completion and cancellation states. Lifecycle is an available AWS backstop; the gateway's finite expiry and sweeper ownership are choices, not service defaults.",
+      "conditions": "Stop/complete removes unfinished-part storage; lifecycle must be configured. Abort prevents additional new work on that upload ID; already in-flight work is governed by R2 and R8.",
+      "domains": "Amazon S3; not proof of the fictional gateway or unknown vendor.",
+      "excerpt": "you can't use the upload ID to upload additional parts.",
+      "access_date_utc": "2026-10-10",
+      "exact_access_timestamp": "UNKNOWN; not separately timestamped per web call",
+      "retrieval_window_utc": [
+        "2026-10-10T04:28:26Z",
+        "2026-10-10 04:32:46 UTC"
+      ],
+      "method": "Independent web.open/find of governing and surrounding primary text; no candidate page copies treated as proof.",
+      "evidence_path": "evidence/R4.md"
+    },
+    {
+      "id": "R5",
+      "candidate_ids": [
+        "S5"
+      ],
+      "title": "AWS SDK for Rust S3 default integrity announcement, issue 1240",
+      "url": "https://github.com/awslabs/aws-sdk-rust/issues/1240",
+      "version": "aws-sdk-s3 v1.69.0; announcement opened 2025-01-16",
+      "kind": "first-party maintainer announcement and issue history",
+      "locators": [
+        "Opening maintainer announcement",
+        "January 16–17 presigned PUT discussion / fix",
+        "January 27 CRC32 default discussion"
+      ],
+      "web_locators": [
+        "lines 155–162, 174–249, 270–286"
+      ],
+      "observation": "The dated default-checksum change and third-party compatibility caveat are accurately used as an adapter qualification rationale. Surrounding history also records a presigned PUT fix and a historical CRC32 default; the final neither recommends the affected release nor asserts a particular current algorithm.",
+      "conditions": "Relevant if a Rust component actually uses this SDK. WHEN_REQUIRED exists but is not recommended as an unconditional integrity remedy. A maintainer announcement does not establish this fictional gateway's library or vendor.",
+      "domains": "Specified Rust S3 client release history; Put/Get operations, not all storage operations.",
+      "excerpt": "we released changes to the S3 client that adopts new default integrity protections.",
+      "access_date_utc": "2026-10-10",
+      "exact_access_timestamp": "UNKNOWN; not separately timestamped per web call",
+      "retrieval_window_utc": [
+        "2026-10-10T04:28:26Z",
+        "2026-10-10 04:32:46 UTC"
+      ],
+      "method": "Independent web.open/find of governing and surrounding primary text; no candidate page copies treated as proof.",
+      "evidence_path": "evidence/R5.md"
+    },
+    {
+      "id": "R6",
+      "candidate_ids": [
+        "S6"
+      ],
+      "title": "tusd issue 1315: InvalidPartOrder at S3 completion",
+      "url": "https://github.com/tus/tusd/issues/1315",
+      "version": "Opened 2025-09-03; mutable tusproject/tusd:latest; exact version UNKNOWN",
+      "kind": "original user report on first-party project issue tracker",
+      "locators": [
+        "Status/opened date",
+        "Setup details",
+        "CompleteMultipartUpload error logs"
+      ],
+      "web_locators": [
+        "lines 140–178, 182–205"
+      ],
+      "observation": "The open report, mutable tag, AWS environment, and completion-order error are present. It is a useful implementation lead and test motivation, not governing evidence of a generalized defect or fixed release. Reported configuration and startup maximum-size values differ, so reproduction identity remains uncertain.",
+      "conditions": "One report; no established root cause or release pin. No claim that all tusd or compatible stores fail is supported.",
+      "domains": "Reporter's macOS Docker/AWS/Uppy configuration only.",
+      "excerpt": "Used tusd version: tusproject/tusd:latest",
+      "access_date_utc": "2026-10-10",
+      "exact_access_timestamp": "UNKNOWN; not separately timestamped per web call",
+      "retrieval_window_utc": [
+        "2026-10-10T04:28:26Z",
+        "2026-10-10 04:32:46 UTC"
+      ],
+      "method": "Independent web.open/find of governing and surrounding primary text; no candidate page copies treated as proof.",
+      "evidence_path": "evidence/R6.md"
+    },
+    {
+      "id": "R7",
+      "candidate_ids": [],
+      "title": "CompleteMultipartUpload API reference",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_CompleteMultipartUpload.html",
+      "version": "Current API reference; S3 API namespace 2006-03-01; document edition not pinned",
+      "kind": "governing operation reference",
+      "locators": [
+        "Opening completion/response handling",
+        "Permissions",
+        "SSECustomerAlgorithm / SSECustomerKey parameters",
+        "Response ChecksumSHA256"
+      ],
+      "web_locators": [
+        "lines 7–30, 223–246, 391–394"
+      ],
+      "observation": "Completion requires successful interpretation of the operation, not merely HTTP 200: the body can contain an error. SDKs handle embedded errors. SSE-C checksum header requirements have operation conditions and directory-bucket exceptions. The final requires operation success plus object/session checks and leaves exact adapter qualification open; it does not equate 200 with success.",
+      "conditions": "KMS permission and SSE-C paths depend on selected mode; SSE-C is unsupported for directory buckets. A completed multipart SHA-256 response can be derived from part checksums.",
+      "domains": "AWS CompleteMultipartUpload; exact compatible-vendor response/permission contract remains UNKNOWN.",
+      "excerpt": "a 200 OK response can contain either a success or an error.",
+      "access_date_utc": "2026-10-10",
+      "exact_access_timestamp": "UNKNOWN; not separately timestamped per web call",
+      "retrieval_window_utc": [
+        "2026-10-10T04:28:26Z",
+        "2026-10-10 04:32:46 UTC"
+      ],
+      "method": "Independent web.open/find of governing and surrounding primary text; no candidate page copies treated as proof.",
+      "evidence_path": "evidence/R7.md"
+    },
+    {
+      "id": "R8",
+      "candidate_ids": [],
+      "title": "AbortMultipartUpload API reference",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_AbortMultipartUpload.html",
+      "version": "Current API reference; no document edition shown",
+      "kind": "governing operation reference",
+      "locators": [
+        "Opening abort semantics",
+        "ListParts verification guidance"
+      ],
+      "web_locators": [
+        "lines 7–8"
+      ],
+      "observation": "Already in-flight part requests may succeed or fail after abort. Repeated abort may be necessary; checking that no parts remain is the API's cleanup verification. This supports preserving the cleanup queue after retiring or canceling an uncertain upload.",
+      "conditions": "An abort response alone cannot prove all storage has been released during an in-flight race. Exact provider behavior must be established.",
+      "domains": "AWS abort/list operations, not generalized vendor behavior.",
+      "excerpt": "it might be necessary to abort a given multipart upload multiple times",
+      "access_date_utc": "2026-10-10",
+      "exact_access_timestamp": "UNKNOWN; not separately timestamped per web call",
+      "retrieval_window_utc": [
+        "2026-10-10T04:28:26Z",
+        "2026-10-10 04:32:46 UTC"
+      ],
+      "method": "Independent web.open/find of governing and surrounding primary text; no candidate page copies treated as proof.",
+      "evidence_path": "evidence/R8.md"
+    },
+    {
+      "id": "R9",
+      "candidate_ids": [],
+      "title": "Checking object integrity for data uploads in Amazon S3",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity-upload.html",
+      "version": "Current User Guide; no semantic edition shown",
+      "kind": "first-party checksum type/operation documentation",
+      "locators": [
+        "Full object and composite checksum types",
+        "Multipart algorithm/type table",
+        "Using full object checksums",
+        "Composite consecutive-number important note"
+      ],
+      "web_locators": [
+        "lines 54–101"
+      ],
+      "observation": "The dedicated table confirms multipart SHA-256 is composite and full-object CRC algorithms differ. Its consecutive-number note is explicitly scoped to composite/part-level checksums, whereas the overview uses broader wording. It also warns that some completion checksum headers can be accepted without validation when the algorithm was not selected at initiation.",
+      "conditions": "Always qualify initiation, type, algorithm, completion, retrieval and encryption as a joined contract. Final's sequential numbering is safe; its generic all-checksums explanation should not be read as resolving narrower API applicability.",
+      "domains": "AWS multipart versus single PutObject distinction; no arbitrary vendor guarantee.",
+      "excerpt": "Checksums for composite (or part-level) checksums",
+      "access_date_utc": "2026-10-10",
+      "exact_access_timestamp": "UNKNOWN; not separately timestamped per web call",
+      "retrieval_window_utc": [
+        "2026-10-10T04:28:26Z",
+        "2026-10-10 04:32:46 UTC"
+      ],
+      "method": "Independent web.open/find of governing and surrounding primary text; no candidate page copies treated as proof.",
+      "evidence_path": "evidence/R9.md"
+    }
+  ],
+  "claim_checks": [
+    {
+      "id": "Q01",
+      "subject": "Tus 1.0.0 core; bytes",
+      "operation": "HEAD/PATCH recovery",
+      "governing_conditions": "Authoritative nonnegative integer offset; mismatch returns 409 without mutation; success acknowledges processed/stored range, not independent final-object verification.",
+      "result": "SUPPORTED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 43
+      },
+      "evidence_ids": [
+        "R1"
+      ]
+    },
+    {
+      "id": "Q02",
+      "subject": "Tus extension support",
+      "operation": "OPTIONS and feature selection",
+      "governing_conditions": "Creation, expiration, checksum, termination and concatenation are optional; auth/durable state/UUID create semantics are not implied by extension advertisement.",
+      "result": "SUPPORTED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 90
+      },
+      "evidence_ids": [
+        "R1"
+      ]
+    },
+    {
+      "id": "Q03",
+      "subject": "Tus expiration; absolute 30 days",
+      "operation": "Advertise/reject resume",
+      "governing_conditions": "Upload-Expires on PATCH and creation when known; known expired resource uses 410. Thirty days is a chosen policy, not a protocol default.",
+      "result": "SUPPORTED_DESIGN_SEPARATION",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 78
+      },
+      "evidence_ids": [
+        "R1"
+      ]
+    },
+    {
+      "id": "Q04",
+      "subject": "Tus PATCH-body integrity",
+      "operation": "Checksum extension",
+      "governing_conditions": "Advertised algorithms; at least sha1 if implemented; verifies request body, not assembled full-file hash.",
+      "result": "SUPPORTED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 74
+      },
+      "evidence_ids": [
+        "R1"
+      ]
+    },
+    {
+      "id": "Q05",
+      "subject": "AWS multipart IDs and parts",
+      "operation": "Initiate/upload/complete",
+      "governing_conditions": "Upload ID + per-part ETag/number manifest; numbered parts assembled in ascending order; same-number replacement; incomplete operations differ from object completion.",
+      "result": "SUPPORTED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 49
+      },
+      "evidence_ids": [
+        "R2",
+        "R7"
+      ]
+    },
+    {
+      "id": "Q06",
+      "subject": "AWS ListParts; 1,000 results",
+      "operation": "Restart/unknown-operation reconciliation",
+      "governing_conditions": "Paginate; omitted unfinished calls are not failed calls; retain own completion manifest. Listing alone cannot settle operation uncertainty.",
+      "result": "SUPPORTED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 51
+      },
+      "evidence_ids": [
+        "R2"
+      ]
+    },
+    {
+      "id": "Q07",
+      "subject": "AWS part sizes/count; MiB/GiB",
+      "operation": "16 MiB candidate sizing",
+      "governing_conditions": "5 MiB–5 GiB with last-part minimum exception; 10,000 parts. 6 GiB gives 384 full parts; 20 MiB gives 16+4 MiB. Not vendor/performance proof.",
+      "result": "SUPPORTED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 55
+      },
+      "evidence_ids": [
+        "R3"
+      ]
+    },
+    {
+      "id": "Q08",
+      "subject": "AWS multipart checksums",
+      "operation": "Consecutive numbering",
+      "governing_conditions": "Overview states a broad checksum rule; dedicated integrity guidance scopes the important note to composite/part-level checksums. Proposed consecutive numbering is safe regardless; broader explanatory applicability is not settled by the overview alone.",
+      "result": "MINOR_APPLICABILITY_LIMIT",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 55
+      },
+      "evidence_ids": [
+        "R2",
+        "R9"
+      ]
+    },
+    {
+      "id": "Q09",
+      "subject": "ETag and full-file SHA-256",
+      "operation": "Integrity labeling",
+      "governing_conditions": "Multipart ETag not assumed full-file MD5; storage-validated strong digest must describe the exact full byte sequence, or read-back SHA-256; CRC/composite cannot substitute silently.",
+      "result": "SUPPORTED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 70
+      },
+      "evidence_ids": [
+        "R2",
+        "R7",
+        "R9"
+      ]
+    },
+    {
+      "id": "Q10",
+      "subject": "AWS multipart SHA-256 versus full-object CRC",
+      "operation": "Checksum-type choice",
+      "governing_conditions": "SHA-256 composite; CRC64NVME/CRC32/CRC32C support full-object type. Algorithm/type/initiation/completion/retrieval must be qualified together.",
+      "result": "SUPPORTED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 72
+      },
+      "evidence_ids": [
+        "R2",
+        "R9"
+      ]
+    },
+    {
+      "id": "Q11",
+      "subject": "AWS SSE-KMS permissions",
+      "operation": "Upload/checksum retrieval",
+      "governing_conditions": "GenerateDataKey and Decrypt conditions; checksum access depends on permissions. Exact mode and permission path gate implementation.",
+      "result": "SUPPORTED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 72
+      },
+      "evidence_ids": [
+        "R2",
+        "R7"
+      ]
+    },
+    {
+      "id": "Q12",
+      "subject": "AWS SSE-C completion checksums",
+      "operation": "Encryption headers",
+      "governing_conditions": "Overview's checksum availability claim is supported in its context. API headers are conditional on checksum use/policy and SSE-C is unsupported in directory buckets. No blanket claim about the unspecified vendor is made.",
+      "result": "SUPPORTED_WITH_CONTEXT",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 72
+      },
+      "evidence_ids": [
+        "R2",
+        "R7"
+      ]
+    },
+    {
+      "id": "Q13",
+      "subject": "AWS in-flight UploadPart",
+      "operation": "Unknown retry, abort and cleanup",
+      "governing_conditions": "Unknown is not Failed; prevent same-number overlap and completion, settle or retire ID, preserve cleanup queue. Already in-flight requests can finish after abort; repeat cleanup/verify.",
+      "result": "SUPPORTED_DESIGN_RESPONSE",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 53
+      },
+      "evidence_ids": [
+        "R2",
+        "R8"
+      ]
+    },
+    {
+      "id": "Q14",
+      "subject": "Remote object versus HTTP result",
+      "operation": "Completion/cancel race",
+      "governing_conditions": "Actual operation success plus target/size/session checks required; AWS 200 can embed error. Final does not use HTTP status alone or cancel intent as proof of committed/aborted state.",
+      "result": "SUPPORTED_BOUNDARY",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 68
+      },
+      "evidence_ids": [
+        "R7",
+        "R4"
+      ]
+    },
+    {
+      "id": "Q15",
+      "subject": "Rust S3 client v1.69.0; 2025-01-16",
+      "operation": "Put/Get integrity defaults",
+      "governing_conditions": "Dated maintainer announcement and third-party caveat; relevant only if SDK is used. No current CRC default or deployed library pin is invented.",
+      "result": "SUPPORTED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 94
+      },
+      "evidence_ids": [
+        "R5"
+      ]
+    },
+    {
+      "id": "Q16",
+      "subject": "tusd #1315; 2025-09-03; latest",
+      "operation": "Completion-order history lead",
+      "governing_conditions": "One original open report with mutable tag and unresolved cause; cannot infer universal defect, known fix or version applicability.",
+      "result": "SUPPORTED_REPORT_QUALIFICATION",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 96
+      },
+      "evidence_ids": [
+        "R6"
+      ]
+    },
+    {
+      "id": "Q17",
+      "subject": "Fictional client/gateway",
+      "operation": "UUID, durable journal, same-owner state",
+      "governing_conditions": "Original design choices; no protocol source promises create idempotency, gateway crash persistence, host refresh or private filesystem semantics. Prospective qualification is explicit.",
+      "result": "SUPPORTED_AS_DESIGN_NOT_FACT",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 29
+      },
+      "evidence_ids": [
+        "R1"
+      ]
+    },
+    {
+      "id": "Q18",
+      "subject": "Original file identity",
+      "operation": "Content hashes and sending buffer",
+      "governing_conditions": "Strong content identity replaces size/mtime/high-water hints; same verified block buffer is sent; mismatch blocks resume/finalization. Platform implementation and races require proposed checks, not source-only runtime proof.",
+      "result": "COHERENT_PROPOSED_DESIGN",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 37
+      },
+      "evidence_ids": []
+    },
+    {
+      "id": "Q19",
+      "subject": "Retry/expiry/concurrency preferences",
+      "operation": "Five attempts, 30 days, one stream/optional three parts",
+      "governing_conditions": "Chosen bounded policies, not sourced defaults or measured optima; competing option remains available.",
+      "result": "SUPPORTED_DESIGN_SEPARATION",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 109
+      },
+      "evidence_ids": [
+        "R1",
+        "R2"
+      ]
+    },
+    {
+      "id": "Q20",
+      "subject": "S3-compatible storage",
+      "operation": "Adapter qualification",
+      "governing_conditions": "All AWS claims remain bounded to AWS; actual provider/version/endpoint/encryption/signing/checksums/cleanup UNKNOWN until discriminating integration tests.",
+      "result": "SUPPORTED_UNCERTAINTY",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 98
+      },
+      "evidence_ids": [
+        "R2",
+        "R3",
+        "R7",
+        "R8",
+        "R9"
+      ]
+    }
+  ],
+  "criticism_dispositions": [
+    {
+      "id": "C1",
+      "stage_origin": "investigator discovery/draft",
+      "classification": "MATERIAL_INCOMPLETE",
+      "remaining_material": false,
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/critic/critique.md",
+        "line": 20
+      },
+      "draft_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/draft.md",
+        "line": 50
+      },
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 72
+      },
+      "disposition": "ACCEPT_AND_AMEND; CLOSED_IN_FINAL",
+      "assessment": "The prior text already made SHA-256 comparison conditional and offered read-back, so the critic correctly classifies missing algorithm/encryption conditions as incomplete rather than a flat false universal claim. Final adds checksum-type/permission distinctions and preserves explicit unverified status.",
+      "evidence_ids": [
+        "R2",
+        "R7",
+        "R9"
+      ]
+    },
+    {
+      "id": "C2",
+      "stage_origin": "investigator draft",
+      "classification": "MATERIAL_INCOMPLETE",
+      "remaining_material": false,
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/critic/critique.md",
+        "line": 21
+      },
+      "draft_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/draft.md",
+        "line": 33
+      },
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+        "line": 53
+      },
+      "disposition": "ACCEPT_AND_AMEND; CLOSED_IN_FINAL",
+      "assessment": "Draft said query known storage state but did not define how absence from a list fails to settle an unfinished request. Final adds per-operation states, no overlap/commit while unknown, settlement or retirement and retained cleanup ownership. Conservative retirement is explicitly a design choice.",
+      "evidence_ids": [
+        "R2",
+        "R8"
+      ]
+    }
+  ],
+  "artifact_inventory": "evidence/original-inventory.json",
+  "freeze_checks": "evidence/freeze-checks.json",
+  "unknowns": [
+    "Exact storage provider, endpoint, API/model version, signing mode, bucket/type, library pin, encryption, checksum and lifecycle contract.",
+    "Existing gateway durable Tus state, crash restoration, create/status idempotency, auth and extension feasibility.",
+    "Matching strong whole-object digest/read-back availability, cost and chosen verification policy.",
+    "Accepted finite expiry and cleanup windows; 30 days is only a proposal.",
+    "Host refresh/account-change contract and supported desktop platform private/atomic/durable file semantics.",
+    "Real provider, fake transport, checksum, crash/race and throughput execution results: none supplied or credited.",
+    "Original all-stage native activation/completion proof, complete role-isolation/helper execution history and effective inference/billing telemetry.",
+    "Precise external page edition/commit for mutable AWS docs and mutable tusd image tag."
+  ]
+}
+

@@ -1,0 +1,14 @@
+# Source evidence excerpt 1/4 — Restic design references
+URL: https://restic.readthedocs.io/en/latest/100_references.html
+Retrieved: 2026-10-10T04:38Z via web_fetch (Status 200, ~54KB, truncated; full text in harness tool-output store, not copied here).
+Sections: "Repository Format", backup/CDC paragraph, "Threat Model", "Changes", key-file handling.
+
+Observed statements (quotes/paraphrase with section):
+- Repository Format: "All data is stored in a restic repository... This so-called 'storage ID' is the SHA-256 hash of the content of a file." Storage ID = SHA-256; files named by lowercase hex of storage ID.
+- Encryption: "Apart from the files stored within the `keys` directory, all files are encrypted with AES-256 in counter mode (CTR). The integrity of the encrypted data is secured by a Poly1305-AES message authentication code (MAC)." Format `IV || CIPHERTEXT || MAC`, 32 bytes overhead, "For each file, a new random IV is selected."
+- Pack header rows: data/tree blob entries carry `Length(encrypted_blob) || Hash(plaintext_blob)`; compressed types (v2) add plaintext length. Index JSON lists packs with "plaintext hashes".
+- CDC: "The data from each file is split into variable length Blobs cut at offsets defined by a sliding window of 64 bytes. The implementation uses Rabin Fingerprints for implementing this Content Defined Chunking (CDC). An irreducible polynomial is selected at random and saved in the file `config` when a repository is initialized, so that watermark attacks are much harder." / "Files smaller than 512 KiB are not split, Blobs are of 512 KiB to 8 MiB in size. The implementation aims for 1 MiB Blob size on average." / "For modified files, only modified Blobs have to be saved in a subsequent backup. This even works if bytes are inserted or removed at arbitrary positions within the file."
+- Keys: `keys/` holds per-password JSON (scrypt N/r/p/salt); password-derived 64 bytes (32 AES-256 + 32 Poly1305-AES key material) unwrap the master keys in `data`. "A repository can have several different passwords, with a key file for each. This way, the password can be changed without having to re-encrypt all data."
+- Threat Model: cites "Chunking Attacks on File Backup Services using Content-Defined Chunking (eprint.iacr.org/2025/532.pdf) by Boris Alexeev, Colin Percival and Yan X Zhang": attacker observing chunk sizes for a known file can derive the secret chunker polynomial and in some cases test whether large files are stored. "Mitigated in restic 0.18.0 by randomly assigning chunks to pack files... See #5295."
+- Changes: "Repository Version 2 — Support compression for blobs (data/tree) and index / lock / snapshot files" (zstandard).
+Applicability: directly evidences CDC+plaintext-hash-ID+random-IV design, its front-insert resilience, password rotation without re-encryption, and chunk-size leakage with a shipped mitigation.

@@ -1,0 +1,42 @@
+{
+  "slot": "A5-01",
+  "arm": "treatment",
+  "snapshot_task": {
+    "key": "er12-eval-A5-01-treatment-full-v1",
+    "slot": "A5-01",
+    "arm": "treatment",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A5-01-treatment-full-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A5-01-treatment-full-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-eval-A5-01-treatment-full-v1:ordinal:1",
+    "status": "completed",
+    "hasPendingChildRuns": false,
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6.1-sol",
+    "latestTerminalStatus": "completed",
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-eval-A5-01-treatment-full-v1:ordinal:1"
+  },
+  "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+  "source_judgment": "FAIL",
+  "included_files": [
+    "assessment/A5-01/treatment-v1/assessment.json",
+    "assessment/A5-01/treatment-v1/assessment.md",
+    "assessment/A5-01/treatment-v1/evidence/github-issue-125.json",
+    "assessment/A5-01/treatment-v1/evidence/github-master-tree.json",
+    "assessment/A5-01/treatment-v1/evidence/github-tags.json",
+    "assessment/A5-01/treatment-v1/evidence/index.md",
+    "assessment/A5-01/treatment-v1/evidence/issue-125-comments.json",
+    "assessment/A5-01/treatment-v1/evidence/release-26.08-Core.cpp",
+    "assessment/A5-01/treatment-v1/evidence/release-26.08-GUI_Main_xxxx_TextEditDialog.cpp",
+    "assessment/A5-01/treatment-v1/evidence/release-26.08-riff-handler.cpp",
+    "assessment/A5-01/treatment-v1/evidence/retrieval-manifest.json",
+    "assessment/A5-01/treatment-v1/evidence/reviewer-native-goal-active.json",
+    "assessment/A5-01/treatment-v1/evidence/reviewer-native-goal-completion.json",
+    "assessment/A5-01/treatment-v1/evidence/supplemental-retrieval-manifest.json",
+    "assessment/A5-01/treatment-v1/evidence/xml-conflict.md",
+    "assessment/A5-01/treatment-v1/freeze-integrity-check.json",
+    "assessment/A5-01/treatment-v1/original-inspected-manifest.json",
+    "assessment/A5-01/treatment-v1/root-review-request.json",
+    "assessment/A5-01/treatment-v1/save-verification.json",
+    "assessment/A5-01/treatment-v1/source-map.json"
+  ]
+}

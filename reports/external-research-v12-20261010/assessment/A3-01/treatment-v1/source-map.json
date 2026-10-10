@@ -1,0 +1,1400 @@
+{
+  "schema_version": "ER12-independent-source-map-v1",
+  "run_id": "A3-01",
+  "arm": "treatment",
+  "reviewer_identity": "codex-er12-a3-review-0437",
+  "independent_retrieval": true,
+  "no_candidate_id_rebinding": true,
+  "records": [
+    {
+      "id": "E01",
+      "requested_url": "https://www.sqlite.org/fts5.html",
+      "resolved_url": "https://www.sqlite.org/fts5.html",
+      "accessed_utc": "2026-10-10T04:39:32.127542+00:00",
+      "http_status": 200,
+      "bytes": 215354,
+      "sha256": "92b7e721147d5119781a80273b43708f2f146314d150abb4d3e6eff1503d6fe6",
+      "capture": "evidence/E01.html",
+      "candidate_source_ids": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "C01"
+      ],
+      "text_capture": "evidence/E01.txt",
+      "text_sha256": "6c14ff0b1739bf3045af75d6d7b03e0672a0466802abca2a946e75d0a5d33797",
+      "independent_locator": "§2.1, §3.1–3.2, §4.3.1, §4.4.1–4.4.4, §4.9, §5.1.1/5.1.3, §6.7/6.12; E01.txt lines 189–193, 235–269, 491–541, 662–828, 1022–1035, 1117–1132, 1323–1342, 1414–1419",
+      "observations": [
+        {
+          "claim_check_id": "CC01",
+          "operation": "Create and use FTS5 on shipped targets",
+          "scope": "live docs; introduced 3.9.0"
+        },
+        {
+          "claim_check_id": "CC02",
+          "operation": "Generate quoted terms/phrases; bind fixed SQL",
+          "scope": "live FTS5 docs; actual release unpinned"
+        },
+        {
+          "claim_check_id": "CC03",
+          "operation": "Index/query accent and punctuation normalization",
+          "scope": "unicode61 remove_diacritics 2; live docs"
+        },
+        {
+          "claim_check_id": "CC04",
+          "operation": "Delete/update/replace and source value retrieval",
+          "scope": "contentless_delete since 3.43.0; plain configurations"
+        },
+        {
+          "claim_check_id": "CC05",
+          "operation": "Create/update/delete and initial population",
+          "scope": "same database; integer rowid mapping; actual schema unknown"
+        },
+        {
+          "claim_check_id": "CC06",
+          "operation": "Detect missing/stale rows and rebuild",
+          "scope": "FTS5 integrity-check/rebuild; external content"
+        },
+        {
+          "claim_check_id": "CC07",
+          "operation": "Conflict deletes and delete triggers",
+          "scope": "current documentation and 3.6.18 origin; connection setting/build unknown"
+        },
+        {
+          "claim_check_id": "CC12",
+          "operation": "Sort and handle ties/rebuilds",
+          "scope": "FTS live docs; Tantivy 0.26.2"
+        },
+        {
+          "claim_check_id": "CC13",
+          "operation": "Bound and display source note text",
+          "scope": "FTS live docs; Tantivy 0.26.2"
+        },
+        {
+          "claim_check_id": "CC17",
+          "operation": "Change derived generation without deleting authority",
+          "scope": "planning inference from configured tables/source authority"
+        }
+      ]
+    },
+    {
+      "id": "E02",
+      "requested_url": "https://www.sqlite.org/transactional.html",
+      "resolved_url": "https://www.sqlite.org/transactional.html",
+      "accessed_utc": "2026-10-10T04:39:32.128498+00:00",
+      "http_status": 200,
+      "bytes": 4609,
+      "sha256": "3d6a66c925d32e66fb28872c0e0c32b1936d46f996995c1a30fe591173bc6266",
+      "capture": "evidence/E02.html",
+      "candidate_source_ids": [
+        "S05",
+        "C11"
+      ],
+      "text_capture": "evidence/E02.txt",
+      "text_sha256": "dafff200d7ca85ec85f75668a6b9ddba6a8a6aef4ed64c2e6686807ff9787c5b",
+      "independent_locator": "Single-transaction guarantee; configuration caveats supplied by E17/E18",
+      "observations": [
+        {
+          "claim_check_id": "CC05",
+          "operation": "Create/update/delete and initial population",
+          "scope": "same database; integer rowid mapping; actual schema unknown"
+        },
+        {
+          "claim_check_id": "CC08",
+          "operation": "Crash/power failure and WAL configuration",
+          "scope": "journal_mode/synchronous/VFS/filesystem unselected"
+        }
+      ]
+    },
+    {
+      "id": "E03",
+      "requested_url": "https://sqlite.org/releaselog/3_53_4.html",
+      "resolved_url": "https://sqlite.org/releaselog/3_53_4.html",
+      "accessed_utc": "2026-10-10T04:39:32.129421+00:00",
+      "http_status": 200,
+      "bytes": 12926,
+      "sha256": "c8d12ef674ac295edba47c341cb18b5913795ba94a78474c68e4213970d128ac",
+      "capture": "evidence/E03.html",
+      "candidate_source_ids": [
+        "S06"
+      ],
+      "text_capture": "evidence/E03.txt",
+      "text_sha256": "663b910674ee5b194c02cdafcfc291182545347719a87a8a99db7947482eca55",
+      "independent_locator": "Release header and SQLITE_SOURCE_ID at patch hash section",
+      "observations": [
+        {
+          "claim_check_id": "CC01",
+          "operation": "Create and use FTS5 on shipped targets",
+          "scope": "live docs; introduced 3.9.0"
+        },
+        {
+          "claim_check_id": "CC16",
+          "operation": "Tie reference source to release/history",
+          "scope": "SQLite 3.53.4 2026-07-24; Tantivy 0.26.2 2026-09-08"
+        }
+      ]
+    },
+    {
+      "id": "E04",
+      "requested_url": "https://github.com/quickwit-oss/tantivy/commit/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d",
+      "resolved_url": "https://github.com/quickwit-oss/tantivy/commit/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d",
+      "accessed_utc": "2026-10-10T04:39:32.135676+00:00",
+      "http_status": 200,
+      "bytes": 422143,
+      "sha256": "06a42fed55ac3253a5d083e85d7527a76d5a26b8f2822206d260c466bf314e62",
+      "capture": "evidence/E04.html",
+      "candidate_source_ids": [
+        "S07"
+      ],
+      "text_capture": "evidence/E04.txt",
+      "text_sha256": "5ebb013f9bf791aded1302e5d2b5c80a931bff34b9fbbb891bff0ed5d23787f1",
+      "independent_locator": "Commit header 72d1ef9; crate-to-commit proof independently in E40",
+      "observations": [
+        {
+          "claim_check_id": "CC16",
+          "operation": "Tie reference source to release/history",
+          "scope": "SQLite 3.53.4 2026-07-24; Tantivy 0.26.2 2026-09-08"
+        }
+      ]
+    },
+    {
+      "id": "E05",
+      "requested_url": "https://docs.rs/crate/tantivy/0.26.2",
+      "resolved_url": "https://docs.rs/crate/tantivy/0.26.2",
+      "accessed_utc": "2026-10-10T04:39:32.137526+00:00",
+      "http_status": 200,
+      "bytes": 64090,
+      "sha256": "6e1b947d72168c7337323c14918ada52893f437a62ce300780eb6400fa780dab",
+      "capture": "evidence/E05.html",
+      "candidate_source_ids": [
+        "S07"
+      ],
+      "text_capture": "evidence/E05.txt",
+      "text_sha256": "70c4a63b331a2ba07b71957ffe27f776e0a814f0c0a7b1fc06e85a51d32910bf",
+      "independent_locator": "Version list 0.26.2 (2026-09-08), dependencies ^0.26.0",
+      "observations": [
+        {
+          "claim_check_id": "CC16",
+          "operation": "Tie reference source to release/history",
+          "scope": "SQLite 3.53.4 2026-07-24; Tantivy 0.26.2 2026-09-08"
+        }
+      ]
+    },
+    {
+      "id": "E06",
+      "requested_url": "https://docs.rs/tantivy/0.26.2/tantivy/indexer/struct.IndexWriter.html",
+      "resolved_url": "https://docs.rs/tantivy/0.26.2/tantivy/indexer/struct.IndexWriter.html",
+      "accessed_utc": "2026-10-10T04:39:32.139295+00:00",
+      "http_status": 200,
+      "bytes": 111454,
+      "sha256": "f2b22513e42f73f9efb998d901bc8cb33cf7f804a2a92a9faece3a55abfd72bf",
+      "capture": "evidence/E06.html",
+      "candidate_source_ids": [
+        "S08",
+        "C05",
+        "R06"
+      ],
+      "text_capture": "evidence/E06.txt",
+      "text_sha256": "c8e3c90327c00857b5514f509afc76668c0cbe1ee1df24947d4efb5d53e9b480",
+      "independent_locator": "IndexWriter commit/delete_term/commit_opstamp/add_document; E06.txt lines 299–358",
+      "observations": [
+        {
+          "claim_check_id": "CC09",
+          "operation": "Add/delete/commit/replay",
+          "scope": "Tantivy 0.26.2"
+        },
+        {
+          "claim_check_id": "CC11",
+          "operation": "Track/filter exact collection state",
+          "scope": "application architecture over Tantivy document API"
+        },
+        {
+          "claim_check_id": "CC17",
+          "operation": "Change derived generation without deleting authority",
+          "scope": "planning inference from configured tables/source authority"
+        }
+      ]
+    },
+    {
+      "id": "E07",
+      "requested_url": "https://docs.rs/tantivy/0.26.2/tantivy/struct.IndexReader.html",
+      "resolved_url": "https://docs.rs/tantivy/0.26.2/tantivy/struct.IndexReader.html",
+      "accessed_utc": "2026-10-10T04:39:32.309965+00:00",
+      "http_status": 200,
+      "bytes": 92582,
+      "sha256": "17d235524009bad02d1530776248ae192cbde2482dfcb53a6c03e4b6d7a44eae",
+      "capture": "evidence/E07.html",
+      "candidate_source_ids": [
+        "S08",
+        "S18",
+        "C06"
+      ],
+      "text_capture": "evidence/E07.txt",
+      "text_sha256": "30d578c02367fbc21a8af16db10f26fbb81f66c079acbc480ba6e944aa41c4a4",
+      "independent_locator": "IndexReader reload/searcher; E07.txt lines 228–242",
+      "observations": [
+        {
+          "claim_check_id": "CC10",
+          "operation": "Make committed source watermark reader-visible",
+          "scope": "Tantivy 0.26.2"
+        },
+        {
+          "claim_check_id": "CC11",
+          "operation": "Track/filter exact collection state",
+          "scope": "application architecture over Tantivy document API"
+        }
+      ]
+    },
+    {
+      "id": "E08",
+      "requested_url": "https://docs.rs/tantivy/0.26.2/tantivy/tokenizer/index.html",
+      "resolved_url": "https://docs.rs/tantivy/0.26.2/tantivy/tokenizer/index.html",
+      "accessed_utc": "2026-10-10T04:39:32.352095+00:00",
+      "http_status": 200,
+      "bytes": 47675,
+      "sha256": "28f76a147756bc1247bc8c0a03f6eb54e8bb542b433ad27e83fcfc7b017dc57e",
+      "capture": "evidence/E08.html",
+      "candidate_source_ids": [
+        "S09",
+        "C07"
+      ],
+      "text_capture": "evidence/E08.txt",
+      "text_sha256": "dc7d20c15a3bf277431aaea579b2be7b82d5ed4577ac7a42ac345758f547aebf",
+      "independent_locator": "Tokenizer default/custom/example/folding; E08.txt lines 225–291; source boundary E30/E42",
+      "observations": [
+        {
+          "claim_check_id": "CC14",
+          "operation": "Apply explicit byte policy to index and query",
+          "scope": "Tantivy 0.26.2 implementation"
+        }
+      ]
+    },
+    {
+      "id": "E09",
+      "requested_url": "https://docs.rs/tantivy/latest/src/tantivy/query/query_parser/query_parser.rs.html",
+      "resolved_url": "https://docs.rs/tantivy/latest/src/tantivy/query/query_parser/query_parser.rs.html",
+      "accessed_utc": "2026-10-10T04:39:32.363907+00:00",
+      "http_status": 200,
+      "bytes": 253417,
+      "sha256": "8cc89ab4797f0b442694b37190c9a6c8d61f78834976404aae7236dd51cd272a",
+      "capture": "evidence/E09.html",
+      "candidate_source_ids": [
+        "S10"
+      ],
+      "text_capture": "evidence/E09.txt",
+      "text_sha256": "def833c67d9bf48d8f67ea33cae9d322962e57789cc6b358dbb686887c971e72",
+      "independent_locator": "Observed latest header and parse_query signature; mutable URL, not a pin",
+      "observations": [
+        {
+          "claim_check_id": "CC15",
+          "operation": "Broad engine grammar and malformed-input handling",
+          "scope": "Tantivy 0.26.2; grammar ^0.26.0 reference, app lock unknown"
+        }
+      ]
+    },
+    {
+      "id": "E10",
+      "requested_url": "https://docs.rs/tantivy/latest/tantivy/query/enum.QueryParserError.html",
+      "resolved_url": "https://docs.rs/tantivy/latest/tantivy/query/enum.QueryParserError.html",
+      "accessed_utc": "2026-10-10T04:39:32.424351+00:00",
+      "http_status": 200,
+      "bytes": 123296,
+      "sha256": "989e12ea05ef523efff34896df34a0b1018479bfa617ca3d747d6124428ac2f7",
+      "capture": "evidence/E10.html",
+      "candidate_source_ids": [
+        "S10"
+      ],
+      "text_capture": "evidence/E10.txt",
+      "text_sha256": "10713a889211c687d5573cff6609660e46b5f2d615a9029bff9fac191f3a1fdf",
+      "independent_locator": "QueryParserError variants on observed latest page; not no-panic proof",
+      "observations": [
+        {
+          "claim_check_id": "CC15",
+          "operation": "Broad engine grammar and malformed-input handling",
+          "scope": "Tantivy 0.26.2; grammar ^0.26.0 reference, app lock unknown"
+        }
+      ]
+    },
+    {
+      "id": "E11",
+      "requested_url": "https://docs.rs/tantivy/0.26.2/tantivy/collector/struct.TopDocs.html",
+      "resolved_url": "https://docs.rs/tantivy/0.26.2/tantivy/collector/struct.TopDocs.html",
+      "accessed_utc": "2026-10-10T04:39:32.441156+00:00",
+      "http_status": 200,
+      "bytes": 114082,
+      "sha256": "045ca07362ee79de6e93dcb81fa4afc5777887cbe0d584e2f41d67a13f9ceb93",
+      "capture": "evidence/E11.html",
+      "candidate_source_ids": [
+        "S11",
+        "C08"
+      ],
+      "text_capture": "evidence/E11.txt",
+      "text_sha256": "4fca554e9e94ebc6155d9b4aa1dececb36e61d9d7ccf6265e960ec7eed8fdc72",
+      "independent_locator": "TopDocs stability and order_by_score; E11.txt lines 226–234, 344–345",
+      "observations": [
+        {
+          "claim_check_id": "CC11",
+          "operation": "Track/filter exact collection state",
+          "scope": "application architecture over Tantivy document API"
+        },
+        {
+          "claim_check_id": "CC12",
+          "operation": "Sort and handle ties/rebuilds",
+          "scope": "FTS live docs; Tantivy 0.26.2"
+        }
+      ]
+    },
+    {
+      "id": "E12",
+      "requested_url": "https://docs.rs/tantivy/0.26.2/tantivy/snippet/struct.Snippet.html",
+      "resolved_url": "https://docs.rs/tantivy/0.26.2/tantivy/snippet/struct.Snippet.html",
+      "accessed_utc": "2026-10-10T04:39:32.499457+00:00",
+      "http_status": 200,
+      "bytes": 86851,
+      "sha256": "40485be7928ba9ad69d894083afd27ff0de87159e1e01f59ce05c5a6f10abc59",
+      "capture": "evidence/E12.html",
+      "candidate_source_ids": [
+        "S12"
+      ],
+      "text_capture": "evidence/E12.txt",
+      "text_sha256": "79838ee8abd2a5747f81573ccc4f2a8562b310c59bad1498b1830dcfa5b120df",
+      "independent_locator": "Snippet fragment/highlighted/to_html API; implementation E31",
+      "observations": [
+        {
+          "claim_check_id": "CC13",
+          "operation": "Bound and display source note text",
+          "scope": "FTS live docs; Tantivy 0.26.2"
+        }
+      ]
+    },
+    {
+      "id": "E13",
+      "requested_url": "https://github.com/quickwit-oss/tantivy/issues/2847",
+      "resolved_url": "https://github.com/quickwit-oss/tantivy/issues/2847",
+      "accessed_utc": "2026-10-10T04:39:32.532823+00:00",
+      "http_status": 200,
+      "bytes": 362492,
+      "sha256": "515098f03638425adf8dfbd0c01fd5fd6e037d2e42aafa303df87e6f2b668541",
+      "capture": "evidence/E13.html",
+      "candidate_source_ids": [
+        "S13"
+      ],
+      "text_capture": "evidence/E13.txt",
+      "text_sha256": "d5fbada35a3ffdaaa774c0c4d1046d8b899cd56a40aa2246bb8361a309a36a03",
+      "independent_locator": "Issue body/version and competing July 28 comment; E13.txt lines 123–182, 191–210",
+      "observations": [
+        {
+          "claim_check_id": "CC16",
+          "operation": "Tie reference source to release/history",
+          "scope": "SQLite 3.53.4 2026-07-24; Tantivy 0.26.2 2026-09-08"
+        }
+      ]
+    },
+    {
+      "id": "E14",
+      "requested_url": "https://github.com/quickwit-oss/tantivy/issues/3079",
+      "resolved_url": "https://github.com/quickwit-oss/tantivy/issues/3079",
+      "accessed_utc": "2026-10-10T04:39:32.551973+00:00",
+      "http_status": 200,
+      "bytes": 276291,
+      "sha256": "844605379a424b3dff1db67546c9988533ecab3a4821179698fb4e23017097db",
+      "capture": "evidence/E14.html",
+      "candidate_source_ids": [
+        "S14"
+      ],
+      "text_capture": "evidence/E14.txt",
+      "text_sha256": "db06d9204b1a8ce2e409c99613114c1903c6420858156faf162d777858560857",
+      "independent_locator": "Issue body/questions/status; E14.txt lines 110–158; no version or confirmed recovery promise",
+      "observations": [
+        {
+          "claim_check_id": "CC16",
+          "operation": "Tie reference source to release/history",
+          "scope": "SQLite 3.53.4 2026-07-24; Tantivy 0.26.2 2026-09-08"
+        }
+      ]
+    },
+    {
+      "id": "E15",
+      "requested_url": "https://github.com/quickwit-oss/tantivy/issues/3031",
+      "resolved_url": "https://github.com/quickwit-oss/tantivy/issues/3031",
+      "accessed_utc": "2026-10-10T04:39:32.590856+00:00",
+      "http_status": 200,
+      "bytes": 309882,
+      "sha256": "3f66cedbb94ba897c83777225c30b25798eb46642975405d1c315bb298f6eb6c",
+      "capture": "evidence/E15.html",
+      "candidate_source_ids": [
+        "S15",
+        "C09"
+      ],
+      "text_capture": "evidence/E15.txt",
+      "text_sha256": "0d73b581cb5b68a96eb3cc1ecafcf257ea549b1483480cdf0728f740a142cb32",
+      "independent_locator": "#3031 version/input/cause/fork activity; E15.txt lines 125–188",
+      "observations": [
+        {
+          "claim_check_id": "CC15",
+          "operation": "Broad engine grammar and malformed-input handling",
+          "scope": "Tantivy 0.26.2; grammar ^0.26.0 reference, app lock unknown"
+        }
+      ]
+    },
+    {
+      "id": "E16",
+      "requested_url": "https://github.com/puretechteam/tantivy/commit/28b2ed185381b59c17530bb37cb9e481921ac1f2",
+      "resolved_url": "https://github.com/puretechteam/tantivy/commit/28b2ed185381b59c17530bb37cb9e481921ac1f2",
+      "accessed_utc": "2026-10-10T04:39:32.614991+00:00",
+      "http_status": 200,
+      "bytes": 508600,
+      "sha256": "9d7dce9b2b002715a13d0b3144a7b8792db834ce7aeca01531fea2df769d000e",
+      "capture": "evidence/E16.html",
+      "candidate_source_ids": [
+        "S15"
+      ],
+      "text_capture": "evidence/E16.txt",
+      "text_sha256": "703cd9ce802ee1bdaa2fba8bbdee4a5062abcedea48436f8a22400b61fa28d69",
+      "independent_locator": "Fork commit description and parent, E16.txt lines 107–146",
+      "observations": [
+        {
+          "claim_check_id": "CC15",
+          "operation": "Broad engine grammar and malformed-input handling",
+          "scope": "Tantivy 0.26.2; grammar ^0.26.0 reference, app lock unknown"
+        }
+      ]
+    },
+    {
+      "id": "E17",
+      "requested_url": "https://www.sqlite.org/wal.html",
+      "resolved_url": "https://www.sqlite.org/wal.html",
+      "accessed_utc": "2026-10-10T04:39:32.675085+00:00",
+      "http_status": 200,
+      "bytes": 42143,
+      "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "capture": "evidence/E17.html",
+      "candidate_source_ids": [
+        "S16",
+        "C10"
+      ],
+      "text_capture": "evidence/E17.txt",
+      "text_sha256": "fdc7fc5b109ae3cafa6dd399de9ad60c79d38f18ccb6207e527fa895533c84fb",
+      "independent_locator": "WAL §1/2/4; E17.txt lines 42–97, 133–159, 179–187, 302–320",
+      "observations": [
+        {
+          "claim_check_id": "CC08",
+          "operation": "Crash/power failure and WAL configuration",
+          "scope": "journal_mode/synchronous/VFS/filesystem unselected"
+        }
+      ]
+    },
+    {
+      "id": "E18",
+      "requested_url": "https://www.sqlite.org/atomiccommit.html",
+      "resolved_url": "https://www.sqlite.org/atomiccommit.html",
+      "accessed_utc": "2026-10-10T04:39:32.730087+00:00",
+      "http_status": 200,
+      "bytes": 77968,
+      "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+      "capture": "evidence/E18.html",
+      "candidate_source_ids": [
+        "S17"
+      ],
+      "text_capture": "evidence/E18.txt",
+      "text_sha256": "8237badd62e3d59705b11436985f520d584ef158aaf11c40d10bf17cef1f1ee6",
+      "independent_locator": "Rollback-only scope and hardware/VFS assumptions; E18.txt lines 71–96, 100–163 and §9",
+      "observations": [
+        {
+          "claim_check_id": "CC08",
+          "operation": "Crash/power failure and WAL configuration",
+          "scope": "journal_mode/synchronous/VFS/filesystem unselected"
+        }
+      ]
+    },
+    {
+      "id": "E19",
+      "requested_url": "https://docs.rs/tantivy/0.26.2/tantivy/snippet/index.html",
+      "resolved_url": "https://docs.rs/tantivy/0.26.2/tantivy/snippet/index.html",
+      "accessed_utc": "2026-10-10T04:39:32.862922+00:00",
+      "http_status": 200,
+      "bytes": 37823,
+      "sha256": "3c44040b03607bbc62958ba04a5b5a24dbd3ec154db8533df468e974bf612762",
+      "capture": "evidence/E19.html",
+      "candidate_source_ids": [
+        "S19"
+      ],
+      "text_capture": "evidence/E19.txt",
+      "text_sha256": "1ef1e208246c48bee5249beaeddd5452e0e11395866772de49b14400ed7a4712",
+      "independent_locator": "Snippet module stored-field example and default maximum, not universal STORED requirement",
+      "observations": [
+        {
+          "claim_check_id": "CC13",
+          "operation": "Bound and display source note text",
+          "scope": "FTS live docs; Tantivy 0.26.2"
+        }
+      ]
+    },
+    {
+      "id": "E20",
+      "requested_url": "https://www.sqlite.org/releaselog/3_43_0.html",
+      "resolved_url": "https://www.sqlite.org/releaselog/3_43_0.html",
+      "accessed_utc": "2026-10-10T04:39:32.907541+00:00",
+      "http_status": 200,
+      "bytes": 6966,
+      "sha256": "a3a5619b15570a64c864514ce4716c37929d7f8918e68ee5bec63ecc40cd87d9",
+      "capture": "evidence/E20.html",
+      "candidate_source_ids": [
+        "C02"
+      ],
+      "text_capture": "evidence/E20.txt",
+      "text_sha256": "39ff3c5a009fd384930bdbbd2a617538436f91611241b04bd1db404beb03f047",
+      "independent_locator": "3.43.0 release first item and source ID",
+      "observations": [
+        {
+          "claim_check_id": "CC04",
+          "operation": "Delete/update/replace and source value retrieval",
+          "scope": "contentless_delete since 3.43.0; plain configurations"
+        }
+      ]
+    },
+    {
+      "id": "E21",
+      "requested_url": "https://www.sqlite.org/lang_conflict.html",
+      "resolved_url": "https://www.sqlite.org/lang_conflict.html",
+      "accessed_utc": "2026-10-10T04:39:33.001838+00:00",
+      "http_status": 200,
+      "bytes": 15964,
+      "sha256": "772b9b3f407bed4cdf59a32f1dd5828c3bc8293744bc40a3f25d07e15973b75f",
+      "capture": "evidence/E21.html",
+      "candidate_source_ids": [
+        "C03",
+        "R01"
+      ],
+      "text_capture": "evidence/E21.txt",
+      "text_sha256": "07432e8bd9cbb355aeac42c8cc3e00b6475fa58aa53940e35186e8e9c995154d",
+      "independent_locator": "REPLACE conflict and trigger condition; E21.txt lines 96–118",
+      "observations": [
+        {
+          "claim_check_id": "CC07",
+          "operation": "Conflict deletes and delete triggers",
+          "scope": "current documentation and 3.6.18 origin; connection setting/build unknown"
+        }
+      ]
+    },
+    {
+      "id": "E22",
+      "requested_url": "https://www.sqlite.org/pragma.html#pragma_recursive_triggers",
+      "resolved_url": "https://www.sqlite.org/pragma.html#pragma_recursive_triggers",
+      "accessed_utc": "2026-10-10T04:39:33.042131+00:00",
+      "http_status": 200,
+      "bytes": 139936,
+      "sha256": "af75d7d7ab00c29e6eea98618cb1259a3919c308af60a6173215bf9798706034",
+      "capture": "evidence/E22.html",
+      "candidate_source_ids": [
+        "C04",
+        "R02"
+      ],
+      "text_capture": "evidence/E22.txt",
+      "text_sha256": "24f05033645c1f9824f4b76f543dae6ae2031e489f0bad9cc599ee9fd2c6df66",
+      "independent_locator": "PRAGMA recursive_triggers and synchronous; E22.txt lines 1208–1226 and 1349 onward",
+      "observations": [
+        {
+          "claim_check_id": "CC07",
+          "operation": "Conflict deletes and delete triggers",
+          "scope": "current documentation and 3.6.18 origin; connection setting/build unknown"
+        },
+        {
+          "claim_check_id": "CC08",
+          "operation": "Crash/power failure and WAL configuration",
+          "scope": "journal_mode/synchronous/VFS/filesystem unselected"
+        }
+      ]
+    },
+    {
+      "id": "E23",
+      "requested_url": "https://www.sqlite.org/releaselog/3_6_18.html",
+      "resolved_url": "https://www.sqlite.org/releaselog/3_6_18.html",
+      "accessed_utc": "2026-10-10T04:39:33.052569+00:00",
+      "http_status": 200,
+      "bytes": 5490,
+      "sha256": "66faa369a3b1893193ac24c20698b9a2452d295dd93a3865d2b844def6797267",
+      "capture": "evidence/E23.html",
+      "candidate_source_ids": [
+        "R03"
+      ],
+      "text_capture": "evidence/E23.txt",
+      "text_sha256": "b42fe700693994a04cbc859d366c6a029dfaaffd317d9d57787e1abb0610e9f2",
+      "independent_locator": "3.6.18 release recursive triggers / REPLACE; E23.txt lines 28–32",
+      "observations": [
+        {
+          "claim_check_id": "CC07",
+          "operation": "Conflict deletes and delete triggers",
+          "scope": "current documentation and 3.6.18 origin; connection setting/build unknown"
+        }
+      ]
+    },
+    {
+      "id": "E24",
+      "requested_url": "https://www.sqlite.org/releaselog/3_7_0.html",
+      "resolved_url": "https://www.sqlite.org/releaselog/3_7_0.html",
+      "accessed_utc": "2026-10-10T04:39:33.063531+00:00",
+      "http_status": 200,
+      "bytes": 4733,
+      "sha256": "494f7be7133a4fd6f839f55ccc0550d30b6e02308aba791187ae9272547077c5",
+      "capture": "evidence/E24.html",
+      "candidate_source_ids": [
+        "R04"
+      ],
+      "text_capture": "evidence/E24.txt",
+      "text_sha256": "cbd83c412b455411cd6a353149747a075198bc9954b0cd5b7ddc01c42e46009e",
+      "independent_locator": "3.7.0 released changes; absence of default item is not universal proof",
+      "observations": []
+    },
+    {
+      "id": "E25",
+      "requested_url": "https://www.sqlite.org/oldnews.html",
+      "resolved_url": "https://www.sqlite.org/oldnews.html",
+      "accessed_utc": "2026-10-10T04:39:33.091626+00:00",
+      "http_status": 200,
+      "bytes": 118466,
+      "sha256": "94c04284bf044c1e7fceb3ddc5787bc1ed965c56b6e89dfb967f64c05a8391fc",
+      "capture": "evidence/E25.html",
+      "candidate_source_ids": [
+        "R05"
+      ],
+      "text_capture": "evidence/E25.txt",
+      "text_sha256": "7838838b83e31fb0eff326fa026b3e975e8dba9f1310924a8c87bc55f8149412",
+      "independent_locator": "2009-09-11 forecast; E25.txt lines 971–998",
+      "observations": []
+    },
+    {
+      "id": "E26",
+      "requested_url": "https://docs.rs/tantivy/0.26.2/tantivy/query/struct.QueryParser.html",
+      "resolved_url": "https://docs.rs/tantivy/0.26.2/tantivy/query/struct.QueryParser.html",
+      "accessed_utc": "2026-10-10T04:39:33.156437+00:00",
+      "http_status": 200,
+      "bytes": 105877,
+      "sha256": "eba1289a3923d0067246421375c95424ae5d6c748ab1e22a67b9c9eb99938cb3",
+      "capture": "evidence/E26.html",
+      "candidate_source_ids": [
+        "R07"
+      ],
+      "text_capture": "evidence/E26.txt",
+      "text_sha256": "c3531226556c0f479b222e8522e07ed96ab9ca2ef6cc0118eb0cf24a04a2c66f",
+      "independent_locator": "QueryParser grammar/positions/default disjunction/typed boundary; E26.txt lines 228–280, 299–303 and parse_query",
+      "observations": [
+        {
+          "claim_check_id": "CC15",
+          "operation": "Broad engine grammar and malformed-input handling",
+          "scope": "Tantivy 0.26.2; grammar ^0.26.0 reference, app lock unknown"
+        }
+      ]
+    },
+    {
+      "id": "E27",
+      "requested_url": "https://sqlite.org/releaselog/3_43_0.html",
+      "resolved_url": "https://sqlite.org/releaselog/3_43_0.html",
+      "accessed_utc": "2026-10-10T04:39:33.161761+00:00",
+      "http_status": 200,
+      "bytes": 6966,
+      "sha256": "a3a5619b15570a64c864514ce4716c37929d7f8918e68ee5bec63ecc40cd87d9",
+      "capture": "evidence/E27.html",
+      "candidate_source_ids": [
+        "R08"
+      ],
+      "text_capture": "evidence/E27.txt",
+      "text_sha256": "39ff3c5a009fd384930bdbbd2a617538436f91611241b04bd1db404beb03f047",
+      "independent_locator": "Duplicate www/no-www retrieval of 3.43.0 release",
+      "observations": [
+        {
+          "claim_check_id": "CC04",
+          "operation": "Delete/update/replace and source value retrieval",
+          "scope": "contentless_delete since 3.43.0; plain configurations"
+        }
+      ]
+    },
+    {
+      "id": "E28",
+      "requested_url": "https://www.sqlite.org/src/artifact/a54f839859",
+      "resolved_url": "https://www.sqlite.org/src/artifact/a54f839859",
+      "accessed_utc": "2026-10-10T04:39:33.217423+00:00",
+      "http_status": 200,
+      "bytes": 269099,
+      "sha256": "98671d710b784784fa1c8e479368e2201a2fd74c43461dc272a03c267e28079f",
+      "capture": "evidence/E28.html",
+      "candidate_source_ids": [
+        "R09"
+      ],
+      "text_capture": "evidence/E28.txt",
+      "text_sha256": "3840e185ba49cf4ba13a0d391fc33645809bfaa87d77e7e004351a943350664e",
+      "independent_locator": "Artifact header check-in 235cf6586b (2025-07-18 trunk), guarded default; E28.txt lines 13–28, 674–679",
+      "observations": [
+        {
+          "claim_check_id": "CC07",
+          "operation": "Conflict deletes and delete triggers",
+          "scope": "current documentation and 3.6.18 origin; connection setting/build unknown"
+        }
+      ]
+    },
+    {
+      "id": "E29",
+      "requested_url": "https://docs.rs/tantivy/0.26.2/tantivy/tokenizer/struct.RemoveLongFilter.html",
+      "resolved_url": "https://docs.rs/tantivy/0.26.2/tantivy/tokenizer/struct.RemoveLongFilter.html",
+      "accessed_utc": "2026-10-10T04:39:33.225099+00:00",
+      "http_status": 200,
+      "bytes": 91815,
+      "sha256": "70b10e68c0c0aeed375da1cc57dc8a3eab949ec8fd02ec7553eb677fa67ba991",
+      "capture": "evidence/E29.html",
+      "candidate_source_ids": [],
+      "text_capture": "evidence/E29.txt",
+      "text_sha256": "d2eb0e1a0c2309a3d16c8a3244491c578c53f30f0b3d3cef14131cbc1fac874f",
+      "independent_locator": "RemoveLongFilter byte-unit API; boundary source in E30/E42",
+      "observations": [
+        {
+          "claim_check_id": "CC14",
+          "operation": "Apply explicit byte policy to index and query",
+          "scope": "Tantivy 0.26.2 implementation"
+        }
+      ]
+    },
+    {
+      "id": "E30",
+      "requested_url": "https://docs.rs/tantivy/0.26.2/src/tantivy/tokenizer/remove_long.rs.html",
+      "resolved_url": "https://docs.rs/tantivy/0.26.2/src/tantivy/tokenizer/remove_long.rs.html",
+      "accessed_utc": "2026-10-10T04:39:33.241184+00:00",
+      "http_status": 200,
+      "bytes": 44547,
+      "sha256": "1e2bdd10c02aeaee5492ca81c4dae9e3b9f7d31f0090bf1744a3919e7a62cc53",
+      "capture": "evidence/E30.html",
+      "candidate_source_ids": [],
+      "text_capture": "evidence/E30.txt",
+      "text_sha256": "7b06f30bd3e6f1afc7d891fd9a43146a4e421f60a2c937619e1cf15eb31ac59d",
+      "independent_locator": "remove_long.rs source lines 34–37 (predicate); source snapshot also E42",
+      "observations": [
+        {
+          "claim_check_id": "CC14",
+          "operation": "Apply explicit byte policy to index and query",
+          "scope": "Tantivy 0.26.2 implementation"
+        }
+      ]
+    },
+    {
+      "id": "E31",
+      "requested_url": "https://docs.rs/tantivy/0.26.2/src/tantivy/snippet/mod.rs.html",
+      "resolved_url": "https://docs.rs/tantivy/0.26.2/src/tantivy/snippet/mod.rs.html",
+      "accessed_utc": "2026-10-10T04:39:33.300685+00:00",
+      "http_status": 200,
+      "bytes": 128452,
+      "sha256": "32384bccc8a7e34d7161e91d68d1a9bf03ae29268d10664bd42405bbcab8b6bf",
+      "capture": "evidence/E31.html",
+      "candidate_source_ids": [],
+      "text_capture": "evidence/E31.txt",
+      "text_sha256": "3dfa928c79fc70ab291b02532197428866ac6fff184f0a064a5e91c895747516",
+      "independent_locator": "snippet/mod.rs source lines 149–165 to_html, 448–474 canonical-text snippet; E31.txt lines 332–348, 631–657",
+      "observations": [
+        {
+          "claim_check_id": "CC13",
+          "operation": "Bound and display source note text",
+          "scope": "FTS live docs; Tantivy 0.26.2"
+        }
+      ]
+    },
+    {
+      "id": "E32",
+      "requested_url": "https://docs.rs/tantivy/0.26.2/src/tantivy/tokenizer/simple_tokenizer.rs.html",
+      "resolved_url": "https://docs.rs/tantivy/0.26.2/src/tantivy/tokenizer/simple_tokenizer.rs.html",
+      "accessed_utc": "2026-10-10T04:39:33.318027+00:00",
+      "http_status": 200,
+      "bytes": 43423,
+      "sha256": "7ab7b5201c8da6346f5950c45202532bb9d698d8f9f103ef8b11c03570b06e5d",
+      "capture": "evidence/E32.html",
+      "candidate_source_ids": [],
+      "text_capture": "evidence/E32.txt",
+      "text_sha256": "bb2ea9baa64b6abfc186f7c8ec1adc5a340cda2d738b031a01d2b734e65a90af",
+      "independent_locator": "simple_tokenizer.rs source lines 30–54 alphanumeric scan",
+      "observations": [
+        {
+          "claim_check_id": "CC14",
+          "operation": "Apply explicit byte policy to index and query",
+          "scope": "Tantivy 0.26.2 implementation"
+        }
+      ]
+    },
+    {
+      "id": "E33",
+      "requested_url": "https://docs.rs/tantivy/0.26.2/src/tantivy/tokenizer/tokenizer_manager.rs.html",
+      "resolved_url": "https://docs.rs/tantivy/0.26.2/src/tantivy/tokenizer/tokenizer_manager.rs.html",
+      "accessed_utc": "2026-10-10T04:39:33.338084+00:00",
+      "http_status": 200,
+      "bytes": 41126,
+      "sha256": "3de53d21084011783d7c69e4f453a67efe6a86510dafde05e1e0948364d680d6",
+      "capture": "evidence/E33.html",
+      "candidate_source_ids": [],
+      "text_capture": "evidence/E33.txt",
+      "text_sha256": "cd02bf1367ab0768347225d6bb4218283679399f856240b272c2f48a0352777f",
+      "independent_locator": "tokenizer_manager.rs source lines 53–77: default pipeline limit(40) then lowercase",
+      "observations": [
+        {
+          "claim_check_id": "CC14",
+          "operation": "Apply explicit byte policy to index and query",
+          "scope": "Tantivy 0.26.2 implementation"
+        }
+      ]
+    },
+    {
+      "id": "E34",
+      "requested_url": "https://github.com/quickwit-oss/tantivy/pull/3075",
+      "resolved_url": "https://github.com/quickwit-oss/tantivy/pull/3075",
+      "http_status": 200,
+      "accessed_utc": "2026-10-10T04:41:48.129537+00:00",
+      "bytes": 370198,
+      "sha256": "7966eb6c7dc36e5bc332c4c532623a6562ee7a7d8b18ce78e9594c64369d214b",
+      "capture": "evidence/E34.html",
+      "candidate_source_ids": [],
+      "text_capture": "evidence/E34.txt",
+      "text_sha256": "fd5f73eb623fed0c729d906a7322296d7e37f790cc71fe3e952bb0281a76dda7",
+      "independent_locator": "PR3075 open status and branch, proposal and tests are contributor-reported, not reviewer execution",
+      "observations": [
+        {
+          "claim_check_id": "CC15",
+          "operation": "Broad engine grammar and malformed-input handling",
+          "scope": "Tantivy 0.26.2; grammar ^0.26.0 reference, app lock unknown"
+        }
+      ]
+    },
+    {
+      "id": "E35",
+      "requested_url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/Cargo.toml",
+      "resolved_url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/Cargo.toml",
+      "http_status": 200,
+      "accessed_utc": "2026-10-10T04:41:48.926560+00:00",
+      "bytes": 5289,
+      "sha256": "86580e1a8bde15d2b0e0b9eb9ffef5b02fb745fa2f1b01ffe7717841f48bd9d5",
+      "capture": "evidence/E35.txt",
+      "candidate_source_ids": [],
+      "text_capture": "evidence/E35.txt",
+      "text_sha256": "86580e1a8bde15d2b0e0b9eb9ffef5b02fb745fa2f1b01ffe7717841f48bd9d5",
+      "independent_locator": "Commit-pinned Cargo.toml lines 1–14, 60–66: package version, Rust minimum and grammar requirement",
+      "observations": [
+        {
+          "claim_check_id": "CC15",
+          "operation": "Broad engine grammar and malformed-input handling",
+          "scope": "Tantivy 0.26.2; grammar ^0.26.0 reference, app lock unknown"
+        },
+        {
+          "claim_check_id": "CC16",
+          "operation": "Tie reference source to release/history",
+          "scope": "SQLite 3.53.4 2026-07-24; Tantivy 0.26.2 2026-09-08"
+        }
+      ]
+    },
+    {
+      "id": "E36",
+      "requested_url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/.cargo_vcs_info.json",
+      "resolved_url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/.cargo_vcs_info.json",
+      "http_status": 404,
+      "accessed_utc": "2026-10-10T04:41:49.093400+00:00",
+      "bytes": 14,
+      "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "capture": "evidence/E36.txt",
+      "candidate_source_ids": [],
+      "independent_locator": "HTTP 404 at attempted repository .cargo_vcs_info path; no semantic evidence; alternate successful E40",
+      "observations": []
+    },
+    {
+      "id": "E37",
+      "requested_url": "https://docs.rs/tantivy/0.26.2/tantivy/snippet/struct.SnippetGenerator.html",
+      "resolved_url": "https://docs.rs/tantivy/0.26.2/tantivy/snippet/struct.SnippetGenerator.html",
+      "http_status": 200,
+      "accessed_utc": "2026-10-10T04:41:49.204228+00:00",
+      "bytes": 87300,
+      "sha256": "fdab17557804f76c0d828801be38a3ed908cb449adc8c3c83bc3b506d5fe979b",
+      "capture": "evidence/E37.html",
+      "candidate_source_ids": [],
+      "text_capture": "evidence/E37.txt",
+      "text_sha256": "2c80e4ea3f3079aa9a6b1369445cf2433da1190a67848c0ee1609acdc1deaeeb",
+      "independent_locator": "SnippetGenerator snippet(&str) versus snippet_from_doc; E37.txt lines 250–259",
+      "observations": [
+        {
+          "claim_check_id": "CC13",
+          "operation": "Bound and display source note text",
+          "scope": "FTS live docs; Tantivy 0.26.2"
+        }
+      ]
+    },
+    {
+      "id": "E38",
+      "requested_url": "https://docs.rs/crate/tantivy-query-grammar/0.26.0/source/src/user_input_ast.rs",
+      "resolved_url": "https://docs.rs/crate/tantivy-query-grammar/0.26.0/source/src/user_input_ast.rs",
+      "http_status": 200,
+      "accessed_utc": "2026-10-10T04:41:49.402440+00:00",
+      "bytes": 299019,
+      "sha256": "4682b0ae238f08d725ca2a809bb9ca810b86654b51a3068a309834a18dc09dc1",
+      "capture": "evidence/E38.html",
+      "candidate_source_ids": [],
+      "text_capture": "evidence/E38.txt",
+      "text_sha256": "837243f3235f0938efc242ace61bb12b73f31f21913a6c819fd38e21528e64a7",
+      "independent_locator": "Released grammar 0.26.0 user_input_ast set_field Exists expect; E38.txt lines 523–543",
+      "observations": [
+        {
+          "claim_check_id": "CC15",
+          "operation": "Broad engine grammar and malformed-input handling",
+          "scope": "Tantivy 0.26.2; grammar ^0.26.0 reference, app lock unknown"
+        }
+      ]
+    },
+    {
+      "id": "E39",
+      "requested_url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/CHANGELOG.md",
+      "resolved_url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/CHANGELOG.md",
+      "http_status": 200,
+      "accessed_utc": "2026-10-10T04:41:49.645105+00:00",
+      "bytes": 59164,
+      "sha256": "702320ebbfe1ab5057d646c7647a834024e07c5741ab040a4113f5d3e446c645",
+      "capture": "evidence/E39.txt",
+      "candidate_source_ids": [],
+      "text_capture": "evidence/E39.txt",
+      "text_sha256": "702320ebbfe1ab5057d646c7647a834024e07c5741ab040a4113f5d3e446c645",
+      "independent_locator": "Commit-pinned CHANGELOG.md lines 1–6, actual 0.26.2 fixes",
+      "observations": [
+        {
+          "claim_check_id": "CC16",
+          "operation": "Tie reference source to release/history",
+          "scope": "SQLite 3.53.4 2026-07-24; Tantivy 0.26.2 2026-09-08"
+        }
+      ]
+    },
+    {
+      "id": "E40",
+      "requested_url": "https://docs.rs/crate/tantivy/0.26.2/source/.cargo_vcs_info.json",
+      "resolved_url": "https://docs.rs/crate/tantivy/0.26.2/source/.cargo_vcs_info.json",
+      "http_status": 200,
+      "accessed_utc": "2026-10-10T04:44:20.144576+00:00",
+      "bytes": 24193,
+      "sha256": "905b09e0ff6cf25d7eeefcbf755a4850d6e1acc3e36655cdf95cd4d8ebf07f9a",
+      "capture": "evidence/E40.html",
+      "candidate_source_ids": [],
+      "text_capture": "evidence/E40.txt",
+      "text_sha256": "667986398b460515e490602f89b19afd4c90553340522dea12f5845443800861",
+      "independent_locator": "Crate VCS metadata; E40.txt lines 62–66 sha1",
+      "observations": [
+        {
+          "claim_check_id": "CC16",
+          "operation": "Tie reference source to release/history",
+          "scope": "SQLite 3.53.4 2026-07-24; Tantivy 0.26.2 2026-09-08"
+        }
+      ]
+    },
+    {
+      "id": "E41",
+      "requested_url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/query-grammar/src/query_grammar.rs",
+      "resolved_url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/query-grammar/src/query_grammar.rs",
+      "http_status": 200,
+      "accessed_utc": "2026-10-10T04:44:20.403402+00:00",
+      "bytes": 69276,
+      "sha256": "8c1590bbfdb84da3a547eace9f74bb2aa755ed865383b2e302d6f0cea73e17fa",
+      "capture": "evidence/E41.txt",
+      "candidate_source_ids": [],
+      "text_capture": "evidence/E41.txt",
+      "text_sha256": "8c1590bbfdb84da3a547eace9f74bb2aa755ed865383b2e302d6f0cea73e17fa",
+      "independent_locator": "Commit-pinned query_grammar.rs lines 365–377 literal optional-field/exists/set_field path; read only, not executed",
+      "observations": [
+        {
+          "claim_check_id": "CC15",
+          "operation": "Broad engine grammar and malformed-input handling",
+          "scope": "Tantivy 0.26.2; grammar ^0.26.0 reference, app lock unknown"
+        }
+      ]
+    },
+    {
+      "id": "E42",
+      "requested_url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/src/tokenizer/remove_long.rs",
+      "resolved_url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/src/tokenizer/remove_long.rs",
+      "http_status": 200,
+      "accessed_utc": "2026-10-10T04:44:20.555323+00:00",
+      "bytes": 3366,
+      "sha256": "d36c4183a9df3a512ec40c64b993b5ada656c018b588f18341ffec0aa2384d9c",
+      "capture": "evidence/E42.txt",
+      "candidate_source_ids": [],
+      "text_capture": "evidence/E42.txt",
+      "text_sha256": "d36c4183a9df3a512ec40c64b993b5ada656c018b588f18341ffec0aa2384d9c",
+      "independent_locator": "Commit-pinned remove_long.rs lines 34–37 exclusive byte predicate",
+      "observations": [
+        {
+          "claim_check_id": "CC14",
+          "operation": "Apply explicit byte policy to index and query",
+          "scope": "Tantivy 0.26.2 implementation"
+        }
+      ]
+    }
+  ],
+  "claim_checks": [
+    {
+      "id": "CC01",
+      "subject": "SQLite FTS5 module/build",
+      "operation": "Create and use FTS5 on shipped targets",
+      "assessment": "Conditional runtime probe is justified. Inclusion since 3.9.0, configure/amalgamation defaults and SQLITE_ENABLE_FTS5 matter; upstream version alone does not enable the app module.",
+      "version_configuration": "live docs; introduced 3.9.0",
+      "evidence_ids": [
+        "E01",
+        "E03"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 77
+      },
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "CC02",
+      "subject": "FTS5 MATCH query language",
+      "operation": "Generate quoted terms/phrases; bind fixed SQL",
+      "assessment": "Quoted AST generation hides Boolean/field/prefix grammar; MATCH value binding alone does not constrain it. Terms/phrases are tokenizer-derived.",
+      "version_configuration": "live FTS5 docs; actual release unpinned",
+      "evidence_ids": [
+        "E01"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 20
+      },
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "CC03",
+      "subject": "unicode61 tokenizer",
+      "operation": "Index/query accent and punctuation normalization",
+      "assessment": "Unicode 6.1 categories/case handling, Latin diacritics, default 1 versus multi-diacritic option 2 are correctly scoped; no cross-language or analyzer-equivalence guarantee.",
+      "version_configuration": "unicode61 remove_diacritics 2; live docs",
+      "evidence_ids": [
+        "E01"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 21
+      },
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "CC04",
+      "subject": "FTS5 content modes",
+      "operation": "Delete/update/replace and source value retrieval",
+      "assessment": "Ordinary contentless SQL restrictions differ from its original-text special delete and from contentless-delete SQL DELETE/REPLACE/all-column UPDATE. External content retrieves named source columns. Optional UNINDEXED persistence is separate.",
+      "version_configuration": "contentless_delete since 3.43.0; plain configurations",
+      "evidence_ids": [
+        "E01",
+        "E20",
+        "E27"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 81
+      },
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "CC05",
+      "subject": "FTS5 external-content triggers",
+      "operation": "Create/update/delete and initial population",
+      "assessment": "Old rowid/text deletes and new inserts match official trigger mechanism; triggers do not backfill. Source and FTS belong to one SQLite transaction.",
+      "version_configuration": "same database; integer rowid mapping; actual schema unknown",
+      "evidence_ids": [
+        "E01",
+        "E02"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 47
+      },
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "CC06",
+      "subject": "External-content reconciliation",
+      "operation": "Detect missing/stale rows and rebuild",
+      "assessment": "rank=1 compares external content. A non-MATCH SELECT may read canonical content without testing postings. Rebuild touches derived index; contentless needs explicit source reindex.",
+      "version_configuration": "FTS5 integrity-check/rebuild; external content",
+      "evidence_ids": [
+        "E01"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 47
+      },
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "CC07",
+      "subject": "SQLite source-table REPLACE",
+      "operation": "Conflict deletes and delete triggers",
+      "assessment": "UNIQUE/PRIMARY KEY conflict deletes fire delete triggers only if recursive_triggers enabled. This differs from REPLACE on the external FTS virtual table, which uses ABORT. Final offers forbid/configure/test, not an observed app defect.",
+      "version_configuration": "current documentation and 3.6.18 origin; connection setting/build unknown",
+      "evidence_ids": [
+        "E01",
+        "E21",
+        "E22",
+        "E23",
+        "E28"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 49
+      },
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "CC08",
+      "subject": "SQLite transaction durability",
+      "operation": "Crash/power failure and WAL configuration",
+      "assessment": "Single-store atomicity does not span Tantivy. WAL FULL commit sync versus NORMAL durability tradeoff, same-host shared memory and WAL companion lifecycle are supported. Rollback atomic-commit article is mode-specific and assumes working storage/VFS.",
+      "version_configuration": "journal_mode/synchronous/VFS/filesystem unselected",
+      "evidence_ids": [
+        "E02",
+        "E17",
+        "E18",
+        "E22"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 51
+      },
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "CC09",
+      "subject": "Tantivy IndexWriter",
+      "operation": "Add/delete/commit/replay",
+      "assessment": "0.26.2 commit blocks and persists/publishes changes, subject to spared storage; delete affects prior committed and earlier same-commit documents. Commit-before-ack ordered replay is an application inference; not cross-store atomicity.",
+      "version_configuration": "Tantivy 0.26.2",
+      "evidence_ids": [
+        "E06"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 59
+      },
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "CC10",
+      "subject": "Tantivy IndexReader",
+      "operation": "Make committed source watermark reader-visible",
+      "assessment": "Default OnCommitWithDelay may lag tens of milliseconds; explicit reload exists. Final barrier requires committed AND reader-visible state, not merely completed writer commit.",
+      "version_configuration": "Tantivy 0.26.2",
+      "evidence_ids": [
+        "E07"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 63
+      },
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "CC11",
+      "subject": "Collection membership and outbox",
+      "operation": "Track/filter exact collection state",
+      "assessment": "Indexed membership needs durable document refresh if canonical relations change separately. Exact-field configuration and any/all/cardinality are owner/schema choices. Source-side filtering must not silently drop a truncated top-K set.",
+      "version_configuration": "application architecture over Tantivy document API",
+      "evidence_ids": [
+        "E06",
+        "E07",
+        "E11"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 57
+      },
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "CC12",
+      "subject": "BM25 and public ordering",
+      "operation": "Sort and handle ties/rebuilds",
+      "assessment": "FTS lower score is better; Tantivy descending score. TopDocs uses ascending internal DocAddress ties; canonical IDs require explicit collector/full candidate sorting. Corpus/config changes may change scores.",
+      "version_configuration": "FTS live docs; Tantivy 0.26.2",
+      "evidence_ids": [
+        "E01",
+        "E11"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 71
+      },
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "CC13",
+      "subject": "Excerpt source/size/rendering",
+      "operation": "Bound and display source note text",
+      "assessment": "FTS snippet has positive <=64 token limit and external text lookup. Product 24-token/180-grapheme limit is a proposed extra bound. Tantivy accepts provided text; source HTML helper encodes note slices but custom markers are raw. Plain-text rendering remains a supported choice.",
+      "version_configuration": "FTS live docs; Tantivy 0.26.2",
+      "evidence_ids": [
+        "E01",
+        "E12",
+        "E19",
+        "E31",
+        "E37"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 73
+      },
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "CC14",
+      "subject": "Tantivy analyzer/default and token unit",
+      "operation": "Apply explicit byte policy to index and query",
+      "assessment": "SimpleTokenizer scans alphanumeric chars; explicit lowercase/folding are not FTS parity. Default docs say chars but API/source bytes; filter limit is exclusive, not inclusive. Draft exact API mapping has L03 defect; generic final policy does not bind that API.",
+      "version_configuration": "Tantivy 0.26.2 implementation",
+      "evidence_ids": [
+        "E08",
+        "E29",
+        "E30",
+        "E32",
+        "E33",
+        "E42"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 22
+      },
+      "status": "SUPPORTED_WITH_STATED_LIMITS"
+    },
+    {
+      "id": "CC15",
+      "subject": "Tantivy QueryParser/history",
+      "operation": "Broad engine grammar and malformed-input handling",
+      "assessment": "0.26.2 grammar has broader operators and phrase searches need indexed positions. Result return type proves no universal no-panic claim. #3031 reports older versions; fork/PR3075 is open, not a shipped fix. Independently retrieved grammar 0.26.0 retains the described expect path; no executable app outcome is claimed. Final typed wrapper avoids depending on arbitrary parser safety.",
+      "version_configuration": "Tantivy 0.26.2; grammar ^0.26.0 reference, app lock unknown",
+      "evidence_ids": [
+        "E09",
+        "E10",
+        "E15",
+        "E16",
+        "E26",
+        "E34",
+        "E35",
+        "E38",
+        "E41"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 84
+      },
+      "status": "SUPPORTED_WITH_STATED_LIMITS"
+    },
+    {
+      "id": "CC16",
+      "subject": "Release identity and issue scope",
+      "operation": "Tie reference source to release/history",
+      "assessment": "SQLite 3.53.4 source ID matches release page. Tantivy crate VCS metadata matches 72d1ef9a... and Cargo 0.26.2. #2847 is disputed old Windows report; #3079 is unversioned precommit question. Changelog metadata limitation does not establish a deployment failure/fix.",
+      "version_configuration": "SQLite 3.53.4 2026-07-24; Tantivy 0.26.2 2026-09-08",
+      "evidence_ids": [
+        "E03",
+        "E04",
+        "E05",
+        "E13",
+        "E14",
+        "E35",
+        "E39",
+        "E40"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 77
+      },
+      "status": "SUPPORTED_WITH_STATED_LIMITS"
+    },
+    {
+      "id": "CC17",
+      "subject": "Tokenizer migration",
+      "operation": "Change derived generation without deleting authority",
+      "assessment": "A new FTS table/schema/analyzer plus source-driven population or a Tantivy new generation preserves SQLite notes; a rebuild on an existing FTS table uses its current configuration. No migration was executed.",
+      "version_configuration": "planning inference from configured tables/source authority",
+      "evidence_ids": [
+        "E01",
+        "E06"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 53
+      },
+      "status": "SUPPORTED"
+    }
+  ],
+  "criticism_dispositions": [
+    {
+      "id": "M1",
+      "original_classification": "Material incomplete, conditional",
+      "independent_disposition": "SUPPORTED_CONDITIONAL_HARDENING",
+      "final_disposition": "accept",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 49
+      },
+      "evidence_ids": [
+        "E21",
+        "E22",
+        "E23",
+        "E28"
+      ],
+      "assessment": "UNIQUE/PRIMARY KEY REPLACE deletes can omit delete triggers when recursive triggers are off. Final forbids that note-write path or explicitly configures/tests every shipped connection and conflict key. Unknown schema/SQL is not an observed defect. Ordinary source REPLACE and external-FTS REPLACE behavior must not be conflated."
+    },
+    {
+      "id": "M2",
+      "original_classification": "Material incomplete, conditional",
+      "independent_disposition": "SUPPORTED_CONDITIONAL_HARDENING",
+      "final_disposition": "accept",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 57
+      },
+      "evidence_ids": [
+        "E06",
+        "E07"
+      ],
+      "assessment": "If membership changes outside a note update and it is indexed in the document, that change needs durable capture. Final explicitly covers relation inserts/deletes and indexed renames or immutable IDs. This is an application architecture inference, not a documented existing app defect."
+    },
+    {
+      "id": "U1",
+      "original_classification": "Honestly unresolved external input",
+      "independent_disposition": "VALID_PRODUCT_UNCERTAINTY",
+      "final_disposition": "accept as unresolved",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 25
+      },
+      "evidence_ids": [],
+      "assessment": "The brief requires filtering capability, not mandatory filter selection or multi-tag any/all semantics. Leaving these owner decisions is appropriate."
+    },
+    {
+      "id": "U2",
+      "original_classification": "Minor locator/wording",
+      "independent_disposition": "VALID_POLARITY_AMBIGUITY",
+      "final_disposition": "accept and amend",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 117
+      },
+      "evidence_ids": [],
+      "assessment": "Draft rejection labels conflict with its compliant implementation proposal. Final accepts every negative constraint. This was a wording defect, not evidence of executed SQL injection/export/note deletion."
+    },
+    {
+      "id": "U3",
+      "original_classification": "Minor locator/wording",
+      "independent_disposition": "VALID_MUTABLE_LOCATOR_WARNING",
+      "final_disposition": "accept",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+        "line": 86
+      },
+      "evidence_ids": [
+        "E09",
+        "E26"
+      ],
+      "assessment": "S10 remains a mutable observed page, while R07 provides exact 0.26.2 syntax. Source IDs are preserved. Critic C11 reference here is a locator error; C09/S15 govern issue #3031."
+    }
+  ],
+  "original_artifact_manifest": "original-inspected-manifest.json",
+  "scope_freeze": "ER12_RUNTIME/runs/A3-01/treatment/terminal-science-freeze-root.json",
+  "note": "Captures/hash/locator records support navigation and integrity. Semantic judgment is in assessment.md/json. Unselected deployment and raw candidate native telemetry remain UNKNOWN."
+}

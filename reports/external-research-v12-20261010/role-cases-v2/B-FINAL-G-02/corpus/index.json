@@ -1,0 +1,27 @@
+{
+  "sources": [
+    {
+      "source_id": "S1",
+      "title": "Git sparse-checkout",
+      "url": "https://git-scm.com/docs/git-sparse-checkout",
+      "version": "Live manual with change history through 2.56.0; target Git 2.43; check history",
+      "retrieved_at": "2026-10-10T03:54:10Z",
+      "navigation": "DESCRIPTION; set; reapply; disable; INTERNALS \u2014 CONE PATTERN SET",
+      "file": "corpus/S1.md",
+      "sha256": "9b511a3588e02c588843e7d0a2d09ed43c7f4b13bc54d7bf2841e08ba8d9cbc0",
+      "verbatim_word_count": 7
+    },
+    {
+      "source_id": "S2",
+      "title": "Git clone",
+      "url": "https://git-scm.com/docs/git-clone",
+      "version": "Live unpinned clone manual; target Git 2.43; verify option/version applicability",
+      "retrieved_at": "2026-10-10T03:54:10Z",
+      "navigation": "--sparse; --filter; --depth",
+      "file": "corpus/S2.md",
+      "sha256": "996efda6f552deb261be72379edac9588a2b96eb8ac1247fb0f083d004a4743c",
+      "verbatim_word_count": 4
+    }
+  ],
+  "retrieval_policy": "Both arms may follow the listed URLs and retrieve up to eight additional primary pages within the same 600-second investigation allowance. Snapshots are short excerpts and attributed paraphrases, not complete manuals."
+}

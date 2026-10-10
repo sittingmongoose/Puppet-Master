@@ -1,0 +1,88 @@
+{
+  "observed_at_utc": "2026-10-10T05:11:12.934137+00:00",
+  "basis": "root observed terminal final T3 task/no pending; separate from native proof",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/critic/critique.md",
+      "bytes": 10531,
+      "sha256": "42d8a8a61b9d1ce94e09fec148870e0d5c679b6dfe8f5f6539002f4ce1b19b0d",
+      "mtime_ns": 1791608365273518215
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/critic/source-map.json",
+      "bytes": 14122,
+      "sha256": "28aad9e1ea904d2f7712715d02add8e8751abc519968cb8d784b3372b8e94eb2",
+      "mtime_ns": 1791608413023837778
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/investigator/discovery.md",
+      "bytes": 9879,
+      "sha256": "4bc5116840da899c1967b5bb157e05c67e579b3a0634edb48f5f53aa48cf58b9",
+      "mtime_ns": 1791606785475541483
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/investigator/draft.md",
+      "bytes": 23136,
+      "sha256": "7a0786233b44b078654a35efbb9b42051ecb03fbe796de12b7e1c8720a5e68f9",
+      "mtime_ns": 1791607549792340584
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/investigator/revealed-plan.md",
+      "bytes": 5916,
+      "sha256": "03928ccee4efbf0f624b296c0d8e7f21ce0d491a5aa52eca4e763ffd08d42131",
+      "mtime_ns": 1791606795839279134
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/investigator/source-map.json",
+      "bytes": 25136,
+      "sha256": "8df4105b92c662ed0b528294c92aca27437c02f8378972802be8f48badd675af",
+      "mtime_ns": 1791607555451332337
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/investigator/sources/index.md",
+      "bytes": 8710,
+      "sha256": "f40a0d140c25307488818fc28f7f92485864655b270a0dd08e8f89ef18d9e4f1",
+      "mtime_ns": 1791607531906396740
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/reviser/final.md",
+      "bytes": 26563,
+      "sha256": "3c7da9f34980d358317532d7711dbcbc40257e1ccd3a0b0c4bb83bd8cfabe66a",
+      "mtime_ns": 1791609042924256910
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/reviser/source-map.json",
+      "bytes": 39035,
+      "sha256": "a202416f75c9fc69079d7288df4072ce1ad23988cd98d8b625e0dcc3a2a1b6a8",
+      "mtime_ns": 1791609042925841822
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/control/stages/reviser/sources/index.md",
+      "bytes": 22584,
+      "sha256": "14083e269e884314bd98f62ff57787e6d7e20f1a1bf91446db89d90c026b9350",
+      "mtime_ns": 1791608920822399891
+    }
+  ],
+  "final_stage_task": {
+    "slot": "A7-02",
+    "arm": "control",
+    "stage": "reviser",
+    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A7-02-control-reviser-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A7-02-control-reviser-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A7-02-control-reviser-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A7-02-control-reviser-v1",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A7-02-control-reviser-v1:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "Completed the assigned reviser stage. The native Goal activated and completed under thread `01a12431-9358-7ae2-b7a1-c6ac55c35c6d`; the required artifacts were saved before completion.\n\n- [final.md](ER12_RUNTIME/runs/A7-02/control/stages/reviser/final.md) contains the complete proposal, clause-by-clause plan dispositions, critique responses, and validation status.\n- [source-map.json](ER12_RUNTIME/runs/A7-02/control/stages/reviser/source-map.json) preserves 21 source IDs and records 13 direct primary-source rechecks and the observed Goal fields.\n- [sources/index.md](ER12_RUNTIME/runs/A7-02/control/stages/reviser/sources/index.md) provides the navigable source index.\n\nI accepted and corrected the S05 wording: its documentation page shows a 2025-12-12 update date, while no Zotero app release is pinned. ([Zotero bibliography documentation](https://www.zotero.org/support/creating_bibliographies)) Product, API, and end-to-end export checks remain **NOT_RUN**; proposed validations are labeled accordingly.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A7-02-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:8dc22abd-0a06-4d9e-9f0d-46194773de80",
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "summary": "Completed the assigned reviser stage. The native Goal activated and completed under thread `01a12431-9358-7ae2-b7a1-c6ac55c35c6d`; the required artifacts were saved before completion.\n\n- [final.md](ER12_RUNTIME/runs/A7-02/control/stages/reviser/final.md) contains the complete proposal, clause-by-clause plan dispositions, critique responses, and validation status.\n- [source-map.json](ER12_RUNTIME/runs/A7-02/control/stages/reviser/source-map.json) preserves 21 source IDs and records 13 direct primary-source rechecks and the observed Goal fields.\n- [sources/index.md](ER12_RUNTIME/runs/A7-02/control/stages/reviser/sources/index.md) provides the navigable source index.\n\nI accepted and corrected the S05 wording: its documentation page shows a 2025-12-12 update date, while no Zotero app release is pinned. ([Zotero bibliography documentation](https://www.zotero.org/support/creating_bibliographies)) Product, API, and end-to-end export checks remain **NOT_RUN**; proposed validations are labeled accordingly.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A7-02-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:8dc22abd-0a06-4d9e-9f0d-46194773de80",
+    "waitTimedOut": false
+  }
+}

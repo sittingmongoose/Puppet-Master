@@ -1,0 +1,45 @@
+{
+  "run_id": "A2-02-treatment",
+  "stage": "critic",
+  "brief": "ER12_RUNTIME/runs/A2-02/treatment/handoff/inputs/brief.md",
+  "predecessors": [
+    "ER12_RUNTIME/runs/A2-02/treatment/handoff/inputs/brief.md",
+    "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/discovery.md",
+    "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/draft.md",
+    "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/source-map.json",
+    "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/revealed-plan.md",
+    "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/plan-reveal.json",
+    "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S01-presentation-api-v3.md",
+    "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S02-presentation-v3-changelog.md",
+    "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S03-canvas-coordinate-space.md",
+    "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S04-web-annotation-model.md",
+    "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S05-image-api-v3.md",
+    "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S06-content-state-v1.md",
+    "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S07-mirador-v4-breaking-change.md",
+    "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S08-mirador-current-release.md",
+    "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S09-mirador-annotations.md",
+    "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S10-plugin-install-issue-75.md",
+    "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S11-mae-compatibility.md",
+    "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S12-universal-viewer-config.md",
+    "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S13-universal-viewer-release.md",
+    "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/S14-iiif-viewer-guide.md",
+    "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources/index.md",
+    "ER12_RUNTIME/runs/A2-02/treatment/handoff/manifest.json",
+    "ER12_RUNTIME/runs/A2-02/treatment/control/handoff-binding.json"
+  ],
+  "source_roots": [
+    "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/sources"
+  ],
+  "allowed_write_root": "ER12_RUNTIME/runs/A2-02/treatment/stages/critic",
+  "stage_deadline_utc": "2026-10-10T05:38:38.876Z",
+  "whole_deadline_utc": "2026-10-10T05:51:12.545Z",
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    }
+  },
+  "revealed_plan": "ER12_RUNTIME/runs/A2-02/treatment/handoff/stages/investigator/revealed-plan.md"
+}

@@ -1,0 +1,61 @@
+{
+  "native_goal_objective": "ER12 B-FINAL-G-02/control: execute ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/assignment.md; save the complete bounded role output and source map before completing this actual native Goal.",
+  "prepared_at_utc": "2026-10-10T05:20:06.159000+00:00",
+  "frozen_at_utc": "2026-10-10T05:20:08.511318+00:00",
+  "deadline_utc": "2026-10-10T05:35:06.159000+00:00",
+  "writing_start_utc": "2026-10-10T05:30:06.159000+00:00",
+  "frozen_inputs": [
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/assignment.md",
+      "sha256": "7f9c430b8d3ee2074f44ef280f95f5341bab8b956c07ca2627d28117661b90a1",
+      "bytes": 2379
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/input-map.json",
+      "sha256": "77561febacf1bcbc483a1ad015c76464c2a610f154876b25578ff6288cfeaaa2",
+      "bytes": 624
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/inputs/fixture.json",
+      "sha256": "795857ccbb69b5914d9e24112379fc162f5a73deeb94cf17371c75cbc358898a",
+      "bytes": 2218
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/inputs/manifest.json",
+      "sha256": "2b906ed13e8d5af988ce49747860527c7c20c6da3de724b601451fb2a31b59a3",
+      "bytes": 624
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/inputs/assignment.md",
+      "sha256": "39860a2ed8542ef8daaf0d84eff6f5b63fd5f79d5d62b35b62d4ee92eaeb694a",
+      "bytes": 4966
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/inputs/corpus/S1.md",
+      "sha256": "9b511a3588e02c588843e7d0a2d09ed43c7f4b13bc54d7bf2841e08ba8d9cbc0",
+      "bytes": 930
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/inputs/corpus/S2.md",
+      "sha256": "996efda6f552deb261be72379edac9588a2b96eb8ac1247fb0f083d004a4743c",
+      "bytes": 817
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/inputs/corpus/index.json",
+      "sha256": "b65e4c7e77821cdd3b43b6dce735662ae62801daa4b67a79a47569b5eebe1652",
+      "bytes": 1245
+    }
+  ],
+  "request_sha256": "e7473cc45f5336772f2fff5ff9401a1c7e9c2fadd6d1b5ba01cd283e0b5faf06",
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    }
+  },
+  "protocol": "role-v2; native Goal activation required before inference; advisory leaf controls",
+  "time_contract": "900 seconds absolute including setup/startup/tools/retries/writing/delivery; final 300 seconds writing",
+  "native_goal_status": "UNKNOWN until directly observed"
+}

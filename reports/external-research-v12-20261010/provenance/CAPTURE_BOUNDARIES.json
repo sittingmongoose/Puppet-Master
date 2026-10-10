@@ -1,7 +1,11 @@
 {
-  "checkpoint_reads": 1,
-  "checkpoint_immutable": true,
-  "selected_science": "Original terminal freezes and source bytes verified; no science changes",
-  "mutable_root_metadata": "First captured private copy retained across preparation; current QUEUE may advance independently and does not redefine snapshot selection",
-  "public_original_custody": "Prior132 files preserved privately; generated projections deliberately replaced; raw fetched source/code files excluded from public projection only"
+  "checkpoint_original_sha256": "553db6e5488de8f927d8339fddac88df7502e404788139908e7cf31fd7679a3a",
+  "snapshot_sha256": "1049e5a51c95f299ee5f8d00a5eddea331d7279efe84f8aae03fa7886a16162c",
+  "fixed_checkpoint": true,
+  "later_grades_excluded": true,
+  "prior_public_files": 915,
+  "live_polling": false,
+  "semantic_regrade": false,
+  "composite_unfinished_draft_excluded": true,
+  "C2_D_unopened": true
 }

@@ -1,0 +1,21 @@
+{
+  "requested_at_utc": "2026-10-10T04:11:12.739Z",
+  "clientRequestId": "er12-A7-A7-01-treatment-investigator-topology-v1",
+  "args": {
+    "clientRequestId": "er12-A7-A7-01-treatment-investigator-topology-v1",
+    "mode": "async",
+    "role": "general",
+    "title": "ER12 A7 A7-01-treatment investigator",
+    "target": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna",
+      "options": {
+        "reasoningEffort": "max",
+        "serviceTier": "priority"
+      }
+    },
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "task": "Execute only the assigned reference stage. Read ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/assignment.md and its input-map.json. Create one actual native Goal under 4,000 characters referring to the assignment; save required outputs before native terminal. No nested agents or parent-history use."
+  }
+}

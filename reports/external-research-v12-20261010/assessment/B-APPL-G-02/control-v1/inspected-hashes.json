@@ -1,0 +1,202 @@
+[
+  {
+    "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+    "bytes": 2790,
+    "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+    "inspection": "full content read",
+    "terminal_expected_sha256": null,
+    "terminal_match": null,
+    "input_freeze_expected_sha256": null,
+    "input_freeze_match": null
+  },
+  {
+    "path": "ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/input-map.json",
+    "bytes": 668,
+    "sha256": "b5149794f62200bc647c04e1771fe12788e876d1e9046a6de0b2d33f694899c6",
+    "inspection": "full content read",
+    "terminal_expected_sha256": "b5149794f62200bc647c04e1771fe12788e876d1e9046a6de0b2d33f694899c6",
+    "terminal_match": true,
+    "input_freeze_expected_sha256": "b5149794f62200bc647c04e1771fe12788e876d1e9046a6de0b2d33f694899c6",
+    "input_freeze_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/assignment.md",
+    "bytes": 3170,
+    "sha256": "c54d8e7cc564c67056edfe762a9ff1d6dceee66e56187deb817be93290ab71ec",
+    "inspection": "full content read",
+    "terminal_expected_sha256": "c54d8e7cc564c67056edfe762a9ff1d6dceee66e56187deb817be93290ab71ec",
+    "terminal_match": true,
+    "input_freeze_expected_sha256": "c54d8e7cc564c67056edfe762a9ff1d6dceee66e56187deb817be93290ab71ec",
+    "input_freeze_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/freeze.json",
+    "bytes": 2945,
+    "sha256": "6bc7d643e10e1a8d5a7cac559c7a73582d07add9ed0a59c8a331e82730bc9683",
+    "inspection": "full content read",
+    "terminal_expected_sha256": "6bc7d643e10e1a8d5a7cac559c7a73582d07add9ed0a59c8a331e82730bc9683",
+    "terminal_match": true,
+    "input_freeze_expected_sha256": null,
+    "input_freeze_match": null
+  },
+  {
+    "path": "ER12_RUNTIME/runs/B-APPL-G-02/inputs/assignment.md",
+    "bytes": 2987,
+    "sha256": "3c7ab9e1ebcde0612e7e6e85a40f7eb8da73c42bf9d62b00bcc6f525fc447b38",
+    "inspection": "full content read",
+    "terminal_expected_sha256": null,
+    "terminal_match": null,
+    "input_freeze_expected_sha256": "3c7ab9e1ebcde0612e7e6e85a40f7eb8da73c42bf9d62b00bcc6f525fc447b38",
+    "input_freeze_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/B-APPL-G-02/inputs/fixture.json",
+    "bytes": 2126,
+    "sha256": "f6fe897c72b46a759ced5e5f9768a6f560bead0a4ed0b11c0f2a02415dd88727",
+    "inspection": "full content read",
+    "terminal_expected_sha256": null,
+    "terminal_match": null,
+    "input_freeze_expected_sha256": "f6fe897c72b46a759ced5e5f9768a6f560bead0a4ed0b11c0f2a02415dd88727",
+    "input_freeze_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/B-APPL-G-02/inputs/manifest.json",
+    "bytes": 624,
+    "sha256": "ae11e96d41df5e87c1821c5a3b199bb3a0695c145fc6b99acb64ee4e1d2739dc",
+    "inspection": "full content read",
+    "terminal_expected_sha256": null,
+    "terminal_match": null,
+    "input_freeze_expected_sha256": "ae11e96d41df5e87c1821c5a3b199bb3a0695c145fc6b99acb64ee4e1d2739dc",
+    "input_freeze_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/B-APPL-G-02/inputs/corpus/S1.md",
+    "bytes": 914,
+    "sha256": "502f95d36e1da301057116c7d443c652463e7fd2b1f934b6b34e8b04334fc32a",
+    "inspection": "full content read",
+    "terminal_expected_sha256": null,
+    "terminal_match": null,
+    "input_freeze_expected_sha256": "502f95d36e1da301057116c7d443c652463e7fd2b1f934b6b34e8b04334fc32a",
+    "input_freeze_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/B-APPL-G-02/inputs/corpus/S2.md",
+    "bytes": 859,
+    "sha256": "e58ec490cbdd3d90ae98b4c45bc8efd670f7d64f29f42a5f4a34a307e30a7409",
+    "inspection": "full content read",
+    "terminal_expected_sha256": null,
+    "terminal_match": null,
+    "input_freeze_expected_sha256": "e58ec490cbdd3d90ae98b4c45bc8efd670f7d64f29f42a5f4a34a307e30a7409",
+    "input_freeze_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/B-APPL-G-02/inputs/corpus/index.json",
+    "bytes": 1286,
+    "sha256": "5576572c6b3b0bc92f670f22d22f0256bac41d3a4988b8bd26184b5cf41f8f4f",
+    "inspection": "full content read",
+    "terminal_expected_sha256": null,
+    "terminal_match": null,
+    "input_freeze_expected_sha256": "5576572c6b3b0bc92f670f22d22f0256bac41d3a4988b8bd26184b5cf41f8f4f",
+    "input_freeze_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/verification.md",
+    "bytes": 4075,
+    "sha256": "f14d91ee366b5d371555d05d590b15d0358866147afc504881f0530a36fd6ef9",
+    "inspection": "full content read",
+    "terminal_expected_sha256": "f14d91ee366b5d371555d05d590b15d0358866147afc504881f0530a36fd6ef9",
+    "terminal_match": true,
+    "input_freeze_expected_sha256": null,
+    "input_freeze_match": null
+  },
+  {
+    "path": "ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/source-map.json",
+    "bytes": 2291,
+    "sha256": "9ab5cb98e38ee2c820f742f9d538e5e83b18e3f7598a705ee900ba51c39932f8",
+    "inspection": "full content read",
+    "terminal_expected_sha256": "9ab5cb98e38ee2c820f742f9d538e5e83b18e3f7598a705ee900ba51c39932f8",
+    "terminal_match": true,
+    "input_freeze_expected_sha256": null,
+    "input_freeze_match": null
+  },
+  {
+    "path": "ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/sources/S1-evidence.md",
+    "bytes": 1375,
+    "sha256": "5e43780061939d6c633ddb011b9347e413deaf4115513ccb9388fc801af4e58d",
+    "inspection": "full content read",
+    "terminal_expected_sha256": "5e43780061939d6c633ddb011b9347e413deaf4115513ccb9388fc801af4e58d",
+    "terminal_match": true,
+    "input_freeze_expected_sha256": null,
+    "input_freeze_match": null
+  },
+  {
+    "path": "ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/sources/S2-evidence.md",
+    "bytes": 974,
+    "sha256": "5bef72bb9565cd01b218adae742c89efb3c9fa6e1aa7c755e39c0ec346e89df8",
+    "inspection": "full content read",
+    "terminal_expected_sha256": "5bef72bb9565cd01b218adae742c89efb3c9fa6e1aa7c755e39c0ec346e89df8",
+    "terminal_match": true,
+    "input_freeze_expected_sha256": null,
+    "input_freeze_match": null
+  },
+  {
+    "path": "ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/native-activation.json",
+    "bytes": 460,
+    "sha256": "821422627239850f38950dd4c898e77e45307cef001814cf6e2a4a8aebdf6dff",
+    "inspection": "full content read",
+    "terminal_expected_sha256": "821422627239850f38950dd4c898e77e45307cef001814cf6e2a4a8aebdf6dff",
+    "terminal_match": true,
+    "input_freeze_expected_sha256": null,
+    "input_freeze_match": null
+  },
+  {
+    "path": "ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/native-completion.json",
+    "bytes": 788,
+    "sha256": "982f34444d8da09518d0eb617196ffeb2586cd4eedc30057ba3aa0cfb5970ace",
+    "inspection": "full content read",
+    "terminal_expected_sha256": "982f34444d8da09518d0eb617196ffeb2586cd4eedc30057ba3aa0cfb5970ace",
+    "terminal_match": true,
+    "input_freeze_expected_sha256": null,
+    "input_freeze_match": null
+  },
+  {
+    "path": "ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/request.json",
+    "bytes": 1801,
+    "sha256": "8e9019f3699a826b2782006abdc3c22644b03a9d04cd28c35c36443b8a13f3f1",
+    "inspection": "full content read",
+    "terminal_expected_sha256": "8e9019f3699a826b2782006abdc3c22644b03a9d04cd28c35c36443b8a13f3f1",
+    "terminal_match": true,
+    "input_freeze_expected_sha256": null,
+    "input_freeze_match": null
+  },
+  {
+    "path": "ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/dispatch.json",
+    "bytes": 5055,
+    "sha256": "342e7a6efd3094585b2f32a8365995a14e04b5b4db3a4e788c3dd757db57ff48",
+    "inspection": "full content read",
+    "terminal_expected_sha256": "342e7a6efd3094585b2f32a8365995a14e04b5b4db3a4e788c3dd757db57ff48",
+    "terminal_match": true,
+    "input_freeze_expected_sha256": null,
+    "input_freeze_match": null
+  },
+  {
+    "path": "ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/service-tier-change.json",
+    "bytes": 479,
+    "sha256": "23af4549829761d637f21ac7d7542602a7d65d0436500ccd81aaad4987df53a0",
+    "inspection": "full content read",
+    "terminal_expected_sha256": "23af4549829761d637f21ac7d7542602a7d65d0436500ccd81aaad4987df53a0",
+    "terminal_match": true,
+    "input_freeze_expected_sha256": null,
+    "input_freeze_match": null
+  },
+  {
+    "path": "ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/terminal-science-freeze-root.json",
+    "bytes": 9962,
+    "sha256": "3a7f11cd51c10519b792b0f041806ce944702056ce26fb9abee48cdd0cb125d0",
+    "inspection": "full content read",
+    "terminal_expected_sha256": null,
+    "terminal_match": null,
+    "input_freeze_expected_sha256": null,
+    "input_freeze_match": null
+  }
+]

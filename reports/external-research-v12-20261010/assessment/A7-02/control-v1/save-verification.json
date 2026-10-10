@@ -1,0 +1,49 @@
+{
+  "checked_utc": "2026-10-10T05:24:08.379362+00:00",
+  "original_inspected_hashes_unchanged": true,
+  "all_evidence_hashes_match": true,
+  "structured_artifacts_parse": true,
+  "six_axes_assessed": true,
+  "eight_exact_numbered_clauses_assessed": true,
+  "auxiliary_clause_records": 8,
+  "all_criticism_categories_disposed": true,
+  "source_records": 24,
+  "primary_url_captures": 27,
+  "native_objective_under_4000_characters": true,
+  "navigation_errors": [],
+  "semantic_test_note": "These checks verify output completeness/navigation and byte integrity only; they are not semantic evidence or product validation.",
+  "final_assessment_artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/control-v1/assessment.md",
+      "bytes": 63404,
+      "sha256": "96042adb4f4a4794aacf50b60c78353d7b4c8aa08e57a4bc4f7aa00795ff8a43"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/control-v1/assessment.json",
+      "bytes": 137472,
+      "sha256": "f4db346b869edbedceed8d9890d6533734b5a258e8e79bac5e32c0cee4bd1a9e"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/control-v1/source-map.json",
+      "bytes": 85324,
+      "sha256": "72fa5e360683a0ae15ee26c7f0aa102d52191ce8c8cf943a8e2b999b290447ca"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/control-v1/evidence/index.md",
+      "bytes": 26078,
+      "sha256": "198f307c14666e80ec7bd3b49bbfe007e0725fbe7adad140f9c72748a66d4291"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/control-v1/inspected-artifacts.json",
+      "bytes": 15853,
+      "sha256": "703571546a6077feb1cdd9377208930f79b0aef69be1a02a9fd3d9ef55bdf47d"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A7-02/control-v1/retrieval-manifest.json",
+      "bytes": 21985,
+      "sha256": "c59df1ce95cacf40572af039a0e63d4b87baafa81d6fac07bfa6e6b65ada724e"
+    }
+  ],
+  "reviewer_elapsed_seconds_at_final_save": 761.386804,
+  "within_review_envelope": true
+}

@@ -1,0 +1,56 @@
+[
+  {
+    "id": "C01",
+    "classification": "material wrong",
+    "draft_locator": "Section 5, Cura issue #19456; source-map S12",
+    "evidence": "S12, activity lines 375-390: reporter says the sample saved/loaded correctly in Cura 5.10.0 and closes the issue completed; lines 392-421 retain old labels but no linked branch/PR.",
+    "disposition": "amend",
+    "rationale": "The final corrects the issue chronology and scopes the reported success to that sample and operation, without claiming a general fix or independent reproduction.",
+    "final_locator": "Compatibility history table, Cura 5.7 and #19456 row; Objects, names and assembly relationships."
+  },
+  {
+    "id": "C02",
+    "classification": "material incomplete",
+    "draft_locator": "Section 5 Cura history and current-version paragraph citing S14",
+    "evidence": "S17, 5.14.0-alpha.0 release notes lines 172-185; S14 release index labels 5.14.0-alpha.0 pre-release and 5.13.0 latest stable.",
+    "disposition": "accept",
+    "rationale": "The final records the alpha's relevant non-project multi-model positioning improvement as a test lead only, without treating it as a stable result or a fix for S12.",
+    "final_locator": "Objects, names and assembly relationships; Compatibility history/version applicability table."
+  },
+  {
+    "id": "C03",
+    "classification": "material incomplete",
+    "draft_locator": "Section 5 PrusaSlicer STEP history, current-version paragraph and source-map S06",
+    "evidence": "S06, issue #8998 lines 395-447: Sep 18 2026 comment says the Owl case reproduced in the then-installed Flathub beta with default settings, but omits the exact build; no linked branch/PR.",
+    "disposition": "accept",
+    "rationale": "The final includes the late beta report with version uncertainty and preserves that it was not reproduced; it does not attribute it to stable 2.9.6.",
+    "final_locator": "Recommendation; Compatibility history and version applicability table."
+  },
+  {
+    "id": "C04",
+    "classification": "material incomplete",
+    "draft_locator": "Section 2 artifact naming and section 4 preview/metadata distinction",
+    "evidence": "S01, Core 1.4.0 §§2.2.1-2.2.2 recommends .model.3mf for design data and .project.3mf for full project files.",
+    "disposition": "accept",
+    "rationale": "The final adds the recommended purpose suffixes, preserves their non-mandatory status, and makes receiver filename acceptance a proposed check.",
+    "final_locator": "Recommendation; Handoff routes and package tradeoffs."
+  },
+  {
+    "id": "C05",
+    "classification": "honestly unresolved external input",
+    "draft_locator": "Section 3 Materials and application-specific settings; source-map S09",
+    "evidence": "S09 lists Core 1.4.0 and M&P 1.2.1; S16 extension v1.2.1 preface says the extension must be used only with Core 1.2.",
+    "disposition": "retain_uncertainty",
+    "rationale": "The final preserves the primary-document version-pair question and does not infer compatibility. It keeps M&P outside the pilot baseline pending authoritative clarification.",
+    "final_locator": "Material intent, display and extensions; Owner decisions/open inputs."
+  },
+  {
+    "id": "C06",
+    "classification": "material incomplete",
+    "draft_locator": "Section 2 Option C row, Cura UCP or generic project ZIP",
+    "evidence": "S11 documents UCP model/settings behavior; a generic ZIP wrapper has no 3D semantics and does not by itself define slicer import behavior.",
+    "disposition": "accept",
+    "rationale": "The final separates Cura UCP as an application-project analogy from a generic outer ZIP as optional reviewer packaging.",
+    "final_locator": "Handoff routes and package tradeoffs, rows C and D."
+  }
+]

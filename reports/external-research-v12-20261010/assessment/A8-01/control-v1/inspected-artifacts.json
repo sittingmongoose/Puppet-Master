@@ -1,0 +1,272 @@
+{
+  "captured_at_utc": "2026-10-10T04:44:10.890991+00:00",
+  "scope": "Only A8-01 control and assigned rubric/original inputs and own root-review-request. No other arms/results/roster.",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A8-01/brief.md",
+      "bytes": 3458,
+      "sha256": "33a97f960ac3e92a24cfeaa5e170a0adb51428d699f49be026f40a909e648c47",
+      "mtime_ns": 1791605469530856617,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A8-01/plan.md",
+      "bytes": 6136,
+      "sha256": "6964f85a4fdd4b74e4a40cbda44e93524aec1b8ed3860fa5ddec434dd8a2fdca",
+      "mtime_ns": 1791605469530976394,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A8-01/control-v1/root-review-request.json",
+      "bytes": 3593,
+      "sha256": "6150fccf6ff688eb77af52c5fb7a974d859276e374a141cff0db94724ac7689a",
+      "mtime_ns": 1791607345568244470,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/control/run.json",
+      "bytes": 580,
+      "sha256": "ba5069ebd6459271074674da4c9b80d76008d9087a2f296ebad0ae23bfd39e23",
+      "mtime_ns": 1791605473469525514,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/inputs/brief.md",
+      "bytes": 3458,
+      "sha256": "33a97f960ac3e92a24cfeaa5e170a0adb51428d699f49be026f40a909e648c47",
+      "mtime_ns": 1791605473469249725,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/critic/assignment.md",
+      "bytes": 3306,
+      "sha256": "bc3ae6414a04d0a88a378a82474dcd563a40f19e56c5ea11a5ecb4372b3dca7e",
+      "mtime_ns": 1791606455162730047,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/critic/critique.md",
+      "bytes": 9203,
+      "sha256": "ca81a473a4bd3fe05fdfe6c3161e2443b8cd8fdfabf6351daab0216ab4b9aca6",
+      "mtime_ns": 1791606875278174910,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/critic/dispatch.json",
+      "bytes": 4124,
+      "sha256": "4a4a89d5bcc15ca103c39e5480b4c04bfa7f00cf12dee871808728252cc68b68",
+      "mtime_ns": 1791606455717467665,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/critic/freeze.json",
+      "bytes": 3135,
+      "sha256": "71bb0458086f4041df6492d874d60827e87a700d906895de70e6d0a3a5cbe07d",
+      "mtime_ns": 1791606455163857395,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/critic/input-map.json",
+      "bytes": 1390,
+      "sha256": "e01f74c84ba1dc03f29073c9143f2c4f8033dabf584cc0bf31dab79254746e2a",
+      "mtime_ns": 1791606455162543243,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/critic/request.json",
+      "bytes": 890,
+      "sha256": "c10801bcbc1f501cfa420dca3b9ca40f474af26c77200f63d1261fffc2ca88fc",
+      "mtime_ns": 1791606455164067065,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/critic/source-map.json",
+      "bytes": 11355,
+      "sha256": "3155117e1d1743976fcd931eb63d4b2579f311bc449ea416a5c78a0baff5498d",
+      "mtime_ns": 1791606875286174972,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/critic/sources/index.md",
+      "bytes": 6047,
+      "sha256": "a525ca596879f0ababd30261207d040cecc891d2dfa5875b66a2b5bda5352495",
+      "mtime_ns": 1791606953524804671,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/critic/status.json",
+      "bytes": 3174,
+      "sha256": "31b4079d4c701bd5793982884de67cd1d82514c82a4c65ba3d4d6f9007c529dd",
+      "mtime_ns": 1791607023077810878,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/investigator/assignment.md",
+      "bytes": 3712,
+      "sha256": "b84914b9e4301c05cc19843facd13089ea5c228077aa4a66b43b8fb14f5a593d",
+      "mtime_ns": 1791605473470428089,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/investigator/discovery.md",
+      "bytes": 10336,
+      "sha256": "dd80136d34f5fd176bd887efdd550f913784c959fb8cffe4de251f566bcd3cfa",
+      "mtime_ns": 1791605662485984069,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/investigator/dispatch.json",
+      "bytes": 4220,
+      "sha256": "d292533126d8dbcf1118dac22712ff22fc164b9ac8d40f50386dd01a4df1d9f8",
+      "mtime_ns": 1791605474046770993,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/investigator/draft.md",
+      "bytes": 26125,
+      "sha256": "20822d8274afb1a4a1bc8199b3866ce68ad3bfd3988f2b357d6050b71aaf6abf",
+      "mtime_ns": 1791606371059964535,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/investigator/freeze.json",
+      "bytes": 1654,
+      "sha256": "4eba851e396bd04b0575a86759de61943f30f003cb98719aa13e4a40cf4c624b",
+      "mtime_ns": 1791605473470750165,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/investigator/input-map.json",
+      "bytes": 714,
+      "sha256": "d428bd8458b76d97fa41a21ccfb9b68574e20d02735adb192487ea1eaa940426",
+      "mtime_ns": 1791605473470171685,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/investigator/native-goal-record.json",
+      "bytes": 1872,
+      "sha256": "a9805e33f78c7b787e832675b17f8cfe4a888d2c3fb935cc478423d6dc36707c",
+      "mtime_ns": 1791606371059278995,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/investigator/plan-reveal.json",
+      "bytes": 427,
+      "sha256": "f749d8c85748cb417b4bda14133e31446eb3ef68dcbf3eab06eb02e7710025bb",
+      "mtime_ns": 1791605815250113037,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/investigator/request.json",
+      "bytes": 914,
+      "sha256": "d7a519bb0edb3d1b4d50927e4198f9ec590007ccb1e9d25875f3b87bfc250794",
+      "mtime_ns": 1791605473470871370,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/investigator/revealed-plan.md",
+      "bytes": 6136,
+      "sha256": "6964f85a4fdd4b74e4a40cbda44e93524aec1b8ed3860fa5ddec434dd8a2fdca",
+      "mtime_ns": 1791605815249948393,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/investigator/source-map.json",
+      "bytes": 12602,
+      "sha256": "eb1e41887508d9c2a71c8917f217527292d506b36d6d0408f7b7dae02dc4b2db",
+      "mtime_ns": 1791606335340877642,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/investigator/sources/index.md",
+      "bytes": 8173,
+      "sha256": "bd06bcfd01ebc0781de6e198ab326dab517cb9f51abc447676e27f0b2b1473f3",
+      "mtime_ns": 1791606335341625448,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/investigator/status.json",
+      "bytes": 4288,
+      "sha256": "b6f0bb6085da6933129d0553e15d9ac18e5aa308bf51f9fc905aca223f8fbe00",
+      "mtime_ns": 1791606454825188028,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/reviser/assignment.md",
+      "bytes": 3286,
+      "sha256": "204194678ab2cf980dc91b3134ef27c9dcf6a7a09a78a4ddde70e9abcd19e82e",
+      "mtime_ns": 1791607023444261514,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/reviser/dispatch.json",
+      "bytes": 4139,
+      "sha256": "a7f70d2b456eb5f0dfb4111d7c7438f853956cbd8f43331d7cabfa9b23a0fc92",
+      "mtime_ns": 1791607024356632426,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/reviser/final.md",
+      "bytes": 26338,
+      "sha256": "1ef15b43b4015d0bed2bfb9a21113f8a2a892f19c5b4c44be13f4cef507595aa",
+      "mtime_ns": 1791607236473225997,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/reviser/freeze.json",
+      "bytes": 3972,
+      "sha256": "e43a61835fd77d25888fdbb6499c1c04015a875acc964c9d603e6aee8d2121a1",
+      "mtime_ns": 1791607023622734296,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/reviser/input-map.json",
+      "bytes": 1768,
+      "sha256": "c20cbdd310e0f26884e2bd3f2bcaff6ae0644ba573903eae887c393745e5bc9f",
+      "mtime_ns": 1791607023622113409,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/reviser/request.json",
+      "bytes": 893,
+      "sha256": "43e95c9e63c6122a776d688378db56e31d4a3d03de4cac5339f12d48bcfcfa31",
+      "mtime_ns": 1791607023622301731,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/reviser/service-tier-change.json",
+      "bytes": 479,
+      "sha256": "e52ea771eb25c1aa89006cf48d37052380f5cc4edb77556579e5bc17beb816cc",
+      "mtime_ns": 1791607023622932911,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/reviser/source-map.json",
+      "bytes": 16495,
+      "sha256": "4363bd3009110f8b18731d7f772bf5ae3748d729c6e771a3850503f0a1f15e60",
+      "mtime_ns": 1791607264997404106,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/reviser/sources/index.md",
+      "bytes": 6436,
+      "sha256": "bd4ec959f4c95cbe20cab9b038a713f5ed5af4bd6e7cdce119496d54bdbb54b0",
+      "mtime_ns": 1791607277015479152,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/terminal-science-freeze-root.json",
+      "bytes": 7608,
+      "sha256": "9c94fb7a5a51d5ba2e1ffeff6237ac5246ad97f2241fcab7a48623c9b729f483",
+      "mtime_ns": 1791607345405663767,
+      "read_status": "FULL"
+    }
+  ]
+}

@@ -1,0 +1,1878 @@
+{
+  "assessment_id": "A7-01-treatment-v1",
+  "source_identity_boundary": "P-prefixed IDs are reviewer primary evidence, not candidate S-ID agreement. Candidate identities are preserved in original files; none silently rebound.",
+  "sources": [
+    {
+      "source_id": "P01",
+      "title": "3MF Core specification",
+      "primary_url": "https://github.com/3MFConsortium/spec_core/blob/373e91d0665d4671cdc3bb44fc5603c561c8d388/3MF%20Core%20Specification.md",
+      "version_or_commit": "Core 1.4.0; file revision 373e91d0665d4671cdc3bb44fc5603c561c8d388",
+      "locator": "§§1.1, 2.1.1–2.1.5, 2.2.1–2.2.2, 2.3.1, 3.4, 3.4.1, 4, 4.2, 5.1; raw lines 150–234, 249–286, 316–327, 400–469, 530–562, 742–813",
+      "accessed_at_utc": [
+        "2026-10-10T04:55:23.631864+00:00",
+        "2026-10-10T04:55:24.352509+00:00"
+      ],
+      "observed_operation": "Independent read-only primary retrieval and semantic reading; no fetched implementation executed",
+      "governing_conditions_and_applicability": "Normative format conditions support explicit units, composition and design intent, optional thumbnail/Description, and consumer-specific PrintTicket. Filename suffixes are recommendations. Required unsupported extensions block editing/manufacturing; recommended unsupported extensions call for warning/input. Format capability does not prove application preservation.",
+      "captures": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P01-core.md",
+          "relative_path": "evidence/P01-core.md",
+          "sha256": "4db7a7a13e7f757c6afc1a9ad731b56d8d068b1a766025692ff757d0f7f16940",
+          "bytes": 98038
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P18-core-commit.json",
+          "relative_path": "evidence/P18-core-commit.json",
+          "sha256": "206c73cde7e8ee933ec5328f37c3cc00aa3d6d9dcdc3ee1109fd4743f5bf90b7",
+          "bytes": 4344
+        }
+      ]
+    },
+    {
+      "source_id": "P02",
+      "title": "3MF Materials and Properties extension",
+      "primary_url": "https://github.com/3MFConsortium/spec_materials/blob/d4d42dd75ca07da40284dc87e3204b2993d2f862/3MF%20Materials%20Extension.md",
+      "version_or_commit": "M&P 1.2.1; file revision d4d42dd75ca07da40284dc87e3204b2993d2f862",
+      "locator": "Preface; raw lines 5–7, 64–96",
+      "accessed_at_utc": [
+        "2026-10-10T04:55:23.634272+00:00",
+        "2026-10-10T04:55:24.391268+00:00"
+      ],
+      "observed_operation": "Independent read-only primary retrieval and semantic reading; no fetched implementation executed",
+      "governing_conditions_and_applicability": "The extension preface restricts use to Core 1.2. The final identifies this exact condition and declines to infer Core 1.4 compatibility. Its optional exclusion from the baseline leaves Core labels and the authorized preview/note intact.",
+      "captures": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P02-materials.md",
+          "relative_path": "evidence/P02-materials.md",
+          "sha256": "1821fe3bd6bdc021a1460ff9e3b01bd8f331b38d730707f199169d956329b772",
+          "bytes": 85720
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P19-materials-commit.json",
+          "relative_path": "evidence/P19-materials-commit.json",
+          "sha256": "353f8c600bd21006833a92bc31e0bd16c2757175090aa343be60b1064082befa",
+          "bytes": 3449
+        }
+      ]
+    },
+    {
+      "source_id": "P03",
+      "title": "3MF current specification index",
+      "primary_url": "https://3mf.io/spec/",
+      "version_or_commit": "Access-date inventory: latest Core 1.4.0; ISO Core 1.3.0; M&P 1.2.1",
+      "locator": "Specification Suite table; web lines 41–50",
+      "accessed_at_utc": [
+        "2026-10-10T04:55:23.635625+00:00"
+      ],
+      "observed_operation": "Independent read-only primary retrieval and semantic reading; no fetched implementation executed",
+      "governing_conditions_and_applicability": "The index distinguishes the ISO edition from the latest revision. It independently corroborates the versions cited in the final; it does not override the extension preface or establish receiver support.",
+      "captures": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P03-index.html",
+          "relative_path": "evidence/P03-index.html",
+          "sha256": "abe2473dc10ad600bb18f9b28087d38e67a86932c438da3883f609ea4bf89ad8",
+          "bytes": 118897
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/web-additional-primary.json",
+          "relative_path": "evidence/web-additional-primary.json",
+          "sha256": "41eeca0a853e1a4f05c388263826bc2eaae4f2c58555992b4dd881cb505cf2a5",
+          "bytes": 13718
+        }
+      ]
+    },
+    {
+      "source_id": "P04",
+      "title": "Fusion Save As Mesh",
+      "primary_url": "https://help.autodesk.com/view/fusion360/ENU/?contextId=MESH-SAVE-AS-MESH",
+      "version_or_commit": "Live help; exact executable build UNKNOWN",
+      "locator": "Save As Mesh steps 3–5; web lines 30–45",
+      "accessed_at_utc": [
+        "2026-10-10 reviewer web access; see saved tool captures"
+      ],
+      "observed_operation": "Independent read-only primary retrieval and semantic reading; no fetched implementation executed",
+      "governing_conditions_and_applicability": "Supports the proposed mesh-export route, selectable output unit and all-bodies/one-body file structure. The help does not prove object hierarchy, material, thumbnail or Description preservation. HTTP shell capture is not the rendered article; the independent web capture supplies the article evidence.",
+      "captures": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/web-official-docs.json",
+          "relative_path": "evidence/web-official-docs.json",
+          "sha256": "4a7b5ba6832d7d333718bb3563e6025e6e4b3462f4a54983895f2ea1b94e90f3",
+          "bytes": 28386
+        }
+      ]
+    },
+    {
+      "source_id": "P05",
+      "title": "Fusion Export designs",
+      "primary_url": "https://help.autodesk.com/view/fusion360/ENU/?contextId=ASM-EXPORT-DESIGN",
+      "version_or_commit": "Live help; exact executable build UNKNOWN",
+      "locator": "Format list and Tips; web lines 35–60",
+      "accessed_at_utc": [
+        "2026-10-10 reviewer web access; see saved tool captures"
+      ],
+      "observed_operation": "Independent read-only primary retrieval and semantic reading; no fetched implementation executed",
+      "governing_conditions_and_applicability": "Supports 3MF and STEP export and the loss-of-associativity boundary. STEP protocol-specific fidelity and receiving behavior are not established by this help page.",
+      "captures": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/web-official-docs.json",
+          "relative_path": "evidence/web-official-docs.json",
+          "sha256": "4a7b5ba6832d7d333718bb3563e6025e6e4b3462f4a54983895f2ea1b94e90f3",
+          "bytes": 28386
+        }
+      ]
+    },
+    {
+      "source_id": "P06",
+      "title": "Prusa supported file formats",
+      "primary_url": "https://help.prusa3d.com/article/supported-file-formats_1772?product=cw1",
+      "version_or_commit": "PrusaSlicer 2.9 legacy help context; exact build UNKNOWN",
+      "locator": "3MF/STL/STEP/OBJ/AMF sections; web lines 359–376",
+      "accessed_at_utc": [
+        "2026-10-10T04:55:23.640189+00:00"
+      ],
+      "observed_operation": "Independent read-only primary retrieval and semantic reading; no fetched implementation executed",
+      "governing_conditions_and_applicability": "Confirms STEP triangulation, the preferred 3MF format, STL ASCII/binary support and the OBJ material/texture exception. These are product-specific documentation facts, not an executed import test.",
+      "captures": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P06-prusa-formats.html",
+          "relative_path": "evidence/P06-prusa-formats.html",
+          "sha256": "de5dd26db1efb176dfe88e3c1536cb008e6800688c53e711c8f52a8b1bdb43e8",
+          "bytes": 1383437
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/web-official-docs.json",
+          "relative_path": "evidence/web-official-docs.json",
+          "sha256": "4a7b5ba6832d7d333718bb3563e6025e6e4b3462f4a54983895f2ea1b94e90f3",
+          "bytes": 28386
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/web-additional-primary.json",
+          "relative_path": "evidence/web-additional-primary.json",
+          "sha256": "41eeca0a853e1a4f05c388263826bc2eaae4f2c58555992b4dd881cb505cf2a5",
+          "bytes": 13718
+        }
+      ]
+    },
+    {
+      "source_id": "P07",
+      "title": "Prusa saving projects as 3MF",
+      "primary_url": "https://help.prusa3d.com/article/saving-projects-as-3mf_1773?product=sl1",
+      "version_or_commit": "PrusaSlicer 2.9 legacy help context; exact build UNKNOWN",
+      "locator": "Save Project and format sections; web lines 350–366",
+      "accessed_at_utc": [
+        "2026-10-10T04:55:23.774760+00:00"
+      ],
+      "observed_operation": "Independent read-only primary retrieval and semantic reading; no fetched implementation executed",
+      "governing_conditions_and_applicability": "Supports the distinction between geometry and a Prusa project snapshot with settings/modifiers. The same-G-code sharing claim is documentation, not workshop machine approval. The geometry-only STL description supports rejection of STL as the complete project record.",
+      "captures": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P07-prusa-project.html",
+          "relative_path": "evidence/P07-prusa-project.html",
+          "sha256": "f6aebabf2701e80c3523663e4c89d98e4b90d425024b6810c2bbc2d153c7e73c",
+          "bytes": 1413813
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/web-official-docs.json",
+          "relative_path": "evidence/web-official-docs.json",
+          "sha256": "4a7b5ba6832d7d333718bb3563e6025e6e4b3462f4a54983895f2ea1b94e90f3",
+          "bytes": 28386
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/web-additional-primary.json",
+          "relative_path": "evidence/web-additional-primary.json",
+          "sha256": "41eeca0a853e1a4f05c388263826bc2eaae4f2c58555992b4dd881cb505cf2a5",
+          "bytes": 13718
+        }
+      ]
+    },
+    {
+      "source_id": "P08",
+      "title": "PrusaSlicer 2.5.0 release",
+      "primary_url": "https://github.com/prusa3d/PrusaSlicer/releases/tag/version_2.5.0",
+      "version_or_commit": "Released 2.5.0; published 2022-09-07; candidate short commit ec2f533",
+      "locator": "Release body Summary",
+      "accessed_at_utc": [
+        "2026-10-10T04:55:23.791265+00:00"
+      ],
+      "observed_operation": "Independent read-only primary retrieval and semantic reading; no fetched implementation executed",
+      "governing_conditions_and_applicability": "Independently confirms the release introduced STEP import. Neither the release nor the final claims universal STEP fidelity.",
+      "captures": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P08-prusa250.json",
+          "relative_path": "evidence/P08-prusa250.json",
+          "sha256": "e5894364bf0e8445156de5bfc8497a0b48e33f070863895a63a20712e74c7ab7",
+          "bytes": 21566
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P08-prusa250.txt",
+          "relative_path": "evidence/P08-prusa250.txt",
+          "sha256": "09eb22b60edaeaae7f1f3d60129b242284e0f35bd45fb1ab6210407a5da87755",
+          "bytes": 1491
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/version-prusa250.json",
+          "relative_path": "evidence/version-prusa250.json",
+          "sha256": "1f1588e9dcbe2db3dfb9a328ff6b55849ea3e1db957a6801e3d6b32281bbfd45",
+          "bytes": 4196
+        }
+      ],
+      "independently_resolved_release_commit": {
+        "tag": "version_2.5.0",
+        "sha": "ec2f533e3a355a2452bf6bd551da84020c69d8f8",
+        "primary_metadata_url": "https://api.github.com/repos/prusa3d/PrusaSlicer/commits/version_2.5.0",
+        "accessed_at_utc": "2026-10-10T05:03:56.893204+00:00"
+      }
+    },
+    {
+      "source_id": "P09",
+      "title": "Cura 5.7.0 release",
+      "primary_url": "https://github.com/Ultimaker/Cura/releases/tag/5.7.0",
+      "version_or_commit": "Released 5.7.0; published 2024-04-03; candidate short commit 04ddb8e",
+      "locator": "Universal Cura Project; Bug fixes; Bugs resolved since Beta; UCP tips",
+      "accessed_at_utc": [
+        "2026-10-10T04:55:23.794787+00:00"
+      ],
+      "observed_operation": "Independent read-only primary retrieval and semantic reading; no fetched implementation executed",
+      "governing_conditions_and_applicability": "Supports UCP models/settings, project-open versus Import Models positions, and New Project reset advice. Also contains a relevant original-name loading improvement omitted from the candidate history. Its cross-printer language never approves settings for a workshop machine.",
+      "captures": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P09-cura570.json",
+          "relative_path": "evidence/P09-cura570.json",
+          "sha256": "80cac52e9486957e1eb1efbe4f7068c3c13980f81987c08e49ffdad8ecec5a72",
+          "bytes": 24764
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P09-cura570.txt",
+          "relative_path": "evidence/P09-cura570.txt",
+          "sha256": "7c4b0296205b001352a15c70d6ee4ce6e6813cc36e9ae3a4de10b725744b29eb",
+          "bytes": 9676
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/version-cura570.json",
+          "relative_path": "evidence/version-cura570.json",
+          "sha256": "95bbdf81a264228e31a059428359549253af9ef397d2d5393dc9a21c2db5be98",
+          "bytes": 8843
+        }
+      ],
+      "independently_resolved_release_commit": {
+        "tag": "5.7.0",
+        "sha": "04ddb8e6e0d5fb66a7f42dca18d3a5aed9cc6abe",
+        "primary_metadata_url": "https://api.github.com/repos/Ultimaker/Cura/commits/5.7.0",
+        "accessed_at_utc": "2026-10-10T05:03:56.943368+00:00"
+      }
+    },
+    {
+      "source_id": "P10",
+      "title": "Cura 5.14.0-alpha.0 release",
+      "primary_url": "https://github.com/Ultimaker/Cura/releases/tag/5.14.0-alpha.0",
+      "version_or_commit": "Prerelease 5.14.0-alpha.0; published 2026-06-25; candidate short commit 17e7b05",
+      "locator": "New features and improvements, non-project multi-model 3MF bullet",
+      "accessed_at_utc": [
+        "2026-10-10T04:55:23.806778+00:00"
+      ],
+      "observed_operation": "Independent read-only primary retrieval and semantic reading; no fetched implementation executed",
+      "governing_conditions_and_applicability": "Confirms the critic addition concerns non-project 3MF positioning and is a prerelease. The final correctly does not equate it with stable acceptance or the exact #19456 correction.",
+      "captures": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P10-cura514alpha.json",
+          "relative_path": "evidence/P10-cura514alpha.json",
+          "sha256": "ad2acd26abe7c88767a4ad21c907858e4504a0827bc697c4db76d3b418b2f5c3",
+          "bytes": 14869
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P10-cura514alpha.txt",
+          "relative_path": "evidence/P10-cura514alpha.txt",
+          "sha256": "5927348431b4dca4b469f41c6dece574eb50cbb0a625d8aa5cf9b8762420b662",
+          "bytes": 3676
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/version-cura514alpha.json",
+          "relative_path": "evidence/version-cura514alpha.json",
+          "sha256": "90d7fd7c86ad990402916a84ac369ca6a73b57f290be4066b4a0abb9a10dbd3d",
+          "bytes": 5362
+        }
+      ],
+      "independently_resolved_release_commit": {
+        "tag": "5.14.0-alpha.0",
+        "sha": "17e7b05ddc5f047c6a0b601f3308785810a091ca",
+        "primary_metadata_url": "https://api.github.com/repos/Ultimaker/Cura/commits/5.14.0-alpha.0",
+        "accessed_at_utc": "2026-10-10T05:03:56.981366+00:00"
+      }
+    },
+    {
+      "source_id": "P11",
+      "title": "Cura release inventory",
+      "primary_url": "https://github.com/Ultimaker/Cura/releases",
+      "version_or_commit": "At review: latest stable 5.13.0; next entry 5.14.0-alpha.0 prerelease",
+      "locator": "First two release objects and prerelease/published_at fields; independent web index",
+      "accessed_at_utc": [
+        "2026-10-10T04:55:23.879517+00:00"
+      ],
+      "observed_operation": "Independent read-only primary retrieval and semantic reading; no fetched implementation executed",
+      "governing_conditions_and_applicability": "The version snapshot is supported. Exact pilot versions and modes remain legitimate owner decisions; the final requires rechecking the inventory at selection.",
+      "captures": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P11-cura-releases.json",
+          "relative_path": "evidence/P11-cura-releases.json",
+          "sha256": "96702f206419cdfba623d5ef9ae4de4dedfc7ee0733085676ff59007af380359",
+          "bytes": 205798
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/version-cura513.json",
+          "relative_path": "evidence/version-cura513.json",
+          "sha256": "82bf46cbb5c349a9f894aec913287cac08cab46db3af0e6ea20c7cfdee82fdbc",
+          "bytes": 14822
+        }
+      ],
+      "independently_resolved_release_commit": {
+        "tag": "5.13.0",
+        "sha": "1fb8a7610460e03ec62da950d1c173a249b23b59",
+        "primary_metadata_url": "https://api.github.com/repos/Ultimaker/Cura/commits/5.13.0",
+        "accessed_at_utc": "2026-10-10T05:03:56.992508+00:00"
+      }
+    },
+    {
+      "source_id": "P12",
+      "title": "PrusaSlicer release inventory",
+      "primary_url": "https://github.com/prusa3d/PrusaSlicer/releases",
+      "version_or_commit": "At review: stable 2.9.6; 3.0.0-alpha11/alpha12 prereleases",
+      "locator": "First three release objects and prerelease/published_at fields; independent web index",
+      "accessed_at_utc": [
+        "2026-10-10T04:55:23.938149+00:00"
+      ],
+      "observed_operation": "Independent read-only primary retrieval and semantic reading; no fetched implementation executed",
+      "governing_conditions_and_applicability": "Supports separation of stable 2.9.6 from alpha-specific name reports and the unknown Flathub beta build.",
+      "captures": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P12-prusa-releases.json",
+          "relative_path": "evidence/P12-prusa-releases.json",
+          "sha256": "a18a7b90d6e050f62a85f13b28ddcd2d549a711209fc2cec29c883eb598acf20",
+          "bytes": 112689
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/version-prusa296.json",
+          "relative_path": "evidence/version-prusa296.json",
+          "sha256": "31fee29cfdbe040d19701ae5fe32c42d3a0d57b523acdcb876f2118d6d85e110",
+          "bytes": 4196
+        }
+      ],
+      "independently_resolved_release_commit": {
+        "tag": "version_2.9.6",
+        "sha": "b028299c770b8380ee81c921a2867d522f288123",
+        "primary_metadata_url": "https://api.github.com/repos/prusa3d/PrusaSlicer/commits/version_2.9.6",
+        "accessed_at_utc": "2026-10-10T05:03:56.886466+00:00"
+      }
+    },
+    {
+      "source_id": "P13",
+      "title": "Prusa STEP issue #8998 and complete comments",
+      "primary_url": "https://github.com/prusa3d/PrusaSlicer/issues/8998",
+      "version_or_commit": "Original 2.5.0 report; September 2026 Flathub beta exact build UNKNOWN",
+      "locator": "Issue description; comments 1267796232, 1267802168, 1268566562, 1359148435, 1368024449, 5731454045",
+      "accessed_at_utc": [
+        "2026-10-10T04:55:23.947657+00:00",
+        "2026-10-10T04:55:23.953750+00:00"
+      ],
+      "observed_operation": "Independent read-only primary retrieval and semantic reading; no fetched implementation executed",
+      "governing_conditions_and_applicability": "Supports missing STEP detail/open-edge history, maintainer OpenCASCADE attribution and the later unpinned Owl report. The Owl follow-up is a different named example in the same thread, not proof the original hinge defect persists. The final keeps both reports bounded and proposes actual selected-build shape checks.",
+      "captures": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P13-step-issue.json",
+          "relative_path": "evidence/P13-step-issue.json",
+          "sha256": "4eb67d81bcb241066cd0042ca3e0c71c047e2c34abe966f62965df2442175542",
+          "bytes": 4772
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P13-step-comments.json",
+          "relative_path": "evidence/P13-step-comments.json",
+          "sha256": "a84abbbe7e80632615711bbc3b6ad99fda7852e82232cb432921edb03e12057f",
+          "bytes": 35645
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P13-step-issue.txt",
+          "relative_path": "evidence/P13-step-issue.txt",
+          "sha256": "910d3d616c01da868b8788ba8359ae232a5788ece2e3c6ff627b0ae48344e546",
+          "bytes": 2022
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P13-step-comments.txt",
+          "relative_path": "evidence/P13-step-comments.txt",
+          "sha256": "a2d6b700ecd3222a8cde1e739a0b5ae2f860c43d8d27b0a9915f7ae7ccaa53ff",
+          "bytes": 9082
+        }
+      ]
+    },
+    {
+      "source_id": "P14",
+      "title": "Prusa unit/transform issue #15545 and comments",
+      "primary_url": "https://github.com/prusa3d/PrusaSlicer/issues/15545",
+      "version_or_commit": "Reported 2.9.6 Windows x64 portable; closed 2026-09-29 for inactivity",
+      "locator": "Description; control matrix; expected/actual bounds; tested build; comment 5890111762",
+      "accessed_at_utc": [
+        "2026-10-10T04:55:24.116128+00:00",
+        "2026-10-10T04:55:24.123372+00:00"
+      ],
+      "observed_operation": "Independent read-only primary retrieval and semantic reading; no fetched implementation executed",
+      "governing_conditions_and_applicability": "The error boundary is non-mm translation terms, not rotation or scale alone. Expected inch-case X bounds are 25.4–50.8 mm versus reported -23.4–2.0 mm. The closure comment establishes housekeeping, irrespective of the API completed status. No candidate or reviewer product reproduction occurred.",
+      "captures": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P14-unit-issue.json",
+          "relative_path": "evidence/P14-unit-issue.json",
+          "sha256": "3a68f9544d7259ab2ece6316878b7ac69f04a145e564fea855eff54eca7b1980",
+          "bytes": 8716
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P14-unit-comments.json",
+          "relative_path": "evidence/P14-unit-comments.json",
+          "sha256": "ebacfb70cf52b8cd6894d1851d2276ed22426e1e409b2e6ea8712396ffc7757e",
+          "bytes": 10500
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P14-unit-issue.txt",
+          "relative_path": "evidence/P14-unit-issue.txt",
+          "sha256": "c670d2172feb4469606d75365e03a9a098fb0e371ab64fa2013cc45ff71dcdfb",
+          "bytes": 5072
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P14-unit-comments.txt",
+          "relative_path": "evidence/P14-unit-comments.txt",
+          "sha256": "2d645a7f9a8c5cbd0ecd5e6ec5385668ff16088f26c4bc0ceff6371e970ccfc2",
+          "bytes": 1607
+        }
+      ]
+    },
+    {
+      "source_id": "P15",
+      "title": "Prusa Bambu-name issue #15662",
+      "primary_url": "https://github.com/prusa3d/PrusaSlicer/issues/15662",
+      "version_or_commit": "Reported 3.0.0-alpha11; vendor-private metadata",
+      "locator": "Description, core XML versus Metadata/model_settings.config; version; issue activity",
+      "accessed_at_utc": [
+        "2026-10-10T04:55:24.158660+00:00"
+      ],
+      "observed_operation": "Independent read-only primary retrieval and semantic reading; no fetched implementation executed",
+      "governing_conditions_and_applicability": "Supports the private-name versus Core object.name distinction. The final does not transfer alpha/vendor-private evidence to stable Core-name behavior.",
+      "captures": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P15-bambu-issue.json",
+          "relative_path": "evidence/P15-bambu-issue.json",
+          "sha256": "cd7d5b18fce0985c8abc4dcb739631198a70915fbcf38b5a7c4e1444b84de7b9",
+          "bytes": 7269
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P15-bambu-issue.txt",
+          "relative_path": "evidence/P15-bambu-issue.txt",
+          "sha256": "6563554fb912c77f4e6528d7b12b57c8daf78a9b4cefdb02132223aa44147e30",
+          "bytes": 3066
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/web-other-primary.json",
+          "relative_path": "evidence/web-other-primary.json",
+          "sha256": "6d40aa5974ab658c4cf45bc9b8c6bb89e52670c80eed1e4e51c853191036be89",
+          "bytes": 15449
+        }
+      ]
+    },
+    {
+      "source_id": "P16",
+      "title": "Cura position issue #19456 and complete comments",
+      "primary_url": "https://github.com/Ultimaker/Cura/issues/19456",
+      "version_or_commit": "Original 5.7.2; later 5.8/5.9 reports; sample success in 5.10.0 on 2025-03-26",
+      "locator": "Comments 2260860726, 2268913792, 2492018540, 2753377279; issue closed_at/state_reason",
+      "accessed_at_utc": [
+        "2026-10-10T04:55:24.218432+00:00",
+        "2026-10-10T04:55:24.288474+00:00"
+      ],
+      "observed_operation": "Independent read-only primary retrieval and semantic reading; no fetched implementation executed",
+      "governing_conditions_and_applicability": "Confirms C01 chronology correction and mode sensitivity. A comment explicitly links Cura PR #19375 as a possible fix. Thus the final absolute no-linked-PR statement is inaccurate, although the exact cause of the sample success remains unproven.",
+      "captures": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P16-cura-position.json",
+          "relative_path": "evidence/P16-cura-position.json",
+          "sha256": "1e5a92a7429e23faf0ef0037650c9c035afe732df0fae5bf711d22b8dc67bf77",
+          "bytes": 5319
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P16-cura-position-comments.json",
+          "relative_path": "evidence/P16-cura-position-comments.json",
+          "sha256": "88625fcc2cc3d82198a1909ff0c504d6ca9933c327ded593dcb144fad6a07a6d",
+          "bytes": 25016
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P16-cura-position.txt",
+          "relative_path": "evidence/P16-cura-position.txt",
+          "sha256": "9c3e3f11870f61a8c350843311b30491fb98d1caf210e3aceb837e5b9529309d",
+          "bytes": 1389
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P16-cura-position-comments.txt",
+          "relative_path": "evidence/P16-cura-position-comments.txt",
+          "sha256": "353da219766376000092aea2ef7075680952683a71fba4b73e4dd5b6cbe943fc",
+          "bytes": 9152
+        }
+      ]
+    },
+    {
+      "source_id": "P17",
+      "title": "Cura object-name issue #17110 and complete comments",
+      "primary_url": "https://github.com/Ultimaker/Cura/issues/17110",
+      "version_or_commit": "2023 issue; author later says using Cura 5.4; no separately formalized tested-build block",
+      "locator": "Description; comments 1826125504, 1832857900, 1835054338",
+      "accessed_at_utc": [
+        "2026-10-10T04:55:24.291717+00:00",
+        "2026-10-10T04:55:24.325553+00:00"
+      ],
+      "observed_operation": "Independent read-only primary retrieval and semantic reading; no fetched implementation executed",
+      "governing_conditions_and_applicability": "The final safely presents an older report, but its no-exact-release-stated wording overlooks the author’s 5.4 context. The thread links Uranium #898; the 5.7.0 release and 5.13.0 reader source provide later name-handling context. They do not guarantee every round trip.",
+      "captures": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P17-cura-names.json",
+          "relative_path": "evidence/P17-cura-names.json",
+          "sha256": "429d48bc42ed774a4203e43b225073dcf344c246de756efe4dd0441f36dac7b6",
+          "bytes": 5272
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P17-cura-names-comments.json",
+          "relative_path": "evidence/P17-cura-names-comments.json",
+          "sha256": "796f369aabd8b8ea606628ef4085ac7d8876e63635e3c01f8af3f096821b46de",
+          "bytes": 7314
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P17-cura-names.txt",
+          "relative_path": "evidence/P17-cura-names.txt",
+          "sha256": "3cb11d4a48e2a0b3f8a1d4838093d98ceac3d32aff49642c2afb0c06952c01fb",
+          "bytes": 2509
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P17-cura-names-comments.txt",
+          "relative_path": "evidence/P17-cura-names-comments.txt",
+          "sha256": "bd8be5496ea8a035b624e06131d601e11f6c3fcd3130c60cc089c0d372539353",
+          "bytes": 1554
+        }
+      ]
+    },
+    {
+      "source_id": "P20",
+      "title": "PrusaSlicer released 3MF importer source",
+      "primary_url": "https://github.com/prusa3d/PrusaSlicer/blob/version_2.9.6/src/libslic3r/Format/3mf.cpp",
+      "version_or_commit": "Source at released version_2.9.6 tag",
+      "locator": "get_unit_factor lines 301–317; model handler 1959–1962; vertex handler 2103–2111; component handler 2183–2201; item handler 2224–2239",
+      "accessed_at_utc": [
+        "2026-10-10T04:55:24.409715+00:00"
+      ],
+      "observed_operation": "Independent read-only primary retrieval and semantic reading; no fetched implementation executed",
+      "governing_conditions_and_applicability": "Static source inspection corroborates the reported asymmetry: vertex factors are applied, while the inspected component/item handlers pass parsed transforms through. This is implementation evidence, not a locally executed witness or a guarantee about all binaries/platforms.",
+      "captures": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P20-prusa3mf-code.txt",
+          "relative_path": "evidence/P20-prusa3mf-code.txt",
+          "sha256": "119ab91923efb393cd7c9ef8c7d242da097cfc6dd812442ba7ac42bd25fab3b8",
+          "bytes": 203717
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/version-prusa296.json",
+          "relative_path": "evidence/version-prusa296.json",
+          "sha256": "31fee29cfdbe040d19701ae5fe32c42d3a0d57b523acdcb876f2118d6d85e110",
+          "bytes": 4196
+        }
+      ],
+      "independently_resolved_release_commit": {
+        "tag": "version_2.9.6",
+        "sha": "b028299c770b8380ee81c921a2867d522f288123",
+        "primary_metadata_url": "https://api.github.com/repos/prusa3d/PrusaSlicer/commits/version_2.9.6",
+        "accessed_at_utc": "2026-10-10T05:03:56.886466+00:00"
+      }
+    },
+    {
+      "source_id": "P21",
+      "title": "PrusaSlicer released STEP import source",
+      "primary_url": "https://github.com/prusa3d/PrusaSlicer/blob/version_2.9.6/src/libslic3r/Format/STEP.cpp",
+      "version_or_commit": "Source at released version_2.9.6 tag",
+      "locator": "get_load_step_fn and load_step, lines 36–123",
+      "accessed_at_utc": [
+        "2026-10-10T04:55:24.472784+00:00"
+      ],
+      "observed_operation": "Independent read-only primary retrieval and semantic reading; no fetched implementation executed",
+      "governing_conditions_and_applicability": "Confirms the OCCT-wrapper path and creation of TriangleMesh facets. The candidate’s STEP triangulation/kernel boundary is supported; source reading does not independently reproduce either issue example.",
+      "captures": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P21-prusa-step-code.txt",
+          "relative_path": "evidence/P21-prusa-step-code.txt",
+          "sha256": "e812a6e62fdb9a62c2570852eff99a3ad8b205a20476bc4f7d9401ed337705f9",
+          "bytes": 4286
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/version-prusa296.json",
+          "relative_path": "evidence/version-prusa296.json",
+          "sha256": "31fee29cfdbe040d19701ae5fe32c42d3a0d57b523acdcb876f2118d6d85e110",
+          "bytes": 4196
+        }
+      ],
+      "independently_resolved_release_commit": {
+        "tag": "version_2.9.6",
+        "sha": "b028299c770b8380ee81c921a2867d522f288123",
+        "primary_metadata_url": "https://api.github.com/repos/prusa3d/PrusaSlicer/commits/version_2.9.6",
+        "accessed_at_utc": "2026-10-10T05:03:56.886466+00:00"
+      }
+    },
+    {
+      "source_id": "P22",
+      "title": "Cura released 3MF reader source",
+      "primary_url": "https://github.com/Ultimaker/Cura/blob/5.13.0/plugins/3MFReader/ThreeMFReader.py",
+      "version_or_commit": "Source at released 5.13.0 tag",
+      "locator": "_convertSavitarNodeToUMNode lines 101–135; _read lines 260–328; _getScaleFromUnit 339–364",
+      "accessed_at_utc": [
+        "2026-10-10T04:55:24.491272+00:00"
+      ],
+      "observed_operation": "Independent read-only primary retrieval and semantic reading; no fetched implementation executed",
+      "governing_conditions_and_applicability": "The current reader asks Savitar for a node name and uses a fallback only when empty. It reads scene metadata and transforms/units. This limits extrapolation from the 2023 name issue, but the dependency/parser/UI/export chain still needs end-to-end tests.",
+      "captures": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P22-cura-reader-code.txt",
+          "relative_path": "evidence/P22-cura-reader-code.txt",
+          "sha256": "17e549322b505a57546696cf9ba635688b01867f5f1ab55d857a6742ab01633c",
+          "bytes": 16552
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/version-cura513.json",
+          "relative_path": "evidence/version-cura513.json",
+          "sha256": "82bf46cbb5c349a9f894aec913287cac08cab46db3af0e6ea20c7cfdee82fdbc",
+          "bytes": 14822
+        }
+      ],
+      "independently_resolved_release_commit": {
+        "tag": "5.13.0",
+        "sha": "1fb8a7610460e03ec62da950d1c173a249b23b59",
+        "primary_metadata_url": "https://api.github.com/repos/Ultimaker/Cura/commits/5.13.0",
+        "accessed_at_utc": "2026-10-10T05:03:56.992508+00:00"
+      }
+    },
+    {
+      "source_id": "P23",
+      "title": "Cura transformation-writer fix PR #19375",
+      "primary_url": "https://github.com/Ultimaker/Cura/pull/19375",
+      "version_or_commit": "Merged 2024-08-05; merge 4a5aecc1e4e62e3cf4cd8e0b6002c503881d3078",
+      "locator": "PR body; files patch plugins/3MFWriter/ThreeMFWriter.py around line 114",
+      "accessed_at_utc": [
+        "2026-10-10T04:57:03.965579+00:00",
+        "2026-10-10T04:57:04.290407+00:00"
+      ],
+      "observed_operation": "Independent read-only primary retrieval and semantic reading; no fetched implementation executed",
+      "governing_conditions_and_applicability": "The linked implementation fix changes center compensation and matrix multiplication. It is a real lead omitted by the candidate, but the issue continues reporting failures after the merge and the final sample result does not attribute its cause. It cannot be promoted to a proven #19456 repair.",
+      "captures": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P23-cura-pr19375.json",
+          "relative_path": "evidence/P23-cura-pr19375.json",
+          "sha256": "9f33fc7574c9ed3ce6e6ba0cd52d51393a46c50e6f9010144cc6fe47d1321389",
+          "bytes": 18327
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P23-cura-pr19375-files.json",
+          "relative_path": "evidence/P23-cura-pr19375-files.json",
+          "sha256": "10ab81c97abf92140c8347ef4e855dc41c459be889ec6612914d4bdb6d6c8355",
+          "bytes": 2227
+        }
+      ]
+    },
+    {
+      "source_id": "P24",
+      "title": "Uranium object reload/name change PR #898",
+      "primary_url": "https://github.com/Ultimaker/Uranium/pull/898",
+      "version_or_commit": "Merged 2023-11-01; merge d6a63ca2837bf934fa01aa0d41f235323e8ebc9e",
+      "locator": "Body test record; UM/Scene/Scene.py patch; dependency on Cura PR #16610",
+      "accessed_at_utc": [
+        "2026-10-10T04:58:26.128173+00:00",
+        "2026-10-10T04:58:26.438474+00:00"
+      ],
+      "observed_operation": "Independent read-only primary retrieval and semantic reading; no fetched implementation executed",
+      "governing_conditions_and_applicability": "Useful implementation/history lead linked by the names issue. Its author reports multi-model name and reload checks, with explicit limitations for added/removed models. These are external executed checks, not candidate or reviewer validation.",
+      "captures": [
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P24-uranium-pr898.json",
+          "relative_path": "evidence/P24-uranium-pr898.json",
+          "sha256": "ee2e0736de259c986eda42adb499900eb83d0e9b3d2f43a6adfd6bd8668303fb",
+          "bytes": 21049
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/evidence/P24-uranium-pr898-files.json",
+          "relative_path": "evidence/P24-uranium-pr898-files.json",
+          "sha256": "d0879f7eeed35d28818e49482f117b10bfc62533be7bd574f64d9971ef5a1c2d",
+          "bytes": 5581
+        }
+      ]
+    }
+  ],
+  "consequential_claims": [
+    {
+      "id": "Q01",
+      "subject": "3MF model unit",
+      "operation": "Interpret model vertices, locations and measurements",
+      "version": "Core 1.4.0",
+      "default": "millimeter",
+      "type": "ST_Unit",
+      "domain": [
+        "micron",
+        "millimeter",
+        "centimeter",
+        "inch",
+        "foot",
+        "meter"
+      ],
+      "exception": "Importer behavior can diverge; format declaration is not a tested receiver guarantee",
+      "sources": [
+        "P01",
+        "P14",
+        "P20"
+      ],
+      "assessment": "Supported; explicit-mm choice is a local pilot recommendation."
+    },
+    {
+      "id": "Q02",
+      "subject": "Objects/components/assembly",
+      "operation": "Reference object resources and apply transforms",
+      "version": "Core 1.4.0",
+      "type": "objectid ST_ResourceID; transform ST_Matrix3D",
+      "domain": "Composition/relative placement, not CAD mates or editable history",
+      "exception": "Manufacturing consumers must preserve relative component positions; overlaps have union/property ordering rules. Final does not claim retained CAD assemblies or printing behavior.",
+      "sources": [
+        "P01",
+        "P13",
+        "P16"
+      ],
+      "assessment": "Supported within stated review-only scope."
+    },
+    {
+      "id": "Q03",
+      "subject": "Core material name/displaycolor",
+      "operation": "Map design-intent labels to actual print material; render appearance",
+      "version": "Core 1.4.0",
+      "type": "name xs:string; displaycolor ST_ColorValue",
+      "default": "No inferred machine approval",
+      "domain": "Portable intended material descriptions; actual material mapping is consumer/technician context",
+      "exception": "displaycolor must not be assumed to affect printed color; print-color design intent needs appropriate extension",
+      "sources": [
+        "P01",
+        "P02"
+      ],
+      "assessment": "Supported; rich M&P is withheld pending pairing/support."
+    },
+    {
+      "id": "Q04",
+      "subject": "Thumbnail/Description metadata",
+      "operation": "Carry optional identification image and human-readable project description",
+      "version": "Core 1.4.0",
+      "type": "JPEG/PNG thumbnail; standard metadata name Description, default value type xs:string",
+      "default": "Optional; metadata preserve defaults false",
+      "domain": "Package/model reviewer information",
+      "exception": "Standard thumbnail relationships and metadata namespace/type/preservation conditions apply; no universal UI display or resave guarantee",
+      "sources": [
+        "P01",
+        "P04",
+        "P07"
+      ],
+      "assessment": "Supported as conditional optional capability, with sidecar fallback."
+    },
+    {
+      "id": "Q05",
+      "subject": "PrintTicket/Prusa project/Cura UCP",
+      "operation": "Carry application or consumer setup",
+      "version": "Core 1.4.0; Prusa legacy help; Cura 5.7.0",
+      "default": "Absent/unsupported PrintTicket leaves consumer defaults",
+      "type": "Consumer-environment PrintTicket; application-specific project settings",
+      "domain": "User/device/app setup rather than universal design approval",
+      "exception": "Cura model import differs from project open; reset advice applies; ownership remains with technician",
+      "sources": [
+        "P01",
+        "P07",
+        "P09",
+        "P16"
+      ],
+      "assessment": "Supported; no universal printer approval inferred."
+    },
+    {
+      "id": "Q06",
+      "subject": "Fusion exporter",
+      "operation": "Save As Mesh / Export designs",
+      "version": "Live help, exact installed build UNKNOWN",
+      "type": "3MF mesh and STEP exchange output",
+      "domain": "Unit selection; one-file or one-body structure; export loses associativity",
+      "exception": "No documented promise of every optional Core field or receiver round trip",
+      "sources": [
+        "P04",
+        "P05"
+      ],
+      "assessment": "Supported route opportunity, not validated product behavior."
+    },
+    {
+      "id": "Q07",
+      "subject": "Prusa STEP import",
+      "operation": "Import then triangulate into receiver mesh",
+      "version": "Introduced 2.5.0; reviewed 2.9 legacy help and released 2.9.6 source",
+      "type": "OCCT-wrapper facets to TriangleMesh",
+      "domain": "Selected files/protocols and chosen build",
+      "exception": "Old hinge/conical and later Owl beta reports are distinct bounded evidence; neither proves stable 2.9.6 quality",
+      "sources": [
+        "P06",
+        "P08",
+        "P13",
+        "P21"
+      ],
+      "assessment": "Supported with meaningful shape-sentinel proposal."
+    },
+    {
+      "id": "Q08",
+      "subject": "Cura position handling",
+      "operation": "Open Project versus Import Models; non-project multi-model load",
+      "version": "5.7.0 release; #19456 5.7.2 and later sample 5.10.0; 5.14-alpha lead",
+      "domain": "Saved positions versus intentional auto-arrange behavior and concrete reported samples",
+      "exception": "Later sample success is not universal fix; alpha improvement concerns non-project operation; PR19375 is linked but not established as cause",
+      "sources": [
+        "P09",
+        "P10",
+        "P16",
+        "P23"
+      ],
+      "assessment": "Consequential chronology/operation supported; no-linked-PR wording minor inaccurate."
+    },
+    {
+      "id": "Q09",
+      "subject": "Object-name portability",
+      "operation": "Import/resave standard names versus vendor project names",
+      "version": "Prusa 3.0-alpha11 private metadata report; older Cura #17110; selected current receiver unvalidated",
+      "domain": "Bambu Metadata/model_settings.config differs from Core object.name and Prusa private configuration",
+      "exception": "Cura thread supplies 5.4 context and later fix leads; current source reads names, but not a full end-to-end guarantee",
+      "sources": [
+        "P09",
+        "P15",
+        "P17",
+        "P22",
+        "P24"
+      ],
+      "assessment": "Conditional receiving test supported; older report context incompletely recorded."
+    },
+    {
+      "id": "Q10",
+      "subject": "M&P extension version pairing",
+      "operation": "Use richer color/material definitions with Core",
+      "version": "M&P 1.2.1 preface targets Core 1.2; current index also lists latest Core 1.4",
+      "domain": "Optional extension outside baseline",
+      "exception": "Inventory alone cannot waive targeted-version requirement; selected pairing must be authoritative and receiver-supported",
+      "sources": [
+        "P01",
+        "P02",
+        "P03"
+      ],
+      "assessment": "Honest externally unresolved choice; no unsupported pairing recommended."
+    },
+    {
+      "id": "Q11",
+      "subject": "STL / generic ZIP alternatives",
+      "operation": "Transfer limited mesh geometry / bundle files for human review",
+      "domain": "STL geometry lacks full project intent; generic archive provides no slicer semantics",
+      "exception": "Companion units/dimensions/material note needed; containing a model does not make arbitrary ZIP a CAD exchange format",
+      "sources": [
+        "P01",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "assessment": "Supported rejection of STL-as-record and conditional convenience wrapper."
+    }
+  ],
+  "candidate_artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/control/handoff-binding.json",
+      "bytes": 112,
+      "sha256": "6ca39d2c34ed52986eafbb996364739b4030907130652f814ec2c4a70019155e",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/control/investigator-frozen-active.json",
+      "bytes": 736,
+      "sha256": "86c4db4578761ec10d70c114f136d059de9ca3199858e45fc9bb8a440cabb3d6",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/control/run.json",
+      "bytes": 532,
+      "sha256": "72d3d2a664001edba2be2b8dcf50b639d543365213e989c4c1891df341e132d3",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/control/topology.json",
+      "bytes": 484,
+      "sha256": "fd4de368995c89f0c93e5e8c60a9a453d3d07b85e7b3f56e7627dc5969dcb3b1",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/inputs/brief.md",
+      "bytes": 3358,
+      "sha256": "dcd62504463a57569adbc66d85753f8a178764bb5d80b7c17dad4f4088a1b1f5",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/manifest.json",
+      "bytes": 10604,
+      "sha256": "b0afeb8a07169c08585fbf002763e89e23b38e7f006c861917ccea5f625da63f",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/discovery.md",
+      "bytes": 9644,
+      "sha256": "419a380cc972621488d814158939cfe7150dd018a23dcfba696664d66acec8ff",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/draft.md",
+      "bytes": 24147,
+      "sha256": "9f6d66b6842f698692d59fa0737894d78cdfcf0927555ba8d41de67aeb5cd846",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/plan-reveal.json",
+      "bytes": 428,
+      "sha256": "8b20bf1d67f7492fa543f8c7c17c15242dc044055b7d824e80876956f72e5bab",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/revealed-plan.md",
+      "bytes": 6015,
+      "sha256": "b9063b147acff997c7c788eac44d2149ca6946fa4ee2a3ce6f0bdf80789397e7",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/source-map.json",
+      "bytes": 15686,
+      "sha256": "764f7abfe399eaad6a6fcc4e9f45df2f6ad2eb93b9eb4c59dfcbbe16238dcbf6",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/README.md",
+      "bytes": 3801,
+      "sha256": "1024802883343dcf360f2e9c88ebfd43fe29e25c68276eac74afc48e0547d429",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S01-3mf-core.md",
+      "bytes": 1356,
+      "sha256": "b89d7799963de7c317479a8aa7dac7d76a7028f2286c2ecd51d72c2778291158",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S02-fusion-mesh.md",
+      "bytes": 679,
+      "sha256": "2f24c205f7be2de6d5d96cdd0ecdd33b61e444f9f05454f873f4c1436fa6f5a5",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S03-fusion-export.md",
+      "bytes": 713,
+      "sha256": "3aa71f40ade5109e8b51e99d2f0f697b37575b70e014603b520faff2b6c70d41",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S04-prusa-formats.md",
+      "bytes": 693,
+      "sha256": "27168f078229656e170146e8fe9220c982fb84dfe28e3cc9fa0a712efb1f77c4",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S05-prusaslicer-250.md",
+      "bytes": 487,
+      "sha256": "02d3548f20e8070faa591701a224d63c333d57f27d182372b43127577ec972bb",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S06-step-issue-8998.md",
+      "bytes": 872,
+      "sha256": "b57175041d61ac0c5c55f4b66ce049d82cce9f419ff114627498188d3d608a01",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S07-unit-issue-15545.md",
+      "bytes": 1032,
+      "sha256": "352ddaf44d0e938acf785479b4df276e20b8d3503e5550b7d3abae0cd829049a",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S08-bambu-names-issue.md",
+      "bytes": 931,
+      "sha256": "63883086c34cdb10e7ab6606afc4c3e8b0af084c6294090b697ac54dce073d00",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S09-3mf-spec-index.md",
+      "bytes": 632,
+      "sha256": "914ca3c0620e377d000c5932f6052092d7353a292eba8c29ad889bf03cbf434a",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S10-prusa-project-3mf.md",
+      "bytes": 810,
+      "sha256": "4093bb0a29d33bca2e1c70b4e48f1c50b316ea45b82abd8a8d9e879a5b929b15",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S11-cura-570-release.md",
+      "bytes": 1060,
+      "sha256": "0660ac8e5e5e35b9e091b6566afecc1aff994ed9a2d63c1a46f0daba022bdf53",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S12-cura-3mf-position-issue.md",
+      "bytes": 1055,
+      "sha256": "582256aef60f160c185fe3c42dfaf988f65fa0210e933b6d5e058262bce8e3ec",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S13-cura-object-name-issue.md",
+      "bytes": 870,
+      "sha256": "23eca2eeddc832da9c6d03fa9c7305f3c6ba358c61a9e6397ba4428c42284aac",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S14-cura-releases.md",
+      "bytes": 544,
+      "sha256": "e8a371d01cd31e35774b1c370ef3ac601b29bfd9ad630f5f981076553c38cc35",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S15-prusaslicer-releases.md",
+      "bytes": 551,
+      "sha256": "e7748ad281c9a6bb09a4dc6bff0948c0a3892a41b21cdccb3e9be7f7f733d2f1",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/inputs/brief.md",
+      "bytes": 3358,
+      "sha256": "dcd62504463a57569adbc66d85753f8a178764bb5d80b7c17dad4f4088a1b1f5",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/assignment.md",
+      "bytes": 5967,
+      "sha256": "6b6a73960d2d4ad1e60ecc91a614492512287a0bddf23dfdea2a041547efebd1",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/checks.json",
+      "bytes": 6822,
+      "sha256": "799a33df5b0769e5e606449b74e7304addc6c0d7a70cc7533bf9daf7e339bea3",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/critique-dispositions.json",
+      "bytes": 3739,
+      "sha256": "b0ae2a1914b98d8e1e14cac2e4d26f1490c00043558e5b0dbcbc0227e9d56784",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/critique-index.json",
+      "bytes": 153,
+      "sha256": "a14556b10b580911548aca0b2e4ed43fb1ad3a8acf66b4b573d3feb0d5125c44",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/critique.md",
+      "bytes": 13527,
+      "sha256": "ee3f528beee5a948bb2f0f2076694cfe6598f6ed79894b60bb0392d83f1b4fd4",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/dispatch.json",
+      "bytes": 4435,
+      "sha256": "e6d4e2cc8da2399db3337646f9f82ac86cd621447ce34022947f6514899927e8",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/final.md",
+      "bytes": 25122,
+      "sha256": "3571f30137e3e7abee055360f231dd50b99a5fc98219ca762ddf914d5cbeff08",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/freeze.json",
+      "bytes": 8074,
+      "sha256": "2b7903941fddfde4e478ddde903c9ed97778f61255a36ea9d077398d585e4a7e",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/goal-activation.json",
+      "bytes": 546,
+      "sha256": "4f956fea986488de72f70b9ef4bdcf14890767ac1e2da9c39c4a6d3cc6f2beda",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/goal-current.json",
+      "bytes": 496,
+      "sha256": "256f4154d033842bf18b3ea705c57aec33bde9760a4e9eedd5c0a45a1bf27c81",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/goal-final-attempt.json",
+      "bytes": 496,
+      "sha256": "4bf87581ab6fd7fb83c9364ad1a9f9a824d62220180dda95623d30f53f3e1e46",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/goal-postseal-attempt.json",
+      "bytes": 496,
+      "sha256": "b66b778b3ffdd5689e608c53bbd27cdb53ce2915698c5f00cc7dc48f05a257f5",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/goal-preseal.json",
+      "bytes": 496,
+      "sha256": "32a0f96d3241b79ecbbbe7d5bd51b2aae055ff04fca5112623e6334b0e2aaddf",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/input-integrity.json",
+      "bytes": 8130,
+      "sha256": "1915b9066762f6574fc32812ec3a642be08ffd93159317e99adb87c59af13165",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/input-map.json",
+      "bytes": 4009,
+      "sha256": "37c8dc5d5752aeedcf4541417d04859788231e892bd5f46b9501d80db8714b7d",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/request.json",
+      "bytes": 949,
+      "sha256": "39f3f2510707de50a145a05df67156f778a20ae7e365e30db9c070dc004eebd2",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/source-map.json",
+      "bytes": 18504,
+      "sha256": "2cc897c9524936757b9b6828db0a2d85d68ccc9c2f5ccfa8e4d0d4aae538e410",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/README.md",
+      "bytes": 3169,
+      "sha256": "25e7fc5051e65af32d7cc5fbb4b169c0bf7cbcfb62524f4de65d00da5fe4eb0d",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S01-3mf-core.md",
+      "bytes": 1644,
+      "sha256": "40042bd200feb9e25c63dc80b5be6240747096d74a232c60dae4b4506b526fba",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S02-fusion-mesh.md",
+      "bytes": 813,
+      "sha256": "c0e580f2cb357d077905f1959c4dea7c14889d66b17156b1e9c5b4027f9589bd",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S03-fusion-export.md",
+      "bytes": 815,
+      "sha256": "53e7a5da7917c92724cb4a287bc5e4aa1017f7a9fd80f259e3236ac660131e6d",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S04-prusa-formats.md",
+      "bytes": 806,
+      "sha256": "f376b0160978f01753abcbe39ef72c2c4020f16fc17ffc0f3fb76b49f18811a7",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S05-prusaslicer-250.md",
+      "bytes": 646,
+      "sha256": "c019cc32c6b7d7d95d16847b21d3f0f35d4af2712b79f53ce01e07757d8a4564",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S06-step-issue-8998.md",
+      "bytes": 1397,
+      "sha256": "9547c29ff57246af3c97df35f971db601c94b5b1a3fe1be2f22d91d4ab7cd887",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S07-unit-issue-15545.md",
+      "bytes": 1104,
+      "sha256": "316c8d3e277e8ace25f6e430775ebba7facd2ff5f3f65f29c79d09f98c8ffb92",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S08-bambu-names-issue.md",
+      "bytes": 903,
+      "sha256": "7ecb71da556cb9583a4d09365278268cd2ca64f7149682d559fae95b956b4972",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S09-3mf-spec-index.md",
+      "bytes": 785,
+      "sha256": "f0cc63189c64550542c08a10bbf4e1849893337e0f01f13d6262767af9558c7f",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S10-prusa-project-3mf.md",
+      "bytes": 945,
+      "sha256": "0374f45f67cb3392f905cd1179b7afe8dbf5cccc19fe30105cdf71c4af9c9fd9",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S11-cura-570-release.md",
+      "bytes": 998,
+      "sha256": "24e16aac50ca4cf654f3fa3c61420858dfa7cab9090ede8f85c2353a0839c14f",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S12-cura-3mf-position-issue.md",
+      "bytes": 1203,
+      "sha256": "8460307a91b5f66feb841d52da6c6008fac190c696a236e6889beb2501c90ab2",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S13-cura-object-name-issue.md",
+      "bytes": 738,
+      "sha256": "b69154f69984d83567b6cad0965204f913b43b273f2e5226772962715a1dc4b5",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S14-cura-releases.md",
+      "bytes": 728,
+      "sha256": "72c55a30e28002de60f5808d8109955f62f2fc37f3e553683f7eb10104aaadf0",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S15-prusaslicer-releases.md",
+      "bytes": 720,
+      "sha256": "1988a085d51af21e317f10c6804fb9248120c5d81cf4749edea3e129adeda892",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S16-3mf-materials-extension.md",
+      "bytes": 1129,
+      "sha256": "4bdd80f2700a7793f17bf8f4fe933f202c69d99547ea625fef4f2992fc32a100",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S17-cura-514-alpha.md",
+      "bytes": 941,
+      "sha256": "2a73fb6b2caae6995a8ce7513660932d8d4b1886a7ced683a465fede012a0045",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/stage-control.json",
+      "bytes": 3347,
+      "sha256": "cea66f155d2bdd728ef963bcfa029720bc3a1bac9d9dd6ed618dd1a6f9ef4f78",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/assignment.md",
+      "bytes": 4598,
+      "sha256": "a9a058a895f812d4020a25484b51b30b0b133e33f2700654bb2852be90392363",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/discovery.md",
+      "bytes": 9644,
+      "sha256": "419a380cc972621488d814158939cfe7150dd018a23dcfba696664d66acec8ff",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/dispatch.json",
+      "bytes": 4371,
+      "sha256": "23ceff59c697e680716f47cecd6f2bc1b252b201e8dcfdee5e0f7a68d19f1d0c",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/draft.md",
+      "bytes": 24147,
+      "sha256": "9f6d66b6842f698692d59fa0737894d78cdfcf0927555ba8d41de67aeb5cd846",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/freeze.json",
+      "bytes": 1526,
+      "sha256": "b2078001dee33b648bd6dbde7425c1bc9252771b471d51ba814ebf03a7b0bce0",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/goal-active.json",
+      "bytes": 737,
+      "sha256": "3e74e77e9595973eb98411f9a1d647c7918fc6e1dce32e18dfae8a23a1f13476",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/input-map.json",
+      "bytes": 722,
+      "sha256": "7bc82160fcd7a6bc9bd030b96dd9dc1a5dcc76431842a832c8bbf8166edf14ee",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/plan-reveal.json",
+      "bytes": 428,
+      "sha256": "8b20bf1d67f7492fa543f8c7c17c15242dc044055b7d824e80876956f72e5bab",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/request.json",
+      "bytes": 933,
+      "sha256": "ecc44f558970f789350aa1d99485e59d9657336b41ed82921bfb39a4e8eee169",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 6015,
+      "sha256": "b9063b147acff997c7c788eac44d2149ca6946fa4ee2a3ce6f0bdf80789397e7",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/source-map.json",
+      "bytes": 15686,
+      "sha256": "764f7abfe399eaad6a6fcc4e9f45df2f6ad2eb93b9eb4c59dfcbbe16238dcbf6",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/README.md",
+      "bytes": 3801,
+      "sha256": "1024802883343dcf360f2e9c88ebfd43fe29e25c68276eac74afc48e0547d429",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S01-3mf-core.md",
+      "bytes": 1356,
+      "sha256": "b89d7799963de7c317479a8aa7dac7d76a7028f2286c2ecd51d72c2778291158",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S02-fusion-mesh.md",
+      "bytes": 679,
+      "sha256": "2f24c205f7be2de6d5d96cdd0ecdd33b61e444f9f05454f873f4c1436fa6f5a5",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S03-fusion-export.md",
+      "bytes": 713,
+      "sha256": "3aa71f40ade5109e8b51e99d2f0f697b37575b70e014603b520faff2b6c70d41",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S04-prusa-formats.md",
+      "bytes": 693,
+      "sha256": "27168f078229656e170146e8fe9220c982fb84dfe28e3cc9fa0a712efb1f77c4",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S05-prusaslicer-250.md",
+      "bytes": 487,
+      "sha256": "02d3548f20e8070faa591701a224d63c333d57f27d182372b43127577ec972bb",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S06-step-issue-8998.md",
+      "bytes": 872,
+      "sha256": "b57175041d61ac0c5c55f4b66ce049d82cce9f419ff114627498188d3d608a01",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S07-unit-issue-15545.md",
+      "bytes": 1032,
+      "sha256": "352ddaf44d0e938acf785479b4df276e20b8d3503e5550b7d3abae0cd829049a",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S08-bambu-names-issue.md",
+      "bytes": 931,
+      "sha256": "63883086c34cdb10e7ab6606afc4c3e8b0af084c6294090b697ac54dce073d00",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S09-3mf-spec-index.md",
+      "bytes": 632,
+      "sha256": "914ca3c0620e377d000c5932f6052092d7353a292eba8c29ad889bf03cbf434a",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S10-prusa-project-3mf.md",
+      "bytes": 810,
+      "sha256": "4093bb0a29d33bca2e1c70b4e48f1c50b316ea45b82abd8a8d9e879a5b929b15",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S11-cura-570-release.md",
+      "bytes": 1060,
+      "sha256": "0660ac8e5e5e35b9e091b6566afecc1aff994ed9a2d63c1a46f0daba022bdf53",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S12-cura-3mf-position-issue.md",
+      "bytes": 1055,
+      "sha256": "582256aef60f160c185fe3c42dfaf988f65fa0210e933b6d5e058262bce8e3ec",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S13-cura-object-name-issue.md",
+      "bytes": 870,
+      "sha256": "23eca2eeddc832da9c6d03fa9c7305f3c6ba358c61a9e6397ba4428c42284aac",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S14-cura-releases.md",
+      "bytes": 544,
+      "sha256": "e8a371d01cd31e35774b1c370ef3ac601b29bfd9ad630f5f981076553c38cc35",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S15-prusaslicer-releases.md",
+      "bytes": 551,
+      "sha256": "e7748ad281c9a6bb09a4dc6bff0948c0a3892a41b21cdccb3e9be7f7f733d2f1",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/status.json",
+      "bytes": 4033,
+      "sha256": "c80965114c17996eaecb7478e094e65a63a254e59f0c90eaea264f70545db97d",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/terminal-science-freeze-root.json",
+      "bytes": 17002,
+      "sha256": "fec3b71d3c2278ba10312e51ff395c10661193277b053fe8382246988ed68a10",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A7-01/brief.md",
+      "bytes": 3358,
+      "sha256": "dcd62504463a57569adbc66d85753f8a178764bb5d80b7c17dad4f4088a1b1f5",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A7-01/plan.md",
+      "bytes": 6015,
+      "sha256": "b9063b147acff997c7c788eac44d2149ca6946fa4ee2a3ce6f0bdf80789397e7",
+      "inspection": "Full contents read; duplicated immutable handoff members read in entirety and byte-compared with already semantically read original; all unique authored sources read fully."
+    }
+  ],
+  "rubric_path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+  "exact_clause_mapping": [
+    {
+      "clause": 1,
+      "exact_plan_clause": "Compare two CAD-to-slicer handoff routes and an analogous portable-package mechanism with clear interoperability tradeoffs.",
+      "exact_original_brief_obligation": "Compare two CAD-to-slicer handoff routes and an analogous portable-package mechanism with clear interoperability tradeoffs.",
+      "exact_plan_draft_treatment": "Export STL as the complete project record and reconstruct units from a filename. Treat material names as a separate verbal handoff.",
+      "disposition": "Corrected; STL-as-complete-record rejected",
+      "reviewer_assessment": "Two independent CAD-to-slicer routes, Cura UCP analogy and separate ZIP wrapper are compared; explicit units and material intent replace filename/verbal reconstruction. Limited STL fallback is preserved.",
+      "source_ids": [
+        "P01",
+        "P04",
+        "P05",
+        "P06",
+        "P07",
+        "P09"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/final.md",
+        "line": 23,
+        "anchor_text": "| **1."
+      },
+      "judgment": "PASS"
+    },
+    {
+      "clause": 2,
+      "exact_plan_clause": "Explain geometry units, object/assembly relationships, materials and application-specific settings; separate design intent from machine instructions.",
+      "exact_original_brief_obligation": "Explain geometry units, object/assembly relationships, materials and application-specific settings; separate design intent from machine instructions.",
+      "exact_plan_draft_treatment": "PrusaSlicer and Cura are listed as receiving tools without testing their package boundaries. A richer package is optional but currently unspecified.",
+      "disposition": "Corrected and expanded",
+      "reviewer_assessment": "Receiver boundaries are stated: 3MF triangle/composition/intent data differs from CAD history and machine setup; STEP is triangulated. Cura and Prusa are candidates whose exact versions/modes need lead selection.",
+      "source_ids": [
+        "P01",
+        "P05",
+        "P06",
+        "P07",
+        "P09",
+        "P21"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/final.md",
+        "line": 24,
+        "anchor_text": "| **2."
+      },
+      "judgment": "PASS"
+    },
+    {
+      "clause": 3,
+      "exact_plan_clause": "Identify supported optional preview or metadata capabilities without treating every extension as universally portable.",
+      "exact_original_brief_obligation": "Identify supported optional preview or metadata capabilities without treating every extension as universally portable.",
+      "exact_plan_draft_treatment": "Retain a preview and project note. Presume any shared package settings are portable to all printers; extension loss has no reporting rule.",
+      "disposition": "Authorized option retained; universal settings portability rejected",
+      "reviewer_assessment": "Conditional standard thumbnail/Description plus sidecar fallback are retained. The final records ignored/warned extension data in proposed tests and keeps rich M&P outside baseline pending the spec pairing.",
+      "source_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P07",
+        "P09"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/final.md",
+        "line": 25,
+        "anchor_text": "| **3."
+      },
+      "judgment": "PASS"
+    },
+    {
+      "clause": 4,
+      "exact_plan_clause": "Investigate a relevant released importer/exporter issue or format-compatibility change and its effect on the pilot.",
+      "exact_original_brief_obligation": "Investigate a relevant released importer/exporter issue or format-compatibility change and its effect on the pilot.",
+      "exact_plan_draft_treatment": "No released importer/exporter history has been read. Opening one file in one slicer is the only proposed acceptance check.",
+      "disposition": "Unresearched assumptions replaced; one-open acceptance rejected",
+      "reviewer_assessment": "Released Cura 5.7 and Prusa 2.5 changes plus bounded issues and later results yield mode/shape/unit/name sentinels. Source history is research, not successful pilot validation.",
+      "source_ids": [
+        "P08",
+        "P09",
+        "P10",
+        "P13",
+        "P14",
+        "P15",
+        "P16"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/final.md",
+        "line": 26,
+        "anchor_text": "| **4."
+      },
+      "judgment": "PASS"
+    },
+    {
+      "clause": 5,
+      "exact_plan_clause": "Preserve and investigate this supported optional scope: a package preview image and human-readable project note for reviewers without the author’s CAD tool. It is an authorized option, not a mandatory feature or an established technical capability; recommend conditions, retain it when supported, and explain any evidence-based exclusion.",
+      "exact_original_brief_obligation": "Preserve and investigate this supported optional scope: a package preview image and human-readable project note for reviewers without the author’s CAD tool. It is an authorized option, not a mandatory feature or an established technical capability; recommend conditions, retain it when supported, and explain any evidence-based exclusion.",
+      "exact_plan_draft_treatment": "Retain a package preview image and human-readable project note for reviewers without the author’s CAD tool as supported owner-authorized optional scope. Support here means that the brief explicitly permits it; technical support, conditions and interoperability still need research. Do not remove it merely because the baseline route lacks it, or silently promote it to mandatory scope.",
+      "disposition": "Retained as authorized optional scope",
+      "reviewer_assessment": "Package image and readable note are supported format opportunities with exporter/receiver conditions, optional sidecar fallback and no unjustified exclusion or promotion to mandatory.",
+      "source_ids": [
+        "P01",
+        "P04",
+        "P07"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/final.md",
+        "line": 27,
+        "anchor_text": "| **5."
+      },
+      "judgment": "PASS"
+    },
+    {
+      "clause": 6,
+      "exact_plan_clause": "Make owner decisions explicit: The project author owns intended units and materials; the workshop technician owns printer settings. The pilot lead selects a tested receiving-tool matrix rather than claiming universal compatibility.",
+      "exact_original_brief_obligation": "Make owner decisions explicit: The project author owns intended units and materials; the workshop technician owns printer settings. The pilot lead selects a tested receiving-tool matrix rather than claiming universal compatibility.",
+      "exact_plan_draft_treatment": "Owner authority is reserved as follows: The project author owns intended units and materials; the workshop technician owns printer settings. The pilot lead selects a tested receiving-tool matrix rather than claiming universal compatibility. The draft has not obtained these decisions. Its tentative implementation assumptions cannot substitute for them.",
+      "disposition": "Fixed owner authority retained; unresolved values separated",
+      "reviewer_assessment": "The author owns intended units/materials, technician printer settings and lead tested receiving matrix. Remaining values, versions and tolerances do not reopen authority.",
+      "source_ids": [
+        "ORIGINAL_BRIEF"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/final.md",
+        "line": 28,
+        "anchor_text": "| **6."
+      },
+      "judgment": "PASS"
+    },
+    {
+      "clause": 7,
+      "exact_plan_clause": "Preserve negative constraints: Do not operate printers, design safety-critical parts, assume STL preserves every project property, or treat saved slicer settings as approved instructions for every machine.",
+      "exact_original_brief_obligation": "Preserve negative constraints: Do not operate printers, design safety-critical parts, assume STL preserves every project property, or treat saved slicer settings as approved instructions for every machine.",
+      "exact_plan_draft_treatment": "Binding exclusions: Do not operate printers, design safety-critical parts, assume STL preserves every project property, or treat saved slicer settings as approved instructions for every machine. The draft has no complete trace showing that its assumptions comply; revise the proposal wherever necessary to preserve these exclusions.",
+      "disposition": "All binding exclusions retained",
+      "reviewer_assessment": "No printers operated, safety-critical parts designed, STL completeness presumed or saved settings universally approved. Later review tests explicitly do not slice or send instructions.",
+      "source_ids": [
+        "ORIGINAL_BRIEF",
+        "P07",
+        "P09"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/final.md",
+        "line": 29,
+        "anchor_text": "| **7."
+      },
+      "judgment": "PASS"
+    },
+    {
+      "clause": 8,
+      "exact_plan_clause": "Deliver one coherent evidence-backed research proposal covering obligations 1–8, with recommendations, source/version applicability, useful discoveries, unresolved owner inputs, and a validation table separating checks actually executed from checks merely proposed. Do not report research sources or future tests as executed product validation.",
+      "exact_original_brief_obligation": "Deliver one coherent evidence-backed research proposal covering obligations 1–8, with recommendations, source/version applicability, useful discoveries, unresolved owner inputs, and a validation table separating checks actually executed from checks merely proposed. Do not report research sources or future tests as executed product validation.",
+      "exact_plan_draft_treatment": "The draft currently contains no coherent evidence-backed final proposal. Its proposed demos are research/validation ideas only. A complete revision must preserve every obligation, disclose corrections and retained options, and not confuse documentation review with successful product operation.",
+      "disposition": "Replaced by coherent full proposal",
+      "reviewer_assessment": "Recommendation, compact comparison, applicability/history, useful discovery, explicit decisions/uncertainty and validation tables are present. No prototype, deployment or product operation is claimed.",
+      "source_ids": [
+        "P01",
+        "P04",
+        "P06",
+        "P09",
+        "P13",
+        "P14",
+        "P16"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/final.md",
+        "line": 30,
+        "anchor_text": "| **8."
+      },
+      "judgment": "PASS"
+    }
+  ],
+  "criticism_dispositions": [
+    {
+      "id": "C01",
+      "candidate_disposition_full": {
+        "id": "C01",
+        "classification": "material wrong",
+        "draft_locator": "Section 5, Cura issue #19456; source-map S12",
+        "evidence": "S12, activity lines 375-390: reporter says the sample saved/loaded correctly in Cura 5.10.0 and closes the issue completed; lines 392-421 retain old labels but no linked branch/PR.",
+        "disposition": "amend",
+        "rationale": "The final corrects the issue chronology and scopes the reported success to that sample and operation, without claiming a general fix or independent reproduction.",
+        "final_locator": "Compatibility history table, Cura 5.7 and #19456 row; Objects, names and assembly relationships."
+      },
+      "independent_disposition_assessment": "SUPPORTED_CORRECTION_WITH_MINOR_WRONG_LOCATOR",
+      "independent_reason": "The 5.10.0 sample success and completed closure are verified. Amendment in final is appropriately bounded. The critic and final nevertheless overlook a comment linking PR #19375; no causal link to the later success is proven.",
+      "source_ids": [
+        "P16",
+        "P23"
+      ],
+      "reflected_in_final": true
+    },
+    {
+      "id": "C02",
+      "candidate_disposition_full": {
+        "id": "C02",
+        "classification": "material incomplete",
+        "draft_locator": "Section 5 Cura history and current-version paragraph citing S14",
+        "evidence": "S17, 5.14.0-alpha.0 release notes lines 172-185; S14 release index labels 5.14.0-alpha.0 pre-release and 5.13.0 latest stable.",
+        "disposition": "accept",
+        "rationale": "The final records the alpha's relevant non-project multi-model positioning improvement as a test lead only, without treating it as a stable result or a fix for S12.",
+        "final_locator": "Objects, names and assembly relationships; Compatibility history/version applicability table."
+      },
+      "independent_disposition_assessment": "SUPPORTED_ADDITION_SEVERITY_OVERSTATED",
+      "independent_reason": "The alpha improvement is real, non-project-specific and correctly not promoted to a stable fix. Absence from the draft was a useful opportunity gap, not shown to invalidate its existing conditional recommendation.",
+      "source_ids": [
+        "P09",
+        "P10",
+        "P11"
+      ],
+      "reflected_in_final": true
+    },
+    {
+      "id": "C03",
+      "candidate_disposition_full": {
+        "id": "C03",
+        "classification": "material incomplete",
+        "draft_locator": "Section 5 PrusaSlicer STEP history, current-version paragraph and source-map S06",
+        "evidence": "S06, issue #8998 lines 395-447: Sep 18 2026 comment says the Owl case reproduced in the then-installed Flathub beta with default settings, but omits the exact build; no linked branch/PR.",
+        "disposition": "accept",
+        "rationale": "The final includes the late beta report with version uncertainty and preserves that it was not reproduced; it does not attribute it to stable 2.9.6.",
+        "final_locator": "Recommendation; Compatibility history and version applicability table."
+      },
+      "independent_disposition_assessment": "SUPPORTED_ADDITION",
+      "independent_reason": "The September 2026 Owl beta report is real and its exact build unknown. Final neither confuses it with the original hinge example nor attributes it to stable 2.9.6. Draft incompleteness is corrected.",
+      "source_ids": [
+        "P13"
+      ],
+      "reflected_in_final": true
+    },
+    {
+      "id": "C04",
+      "candidate_disposition_full": {
+        "id": "C04",
+        "classification": "material incomplete",
+        "draft_locator": "Section 2 artifact naming and section 4 preview/metadata distinction",
+        "evidence": "S01, Core 1.4.0 §§2.2.1-2.2.2 recommends .model.3mf for design data and .project.3mf for full project files.",
+        "disposition": "accept",
+        "rationale": "The final adds the recommended purpose suffixes, preserves their non-mandatory status, and makes receiver filename acceptance a proposed check.",
+        "final_locator": "Recommendation; Handoff routes and package tradeoffs."
+      },
+      "independent_disposition_assessment": "SUPPORTED_OPTIONAL_IMPROVEMENT_SEVERITY_OVERSTATED",
+      "independent_reason": "The suffix recommendation/reservation is real, but the brief never required every newly documented naming convention. Final keeps filename acceptance conditional; original project.3mf was not itself a proven material violation.",
+      "source_ids": [
+        "P01"
+      ],
+      "reflected_in_final": true
+    },
+    {
+      "id": "C05",
+      "candidate_disposition_full": {
+        "id": "C05",
+        "classification": "honestly unresolved external input",
+        "draft_locator": "Section 3 Materials and application-specific settings; source-map S09",
+        "evidence": "S09 lists Core 1.4.0 and M&P 1.2.1; S16 extension v1.2.1 preface says the extension must be used only with Core 1.2.",
+        "disposition": "retain_uncertainty",
+        "rationale": "The final preserves the primary-document version-pair question and does not infer compatibility. It keeps M&P outside the pilot baseline pending authoritative clarification.",
+        "final_locator": "Material intent, display and extensions; Owner decisions/open inputs."
+      },
+      "independent_disposition_assessment": "SUPPORTED_CONDITION_AND_HONEST_UNCERTAINTY",
+      "independent_reason": "The published M&P preface has the exact Core 1.2 restriction. Final does not recommend the unsupported pairing and preserves simple labels/preview/note. Official inventory alone cannot resolve the discrepancy; this bounded external clarification may remain.",
+      "source_ids": [
+        "P01",
+        "P02",
+        "P03"
+      ],
+      "reflected_in_final": true
+    },
+    {
+      "id": "C06",
+      "candidate_disposition_full": {
+        "id": "C06",
+        "classification": "material incomplete",
+        "draft_locator": "Section 2 Option C row, Cura UCP or generic project ZIP",
+        "evidence": "S11 documents UCP model/settings behavior; a generic ZIP wrapper has no 3D semantics and does not by itself define slicer import behavior.",
+        "disposition": "accept",
+        "rationale": "The final separates Cura UCP as an application-project analogy from a generic outer ZIP as optional reviewer packaging.",
+        "final_locator": "Handoff routes and package tradeoffs, rows C and D."
+      },
+      "independent_disposition_assessment": "SUPPORTED_CLARITY_IMPROVEMENT_SEVERITY_OVERSTATED",
+      "independent_reason": "The original draft already distinguished UCP semantics from generic ZIP textually. Separate final rows improve comparison without rejecting a supported approach or creating a new requirement.",
+      "source_ids": [
+        "P01",
+        "P09"
+      ],
+      "reflected_in_final": true
+    }
+  ],
+  "lineage_and_findings": {
+    "material_remaining": [],
+    "corrected_lineage": [
+      {
+        "id": "LD01",
+        "stage": "investigator draft and its S12 evidence",
+        "kind": "material stale history",
+        "source_ids": [
+          "P16"
+        ],
+        "description": "Draft/source note omit the 2025-03-26 reporter-confirmed sample success and closure and leave the issue looking unresolved. C01 and final correct that meaning.",
+        "remaining_in_final": false
+      },
+      {
+        "id": "LD02",
+        "stage": "investigator draft",
+        "kind": "consequential optional-extension condition omitted",
+        "source_ids": [
+          "P01",
+          "P02",
+          "P03"
+        ],
+        "description": "Draft mentions current M&P version and receiver support without its published Core 1.2-only precondition. C05/final make that condition explicit and withhold unsupported baseline pairing.",
+        "remaining_in_final": false
+      },
+      {
+        "id": "LD03",
+        "stage": "discovery/draft",
+        "kind": "later-history opportunity incompleteness",
+        "source_ids": [
+          "P10",
+          "P13"
+        ],
+        "description": "Initial STEP history omits the later beta example; draft notes Cura alpha without its non-project positioning change. Final includes both and preserves their limits. Severity is not automatically material for a planning proposal.",
+        "remaining_in_final": false
+      }
+    ],
+    "nonmaterial": [
+      {
+        "id": "L01",
+        "severity": "minor source/locator wording",
+        "material": false,
+        "title": "No-linked-PR statement overlooks a real discussion link",
+        "candidate_locator": {
+          "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/final.md",
+          "line": 58,
+          "anchor_text": "No branch or PR is linked"
+        },
+        "source_ids": [
+          "P16",
+          "P23"
+        ],
+        "evidence_locator": "#19456 comment 2268913792 explicitly links PR #19375; merged PR body and writer patch",
+        "assessment": "The development sidebar is empty, but the discussion links a possible fix and the PR is merged. The absolute absence claim is wrong. It does not prove that PR repaired this particular sample; later failures were reported after the merge. Final still accurately describes 5.10.0 sample success and requires operation-specific testing, so no material decision turns on the wording."
+      },
+      {
+        "id": "L02",
+        "severity": "minor version/history incompleteness",
+        "material": false,
+        "title": "Older Cura name report is missing surrounding version/fix context",
+        "candidate_locator": {
+          "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/final.md",
+          "line": 56,
+          "anchor_text": "no exact Cura release stated"
+        },
+        "source_ids": [
+          "P09",
+          "P17",
+          "P22",
+          "P24"
+        ],
+        "evidence_locator": "#17110 comment 1832857900 author says using 5.4; comments link Uranium #898; Cura 5.7 names improvement; released 5.13 reader lines 107–135",
+        "assessment": "No formal exact tested-build field is present, but the wider issue does state the author’s 5.4 context and a later implementation lead. Candidate does not claim current 5.13 lacks Core names or reject Cura on that basis. The receiving-matrix check remains meaningful, so this is a nonmaterial context/wording limitation."
+      },
+      {
+        "id": "L03",
+        "severity": "minor source-condition compression",
+        "material": false,
+        "title": "Required/recommended extension behavior is less explicit in final prose",
+        "candidate_locator": {
+          "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/final.md",
+          "line": 109,
+          "anchor_text": "Names, materials and extensions"
+        },
+        "source_ids": [
+          "P01"
+        ],
+        "evidence_locator": "Core §§2.3.1, 3.4 (requiredextensions/recommendedextensions); raw lines 322, 417–418",
+        "assessment": "Draft correctly distinguishes required-extension blocking from recommended-extension warnings. Final says optional extension data must be checked/recorded and excludes M&P from baseline, but its source-map summary broadly says unsupported extension data may be ignored. Read in isolation that summary lacks the required-extension exception. No selected required extension is approved or silently accepted, so this is not a remaining material product decision."
+      },
+      {
+        "id": "L04",
+        "severity": "critique classification calibration",
+        "material": false,
+        "title": "Useful additions sometimes labelled material without demonstrated harm",
+        "candidate_locator": {
+          "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/critique.md",
+          "line": 52,
+          "anchor_text": "C04 — material incomplete"
+        },
+        "source_ids": [
+          "P01",
+          "P09",
+          "P10"
+        ],
+        "evidence_locator": "Critique C02/C04/C06 compared with original brief and full draft route/condition prose",
+        "assessment": "Purpose suffixes, separate ZIP rows and the later alpha lead improve coverage. The already conditional draft satisfied the required released-history/route comparison without proving these omissions changed its recommendation. No harmful correction or authorized-scope loss follows in final."
+      },
+      {
+        "id": "L05",
+        "severity": "candidate research depth limitation",
+        "material": false,
+        "title": "Direct implementation-source exploration is limited",
+        "candidate_locator": {
+          "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/draft.md",
+          "line": 117,
+          "anchor_text": "Public source/version review"
+        },
+        "source_ids": [
+          "P13",
+          "P20",
+          "P21",
+          "P22",
+          "P23",
+          "P24"
+        ],
+        "evidence_locator": "Candidate maps: official docs/specs/releases/issues; independent released code and linked fixes saved in assessment evidence",
+        "assessment": "Candidate used embedded issue XML, specifications and maintainer kernel discussion, but no directly cited importer/writer implementation file. Reviewer static inspection corroborates key conditions and exposes missed fix leads. Those checks are reviewer work and must not be credited as candidate executed validation. The proposal remains conditional and covers a substantive bounded released-history example; this is not an invented demand for a prototype or exhaustive catalogue."
+      }
+    ]
+  }
+}

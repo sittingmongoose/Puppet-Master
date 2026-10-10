@@ -1,0 +1,29 @@
+URL: https://docs.aws.amazon.com/cli/latest/topic/s3-config.html
+Original locator: ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P14-text.txt
+Original SHA256: 4ccb8a83377fadecd7dd92ec7448604f429a58da49afc83f929e29a9cd019abf
+Original numbered lines; gaps omitted. Not full response.
+
+31: preferred_transfer_client
+174: Default - 8MB
+175: When uploading, downloading, or copying a file, the S3 commands
+176: will switch to multipart operations if the file reaches a given
+177: size threshold.  The multipart_threshold controls this value.
+178: You can specify this value in one of two ways:
+179: The file size in bytes.  For example, 1048576.
+180: The file size with a size suffix.  You can use KB, MB, GB,
+181: TB.  For example: 10MB, 1GB.  Note that S3 imposes
+182: constraints on valid values that can be used for multipart
+183: operations.
+184: multipart_chunksize¶
+185: Default - 8MB
+186: Minimum For Uploads - 5MB
+286: preferred_transfer_client¶
+315: the CRT S3 transfer client, set the preferred_transfer_client configuration
+319: set the preferred_transfer_client configuration variable to the
+347: This configuration option is only supported when the preferred_transfer_client
+355: When the preferred_transfer_client configuration value is set to
+359: When the preferred_transfer_client configuration value resolves to
+383: This configuration option is only supported when the preferred_transfer_client
+391: This configuration option is only supported when the preferred_transfer_client
+401: This configuration option is only supported when the preferred_transfer_client
+422: When the preferred_transfer_client configuration value is set to or

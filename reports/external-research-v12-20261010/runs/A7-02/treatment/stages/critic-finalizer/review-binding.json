@@ -1,0 +1,26 @@
+{
+  "bound_at_utc": "2026-10-10T04:59:59.252Z",
+  "criticism_ids": [
+    "C01",
+    "C02",
+    "C03",
+    "C04",
+    "C05",
+    "C06"
+  ],
+  "input_manifest_sha256": "3d15d98c9ff54bb2d692644907d517746fb8f2220cb64dbdc8c173d50c6d9d98",
+  "files": [
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/checks.json",
+      "sha256": "da9f1f3a21b83ea24fc72ee144b7440a8073bf03e4642960a8cbbf36be6d1634"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/critique.md",
+      "sha256": "cbd23bac4618222be9d567fbb2e6147719422b15e3de1b131ebcb81fef48e186"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/critique-index.json",
+      "sha256": "a14556b10b580911548aca0b2e4ed43fb1ad3a8acf66b4b573d3feb0d5125c44"
+    }
+  ]
+}

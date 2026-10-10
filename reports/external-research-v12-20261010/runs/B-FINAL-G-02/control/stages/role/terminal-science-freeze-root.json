@@ -1,0 +1,142 @@
+{
+  "observed_at_utc": "2026-10-10T05:25:41.399238+00:00",
+  "basis": "root actual T3 completed/no pending before independent review; not native Goal proof",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/.invocation-backup-a59096d98f7e4724ad338348a01fabd1/assignment.md",
+      "sha256": "7f9c430b8d3ee2074f44ef280f95f5341bab8b956c07ca2627d28117661b90a1",
+      "bytes": 2379,
+      "mtime_ns": 1791609608831233416
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/.invocation-backup-a59096d98f7e4724ad338348a01fabd1/freeze.json",
+      "sha256": "8ef388f1c7f08ffdc8ac9b03d69dbcecdcfea7a2f1a1a114ce8e2ec26697e9f6",
+      "bytes": 2955,
+      "mtime_ns": 1791609608831105131
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/.invocation-backup-a59096d98f7e4724ad338348a01fabd1/input-map.json",
+      "sha256": "3a9866ee8f3773a744c22c720030645a690ab75c58720bb1beab08aeee19f283",
+      "bytes": 692,
+      "mtime_ns": 1791609608831174287
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/.invocation-backup-a59096d98f7e4724ad338348a01fabd1/request.json",
+      "sha256": "7fe30079f510b339183189e289c404d61d01ccd5c82ebe13055a374734ffacc6",
+      "bytes": 1097,
+      "mtime_ns": 1791609608830974785
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/assignment.md",
+      "sha256": "9025ff6c548dbb96c78095a8652f34481492f671bf63248cf7e00500f482c40d",
+      "bytes": 3176,
+      "mtime_ns": 1791609608832242898
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/dispatch.json",
+      "sha256": "90eff72180162e127ad55d56b56f55d72e33e87e7a592daa46ce162f56b6c809",
+      "bytes": 5073,
+      "mtime_ns": 1791609609981325964
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/final-section.md",
+      "sha256": "b4d525027019c2694cd6c2f1144152fe53d9a8923a4b1239693ac8f1251b26af",
+      "bytes": 5736,
+      "mtime_ns": 1791609834480504019
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/freeze.json",
+      "sha256": "2fb7ebb7295663cff0a6fdf926f075176e34dae14d8ae7f24c9371d095c4852b",
+      "bytes": 2955,
+      "mtime_ns": 1791609608831917388
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/input-map.json",
+      "sha256": "3a9866ee8f3773a744c22c720030645a690ab75c58720bb1beab08aeee19f283",
+      "bytes": 692,
+      "mtime_ns": 1791609608832107768
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/invocation-clarification.json",
+      "sha256": "1e0b5b5c8e8ac42af223db77dab22dbeffac46b9af408b7bbb776c6ffe1d9fc6",
+      "bytes": 3222,
+      "mtime_ns": 1791609608832406111
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/native-goal-activation.json",
+      "sha256": "63b586388e35a77c2d66ce56136cebb8f2327048fd9aab072135537a968242f4",
+      "bytes": 462,
+      "mtime_ns": 1791609632730876149
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/native-goal-completion.json",
+      "sha256": "517f892ee752ef495dffb8615aac53de476792524f50d136ccdf96387353da72",
+      "bytes": 790,
+      "mtime_ns": 1791609877234427773
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/raw-dispatch.json",
+      "sha256": "9f224a0254ce243acd92c1c1490e6f7ec7d99fd7995f0649f26cdb5da0be299b",
+      "bytes": 2104,
+      "mtime_ns": 1791609609795898699
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/records/dispatch-20261010T052009980853-2cbc592f7aa4425cb3d0ec6ee41e30d0.json",
+      "sha256": "90eff72180162e127ad55d56b56f55d72e33e87e7a592daa46ce162f56b6c809",
+      "bytes": 5073,
+      "mtime_ns": 1791609609981103415
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/request.json",
+      "sha256": "0c938d14a964f578252d115e1536ae83411c21f7faf1b3d388715625293a5c00",
+      "bytes": 1807,
+      "mtime_ns": 1791609608831705965
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/service-tier-change.json",
+      "sha256": "a540d0a0ee05af883b3fcd454d6a164083e6a7ad00022f0def0570e1f6a7f65b",
+      "bytes": 481,
+      "mtime_ns": 1791609608627527699
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/source-map.json",
+      "sha256": "94e4f2ab0878958ae5a3542b41b1fa00ba77ff5eed3c1161df05df3d67a43aab",
+      "bytes": 5285,
+      "mtime_ns": 1791609859952184179
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/sources/git-clone.md",
+      "sha256": "3a7f3101f4117ae1b14bd958a8b7cdb99d879e5d17399f23c9a2f39462aa72ac",
+      "bytes": 1161,
+      "mtime_ns": 1791609834495165752
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/sources/git-sparse-checkout.md",
+      "sha256": "482686b1c0e8ffac70ebc3df471eb1f0bff98482d72488d825c70ca5e8c17d20",
+      "bytes": 1946,
+      "mtime_ns": 1791609859952481730
+    }
+  ],
+  "terminal_task": {
+    "slot": "B-FINAL-G-02",
+    "arm": "control",
+    "stage": "role",
+    "helper": "ER12_RUNTIME/helpers/role-v2",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-G-02-control-role-v2",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-G-02-control-role-v2",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-02-control-role-v2:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-G-02-control-role-v2",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-02-control-role-v2:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "Completed the single requested native Goal with the exact frozen objective. Its activation and completion responses are saved separately.\n\n- [Final section: 582-word replacement, 748 words total](ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/final-section.md)\n- [Source map](ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/source-map.json)\n- [Activation receipt](ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/native-goal-activation.json) \u00b7 [Completion receipt](ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/native-goal-completion.json)\n- [Sparse-checkout evidence](ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/sources/git-sparse-checkout.md) \u00b7 [Clone evidence](ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/sources/git-clone.md)\n\nThe section corrects cone-mode inclusions, distinguishes sparse checkout from blob filtering and shallow history, and retains recovery guidance and all six critique dispositions. It cites the [Git sparse-checkout manual](https://git-scm.com/docs/git-sparse-checkout/2.42.0) and [Git 2.43 clone manual](https://git-scm.com/docs/git-clone/2.43.0). No Git command or test was run; the three checks are prospective, and network transfer and runtime remain unmeasured.\n\nThe native Goal reports 94,780 tokens used and 250 seconds elapsed.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-02-control-role-v2:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:228ce35e-7dd6-4ae9-98fd-9bee9d56e0a0",
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "summary": "Completed the single requested native Goal with the exact frozen objective. Its activation and completion responses are saved separately.\n\n- [Final section: 582-word replacement, 748 words total](ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/final-section.md)\n- [Source map](ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/source-map.json)\n- [Activation receipt](ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/native-goal-activation.json) \u00b7 [Completion receipt](ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/native-goal-completion.json)\n- [Sparse-checkout evidence](ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/sources/git-sparse-checkout.md) \u00b7 [Clone evidence](ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/sources/git-clone.md)\n\nThe section corrects cone-mode inclusions, distinguishes sparse checkout from blob filtering and shallow history, and retains recovery guidance and all six critique dispositions. It cites the [Git sparse-checkout manual](https://git-scm.com/docs/git-sparse-checkout/2.42.0) and [Git 2.43 clone manual](https://git-scm.com/docs/git-clone/2.43.0). No Git command or test was run; the three checks are prospective, and network transfer and runtime remain unmeasured.\n\nThe native Goal reports 94,780 tokens used and 250 seconds elapsed.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-02-control-role-v2:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:228ce35e-7dd6-4ae9-98fd-9bee9d56e0a0",
+    "waitTimedOut": false
+  }
+}

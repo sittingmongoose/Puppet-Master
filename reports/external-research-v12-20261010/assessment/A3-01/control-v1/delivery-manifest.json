@@ -1,0 +1,42 @@
+{
+  "source_judgment": "FAIL",
+  "native_goal_status": "complete",
+  "native_time_used_seconds": 672,
+  "native_reported_tokens_used": 215520,
+  "billable_usage": "UNKNOWN",
+  "review_deadline_utc": "2026-10-10T05:17:30Z",
+  "finished_at_utc": "2026-10-10T04:44:02.389856+00:00",
+  "original_source_freeze_unchanged": true,
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/A3-01/control-v1/assessment.md",
+      "bytes": 49181,
+      "sha256": "278abc1312013516f5a8b11953acaf1d9d78aa12b19a047772445c12c3753815",
+      "saved_mtime_ns": 1791607359988571900,
+      "saved_before_actual_goal_completion": true
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A3-01/control-v1/assessment.json",
+      "bytes": 132740,
+      "sha256": "ad89862f132b364bea142acc9a2c873fe45eb411e4439f266a5ea6b726f9eaf7",
+      "saved_mtime_ns": 1791607359986396169,
+      "saved_before_actual_goal_completion": true
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A3-01/control-v1/source-map.json",
+      "bytes": 54140,
+      "sha256": "c71e86c760ed6f0e0e8e12a57b823bbc07b862b448a8c700d9e910ea7f3de198",
+      "saved_mtime_ns": 1791607359986997235,
+      "saved_before_actual_goal_completion": true
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A3-01/control-v1/evidence/index.md",
+      "bytes": 21265,
+      "sha256": "d702dfbe9fadffe30d4f0e3d15cd1631501ce2500adbdba4dd90d89ccd778267",
+      "saved_mtime_ns": 1791607359989152299,
+      "saved_before_actual_goal_completion": true
+    }
+  ],
+  "native_terminal_receipt": "evidence/reviewer-native-goal-terminal.json",
+  "own_mail_waiter_stopped": true
+}

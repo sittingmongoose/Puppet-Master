@@ -1,0 +1,657 @@
+{
+  "schema": "er12-independent-role-assessment-v1",
+  "assessment_id": "B-DISC-G-01/control-v1",
+  "case_id": "ER12-B-DISC-G-01-FRESH",
+  "arm": "control",
+  "role": "Brief-only discovery (DISC)",
+  "rubric": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+  "reviewer_identity": "codex-er12-bdisc-control-review-045612",
+  "source_judgment": "FAIL",
+  "judgments": {
+    "delivery": {
+      "status": "DELIVERED",
+      "artifact": "discovery.md",
+      "word_count_whitespace": 981,
+      "required_range": [
+        700,
+        1000
+      ],
+      "source_map_present": true,
+      "all_source_members_read": [
+        "sources/evidence.md"
+      ],
+      "corpus": "NONE; input-map corpus is null",
+      "terminal_freeze": {
+        "checked_utc": "2026-10-10T05:04:39.541613+00:00",
+        "searched_root": "ER12_RUNTIME/runs/B-DISC-G-01/control",
+        "terminal_freeze_paths": [],
+        "status": "UNKNOWN_NOT_FOUND",
+        "meaning": "Only the pre-dispatch input freeze was found. Root completion/no pending is a user-provided premise; no other outcome/status/history labels were read."
+      }
+    },
+    "source": {
+      "judgment": "FAIL",
+      "reason": "F1 is a material omission in explicitly assigned undo semantics; the main published capability claims are independently supported.",
+      "factual_claims_diagnostic": "PASS_WITH_LIMITATIONS",
+      "material_finding_ids": [
+        "F1"
+      ],
+      "minor_limitation_ids": [
+        "L1",
+        "L2",
+        "L3"
+      ]
+    },
+    "coverage": {
+      "status": "PARTIAL_MATERIAL_OMISSION",
+      "axes": [
+        {
+          "id": "original_obligations",
+          "status": "PARTIAL_MATERIAL_OMISSION",
+          "detail": "Exact subject is one plain-text note, two offline users and an intermittently available relay. Negative scope constraints and all output forms are respected; undo semantic discovery has F1."
+        },
+        {
+          "id": "mechanism_diversity_and_useful_alternatives",
+          "status": "PASS",
+          "detail": "OT, sequence CRDT, base-relative file merge, and explicit revision adoption are meaningfully different automatic/manual convergence approaches. Automerge/Yjs are two implementations inside the CRDT family, not double-counted mechanisms. Revision adoption is correctly conditional on a later accepted revision; no automatic guarantee is invented."
+        },
+        {
+          "id": "consequential_source_conditions",
+          "status": "PASS_WITH_LIMITATIONS",
+          "detail": "P1-P7 support the main capability claims. Defaults, sequence versus scalar operations, retention versus compression, binary-update-only cleanup, common base, line domain, registration and unpinned versions are handled with bounded inference. L1-L3 are minor; F1 is tracked independently as a material omission."
+        },
+        {
+          "id": "retained_history_costs",
+          "status": "PASS",
+          "detail": "History/metadata retention, branch storage growth, base retention, deletion cleanup and a 20 KB edit-churn/stale-client measurement are addressed. No numeric storage guarantee is claimed. A 20 KB current note is not treated as a 20 KB history bound."
+        },
+        {
+          "id": "undo_semantics",
+          "status": "FAIL",
+          "finding_ids": [
+            "F1"
+          ],
+          "detail": "Only unknowns, application-defined behavior and a prospective policy question are given; no bounded implementation undo mechanism is discovered."
+        },
+        {
+          "id": "implementation_leads",
+          "status": "PASS",
+          "detail": "Automerge and Yjs are inspectable leads with official API examples and actionable splice/update/state-vector entry points. The assignment asks for leads, not executed or audited source implementations. No exact library release or implementation validation is established."
+        },
+        {
+          "id": "historical_version_lead",
+          "status": "PASS",
+          "detail": "Git manual history and RCS ancestry are verified in P7; repeated-line/same-line evaluation is prospective, and no deployed binary version is fabricated."
+        },
+        {
+          "id": "discriminating_questions_and_checks",
+          "status": "PASS_WITH_LIMITATIONS",
+          "detail": "Three traces distinguish merge order/insert-delete intent, undo isolation, and retained bytes/stale recovery. Undo trace lacks origin/grouping semantics because of F1. Prospective outputs and user-dependent policy are identified rather than asserted as observed oracle results."
+        },
+        {
+          "id": "proposed_versus_executed_validation",
+          "status": "PASS",
+          "detail": "The candidate says no implementation/package/local probe was run. Its evidence is documentation retrieval; its three traces are proposed. No requirement for runtime execution exists in this discovery assignment."
+        },
+        {
+          "id": "product_choices_and_supported_scope",
+          "status": "PASS",
+          "detail": "Automatic preservation versus human conflict review remains a product decision. No universal winner, whole-product specification, rich-text requirement, networking architecture, permissions or UI design is introduced. Main supported discoveries are preserved despite F1."
+        },
+        {
+          "id": "wrong_corrections_exact_plan_dispositions",
+          "status": "NOT_APPLICABLE",
+          "detail": "Brief-only discovery has no supplied plan, enumerated applicability claims or critique/finalization dispositions."
+        },
+        {
+          "id": "pipeline_preservation_appl_final",
+          "status": "NOT_ASSIGNED_UNGRADED",
+          "detail": "No applicability/finalization or full pipeline is graded. Absence of verification.md/final-section.md is not a missing required final for DISC."
+        }
+      ],
+      "full_pipeline_qualification": false
+    },
+    "native": {
+      "status": "UNKNOWN",
+      "activation_evidence": "A saved JSON receipt reports an active goal created at epoch 1791607571 (2026-10-10T04:46:11Z). Its objective is observable and mismatches the required verbatim objective.",
+      "activation_receipt": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/goal-activation-receipt.json",
+      "actual_tool_identity": "UNKNOWN; not exposed by the saved receipt",
+      "completion_receipt": "UNKNOWN; none found in permitted own-arm artifacts",
+      "effective_provider": "UNKNOWN",
+      "effective_model": "UNKNOWN",
+      "effective_reasoning_effort": "UNKNOWN",
+      "effective_service_tier": "UNKNOWN",
+      "requested_route": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "options": {
+          "reasoningEffort": "max",
+          "serviceTier": "default"
+        }
+      },
+      "billing_tokens": "UNKNOWN",
+      "billed_cost": "UNKNOWN",
+      "requested_is_not_effective": true
+    },
+    "protocol": {
+      "status": "INVALID_METHOD",
+      "supported_deviation": "Required verbatim native Goal objective differs from the saved activation receipt. This is an exact assignment violation separate from semantic judgment.",
+      "required_objective": "ER12 B-DISC-G-01/control: execute ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/assignment.md; save the complete bounded role output and source map before completing this actual native Goal.",
+      "observed_objective": "Execute exactly ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/assignment.md and input-map.json, following the user's constraints.",
+      "scope": "Objective mismatch established. Activation-before-common-input order and exactly-one-goal execution are not independently attested by a permitted tool trace; candidate declaration is not upgraded to proof. No unauthorized assistance finding is made.",
+      "assistance_diagnostic": "UNKNOWN; none evidenced in the inspected packet",
+      "semantic_diagnostic_unchanged_by_protocol": true
+    },
+    "time": {
+      "status": "PARTIALLY_OBSERVED",
+      "candidate_absolute_deadline_utc": "2026-10-10T05:00:54.708000+00:00",
+      "writing_reserve_start_utc": "2026-10-10T04:55:54.708000+00:00",
+      "last_science_artifact_mtime_utc": "2026-10-10T04:53:45.786946+00:00",
+      "candidate_source_retrieval_window": "2026-10-10T04:50:41Z–04:51:39Z; candidate-reported, not independent browser trace",
+      "deadline_observation": "Inspected scientific file mtimes precede the deadline; this is file metadata, not exact delivery/completion/occupancy telemetry.",
+      "candidate_total_occupancy_s": "UNKNOWN",
+      "investigation_elapsed_s": "UNKNOWN",
+      "writing_reserve_compliance": "UNKNOWN; no full execution timeline inspected",
+      "billing_or_inference_savings": "UNKNOWN; none inferred",
+      "paired_latency_or_other_arm_comparison": "NOT_ASSESSED",
+      "review_start_utc": "2026-10-10T04:56:12Z",
+      "review_saved_utc": "2026-10-10T05:04:39.541613+00:00",
+      "review_deadline_utc": "2026-10-10T05:21:12Z"
+    }
+  },
+  "axis_coverage": [
+    {
+      "id": "original_obligations",
+      "status": "PARTIAL_MATERIAL_OMISSION",
+      "detail": "Exact subject is one plain-text note, two offline users and an intermittently available relay. Negative scope constraints and all output forms are respected; undo semantic discovery has F1."
+    },
+    {
+      "id": "mechanism_diversity_and_useful_alternatives",
+      "status": "PASS",
+      "detail": "OT, sequence CRDT, base-relative file merge, and explicit revision adoption are meaningfully different automatic/manual convergence approaches. Automerge/Yjs are two implementations inside the CRDT family, not double-counted mechanisms. Revision adoption is correctly conditional on a later accepted revision; no automatic guarantee is invented."
+    },
+    {
+      "id": "consequential_source_conditions",
+      "status": "PASS_WITH_LIMITATIONS",
+      "detail": "P1-P7 support the main capability claims. Defaults, sequence versus scalar operations, retention versus compression, binary-update-only cleanup, common base, line domain, registration and unpinned versions are handled with bounded inference. L1-L3 are minor; F1 is tracked independently as a material omission."
+    },
+    {
+      "id": "retained_history_costs",
+      "status": "PASS",
+      "detail": "History/metadata retention, branch storage growth, base retention, deletion cleanup and a 20 KB edit-churn/stale-client measurement are addressed. No numeric storage guarantee is claimed. A 20 KB current note is not treated as a 20 KB history bound."
+    },
+    {
+      "id": "undo_semantics",
+      "status": "FAIL",
+      "finding_ids": [
+        "F1"
+      ],
+      "detail": "Only unknowns, application-defined behavior and a prospective policy question are given; no bounded implementation undo mechanism is discovered."
+    },
+    {
+      "id": "implementation_leads",
+      "status": "PASS",
+      "detail": "Automerge and Yjs are inspectable leads with official API examples and actionable splice/update/state-vector entry points. The assignment asks for leads, not executed or audited source implementations. No exact library release or implementation validation is established."
+    },
+    {
+      "id": "historical_version_lead",
+      "status": "PASS",
+      "detail": "Git manual history and RCS ancestry are verified in P7; repeated-line/same-line evaluation is prospective, and no deployed binary version is fabricated."
+    },
+    {
+      "id": "discriminating_questions_and_checks",
+      "status": "PASS_WITH_LIMITATIONS",
+      "detail": "Three traces distinguish merge order/insert-delete intent, undo isolation, and retained bytes/stale recovery. Undo trace lacks origin/grouping semantics because of F1. Prospective outputs and user-dependent policy are identified rather than asserted as observed oracle results."
+    },
+    {
+      "id": "proposed_versus_executed_validation",
+      "status": "PASS",
+      "detail": "The candidate says no implementation/package/local probe was run. Its evidence is documentation retrieval; its three traces are proposed. No requirement for runtime execution exists in this discovery assignment."
+    },
+    {
+      "id": "product_choices_and_supported_scope",
+      "status": "PASS",
+      "detail": "Automatic preservation versus human conflict review remains a product decision. No universal winner, whole-product specification, rich-text requirement, networking architecture, permissions or UI design is introduced. Main supported discoveries are preserved despite F1."
+    },
+    {
+      "id": "wrong_corrections_exact_plan_dispositions",
+      "status": "NOT_APPLICABLE",
+      "detail": "Brief-only discovery has no supplied plan, enumerated applicability claims or critique/finalization dispositions."
+    },
+    {
+      "id": "pipeline_preservation_appl_final",
+      "status": "NOT_ASSIGNED_UNGRADED",
+      "detail": "No applicability/finalization or full pipeline is graded. Absence of verification.md/final-section.md is not a missing required final for DISC."
+    }
+  ],
+  "material_findings": [
+    {
+      "id": "F1",
+      "severity": "MATERIAL_OMISSION",
+      "axis": "Bounded discovery / undo semantics",
+      "title": "Undo is deferred without discovering a sourced undo mechanism for any shortlisted option.",
+      "obligation": {
+        "path": "ER12_RUNTIME/runs/B-DISC-G-01/inputs/assignment.md",
+        "lines": [
+          11,
+          13,
+          16
+        ],
+        "exact_text": "Concurrent insertions, deletions and undo must be explainable.",
+        "bounded_aspect": "including retained-history costs and undo semantics"
+      },
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/discovery.md",
+          "lines": [
+            7,
+            17,
+            18,
+            19,
+            22,
+            29,
+            32
+          ],
+          "exact_text": [
+            "Neither retrieved source establishes the desired undo behavior for this product.",
+            "undo unspecified",
+            "undo unspecified here",
+            "undo is application-defined",
+            "Inspect the implementation and undo API before assuming its cross-device undo semantics."
+          ]
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/source-map.json",
+          "lines": [
+            96,
+            98,
+            100
+          ],
+          "exact_text": "empty page body; no source claim used"
+        }
+      ],
+      "primary_evidence": [
+        {
+          "source_id": "P8",
+          "url": "https://docs.yjs.dev/api/undo-manager.md",
+          "section": "Y.UndoManager constructor; Stop Capturing; Specify tracked origins",
+          "local_locator": "primary/P8-evidence.html#L16",
+          "numbered_text_lines": "3-24,31-47"
+        }
+      ],
+      "supported_finding": "The entire shortlist leaves undo as unspecified, application-defined, or future investigation. Its one concrete undo trace is a product-policy question, not a discovery of how an implementation can selectively reverse tracked operations. The primary Yjs API documents a scoped selective inverse-operation stack, origin tracking, and edit-grouping controls. These capabilities bear directly on the proposed one-undo-after-sync trace and differ from restoring an earlier whole-note snapshot.",
+      "materiality": "Undo is expressly inside the assigned bounded aspect. Leaving every implementation capability unknown deprives the mechanism comparison and prospective undo test of the distinction between selecting whose operations to reverse and reverting shared state. This is missing role discovery, not a requirement to choose the desired product policy, prove all cross-device behavior, deploy software, or execute a test.",
+      "qualification": "The candidate honestly documents the failed retrieval and does not falsely claim Yjs lacks undo. The failure is acknowledged; nevertheless, uncertainty about the desired product policy does not cover the omitted discoverable capability. The independently retrieved official Markdown rendition supplies bounded primary evidence. No particular API or exhaustive undo survey is mandated; this API establishes why the absent semantic distinction matters.",
+      "disposition": "Retain supported mechanism discoveries; the role source judgment fails for this material coverage omission. No candidate changes or feedback supplied."
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L1",
+      "kind": "MINOR_LOCATOR",
+      "candidate_locator": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/discovery.md:7",
+      "detail": "The CRDT paragraph makes Yjs update/garbage-collection claims but its trailing citations list S1-S3. S4 elsewhere in the saved map supports them.",
+      "primary_ids": [
+        "P4"
+      ]
+    },
+    {
+      "id": "L2",
+      "kind": "MINOR_SOURCE_ATTRIBUTION",
+      "candidate_locator": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/discovery.md:11",
+      "detail": "Git retaining base and both sides of an unresolved repository merge is true, but S7 is the standalone merge-file manual. Independent P9 TRUE MERGE gives the precise repository-index precedent. The candidate explicitly treats this as a precedent rather than a ready-made workflow.",
+      "primary_ids": [
+        "P7",
+        "P9"
+      ]
+    },
+    {
+      "id": "L3",
+      "kind": "BOUNDED_WORDING",
+      "candidate_locator": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/discovery.md:19",
+      "detail": "Automatic only for non-overlapping is a coarse boundary: identical changes by both sides may be resolved cleanly. The prose and next step do not make a consequential rejection or promise based on that simplification.",
+      "primary_ids": [
+        "P9"
+      ]
+    }
+  ],
+  "unknowns": [
+    "Exact deployed Automerge/Yjs/ShareDB/Git versions and target language are unchosen.",
+    "Runtime convergence, deletion retention, undo after restart, and stale-replica behavior are unexecuted.",
+    "Meaning of preserve every edit, desired undo policy, recovery window and retained-byte ceiling require product input.",
+    "Candidate native completion, actual effective route/tier and billing are not established by inspected evidence.",
+    "No terminal science freeze was found under the assigned own-arm root; hashes define the reviewed snapshot, not host terminal provenance.",
+    "Candidate complete execution timeline and assistance history were intentionally not read."
+  ],
+  "useful_discoveries": [
+    {
+      "id": "D1",
+      "credit": "candidate",
+      "detail": "Automerge operation granularity matters: infrequent whole-string diff conversion can merge poorly, making per-keystroke versus splice an actionable adapter check.",
+      "source_ids": [
+        "P1"
+      ]
+    },
+    {
+      "id": "D2",
+      "credit": "candidate",
+      "detail": "Yjs compressed update merging and deletion garbage collection are different operations; measure loaded-document cleanup rather than assuming mergeUpdates shrinks away deleted content.",
+      "source_ids": [
+        "P4"
+      ]
+    },
+    {
+      "id": "D3",
+      "credit": "candidate",
+      "detail": "ShareDB is operation machinery plus an OT type, so offline support alone does not establish the note-text transform or undo contract.",
+      "source_ids": [
+        "P5",
+        "P6"
+      ]
+    },
+    {
+      "id": "D4",
+      "credit": "candidate",
+      "detail": "RCS-style line merging and explicit retained revision adoption preserve meaningful human-resolution alternatives to automatic operation merge.",
+      "source_ids": [
+        "P3",
+        "P7",
+        "P9"
+      ]
+    },
+    {
+      "id": "D5",
+      "credit": "reviewer_only_not_candidate_credit",
+      "detail": "Yjs supplies origin-scoped selective undo and 500 ms capture grouping, so one undo need not mean one keystroke; source capability and desired product policy are separate.",
+      "source_ids": [
+        "P8"
+      ]
+    },
+    {
+      "id": "D6",
+      "credit": "reviewer_only_not_candidate_credit",
+      "detail": "Git endpoint/base merging does not replay individual edits: an edit later reverted on one branch may reappear on merging another branch. This reinforces the need to distinguish history inspection from operation-aware undo.",
+      "source_ids": [
+        "P9"
+      ]
+    }
+  ],
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_utc": "2026-10-10T03:56:48.938287+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/input-map.json",
+      "bytes": 573,
+      "sha256": "feb5bafd0af6ab1d980c65a79eb872341d59cc0658360d98ba2b78fd145a2449",
+      "mtime_utc": "2026-10-10T04:45:55.270600+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/assignment.md",
+      "bytes": 2375,
+      "sha256": "0eecdb0431d80d9fb596bc8cdfba78ada961b86daef2b057268526a98b10c41a",
+      "mtime_utc": "2026-10-10T04:45:55.037622+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/freeze.json",
+      "bytes": 2276,
+      "sha256": "6d387c53ecd5b5d9a5f789f3968c1748a742d7dc3b516ddc520f0329f37f2337",
+      "mtime_utc": "2026-10-10T04:45:55.271175+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/inputs/assignment.md",
+      "bytes": 2583,
+      "sha256": "848cd2e8b9ef3078e2333ae05a62a8e04662b2b1628f5c9b3b34b1c6c896a83b",
+      "mtime_utc": "2026-10-10T04:45:55.036655+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/inputs/fixture.json",
+      "bytes": 1583,
+      "sha256": "d9e63ea84e74f37b9e33e8087dcbff1359fed87ebb3401c22435573ec9598d4f",
+      "mtime_utc": "2026-10-10T04:45:55.036784+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/inputs/manifest.json",
+      "bytes": 241,
+      "sha256": "7d9b298c18a2e876f1d41d4f4f94ce92c43f48db8ae8d95f622b91be30035d0c",
+      "mtime_utc": "2026-10-10T04:45:55.036945+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/discovery.md",
+      "bytes": 6862,
+      "sha256": "953c7898fd84f292053f4ae63193d4209ede7b98d58329c334723ffc89679956",
+      "mtime_utc": "2026-10-10T04:53:45.786946+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/source-map.json",
+      "bytes": 7096,
+      "sha256": "fa04c62ad27adee545851d3aa613db2690ff44bd8d1f18c6a4a94c2a8f8b0a97",
+      "mtime_utc": "2026-10-10T04:53:05.661022+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/sources/evidence.md",
+      "bytes": 4969,
+      "sha256": "7174645e3fe876669c8ec478d5b58a07bea4044ce81274409c3c1d48c5b091e0",
+      "mtime_utc": "2026-10-10T04:53:05.654022+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/goal-activation-receipt.json",
+      "bytes": 399,
+      "sha256": "26a6b7db799d4313a31cbad9d4422bb3637605d9f32cad529d5d24a7a1f6fcbc",
+      "mtime_utc": "2026-10-10T04:49:50.300750+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/protocol-deviation.md",
+      "bytes": 735,
+      "sha256": "d0313d12ae3a02faec3d5f5d8ef3eeeed2806a38db9c7fa5ad81f6e80b45b29f",
+      "mtime_utc": "2026-10-10T04:53:05.668022+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/service-tier-change.json",
+      "bytes": 479,
+      "sha256": "9339d26821341415234084351a2b4e9348d06dadaeae24d4a05611b42f6914b4",
+      "mtime_utc": "2026-10-10T04:45:55.271339+00:00",
+      "read_scope": "FULL"
+    }
+  ],
+  "primary_urls_versions": [
+    {
+      "id": "P1",
+      "url": "https://automerge.org/docs/reference/documents/text/",
+      "version": "UNKNOWN; current unversioned primary documentation, no deployed binary/version checked",
+      "locator": {
+        "section": "Text; Using updateText when you cannot use splice",
+        "numbered_text_lines": "58-77,98",
+        "navigable_path": "primary/P1-evidence.html#L58"
+      }
+    },
+    {
+      "id": "P2",
+      "url": "https://automerge.org/docs/reference/documents/conflicts/",
+      "version": "UNKNOWN; current unversioned primary documentation, no deployed binary/version checked",
+      "locator": {
+        "section": "What is a Conflict?",
+        "numbered_text_lines": "63-69,82-98",
+        "navigable_path": "primary/P2-evidence.html#L63"
+      }
+    },
+    {
+      "id": "P3",
+      "url": "https://automerge.org/docs/reference/concepts/",
+      "version": "UNKNOWN; current unversioned primary documentation, no deployed binary/version checked",
+      "locator": {
+        "section": "Intro; Documents; Repositories; Storage Format",
+        "numbered_text_lines": "58-68,77-80",
+        "navigable_path": "primary/P3-evidence.html#L58"
+      }
+    },
+    {
+      "id": "P4",
+      "url": "https://docs.yjs.dev/api/document-updates.md",
+      "version": "UNKNOWN; current unversioned primary documentation, no deployed binary/version checked",
+      "locator": {
+        "section": "Document Updates; Update API; Alternative Update API; Syncing clients",
+        "numbered_text_lines": "4-24,58-76",
+        "navigable_path": "primary/P4-evidence.html#L4"
+      }
+    },
+    {
+      "id": "P5",
+      "url": "https://share.github.io/sharedb/",
+      "version": "UNKNOWN; current unversioned primary documentation, no deployed binary/version checked",
+      "locator": {
+        "section": "Introduction; Features",
+        "numbered_text_lines": "34-48",
+        "navigable_path": "primary/P5-evidence.html#L34"
+      }
+    },
+    {
+      "id": "P6",
+      "url": "https://share.github.io/sharedb/types/",
+      "version": "UNKNOWN; current unversioned primary documentation, no deployed binary/version checked",
+      "locator": {
+        "section": "OT Types; Registering types; Using types",
+        "numbered_text_lines": "38-57",
+        "navigable_path": "primary/P6-evidence.html#L38"
+      }
+    },
+    {
+      "id": "P7",
+      "url": "https://git-scm.com/docs/git-merge-file",
+      "version": "Manual last updated in 2.54.0; selector 2.55.0-2.56.0 no changes; no deployed/local version observed.",
+      "locator": {
+        "section": "Manual version selector; DESCRIPTION; OPTIONS",
+        "numbered_text_lines": "147-166,176-205,225-241",
+        "navigable_path": "primary/P7-evidence.html#L147"
+      }
+    },
+    {
+      "id": "P8",
+      "url": "https://docs.yjs.dev/api/undo-manager.md",
+      "version": "UNKNOWN; current unversioned primary documentation, no deployed binary/version checked",
+      "locator": {
+        "section": "Y.UndoManager; constructor; Stop Capturing; Specify tracked origins",
+        "numbered_text_lines": "3-24,31-47",
+        "navigable_path": "primary/P8-evidence.html#L3"
+      }
+    },
+    {
+      "id": "P9",
+      "url": "https://git-scm.com/docs/git-merge",
+      "version": "Manual last updated in 2.54.0; selector 2.55.0-2.56.0 no changes; no deployed/local version observed.",
+      "locator": {
+        "section": "TRUE MERGE; HOW CONFLICTS ARE PRESENTED; MERGE STRATEGIES",
+        "numbered_text_lines": "553-580,617-662,824-830",
+        "navigable_path": "primary/P9-evidence.html#L553"
+      }
+    }
+  ],
+  "science_input_stability": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "initial_sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "final_sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/input-map.json",
+      "initial_sha256": "feb5bafd0af6ab1d980c65a79eb872341d59cc0658360d98ba2b78fd145a2449",
+      "final_sha256": "feb5bafd0af6ab1d980c65a79eb872341d59cc0658360d98ba2b78fd145a2449",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/assignment.md",
+      "initial_sha256": "0eecdb0431d80d9fb596bc8cdfba78ada961b86daef2b057268526a98b10c41a",
+      "final_sha256": "0eecdb0431d80d9fb596bc8cdfba78ada961b86daef2b057268526a98b10c41a",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/freeze.json",
+      "initial_sha256": "6d387c53ecd5b5d9a5f789f3968c1748a742d7dc3b516ddc520f0329f37f2337",
+      "final_sha256": "6d387c53ecd5b5d9a5f789f3968c1748a742d7dc3b516ddc520f0329f37f2337",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/inputs/assignment.md",
+      "initial_sha256": "848cd2e8b9ef3078e2333ae05a62a8e04662b2b1628f5c9b3b34b1c6c896a83b",
+      "final_sha256": "848cd2e8b9ef3078e2333ae05a62a8e04662b2b1628f5c9b3b34b1c6c896a83b",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/inputs/fixture.json",
+      "initial_sha256": "d9e63ea84e74f37b9e33e8087dcbff1359fed87ebb3401c22435573ec9598d4f",
+      "final_sha256": "d9e63ea84e74f37b9e33e8087dcbff1359fed87ebb3401c22435573ec9598d4f",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/inputs/manifest.json",
+      "initial_sha256": "7d9b298c18a2e876f1d41d4f4f94ce92c43f48db8ae8d95f622b91be30035d0c",
+      "final_sha256": "7d9b298c18a2e876f1d41d4f4f94ce92c43f48db8ae8d95f622b91be30035d0c",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/discovery.md",
+      "initial_sha256": "953c7898fd84f292053f4ae63193d4209ede7b98d58329c334723ffc89679956",
+      "final_sha256": "953c7898fd84f292053f4ae63193d4209ede7b98d58329c334723ffc89679956",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/source-map.json",
+      "initial_sha256": "fa04c62ad27adee545851d3aa613db2690ff44bd8d1f18c6a4a94c2a8f8b0a97",
+      "final_sha256": "fa04c62ad27adee545851d3aa613db2690ff44bd8d1f18c6a4a94c2a8f8b0a97",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/sources/evidence.md",
+      "initial_sha256": "7174645e3fe876669c8ec478d5b58a07bea4044ce81274409c3c1d48c5b091e0",
+      "final_sha256": "7174645e3fe876669c8ec478d5b58a07bea4044ce81274409c3c1d48c5b091e0",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/goal-activation-receipt.json",
+      "initial_sha256": "26a6b7db799d4313a31cbad9d4422bb3637605d9f32cad529d5d24a7a1f6fcbc",
+      "final_sha256": "26a6b7db799d4313a31cbad9d4422bb3637605d9f32cad529d5d24a7a1f6fcbc",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/protocol-deviation.md",
+      "initial_sha256": "d0313d12ae3a02faec3d5f5d8ef3eeeed2806a38db9c7fa5ad81f6e80b45b29f",
+      "final_sha256": "d0313d12ae3a02faec3d5f5d8ef3eeeed2806a38db9c7fa5ad81f6e80b45b29f",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/service-tier-change.json",
+      "initial_sha256": "9339d26821341415234084351a2b4e9348d06dadaeae24d4a05611b42f6914b4",
+      "final_sha256": "9339d26821341415234084351a2b4e9348d06dadaeae24d4a05611b42f6914b4",
+      "unchanged": true
+    }
+  ],
+  "review_method": {
+    "independent": true,
+    "no_delegation": true,
+    "no_candidate_feedback_or_repair": true,
+    "no_other_arms_or_history": true,
+    "no_accounts_git_publication_or_canon": true,
+    "no_er11_rescore": true,
+    "root_task_completion": "User explicitly supplied completed/no pending premise; no orchestration status reads.",
+    "native_goal": "One actual reviewer Goal created before shared substantive input; current observation saved in reviewer-native-goal-observation.json; judgment saved before terminal completion."
+  },
+  "saved_utc": "2026-10-10T05:04:39.541613+00:00",
+  "source_map": "source-map.json",
+  "evidence_index": "primary/index.md"
+}

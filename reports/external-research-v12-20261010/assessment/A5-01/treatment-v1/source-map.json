@@ -1,0 +1,676 @@
+{
+  "schema_version": "ER12-independent-source-map-v1",
+  "slot": "A5-01",
+  "arm": "treatment",
+  "reviewer_identity": "codex-er12-a5-treat-review-1010",
+  "created_at_utc": "2026-10-10T05:00:42.004014+00:00",
+  "scope": "Independent governing primary evidence for this assigned treatment; source records do not silently rebind candidate IDs.",
+  "sources": [
+    {
+      "source_id": "IND-FADGI",
+      "url": "https://www.digitizationguidelines.gov/audio-visual/documents/BWF_Embed_Guideline_v3_2021.pdf",
+      "resolved_url": "https://www.digitizationguidelines.gov/audio-visual/documents/BWF_Embed_Guideline_v3_2021.pdf",
+      "retrieved_at_utc": "2026-10-10T04:48:10.789784+00:00",
+      "http_status": 200,
+      "content_type": "application/pdf",
+      "bytes": 535236,
+      "sha256": "8072afec5ab3bfbfdf47b9625a8a983d622cb0012d744946eda0e7695e07e5bd",
+      "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/fadgi.pdf",
+      "text_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/fadgi.txt",
+      "retrieval": "reviewer independent urllib public GET; governing evidence, not candidate operation",
+      "candidate_source_id_checked": "FADGI",
+      "version_or_commit": "Version 3, approved 2021-04-26",
+      "locator": "Printed pp. 6–9, 12, 22–26; Parts I and III",
+      "governing_meaning": "The BWF guidance distinguishes recommendation levels. BEXT Description and OriginatorReference have 256/32 ASCII-character limits; identifiers may point outward, with a pathname-security caution. FADGI interprets origination date/time locally, without unambiguous UTC. The ltxt recommendation permits tran and recommends ASCII free text linked to cue ranges, with termination/padding conditions. Its optional Code Page entry has an ISO 8859/1 fallback when CSET is absent or zero. Thus the ASCII recommendation is not proof of an ASCII-only implementation for every ltxt tool. These are embedding conditions, not a recorder-wide compatibility result.",
+      "applicability": "Supports the bounded BWF profile and timed-transcript lead. The final’s short-segment choice is a pilot recommendation, not a normative length cap.",
+      "inspection": "independently retrieved; governing passages and surrounding conditions inspected; not executed product behavior"
+    },
+    {
+      "source_id": "IND-FADGI-INDEX",
+      "url": "https://www.digitizationguidelines.gov/guidelines/digitize-embedding.html",
+      "resolved_url": "https://www.digitizationguidelines.gov/guidelines/digitize-embedding.html",
+      "retrieved_at_utc": "2026-10-10T04:48:10Z to 04:48:12Z",
+      "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/fadgi-index.html",
+      "text_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/fadgi-index.txt",
+      "bytes": 14886,
+      "sha256": "3aecbcf89b6f9356e48f6a4296f4f187c5c4f24bbf9250bb2eb05daf12138b6b",
+      "retrieval": "reviewer independent urllib GET; original capture retained; standard-library HTMLParser after unavailable bs4; web open corroborates 200 document",
+      "candidate_source_id_checked": "FADGI-INDEX",
+      "version_or_commit": "Live index, last updated 2025-02-26; v3 current",
+      "locator": "Guidelines: Current Version; Reusing ADTL; BWF MetaEdit: About the tool; independent text lines 18–59",
+      "governing_meaning": "The index identifies BWF scope and v3, synergy with organizational databases, cue/adtl support starting with MetaEdit v21.07, and an experimental AudiAnnotate/IIIF reuse lead. It explicitly lists command-line and GUI choices across Windows, Mac and Linux. This supports the investigator’s interface fact at an alternative primary locator; the narrower METAEDIT page does not itself say GUI/CLI.",
+      "applicability": "Useful discovery and criticism-disposition evidence. The IIIF opportunity is a breadth lead, not a newly imposed deliverable.",
+      "inspection": "independently retrieved; governing passages and surrounding conditions inspected; not executed product behavior"
+    },
+    {
+      "source_id": "IND-EBU",
+      "url": "https://tech.ebu.ch/docs/tech/tech3285.pdf",
+      "resolved_url": "https://tech.ebu.ch/docs/tech/tech3285.pdf",
+      "retrieved_at_utc": "2026-10-10T04:48:12.297275+00:00",
+      "http_status": 200,
+      "content_type": "application/pdf",
+      "bytes": 243500,
+      "sha256": "60f59140c7dfa4c4b26a9c05914da98a69b47c07d24f07fb02ac2c4b11a7321c",
+      "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/ebu.pdf",
+      "text_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/ebu.txt",
+      "retrieval": "reviewer independent urllib public GET; governing evidence, not candidate operation",
+      "candidate_source_id_checked": "EBU",
+      "version_or_commit": "EBU Tech 3285 Version 2.0, May 2011",
+      "locator": "Printed pp. 7–10; §1.1, §2.1, §2.3; Appendix A1 p. 15",
+      "governing_meaning": "BWF extends RIFF/WAVE using bext. Older readers ignore later UMID/loudness fields; early devices may not recognize later chunks. For unspecified private chunks, interpretation/use is not required and integrity is not guaranteed, but conforming BWF applications must pass them. Appendix A1 tells generic WAVE programs to expect and ignore unknown chunks. BEXT string limits apply to named fields, not every possible WAV comment. None of this proves arbitrary editor write behavior.",
+      "applicability": "Confirms CR-2’s clarification and the final’s original/copy separation. The draft’s reader shorthand did not explicitly claim all unknown chunks are dropped.",
+      "inspection": "independently retrieved; governing passages and surrounding conditions inspected; not executed product behavior"
+    },
+    {
+      "source_id": "IND-METAEDIT",
+      "url": "https://mediaarea.net/BWFMetaEdit",
+      "resolved_url": "https://mediaarea.net/BWFMetaEdit",
+      "retrieved_at_utc": "2026-10-10T04:48:10Z to 04:48:12Z",
+      "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/metaedit.html",
+      "text_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/metaedit.txt",
+      "bytes": 20610,
+      "sha256": "7ec25815af64a1a912cbfb63fffe88de3610949bb768922e6d73c4a17c52ff70",
+      "retrieval": "reviewer independent urllib GET; original capture retained; standard-library HTMLParser after unavailable bs4; web open corroborates 200 document",
+      "candidate_source_id_checked": "METAEDIT",
+      "version_or_commit": "Live project page listed 26.08.1 at independent access",
+      "locator": "Purpose, download/platform list, BWF MetaEdit features; independent text lines 37–82",
+      "governing_meaning": "Official page documents BWF metadata import/edit/embed/export, CSV/XML extraction, construction reports and MD5 of the WAVE data chunk only. It lists multi-platform downloads. It does not establish GUI/CLI through those exact terms. The version label is a listing; no local binary or volunteer file was tested.",
+      "applicability": "Supports a realistic conditional tool candidate and the distinction between audio-only and full-file fixity.",
+      "inspection": "independently retrieved; governing passages and surrounding conditions inspected; not executed product behavior"
+    },
+    {
+      "source_id": "IND-BEXT",
+      "url": "https://mediaarea.net/BWFMetaEdit/bext",
+      "resolved_url": "https://mediaarea.net/BWFMetaEdit/bext",
+      "retrieved_at_utc": "2026-10-10T04:48:10Z to 04:48:12Z",
+      "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/bext.html",
+      "text_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/bext.txt",
+      "bytes": 24655,
+      "sha256": "bb7445b6a5f57b139fc86982fcd2565f2ed1ea9734b0bda4b49e88b7b28c5f97",
+      "retrieval": "reviewer independent urllib GET; original capture retained; standard-library HTMLParser after unavailable bs4; web open corroborates 200 document",
+      "candidate_source_id_checked": "BEXT",
+      "version_or_commit": "Rolling official help; no documentation release pin",
+      "locator": "Description, OriginatorReference, OriginationDate and OriginationTime entries",
+      "governing_meaning": "Help reproduces EBU bounded ASCII definitions and FADGI identifier/pointer and local-date/time guidance. FADGI application advice can differ from the underlying EBU wording. Embedded convenience fields do not decide this society’s authority model.",
+      "applicability": "Corroborates named field applicability; no implication that all WAV tools implement these fields.",
+      "inspection": "independently retrieved; governing passages and surrounding conditions inspected; not executed product behavior"
+    },
+    {
+      "source_id": "IND-LISTINFO",
+      "url": "https://mediaarea.net/BWFMetaEdit/listinfo",
+      "resolved_url": "https://mediaarea.net/BWFMetaEdit/listinfo",
+      "retrieved_at_utc": "2026-10-10T04:48:10Z to 04:48:12Z",
+      "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/listinfo.html",
+      "text_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/listinfo.txt",
+      "bytes": 20369,
+      "sha256": "d81760b5ecdff9bc2dcf382f996bf819fd3c7b349ea4bde6a4c279219f0e80c4",
+      "retrieval": "reviewer independent urllib GET; original capture retained; standard-library HTMLParser after unavailable bs4; web open corroborates 200 document",
+      "candidate_source_id_checked": "LISTINFO",
+      "version_or_commit": "Rolling official help",
+      "locator": "ICOP and INAM FADGI application notes",
+      "governing_meaning": "The official notes warn that embedded restrictions and working titles may become outdated and recommend following identifiers for later information. INFO elements have differing guidance and optionality.",
+      "applicability": "Supports the proposed external authority policy as an inference. It does not choose the archivist’s policy.",
+      "inspection": "independently retrieved; governing passages and surrounding conditions inspected; not executed product behavior"
+    },
+    {
+      "source_id": "IND-CORE",
+      "url": "https://mediaarea.net/BWFMetaEdit/core_doc_help",
+      "resolved_url": "https://mediaarea.net/BWFMetaEdit/core_doc_help",
+      "retrieved_at_utc": "2026-10-10T04:48:10Z to 04:48:12Z",
+      "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/core.html",
+      "text_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/core.txt",
+      "bytes": 17130,
+      "sha256": "2f23ac2b3cccc3dcba8cbe1640b655b0a08c754b977c720bdf6d2ef857721f9d",
+      "retrieval": "reviewer independent urllib GET; original capture retained; standard-library HTMLParser after unavailable bs4; web open corroborates 200 document",
+      "candidate_source_id_checked": "CORE",
+      "version_or_commit": "Rolling official help",
+      "locator": "CORE Document introduction; CSV FileName/Description/OriginatorReference columns; XML format section",
+      "governing_meaning": "CORE exchanges BEXT/LIST-INFO as CSV/XML, one record per audio file, associated with full filepaths. CSV lists named bounded ASCII fields. XML uses its own document encoding. A CORE path is an exchange association, not durable collection identity. Rolling help is not proof of a specific release’s round-trip results.",
+      "applicability": "Supports the optional batch workflow; stable IDs/checksums and representative-value tests are local design choices.",
+      "inspection": "independently retrieved; governing passages and surrounding conditions inspected; not executed product behavior"
+    },
+    {
+      "source_id": "IND-XML",
+      "url": "https://mediaarea.net/BWFMetaEdit/xml_chunks",
+      "resolved_url": "https://mediaarea.net/BWFMetaEdit/xml_chunks",
+      "retrieved_at_utc": "2026-10-10T04:48:10Z to 04:48:12Z",
+      "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/xml.html",
+      "text_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/xml.txt",
+      "bytes": 13719,
+      "sha256": "53b8f707fa8ddc57c8ddbeface5fcdc9489c7cbf4933bcd0050b64ec7721b6fd",
+      "retrieval": "reviewer independent urllib GET; original capture retained; standard-library HTMLParser after unavailable bs4; web open corroborates 200 document",
+      "candidate_source_id_checked": "XML",
+      "version_or_commit": "Rolling help with no binary/version linkage",
+      "locator": "XML Chunks, Warning; independent text lines 54–55",
+      "governing_meaning": "The published warning says entered XML receives no document/instance verification and edits have no undo. This is an accurate account of that help text. Its broad absence-of-verification warning conflicts with the later release history and inspected v26.08 code. The final carries it as a tool condition without reconciling that conflict.",
+      "applicability": "M1: documentation provenance alone does not settle released operational applicability. Schema conformance and syntax warnings must be separated.",
+      "inspection": "independently retrieved; governing passages and surrounding conditions inspected; not executed product behavior"
+    },
+    {
+      "source_id": "IND-HISTORY",
+      "url": "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/master/History_GUI.txt",
+      "resolved_url": "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/master/History_GUI.txt",
+      "retrieved_at_utc": "2026-10-10T04:48:11.533000+00:00",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "bytes": 15486,
+      "sha256": "88faeb6b107187959435d46c55a36f8538995bddea23953b62cc0b9b1a762b15",
+      "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/history.txt",
+      "text_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/history.txt",
+      "retrieval": "reviewer independent urllib public GET; governing evidence, not candidate operation",
+      "candidate_source_id_checked": "HISTORY",
+      "version_or_commit": "Mutable master capture; also independently pinned to v26.08 commit 318d800d92c4a3cc8a814f6fdceba0ed8b3416ec",
+      "locator": "Version entries 0.2.2, 20.08, 21.07, 23.04 and 25.04; captured history lines 12–15, 47–50, 61–87, 99–104 and 293–301",
+      "governing_meaning": "The cited CR/escaping/full-file-write, UNICODE=1 import, code-page/CSET and CORE fallback changes are present for the named releases. They justify version/path-specific prospective checks, not present universal compatibility. The same history records XML checks in 20.08 and an invalid-XML data-entry warning in 21.07. Those relevant entries were omitted from the proposal’s XML applicability discussion. The immutable v26.08 file has the same inspected history bytes; this is supporting provenance, not semantic proof.",
+      "applicability": "Supports the bounded historical example and independently exposes the unresolved source conflict in M1.",
+      "inspection": "independently retrieved; governing passages and surrounding conditions inspected; not executed product behavior"
+    },
+    {
+      "source_id": "IND-BAGIT",
+      "url": "https://datatracker.ietf.org/doc/html/rfc8493",
+      "resolved_url": "https://datatracker.ietf.org/doc/html/rfc8493",
+      "retrieved_at_utc": "2026-10-10T04:48:10Z to 04:48:12Z",
+      "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/bagit.html",
+      "text_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/bagit.txt",
+      "bytes": 121173,
+      "sha256": "2b32dd7019a823c94344f562c684ea3dfd904dcc621f071634b5195e1ac2b65b",
+      "retrieval": "reviewer independent urllib GET; original capture retained; standard-library HTMLParser after unavailable bs4; web open corroborates 200 document",
+      "candidate_source_id_checked": "BAGIT",
+      "version_or_commit": "RFC 8493, BagIt v1.0, October 2018; Informational",
+      "locator": "§§1.3, 2.1.1–2.1.3, 2.2.1, 2.4, 3 and 5.4",
+      "governing_meaning": "Payload is opaque. Each bag needs at least one payload manifest; each manifest lists every payload file once. Tag manifests are optional, must list payload manifests, and must not list other tag manifests or payload files. bagit.txt is UTF-8 without BOM; remaining tag encoding should be UTF-8 but may differ for compatibility. A valid bag is complete with all manifest checksums verified. Tools must support SHA-256/SHA-512 and should default to SHA-512. The proposed SHA-256 choice is allowed. Fixity does not secure against active attacks.",
+      "applicability": "Confirms CR-4 and the analogous transfer mechanism. No completed bag, implementation conformance or audio semantics are established.",
+      "inspection": "independently retrieved; governing passages and surrounding conditions inspected; not executed product behavior"
+    },
+    {
+      "source_id": "IND-PREMIS",
+      "url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+      "resolved_url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+      "retrieved_at_utc": "2026-10-10T04:48:12.149311+00:00",
+      "http_status": 200,
+      "content_type": "application/pdf",
+      "bytes": 2176353,
+      "sha256": "2e3e3fe001798f3f43d26b4aed03e8737310fa044ee001af2493f7c72517b0e0",
+      "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/premis.pdf",
+      "text_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/premis.txt",
+      "retrieval": "reviewer independent urllib public GET; governing evidence, not candidate operation",
+      "candidate_source_id_checked": "PREMIS",
+      "version_or_commit": "Data Dictionary v3.0; June 2015 release, final PDF updated November 2015",
+      "locator": "Printed pp. 18–20 and semantic unit 1.13 (p. 117 onward); PDF physical pages differ from printed pages",
+      "governing_meaning": "Relationships identify related Objects and characterize structural/derivation links; events can be associated. Sibling representations do not thereby derive from one another. PREMIS is implementation independent and can be used as a conceptual model; whole-standard adoption is not required by this pilot brief.",
+      "applicability": "Supports the lineage model without claiming a generated or validated PREMIS record.",
+      "inspection": "independently retrieved; governing passages and surrounding conditions inspected; not executed product behavior"
+    },
+    {
+      "source_id": "IND-W3C",
+      "url": "https://www.w3.org/WAI/media/av/",
+      "resolved_url": "https://www.w3.org/WAI/media/av/",
+      "retrieved_at_utc": "2026-10-10T04:48:10Z to 04:48:12Z",
+      "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/w3c.html",
+      "text_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/w3c.txt",
+      "bytes": 43349,
+      "sha256": "a03d29cc27e3c9af8da3d876d6acde6ced0b1c250290773e800a15aba28d11e9",
+      "retrieval": "reviewer independent urllib GET; original capture retained; standard-library HTMLParser after unavailable bs4; web open corroborates 200 document",
+      "candidate_source_id_checked": "W3C",
+      "version_or_commit": "Live WAI guidance; not a player conformance certificate",
+      "locator": "Transcripts and Media Players; independent text lines 102–107",
+      "governing_meaning": "WAI recommends text for speech and relevant non-speech audio and a player with accessibility support. Actual needed features depend on media and users.",
+      "applicability": "Supports the optional accessible experience, while leaving product validation proposed.",
+      "inspection": "independently retrieved; governing passages and surrounding conditions inspected; not executed product behavior"
+    },
+    {
+      "source_id": "IND-W3C-PLAN",
+      "url": "https://www.w3.org/WAI/media/av/planning/",
+      "resolved_url": "https://www.w3.org/WAI/media/av/planning/",
+      "retrieved_at_utc": "2026-10-10T04:48:10Z to 04:48:12Z",
+      "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/w3c-plan.html",
+      "text_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/w3c-plan.txt",
+      "bytes": 58494,
+      "sha256": "0a9628cd43b56637c251bfd694f1d90778154eb670abe6d0d354327f5e85f06d",
+      "retrieval": "reviewer independent urllib GET; original capture retained; standard-library HTMLParser after unavailable bs4; web open corroborates 200 document",
+      "candidate_source_id_checked": "W3C-PLAN",
+      "version_or_commit": "Live WAI planning guidance; WCAG level discussion",
+      "locator": "Audio-only Checklists, Pre-Recorded Audio-only; Standards section; independent text lines 117–126, 200–226",
+      "governing_meaning": "The prerecorded audio-only checklist lists a separate transcript at Level A, distinguished from live audio and video paths. Guidance and WCAG applicability do not demonstrate that a proposed player or transcript conforms.",
+      "applicability": "Supports retention of the human-reviewed transcript/listening option, subject to owner and recipient decisions.",
+      "inspection": "independently retrieved; governing passages and surrounding conditions inspected; not executed product behavior"
+    },
+    {
+      "id": "release-26.08-riff-handler.cpp",
+      "url": "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/318d800d92c4a3cc8a814f6fdceba0ed8b3416ec/Source/Riff/Riff_Handler.cpp",
+      "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/release-26.08-riff-handler.cpp",
+      "sha256": "b610951194f7100931c14bf834f38147a75b27924848d772cc3209249dea6af4",
+      "bytes": 184884,
+      "retrieved_at_utc": "2026-10-10T04:48:56.421356+00:00",
+      "source_id": "IND-CODE-HANDLER",
+      "version_or_commit": "v26.08 at 318d800d92c4a3cc8a814f6fdceba0ed8b3416ec",
+      "navigable_url": "https://github.com/MediaArea/BWFMetaEdit/blob/318d800d92c4a3cc8a814f6fdceba0ed8b3416ec/Source/Riff/Riff_Handler.cpp",
+      "locator": "Lines 1959–1984, 2927–2932 and 3205–3211",
+      "governing_meaning": "For nonempty axml/ixml/xmp, the released handler invokes TinyXML2 parsing and records a syntax warning on failure. A warning alone does not turn IsValid false; errors do. This is static code evidence of a verification/warning path, not schema validation or guaranteed refusal to save malformed XML.",
+      "applicability": "Static public released-source evidence only; installed 26.08.1 binary behavior remains untested."
+    },
+    {
+      "id": "release-26.08-history.txt",
+      "url": "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/318d800d92c4a3cc8a814f6fdceba0ed8b3416ec/History_GUI.txt",
+      "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/release-26.08-history.txt",
+      "sha256": "88faeb6b107187959435d46c55a36f8538995bddea23953b62cc0b9b1a762b15",
+      "bytes": 15486,
+      "retrieved_at_utc": "2026-10-10T04:48:56.392005+00:00",
+      "source_id": "IND-PINNED-HISTORY",
+      "version_or_commit": "v26.08 at 318d800d92c4a3cc8a814f6fdceba0ed8b3416ec",
+      "navigable_url": "https://github.com/MediaArea/BWFMetaEdit/blob/318d800d92c4a3cc8a814f6fdceba0ed8b3416ec/History_GUI.txt",
+      "locator": "Version 20.08/21.07 entries and named encoding releases",
+      "governing_meaning": "Released v26.08 history corroborates the XML check/warning changes and versioned encoding example, independently of moving master.",
+      "applicability": "Static public released-source evidence only; installed 26.08.1 binary behavior remains untested."
+    },
+    {
+      "id": "issue-125-comments.json",
+      "url": "https://api.github.com/repos/MediaArea/BWFMetaEdit/issues/125/comments",
+      "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/issue-125-comments.json",
+      "sha256": "61b5e232e0f66ef196d96b9f1c3f8a8d2feadecd94a95c8fbd64489a79640518",
+      "bytes": 3656,
+      "retrieved_at_utc": "2026-10-10T04:48:56.433949+00:00",
+      "source_id": "IND-ISSUE-125-COMMENTS",
+      "version_or_commit": "Public repository API snapshot at recorded access",
+      "locator": "v26.08 tag mapping; issue 125 body and comments; tree paths and root SHA as applicable",
+      "governing_meaning": "Repository provenance and bounded issue context. Issue 125 requested basic XML checks rather than format-spec checks and was closed in July 2020. The tag mapping identifies the inspected released source. Tree data was used only to locate relevant source files.",
+      "applicability": "Supporting provenance/context; tag names, closure and hashes alone do not prove implementation behavior."
+    },
+    {
+      "id": "GUI_Main_xxxx_TextEditDialog.cpp",
+      "url": "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/318d800d92c4a3cc8a814f6fdceba0ed8b3416ec/Source/GUI/Qt/GUI_Main_xxxx_TextEditDialog.cpp",
+      "version": "v26.08",
+      "commit": "318d800d92c4a3cc8a814f6fdceba0ed8b3416ec",
+      "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/release-26.08-GUI_Main_xxxx_TextEditDialog.cpp",
+      "sha256": "6820925b88a89bc91e1f238985c0020893c5cce5e64df7e080e37ccc9af9a0ad",
+      "bytes": 9517,
+      "retrieved_at_utc": "2026-10-10T04:50:05.620483+00:00",
+      "source_id": "IND-CODE-GUI",
+      "version_or_commit": "v26.08 at 318d800d92c4a3cc8a814f6fdceba0ed8b3416ec",
+      "navigable_url": "https://github.com/MediaArea/BWFMetaEdit/blob/318d800d92c4a3cc8a814f6fdceba0ed8b3416ec/Source/GUI/Qt/GUI_Main_xxxx_TextEditDialog.cpp",
+      "locator": "Lines 83–88 and 112–156",
+      "governing_meaning": "The released GUI distinguishes absent format-specific validation and undo from the IsValid editing path. Text changes call IsValid and display LastWarning when no blocking error exists; acceptance can continue. This establishes relevance to entered XML, not merely file import.",
+      "applicability": "Static public released-source evidence only; installed 26.08.1 binary behavior remains untested."
+    },
+    {
+      "id": "Core.cpp",
+      "url": "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/318d800d92c4a3cc8a814f6fdceba0ed8b3416ec/Source/Common/Core.cpp",
+      "version": "v26.08",
+      "commit": "318d800d92c4a3cc8a814f6fdceba0ed8b3416ec",
+      "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/release-26.08-Core.cpp",
+      "sha256": "bf8bda2de2abc7d2f75ff4574bca24dbc733ad8c429abea3651a0f2d0ee7c5d3",
+      "bytes": 90821,
+      "retrieved_at_utc": "2026-10-10T04:50:05.629557+00:00",
+      "source_id": "IND-CODE-CORE",
+      "version_or_commit": "v26.08 at 318d800d92c4a3cc8a814f6fdceba0ed8b3416ec",
+      "navigable_url": "https://github.com/MediaArea/BWFMetaEdit/blob/318d800d92c4a3cc8a814f6fdceba0ed8b3416ec/Source/Common/Core.cpp",
+      "locator": "Lines 1573–1615",
+      "governing_meaning": "Core forwards IsValid to Riff_Handler and exposes its last warning to the GUI. Static call-chain inspection supports M1; no compiled application was run.",
+      "applicability": "Static public released-source evidence only; installed 26.08.1 binary behavior remains untested."
+    },
+    {
+      "id": "github-tags.json",
+      "url": "https://api.github.com/repos/MediaArea/BWFMetaEdit/tags?per_page=100",
+      "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/github-tags.json",
+      "bytes": 5545,
+      "sha256": "ec5da3e7b277683dd9a88ec48d31b0442bca56cc6276dfba0f170a17ad1ed4a9",
+      "retrieved_at_utc": "2026-10-10T04:48:45.656329+00:00",
+      "operation": "unauthenticated independent public API GET; no git checkout or account",
+      "source_id": "IND-GITHUB-TAGS",
+      "version_or_commit": "Public repository API snapshot at recorded access",
+      "locator": "v26.08 tag mapping; issue 125 body and comments; tree paths and root SHA as applicable",
+      "governing_meaning": "Repository provenance and bounded issue context. Issue 125 requested basic XML checks rather than format-spec checks and was closed in July 2020. The tag mapping identifies the inspected released source. Tree data was used only to locate relevant source files.",
+      "applicability": "Supporting provenance/context; tag names, closure and hashes alone do not prove implementation behavior."
+    },
+    {
+      "id": "github-issue-125.json",
+      "url": "https://api.github.com/repos/MediaArea/BWFMetaEdit/issues/125",
+      "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/github-issue-125.json",
+      "bytes": 5695,
+      "sha256": "aad89d9ca2089966bb035c7826dce936348b44a9f66e71388d31eaed2e6334b9",
+      "retrieved_at_utc": "2026-10-10T04:48:45.840330+00:00",
+      "operation": "unauthenticated independent public API GET; no git checkout or account",
+      "source_id": "IND-GITHUB-ISSUE-125",
+      "version_or_commit": "Public repository API snapshot at recorded access",
+      "locator": "v26.08 tag mapping; issue 125 body and comments; tree paths and root SHA as applicable",
+      "governing_meaning": "Repository provenance and bounded issue context. Issue 125 requested basic XML checks rather than format-spec checks and was closed in July 2020. The tag mapping identifies the inspected released source. Tree data was used only to locate relevant source files.",
+      "applicability": "Supporting provenance/context; tag names, closure and hashes alone do not prove implementation behavior."
+    },
+    {
+      "id": "github-master-tree.json",
+      "url": "https://api.github.com/repos/MediaArea/BWFMetaEdit/git/trees/master?recursive=1",
+      "capture_path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/github-master-tree.json",
+      "bytes": 91830,
+      "sha256": "45e72b457088aacdf4fda3ae73f71b0cc01a59e466c5856dca3eac229a6e4050",
+      "retrieved_at_utc": "2026-10-10T04:48:46.037320+00:00",
+      "operation": "unauthenticated independent public API GET; no git checkout or account",
+      "source_id": "IND-GITHUB-MASTER-TREE",
+      "version_or_commit": "Public repository API snapshot at recorded access",
+      "locator": "v26.08 tag mapping; issue 125 body and comments; tree paths and root SHA as applicable",
+      "governing_meaning": "Repository provenance and bounded issue context. Issue 125 requested basic XML checks rather than format-spec checks and was closed in July 2020. The tag mapping identifies the inspected released source. Tree data was used only to locate relevant source files.",
+      "applicability": "Supporting provenance/context; tag names, closure and hashes alone do not prove implementation behavior."
+    }
+  ],
+  "consequential_claim_map": [
+    {
+      "claim_id": "C1",
+      "subject_operation": "BWF/RIFF and unknown private chunks",
+      "ruling": "SUPPORTED after CR-2 correction",
+      "source_refs": [
+        "IND-EBU"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/final.md",
+        "line": 39
+      },
+      "conditions_units_types_defaults_exceptions": "Interpretation is separate from conforming pass-through; arbitrary editor integrity is not established."
+    },
+    {
+      "claim_id": "C2",
+      "subject_operation": "BWF versions and UMID/loudness",
+      "ruling": "SUPPORTED",
+      "source_refs": [
+        "IND-EBU"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/final.md",
+        "line": 41
+      },
+      "conditions_units_types_defaults_exceptions": "v0/v1 readers and later fields are correctly distinguished; this is not universal future compatibility."
+    },
+    {
+      "claim_id": "C3",
+      "subject_operation": "BEXT Description/OriginatorReference",
+      "ruling": "SUPPORTED bounded fields",
+      "source_refs": [
+        "IND-EBU",
+        "IND-FADGI",
+        "IND-BEXT"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/final.md",
+        "line": 43
+      },
+      "conditions_units_types_defaults_exceptions": "256/32 ASCII characters for these specific fields; not every WAV comment or every metadata chunk."
+    },
+    {
+      "claim_id": "C4",
+      "subject_operation": "Origination date/time",
+      "ruling": "SUPPORTED FADGI application scope",
+      "source_refs": [
+        "IND-FADGI",
+        "IND-BEXT"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/final.md",
+        "line": 43
+      },
+      "conditions_units_types_defaults_exceptions": "Local archival-entity semantics; no unambiguous UTC is claimed."
+    },
+    {
+      "claim_id": "C5",
+      "subject_operation": "CORE CSV/XML and filepath association",
+      "ruling": "SUPPORTED",
+      "source_refs": [
+        "IND-CORE"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/final.md",
+        "line": 31
+      },
+      "conditions_units_types_defaults_exceptions": "Named BEXT/LIST-INFO exchange, one record per file; not a universal metadata schema or enduring identity."
+    },
+    {
+      "claim_id": "C6",
+      "subject_operation": "MetaEdit operations/platform candidate",
+      "ruling": "SUPPORTED documentary claim",
+      "source_refs": [
+        "IND-METAEDIT"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/final.md",
+        "line": 31
+      },
+      "conditions_units_types_defaults_exceptions": "26.08.1 is the listed release, not an installed or tested one."
+    },
+    {
+      "claim_id": "C7",
+      "subject_operation": "MetaEdit GUI/CLI wording",
+      "ruling": "SUPPORTED elsewhere; removed unnecessarily",
+      "source_refs": [
+        "IND-FADGI-INDEX",
+        "IND-METAEDIT"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/final.md",
+        "line": 87
+      },
+      "conditions_units_types_defaults_exceptions": "Exact page-citation deficit is not an absent interface; L1."
+    },
+    {
+      "claim_id": "C8",
+      "subject_operation": "MetaEdit MD5 checksum",
+      "ruling": "SUPPORTED exact subject",
+      "source_refs": [
+        "IND-METAEDIT",
+        "IND-FADGI-INDEX"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/final.md",
+        "line": 31
+      },
+      "conditions_units_types_defaults_exceptions": "WAVE data chunk only; no whole-file, descriptive or consent oracle."
+    },
+    {
+      "claim_id": "C9",
+      "subject_operation": "Embedded descriptive values can become stale",
+      "ruling": "SUPPORTED; authority recommendation is local",
+      "source_refs": [
+        "IND-LISTINFO"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/final.md",
+        "line": 21
+      },
+      "conditions_units_types_defaults_exceptions": "External authority is for the archivist to approve, not a source-imposed policy."
+    },
+    {
+      "claim_id": "C10",
+      "subject_operation": "ltxt/tran and cue ranges",
+      "ruling": "SUPPORTED FADGI recommendation with L4",
+      "source_refs": [
+        "IND-FADGI"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/final.md",
+        "line": 45
+      },
+      "conditions_units_types_defaults_exceptions": "ASCII recommendation and RIFF structural conditions do not establish whole-transcript portability or a normative short-text cap."
+    },
+    {
+      "claim_id": "C11",
+      "subject_operation": "XML verification/undo conditions",
+      "ruling": "MATERIAL SOURCE GAP M1",
+      "source_refs": [
+        "IND-XML",
+        "IND-HISTORY",
+        "IND-CODE-HANDLER",
+        "IND-CODE-GUI",
+        "IND-CODE-CORE"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/final.md",
+        "line": 45
+      },
+      "conditions_units_types_defaults_exceptions": "Rolling help is not reconciled with released syntax warnings; schema checks and undo remain absent as described."
+    },
+    {
+      "claim_id": "C12",
+      "subject_operation": "0.2.2 XML CR/escaping/full-file-write history",
+      "ruling": "SUPPORTED bounded release history",
+      "source_refs": [
+        "IND-HISTORY",
+        "IND-PINNED-HISTORY"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/final.md",
+        "line": 51
+      },
+      "conditions_units_types_defaults_exceptions": "Historical Mac/Linux write issue and XML output fixes; no current write-losslessness guarantee."
+    },
+    {
+      "claim_id": "C13",
+      "subject_operation": "21.07 UNICODE=1; 23.04 code pages/CSET; 25.04 CORE fallback",
+      "ruling": "SUPPORTED for named paths/releases",
+      "source_refs": [
+        "IND-HISTORY",
+        "IND-PINNED-HISTORY"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/final.md",
+        "line": 51
+      },
+      "conditions_units_types_defaults_exceptions": "Does not amend all BEXT standards or prove every tool supports Unicode."
+    },
+    {
+      "claim_id": "C14",
+      "subject_operation": "BagIt v1.0 opaque payload and manifests",
+      "ruling": "SUPPORTED after CR-4",
+      "source_refs": [
+        "IND-BAGIT"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/final.md",
+        "line": 32
+      },
+      "conditions_units_types_defaults_exceptions": "Every payload manifest covers every payload file; tag manifests are optional and distinct."
+    },
+    {
+      "claim_id": "C15",
+      "subject_operation": "BagIt encoding/default/hash/security",
+      "ruling": "SUPPORTED bounded recommendation",
+      "source_refs": [
+        "IND-BAGIT"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/final.md",
+        "line": 53
+      },
+      "conditions_units_types_defaults_exceptions": "Tag UTF-8 recommendation is separate from WAV field encoding; SHA-256 is permitted; no active-attack authenticity claimed."
+    },
+    {
+      "claim_id": "C16",
+      "subject_operation": "PREMIS relationships and optional pilot model",
+      "ruling": "SUPPORTED",
+      "source_refs": [
+        "IND-PREMIS"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/final.md",
+        "line": 23
+      },
+      "conditions_units_types_defaults_exceptions": "Identified objects and characterized links model lineage; no PREMIS XML implementation/conformance is claimed."
+    },
+    {
+      "claim_id": "C17",
+      "subject_operation": "Accessible transcript/player and prerecorded audio-only Level A",
+      "ruling": "SUPPORTED guidance scope",
+      "source_refs": [
+        "IND-W3C",
+        "IND-W3C-PLAN"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/final.md",
+        "line": 57
+      },
+      "conditions_units_types_defaults_exceptions": "Audio-only prerecorded guidance, not all video/live contexts and not local player conformance."
+    },
+    {
+      "claim_id": "C18",
+      "subject_operation": "Stable object IDs and external UTF-8 authority",
+      "ruling": "SUPPORTED local recommendation",
+      "source_refs": [
+        "original-brief",
+        "IND-CORE",
+        "IND-LISTINFO",
+        "IND-PREMIS"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/final.md",
+        "line": 19
+      },
+      "conditions_units_types_defaults_exceptions": "IDs/checksums supplement paths; field authority remains the archivist’s input."
+    },
+    {
+      "claim_id": "C19",
+      "subject_operation": "Transcript/access sibling derivatives and approvals",
+      "ruling": "SUPPORTED local proposal",
+      "source_refs": [
+        "original-brief",
+        "IND-PREMIS",
+        "IND-W3C"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/final.md",
+        "line": 23
+      },
+      "conditions_units_types_defaults_exceptions": "Distinct objects and revisions; no requirement for ASR or automatic publication."
+    },
+    {
+      "claim_id": "C20",
+      "subject_operation": "Unrun checks do not establish safe rewriting/access",
+      "ruling": "SUPPORTED boundary",
+      "source_refs": [
+        "original-brief",
+        "IND-EBU",
+        "IND-BAGIT"
+      ],
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/final.md",
+        "line": 96
+      },
+      "conditions_units_types_defaults_exceptions": "Future structure, round-trip, fixity and accessibility observations are proposed; no nonexistent deployment is assumed."
+    }
+  ],
+  "material_finding_source_map": [
+    {
+      "finding_id": "M1",
+      "severity": "MATERIAL",
+      "classification": "material incomplete source applicability / unreconciled consequential condition",
+      "title": "The final carries an obsolete broad XML-verification warning without reconciling released checks",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/final.md",
+        "line": 45
+      },
+      "lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/discovery.md",
+          "line": 23
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/draft.md",
+          "line": 51
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/critic/source-map.json",
+          "line": 94
+        }
+      ],
+      "candidate_claim": "MediaArea’s current XML-chunk help says aXML/iXML/XMP editing does not validate XML or schema instances and has no undo; the final treats this as a tool-specific caution.",
+      "independent_evidence": [
+        "IND-XML",
+        "IND-HISTORY",
+        "IND-PINNED-HISTORY",
+        "IND-CODE-HANDLER",
+        "IND-CODE-GUI",
+        "IND-CODE-CORE"
+      ],
+      "judgment": "The quotation/paraphrase is accurate about the rolling help, but the operational source condition is materially incomplete. The proposal does not distinguish released syntactic parsing/warnings from absent format/schema conformance checks. The cited history already supplies the contradictory later change, and relevant public code resolves that distinction. The original brief requires relevant source code and released history where they bear on the proposal; obligation 3 requires investigated embedding conditions. All three stages leave this publicly answerable distinction unresolved.",
+      "bounded_counterevidence": "Schema/format validation and no-undo cautions remain supported; an XML warning is not blocking enforcement and does not certify valid metadata. Sidecar-first remains a reasonable local recommendation. No conclusion is made about corruption, deployment, consent or the behavior of an installed 26.08.1 binary.",
+      "materiality": "XML verification is a consequential safety/applicability condition for one investigated embedded metadata path. Discovery uses the broad warning to advise avoiding that path unless further controls are approved, the draft repeats it in obligation 3, the critic endorses it, and the final preserves it as a tool condition. Source attribution does not complete investigation of the visible release-history conflict. This is more than a citation-format issue even though the baseline recommendation can remain sensible.",
+      "final_disposition": "REMAINS; source-backed FAIL. No candidate repair or feedback performed."
+    }
+  ],
+  "original_artifact_manifest": "original-inspected-manifest.json",
+  "inspection_boundary": "All original mapped authored artifacts read in full; independent standards/code inspected at governing passages plus surrounding conditions. Raw captures are reviewer evidence, not candidate execution witnesses. Original freezes remain unchanged."
+}

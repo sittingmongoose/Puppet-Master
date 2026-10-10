@@ -1,0 +1,94 @@
+{
+  "observed_at_utc": "2026-10-10T05:20:05.612841+00:00",
+  "basis": "root observed terminal final T3 task/no pending; separate from native proof",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/critic/critique.md",
+      "bytes": 10869,
+      "sha256": "9b053df049d8ddb973032966c9dc1492fa0876b83015b14c722d157a4553b1ad",
+      "mtime_ns": 1791608769336625924
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/critic/source-map.json",
+      "bytes": 45340,
+      "sha256": "ad63b15fd192b94a6a1b244112a3cce6d19b63e17d86e4ad2712c1c2790695f6",
+      "mtime_ns": 1791608769336403352
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/critic/sources/index.md",
+      "bytes": 9098,
+      "sha256": "3fc4d5f3b1e469ecbadc337558dbb0cdf8df1bff5f82604d34afa2a12fc2b82e",
+      "mtime_ns": 1791608769336951814
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/investigator/discovery.md",
+      "bytes": 13649,
+      "sha256": "02799631734d0d4afdca3afde0426b22030aa35fddb235d94e22f524d7d69440",
+      "mtime_ns": 1791607619135236819
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/investigator/draft.md",
+      "bytes": 37287,
+      "sha256": "f0ba0b7b43cd2ce6399831c1b0d7600a7f4980988b8269946cd612236bbbc19d",
+      "mtime_ns": 1791608144466055489
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/investigator/revealed-plan.md",
+      "bytes": 6071,
+      "sha256": "169aaf6153653975a15fc0bcb87130cf772fb7761f5c1abf2f80838b62a4a1db",
+      "mtime_ns": 1791607629867390517
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/investigator/source-map.json",
+      "bytes": 33329,
+      "sha256": "54c401269b7800c147cff79d4bb98321f9e28a9d21180f5ac8e06a04f82e400c",
+      "mtime_ns": 1791607776082418227
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/investigator/sources/index.md",
+      "bytes": 6458,
+      "sha256": "4f7d53d2fb1500c785c2309ec8bb155bd4c82cb61e1cd3e1557cd71480baf89d",
+      "mtime_ns": 1791607776082418227
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+      "bytes": 43881,
+      "sha256": "325c6b4472ee9a02810fa5cf961a2b8adafa7a95e8377bbef4837dd9cec6fbef",
+      "mtime_ns": 1791609519702149516
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/source-map.json",
+      "bytes": 49814,
+      "sha256": "0f2847f0185222625367669d3651363a5ab0dc04e2eea5652812b30c37e526ba",
+      "mtime_ns": 1791609398036688868
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/sources/index.md",
+      "bytes": 15362,
+      "sha256": "fa020986bb8d1d9d7925a29c578a299891efef8202e992a5b659e098cd2d0bbb",
+      "mtime_ns": 1791609398035949246
+    }
+  ],
+  "final_stage_task": {
+    "slot": "A6-02",
+    "arm": "control",
+    "stage": "reviser",
+    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-02-control-reviser-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-02-control-reviser-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-02-control-reviser-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-02-control-reviser-v1",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-02-control-reviser-v1:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "Completed the assigned reviser stage. The proposal covers all eight plan clauses and records each critique disposition.\n\n- [final.md](ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A6-02/control/stages/reviser/source-map.json)\n- [Source index](ER12_RUNTIME/runs/A6-02/control/stages/reviser/sources/index.md)\n\nThe revision adds the documented Omeka REST `PUT`/`PATCH` update conditions and a conditional Item Importer path, pending confirmation that a collection already uses Omeka S ([official REST API docs](https://omeka.org/s/docs/developer/api/rest_api/), [Item Importer module](https://omeka.org/s/modules/Osii/)). It preserves the CNE page retrieval limitation. No product validation was run.\n\nThe actual native Goal is **complete**. Its returned fields include `tokensUsed: 148914`, `timeUsedSeconds: 688`, `createdAt: 1791608864`, and `updatedAt: 1791609553`. Provenance beyond the tool-returned fields is UNKNOWN.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-02-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:4dd32c3c-dadc-442a-9cb6-b33c11815f6f",
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "summary": "Completed the assigned reviser stage. The proposal covers all eight plan clauses and records each critique disposition.\n\n- [final.md](ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A6-02/control/stages/reviser/source-map.json)\n- [Source index](ER12_RUNTIME/runs/A6-02/control/stages/reviser/sources/index.md)\n\nThe revision adds the documented Omeka REST `PUT`/`PATCH` update conditions and a conditional Item Importer path, pending confirmation that a collection already uses Omeka S ([official REST API docs](https://omeka.org/s/docs/developer/api/rest_api/), [Item Importer module](https://omeka.org/s/modules/Osii/)). It preserves the CNE page retrieval limitation. No product validation was run.\n\nThe actual native Goal is **complete**. Its returned fields include `tokensUsed: 148914`, `timeUsedSeconds: 688`, `createdAt: 1791608864`, and `updatedAt: 1791609553`. Provenance beyond the tool-returned fields is UNKNOWN.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-02-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:4dd32c3c-dadc-442a-9cb6-b33c11815f6f",
+    "waitTimedOut": false
+  }
+}

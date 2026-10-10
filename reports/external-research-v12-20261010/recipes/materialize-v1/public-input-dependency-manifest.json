@@ -1,0 +1,104 @@
+{
+  "version": "materialize-v1",
+  "scope": [
+    "R0",
+    "A1"
+  ],
+  "files": [
+    {
+      "relative_path": "materialize.py",
+      "sha256": "7850bb8c7dce9dfef5c8bd09daacf378aaf4c3c94b21cf79dc131107c6abf0b8",
+      "bytes": 13015,
+      "prior_published_sha256": "7850bb8c7dce9dfef5c8bd09daacf378aaf4c3c94b21cf79dc131107c6abf0b8"
+    },
+    {
+      "relative_path": "README.md",
+      "sha256": "f96db13e5a28c00d34551bd15a8207606f1d56dee80d885e1393c453e5cee4fb",
+      "bytes": 5915,
+      "prior_published_sha256": "f96db13e5a28c00d34551bd15a8207606f1d56dee80d885e1393c453e5cee4fb"
+    },
+    {
+      "relative_path": "checks.py",
+      "sha256": "174e05bc14daf020f0a0e66f6bf10a0bfe63e3def7d681bd70e462d62c1a0601",
+      "bytes": 9457,
+      "prior_published_sha256": "174e05bc14daf020f0a0e66f6bf10a0bfe63e3def7d681bd70e462d62c1a0601"
+    },
+    {
+      "relative_path": "source-lineage.json",
+      "sha256": "6a2646d2b20eda3af93f9e436aa10af8f4ddb9829a23f6b5bde262d55379351f",
+      "bytes": 4535,
+      "prior_published_sha256": "b6e3efdc96ee48ef64b3e6c3d598dfa4fe08d59c56eb5c360a75a92c6223f4d1"
+    },
+    {
+      "relative_path": "sources/helpers/er12-screen-v1/bootstrap.js",
+      "sha256": "67b8667f5f7d09b854541f95c8453b977f3514a4243d679fdb24a26335fa4c56",
+      "bytes": 4352,
+      "prior_published_sha256": "67b8667f5f7d09b854541f95c8453b977f3514a4243d679fdb24a26335fa4c56"
+    },
+    {
+      "relative_path": "sources/helpers/er12-screen-v1/prepare.py",
+      "sha256": "3af25138aa7fc20123c238e8485df3210d9a4f3f2bf6419a256d73a1c4176fdc",
+      "bytes": 23592,
+      "prior_published_sha256": "3af25138aa7fc20123c238e8485df3210d9a4f3f2bf6419a256d73a1c4176fdc"
+    },
+    {
+      "relative_path": "sources/helpers/er12-screen-v1/reveal.py",
+      "sha256": "ec9579204af96aa6a45caba1eef94c6ca1a799c296a2363b179af359bd908abe",
+      "bytes": 2880,
+      "prior_published_sha256": "ec9579204af96aa6a45caba1eef94c6ca1a799c296a2363b179af359bd908abe"
+    },
+    {
+      "relative_path": "sources/mechanics/invocation-clarification-v1/transform.py",
+      "sha256": "40d7052fffa5e8830c8c738c751755a0bfb25a63fa68ee4f2518a30dc1716594",
+      "bytes": 12009,
+      "prior_published_sha256": "40d7052fffa5e8830c8c738c751755a0bfb25a63fa68ee4f2518a30dc1716594"
+    },
+    {
+      "relative_path": "sources/mechanics/native-root-code-mode/clarifySpecJS.js",
+      "sha256": "bb25e8ec79588d59aad269b9adff256ed9ea0bf7e4c28080245a2a45ea74556a",
+      "bytes": 380,
+      "prior_published_sha256": "bb25e8ec79588d59aad269b9adff256ed9ea0bf7e4c28080245a2a45ea74556a"
+    },
+    {
+      "relative_path": "sources/mechanics/native-root-code-mode/standardSpecJS.js",
+      "sha256": "02821bc77b08aae08c50203213e88556da8ab50401dc675c1425e0abbe503b92",
+      "bytes": 2503,
+      "prior_published_sha256": "02821bc77b08aae08c50203213e88556da8ab50401dc675c1425e0abbe503b92"
+    }
+  ],
+  "dependency_edges": [
+    "bootstrap -> prepare.py",
+    "bootstrap -> standardSpecJS.js -> Python standard library",
+    "bootstrap -> clarifySpecJS.js -> transform.py -> relocated helper-pins.json -> prepare.py/reveal.py",
+    "investigator assignment -> reveal.py -> outside-run caller config -> NEW controlled plan",
+    "critic/reviser -> exact terminal taskID/status + full frozen predecessor sources"
+  ],
+  "external_runtime_requirements": [
+    "Python >=3.11",
+    "T3 functions code mode with live catalog/delegate/task_status",
+    "native Goal tools in each fresh leaf",
+    "free -g with >=6GB available"
+  ],
+  "caller_supplies": [
+    "dedicated nonexistent destination",
+    "actual authorized route ID",
+    "NEW brief",
+    "NEW plan",
+    "unique run ID"
+  ],
+  "unsupported_methods": [
+    "A2",
+    "A3",
+    "A4",
+    "A5",
+    "A6",
+    "A7",
+    "A8",
+    "role-v1",
+    "role-v2"
+  ],
+  "historical_source_answers_included": false,
+  "original_byte_equivalence_claimed": false,
+  "production_qualified": false,
+  "publication_projection": "Cohort3 sanitation; prior hashes retained, current public inputs repinned."
+}

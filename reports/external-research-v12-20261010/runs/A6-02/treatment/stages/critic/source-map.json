@@ -1,0 +1,167 @@
+{
+  "run_id": "A6-02-treatment",
+  "stage": "critic",
+  "reviewed_inputs": {
+    "brief": "ER12_RUNTIME/runs/A6-02/treatment/inputs/brief.md",
+    "investigator_package": "ER12_RUNTIME/runs/A6-02/treatment/stages/investigator",
+    "revealed_plan": "ER12_RUNTIME/runs/A6-02/treatment/stages/investigator/revealed-plan.md"
+  },
+  "access_window_note": "2026-10-10T04:53:30Z/2026-10-10T04:59:09Z, bracketed by UTC clock observations; the web retrieval tool did not expose per-request completion timestamps. Search-result text for S07, S10 and S22 was returned from the official source pages; direct opens for S07 and S10 failed and were not treated as successful direct opens.",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "Open Archives Initiative Protocol for Metadata Harvesting",
+      "url": "https://www.openarchives.org/OAI/openarchivesprotocol.html",
+      "released_version_or_commit": "Protocol Version 2.0, 2002-06-14; document version 2015-01-08.",
+      "locator": "Sections 2.5.1 deleted records, 3.3.2 UTC datestamps, 3.4 metadataPrefix, 3.5 flow control/resumption tokens, and Identify response.",
+      "accessed_at_utc": "2026-10-10T04:53:30Z/2026-10-10T04:58:33Z; exact per-request time unavailable.",
+      "observed_operation": "Opened the official specification and read section 2.5.1 directly; reviewed the adjacent concepts and section index. No collection endpoint was queried.",
+      "governing_condition_default_exception": "Identify declares deletedRecord=no, transient, or persistent. With no deletion tracking, an incremental harvester cannot discover vanished records. Persistent means deletion state is retained consistently; transient has no persistence guarantee. Follow repository datestamp granularity, metadataPrefix, and resumption-token behavior.",
+      "applicability": "Supports the investigator's conditional OAI design and warns against treating missing incremental results as deletions. Does not establish any pilot collection's OAI support."
+    },
+    {
+      "id": "S02",
+      "title": "DPLA Hub Network",
+      "url": "https://pro.dp.la/hubs",
+      "released_version_or_commit": "Current official program page; no release version/date displayed.",
+      "locator": "Content and Service Hubs description.",
+      "accessed_at_utc": "2026-10-10T04:58:33Z/2026-10-10T04:59:09Z; exact per-request time unavailable.",
+      "observed_operation": "Retrieved the official page text via web search. No hub was contacted.",
+      "governing_condition_default_exception": "DPLA describes Content and Service Hubs as organizations that aggregate metadata from partner cultural heritage institutions and contribute it to DPLA.",
+      "applicability": "Supports the hub-mediated comparator only; it does not establish acceptance, partner terms, or suitability for the museum network."
+    },
+    {
+      "id": "S03",
+      "title": "DPLA API Field Reference",
+      "url": "https://pro.dp.la/developers/field-reference",
+      "released_version_or_commit": "Current official field reference; states that the DPLA API implements MAP 3.1.",
+      "locator": "MAP introduction; originalRecord, sourceResource.rights, object.rights, and provider fields.",
+      "accessed_at_utc": "2026-10-10T04:53:30Z/2026-10-10T04:58:33Z; exact per-request time unavailable.",
+      "observed_operation": "Retrieved the official page text via web search; a direct open returned HTTP 403. No DPLA item/API request was made.",
+      "governing_condition_default_exception": "The field reference distinguishes rights held in the described SourceResource from rights asserted in the digital object at object.@id, and defines originalRecord as the complete provider record.",
+      "applicability": "Supports retaining original and mapped fields separately and scope-aware comparison. It does not describe the five source records."
+    },
+    {
+      "id": "S04",
+      "title": "DPLA Metadata Application Profile landing page and metadata policy",
+      "url": "https://pro.dp.la/hubs/metadata-application-profile",
+      "released_version_or_commit": "Current official page; text says current MAP version 4.0 and offers a MAP 5.0 download.",
+      "locator": "Download the DPLA Metadata Application Profile; page's current-version label; Digital Public Library of America Policy Statement on Metadata, especially partners' terms and free reuse.",
+      "accessed_at_utc": "2026-10-10T04:58:33Z/2026-10-10T04:59:09Z; exact per-request time unavailable.",
+      "observed_operation": "Retrieved official page text via web search; no profile artifact was downloaded.",
+      "governing_condition_default_exception": "DPLA states partners agree that metadata is broadly shareable and dedicate partner metadata that may be copyright-protected to CC0; it also states DPLA asserts no rights over its database/contributions. The same page's 4.0 current-version statement and 5.0 download offer are conflicting signals.",
+      "applicability": "A condition on the DPLA partner route and a concrete metadata-terms example, not a legal rule or permission for this network. It exposes a version ambiguity relevant to any future adapter."
+    },
+    {
+      "id": "S07",
+      "title": "Europeana Semantic Elements to EDM migration guidance",
+      "url": "https://pro.europeana.eu/page/ese-documentation",
+      "released_version_or_commit": "Official ESE guidance page; posted 2014-12-04, updated 2023-11-06 per the page index.",
+      "locator": "Default ESE-to-EDM mapping and direct source-to-EDM mapping guidance; dc:date and dc:format ambiguity examples.",
+      "accessed_at_utc": "2026-10-10T04:53:30Z/2026-10-10T04:58:33Z; exact per-request time unavailable.",
+      "observed_operation": "Retrieved the official source text via web search. A direct open redirected to an inaccessible Europeana Atlassian page; the search-returned text is the evidence used.",
+      "governing_condition_default_exception": "The default mapping may put digitization date into edm:ProvidedCHO or confuse source-object and digital-file format; provider-specific mappings can be used and direct EDM mapping is recommended for a more complete redesign.",
+      "applicability": "Supports the draft's per-collection schema/mapping validation. This is historic guidance, not proof the five collections use ESE/EDM."
+    },
+    {
+      "id": "S08",
+      "title": "Europeana Licensing Framework",
+      "url": "https://pro.europeana.eu/index.php/page/europeana-licensing-framework",
+      "released_version_or_commit": "Official framework page posted 2015-02-06 and updated 2026-05-01.",
+      "locator": "Metadata published by Europeana; Data Exchange Agreement; edm:rights field.",
+      "accessed_at_utc": "2026-10-10T04:58:33Z/2026-10-10T04:59:09Z; exact per-request time unavailable.",
+      "observed_operation": "Retrieved current official Europeana page text via web search.",
+      "governing_condition_default_exception": "Europeana says metadata received from providers is published under CC0 under its provider framework; edm:rights communicates terms for previews and digital objects.",
+      "applicability": "Supports the distinction between metadata terms and object/preview rights and the need to identify provider conditions. It does not license this network's metadata."
+    },
+    {
+      "id": "S10",
+      "title": "RightsStatements.org: Other rights statements",
+      "url": "https://rightsstatements.org/page/collection-other/1.0/?language=en",
+      "released_version_or_commit": "RightsStatements.org version 1.0 vocabulary page.",
+      "locator": "CNE, UND, NKC definitions and collection-level introduction.",
+      "accessed_at_utc": "2026-10-10T04:53:30Z/2026-10-10T04:58:33Z; exact per-request time unavailable.",
+      "observed_operation": "Retrieved official source text via web search; direct open returned HTTP 526.",
+      "governing_condition_default_exception": "CNE is for an unevaluated unknown; UND follows an unsuccessful evaluation; NKC requires reasonable cause to believe copyright/related rights no longer cover the work and is excluded when no inquiry occurred. These are statements, not licenses.",
+      "applicability": "Supports keeping absent data distinct from source-supplied CNE/UND/NKC. Does not authorize the network to assign these terms."
+    },
+    {
+      "id": "S11",
+      "title": "Creative Commons public-domain tools",
+      "url": "https://creativecommons.org/public-domain/",
+      "released_version_or_commit": "Current official CC guidance; CC0 and Public Domain Mark 1.0 tools.",
+      "locator": "CC0 vs. PDM; use restrictions; PDM not for uncertain or jurisdiction-specific status.",
+      "accessed_at_utc": "2026-10-10T04:53:30Z/2026-10-10T04:58:33Z; exact per-request time unavailable.",
+      "observed_operation": "Retrieved official CC page text via web search. No tool was applied to an item.",
+      "governing_condition_default_exception": "CC0 is a tool for creators/rightsholders to waive rights they hold; PDM is an informational label for work already believed free of known copyright restrictions worldwide and is not for uncertain/jurisdiction-specific cases.",
+      "applicability": "Supports the draft's distinction between supplied CC0 and PDM assertions. The critic makes no independent status finding."
+    },
+    {
+      "id": "S12",
+      "title": "IIIF Presentation API",
+      "url": "https://iiif.io/api/presentation/3.0/",
+      "released_version_or_commit": "Presentation API 3.0.0, listed as latest stable version by the official specification.",
+      "locator": "requiredStatement, rights, provider; machine-actionable and user-readable URI notes.",
+      "accessed_at_utc": "2026-10-10T04:53:30Z/2026-10-10T04:58:33Z; exact per-request time unavailable.",
+      "observed_operation": "Retrieved official version-3.0 specification text via web search.",
+      "governing_condition_default_exception": "requiredStatement is user-facing text that clients must render; rights is informative and may be rendered. Rights URIs are machine-actionable HTTP URIs; equivalent HTTPS pages may be used for user links.",
+      "applicability": "Supports optional presentation and statement-link patterns, not harvesting/search/update. A rights value applies to the IIIF resource where attached."
+    },
+    {
+      "id": "S13",
+      "title": "W3C SKOS Reference",
+      "url": "https://www.w3.org/TR/skos-reference/",
+      "released_version_or_commit": "W3C Recommendation, 2009-08-18.",
+      "locator": "Section 10 mapping properties; exactMatch and closeMatch semantics and transitivity.",
+      "accessed_at_utc": "2026-10-10T04:53:30Z/2026-10-10T04:58:33Z; exact per-request time unavailable.",
+      "observed_operation": "Retrieved the official W3C text via web search.",
+      "governing_condition_default_exception": "exactMatch denotes high-confidence interchangeability and is transitive; closeMatch is not transitive. owl:sameAs asserts identity, not a weaker concept mapping.",
+      "applicability": "Supports versioned explicit crosswalks that preserve source URIs; does not itself establish that any two pilot terms match."
+    },
+    {
+      "id": "S16",
+      "title": "DPLA ingestion3 Issue 739 NARA audit and deletion fix",
+      "url": "https://github.com/dpla/ingestion3/commit/608ea023de200df48e8241ed08e0fa49466646f9",
+      "additional_url": "https://github.com/dpla/ingestion3/blob/608ea023de200df48e8241ed08e0fa49466646f9/docs/ingestion/README_NARA.md",
+      "released_version_or_commit": "Pinned merged commit 608ea023de200df48e8241ed08e0fa49466646f9, 2026-06-17T18:53:12Z.",
+      "locator": "Pinned README_NARA.md history and preprocessing sections; commit patch to delete-file preprocessing and zero-delete checks.",
+      "accessed_at_utc": "2026-10-10T04:53:30Z/2026-10-10T04:58:33Z; exact per-request time unavailable.",
+      "observed_operation": "Opened pinned GitHub commit and README; read the diff showing NaidsList rosters are not delete files and NAC_DESC_Deletes files are. No code was downloaded or run.",
+      "governing_condition_default_exception": "The pinned runbook says the prior path misclassified rosters, and affected deletions may remain; correction selects explicit delete-file names and asks operators to inspect zero/invalid outcomes. Retroactive processing is a team decision.",
+      "applicability": "Supports the bounded history example and proposed counted-delete controls. It is a source/runbook account, not independently reproduced production behavior."
+    },
+    {
+      "id": "S19",
+      "title": "Omeka S CSV Import module documentation",
+      "url": "https://omeka.org/s/docs/user-manual/modules/csvimport/",
+      "released_version_or_commit": "Current official user manual; module release 2.6.2 noted on official module page, 2024-10-22.",
+      "locator": "Module scope, import/update strategies, permissions, PHP background-job prerequisite.",
+      "accessed_at_utc": "2026-10-10T04:53:30Z/2026-10-10T04:58:33Z; exact per-request time unavailable.",
+      "observed_operation": "Retrieved official Omeka S manual text via web search.",
+      "governing_condition_default_exception": "Imports CSV/TSV/ODS and supports resource operations; only Global Administrator/Supervisor users may run it and PHP must support background jobs.",
+      "applicability": "Supports its limited batch/editorial role; does not establish an automatic OAI harvester or provenance ledger."
+    },
+    {
+      "id": "S20",
+      "title": "Omeka S REST API Reference",
+      "url": "https://omeka.org/s/docs/developer/api/rest_api_reference/",
+      "released_version_or_commit": "Current official REST API documentation; page has no tagged release.",
+      "locator": "Resource Values JSON-LD; is_public and value-level visibility.",
+      "accessed_at_utc": "2026-10-10T04:53:30Z/2026-10-10T04:58:33Z; exact per-request time unavailable.",
+      "observed_operation": "Retrieved official Omeka S documentation via web search; no live installation/API was queried.",
+      "governing_condition_default_exception": "Resource values are JSON-LD arrays with value type/property/value and is_public; values default public on input when is_public is omitted.",
+      "applicability": "Supports the draft's distinction between local visibility and rights assertions. Does not establish product behavior in a selected deployment."
+    },
+    {
+      "id": "S22",
+      "title": "RightsStatements.org statement applicability guidance",
+      "url": "https://rightsstatements.org/en/2018/12/where-statements-apply.html",
+      "released_version_or_commit": "Official RightsStatements.org guidance posted 2018-12; no versioned revision stated in retrieved page.",
+      "locator": "Sections for in-copyright statements, no-copyright statements, and Other statements; comparison of original work and digital object applicability.",
+      "accessed_at_utc": "2026-10-10T04:53:30Z/2026-10-10T04:58:33Z; exact per-request time unavailable.",
+      "observed_operation": "Retrieved the official page content via web search. It specifically enumerates which statement families apply to both work and digital object versus only the digital object.",
+      "governing_condition_default_exception": "Applicability differs by statement: some in-copyright and no-copyright terms apply only to digital objects, while the Other statements CNE/UND/NKC and several terms apply to both work and digital copy.",
+      "applicability": "Directly supports C1. Preserve scope as a distinct source/mapping field and do not generalize from a statement label."
+    }
+  ]
+}

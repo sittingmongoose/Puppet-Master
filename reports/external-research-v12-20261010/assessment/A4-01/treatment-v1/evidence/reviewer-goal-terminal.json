@@ -1,0 +1,16 @@
+{
+  "basis": "Actual native update_goal response after complete assessment and save-check were written. No candidate native inference is made.",
+  "response": {
+    "goal": {
+      "threadId": "01a1241b-ad72-72a0-bf81-fb4218121b0c",
+      "objective": "Independently assess the single completed ER12 A4-01 treatment full pipeline under ER12_RUNTIME, using the complete RUBRIC-v1.md, original frozen brief and plan, terminal freeze root, actual full per-stage assignments/maps/freezes/authored artifacts/source evidence, and independently retrieved governing primary sources. Assess all six rubric axes and every exact plan clause, preserve corrected lineage defects versus final qualifications, and require source-backed FAIL for any remaining material error/omission/unsupported consequential decision. Do not delegate, repair candidates, change accounts, use Git/publication, inspect other arms/results/history, or rescore ER11. Preserve the original freeze. Within 45 minutes including saving, write complete assessment.md, assessment.json and independent navigable source-map/evidence only under ER12_RUNTIME/assessment/A4-01/treatment-v1, including source locators, criticism dispositions, discoveries/alternatives, findings/limits/unknowns and original inspected hashes. Save full judgment before completing this native Goal; report result and paths.",
+      "status": "complete",
+      "tokensUsed": 241896,
+      "timeUsedSeconds": 871,
+      "createdAt": 1791607171,
+      "updatedAt": 1791608042
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+  }
+}

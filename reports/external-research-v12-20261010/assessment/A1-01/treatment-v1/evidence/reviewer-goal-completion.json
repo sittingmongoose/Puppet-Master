@@ -1,0 +1,22 @@
+{
+  "tool": "update_goal",
+  "argument": {
+    "status": "complete"
+  },
+  "directly_observed_result": {
+    "goal": {
+      "threadId": "01a12411-9743-70a3-a140-301ba5fe2db2",
+      "objective": "Independently assess exactly one completed ER12 A1-01 treatment pipeline against the full RUBRIC-v1 and original frozen brief/plan. Read complete terminal freeze, authored discovery/draft/critique/final, every stage source map, assignment/input/freeze, dispositions/checks and authored evidence by actual mappings. Judge all six axes and every plan clause; retrieve governing primary evidence for consequential claims/corrections; separate final qualification from lineage defects and semantic judgment from native/protocol/time/billing evidence. No delegation, candidate feedback or repairs, account changes, Git/publication, other arms/history, or ER11 rescoring. Within a finite 45-minute review envelope, save complete assessment.md, assessment.json, and independent navigable source map/evidence only under ER12_RUNTIME/assessment/A1-01/treatment-v1, preserve originals, then complete this Goal and report result/paths.",
+      "status": "complete",
+      "tokensUsed": 195504,
+      "timeUsedSeconds": 672,
+      "createdAt": 1791606506,
+      "updatedAt": 1791607179
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+  },
+  "full_judgment_saved_before_completion": true,
+  "not_original_stage_goal_proof": true,
+  "not_billing_proof": true
+}

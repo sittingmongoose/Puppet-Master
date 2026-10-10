@@ -1,0 +1,20 @@
+{
+  "requested_at_utc": "2026-10-10T04:37:26.708000+00:00",
+  "clientRequestId": "er12-B-DISC-M-02-treatment-role-v2",
+  "args": {
+    "clientRequestId": "er12-B-DISC-M-02-treatment-role-v2",
+    "title": "ER12 B-DISC-M-02 treatment role",
+    "role": "research",
+    "mode": "async",
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "target": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "muse-spark-1.3-contributor",
+      "options": {
+        "reasoningEffort": "max"
+      }
+    },
+    "task": "Execute exactly ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/assignment.md and input-map.json. Before common source/case input or inference, activate exactly ONE actual exposed native Goal referring to this assignment. If unavailable/unsupported, stop scientific inference and save the exact unsupported diagnostic; no simulated Goal. Save deliverables before native completion. Never start provider CLI/model/session in shell, nested assistance, other arms, account changes or parent history."
+  }
+}

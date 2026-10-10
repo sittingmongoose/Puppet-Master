@@ -1,0 +1,56 @@
+[
+  {
+    "id": "C01",
+    "classification": "material incomplete",
+    "draft_locator": "Candidate workflows and tradeoffs; Workflow comparison and alternatives; DOI-less records, duplicates, and scholarly versions",
+    "evidence": "S13 Reconciling, Overview, match outcomes and Reconciliation actions; S14 Reconciliation API opening definition.",
+    "disposition": "accept",
+    "rationale": "The source permits confident auto-matches and bulk best-candidate actions while retaining original cell text. The proposal now states those observed behaviors and separately requires editor approval for this group.",
+    "final_locator": "Reference-manager and reconciliation comparison — OpenRefine row; DOI-less citations, duplicates, versions, and corrections"
+  },
+  {
+    "id": "C02",
+    "classification": "material incomplete",
+    "draft_locator": "Recommendation; Workflow comparison and alternatives; Optional lookup and downloadable bibliography",
+    "evidence": "S01 Via your web browser and PDFs; S07 exporter options; S08 Uploading RIS and BibTeX files with PDFs; S10 library-data export behavior.",
+    "disposition": "accept",
+    "rationale": "The final explicitly excludes Zotero Connector/PDF save, Paperpile PDF/attachment import, and file export, while retaining metadata and links only.",
+    "final_locator": "Reference-manager and reconciliation comparison — Zotero and Paperpile rows; Optional enrichment and downloadable bibliography"
+  },
+  {
+    "id": "C03",
+    "classification": "unsupported",
+    "draft_locator": "Identity, version, correction, and export model; DOI-less records, duplicates, and scholarly versions; DOI-less enrichment validation row",
+    "evidence": "S16 Using Simple Text Query to match references with DOIs; no query was issued in this stage.",
+    "disposition": "accept",
+    "rationale": "The final attributes multiple or non-unique results to Crossref documentation and identifies a local no-candidate state as a proposed requirement, not an observed service screen.",
+    "final_locator": "DOI-less citations, duplicates, versions, and corrections; Validation status and prioritized plan — DOI-less lookup"
+  },
+  {
+    "id": "C04",
+    "classification": "minor locator/wording",
+    "draft_locator": "Proposed pilot workflow and record model, step 6; Optional lookup and downloadable bibliography; Authority and unresolved owner inputs",
+    "evidence": "Brief clause 6 assigns presentation style and lookup-provider acceptability to the group lead; clause 5 authorizes but does not require a commonly supported interchange download.",
+    "disposition": "accept",
+    "rationale": "The final keeps exact format and required fields as open owner choices and does not claim the brief delegates interchange format selection.",
+    "final_locator": "Optional enrichment and downloadable bibliography; Authority, owner choices, and negative constraints"
+  },
+  {
+    "id": "C05",
+    "classification": "material incomplete",
+    "draft_locator": "Released importer/exporter failure chain; Affected scope; JabRef page-range regression validation row",
+    "evidence": "S22 #15106 reported version/environment and development-build statement; S23 #15315 merged fix; S24 v6.0-alpha.6 release note and tag.",
+    "disposition": "accept",
+    "rationale": "The final preserves the issue reporter's 5.15/Ubuntu and then-current development-build claim as a report, documents the narrow pages-to-RIS case, and limits the linked fix claim to the named alpha release.",
+    "final_locator": "Released importer/exporter defect chain; Validation status and prioritized plan — JabRef page-range regression"
+  },
+  {
+    "id": "C06",
+    "classification": "honestly unresolved external input",
+    "draft_locator": "Paperpile workflow comparison; optional enrichment; uncertainty and validation statements",
+    "evidence": "S12 official Auto Update URL returned HTTP 502 on this review at 2026-10-10T04:47:55Z; frozen source map also records an official indexed result and prior direct failures.",
+    "disposition": "retain_uncertainty",
+    "rationale": "The live help page and interface remain unavailable; the final clearly marks the indexed-result flow as unverified and proposes a selected-build check.",
+    "final_locator": "Reference-manager and reconciliation comparison — Paperpile row; Optional enrichment and downloadable bibliography"
+  }
+]

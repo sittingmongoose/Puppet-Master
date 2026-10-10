@@ -1,0 +1,1209 @@
+{
+  "basis": "Fixed ROOT_CHECKPOINT_FROZEN + PROGRESS_COUNT_POLICY; no stage/file/task counts used as logical progress",
+  "checkpoint_original_sha256": "553db6e5488de8f927d8339fddac88df7502e404788139908e7cf31fd7679a3a",
+  "planned_slots": 40,
+  "planned_logical_arms": 80,
+  "started_logical_arms": 60,
+  "completed_role_deliveries": 24,
+  "completed_full_final_deliveries": 23,
+  "completed_independent_judgments": 40,
+  "source_grade_from_completion": false,
+  "campaign_complete": false,
+  "logical_arms": [
+    {
+      "slot": "A1-01",
+      "arm": "control",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "investigator",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "critic",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "reviser",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": false,
+      "completed_final_delivery": true,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS"
+    },
+    {
+      "slot": "A1-01",
+      "arm": "treatment",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "investigator",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "critic",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "reviser",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": false,
+      "completed_final_delivery": true,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS"
+    },
+    {
+      "slot": "A1-02",
+      "arm": "control",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "investigator",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "critic",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "reviser",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": false,
+      "completed_final_delivery": true,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "FAIL"
+    },
+    {
+      "slot": "A1-02",
+      "arm": "treatment",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "investigator",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "critic",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "reviser",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": false,
+      "completed_final_delivery": true,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS"
+    },
+    {
+      "slot": "A2-01",
+      "arm": "control",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "investigator",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "critic",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "reviser",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": false,
+      "completed_final_delivery": true,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS"
+    },
+    {
+      "slot": "A2-01",
+      "arm": "treatment",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "investigator",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "critic",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": false,
+      "completed_final_delivery": true,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS"
+    },
+    {
+      "slot": "A2-02",
+      "arm": "control",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "investigator",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "critic",
+          "status": "running",
+          "quiet_completed": false
+        }
+      ],
+      "completed_role_delivery": false,
+      "completed_final_delivery": false,
+      "assessment_state": "NOT_SELECTED_OR_SOURCE_PENDING",
+      "source_judgment": null
+    },
+    {
+      "slot": "A2-02",
+      "arm": "treatment",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "investigator",
+          "status": "running",
+          "quiet_completed": false
+        }
+      ],
+      "completed_role_delivery": false,
+      "completed_final_delivery": false,
+      "assessment_state": "NOT_SELECTED_OR_SOURCE_PENDING",
+      "source_judgment": null
+    },
+    {
+      "slot": "A3-01",
+      "arm": "control",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "investigator",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "critic",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "reviser",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": false,
+      "completed_final_delivery": true,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "FAIL"
+    },
+    {
+      "slot": "A3-01",
+      "arm": "treatment",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "investigator",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "critic",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "reviser",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": false,
+      "completed_final_delivery": true,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS"
+    },
+    {
+      "slot": "A3-02",
+      "arm": "control",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "investigator",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "critic",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "reviser",
+          "status": "running",
+          "quiet_completed": false
+        }
+      ],
+      "completed_role_delivery": false,
+      "completed_final_delivery": false,
+      "assessment_state": "NOT_SELECTED_OR_SOURCE_PENDING",
+      "source_judgment": null
+    },
+    {
+      "slot": "A3-02",
+      "arm": "treatment",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "investigator",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "critic",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "reviser",
+          "status": "running",
+          "quiet_completed": false
+        }
+      ],
+      "completed_role_delivery": false,
+      "completed_final_delivery": false,
+      "assessment_state": "NOT_SELECTED_OR_SOURCE_PENDING",
+      "source_judgment": null
+    },
+    {
+      "slot": "A4-01",
+      "arm": "control",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "investigator",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "critic",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "reviser",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": false,
+      "completed_final_delivery": true,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS"
+    },
+    {
+      "slot": "A4-01",
+      "arm": "treatment",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "investigator",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "critic",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "reviser",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": false,
+      "completed_final_delivery": true,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS"
+    },
+    {
+      "slot": "A4-02",
+      "arm": "control",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "investigator",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "critic",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "reviser",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": false,
+      "completed_final_delivery": true,
+      "assessment_state": "SOURCE_PENDING",
+      "source_judgment": null
+    },
+    {
+      "slot": "A4-02",
+      "arm": "treatment",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "investigator",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "critic",
+          "status": "running",
+          "quiet_completed": false
+        }
+      ],
+      "completed_role_delivery": false,
+      "completed_final_delivery": false,
+      "assessment_state": "NOT_SELECTED_OR_SOURCE_PENDING",
+      "source_judgment": null
+    },
+    {
+      "slot": "A5-01",
+      "arm": "control",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "investigator",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "critic",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "reviser",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": false,
+      "completed_final_delivery": true,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "FAIL"
+    },
+    {
+      "slot": "A5-01",
+      "arm": "treatment",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "investigator",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "critic",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "reviser",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": false,
+      "completed_final_delivery": true,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "FAIL"
+    },
+    {
+      "slot": "A5-02",
+      "arm": "control",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "investigator",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "critic",
+          "status": "running",
+          "quiet_completed": false
+        }
+      ],
+      "completed_role_delivery": false,
+      "completed_final_delivery": false,
+      "assessment_state": "NOT_SELECTED_OR_SOURCE_PENDING",
+      "source_judgment": null
+    },
+    {
+      "slot": "A5-02",
+      "arm": "treatment",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "investigator",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "critic",
+          "status": "running",
+          "quiet_completed": false
+        }
+      ],
+      "completed_role_delivery": false,
+      "completed_final_delivery": false,
+      "assessment_state": "NOT_SELECTED_OR_SOURCE_PENDING",
+      "source_judgment": null
+    },
+    {
+      "slot": "A6-01",
+      "arm": "control",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "investigator",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "critic",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "reviser",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": false,
+      "completed_final_delivery": true,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "FAIL"
+    },
+    {
+      "slot": "A6-01",
+      "arm": "treatment",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "investigator",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "critic",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "reviser",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": false,
+      "completed_final_delivery": true,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS"
+    },
+    {
+      "slot": "A6-02",
+      "arm": "control",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "investigator",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "critic",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "reviser",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": false,
+      "completed_final_delivery": true,
+      "assessment_state": "SOURCE_PENDING",
+      "source_judgment": null
+    },
+    {
+      "slot": "A6-02",
+      "arm": "treatment",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "investigator",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "critic",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "reviser",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": false,
+      "completed_final_delivery": true,
+      "assessment_state": "SOURCE_PENDING",
+      "source_judgment": null
+    },
+    {
+      "slot": "A7-01",
+      "arm": "control",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "investigator",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "critic",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "reviser",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": false,
+      "completed_final_delivery": true,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS"
+    },
+    {
+      "slot": "A7-01",
+      "arm": "treatment",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "investigator",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "critic-finalizer",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": false,
+      "completed_final_delivery": true,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS"
+    },
+    {
+      "slot": "A7-02",
+      "arm": "control",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "investigator",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "critic",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "reviser",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": false,
+      "completed_final_delivery": true,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS"
+    },
+    {
+      "slot": "A7-02",
+      "arm": "treatment",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "investigator",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "critic-finalizer",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": false,
+      "completed_final_delivery": true,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS"
+    },
+    {
+      "slot": "A8-01",
+      "arm": "control",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "investigator",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "critic",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "reviser",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": false,
+      "completed_final_delivery": true,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "FAIL"
+    },
+    {
+      "slot": "A8-01",
+      "arm": "treatment",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "investigator",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "critic",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "reviser",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": false,
+      "completed_final_delivery": true,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS"
+    },
+    {
+      "slot": "A8-02",
+      "arm": "control",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "investigator",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "critic",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "reviser",
+          "status": "running",
+          "quiet_completed": false
+        }
+      ],
+      "completed_role_delivery": false,
+      "completed_final_delivery": false,
+      "assessment_state": "NOT_SELECTED_OR_SOURCE_PENDING",
+      "source_judgment": null
+    },
+    {
+      "slot": "A8-02",
+      "arm": "treatment",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "investigator",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "critic",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "reviser",
+          "status": "running",
+          "quiet_completed": false
+        }
+      ],
+      "completed_role_delivery": false,
+      "completed_final_delivery": false,
+      "assessment_state": "NOT_SELECTED_OR_SOURCE_PENDING",
+      "source_judgment": null
+    },
+    {
+      "slot": "B-APPL-G-01",
+      "arm": "control",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "role",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": true,
+      "completed_final_delivery": false,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS"
+    },
+    {
+      "slot": "B-APPL-G-01",
+      "arm": "treatment",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "role",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": true,
+      "completed_final_delivery": false,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "FAIL"
+    },
+    {
+      "slot": "B-APPL-G-02",
+      "arm": "control",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "role",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": true,
+      "completed_final_delivery": false,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS"
+    },
+    {
+      "slot": "B-APPL-G-02",
+      "arm": "treatment",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "role",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": true,
+      "completed_final_delivery": false,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "FAIL"
+    },
+    {
+      "slot": "B-APPL-M-01",
+      "arm": "control",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "role",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": true,
+      "completed_final_delivery": false,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS"
+    },
+    {
+      "slot": "B-APPL-M-01",
+      "arm": "treatment",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "role",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": true,
+      "completed_final_delivery": false,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "FAIL"
+    },
+    {
+      "slot": "B-APPL-M-02",
+      "arm": "control",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "role",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": true,
+      "completed_final_delivery": false,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS"
+    },
+    {
+      "slot": "B-APPL-M-02",
+      "arm": "treatment",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "role",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": true,
+      "completed_final_delivery": false,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS"
+    },
+    {
+      "slot": "B-DISC-G-01",
+      "arm": "control",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "role",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": true,
+      "completed_final_delivery": false,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "FAIL"
+    },
+    {
+      "slot": "B-DISC-G-01",
+      "arm": "treatment",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "role",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": true,
+      "completed_final_delivery": false,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "FAIL"
+    },
+    {
+      "slot": "B-DISC-G-02",
+      "arm": "control",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "role",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": true,
+      "completed_final_delivery": false,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "FAIL"
+    },
+    {
+      "slot": "B-DISC-G-02",
+      "arm": "treatment",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "role",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": true,
+      "completed_final_delivery": false,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "FAIL"
+    },
+    {
+      "slot": "B-DISC-M-01",
+      "arm": "control",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "role",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": true,
+      "completed_final_delivery": false,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "FAIL"
+    },
+    {
+      "slot": "B-DISC-M-01",
+      "arm": "treatment",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "role",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": true,
+      "completed_final_delivery": false,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "FAIL"
+    },
+    {
+      "slot": "B-DISC-M-02",
+      "arm": "control",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "role",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": true,
+      "completed_final_delivery": false,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS"
+    },
+    {
+      "slot": "B-DISC-M-02",
+      "arm": "treatment",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "role",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": true,
+      "completed_final_delivery": false,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "FAIL"
+    },
+    {
+      "slot": "B-FINAL-G-01",
+      "arm": "control",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "role",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": true,
+      "completed_final_delivery": false,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS"
+    },
+    {
+      "slot": "B-FINAL-G-01",
+      "arm": "treatment",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "role",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": true,
+      "completed_final_delivery": false,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "FAIL"
+    },
+    {
+      "slot": "B-FINAL-G-02",
+      "arm": "control",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "role",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": true,
+      "completed_final_delivery": false,
+      "assessment_state": "SOURCE_PENDING",
+      "source_judgment": null
+    },
+    {
+      "slot": "B-FINAL-G-02",
+      "arm": "treatment",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "role",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": true,
+      "completed_final_delivery": false,
+      "assessment_state": "SOURCE_PENDING",
+      "source_judgment": null
+    },
+    {
+      "slot": "B-FINAL-M-01",
+      "arm": "control",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "role",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": true,
+      "completed_final_delivery": false,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS"
+    },
+    {
+      "slot": "B-FINAL-M-01",
+      "arm": "treatment",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "role",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": true,
+      "completed_final_delivery": false,
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "FAIL"
+    },
+    {
+      "slot": "B-FINAL-M-02",
+      "arm": "control",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "role",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": true,
+      "completed_final_delivery": false,
+      "assessment_state": "SOURCE_PENDING",
+      "source_judgment": null
+    },
+    {
+      "slot": "B-FINAL-M-02",
+      "arm": "treatment",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "role",
+          "status": "completed",
+          "quiet_completed": true
+        }
+      ],
+      "completed_role_delivery": true,
+      "completed_final_delivery": false,
+      "assessment_state": "SOURCE_PENDING",
+      "source_judgment": null
+    },
+    {
+      "slot": "C-R1-01",
+      "arm": "control",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "investigator",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "critic",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "reviser",
+          "status": "running",
+          "quiet_completed": false
+        }
+      ],
+      "completed_role_delivery": false,
+      "completed_final_delivery": false,
+      "assessment_state": "NOT_SELECTED_OR_SOURCE_PENDING",
+      "source_judgment": null
+    },
+    {
+      "slot": "C-R1-01",
+      "arm": "treatment",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "investigator",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "critic",
+          "status": "running",
+          "quiet_completed": false
+        }
+      ],
+      "completed_role_delivery": false,
+      "completed_final_delivery": false,
+      "assessment_state": "NOT_SELECTED_OR_SOURCE_PENDING",
+      "source_judgment": null
+    },
+    {
+      "slot": "C-R1-02",
+      "arm": "control",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "investigator",
+          "status": "completed",
+          "quiet_completed": true
+        },
+        {
+          "stage": "critic",
+          "status": "running",
+          "quiet_completed": false
+        }
+      ],
+      "completed_role_delivery": false,
+      "completed_final_delivery": false,
+      "assessment_state": "NOT_SELECTED_OR_SOURCE_PENDING",
+      "source_judgment": null
+    },
+    {
+      "slot": "C-R1-02",
+      "arm": "treatment",
+      "checkpoint_stage_statuses": [
+        {
+          "stage": "investigator",
+          "status": "running",
+          "quiet_completed": false
+        }
+      ],
+      "completed_role_delivery": false,
+      "completed_final_delivery": false,
+      "assessment_state": "NOT_SELECTED_OR_SOURCE_PENDING",
+      "source_judgment": null
+    }
+  ]
+}

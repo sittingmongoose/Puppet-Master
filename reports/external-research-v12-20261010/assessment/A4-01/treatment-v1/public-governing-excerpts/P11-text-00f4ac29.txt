@@ -1,0 +1,18 @@
+URL: https://docs.aws.amazon.com/AmazonS3/latest/userguide/conditional-writes.html
+Original locator: ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P11-text.txt
+Original SHA256: 00f4ac295ea1631c8e6e03b0b2e4f6c1d7aae9ede6bc9962c06889d764a42b2e
+Original numbered lines; gaps omitted. Not full response.
+
+114: operation fails, resulting in a 412 Precondition Failed
+119: with a 412 Precondition Failed response.
+122: 412 Precondition Failed response.
+123: You can also receive a 409 Conflict response in the case of
+127: 409 Conflict error. When using
+129: re-initiated with CreateMultipartUpload to upload the object
+130: again after receiving a 409 Conflict error.
+136: 412 Precondition Failed response.
+137: You can also receive a 409 Conflict response in the case of
+151: Conditional writes do not consider any in-progress multipart uploads requests since
+157: This scenario will result in a 412 Precondition Failed response for both If-None-Match and If-Match headers.
+163: returns a 409 Conflict or 404 Not Found response for the
+168: This scenario will result in a 409 Conflict response for an

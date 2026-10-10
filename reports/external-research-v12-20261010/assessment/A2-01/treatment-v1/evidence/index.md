@@ -1,0 +1,32 @@
+# Independent primary-evidence index
+
+Read-only assessor captures. No product workflow/code was executed. Raw HTML is decoded if the HTTP response was gzip; wire response is retained where applicable. Exact capture times, requested/final URLs, headers and hashes are in [retrieval-manifest.json](retrieval-manifest.json). Local extracted-text line numbers differ from the candidate/browser renderers.
+
+| ID | Primary source | Version/context and checked locator | Captured evidence |
+|---|---|---|---|
+| R01 | [ODK Collect release v2026.3.5](https://github.com/getodk/collect/releases/tag/v2026.3.5) | Collect v2026.3.5; short commit 87bf04e; release 2026-09-28T17:56:05Z; text lines 23-62; HTML relative-time datetime | [text](R01.txt), [HTML](R01.html) |
+| R02 | [ODK Central release list and v2026.3.1 metadata](https://github.com/getodk/central/releases) | Central v2026.3.1; short commit 7d6de62; release 2026-09-28T16:52:20Z; text lines 29-80; HTML relative-time datetime | [text](R02.txt), [HTML](R02.html) |
+| R03 | [Managing Forms in Collect](https://docs.getodk.org/collect-forms/) | Living ODK Docs; native edits introduced Collect v2025.2.0 and Central v2025.1.4; text lines 128-150,152-174,216-276 | [text](R03.txt), [HTML](R03.html) |
+| R04 | [Managing Submissions in Central](https://docs.getodk.org/central-submissions/) | Living ODK Docs; review states since Central v1.2 and version diffs since v1.3; text lines 237-245,268-327,400-439,440-496 | [text](R04.txt), [HTML](R04.html) |
+| R05 | [Managing Forms in Central](https://docs.getodk.org/central-forms/) | Living ODK Docs; text lines 315-367 | [text](R05.txt), [HTML](R05.html) |
+| R06 | [OpenRosa Metadata Scheme](https://docs.getodk.org/openrosa-metadata/) | Living OpenRosa metadata specification; text lines 167-222,223-263 | [text](R06.txt), [HTML](R06.html) |
+| R07 | [ODK Question Types: metadata](https://docs.getodk.org/form-question-types/) | Living ODK Docs question-type reference; text lines 3381-3408 | [text](R07.txt), [HTML](R07.html) |
+| R08 | [Installing ODK Central](https://docs.getodk.org/central-install/) | Living ODK Central installation documentation; text lines 122-146,174-177 | [text](R08.txt), [HTML](R08.html) |
+| R09 | [Collecting data using KoboCollect](https://support.kobotoolbox.org/data_collection_kobocollect.html) | Kobo help last updated 2026-07-17; exact app build unspecified; text lines 18-27,78-169 | [text](R09.txt), [HTML](R09.html) |
+| R10 | [Viewing and validating Kobo data](https://support.kobotoolbox.org/viewing_validating_data.html) | Kobo help last updated 2026-09-08; server build unspecified; text lines 83-107,168-187 | [text](R10.txt), [HTML](R10.html) |
+| R11 | [Editing and deleting Kobo data](https://support.kobotoolbox.org/editing_deleting_data.html) | Kobo help last updated 2026-05-06; server build unspecified; text lines 13-19,34-91,140-157,181-217 | [text](R11.txt), [HTML](R11.html) |
+| R12 | [Exporting and downloading Kobo data](https://support.kobotoolbox.org/export_download.html) | Kobo help last updated 2026-05-06; export build unspecified; text lines 26-76,111-165 | [text](R12.txt), [HTML](R12.html) |
+| R13 | [Manually uploading submissions to KoboToolbox](https://support.kobotoolbox.org/manual_upload.html) | Kobo help last updated 2026-07-22; experimental feature; text lines 8-20,39-86 | [text](R13.txt), [HTML](R13.html) |
+| R14 | [Pulling data from an external CSV](https://support.kobotoolbox.org/pull_data_kobotoolbox.html) | Kobo help last updated 2026-05-06; text lines 8-50,67-78,79-120 | [text](R14.txt), [HTML](R14.html) |
+| R15 | [Creating a KoboToolbox account](https://support.kobotoolbox.org/creating_account.html) | Kobo help last updated 2026-10-03; text lines 8-51 | [text](R15.txt), [HTML](R15.html) |
+| R16 | [Apache CouchDB 3.5.1 replication and conflict model](https://docs.couchdb.org/en/3.5.1/replication/conflicts.html) | Apache CouchDB documentation path en/3.5.1; page title 3.5; text lines 21-94,115-177,272-291,1298-1306 | [text](R16.txt), [HTML](R16.html) |
+| R17 | [ODK Collect issue #4589: failed submission editing](https://github.com/getodk/collect/issues/4589) | Collect issue #4589 opened 2021-06-02; closed 2021-07-07; text lines 36-47,256-267,360-375 | [text](R17.txt), [HTML](R17.html) |
+| R18 | [ODK forum report: failed submissions no longer editable](https://forum.getodk.org/t/unable-to-edit-forms-that-fail-to-send/34867) | Reported Collect v2021.2.4 / Android 10; 2021-08-26 through 2021-09-02; text lines 8-45 | [text](R18.txt), [HTML](R18.html) |
+| R19 | [ODK Central API changelog](https://docs.getodk.org/central-api-changelog/) | Living Central API changelog; v1.2, v1.3, v1.4 introductions; text lines 730-767,768-825 | [text](R19.txt), [HTML](R19.html) |
+| R20 | [KoboToolbox data storage](https://support.kobotoolbox.org/data_storage.html) | Kobo help last updated 2026-07-22; text lines 8-23 | [text](R20.txt), [HTML](R20.html) |
+| R21 | [ODK Central issue #1612 with backend attachment-purge test code](https://github.com/getodk/central/issues/1612) | Central issue #1612 opened 2026-01-20; closed via backend #1754 on 2026-03-05; issue has no release pin; text lines 53-131,174-178,206-230 | [text](R21.txt), [HTML](R21.html) |
+| R22 | [Linked fix PR #4655](https://github.com/getodk/collect/pull/4655) | Collect PR #4655 merged 2021-07-07; no exact release inclusion inferred; text lines 23-37,64-114,494-525 | [text](R22.txt), [HTML](R22.html) |
+| R23 | [Central submission API and version retrieval](https://docs.getodk.org/central-api-submission-management/) | Living Central Submission Management API; version resources introduced v1.2; text lines 707-730,1725-1759,3958-3991,4628-4631,4799-4802,4876-4885 | [text](R23.txt), [HTML](R23.html) |
+| R24 | [Linked attachment fix PR #1754](https://github.com/getodk/central-backend/pull/1754) | Central-backend PR #1754 merged 2026-03-05; merge short commit 2b310ff; exact release inclusion not established here; text lines 23-75,293-315 | [text](R24.txt), [HTML](R24.html) |
+
+[Complete independent source map](../source-map.json) contains each consequential judgment, operation, conditions/defaults/exceptions/type/domain and original claim locator. [Assessment](../assessment.md) separates final qualification, corrected lineage defects, remaining limits and native/protocol/time unknowns. Original candidate artifacts are identified by [original-inspected-hashes.json](../original-inspected-hashes.json).

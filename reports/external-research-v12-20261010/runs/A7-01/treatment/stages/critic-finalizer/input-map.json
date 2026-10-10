@@ -1,0 +1,46 @@
+{
+  "run_id": "A7-01-treatment",
+  "stage": "critic-finalizer",
+  "brief": "ER12_RUNTIME/runs/A7-01/treatment/handoff/inputs/brief.md",
+  "predecessors": [
+    "ER12_RUNTIME/runs/A7-01/treatment/handoff/inputs/brief.md",
+    "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/discovery.md",
+    "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/draft.md",
+    "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/source-map.json",
+    "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/revealed-plan.md",
+    "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/plan-reveal.json",
+    "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/README.md",
+    "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S01-3mf-core.md",
+    "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S02-fusion-mesh.md",
+    "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S03-fusion-export.md",
+    "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S04-prusa-formats.md",
+    "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S05-prusaslicer-250.md",
+    "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S06-step-issue-8998.md",
+    "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S07-unit-issue-15545.md",
+    "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S08-bambu-names-issue.md",
+    "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S09-3mf-spec-index.md",
+    "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S10-prusa-project-3mf.md",
+    "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S11-cura-570-release.md",
+    "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S12-cura-3mf-position-issue.md",
+    "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S13-cura-object-name-issue.md",
+    "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S14-cura-releases.md",
+    "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S15-prusaslicer-releases.md",
+    "ER12_RUNTIME/runs/A7-01/treatment/handoff/manifest.json",
+    "ER12_RUNTIME/runs/A7-01/treatment/control/handoff-binding.json"
+  ],
+  "source_roots": [
+    "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources"
+  ],
+  "allowed_write_root": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer",
+  "stage_deadline_utc": "2026-10-10T04:56:50.913Z",
+  "whole_deadline_utc": "2026-10-10T04:56:50.913Z",
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    }
+  },
+  "revealed_plan": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/revealed-plan.md"
+}

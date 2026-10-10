@@ -1,0 +1,152 @@
+{
+  "verified_at_utc": "2026-10-10T05:00:42.222825+00:00",
+  "review_goal_state_at_save": "active; native completion has not yet been called",
+  "source_judgment": "FAIL",
+  "all_six_axes_assessed": true,
+  "unassessed_axes": [],
+  "original_artifacts_unchanged": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A5-01/brief.md",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A5-01/plan.md",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/terminal-science-freeze-root.json",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/inputs/brief.md",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/assignment.md",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/input-map.json",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/freeze.json",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/source-map.json",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/sources/index.md",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/critic/assignment.md",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/critic/input-map.json",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/critic/freeze.json",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/critic/source-map.json",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/critic/sources/index.md",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/assignment.md",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/input-map.json",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/freeze.json",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/source-map.json",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/sources/index.md",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/discovery.md",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/draft.md",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/revealed-plan.md",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/plan-reveal.json",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/critic/critique.md",
+      "unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/final.md",
+      "unchanged": true
+    }
+  ],
+  "output_hashes": [
+    {
+      "path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/assessment.md",
+      "bytes": 50970,
+      "sha256": "246cfb2b5cd75750c8a2c47e056ffed9f6c99e46cc5349411876fb64213de785"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/assessment.json",
+      "bytes": 114645,
+      "sha256": "0863fd6668d91c94bb590e1b13f4950ad207b1cc7c2166b45173c21efcf8cfac"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/source-map.json",
+      "bytes": 46020,
+      "sha256": "675a6860057cf66c599a3e83a119fe3b1618f8a51453edddebf1389b89a82c7c"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/index.md",
+      "bytes": 19650,
+      "sha256": "e3774455de1cb6fd86c05c4ff46cb7158102e40b4b2625990c80e50e6317bb77"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/xml-conflict.md",
+      "bytes": 3809,
+      "sha256": "0e1380a51f612932ecdc8d39753dde501f549924a250a7cc2ad23a61d859fe4e"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/original-inspected-manifest.json",
+      "bytes": 8372,
+      "sha256": "186ad7dfa99d245e9370de9293eeca16d6c12a521377ec795bf224d641717913"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/freeze-integrity-check.json",
+      "bytes": 16772,
+      "sha256": "7c17b6679824578bbd1ff7f975005b8bab2d41aff948dfe2558fdd44608b7112"
+    }
+  ],
+  "local_links_verified": 146,
+  "independent_capture_hashes_verified": 21
+}

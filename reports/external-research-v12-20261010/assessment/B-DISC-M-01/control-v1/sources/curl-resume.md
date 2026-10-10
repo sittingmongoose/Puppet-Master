@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <PRIVATE_EMAIL_REDACTED>, et al.
+c: Copyright (C) Daniel Stenberg, <AUTHORIZED_PROVIDER_INSTANCE>, et al.
 SPDX-License-Identifier: curl
 Title: CURLOPT_RESUME_FROM
 Section: 3

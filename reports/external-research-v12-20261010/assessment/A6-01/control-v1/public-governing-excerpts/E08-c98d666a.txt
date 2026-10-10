@@ -1,0 +1,35 @@
+URL: https://docs.opentripplanner.org/en/latest/apis/GTFS-GraphQL-API/
+Original locator: ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E08.txt
+Original SHA256: c98d666a6812ba6644396fac4d1dc42ff3735deee752093b9628ff4825be4ed4
+Original numbered lines; gaps omitted. Not full response.
+
+112: GTFS GraphQL API
+113: The GTFS GraphQL API is a general purpose API which was created for the Digitransit project and is
+114: used heavily by digitransit-ui.
+115: otp-react-redux has also migrated to this API
+116: in 2023.
+117: There is also a Java client available which
+118: makes it easy to use this API in a Java application.
+119: URLs
+120: GraphQL endpoint: http://localhost:8080/otp/gtfs/v1
+121: HTML schema documentation:
+122: https://docs.opentripplanner.org/api/dev-2.x/graphql-gtfs/
+123: Built-in visual GraphQL client: http://localhost:8080/graphiql
+124: (note the additional i!)
+125: Built-in API client
+126: A browser based GraphQL API client is available at
+127: http://localhost:8080/graphiql
+128: curl example
+129: A complete example that fetches the list of all stops from OTP is:
+130: curl --request POST \
+131: --url http://localhost:8080/otp/gtfs/v1 \
+132: --header 'Content-Type: application/json' \
+133: --header 'OTPTimeout: 180000' \
+134: --data '{"query":"query stops {\n stops {\n gtfsId\n name\n }\n}\n","operationName":"stops"}'
+135: Configuration
+136: The API is enabled by default.
+137: If you want to disable it, do it in otp-config.json:
+138: // otp-config.json
+139: {
+140: "otpFeatures": {
+141: "GtfsGraphQlApi": false

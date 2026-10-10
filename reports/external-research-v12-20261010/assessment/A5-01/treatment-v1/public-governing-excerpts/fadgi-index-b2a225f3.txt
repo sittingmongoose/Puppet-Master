@@ -1,0 +1,47 @@
+URL: https://www.digitizationguidelines.gov/guidelines/digitize-embedding.html
+Original locator: ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/fadgi-index.txt
+Original SHA256: b2a225f32451227f9dcba54800f18ef7ac42718770754a32d6413d260055e5dc
+Original numbered lines; gaps omitted. Not full response.
+
+18: Guidelines: Current  Version
+19: These guidelines pertain to metadata to be embedded in Broadcast WAVE files. They emphasize the importance of identifying the responsible organization and providing one or more item identifiers, as well a providing other guidance. The guidelines recommend an implementation of the bext chunk standardized by the European Broadcast Union (EBU) in EBU-TECH 3285: Specification of the Broadcast Wave Format Version 2 (2011), the INFO-list chunk, Cue chunk and Associated Data List chunk (adtl) defined in the Microsoft-IBM RIFF specification (1991).
+20: Guidelines for Embedding Metadata in Broadcast WAVE Files, Version 3 (PDF, 481 KB)
+21: Approved by Working Group on April 26, 2021.
+22: Blog post on The Signal about updated version: That’s Our Cue! Updates for the FADGI Embedded Metadata Guidelines and BWF MetaEdit for the Cue Chunk in Broadcast Wave Files, September 9, 2021
+23: Demo of cue chunk functionality in BWF MetaEdit from Jerome Martinez of MediaArea: Video (mp4, 8:36 minutes)
+24: Changes from 2012 version:
+25: Simplified title from “Embedding Metadata in Digital Audio Files: Guideline for Federal Agency Use of Broadcast WAVE Files” to “Guidelines for Embedding Metadata in Broadcast WAVE Files”.
+26: For OriginationDate and ICRD, FADGI adds the option for a date range using double hyphens    [--] as the interval designator, such as 2002--2003, in place of a solidus (a.k.a. forward slash "/") although a solidus is also permitted.
+27: Changes in CodingHistory:
+28: Adding values for sampling frequency, bit depth and mode beyond what is listed in EBU R98 to reflect current needs and tool capabilities
+29: Added values for sampling frequency: 96000, 176400, 192000, 384000, 768000 Hz
+30: Added value for word length/bit depth: 32 bits
+31: Added values for mode: multitrack, multichannel and other
+32: Mode definition: To clarify the use of this field in CodingHistory, FADGI states that ‘mode’ is a synonym for ‘sound field’ and includes definitions for allowable mode values
+33: Definitions for all values in mode: mono, stereo, dual mono, joint stereo, multitrack, multichannel and other
+34: Updated examples for coding history to reflect other changes
+35: Addition of guidance for use of Associated Data List Chunk (adtl), Label Chunk (labl), Note Chunk (note) and Labeled Text Chunk (ltxt) to accompany use of Cue Chunk (cue) and Cue Points
+36: Correction from “LIST info chunk” to “INFO List Chunk” to comply with published specification
+37: Updated Specification and Reference list in Part V
+38: Guidelines: Earlier Versions
+39: Broadcast WAVE Metadata Embedding Guidelines, Version 2 (PDF, 343  KB)
+40: Approved by Working Group on April 23, 2012, and superseded by version 3 on April 1, 2021.
+41: Broadcast WAVE Metadata Embedding Guidelines, Version 1 (PDF, 274 KB)
+42: Approved by Working Group on September 15, 2009, and superseded by version 2 on April 23, 2012.
+43: Reusing ADTL chunk data as IIIF Web Annotations
+44: In 2021-2022, the FADGI team worked on an experimental project with AudiAnnotate to reuse cue and adtl chunk data as IIIF web annotations. For more details, see Test Sample Files for IIIF Web Annotations Using AudiAnnotate
+45: Guidelines: Background
+46: Three background documents provide an explanatory context for  the guidelines and describe the constraints imposed by existing WAVE  metadata structures. The documents discuss a variety of metadata chunks in WAVE files: the bext and  INFO-list chunks covered by the guidelines, as well as the format chunk with its technical metadata, and the aXML and iXML chunks. The introductory document describes the loudness metadata introduced in version 2 of the EBU Broadcast WAVE standard and the Working Group's provisional implementation of an ad hoc MD5 chunk for checksum (hash value) data. The third document provides information about the types of identifiers used in some federal agencies.
+47: Introductory Discussion (PDF, 295 KB) for the proposed audio metadata embedding guidelines (revised 2012)
+48: Consultant’s report on embedding options (PDF, 319 KB) in digital audio files (2009)
+49: Identifiers: Types and Characteristics (PDF, 42 KB) relevant to digital content entities, including audio files (2011)
+50: BWF MetaEdit: About the tool
+51: BWF MetaEdit is a free open source tool that supports embedding, validating, and exporting of metadata in Broadcast WAVE Format (BWF) files. It supports the FADGI Guidelines for Embedding Metadata in Broadcast WAVE Files, including  updates starting v21.07 and beyond which support use of the Associated Data List Chunk (adtl), Label Chunk (labl), Note Chunk (note) and Labeled Text Chunk (ltxt) to accompany use of Cue Chunk (cue) and Cue Points.
+52: BWF MetaEdit is supported, in part, by  funding from the Library of Congress and FADGI; designed and led by AVPreserve (now known as AVP); developed by MediaArea.
+53: Features include the ability to:
+54: Import, edit, embed, and export specified metadata elements in WAVE audio files
+55: Export technical metadata from Format Chunks and minimal metadata  from bext and INFO chunks as comma-separated values and/or XML, across  a set of files or from individual files
+56: Evaluate, verify and embed MD5 checksums, as applied to the WAVE file's data chunk (audio bitstream only) into a non-standardized, ad hoc "MD5 chunk."
+57: Enforce the guideline (above) developed by FADGI as well as specifications from the European  Broadcasting Union (EBU), Microsoft, and IBM
+58: Report certain errors in the construction of WAVE files
+59: Choose from Command line and GUI, for Windows/PC, Macintosh OS, Linux and more; see list of options

@@ -1,0 +1,29 @@
+[
+  {
+    "id": "CR-01",
+    "classification": "material incomplete",
+    "draft_locator": "Recommendation; Proposed data and coordinator workflow states 6–7; Product and sync comparison; Validation table correction path",
+    "evidence": "S03 lines 181–198; S04 lines 303–317; S11 lines 10–13, 19–27, 40–61, 122–131; author rechecks recorded under those unchanged source IDs in source-map.json.",
+    "disposition": "amend",
+    "rationale": "The gap is valid: native edit/revision history does not itself provide the charity with a stable correction-event identity and immutable before-image, and current ODK documentation does not guarantee prior-version retrieval in the selected build. The final defines correction_id, parent/prior links, actor/time/reason/version, field and attachment changes, and a complete before-image; it proposes a separate correction event and requires a pinned-build recoverability gate before any native edit can stand in that route. The steward still owns the current-view decision.",
+    "final_locator": "Recommendation; Proposed data and coordinator workflow, states 6–7; Product and sync comparison; Validation table, proposed correction path."
+  },
+  {
+    "id": "CR-02",
+    "classification": "material incomplete",
+    "draft_locator": "Kobo row in Product and sync comparison; Site, visit, form, attachment, time, and duplicate handling; proposed Kobo export/restore rehearsal",
+    "evidence": "S12 lines 28–40, 67–74; author read-only recheck in source-map.json.",
+    "disposition": "amend",
+    "rationale": "The official Kobo page confirms the condition: standard XLS is .xlsx and supports repeats; CSV omits repeats; media is separate; XLS removes timezone data unless dates are exported as text. The final preserves the observed time as raw text with known offset separate, calls for the dates-as-text option when using Kobo XLS, and adds a proposed export/restore acceptance check. No export was executed.",
+    "final_locator": "Kobo row in Product and sync comparison; Site, visit, form, attachment, time, and duplicate handling; Validation table."
+  },
+  {
+    "id": "CR-03",
+    "classification": "minor locator/wording",
+    "draft_locator": "Conditions and local recommendation; Site, visit, form, attachment, time, and duplicate handling",
+    "evidence": "Original brief.md, obligation 7; exact scope quoted in the final plan-disposition table.",
+    "disposition": "amend",
+    "rationale": "The brief prohibits precise location inferred from photographs but does not ban GPS collected separately. The final retains the photo-derived location prohibition and labels omitting GPS as the proposal's local data-minimization recommendation, not a binding brief requirement.",
+    "final_locator": "Independent critic dispositions; Conditions and local recommendation; Site, visit, form, attachment, time, and duplicate handling; Exact per-clause plan disposition, clause 7."
+  }
+]

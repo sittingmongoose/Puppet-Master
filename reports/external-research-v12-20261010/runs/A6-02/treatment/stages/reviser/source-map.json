@@ -1,0 +1,606 @@
+{
+  "run_id": "A6-02-treatment",
+  "stage": "reviser",
+  "source_id_policy": "Original source IDs are preserved exactly inside their original map namespace. Use INV:Sxx, CRT:Sxx, or REV:Rxx; repeated numeric IDs from separate predecessor maps are distinct entries and are not merged or rebound.",
+  "assignment_path": "ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/assignment.md",
+  "input_map_path": "ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/input-map.json",
+  "frozen_input_hashes": [
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/inputs/brief.md",
+      "sha256": "2f0f5e66921a17b6966aee8ea7fce3fe7b8652a8cac03f05e6c175cebe354598",
+      "bytes": 3410
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/assignment.md",
+      "sha256": "27d918bcf9394df99b1dce7e87db2b9173a7df8c1e1b4399424b5f586af80ac2",
+      "bytes": 3759
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/input-map.json",
+      "sha256": "2168d498b7d0b31bde0778ad3643d8093f6bed56968fb8b2322804c3f554f3b2",
+      "bytes": 1794
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/investigator/discovery.md",
+      "sha256": "6ceb48b8cdcd2660861a3d0f651c005382a8313bb2d0ea227dd4644defd2a6e5",
+      "bytes": 9957
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/investigator/draft.md",
+      "sha256": "1377bda71ce8f1caf2ac46d56aed127b00d8a6ae2272266732bead508081f1d6",
+      "bytes": 28318
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/investigator/source-map.json",
+      "sha256": "fec1b5c705917ba5ac2435fab7fb6266fa12e75823be987ee3aa9dff5eb955b9",
+      "bytes": 28217
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/investigator/revealed-plan.md",
+      "sha256": "169aaf6153653975a15fc0bcb87130cf772fb7761f5c1abf2f80838b62a4a1db",
+      "bytes": 6071
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/investigator/plan-reveal.json",
+      "sha256": "7d824cb3beca8d6a55de279ee56927b3174df11887e1991e89640ed99d3b43ea",
+      "bytes": 428
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/critic/critique.md",
+      "sha256": "cb1caad0601e7fd748001086f85fd7c490bc7de461c6c4e71cd9b064a8eb70a4",
+      "bytes": 12494
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-02/treatment/stages/critic/source-map.json",
+      "sha256": "884b8dc448808de7aa18e2f1039b50e5f8baa5b46cbc80149b3bd780351f5dd0",
+      "bytes": 15709
+    }
+  ],
+  "input_map": {
+    "run_id": "A6-02-treatment",
+    "stage": "reviser",
+    "brief": "ER12_RUNTIME/runs/A6-02/treatment/inputs/brief.md",
+    "predecessors": [
+      "ER12_RUNTIME/runs/A6-02/treatment/stages/investigator/discovery.md",
+      "ER12_RUNTIME/runs/A6-02/treatment/stages/investigator/draft.md",
+      "ER12_RUNTIME/runs/A6-02/treatment/stages/investigator/source-map.json",
+      "ER12_RUNTIME/runs/A6-02/treatment/stages/investigator/revealed-plan.md",
+      "ER12_RUNTIME/runs/A6-02/treatment/stages/investigator/plan-reveal.json",
+      "ER12_RUNTIME/runs/A6-02/treatment/stages/critic/critique.md",
+      "ER12_RUNTIME/runs/A6-02/treatment/stages/critic/source-map.json"
+    ],
+    "source_roots": [
+      "ER12_RUNTIME/runs/A6-02/treatment/stages/investigator/sources",
+      "ER12_RUNTIME/runs/A6-02/treatment/stages/critic/sources"
+    ],
+    "allowed_write_root": "ER12_RUNTIME/runs/A6-02/treatment/stages/reviser",
+    "stage_deadline_utc": "2026-10-10T05:21:59.858Z",
+    "whole_deadline_utc": "2026-10-10T05:39:56.996Z",
+    "requested_route": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna",
+      "options": {
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      }
+    },
+    "revealed_plan": "ER12_RUNTIME/runs/A6-02/treatment/stages/investigator/revealed-plan.md",
+    "prospective_service_tier_revision": "user-standard-20261010-v1"
+  },
+  "predecessor_source_maps": {
+    "INV": {
+      "source_map_path": "ER12_RUNTIME/runs/A6-02/treatment/stages/investigator/source-map.json",
+      "original_map": {
+        "run_id": "A6-02-treatment",
+        "stage": "investigator",
+        "discovery_input": "ER12_RUNTIME/runs/A6-02/treatment/inputs/brief.md",
+        "access_window_note": "2026-10-10T04:40:13Z/2026-10-10T04:45:45Z; browser retrieval timestamps are not exposed, so this records the bounded stage access window rather than a per-request instant.",
+        "sources": [
+          {
+            "id": "S01",
+            "title": "Open Archives Initiative Protocol for Metadata Harvesting",
+            "url": "https://www.openarchives.org/OAI/openarchivesprotocol.html",
+            "released_version_or_commit": "OAI-PMH 2.0, released 2002-06-14; current official specification page.",
+            "locator": "Sections 2.5.1 (Deleted records), 3.3.2 (UTC datestamps), 3.4 (metadataPrefix), and 3.5 (flow control/resumption tokens).",
+            "accessed_at_utc": "2026-10-10T04:40:13Z/2026-10-10T04:45:45Z; browser retrieval timestamps are not exposed, so this records the bounded stage access window rather than a per-request instant.",
+            "observed_operation": "Read the official protocol text through web retrieval; no collection endpoint was queried.",
+            "governing_condition_default_exception": "Identify declares deletedRecord as no, transient, or persistent. With no deletion tracking, incremental harvesters cannot discover vanished records. Persistent means deletion records are retained consistently; transient gives no persistence guarantee. Date granularity and request ranges must follow the repository declaration; oai_dc is the required unqualified Dublin Core format.",
+            "applicability": "For any OAI-PMH connector, store the Identify response, granularity, set and metadataPrefix; handle resumption tokens; never assume silent absence means delete. Decide whether to tombstone only explicit deletions or to reconcile full snapshots."
+          },
+          {
+            "id": "S02",
+            "title": "DPLA Hub Network",
+            "url": "https://pro.dp.la/hubs",
+            "released_version_or_commit": "Current official program page; no version or last-updated date stated on retrieved page.",
+            "locator": "Sections Content and Service Hubs and Documentation and Tools.",
+            "accessed_at_utc": "2026-10-10T04:40:13Z/2026-10-10T04:45:45Z; browser retrieval timestamps are not exposed, so this records the bounded stage access window rather than a per-request instant.",
+            "observed_operation": "Read official DPLA Hub Network page via search retrieval; open request returned HTTP 405, so the retrieved page text is the evidence used.",
+            "governing_condition_default_exception": "DPLA describes Content Hubs and Service Hubs as organizations aggregating metadata from partner libraries, museums, archives, and cultural heritage institutions and contributing it to DPLA.",
+            "applicability": "A real shared-hub workflow to compare with a locally operated catalog. It implies an extra mapping/aggregation boundary and an ingest schedule; it is a pattern, not a selected procurement or rights authority."
+          },
+          {
+            "id": "S03",
+            "title": "DPLA API Field Reference",
+            "url": "https://pro.dp.la/developers/field-reference",
+            "released_version_or_commit": "Current official field reference says the DPLA API implements DPLA MAP 3.1; page itself is not versioned.",
+            "locator": "Metadata Application Profile introduction; definitions for originalRecord, sourceResource.rights, object.rights, provider, ingestDate, and sourceResource.",
+            "accessed_at_utc": "2026-10-10T04:40:13Z/2026-10-10T04:45:45Z; browser retrieval timestamps are not exposed, so this records the bounded stage access window rather than a per-request instant.",
+            "observed_operation": "Read primary page text from search retrieval; direct open returned HTTP 403. No API item was fetched.",
+            "governing_condition_default_exception": "The page distinguishes rights held in the described source resource from rights asserted in the digital object at object.@id, and defines originalRecord as the complete provider record. It documents API MAP 3.1 while the separate MAP profile landing page offers MAP 5.0.",
+            "applicability": "Useful field-separation and raw-source-retention precedent. Pin the version for each interface; do not silently treat profile download version 5.0 as the API field contract version 3.1."
+          },
+          {
+            "id": "S04",
+            "title": "DPLA Metadata Application Profile landing page",
+            "url": "https://pro.dp.la/hubs/metadata-application-profile",
+            "released_version_or_commit": "Profile download offered as DPLA MAP 5.0 on the current official page; page itself has no stated release date.",
+            "locator": "Opening description and Download the DPLA Metadata Application Profile, version 5.0.",
+            "accessed_at_utc": "2026-10-10T04:40:13Z/2026-10-10T04:45:45Z; browser retrieval timestamps are not exposed, so this records the bounded stage access window rather than a per-request instant.",
+            "observed_operation": "Read official page text from search retrieval; direct open returned HTTP 403; no schema file downloaded.",
+            "governing_condition_default_exception": "The profile is described as the basis for DPLA metadata structure and validation and for API JSON-LD serialization; its current offered download is 5.0.",
+            "applicability": "Version-surface warning for a future partner/export adapter: record the exact profile and API serialization contract separately, then validate real source examples against the selected target."
+          },
+          {
+            "id": "S05",
+            "title": "DPLA Requests and API policies",
+            "url": "https://pro.dp.la/developers/requests",
+            "additional_url": "https://pro.dp.la/developers/policies",
+            "released_version_or_commit": "DPLA API v2 per the official Codex/policies documentation; documentation has no visible tagged release.",
+            "locator": "Requests: Resource Types and examples; Policies: API Keys.",
+            "accessed_at_utc": "2026-10-10T04:40:13Z/2026-10-10T04:45:45Z; browser retrieval timestamps are not exposed, so this records the bounded stage access window rather than a per-request instant.",
+            "observed_operation": "Read official DPLA documentation from web search retrieval; made no live API or key request.",
+            "governing_condition_default_exception": "DPLA says item search returns references and links to original online records; API requests require an API key. The item is distinct from the physical source object and the digital representation.",
+            "applicability": "The item/link pattern can inspire publishing; the external API is not a required pilot dependency and no account/key was obtained."
+          },
+          {
+            "id": "S06",
+            "title": "Europeana Data Model Definition",
+            "url": "https://pro.europeana.eu/files/Europeana_Professional/Share_your_data/Technical_requirements/EDM_Documentation/EDM_Definition_v5.2.7_042016.pdf",
+            "released_version_or_commit": "EDM Definition v5.2.7, April 2016.",
+            "locator": "EDM property edm:rights, definition table and occurrence row; also EDM class distinctions for ore:Aggregation, edm:ProvidedCHO, and edm:WebResource.",
+            "accessed_at_utc": "2026-10-10T04:40:13Z/2026-10-10T04:45:45Z; browser retrieval timestamps are not exposed, so this records the bounded stage access window rather than a per-request instant.",
+            "observed_operation": "Read the official specification excerpt surfaced from the PDF; no local metadata was validated against the schema.",
+            "governing_condition_default_exception": "edm:rights describes copyright, use, and access rights of digital objects representing the source cultural heritage object. Its occurrence is mandatory on ore:Aggregation and optional on edm:WebResource (0 or 1); Europeana expects an allowed rights URI.",
+            "applicability": "Rights need an explicit subject/scope and source. Do not flatten rights for the original object, its digital representation, the metadata, and access to a local preview into a single field."
+          },
+          {
+            "id": "S07",
+            "title": "Europeana Semantic Elements to EDM migration guidance",
+            "url": "https://pro.europeana.eu/page/ese-documentation",
+            "released_version_or_commit": "Europeana ESE guidance posted 2014-12-04, updated 2023-11-06; current page redirects to Europeana documentation.",
+            "locator": "Default mapping section; ESE-to-EDM table; alternatives to accepting the default mapping.",
+            "accessed_at_utc": "2026-10-10T04:40:13Z/2026-10-10T04:45:45Z; browser retrieval timestamps are not exposed, so this records the bounded stage access window rather than a per-request instant.",
+            "observed_operation": "Read official Europeana page text from web search retrieval; open redirected to an inaccessible Atlassian page, so the retrieved text is retained as the evidence boundary.",
+            "governing_condition_default_exception": "ESE is flat and does not distinguish source object, web resource, and aggregation fields. The default EDM mapping makes broad assumptions; dc:date may mean original creation or digitization date and dc:format may refer to the source object or digital file. Providers may accept, replace, or enrich the mapping and can provide EDM directly.",
+            "applicability": "Bounded migration example: map each collection from its actual source schema, do not blindly reuse a generic crosswalk, and retain unmapped/source values for review."
+          },
+          {
+            "id": "S08",
+            "title": "Europeana Licensing Framework",
+            "url": "https://pro.europeana.eu/index.php/page/europeana-licensing-framework",
+            "effective_url": "https://www.dataspace-culturalheritage.eu/en/news/europeana-licensing-framework",
+            "released_version_or_commit": "Current Europeana framework page; no version number shown in the retrieved page.",
+            "locator": "Sections Metadata published by Europeana and edm:rights field.",
+            "accessed_at_utc": "2026-10-10T04:40:13Z/2026-10-10T04:45:45Z; browser retrieval timestamps are not exposed, so this records the bounded stage access window rather than a per-request instant.",
+            "observed_operation": "Opened official Europeana page; it redirected to the Data Space Cultural Heritage page, whose relevant lines were read.",
+            "governing_condition_default_exception": "Europeana states its metadata is published under CC0 and accompanied by non-binding Data Use Guidelines; separately, edm:rights communicates terms for previews and digital objects in Europeana.",
+            "applicability": "Keep metadata reuse terms, object/display reuse statements, and local catalog access policy as separate assertions. An aggregator metadata license does not license the underlying object."
+          },
+          {
+            "id": "S09",
+            "title": "Europeana Semantic Enrichment",
+            "url": "https://pro.europeana.eu/page/europeana-semantic-enrichment",
+            "released_version_or_commit": "Official page posted 2015-11-05, updated 2025-06-23.",
+            "locator": "Automatic semantic enrichment and linked-vocabulary guidance.",
+            "accessed_at_utc": "2026-10-10T04:40:13Z/2026-10-10T04:45:45Z; browser retrieval timestamps are not exposed, so this records the bounded stage access window rather than a per-request instant.",
+            "observed_operation": "Read official Europeana page text from search retrieval; open redirected to an inaccessible Europeana Atlassian page.",
+            "governing_condition_default_exception": "Europeana describes automated enrichment by linking provider metadata values to controlled terms in its entity collection, and encourages open multilingual vocabulary links. Supported vocabularies and enrichment processes are bounded by its configuration.",
+            "applicability": "Opportunity to add discoverability through links, while preserving provider value and marking enrichment as a separate network-derived mapping with version/provenance."
+          },
+          {
+            "id": "S10",
+            "title": "RightsStatements.org: About and statement collections",
+            "url": "https://rightsstatements.org/en/about.html",
+            "additional_urls": [
+              "https://rightsstatements.org/page/collection-other/1.0/?language=en",
+              "https://rightsstatements.org/page/collection-ic/1.0/?language=en",
+              "https://rightsstatements.org/page/collection-nc/1.0/?language=en"
+            ],
+            "released_version_or_commit": "RightsStatements.org vocabulary URIs are versioned 1.0; current site announces Digital Scholar stewardship, with no statement-schema version change established here.",
+            "locator": "About: standardized rights/reuse statements for cultural heritage; collection-other: CNE, UND, NKC; collection-ic: In Copyright examples; collection-nc: No Copyright - Other Known Legal Restrictions.",
+            "accessed_at_utc": "2026-10-10T04:40:13Z/2026-10-10T04:45:45Z; browser retrieval timestamps are not exposed, so this records the bounded stage access window rather than a per-request instant.",
+            "observed_operation": "Read official about/statement pages via web search; some later page opens returned HTTP 526, so search-returned page text is the evidence used.",
+            "governing_condition_default_exception": "CNE is for unknown status where no evaluation was made; UND is for an unsuccessful status investigation, typically missing key facts; NKC requires reasonable cause to believe the work is no longer covered and must not be used where no status inquiry occurred. Rights Statements are summaries, not licenses.",
+            "applicability": "A vocabulary lookup is not a safe conversion rule. Missing network data stays missing; do not assign CNE, UND, NKC, or any other URI without the collection registrar supplying that assertion and its provenance."
+          },
+          {
+            "id": "S11",
+            "title": "Creative Commons licenses, CC0, and Public Domain Mark",
+            "url": "https://creativecommons.org/share-your-work/use-remix/cc-licenses/",
+            "additional_urls": [
+              "https://creativecommons.org/public-domain/",
+              "https://creativecommons.org/publicdomain/mark/1.0/"
+            ],
+            "released_version_or_commit": "CC license family and CC0; Public Domain Mark 1.0; current Creative Commons guidance pages are not separately versioned.",
+            "locator": "CC Licenses: license conditions; Public Domain: CC0, PDM and distinction; Public Domain Mark 1.0 deed.",
+            "accessed_at_utc": "2026-10-10T04:40:13Z/2026-10-10T04:45:45Z; browser retrieval timestamps are not exposed, so this records the bounded stage access window rather than a per-request instant.",
+            "observed_operation": "Read Creative Commons primary guidance and deed pages; no license was applied or evaluated for a collection item.",
+            "governing_condition_default_exception": "CC licenses are permissions granted on selected conditions; CC0 is a legal tool for a creator/rightsholder to waive rights; PDM is an informational label for work believed already public domain and should not be used when status is uncertain or jurisdiction-specific.",
+            "applicability": "Store the exact supplied license/PDM assertion and scope; never infer it from image visibility or create a new license in the network catalog."
+          },
+          {
+            "id": "S12",
+            "title": "IIIF Presentation API",
+            "url": "https://iiif.io/api/presentation/3.0/",
+            "released_version_or_commit": "Presentation API 3.0.0, listed as latest stable version on the official specification.",
+            "locator": "requiredStatement, rights, provider, homepage/URI links, Manifest and JSON-LD considerations; sections on safe HTML handling.",
+            "accessed_at_utc": "2026-10-10T04:40:13Z/2026-10-10T04:45:45Z; browser retrieval timestamps are not exposed, so this records the bounded stage access window rather than a per-request instant.",
+            "observed_operation": "Read official API 3.0 specification, including exact normative field requirements; no IIIF server or manifest was queried.",
+            "governing_condition_default_exception": "requiredStatement is text clients must render; rights is an informative URI for CC or RightsStatements.org terms and may be rendered. For user-facing rights text, the spec recommends requiredStatement or metadata. Human-readable pages may use HTTPS counterparts; clients sanitize HTML links to HTTP, HTTPS, or mailto.",
+            "applicability": "Strong optional publishing path for linked rights explanation, attribution, provider identity, and downloadable Manifest JSON if a collection exposes IIIF. It is not a harvester, discovery API, or update/deletion protocol."
+          },
+          {
+            "id": "S13",
+            "title": "W3C SKOS Reference",
+            "url": "https://www.w3.org/TR/skos-reference/",
+            "released_version_or_commit": "W3C Recommendation, 2009-08-18.",
+            "locator": "Section 10 Mapping Properties, definitions of skos:exactMatch and skos:closeMatch; section 10.6.8 comparison with owl:sameAs.",
+            "accessed_at_utc": "2026-10-10T04:40:13Z/2026-10-10T04:45:45Z; browser retrieval timestamps are not exposed, so this records the bounded stage access window rather than a per-request instant.",
+            "observed_operation": "Read the official W3C recommendation/search excerpt; no vocabulary mapping was asserted against collection data.",
+            "governing_condition_default_exception": "exactMatch indicates high-confidence interchangeability and is transitive; closeMatch allows interchangeability for some information-retrieval applications and is not transitive. owl:sameAs states resource identity and is not a substitute for a looser concept mapping.",
+            "applicability": "Map source vocabulary URIs to target concepts with a relationship appropriate to evidence; preserve original URI, mapping rule, mapper, and version instead of overwriting source terms."
+          },
+          {
+            "id": "S14",
+            "title": "W3C PROV-O",
+            "url": "https://www.w3.org/TR/prov-o/",
+            "released_version_or_commit": "W3C Recommendation, 2013-04-30.",
+            "locator": "Starting-point classes Entity, Activity, Agent; properties wasDerivedFrom, wasAttributedTo, wasAssociatedWith, used, generatedAtTime, and invalidatedAtTime.",
+            "accessed_at_utc": "2026-10-10T04:40:13Z/2026-10-10T04:45:45Z; browser retrieval timestamps are not exposed, so this records the bounded stage access window rather than a per-request instant.",
+            "observed_operation": "Read the official W3C recommendation search result and description; no graph was generated.",
+            "governing_condition_default_exception": "PROV-O supports chains among source/derived entities and activities, and responsibility attribution to agents; it does not itself establish legal rights truth.",
+            "applicability": "Use as an optional modeling vocabulary for raw source record, normalized record, mapper activity/profile, collection registrar, and captured/changed timestamps."
+          },
+          {
+            "id": "S15",
+            "title": "Europeana API key registration guidance",
+            "url": "https://pro.europeana.eu/page/get-api",
+            "released_version_or_commit": "Official page posted 2025-02-19, updated 2025-06-05.",
+            "locator": "What changed since 28 May 2025; API key request requirements.",
+            "accessed_at_utc": "2026-10-10T04:40:13Z/2026-10-10T04:45:45Z; browser retrieval timestamps are not exposed, so this records the bounded stage access window rather than a per-request instant.",
+            "observed_operation": "Read current page text from search retrieval; direct open timed out; no account or key was requested.",
+            "governing_condition_default_exception": "Since 2025-05-28, requesting an API key requires a Europeana account and login; a project key may request higher request rates.",
+            "applicability": "A future Europeana API integration has account/access setup as a dependency. It is unnecessary for this read-only discovery and weighs against requiring it for the pilot."
+          },
+          {
+            "id": "S16",
+            "title": "DPLA ingestion3 NARA audit and deletion fix",
+            "url": "https://github.com/dpla/ingestion3/commit/608ea023de200df48e8241ed08e0fa49466646f9",
+            "additional_url": "https://github.com/dpla/ingestion3/blob/608ea023de200df48e8241ed08e0fa49466646f9/docs/ingestion/README_NARA.md",
+            "released_version_or_commit": "Publicly merged GitHub commit 608ea023de200df48e8241ed08e0fa49466646f9, 2026-06-17T18:53:12Z, titled Issue 739: NARA audit (#750).",
+            "locator": "Pinned README_NARA.md sections Data Delivery Format, Step 1 Preprocessing, Validation, History (lines 304-374, 511-552, 692-700); pinned commit patch to scripts/harvest/nara-ingest.sh preprocess_month and check_delete_gate.",
+            "accessed_at_utc": "2026-10-10T04:40:13Z/2026-10-10T04:45:45Z; browser retrieval timestamps are not exposed, so this records the bounded stage access window rather than a per-request instant.",
+            "observed_operation": "Read pinned GitHub source with web retrieval and issued a read-only GitHub REST GET for this commit to inspect changed files and patch; no downloaded code was run.",
+            "governing_condition_default_exception": "The audit says pre-June 2026 preprocessing treated NaidsList rosters as deletions instead of NAC_DESC_Deletes files, so requested deletes failed; the patch selects the real delete filename pattern and adds a zero-valid-delete gate. Interactive runs require operator confirmation; non-interactive runs halt; --skip-delete-check is an explicit exception after confirmation. The README notes retroactive reprocessing is a team decision.",
+            "applicability": "A bounded production-history example: update/deletion correctness needs explicit markers, counted outcomes, alerting, and an owner decision for backfill. For each pilot connector, retain change evidence and review zero/invalid deletion counts rather than silently publishing stale records."
+          },
+          {
+            "id": "S17",
+            "title": "DPLA Bulk Download",
+            "url": "https://pro.dp.la/developers/bulk-download",
+            "released_version_or_commit": "Current official page; export formats include zipped JSON and Parquet. Export-format changes are noted for 2015, 2018, and 2019.",
+            "locator": "Bulk Download introduction and format-change notes.",
+            "accessed_at_utc": "2026-10-10T04:40:13Z/2026-10-10T04:45:45Z; browser retrieval timestamps are not exposed, so this records the bounded stage access window rather than a per-request instant.",
+            "observed_operation": "Read official developer documentation via web search retrieval; no bulk file was downloaded.",
+            "governing_condition_default_exception": "DPLA describes full repository exports in zipped JSON and Parquet and explicitly notes that export file formats have changed.",
+            "applicability": "Evidence that a downloadable catalog record/export is a real publishing pattern, but record schema/version and export rights must be explicit. Does not establish that the five source collections permit download."
+          },
+          {
+            "id": "S18",
+            "title": "Omeka S Resource Templates",
+            "url": "https://omeka.org/s/docs/user-manual/content/resource-template/",
+            "released_version_or_commit": "Current official user manual; no documentation version/date displayed.",
+            "locator": "Base Resource template; value data types; external URI; Value Suggest; template export/import.",
+            "accessed_at_utc": "2026-10-10T04:47:26.092Z/2026-10-10T04:48:01Z; bounded post-reveal Omeka source-research window, with per-request timestamps not exposed by web retrieval.",
+            "observed_operation": "Read official Omeka S user manual text from web search retrieval; no Omeka installation was used.",
+            "governing_condition_default_exception": "Base Resource includes Dublin Core Rights. Resource values can be literal text or linked to external sites by URI. Value Suggest proposes controlled terms but users may ignore suggestions and enter text; imported templates using Custom Vocab require that vocabulary to be recreated on the second installation.",
+            "applicability": "Supports controlled URI fields and templates for a publishing UI, but does not enforce a vocabulary or preserve a source assertion by itself. Version templates and keep explicit raw-source/provenance fields."
+          },
+          {
+            "id": "S19",
+            "title": "Omeka S CSV Import module",
+            "url": "https://omeka.org/s/modules/CSVImport/",
+            "additional_url": "https://omeka.org/s/docs/user-manual/modules/csvimport/",
+            "released_version_or_commit": "CSV Import 2.6.2, released 2024-10-22; module directory lists minimum Omeka S ^4.0.0.",
+            "locator": "Module release/version table; manual sections Import type, Map to Omeka S data, matching/update actions and permissions.",
+            "accessed_at_utc": "2026-10-10T04:47:26.092Z/2026-10-10T04:48:01Z; bounded post-reveal Omeka source-research window, with per-request timestamps not exposed by web retrieval.",
+            "observed_operation": "Read official Omeka S module directory and manual text; no module was installed and no import job was run.",
+            "governing_condition_default_exception": "Imports items/item sets/media/users from CSV, TSV or ODS; supports append/revise/update/replace strategies for matching resources. Module use requires Global Administrator or Supervisor and PHP background import jobs.",
+            "applicability": "A workable curated/batch publishing path if network operators can own incoming feeds and carefully choose stable identifiers/update modes. It is not evidence of built-in automatic OAI-PMH harvesting or a complete source-provenance ledger."
+          },
+          {
+            "id": "S20",
+            "title": "Omeka S REST API and import/export guidance",
+            "url": "https://omeka.org/s/docs/developer/api/rest_api_reference/",
+            "additional_url": "https://omeka.org/s/docs/user-manual/importexport/",
+            "released_version_or_commit": "Current official documentation; REST API is the live product API, documentation page has no tagged release. API docs mention a behavior since Omeka S 4.0.0 for one property lookup option.",
+            "locator": "REST API Reference: Resource Values JSON-LD shape and is_public; Importing and Exporting: API JSON-LD/RDFXML formats and Output Formats module public exports.",
+            "accessed_at_utc": "2026-10-10T04:47:26.092Z/2026-10-10T04:48:01Z; bounded post-reveal Omeka source-research window, with per-request timestamps not exposed by web retrieval.",
+            "observed_operation": "Read official developer/user documentation through web search retrieval; no live Omeka endpoint was queried.",
+            "governing_condition_default_exception": "Resource values are represented in JSON-LD arrays and include type, property identifier/label, public visibility, and value. API supports resource CRUD. Public downloadable output formats require the Output Formats module when using the user-friendly page option; the API is the direct programmatic route.",
+            "applicability": "Evidence for the optional source-attributed metadata download and for separating a local visibility flag from rights statements. Verify actual API visibility behavior and export fields on the selected deployment before adoption."
+          },
+          {
+            "id": "S21",
+            "title": "Europeana Aggregators Forum",
+            "url": "https://pro.europeana.eu/page/aggregators",
+            "released_version_or_commit": "Current official programme page; no version/date displayed.",
+            "locator": "Europeana aggregators overview; aggregator role and forum scope.",
+            "accessed_at_utc": "2026-10-10T04:48:01Z/2026-10-10T04:51:28Z; conservative post-reveal source-access window, per-request timestamps are not exposed by web retrieval.",
+            "observed_operation": "Read official Europeana page text via web search retrieval; no external aggregator was contacted.",
+            "governing_condition_default_exception": "Europeana describes aggregators as working with cultural heritage institutions to gather authentic, trustworthy, robust data and make it accessible through Europeana; aggregator roles include national, regional, domain and thematic networks.",
+            "applicability": "Supports the hub-mediated publishing workflow as a real organizational alternative. It does not imply that the regional museum network is accredited or should submit records to Europeana."
+          }
+        ]
+      }
+    },
+    "CRT": {
+      "source_map_path": "ER12_RUNTIME/runs/A6-02/treatment/stages/critic/source-map.json",
+      "original_map": {
+        "run_id": "A6-02-treatment",
+        "stage": "critic",
+        "reviewed_inputs": {
+          "brief": "ER12_RUNTIME/runs/A6-02/treatment/inputs/brief.md",
+          "investigator_package": "ER12_RUNTIME/runs/A6-02/treatment/stages/investigator",
+          "revealed_plan": "ER12_RUNTIME/runs/A6-02/treatment/stages/investigator/revealed-plan.md"
+        },
+        "access_window_note": "2026-10-10T04:53:30Z/2026-10-10T04:59:09Z, bracketed by UTC clock observations; the web retrieval tool did not expose per-request completion timestamps. Search-result text for S07, S10 and S22 was returned from the official source pages; direct opens for S07 and S10 failed and were not treated as successful direct opens.",
+        "sources": [
+          {
+            "id": "S01",
+            "title": "Open Archives Initiative Protocol for Metadata Harvesting",
+            "url": "https://www.openarchives.org/OAI/openarchivesprotocol.html",
+            "released_version_or_commit": "Protocol Version 2.0, 2002-06-14; document version 2015-01-08.",
+            "locator": "Sections 2.5.1 deleted records, 3.3.2 UTC datestamps, 3.4 metadataPrefix, 3.5 flow control/resumption tokens, and Identify response.",
+            "accessed_at_utc": "2026-10-10T04:53:30Z/2026-10-10T04:58:33Z; exact per-request time unavailable.",
+            "observed_operation": "Opened the official specification and read section 2.5.1 directly; reviewed the adjacent concepts and section index. No collection endpoint was queried.",
+            "governing_condition_default_exception": "Identify declares deletedRecord=no, transient, or persistent. With no deletion tracking, an incremental harvester cannot discover vanished records. Persistent means deletion state is retained consistently; transient has no persistence guarantee. Follow repository datestamp granularity, metadataPrefix, and resumption-token behavior.",
+            "applicability": "Supports the investigator's conditional OAI design and warns against treating missing incremental results as deletions. Does not establish any pilot collection's OAI support."
+          },
+          {
+            "id": "S02",
+            "title": "DPLA Hub Network",
+            "url": "https://pro.dp.la/hubs",
+            "released_version_or_commit": "Current official program page; no release version/date displayed.",
+            "locator": "Content and Service Hubs description.",
+            "accessed_at_utc": "2026-10-10T04:58:33Z/2026-10-10T04:59:09Z; exact per-request time unavailable.",
+            "observed_operation": "Retrieved the official page text via web search. No hub was contacted.",
+            "governing_condition_default_exception": "DPLA describes Content and Service Hubs as organizations that aggregate metadata from partner cultural heritage institutions and contribute it to DPLA.",
+            "applicability": "Supports the hub-mediated comparator only; it does not establish acceptance, partner terms, or suitability for the museum network."
+          },
+          {
+            "id": "S03",
+            "title": "DPLA API Field Reference",
+            "url": "https://pro.dp.la/developers/field-reference",
+            "released_version_or_commit": "Current official field reference; states that the DPLA API implements MAP 3.1.",
+            "locator": "MAP introduction; originalRecord, sourceResource.rights, object.rights, and provider fields.",
+            "accessed_at_utc": "2026-10-10T04:53:30Z/2026-10-10T04:58:33Z; exact per-request time unavailable.",
+            "observed_operation": "Retrieved the official page text via web search; a direct open returned HTTP 403. No DPLA item/API request was made.",
+            "governing_condition_default_exception": "The field reference distinguishes rights held in the described SourceResource from rights asserted in the digital object at object.@id, and defines originalRecord as the complete provider record.",
+            "applicability": "Supports retaining original and mapped fields separately and scope-aware comparison. It does not describe the five source records."
+          },
+          {
+            "id": "S04",
+            "title": "DPLA Metadata Application Profile landing page and metadata policy",
+            "url": "https://pro.dp.la/hubs/metadata-application-profile",
+            "released_version_or_commit": "Current official page; text says current MAP version 4.0 and offers a MAP 5.0 download.",
+            "locator": "Download the DPLA Metadata Application Profile; page's current-version label; Digital Public Library of America Policy Statement on Metadata, especially partners' terms and free reuse.",
+            "accessed_at_utc": "2026-10-10T04:58:33Z/2026-10-10T04:59:09Z; exact per-request time unavailable.",
+            "observed_operation": "Retrieved official page text via web search; no profile artifact was downloaded.",
+            "governing_condition_default_exception": "DPLA states partners agree that metadata is broadly shareable and dedicate partner metadata that may be copyright-protected to CC0; it also states DPLA asserts no rights over its database/contributions. The same page's 4.0 current-version statement and 5.0 download offer are conflicting signals.",
+            "applicability": "A condition on the DPLA partner route and a concrete metadata-terms example, not a legal rule or permission for this network. It exposes a version ambiguity relevant to any future adapter."
+          },
+          {
+            "id": "S07",
+            "title": "Europeana Semantic Elements to EDM migration guidance",
+            "url": "https://pro.europeana.eu/page/ese-documentation",
+            "released_version_or_commit": "Official ESE guidance page; posted 2014-12-04, updated 2023-11-06 per the page index.",
+            "locator": "Default ESE-to-EDM mapping and direct source-to-EDM mapping guidance; dc:date and dc:format ambiguity examples.",
+            "accessed_at_utc": "2026-10-10T04:53:30Z/2026-10-10T04:58:33Z; exact per-request time unavailable.",
+            "observed_operation": "Retrieved the official source text via web search. A direct open redirected to an inaccessible Europeana Atlassian page; the search-returned text is the evidence used.",
+            "governing_condition_default_exception": "The default mapping may put digitization date into edm:ProvidedCHO or confuse source-object and digital-file format; provider-specific mappings can be used and direct EDM mapping is recommended for a more complete redesign.",
+            "applicability": "Supports the draft's per-collection schema/mapping validation. This is historic guidance, not proof the five collections use ESE/EDM."
+          },
+          {
+            "id": "S08",
+            "title": "Europeana Licensing Framework",
+            "url": "https://pro.europeana.eu/index.php/page/europeana-licensing-framework",
+            "released_version_or_commit": "Official framework page posted 2015-02-06 and updated 2026-05-01.",
+            "locator": "Metadata published by Europeana; Data Exchange Agreement; edm:rights field.",
+            "accessed_at_utc": "2026-10-10T04:58:33Z/2026-10-10T04:59:09Z; exact per-request time unavailable.",
+            "observed_operation": "Retrieved current official Europeana page text via web search.",
+            "governing_condition_default_exception": "Europeana says metadata received from providers is published under CC0 under its provider framework; edm:rights communicates terms for previews and digital objects.",
+            "applicability": "Supports the distinction between metadata terms and object/preview rights and the need to identify provider conditions. It does not license this network's metadata."
+          },
+          {
+            "id": "S10",
+            "title": "RightsStatements.org: Other rights statements",
+            "url": "https://rightsstatements.org/page/collection-other/1.0/?language=en",
+            "released_version_or_commit": "RightsStatements.org version 1.0 vocabulary page.",
+            "locator": "CNE, UND, NKC definitions and collection-level introduction.",
+            "accessed_at_utc": "2026-10-10T04:53:30Z/2026-10-10T04:58:33Z; exact per-request time unavailable.",
+            "observed_operation": "Retrieved official source text via web search; direct open returned HTTP 526.",
+            "governing_condition_default_exception": "CNE is for an unevaluated unknown; UND follows an unsuccessful evaluation; NKC requires reasonable cause to believe copyright/related rights no longer cover the work and is excluded when no inquiry occurred. These are statements, not licenses.",
+            "applicability": "Supports keeping absent data distinct from source-supplied CNE/UND/NKC. Does not authorize the network to assign these terms."
+          },
+          {
+            "id": "S11",
+            "title": "Creative Commons public-domain tools",
+            "url": "https://creativecommons.org/public-domain/",
+            "released_version_or_commit": "Current official CC guidance; CC0 and Public Domain Mark 1.0 tools.",
+            "locator": "CC0 vs. PDM; use restrictions; PDM not for uncertain or jurisdiction-specific status.",
+            "accessed_at_utc": "2026-10-10T04:53:30Z/2026-10-10T04:58:33Z; exact per-request time unavailable.",
+            "observed_operation": "Retrieved official CC page text via web search. No tool was applied to an item.",
+            "governing_condition_default_exception": "CC0 is a tool for creators/rightsholders to waive rights they hold; PDM is an informational label for work already believed free of known copyright restrictions worldwide and is not for uncertain/jurisdiction-specific cases.",
+            "applicability": "Supports the draft's distinction between supplied CC0 and PDM assertions. The critic makes no independent status finding."
+          },
+          {
+            "id": "S12",
+            "title": "IIIF Presentation API",
+            "url": "https://iiif.io/api/presentation/3.0/",
+            "released_version_or_commit": "Presentation API 3.0.0, listed as latest stable version by the official specification.",
+            "locator": "requiredStatement, rights, provider; machine-actionable and user-readable URI notes.",
+            "accessed_at_utc": "2026-10-10T04:53:30Z/2026-10-10T04:58:33Z; exact per-request time unavailable.",
+            "observed_operation": "Retrieved official version-3.0 specification text via web search.",
+            "governing_condition_default_exception": "requiredStatement is user-facing text that clients must render; rights is informative and may be rendered. Rights URIs are machine-actionable HTTP URIs; equivalent HTTPS pages may be used for user links.",
+            "applicability": "Supports optional presentation and statement-link patterns, not harvesting/search/update. A rights value applies to the IIIF resource where attached."
+          },
+          {
+            "id": "S13",
+            "title": "W3C SKOS Reference",
+            "url": "https://www.w3.org/TR/skos-reference/",
+            "released_version_or_commit": "W3C Recommendation, 2009-08-18.",
+            "locator": "Section 10 mapping properties; exactMatch and closeMatch semantics and transitivity.",
+            "accessed_at_utc": "2026-10-10T04:53:30Z/2026-10-10T04:58:33Z; exact per-request time unavailable.",
+            "observed_operation": "Retrieved the official W3C text via web search.",
+            "governing_condition_default_exception": "exactMatch denotes high-confidence interchangeability and is transitive; closeMatch is not transitive. owl:sameAs asserts identity, not a weaker concept mapping.",
+            "applicability": "Supports versioned explicit crosswalks that preserve source URIs; does not itself establish that any two pilot terms match."
+          },
+          {
+            "id": "S16",
+            "title": "DPLA ingestion3 Issue 739 NARA audit and deletion fix",
+            "url": "https://github.com/dpla/ingestion3/commit/608ea023de200df48e8241ed08e0fa49466646f9",
+            "additional_url": "https://github.com/dpla/ingestion3/blob/608ea023de200df48e8241ed08e0fa49466646f9/docs/ingestion/README_NARA.md",
+            "released_version_or_commit": "Pinned merged commit 608ea023de200df48e8241ed08e0fa49466646f9, 2026-06-17T18:53:12Z.",
+            "locator": "Pinned README_NARA.md history and preprocessing sections; commit patch to delete-file preprocessing and zero-delete checks.",
+            "accessed_at_utc": "2026-10-10T04:53:30Z/2026-10-10T04:58:33Z; exact per-request time unavailable.",
+            "observed_operation": "Opened pinned GitHub commit and README; read the diff showing NaidsList rosters are not delete files and NAC_DESC_Deletes files are. No code was downloaded or run.",
+            "governing_condition_default_exception": "The pinned runbook says the prior path misclassified rosters, and affected deletions may remain; correction selects explicit delete-file names and asks operators to inspect zero/invalid outcomes. Retroactive processing is a team decision.",
+            "applicability": "Supports the bounded history example and proposed counted-delete controls. It is a source/runbook account, not independently reproduced production behavior."
+          },
+          {
+            "id": "S19",
+            "title": "Omeka S CSV Import module documentation",
+            "url": "https://omeka.org/s/docs/user-manual/modules/csvimport/",
+            "released_version_or_commit": "Current official user manual; module release 2.6.2 noted on official module page, 2024-10-22.",
+            "locator": "Module scope, import/update strategies, permissions, PHP background-job prerequisite.",
+            "accessed_at_utc": "2026-10-10T04:53:30Z/2026-10-10T04:58:33Z; exact per-request time unavailable.",
+            "observed_operation": "Retrieved official Omeka S manual text via web search.",
+            "governing_condition_default_exception": "Imports CSV/TSV/ODS and supports resource operations; only Global Administrator/Supervisor users may run it and PHP must support background jobs.",
+            "applicability": "Supports its limited batch/editorial role; does not establish an automatic OAI harvester or provenance ledger."
+          },
+          {
+            "id": "S20",
+            "title": "Omeka S REST API Reference",
+            "url": "https://omeka.org/s/docs/developer/api/rest_api_reference/",
+            "released_version_or_commit": "Current official REST API documentation; page has no tagged release.",
+            "locator": "Resource Values JSON-LD; is_public and value-level visibility.",
+            "accessed_at_utc": "2026-10-10T04:53:30Z/2026-10-10T04:58:33Z; exact per-request time unavailable.",
+            "observed_operation": "Retrieved official Omeka S documentation via web search; no live installation/API was queried.",
+            "governing_condition_default_exception": "Resource values are JSON-LD arrays with value type/property/value and is_public; values default public on input when is_public is omitted.",
+            "applicability": "Supports the draft's distinction between local visibility and rights assertions. Does not establish product behavior in a selected deployment."
+          },
+          {
+            "id": "S22",
+            "title": "RightsStatements.org statement applicability guidance",
+            "url": "https://rightsstatements.org/en/2018/12/where-statements-apply.html",
+            "released_version_or_commit": "Official RightsStatements.org guidance posted 2018-12; no versioned revision stated in retrieved page.",
+            "locator": "Sections for in-copyright statements, no-copyright statements, and Other statements; comparison of original work and digital object applicability.",
+            "accessed_at_utc": "2026-10-10T04:53:30Z/2026-10-10T04:58:33Z; exact per-request time unavailable.",
+            "observed_operation": "Retrieved the official page content via web search. It specifically enumerates which statement families apply to both work and digital object versus only the digital object.",
+            "governing_condition_default_exception": "Applicability differs by statement: some in-copyright and no-copyright terms apply only to digital objects, while the Other statements CNE/UND/NKC and several terms apply to both work and digital copy.",
+            "applicability": "Directly supports C1. Preserve scope as a distinct source/mapping field and do not generalize from a statement label."
+          }
+        ]
+      }
+    }
+  },
+  "reviser_primary_source_rechecks": [
+    {
+      "id": "R01",
+      "title": "RightsStatements.org: work and digital-object applicability guidance",
+      "url": "https://rightsstatements.org/en/2018/12/where-statements-apply.html",
+      "released_version_or_commit": "Official guidance dated 2018-12-21; not a versioned vocabulary release. The cited statement URI families are RightsStatements.org 1.0 where applicable.",
+      "locator": "Sections “Rights statements for in copyright objects,” “Rights statements for objects that are not in copyright,” and “Other rights statements”; term-by-term lists distinguishing both work and digital object from digital-object-only terms.",
+      "accessed_at_utc": "2026-10-10T05:07:49Z is the UTC clock observation immediately after the combined retrieval; exact per-request completion UTC is UNKNOWN.",
+      "observed_operation": "Official page text was returned by web search retrieval. A subsequent direct open timed out; no collection record was inspected.",
+      "governing_condition_default_exception": "In Copyright, In Copyright - EU Orphan Work, In Copyright - Rights-holder(s) Unlocatable or Unidentifiable, No Copyright - United States, and CNE/UND/NKC are described as applicable to both the work and digital object. In Copyright - Educational Use Permitted, In Copyright - Non-Commercial Use Permitted, and the other No Copyright statements are digital-object-only. No Copyright - United States has its own location condition. RightsStatements.org notes the terms were designed primarily for digital objects and that additional digitalization-related restrictions should be represented at the digital-object level.",
+      "applicability": "Keep source-asserted subject separate from the vocabulary term’s documented possible scope and from the catalog display resource. If the source subject is unstated or conflicts with the term/profile, retain ambiguity and route to the registrar; do not extend a digital-object statement to the work."
+    },
+    {
+      "id": "R02",
+      "title": "DPLA Metadata Application Profile landing page and embedded metadata policy",
+      "url": "https://pro.dp.la/hubs/metadata-application-profile",
+      "released_version_or_commit": "Current official page retrieved 2026-10-10; it states the current MAP version is 4.0 and separately offers a MAP 5.0 download. No exact dated release of the page was shown.",
+      "locator": "Opening “Download the MAP” text; “The current version is 4.0”; “Download the DPLA Metadata Application Profile, version 5.0”; embedded “Digital Public Library of America Policy Statement on Metadata,” especially “The DPLA’s Partners Share the DPLA’s Commitment” and “Free and Unencumbered Access to Metadata.”",
+      "accessed_at_utc": "2026-10-10T05:07:49Z is the UTC clock observation immediately after the combined retrieval; exact per-request completion UTC is UNKNOWN.",
+      "observed_operation": "Official page text, including the MAP version and partner metadata-policy passages, was returned by web search retrieval. Direct open returned HTTP 403. No profile download or partner agreement was accessed.",
+      "governing_condition_default_exception": "The page says DPLA partners agree that the vast majority of metadata is not copyrightable and dedicate partner-provided metadata that may be copyright-protected to CC0; it also says DPLA waives its own database/contribution rights. Those conditions are stated for DPLA and its partners. On the same page the 4.0 “current version” label conflicts with the offered 5.0 download.",
+      "applicability": "Evidence that a hub can have explicit, relationship-specific metadata terms and that profile version signals need pinning. It neither grants this network rights to five collections nor identifies which MAP artifact a future adapter would implement."
+    },
+    {
+      "id": "R03",
+      "title": "Europeana Licensing Framework",
+      "url": "https://pro.europeana.eu/page/europeana-licensing-framework",
+      "effective_url": "https://www.dataspace-culturalheritage.eu/en/news/europeana-licensing-framework",
+      "released_version_or_commit": "Current Europeana framework page retrieved 2026-10-10; published by Europeana Foundation 2023-09-10; no numbered framework version shown. The page describes a Data Exchange Agreement effective in the provider relationship.",
+      "locator": "Numbered elements 1 “The Data Exchange Agreement,” 2 “The Creative Commons Zero Universal Public Domain Dedication (CC0),” and 4 “The edm:rights field of the Europeana Data Model.”",
+      "accessed_at_utc": "2026-10-10T05:07:49Z is the UTC clock observation immediately after the combined retrieval; exact per-request completion UTC is UNKNOWN.",
+      "observed_operation": "Opened the official Europeana URL; it redirected to the current Europeana Licensing Framework page on the Data Space Cultural Heritage site. Read lines 17-31 of that page. No provider agreement or catalog was accessed.",
+      "governing_condition_default_exception": "The page says the Data Exchange Agreement structures Europeana’s relationship with data providers; it establishes that Europeana publishes provider metadata under CC0 and accompanies it with non-binding data-use guidelines; edm:rights communicates terms for previews and digital objects.",
+      "applicability": "Shows a provider-specific metadata arrangement and a separate object/preview statement field. It does not establish terms for this network or authorize use of any pilot collection record."
+    },
+    {
+      "id": "R04",
+      "title": "RightsStatements.org Frequently Asked Questions",
+      "url": "https://rightsstatements.org/en/documentation/faq.html",
+      "released_version_or_commit": "Current official FAQ page retrieved 2026-10-10; no separate page or vocabulary version number stated. The FAQ describes the 12 RightsStatements.org terms and versioned statement URIs.",
+      "locator": "General questions “What are rights statements?” and “How do they differ from the Creative Commons licenses?”; technical question “Why are there different versions of the URIs of the statements?”",
+      "accessed_at_utc": "2026-10-10T05:07:49Z is the UTC clock observation immediately after the combined retrieval; exact per-request completion UTC is UNKNOWN.",
+      "observed_operation": "Official FAQ text was returned by web search retrieval. A subsequent direct open timed out; no collection record was inspected.",
+      "governing_condition_default_exception": "The FAQ describes RightsStatements.org terms as high-level summaries of rights status for digital objects, complementing rather than replacing more detailed information and licenses. The statements are not licenses. For applying a statement, it directs users to the versioned statement URI form /vocab/[id]/[version]/.",
+      "applicability": "Supports keeping a supplied rights statement distinct from a license and preserving its exact versioned URI; it does not establish a source collection’s assertion, permission, subject or legal accuracy."
+    }
+  ],
+  "native_goal_observations": {
+    "create_goal": {
+      "threadId": "01a12432-56bc-7ae2-9d79-d258e650c52e",
+      "objective": "ER12 reviser stage, run A6-02-treatment: execute ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791608666,
+      "updatedAt": 1791608666,
+      "remainingTokens": null,
+      "completionBudgetReport": null
+    },
+    "get_goal_before_terminal": {
+      "threadId": "01a12432-56bc-7ae2-9d79-d258e650c52e",
+      "objective": "ER12 reviser stage, run A6-02-treatment: execute ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "status": "active",
+      "tokensUsed": 69543,
+      "timeUsedSeconds": 288,
+      "createdAt": 1791608666,
+      "updatedAt": 1791608955,
+      "remainingTokens": null,
+      "completionBudgetReport": null
+    },
+    "unavailable_fields": [
+      "provider/model provenance",
+      "prospective service-tier revision",
+      "separate activation receipt",
+      "separate activation timestamp"
+    ],
+    "get_goal_latest_before_terminal": {
+      "threadId": "01a12432-56bc-7ae2-9d79-d258e650c52e",
+      "objective": "ER12 reviser stage, run A6-02-treatment: execute ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "status": "active",
+      "tokensUsed": 136073,
+      "timeUsedSeconds": 653,
+      "createdAt": 1791608666,
+      "updatedAt": 1791609319,
+      "remainingTokens": null,
+      "completionBudgetReport": null
+    }
+  }
+}

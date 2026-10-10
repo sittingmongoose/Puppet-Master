@@ -1,0 +1,448 @@
+{
+  "schema": "er12.independent.primary-source-map.v1",
+  "review": "B-DISC-G-02/treatment-v1",
+  "retrieved_independently": true,
+  "retrieval_count": 11,
+  "source_scope": "Only this assigned brief and candidate claims; no other arms/cases/history. Candidate eight-page limit is evaluated separately from reviewer corroboration.",
+  "evidence_source_distinction": "Candidate excerpts are frozen authored evidence. These are independent HTTPS retrievals; agreement does not establish the candidate actually performed every claimed retrieval.",
+  "sources": [
+    {
+      "id": "P01",
+      "requested_url": "https://slsa.dev/spec/v1.0/provenance",
+      "resolved_url": "https://slsa.dev/spec/v1.0/provenance",
+      "version": "SLSA v1.0 retired",
+      "operation": "HTTPS GET via Python urllib.request; no downloaded code executed",
+      "retrieval_started_utc": "2026-10-10T05:07:11.149697+00:00",
+      "retrieval_completed_utc": "2026-10-10T05:07:11.524403+00:00",
+      "http_status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "raw_path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P01.raw.html",
+      "raw_sha256": "a5d8066c3a299dc95ac748cce71bf32d029b5fa31085a415fd4c49d0eac5c92e",
+      "raw_bytes": 61049,
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P01.txt",
+      "text_sha256": "1d44d424c01b5b8c624cf66ee4861272b42b414d70cb2146fe59f283f559af36",
+      "text_lines": 1258,
+      "view_path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P01.view.html",
+      "view_sha256": "dba658db7f91d857d85a3cdd5f3978ce0bd618968e96e02d3a2431f9131075d0",
+      "conditions_and_applicability": "SLSA provenance/v1 is a major-version predicate, not a trust guarantee. Dependencies are best effort; signer-builder authorization is specific. Unknown generic fields and unknown externalParameters have different rules.",
+      "locators": [
+        {
+          "section": "BuildDefinition: resolvedDependencies",
+          "text_start_line": 626,
+          "text_end_line": 634,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P01.view.html#L626",
+          "primary_url": "https://slsa.dev/spec/v1.0/provenance#builddefinition"
+        },
+        {
+          "section": "Builder: authorized signer-builder pairs",
+          "text_start_line": 820,
+          "text_end_line": 827,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P01.view.html#L820",
+          "primary_url": "https://slsa.dev/spec/v1.0/provenance#builder"
+        },
+        {
+          "section": "Parsing rules",
+          "text_start_line": 160,
+          "text_end_line": 173,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P01.view.html#L160",
+          "primary_url": "https://slsa.dev/spec/v1.0/provenance#parsing-rules"
+        },
+        {
+          "section": "Version header and predicate URI",
+          "text_start_line": 34,
+          "text_end_line": 82,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P01.view.html#L34",
+          "primary_url": "https://slsa.dev/spec/v1.0/provenance#provenance"
+        },
+        {
+          "section": "Migration/change history",
+          "text_start_line": 882,
+          "text_end_line": 1198,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P01.view.html#L882",
+          "primary_url": "https://slsa.dev/spec/v1.0/provenance#migrating-from-02"
+        }
+      ]
+    },
+    {
+      "id": "P02",
+      "requested_url": "https://slsa.dev/spec/v1.0/verifying-artifacts",
+      "resolved_url": "https://slsa.dev/spec/v1.0/verifying-artifacts",
+      "version": "SLSA v1.0 retired",
+      "operation": "HTTPS GET via Python urllib.request; no downloaded code executed",
+      "retrieval_started_utc": "2026-10-10T05:07:11.152020+00:00",
+      "retrieval_completed_utc": "2026-10-10T05:07:11.629735+00:00",
+      "http_status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "raw_path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P02.raw.html",
+      "raw_sha256": "01052856dda6d2ad681cfa371e3cefae2495c5f05453281e6710ad862e9b2d85",
+      "raw_bytes": 34950,
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P02.txt",
+      "text_sha256": "d061044bd9535fb8a91e6297a7cb31843c8b5ef9a078b2caa91613dee30e07f9",
+      "text_lines": 398,
+      "view_path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P02.view.html",
+      "view_sha256": "4b29147ed9fe8a9e164bd8d20959f0de4df8a7a63e29a4d650931051d5f5d364",
+      "conditions_and_applicability": "Preconfigured trust, artifact subject digest, predicate, and expectations are distinct checks. Dependency recursion is optional. Approved ignored parameters are permitted.",
+      "locators": [
+        {
+          "section": "Verification prerequisites and roots of trust",
+          "text_start_line": 89,
+          "text_end_line": 105,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P02.view.html#L89",
+          "primary_url": "https://slsa.dev/spec/v1.0/verifying-artifacts#step-1-check-slsa-build-level"
+        },
+        {
+          "section": "Subject/predicate and threat distinctions",
+          "text_start_line": 166,
+          "text_end_line": 205,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P02.view.html#L166",
+          "primary_url": "https://slsa.dev/spec/v1.0/verifying-artifacts#step-1-check-slsa-build-level"
+        },
+        {
+          "section": "External parameter exceptions",
+          "text_start_line": 62,
+          "text_end_line": 77,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P02.view.html#L62",
+          "primary_url": "https://slsa.dev/spec/v1.0/verifying-artifacts#how-to-verify"
+        },
+        {
+          "section": "Optional dependency verification",
+          "text_start_line": 263,
+          "text_end_line": 284,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P02.view.html#L263",
+          "primary_url": "https://slsa.dev/spec/v1.0/verifying-artifacts#step-3-optional-check-dependencies-recursively"
+        }
+      ]
+    },
+    {
+      "id": "P03",
+      "requested_url": "https://docs.sigstore.dev/about/overview/",
+      "resolved_url": "https://docs.sigstore.dev/about/overview/",
+      "version": "Live documentation; release version unspecified",
+      "operation": "HTTPS GET via Python urllib.request; no downloaded code executed",
+      "retrieval_started_utc": "2026-10-10T05:07:11.155248+00:00",
+      "retrieval_completed_utc": "2026-10-10T05:07:11.353821+00:00",
+      "http_status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "raw_path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P03.raw.html",
+      "raw_sha256": "ba8e1be8b7ffd811ca6ec0f2b2a8fe7134afea623c83501ffecbef26878fb3a1",
+      "raw_bytes": 48708,
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P03.txt",
+      "text_sha256": "617da8f646b2cdb41431a2d72f893b76b7f0dbda881187c39f1744b1ac334aaf",
+      "text_lines": 267,
+      "view_path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P03.view.html",
+      "view_sha256": "c362021c3516b21b582651b815c1b0f0d83a60aff0930f7403d47eb1b4412615",
+      "conditions_and_applicability": "Fulcio authenticates OIDC identity; Rekor records signing events. Signature/certificate/identity/root/inclusion checks do not prove the build was correct.",
+      "locators": [
+        {
+          "section": "How Sigstore works: certificate, signing event, verification",
+          "text_start_line": 232,
+          "text_end_line": 235,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P03.view.html#L232",
+          "primary_url": "https://docs.sigstore.dev/about/overview/#how-sigstore-works"
+        }
+      ]
+    },
+    {
+      "id": "P04",
+      "requested_url": "https://docs.sigstore.dev/cosign/verifying/attestation/",
+      "resolved_url": "https://docs.sigstore.dev/cosign/verifying/attestation/",
+      "version": "Live documentation; Cosign release unspecified",
+      "operation": "HTTPS GET via Python urllib.request; no downloaded code executed",
+      "retrieval_started_utc": "2026-10-10T05:07:11.156745+00:00",
+      "retrieval_completed_utc": "2026-10-10T05:07:11.323591+00:00",
+      "http_status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "raw_path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P04.raw.html",
+      "raw_sha256": "acccc72850ed293f8cb8b065b9864cd57a8912c8486966081e46c59ba4f76935",
+      "raw_bytes": 63335,
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P04.txt",
+      "text_sha256": "2a7b3b8acdaa858d3e85875f1663f55c0e6bed7b6340f5f411c8baa4dbd323ec",
+      "text_lines": 429,
+      "view_path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P04.view.html",
+      "view_sha256": "6b72fbeb93f973cae9c8a8d7d4b2b4b424a5733b93203a492977177a8e0af9b5",
+      "conditions_and_applicability": "Examples operate on OCI images and distinguish DSSE signature verification from CUE/Rego predicate policy validation. No release-specific behavior or local blob command is established by this page.",
+      "locators": [
+        {
+          "section": "In-toto attestation image operations",
+          "text_start_line": 269,
+          "text_end_line": 282,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P04.view.html#L269",
+          "primary_url": "https://docs.sigstore.dev/cosign/verifying/attestation/"
+        },
+        {
+          "section": "Policy validation; predicate vs signature",
+          "text_start_line": 283,
+          "text_end_line": 313,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P04.view.html#L283",
+          "primary_url": "https://docs.sigstore.dev/cosign/verifying/attestation/#validate-in-toto-attestations"
+        }
+      ]
+    },
+    {
+      "id": "P05",
+      "requested_url": "https://theupdateframework.io/overview/",
+      "resolved_url": "https://theupdateframework.io/docs/overview/",
+      "version": "Live overview; release version unspecified",
+      "operation": "HTTPS GET via Python urllib.request; no downloaded code executed",
+      "retrieval_started_utc": "2026-10-10T05:07:11.157895+00:00",
+      "retrieval_completed_utc": "2026-10-10T05:07:11.372462+00:00",
+      "http_status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "raw_path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P05.raw.html",
+      "raw_sha256": "c461b95395c7b2bb2d3e634679ff687faf935c064a4984bf1f55db25a47d16b2",
+      "raw_bytes": 23258,
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P05.txt",
+      "text_sha256": "3710474836fa2f081587312ab70b12f4354aafd2dd8492acd2381378215f0dc4",
+      "text_lines": 121,
+      "view_path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P05.view.html",
+      "view_sha256": "4310a99e53db3fa28b2fde7d2fc359d524045e4c8760d533d1c5affcc58399fa",
+      "conditions_and_applicability": "TUF is complementary update-channel protection; it does not substantiate source/dependency/builder claims.",
+      "locators": [
+        {
+          "section": "Purpose and rollback/freeze threats",
+          "text_start_line": 51,
+          "text_end_line": 121,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P05.view.html#L51",
+          "primary_url": "https://theupdateframework.io/docs/overview/#purpose-or-why-get-tuf"
+        }
+      ]
+    },
+    {
+      "id": "P06",
+      "requested_url": "https://in-toto.io/docs/",
+      "resolved_url": "https://in-toto.io/docs/",
+      "version": "Live documentation index; release version unspecified",
+      "operation": "HTTPS GET via Python urllib.request; no downloaded code executed",
+      "retrieval_started_utc": "2026-10-10T05:07:11.159159+00:00",
+      "retrieval_completed_utc": "2026-10-10T05:07:11.353944+00:00",
+      "http_status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "raw_path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P06.raw.html",
+      "raw_sha256": "892c5a7edf83d48f7532ff808e3a390492597e47db298f449c2632727ad83f4f",
+      "raw_bytes": 24407,
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P06.txt",
+      "text_sha256": "33f5c2d2f519426a1a12d21aa69d2f1c6e5d91e8b2e867194dc166c8b4475f2a",
+      "text_lines": 77,
+      "view_path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P06.view.html",
+      "view_sha256": "b4c92422c6f79315621931c2ce7bae76fd91e3861085cc59671900385c8e5fb2",
+      "conditions_and_applicability": "Documentation index establishes inspectable leads, not layout field semantics.",
+      "locators": [
+        {
+          "section": "Spec/demo/Python reference implementation links",
+          "text_start_line": 37,
+          "text_end_line": 61,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P06.view.html#L37",
+          "primary_url": "https://in-toto.io/docs/#python-reference-implementation"
+        }
+      ]
+    },
+    {
+      "id": "P07",
+      "requested_url": "https://slsa.dev/spec/v1.0/requirements",
+      "resolved_url": "https://slsa.dev/spec/v1.0/requirements",
+      "version": "SLSA v1.0 retired",
+      "operation": "HTTPS GET via Python urllib.request; no downloaded code executed",
+      "retrieval_started_utc": "2026-10-10T05:07:11.335685+00:00",
+      "retrieval_completed_utc": "2026-10-10T05:07:11.535554+00:00",
+      "http_status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "raw_path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P07.raw.html",
+      "raw_sha256": "e419a99cab563e8e0592750141f93217f9ddabddce29e03cc289b6e31766ab03",
+      "raw_bytes": 32225,
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P07.txt",
+      "text_sha256": "d9cca9ab3739ec6cccc2771275df67ad617aeae796c4643af9a2f41ef80f44b6",
+      "text_lines": 392,
+      "view_path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P07.view.html",
+      "view_sha256": "c3eab170d77f0f9614ac41fe1cf3274a4f5e49bfb9ca2ea1dfbb652f0b5b77bf",
+      "conditions_and_applicability": "Integrity depends on control-plane generation, tenant resistance and isolation; field exceptions persist. Build-level requirements are not a supplier-wide policy selected for this brief.",
+      "locators": [
+        {
+          "section": "Authentic provenance and tenant field exceptions",
+          "text_start_line": 251,
+          "text_end_line": 284,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P07.view.html#L251",
+          "primary_url": "https://slsa.dev/spec/v1.0/requirements#provenance-generation"
+        },
+        {
+          "section": "Unforgeable provenance and completeness",
+          "text_start_line": 295,
+          "text_end_line": 315,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P07.view.html#L295",
+          "primary_url": "https://slsa.dev/spec/v1.0/requirements#provenance-generation"
+        },
+        {
+          "section": "Isolation strength and limits",
+          "text_start_line": 339,
+          "text_end_line": 368,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P07.view.html#L339",
+          "primary_url": "https://slsa.dev/spec/v1.0/requirements#isolation-strength"
+        }
+      ]
+    },
+    {
+      "id": "P08",
+      "requested_url": "https://in-toto.io/docs/specs/",
+      "resolved_url": "https://in-toto.io/docs/specs/",
+      "version": "Live spec index selecting stable v1.0",
+      "operation": "HTTPS GET via Python urllib.request; no downloaded code executed",
+      "retrieval_started_utc": "2026-10-10T05:07:11.354637+00:00",
+      "retrieval_completed_utc": "2026-10-10T05:07:11.449377+00:00",
+      "http_status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "raw_path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P08.raw.html",
+      "raw_sha256": "f9da83e4ae574a9d7212c204c90490829057d6b44d6c650c9fb3090660eb31e2",
+      "raw_bytes": 23246,
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P08.txt",
+      "text_sha256": "5f83396441d8bd0336d566002f3395735920de5227ad9d6a2b116c5ad915aa37",
+      "text_lines": 53,
+      "view_path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P08.view.html",
+      "view_sha256": "f655c65a43c049ee03f65f42ca0052c5e0a8cb78e11d5b3f5cf9b81e2fe41a45",
+      "conditions_and_applicability": "The in-toto layout specification and attestation framework are separately developed specifications; sharing a project name does not make formats interchangeable.",
+      "locators": [
+        {
+          "section": "Distinct stable specifications",
+          "text_start_line": 33,
+          "text_end_line": 40,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P08.view.html#L33",
+          "primary_url": "https://in-toto.io/docs/specs/"
+        }
+      ]
+    },
+    {
+      "id": "P09",
+      "requested_url": "https://raw.githubusercontent.com/in-toto/specification/v1.0/in-toto-spec.md",
+      "resolved_url": "https://raw.githubusercontent.com/in-toto/specification/v1.0/in-toto-spec.md",
+      "version": "in-toto specification v1.0",
+      "operation": "HTTPS GET via Python urllib.request; no downloaded code executed",
+      "retrieval_started_utc": "2026-10-10T05:07:11.355300+00:00",
+      "retrieval_completed_utc": "2026-10-10T05:07:11.537835+00:00",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P09.raw.md",
+      "raw_sha256": "17d3326e4cf58234619dbfe821cdc5187e55e2c89f7b63f03699c46588322097",
+      "raw_bytes": 87108,
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P09.txt",
+      "text_sha256": "17d3326e4cf58234619dbfe821cdc5187e55e2c89f7b63f03699c46588322097",
+      "text_lines": 2217,
+      "view_path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P09.view.html",
+      "view_sha256": "b8d24b30c21551a87bec4094313a18fca08ca43b812795c25ca591e3177e5b42",
+      "conditions_and_applicability": "Layout owner/key and functionary links must be trusted; artifact matching rules and inspections enforce content continuity. Commands are not proof of execution correctness. Implicit ALLOW and old unexpired-layout replay are boundaries.",
+      "locators": [
+        {
+          "section": "Scope/assumptions and old layout replay",
+          "text_start_line": 179,
+          "text_end_line": 225,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P09.view.html#L179",
+          "primary_url": "https://github.com/in-toto/specification/blob/v1.0/in-toto-spec.md#152-limitations"
+        },
+        {
+          "section": "Components and artifact-chain example",
+          "text_start_line": 462,
+          "text_end_line": 524,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P09.view.html#L462",
+          "primary_url": "https://github.com/in-toto/specification/blob/v1.0/in-toto-spec.md#22-in-toto-components"
+        },
+        {
+          "section": "Layout/steps/threshold/artifact rules",
+          "text_start_line": 683,
+          "text_end_line": 779,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P09.view.html#L683",
+          "primary_url": "https://github.com/in-toto/specification/blob/v1.0/in-toto-spec.md#43-file-formats-layout"
+        },
+        {
+          "section": "Rule defaults and MATCH",
+          "text_start_line": 888,
+          "text_end_line": 932,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P09.view.html#L888",
+          "primary_url": "https://github.com/in-toto/specification/blob/v1.0/in-toto-spec.md#4331-rule-processing"
+        }
+      ]
+    },
+    {
+      "id": "P10",
+      "requested_url": "https://theupdateframework.io/docs/metadata/",
+      "resolved_url": "https://theupdateframework.io/docs/metadata/",
+      "version": "Live roles/metadata; release version unspecified",
+      "operation": "HTTPS GET via Python urllib.request; no downloaded code executed",
+      "retrieval_started_utc": "2026-10-10T05:07:11.372835+00:00",
+      "retrieval_completed_utc": "2026-10-10T05:07:11.458265+00:00",
+      "http_status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "raw_path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P10.raw.html",
+      "raw_sha256": "ea6fbaf7970cc70eb5d717575cdfa7e101d2159216cac90c56054a71d832db23",
+      "raw_bytes": 27110,
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P10.txt",
+      "text_sha256": "a8fa81c017fe3dbeaca0a00f8dac278009400a83292489d5e25e8804a759251e",
+      "text_lines": 146,
+      "view_path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P10.view.html",
+      "view_sha256": "695aff0ee783f9197a35db986d564739af826d26fecc2d76ca26289cc864be81",
+      "conditions_and_applicability": "Root authorizes role keys and thresholds; targets metadata lists hashes/sizes; expiring timestamp metadata supports freshness. A complete updater is outside the assigned scope.",
+      "locators": [
+        {
+          "section": "Root role and thresholds",
+          "text_start_line": 61,
+          "text_end_line": 65,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P10.view.html#L61",
+          "primary_url": "https://theupdateframework.io/docs/metadata/#root-metadata-rootjson"
+        },
+        {
+          "section": "Target hashes and size",
+          "text_start_line": 69,
+          "text_end_line": 73,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P10.view.html#L69",
+          "primary_url": "https://theupdateframework.io/docs/metadata/#targets-metadata-targetsjson"
+        },
+        {
+          "section": "Timestamp freshness",
+          "text_start_line": 116,
+          "text_end_line": 123,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P10.view.html#L116",
+          "primary_url": "https://theupdateframework.io/docs/metadata/#timestamp-metadata-timestampjson"
+        }
+      ]
+    },
+    {
+      "id": "P11",
+      "requested_url": "https://docs.sigstore.dev/cosign/verifying/verify/",
+      "resolved_url": "https://docs.sigstore.dev/cosign/verifying/verify/",
+      "version": "Live documentation; Cosign release unspecified",
+      "operation": "HTTPS GET via Python urllib.request; no downloaded code executed",
+      "retrieval_started_utc": "2026-10-10T05:07:11.449748+00:00",
+      "retrieval_completed_utc": "2026-10-10T05:07:11.596315+00:00",
+      "http_status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "raw_path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P11.raw.html",
+      "raw_sha256": "cddc158241a16c414589b05f77674d24902660e61c722f9630414c16a753e298",
+      "raw_bytes": 73554,
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P11.txt",
+      "text_sha256": "2939becc0d54b2b0182a1cb5bb1ae650bf82d6e06e847c4acb65ee0817ac4a2e",
+      "text_lines": 560,
+      "view_path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P11.view.html",
+      "view_sha256": "abb7c0218eb71aa628ab58388d86884922f8fafaeda8b1ef6749ee53392be468",
+      "conditions_and_applicability": "Documents different image and blob operations, identity plus issuer checks, and bundle/offline possibilities. CLI release is unspecified and no executable command was run.",
+      "locators": [
+        {
+          "section": "Identity/issuer and blob operation",
+          "text_start_line": 324,
+          "text_end_line": 338,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P11.view.html#L324",
+          "primary_url": "https://docs.sigstore.dev/cosign/verifying/verify/#keyless-verification-using-openid-connect"
+        },
+        {
+          "section": "Image attestation operation",
+          "text_start_line": 401,
+          "text_end_line": 410,
+          "local_url": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary/P11.view.html#L401",
+          "primary_url": "https://docs.sigstore.dev/cosign/verifying/verify/#verify-attestation"
+        }
+      ]
+    }
+  ],
+  "failures": [
+    {
+      "operation": "Local extraction dependency import",
+      "error": "ModuleNotFoundError: No module named 'bs4'",
+      "disposition": "No installation; reran extraction with standard-library HTMLParser. All HTTPS retrievals subsequently returned HTTP 200."
+    }
+  ]
+}

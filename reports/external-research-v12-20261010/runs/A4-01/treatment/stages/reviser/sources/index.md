@@ -1,0 +1,17 @@
+# Reviser evidence index
+
+This index supports the complete proposal in [final.md](../final.md). Exact source identity, version or commit, locator, access UTC, operation, conditions, and applicability are recorded per source ID in [source-map.json](../source-map.json). Investigator IDs S01-S19 and critic IDs C01-C19 remain distinct and are preserved under separate source sets; reviser source R01 is a new analogy source. All material was retrieved read-only.
+
+| Source IDs | Primary source links | Bounded use |
+|---|---|---|
+| S01-S02; C01-C02 | [AWS upload guide](https://docs.aws.amazon.com/AmazonS3/latest/userguide/upload-objects.html); [AWS quotas](https://docs.aws.amazon.com/AmazonS3/latest/userguide/qfacts.html) | Separate single PutObject, console, and multipart limits; preserve decimal/binary wording. |
+| S03-S06; C03-C04, C12 | [AWS multipart overview](https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html); [AWS lifecycle examples](https://docs.aws.amazon.com/AmazonS3/latest/userguide/lifecycle-configuration-examples.html); [AWS integrity guide](https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity-upload.html); [CompleteMultipartUpload API](https://docs.aws.amazon.com/AmazonS3/latest/API/API_CompleteMultipartUpload.html) | Part state, abandoned uploads, checksum mode and scope, and completion-response errors. |
+| S07-S08; C05-C06 | [Uppy AWS S3 docs](https://uppy.io/docs/aws-s3/); [Golden Retriever docs](https://uppy.io/docs/golden-retriever/) | Signing/CORS and threshold defaults; separate browser file-recovery limits from storage-service limits. |
+| S09-S10, S19; C07-C09 | [tus protocol 1.0](https://tus.io/protocols/resumable-upload); [tusd v2.10.1 S3 backend](https://github.com/tus/tusd/blob/v2.10.1/docs/_storage-backends/aws-s3.md); [tusd v2.10.1 release](https://github.com/tus/tusd/releases/tag/v2.10.1) | Offset recovery, optional extensions, backend operations, and released deferred-length fix. |
+| S11; C13 | [AWS conditional writes](https://docs.aws.amazon.com/AmazonS3/latest/userguide/conditional-writes.html) | AWS final-write race controls and their scope gaps. |
+| S12-S13; C17-C18 | [Cloudflare R2 upload guide](https://developers.cloudflare.com/r2/objects/upload-objects/); [R2 limits](https://developers.cloudflare.com/r2/platform/limits/) | Provider-specific illustrative bounds, lifecycle default, and two-page limit difference. |
+| S14-S16; C14-C16 | [AWS CLI configuration](https://docs.aws.amazon.com/cli/latest/topic/s3-config.html); [CLI checksum FAQ](https://docs.aws.amazon.com/cli/latest/topic/s3-faq.html); [cp reference](https://docs.aws.amazon.com/cli/latest/reference/s3/cp.html) | Optional CLI candidate behavior and controls; not proof of archive compatibility or a performed transfer. |
+| S17-S18; C10-C11 | [MinIO issue #20455](https://github.com/minio/minio/issues/20455); [fix commit f246ee7](https://github.com/minio/minio/commit/f246ee7) | Reported single-PutObject checksum retrieval difference and code fix; packaged release inclusion not established. |
+| R01; RC03 | [Google Cloud resumable uploads](https://cloud.google.com/storage/docs/resumable-uploads) | Distinct session-URI recovery analogy only; not an archive provider recommendation. |
+
+Reviewer checks RC01 and RC02 re-open the AWS checksum guide and Uppy documentation at 2026-10-10T04:33:03Z. RC03 records the Google Cloud page opened at that time. The source map preserves the original investigator and critic access times separately.

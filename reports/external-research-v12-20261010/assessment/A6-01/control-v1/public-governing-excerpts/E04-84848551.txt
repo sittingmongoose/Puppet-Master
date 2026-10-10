@@ -1,0 +1,24 @@
+URL: https://gtfs.org/documentation/realtime/feed-entities/service-alerts/
+Original locator: ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E04.txt
+Original SHA256: 848485518a8e3121eebdfa15e5853e92a49968203725dd7043621a5e79e152bc
+Original numbered lines; gaps omitted. Not full response.
+
+175: Service Alerts¶
+176: Service alerts allow you to provide updates whenever there is disruption on the network. Delays and cancellations of individual trips should usually be communicated using Trip updates.
+177: You have the option to provide the following:
+178: URL - link to your site explaining more about the alert
+179: Header text - a summary of the alert
+180: Description - a full description of the alert, which will always be shown alongside the header (so should not repeat this information).
+181: TimeRange¶
+182: The alert will be displayed where appropriate within the given time range. This range should cover the entire time that the alert is useful for the passenger to see.
+183: If no time is given, we will display the alert for as long as it is in the feed. If multiple ranges are given, we will display during all of them.
+184: EntitySelector¶
+185: Entity selector allows you specify exactly which parts of the network this alert affects, so that we can display only the most appropriate alerts to the user. You may include multiple entity selectors for alerts which affect multiple entities.
+186: Entities are selected using their GTFS identifiers, and you can select any of the following:
+187: Agency - affects the whole network
+188: Route - affects the whole route
+189: Route type - affects any route of this type. e.g. all subways.
+190: Trip - affects a particular trip
+191: Stop - affects a particular stop
+192: You may include more than one of the fields listed above in one informed_entity. When multiple fields are included in one informed_entity, they should be interpreted as being joined by the AND logical operator. In other words, the alert should only be applied in a context that meets all of the fields provided in an informed_entity. For example, if route_id: "1" and stop_id: "5" are both included in one informed_entity, then the alert should apply only to route 1 at stop 5. It should NOT be applied to any other stop on route 1, and it should NOT be applied to any other route at stop 5.
+193: If you would like to represent an alert that affects more than one entity (e.g. an alert for both route 1 and stop 5) , you should add multiple informed_entity to your alert, with each of them applying to the affected entity (e.g. one informed_entity that includes route 1 and another informed_entity that includes stop 5).

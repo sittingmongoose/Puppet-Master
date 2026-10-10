@@ -1,0 +1,39 @@
+URL: https://github.com/prusa3d/PrusaSlicer/issues/8401
+Original locator: ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I11.txt
+Original SHA256: 1b7fed7b9a6cc721a48c8a7db7e2307edfd2b5cdee10b6a5539322fd5006a9ba
+Original numbered lines; gaps omitted. Not full response.
+
+119: FreeCAD has recently added 3MF export in version 0.20. When attempting to open a 3MF file exported from FreeCAD in PrusaSlicer 2.4.2, the import appears to fail silently. There are no error messages, and no object shows on the build area (or anywhere in space when zoomed out).
+120: It is quite possible the 3MF file isn't in the format that PrusaSlicer is looking for (Fusion 360 also has issues with it) but Fusion 360 does at least display an error. Oddly, Blender 3.2 (with a community add-in) can open the file successfully.
+121: I've opened a thread in the FreeCAD forum: https://forum.freecadweb.org/viewtopic.php?p=601749#p601749
+122: but also wanted to open a ticket here, as a) someone familiar with the 3MF import might readily spot an error, and b) if the file IS in error, PrusaSlicer would ideally display an error message.
+123: Project file & How to reproduce
+124: I've attached a zip file with the following:
+125: Narrow Hose Adapter-3MF-Test.3mf - the import file that fails
+126: Narrow Hose Adapter-AMF-Test.amf - an AMF import that succeeds but places model at 0,0 not centered on bed
+127: Narrow Hose Adapter-STL-Test.stl - an STL import that works as expected
+128: Narrow Hose Adapter-PS-Exported-3MF.3mf - a 3MF file saved AFTER importing as STL and saving as 3MF from PrusaSlicer
+129: TestProjectSaved.3mf - a 3MF file saved from PrusaSlicer after attempting to import the 3MF (and seeing no indication of success or failure)
+130: Narrow Hose Adapter.FCStd - the FreeCAD design file in case you wish to load FreeCAD and test exporting it yourself
+131: Test by attempting to import the Narrow Hose Adapter-3MF-Test.3mf file. Others are added as additional supporting info.
+132: ImportTests.zip
+133: Checklist of files included above
+134: Project file
+135: Screenshot
+136: Version of PrusaSlicer
+137: Version 2.4.2+arm64
+138: Operating system
+139: macOS 12.4 Monterey
+149: Provided 3MF file (generated from non-stable FreeCAD version) has an incorrect format, please report the issue to FreeCAD developers.
+150: This is the content of the 3MF file, the slash shouldn't be there.
+151: We will add some error message for such cases. Closing.
+152: rtyrclosed this as completedon Jun 14, 2022
+153: enricoturri1966added a commit that references this issue on Jun 14, 2022
+154: #8401 - Show error message when trying to import invalid 3mf
+155: 040a846
+156: JohnOCFII commented on Jun 14, 2022
+157: JohnOCFII
+158: on Jun 14, 2022
+159: Author
+160: More actions
+161: Thanks for the analysis and adding an error message. This issue was opened with FreeCAD yesterday, and they've now submitted the fix regarding the leading \ as indicated above.

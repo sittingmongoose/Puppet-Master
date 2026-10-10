@@ -1,0 +1,1127 @@
+{
+  "schema_version": "er12-independent-assessment-source-map-v1",
+  "reviewer": "codex-er12-a601-review-1010",
+  "slot": "A6-01",
+  "arm": "control",
+  "created_at_utc": "2026-10-10T04:57:41.398147+00:00",
+  "authority": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+  "scope": "Exactly one complete ordinary control pipeline; no other arms/results/history.",
+  "identity_policy": "E identifiers name independently retrieved exact URLs and retained response hashes. Candidate source IDs are cross-references only, not evidence of truth or independent review.",
+  "sources": [
+    {
+      "id": "E01",
+      "url": "https://gtfs.org/documentation/schedule/reference/",
+      "candidate_id": "S01-GTFS-SCHEDULE-REF-2026-04-27",
+      "access_utc": "2026-10-10T04:39:00.101848+00:00",
+      "http_status": 200,
+      "resolved_url": "https://gtfs.org/documentation/schedule/reference/",
+      "content_type": "text/html",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E01.html",
+      "raw_sha256": "250b50e7be70e58a12616e82bade177b654179cf0d087797215ca2633f9eb1da",
+      "text_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E01.txt",
+      "text_sha256": "1250e8cc4c178704f4d7b472f9da5a1cf2b29e3ea57a7aa0d7439a865f00ba38",
+      "bytes": 298318,
+      "lines": 1795,
+      "version_observed": "GTFS Schedule living reference revised 2026-04-27; observed 2026-10-10",
+      "locator": "E01.txt lines 267; 309-345; 505-508; 583; 668-697; 853-920; 1323-1352; 1715-1726",
+      "independent_observation": "Primary Schedule semantics independently read for identity, dates, timezone, Time, frequency defaults and version metadata.",
+      "claim_ids": [
+        "SC-01",
+        "SC-02",
+        "SC-03",
+        "SC-05"
+      ],
+      "material_finding_ids": [],
+      "product_validation": "NOT_RUN; this is public primary evidence retrieval/inspection"
+    },
+    {
+      "id": "E02",
+      "url": "https://gtfs.org/documentation/realtime/reference/",
+      "candidate_id": "S02-GTFS-RT-REF-2.0",
+      "access_utc": "2026-10-10T04:39:00.103849+00:00",
+      "http_status": 200,
+      "resolved_url": "https://gtfs.org/documentation/realtime/reference/",
+      "content_type": "text/html",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E02.html",
+      "raw_sha256": "09db43954f662ce8090a22ee47794162115e6165a77966b2004a20925b2f591e",
+      "text_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E02.txt",
+      "text_sha256": "bf41723bbd0fdab269e255a4bf70ae3569bf6e78a2f41eb98553c22e6ae95c05",
+      "bytes": 240916,
+      "lines": 1466,
+      "version_observed": "GTFS RT current reference, protocol 2.0; fields/history through June 2026; observed 2026-10-10",
+      "locator": "E02.txt lines 347-378; 431-475; 488-571; 795-821; 974-1046; 1116-1154",
+      "independent_observation": "Primary current RT field context independently read including the NEW identity exception and full journey requirements; this directly supports F-01.",
+      "claim_ids": [
+        "SC-03",
+        "SC-04",
+        "SC-05",
+        "SC-06",
+        "SC-07",
+        "SC-08"
+      ],
+      "material_finding_ids": [
+        "F-01"
+      ],
+      "product_validation": "NOT_RUN; this is public primary evidence retrieval/inspection"
+    },
+    {
+      "id": "E03",
+      "url": "https://gtfs.org/documentation/realtime/feed-entities/trip-updates/",
+      "candidate_id": "S03-GTFS-TRIP-UPDATES",
+      "access_utc": "2026-10-10T04:39:00.108195+00:00",
+      "http_status": 200,
+      "resolved_url": "https://gtfs.org/documentation/realtime/feed-entities/trip-updates/",
+      "content_type": "text/html",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E03.html",
+      "raw_sha256": "af83842ec3e5a2631d6fc0cab3679d859dc9c4003cc7359cd24b91782ddc6314",
+      "text_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E03.txt",
+      "text_sha256": "74fcb32e4b78cf405a42030271f8b47869dedbcdc4f19ec60baeb43356d31b95",
+      "bytes": 112551,
+      "lines": 259,
+      "version_observed": "Living primary page/repository observed 2026-10-10; see precise scope in linked claim records",
+      "locator": "E03.txt lines 177-247; overview repeats legacy relationship examples, so current E02 governs newer enums",
+      "independent_observation": "Independent no-update and instance-key context; legacy examples do not override current reference.",
+      "claim_ids": [
+        "SC-04",
+        "SC-06"
+      ],
+      "material_finding_ids": [
+        "F-01"
+      ],
+      "product_validation": "NOT_RUN; this is public primary evidence retrieval/inspection"
+    },
+    {
+      "id": "E04",
+      "url": "https://gtfs.org/documentation/realtime/feed-entities/service-alerts/",
+      "candidate_id": "S04-GTFS-SERVICE-ALERTS",
+      "access_utc": "2026-10-10T04:39:00.109327+00:00",
+      "http_status": 200,
+      "resolved_url": "https://gtfs.org/documentation/realtime/feed-entities/service-alerts/",
+      "content_type": "text/html",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E04.html",
+      "raw_sha256": "da7c6fd8f32b260026c4c89ca5f0b8b9f4deaa03085c733970c352f16fe77b0e",
+      "text_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E04.txt",
+      "text_sha256": "848485518a8e3121eebdfa15e5853e92a49968203725dd7043621a5e79e152bc",
+      "bytes": 105023,
+      "lines": 230,
+      "version_observed": "Living primary page/repository observed 2026-10-10; see precise scope in linked claim records",
+      "locator": "E04.txt lines 175-193 and 209-221",
+      "independent_observation": "Independent alert ranges and EntitySelector conjunctions; supports separate alert surface.",
+      "claim_ids": [
+        "SC-08"
+      ],
+      "material_finding_ids": [],
+      "product_validation": "NOT_RUN; this is public primary evidence retrieval/inspection"
+    },
+    {
+      "id": "E05",
+      "url": "https://gtfs.org/documentation/realtime/realtime-best-practices/",
+      "candidate_id": "S05-GTFS-RT-BEST-PRACTICES",
+      "access_utc": "2026-10-10T04:39:00.110963+00:00",
+      "http_status": 200,
+      "resolved_url": "https://gtfs.org/documentation/realtime/realtime-best-practices/",
+      "content_type": "text/html",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E05.html",
+      "raw_sha256": "18138a16e53a8cd7e4baaffcd5fc9a3fd7c681a96cf4a004b756b905eb6bfc1c",
+      "text_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E05.txt",
+      "text_sha256": "311c75752e7923b5ca4dfe33aa267f939ad9ffbc8bd89f4023b208066acea5d5",
+      "bytes": 130903,
+      "lines": 351,
+      "version_observed": "Living primary page/repository observed 2026-10-10; see precise scope in linked claim records",
+      "locator": "E05.txt lines 209-225; 271-304",
+      "independent_observation": "Independent recommendation context and units; freshness guidance is not product performance.",
+      "claim_ids": [
+        "SC-06",
+        "SC-09"
+      ],
+      "material_finding_ids": [],
+      "product_validation": "NOT_RUN; this is public primary evidence retrieval/inspection"
+    },
+    {
+      "id": "E06",
+      "url": "https://gtfs.org/resources/mobilitydata-recommendations/gtfs-schedule-vs-gtfs-realtime/",
+      "candidate_id": "S06-GTFS-SCHEDULE-REALTIME-ALIGNMENT",
+      "access_utc": "2026-10-10T04:39:00.112109+00:00",
+      "http_status": 200,
+      "resolved_url": "https://gtfs.org/resources/mobilitydata-recommendations/gtfs-schedule-vs-gtfs-realtime/",
+      "content_type": "text/html",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E06.html",
+      "raw_sha256": "fed6f94a5813ca21e0e2ae21bd77f02eb846ddaa5b2021fa529434bf1c65e42a",
+      "text_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E06.txt",
+      "text_sha256": "9b32a7671b658a57c5e4b5f12c47fbe20fcb7fcf59236e60763934f826b0e264",
+      "bytes": 157612,
+      "lines": 453,
+      "version_observed": "Living primary page/repository observed 2026-10-10; see precise scope in linked claim records",
+      "locator": "E06.txt lines 207-232; 272-276; 325-329",
+      "independent_observation": "Independent publisher/consumer handoff and New/Replacement caveats; alignment is not a mandate for the local fail-closed UI.",
+      "claim_ids": [
+        "SC-05"
+      ],
+      "material_finding_ids": [
+        "F-01"
+      ],
+      "product_validation": "NOT_RUN; this is public primary evidence retrieval/inspection"
+    },
+    {
+      "id": "E07",
+      "url": "https://gtfs.org/documentation/realtime/change-history/revision-history/",
+      "candidate_id": "S07-GTFS-RT-REVISION-HISTORY",
+      "access_utc": "2026-10-10T04:39:00.348614+00:00",
+      "http_status": 200,
+      "resolved_url": "https://gtfs.org/documentation/realtime/change-history/revision-history/",
+      "content_type": "text/html",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E07.html",
+      "raw_sha256": "19d883d3c6f7f1988f2b12cff9a204dd66df671d53a5188d9838b9f5c856c605",
+      "text_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E07.txt",
+      "text_sha256": "b02de14fa99a9b0e85f94e9548accdc877667b93d60d5b3b3a6d79ee087df34b",
+      "bytes": 124419,
+      "lines": 327,
+      "version_observed": "Living primary page/repository observed 2026-10-10; see precise scope in linked claim records",
+      "locator": "E07.txt lines 239-251; 273-276",
+      "independent_observation": "Independent dated additions; DUPLICATED precedes 2025; supplies L-02 and protocol-history context.",
+      "claim_ids": [
+        "SC-05",
+        "SC-07",
+        "SC-08"
+      ],
+      "material_finding_ids": [],
+      "product_validation": "NOT_RUN; this is public primary evidence retrieval/inspection"
+    },
+    {
+      "id": "E08",
+      "url": "https://docs.opentripplanner.org/en/latest/apis/GTFS-GraphQL-API/",
+      "candidate_id": "S08-OTP-GTFS-GRAPHQL",
+      "access_utc": "2026-10-10T04:39:00.418248+00:00",
+      "http_status": 200,
+      "resolved_url": "https://docs.opentripplanner.org/en/latest/apis/GTFS-GraphQL-API/",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E08.html",
+      "raw_sha256": "5159e5911e4e0e99eb8483918d2e46a0fde96ef9ec632d75c69bb841bafc62b5",
+      "text_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E08.txt",
+      "text_sha256": "c98d666a6812ba6644396fac4d1dc42ff3735deee752093b9628ff4825be4ed4",
+      "bytes": 49090,
+      "lines": 145,
+      "version_observed": "Living primary page/repository observed 2026-10-10; see precise scope in linked claim records",
+      "locator": "E08.txt lines 112-141",
+      "independent_observation": "Independent GraphQL endpoint/general-purpose/API configuration documentation.",
+      "claim_ids": [
+        "SC-10"
+      ],
+      "material_finding_ids": [],
+      "product_validation": "NOT_RUN; this is public primary evidence retrieval/inspection"
+    },
+    {
+      "id": "E09",
+      "url": "https://docs.opentripplanner.org/en/latest/GTFS-RT-Config/",
+      "candidate_id": "S09-OTP-GTFS-RT-UPDATERS",
+      "access_utc": "2026-10-10T04:39:00.442274+00:00",
+      "http_status": 200,
+      "resolved_url": "https://docs.opentripplanner.org/en/latest/GTFS-RT-Config/",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E09.html",
+      "raw_sha256": "29f34e7533968d5a1aa9a18ab0cbc4beb7a54ebdc2063d4154c49974beb92b45",
+      "text_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E09.txt",
+      "text_sha256": "6cb07a72d1ea69c49f21bf237539fbc90ff3fc4ed62fb2203a6e6be3228c7420",
+      "bytes": 79928,
+      "lines": 502,
+      "version_observed": "Living primary page/repository observed 2026-10-10; see precise scope in linked claim records",
+      "locator": "E09.txt lines 129-173; 210-251",
+      "independent_observation": "Independent poller field tables including type/default/presence and duration units.",
+      "claim_ids": [
+        "SC-10",
+        "SC-11"
+      ],
+      "material_finding_ids": [],
+      "product_validation": "NOT_RUN; this is public primary evidence retrieval/inspection"
+    },
+    {
+      "id": "E10",
+      "url": "https://docs.opentripplanner.org/en/latest/Changelog/",
+      "candidate_id": "S10-OTP-CHANGELOG-2.10.0",
+      "access_utc": "2026-10-10T04:39:00.492239+00:00",
+      "http_status": 200,
+      "resolved_url": "https://docs.opentripplanner.org/en/latest/Changelog/",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E10.html",
+      "raw_sha256": "2b562ca78a01d9bdf8bb6bcd733d1bcc2313e6150467ffa66f8ae1e646141f94",
+      "text_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E10.txt",
+      "text_sha256": "7e81044b8f973a16aebce4e9bd126a72141660c231217bb3a72026984a5e97cb",
+      "bytes": 217026,
+      "lines": 1432,
+      "version_observed": "Living primary page/repository observed 2026-10-10; see precise scope in linked claim records",
+      "locator": "2.10.0 changelog section; exact release source E21 lines 6-38",
+      "independent_observation": "Current changelog retrieved; exact release supplement independently pins consequential release claims.",
+      "claim_ids": [
+        "SC-12"
+      ],
+      "material_finding_ids": [],
+      "product_validation": "NOT_RUN; this is public primary evidence retrieval/inspection"
+    },
+    {
+      "id": "E11",
+      "url": "https://github.com/opentripplanner/OpenTripPlanner/issues/6252",
+      "candidate_id": "S11-OTP-ISSUE-6252",
+      "access_utc": "2026-10-10T04:39:00.508775+00:00",
+      "http_status": 200,
+      "resolved_url": "https://github.com/opentripplanner/OpenTripPlanner/issues/6252",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E11.html",
+      "raw_sha256": "661ff7b651830cc89600c375157626b81b36e06afa02ce8594efd302c8fd9a63",
+      "text_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E11.txt",
+      "text_sha256": "22fbd76beb35b0da308362eacfce9239ea98acf6559681cb9dc4c0dad88ada14",
+      "bytes": 301517,
+      "lines": 285,
+      "version_observed": "Living primary page/repository observed 2026-10-10; see precise scope in linked claim records",
+      "locator": "Issue body; E22-body.md Expected/Observed behavior, Version, Data sets, router config and Additional information",
+      "independent_observation": "Issue retrieved independently; full API body establishes actual scope and no exact timetable version.",
+      "claim_ids": [
+        "SC-13"
+      ],
+      "material_finding_ids": [],
+      "product_validation": "NOT_RUN; this is public primary evidence retrieval/inspection"
+    },
+    {
+      "id": "E12",
+      "url": "https://github.com/opentripplanner/OpenTripPlanner/pull/6262",
+      "candidate_id": "S12-OTP-PR-6262",
+      "access_utc": "2026-10-10T04:39:00.601132+00:00",
+      "http_status": 200,
+      "resolved_url": "https://github.com/opentripplanner/OpenTripPlanner/pull/6262",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E12.html",
+      "raw_sha256": "ac9b4785d8463315d2ea6d516df8af1e4cc00e43faccc415422309e4c22a08c5",
+      "text_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E12.txt",
+      "text_sha256": "b3962130795ee0c0534cedddd7e137a60cf111b79ce1b9353253274c6a3434b9",
+      "bytes": 772537,
+      "lines": 964,
+      "version_observed": "Living primary page/repository observed 2026-10-10; see precise scope in linked claim records",
+      "locator": "PR summary, linked issue, merge date and testing heading; E23 JSON /merged_at, /base/ref, /body",
+      "independent_observation": "PR retrieved independently; full API supplies actual merge and test-summary context.",
+      "claim_ids": [
+        "SC-14"
+      ],
+      "material_finding_ids": [],
+      "product_validation": "NOT_RUN; this is public primary evidence retrieval/inspection"
+    },
+    {
+      "id": "E13",
+      "url": "https://docs.opentripplanner.org/en/v2.7.0/Changelog/",
+      "candidate_id": "S13-OTP-CHANGELOG-2.7.0",
+      "access_utc": "2026-10-10T04:39:00.670027+00:00",
+      "http_status": 200,
+      "resolved_url": "https://docs.opentripplanner.org/en/v2.7.0/Changelog/",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E13.html",
+      "raw_sha256": "37f0b92adc6d6a44e275d1f7301019d794bc7bf68faf37919ade76b8e66c2420",
+      "text_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E13.txt",
+      "text_sha256": "f9b9e1110b41a04ca28fb6aff7f7adef88a7ee51586222931b4f9e25ddff88b7",
+      "bytes": 169080,
+      "lines": 1154,
+      "version_observed": "OTP v2.7.0 release 2025-03-12",
+      "locator": "E13.txt lines 149 and 204-206",
+      "independent_observation": "Versioned release inclusion independently inspected.",
+      "claim_ids": [
+        "SC-15"
+      ],
+      "material_finding_ids": [],
+      "product_validation": "NOT_RUN; this is public primary evidence retrieval/inspection"
+    },
+    {
+      "id": "E14",
+      "url": "https://docs.opentripplanner.org/en/latest/Netex-Tutorial/",
+      "candidate_id": "S14-OTP-NETEX-SIRI-TUTORIAL",
+      "access_utc": "2026-10-10T04:39:00.687196+00:00",
+      "http_status": 200,
+      "resolved_url": "https://docs.opentripplanner.org/en/latest/Netex-Tutorial/",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E14.html",
+      "raw_sha256": "f99f33e2bc64b73e847423f347bce790d3b766f636ea4b4888d90115bbd78dd7",
+      "text_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E14.txt",
+      "text_sha256": "7a68b7695c12430f07c9225762c2e1c31474a31496bd0f67e44a2d38e0bba1b4",
+      "bytes": 59361,
+      "lines": 205,
+      "version_observed": "Living primary page/repository observed 2026-10-10; see precise scope in linked claim records",
+      "locator": "E14.txt lines 121-158; 165-200",
+      "independent_observation": "Independent tutorial context for Norway, NeTEx graph and separate SIRI services; no deployment executed.",
+      "claim_ids": [
+        "SC-17"
+      ],
+      "material_finding_ids": [],
+      "product_validation": "NOT_RUN; this is public primary evidence retrieval/inspection"
+    },
+    {
+      "id": "E15",
+      "url": "https://github.com/TransmodelEcosystem/SIRI",
+      "candidate_id": "S15-SIRI-README-V2.2",
+      "access_utc": "2026-10-10T04:39:00.714148+00:00",
+      "http_status": 200,
+      "resolved_url": "https://github.com/TransmodelEcosystem/SIRI",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E15.html",
+      "raw_sha256": "5fec05b3b4c65ba21393a4d7104b8705ac440ca2e855ee32d4840c43bfc29903",
+      "text_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E15.txt",
+      "text_sha256": "b93f562e3a89d91f180f12c61730dc809a38c150418e4d72cb52cc83495083b4",
+      "bytes": 315313,
+      "lines": 367,
+      "version_observed": "Living primary page/repository observed 2026-10-10; see precise scope in linked claim records",
+      "locator": "Repository README Branches, Important notes and Releases; raw README E26 lines 48-62 and 139-150",
+      "independent_observation": "Independent repository branch/release conditions; raw README provides a readable corroborating capture.",
+      "claim_ids": [
+        "SC-18"
+      ],
+      "material_finding_ids": [],
+      "product_validation": "NOT_RUN; this is public primary evidence retrieval/inspection"
+    },
+    {
+      "id": "E16",
+      "url": "https://github.com/opentripplanner/OpenTripPlanner/blob/v2.10.0/application/src/main/java/org/opentripplanner/framework/application/OTPFeature.java",
+      "candidate_id": "S16-OTP-OTPFEATURE-POLL-WAIT-2.10.0",
+      "access_utc": "2026-10-10T04:39:00.730965+00:00",
+      "http_status": 200,
+      "resolved_url": "https://github.com/opentripplanner/OpenTripPlanner/blob/v2.10.0/application/src/main/java/org/opentripplanner/framework/application/OTPFeature.java",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E16.html",
+      "raw_sha256": "e0a63641d9e8c473aa221e31bfa5c9a96e92bad3c51b03ac0f6c0eb60e71d035",
+      "text_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E16.txt",
+      "text_sha256": "ffeb4a3a6835041c8fb773368b9d030bfa3451d7d42fe5559b087d4ccab021fa",
+      "bytes": 392679,
+      "lines": 754,
+      "version_observed": "OTP exact tag v2.10.0",
+      "locator": "Exact v2.10.0 OTPFeature source; raw E20 lines 11-16, 125-130 and enum constructors",
+      "independent_observation": "Exact released code retrieved; raw counterpart independently inspected for true default and override mechanism.",
+      "claim_ids": [],
+      "material_finding_ids": [],
+      "product_validation": "NOT_RUN; this is public primary evidence retrieval/inspection"
+    },
+    {
+      "id": "E17",
+      "url": "https://github.com/opentripplanner/OpenTripPlanner/blob/v2.10.0/doc/user/Changelog.md",
+      "candidate_id": "S17-OTP-CHANGELOG-TAG-2.10.0",
+      "access_utc": "2026-10-10T04:39:00.846470+00:00",
+      "http_status": 200,
+      "resolved_url": "https://github.com/opentripplanner/OpenTripPlanner/blob/v2.10.0/doc/user/Changelog.md",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E17.html",
+      "raw_sha256": "39a7ed9a53a637812b01873ebf1f0e23d12023ed3bd7b2e3cdf369f42f85d65e",
+      "text_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E17.txt",
+      "text_sha256": "a6679b533ecfccb76b5785e7444bde1f44f032cea20d9b3c7770e2b50f50652a",
+      "bytes": 1119491,
+      "lines": 1420,
+      "version_observed": "OTP exact tag v2.10.0",
+      "locator": "Exact v2.10.0 Changelog; raw E21 lines 6-38",
+      "independent_observation": "Exact release changelog independently captured and inspected through raw counterpart.",
+      "claim_ids": [
+        "SC-12"
+      ],
+      "material_finding_ids": [],
+      "product_validation": "NOT_RUN; this is public primary evidence retrieval/inspection"
+    },
+    {
+      "id": "E18",
+      "url": "https://github.com/opentripplanner/OpenTripPlanner/pull/6262/files",
+      "candidate_id": "S18-OTP-PR-6262-POLLING-CODE",
+      "access_utc": "2026-10-10T04:39:00.872196+00:00",
+      "http_status": 200,
+      "resolved_url": "https://github.com/opentripplanner/OpenTripPlanner/pull/6262/files",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E18.html",
+      "raw_sha256": "3dcfd2ae30fd2d03b76748f526997be37841b3ad235db96f3466062fb3d84382",
+      "text_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E18.txt",
+      "text_sha256": "95aa219123e0d57f17423a8fb445a523a8b04cfd87daf097cd03ad006e2c16ae",
+      "bytes": 751720,
+      "lines": 1928,
+      "version_observed": "Living primary page/repository observed 2026-10-10; see precise scope in linked claim records",
+      "locator": "PR changed-file view; independent API E25 /files by filename or E25-polling.patch",
+      "independent_observation": "Changed-file source retrieved; API patches independently inspected to determine wait scope.",
+      "claim_ids": [
+        "SC-14"
+      ],
+      "material_finding_ids": [],
+      "product_validation": "NOT_RUN; this is public primary evidence retrieval/inspection"
+    },
+    {
+      "id": "E19",
+      "url": "https://github.com/opentripplanner/OpenTripPlanner/commit/69ac485",
+      "candidate_id": "S19-OTP-PR-6262-TEST-COMMIT-69AC485",
+      "access_utc": "2026-10-10T04:39:01.014697+00:00",
+      "http_status": 200,
+      "resolved_url": "https://github.com/opentripplanner/OpenTripPlanner/commit/69ac485",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E19.html",
+      "raw_sha256": "fa0ce4aca40eeb9c1717232129e7e919277ec2aeb0eed60ef1b91cade122375d",
+      "text_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E19.txt",
+      "text_sha256": "1bf188e559b59656bb5f8ebd73f7ce2d19a425dfc7fa8418da44ef81ca1c0e54",
+      "bytes": 390374,
+      "lines": 290,
+      "version_observed": "OTP commit 69ac4854678bb964715d4b7d143e457cc6b77dda",
+      "locator": "Commit 69ac485 test diff; E24-test.patch complete test source",
+      "independent_observation": "Test commit independently retrieved; API patch independently inspected in full.",
+      "claim_ids": [
+        "SC-16"
+      ],
+      "material_finding_ids": [],
+      "product_validation": "NOT_RUN; this is public primary evidence retrieval/inspection"
+    },
+    {
+      "id": "E20",
+      "url": "https://raw.githubusercontent.com/opentripplanner/OpenTripPlanner/v2.10.0/application/src/main/java/org/opentripplanner/framework/application/OTPFeature.java",
+      "candidate_id": null,
+      "access_utc": "2026-10-10T04:39:01.203408+00:00",
+      "http_status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/opentripplanner/OpenTripPlanner/v2.10.0/application/src/main/java/org/opentripplanner/framework/application/OTPFeature.java",
+      "content_type": "text/plain; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E20.raw",
+      "raw_sha256": "cfacf886bf1fac2428d4c8a1a9b5d0eb63ed8def0cf9516983893e2cfd4053b7",
+      "text_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E20.txt",
+      "text_sha256": "cfacf886bf1fac2428d4c8a1a9b5d0eb63ed8def0cf9516983893e2cfd4053b7",
+      "bytes": 10849,
+      "lines": 307,
+      "version_observed": "OTP exact tag v2.10.0",
+      "locator": "E20.txt lines 11-16, 125-130, constructors/default assignment and 197-199",
+      "independent_observation": "Exact v2.10.0 source independently read for default-enabled wait and configurable initialization.",
+      "claim_ids": [
+        "SC-15"
+      ],
+      "material_finding_ids": [],
+      "product_validation": "NOT_RUN; this is public primary evidence retrieval/inspection"
+    },
+    {
+      "id": "E21",
+      "url": "https://raw.githubusercontent.com/opentripplanner/OpenTripPlanner/v2.10.0/doc/user/Changelog.md",
+      "candidate_id": null,
+      "access_utc": "2026-10-10T04:39:01.321613+00:00",
+      "http_status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/opentripplanner/OpenTripPlanner/v2.10.0/doc/user/Changelog.md",
+      "content_type": "text/plain; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E21.raw",
+      "raw_sha256": "48725dc4a3356dd6d526b2d026c1d6d3070b53af144590ea436bf4d87e682277",
+      "text_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E21.txt",
+      "text_sha256": "48725dc4a3356dd6d526b2d026c1d6d3070b53af144590ea436bf4d87e682277",
+      "bytes": 137268,
+      "lines": 1378,
+      "version_observed": "OTP exact tag v2.10.0",
+      "locator": "E21.txt lines 6-38; 283-344",
+      "independent_observation": "Exact v2.10.0 release history independently read for 2.10.0 and historical 2.7.0 chain.",
+      "claim_ids": [
+        "SC-12",
+        "SC-15"
+      ],
+      "material_finding_ids": [],
+      "product_validation": "NOT_RUN; this is public primary evidence retrieval/inspection"
+    },
+    {
+      "id": "E22",
+      "url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/issues/6252",
+      "candidate_id": null,
+      "access_utc": "2026-10-10T04:39:01.322155+00:00",
+      "http_status": 200,
+      "resolved_url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/issues/6252",
+      "content_type": "application/json; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E22.json",
+      "raw_sha256": "e66fd7444150c4fc962c084ab44f1ca47c6b45b7aeb50b0e8f71efafcc8cc0fd",
+      "text_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E22.txt",
+      "text_sha256": "e66fd7444150c4fc962c084ab44f1ca47c6b45b7aeb50b0e8f71efafcc8cc0fd",
+      "bytes": 8023,
+      "lines": 1,
+      "version_observed": "OTP issue #6252, opened 2024-11-14; reported 2.7.0-SNAPSHOT",
+      "locator": "E22 JSON /body and /created_at; navigable E22-body.md",
+      "independent_observation": "Independent issue API response, complete body retained and read.",
+      "claim_ids": [
+        "SC-13"
+      ],
+      "material_finding_ids": [],
+      "product_validation": "NOT_RUN; this is public primary evidence retrieval/inspection"
+    },
+    {
+      "id": "E23",
+      "url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/pulls/6262",
+      "candidate_id": null,
+      "access_utc": "2026-10-10T04:39:01.437198+00:00",
+      "http_status": 200,
+      "resolved_url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/pulls/6262",
+      "content_type": "application/json; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E23.json",
+      "raw_sha256": "a99b10dd95bc3af311721607f778f1e87ee4b0f4903853620a4fc82000131928",
+      "text_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E23.txt",
+      "text_sha256": "a99b10dd95bc3af311721607f778f1e87ee4b0f4903853620a4fc82000131928",
+      "bytes": 21432,
+      "lines": 1,
+      "version_observed": "OTP PR #6262, merged 2025-01-09; merge b0b8661b6ea617a611b1af622d2b1c9249dcadbd",
+      "locator": "E23 JSON /merged_at, /merge_commit_sha, /base/ref, /body; E23-body.md",
+      "independent_observation": "Independent PR API response, merge metadata and complete body read; actual merge SHA retained.",
+      "claim_ids": [
+        "SC-14"
+      ],
+      "material_finding_ids": [],
+      "product_validation": "NOT_RUN; this is public primary evidence retrieval/inspection"
+    },
+    {
+      "id": "E24",
+      "url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/commits/69ac485",
+      "candidate_id": null,
+      "access_utc": "2026-10-10T04:39:01.460235+00:00",
+      "http_status": 200,
+      "resolved_url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/commits/69ac485",
+      "content_type": "application/json; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E24.json",
+      "raw_sha256": "b02381cb6e5a4d01070d9f1e0f640ce2a4cc5e831ed87ac8f83eee569b84168d",
+      "text_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E24.txt",
+      "text_sha256": "b02381cb6e5a4d01070d9f1e0f640ce2a4cc5e831ed87ac8f83eee569b84168d",
+      "bytes": 6973,
+      "lines": 1,
+      "version_observed": "OTP commit 69ac4854678bb964715d4b7d143e457cc6b77dda",
+      "locator": "E24 JSON /sha, /commit/message, /files/0/patch; complete E24-test.patch",
+      "independent_observation": "Independent commit API response and complete two-method test patch read; no downloaded code run.",
+      "claim_ids": [
+        "SC-16"
+      ],
+      "material_finding_ids": [],
+      "product_validation": "NOT_RUN; this is public primary evidence retrieval/inspection"
+    },
+    {
+      "id": "E25",
+      "url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/pulls/6262/files",
+      "candidate_id": null,
+      "access_utc": "2026-10-10T04:39:01.520121+00:00",
+      "http_status": 200,
+      "resolved_url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/pulls/6262/files",
+      "content_type": "application/json; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E25.json",
+      "raw_sha256": "7389870dc7d1c9f0f0a8fc64fb5ad076271d66bb94bba227fef3f37ef2652f5d",
+      "text_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E25.txt",
+      "text_sha256": "7389870dc7d1c9f0f0a8fc64fb5ad076271d66bb94bba227fef3f37ef2652f5d",
+      "bytes": 62694,
+      "lines": 1,
+      "version_observed": "OTP PR #6262 current changed-file representation, observed 2026-10-10",
+      "locator": "E25 JSON file objects by filename; PollingGraphUpdater/test patches; E25-polling.patch",
+      "independent_observation": "Independent PR changed-files API; updater and complete test patches read, affected filenames inspected.",
+      "claim_ids": [
+        "SC-14",
+        "SC-16"
+      ],
+      "material_finding_ids": [],
+      "product_validation": "NOT_RUN; this is public primary evidence retrieval/inspection"
+    },
+    {
+      "id": "E26",
+      "url": "https://raw.githubusercontent.com/TransmodelEcosystem/SIRI/master/README.md",
+      "candidate_id": null,
+      "access_utc": "2026-10-10T04:39:01.750630+00:00",
+      "http_status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/TransmodelEcosystem/SIRI/master/README.md",
+      "content_type": "text/plain; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E26.raw",
+      "raw_sha256": "125d45666120e1b5dcc1869e6ecee6a1bc72b62470942662675948907114c088",
+      "text_path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E26.txt",
+      "text_sha256": "125d45666120e1b5dcc1869e6ecee6a1bc72b62470942662675948907114c088",
+      "bytes": 9903,
+      "lines": 154,
+      "version_observed": "Living SIRI master README; observed 2026-10-10; v2.3 functional, v2.2 CEN; Oct 2026 releases",
+      "locator": "E26.txt lines 5-21, 48-62, 139-150",
+      "independent_observation": "Independent raw current SIRI README read for services, branch status and release conditions.",
+      "claim_ids": [
+        "SC-17",
+        "SC-18"
+      ],
+      "material_finding_ids": [],
+      "product_validation": "NOT_RUN; this is public primary evidence retrieval/inspection"
+    }
+  ],
+  "input_evidence": [
+    {
+      "id": "INPUT-BRIEF",
+      "path": "ER12_RUNTIME/frozen-inputs/A6-01/brief.md",
+      "sha256": "ef82ee81df37c62d0db64103e2891322a1161eed74e0edbd5663f0da1bdbd14c",
+      "meaning": "Owner authorization, numbered obligations and negative constraints."
+    },
+    {
+      "id": "INPUT-PLAN",
+      "path": "ER12_RUNTIME/frozen-inputs/A6-01/plan.md",
+      "sha256": "8656d21b801ae5c4905cb19f08fb8b9262058c9916bbc257537bd35353e55d97",
+      "meaning": "Fallible exact plan; assessed clause by clause, not treated as answer key."
+    }
+  ],
+  "consequential_claim_checks": [
+    {
+      "id": "SC-01",
+      "subject_operation": "Static identity/date activation",
+      "evidence_ids": [
+        "E01"
+      ],
+      "judgment": "SUPPORTED",
+      "independent_assessment": "route_id/trip_id/service_id and stop IDs are distinct; service_id dates are calendar rules plus exceptions. Calendar-only or dates-only forms exist.",
+      "conditions_types_units_domain_exceptions": "IDs are CSV strings/foreign references; service dates use YYYYMMDD; not realtime instance IDs."
+    },
+    {
+      "id": "SC-02",
+      "subject_operation": "GTFS Time and timezone",
+      "evidence_ids": [
+        "E01"
+      ],
+      "judgment": "SUPPORTED",
+      "independent_assessment": "Agency timezone governs stop_times; service day can extend beyond 24 hours; DST basis differs from naive midnight arithmetic.",
+      "conditions_types_units_domain_exceptions": "GTFS HH:MM:SS Time is not POSIX time. Stop timezone is not the timetable timezone."
+    },
+    {
+      "id": "SC-03",
+      "subject_operation": "Frequency representation",
+      "evidence_ids": [
+        "E01",
+        "E02"
+      ],
+      "judgment": "SUPPORTED IN FINAL; PREDECESSOR GAP CORRECTED",
+      "independent_assessment": "exact_times=0/empty is headway service; 1 is schedule-based compression. Exact_times=0 does not authorize invented exact static departures.",
+      "conditions_types_units_domain_exceptions": "headway_secs is a positive integer in seconds; exact_times optional default 0/empty."
+    },
+    {
+      "id": "SC-04",
+      "subject_operation": "TripDescriptor matching",
+      "evidence_ids": [
+        "E02",
+        "E03"
+      ],
+      "judgment": "FAIL ON NEW EXCEPTION",
+      "independent_assessment": "Ordinary static trips may use trip_id; frequency instances need date/time; long/late collisions require date; alternate nonfrequency key must be unique. NEW is explicitly outside an existing-static-trip lookup.",
+      "conditions_types_units_domain_exceptions": "NEW requires novel trip_id plus existing route_id; zero static match is expected for that relationship, not invalid. F-01."
+    },
+    {
+      "id": "SC-05",
+      "subject_operation": "Version metadata and mismatch policy",
+      "evidence_ids": [
+        "E01",
+        "E02",
+        "E06",
+        "E07"
+      ],
+      "judgment": "SUPPORTED",
+      "independent_assessment": "Realtime protocol version and static revision are different. RT feed_version is optional and matches static publisher text. Missing version is not verified alignment.",
+      "conditions_types_units_domain_exceptions": "Static feed_version Text is recommended; RT field string optional. Fail-closed display is a local proposal, not a mandatory consumer behavior."
+    },
+    {
+      "id": "SC-06",
+      "subject_operation": "Prediction/absence/NO_DATA",
+      "evidence_ids": [
+        "E02",
+        "E03",
+        "E05"
+      ],
+      "judgment": "SUPPORTED",
+      "independent_assessment": "Missing TripUpdate is not on-time evidence; NO_DATA has no realtime timing; cancellation/skip is status, not invented time.",
+      "conditions_types_units_domain_exceptions": "StopTimeEvent.time is int64 POSIX seconds; delay is int32 signed seconds; NO_DATA forbids prediction time/delay, while NEW/REPLACEMENT can still carry scheduled_time."
+    },
+    {
+      "id": "SC-07",
+      "subject_operation": "Relationship-specific identity and journey semantics",
+      "evidence_ids": [
+        "E02",
+        "E07"
+      ],
+      "judgment": "INVENTORY SUBSTANTIALLY SUPPORTED; F-01",
+      "independent_assessment": "UNSCHEDULED only exact_times=0; NEW supplies a complete journey; REPLACEMENT identifies original but supplies alternate stop/times; DUPLICATED references source through TripDescriptor and new identity through TripProperties; DELETED differs from CANCELED.",
+      "conditions_types_units_domain_exceptions": "DUPLICATED also has a source-service-within-next-30-days condition and forbids frequency exact_times=0/empty. The final is a scoped proposal, not a full protobuf parser specification; omitted exhaustive field rules are not separately invented obligations."
+    },
+    {
+      "id": "SC-08",
+      "subject_operation": "Alert applicability",
+      "evidence_ids": [
+        "E02",
+        "E04",
+        "E07"
+      ],
+      "judgment": "SUPPORTED",
+      "independent_assessment": "AND within selector; multiple selectors cover independent scopes; active ranges and route/stop/trip scope are separate from TripUpdate.",
+      "conditions_types_units_domain_exceptions": "EntitySelector.route_id is the route-wide field; absent active_period is displayable while in feed. Optional communication/impact fields have distinct purposes; impact ranges must fit communication ranges when supplied."
+    },
+    {
+      "id": "SC-09",
+      "subject_operation": "Freshness",
+      "evidence_ids": [
+        "E05"
+      ],
+      "judgment": "SUPPORTED",
+      "independent_assessment": "Producer refresh/age guidance is accurately used as candidate thresholds requiring owner approval, not partner performance or protocol mandates.",
+      "conditions_types_units_domain_exceptions": "30 seconds or content change, whichever more frequent; entity ages 90 seconds for TU/VP, 10 minutes for Alerts. Refreshed header does not by itself freshen entities."
+    },
+    {
+      "id": "SC-10",
+      "subject_operation": "OTP API route",
+      "evidence_ids": [
+        "E08",
+        "E09"
+      ],
+      "judgment": "SUPPORTED WITH VERSION LIMIT",
+      "independent_assessment": "A general-purpose GTFS GraphQL API and separate realtime Alert/TU updater configuration are real mechanisms; custom board UI and source policies remain necessary.",
+      "conditions_types_units_domain_exceptions": "Latest docs are moving; API enabled by default there. No server installation or pilot query was executed."
+    },
+    {
+      "id": "SC-11",
+      "subject_operation": "OTP poller defaults/types",
+      "evidence_ids": [
+        "E09"
+      ],
+      "judgment": "SUPPORTED FOR OBSERVED DOCS",
+      "independent_assessment": "HTTP Alerts and TU pollers require feedId/url; poll frequency is duration with PT1M default; fuzzy matching defaults false; alert earlyStartSec integer defaults zero.",
+      "conditions_types_units_domain_exceptions": "PT1M means one minute. These are current-doc observations, not all-protocol or all-release defaults."
+    },
+    {
+      "id": "SC-12",
+      "subject_operation": "OTP 2.10.0 release metadata",
+      "evidence_ids": [
+        "E10",
+        "E17",
+        "E21"
+      ],
+      "judgment": "SUPPORTED",
+      "independent_assessment": "Versioned changelog dates 2.10.0 at 2026-09-09 and includes feed-version GraphQL exposure and service-date grouping fix.",
+      "conditions_types_units_domain_exceptions": "Release inclusion is not validation of the actual ferry export or transformed API response."
+    },
+    {
+      "id": "SC-13",
+      "subject_operation": "OTP load issue",
+      "evidence_ids": [
+        "E11",
+        "E22"
+      ],
+      "judgment": "SUPPORTED WITH L-01",
+      "independent_assessment": "Issue #6252 records 2.7.0-SNAPSHOT/National Rail GTFS+RT, 1-minute Alerts and 27-second TU polling and async-update accumulation. No exact static revision is named.",
+      "conditions_types_units_domain_exceptions": "Reporter says 20 minutes or more; slow-server/large-dataset/poll interval context. Reported external behavior, not a reviewer-run load test."
+    },
+    {
+      "id": "SC-14",
+      "subject_operation": "Polling fix operation",
+      "evidence_ids": [
+        "E12",
+        "E18",
+        "E23",
+        "E25"
+      ],
+      "judgment": "SUPPORTED",
+      "independent_assessment": "PR #6262 fixes #6252, merged 2025-01-09 into dev-2.x; future wait is feature-gated across polling updater classes.",
+      "conditions_types_units_domain_exceptions": "Actual merge_commit_sha in API is b0b8661b6ea617a611b1af622d2b1c9249dcadbd. The map final-listed commit is not treated as the merge identity."
+    },
+    {
+      "id": "SC-15",
+      "subject_operation": "Released inclusion/default/config override",
+      "evidence_ids": [
+        "E13",
+        "E20",
+        "E21"
+      ],
+      "judgment": "SUPPORTED",
+      "independent_assessment": "2.7.0 release on 2025-03-12 includes #6262. Exact v2.10.0 OTPFeature sets wait default true, non-sandbox, with optional feature override.",
+      "conditions_types_units_domain_exceptions": "Enabled source default is conditional on configuration; no zero-lag promise or schedule-version binding is established."
+    },
+    {
+      "id": "SC-16",
+      "subject_operation": "OTP test oracle",
+      "evidence_ids": [
+        "E19",
+        "E24",
+        "E25"
+      ],
+      "judgment": "SUPPORTED",
+      "independent_assessment": "Commit 69ac4854678bb964715d4b7d143e457cc6b77dda adds two methods; one asserts completion after wait-on, one asserts incompletion after wait-off using a short async task.",
+      "conditions_types_units_domain_exceptions": "Source uses 100 ms callback sleep and fake/null graph context. Reading this code is not executing it and is not performance, feed integration or ferry validation."
+    },
+    {
+      "id": "SC-17",
+      "subject_operation": "NeTEx/SIRI analogue",
+      "evidence_ids": [
+        "E14",
+        "E26"
+      ],
+      "judgment": "SUPPORTED",
+      "independent_assessment": "OTP tutorial builds NeTEx timetable data and configures SIRI-ET and SIRI-SX separately using Transmodel references.",
+      "conditions_types_units_domain_exceptions": "Norwegian/Entur example is conditional; polling example is not proof of partner streams, endpoint access, profile or ferry compatibility."
+    },
+    {
+      "id": "SC-18",
+      "subject_operation": "SIRI schema versus CEN release",
+      "evidence_ids": [
+        "E15",
+        "E26"
+      ],
+      "judgment": "SUPPORTED IN FINAL; PREDECESSOR OBSERVATION INCOMPLETE",
+      "independent_assessment": "README distinguishes v2.3 functional branch and CEN-matching v2.2; releases table lists October 2026 v2.2.1/v2.3.",
+      "conditions_types_units_domain_exceptions": "Use releases for published CEN document matching; exact partner profile/version remains unknown."
+    },
+    {
+      "id": "SC-19",
+      "subject_operation": "Optional staff advisory",
+      "evidence_ids": [
+        "INPUT-BRIEF"
+      ],
+      "judgment": "SUPPORTED LOCAL OPTION",
+      "independent_assessment": "The original brief authorizes an optional staff banner; proposed separate provenance/workflow does not claim GTFS or OTP provides an authoring tool.",
+      "conditions_types_units_domain_exceptions": "No existing CMS, staff workflow or launch selection is proven. Owners decide technical support and optional inclusion."
+    }
+  ],
+  "material_findings": [
+    {
+      "id": "F-01",
+      "severity": "MATERIAL",
+      "classification": "material wrong / unsupported consequential acceptance rule",
+      "title": "Universal static-trip matching gate conflicts with conditionally supported NEW trips",
+      "remaining_in_final": true,
+      "source_backed": true,
+      "axes": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/final.md",
+          "line": 31,
+          "text": "Resolve each TripUpdate to exactly one trip instance in the exact approved schedule:"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/final.md",
+          "line": 35,
+          "text": "- The specification permits a fallback combination of `route_id`, `direction_id`, `start_time` and `start_date` only if it resolves uniquely. If a descriptor resolves to zero or multiple instances, reject or quarantine that entity and report realtime unavailable for it. [S02, S03]"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/final.md",
+          "line": 44,
+          "text": "- `NEW`: an unrelated added trip with its full stop/time journey specified."
+        },
+        {
+          "path": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/draft.md",
+          "line": 21,
+          "text": "Use only message types the regional partner confirms it actually supplies. For a scheduled trip, accept a TripUpdate only when it matches the exact trip instance and an approved schedule version. Display the published schedule time and, where a valid fresh producer time exists, a clearly separate “Realtime update” time/status. GTFS-RT event times can be producer estimates; without partner semantics do not label one an observed vessel position or a guaranteed ETA. [S02, S03]"
+        }
+      ],
+      "primary_evidence_ids": [
+        "E02",
+        "E03",
+        "E06"
+      ],
+      "governing_primary_locators": [
+        {
+          "url": "https://gtfs.org/documentation/realtime/reference/#message-tripdescriptor",
+          "path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E02.txt",
+          "lines": [
+            974,
+            984
+          ],
+          "condition": "TripDescriptor distinguishes NEW from identifying an existing GTFS trip. NEW trip_id must be absent from static GTFS; route_id must exist in routes.txt."
+        },
+        {
+          "url": "https://gtfs.org/documentation/realtime/reference/#message-tripdescriptor",
+          "path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E02.txt",
+          "lines": [
+            991,
+            1000
+          ],
+          "condition": "The trip_id field has relationship-specific identity rules; NEW is not an existing-static-trip lookup."
+        },
+        {
+          "url": "https://gtfs.org/documentation/realtime/reference/#enum-schedulerelationship-1",
+          "path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E02.txt",
+          "lines": [
+            1039,
+            1044
+          ],
+          "condition": "NEW supplies its complete journey through StopTimeUpdates; REPLACEMENT also supplies its own journey."
+        }
+      ],
+      "analysis": "The final directs every TripUpdate to resolve to one instance in the exact approved schedule and directs zero-match descriptors to be rejected/quarantined. It later explicitly includes NEW in the conditional support inventory and describes the full journey correctly, but never makes NEW an exception to the prior static-trip acceptance gate. A valid NEW trip necessarily has no static trip_id match. Thus the stated gate would hide an otherwise valid partner-supported extra ferry service. This is a conflict in the proposal, not a claim that the unknown ferry partner supplies NEW.",
+      "analytical_counterexample": {
+        "status": "PROSPECTIVE SEMANTIC COUNTEREXAMPLE; NOT AN EXECUTED PRODUCT TEST",
+        "inputs": "An approved static dataset with route R and two known terminal stop IDs, plus a fresh version-bound NEW TripUpdate whose novel trip_id N is not in trips.txt and whose complete StopTimeUpdates specify the journey.",
+        "source_permitted_behavior": "NEW identifies a new trip using N and existing route/stop references; absence of N in trips.txt is required rather than invalid.",
+        "proposal_gate_behavior": "N produces zero existing-static-trip matches and is quarantined by the universal gate.",
+        "material_effect": "Declared extra service can disappear from the public board even when its source binding, freshness, route, stops and relationship support are valid."
+      },
+      "counterevidence_considered": "The final correctly says NEW is unrelated to an existing trip and supplies a full journey; it also says REPLACEMENT does not use the original static schedule. Those are credited. They do not state which acceptance gate bypasses the explicit each-TripUpdate/static-schedule/zero-match rejection rule. Reading the latter as ordinary scheduled trips only would import an exception the final no longer states.",
+      "lineage": "The draft explicitly limited this acceptance statement to a scheduled trip. The final broadens it to each TripUpdate while expanding the relationship inventory. C-04 correctly requested relationship-specific semantics, but its final treatment leaves this consequential acceptance conflict.",
+      "not_required": "This finding does not require NEW support when the partner does not supply it, a prototype, an implementation, or a deployment. It evaluates the proposal on its own declared conditional support."
+    }
+  ],
+  "original_inspected_artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A6-01/READY.json",
+      "bytes": 290,
+      "sha256": "ff7498e5d6ee7b37d4eb4cf87188eb5db473d7c5f173cb04b0dbcc699ddf0dd6"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A6-01/brief.md",
+      "bytes": 3323,
+      "sha256": "ef82ee81df37c62d0db64103e2891322a1161eed74e0edbd5663f0da1bdbd14c"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A6-01/plan.md",
+      "bytes": 5984,
+      "sha256": "8656d21b801ae5c4905cb19f08fb8b9262058c9916bbc257537bd35353e55d97"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/control/run.json",
+      "bytes": 580,
+      "sha256": "13c8dc5b80bb29ffbab444b0d09fe0dbdb5eaa6bfc3bc1f019840fd852eed65b"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/inputs/brief.md",
+      "bytes": 3323,
+      "sha256": "ef82ee81df37c62d0db64103e2891322a1161eed74e0edbd5663f0da1bdbd14c"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/critic/assignment.md",
+      "bytes": 3306,
+      "sha256": "ede739df7da189924cc229a3a8033c89693da923f5782421ec36a688bdd026c3"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/critic/critique.md",
+      "bytes": 11419,
+      "sha256": "51c973c39dbefe617915a75a894c585aa819b9504b4d8c21ec52c2e532274783"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/critic/dispatch.json",
+      "bytes": 4124,
+      "sha256": "44673feadb283463f7b2cd0a49bef9b1c34bdb8af1b694d7db95dc3ee1e54722"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/critic/freeze.json",
+      "bytes": 3135,
+      "sha256": "f21edb682e2dfc75adf6168175e22bee9f53f20099b877846c32bbe5f2591f69"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/critic/input-map.json",
+      "bytes": 1390,
+      "sha256": "681fa0dc9da94d514cfc599cf6f620e4f3beeb545976d787dfeeb56238339556"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/critic/request.json",
+      "bytes": 890,
+      "sha256": "8981732c4fa009422793ced7850f37bbcca86cb4cf6d2d43d881c0f57e29b23b"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/critic/source-map.json",
+      "bytes": 26000,
+      "sha256": "fe7636a876ff6b98fdd4f669463332a76b2da043c245a702857498bdaba485ef"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/critic/sources/index.md",
+      "bytes": 4987,
+      "sha256": "08a5e63151239f70c6c1c69298d4eec2c183515790bf1179fbaf0143ee71cfc3"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/critic/status.json",
+      "bytes": 4406,
+      "sha256": "965c0b80e39cf57cb15ee1afee80720cd98083b60b0602cc53e21d8543de66be"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/assignment.md",
+      "bytes": 3712,
+      "sha256": "eb322662379fb3b87ae8ceab629e556a00efa9832fcd7c0ebee8f7c2b185fd07"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/discovery.md",
+      "bytes": 16039,
+      "sha256": "2528c9e269ab744712570a20287d85abd1214a128a8fce3d720fa7f1f839a1b4"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/dispatch.json",
+      "bytes": 4220,
+      "sha256": "75cad33ceccf5f2712381c7d4b9b62a05b207822c38375a0ca724c327b9e0756"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/draft.md",
+      "bytes": 23006,
+      "sha256": "ae7bae1e494a90c625c4a6aee55c1ec8490fc8270b964fada87cb4c18385e47b"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/freeze.json",
+      "bytes": 1654,
+      "sha256": "0014e54088dd0da1f3bb08fcb5c085126113e9f229625ebf22a71426fbec21b6"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/input-map.json",
+      "bytes": 714,
+      "sha256": "f897fda9f72a7aa451088877367114484d292b8fb6dfa8c5ec1eebe123a7e1dc"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/plan-reveal.json",
+      "bytes": 427,
+      "sha256": "8a2196ac8d0b966f15b3c4e458a50e4ae449b7476d74000f1da5f8721c0acd5d"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/request.json",
+      "bytes": 914,
+      "sha256": "d86f1cc79c2e8b62beba106ad3ee129e218b318de13be20ee26e1d092b5042de"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/revealed-plan.md",
+      "bytes": 5984,
+      "sha256": "8656d21b801ae5c4905cb19f08fb8b9262058c9916bbc257537bd35353e55d97"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/source-map.json",
+      "bytes": 20291,
+      "sha256": "f24cd24a3e59d50022a32ac0827d20460029ba6f114c70a034c248f1172e955e"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/sources/index.md",
+      "bytes": 4864,
+      "sha256": "5f0454d89f43366f4a55ed48792c55909536421299b29487f03682be9fe076e0"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/status.json",
+      "bytes": 3066,
+      "sha256": "e6bf73cdafeac039ded2cd9546dc8a71191c6d21f83d1f2fff74d8bd902eb108"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/assignment.md",
+      "bytes": 3286,
+      "sha256": "32aebb4ea2f66960a5ac89819f8422cc147e6261a8288b474cd70ea7d6020f96"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/dispatch.json",
+      "bytes": 4140,
+      "sha256": "d8aa43e71740c1303a727f32ac2bbf4ed56d4466a4f6e659cf7de05b8831c79d"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/final.md",
+      "bytes": 28212,
+      "sha256": "a660dcf2af9b2aaf1d65bb86b137ad696a29498f1f4ef1fbfd4b3b495c00e270"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/freeze.json",
+      "bytes": 3906,
+      "sha256": "505a799434f229847e373f3771e3f93535d544948e2b4b008e0f595cc83fb359"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/input-map.json",
+      "bytes": 1701,
+      "sha256": "328df8c6b5b979343c418f890179af27b7d1a3cc95c42280beeca3f3eb7da10f"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/request.json",
+      "bytes": 894,
+      "sha256": "af90f61e9c21092fcd6e7c275631d0edae5dbd4bf624af66fa2fc6225ea022fe"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/source-map.json",
+      "bytes": 38613,
+      "sha256": "cf2550bc5f5c3bea4bf5874bb6e2a25f838a2106462fec3c8086c04589042e76"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/sources/index.md",
+      "bytes": 7973,
+      "sha256": "6e0d55204a02b82318ebe57773ca1e12d6b7973bb17ad6f9c674ee61221ea2e7"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/terminal-science-freeze-root.json",
+      "bytes": 7827,
+      "sha256": "9369ce170ff717ea702cfca2b82d65394670acc2322f4d5f84b66456aa8c8207"
+    }
+  ],
+  "original_hash_manifest": "original-inspected-hashes.json",
+  "integrity_check": "evidence/freeze-integrity.json",
+  "navigation": "evidence/index.md"
+}

@@ -1,0 +1,135 @@
+URL: https://docs.aws.amazon.com/AmazonS3/latest/API/API_UploadPart.html
+Original locator: ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P31-text.txt
+Original SHA256: e22760684a54cbeb4c9bc857d53eced0c158471b4f9d48096ae09f0602c0b8e0
+Original numbered lines; gaps omitted. Not full response.
+
+15: Part numbers can be any number from 1 to 10,000, inclusive. A part number uniquely identifies a part
+17: part number that was used with a previous part, the previously uploaded part is overwritten.
+29: Directory buckets - For directory buckets, you must make requests for this API operation to the Zonal endpoint. These endpoints support virtual-hosted-style requests in the format https://amzn-s3-demo-bucket.s3express-zone-id.region-code.amazonaws.com/key-name
+30: . Path-style requests are not supported. For more information about endpoints in Availability Zones, see Regional and Zonal endpoints for directory buckets in Availability Zones in the
+31: Amazon S3 User Guide. For more information about endpoints in Local Zones, see Concepts for directory buckets in Local Zones in the
+62: Directory buckets - MD5 is not supported by directory buckets. You can use checksum algorithms to check object integrity.
+89: Directory buckets  -
+90: For directory buckets, there are only two supported options for server-side encryption: server-side encryption with Amazon S3 managed keys (SSE-S3) (AES256) and server-side encryption with AWS KMS keys (SSE-KMS) (aws:kms).
+98: Directory buckets  - The HTTP Host header syntax is
+113: x-amz-sdk-checksum-algorithm: ChecksumAlgorithm
+114: x-amz-checksum-crc32: ChecksumCRC32
+115: x-amz-checksum-crc32c: ChecksumCRC32C
+116: x-amz-checksum-crc64nvme: ChecksumCRC64NVME
+117: x-amz-checksum-sha1: ChecksumSHA1
+118: x-amz-checksum-sha256: ChecksumSHA256
+119: x-amz-checksum-sha512: ChecksumSHA512
+120: x-amz-checksum-md5: ChecksumMD5
+121: x-amz-checksum-xxhash64: ChecksumXXHASH64
+122: x-amz-checksum-xxhash3: ChecksumXXHASH3
+123: x-amz-checksum-xxhash128: ChecksumXXHASH128
+124: x-amz-server-side-encryption-customer-algorithm: SSECustomerAlgorithm
+125: x-amz-server-side-encryption-customer-key: SSECustomerKey
+126: x-amz-server-side-encryption-customer-key-MD5: SSECustomerKeyMD5
+127: x-amz-request-payer: RequestPayer
+128: x-amz-expected-bucket-owner: ExpectedBucketOwner
+129: Body
+130: URI Request Parameters
+131: The request uses the following URI parameters.
+132: Bucket
+133: The name of the bucket to which the multipart upload was initiated.
+134: Directory buckets - When you use this operation with a directory bucket, you must use virtual-hosted-style requests in the format
+135: Bucket-name.s3express-zone-id.region-code.amazonaws.com. Path-style requests are not supported.  Directory bucket names must be unique in the chosen Zone (Availability Zone or Local Zone). Bucket names must follow the format
+136: bucket-base-name--zone-id--x-s3 (for example,
+137: amzn-s3-demo-bucket--usw2-az1--x-s3). For information about bucket naming
+138: restrictions, see Directory bucket naming
+139: rules in the Amazon S3 User Guide.
+140: Access points - When you use this action with an access point for general purpose buckets, you must provide the alias of the access point in place of the bucket name or specify the access point ARN. When you use this action with an access point for directory buckets, you must provide the access point name in place of the bucket name. When using the access point ARN, you must direct requests to the access point hostname. The access point hostname takes the form AccessPointName-AccountId.s3-accesspoint.Region.amazonaws.com. When using this action with an access point through the AWS SDKs, you provide the access point ARN in place of the bucket name. For more information about access point ARNs, see Using access points in the Amazon S3 User Guide.
+141: Note
+142: Object Lambda access points are not supported by directory buckets.
+143: S3 on Outposts - When you use this action with S3 on Outposts, you must direct requests to the S3 on Outposts hostname. The S3 on Outposts hostname takes the
+144: form
+145: AccessPointName-AccountId.outpostID.s3-outposts.Region.amazonaws.com. When you use this action with S3 on Outposts, the destination bucket must be the Outposts access point ARN or the access point alias. For more information about S3 on Outposts, see What is S3 on Outposts? in the Amazon S3 User Guide.
+146: Required: Yes
+147: Content-Length
+148: Size of the body in bytes. This parameter is useful when the size of the body cannot be determined
+149: automatically.
+150: Content-MD5
+151: The Base64 encoded 128-bit MD5 digest of the part data. This parameter is auto-populated when using
+152: the command from the CLI. This parameter is required if object lock parameters are specified.
+153: Note
+154: This functionality is not supported for directory buckets.
+155: Key
+156: Object key for which the multipart upload was initiated.
+157: Length Constraints: Minimum length of 1.
+158: Required: Yes
+159: partNumber
+160: Part number of part being uploaded. This is a positive integer between 1 and 10,000.
+161: Required: Yes
+162: uploadId
+163: Upload ID identifying the multipart upload whose part is being uploaded.
+164: Required: Yes
+165: x-amz-checksum-crc32
+166: This header can be used as a data integrity check to verify that the data received is the same data that was originally sent.
+167: This header specifies the Base64 encoded, 32-bit CRC32 checksum of the object. For more information, see
+168: Checking object integrity in the
+169: Amazon S3 User Guide.
+170: x-amz-checksum-crc32c
+171: This header can be used as a data integrity check to verify that the data received is the same data that was originally sent.
+172: This header specifies the Base64 encoded, 32-bit CRC32C checksum of the object. For more information, see
+173: Checking object integrity in the
+174: Amazon S3 User Guide.
+175: x-amz-checksum-crc64nvme
+176: This header can be used as a data integrity check to verify that the data received is the same data
+177: that was originally sent. This header specifies the Base64 encoded, 64-bit CRC64NVME
+178: checksum of the part. For more information, see Checking object integrity in
+179: the Amazon S3 User Guide.
+180: x-amz-checksum-md5
+181: This header can be used as a data integrity check to verify that the data received is the same data
+182: that was originally sent. This header specifies the Base64 encoded, 128-bit MD5
+183: digest of the part. For more information, see Checking object integrity in
+184: the Amazon S3 User Guide.
+185: x-amz-checksum-sha1
+186: This header can be used as a data integrity check to verify that the data received is the same data that was originally sent.
+187: This header specifies the Base64 encoded, 160-bit SHA1 digest of the object. For more information, see
+188: Checking object integrity in the
+189: Amazon S3 User Guide.
+190: x-amz-checksum-sha256
+191: This header can be used as a data integrity check to verify that the data received is the same data that was originally sent.
+192: This header specifies the Base64 encoded, 256-bit SHA256 digest of the object. For more information, see
+193: Checking object integrity in the
+194: Amazon S3 User Guide.
+195: x-amz-checksum-sha512
+196: This header can be used as a data integrity check to verify that the data received is the same data
+197: that was originally sent. This header specifies the Base64 encoded, 512-bit SHA512
+198: digest of the part. For more information, see Checking object integrity in
+199: the Amazon S3 User Guide.
+200: x-amz-checksum-xxhash128
+201: This header can be used as a data integrity check to verify that the data received is the same data
+202: that was originally sent. This header specifies the Base64 encoded, 128-bit XXHASH128
+203: checksum of the part. For more information, see Checking object integrity in
+204: the Amazon S3 User Guide.
+205: x-amz-checksum-xxhash3
+206: This header can be used as a data integrity check to verify that the data received is the same data
+207: that was originally sent. This header specifies the Base64 encoded, 64-bit XXHASH3
+208: checksum of the part. For more information, see Checking object integrity in
+209: the Amazon S3 User Guide.
+210: x-amz-checksum-xxhash64
+211: This header can be used as a data integrity check to verify that the data received is the same data
+212: that was originally sent. This header specifies the Base64 encoded, 64-bit XXHASH64
+213: checksum of the part. For more information, see Checking object integrity in
+214: the Amazon S3 User Guide.
+215: x-amz-expected-bucket-owner
+216: The account ID of the expected bucket owner. If the account ID that you provide does not match the actual owner of the bucket, the request fails with the HTTP status code 403 Forbidden (access denied).
+217: x-amz-request-payer
+218: Confirms that the requester knows that they will be charged for the request. Bucket owners need not
+219: specify this parameter in their requests. If either the source or destination S3 bucket has Requester
+220: Pays enabled, the requester will pay for the corresponding charges. For information about
+221: downloading objects from Requester Pays buckets, see Downloading Objects in Requester Pays
+222: Buckets in the Amazon S3 User Guide.
+223: Note
+224: This functionality is not supported for directory buckets.
+225: Valid Values: requester
+226: x-amz-sdk-checksum-algorithm
+227: Indicates the algorithm used to create the checksum for the object when you use the SDK. This header will not provide any
+228: additional functionality if you don't use the SDK. When you send this header, there must be a corresponding x-amz-checksum or
+229: x-amz-trailer header sent. Otherwise, Amazon S3 fails the request with the HTTP status code 400 Bad Request. For more
+230: information, see Checking object integrity in
+231: the Amazon S3 User Guide.
+232: If you provide an individual checksum, Amazon S3 ignores any provided ChecksumAlgorithm
+362: The following PUT request uploads a part (part number 1) in a multipart upload. The request

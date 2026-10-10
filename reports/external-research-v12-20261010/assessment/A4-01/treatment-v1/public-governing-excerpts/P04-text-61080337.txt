@@ -1,0 +1,20 @@
+URL: https://docs.aws.amazon.com/AmazonS3/latest/userguide/lifecycle-configuration-examples.html
+Original locator: ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P04-text.txt
+Original SHA256: 61080337dbbda438268a86fee2e460da7be21017ae857b40132bc836b1e1d1b9
+Original numbered lines; gaps omitted. Not full response.
+
+392: rule cannot specify a tag-based filter.
+393: Lifecycle configuration to abort multipart uploads
+394: You can use the Amazon S3 multipart upload REST API operations to upload large objects in
+395: parts. For more information about multipart uploads, see Uploading and copying objects using multipart upload in Amazon S3.
+396: By using an S3 Lifecycle configuration, you can direct Amazon S3 to stop incomplete
+397: multipart uploads (identified by the key name prefix specified in the rule) if they
+398: aren't completed within a specified number of days after initiation. When Amazon S3 aborts a
+399: multipart upload, it deletes all the parts associated with the multipart upload. This
+400: process helps control your storage costs by ensuring that you don't have incomplete
+401: multipart uploads with parts that are stored in Amazon S3.
+402: Note
+403: When you use the AbortIncompleteMultipartUpload S3 Lifecycle action,
+404: the rule cannot specify a tag-based filter.
+407: incomplete multipart uploads seven days after initiation.
+416: <DaysAfterInitiation>7</DaysAfterInitiation>

@@ -1,0 +1,18 @@
+{
+  "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-01-treatment-investigator-v1",
+  "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-01-treatment-investigator-v1",
+  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-01-treatment-investigator-v1:ordinal:1",
+  "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-01-treatment-investigator-v1",
+  "status": "completed",
+  "workState": "result_available",
+  "hasPendingChildRuns": false,
+  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-01-treatment-investigator-v1:ordinal:1",
+  "latestTerminalStatus": "completed",
+  "latestTerminalSummary": "Completed the assigned investigator stage. Saved the proposal and evidence bundle:\n\n- [Discovery](<ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/discovery.md>)\n- [Final draft](<ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/draft.md>)\n- [Source map](<ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/source-map.json>) and [evidence index](<ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/sources/index.md>)\n- [Released plan copy](<ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/revealed-plan.md>)\n\nThe discovery hash matches the helper’s freeze record. The helper ran once. No provider or product validation was performed; proposed tests are labeled accordingly.\n\nThe single native Goal is **complete** (`threadId: 01a123f5-4da1-7a50-a31a-8245389e5430`). Its terminal response reported 325,683 tokens used and 1,025 seconds elapsed (17m 5s).",
+  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-01-treatment-investigator-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:f1dc3160-a94e-4eb3-a23f-ca2551810c4f",
+  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+  "model": "gpt-6-luna",
+  "summary": "Completed the assigned investigator stage. Saved the proposal and evidence bundle:\n\n- [Discovery](<ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/discovery.md>)\n- [Final draft](<ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/draft.md>)\n- [Source map](<ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/source-map.json>) and [evidence index](<ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/sources/index.md>)\n- [Released plan copy](<ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/revealed-plan.md>)\n\nThe discovery hash matches the helper’s freeze record. The helper ran once. No provider or product validation was performed; proposed tests are labeled accordingly.\n\nThe single native Goal is **complete** (`threadId: 01a123f5-4da1-7a50-a31a-8245389e5430`). Its terminal response reported 325,683 tokens used and 1,025 seconds elapsed (17m 5s).",
+  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-01-treatment-investigator-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:f1dc3160-a94e-4eb3-a23f-ca2551810c4f",
+  "waitTimedOut": false
+}

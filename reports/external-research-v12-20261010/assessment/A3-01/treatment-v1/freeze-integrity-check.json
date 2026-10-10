@@ -1,0 +1,165 @@
+{
+  "purpose": "Integrity only; not semantic proof",
+  "checks": [
+    {
+      "freeze": "ER12_RUNTIME/runs/A3-01/treatment/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/inputs/brief.md",
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A3-01/treatment/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/critic/assignment.md",
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A3-01/treatment/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/critic/input-map.json",
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A3-01/treatment/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/discovery.md",
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A3-01/treatment/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/draft.md",
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A3-01/treatment/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/source-map.json",
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A3-01/treatment/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/revealed-plan.md",
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A3-01/treatment/stages/critic/freeze.json",
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/plan-reveal.json",
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/freeze.json",
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/inputs/brief.md",
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/freeze.json",
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/assignment.md",
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/freeze.json",
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/input-map.json",
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/inputs/brief.md",
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/assignment.md",
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/input-map.json",
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/discovery.md",
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/draft.md",
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/source-map.json",
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/revealed-plan.md",
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/plan-reveal.json",
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/critic/critique.md",
+      "match": true
+    },
+    {
+      "freeze": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/freeze.json",
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/critic/source-map.json",
+      "match": true
+    },
+    {
+      "freeze": "terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/critic/critique.md",
+      "match": true
+    },
+    {
+      "freeze": "terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/critic/source-map.json",
+      "match": true
+    },
+    {
+      "freeze": "terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/critic/sources/index.md",
+      "match": true
+    },
+    {
+      "freeze": "terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/discovery.md",
+      "match": true
+    },
+    {
+      "freeze": "terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/draft.md",
+      "match": true
+    },
+    {
+      "freeze": "terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/revealed-plan.md",
+      "match": true
+    },
+    {
+      "freeze": "terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/source-map.json",
+      "match": true
+    },
+    {
+      "freeze": "terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/sources/index.md",
+      "match": true
+    },
+    {
+      "freeze": "terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+      "match": true
+    },
+    {
+      "freeze": "terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/source-map.json",
+      "match": true
+    },
+    {
+      "freeze": "terminal-science-freeze-root.json",
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/sources/index.md",
+      "match": true
+    }
+  ]
+}

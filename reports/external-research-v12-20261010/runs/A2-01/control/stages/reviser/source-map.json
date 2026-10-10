@@ -1,0 +1,575 @@
+{
+  "schema_version": 1,
+  "run_id": "A2-01-control",
+  "stage": "reviser",
+  "brief": "ER12_RUNTIME/runs/A2-01/control/inputs/brief.md",
+  "assignment": "ER12_RUNTIME/runs/A2-01/control/stages/reviser/assignment.md",
+  "sources_index": "sources/index.md",
+  "source_id_policy": "Investigator IDs S01-S16 and critic IDs C01-C17 are copied from their original source maps without changes or rebinding. R01-R08 are new reviser retrieval records, even where a URL matches an inherited source.",
+  "input_hashes_verified": {
+    "ER12_RUNTIME/runs/A2-01/control/inputs/brief.md": "3715d3b3364ed8d47ed60b7d2f7c3e4ed0151f8c7e6ed26598de908a292b051f",
+    "ER12_RUNTIME/runs/A2-01/control/stages/reviser/assignment.md": "d8d66aa4d64173f80356b7aa303f556c65ecbab17e5e9a41d4f6bf4996bc0fb3",
+    "ER12_RUNTIME/runs/A2-01/control/stages/reviser/input-map.json": "bd89dc679bff69c7a5d11c01a41e908341f2533d996070257ae20ca90b50fdd0",
+    "ER12_RUNTIME/runs/A2-01/control/stages/investigator/discovery.md": "9d64b0fbf5433114a1fec7a69f783a9dfd784a241562d00898cc1e17eea98f75",
+    "ER12_RUNTIME/runs/A2-01/control/stages/investigator/draft.md": "6fdde53b76200243d2532547221de3744ceddbab5f853d020aef02ed5fb1e610",
+    "ER12_RUNTIME/runs/A2-01/control/stages/investigator/source-map.json": "ca2f489c77115d259ac336393577ecc9669d02b739eddd04ac0822079b9e1e10",
+    "ER12_RUNTIME/runs/A2-01/control/stages/investigator/revealed-plan.md": "57c6e740ac94d7c3b783621e59b759460ff10e4d157288e72d590e3f1f41666b",
+    "ER12_RUNTIME/runs/A2-01/control/stages/investigator/plan-reveal.json": "f1de6b356bfd658595613cb3c74d92b3b2856c7f1815a822c7ae1f3464f3ad10",
+    "ER12_RUNTIME/runs/A2-01/control/stages/critic/critique.md": "334b8b0b3f2ba4792ea6cb7b7f32fc87bc3ab002a616a6d1ae067fad77a331ab",
+    "ER12_RUNTIME/runs/A2-01/control/stages/critic/source-map.json": "6c3fea6c34ccc155a023cacfda2ff5ad6a17f55ab982ef612a1d7bdd38f0db4e"
+  },
+  "preserved_source_maps": [
+    {
+      "stage": "investigator",
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/investigator/source-map.json",
+      "sha256": "ca2f489c77115d259ac336393577ecc9669d02b739eddd04ac0822079b9e1e10"
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/A2-01/control/stages/critic/source-map.json",
+      "sha256": "6c3fea6c34ccc155a023cacfda2ff5ad6a17f55ab982ef612a1d7bdd38f0db4e"
+    }
+  ],
+  "access_time_note": "For R01-R08, T3 preview did not expose a per-page UTC access timestamp. The following UTC clock observation after the reviser retrieval batch was 2026-10-10T04:48:05Z; this is recorded as a batch timestamp, not a precise request timestamp.",
+  "criticism_dispositions": [
+    {
+      "id": "C-01",
+      "disposition": "accept",
+      "basis": "A disconnected device's pending queue is client-local, not a coordinator-visible server state. Show it as received-after-queue only when a client event/manifest is retained and later synced; otherwise show reported observation time beside server receipt time.",
+      "sources": [
+        "R01",
+        "R02",
+        "R03"
+      ]
+    },
+    {
+      "id": "C-02",
+      "disposition": "amend and retain uncertainty",
+      "basis": "ODK exposes XML submission creation plus separate attachment endpoints; ArcGIS feature-service Append can accept CSV when service capabilities and permissions allow; Survey123 pulldata is a form lookup. No safe adapter, attachment mapping, legacy file shape, or need is established; optional scope remains.",
+      "sources": [
+        "R03",
+        "R05",
+        "R06",
+        "R07",
+        "R08"
+      ]
+    },
+    {
+      "id": "C-03",
+      "disposition": "accept",
+      "basis": "Survey123 website export has an ArcGIS Server feature-layer exception; confirm deployment type/export route without excluding the candidate.",
+      "sources": [
+        "R04"
+      ]
+    },
+    {
+      "id": "C-04",
+      "disposition": "accept and correct locator",
+      "basis": "The files/ subfolder detail is under Central submissions “Downloading Submissions as CSVs”; inherited S04 URL and identity remain unchanged.",
+      "sources": [
+        "R02",
+        "C04"
+      ]
+    }
+  ],
+  "native_goal": {
+    "threadId": "01a1241c-d41c-7560-b9d-f72585b1404d",
+    "objective": "ER12 reviser stage, run A2-01-control: execute ER12_RUNTIME/runs/A2-01/control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+    "status_at_creation": "active",
+    "tokensUsed": 0,
+    "timeUsedSeconds": 0,
+    "createdAt_raw": 1791607260,
+    "updatedAt_raw": 1791607260,
+    "remainingTokens": null,
+    "completionBudgetReport": null,
+    "pre_creation_get_goal": {
+      "goal": null
+    },
+    "timestamp_timezone_and_provenance": "UNKNOWN; the native tool returned numeric fields without timezone/provenance labels.",
+    "terminal_status_at_output_write": "UNKNOWN; outputs were saved before Goal completion as required.",
+    "pre_completion_snapshot": {
+      "threadId": "01a1241c-d41c-7560-b09d-f72585b1404d",
+      "objective": "ER12 reviser stage, run A2-01-control: execute ER12_RUNTIME/runs/A2-01/control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "status": "active",
+      "tokensUsed": 138196,
+      "timeUsedSeconds": 687,
+      "createdAt_raw": 1791607260,
+      "updatedAt_raw": 1791607948,
+      "remainingTokens": null,
+      "completionBudgetReport": null,
+      "following_clock_observation_utc": "2026-10-10T04:52:38Z",
+      "clock_sequence_note": "get_goal was called immediately before the clock tool in the same sequential tool execution.",
+      "timestamp_timezone_and_provenance": "UNKNOWN; the native tool returned numeric fields without timezone/provenance labels."
+    }
+  },
+  "sources": [
+    {
+      "id": "S01",
+      "title": "Managing Forms in Collect — ODK Docs",
+      "url": "https://docs.getodk.org/collect-forms/",
+      "version_or_commit": "Living documentation reviewed 2026-10-10; sent/finalized edits feature explicitly introduced with Collect v2025.2.0 and Central v2025.1.4.",
+      "locator": "Sections ‘Finalizing drafts’, ‘Sending finalized forms’, ‘Sending previously-sent forms’, ‘Editing finalized or sent forms’; web lines 144–198 and linked version note.",
+      "access_utc": "2026-10-10T04:14:55Z",
+      "observed_operation": "Opened the primary ODK documentation page; reviewed the local Draft/Ready to send/Sent behavior and its explicit version gate.",
+      "governing_condition_default_exception": "Offline or auto-send-disabled finalized forms appear in Ready to send; finalized forms are ordinarily not editable. `client_editable=true` is opt-in and, from Collect v2025.2.0/Central v2025.1.4, permits editing finalized/sent records still on-device. Manually queued edits must be sent in order. Central-edited records can no longer be edited from Collect. Edits use the original form version.",
+      "applicability": "Directly relevant Android survey behavior and corrections. The workflow is documented, not exercised here; confirm currently deployed app/server versions before relying on the feature."
+    },
+    {
+      "id": "S02",
+      "title": "Metadata Scheme — ODK Docs / OpenRosa",
+      "url": "https://docs.getodk.org/openrosa-metadata/",
+      "version_or_commit": "Living OpenRosa/XForms metadata documentation reviewed 2026-10-10; no product build pinned on the page.",
+      "locator": "‘Form Identity’, ‘Version’, ‘Completed Form Metadata’, ‘Fields’, and ‘ID field formatting’; web lines 121–146 and 177–206.",
+      "access_utc": "2026-10-10T04:14:55Z",
+      "observed_operation": "Opened and read metadata definitions and sample XML.",
+      "governing_condition_default_exception": "Form `id` and `version` identify the XForm. Required submission `instanceID` is a universally unique string for that submission. Optional `timeStart` and `timeEnd` are ISO 8601 client timestamps; optional `deprecatedID` can link a revised submission to the original, subject to server handling.",
+      "applicability": "Useful identity and timestamp fields for ODK-compatible design. A phone-provided time is not independent proof of clock accuracy; the documentation does not claim that it is."
+    },
+    {
+      "id": "S03",
+      "title": "Managing Forms in Central — ODK Docs",
+      "url": "https://docs.getodk.org/central-forms/",
+      "version_or_commit": "Living documentation reviewed 2026-10-10; page describes versioned Central behavior and historical version boundaries (including Draft UI moved in Central v2025.1).",
+      "locator": "‘Forms in ODK Central’, ‘Working with Form Drafts’, ‘Updating Forms to a New Version’, and ‘Accessing Older Form Versions’; web lines 119–170 and 221–261.",
+      "access_utc": "2026-10-10T04:14:55Z",
+      "observed_operation": "Opened the primary Central form lifecycle page; read draft/publish, app-user access, form version and export caveats.",
+      "governing_condition_default_exception": "Drafts can be tested before publishing; App Users must separately receive form access. Publishing a new version preserves old submissions, but exports default to the current form definition and may omit removed fields; export can include fields from prior versions. ODK Cloud is linked as managed hosting and Central installation docs are available for self-hosting.",
+      "applicability": "Relevant to 25 volunteers who may hold older downloaded forms while offline and to the deployment/export comparison. No deployment or permissions were created."
+    },
+    {
+      "id": "S04",
+      "title": "Managing Submissions in Central — ODK Docs",
+      "url": "https://docs.getodk.org/central-submissions/",
+      "version_or_commit": "Living documentation reviewed 2026-10-10; current UI/API behavior is not tied to one specific Central build on the page.",
+      "locator": "‘Downloading Submissions as CSVs’, ‘Editing Submissions’, ‘Submission Review States’, and ‘Allowing web form users to work offline’; web lines around 175–200 and 313–330.",
+      "access_utc": "2026-10-10T04:14:55Z",
+      "observed_operation": "Opened page and reviewed export, editing, review, and web-offline conditions.",
+      "governing_condition_default_exception": "ZIP export may contain a root CSV, repeat-table CSVs, and `files/` subfolders keyed by submission instance ID. Edited submissions create a new version and set review state to Edited. ODK Web Forms do not support offline completion/submission; Enketo queues offline, but auto-send occurs only while the form remains open in the browser.",
+      "applicability": "Supports the product comparison and warns against assuming all browser form routes have Collect-like offline/retry behavior."
+    },
+    {
+      "id": "S05",
+      "title": "Submission Management API — ODK Docs",
+      "url": "https://docs.getodk.org/central-api-submission-management/",
+      "version_or_commit": "Current Central REST API documentation reviewed 2026-10-10; page marks `deviceId` at API 1.4 and `currentVersion` at Central 2023.2.",
+      "locator": "Submission identity/versions at lines 119–128; POST create and duplicate-ID response at lines 264–270; `createdAt` server receipt and metadata at lines 175–195 / 443–449; CSV endpoints elsewhere on page.",
+      "access_utc": "2026-10-10T04:14:55Z",
+      "observed_operation": "Opened the official API reference and inspected create, identity, server receipt time, and version sections.",
+      "governing_condition_default_exception": "Submission XML is POSTed; this REST create endpoint does not include attachments in that request. An existing `instanceId` produces HTTP 409. Central defines `createdAt` as the time the server received the submission. The original submission `instanceId` identifies the submission overall; individual versions have version metadata/IDs.",
+      "applicability": "A duplicate ID requires reconciliation; it is not evidence that a second observation should be created. API supports XML submission creation, not a documented native CSV-to-submission import workflow. This limited doc review does not rule out external import tooling."
+    },
+    {
+      "id": "S06",
+      "title": "Prevent editing of submissions that failed to send — ODK Collect issue #4589",
+      "url": "https://github.com/getodk/collect/issues/4589",
+      "version_or_commit": "Opened 2021-06-02; closed 2021-07-07 by PR #4655; historical issue against Collect.",
+      "locator": "Issue description and maintainer discussion on delivery limbo; web lines 129–164, 301–365, 426–439.",
+      "access_utc": "2026-10-10T04:14:55Z",
+      "observed_operation": "Opened the public source issue, read reported failure and maintainers’ discussion; followed issue-linked commit/release records separately as S07–S08.",
+      "governing_condition_default_exception": "The reported case is a submission accepted by Central when the client does not receive the POST result; editing the failed local item may change XML (such as an end timestamp), so same-ID resubmission with changed XML is rejected. Maintainer discussion identifies submission-failed state and accidental-edit prevention as the narrow fix.",
+      "applicability": "Bounded historical reconnect/ambiguous-ack example. It does not establish a present defect in current Collect, and it does not address independent duplicate observations or owner merge policy."
+    },
+    {
+      "id": "S07",
+      "title": "Collect commit 0bc6cde — CursorLoaderFactory etc. for #4589",
+      "url": "https://github.com/getodk/collect/commit/0bc6cde",
+      "version_or_commit": "Commit 0bc6cde (abbreviated SHA displayed by GitHub), associated with issue #4589; June 2021 commit activity.",
+      "locator": "`CursorLoaderFactory` diff filters `STATUS_SUBMISSION_FAILED` from unsent/editable results and adds `FormResubmissionTest`; web lines 128–150, 185–298, 361–406.",
+      "access_utc": "2026-10-10T04:14:55Z",
+      "observed_operation": "Opened primary source-code history and inspected the linked commit diff; code was not downloaded or run.",
+      "governing_condition_default_exception": "The code change excludes failed-send records from the unsent/editable selection and includes a test for resubmission after a failed response. It does not lock all finalized forms or prohibit later opt-in versioned correction.",
+      "applicability": "Evidence for the actual narrow historical fix and its test, not a general exactly-once guarantee."
+    },
+    {
+      "id": "S08",
+      "title": "ODK Collect v2021.2.0 release",
+      "url": "https://github.com/getodk/collect/releases/tag/v2021.2.0",
+      "version_or_commit": "Collect v2021.2.0; released 2021-07-27; release page lists PR #4655.",
+      "locator": "Release heading/date lines 129–160 and release entry for PR #4655 at lines around 222–229.",
+      "access_utc": "2026-10-10T04:14:55Z",
+      "observed_operation": "Opened the official tagged release page and confirmed the linked PR appears in its release notes.",
+      "governing_condition_default_exception": "Release evidence establishes the historical fix shipped in this release; it does not certify all later versions or deployments.",
+      "applicability": "Gives an exact bounded release milestone for the reconnect history example."
+    },
+    {
+      "id": "S09",
+      "title": "Submit survey results — ArcGIS Survey123 documentation",
+      "url": "https://doc.arcgis.com/en/survey123/capture/field-app/submitsurveyresults.htm",
+      "version_or_commit": "Living Survey123 documentation reviewed 2026-10-10; no app build displayed on page.",
+      "locator": "Offline submit / Outbox directions, web lines 11–33.",
+      "access_utc": "2026-10-10T04:14:55Z",
+      "observed_operation": "Opened and read field-app send, offline Outbox, and post-submit editing notes.",
+      "governing_condition_default_exception": "With no connection, a response can be saved in Outbox, optionally edited before submission, then sent after reconnection. Post-submit editing depends on survey configuration.",
+      "applicability": "Confirms Survey123 is a usable Android offline candidate; not tested with the charity’s data or settings."
+    },
+    {
+      "id": "S10",
+      "title": "Publish a survey — ArcGIS Survey123 documentation",
+      "url": "https://doc.arcgis.com/en/survey123/create/connect/publishsurvey.htm",
+      "version_or_commit": "Living documentation reviewed 2026-10-10; defaults and version caveats are stated on page; no app build pinned.",
+      "locator": "‘Publish options’ and ‘Sent folder’; web lines 55–90.",
+      "access_utc": "2026-10-10T04:14:55Z",
+      "observed_operation": "Opened publishing options, sync default, Enterprise offline note, and Sent-folder configuration.",
+      "governing_condition_default_exception": "Enable sync is off by default; offline web maps may need extra Enterprise setup. Editing sent surveys is disabled by default. Sent and Inbox together may produce stale records when another user changes a record.",
+      "applicability": "Deployment/operations tradeoff for a charity already using ArcGIS; test layer configuration and correction workflow."
+    },
+    {
+      "id": "S11",
+      "title": "Edit existing survey data — ArcGIS Survey123 documentation",
+      "url": "https://doc.arcgis.com/en/survey123/capture/web-app/editexistingdata.htm",
+      "version_or_commit": "Living documentation reviewed 2026-10-10; global-ID edit behavior from Survey123 3.9; Enterprise attachment limitation before 10.8.1.",
+      "locator": "‘Edit an individual response’ and ‘Limitations’; web lines 45–96.",
+      "access_utc": "2026-10-10T04:14:55Z",
+      "observed_operation": "Opened page and reviewed user privilege, attachment edit, and supported-survey limitations.",
+      "governing_condition_default_exception": "Owner can edit; submitters need applicable submitter/viewer plus add/update permissions. Attachments are modifiable in individual-response/web-app editing. Nested repeats are unsupported; Enterprise surveys earlier than 10.8.1 with attachment questions are unsupported for this editing path.",
+      "applicability": "Good correction support with permission/version boundaries; public sign-in-free collection does not remove correction authorization requirements."
+    },
+    {
+      "id": "S12",
+      "title": "View your results — ArcGIS Survey123 documentation",
+      "url": "https://doc.arcgis.com/en/survey123/analyze/viewresults.htm",
+      "version_or_commit": "Living documentation reviewed 2026-10-10; no ArcGIS product build pinned.",
+      "locator": "‘Download results’; web lines 56–66 and related attachment/choice notes later on the page.",
+      "access_utc": "2026-10-10T04:14:55Z",
+      "observed_operation": "Opened data-export formats and table/attachment notes.",
+      "governing_condition_default_exception": "CSV, Excel, KML, shapefile, and file geodatabase exports are listed. CSV/Excel store the coded choice name, not display label. Attachment-keyword information may need attention when data is exported and republished.",
+      "applicability": "Useful GIS-native export alternative, with attachment and coded-value handling to verify in the pilot."
+    },
+    {
+      "id": "S13",
+      "title": "Replication introduction — Apache CouchDB 3.5.1 documentation",
+      "url": "https://docs.couchdb.org/en/3.5.1/replication/intro.html",
+      "version_or_commit": "Apache CouchDB documentation 3.5.1.",
+      "locator": "Replication procedure, changes feed, batches, continuous mode, and checkpoint recovery; web section 2.1.",
+      "access_utc": "2026-10-10T04:14:55Z",
+      "observed_operation": "Opened version-pinned primary documentation for replication behavior.",
+      "governing_condition_default_exception": "Replication proceeds by changes-feed comparison; a task may be continuous. Replication checkpoint documents allow restart from where processing stopped, including after a crash. One replication task transfers one direction; bidirectional behavior requires paired tasks.",
+      "applicability": "A bounded analogy for offline synchronization and restartable transport; not a survey-product deployment recommendation."
+    },
+    {
+      "id": "S14",
+      "title": "Replication and conflict model — Apache CouchDB 3.5.1 documentation",
+      "url": "https://docs.couchdb.org/en/3.5.1/replication/conflicts.html",
+      "version_or_commit": "Apache CouchDB documentation 3.5.1.",
+      "locator": "Conflict explanation and `_conflicts`/leaf revision examples; section 2.3, web lines around 111–125 and surrounding discussion.",
+      "access_utc": "2026-10-10T04:14:55Z",
+      "observed_operation": "Opened version-pinned primary documentation on revision conflicts.",
+      "governing_condition_default_exception": "Conflicting revisions may coexist as leaf branches. CouchDB exposes a winning revision by deterministic rules while retaining losing branches; the application must choose whether to leave, revert, or merge.",
+      "applicability": "Useful analogy for keeping correction history and making resolution an explicit application decision; do not adopt silent winner selection for field observations."
+    },
+    {
+      "id": "S15",
+      "title": "Collecting data using KoboCollect — KoboToolbox documentation",
+      "url": "https://support.kobotoolbox.org/data_collection_kobocollect.html",
+      "version_or_commit": "Living documentation; last updated 2026-07-17 per page; application/server build not pinned.",
+      "locator": "Offline setup and collection, Draft/Ready to send/Sent, and bulk upload; web lines 7-16, 18-47, 49-91.",
+      "access_utc": "2026-10-10T04:21:28Z",
+      "observed_operation": "Opened the official KoboToolbox support page and reviewed current KoboCollect offline and form-update behavior.",
+      "governing_condition_default_exception": "Forms must first be deployed and downloaded while connected; data can then be collected offline. Depending on project settings, drafts remain editable, finalized records are Ready to send, and auto-send can queue an item until connectivity returns. Data normally stays on device until manually deleted; Delete after send is an optional setting.",
+      "applicability": "Supports Kobo as a plausible Android field product; form updates require online retrieval, which matters for volunteers returning late with a previous form version."
+    },
+    {
+      "id": "S16",
+      "title": "Editing and deleting your data — KoboToolbox documentation",
+      "url": "https://support.kobotoolbox.org/editing_deleting_data.html",
+      "version_or_commit": "Living documentation; last updated 2026-05-06 per page; application/server build not pinned.",
+      "locator": "Individual edits, raw data edits, duplicates, delete behavior, and troubleshooting; web lines 7-27, 28-61, 79-106, 121-131.",
+      "access_utc": "2026-10-10T04:21:28Z",
+      "observed_operation": "Opened the official KoboToolbox support page and reviewed correction, identity, undo, and export-version cautions.",
+      "governing_condition_default_exception": "Post-submit corrections happen in KoboToolbox rather than KoboCollect. Every saved edit changes `_uuid` while `rootUuid` remains the original; web-form edit uses the latest form and may recalculate or remove fields; raw edits are not undoable and the docs recommend an external edit log. Submission deletion is permanent.",
+      "applicability": "A useful alternative for comparison, but current documented correction behavior needs explicit external history and careful schema/version testing for this pilot."
+    },
+    {
+      "id": "C01",
+      "upstream_source_id": "S01",
+      "title": "Managing Forms in Collect — ODK Docs",
+      "url": "https://docs.getodk.org/collect-forms/",
+      "version_or_commit": "Living documentation retrieved 2026-10-10; the page states finalized/sent editing was added with Collect v2025.2.0 and Central v2025.1.4.",
+      "locator": "Finalizing drafts and Ready to send, page lines 144–168; opt-in finalized/sent edits and ordering, lines 181–198.",
+      "access_utc": "2026-10-10T04:32:46Z",
+      "observed_operation": "Opened the official documentation and read the device states, offline-send condition, and version-gated client-edit section.",
+      "governing_condition_default_exception": "Offline or auto-send-disabled finalized forms are on the device Ready to send list and not editable there by default. `client_editable=true` is opt-in; edits use the original form version, are tracked in Central, and manual queued edits must be sent in order.",
+      "applicability": "Supports a local Android queue and configured correction path; does not establish that coordinators can see device-local pending or receipt-unknown events before sync."
+    },
+    {
+      "id": "C02",
+      "upstream_source_id": "S02",
+      "title": "Metadata Scheme — ODK Docs / OpenRosa",
+      "url": "https://docs.getodk.org/openrosa-metadata/",
+      "version_or_commit": "Living OpenRosa/XForms metadata documentation retrieved 2026-10-10; no product build pinned.",
+      "locator": "Form identity and version, lines 147–176; completed-form `instanceID`, `timeStart`, `timeEnd`, and `deprecatedID`, lines 177–206.",
+      "access_utc": "2026-10-10T04:32:46Z",
+      "observed_operation": "Opened the primary metadata reference and inspected the form/submission identity and timestamp definitions.",
+      "governing_condition_default_exception": "Form identity/version are XForm metadata; `instanceID` is required and must be universally unique for a submission. `timeStart`/`timeEnd` are client timestamps. `deprecatedID` may identify a revision; server handling controls consolidation.",
+      "applicability": "Supports the proposed identity model and clock-uncertainty distinction, but does not certify phone clock accuracy or a chosen correction display policy."
+    },
+    {
+      "id": "C03",
+      "upstream_source_id": "S03",
+      "title": "Managing Forms in Central — ODK Docs",
+      "url": "https://docs.getodk.org/central-forms/",
+      "version_or_commit": "Living documentation retrieved 2026-10-10; form lifecycle behavior is not tied to a deployed Central build.",
+      "locator": "Form drafting and access, lines 121–127 and following access section; updating forms and removed-field export behavior, lines 221–232.",
+      "access_utc": "2026-10-10T04:32:46Z",
+      "observed_operation": "Opened the official Central form-management page and read draft/publish, form access, version-update, and removed-field export conditions.",
+      "governing_condition_default_exception": "A new form version may be published; old submissions persist. Removed fields are omitted from exports by default, with a prior-version-fields export option. Form access must be set for the relevant App Users.",
+      "applicability": "Supports the version/export warning and access tradeoff. Actual volunteer access, old downloaded forms, and a deployment are not tested."
+    },
+    {
+      "id": "C04",
+      "upstream_source_id": "S04",
+      "title": "Managing Submissions in Central — ODK Docs",
+      "url": "https://docs.getodk.org/central-submissions/",
+      "version_or_commit": "Living documentation retrieved 2026-10-10; the page does not pin a Central build for these UI behaviors.",
+      "locator": "CSV ZIP `files/` folders keyed by submission instance ID, page line 234; activity feed and edit-version behavior, lines 311–317; web-form offline limitation, lines 319–325.",
+      "access_utc": "2026-10-10T04:32:46Z",
+      "observed_operation": "Opened the official submission-management page and directly inspected attachment export, edit activity/version, and offline web-form passages.",
+      "governing_condition_default_exception": "ZIP export places attachments in `files/` subfolders named by submission `instanceId`; edits create a new submission version and review state Edited. ODK Web Forms still require internet to submit; Enketo can queue in offline-capable mode while its conditions hold.",
+      "applicability": "Supports export and correction qualifications, not an end-to-end export check or a coordinator-visible mobile queue."
+    },
+    {
+      "id": "C05",
+      "upstream_source_id": "S05",
+      "title": "Submission Management — ODK Docs",
+      "url": "https://docs.getodk.org/central-api-submission-management/",
+      "version_or_commit": "Current living Central REST API documentation retrieved 2026-10-10; `deviceId` and version fields have documented historical version notes.",
+      "locator": "Submission/form version identity, lines 119–123; `createdAt` server receipt semantics, lines 192–195; REST XML create, attachment follow-up, and duplicate-ID 409, lines 264–270; CSV export endpoints, lines 1009–1119.",
+      "access_utc": "2026-10-10T04:32:46Z",
+      "observed_operation": "Opened the official API reference and inspected identity, server receipt, create/attachment, duplicate response, and export sections.",
+      "governing_condition_default_exception": "An existing `instanceId` in the REST-create endpoint returns 409. That endpoint takes XML; attachments are added through later endpoints. `createdAt` is the server-received time. The cited docs establish CSV export, not a native CSV-to-submission import.",
+      "applicability": "Supports reconciliation and server-receipt recommendations; 409 alone does not show a coordinator the device queue or prove the legacy CSV route."
+    },
+    {
+      "id": "C06",
+      "upstream_source_id": "S06",
+      "title": "Prevent editing of submissions that failed to send — ODK Collect issue #4589",
+      "url": "https://github.com/getodk/collect/issues/4589",
+      "version_or_commit": "Historical issue opened 2021-06-02 and closed through PR #4655.",
+      "locator": "Issue report, lines 129–164; maintainer explanation of lost POST result/limbo, lines 302–306.",
+      "access_utc": "2026-10-10T04:32:46Z",
+      "observed_operation": "Opened the public issue and read the original failure report and maintainer discussion.",
+      "governing_condition_default_exception": "The reported case is server acceptance with no response reaching the client, followed by editing a failed local record and resubmitting different XML under the same ID.",
+      "applicability": "A bounded historic reconnect case only; not evidence of a current defect, exactly-once behavior, or arbitrary duplicate resolution."
+    },
+    {
+      "id": "C07",
+      "upstream_source_id": "S07",
+      "title": "Collect commit 0bc6cde — CursorLoaderFactory and regression test",
+      "url": "https://github.com/getodk/collect/commit/0bc6cde",
+      "version_or_commit": "Commit `0bc6cde` as displayed in the GitHub URL/page; linked to issue #4589 in June 2021.",
+      "locator": "`FormResubmissionTest` added in diff around lines 185–267; unsent-list exclusion for `STATUS_SUBMISSION_FAILED` around lines 383–407.",
+      "access_utc": "2026-10-10T04:32:46Z",
+      "observed_operation": "Opened the GitHub commit diff and inspected the test addition and failed-status filter; no code was downloaded or run.",
+      "governing_condition_default_exception": "The diff excludes failed submissions from the ordinary unsent list and adds a resubmission-after-failed-response test.",
+      "applicability": "Confirms a narrow historical code fix and regression witness, not general exactly-once delivery."
+    },
+    {
+      "id": "C08",
+      "upstream_source_id": "S08",
+      "title": "ODK Collect v2021.2.0 release",
+      "url": "https://github.com/getodk/collect/releases/tag/v2021.2.0",
+      "version_or_commit": "Collect v2021.2.0, released 2021-07-27.",
+      "locator": "Release date lines 150–154; PR #4655 entry lines 228–229.",
+      "access_utc": "2026-10-10T04:32:46Z",
+      "observed_operation": "Opened the official tagged release page and found the dated release and PR #4655 entry.",
+      "governing_condition_default_exception": "The release entry shows the linked fix shipped in this tagged release; it says nothing about the charity's current deployment.",
+      "applicability": "Bounds the historic example to a released version."
+    },
+    {
+      "id": "C09",
+      "upstream_source_id": "S09",
+      "title": "Submit survey results — ArcGIS Survey123 documentation",
+      "url": "https://doc.arcgis.com/en/survey123/capture/field-app/submitsurveyresults.htm",
+      "version_or_commit": "Living Survey123 documentation retrieved 2026-10-10; app build not pinned.",
+      "locator": "Offline Save in Outbox/send after reconnection, lines 20–33.",
+      "access_utc": "2026-10-10T04:32:46Z",
+      "observed_operation": "Opened the official field-app documentation and read the offline Outbox and post-submit edit conditions.",
+      "governing_condition_default_exception": "With no internet, a completed response can be saved in Outbox; unsent surveys can be sent after reconnecting. Post-submit editing depends on configuration.",
+      "applicability": "Confirms an Android offline candidate and device-local queue; does not prove coordinator-visible pending-state behavior."
+    },
+    {
+      "id": "C10",
+      "upstream_source_id": "S10",
+      "title": "Publish a survey — ArcGIS Survey123 documentation",
+      "url": "https://doc.arcgis.com/en/survey123/create/connect/publishsurvey.htm",
+      "version_or_commit": "Living documentation retrieved 2026-10-10; no app/server build pinned.",
+      "locator": "Publish sync option and Enterprise web-map caveat, lines 55–70; Sent-folder edit default and Inbox/Sent stale-data warning, lines 83–94.",
+      "access_utc": "2026-10-10T04:32:46Z",
+      "observed_operation": "Opened the official publishing page and checked sync defaults, Enterprise conditions, sent-edit default, and Inbox/Sent interaction.",
+      "governing_condition_default_exception": "Feature-layer sync is off by default and is required for offline map areas configured for a web map. Editing sent surveys is off by default; enabling both Sent and Inbox can leave another device's update undownloaded.",
+      "applicability": "Supports the conditional deployment/correction tradeoff; exact charity layer and permissions are unknown."
+    },
+    {
+      "id": "C11",
+      "upstream_source_id": "S11",
+      "title": "Edit existing survey data — ArcGIS Survey123 documentation",
+      "url": "https://doc.arcgis.com/en/survey123/capture/web-app/editexistingdata.htm",
+      "version_or_commit": "Living documentation retrieved 2026-10-10; global-ID editing behavior starts at Survey123 3.9; Enterprise attachment limitation is version-qualified on the page.",
+      "locator": "Individual-response edit privileges and attachment edits, lines 34–63; nested-repeat and older Enterprise attachment limitations, lines 91–96.",
+      "access_utc": "2026-10-10T04:32:46Z",
+      "observed_operation": "Opened the official correction page and read authorization, attachment editing, and limitations.",
+      "governing_condition_default_exception": "Individual response edits need submitter/viewer and add/update privileges; attachments may be changed in that path. Nested-repeat surveys are unsupported; Enterprise surveys before 10.8.1 with attachment questions are unsupported for the described edit path.",
+      "applicability": "Supports a configured correction candidate, not immutable append-only history or the charity's owner-selected view policy."
+    },
+    {
+      "id": "C12",
+      "upstream_source_id": "S12",
+      "title": "View your results — ArcGIS Survey123 documentation",
+      "url": "https://doc.arcgis.com/en/survey123/analyze/viewresults.htm",
+      "version_or_commit": "Living documentation retrieved 2026-10-10; no app/server build pinned.",
+      "locator": "Data/attachments and download formats, lines 47–67; coded-choice and attachment keyword notes and ArcGIS Server feature-layer download exception, lines 68–73.",
+      "access_utc": "2026-10-10T04:32:46Z",
+      "observed_operation": "Opened the official results/export page and inspected available formats, coded values, attachment notes, and the ArcGIS Server exception.",
+      "governing_condition_default_exception": "CSV/Excel and GIS formats are available through the website, but surveys created from ArcGIS Server feature layers cannot be downloaded there. CSV/Excel store choice names, and file-geodatabase export removes the attachment KEYWORD field.",
+      "applicability": "Supports Survey123 export comparison and identifies an Enterprise deployment caveat omitted from the investigator's comparison."
+    },
+    {
+      "id": "C13",
+      "upstream_source_id": "S15",
+      "title": "Collecting data using KoboCollect — KoboToolbox documentation",
+      "url": "https://support.kobotoolbox.org/data_collection_kobocollect.html",
+      "version_or_commit": "Living support documentation; page says last updated 2026-07-17; app/server build not pinned.",
+      "locator": "Android/offline use and initial form-download prerequisites, lines 7–40; offline collection and finalized upload, lines 49–57 and 79–91.",
+      "access_utc": "2026-10-10T04:32:46Z",
+      "observed_operation": "Opened the official Kobo support page and inspected offline collection, online form-download/update requirements, and bulk upload.",
+      "governing_condition_default_exception": "A deployed form must be downloaded with internet first; after download, collection can be offline. Form-update retrieval needs connectivity; finalized submissions may be uploaded later/in bulk.",
+      "applicability": "Supports Kobo as a screened Android option and explains a form-version risk for volunteers returning late."
+    },
+    {
+      "id": "C14",
+      "upstream_source_id": "S16",
+      "title": "Editing and deleting your data — KoboToolbox documentation",
+      "url": "https://support.kobotoolbox.org/editing_deleting_data.html",
+      "version_or_commit": "Living support documentation; page says last updated 2026-05-06; app/server build not pinned.",
+      "locator": "Post-submit edit path and UUID changes, lines 10–43; external log and non-undoable raw edits, lines 44–61; `_uuid` / `rootUuid`, lines 121–131.",
+      "access_utc": "2026-10-10T04:32:46Z",
+      "observed_operation": "Opened the official correction page and inspected edit locations, UUID lineage, latest-form behavior, and edit-log advice.",
+      "governing_condition_default_exception": "Post-submit changes are made in KoboToolbox. Saved edits change `_uuid` while `rootUuid` stays stable; web-form edits use the latest form and can alter logic-dependent values. Raw edits cannot be undone and should be tracked externally.",
+      "applicability": "Supports screening Kobo's correction-history caveat; does not establish legacy CSV row import."
+    },
+    {
+      "id": "C15",
+      "upstream_source_id": "S13",
+      "title": "2.1. Introduction to Replication — Apache CouchDB documentation",
+      "url": "https://docs.couchdb.org/en/3.5.1/replication/intro.html",
+      "version_or_commit": "Apache CouchDB 3.5.1 documentation.",
+      "locator": "Replication checkpoint behavior, section 2.1, page line 24.",
+      "access_utc": "2026-10-10T04:32:46Z",
+      "observed_operation": "Opened the version-pinned primary replication documentation and checked the checkpoint passage.",
+      "governing_condition_default_exception": "Replication tasks create destination checkpoint documents so a restarted task can continue from where it stopped, including after a crash.",
+      "applicability": "Supports restartable transport as a conceptual analogy; CouchDB is not a survey product recommendation."
+    },
+    {
+      "id": "C16",
+      "upstream_source_id": "S14",
+      "title": "2.3. Replication and conflict model — Apache CouchDB documentation",
+      "url": "https://docs.couchdb.org/en/3.5.1/replication/conflicts.html",
+      "version_or_commit": "Apache CouchDB 3.5.1 documentation.",
+      "locator": "Revision branches and conflict leaves, lines 82–101; winner visibility and explicit application resolution, lines 104–135 and 197–226.",
+      "access_utc": "2026-10-10T04:32:46Z",
+      "observed_operation": "Opened the version-pinned conflict documentation and read revision tree, winner, conflict retrieval, and resolution passages.",
+      "governing_condition_default_exception": "Conflicting leaves can coexist; a normal read exposes only the deterministic winner unless conflicts are requested. An application can inspect all leaves and choose display/merge/resolution.",
+      "applicability": "Supports the analogy while warning against inheriting database winner selection as the charity's owner decision."
+    },
+    {
+      "id": "C17",
+      "upstream_source_id": null,
+      "title": "Formulas — ArcGIS Survey123 documentation",
+      "url": "https://doc.arcgis.com/en/survey123/create/main/xlsformformulas.htm",
+      "version_or_commit": "Living documentation retrieved 2026-10-10; formula feature conditions are stated on the page; app build not pinned.",
+      "locator": "`pulldata()` CSV lookup and its app availability, lines 454–468; function summary, lines 191–200.",
+      "access_utc": "2026-10-10T04:32:46Z",
+      "observed_operation": "Searched and opened the official Survey123 formula documentation to check whether CSV support means legacy response import.",
+      "governing_condition_default_exception": "`pulldata()` can preload a value from a local/linked CSV into a form in Survey123 Connect/field app; the docs do not describe importing legacy rows as existing survey submissions.",
+      "applicability": "Evidence for the narrow distinction in C-02; it is not evidence that Survey123 has no import path through other ArcGIS services or adapters."
+    },
+    {
+      "id": "R01",
+      "title": "Managing Forms in Collect — ODK Docs",
+      "url": "https://docs.getodk.org/collect-forms/",
+      "version_or_commit": "Living primary documentation retrieved 2026-10-10; the page says the finalized/sent edit feature was added with Collect v2025.2.0 and Central v2025.1.4; no live deployment is pinned.",
+      "locator": "Sections “Finalizing drafts”, “Sending finalized forms”, and “Editing finalized or sent forms”; version note adjacent to edit feature.",
+      "access_utc": "2026-10-10T04:48:05Z",
+      "observed_operation": "Opened the official page in the T3 collaborative browser and read the local-state, offline-send, edit-default, version-gate, and ordering passages. The browser did not expose a per-request UTC timestamp; access_utc is the following clock observation after the reviser retrieval batch.",
+      "governing_condition_default_exception": "Drafts remain device-local. When offline or auto-send is disabled, finalized forms are in Ready to send and cannot be edited there by default. They become Sent after upload. client_editable is opt-in; the feature is documented from Collect v2025.2.0/Central v2025.1.4; manually queued edits must be sent in order.",
+      "applicability": "Confirms the device-local queue and versioned edit conditions. The coordinator-visibility boundary is an inference from these local states and the server-side submission model; the docs do not establish a live coordinator feed for pending or receipt-unknown items."
+    },
+    {
+      "id": "R02",
+      "title": "Managing Submissions in Central — ODK Docs",
+      "url": "https://docs.getodk.org/central-submissions/",
+      "version_or_commit": "Living primary documentation retrieved 2026-10-10; no Central build is pinned for the cited export behavior.",
+      "locator": "“Downloading Submissions as CSVs”, root/repeat tables and files-folder description; “Allowing web form users to work offline”.",
+      "access_utc": "2026-10-10T04:48:05Z",
+      "observed_operation": "Opened the official page in the T3 collaborative browser and read the CSV ZIP attachment-tree and offline Enketo passages. The browser did not expose a per-request UTC timestamp; access_utc is the following clock observation after the reviser retrieval batch.",
+      "governing_condition_default_exception": "CSV ZIP exports contain one or more CSV tables and submitted media. The files folder contains subfolders named for each submission instanceId. Enketo may queue offline-capable web form submissions and send when connection is available; the client must use an offline-capable form URL.",
+      "applicability": "Supports export structure and the fact that a queued web submission reaches the server only after network availability. Does not establish that a coordinator sees device-local queue state."
+    },
+    {
+      "id": "R03",
+      "title": "Submission Management API — ODK Docs",
+      "url": "https://docs.getodk.org/central-api-submission-management/",
+      "version_or_commit": "Current living ODK Central REST API documentation retrieved 2026-10-10; API fields have their own version notes on the page.",
+      "locator": "“Creating a Submission”, duplicate instanceId response, “Attachments”, and “Exporting Form Submissions to CSV”.",
+      "access_utc": "2026-10-10T04:48:05Z",
+      "observed_operation": "Opened the official API page in the T3 collaborative browser and read XML creation, attachment endpoints, 409 duplicate response, createdAt semantics, and CSV export passages. The browser did not expose a per-request UTC timestamp; access_utc is the following clock observation after the reviser retrieval batch.",
+      "governing_condition_default_exception": "REST creation posts Submission XML using an XML Content-Type; that create endpoint does not accept attachment bytes, which are uploaded through separate attachment endpoints. Existing instanceId returns HTTP 409. createdAt is the server receive time. The reviewed route documents CSV export, not a native CSV-to-submission importer.",
+      "applicability": "Provides possible pieces for a staff-reviewed adapter and stable-ID reconciliation. It does not prove a CSV adapter exists or is safe, and does not exercise a live Central instance."
+    },
+    {
+      "id": "R04",
+      "title": "View your results — ArcGIS Survey123 documentation",
+      "url": "https://doc.arcgis.com/en/survey123/analyze/viewresults.htm",
+      "version_or_commit": "Living primary documentation retrieved 2026-10-10; no Survey123 or ArcGIS deployment build is pinned.",
+      "locator": "“Download results”, available formats, coded choice names, attachment KEYWORD note, and ArcGIS Server feature-layer exception.",
+      "access_utc": "2026-10-10T04:48:05Z",
+      "observed_operation": "Opened the official results page in the T3 collaborative browser and read export formats and deployment/attachment qualifications. The browser did not expose a per-request UTC timestamp; access_utc is the following clock observation after the reviser retrieval batch.",
+      "governing_condition_default_exception": "The page lists CSV, Excel, KML, shapefile, and file geodatabase. CSV/Excel contain coded choice names rather than display labels; file-geodatabase export removes attachment KEYWORD; surveys built from ArcGIS Server feature layers cannot be downloaded through the Survey123 website.",
+      "applicability": "Corrects the comparison for ArcGIS Server deployments. Confirm the charity's layer type and another supported export route before selecting Survey123; the exception does not rule out all Enterprise exports."
+    },
+    {
+      "id": "R05",
+      "title": "Formulas — ArcGIS Survey123 documentation",
+      "url": "https://doc.arcgis.com/en/survey123/create/main/xlsformformulas.htm",
+      "version_or_commit": "Living primary documentation retrieved 2026-10-10; app/build conditions are stated on the page.",
+      "locator": "“Retrieve a value from a .csv file” and pulldata() description and limitations.",
+      "access_utc": "2026-10-10T04:48:05Z",
+      "observed_operation": "Opened the official formula page in the T3 collaborative browser and read the CSV lookup description, supported app conditions, and limitations. The browser did not expose a per-request UTC timestamp; access_utc is the following clock observation after the reviser retrieval batch.",
+      "governing_condition_default_exception": "pulldata() can preload/lookup a value from an external CSV in Survey123 Connect and the field app; this functionality is not available in Survey123 Studio or Survey123 Mobile. The page describes lookup into a form, not importing legacy CSV rows as existing submissions.",
+      "applicability": "Distinguishes a lookup file from a legacy response importer; does not prove there is no other import path."
+    },
+    {
+      "id": "R06",
+      "title": "Append (Feature Service/Layer) — ArcGIS REST APIs",
+      "url": "https://developers.arcgis.com/rest/services-reference/enterprise/append-feature-service-layer/",
+      "version_or_commit": "Living ArcGIS Enterprise REST API documentation retrieved 2026-10-10; page contains version-gated behavior, including imageCollection at 11.5 and appendItemId at Enterprise 10.9.",
+      "locator": "“Supported append formats”, Append capability/privileges, appendSourceInfo for CSV, upsert, CSV-to-table example, and “Appending image collections”.",
+      "access_utc": "2026-10-10T04:48:05Z",
+      "observed_operation": "Opened the official Esri REST API page in the T3 collaborative browser and read supported formats, capability/privilege, source parsing, upsert, CSV example, and imageCollection behavior. The browser did not expose a per-request UTC timestamp; access_utc is the following clock observation after the reviser retrieval batch.",
+      "governing_condition_default_exception": "ArcGIS Online and Enterprise feature service layers can support Append; the target advertises supportsAppend/supportedAppendFormats, and nonadministrative callers need the Append capability/privilege while service owner/organization admins can use it without that capability enabled. CSV is a supported format when advertised; CSV parsing uses appendSourceInfo. Upsert may update matching rows. Since 11.5, imageCollection append can create points from EXIF location and attach the image.",
+      "applicability": "A possible structured-row import route into a feature service, not a Survey123-native import or a tested workflow. The CSV schema, service version, identity, no-overwrite behavior, attachments, and permissions must be validated. Avoid imageCollection for this brief because it infers location from photos."
+    },
+    {
+      "id": "R07",
+      "title": "Collecting data using KoboCollect — KoboToolbox documentation",
+      "url": "https://support.kobotoolbox.org/data_collection_kobocollect.html",
+      "version_or_commit": "Living primary support documentation; page states last updated 2026-07-17; app/server build not pinned.",
+      "locator": "“Downloading forms”, “Collecting data”, “Sending finalized forms to the server”, and upload confirmation.",
+      "access_utc": "2026-10-10T04:48:05Z",
+      "observed_operation": "Opened the official page in the T3 collaborative browser and read online form download, offline collection, Ready to send/bulk upload, and local cleanup conditions. The browser did not expose a per-request UTC timestamp; access_utc is the following clock observation after the reviser retrieval batch.",
+      "governing_condition_default_exception": "Forms are downloaded first; after download, collection can continue without internet. Finalized forms may be uploaded later in bulk. Depending on project settings, auto-send and local deletion behavior differ.",
+      "applicability": "Confirms Kobo as an offline Android alternative. This page does not establish a legacy CSV submission-import route; no claim that such a route is impossible is made."
+    },
+    {
+      "id": "R08",
+      "title": "Editing and deleting your data — KoboToolbox documentation",
+      "url": "https://support.kobotoolbox.org/editing_deleting_data.html",
+      "version_or_commit": "Living primary support documentation; page states last updated 2026-05-06; app/server build not pinned.",
+      "locator": "Post-submit web/raw edits, _uuid/rootUuid metadata, external edit-log recommendation, and undo limitation.",
+      "access_utc": "2026-10-10T04:48:05Z",
+      "observed_operation": "Opened the official page in the T3 collaborative browser and read correction identity and raw-edit conditions. The browser did not expose a per-request UTC timestamp; access_utc is the following clock observation after the reviser retrieval batch.",
+      "governing_condition_default_exception": "Post-submit edits occur in KoboToolbox. Saved edits change _uuid while rootUuid remains stable. Raw edits cannot be undone; the docs recommend an external edit log.",
+      "applicability": "Confirms the correction-history caveat. The reviewed page does not establish legacy CSV row import or its absence."
+    }
+  ]
+}

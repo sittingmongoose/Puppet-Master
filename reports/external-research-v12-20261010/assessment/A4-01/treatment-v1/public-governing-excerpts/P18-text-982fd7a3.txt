@@ -1,0 +1,22 @@
+URL: https://github.com/minio/minio/commit/f246ee7
+Original locator: ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P18-text.txt
+Original SHA256: 982fd7a35dc44cae81757bacb6310d1fa173fd4778d5f80793cb5658c944dc2e
+Original numbered lines; gaps omitted. Not full response.
+
+1: Fix PutObject Trailing checksum · minio/minio@f246ee7 · GitHub
+112: Fix PutObject Trailing checksum
+113: PutObject would verify trailing checksums, but not store them.
+127: checksum.go
+143: fi.Checksum = opts.WantChecksum.AppendTo(nil, nil)
+147: fi.Checksum = opts.EncryptFn("object-checksum", fi.Checksum)
+151: if ckSum := userDefined[ReplicationSsecChecksumHeader]; ckSum != "" {
+155: fi.Checksum = v
+165: if fi.Checksum == nil {
+169: fi.Checksum = opts.WantChecksum.AppendTo(nil, nil)
+173: fi.Checksum = opts.EncryptFn("object-checksum", fi.Checksum)
+192: partsMetadata[i].Checksum = fi.Checksum
+211: opts.WantChecksum = hashReader.Checksum()
+222: @@ -335,6 +335,10 @@ func (c *Checksum) AppendTo(b []byte, parts []byte) []byte {
+234: c.Type ^= ChecksumTrailing
+255: // Checksum returns the content checksum if set.
+257: func (r *Reader) Checksum() *Checksum {

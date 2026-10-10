@@ -1,0 +1,130 @@
+[
+  {
+    "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+    "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+    "bytes": 2790,
+    "read_full": true,
+    "terminal_match": null,
+    "input_freeze_match": null
+  },
+  {
+    "path": "ER12_RUNTIME/runs/B-APPL-G-02/treatment/stages/role/input-map.json",
+    "sha256": "a044c8df2cd14f2202971f2a674918c0694efba73eff4d570e085113ae3a37d5",
+    "bytes": 602,
+    "read_full": true,
+    "terminal_match": true,
+    "input_freeze_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/B-APPL-G-02/treatment/stages/role/assignment.md",
+    "sha256": "bab768476a8ef3af2f396ffe2a306c6bb872d22a081fd425a1e800b2f0e8e880",
+    "bytes": 3182,
+    "read_full": true,
+    "terminal_match": true,
+    "input_freeze_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/B-APPL-G-02/treatment/stages/role/freeze.json",
+    "sha256": "9482598a49a76b5e96b9b22de025952bc8c602c69242e8819d1ad9ab1b35c7da",
+    "bytes": 2862,
+    "read_full": true,
+    "terminal_match": true,
+    "input_freeze_match": null
+  },
+  {
+    "path": "ER12_RUNTIME/runs/B-APPL-G-02/treatment/stages/role/terminal-science-freeze-root.json",
+    "sha256": "641d24120b6c0434f3e9a566b4e916d98c686dbdc92b67fab57bd7ff01c56b2e",
+    "bytes": 10849,
+    "read_full": true,
+    "terminal_match": null,
+    "input_freeze_match": null
+  },
+  {
+    "path": "ER12_RUNTIME/runs/B-APPL-G-02/treatment/stages/role/verification.md",
+    "sha256": "ce2bd9ec7cc9fb1bb2437bdf28db3e66931a4f2aff08a6255d75f967cff55d4a",
+    "bytes": 5507,
+    "read_full": true,
+    "terminal_match": true,
+    "input_freeze_match": null
+  },
+  {
+    "path": "ER12_RUNTIME/runs/B-APPL-G-02/treatment/stages/role/source-map.json",
+    "sha256": "87f13f42eea072d3cb01fe00bec05dd610ff66df5280e6152b5548d8a2ac1603",
+    "bytes": 4923,
+    "read_full": true,
+    "terminal_match": true,
+    "input_freeze_match": null
+  },
+  {
+    "path": "ER12_RUNTIME/runs/B-APPL-G-02/treatment/stages/role/sources/P1-systemd.timer-v257-excerpts.md",
+    "sha256": "b5f8d9891f337abe0304a3e6cb4ce332453a89418057660c9001dbb33f5d2ee1",
+    "bytes": 6935,
+    "read_full": true,
+    "terminal_match": true,
+    "input_freeze_match": null
+  },
+  {
+    "path": "ER12_RUNTIME/runs/B-APPL-G-02/treatment/stages/role/sources/P2-systemd.time-v257-excerpts.md",
+    "sha256": "ce8550574de7a0dfcbf39a6144dad138ae631aed17c7b28ef0ad94bdef3b770f",
+    "bytes": 1697,
+    "read_full": true,
+    "terminal_match": true,
+    "input_freeze_match": null
+  },
+  {
+    "path": "ER12_RUNTIME/runs/B-APPL-G-02/treatment/stages/role/records/native-goal-activation.json",
+    "sha256": "c4fca95a423be5d1a1523ed9cdd564537d61635200db022dbabd0f799bf4c1d6",
+    "bytes": 1090,
+    "read_full": true,
+    "terminal_match": true,
+    "input_freeze_match": null
+  },
+  {
+    "path": "ER12_RUNTIME/runs/B-APPL-G-02/treatment/stages/role/records/native-goal-completion.json",
+    "sha256": "afd15ae12f395db5101a8a822e5461f0fba849a44d44287134bbf27860125f8d",
+    "bytes": 971,
+    "read_full": true,
+    "terminal_match": true,
+    "input_freeze_match": null
+  },
+  {
+    "path": "ER12_RUNTIME/runs/B-APPL-G-02/inputs/assignment.md",
+    "sha256": "3c7ab9e1ebcde0612e7e6e85a40f7eb8da73c42bf9d62b00bcc6f525fc447b38",
+    "bytes": 2987,
+    "read_full": true,
+    "terminal_match": null,
+    "input_freeze_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/B-APPL-G-02/inputs/fixture.json",
+    "sha256": "f6fe897c72b46a759ced5e5f9768a6f560bead0a4ed0b11c0f2a02415dd88727",
+    "bytes": 2126,
+    "read_full": true,
+    "terminal_match": null,
+    "input_freeze_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/B-APPL-G-02/inputs/corpus/S1.md",
+    "sha256": "502f95d36e1da301057116c7d443c652463e7fd2b1f934b6b34e8b04334fc32a",
+    "bytes": 914,
+    "read_full": true,
+    "terminal_match": null,
+    "input_freeze_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/B-APPL-G-02/inputs/corpus/S2.md",
+    "sha256": "e58ec490cbdd3d90ae98b4c45bc8efd670f7d64f29f42a5f4a34a307e30a7409",
+    "bytes": 859,
+    "read_full": true,
+    "terminal_match": null,
+    "input_freeze_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/B-APPL-G-02/inputs/corpus/index.json",
+    "sha256": "5576572c6b3b0bc92f670f22d22f0256bac41d3a4988b8bd26184b5cf41f8f4f",
+    "bytes": 1286,
+    "read_full": true,
+    "terminal_match": null,
+    "input_freeze_match": true
+  }
+]

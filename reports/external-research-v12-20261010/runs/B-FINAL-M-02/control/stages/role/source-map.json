@@ -1,0 +1,85 @@
+{
+  "case_id": "ER12-B-FINAL-M-02-FRESH",
+  "role": "Criticism adjudication and complete bounded finalization",
+  "map_recorded_utc": "2026-10-10T05:18:46Z",
+  "sources": [
+    {
+      "source_id": "S1",
+      "title": "PostgreSQL 17 INSERT",
+      "url": "https://www.postgresql.org/docs/17/sql-insert.html",
+      "version": "PostgreSQL major version 17 documentation; target PostgreSQL 17",
+      "locator": [
+        "Description: RETURNING semantics",
+        "ON CONFLICT Clause: arbiter and atomic outcome",
+        "condition: conditional update and row locking",
+        "deterministic statements: repeated arbiter key/cardinality violation",
+        "Outputs: inserted/updated row count"
+      ],
+      "retrieval": {
+        "utc": "2026-10-10T05:18:46Z (response observed complete by this time)",
+        "operation": "Direct web.open of the listed official PostgreSQL 17 URL; page identified as PostgreSQL 17 documentation."
+      },
+      "prior_corpus_snapshot": {
+        "retrieved_utc": "2026-10-10T03:54:10Z",
+        "operation": "Setup-worker web retrieval recorded in the supplied corpus index; excerpt and paraphrase treated as locator aids."
+      },
+      "source_statements_used": [
+        "ON CONFLICT DO UPDATE has an atomic insert-or-update outcome provided there is no independent error.",
+        "The conflict target selects an arbiter; DO UPDATE requires a target.",
+        "The DO UPDATE condition is evaluated after the conflict is identified, and conflicting rows are locked even when the condition is false.",
+        "A deterministic INSERT cannot affect one existing row more than once; repeated proposed arbiter keys can raise a cardinality violation.",
+        "RETURNING includes only rows successfully inserted or updated; a locked row skipped by the condition is omitted."
+      ],
+      "conditions_and_exceptions": [
+        "Only NOT DEFERRABLE constraints and unique indexes are supported as arbiters; exclusion constraints are not supported as DO UPDATE arbiters.",
+        "Independent errors, including unrelated constraints or privilege failures, remain possible.",
+        "Documentation warns unique violations may occur during concurrent create/reindex of a unique index."
+      ],
+      "applicability": "Directly applies to the PostgreSQL 17 multi-row INSERT, unique device_id conflict target, strict timestamp WHERE predicate, and RETURNING behavior in this proposed section.",
+      "checks": {
+        "proposed": [
+          "Pre-SQL duplicate device_id batch rejection.",
+          "Fresh, newer, older, equal, and RETURNING behavior.",
+          "Concurrent same-device upserts and an unrelated-constraint failure path."
+        ],
+        "executed": []
+      },
+      "bounded_evidence_file": "sources/S1.md"
+    },
+    {
+      "source_id": "S2",
+      "title": "PostgreSQL 17 Transaction Isolation",
+      "url": "https://www.postgresql.org/docs/17/transaction-iso.html",
+      "version": "PostgreSQL major version 17 documentation; target Read Committed",
+      "locator": [
+        "§13.2.1 Read Committed Isolation Level",
+        "Concurrent updater waits and re-evaluation on the updated row",
+        "INSERT ... ON CONFLICT DO UPDATE behavior"
+      ],
+      "retrieval": {
+        "utc": "2026-10-10T05:18:46Z (response observed complete by this time)",
+        "operation": "Direct web.open of the listed official PostgreSQL 17 URL; page identified as PostgreSQL 17 documentation."
+      },
+      "prior_corpus_snapshot": {
+        "retrieved_utc": "2026-10-10T03:54:10Z",
+        "operation": "Setup-worker web retrieval recorded in the supplied corpus index; excerpt and paraphrase treated as locator aids."
+      },
+      "source_statements_used": [
+        "At Read Committed, a concurrent updater can wait for another transaction and apply its operation to the updated row version after re-evaluating its condition.",
+        "For INSERT ... ON CONFLICT DO UPDATE, each proposed row inserts or updates unless there are unrelated errors, including conflicts whose transaction effects were not visible to the statement snapshot."
+      ],
+      "conditions_and_exceptions": [
+        "The assignment's conditional DO UPDATE WHERE may deliberately skip an older or equal timestamp; that skip is documented by S1.",
+        "The upsert behavior does not remove independent statement or transaction errors."
+      ],
+      "applicability": "Supports use of the required Read Committed isolation for concurrent writes to the unique device_id key; the monotonic timestamp result is an inference from applying S1's strict condition to the current conflicting row.",
+      "checks": {
+        "proposed": [
+          "Competing same-device timestamps at Read Committed, with successful commits retaining the greatest observed_at."
+        ],
+        "executed": []
+      },
+      "bounded_evidence_file": "sources/S2.md"
+    }
+  ]
+}

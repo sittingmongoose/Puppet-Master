@@ -1,0 +1,28 @@
+{
+  "run_id": "A7-01-control",
+  "stage": "investigator",
+  "native_goal_create_observation": {
+    "threadId": "01a12401-fc92-7e02-ba13-b0d64e19e5f1",
+    "objective": "ER12 investigator stage, run A7-01-control: execute ER12_RUNTIME/runs/A7-01/control/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+    "status": "active",
+    "tokensUsed": 0,
+    "timeUsedSeconds": 0,
+    "createdAt": 1791605516,
+    "updatedAt": 1791605516
+  },
+  "native_goal_get_observation": {
+    "status": "active",
+    "threadId": "01a12401-fc92-7e02-ba13-b0d64e19e5f1",
+    "objective": "ER12 investigator stage, run A7-01-control: execute ER12_RUNTIME/runs/A7-01/control/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+    "tokensUsed": 0,
+    "timeUsedSeconds": 0,
+    "createdAt": 1791605516,
+    "updatedAt": 1791605516
+  },
+  "provenance": {
+    "provider": "UNKNOWN",
+    "model": "UNKNOWN",
+    "activation_receipt_timestamp_utc": "UNKNOWN",
+    "source": "Direct create_goal and get_goal tool outputs; only fields returned by those calls are recorded."
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "schema": "er12.assessment.save-validation.v1",
+  "validated_at_utc": "2026-10-10T05:16:45.258095+00:00",
+  "judgment": "FAIL",
+  "finding_ids": [
+    "F01",
+    "F02"
+  ],
+  "exact_candidate_locators_valid": true,
+  "primary_locators_and_hashes_valid": true,
+  "terminal_and_input_hashes_unchanged": true,
+  "all_frozen_artifact_mtimes_precede_candidate_deadline": true,
+  "native_completion_not_yet_called": true,
+  "saved_artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/assessment.md",
+      "sha256": "1df60f7fe7b7a56f59273507903941eece0a986fd155907f621173e04e888c68",
+      "bytes": 13218
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/assessment.json",
+      "sha256": "6da2942eaedec9d0e0c6486eb46e2959ba9f95099c387fc69c7f71317688004b",
+      "bytes": 31105
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/source-map.json",
+      "sha256": "2628df9d4a8d1dd0278e973b0aeb5b539ff1eba9e830ac1f6258ac1cfa4d680c",
+      "bytes": 27285
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary-evidence.md",
+      "sha256": "7591fcf26e3513b72af72514d680ea92842e87bea7ea660be8fad12e30d24adb",
+      "bytes": 2707
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/inspected-artifacts.json",
+      "sha256": "768c39175e69718946cc3959235c4d1d6592f804454909a1a952e6768afaebfa",
+      "bytes": 7729
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/reviewer-native-goal-active.json",
+      "sha256": "beca9650186bb59c6f4767dc4a65db5194d97fdb1d1c4581080ef032cd06e337",
+      "bytes": 1310
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/primary-retrievals.json",
+      "sha256": "463da248c21263d6afe8c2e3522beaf21d70c9a2155c4ee1524bc3ab8afdf8f5",
+      "bytes": 10737
+    }
+  ]
+}

@@ -1,0 +1,166 @@
+{
+  "manual_only": true,
+  "method": "Python stdlib SHA-256 and byte-count comparison against critic-finalizer freeze.json, restricted to the input-map brief/predecessor paths plus this stage assignment and input-map; live predecessor source files were not read.",
+  "checked_at_utc": "2026-10-10T04:39:48Z",
+  "pass_count": 26,
+  "path_count": 26,
+  "all_pass": true,
+  "results": [
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/control/handoff-binding.json",
+      "bytes_observed": 112,
+      "sha256_observed": "6ca39d2c34ed52986eafbb996364739b4030907130652f814ec2c4a70019155e",
+      "result": "PASS"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/inputs/brief.md",
+      "bytes_observed": 3358,
+      "sha256_observed": "dcd62504463a57569adbc66d85753f8a178764bb5d80b7c17dad4f4088a1b1f5",
+      "result": "PASS"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/manifest.json",
+      "bytes_observed": 10604,
+      "sha256_observed": "b0afeb8a07169c08585fbf002763e89e23b38e7f006c861917ccea5f625da63f",
+      "result": "PASS"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/discovery.md",
+      "bytes_observed": 9644,
+      "sha256_observed": "419a380cc972621488d814158939cfe7150dd018a23dcfba696664d66acec8ff",
+      "result": "PASS"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/draft.md",
+      "bytes_observed": 24147,
+      "sha256_observed": "9f6d66b6842f698692d59fa0737894d78cdfcf0927555ba8d41de67aeb5cd846",
+      "result": "PASS"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/plan-reveal.json",
+      "bytes_observed": 428,
+      "sha256_observed": "8b20bf1d67f7492fa543f8c7c17c15242dc044055b7d824e80876956f72e5bab",
+      "result": "PASS"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/revealed-plan.md",
+      "bytes_observed": 6015,
+      "sha256_observed": "b9063b147acff997c7c788eac44d2149ca6946fa4ee2a3ce6f0bdf80789397e7",
+      "result": "PASS"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/source-map.json",
+      "bytes_observed": 15686,
+      "sha256_observed": "764f7abfe399eaad6a6fcc4e9f45df2f6ad2eb93b9eb4c59dfcbbe16238dcbf6",
+      "result": "PASS"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/README.md",
+      "bytes_observed": 3801,
+      "sha256_observed": "1024802883343dcf360f2e9c88ebfd43fe29e25c68276eac74afc48e0547d429",
+      "result": "PASS"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S01-3mf-core.md",
+      "bytes_observed": 1356,
+      "sha256_observed": "b89d7799963de7c317479a8aa7dac7d76a7028f2286c2ecd51d72c2778291158",
+      "result": "PASS"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S02-fusion-mesh.md",
+      "bytes_observed": 679,
+      "sha256_observed": "2f24c205f7be2de6d5d96cdd0ecdd33b61e444f9f05454f873f4c1436fa6f5a5",
+      "result": "PASS"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S03-fusion-export.md",
+      "bytes_observed": 713,
+      "sha256_observed": "3aa71f40ade5109e8b51e99d2f0f697b37575b70e014603b520faff2b6c70d41",
+      "result": "PASS"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S04-prusa-formats.md",
+      "bytes_observed": 693,
+      "sha256_observed": "27168f078229656e170146e8fe9220c982fb84dfe28e3cc9fa0a712efb1f77c4",
+      "result": "PASS"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S05-prusaslicer-250.md",
+      "bytes_observed": 487,
+      "sha256_observed": "02d3548f20e8070faa591701a224d63c333d57f27d182372b43127577ec972bb",
+      "result": "PASS"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S06-step-issue-8998.md",
+      "bytes_observed": 872,
+      "sha256_observed": "b57175041d61ac0c5c55f4b66ce049d82cce9f419ff114627498188d3d608a01",
+      "result": "PASS"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S07-unit-issue-15545.md",
+      "bytes_observed": 1032,
+      "sha256_observed": "352ddaf44d0e938acf785479b4df276e20b8d3503e5550b7d3abae0cd829049a",
+      "result": "PASS"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S08-bambu-names-issue.md",
+      "bytes_observed": 931,
+      "sha256_observed": "63883086c34cdb10e7ab6606afc4c3e8b0af084c6294090b697ac54dce073d00",
+      "result": "PASS"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S09-3mf-spec-index.md",
+      "bytes_observed": 632,
+      "sha256_observed": "914ca3c0620e377d000c5932f6052092d7353a292eba8c29ad889bf03cbf434a",
+      "result": "PASS"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S10-prusa-project-3mf.md",
+      "bytes_observed": 810,
+      "sha256_observed": "4093bb0a29d33bca2e1c70b4e48f1c50b316ea45b82abd8a8d9e879a5b929b15",
+      "result": "PASS"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S11-cura-570-release.md",
+      "bytes_observed": 1060,
+      "sha256_observed": "0660ac8e5e5e35b9e091b6566afecc1aff994ed9a2d63c1a46f0daba022bdf53",
+      "result": "PASS"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S12-cura-3mf-position-issue.md",
+      "bytes_observed": 1055,
+      "sha256_observed": "582256aef60f160c185fe3c42dfaf988f65fa0210e933b6d5e058262bce8e3ec",
+      "result": "PASS"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S13-cura-object-name-issue.md",
+      "bytes_observed": 870,
+      "sha256_observed": "23eca2eeddc832da9c6d03fa9c7305f3c6ba358c61a9e6397ba4428c42284aac",
+      "result": "PASS"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S14-cura-releases.md",
+      "bytes_observed": 544,
+      "sha256_observed": "e8a371d01cd31e35774b1c370ef3ac601b29bfd9ad630f5f981076553c38cc35",
+      "result": "PASS"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S15-prusaslicer-releases.md",
+      "bytes_observed": 551,
+      "sha256_observed": "e7748ad281c9a6bb09a4dc6bff0948c0a3892a41b21cdccb3e9be7f7f733d2f1",
+      "result": "PASS"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/assignment.md",
+      "bytes_observed": 5967,
+      "sha256_observed": "6b6a73960d2d4ad1e60ecc91a614492512287a0bddf23dfdea2a041547efebd1",
+      "result": "PASS"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/input-map.json",
+      "bytes_observed": 4009,
+      "sha256_observed": "37c8dc5d5752aeedcf4541417d04859788231e892bd5f46b9501d80db8714b7d",
+      "result": "PASS"
+    }
+  ]
+}

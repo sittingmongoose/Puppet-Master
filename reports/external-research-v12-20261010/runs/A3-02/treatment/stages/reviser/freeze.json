@@ -1,0 +1,88 @@
+{
+  "prepared_at_utc": "2026-10-10T05:19:03.324Z",
+  "stage": "reviser",
+  "stage_deadline_utc": "2026-10-10T05:37:03.324Z",
+  "whole_deadline_utc": "2026-10-10T05:42:48.166Z",
+  "stage_budget_s": 1080,
+  "predecessors": [
+    {
+      "stage": "investigator",
+      "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-02-treatment-investigator-v1",
+      "statusPath": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/status.json"
+    },
+    {
+      "stage": "critic",
+      "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-02-treatment-critic-v1",
+      "statusPath": "ER12_RUNTIME/runs/A3-02/treatment/stages/critic/status.json"
+    }
+  ],
+  "frozen_inputs": [
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/inputs/brief.md",
+      "sha256": "64d7c999cf74b0022f481d6e5412866fc4b9b63d05c1726ceef4658a0d8d712e",
+      "bytes": 2869
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/assignment.md",
+      "sha256": "206a7136de0a86949160fd3bd4be121a6ec6db68795e0b3d3188e3e3f9b6accd",
+      "bytes": 4514
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/input-map.json",
+      "sha256": "9947941d9083c9864138dd67bfc4954f54dcc1fa5594e5d8268f59ec7c286d6e",
+      "bytes": 1794
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/discovery.md",
+      "sha256": "510bcbb9f05eb883d1323caa2af5603ac1a6506b73cbd2fa0705e50702944069",
+      "bytes": 10244
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/draft.md",
+      "sha256": "4d80c59ff8763895427b97c1b066fd3afdd12ea1dd42029fd6ca3c853f00f6ef",
+      "bytes": 21174
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/source-map.json",
+      "sha256": "56502caed4f390491f2bab25fa330fe3a4c620a9f738279b2e5f9a3c844c6c0b",
+      "bytes": 16591
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/revealed-plan.md",
+      "sha256": "b977457667677faa27fe5256d090e48ec798eae592ffd7d860e4c3c239167b79",
+      "bytes": 2470
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/investigator/plan-reveal.json",
+      "sha256": "8034921bd15eb2279a069c4e71cf67ee6968c1e4bfbeccf1fea230ba1f1c0116",
+      "bytes": 429
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/critic/critique.md",
+      "sha256": "e770ac9ce0819bf44ecdfc97cd2ff1d3652f12f3631ff7abf70e60fcda285e76",
+      "bytes": 7105
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/treatment/stages/critic/source-map.json",
+      "sha256": "f20bc262ec0fee4e15e9b4a16e2dc580603cc4d8d6b9733666e3ad8b507b5ac4",
+      "bytes": 11087
+    }
+  ],
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "runtime_mode_requested": "full-access",
+  "native_goal_objective": "ER12 reviser stage, run A3-02-treatment: execute ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+  "native_goal_status": "UNKNOWN until directly observed",
+  "method_id": "A3",
+  "stage_prompt_delta": "Inside the existing critic/reviser budget, replace redundant rereading with a targeted challenge to recommendations that depend on “not supported,” “all,” “only,” “never,” or a supposedly unavoidable default. Inspect governing current/version-pinned documentation, adjacent exception sections, and relevant released history. Record source conflicts rather than assuming the newest-looking page wins. Keep normal full-scope review.",
+  "time_contract": "fixed_stage_caps",
+  "available_stage_seconds_at_prepare": 1080.0,
+  "prospective_service_tier_revision": "user-standard-20261010-v1",
+  "request_sha256": "5688912920c57b7f1e0f65d2c03f45dc88fa2979b34ff44ea5e3725cb3f2b611"
+}

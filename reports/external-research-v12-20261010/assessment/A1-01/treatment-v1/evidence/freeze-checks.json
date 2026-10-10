@@ -1,0 +1,187 @@
+{
+  "checks": [
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/critic/critique.md",
+      "sha256_match": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/critic/source-map.json",
+      "sha256_match": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/critic/sources/index.md",
+      "sha256_match": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/discovery.md",
+      "sha256_match": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/draft.md",
+      "sha256_match": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/revealed-plan.md",
+      "sha256_match": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/source-map.json",
+      "sha256_match": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/sources/index.md",
+      "sha256_match": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+      "sha256_match": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/source-map.json",
+      "sha256_match": true,
+      "bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/sources/index.md",
+      "sha256_match": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "investigator",
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/inputs/brief.md",
+      "sha256_match": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "investigator",
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/assignment.md",
+      "sha256_match": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "investigator",
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/input-map.json",
+      "sha256_match": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/inputs/brief.md",
+      "sha256_match": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/critic/assignment.md",
+      "sha256_match": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/critic/input-map.json",
+      "sha256_match": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/discovery.md",
+      "sha256_match": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/draft.md",
+      "sha256_match": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/source-map.json",
+      "sha256_match": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/revealed-plan.md",
+      "sha256_match": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/plan-reveal.json",
+      "sha256_match": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/inputs/brief.md",
+      "sha256_match": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/assignment.md",
+      "sha256_match": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/input-map.json",
+      "sha256_match": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/discovery.md",
+      "sha256_match": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/draft.md",
+      "sha256_match": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/source-map.json",
+      "sha256_match": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/revealed-plan.md",
+      "sha256_match": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/plan-reveal.json",
+      "sha256_match": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/critic/critique.md",
+      "sha256_match": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/critic/source-map.json",
+      "sha256_match": true,
+      "bytes_match": true
+    }
+  ],
+  "all_match": true,
+  "scope": "Identity check only; not semantic proof."
+}

@@ -1,0 +1,18 @@
+{
+  "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-investigator-topology-v1",
+  "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-investigator-topology-v1",
+  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+  "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-investigator-topology-v1",
+  "status": "completed",
+  "workState": "result_available",
+  "hasPendingChildRuns": false,
+  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+  "latestTerminalStatus": "completed",
+  "latestTerminalSummary": "Completed the assigned reference stage and saved the handoff before completing the native Goal.\n\n- [Discovery](ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/discovery.md)\n- [Research proposal](ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/draft.md)\n- [Source map](ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/source-map.json) and [source index](ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/sources/index.md)\n- [Released plan](ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/revealed-plan.md)\n\nThe handoff was frozen and confirmed while the Goal was active. Product and API checks are marked **NOT_RUN**; proposed validations are identified separately. The native Goal is complete: **323,645 tokens; 11m 03s**.",
+  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:0bd1801d-326b-409a-bfba-4e74ae86d619",
+  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+  "model": "gpt-6-luna",
+  "summary": "Completed the assigned reference stage and saved the handoff before completing the native Goal.\n\n- [Discovery](ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/discovery.md)\n- [Research proposal](ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/draft.md)\n- [Source map](ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/source-map.json) and [source index](ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/sources/index.md)\n- [Released plan](ER12_RUNTIME/runs/A7-02/treatment/stages/investigator/revealed-plan.md)\n\nThe handoff was frozen and confirmed while the Goal was active. Product and API checks are marked **NOT_RUN**; proposed validations are identified separately. The native Goal is complete: **323,645 tokens; 11m 03s**.",
+  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:0bd1801d-326b-409a-bfba-4e74ae86d619",
+  "waitTimedOut": false
+}

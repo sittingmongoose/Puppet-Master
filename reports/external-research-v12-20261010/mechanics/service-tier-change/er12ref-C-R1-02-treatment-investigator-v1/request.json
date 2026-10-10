@@ -1,0 +1,21 @@
+{
+  "requested_at_utc": "2026-10-10T05:03:33.967Z",
+  "clientRequestId": "er12ref-C-R1-02-treatment-investigator-v1",
+  "args": {
+    "clientRequestId": "er12ref-C-R1-02-treatment-investigator-v1",
+    "mode": "async",
+    "role": "general",
+    "title": "ER12 reference C-R1-02-treatment investigator",
+    "target": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna",
+      "options": {
+        "reasoningEffort": "max",
+        "serviceTier": "priority"
+      }
+    },
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "task": "Execute only the assigned reference stage. Read ER12_RUNTIME/runs/C-R1-02/treatment/stages/investigator/assignment.md and its input-map.json. Create one actual native Goal under 4,000 characters referring to the assignment; save required outputs before native terminal. No nested agents or parent-history use."
+  }
+}

@@ -1,0 +1,136 @@
+{
+  "observed_at_utc": "2026-10-10T05:23:58.881330+00:00",
+  "basis": "root actual T3 completed/no pending before independent review; not native Goal proof",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/.invocation-backup-c14f1cad7a564526961353571afe662e/assignment.md",
+      "sha256": "cd7b93e378fee236df67dfb9f449b552c95ac838feeef91c0795dcc66d7ecf33",
+      "bytes": 2387,
+      "mtime_ns": 1791609606844592140
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/.invocation-backup-c14f1cad7a564526961353571afe662e/freeze.json",
+      "sha256": "bcc9cade75042fcc9fedc2d8e49eb778fdb004077b5a9ba6b1323ff82e67a735",
+      "bytes": 2872,
+      "mtime_ns": 1791609606844390639
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/.invocation-backup-c14f1cad7a564526961353571afe662e/input-map.json",
+      "sha256": "a6b517ed716d0ea987d280fbacd9426314b1199837e5388d44c6de746a72ca23",
+      "bytes": 626,
+      "mtime_ns": 1791609606844486528
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/.invocation-backup-c14f1cad7a564526961353571afe662e/request.json",
+      "sha256": "883d2ba19a99f2138a6b669d5dae4556b408522875f875950c2dec2d4a73f2d6",
+      "bytes": 1080,
+      "mtime_ns": 1791609606844235450
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/assignment.md",
+      "sha256": "03e5e6cb0b03679d8cf53a4d427eceee8b73a68a8afe684a73424f3dff8aa16f",
+      "bytes": 3188,
+      "mtime_ns": 1791609606845929233
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/dispatch.json",
+      "sha256": "8d066c0b5a3c511f69b83c2b01845032eeea72a203f4579336529c0693f74ee8",
+      "bytes": 5111,
+      "mtime_ns": 1791609608324428416
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/final-section.md",
+      "sha256": "932786a3f7d86488cc9d2fed43ca5233f1ef1b55236e8bf8ee03dde718d90e4e",
+      "bytes": 5547,
+      "mtime_ns": 1791609713388417799
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/freeze.json",
+      "sha256": "215d7f9ac1349abad7e6f2d4f8ab7a5e52d05f815c3df68f072f800355661d03",
+      "bytes": 2872,
+      "mtime_ns": 1791609606845571712
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/input-map.json",
+      "sha256": "a6b517ed716d0ea987d280fbacd9426314b1199837e5388d44c6de746a72ca23",
+      "bytes": 626,
+      "mtime_ns": 1791609606845790319
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/invocation-clarification.json",
+      "sha256": "2b7761bd6c0d3267f30a59839109bd6454c4fea6a24cab231bdef9c7fd4ed8cc",
+      "bytes": 3211,
+      "mtime_ns": 1791609606846125220
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/raw-dispatch.json",
+      "sha256": "cd89265d8e4229eaee8381c6f193093f3c8f9738f4968e6aba69898280d38611",
+      "bytes": 2138,
+      "mtime_ns": 1791609608123658828
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/records/dispatch-20261010T052008323899-0c8c73d937494c76b3290f41722fd190.json",
+      "sha256": "8d066c0b5a3c511f69b83c2b01845032eeea72a203f4579336529c0693f74ee8",
+      "bytes": 5111,
+      "mtime_ns": 1791609608324168138
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/records/native-goal-activation.json",
+      "sha256": "79910ba03ef0fed64e82fd9985df708b301ec77acfc70ed4a9477ce2ce788f67",
+      "bytes": 568,
+      "mtime_ns": 1791609752041660285
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/records/native-goal-completion.json",
+      "sha256": "d1ff1c82192d554679986861415c180f4a2932103a2c854344082a319c8a333c",
+      "bytes": 700,
+      "mtime_ns": 1791609776752814238
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/request.json",
+      "sha256": "688e23eb8ec24cb1e4ee558fa1e5a31e4fdf033250b0586f0441b427e78d3dd6",
+      "bytes": 1794,
+      "mtime_ns": 1791609606845288126
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/source-map.json",
+      "sha256": "2e4ab7c983df62903f48888890f6a29f1eb2d3b654499a32b7d73e22ba29c23a",
+      "bytes": 5716,
+      "mtime_ns": 1791609762653726399
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/sources/S1-excerpts.md",
+      "sha256": "5e40aea220cb7aa2a4115df902c693b22ab59859ed418aca77619384974cf7ee",
+      "bytes": 2895,
+      "mtime_ns": 1791609751988659955
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/sources/S2-excerpts.md",
+      "sha256": "a3c52b3434319d3962b4ec15cde1cd23718a352d96556dcf760bcaec29a150a1",
+      "bytes": 1231,
+      "mtime_ns": 1791609751988659955
+    }
+  ],
+  "terminal_task": {
+    "slot": "B-FINAL-G-02",
+    "arm": "treatment",
+    "stage": "role",
+    "helper": "ER12_RUNTIME/helpers/role-v2",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-G-02-treatment-role-v2",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-G-02-treatment-role-v2",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-02-treatment-role-v2:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-G-02-treatment-role-v2",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-02-treatment-role-v2:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "Role complete. The single native Goal was activated before any case input, all deliverables were saved and validated before completion, and the same Goal is now complete \u2014 well before the 2026-10-10T05:35:06Z deadline.\n\nDeliverables in `.../B-FINAL-G-02/treatment/stages/role/`:\n\n- [final-section.md](ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/final-section.md) \u2014 replacement section (494 words, within 400\u2013650) plus 6 numbered dispositions and remaining-uncertainty statement; 772 words total (<1100). All exact tokens preserved; all of O1\u2013O6 addressed.\n- [source-map.json](ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/source-map.json) \u2014 claim map, retrieval operations, conditions, proposed-vs-executed checks, unresolved evidence (JSON validated).\n- `sources/S1-excerpts.md`, `sources/S2-excerpts.md` \u2014 verbatim primary excerpts with URL/section locators.\n- `records/native-goal-activation.json`, `records/native-goal-completion.json` \u2014 exact unmodified native Goal receipts.\n\nAdjudication: accepted 1 (cone parent-file inclusion), 2 (sparse vs filter distinction, no byte bound), 5 (remove `--depth=1`, protect local changes); rejected 3 (`--depth=1` truncates history), 4 (reapply exists for materialized paths), 6 (sparse index is optional/experimental, not a network control). Citations are to the live git-sparse-checkout and git-clone manuals (retrieved 2026-10-10, 200 OK); no additional primary pages beyond the listed URLs, no commands executed against any repository.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-02-treatment-role-v2:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:dede2218-67c7-447f-b672-5423da86406f",
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "muse-spark-1.3-contributor",
+    "summary": "Role complete. The single native Goal was activated before any case input, all deliverables were saved and validated before completion, and the same Goal is now complete \u2014 well before the 2026-10-10T05:35:06Z deadline.\n\nDeliverables in `.../B-FINAL-G-02/treatment/stages/role/`:\n\n- [final-section.md](ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/final-section.md) \u2014 replacement section (494 words, within 400\u2013650) plus 6 numbered dispositions and remaining-uncertainty statement; 772 words total (<1100). All exact tokens preserved; all of O1\u2013O6 addressed.\n- [source-map.json](ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/source-map.json) \u2014 claim map, retrieval operations, conditions, proposed-vs-executed checks, unresolved evidence (JSON validated).\n- `sources/S1-excerpts.md`, `sources/S2-excerpts.md` \u2014 verbatim primary excerpts with URL/section locators.\n- `records/native-goal-activation.json`, `records/native-goal-completion.json` \u2014 exact unmodified native Goal receipts.\n\nAdjudication: accepted 1 (cone parent-file inclusion), 2 (sparse vs filter distinction, no byte bound), 5 (remove `--depth=1`, protect local changes); rejected 3 (`--depth=1` truncates history), 4 (reapply exists for materialized paths), 6 (sparse index is optional/experimental, not a network control). Citations are to the live git-sparse-checkout and git-clone manuals (retrieved 2026-10-10, 200 OK); no additional primary pages beyond the listed URLs, no commands executed against any repository.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-02-treatment-role-v2:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:dede2218-67c7-447f-b672-5423da86406f",
+    "waitTimedOut": false
+  }
+}

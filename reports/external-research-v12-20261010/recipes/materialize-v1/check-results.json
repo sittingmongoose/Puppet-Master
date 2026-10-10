@@ -1,0 +1,226 @@
+{
+  "checked_at_utc": "2026-10-10T05:29:37.934349+00:00",
+  "passed": true,
+  "checks": [
+    {
+      "check": "CLI accept",
+      "passed": true
+    },
+    {
+      "check": "CLI accept",
+      "passed": true
+    },
+    {
+      "check": "CLI reject",
+      "passed": true
+    },
+    {
+      "check": "R0 new 60-minute config outside run",
+      "passed": true
+    },
+    {
+      "check": "R0 30/12/18 and original priority guard",
+      "passed": true
+    },
+    {
+      "check": "R0 no store dependence",
+      "passed": true
+    },
+    {
+      "check": "R0 missing live Standard option blocks before prepare",
+      "passed": true
+    },
+    {
+      "check": "R0 bootstrap dry stops before actual dispatch",
+      "passed": true
+    },
+    {
+      "check": "R0 actual prepared target Standard",
+      "passed": true
+    },
+    {
+      "check": "R0 exact leaf objective",
+      "passed": true
+    },
+    {
+      "check": "R0 reveal helper closed and unexecuted",
+      "passed": true
+    },
+    {
+      "check": "R0 no fake task/native receipts",
+      "passed": true
+    },
+    {
+      "check": "R0 full source binding present",
+      "passed": true
+    },
+    {
+      "check": "R0 full source additions reject retry",
+      "passed": true
+    },
+    {
+      "check": "R0 carried source changed bytes reject retry",
+      "passed": true
+    },
+    {
+      "check": "R0 repinned frozen input",
+      "passed": true
+    },
+    {
+      "check": "R0 repinned frozen input",
+      "passed": true
+    },
+    {
+      "check": "R0 repinned frozen input",
+      "passed": true
+    },
+    {
+      "check": "R0 stable retry request key",
+      "passed": true
+    },
+    {
+      "check": "R0 premature critic missing exact taskID rejected",
+      "passed": true
+    },
+    {
+      "check": "CLI accept",
+      "passed": true
+    },
+    {
+      "check": "CLI reject",
+      "passed": true
+    },
+    {
+      "check": "R0 public-to-relocated explicit provenance",
+      "passed": true
+    },
+    {
+      "check": "R0 unsafe runtime root rejected",
+      "passed": true
+    },
+    {
+      "check": "R0 expired clocks rejected",
+      "passed": true
+    },
+    {
+      "check": "CLI accept",
+      "passed": true
+    },
+    {
+      "check": "CLI accept",
+      "passed": true
+    },
+    {
+      "check": "CLI reject",
+      "passed": true
+    },
+    {
+      "check": "A1 new 60-minute config outside run",
+      "passed": true
+    },
+    {
+      "check": "A1 30/12/18 and original priority guard",
+      "passed": true
+    },
+    {
+      "check": "A1 no store dependence",
+      "passed": true
+    },
+    {
+      "check": "A1 missing live Standard option blocks before prepare",
+      "passed": true
+    },
+    {
+      "check": "A1 bootstrap dry stops before actual dispatch",
+      "passed": true
+    },
+    {
+      "check": "A1 actual prepared target Standard",
+      "passed": true
+    },
+    {
+      "check": "A1 exact leaf objective",
+      "passed": true
+    },
+    {
+      "check": "A1 reveal helper closed and unexecuted",
+      "passed": true
+    },
+    {
+      "check": "A1 no fake task/native receipts",
+      "passed": true
+    },
+    {
+      "check": "A1 full source binding present",
+      "passed": true
+    },
+    {
+      "check": "A1 full source additions reject retry",
+      "passed": true
+    },
+    {
+      "check": "A1 carried source changed bytes reject retry",
+      "passed": true
+    },
+    {
+      "check": "A1 repinned frozen input",
+      "passed": true
+    },
+    {
+      "check": "A1 repinned frozen input",
+      "passed": true
+    },
+    {
+      "check": "A1 repinned frozen input",
+      "passed": true
+    },
+    {
+      "check": "A1 stable retry request key",
+      "passed": true
+    },
+    {
+      "check": "A1 premature critic missing exact taskID rejected",
+      "passed": true
+    },
+    {
+      "check": "CLI accept",
+      "passed": true
+    },
+    {
+      "check": "CLI reject",
+      "passed": true
+    },
+    {
+      "check": "A1 public-to-relocated explicit provenance",
+      "passed": true
+    },
+    {
+      "check": "A1 unsafe runtime root rejected",
+      "passed": true
+    },
+    {
+      "check": "A1 expired clocks rejected",
+      "passed": true
+    },
+    {
+      "check": "CLI reject",
+      "passed": true
+    },
+    {
+      "check": "CLI reject",
+      "passed": true
+    },
+    {
+      "check": "CLI reject",
+      "passed": true
+    }
+  ],
+  "mode": "OFFLINE_LOCAL_MECHANICAL_ONLY",
+  "provider_calls": 0,
+  "candidate_launches": 0,
+  "reveal_executions": 0,
+  "live_catalog_observed": false,
+  "leaf_native_goals_observed": false,
+  "production_qualified": false,
+  "scratch_removed": true
+}

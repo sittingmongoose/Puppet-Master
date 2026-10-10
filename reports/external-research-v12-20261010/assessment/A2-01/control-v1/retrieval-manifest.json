@@ -1,0 +1,534 @@
+[
+  {
+    "id": "E01",
+    "url": "https://docs.getodk.org/collect-forms/",
+    "access_started_utc": "2026-10-10T04:55:52.834275+00:00",
+    "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+    "candidate_ids": [
+      "S01",
+      "C01",
+      "R01"
+    ],
+    "http_status": 200,
+    "effective_url": "https://docs.getodk.org/collect-forms/",
+    "raw_path": "evidence/E01.html",
+    "raw_sha256": "2f2023a20521a9ae3565317549d01cd92db24da3f15aedc1b75dc19419bf687e",
+    "text_path": "evidence/E01.txt",
+    "text_sha256": "e16ae7d185dd70a2ca3d18ef7fceb69d98b4767eec85b3692e8b52e7824d8323",
+    "response_headers": {
+      "Content-Type": "text/html; charset=utf-8",
+      "Last-Modified": "Fri, 03 Jul 2026 17:08:17 GMT",
+      "Date": "Sat, 10 Oct 2026 04:55:53 GMT",
+      "ETag": "\"e8e3bc6224427a6669cc8b0126b9f817\""
+    },
+    "access_finished_utc": "2026-10-10T04:55:53.158392+00:00"
+  },
+  {
+    "id": "E02",
+    "url": "https://docs.getodk.org/openrosa-metadata/",
+    "access_started_utc": "2026-10-10T04:55:52.835332+00:00",
+    "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+    "candidate_ids": [
+      "S02",
+      "C02"
+    ],
+    "http_status": 200,
+    "effective_url": "https://docs.getodk.org/openrosa-metadata/",
+    "raw_path": "evidence/E02.html",
+    "raw_sha256": "974bf68eb0f2ed0a6aea5713f25716d928706e88974bdf97d410af44065bc080",
+    "text_path": "evidence/E02.txt",
+    "text_sha256": "1f81c8593485ecc3bd7f6abaae6aa7cd2eb966456b6e147e4d88b7ab42d026a1",
+    "response_headers": {
+      "Content-Type": "text/html; charset=utf-8",
+      "Last-Modified": "Sat, 22 Aug 2026 17:48:45 GMT",
+      "Date": "Sat, 10 Oct 2026 04:55:54 GMT",
+      "ETag": "\"3f07479710034f916c8a93ed1f0f8c88\""
+    },
+    "access_finished_utc": "2026-10-10T04:55:53.292669+00:00"
+  },
+  {
+    "id": "E03",
+    "url": "https://docs.getodk.org/central-forms/",
+    "access_started_utc": "2026-10-10T04:55:52.838646+00:00",
+    "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+    "candidate_ids": [
+      "S03",
+      "C03"
+    ],
+    "http_status": 200,
+    "effective_url": "https://docs.getodk.org/central-forms/",
+    "raw_path": "evidence/E03.html",
+    "raw_sha256": "c852d7a6a8d1e2952d5f5c2f8dc89bcac4b5a30af61c374bc5480406f3415da9",
+    "text_path": "evidence/E03.txt",
+    "text_sha256": "026807ce97c97e14e2cb6de802a8492a0d6fd652e8f322cfbc27b28b3b26761b",
+    "response_headers": {
+      "Content-Type": "text/html; charset=utf-8",
+      "Last-Modified": "Fri, 03 Jul 2026 21:39:08 GMT",
+      "Date": "Sat, 10 Oct 2026 04:55:18 GMT",
+      "ETag": "\"42035b9f2e98e79b2f010b663939f036\""
+    },
+    "access_finished_utc": "2026-10-10T04:55:52.951369+00:00"
+  },
+  {
+    "id": "E04",
+    "url": "https://docs.getodk.org/central-submissions/",
+    "access_started_utc": "2026-10-10T04:55:52.841741+00:00",
+    "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+    "candidate_ids": [
+      "S04",
+      "C04",
+      "R02"
+    ],
+    "http_status": 200,
+    "effective_url": "https://docs.getodk.org/central-submissions/",
+    "raw_path": "evidence/E04.html",
+    "raw_sha256": "9867abb3f0294f65155bb8e56a91bdc4d9dec7f6630ca1560a3b1375050dd1db",
+    "text_path": "evidence/E04.txt",
+    "text_sha256": "8a7a3b51122fde273f4400119d34abc85f5844308f7d46065fa2793e8cd5b7ec",
+    "response_headers": {
+      "Content-Type": "text/html; charset=utf-8",
+      "Last-Modified": "Fri, 11 Sep 2026 16:20:32 GMT",
+      "Date": "Sat, 10 Oct 2026 04:55:53 GMT",
+      "ETag": "\"5c2f14eb314abfe50daadf2d2658bccc\""
+    },
+    "access_finished_utc": "2026-10-10T04:55:53.293224+00:00"
+  },
+  {
+    "id": "E05",
+    "url": "https://docs.getodk.org/central-api-submission-management/",
+    "access_started_utc": "2026-10-10T04:55:52.844027+00:00",
+    "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+    "candidate_ids": [
+      "S05",
+      "C05",
+      "R03"
+    ],
+    "http_status": 200,
+    "effective_url": "https://docs.getodk.org/central-api-submission-management/",
+    "raw_path": "evidence/E05.html",
+    "raw_sha256": "3e2e4c1a31743f5bd3ae03e9e51dbcf1a375c5c1d23e09eda227f8bd0831c948",
+    "text_path": "evidence/E05.txt",
+    "text_sha256": "63fccc42365d45b14b87881f53d6e8239b03ab804742381d211b7763ac025d9e",
+    "response_headers": {
+      "Content-Type": "text/html; charset=utf-8",
+      "Last-Modified": "Sat, 22 Aug 2026 17:48:45 GMT",
+      "Date": "Sat, 10 Oct 2026 04:55:52 GMT",
+      "ETag": "\"40917eb9991fc2a0d9deb8d3b9aa8388\""
+    },
+    "access_finished_utc": "2026-10-10T04:55:53.420514+00:00"
+  },
+  {
+    "id": "E06",
+    "url": "https://github.com/getodk/collect/issues/4589",
+    "access_started_utc": "2026-10-10T04:55:52.953883+00:00",
+    "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+    "candidate_ids": [
+      "S06",
+      "C06"
+    ],
+    "http_status": 200,
+    "effective_url": "https://github.com/getodk/collect/issues/4589",
+    "raw_path": "evidence/E06.html",
+    "raw_sha256": "88f77b8ed6de9b342c3e4758ed81cd9c6a5ad2c99e782ba385a89f5e567dcd68",
+    "text_path": "evidence/E06.txt",
+    "text_sha256": "1286aef0bfff0e44076f66255924a31ef05d12fa724b41d811e1bd0a16612fc1",
+    "response_headers": {
+      "Date": "Sat, 10 Oct 2026 04:55:53 GMT",
+      "Content-Type": "text/html; charset=utf-8"
+    },
+    "access_finished_utc": "2026-10-10T04:55:54.009289+00:00"
+  },
+  {
+    "id": "E07",
+    "url": "https://github.com/getodk/collect/commit/0bc6cde",
+    "access_started_utc": "2026-10-10T04:55:53.243400+00:00",
+    "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+    "candidate_ids": [
+      "S07",
+      "C07"
+    ],
+    "http_status": 200,
+    "effective_url": "https://github.com/getodk/collect/commit/0bc6cde",
+    "raw_path": "evidence/E07.html",
+    "raw_sha256": "7fa500883b0f0be483fa635a99e0be57d28d04f4ea3c88422839b01c9f603cb8",
+    "text_path": "evidence/E07.txt",
+    "text_sha256": "a2565c4c9b68ae3b4b0c57c035b7c35002f0138f51ac4d2aa621c4d7094b1873",
+    "response_headers": {
+      "Date": "Sat, 10 Oct 2026 04:55:53 GMT",
+      "Content-Type": "text/html; charset=utf-8",
+      "ETag": "W/\"173385609ec72cd3570908bc06f9e0de\""
+    },
+    "access_finished_utc": "2026-10-10T04:55:53.848625+00:00"
+  },
+  {
+    "id": "E08",
+    "url": "https://github.com/getodk/collect/releases/tag/v2021.2.0",
+    "access_started_utc": "2026-10-10T04:55:53.307754+00:00",
+    "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+    "candidate_ids": [
+      "S08",
+      "C08"
+    ],
+    "http_status": 200,
+    "effective_url": "https://github.com/getodk/collect/releases/tag/v2021.2.0",
+    "raw_path": "evidence/E08.html",
+    "raw_sha256": "b8fb13b29638376e388cf264ce68c74687d9d591e9453924fa87cb66b1ea6030",
+    "text_path": "evidence/E08.txt",
+    "text_sha256": "a3b3c952ee9e0afb5371428ffe78df58ff5bcd07a7d197926ad1c945593310a1",
+    "response_headers": {
+      "Date": "Sat, 10 Oct 2026 04:55:54 GMT",
+      "Content-Type": "text/html; charset=utf-8",
+      "ETag": "W/\"5fef57e46b64e037449189b7e8335ed0\""
+    },
+    "access_finished_utc": "2026-10-10T04:55:54.110634+00:00"
+  },
+  {
+    "id": "E09",
+    "url": "https://doc.arcgis.com/en/survey123/capture/field-app/submitsurveyresults.htm",
+    "access_started_utc": "2026-10-10T04:55:53.322684+00:00",
+    "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+    "candidate_ids": [
+      "S09",
+      "C09"
+    ],
+    "http_status": 200,
+    "effective_url": "https://doc.arcgis.com/en/survey123/capture/field-app/submitsurveyresults.htm",
+    "raw_path": "evidence/E09.html",
+    "raw_sha256": "7438455df9f845097d553ac43579594be71fc17f316213ace3dcb85370f0c5ed",
+    "text_path": "evidence/E09.txt",
+    "text_sha256": "16935d9a10ddbf1173591ece1f02d1ed87fae1b35b1a2889444d83859aa49ba8",
+    "response_headers": {
+      "Date": "Sat, 10 Oct 2026 04:55:53 GMT",
+      "Last-Modified": "Tue, 21 Jul 2026 06:45:48 GMT",
+      "ETag": "\"358c-657195f89670c\"",
+      "Content-Type": "text/html; charset=UTF-8"
+    },
+    "access_finished_utc": "2026-10-10T04:55:53.838789+00:00"
+  },
+  {
+    "id": "E10",
+    "url": "https://doc.arcgis.com/en/survey123/create/connect/publishsurvey.htm",
+    "access_started_utc": "2026-10-10T04:55:53.422264+00:00",
+    "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+    "candidate_ids": [
+      "S10",
+      "C10"
+    ],
+    "http_status": 200,
+    "effective_url": "https://doc.arcgis.com/en/survey123/create/connect/publishsurvey.htm",
+    "raw_path": "evidence/E10.html",
+    "raw_sha256": "2595915a9f669c2f81b08db139ff060b8fcb74dcaf5f3d3dd63ff6f8e05adbde",
+    "text_path": "evidence/E10.txt",
+    "text_sha256": "087d6679dda0265517b7ea8a995cb5fab31a79a7df4a3f171d63aac1b4d91760",
+    "response_headers": {
+      "Date": "Sat, 10 Oct 2026 04:55:53 GMT",
+      "Last-Modified": "Mon, 20 Jul 2026 03:54:44 GMT",
+      "ETag": "\"7c3a-65702dde0f08c\"",
+      "Content-Type": "text/html; charset=UTF-8"
+    },
+    "access_finished_utc": "2026-10-10T04:55:54.009005+00:00"
+  },
+  {
+    "id": "E11",
+    "url": "https://doc.arcgis.com/en/survey123/capture/web-app/editexistingdata.htm",
+    "access_started_utc": "2026-10-10T04:55:53.846728+00:00",
+    "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+    "candidate_ids": [
+      "S11",
+      "C11"
+    ],
+    "http_status": 200,
+    "effective_url": "https://doc.arcgis.com/en/survey123/capture/web-app/editexistingdata.htm",
+    "raw_path": "evidence/E11.html",
+    "raw_sha256": "09cc1ab659fde547b6e53782339462653ef6921539571b27786aa6929b1957b8",
+    "text_path": "evidence/E11.txt",
+    "text_sha256": "fd30e68d8148fe233cfabdd244aca94548185c8e22198408ba221efb05c05938",
+    "response_headers": {
+      "Date": "Sat, 10 Oct 2026 04:55:54 GMT",
+      "Last-Modified": "Mon, 20 Jul 2026 21:37:02 GMT",
+      "ETag": "\"5f03-65711b4f1e4dd\"",
+      "Content-Type": "text/html; charset=UTF-8"
+    },
+    "access_finished_utc": "2026-10-10T04:55:54.339005+00:00"
+  },
+  {
+    "id": "E12",
+    "url": "https://doc.arcgis.com/en/survey123/analyze/viewresults.htm",
+    "access_started_utc": "2026-10-10T04:55:53.850942+00:00",
+    "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+    "candidate_ids": [
+      "S12",
+      "C12",
+      "R04"
+    ],
+    "http_status": 200,
+    "effective_url": "https://doc.arcgis.com/en/survey123/analyze/viewresults.htm",
+    "raw_path": "evidence/E12.html",
+    "raw_sha256": "dba6c70476d4821369e623765051ae8df2ed8a6880ce0db9845ddc29164aaff6",
+    "text_path": "evidence/E12.txt",
+    "text_sha256": "bb9f5a9c9b464738d6a23d02df41d7840c11176f26b8c1f9726a24545b9386fe",
+    "response_headers": {
+      "Date": "Sat, 10 Oct 2026 04:55:54 GMT",
+      "Last-Modified": "Mon, 20 Jul 2026 04:08:25 GMT",
+      "ETag": "\"6413-657030eccb237\"",
+      "Content-Type": "text/html; charset=UTF-8"
+    },
+    "access_finished_utc": "2026-10-10T04:55:54.345338+00:00"
+  },
+  {
+    "id": "E13",
+    "url": "https://docs.couchdb.org/en/3.5.1/replication/intro.html",
+    "access_started_utc": "2026-10-10T04:55:54.011855+00:00",
+    "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+    "candidate_ids": [
+      "S13",
+      "C15"
+    ],
+    "http_status": 200,
+    "effective_url": "https://docs.couchdb.org/en/3.5.1/replication/intro.html",
+    "raw_path": "evidence/E13.html",
+    "raw_sha256": "f5ceaff9abe6d9260172469c66d0c85b9442b55e19196739b0d3f71864c721c1",
+    "text_path": "evidence/E13.txt",
+    "text_sha256": "a61a10becbe07893375a6b1081a91ad9be6037b120bc825488d9f49cfc8241b2",
+    "response_headers": {
+      "Date": "Sat, 10 Oct 2026 04:55:54 GMT",
+      "Content-Type": "text/html; charset=utf-8",
+      "ETag": "\"080d19a3193a18cbfe12c97cfead5adc\"",
+      "Last-Modified": "Sun, 09 Nov 2025 05:11:06 GMT"
+    },
+    "access_finished_utc": "2026-10-10T04:55:54.188441+00:00"
+  },
+  {
+    "id": "E14",
+    "url": "https://docs.couchdb.org/en/3.5.1/replication/conflicts.html",
+    "access_started_utc": "2026-10-10T04:55:54.015821+00:00",
+    "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+    "candidate_ids": [
+      "S14",
+      "C16"
+    ],
+    "http_status": 200,
+    "effective_url": "https://docs.couchdb.org/en/3.5.1/replication/conflicts.html",
+    "raw_path": "evidence/E14.html",
+    "raw_sha256": "30423a9a6159213eac7d251e5403b005a07580ceec5c5208970abb5ce7851536",
+    "text_path": "evidence/E14.txt",
+    "text_sha256": "6b07138458a2f3654f98bf6f1f1a74615d263f7a1d7f7163adb07a3bda1edb56",
+    "response_headers": {
+      "Date": "Sat, 10 Oct 2026 04:55:54 GMT",
+      "Content-Type": "text/html; charset=utf-8",
+      "ETag": "\"e848dfa97465512dc73b87713eed6a06\"",
+      "Last-Modified": "Sun, 09 Nov 2025 05:11:06 GMT"
+    },
+    "access_finished_utc": "2026-10-10T04:55:54.163671+00:00"
+  },
+  {
+    "id": "E15",
+    "url": "https://support.kobotoolbox.org/data_collection_kobocollect.html",
+    "access_started_utc": "2026-10-10T04:55:54.113615+00:00",
+    "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+    "candidate_ids": [
+      "S15",
+      "C13",
+      "R07"
+    ],
+    "http_status": 200,
+    "effective_url": "https://support.kobotoolbox.org/data_collection_kobocollect.html",
+    "raw_path": "evidence/E15.html",
+    "raw_sha256": "82788080344a48991119da279ab97952cf6ac4334a31638a5089ba8d7e351e47",
+    "text_path": "evidence/E15.txt",
+    "text_sha256": "88646df23993227f158315e84c40805ca64d7879413636c378d984b0496a8954",
+    "response_headers": {
+      "Date": "Sat, 10 Oct 2026 04:55:54 GMT",
+      "Content-Type": "text/html; charset=utf-8",
+      "Last-Modified": "Tue, 06 Oct 2026 09:56:46 GMT",
+      "ETag": "W/\"6ac4c5de-ba5a\""
+    },
+    "access_finished_utc": "2026-10-10T04:55:54.284378+00:00"
+  },
+  {
+    "id": "E16",
+    "url": "https://support.kobotoolbox.org/editing_deleting_data.html",
+    "access_started_utc": "2026-10-10T04:55:54.165535+00:00",
+    "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+    "candidate_ids": [
+      "S16",
+      "C14",
+      "R08"
+    ],
+    "http_status": 200,
+    "effective_url": "https://support.kobotoolbox.org/editing_deleting_data.html",
+    "raw_path": "evidence/E16.html",
+    "raw_sha256": "394277663ec886566754655763e75012490dbd78ce1e29859b61978f3294dcba",
+    "text_path": "evidence/E16.txt",
+    "text_sha256": "1d9f25bba043a6735f4f49d5be5bfa079a0491fc830391f0d93541bec4d2bb47",
+    "response_headers": {
+      "Date": "Sat, 10 Oct 2026 04:55:54 GMT",
+      "Content-Type": "text/html; charset=utf-8",
+      "Last-Modified": "Tue, 06 Oct 2026 09:56:46 GMT",
+      "ETag": "W/\"6ac4c5de-a88c\""
+    },
+    "access_finished_utc": "2026-10-10T04:55:54.312484+00:00"
+  },
+  {
+    "id": "E17",
+    "url": "https://doc.arcgis.com/en/survey123/create/main/xlsformformulas.htm",
+    "access_started_utc": "2026-10-10T04:55:54.190789+00:00",
+    "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+    "candidate_ids": [
+      "C17",
+      "R05"
+    ],
+    "http_status": 200,
+    "effective_url": "https://doc.arcgis.com/en/survey123/create/main/xlsformformulas.htm",
+    "raw_path": "evidence/E17.html",
+    "raw_sha256": "949b412395f4a70220bd9d697d3c4095c320d19fac6e8a8502e4267bbe144db2",
+    "text_path": "evidence/E17.txt",
+    "text_sha256": "1da5f9b7aeffbfab214b2be268183afc57b4bcb0593761da044d04886f850d31",
+    "response_headers": {
+      "Date": "Sat, 10 Oct 2026 04:55:54 GMT",
+      "Last-Modified": "Tue, 21 Jul 2026 01:25:40 GMT",
+      "ETag": "\"212ce-65714e6a3b134\"",
+      "Content-Type": "text/html; charset=UTF-8"
+    },
+    "access_finished_utc": "2026-10-10T04:55:54.927697+00:00"
+  },
+  {
+    "id": "E18",
+    "url": "https://developers.arcgis.com/rest/services-reference/enterprise/append-feature-service-layer/",
+    "access_started_utc": "2026-10-10T04:55:54.297674+00:00",
+    "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+    "candidate_ids": [
+      "R06"
+    ],
+    "http_status": 200,
+    "effective_url": "https://developers.arcgis.com/rest/services-reference/enterprise/append-feature-service-layer/",
+    "raw_path": "evidence/E18.html",
+    "raw_sha256": "bea9ac7d4207280e2cb8448b836c23c3776e94722921af0bfe6eddf745189f11",
+    "text_path": "evidence/E18.txt",
+    "text_sha256": "16069a5b68f9a6f3020eec6cca2b874a5677c2e055c5d7a29e6e7035ad44a4ea",
+    "response_headers": {
+      "Content-Type": "text/html",
+      "Date": "Sat, 10 Oct 2026 04:42:51 GMT",
+      "Last-Modified": "Fri, 09 Oct 2026 21:27:27 GMT",
+      "ETag": "W/\"ddf1683be9b0af7c477494f5c8ca74ba\""
+    },
+    "access_finished_utc": "2026-10-10T04:55:54.534800+00:00"
+  },
+  {
+    "id": "E19",
+    "url": "https://docs.getodk.org/central-api-openrosa-endpoints/",
+    "access_started_utc": "2026-10-10T04:55:54.315280+00:00",
+    "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+    "candidate_ids": [],
+    "http_status": 200,
+    "effective_url": "https://docs.getodk.org/central-api-openrosa-endpoints/",
+    "raw_path": "evidence/E19.html",
+    "raw_sha256": "bbd456ff961bf8033988ddf1d373473581a84dc34e558c7b26b53722565479eb",
+    "text_path": "evidence/E19.txt",
+    "text_sha256": "9cef1699d5be487056ff132b9759b0e49bfa4ed3ed5a195bd27d272750377938",
+    "response_headers": {
+      "Content-Type": "text/html; charset=utf-8",
+      "Last-Modified": "Sat, 22 Aug 2026 17:48:45 GMT",
+      "Date": "Sat, 10 Oct 2026 04:55:55 GMT",
+      "ETag": "\"e25a63d787cd0cabd49c87d5915c4077\""
+    },
+    "access_finished_utc": "2026-10-10T04:55:54.646680+00:00"
+  },
+  {
+    "id": "E20",
+    "url": "https://github.com/getodk/collect/pull/4655",
+    "access_started_utc": "2026-10-10T04:55:54.342500+00:00",
+    "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+    "candidate_ids": [],
+    "http_status": 200,
+    "effective_url": "https://github.com/getodk/collect/pull/4655",
+    "raw_path": "evidence/E20.html",
+    "raw_sha256": "9b21e3392f5006e7dac597722806fd56e53da56fe4336a07d021c3b94fc21ba3",
+    "text_path": "evidence/E20.txt",
+    "text_sha256": "505e5e44f9ae1ed4a06551bcbb74c2dbd48e0e34f1b71530d5665625a2967e6e",
+    "response_headers": {
+      "Date": "Sat, 10 Oct 2026 04:55:55 GMT",
+      "Content-Type": "text/html; charset=utf-8"
+    },
+    "access_finished_utc": "2026-10-10T04:55:55.469291+00:00"
+  },
+  {
+    "id": "E21",
+    "url": "https://github.com/getodk/collect/commit/0bc6cde.patch",
+    "access_started_utc": "2026-10-10T04:55:54.348331+00:00",
+    "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+    "candidate_ids": [],
+    "http_status": 200,
+    "effective_url": "https://github.com/getodk/collect/commit/0bc6cde.patch",
+    "raw_path": "evidence/E21.patch",
+    "raw_sha256": "f8d97d1c6edf6a776049f2955cc343421c2b2c99305b2d578ab112974b3a37b9",
+    "text_path": "evidence/E21.txt",
+    "text_sha256": "91eeb5a3380e4cc49fdf4b07d2e1eda4e0409b5983b220cb39330e87c21da9c8",
+    "response_headers": {
+      "Date": "Sat, 10 Oct 2026 04:55:54 GMT",
+      "Content-Type": "text/plain; charset=utf-8",
+      "ETag": "W/\"f8d97d1c6edf6a776049f2955cc34342\""
+    },
+    "access_finished_utc": "2026-10-10T04:55:54.646410+00:00"
+  },
+  {
+    "id": "E22",
+    "url": "https://docs.getodk.org/central-install/",
+    "access_started_utc": "2026-10-10T04:55:54.537203+00:00",
+    "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+    "candidate_ids": [],
+    "http_status": 200,
+    "effective_url": "https://docs.getodk.org/central-install/",
+    "raw_path": "evidence/E22.html",
+    "raw_sha256": "ca8c180bae7b722627447e81a495a90825b435de7c74653a7433ddb25292fe61",
+    "text_path": "evidence/E22.txt",
+    "text_sha256": "bd1e62bb75337ba946f6e4e505c051e46574ebc9658688daa92109e5bc99d3d3",
+    "response_headers": {
+      "Content-Type": "text/html; charset=utf-8",
+      "Last-Modified": "Fri, 03 Jul 2026 17:08:17 GMT",
+      "Date": "Sat, 10 Oct 2026 04:55:54 GMT",
+      "ETag": "\"833e536795823a3d83e156bb79b8a0ca\""
+    },
+    "access_finished_utc": "2026-10-10T04:55:54.647323+00:00"
+  },
+  {
+    "id": "E23",
+    "url": "https://docs.getodk.org/central-users/",
+    "access_started_utc": "2026-10-10T04:55:54.650016+00:00",
+    "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+    "candidate_ids": [],
+    "http_status": 200,
+    "effective_url": "https://docs.getodk.org/central-users/",
+    "raw_path": "evidence/E23.html",
+    "raw_sha256": "8e4f003d13115424e2bb42c7933c7347a9ce520109d063baff0e1e40ae2463dd",
+    "text_path": "evidence/E23.txt",
+    "text_sha256": "72bc4f0dc3ecca2e4e453dbc386c71ccdea6572028be12e5b55cfad364854abf",
+    "response_headers": {
+      "Content-Type": "text/html; charset=utf-8",
+      "Last-Modified": "Fri, 11 Sep 2026 16:08:43 GMT",
+      "Date": "Sat, 10 Oct 2026 04:54:20 GMT",
+      "ETag": "\"af10046989edd100ce3dbcd099817be1\""
+    },
+    "access_finished_utc": "2026-10-10T04:55:54.750229+00:00"
+  },
+  {
+    "id": "E24",
+    "url": "https://doc.arcgis.com/en/survey123/get-started/systemrequirements.htm",
+    "access_started_utc": "2026-10-10T04:58:59.983764+00:00",
+    "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
+    "candidate_ids": [],
+    "http_status": 200,
+    "effective_url": "https://doc.arcgis.com/en/survey123/get-started/systemrequirements.htm",
+    "raw_path": "evidence/E24.html",
+    "raw_sha256": "f067020541d815832b8654cf489f54e5576737150bab60b63682a773241f2685",
+    "text_path": "evidence/E24.txt",
+    "text_sha256": "8be6f9df704aa058ac892429c635437de9c2bcfea9b45234d113ee5055fd90bc",
+    "response_headers": {
+      "Date": "Sat, 10 Oct 2026 04:59:00 GMT",
+      "Last-Modified": "Wed, 19 Aug 2026 04:03:56 GMT",
+      "ETag": "\"e344-6595e7e0e89de\"",
+      "Content-Type": "text/html; charset=UTF-8"
+    },
+    "access_finished_utc": "2026-10-10T04:59:00.451556+00:00"
+  }
+]

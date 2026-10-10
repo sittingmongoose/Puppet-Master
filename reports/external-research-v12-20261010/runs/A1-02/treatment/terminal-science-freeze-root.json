@@ -1,0 +1,304 @@
+{
+  "observed_at_utc": "2026-10-10T04:42:46.074813+00:00",
+  "basis": "root observed terminal final T3 task/no pending; separate from native proof",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/critique.md",
+      "bytes": 11086,
+      "sha256": "de2d80da4d39e854a5b5b42f688e32ca939d1d28b91a6ffd3a295104de1eafa6",
+      "mtime_ns": 1791606353079255087
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/source-map.json",
+      "bytes": 15224,
+      "sha256": "af14c1e4067717913d3b276f27b41b2d7fa037ded7e76fd785d0aaddfa64c190",
+      "mtime_ns": 1791606353079958644
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/sources/README.md",
+      "bytes": 3195,
+      "sha256": "ead1085dcdb38029f84cbfb551fc4caaac3acb8ba30019042bae80ccfa5e7667",
+      "mtime_ns": 1791606297573408358
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/sources/S01.md",
+      "bytes": 1885,
+      "sha256": "7922503ebbe9e6d72f70615cb9ce474422f17b0e108cdde50b1811379b865d28",
+      "mtime_ns": 1791606353080516075
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/sources/S02.md",
+      "bytes": 813,
+      "sha256": "5b5cad2f8a867e8fdd3e72774b3ef0ba41d2b5ab47a2359d9c20b90f2b04ebc5",
+      "mtime_ns": 1791606307757657452
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/sources/S03.md",
+      "bytes": 991,
+      "sha256": "ef68f9dd52dbb6c037fbc90f064053c709e595fd5d18b75dd3dcacbceb46104d",
+      "mtime_ns": 1791606307757795243
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/sources/S04.md",
+      "bytes": 1039,
+      "sha256": "333438ef785e8d6cb3faac919f2a46de89613f8eb29e38dbdf3ba6d4d1610800",
+      "mtime_ns": 1791606307757901648
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/sources/S05.md",
+      "bytes": 832,
+      "sha256": "7d34069bc6b25ab02379aafbf7b13b2b479c6b7a73134659320cfd40950756d6",
+      "mtime_ns": 1791606307758085009
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/sources/S06.md",
+      "bytes": 908,
+      "sha256": "ae3782b771059fa7131e7c2b117df02a8b532f5bf13c6b084c7f034b9a2ef0c6",
+      "mtime_ns": 1791606307758183524
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/sources/S07.md",
+      "bytes": 896,
+      "sha256": "03c3554ce0e347f9e4f57b8837096d2e086246859fd76b101e97fa1497a9fb49",
+      "mtime_ns": 1791606307758270377
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/sources/S08.md",
+      "bytes": 899,
+      "sha256": "81fc86b617e7f0cf61716e7ded86a54cf5fe2f971c75ae66520cb06abf5197ce",
+      "mtime_ns": 1791606307758355227
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/sources/S09.md",
+      "bytes": 734,
+      "sha256": "fa5f7bdab3ba2f9095f7e004e47a4cee58caa8d49d9c9a96a61a0601d1cf4d0b",
+      "mtime_ns": 1791606307758440898
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/sources/S10.md",
+      "bytes": 918,
+      "sha256": "2c674c5c7a613646f4c9a365cccf9476231e79fc779ec1138e213c3707eae59d",
+      "mtime_ns": 1791606307758551994
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/sources/S11.md",
+      "bytes": 788,
+      "sha256": "389459458982e4eb2516670a2dab5e6c4979bfc863f8b4cdc24a2696490f0264",
+      "mtime_ns": 1791606307758676734
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/critic/sources/S12.md",
+      "bytes": 1058,
+      "sha256": "d48d93edef1ee223000806e341bacae494baac3d9f16ab655da055362e7f3375",
+      "mtime_ns": 1791606307758768735
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/discovery.md",
+      "bytes": 10093,
+      "sha256": "2f46926e64db4b894da1e811660633779e763b368614de0b6df0522664e9be27",
+      "mtime_ns": 1791604979594569441
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/draft.md",
+      "bytes": 18699,
+      "sha256": "bd3112dbdd14fe71f651caf12fc716b6407f046751c38514451b3c90ac9ab580",
+      "mtime_ns": 1791605402183967355
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 2413,
+      "sha256": "e585d3899d830686e266298ad05246a0d9409ef106762c5fe85674321cf57258",
+      "mtime_ns": 1791605009982891497
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/source-map.json",
+      "bytes": 12475,
+      "sha256": "eee17672f713aab23d88670b9e054c1f929a2bf3488a4931af7817af863742ea",
+      "mtime_ns": 1791605423031901542
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/sources/README.md",
+      "bytes": 2946,
+      "sha256": "c40d73bbd6db4123a6319b16b16b36b8aa9ab267af266af92373fafe10206122",
+      "mtime_ns": 1791604979607569525
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/sources/S01-rfc5545.md",
+      "bytes": 2308,
+      "sha256": "a367de9f65346ec5bbe290940278949cbe3e3f2e8bb43dd453ec8cf0bd038d08",
+      "mtime_ns": 1791605402183483012
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/sources/S02-rfc5546.md",
+      "bytes": 802,
+      "sha256": "e2ec130577d968e8a83768b20a3b299ac966ea2b7fa37ef934c8d103c7d98b89",
+      "mtime_ns": 1791605000124703705
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/sources/S03-google.md",
+      "bytes": 1048,
+      "sha256": "fa613019ed366957373e8546e03e8d76a31eb2ecd4c4c748222fa503158c3860",
+      "mtime_ns": 1791605000131703750
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/sources/S04-graph-event.md",
+      "bytes": 1060,
+      "sha256": "edf23322b0a248fe41a7643c4c6230268df008127cbbe43e74eda9561b9aa7fb",
+      "mtime_ns": 1791605000136703783
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/sources/S05-graph-cancel.md",
+      "bytes": 919,
+      "sha256": "89c699a8adbc55cfc7a9742c77571c655498ac7184496aff0d8df1eac810c691",
+      "mtime_ns": 1791605000146703849
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/sources/S06-graph-update.md",
+      "bytes": 928,
+      "sha256": "c46e1b810d67e88e82cb5038d5ff58e7f4e4f24964106f6803d68d22fdff7a50",
+      "mtime_ns": 1791605000153703894
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/sources/S07-graph-instances.md",
+      "bytes": 796,
+      "sha256": "490020a95e31f0957c227eca3ce5a02e3146b8d2031a9705c105f6c80ddedfc4",
+      "mtime_ns": 1791605000159703934
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/sources/S08-caldata.md",
+      "bytes": 1010,
+      "sha256": "9bbc82d091e3eb2a053948d994b8b6d38668c54cd5047fcadc00944ccb7e68c4",
+      "mtime_ns": 1791605000168703992
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/sources/S09-pimalaya-ical.md",
+      "bytes": 810,
+      "sha256": "0a9ace2696a51614691f1be051c860b52bdc4fb37f185a6fa29b2fdcc3120cf2",
+      "mtime_ns": 1791605000173704025
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/sources/S10-icalendar-history.md",
+      "bytes": 964,
+      "sha256": "aa8cba2f5cd9129715824a8b71cd0dffb733e0c9ded4528bc42688d6c4aa5ea9",
+      "mtime_ns": 1791605000179704064
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/investigator/sources/S11-archived-rust-parser.md",
+      "bytes": 811,
+      "sha256": "013273c015bcde4014b24c6385b98cdcbd0c7a9ace4be917b4f86f8b4516c73e",
+      "mtime_ns": 1791605000187704117
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+      "bytes": 25039,
+      "sha256": "d635630d4404dfe2492461233e72c6f704c5897612a7a3074aa33d6583b72cd9",
+      "mtime_ns": 1791607086555999262
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/source-map.json",
+      "bytes": 24070,
+      "sha256": "1cf2efd6607143e14b0bd9a52f5ecc299ffbea17fbdb29979e1131ebeca575a5",
+      "mtime_ns": 1791607318266736731
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/sources/README.md",
+      "bytes": 3113,
+      "sha256": "d10ffc2adbdd2a2e4b78df7d3aa27ee769340379933e4709e0b29b715c564821",
+      "mtime_ns": 1791607245950983298
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/sources/S01.md",
+      "bytes": 2297,
+      "sha256": "90fa6dab68ff4fc2b106d131642047626a37379897499da7ab5ddcb57e93d572",
+      "mtime_ns": 1791607245949341061
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/sources/S02.md",
+      "bytes": 913,
+      "sha256": "4f5fcee7a9bd300be8364f9fdbd899790a2aa77d6c8b034ca6aaa4788fce234a",
+      "mtime_ns": 1791607245949544914
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/sources/S03.md",
+      "bytes": 1169,
+      "sha256": "25668de0805ea05fbf0505ad16cad3c1675c1e95d3d6262cbe3773f003cd05ba",
+      "mtime_ns": 1791607245949687285
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/sources/S04.md",
+      "bytes": 1185,
+      "sha256": "07f2ee0f19581d3d7517708d6df552ee7ae737a149564f2d6fc4a5de10b6e475",
+      "mtime_ns": 1791607245949842816
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/sources/S05.md",
+      "bytes": 971,
+      "sha256": "1b7aedda5695aa2b299b6ce8eea72811585c6fa0a5c86c964bf4cf0f9debaf22",
+      "mtime_ns": 1791607245949963704
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/sources/S06.md",
+      "bytes": 1038,
+      "sha256": "6fd9848147fb47c7e0c5c07757a8a2708d325e2f68867e3a32af57bf437bb658",
+      "mtime_ns": 1791607245950133483
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/sources/S07.md",
+      "bytes": 1060,
+      "sha256": "8d04183ad59e155b214678221f78d7ff270628f28cf8e30c0db8073e4cc08473",
+      "mtime_ns": 1791607245950291096
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/sources/S08.md",
+      "bytes": 1070,
+      "sha256": "4b4082cd03f4819969e3d28f09efb76a05bbdd2fcc56c119e31f9333a8017cd3",
+      "mtime_ns": 1791607245950402065
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/sources/S09.md",
+      "bytes": 875,
+      "sha256": "51ef2c4fb77dccfbad51ac350fecb1725c4668d93a95c18518641beb714193f1",
+      "mtime_ns": 1791607245950512136
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/sources/S10.md",
+      "bytes": 1140,
+      "sha256": "0701eb3d98c7471bb9fa1c65221e69364406d022b16f37ad87605829e5e0d9ab",
+      "mtime_ns": 1791607245950620468
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/sources/S11.md",
+      "bytes": 976,
+      "sha256": "a64b249c60c3d580f13000320b4f6596cbf17d259712748a1fb3c11bebb24e27",
+      "mtime_ns": 1791607245950743946
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/sources/S12.md",
+      "bytes": 1412,
+      "sha256": "7bca89d9f4fc1a24a03e7a80a92fa75d0e0d0342538d207eb41dc55d23875fae",
+      "mtime_ns": 1791607245950864869
+    }
+  ],
+  "final_stage_task": {
+    "slot": "A1-02",
+    "arm": "treatment",
+    "stage": "reviser",
+    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-02-treatment-reviser-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-02-treatment-reviser-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-02-treatment-reviser-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-02-treatment-reviser-v1",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-02-treatment-reviser-v1:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "Completed only the assigned reviser stage. Saved:\n\n- [final.md](ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/source-map.json)\n- [Evidence index](ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/sources/README.md)\n\nThe final covers C1\u2013C6, dispositions F1\u2013F4, retains U1 as unresolved, and distinguishes source checks from proposed, unrun implementation validation. Frozen input hashes matched. No importer, exporter, database, provider, or client tests were run.\n\nThe native Goal was directly observed active, then completed and confirmed complete. Goal thread: `01a12411-07bf-7bb2-b6ef-4e8874c8b103`. Activation and terminal timestamps: UNKNOWN. Usage: 222,994 tokens and 13m45s.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-02-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:4399a6ac-5f71-446d-a6dd-7eaf40bf49b0",
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "summary": "Completed only the assigned reviser stage. Saved:\n\n- [final.md](ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/source-map.json)\n- [Evidence index](ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/sources/README.md)\n\nThe final covers C1\u2013C6, dispositions F1\u2013F4, retains U1 as unresolved, and distinguishes source checks from proposed, unrun implementation validation. Frozen input hashes matched. No importer, exporter, database, provider, or client tests were run.\n\nThe native Goal was directly observed active, then completed and confirmed complete. Goal thread: `01a12411-07bf-7bb2-b6ef-4e8874c8b103`. Activation and terminal timestamps: UNKNOWN. Usage: 222,994 tokens and 13m45s.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-02-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:4399a6ac-5f71-446d-a6dd-7eaf40bf49b0",
+    "waitTimedOut": false
+  }
+}

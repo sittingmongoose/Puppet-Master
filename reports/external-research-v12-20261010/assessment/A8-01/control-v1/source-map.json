@@ -1,0 +1,354 @@
+{
+  "assessment_id": "ER12-A8-01-control-v1",
+  "scope": "ONE completed A8-01 control full pipeline only",
+  "created_at_utc": "2026-10-10T04:51:41.024285+00:00",
+  "independent_retrieval": true,
+  "semantic_basis": "Governing primary text and actual stock code call paths, not hashes/counts/stage agreement",
+  "source_id_policy": "Independent E01–E11 ids; corresponding original S01–S11 identities retained, no rebind",
+  "sources": [
+    {
+      "id": "E01",
+      "candidate_source_id": "S01",
+      "title": "BagIt File Packaging Format",
+      "primary_url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+      "released_version_or_commit": "RFC 8493, BagIt 1.0, October 2018",
+      "locator": "§§1.1, 2.1.2–2.1.3, 2.2.1–2.2.4, 2.4, 3, 5.4, 6.1",
+      "governing_subject_operation_default_unit_type_domain_exceptions": "File-layout/package specification. Opaque payload octets remain accessible. Each payload manifest enumerates every payload file once; valid means complete and all manifest checksums verify. Creation/validation tools MUST support SHA-256 and SHA-512; creation SHOULD default to SHA-512. Payload-Oxum is optional OctetCount.StreamCount (8-bit bytes, number of payload files), not digest validation. Tag manifests are optional; when present they include payload manifests. Paths are relative to bag root, use slash separators and encode LF/CR/percent specially. Interoperability guidance is non-normative. Retention controls, logical asset identity, curator completeness and authenticity are outside these guarantees.",
+      "applicability_assessment": "Supports chosen copied-directory pilot, arbitrary inventory payload, per-file reference and conditional tag protection. Custodian retention is local policy. Supports rejecting archive-digest completeness/provenance/recovery proof.",
+      "semantic_result": "SUPPORTED",
+      "independent_evidence": [
+        {
+          "path": "evidence/E01-rfc8493.txt",
+          "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+          "bytes": 48783,
+          "requested_url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+          "effective_url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+          "access_utc": "2026-10-10T04:44:27.895481+00:00",
+          "status": 200,
+          "operation": "Independent read-only HTTP GET; source code inspected as text only, never executed"
+        }
+      ]
+    },
+    {
+      "id": "E02",
+      "candidate_source_id": "S02",
+      "title": "OCFL Specification",
+      "primary_url": "https://ocfl.io/1.1.0/spec/",
+      "released_version_or_commit": "OCFL 1.1.0, 7 October 2022",
+      "locator": "§§3.3–3.8; readable capture lines 201–240, 244–350, 402–438",
+      "governing_subject_operation_default_unit_type_domain_exceptions": "Object id is unique locally and stable; URI is SHOULD. Version integers start at one without gaps; consistently padded names are permitted. Prior directories are intended immutable. Content-addressing MUST use sha512 or sha256 and SHOULD use sha512. Manifest values are arrays of physical content paths; version state values are arrays of logical paths. Root inventory is required; version inventories SHOULD exist. Each inventory has a matching-algorithm sidecar. Logs directory MAY exist and its format is out of scope.",
+      "applicability_assessment": "Supports richer version history/deduplication alternative on filesystem or object storage. Does not choose gallery completeness, version approval or demonstrate recovery. Draft state/content-path wording is imprecise; final avoids the explicit conflation.",
+      "semantic_result": "SUPPORTED_WITH_LINEAGE_LIMIT",
+      "independent_evidence": [
+        {
+          "path": "evidence/E02-ocfl11.html",
+          "sha256": "e01510fe5173961a84e0f92bae50a26f9cab2c2f3fb2d692d368141e94398eed",
+          "bytes": 138414,
+          "requested_url": "https://ocfl.io/1.1.0/spec/",
+          "effective_url": "https://ocfl.io/1.1.0/spec/",
+          "access_utc": "2026-10-10T04:44:27.897536+00:00",
+          "status": 200,
+          "operation": "Independent read-only HTTP GET; source code inspected as text only, never executed"
+        },
+        {
+          "path": "evidence/E02-ocfl11.txt",
+          "sha256": "954cae07e2e3541891d76be5a95be199ed15d4d71251610937d0b0c47939b55c",
+          "bytes": 59403,
+          "operation": "Reviewer local text extraction or static source analysis; no candidate product operation"
+        }
+      ]
+    },
+    {
+      "id": "E03",
+      "candidate_source_id": "S03",
+      "title": "OCFL 1.1 Change Log",
+      "primary_url": "https://ocfl.io/1.1.0/spec/change-log.html",
+      "released_version_or_commit": "OCFL 1.1, 7 October 2022",
+      "locator": "Changes from 1.0; readable lines 15–50",
+      "governing_subject_operation_default_unit_type_domain_exceptions": "Minor correction/clarification update with backwards-compatible prior-version conformance rules. Clarifies immutability/monotonic specification numbering, UTF-8 inventory, historic manifests, direct-child content directory and stable object id. History does not automatically repair local objects.",
+      "applicability_assessment": "Supports version-specific comparison and qualification; useful alternative implementation/history context.",
+      "semantic_result": "SUPPORTED",
+      "independent_evidence": [
+        {
+          "path": "evidence/E03-ocfl11-changelog.html",
+          "sha256": "7d9c7b3f7b58ea33229c62475a8c4c92273539ed192769bd9d47f9445add69b6",
+          "bytes": 15418,
+          "requested_url": "https://ocfl.io/1.1.0/spec/change-log.html",
+          "effective_url": "https://ocfl.io/1.1.0/spec/change-log.html",
+          "access_utc": "2026-10-10T04:44:27.898887+00:00",
+          "status": 200,
+          "operation": "Independent read-only HTTP GET; source code inspected as text only, never executed"
+        },
+        {
+          "path": "evidence/E03-ocfl11-changelog.txt",
+          "sha256": "aa23a31dc041867202eb8ed74c389229346a76d6d7ebd6cb2918907ca0d88f02",
+          "bytes": 5723,
+          "operation": "Reviewer local text extraction or static source analysis; no candidate product operation"
+        }
+      ]
+    },
+    {
+      "id": "E04",
+      "candidate_source_id": "S04",
+      "title": "bagit-python issue #51",
+      "primary_url": "https://github.com/LibraryOfCongress/bagit-python/issues/51",
+      "released_version_or_commit": "Opened 2016-01-20, closed 2017-02-24, milestone 1.6; report does not specify bagit release",
+      "locator": "Issue body; comments 173395149, 173397299, 173670998, 173694437, 197048716, 197074748",
+      "governing_subject_operation_default_unit_type_domain_exceptions": "Reporter says Mac-created/validated bag (~82,000 files, 300 GB) failed full pathname checks on Archivematica transfer server; destination OS unstated. Source Python 2.7.10 and destination 2.7.6 are reported. Fast Oxum check passed. Separate commenter test worked on OS X/Linux. Thread distinguishes Unicode normalization forms and proposes consistent comparison and collision exceptions.",
+      "applicability_assessment": "Supports actual reported normalization mismatch and portability risk; not universal failure, gallery observation, or evidence that Linux was the reporter destination. C3 correction valid.",
+      "semantic_result": "SUPPORTED_AFTER_FINAL_QUALIFICATION",
+      "independent_evidence": [
+        {
+          "path": "evidence/E04-issue51.json",
+          "sha256": "49acd85cbb8fd7575f82050d035665929fd59202cad7781a9e42a81188394ea7",
+          "bytes": 7817,
+          "requested_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/issues/51",
+          "effective_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/issues/51",
+          "access_utc": "2026-10-10T04:44:27.900132+00:00",
+          "status": 200,
+          "operation": "Independent read-only HTTP GET; source code inspected as text only, never executed"
+        },
+        {
+          "path": "evidence/E04-issue51-comments.json",
+          "sha256": "0197e6f77c7df80e1c1a818705f99b1cf477414f05050a311e9d808526ba0a47",
+          "bytes": 24415,
+          "requested_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/issues/51/comments?per_page=100",
+          "effective_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/issues/51/comments?per_page=100",
+          "access_utc": "2026-10-10T04:44:27.901626+00:00",
+          "status": 200,
+          "operation": "Independent read-only HTTP GET; source code inspected as text only, never executed"
+        }
+      ]
+    },
+    {
+      "id": "E05",
+      "candidate_source_id": "S05",
+      "title": "NFD normalization fix commit",
+      "primary_url": "https://github.com/LibraryOfCongress/bagit-python/commit/16f34b6",
+      "released_version_or_commit": "16f34b64452628be82ee545401ea579c5e1e7bd1, 2016-03-15",
+      "locator": "commit.message; files[bagit.py].patch and files[test.py].patch",
+      "governing_subject_operation_default_unit_type_domain_exceptions": "Exact commit normalizes encoded/decoded manifest filename handling to NFD and adds a decomposed/composed rename regression test using an empty MD5 file. It is a commit-specific patch, not all released behavior or permission to change originals.",
+      "applicability_assessment": "Concrete fix/regression evidence for transit normalization; final properly distinguishes it from v1.6.0 NFC comparison.",
+      "semantic_result": "SUPPORTED",
+      "independent_evidence": [
+        {
+          "path": "evidence/E05-commit16f34b6.json",
+          "sha256": "164e67c55a9b03eb08d0b85b8944b0b786f225bae415cd5711eccd18a8a85a3f",
+          "bytes": 7369,
+          "requested_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/commits/16f34b6",
+          "effective_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/commits/16f34b6",
+          "access_utc": "2026-10-10T04:44:28.089392+00:00",
+          "status": 200,
+          "operation": "Independent read-only HTTP GET; source code inspected as text only, never executed"
+        }
+      ]
+    },
+    {
+      "id": "E06",
+      "candidate_source_id": "S06",
+      "title": "bagit-python released source and test",
+      "primary_url": "https://github.com/LibraryOfCongress/bagit-python/blob/v1.6.0/bagit.py",
+      "released_version_or_commit": "v1.6.0 tag commit 43fd5007115fd0e24dd701518ac6f82271006acd",
+      "locator": "bagit.py lines 345–398, 519–537, 625–627, 669–685, 727–761, 878–959; test.py lines 751–786",
+      "governing_subject_operation_default_unit_type_domain_exceptions": "Stock validation compares NFC-normalized sets and writes normalized-key lookup maps. It defines FileNormalizationConflict and build_unicode_normalized_lookup_dict, but no stock call path invokes the latter. Its only conflict-exception call is inside that unused function. The tagged regression test exercises single-name normalization, not collision rejection. make_bag writes BagIt-Version 0.97 at line 210; this historical release is not evidence of a selected BagIt 1.0 deployment. Downloaded code was not executed.",
+      "applicability_assessment": "NFC normalization mitigation is supported. Normal-operation collision rejection is not: material finding M1 survives final.md:40 and reviser source-map S06. A custom explicit helper caller or another release would require separate evidence.",
+      "semantic_result": "MATERIAL_WRONG_OPERATION_M1",
+      "independent_evidence": [
+        {
+          "path": "evidence/E06-v160-bagit.py",
+          "sha256": "5dcb0c0f6739b8b60ca148fdd1cb37b48101f99fc44bb1831d18591b19cbac57",
+          "bytes": 52646,
+          "requested_url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.6.0/bagit.py",
+          "effective_url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.6.0/bagit.py",
+          "access_utc": "2026-10-10T04:44:28.128854+00:00",
+          "status": 200,
+          "operation": "Independent read-only HTTP GET; source code inspected as text only, never executed"
+        },
+        {
+          "path": "evidence/E06-v160-ref.json",
+          "sha256": "7acc3e1838afa2fcb0f55ca25844854ca21c94a60d1506c821166cb729fb3376",
+          "bytes": 369,
+          "requested_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/git/ref/tags/v1.6.0",
+          "effective_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/git/ref/tags/v1.6.0",
+          "access_utc": "2026-10-10T04:44:28.161995+00:00",
+          "status": 200,
+          "operation": "Independent read-only HTTP GET; source code inspected as text only, never executed"
+        },
+        {
+          "path": "evidence/E06-v160-test.py",
+          "sha256": "52a4c2c86342daf72f1a54ac10530f76a797e1032be8a563c561fcef65a32838",
+          "bytes": 39672,
+          "requested_url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.6.0/test.py",
+          "effective_url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.6.0/test.py",
+          "access_utc": "2026-10-10T04:46:24.343379+00:00",
+          "status": 200,
+          "operation": "Independent read-only HTTP GET; test code read as text, not executed"
+        },
+        {
+          "path": "evidence/E06-static-call-check.json",
+          "sha256": "33e66199de439dd353d80eb13396f59672fe86f99c709309f7f588855ae32e8b",
+          "bytes": 548,
+          "operation": "Reviewer local text extraction or static source analysis; no candidate product operation"
+        }
+      ]
+    },
+    {
+      "id": "E07",
+      "candidate_source_id": "S07",
+      "title": "bagit-python v1.9.0 release",
+      "primary_url": "https://github.com/LibraryOfCongress/bagit-python/releases/tag/v1.9.0",
+      "released_version_or_commit": "v1.9.0; 861ddacb339d5b92659f0187a402f501d841abbe; published 2025-06-13T17:43:22Z",
+      "locator": "release.body Behavioral changes, PR184; tag object.sha",
+      "governing_subject_operation_default_unit_type_domain_exceptions": "Release lists removal of expandvars from unsafe-path check along with separate changes. No claim about all other path behavior follows.",
+      "applicability_assessment": "Supports narrow recent released path-safety history and pin/qualify recommendation. No installation, account or platform decision is inferred.",
+      "semantic_result": "SUPPORTED",
+      "independent_evidence": [
+        {
+          "path": "evidence/E07-v190-release.json",
+          "sha256": "440f889a816cbae1de6d557161dc43e6494d102f0c2459bc07a1ff5d04b7700e",
+          "bytes": 4053,
+          "requested_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/releases/tags/v1.9.0",
+          "effective_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/releases/tags/v1.9.0",
+          "access_utc": "2026-10-10T04:44:28.182729+00:00",
+          "status": 200,
+          "operation": "Independent read-only HTTP GET; source code inspected as text only, never executed"
+        },
+        {
+          "path": "evidence/E07-v190-ref.json",
+          "sha256": "7c41fcb68acb5959ef7fa44669f4c112f2e3ff0a7557d90622edff499a948c3a",
+          "bytes": 369,
+          "requested_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/git/ref/tags/v1.9.0",
+          "effective_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/git/ref/tags/v1.9.0",
+          "access_utc": "2026-10-10T04:44:28.190621+00:00",
+          "status": 200,
+          "operation": "Independent read-only HTTP GET; source code inspected as text only, never executed"
+        }
+      ]
+    },
+    {
+      "id": "E08",
+      "candidate_source_id": "S08",
+      "title": "bagit-python PR #184 and exact diff",
+      "primary_url": "https://github.com/LibraryOfCongress/bagit-python/pull/184",
+      "released_version_or_commit": "Merged 2025-06-13T16:26:17Z, merge 753679c9b342660d038f65a8dc4f755ab95d679b",
+      "locator": "body, merged_at, merge_commit_sha; files[0].patch at _path_is_dangerous",
+      "governing_subject_operation_default_unit_type_domain_exceptions": "Two-line deletion removes environment-variable expansion/rejection from _path_is_dangerous. Other unsafe-path checks remain. This changes implementation checking, not BagIt manifest rules.",
+      "applicability_assessment": "Supports exact scope behind E07. No broader validator safety conclusion.",
+      "semantic_result": "SUPPORTED",
+      "independent_evidence": [
+        {
+          "path": "evidence/E08-pr184.json",
+          "sha256": "3f82b9c64514a1d9510033d62b83908e3cb65f449f68dae97bcb116e11c8d430",
+          "bytes": 17852,
+          "requested_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/pulls/184",
+          "effective_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/pulls/184",
+          "access_utc": "2026-10-10T04:44:28.260765+00:00",
+          "status": 200,
+          "operation": "Independent read-only HTTP GET; source code inspected as text only, never executed"
+        },
+        {
+          "path": "evidence/E08-pr184-files.json",
+          "sha256": "3d6e3c8b852dbe56c8abc04a7c9df99a99aaf227fd6c656203665bf34988fe78",
+          "bytes": 915,
+          "requested_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/pulls/184/files?per_page=100",
+          "effective_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/pulls/184/files?per_page=100",
+          "access_utc": "2026-10-10T04:44:28.281613+00:00",
+          "status": 200,
+          "operation": "Independent read-only HTTP GET; source code inspected as text only, never executed"
+        }
+      ]
+    },
+    {
+      "id": "E09",
+      "candidate_source_id": "S09",
+      "title": "PREMIS Data Dictionary",
+      "primary_url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+      "released_version_or_commit": "PREMIS 3.0, June 2015, revised November 2015",
+      "locator": "Printed pp.6–7, 59 (§1.5.2), 258–259; PDF zero-based pp.15–16,68,267–268; extracted text lines 452–480,2906–2963,9537–9590",
+      "governing_subject_operation_default_unit_type_domain_exceptions": "Model has Objects, Events, Agents and Rights. Fixity digest comparison records an Event and eventOutcome. Equal same-algorithm digests are evidence of unchanged content; fixity is distinguished from structural/format integrity and authenticity. File/Bitstream fixity fields do not establish authorship or restore success.",
+      "applicability_assessment": "Supports lightweight event-log analogy and logical/fixity/custody distinction, not CSV PREMIS conformance or a deployed system.",
+      "semantic_result": "SUPPORTED",
+      "independent_evidence": [
+        {
+          "path": "evidence/E09-premis30.pdf",
+          "sha256": "2e3e3fe001798f3f43d26b4aed03e8737310fa044ee001af2493f7c72517b0e0",
+          "bytes": 2176353,
+          "requested_url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+          "effective_url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+          "access_utc": "2026-10-10T04:44:28.289156+00:00",
+          "status": 200,
+          "operation": "Independent read-only HTTP GET; source code inspected as text only, never executed"
+        },
+        {
+          "path": "evidence/E09-premis30.txt",
+          "sha256": "33f5c18cadf03d00b9b7a1232d662d40501dbbe17d31caffaa455b487ec22e95",
+          "bytes": 480247,
+          "operation": "Reviewer local text extraction or static source analysis; no candidate product operation"
+        }
+      ]
+    },
+    {
+      "id": "E10",
+      "candidate_source_id": "S10",
+      "title": "PREMIS semantic-unit listing",
+      "primary_url": "https://www.loc.gov/standards/premis/v3/premis-hierarchical-3-0.html",
+      "released_version_or_commit": "PREMIS 3.0 HTML listing; page footer 2022-01-28",
+      "locator": "Introduction lines 14–27; Event/Agent lines 117–148",
+      "governing_subject_operation_default_unit_type_domain_exceptions": "HTML introduction says five entities including Intellectual Entities, unlike v3 PDF model. Listed eventIdentifier/type/dateTime/outcome and linkingAgent/Object identifiers support the proposed field analogy.",
+      "applicability_assessment": "Candidate recognizes document distinction and uses Event/Agent concepts without a conformance/entity-count dependency.",
+      "semantic_result": "SUPPORTED",
+      "independent_evidence": [
+        {
+          "path": "evidence/E10-premis30-listing.html",
+          "sha256": "135b448572a12fc9a5eb52d250bfab45f702b1ab6213c9baa25a88655cc5566a",
+          "bytes": 37925,
+          "requested_url": "https://www.loc.gov/standards/premis/v3/premis-hierarchical-3-0.html",
+          "effective_url": "https://www.loc.gov/standards/premis/v3/premis-hierarchical-3-0.html",
+          "access_utc": "2026-10-10T04:44:28.317648+00:00",
+          "status": 200,
+          "operation": "Independent read-only HTTP GET; source code inspected as text only, never executed"
+        },
+        {
+          "path": "evidence/E10-premis30-listing.txt",
+          "sha256": "dee1109074e8c1190d05ceb6852a71dee81e6559d5c9b5a931ba67414016041d",
+          "bytes": 10547,
+          "operation": "Reviewer local text extraction or static source analysis; no candidate product operation"
+        }
+      ]
+    },
+    {
+      "id": "E11",
+      "candidate_source_id": "S11",
+      "title": "git-annex whereis manual",
+      "primary_url": "https://git-annex.branchable.com/git-annex-whereis/",
+      "released_version_or_commit": "Rolling official manual, release version not stated",
+      "locator": "DESCRIPTION; readable lines 24–36",
+      "governing_subject_operation_default_unit_type_domain_exceptions": "Reports last-received remote content-location information and does not contact remotes to establish current content presence. Other commands are not tested by this source.",
+      "applicability_assessment": "Supports optional location-history aid only, not remote byte verification, custody proof or restore success.",
+      "semantic_result": "SUPPORTED",
+      "independent_evidence": [
+        {
+          "path": "evidence/E11-annex-whereis.html",
+          "sha256": "e812d30340382ffd2771adc14e35123c327feab0f7b9a3aef818525d0658a5a6",
+          "bytes": 13160,
+          "requested_url": "https://git-annex.branchable.com/git-annex-whereis/",
+          "effective_url": "https://git-annex.branchable.com/git-annex-whereis/",
+          "access_utc": "2026-10-10T04:44:28.333369+00:00",
+          "status": 200,
+          "operation": "Independent read-only HTTP GET; source code inspected as text only, never executed"
+        },
+        {
+          "path": "evidence/E11-annex-whereis.txt",
+          "sha256": "6d6d5ab38ff75e3a1fe19fe38927c6c7b0ccbc00aabc404bbfeba7cc6606ecbf",
+          "bytes": 4905,
+          "operation": "Reviewer local text extraction or static source analysis; no candidate product operation"
+        }
+      ]
+    }
+  ],
+  "retrieval_receipts": "evidence/retrieval-records.json",
+  "all_original_inspected_hashes": "inspected-artifacts.json",
+  "lineage_and_dispositions": "assessment.json",
+  "product_execution": "NOT_RUN; no downloaded code executed",
+  "mechanical_check_scope": "AST parse corroborates call-site reading; does not certify runtime or another release"
+}

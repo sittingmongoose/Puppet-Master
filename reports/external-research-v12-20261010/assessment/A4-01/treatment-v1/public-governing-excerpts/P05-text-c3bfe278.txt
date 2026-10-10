@@ -1,0 +1,115 @@
+URL: https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity-upload.html
+Original locator: ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P05-text.txt
+Original SHA256: c3bfe27835cf348ec6f84de4e7f5ff0ad7657cab4d32d69a95de75cf02b95475
+Original numbered lines; gaps omitted. Not full response.
+
+37: SHA-256 (SHA256)
+38: MD5 (MD5)
+39: XXHash64 (XXHASH64)
+40: XXHash3 (XXHASH3)
+41: XXHash128 (XXHASH128)
+42: SHA-512 (SHA512)
+43: Note
+44: The content-MD5 header is only available using the S3 ETag
+45: for objects uploaded in a single part upload (PUT operation)
+46: that uses the SSE-S3 encryption.
+47: Additionally, you can provide a checksum with each request using the Content-MD5
+48: header.
+49: When you upload an object, you
+50: specify the algorithm that you want to use:
+51: When you use the AWS Management Console, choose the
+52: checksum algorithm that you want to use. You can optionally specify the checksum
+53: value of the object. When Amazon S3 receives the object, it calculates the checksum
+54: by using the algorithm that you specified. If the two checksum values don't
+55: match, Amazon S3 generates an error.
+56: When you use an SDK, be aware of the
+57: following:
+58: Set the ChecksumAlgorithm parameter to the algorithm that
+59: you want Amazon S3 to use. If you already have a precalculated checksum, you
+60: pass the checksum value to the AWS SDK, and the SDK includes the value in
+61: the request. If you don’t pass a checksum value or don’t specify a
+62: checksum algorithm, the SDK automatically calculates a checksum value
+63: for you and includes it with the request to provide integrity
+64: protections. If the individual checksum value doesn't match the set
+65: value of the checksum algorithm, Amazon S3 fails the request with a
+66: BadDigest error.
+67: If you’re using an upgraded AWS SDK, the SDK chooses a checksum
+68: algorithm for you. However, you can override this checksum
+69: algorithm.
+70: If you don’t specify a checksum algorithm and the SDK also doesn’t
+71: calculate a checksum for you, then S3 automatically chooses the
+72: CRC-64/NVME (CRC64NVME) checksum algorithm.
+73: When you use the REST API, don't use the
+74: x-amz-sdk-checksum-algorithm parameter. Instead, use one of the
+75: algorithm-specific headers (for example,
+76: x-amz-checksum-crc32).
+77: To apply any of these checksum values to objects that are already uploaded to Amazon S3,
+78: you can copy the object and specify whether you want to use the existing checksum
+79: algorithm or a new one. If you don’t specify an algorithm, S3 uses the existing
+80: algorithm. If the source object doesn’t have a specified checksum algorithm or checksum
+81: value, Amazon S3 uses the CRC-64/NVME algorithm to calculate the checksum value for the
+82: destination object. You can also specify a checksum algorithm when copying objects using
+83: S3 Batch Operations.
+84: Important
+85: If you use a multipart upload with Checksums for composite (or
+86: part-level) checksums, the multipart upload part numbers must be consecutive and begin with 1.
+87: If you try to complete a multipart upload request with nonconsecutive part numbers, Amazon S3
+88: generates an HTTP 500 Internal Server error.
+89: Full object and composite checksum types
+90: In Amazon S3, there are two types of supported checksums:
+91: Full object checksums: A full object checksum
+92: is calculated based on all of the content of a multipart upload, covering all data from the
+93: first byte of the first part to the last byte of the last part. Be aware that if
+94: you're using the AWS Management Console to upload objects that are smaller than 16 MB, only
+95: the full object checksum type is supported.
+96: Note
+97: Objects that you upload using PutObject use the full object checksum type. You
+98: do not need to specify a checksum type.
+99: Composite checksums: A composite checksum is
+100: calculated based on the individual checksums of each part in a multipart upload. Instead of
+101: computing a checksum based on all of the data content, this approach aggregates
+102: the part-level checksums (from the first part to the last) to produce a single,
+103: combined checksum for the complete object. You may only use the composite
+104: checksum type with certain checksum algorithms and only when using a multipart upload to
+105: upload your object. For the algorithms that support each checksum type, see the
+106: Multipart uploads section.
+107: Note
+108: When an object is uploaded as a multipart upload, the entity tag (ETag) for the
+109: object is not an MD5 digest of the entire object. Instead, Amazon S3 calculates
+110: the MD5 digest of each individual part as it is uploaded. The MD5 digests
+111: are used to determine the ETag for the final object. Amazon S3 concatenates the
+112: bytes for the MD5 digests together and then calculates the MD5 digest of
+113: these concatenated values. During the final ETag creation step,
+114: Amazon S3 adds a dash with the total number of parts to the
+115: end.
+116: Single part uploads
+117: Checksums of objects that are uploaded in a single part (using PutObject) are treated as full object checksums. When
+118: you upload an object in the Amazon S3 console, you can choose the checksum algorithm that
+119: you want S3 to use and also (optionally) provide a precomputed value. Amazon S3 then
+120: validates the precomputed checksum value before storing the object and its checksum
+121: value. You can verify an object's data integrity when you request the checksum value
+122: during object downloads.
+123: Multipart uploads
+124: When you upload the object in multiple parts using the MultipartUpload API, you can specify the checksum
+125: algorithm that you want Amazon S3 to use and the checksum type (full object or
+126: composite).
+127: The following table indicates which checksum algorithm type is supported for each
+128: checksum algorithm in a multipart upload:
+129: Checksum algorithm
+130: Full object
+131: Composite
+132: CRC-64/NVME (CRC64NVME)
+133: Yes
+134: No
+135: CRC-32 (CRC32)
+136: Yes
+137: Yes
+138: CRC-32C (CRC32C)
+139: Yes
+140: Yes
+141: SHA-1 (SHA1)
+142: No
+143: Yes
+144: SHA-256 (SHA256)
+197: InvalidRequest error.
+199: For existing checksum algorithms (CRC32, CRC32C, SHA-1, SHA-256), if the algorithm

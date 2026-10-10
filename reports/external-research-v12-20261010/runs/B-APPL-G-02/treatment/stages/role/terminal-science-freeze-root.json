@@ -1,0 +1,136 @@
+{
+  "observed_at_utc": "2026-10-10T05:12:50.060893+00:00",
+  "basis": "root actual T3 completed/no pending before independent review; not native Goal proof",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-02/treatment/stages/role/.invocation-backup-f4a9350df8884746a0b8da28ecb66c0f/assignment.md",
+      "sha256": "decbf47d7581baf94a86cefeac9675bc4576a076942126a60138c069613ccd7c",
+      "bytes": 2383,
+      "mtime_ns": 1791608949055077601
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-02/treatment/stages/role/.invocation-backup-f4a9350df8884746a0b8da28ecb66c0f/freeze.json",
+      "sha256": "95824619bc07fae4b109a22cc8afd4784b592990cfe2629222d12f57e77c65de",
+      "bytes": 2862,
+      "mtime_ns": 1791608949054910029
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-02/treatment/stages/role/.invocation-backup-f4a9350df8884746a0b8da28ecb66c0f/input-map.json",
+      "sha256": "a044c8df2cd14f2202971f2a674918c0694efba73eff4d570e085113ae3a37d5",
+      "bytes": 602,
+      "mtime_ns": 1791608949054989390
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-02/treatment/stages/role/.invocation-backup-f4a9350df8884746a0b8da28ecb66c0f/request.json",
+      "sha256": "e50cca2d845e0d4e59ed73e299ac61d07eb85233a20b55f8a806004a3afb1f11",
+      "bytes": 1076,
+      "mtime_ns": 1791608949054783842
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-02/treatment/stages/role/assignment.md",
+      "sha256": "bab768476a8ef3af2f396ffe2a306c6bb872d22a081fd425a1e800b2f0e8e880",
+      "bytes": 3182,
+      "mtime_ns": 1791608949056228593
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-02/treatment/stages/role/dispatch.json",
+      "sha256": "80dc2bb2b297fd357ce81799bb9fc5d3982ce5151a1d760631dcf9d43f056bd8",
+      "bytes": 5093,
+      "mtime_ns": 1791608949829513447
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-02/treatment/stages/role/freeze.json",
+      "sha256": "9482598a49a76b5e96b9b22de025952bc8c602c69242e8819d1ad9ab1b35c7da",
+      "bytes": 2862,
+      "mtime_ns": 1791608949055800409
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-02/treatment/stages/role/input-map.json",
+      "sha256": "a044c8df2cd14f2202971f2a674918c0694efba73eff4d570e085113ae3a37d5",
+      "bytes": 602,
+      "mtime_ns": 1791608949055946220
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-02/treatment/stages/role/invocation-clarification.json",
+      "sha256": "20c6bfcf79abcec127562f28fa3b691e4369443402e1a02a4c9f8ae59567057b",
+      "bytes": 3204,
+      "mtime_ns": 1791608949056431765
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-02/treatment/stages/role/raw-dispatch.json",
+      "sha256": "3749969995f87d1d2360d1875d7e9f14aa17c0b11dd8002770bd5e0dfd83f405",
+      "bytes": 2130,
+      "mtime_ns": 1791608949631780699
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-02/treatment/stages/role/records/dispatch-20261010T050909828801-e097d8348bb441ada41a71ad9d473d64.json",
+      "sha256": "80dc2bb2b297fd357ce81799bb9fc5d3982ce5151a1d760631dcf9d43f056bd8",
+      "bytes": 5093,
+      "mtime_ns": 1791608949829167075
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-02/treatment/stages/role/records/native-goal-activation.json",
+      "sha256": "c4fca95a423be5d1a1523ed9cdd564537d61635200db022dbabd0f799bf4c1d6",
+      "bytes": 1090,
+      "mtime_ns": 1791609071883776022
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-02/treatment/stages/role/records/native-goal-completion.json",
+      "sha256": "afd15ae12f395db5101a8a822e5461f0fba849a44d44287134bbf27860125f8d",
+      "bytes": 971,
+      "mtime_ns": 1791609140296973353
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-02/treatment/stages/role/request.json",
+      "sha256": "809cd17ae803e430fa006a01a62255c630eb0e7dccc465f00b56030202b43d90",
+      "bytes": 1788,
+      "mtime_ns": 1791608949055570392
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-02/treatment/stages/role/source-map.json",
+      "sha256": "87f13f42eea072d3cb01fe00bec05dd610ff66df5280e6152b5548d8a2ac1603",
+      "bytes": 4923,
+      "mtime_ns": 1791609126549904179
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-02/treatment/stages/role/sources/P1-systemd.timer-v257-excerpts.md",
+      "sha256": "b5f8d9891f337abe0304a3e6cb4ce332453a89418057660c9001dbb33f5d2ee1",
+      "bytes": 6935,
+      "mtime_ns": 1791609108341805075
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-02/treatment/stages/role/sources/P2-systemd.time-v257-excerpts.md",
+      "sha256": "ce8550574de7a0dfcbf39a6144dad138ae631aed17c7b28ef0ad94bdef3b770f",
+      "bytes": 1697,
+      "mtime_ns": 1791609112931830057
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-02/treatment/stages/role/verification.md",
+      "sha256": "ce2bd9ec7cc9fb1bb2437bdf28db3e66931a4f2aff08a6255d75f967cff55d4a",
+      "bytes": 5507,
+      "mtime_ns": 1791609089544834969
+    }
+  ],
+  "terminal_task": {
+    "slot": "B-APPL-G-02",
+    "arm": "treatment",
+    "stage": "role",
+    "helper": "ER12_RUNTIME/helpers/role-v2",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-treatment-role-v2",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-treatment-role-v2",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-treatment-role-v2",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "Role complete. All deliverables saved in the assigned stage directory before native Goal completion, finishing at 05:12:24Z against the 05:24:08Z deadline.\n\nTop finding: of the six systemd-257 timer claims, 1, 4, and 5 are supported (with corrected bounded wording) and 2, 3, and 6 are refuted \u2014 persistence catch-up is OnCalendar-only, an elapse never restarts an already-active unit, and valid `daily` syntax proves nothing about completion timing.\n\nWhat was done, in order:\n\n- Activated exactly one native Goal with the frozen objective verbatim as the first action, before any case/source input. Receipt preserved in `records/native-goal-activation.json` (`goal-01a12437-354c-7f53-91e2-fc92218cbd52`, now `complete`; completion receipt in `records/native-goal-completion.json`).\n- Read only the input-map's common assignment, fixture, and listed corpus (S1, S2, index).\n- Retrieved the two corpus-listed pinned v257 primaries (timer and time manuals, raw equivalents) \u2014 2 listed URLs followed, 0 additional pages (limit 8), no failures.\n- Wrote `verification.md` (772 words, limit 900): independent disposition, version/configuration, primary citation, corrected wording, and exceptions per claim, plus two concrete acceptance checks.\n- Wrote `source-map.json` (claim citations, retrieval UTC/operation, applicability, conditions/exceptions, proposed-vs-executed, unresolved evidence) and bounded excerpts in `sources/P1-*.md` and `sources/P2-*.md`.\n\nConstraints honored: no provider CLI/session in shell, no delegation or cross-arm contact, no input modification, no installs or code execution, writes confined to the allowed root, scratch files removed.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:03f223b4-5dee-4296-bff0-82d35327707e",
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "muse-spark-1.3-contributor",
+    "summary": "Role complete. All deliverables saved in the assigned stage directory before native Goal completion, finishing at 05:12:24Z against the 05:24:08Z deadline.\n\nTop finding: of the six systemd-257 timer claims, 1, 4, and 5 are supported (with corrected bounded wording) and 2, 3, and 6 are refuted \u2014 persistence catch-up is OnCalendar-only, an elapse never restarts an already-active unit, and valid `daily` syntax proves nothing about completion timing.\n\nWhat was done, in order:\n\n- Activated exactly one native Goal with the frozen objective verbatim as the first action, before any case/source input. Receipt preserved in `records/native-goal-activation.json` (`goal-01a12437-354c-7f53-91e2-fc92218cbd52`, now `complete`; completion receipt in `records/native-goal-completion.json`).\n- Read only the input-map's common assignment, fixture, and listed corpus (S1, S2, index).\n- Retrieved the two corpus-listed pinned v257 primaries (timer and time manuals, raw equivalents) \u2014 2 listed URLs followed, 0 additional pages (limit 8), no failures.\n- Wrote `verification.md` (772 words, limit 900): independent disposition, version/configuration, primary citation, corrected wording, and exceptions per claim, plus two concrete acceptance checks.\n- Wrote `source-map.json` (claim citations, retrieval UTC/operation, applicability, conditions/exceptions, proposed-vs-executed, unresolved evidence) and bounded excerpts in `sources/P1-*.md` and `sources/P2-*.md`.\n\nConstraints honored: no provider CLI/session in shell, no delegation or cross-arm contact, no input modification, no installs or code execution, writes confined to the allowed root, scratch files removed.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:03f223b4-5dee-4296-bff0-82d35327707e",
+    "waitTimedOut": false
+  }
+}

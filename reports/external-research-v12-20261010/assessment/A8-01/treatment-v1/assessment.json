@@ -1,0 +1,2098 @@
+{
+  "assessment_id": "ER12-A8-01-treatment-v1",
+  "rubric_path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+  "run_id": "A8-01",
+  "arm": "treatment",
+  "reviewer_identity": "codex-er12-a8-treat-review-0439",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "judgment_basis": "No material error, omission or unsupported consequential decision remains in the ordinary final after full six-axis inspection and independent governing-source retrieval. Preserve the corrected material draft lineage defect separately. Source judgment is not proof of complete A8 protocol or native/billing compliance.",
+  "full_pipeline_semantic_qualification": true,
+  "delivery_judgment": "DELIVERED_COMPLETE final proposal and maps",
+  "coverage_judgment": "ALL_SIX_AXES_ASSESSED; all exact original plan clauses and critiques inspected",
+  "remaining_material_findings": [],
+  "lineage_findings": [
+    {
+      "id": "D-L01",
+      "severity": "material wrong in investigator draft",
+      "remaining_in_final": false,
+      "candidate_locator": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/draft.md:69",
+      "exact_defect": "Current 1.1 text also requires the stable object ID across versions, continuous version numbering, immutable existing version directories, and per-version inventory sidecars.",
+      "finding": "As written, the per-version sidecar claim makes optional per-version inventories look universally required. Root inventory MUST; per-version inventories SHOULD; every inventory that exists MUST have its digest sidecar.",
+      "primary_locator": "OCFL §§3.6–3.7; release-pinned source lines 556–593",
+      "evidence_ids": [
+        "E02-ocfl-spec",
+        "E16-ocfl-release-pinned-spec"
+      ],
+      "critic_disposition": "Material wrong at critique line 77 and SCW_NOT_RUN line 85",
+      "final_resolution": "Corrected explicitly at final lines 35, 47, 77 and 116."
+    },
+    {
+      "id": "D-L02",
+      "severity": "minor modality overstatement in investigator draft",
+      "remaining_in_final": false,
+      "candidate_locator": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/draft.md:69",
+      "exact_defect": "The same requires list unqualifiedly includes immutable existing version directories.",
+      "finding": "OCFL describes existing version contents as expected/intended immutable; ordinary filesystem writes do not automatically enforce that property. Preserving older states unchanged is a legitimate stricter local policy.",
+      "primary_locator": "OCFL §§3.3, 3.7.1; release-pinned source lines 280–282 and 595–607",
+      "evidence_ids": [
+        "E02-ocfl-spec",
+        "E16-ocfl-release-pinned-spec"
+      ],
+      "critic_disposition": "No distinct criticism; critic focused on inventory/sidecar modality.",
+      "final_resolution": "The comparison correctly says expected immutable (final line 77); immutable BagIt snapshots remain expressly a local design policy."
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L01",
+      "classification": "source/version limitation",
+      "material": false,
+      "description": "Official git-annex manuals are unversioned in the authored evidence; exact implementation-release behavior remains unknown. The final discloses this and keeps annex optional.",
+      "candidate_locator": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/source-map.json:131",
+      "evidence_ids": [
+        "E10-annex-whereis",
+        "E11-annex-fsck",
+        "E12-annex-log"
+      ]
+    },
+    {
+      "id": "L02",
+      "classification": "locator/time provenance limitation",
+      "material": false,
+      "description": "Critic/reviser per-request source access UTC is UNKNOWN and their preserved notes are paraphrases. This limits replication of the historical retrieval session, not the independently verified specification meaning. Reviewer retrievals have separate real access metadata and saved raw evidence.",
+      "candidate_locator": "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/sources/index.md:3",
+      "evidence_ids": [
+        "E01-bagit-rfc8493",
+        "E02-ocfl-spec"
+      ]
+    },
+    {
+      "id": "L03",
+      "classification": "minor wording/option framing",
+      "material": false,
+      "description": "The main procedure directly uses inventory.csv without repeating an if-adopted qualifier. Read with the explicit optional/conditional status at final lines 22, 65 and 122, this is the recommended configuration, not a decision that the authorized option became mandatory. The registrar’s completeness responsibility is mandatory regardless of a CSV representation.",
+      "candidate_locator": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md:99",
+      "evidence_ids": [
+        "E01-bagit-rfc8493"
+      ]
+    },
+    {
+      "id": "L04",
+      "classification": "implementation-selection breadth limit",
+      "material": false,
+      "description": "The research compares concrete mechanisms/specifications but does not nominate or inspect source for a particular BagIt/OCFL validator. It does not assert that any implementation conforms or has been installed. Because this is a planning proposal and the toolchain is an explicit owner input, a named implementation is not invented as an extra deliverable. Released specification source/history is substantive and independently verified.",
+      "candidate_locator": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md:130",
+      "evidence_ids": [
+        "E06-ocfl-pr547-files",
+        "E16-ocfl-release-pinned-spec"
+      ]
+    },
+    {
+      "id": "L05",
+      "classification": "prospective-check granularity limit",
+      "material": false,
+      "description": "A separate interruption fault-injection row is not named. The proposed path-set/digest acceptance controls and preservation of failed copies cover incomplete interrupted copies at design level; the pilot walkthrough remains proposed. No executed interruption test, atomic copy guarantee or universal restore capability is claimed.",
+      "candidate_locator": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md:101",
+      "evidence_ids": [
+        "E01-bagit-rfc8493"
+      ]
+    }
+  ],
+  "axis_coverage": [
+    {
+      "axis": 1,
+      "name": "Original obligations and negative constraints",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "All eight numbered obligations, full pilot intent, ownership and exclusions are carried into the final. No originals/accounts/storage-platform changes are prescribed or claimed. The optional CSV is explicitly retained conditionally; imperatives in the adopted-option procedure are a minor presentation ambiguity (L03), not an evidence-backed exclusion or mandatory feature conclusion.",
+      "references": [
+        "C01",
+        "C04",
+        "C05",
+        "C06",
+        "C17",
+        "C18",
+        "C19"
+      ],
+      "final_sections": [
+        "Recommendation",
+        "Reconciliation with the released draft plan",
+        "Exact revealed-plan disposition",
+        "Optional human-readable exhibition inventory",
+        "Decisions and unresolved owner inputs"
+      ]
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source claims: subject, operation, version, defaults, units, types, domain and exceptions",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "Independently checked the governing normative sections, full history referents, released source patch/tags, PREMIS applicability tables and annex operation distinctions. The final correctly repairs OCFL inventory modality and hash-tool support. No wrong numeric unit, digest denominator, JSON mapping type, blanket platform guarantee or untested actual default remains. Annex manuals are deliberately version-unpinned (L01).",
+      "references": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C12",
+        "C13",
+        "C14",
+        "C15",
+        "C16",
+        "C17",
+        "C18",
+        "C19"
+      ],
+      "final_sections": [
+        "Comparison and choice conditions",
+        "Independent critic adjudication",
+        "Bounded released issue and local-storage consequence",
+        "Evidence and validation status"
+      ]
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar discovery, competing and analogous approaches, implementation/history and opportunity breadth",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "BagIt snapshots versus OCFL object states provide a meaningful competing design; PREMIS-informed identity/event records and git-annex location/fsck supply analogous mechanisms. Useful opportunities include readable manifested inventory, direct file access, normalization-aware path checks and historical own-version inventory scope. History is actually a released specification-source correction, not invented deployed data loss. No product/validator is selected or benchmarked; implementation-specific tool research remains a disclosed future selection limitation (L04), not a missing mandatory deployment.",
+      "references": [
+        "C01",
+        "C05",
+        "C07",
+        "C08",
+        "C09",
+        "C12",
+        "C14",
+        "C15",
+        "C16",
+        "C17",
+        "C18"
+      ],
+      "final_sections": [
+        "Comparison and choice conditions",
+        "Bounded released issue and local-storage consequence",
+        "Decisions and unresolved owner inputs"
+      ]
+    },
+    {
+      "axis": 4,
+      "name": "Wrong criticism/corrections/rejections and exact plan dispositions",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "All six SCW records, every ordinary critique row, the sidecar finding and out-of-cap volume question are adjudicated. The critic’s material sidecar correction is supported and implemented. Neighboring hypotheses do not remove supported options. SCW-5 is not a valid single-selector contrast and the preserved critique lacks authentic excerpts; these are separately recorded method deviations P01/P02, not residual false product corrections. All exact plan treatments are independently mapped below.",
+      "references": [
+        "C01",
+        "C05",
+        "C06",
+        "C07",
+        "C10",
+        "C12",
+        "C17",
+        "C18"
+      ],
+      "final_sections": [
+        "Independent critic adjudication",
+        "Disposition of the critic’s full-brief findings",
+        "Exact revealed-plan disposition"
+      ]
+    },
+    {
+      "axis": 5,
+      "name": "Supported discovery/draft/critique/final meaning preserved",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS",
+      "basis": "Final retains the two layouts, identity levels, corrected-version retention, full-snapshot inference, alternative mechanisms, history qualifications, human inventory option, owner choices, named failures and NOT_RUN status. The final corrects unsupported normative wording without dropping compatible capabilities. Original discovery remains unchanged and its reveal hash matches; identity evidence supports lineage only, while independent source reading supports preserved meaning.",
+      "references": [
+        "C01",
+        "C05",
+        "C06",
+        "C07",
+        "C10",
+        "C12",
+        "C14",
+        "C15",
+        "C17",
+        "C18",
+        "C19"
+      ],
+      "final_sections": [
+        "Complete final, including recommendation, procedure, history, option and validation status"
+      ]
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed versus executed validation and oracle applicability",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "Only research reads/reconciliation are reported executed; product/package/validator/offsite/restore/reader checks are NOT_RUN. Proposed reference-manifest and file-set oracles distinguish missing/renamed/corrupt content, while registrar-approved intent catches omissions from both manifest and payload. Destination and staged restore checks answer custody/recovery questions independently. No prototype was required. Interruption is handled through acceptance-blocking incomplete/mismatch handling rather than a separate timed fault-injection row (L05).",
+      "references": [
+        "C03",
+        "C04",
+        "C07",
+        "C19"
+      ],
+      "final_sections": [
+        "Bounded copy and restore procedure",
+        "Evidence and validation status"
+      ]
+    }
+  ],
+  "final_artifact": {
+    "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+    "bytes": 36351,
+    "sha256": "064113d7792459e3f86ba0901b558d015c65a5b9c88f87747e409b0410be349f",
+    "mtime_ns": 1791607000123223122,
+    "content_inspection": "FULL",
+    "reviewer_read_role": "authored scientific output/source evidence"
+  },
+  "original_plan_dispositions": [
+    {
+      "id": 1,
+      "exact_plan_obligation": "1. Compare two preservation packaging/versioning approaches and an analogous content-identity/custody mechanism suitable for a small gallery.",
+      "exact_plan_draft_treatment": "Create a ZIP for each exhibition and call it immutable once named final. Overwrite a corrected caption inside the current ZIP.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A8-01/plan.md",
+        "heading_line": 15,
+        "treatment_line": 17
+      },
+      "independent_disposition": "REJECT overwrite; REPLACE packaging/version mechanism",
+      "assessment": "Preserves exhibition packages and corrected prior states; BagIt snapshot plus register or later OCFL state. ZIP may serialize a package but an immutable label alone proves nothing.",
+      "claim_ids": [
+        "C01",
+        "C08",
+        "C17"
+      ],
+      "final_path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+      "final_lines": [
+        18,
+        61,
+        76,
+        91
+      ],
+      "remaining_material_issue": false
+    },
+    {
+      "id": 2,
+      "exact_plan_obligation": "2. Explain logical asset identity, corrected versions, manifests and separation of integrity from provenance or completeness.",
+      "exact_plan_draft_treatment": "BagIt is a candidate; OCFL is mentioned without comparing repository versus transfer-package responsibilities.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A8-01/plan.md",
+        "heading_line": 19,
+        "treatment_line": 21
+      },
+      "independent_disposition": "AMEND incomplete comparison",
+      "assessment": "Adds package/transfer versus persistent object-history distinction, gallery logical IDs and byte identity. Neither format decides intended completeness.",
+      "claim_ids": [
+        "C01",
+        "C08",
+        "C09",
+        "C14"
+      ],
+      "final_path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+      "final_lines": [
+        19,
+        62,
+        76,
+        77,
+        84
+      ],
+      "remaining_material_issue": false
+    },
+    {
+      "id": 3,
+      "exact_plan_obligation": "3. Describe a bounded copy/restore validation design and explicit behavior for missing files, changed names or manifest mismatch.",
+      "exact_plan_draft_treatment": "Use one archive checksum as proof that all expected assets are preserved. Retain the optional human inventory, but no reconciliation or restore procedure is specified.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A8-01/plan.md",
+        "heading_line": 23,
+        "treatment_line": 25
+      },
+      "independent_disposition": "REJECT checksum-as-completeness proof; RETAIN option; ADD reconciliation/restore",
+      "assessment": "Every sentence is addressed: itemized manifests plus registrar intent, optional human index, destination validation and staged restore with explicit missing/renamed/mismatched handling.",
+      "claim_ids": [
+        "C02",
+        "C03",
+        "C04",
+        "C18",
+        "C19"
+      ],
+      "final_path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+      "final_lines": [
+        20,
+        63,
+        99,
+        106,
+        108,
+        110
+      ],
+      "remaining_material_issue": false
+    },
+    {
+      "id": 4,
+      "exact_plan_obligation": "4. Investigate a relevant released path/manifest/version-history issue and explain its impact on ordinary local/offsite storage.",
+      "exact_plan_draft_treatment": "No path/manifest history has been investigated. A future successful copy is expected to establish provenance and recovery.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A8-01/plan.md",
+        "heading_line": 27,
+        "treatment_line": 29
+      },
+      "independent_disposition": "ADD released history; REJECT future-copy-as-provenance/recovery proof",
+      "assessment": "Released #538/#547 own-version clarification is conditional on OCFL; whole-object preservation is an operational inference, not measured recovery.",
+      "claim_ids": [
+        "C04",
+        "C10",
+        "C12",
+        "C13",
+        "C19"
+      ],
+      "final_path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+      "final_lines": [
+        21,
+        64,
+        114,
+        116,
+        118
+      ],
+      "remaining_material_issue": false
+    },
+    {
+      "id": 5,
+      "exact_plan_obligation": "5. Preserve and investigate this supported optional scope: a human-readable exhibition inventory that remains usable without specialist repository software. It is an authorized option, not a mandatory feature or an established technical capability; recommend conditions, retain it when supported, and explain any evidence-based exclusion.",
+      "exact_plan_draft_treatment": "Retain a human-readable exhibition inventory that remains usable without specialist repository software as supported owner-authorized optional scope. Support here means that the brief explicitly permits it; technical support, conditions and interoperability still need research. Do not remove it merely because the baseline route lacks it, or silently promote it to mandatory scope.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A8-01/plan.md",
+        "heading_line": 31,
+        "treatment_line": 33
+      },
+      "independent_disposition": "RETAIN authorized optional scope; QUALIFY technical support",
+      "assessment": "Readable manifested CSV/README is a local option; source mechanics support byte inclusion and direct file access, staff readability/maintenance require pilot checks. No unsupported exclusion; no formal standard CSV semantics.",
+      "claim_ids": [
+        "C05",
+        "C18"
+      ],
+      "final_path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+      "final_lines": [
+        22,
+        37,
+        65,
+        122,
+        145
+      ],
+      "remaining_material_issue": false
+    },
+    {
+      "id": 6,
+      "exact_plan_obligation": "6. Make owner decisions explicit: The exhibition registrar owns completeness and version relationships; the storage custodian owns copy/restore practice. Hash algorithm and package depth are explicit recommendations for owner choice, not a presumed mandate.",
+      "exact_plan_draft_treatment": "Owner authority is reserved as follows: The exhibition registrar owns completeness and version relationships; the storage custodian owns copy/restore practice. Hash algorithm and package depth are explicit recommendations for owner choice, not a presumed mandate. The draft has not obtained these decisions. Its tentative implementation assumptions cannot substitute for them.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A8-01/plan.md",
+        "heading_line": 35,
+        "treatment_line": 37
+      },
+      "independent_disposition": "RETAIN authority; RECOMMEND rather than presume decisions",
+      "assessment": "Registrar completeness/version links and custodian copy/restore remain distinct. SHA-512 and one full shallow bag are recommendations, with explicit toolchain/size/algorithm/depth owner choices; no decisions were obtained.",
+      "claim_ids": [
+        "C06",
+        "C17"
+      ],
+      "final_path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+      "final_lines": [
+        23,
+        36,
+        66,
+        126,
+        128,
+        130
+      ],
+      "remaining_material_issue": false
+    },
+    {
+      "id": 7,
+      "exact_plan_obligation": "7. Preserve negative constraints: Do not move gallery originals, create storage accounts, claim a checksum establishes authorship or backup recoverability, or replace the existing offsite copy with an untested platform.",
+      "exact_plan_draft_treatment": "Binding exclusions: Do not move gallery originals, create storage accounts, claim a checksum establishes authorship or backup recoverability, or replace the existing offsite copy with an untested platform. The draft has no complete trace showing that its assumptions comply; revise the proposal wherever necessary to preserve these exclusions.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A8-01/plan.md",
+        "heading_line": 39,
+        "treatment_line": 41
+      },
+      "independent_disposition": "ACCEPT binding exclusions and apply them throughout",
+      "assessment": "Works on deposit copies; no accounts, migration/new platform, authorship or recoverability proof. A proposal can describe future tests without claiming a performed deployment.",
+      "claim_ids": [
+        "C04",
+        "C17",
+        "C19"
+      ],
+      "final_path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+      "final_lines": [
+        24,
+        67,
+        100,
+        102,
+        149
+      ],
+      "remaining_material_issue": false
+    },
+    {
+      "id": 8,
+      "exact_plan_obligation": "8. Deliver one coherent evidence-backed research proposal covering obligations 1–8, with recommendations, source/version applicability, useful discoveries, unresolved owner inputs, and a validation table separating checks actually executed from checks merely proposed. Do not report research sources or future tests as executed product validation.",
+      "exact_plan_draft_treatment": "The draft currently contains no coherent evidence-backed final proposal. Its proposed demos are research/validation ideas only. A complete revision must preserve every obligation, disclose corrections and retained options, and not confuse documentation review with successful product operation.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/A8-01/plan.md",
+        "heading_line": 43,
+        "treatment_line": 45
+      },
+      "independent_disposition": "FULFILL coherent complete proposal; keep demonstrations proposed",
+      "assessment": "Final is standalone, not just critique/patch IDs; includes comparison, recommendation, evidence/version conditions, discoveries, options, uncertainties, history and table separating research from NOT_RUN product checks.",
+      "claim_ids": [
+        "C01",
+        "C12",
+        "C17",
+        "C18",
+        "C19"
+      ],
+      "final_path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+      "final_lines": [
+        25,
+        68,
+        70,
+        132,
+        134,
+        136,
+        138,
+        140
+      ],
+      "remaining_material_issue": false
+    }
+  ],
+  "other_exact_plan_context": [
+    {
+      "id": "PLAN-access-status",
+      "exact_text": "ROOT-STAGED PLAN INPUT. Withhold this document, its product hints and this fixture's index entry from the brief-only investigator until discovery has been saved. This is a fallible, realistically incomplete sandbox draft to compare against research, not an assessor key. All external behavior claims below are unverified draft assumptions. No implementation, source inspection or product validation has been executed in preparing the draft.",
+      "assessment": "Revealed plan equals original frozen bytes. Reveal record binds the pre-release discovery hash and time; discovery text says brief-only. This documents the designated reveal, but cannot prove no earlier unauthorized read without tool-access telemetry. The plan is consistently treated as fallible input, not an assessor key.",
+      "final_lines": [
+        4,
+        57,
+        149
+      ],
+      "protocol_unknown": "independent assurance of brief-only access chronology"
+    },
+    {
+      "id": "PLAN-pilot-intent",
+      "exact_text": "An independent gallery needs to preserve the final digital assets for a series of exhibitions: photographs, captions, installation diagrams and catalogue PDFs. Staff may deposit a corrected caption later without losing the earlier deposit. They need a small, inspectable package and a documented way to confirm that a copied deposit is intact. Storage is ordinary local disk plus an existing offsite copy; no new preservation platform is required.",
+      "assessment": "All four asset categories, later correction retaining earlier deposit, inspectable package, copied-deposit integrity, ordinary disk and existing offsite copy remain in the final.",
+      "final_lines": [
+        8,
+        57,
+        99,
+        102,
+        103
+      ]
+    },
+    {
+      "id": "PLAN-leads-not-winners",
+      "exact_text": "The team has tentatively discussed BagIt-oriented packaging or OCFL-oriented repository tooling. These are investigation leads, not selected winners. The mechanism needing investigation is fixity manifests, version inventory and custody receipts; a useful historical inquiry concerns released manifest/path-handling or version-recovery failures. Do not let these leads prevent discovery of a better fit or an analogous mechanism.",
+      "assessment": "BagIt/OCFL leads did not exclude analogous PREMIS/git-annex mechanisms; final winner is conditional local design. No historical storage-failure incident is invented.",
+      "final_lines": [
+        10,
+        12,
+        76,
+        77,
+        78,
+        114
+      ]
+    },
+    {
+      "id": "PLAN-input-existence-not-proof",
+      "exact_text": "The local existence of this document is input preparation only. It establishes neither the truth of its draft claims nor feasibility of the proposed system. Reconcile research with the draft in the complete final; do not deliver only a critique or patch list.",
+      "assessment": "Final provides full proposal and independent sources; no locally existing draft, source map, hash or count is treated as proof of product behavior.",
+      "final_lines": [
+        4,
+        134,
+        138
+      ]
+    }
+  ],
+  "original_plan_validation_handoff_dispositions": [
+    {
+      "exact_handoff_row": "| External documentation/version review | NOT_RUN | Investigator must retrieve relevant public primary evidence. |",
+      "original_line": 51,
+      "final_resolution": "Read-only research reported executed; governing sources independently retrieved by reviewer. Original documentation absence is no longer the scientific state.",
+      "oracle_applicability": "Research-source propositions, not validator conformance.",
+      "final_lines": [
+        70,
+        138,
+        143,
+        144,
+        145,
+        146
+      ]
+    },
+    {
+      "exact_handoff_row": "| Product comparison and history investigation | NOT_RUN | No winner, applicability conclusion or failure-chain finding is supplied. |",
+      "original_line": 52,
+      "final_resolution": "Comparison and history investigation supplied; no preselected product winner or operational failure chain is fabricated.",
+      "oracle_applicability": "Distinct format/state responsibilities and released issue/patch evidence.",
+      "final_lines": [
+        70,
+        138,
+        143,
+        144,
+        145,
+        146
+      ]
+    },
+    {
+      "exact_handoff_row": "| Pilot scenario walkthrough | PROPOSED | Walk through ordinary use, interruption, correction and incompatible/missing input. |",
+      "original_line": 53,
+      "final_resolution": "Still proposed/NOT_RUN. Ordinary deposit, correction, missing/incompatible names, mismatch and incomplete-copy handling are described; no executed interruption witness.",
+      "oracle_applicability": "Reference path sets/digests plus owner intent, with acceptance blocked on incomplete/mismatch results.",
+      "final_lines": [
+        70,
+        138,
+        143,
+        144,
+        145,
+        146
+      ]
+    },
+    {
+      "exact_handoff_row": "| Optional-path compatibility | PROPOSED | Check the option on its own terms, with conditions and owner choices. |",
+      "original_line": 54,
+      "final_resolution": "Still proposed/NOT_RUN, retained on its own readable/maintainable conditions.",
+      "oracle_applicability": "Staff opening and registrar reconciliation; byte manifestation cannot prove curatorial truth.",
+      "final_lines": [
+        70,
+        138,
+        143,
+        144,
+        145,
+        146
+      ]
+    },
+    {
+      "exact_handoff_row": "| End-to-end product operation | NOT_RUN | No installation, deployment or live system access is authorized by this fixture. |",
+      "original_line": 55,
+      "final_resolution": "Still NOT_RUN. No installation/deployment/live access is required or asserted.",
+      "oracle_applicability": "No executed end-to-end oracle result exists.",
+      "final_lines": [
+        70,
+        138,
+        143,
+        144,
+        145,
+        146
+      ]
+    }
+  ],
+  "criticism_dispositions": {
+    "selected_scw": [
+      {
+        "id": "SCW-1",
+        "exact_selected_sentence_and_context": "1. **Recommendation ¶1. Exact claim:** “For a small pilot on ordinary local disk plus the gallery’s existing offsite copy, use a **BagIt v1.0 package per exhibition deposit state**, with one new package whenever an asset correction is approved.” Selected because misreading scale/package unit could change the packaging recommendation. Diagnostic selector: applicability condition, small pilot vs many revisions.",
+        "critic_selection_line": 11,
+        "complete_original_scw_record": "### SCW-1 — small-pilot package recommendation\n\n- **C:** Use one BagIt package per exhibition deposit state for the stated small pilot, creating a new package for an approved correction. **C*:** Use that same package-per-deposit recommendation for a gallery with many revisions. **Delta:** applicability condition, “small pilot” → “many revisions.”\n- **Evidence:** S01 defines BagIt’s directory/manifest packaging and byte checks; S02 defines a persistent object with continuous version directories and state. The cited standards do not measure staff effort, collection size, restore simplicity, or local storage cost. Both excerpts: `[S01 §1.1, §2.1.3; S02 §§3.3, 3.5]`.\n- **Relations:** C **UNDETERMINED**; C* **UNDETERMINED**. The record supports format capabilities, not relative ease or a numerical revision threshold.\n- **Disposition:** Qualify as a local recommendation/inference conditional on actual volume, correction frequency, and owner tolerance for duplicate bytes. No evidence-backed replacement identified here.\n- **Affected:** Brief 1; package/version choice and owner input on snapshot depth.",
+        "critic_heading_line": 22,
+        "final_disposition_line": 33,
+        "reviewer_disposition": "RETAIN UNCERTAINTY",
+        "independent_basis": "C/C* both UNDETERMINED as externally measured comparative-fit claims; the original small-pilot design remains a reasonable explicitly labeled local choice. Neither standard establishes a revision threshold.",
+        "claim_ids": [
+          "C01",
+          "C08",
+          "C17"
+        ],
+        "final_false_correction_remaining": false
+      },
+      {
+        "id": "SCW-2",
+        "exact_selected_sentence_and_context": "2. **Comparison table, BagIt row. Exact claim:** “BagIt validates completeness/layout and checksums, but does not model succession of corrected asset versions.” Selected because conflating package integrity with version history could change the plan disposition. Selector: product, BagIt vs OCFL.",
+        "critic_selection_line": 12,
+        "complete_original_scw_record": "### SCW-2 — native version model\n\n- **C:** BagIt validates its enumerated package paths/checksums but does not itself model successor states for corrected assets. **C*:** The same statement about successor-state modeling applies to OCFL. **Delta:** product, “BagIt” → “OCFL.”\n- **Evidence:** S01 defines bags as storage/transfer layout and enumerated payload/tag manifests; S02 requires continuous object versions and inventories with per-version state. The format distinction is scope-bearing. `[S01 §§1.1, 2.1.3, 3; S02 §§3.3, 3.5.3]`\n- **Relations:** C **ENTAILS**, scoped to BagIt’s specified behavior (custom local tags can record relationships but are not a native version model); C* **CONTRADICTS**, because OCFL defines object version states.\n- **Disposition:** Retain, with “native” understood. BagIt snapshots plus a separate register remain one design choice; OCFL is the alternative for native history.\n- **Affected:** Brief 1–2; correction handling and disposition of the overwrite-in-place ZIP assumption.",
+        "critic_heading_line": 30,
+        "final_disposition_line": 34,
+        "reviewer_disposition": "ACCEPT original / REJECT neighboring no-version claim",
+        "independent_basis": "BagIt’s native model is packaging, OCFL explicitly has states/versions. A separate register remains compatible with BagIt.",
+        "claim_ids": [
+          "C01",
+          "C08",
+          "C09"
+        ],
+        "final_false_correction_remaining": false
+      },
+      {
+        "id": "SCW-3",
+        "exact_selected_sentence_and_context": "3. **Bounded released issue ¶1. Exact claim:** “The released OCFL 1.1 change log documents that v1.1.0 clarified the rule so each historical inventory’s manifest references every file in that inventory’s version directory; the [release page](https://github.com/OCFL/spec/releases) identifies the subsequent 1.1.1 release (tag `1.1.1`, commit `c3f88b3`).” Selected because the inventory/version referent controls copy and check scope. Selector: inventory scope, historical vs current.",
+        "critic_selection_line": 13,
+        "complete_original_scw_record": "### SCW-3 — historical inventory scope\n\n- **C:** Each historical inventory’s manifest references every file in that inventory’s version directory. **C*:** Each current inventory’s manifest references every file in that inventory’s version directory. **Delta:** inventory scope, “historical” → “current.”\n- **Evidence:** S04 change log states the clarification for each historical inventory and its own version directory; S02 §3.3.1 makes the content-directory/version-inventory relation explicit. S03 documents the original ambiguity and #547 closure. `[S02 §3.3.1; S03 issue description/status; S04 v1.1.0 clarification]`\n- **Relations:** C **ENTAILS**; C* **ENTAILS**. This is a nondiscriminating result, not evidence that the historical wording is wrong; both inventory scopes have rules.\n- **Disposition:** Retain. Preserve the released clarification’s own-version-directory wording and keep the separate inference to copy/validate the whole OCFL object explicitly marked as local-storage guidance.\n- **Affected:** Brief 4; historical-copy depth and version-history validation.",
+        "critic_heading_line": 38,
+        "final_disposition_line": 35,
+        "reviewer_disposition": "ACCEPT both scoped referents / nondiscriminating",
+        "independent_basis": "Historical own-version manifest rule and current root inventory coverage both hold. Historic inventories do not refer to future version content. Optional historical inventory presence is separately qualified.",
+        "claim_ids": [
+          "C09",
+          "C10",
+          "C12"
+        ],
+        "final_false_correction_remaining": false
+      },
+      {
+        "id": "SCW-4",
+        "exact_selected_sentence_and_context": "4. **Reconciliation table, obligation 6. Exact claim:** “Recommend SHA-512 for new BagIt payload manifests, aligning with RFC 8493’s SHOULD default; SHA-256 is also supported and can be chosen if the actual validated workflow favors it.” Selected because confusing recommendation strength with a mandate changes the algorithm decision. Selector: modality, SHOULD vs MUST.",
+        "critic_selection_line": 14,
+        "complete_original_scw_record": "### SCW-4 — SHA-512 modality\n\n- **C:** RFC 8493 says tools SHOULD enable SHA-512 by default for new BagIt 1.0 bags. **C*:** RFC 8493 says tools MUST enable SHA-512 by default. **Delta:** requirement modality, SHOULD → MUST.\n- **Evidence:** S01 §2.4 / RFC 8493 lines 679–685 distinguishes MUST support for SHA-256 and SHA-512 from SHOULD enable SHA-512 by default. `[S01 §2.4]`\n- **Relations:** C **ENTAILS**; C* **CONTRADICTS**.\n- **Disposition:** Retain the recommendation as an owner choice; state tool support for both algorithms separately from the default recommendation. A product’s actual behavior remains untested.\n- **Affected:** Brief 6; custodian algorithm decision.",
+        "critic_heading_line": 46,
+        "final_disposition_line": 36,
+        "reviewer_disposition": "ACCEPT SHOULD / REJECT asserted MUST",
+        "independent_basis": "Tool support for both hashes is MUST; SHA-512 default for creating new bags is SHOULD. No actual product default is witnessed.",
+        "claim_ids": [
+          "C06"
+        ],
+        "final_false_correction_remaining": false
+      },
+      {
+        "id": "SCW-5",
+        "exact_selected_sentence_and_context": "5. **Optional inventory ¶1. Exact claim:** “BagIt’s optional `bag-info.txt` is meant for human use and arbitrary tag files are allowed, but generic BagIt processors ignore custom tag semantics.” Selected because mis-scoping a generic processor’s guarantees could reject or overstate the authorized CSV option. Selector: processor scope, generic vs locally extended.",
+        "critic_selection_line": 15,
+        "complete_original_scw_record": "### SCW-5 — custom tag semantics\n\n- **C:** `bag-info.txt` is optional human-use metadata; other tag files are allowed, but generic implementations that do not understand a custom tag ignore its contents. **C*:** A processor locally extended to understand this gallery’s CSV assigns standard BagIt semantics to its inventory fields. **Delta:** processor scope, generic/unextended → locally extended.\n- **Evidence:** S01 §§2.2.2, 2.2.4 allows human-readable metadata/arbitrary tags and specifies handling of unknown tags; custom CSV field meaning remains local. No gallery-specific processor was identified or tested. `[S01 §§2.2.2, 2.2.4]`\n- **Relations:** C **ENTAILS**; C* **UNDETERMINED** by the RFC because an extension would be local behavior.\n- **Disposition:** Retain the CSV as optional local content, not a BagIt-provided semantic capability; keep its bytes manifested and validate staff readability in the proposed pilot.\n- **Affected:** Brief 5; optional inventory support and interoperability.",
+        "critic_heading_line": 54,
+        "final_disposition_line": 37,
+        "reviewer_disposition": "ACCEPT core custom-tag claim / RETAIN extension uncertainty; method contrast invalid",
+        "independent_basis": "Core BagIt does not assign gallery-specific CSV semantics. A hypothetical locally extended processor is not an inspected product. The final keeps the supported optional inventory, but the critic changed more than one factual component (P02).",
+        "claim_ids": [
+          "C05",
+          "C18"
+        ],
+        "final_false_correction_remaining": false
+      },
+      {
+        "id": "SCW-6",
+        "exact_selected_sentence_and_context": "6. **Changed name or path. Exact claim:** “The BagIt RFC documents that visually identical names may compare unequal across filesystems and recommends tolerant normalization-aware validators.” Selected because platform condition changes path-risk applicability. Selector: applicability, cross-filesystem vs same-filesystem.",
+        "critic_selection_line": 16,
+        "complete_original_scw_record": "### SCW-6 — filename normalization applicability\n\n- **C:** RFC 8493 documents that different filesystems/utilities may normalize names differently, so a path that looks identical may fail exact manifest lookup; it recommends normalization-aware tolerance. **C*:** The same cross-filesystem failure is established for a copy that stays on one unchanged filesystem with no normalizing utility. **Delta:** applicability condition, cross-filesystem → same-filesystem/no-normalizing utility.\n- **Evidence:** S01 §§6.1.1–6.1.2 specifically discusses cross-system normalization/case behavior and common utilities; it does not establish a failure under the narrowed C* condition. Do not infer universal safety or risk from silence. `[S01 §§6.1.1–6.1.2]`\n- **Relations:** C **ENTAILS**; C* **UNDETERMINED**.\n- **Disposition:** Retain cross-platform warning; qualify as platform/transfer-tool dependent. Test the actual mixed-platform names and tools if used.\n- **Affected:** Brief 3; path reconciliation and pilot filenames.",
+        "critic_heading_line": 62,
+        "final_disposition_line": 38,
+        "reviewer_disposition": "ACCEPT conditional normalization risk / RETAIN narrower-case uncertainty",
+        "independent_basis": "Different normalizing systems or tools can produce exact-lookup differences. An unchanged single-filesystem condition is not evidence-backed failure or universal safety.",
+        "claim_ids": [
+          "C07"
+        ],
+        "final_false_correction_remaining": false
+      }
+    ],
+    "ordinary_and_outside_cap": [
+      {
+        "id": "ORD-1",
+        "complete_critic_finding": "| **1. Compare two preservation packaging/versioning approaches and analogous identity/custody mechanism.** | **Covered.** BagIt and OCFL have distinct package vs object-history roles; PREMIS-inspired event log and git-annex are useful bounded alternatives. Draft explicitly rejects the plan’s ZIP overwrite contradiction. No need to imply either format is mandatory. |",
+        "critic_line": 74,
+        "final_line": 44,
+        "reviewer_disposition": "SUPPORTED / addressed",
+        "basis": "Preserves exhibition packages and corrected prior states; BagIt snapshot plus register or later OCFL state. ZIP may serialize a package but an immutable label alone proves nothing.",
+        "claim_ids": [
+          "C01",
+          "C08",
+          "C17"
+        ]
+      },
+      {
+        "id": "ORD-2",
+        "complete_critic_finding": "| **2. Identity, corrections, manifests, integrity vs provenance/completeness.** | **Covered.** Exhibition, asset, version and deposit IDs are separated; digest identity is separated from registrar intent and custody. Keep the “BagIt does not model” statement scoped to the standard’s native model (SCW-2). |",
+        "critic_line": 75,
+        "final_line": 45,
+        "reviewer_disposition": "SUPPORTED / addressed",
+        "basis": "Adds package/transfer versus persistent object-history distinction, gallery logical IDs and byte identity. Neither format decides intended completeness.",
+        "claim_ids": [
+          "C01",
+          "C08",
+          "C09",
+          "C14"
+        ]
+      },
+      {
+        "id": "ORD-3",
+        "complete_critic_finding": "| **3. Bounded copy/restore and named failures.** | **Covered as proposed, not run.** Source/destination checks, separate path-set and digest results, staging restore and failure preservation are clear. A manifest can pass while an intended asset is omitted from both payload and manifest; registrar inventory review is correctly assigned to detect this. No restore or product validation occurred. |",
+        "critic_line": 76,
+        "final_line": 46,
+        "reviewer_disposition": "SUPPORTED / addressed",
+        "basis": "Every sentence is addressed: itemized manifests plus registrar intent, optional human index, destination validation and staged restore with explicit missing/renamed/mismatched handling.",
+        "claim_ids": [
+          "C02",
+          "C03",
+          "C04",
+          "C18",
+          "C19"
+        ]
+      },
+      {
+        "id": "ORD-4",
+        "complete_critic_finding": "| **4. Released history and ordinary storage impact.** | **Mostly covered.** Issue #538 and v1.1.0 clarification are accurately distinguished from a reported incident. Copying the whole OCFL object is an inference, not the issue’s direct finding. **Material wrong:** in “Bounded released issue…” the draft says 1.1 “requires … per-version inventory sidecars.” OCFL 1.1 §3.7 says a root inventory **MUST** exist, while each version-directory inventory **SHOULD** be included; §3.6 requires a digest sidecar for every inventory file that exists. This upgrades a SHOULD to a MUST and may overstate package requirements. Correct the claim in any later final. |",
+        "critic_line": 77,
+        "final_line": 47,
+        "reviewer_disposition": "SUPPORTED / addressed",
+        "basis": "Released #538/#547 own-version clarification is conditional on OCFL; whole-object preservation is an operational inference, not measured recovery. Includes supported OCFL sidecar correction D-L01.",
+        "claim_ids": [
+          "C04",
+          "C10",
+          "C12",
+          "C13",
+          "C19"
+        ]
+      },
+      {
+        "id": "ORD-5",
+        "complete_critic_finding": "| **5. Optional human-readable inventory.** | **Covered and retained at the right status.** CSV/README is an authorized optional local choice, not mandatory or standardized; bag-info and custom-tag semantics are correctly bounded. Readability/maintenance remain proposed checks and owner inputs. |",
+        "critic_line": 78,
+        "final_line": 48,
+        "reviewer_disposition": "SUPPORTED / addressed",
+        "basis": "Readable manifested CSV/README is a local option; source mechanics support byte inclusion and direct file access, staff readability/maintenance require pilot checks. No unsupported exclusion; no formal standard CSV semantics.",
+        "claim_ids": [
+          "C05",
+          "C18"
+        ]
+      },
+      {
+        "id": "ORD-6",
+        "complete_critic_finding": "| **6. Ownership and explicit owner choices.** | **Covered.** Registrar owns intended completeness and version relationships; custodian owns copies/restores. SHA-512 recommendation vs SHA-256 owner choice and package depth are distinguished. **Minor incomplete wording:** RFC 8493 says tools MUST support SHA-256 and SHA-512, and SHOULD enable SHA-512 by default. “SHA-256 is also supported” should not obscure the support obligation; neither hash choice nor actual tool behavior was executed. |",
+        "critic_line": 79,
+        "final_line": 49,
+        "reviewer_disposition": "SUPPORTED / addressed",
+        "basis": "Registrar completeness/version links and custodian copy/restore remain distinct. SHA-512 and one full shallow bag are recommendations, with explicit toolchain/size/algorithm/depth owner choices; no decisions were obtained. Includes explicit normative hash-tool support.",
+        "claim_ids": [
+          "C06",
+          "C17"
+        ]
+      },
+      {
+        "id": "ORD-7",
+        "complete_critic_finding": "| **7. Negative constraints.** | **Preserved.** No originals moved; no account, live write, untested platform replacement, or unsupported authorship/recoverability claim. |",
+        "critic_line": 80,
+        "final_line": 50,
+        "reviewer_disposition": "SUPPORTED / addressed",
+        "basis": "Works on deposit copies; no accounts, migration/new platform, authorship or recoverability proof. A proposal can describe future tests without claiming a performed deployment.",
+        "claim_ids": [
+          "C04",
+          "C17",
+          "C19"
+        ]
+      },
+      {
+        "id": "ORD-8",
+        "complete_critic_finding": "| **8. Coherent proposal, useful discovery, unresolved inputs, validation table.** | **Covered at planning level.** The draft distinguishes research reads from product validation and marks package, CSV, and restore checks proposed/not run. It identifies practical owner inputs. The critic’s finding is a material correction to the fallible draft, not authority to write a final. |",
+        "critic_line": 81,
+        "final_line": 51,
+        "reviewer_disposition": "SUPPORTED / addressed",
+        "basis": "Final is standalone, not just critique/patch IDs; includes comparison, recommendation, evidence/version conditions, discoveries, options, uncertainties, history and table separating research from NOT_RUN product checks.",
+        "claim_ids": [
+          "C01",
+          "C12",
+          "C17",
+          "C18",
+          "C19"
+        ]
+      },
+      {
+        "id": "ORD-outside-sidecar",
+        "complete_critic_finding": "- **SCW_NOT_RUN — OCFL sidecar obligation wording:** material error recorded above under obligation 4; not added to the fixed SCW selection.",
+        "critic_line": 85,
+        "final_line": 47,
+        "reviewer_disposition": "ACCEPT material draft finding; resolved in final",
+        "basis": "D-L01 is independently contradicted by OCFL §§3.6–3.7 and corrected in the final.",
+        "claim_ids": [
+          "C10"
+        ]
+      },
+      {
+        "id": "ORD-outside-cost",
+        "complete_critic_finding": "- **SCW_NOT_RUN — actual revision volume/storage costs:** no bytes, counts, cadence, or toolchain were provided; the draft correctly leaves these as owner inputs, so no threshold-based product winner is externally established.",
+        "critic_line": 86,
+        "final_line": 52,
+        "reviewer_disposition": "RETAIN owner-input uncertainty",
+        "basis": "No actual bytes/counts/cadence/toolchain given; no measured threshold required or claimed.",
+        "claim_ids": [
+          "C17"
+        ]
+      },
+      {
+        "id": "ORD-no-scope-reduction",
+        "complete_critic_finding": "- No scope reduction is warranted. No other material false correction found in this review.",
+        "critic_line": 87,
+        "final_line": 53,
+        "reviewer_disposition": "ACCEPT with independent scope assessment",
+        "basis": "The complete final retains scope, including optional inventory and contrasting approaches. No further remaining material source error identified.",
+        "claim_ids": [
+          "C17",
+          "C18",
+          "C19"
+        ]
+      }
+    ]
+  },
+  "consequential_claim_assessment": [
+    {
+      "id": "C01",
+      "consequential_claim": "BagIt is a directory transfer/storage format with data/, bagit.txt and payload manifests; the standard has no native sequence of corrected asset states.",
+      "evidence_ids": [
+        "E01-bagit-rfc8493"
+      ],
+      "primary_locators": [
+        "RFC 8493 §§1.1, 1.3, 2.1; text lines 89–259"
+      ],
+      "semantic_judgment": "SUPPORTED",
+      "scope_conditions_and_exceptions": "The payload is opaque; a local register can add version relationships. The lack of a native version model does not prohibit snapshots, ZIP serialization, or additional local metadata. This is BagIt 1.0, not a claim about every product using BagIt.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+        "lines": [
+          76
+        ]
+      }
+    },
+    {
+      "id": "C02",
+      "consequential_claim": "Each BagIt 1.0 payload manifest lists every payload filename exactly once, and completeness includes both listed-file presence and the actual payload file set.",
+      "evidence_ids": [
+        "E01-bagit-rfc8493"
+      ],
+      "primary_locators": [
+        "§2.1.3, §3; text lines 220–259, 462–475"
+      ],
+      "semantic_judgment": "SUPPORTED",
+      "scope_conditions_and_exceptions": "Every manifest, not a union of manifests, must enumerate the payload in 1.0. Filenames are relative to the bag base and include data/; slash separators and special-character encoding rules apply. Older BagIt rules differ. The final proposes complete local packages, not unresolved fetch.txt holes.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+        "lines": [
+          76,
+          99,
+          101,
+          106
+        ]
+      }
+    },
+    {
+      "id": "C03",
+      "consequential_claim": "A valid bag is complete and all payload/tag manifest checksums verify; missing paths, unlisted payload paths and byte mismatches are different failure observations.",
+      "evidence_ids": [
+        "E01-bagit-rfc8493"
+      ],
+      "primary_locators": [
+        "§3; text lines 462–475; §6.1.1.3 lines 650–657"
+      ],
+      "semantic_judgment": "SUPPORTED",
+      "scope_conditions_and_exceptions": "A true unlisted payload violates 1.0 completeness. Normalization-equivalent paths need the RFC-recommended tolerant comparison, which the final expressly acknowledges. These checks do not catch an intended item omitted from both manifest and deposited content.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+        "lines": [
+          101,
+          106,
+          108,
+          110
+        ]
+      }
+    },
+    {
+      "id": "C04",
+      "consequential_claim": "Fixity against a trusted reference does not establish intended exhibition completeness, authorship, live remote possession, or backup recoverability.",
+      "evidence_ids": [
+        "E01-bagit-rfc8493",
+        "E09-premis30",
+        "E10-annex-whereis"
+      ],
+      "primary_locators": [
+        "BagIt §§1.1, 3, 5.4; PREMIS §1.5.2 p.59, special topic p.258; whereis description lines 34–36"
+      ],
+      "semantic_judgment": "SUPPORTED",
+      "scope_conditions_and_exceptions": "The governing standards concern reference bytes and preservation metadata. Registrar intent and custody/restore observations are separate controls. A whole archive digest can demonstrate archive-byte agreement with an established reference; the rejected plan had improperly promoted that to proof of expected contents and recovery.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+        "lines": [
+          12,
+          20,
+          63,
+          64,
+          106,
+          110
+        ]
+      }
+    },
+    {
+      "id": "C05",
+      "consequential_claim": "bag-info.txt is optional human-use metadata, additional tags are permitted, and custom CSV field meanings are local. Manifesting an inventory protects its bytes, not its truth.",
+      "evidence_ids": [
+        "E01-bagit-rfc8493"
+      ],
+      "primary_locators": [
+        "§§2.2.1, 2.2.2, 2.2.4; text lines 261–290, 411–415; §2.1.2"
+      ],
+      "semantic_judgment": "SUPPORTED",
+      "scope_conditions_and_exceptions": "Tagmanifest checks cover a listed tag; the RFC otherwise says to ignore custom tag contents. Putting CSV/README in data/ makes them payload bytes. Ordinary staff readability and registrar maintenance are proposed pilot checks, not established interoperability or catalogue integration.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+        "lines": [
+          22,
+          37,
+          65,
+          93,
+          122
+        ]
+      }
+    },
+    {
+      "id": "C06",
+      "consequential_claim": "BagIt 1.0 creation/validation tools MUST support SHA-256 and SHA-512; SHA-512 is a SHOULD default for new bags, and the gallery may choose the algorithm.",
+      "evidence_ids": [
+        "E01-bagit-rfc8493"
+      ],
+      "primary_locators": [
+        "§2.4; text lines 435–461, especially 455–459"
+      ],
+      "semantic_judgment": "SUPPORTED",
+      "scope_conditions_and_exceptions": "The support obligation concerns tools. It does not require every bag to contain both algorithms, make SHA-512 a MUST, or prove any untested tool implements its default. Legacy algorithm support is separately recommended. No numeric hash length or unit is incorrectly substituted in the final.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+        "lines": [
+          23,
+          36,
+          88,
+          128
+        ]
+      }
+    },
+    {
+      "id": "C07",
+      "consequential_claim": "Filename normalization, case and target-platform path rules can alter manifest lookup; actual filesystem and transfer-tool conditions matter.",
+      "evidence_ids": [
+        "E01-bagit-rfc8493"
+      ],
+      "primary_locators": [
+        "§§6.1.1.1–6.1.1.3, 6.1.2; text lines 583–679"
+      ],
+      "semantic_judgment": "SUPPORTED",
+      "scope_conditions_and_exceptions": "The witnessed failure is a filename normalization change after manifest writing. It is not universal failure across all copies or proof of safety/failure on a single unchanged filesystem. The final avoids adopting the RFC’s dated numeric Windows length statement as a universal current limit and requests actual-platform fixtures.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+        "lines": [
+          38,
+          93,
+          108,
+          118
+        ]
+      }
+    },
+    {
+      "id": "C08",
+      "consequential_claim": "OCFL uses stable local object IDs and continuous version directories with expected immutable earlier content.",
+      "evidence_ids": [
+        "E02-ocfl-spec",
+        "E16-ocfl-release-pinned-spec"
+      ],
+      "primary_locators": [
+        "§§3, 3.3, 3.5.1, 3.7.1; released source lines 238–282, 377–402, 595–607"
+      ],
+      "semantic_judgment": "SUPPORTED",
+      "scope_conditions_and_exceptions": "The ID MUST remain stable and unique locally and SHOULD be a URI; no assertion of resolvability. Directory numbers are positive continuous integers with specified zero-padding rules. Immutability is the expected versioning model, not automatically enforced by ordinary disks. The final correctly says expected immutable.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+        "lines": [
+          10,
+          77,
+          114,
+          116
+        ]
+      }
+    },
+    {
+      "id": "C09",
+      "consequential_claim": "OCFL inventories map digests to arrays of stored content paths and version states to arrays of logical paths; they record current and historical states.",
+      "evidence_ids": [
+        "E02-ocfl-spec",
+        "E16-ocfl-release-pinned-spec"
+      ],
+      "primary_locators": [
+        "§§2, 3.4, 3.5.1–3.5.3, 3.7"
+      ],
+      "semantic_judgment": "SUPPORTED",
+      "scope_conditions_and_exceptions": "The inventory is UTF-8 JSON with required manifest/versions blocks. Digests connect physical and logical paths and can deduplicate unchanged content. Safe relative slash-separated paths prohibit empty, dot and parent segments and conflicts. The final does not mistake a logical asset ID for a checksum or OCFL object ID.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+        "lines": [
+          35,
+          77,
+          85,
+          116
+        ]
+      }
+    },
+    {
+      "id": "C10",
+      "consequential_claim": "The OCFL root inventory is required; inventories in version directories are SHOULD; every inventory present requires its digest sidecar.",
+      "evidence_ids": [
+        "E02-ocfl-spec",
+        "E16-ocfl-release-pinned-spec"
+      ],
+      "primary_locators": [
+        "§§3.6–3.7; HTML text lines 404–433; release-pinned source lines 556–593"
+      ],
+      "semantic_judgment": "SUPPORTED_FINAL_CORRECTED_DRAFT",
+      "scope_conditions_and_exceptions": "The condition is every occurrence of an inventory, not every directory whether it has an inventory or not. If a latest-version inventory is present it must match the root. Optional per-version inventories retain redundancy. This corrects investigator draft line 69 and the critic’s supported material finding.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+        "lines": [
+          35,
+          47,
+          77,
+          116
+        ]
+      }
+    },
+    {
+      "id": "C11",
+      "consequential_claim": "Inventory sidecar digest is written after inventory edits, using the inventory digestAlgorithm. OCFL logs/ may hold local action records with format outside the specification.",
+      "evidence_ids": [
+        "E02-ocfl-spec",
+        "E16-ocfl-release-pinned-spec"
+      ],
+      "primary_locators": [
+        "§§3.6, 3.8; text lines 404–414, 434–445"
+      ],
+      "semantic_judgment": "SUPPORTED",
+      "scope_conditions_and_exceptions": "A sidecar does not permit changing historic inventories without respecting version requirements. The optional logs directory is a designated object-root directory; arbitrary extra root files are not implied. The final does not claim the local CSV is an OCFL-native exhibition catalogue.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+        "lines": [
+          77,
+          95,
+          116
+        ]
+      }
+    },
+    {
+      "id": "C12",
+      "consequential_claim": "OCFL #538 was an inventory-referent ambiguity resolved by PR #547 and released in the 1.1.0 clarification; it was not a reported gallery loss or implementation failure.",
+      "evidence_ids": [
+        "E03-ocfl-change-log",
+        "E04-ocfl-issue538",
+        "E05-ocfl-pr547",
+        "E06-ocfl-pr547-files"
+      ],
+      "primary_locators": [
+        "Change log v1.0→v1.1.0 historical inventory entry lines 34–35; issue body/milestone/dates; PR body, merged_at and merge_commit_sha; PR files[0].patch"
+      ],
+      "semantic_judgment": "SUPPORTED",
+      "scope_conditions_and_exceptions": "Issue opened 2021-04-02; PR merged 2021-06-10, merge commit 8b13af6edbac68fe1144ce0d398ac978627af314. The patch changes the inventory referent to that version’s inventory. Copying a whole object is a justified local preservation inference, not the PR’s empirical recovery finding and not a rule governing BagIt.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+        "lines": [
+          21,
+          35,
+          47,
+          114,
+          116,
+          118
+        ]
+      }
+    },
+    {
+      "id": "C13",
+      "consequential_claim": "OCFL release tag 1.1 refers to 4b05472; 1.1.1 refers to c3f88b3 and is the latest listed release inspected.",
+      "evidence_ids": [
+        "E07-ocfl-release11",
+        "E08-ocfl-release111",
+        "E13-ocfl-tag11",
+        "E14-ocfl-tag111",
+        "E15-ocfl-latest-release"
+      ],
+      "primary_locators": [
+        "Official release bodies/tag_name/published_at; Git reference object.sha; latest release tag_name"
+      ],
+      "semantic_judgment": "SUPPORTED",
+      "scope_conditions_and_exceptions": "Full commits: 4b0547244d54967d1404c8c1e7bdba403ac08fb7 and c3f88b31ab8c82c37a190a4f0e5b9bc3c9f01010. Releases published 2022-10-07 and 2024-11-22. The 1.1 URL now renders the 1.1.1 series; rules were also checked against the release-pinned source.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+        "lines": [
+          114
+        ]
+      }
+    },
+    {
+      "id": "C14",
+      "consequential_claim": "PREMIS 3.0 separates file/bitstream fixity from the fixity-check Event/date/outcome and permits backup-copy actions to be recorded in system logs.",
+      "evidence_ids": [
+        "E09-premis30"
+      ],
+      "primary_locators": [
+        "§1.5.2 printed pp.59–60, extracted physical lines 2838–2888; Event Entity p.137, lines 5713–5755; data model pp.6–7"
+      ],
+      "semantic_judgment": "SUPPORTED",
+      "scope_conditions_and_exceptions": "The fixity container applies to File/Bitstream and its digestAlgorithm/value are required when that container is supplied. Event identifier/type/datetime are mandatory; outcome is optional generally. Events relate to objects and may relate to agents. A gallery log is expressly PREMIS-inspired, not formal conformance or a mandatory new platform.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+        "lines": [
+          12,
+          78,
+          95
+        ]
+      }
+    },
+    {
+      "id": "C15",
+      "consequential_claim": "git-annex whereis uses last-received location records and does not contact remotes; log may lack historic data and is about content currently at the paths.",
+      "evidence_ids": [
+        "E10-annex-whereis",
+        "E12-annex-log"
+      ],
+      "primary_locators": [
+        "whereis Description lines 24–36; log Description/options lines 24–37"
+      ],
+      "semantic_judgment": "SUPPORTED_WITH_VERSION_LIMIT",
+      "scope_conditions_and_exceptions": "Current official manuals, with no inspected release identifier. Private/forget/uncommitted history conditions are disclosed in the source maps. It is an optional alternative, not a selected production dependency or live custody guarantee.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+        "lines": [
+          78,
+          95
+        ]
+      }
+    },
+    {
+      "id": "C16",
+      "consequential_claim": "git-annex fsck --from normally copies remote contents for checks; --fast skips expensive checksums/transfers and checks expected presence.",
+      "evidence_ids": [
+        "E11-annex-fsck"
+      ],
+      "primary_locators": [
+        "Description lines 24–32; --from/--fast lines 34–42; --all lines 71–74"
+      ],
+      "semantic_judgment": "SUPPORTED_WITH_VERSION_LIMIT",
+      "scope_conditions_and_exceptions": "This is remote fsck operation, not whereis. With ordinary parameters only selected/current-branch files are checked; --all expands version coverage. No selected annex execution is proposed as proof of every prior asset state. Current manuals remain version-sensitive and no product run occurred.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+        "lines": [
+          78,
+          95
+        ]
+      }
+    },
+    {
+      "id": "C17",
+      "consequential_claim": "Use new full BagIt snapshots, stable local gallery IDs, a shallow role layout and SHA-512 as a conditional pilot recommendation.",
+      "evidence_ids": [
+        "E01-bagit-rfc8493",
+        "E02-ocfl-spec",
+        "E09-premis30"
+      ],
+      "primary_locators": [
+        "BagIt §1.1/§2.1.2; OCFL version/state model; PREMIS data model; original brief scale/owner clauses"
+      ],
+      "semantic_judgment": "SUPPORTED_LOCAL_CHOICE",
+      "scope_conditions_and_exceptions": "Standards establish mechanics; inspectability and simpler full-snapshot restore are design inferences, trading duplicate bytes for fewer delta assumptions. No measured effort, storage, performance or revision threshold is claimed. Owners must decide volume, maintenance, toolchain, algorithm and depth. A reasonable local proposal need not be an externally benchmarked universal winner.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+        "lines": [
+          8,
+          10,
+          33,
+          66,
+          76,
+          126,
+          128,
+          130
+        ]
+      }
+    },
+    {
+      "id": "C18",
+      "consequential_claim": "The retained CSV/README inventory is optional and useful without specialist repository software under readability and maintenance conditions.",
+      "evidence_ids": [
+        "E01-bagit-rfc8493"
+      ],
+      "primary_locators": [
+        "§§1.1, 2.1.2, 2.2.2, 2.2.4; original brief obligation 5"
+      ],
+      "semantic_judgment": "SUPPORTED_CONDITIONAL_OPTION",
+      "scope_conditions_and_exceptions": "A plain-text CSV is a local representation, not an automatic BagIt/OCFL catalogue capability. The final explicitly retains its optional status and explains exclusion only on observed drift/maintenance facts. Staff-tool compatibility remains NOT_RUN. The main procedure is written for the recommended configuration with the option adopted; see limitation L03.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+        "lines": [
+          22,
+          37,
+          65,
+          99,
+          122
+        ]
+      }
+    },
+    {
+      "id": "C19",
+      "consequential_claim": "Validation is a bounded future source/destination/restore procedure using known reference manifests plus registrar intent, not an executed demonstration.",
+      "evidence_ids": [
+        "E01-bagit-rfc8493",
+        "E09-premis30",
+        "E10-annex-whereis"
+      ],
+      "primary_locators": [
+        "BagIt §3; PREMIS fixity/event distinction; original brief obligations 3 and 8"
+      ],
+      "semantic_judgment": "SUPPORTED_PROSPECTIVE_DESIGN",
+      "scope_conditions_and_exceptions": "Missing, extra and renamed files and byte mismatches block acceptance; normalization-only differences are reviewed separately. Preserve suspect copies, do not regenerate their reference as proof, verify destination, restore into staging and open representative files. Sample opening proves only the selected files/use context, and the final does not generalize it to guaranteed recovery.",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+        "lines": [
+          99,
+          101,
+          102,
+          103,
+          104,
+          106,
+          108,
+          110,
+          134,
+          138,
+          143,
+          145,
+          146
+        ]
+      }
+    }
+  ],
+  "preserved_supported_scope": [
+    {
+      "topic": "Package/version design",
+      "lineage": "discovery lines 7–9 → draft recommendation/comparison → critic ordinary 1–2/SCW-1–2 → final lines 8–12, 76–77",
+      "judgment": "Preserved. Both approaches, correction retention and local full-snapshot inference remain; no mandatory winner."
+    },
+    {
+      "topic": "Four identity levels, intent versus fixity",
+      "lineage": "discovery line 11 → draft IDs → critic ordinary 2–3 → final lines 81–95, 106",
+      "judgment": "Preserved. Stable conceptual ID, version/deposit ID and byte digest stay separate; registrar intent is retained."
+    },
+    {
+      "topic": "Optional human inventory",
+      "lineage": "discovery line 13/owner choices → draft optional section → critic SCW-5/ordinary 5 → final lines 22, 37, 65, 122",
+      "judgment": "Preserved conditionally. No unsupported exclusion or invented standardized semantics."
+    },
+    {
+      "topic": "PREMIS / git-annex analogous opportunity",
+      "lineage": "discovery line 15 → draft comparison/log → critic ordinary 1 → final lines 12, 78, 95",
+      "judgment": "Preserved with no conformance/platform/live-presence claim; annex manual version unknown remains disclosed."
+    },
+    {
+      "topic": "Normalization and three error classes",
+      "lineage": "discovery validation lines 21–24 → draft procedure → critic SCW-6 → final lines 106–110",
+      "judgment": "Preserved. Proposed, actual-platform-dependent, with normalization-only mapping reviewed."
+    },
+    {
+      "topic": "Released #538 ambiguity",
+      "lineage": "discovery line 28 → draft line 69 → critic SCW-3 and sidecar finding → final lines 114–118",
+      "judgment": "History meaning preserved. Universal per-version sidecar overstatement corrected; no invented data loss."
+    },
+    {
+      "topic": "Hash and owner choices",
+      "lineage": "discovery owner bullets → draft obligation 6 → critic SCW-4/ordinary 6 → final lines 23, 36, 66, 88, 126–130",
+      "judgment": "Preserved and clarified. Tool support/default modality separated from owner algorithm/depth choice."
+    },
+    {
+      "topic": "Execution status and constraints",
+      "lineage": "discovery final sections → draft status → critic executed/not-executed → final lines 134–149",
+      "judgment": "Preserved. Research is not product validation, no source moves/accounts/offsite replacement claimed."
+    }
+  ],
+  "useful_discoveries": [
+    {
+      "discovery": "Direct-file BagIt snapshot with external local version register",
+      "decision_value": "Small inspectable package and corrected prior states without a new platform; duplicate storage is explicit.",
+      "claim_ids": [
+        "C01",
+        "C17"
+      ],
+      "unfamiliarity": "Useful discovered mechanism; personal unfamiliarity cannot be measured from this packet."
+    },
+    {
+      "discovery": "OCFL content versus logical paths and persistent version state",
+      "decision_value": "Meaningfully different object-history route where revision cadence justifies more structure; version numbering/inventory discipline matters.",
+      "claim_ids": [
+        "C08",
+        "C09",
+        "C10"
+      ]
+    },
+    {
+      "discovery": "Readable inventory manifested as payload, rather than assumed custom-tag semantics",
+      "decision_value": "Keeps the authorized option usable without repository software while protecting its bytes and leaving semantic reconciliation with the registrar.",
+      "claim_ids": [
+        "C05",
+        "C18"
+      ]
+    },
+    {
+      "discovery": "PREMIS-inspired identity/fixity/event/agent separation",
+      "decision_value": "Records who checked/copied/restored which deposit and outcome without confusing hash equality with custody.",
+      "claim_ids": [
+        "C04",
+        "C14"
+      ]
+    },
+    {
+      "discovery": "git-annex location records versus remote checksum work",
+      "decision_value": "Potential custodian alternative, with explicit stale whereis and fast-check limits; avoids recommending recorded presence as recovery proof.",
+      "claim_ids": [
+        "C15",
+        "C16"
+      ]
+    },
+    {
+      "discovery": "Unicode/case transformations and released historic-inventory clarification",
+      "decision_value": "Discriminating negative fixtures and complete-history copy scope for ordinary storage, supported by real primary specification/release history.",
+      "claim_ids": [
+        "C07",
+        "C12",
+        "C19"
+      ]
+    }
+  ],
+  "sources_and_versions": [
+    {
+      "id": "E01-bagit-rfc8493",
+      "url": "https://www.rfc-editor.org/rfc/rfc8493.html",
+      "final_url": "https://www.rfc-editor.org/rfc/rfc8493.html",
+      "access_start_utc": "2026-10-10T04:41:13.501007+00:00",
+      "access_finish_utc": "2026-10-10T04:41:13.671252+00:00",
+      "http_status": 200,
+      "content_type": "text/html",
+      "raw_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E01-bagit-rfc8493.html",
+      "sha256": "f801a6d8685e3910354079fe2194b223f574343b74f0897d505a32bf313925f2",
+      "bytes": 63600,
+      "text_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E01-bagit-rfc8493.txt",
+      "text_sha256": "ba089d070ad037879c53b2ac6b6306c7678d9c52b7dd3ac3224750745f65424f",
+      "text_lines": 859
+    },
+    {
+      "id": "E02-ocfl-spec",
+      "url": "https://ocfl.io/1.1/spec/",
+      "final_url": "https://ocfl.io/1.1/spec/",
+      "access_start_utc": "2026-10-10T04:41:13.502387+00:00",
+      "access_finish_utc": "2026-10-10T04:41:13.910104+00:00",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E02-ocfl-spec.html",
+      "sha256": "82bb493ba4c919ead82db7e99adbcc93a54bde73af320059826b26e6df6106ad",
+      "bytes": 139510,
+      "text_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E02-ocfl-spec.txt",
+      "text_sha256": "bbb6521fa1c343b79d5b8390bec0f197ea9a8abd0e60b2c998b0ae6995b3ed41",
+      "text_lines": 1060
+    },
+    {
+      "id": "E03-ocfl-change-log",
+      "url": "https://ocfl.io/1.1/spec/change-log.html",
+      "final_url": "https://ocfl.io/1.1/spec/change-log.html",
+      "access_start_utc": "2026-10-10T04:41:13.503180+00:00",
+      "access_finish_utc": "2026-10-10T04:41:13.861086+00:00",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E03-ocfl-change-log.html",
+      "sha256": "261b6b0e847e7caaf321f8c33a3925b08cda6a397f28b044acba53b857429248",
+      "bytes": 18766,
+      "text_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E03-ocfl-change-log.txt",
+      "text_sha256": "b7321289ebc4e186abeb4f69610c5dc6b88b3c03e32d2b6ee0858ea70054f792",
+      "text_lines": 76
+    },
+    {
+      "id": "E04-ocfl-issue538",
+      "url": "https://api.github.com/repos/OCFL/spec/issues/538",
+      "final_url": "https://api.github.com/repos/OCFL/spec/issues/538",
+      "access_start_utc": "2026-10-10T04:41:13.508557+00:00",
+      "access_finish_utc": "2026-10-10T04:41:13.726016+00:00",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E04-ocfl-issue538.json",
+      "sha256": "38dac1c6e3d97928f1a8ae817caa0316d62122f3ca33b50caec0f530392f900a",
+      "bytes": 6667
+    },
+    {
+      "id": "E05-ocfl-pr547",
+      "url": "https://api.github.com/repos/OCFL/spec/pulls/547",
+      "final_url": "https://api.github.com/repos/OCFL/spec/pulls/547",
+      "access_start_utc": "2026-10-10T04:41:13.511328+00:00",
+      "access_finish_utc": "2026-10-10T04:41:13.734372+00:00",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E05-ocfl-pr547.json",
+      "sha256": "02d9f7cc6e9cd24099bbdd1ba440bf1086c7ed43558a3d1b424e77d994111902",
+      "bytes": 16423
+    },
+    {
+      "id": "E06-ocfl-pr547-files",
+      "url": "https://api.github.com/repos/OCFL/spec/pulls/547/files",
+      "final_url": "https://api.github.com/repos/OCFL/spec/pulls/547/files",
+      "access_start_utc": "2026-10-10T04:41:13.515104+00:00",
+      "access_finish_utc": "2026-10-10T04:41:13.821996+00:00",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E06-ocfl-pr547-files.json",
+      "sha256": "2530c9e0a89a8b29e14d90d1d9077331f90d54485316e4fd0a268a7e3406ad20",
+      "bytes": 2853
+    },
+    {
+      "id": "E07-ocfl-release11",
+      "url": "https://api.github.com/repos/OCFL/spec/releases/tags/1.1",
+      "final_url": "https://api.github.com/repos/OCFL/spec/releases/tags/1.1",
+      "access_start_utc": "2026-10-10T04:41:13.517185+00:00",
+      "access_finish_utc": "2026-10-10T04:41:13.687692+00:00",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E07-ocfl-release11.json",
+      "sha256": "70d8c1e908d11621a4fe42268c9345b99ec5b210d222f826b0d66b6880f187ff",
+      "bytes": 3917
+    },
+    {
+      "id": "E08-ocfl-release111",
+      "url": "https://api.github.com/repos/OCFL/spec/releases/tags/1.1.1",
+      "final_url": "https://api.github.com/repos/OCFL/spec/releases/tags/1.1.1",
+      "access_start_utc": "2026-10-10T04:41:13.519304+00:00",
+      "access_finish_utc": "2026-10-10T04:41:13.687338+00:00",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E08-ocfl-release111.json",
+      "sha256": "cdb3bea7a287a3102380e6f74bce0f9d7b23862b00fa7921b18c7c7c2a6a6ba4",
+      "bytes": 2774
+    },
+    {
+      "id": "E09-premis30",
+      "url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+      "final_url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+      "access_start_utc": "2026-10-10T04:41:13.689515+00:00",
+      "access_finish_utc": "2026-10-10T04:41:13.989492+00:00",
+      "http_status": 200,
+      "content_type": "application/pdf",
+      "raw_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E09-premis30.pdf",
+      "sha256": "2e3e3fe001798f3f43d26b4aed03e8737310fa044ee001af2493f7c72517b0e0",
+      "bytes": 2176353,
+      "text_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E09-premis30.txt",
+      "text_sha256": "1029138c1f86a603a399f11c361c8bb33b357071ca5ba0bbdc4b78908fb0a683",
+      "text_locator_convention": "physical newline lines as counted by rg/sed; printed PDF page numbers also provided"
+    },
+    {
+      "id": "E10-annex-whereis",
+      "url": "https://git-annex.branchable.com/git-annex-whereis/",
+      "final_url": "https://git-annex.branchable.com/git-annex-whereis/",
+      "access_start_utc": "2026-10-10T04:41:13.692949+00:00",
+      "access_finish_utc": "2026-10-10T04:41:13.782343+00:00",
+      "http_status": 200,
+      "content_type": "text/html",
+      "raw_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E10-annex-whereis.html",
+      "sha256": "e812d30340382ffd2771adc14e35123c327feab0f7b9a3aef818525d0658a5a6",
+      "bytes": 13160,
+      "text_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E10-annex-whereis.txt",
+      "text_sha256": "d56dbdca2e1846fa1d25cba480df7978aab03f48fee3cd87951cce10ce38554a",
+      "text_lines": 140
+    },
+    {
+      "id": "E11-annex-fsck",
+      "url": "https://git-annex.branchable.com/git-annex-fsck/",
+      "final_url": "https://git-annex.branchable.com/git-annex-fsck/",
+      "access_start_utc": "2026-10-10T04:41:13.696205+00:00",
+      "access_finish_utc": "2026-10-10T04:41:13.771012+00:00",
+      "http_status": 200,
+      "content_type": "text/html",
+      "raw_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E11-annex-fsck.html",
+      "sha256": "7b972df5a21fcc8ca4fac5574594885ff4d2936c79c70dd4a8787775801254a3",
+      "bytes": 16749,
+      "text_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E11-annex-fsck.txt",
+      "text_sha256": "594c0b1fa51df8773efeb8127c6363f8e71e06ef24cf2a73540af9ded2ccf16d",
+      "text_lines": 179
+    },
+    {
+      "id": "E12-annex-log",
+      "url": "https://git-annex.branchable.com/git-annex-log/",
+      "final_url": "https://git-annex.branchable.com/git-annex-log/",
+      "access_start_utc": "2026-10-10T04:41:13.727829+00:00",
+      "access_finish_utc": "2026-10-10T04:41:13.793350+00:00",
+      "http_status": 200,
+      "content_type": "text/html",
+      "raw_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E12-annex-log.html",
+      "sha256": "dbff8ef434d9289fe2918d27e876ebab3fb4ac416757405c7edbf69377d33f14",
+      "bytes": 9122,
+      "text_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E12-annex-log.txt",
+      "text_sha256": "ec090a3001eb9bd2bbd399082fffada540976ce3dda9c03f74171852d1261549",
+      "text_lines": 120
+    },
+    {
+      "id": "E13-ocfl-tag11",
+      "url": "https://api.github.com/repos/OCFL/spec/git/ref/tags/1.1",
+      "final_url": "https://api.github.com/repos/OCFL/spec/git/ref/tags/1.1",
+      "access_start_utc": "2026-10-10T04:41:13.736324+00:00",
+      "access_finish_utc": "2026-10-10T04:41:13.955615+00:00",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E13-ocfl-tag11.json",
+      "sha256": "acfd10f8362d994adb88513c190f07808bbfd852e5ad33a5bc81f4cbf6aeb2ab",
+      "bytes": 317
+    },
+    {
+      "id": "E14-ocfl-tag111",
+      "url": "https://api.github.com/repos/OCFL/spec/git/ref/tags/1.1.1",
+      "final_url": "https://api.github.com/repos/OCFL/spec/git/ref/tags/1.1.1",
+      "access_start_utc": "2026-10-10T04:41:13.783920+00:00",
+      "access_finish_utc": "2026-10-10T04:41:13.981303+00:00",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E14-ocfl-tag111.json",
+      "sha256": "53b8b8602aadf422931670a7e1188fa30d13ab6c077be4eb63a7fcdd83f24345",
+      "bytes": 325
+    },
+    {
+      "id": "E15-ocfl-latest-release",
+      "url": "https://api.github.com/repos/OCFL/spec/releases/latest",
+      "final_url": "https://api.github.com/repos/OCFL/spec/releases/latest",
+      "access_start_utc": "2026-10-10T04:43:52.293683+00:00",
+      "access_finish_utc": "2026-10-10T04:43:52.457466+00:00",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E15-ocfl-latest-release.json",
+      "sha256": "cdb3bea7a287a3102380e6f74bce0f9d7b23862b00fa7921b18c7c7c2a6a6ba4",
+      "bytes": 2774
+    },
+    {
+      "id": "E16-ocfl-release-pinned-spec",
+      "url": "https://raw.githubusercontent.com/OCFL/spec/c3f88b31ab8c82c37a190a4f0e5b9bc3c9f01010/1.1/spec/index.md",
+      "final_url": "https://raw.githubusercontent.com/OCFL/spec/c3f88b31ab8c82c37a190a4f0e5b9bc3c9f01010/1.1/spec/index.md",
+      "access_start_utc": "2026-10-10T04:43:52.457589+00:00",
+      "access_finish_utc": "2026-10-10T04:43:52.637604+00:00",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/E16-ocfl-release-pinned-spec.md",
+      "sha256": "3d02c6c68e542f471d9252cf1f02cd97e94615e3063930507fb2c33aa31d8f6e",
+      "bytes": 74506
+    },
+    {
+      "id": "E17-ocfl-release-pinned-inventory-schema",
+      "url": "https://raw.githubusercontent.com/OCFL/spec/c3f88b31ab8c82c37a190a4f0e5b9bc3c9f01010/1.1/spec/inventory_schema.json",
+      "final_url": "https://raw.githubusercontent.com/OCFL/spec/c3f88b31ab8c82c37a190a4f0e5b9bc3c9f01010/1.1/spec/inventory_schema.json",
+      "access_start_utc": "2026-10-10T04:54:00.509381+00:00",
+      "access_finish_utc": "2026-10-10T04:54:00.647142+00:00",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/evidence/inventory_schema.json",
+      "sha256": "3f87a36951c25464824a25273e1480fd68448668f05ee7fa5af0115716b0b82c",
+      "bytes": 4297,
+      "role": "Supplemental context: preserves the relative schema link in the unmodified release-pinned source. No validator executed; JSON shape corroboration only."
+    }
+  ],
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "authored scientific output/source evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A8-01/brief.md",
+      "bytes": 3458,
+      "sha256": "33a97f960ac3e92a24cfeaa5e170a0adb51428d699f49be026f40a909e648c47",
+      "mtime_ns": 1791605469530856617,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A8-01/plan.md",
+      "bytes": 6136,
+      "sha256": "6964f85a4fdd4b74e4a40cbda44e93524aec1b8ed3860fa5ddec434dd8a2fdca",
+      "mtime_ns": 1791605469530976394,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/terminal-science-freeze-root.json",
+      "bytes": 9011,
+      "sha256": "c3f262936b20f451016e2c02e08d9b9533744811e889731e8aa95dad28137180",
+      "mtime_ns": 1791607129380768527,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/inputs/brief.md",
+      "bytes": 3458,
+      "sha256": "33a97f960ac3e92a24cfeaa5e170a0adb51428d699f49be026f40a909e648c47",
+      "mtime_ns": 1791605474437000478,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/assignment.md",
+      "bytes": 6709,
+      "sha256": "b293485191784992768bfc8f1d2236405a6c7c7ef7756b47ed7ef5c3bf0323dc",
+      "mtime_ns": 1791605870370916167,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/critique.md",
+      "bytes": 13712,
+      "sha256": "9bd06b82fa828f1bea56e9448ab90c95e392986cdde4d0bb14663480d746b10b",
+      "mtime_ns": 1791606556992036942,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "authored scientific output/source evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/dispatch.json",
+      "bytes": 4156,
+      "sha256": "a02261639377a656304c30b68d096607c0a0465b09f2b1e0a38aaf7d770cc705",
+      "mtime_ns": 1791605871135680953,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/freeze.json",
+      "bytes": 3465,
+      "sha256": "4814acec1d7987ec735edfeccb210d9feeace2ff1339783afa3e6e893223179d",
+      "mtime_ns": 1791605870371778010,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/input-map.json",
+      "bytes": 1410,
+      "sha256": "afbb868f0a10670b1f671d06c96639651245375a1a4f90ef745727c29453d28f",
+      "mtime_ns": 1791605870370657435,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/request.json",
+      "bytes": 898,
+      "sha256": "192b58931dc9090a47f892bdc76a453acdbfb55c943cdf97f50f0cb0b38ac0f2",
+      "mtime_ns": 1791605870372074237,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/source-map.json",
+      "bytes": 7176,
+      "sha256": "21ec44bf61bc8d698e236675f515d7135bc92ae038e8bc735e642bff5dc22ab4",
+      "mtime_ns": 1791606584294191801,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/sources/index.md",
+      "bytes": 1777,
+      "sha256": "b3bf7c85a920a96da3f65f1eeda4acd68863a8ffad2976ff89b85c00a8f1d60f",
+      "mtime_ns": 1791606584307191875,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "authored scientific output/source evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/status.json",
+      "bytes": 3342,
+      "sha256": "0b27b30fc203d8278eddddbe3bf1eab1b6bb5122199e6e71003ca266adde8ee0",
+      "mtime_ns": 1791606611634261736,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/assignment.md",
+      "bytes": 3710,
+      "sha256": "464e98672d46ecc3a11ff8c582fae4fd671b9b932d548d12a6b0ecce84449639",
+      "mtime_ns": 1791605474437862112,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/discovery.md",
+      "bytes": 9012,
+      "sha256": "baef8ae18b8f568005def64e37525a34857771fd3ca7e1ce09548b680646430e",
+      "mtime_ns": 1791605759831825367,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "authored scientific output/source evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/dispatch.json",
+      "bytes": 4252,
+      "sha256": "9a0262656358dad52179f22d21807653fef1fe58b080b2a9f5cd5b24e72d36f9",
+      "mtime_ns": 1791605475056175829,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/draft.md",
+      "bytes": 22534,
+      "sha256": "0af43bf0c4c5fdcdf703052e68fd11214c99a7dfa70715ab1f106cf0f66544df",
+      "mtime_ns": 1791605824889341301,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "authored scientific output/source evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/freeze.json",
+      "bytes": 1668,
+      "sha256": "fa670426b20a8be18796bdc3818e0e70afc35bf2f2f27eae5933dc0353804102",
+      "mtime_ns": 1791605474438482219,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/input-map.json",
+      "bytes": 722,
+      "sha256": "b994ad74eb3b52aadc1ffd92b7f6a338ee2890cfa463cbdc3d73b64aeb5d85d5",
+      "mtime_ns": 1791605474437671920,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/plan-reveal.json",
+      "bytes": 428,
+      "sha256": "c71db7d937329294db97f04470c59b94c80dac6ffb167492a9066e3157895afa",
+      "mtime_ns": 1791605766720715394,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/request.json",
+      "bytes": 922,
+      "sha256": "ebe208acd3a3f4d208ea49b4a275d62eb4a8b73972bc6fcc60af3e6b9b387b15",
+      "mtime_ns": 1791605474438788665,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 6136,
+      "sha256": "6964f85a4fdd4b74e4a40cbda44e93524aec1b8ed3860fa5ddec434dd8a2fdca",
+      "mtime_ns": 1791605766720593630,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/source-map.json",
+      "bytes": 8295,
+      "sha256": "116008968cd18bbb54e5224b3320e3b547674fe568c43548bbbf1d4a15b40c1b",
+      "mtime_ns": 1791605759838825437,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/sources/S01-bagit-rfc8493.md",
+      "bytes": 2809,
+      "sha256": "514a32e6f471a9a111a4ad04f26a3e126b159e7afdb0c4aa891e32940dd74702",
+      "mtime_ns": 1791605759794824994,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "authored scientific output/source evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/sources/S02-ocfl-spec-1.1.md",
+      "bytes": 1988,
+      "sha256": "867b9b0ebd37ba4399fe9254aa52b905d43a3b80da5db44dc29bb27c873e6686",
+      "mtime_ns": 1791605759798825035,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "authored scientific output/source evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/sources/S03-ocfl-issue-538.md",
+      "bytes": 1360,
+      "sha256": "1fa0960eec4d2e5b7dad80ad5bd473502531d5b9a6c1cfd72a49a72f26b5335d",
+      "mtime_ns": 1791605759805825105,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "authored scientific output/source evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/sources/S04-ocfl-release-history.md",
+      "bytes": 1577,
+      "sha256": "03b857ecb0bb73a10cc63b5aaea42568b7b3604148836ad2aa4360e207a5a184",
+      "mtime_ns": 1791605759811825166,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "authored scientific output/source evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/sources/S05-premis-3.0.md",
+      "bytes": 1588,
+      "sha256": "f7f9b4d3046ad59f1594028ef63dd48cc1b7ab237ae0001ca672be7895dff912",
+      "mtime_ns": 1791605759820825256,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "authored scientific output/source evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/sources/S06-git-annex.md",
+      "bytes": 1630,
+      "sha256": "7185168ec2ebc4b2de5b11178b7abef4980c36fe2072672455457b7811acde20",
+      "mtime_ns": 1791605759827825326,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "authored scientific output/source evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/sources/index.md",
+      "bytes": 1693,
+      "sha256": "f38ec81b7d85259d6ad3ab95da1311b4537616b83cf1a1ca1c8f7bd7eb242db9",
+      "mtime_ns": 1791605759787824924,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "authored scientific output/source evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/status.json",
+      "bytes": 4482,
+      "sha256": "7ef29f841e15cb8e34486e56045a41846e79883012312d28c2d93239c22557b2",
+      "mtime_ns": 1791605870053691312,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/assignment.md",
+      "bytes": 5006,
+      "sha256": "8c74f4d66311597371dad2546d94183f1bcbdfd6d5d0c9eda9c6c9a3a24eb3ca",
+      "mtime_ns": 1791606612031560274,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/dispatch.json",
+      "bytes": 4172,
+      "sha256": "fe8793ed663b21c81f9da27aed0e1063098212bdbe647453c73cd33aaf0bf14d",
+      "mtime_ns": 1791606612680615087,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+      "bytes": 36351,
+      "sha256": "064113d7792459e3f86ba0901b558d015c65a5b9c88f87747e409b0410be349f",
+      "mtime_ns": 1791607000123223122,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "authored scientific output/source evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/freeze.json",
+      "bytes": 4244,
+      "sha256": "32abe04a0fad68d897e5f26ec7adb54ac98059370578c06934273ed0d423f0b7",
+      "mtime_ns": 1791606612032536451,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/input-map.json",
+      "bytes": 1727,
+      "sha256": "985eb9a20682732389aa744218a64b4c4af632103b51d6729e9ce8aed55bdec0",
+      "mtime_ns": 1791606612031301347,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/request.json",
+      "bytes": 902,
+      "sha256": "9fbc3e1ec0ee7e8054e0eb46f8f8b8b623db5610d287d84d7140255b8a6a8ea8",
+      "mtime_ns": 1791606612032872377,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/source-map.json",
+      "bytes": 17624,
+      "sha256": "46a320cacdd70bd9c16074e7aa613ecc29312b3b476c179cae80092b22408e8e",
+      "mtime_ns": 1791607061558774796,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/sources/index.md",
+      "bytes": 2497,
+      "sha256": "eb457b6aa8ea38dc8d168fd362535081c935f3345aee9e9dafeafa8aa4f3e4c2",
+      "mtime_ns": 1791607045186627779,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "authored scientific output/source evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/methods/A8/critic_prompt_delta.txt",
+      "bytes": 3398,
+      "sha256": "6ca210592ebaffd1228f390855af2dcbb7b338dcbb3e00c9fb57f0bdc8672c0d",
+      "mtime_ns": 1791604541744895060,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/methods/A8/reviser_prompt_delta.txt",
+      "bytes": 1715,
+      "sha256": "31b0b79da9d1a99d81103a485448bbd2d518e5c48cd56b15a1a1a9cb9d11e087",
+      "mtime_ns": 1791604541744994813,
+      "content_inspection": "FULL",
+      "reviewer_read_role": "input/assignment/provenance"
+    }
+  ],
+  "inspection": "FULL original rubric, original brief/plan, terminal freeze, every stage authored scientific output/source map/source note/index and all existing assignments/input maps/freezes/requests/dispatch/status/reveal records; mapped A8 delta files. No separate critique check/disposition file exists; dispositions are in critique/final/maps.",
+  "missing_or_incomplete_artifacts": [],
+  "freeze_integrity": {
+    "terminal_artifact_hashes": "ALL_MATCH",
+    "stage_frozen_inputs": "ALL_EXIST_AND_MATCH",
+    "original_brief_equals_run_input": true,
+    "original_plan_equals_revealed_copy": true,
+    "reviewer_preserved_originals": true,
+    "semantic_proof_note": "Hashes establish exact inspected identity and unchanged freeze only; they are not scientific/source-correctness evidence."
+  },
+  "protocol": {
+    "assessment_method": "Independent review only; no feedback/repair/delegation/account/Git/publication/other-arm/history/ER11 rescore actions performed. Only requested assessment output root written; pm-mail identity registered.",
+    "a8_method_judgment": "NOT_FULLY_COMPLIANT_ON_OBSERVABLE_DELIVERABLE_REQUIREMENTS; P01/P02. Chronological/isolation requirements remain UNKNOWN without telemetry.",
+    "observed_findings": [
+      {
+        "id": "P01",
+        "classification": "observed A8 method deliverable deviation",
+        "source_judgment_effect": "none; governing source meaning independently assessed",
+        "requirement_locator": "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/assignment.md:18",
+        "requirement": "Preserve scope-bearing excerpt(s); keep source text authentic.",
+        "observed": "All six SCW evidence entries give narrative paraphrases and section IDs, not authentic scope-bearing source excerpts. The critic source index explicitly labels them excerpt paraphrases. The complete authored source tree has no separate authentic excerpt capture.",
+        "artifact_locators": [
+          "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/critique.md:25",
+          "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/critique.md:33",
+          "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/critique.md:41",
+          "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/critique.md:49",
+          "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/critique.md:57",
+          "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/critique.md:65",
+          "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/sources/index.md:14"
+        ]
+      },
+      {
+        "id": "P02",
+        "classification": "observed A8 diagnostic construction deviation",
+        "source_judgment_effect": "none; optional CSV retained on applicable primary evidence",
+        "requirement_locator": "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/assignment.md:16",
+        "requirement": "C* changes exactly one selector and preserves all other factual components.",
+        "observed": "SCW-5 changes generic/unextended to locally extended, but also changes ignoring custom tag contents into assigning standard BagIt semantics to gallery CSV fields and drops the other conjuncts. It is not the same claim with only a processor selector changed. The final’s uncertainty about an untested local extension is cautious but cannot certify this as a valid one-selector witness.",
+        "artifact_locators": [
+          "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/critique.md:56",
+          "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md:37"
+        ]
+      }
+    ],
+    "unauthorized_assistance": "UNKNOWN as a pipeline-wide provenance fact; none supplied by reviewer"
+  },
+  "native": {
+    "pipeline_native_judgment": "UNKNOWN overall; actual per-stage native terminal receipts not independently exposed in this bounded packet",
+    "investigator": {
+      "active": "CLAIMED in terminal task summary; no native receipt in authored source map",
+      "complete": "CLAIMED in terminal task summary",
+      "independent_native_status": "UNKNOWN",
+      "reported_goal_seconds": 344,
+      "time_counter_evidence": "author summary only, not independently observed native telemetry"
+    },
+    "critic": {
+      "active": "CLAIMED in critique; thread ID 01a12408-11d4-7c31-be4f-39a46f80ee8e",
+      "complete": "CLAIMED in terminal task summary",
+      "independent_native_status": "UNKNOWN",
+      "timestamp_and_usage": "UNKNOWN"
+    },
+    "reviser": {
+      "active": "RETAINED structured create/get observations in authored source-map.json; not queried independently against that Goal",
+      "recorded_thread_id": "01a12413-623a-7e80-a231-e39436df6d60",
+      "recorded_createdAt": 1791606634,
+      "derived_createdAt_utc": "2026-10-10T04:30:34Z (arithmetic conversion of retained epoch; no new activation telemetry)",
+      "recorded_pre_save_active_seconds": 133,
+      "recorded_post_save_active_seconds": 410,
+      "complete": "CLAIMED in root-preserved T3 terminal summary; no actual native terminal result in original source map",
+      "independent_native_terminal_status": "UNKNOWN",
+      "reported_terminal_tokens": 184020,
+      "reported_terminal_seconds": 461,
+      "billing_proof": false
+    },
+    "reviewer": {
+      "goal_count_created": 1,
+      "thread_id": "01a1241b-46f6-7b70-bcf0-548a1c15766e",
+      "active_receipt": "reviewer-goal-active.json",
+      "completion_policy": "Complete only after full assessment and evidence are saved and checked; terminal receipt will be separate, not retroactively invented in assessment."
+    }
+  },
+  "t3": {
+    "investigator": "completed/result_available/no_pending in retained status.json",
+    "critic": "completed/result_available/no_pending in retained status.json",
+    "reviser": "completed/result_available/no_pending in root terminal freeze",
+    "requested_and_t3_selected_route": "AUTHORIZED_PROVIDER_INSTANCE / gpt-6-luna; max/priority requested",
+    "native_equivalence": "T3 completion is not native Goal proof"
+  },
+  "time": {
+    "review_started_utc": "2026-10-10T04:39:03Z",
+    "review_deadline_utc": "2026-10-10T05:24:03Z",
+    "assessment_saved_utc": "2026-10-10T04:52:10.461403+00:00",
+    "envelope_seconds": 2700,
+    "capped": false,
+    "unassessed_axes": [],
+    "pipeline_requested_start_utc": "2026-10-10T04:11:14.437Z",
+    "pipeline_whole_deadline_utc": "2026-10-10T05:11:09.531Z",
+    "root_terminal_observed_utc": "2026-10-10T04:38:49.380414+00:00",
+    "request_to_root_terminal_observation_seconds": 1654.943414,
+    "occupancy_basis": "Recorded request to root observation; an observed elapsed bound, not effective model time or billable duration.",
+    "stage_deadlines": {
+      "investigator": "2026-10-10T04:41:14.437Z",
+      "critic": "2026-10-10T04:29:50.370Z",
+      "reviser": "2026-10-10T04:48:12.031Z"
+    },
+    "delivery_time_judgment": "Final artifacts and root terminal observation precede the whole deadline; stage scientific output mtimes precede stated stage deadlines. Exact native terminal/save order remains UNKNOWN except retained/claimed records.",
+    "effective_compute_time": "UNKNOWN",
+    "billing": "UNKNOWN",
+    "latency_or_savings_comparison": "NOT ASSESSED; no other arm and no source-comparable pair inspected.",
+    "assessment_finalized_utc": "2026-10-10T04:54:57.994662+00:00"
+  },
+  "effective": "UNKNOWN beyond route selections retained in dispatch",
+  "billing": "UNKNOWN",
+  "unknowns": [
+    "Independent native Goal activation/completion telemetry for investigator and critic; independent reviser terminal native receipt.",
+    "Whether SCW selection was actually persisted before new source fetching; final prose asserts chronology but complete event/tool log is absent.",
+    "Proof of no early concealed-plan access or unauthorized candidate assistance/nested delegation; mapped handoff and no-pending T3 states are consistent but not complete access telemetry.",
+    "Actual lower-level effective model/reasoning/service tier; request and T3-selected route records do not prove every provider setting.",
+    "Effective compute time, billable tokens/time/cost, retries, queue/setup breakdown and savings. Native usage claims are not price/billing records.",
+    "Actual gallery volumes, revision frequency, filesystem/transfer path, validator/version, staff readers, maintenance budget and existing offsite restore practice.",
+    "Product validation: no observed executed package/validator/copy/restore/CSV-reader result; authored status explicitly NOT_RUN."
+  ],
+  "validation": {
+    "candidate_research": "EXECUTED as authored reports; governing claims independently verified here. Full original retrieval-call telemetry is absent.",
+    "candidate_product": "NOT_RUN, explicitly disclosed; not independently executed by reviewer",
+    "reviewer_executed": [
+      "Read original authored files in full",
+      "Read-only independent primary web/API retrieval",
+      "Convert official PREMIS PDF to text with pdftotext for semantic inspection",
+      "Check original hashes/maps/freeze equality without modifying originals",
+      "Write and structurally verify assessment artifacts"
+    ],
+    "proposed_oracles": [
+      {
+        "check": "Source/destination BagIt completeness/fixity",
+        "oracle": "Known reference manifests plus actual file sets; expected missing/unlisted/digest failures.",
+        "limits": "Does not detect curatorial omission outside both payload and manifest."
+      },
+      {
+        "check": "Registrar intended-set/version reconciliation",
+        "oracle": "Registrar-approved asset/version list and correction links, not generated manifest alone.",
+        "limits": "Human authority, not checksum proof; optional CSV is one representation."
+      },
+      {
+        "check": "Path normalization/rename/collision fixtures",
+        "oracle": "Actual filesystem/tool names, normalized comparison and exact missing/extra diagnostics with explicit resolution.",
+        "limits": "No universal safe-platform inference."
+      },
+      {
+        "check": "Offsite restore/openability",
+        "oracle": "Restore selected package to staging, compare manifests/path set/digests and open representative files.",
+        "limits": "NOT_RUN; sample demonstrates only tested files and context."
+      },
+      {
+        "check": "Optional staff-readable inventory",
+        "oracle": "Staff text/spreadsheet reading, IDs/path mapping and maintainability on actual tools.",
+        "limits": "NOT_RUN; not automatic catalogue integration."
+      }
+    ]
+  },
+  "outputs": [
+    "assessment.md",
+    "assessment.json",
+    "source-map.json",
+    "evidence/index.md",
+    "evidence/retrieval-index.json",
+    "original-inspected-hashes.json",
+    "reviewer-goal-active.json",
+    "verification.json"
+  ],
+  "scientific_required_artifacts_missing": [],
+  "native_telemetry_not_present": [
+    "Investigator direct create/get/terminal receipt",
+    "Critic direct create/get/terminal receipt",
+    "Reviser direct terminal receipt; structured active observations are retained in authored source map"
+  ]
+}

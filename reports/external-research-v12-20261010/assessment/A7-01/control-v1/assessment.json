@@ -1,0 +1,1258 @@
+{
+  "schema": "ER12-independent-full-pipeline-assessment-v1",
+  "assessment_id": "A7-01-control-v1",
+  "arm": "control",
+  "slot": "A7-01",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "rationale": "No remaining material error, omission, false correction, scope loss, or unsupported consequential recommendation was found within the declared scope. Corrected lineage defects and residual minor precision/coverage limits are preserved. Critic fixed-cap violation and native/telemetry unknowns are separate from this semantic source judgment.",
+  "delivery_judgment": "COMPLETE_REQUIRED_SCIENCE_PRESENT",
+  "coverage": {
+    "assigned_axes": 6,
+    "assessed_axes": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "unassessed_axes": [],
+    "exact_plan_clauses_assessed": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "read_scope": "Full rubric, original frozen brief/plan, listed stage assignments/input maps/freezes, original discovery/draft/critique/final, all original source maps, all source indexes, listed critique/disposition/check records, reveal receipts and terminal freeze. No missing required final or stage science. Source directories contain indexes only; no nonexistent captures guessed."
+  },
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Original obligations and negative constraints",
+      "coverage": "ASSESSED_FULL_ASSIGNED_SCOPE",
+      "judgment": "PASS",
+      "assessment": "All eight exact obligations have substantive treatment in the final. The two routes are CAD mesh export to 3MF and STEP through CAD or a supporting slicer; the package mechanism is OPC plus a local outer folder/ZIP with explicit tradeoffs. The preview/note option remains optional, owner roles remain fixed, and all four negative constraints survive. The final is a coherent planning proposal at the ten decorative-project scale. No implementation, universal compatibility, printer operation, or successful product validation is asserted. The draft plan is a fallible input, not an assessor key.",
+      "evidence": [
+        "original brief obligations 1–8",
+        "original plan clauses 1–8",
+        "ER12_RUNTIME/runs/A7-01/control/stages/reviser/final.md#brief-and-released-plan-crosswalk",
+        "ER12_RUNTIME/runs/A7-01/control/stages/reviser/final.md#recommendation"
+      ]
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source claims: exact subject, operation, version, default, unit, type, domain, exceptions",
+      "coverage": "ASSESSED_FULL_ASSIGNED_SCOPE",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "Independent primary retrieval supports the route and optional-scope decisions, the units/material/settings distinctions, and the bounded historical example. Claims are assessed individually in claim_assessments, including the domain of the component-position rule. The final explicitly withholds reliance on the unresolved Materials 1.2.1/Core 1.4.0 pairing. Two minor precision defects remain: consumers is broader than the manufacturing-device subject of one normative rule, and a carried identity record labels a 2025 index date as the 1.2.1 release date although the tagged release was published in 2019. Neither supports a remaining material decision because actual exporter/receiver testing is required and the exact tagged extension, rather than its date, governs the final.",
+      "evidence": [
+        "I01–I22",
+        "claim_assessments",
+        "L01",
+        "L02",
+        "L03"
+      ]
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar discovery, competing and analogous approaches, implementation/history, opportunity breadth",
+      "coverage": "ASSESSED_FULL_ASSIGNED_SCOPE",
+      "judgment": "PASS",
+      "assessment": "Discovery is substantive rather than generic caution: it identifies role-specific 3MF filenames, embedded optional review fields plus accessible sidecars, a formal AMF alternative and STL fallback, a STEP triangulation boundary, vendor-specific project/settings compatibility, a format-level suite, and a concrete importer return-condition change. These opportunities are connected to pilot decisions and discriminating checks. Fusion and Prusa are concrete documented routes; Cura/FreeCAD/Bambu/Orca entries are a discovery shortlist, not falsely tested alternatives. The outer ZIP is explicitly a local portable-package mechanism and its revision-detachment tradeoff is explained. The brief does not require an unrelated-domain package standard or exhaustive product catalogue.",
+      "evidence": [
+        "investigator/discovery.md obligations 1–5",
+        "ER12_RUNTIME/runs/A7-01/control/stages/reviser/final.md#handoff-and-portable-package-comparison",
+        "I01",
+        "I04",
+        "I05",
+        "I07",
+        "I10–I15",
+        "useful_discoveries"
+      ]
+    },
+    {
+      "axis": 4,
+      "name": "Wrong criticism, corrections/rejections, exact plan dispositions",
+      "coverage": "ASSESSED_FULL_ASSIGNED_SCOPE",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "Every C1–C4 criticism has an explicit final disposition and was independently adjudicated. C1 supports qualification of a genuinely unresolved optional version target, not removal of preview/note or Core-only 3MF. C2 correctly requests a unit locator, but the critic itself gives the wrong section number; the final independently uses the correct §3.4. C3 corrects the ambiguous slash summary without inventing attachment bytes. C4 is a frozen-access limitation, not proof that a receipt never existed: this assessment found the original receipt and verified its record, while the final properly cites the listed plan-reveal record. Exact plan treatments are preserved and classified in clause_assessments. No material false rejection or scope narrowing was found.",
+      "evidence": [
+        "critic/critique.md C1–C4",
+        "reviser/source-map.json criticism_dispositions",
+        "ER12_RUNTIME/runs/A7-01/control/stages/reviser/final.md#critique-dispositions",
+        "I01",
+        "I02",
+        "I11",
+        "I15",
+        "criticism_dispositions"
+      ]
+    },
+    {
+      "axis": 5,
+      "name": "Supported discovery/draft/critique/final meaning preserved",
+      "coverage": "ASSESSED_FULL_ASSIGNED_SCOPE",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "The final retains both routes, meaningful alternative formats, package sidecars/embedded options, design-versus-process separation, owners, old issue limits, unresolved inputs, and proposed-versus-executed status. It qualifies the lineage Materials pairing omission and slash ambiguity instead of treating them as still true. It removes an inaccessible process-record citation without removing product substance. The individual technician G-code-preview suggestion in discovery/draft is compressed into the final machine-settings boundary rather than repeated as a specific test; the original plan's optional interruption/walkthrough idea is not an explicit final row. These are nonmaterial prioritization losses, not unmet binding brief obligations or evidence of executed validation. The broadened consumer wording is separately recorded as L01.",
+      "evidence": [
+        "preservation_assessment",
+        "investigator/discovery.md",
+        "investigator/draft.md",
+        "critic/critique.md",
+        "ER12_RUNTIME/runs/A7-01/control/stages/reviser/final.md"
+      ]
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed versus executed validation and oracle applicability",
+      "coverage": "ASSESSED_FULL_ASSIGNED_SCOPE",
+      "judgment": "PASS",
+      "assessment": "Product/application/file/conformance/printer checks consistently remain NOT_RUN or OUT OF SCOPE. The final proposes meaningful observations of scale, dimensions, geometry, part count/placement, material/extension survival, no-CAD preview/note access, revision identity, and failure/recovery behavior using exact builds. Author notes and dimensions are an appropriate intent oracle after owner tolerances are selected. A successful open, format suite, source lookup, or hash match is not elevated into a product oracle. Code success based on objects OR configuration is weaker than proof that intended geometry loaded, so the final's visual/measurement checks matter. No local executable format witness was required for this research-only proposal.",
+      "evidence": [
+        "validation_assessment",
+        "ER12_RUNTIME/runs/A7-01/control/stages/reviser/final.md#validation-status-and-proposed-pilot-checks",
+        "I12",
+        "I15",
+        "freeze-integrity-check.json"
+      ]
+    }
+  ],
+  "clause_assessments": [
+    {
+      "number": 1,
+      "exact_plan_clause": "Compare two CAD-to-slicer handoff routes and an analogous portable-package mechanism with clear interoperability tradeoffs.",
+      "exact_original_draft_treatment": "Export STL as the complete project record and reconstruct units from a filename. Treat material names as a separate verbal handoff.",
+      "disposition": "CORRECT_UNVERIFIED_DRAFT_ASSUMPTION",
+      "judgment": "PASS",
+      "independent_assessment": "Replaces STL-as-complete-record, filename-only units, and verbal-only materials with two routes and written intent plus dimensions. Keeps STL as a conditional fallback.",
+      "final_locator": "Handoff and portable-package comparison; Units and geometry; Material intent",
+      "source_refs": [
+        "I01",
+        "I04",
+        "I05",
+        "I06",
+        "I07",
+        "I13",
+        "I14",
+        "I17"
+      ]
+    },
+    {
+      "number": 2,
+      "exact_plan_clause": "Explain geometry units, object/assembly relationships, materials and application-specific settings; separate design intent from machine instructions.",
+      "exact_original_draft_treatment": "PrusaSlicer and Cura are listed as receiving tools without testing their package boundaries. A richer package is optional but currently unspecified.",
+      "disposition": "CONSTRAIN_CANDIDATES_AND_EXPLAIN_BOUNDARIES",
+      "judgment": "PASS",
+      "independent_assessment": "Investigates concrete 3MF and STEP routes. Prusa/Cura remain candidates, richer package structure is specified, and actual pair/build testing belongs to the lead. Does not claim source CAD assembly/history is preserved by a mesh.",
+      "final_locator": "Information, intent, and machine settings; Handoff and portable-package comparison",
+      "source_refs": [
+        "I01",
+        "I03",
+        "I04",
+        "I05",
+        "I07",
+        "I10",
+        "I19"
+      ]
+    },
+    {
+      "number": 3,
+      "exact_plan_clause": "Identify supported optional preview or metadata capabilities without treating every extension as universally portable.",
+      "exact_original_draft_treatment": "Retain a preview and project note. Presume any shared package settings are portable to all printers; extension loss has no reporting rule.",
+      "disposition": "RETAIN_OPTION_CORRECT_UNIVERSAL_SETTINGS_AND_REPORT_LOSS",
+      "judgment": "PASS",
+      "independent_assessment": "Retains optional preview/note, rejects universal printer-settings portability, and requires recording extension/metadata losses. Distinguishes schema capability from application display/preservation.",
+      "final_locator": "Optional preview and reviewer note; Application-specific settings; crosswalk clause 3",
+      "source_refs": [
+        "I01",
+        "I02",
+        "I03",
+        "I08",
+        "I10"
+      ]
+    },
+    {
+      "number": 4,
+      "exact_plan_clause": "Investigate a relevant released importer/exporter issue or format-compatibility change and its effect on the pilot.",
+      "exact_original_draft_treatment": "No released importer/exporter history has been read. Opening one file in one slicer is the only proposed acceptance check.",
+      "disposition": "REPLACE_UNRESEARCHED_SINGLE_OPEN_ACCEPTANCE",
+      "judgment": "PASS",
+      "independent_assessment": "Uses issue 8401 on the named old builds and its linked source change. Proposes dimensions, placement, warnings/failure, and recovery checks, not a one-open universal pass. First fixed stable versions and attachment bytes remain unknown.",
+      "final_locator": "Bounded released issue and pilot effect",
+      "source_refs": [
+        "I11",
+        "I12"
+      ]
+    },
+    {
+      "number": 5,
+      "exact_plan_clause": "Preserve and investigate this supported optional scope: a package preview image and human-readable project note for reviewers without the author’s CAD tool. It is an authorized option, not a mandatory feature or an established technical capability; recommend conditions, retain it when supported, and explain any evidence-based exclusion.",
+      "exact_original_draft_treatment": "Retain a package preview image and human-readable project note for reviewers without the author’s CAD tool as supported owner-authorized optional scope. Support here means that the brief explicitly permits it; technical support, conditions and interoperability still need research. Do not remove it merely because the baseline route lacks it, or silently promote it to mandatory scope.",
+      "disposition": "RETAIN_AUTHORIZED_OPTION_WITH_CONDITIONS",
+      "judgment": "PASS",
+      "independent_assessment": "Retains preview image and readable note for no-author-CAD review. Sidecars are a local option; embedding/display is conditional. No unsupported exclusion or silent promotion to mandatory technical capability.",
+      "final_locator": "Optional preview and reviewer note; Recommendation",
+      "source_refs": [
+        "I01",
+        "I03"
+      ]
+    },
+    {
+      "number": 6,
+      "exact_plan_clause": "Make owner decisions explicit: The project author owns intended units and materials; the workshop technician owns printer settings. The pilot lead selects a tested receiving-tool matrix rather than claiming universal compatibility.",
+      "exact_original_draft_treatment": "Owner authority is reserved as follows: The project author owns intended units and materials; the workshop technician owns printer settings. The pilot lead selects a tested receiving-tool matrix rather than claiming universal compatibility. The draft has not obtained these decisions. Its tentative implementation assumptions cannot substitute for them.",
+      "disposition": "PRESERVE_BINDING_OWNER_AUTHORITY_LEAVE_VALUES_OPEN",
+      "judgment": "PASS",
+      "independent_assessment": "The author owns intended units/materials; technician owns printer settings; lead selects tested receiving builds. Actual values/matrix are unresolved owner inputs and are not replaced by draft assumptions.",
+      "final_locator": "Explicit owner decisions and open inputs",
+      "source_refs": [
+        "original brief obligation 6",
+        "original plan clause 6"
+      ]
+    },
+    {
+      "number": 7,
+      "exact_plan_clause": "Preserve negative constraints: Do not operate printers, design safety-critical parts, assume STL preserves every project property, or treat saved slicer settings as approved instructions for every machine.",
+      "exact_original_draft_treatment": "Binding exclusions: Do not operate printers, design safety-critical parts, assume STL preserves every project property, or treat saved slicer settings as approved instructions for every machine. The draft has no complete trace showing that its assumptions comply; revise the proposal wherever necessary to preserve these exclusions.",
+      "disposition": "PRESERVE_ALL_BINDING_NEGATIVE_CONSTRAINTS",
+      "judgment": "PASS",
+      "independent_assessment": "Keeps no printers, no safety-critical designs, no STL-completeness assertion, and no universal machine approval of saved settings. No nonexistent deployment or operation is introduced.",
+      "final_locator": "Scope; crosswalk clause 7; Validation status and proposed pilot checks",
+      "source_refs": [
+        "original brief obligation 7",
+        "original plan clause 7",
+        "I06",
+        "I08",
+        "I10",
+        "I17"
+      ]
+    },
+    {
+      "number": 8,
+      "exact_plan_clause": "Deliver one coherent evidence-backed research proposal covering obligations 1–8, with recommendations, source/version applicability, useful discoveries, unresolved owner inputs, and a validation table separating checks actually executed from checks merely proposed. Do not report research sources or future tests as executed product validation.",
+      "exact_original_draft_treatment": "The draft currently contains no coherent evidence-backed final proposal. Its proposed demos are research/validation ideas only. A complete revision must preserve every obligation, disclose corrections and retained options, and not confuse documentation review with successful product operation.",
+      "disposition": "REPLACE_INCOMPLETE_DRAFT_WITH_COHERENT_PROPOSAL",
+      "judgment": "PASS",
+      "independent_assessment": "Final provides routes, tradeoffs, owners, recommendations, version applicability, discoveries, uncertainties, critique dispositions, and a validation table. Research/hash checks remain separate from product checks.",
+      "final_locator": "Entire final; Validation status and proposed pilot checks",
+      "source_refs": [
+        "final.md",
+        "source-map.json",
+        "validation_assessment"
+      ]
+    }
+  ],
+  "additional_plan_context_dispositions": [
+    {
+      "exact_plan_context": "All external behavior claims below are unverified draft assumptions. No implementation, source inspection or product validation has been executed in preparing the draft.",
+      "assessment": "Correctly treated as fallible plan input, never proof. Final research observations and unrun product checks are distinct."
+    },
+    {
+      "exact_plan_context": "The team has tentatively discussed 3MF-capable PrusaSlicer or Cura workflows. These are investigation leads, not selected winners.",
+      "assessment": "Final retains these as candidates; independently discovered routes/alternatives are compared without making Cura a selected or tested receiver."
+    },
+    {
+      "exact_plan_context": "Do not let these leads prevent discovery of a better fit or an analogous mechanism.",
+      "assessment": "Discovery was saved before plan release; final compares STEP, AMF/STL and a portable wrapper. Complete access audit remains UNKNOWN."
+    },
+    {
+      "exact_plan_context": "Pilot scenario walkthrough | PROPOSED | Walk through ordinary use, interruption, correction and incompatible/missing input.",
+      "assessment": "Final prioritizes exact-route checks, failure/recovery and revision identity; explicit interruption walkthrough is not retained as a separate row. L04 records this nonmaterial optional-proposal compression."
+    },
+    {
+      "exact_plan_context": "Optional-path compatibility | PROPOSED | Check the option on its own terms, with conditions and owner choices.",
+      "assessment": "Retained as NOT_RUN preview/note access plus conditioned extension-preservation checks."
+    },
+    {
+      "exact_plan_context": "End-to-end product operation | NOT_RUN | No installation, deployment or live system access is authorized by this fixture.",
+      "assessment": "NOT_RUN remains; no installation or nonexistent deployment is demanded as a grading prerequisite."
+    },
+    {
+      "exact_plan_context": "Reconcile research with the draft in the complete final; do not deliver only a critique or patch list.",
+      "assessment": "Satisfied: final is self-contained and substantive rather than a predecessor-ID or patch-only handoff."
+    }
+  ],
+  "criticism_dispositions": [
+    {
+      "id": "C1",
+      "original_classification": "Material incomplete / honestly unresolved official version discrepancy",
+      "final_disposition": "Accept; preserve uncertainty",
+      "independent_judgment": "JUSTIFIED_FINAL_QUALIFICATION",
+      "basis": "I02 Preface explicitly targets Core 1.2; I15 README lists Core 1.4.0 and Materials 1.2.1 and marks combined suite coverage. Core §2.3.1 requires extensions to declare target versions. I20 release notes link Core 1.2.3 and I21 bounded repository issue/PR review yielded no explicit 1.4 target clarification. A suite listing does not override the published restriction. The final withholds reliance, keeps richer properties optional, and retains the independent Core preview/note capability. No assertion of actual incompatibility is necessary.",
+      "lineage_defect": "Draft failed to record the target condition while proposing the Materials path alongside Core 1.4.0.",
+      "remaining_material_issue": false,
+      "source_refs": [
+        "I01",
+        "I02",
+        "I15",
+        "I20",
+        "I21"
+      ]
+    },
+    {
+      "id": "C2",
+      "original_classification": "Minor locator/wording",
+      "final_disposition": "Accept; use Core §3.4",
+      "independent_judgment": "JUSTIFIED_WITH_CRITIC_LOCATOR_ERROR_CORRECTED",
+      "basis": "The attribute table is §3.4, not critic's §3.1. §3.1 discusses coordinate space. Final §3.4 locator and permitted unit/default statement are correct.",
+      "lineage_defect": "Original S01 omitted the direct unit table locator; critic introduced an incorrect locator in its correction.",
+      "remaining_material_issue": false,
+      "source_refs": [
+        "I01"
+      ]
+    },
+    {
+      "id": "C3",
+      "original_classification": "Minor slash/backslash ambiguity",
+      "final_disposition": "Accept; amend interpretation",
+      "independent_judgment": "JUSTIFIED",
+      "basis": "I11 reporter follow-up identifies a leading backslash. Core §2.2.3 requires absolute part names beginning with a forward slash. Exact relationship/ZIP entry context and attachment bytes remain uninspected. Final states this distinction and does not invent a file defect from an absent attachment.",
+      "lineage_defect": "Discovery and carried S11 summary blur slash and backslash; critic's part-name locator is also imprecise.",
+      "remaining_material_issue": false,
+      "source_refs": [
+        "I01",
+        "I11"
+      ]
+    },
+    {
+      "id": "C4",
+      "original_classification": "Unsupported non-product process trace because receipt outside critic frozen inputs",
+      "final_disposition": "Accept; cite listed plan-reveal hashes",
+      "independent_judgment": "VALID_ACCESS_LIMITATION_NOT_PROOF_OF_FALSE_RECEIPT",
+      "basis": "The original release-receipt.json actually exists, records successful helper execution, and matches plan-reveal hashes. The critic accurately says it did not inspect an unlisted path. Final reliance on its allowed plan-reveal record and matching hashes is appropriate. Neither receipt proves product validation. No claim that the original receipt was fabricated is supported.",
+      "lineage_defect": "Citation could not be corroborated within critic/reviser frozen input maps; not independently established as a false statement.",
+      "remaining_material_issue": false,
+      "source_refs": [
+        "original release-receipt.json",
+        "original plan-reveal.json",
+        "evidence/freeze-integrity-check.json"
+      ]
+    }
+  ],
+  "remaining_material_findings": [],
+  "limitations": [
+    {
+      "id": "L01",
+      "kind": "MINOR_REMAINING_SUBJECT_DOMAIN_OVERSTATEMENT",
+      "locator": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/final.md — Objects, parts, and assembly relationships",
+      "finding": "Final says Core requires consumers to respect component relative positions. The explicit §4.2 MUST addresses a 3D manufacturing device; Core Chapter 1 defines this as a consumer that produces a physical part. The discovery was narrower.",
+      "source_refs": [
+        "I01 §§1, 4.2; evidence/I01.txt line 141 and lines 742–752"
+      ],
+      "material": false,
+      "why_nonmaterial": "The final separately requires exact exporter/receiver tests for preserved placement and never declares every viewer/slicer conformant or tested. Its route choice rests on representable structure and a testing condition, not on this generalized MUST. This wording should not be used as a universal inspection-software guarantee."
+    },
+    {
+      "id": "L02",
+      "kind": "MINOR_CARRIED_RELEASE_DATE_ERROR",
+      "locator": "All stage source maps, carried S02/S16 released_version_commit; investigator sources/index.md S02",
+      "finding": "The carried source record says Materials 1.2.1 was released 2025-02-27 according to an index. The tagged release API gives published_at 2019-09-27T09:46:41Z and commit d4d42dd. A later specification-index date does not establish the original release date.",
+      "source_refs": [
+        "I20",
+        "I16"
+      ],
+      "material": false,
+      "why_nonmaterial": "Exact tagged 1.2.1 text is the source actually used; final does not depend on a 2025 release date or claim a newly released compatibility fix. The extension target issue remains supported independently."
+    },
+    {
+      "id": "L03",
+      "kind": "HISTORICAL_APPLICABILITY_LIMIT",
+      "locator": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/final.md — Bounded released issue and pilot effect",
+      "finding": "The maintainer specifically describes the FreeCAD exporter as non-stable, and the reporter says a fix was submitted rather than documenting a first stable fixed release. Final quotes the reported 0.20 family and does not include the non-stable qualifier explicitly.",
+      "source_refs": [
+        "I11 lines 119, 137–161",
+        "I12"
+      ],
+      "material": false,
+      "why_nonmaterial": "Final bounds the case to an old user report, leaves fixed-release containment unknown, does not claim a current defect, and requires exact pilot builds. The released receiving Prusa 2.4.2 case is still relevant."
+    },
+    {
+      "id": "L04",
+      "kind": "MINOR_VALIDATION_PROPOSAL_COMPRESSION",
+      "locator": "Discovery §8 proposed check (6); original plan validation table Pilot scenario walkthrough; final validation table",
+      "finding": "Final no longer names a technician G-code preview as a distinct proposed check and does not explicitly repeat interruption as a walkthrough scenario. It preserves technician process responsibility, import failure/recovery, revision identity, and owner choices.",
+      "source_refs": [
+        "original discovery.md §8",
+        "original plan.md validation table",
+        "I09",
+        "final.md validation table"
+      ],
+      "material": false,
+      "why_nonmaterial": "These were prospective optional validation ideas, not binding added feature/deployment obligations. The mandatory prioritized research validation table remains meaningful and no executed check is invented."
+    },
+    {
+      "id": "L05",
+      "kind": "ORIGINAL_EVIDENCE_GRANULARITY_LIMIT",
+      "locator": "All original stages/sources directories",
+      "finding": "Each original authored sources directory contains only index.md; authored maps provide observations but no local full-page captures or full execution transcripts. Independent primary retrieval verifies source meaning here, not every predecessor action.",
+      "source_refs": [
+        "original-inspected-manifest.json",
+        "independent source-map.json"
+      ],
+      "material": false,
+      "why_nonmaterial": "Assignments permit bounded navigable indexes; raw capture absence is not an invented delivery requirement. Native/session protocol and action claims remain separately limited."
+    }
+  ],
+  "lineage_material_findings": [
+    {
+      "id": "LC1",
+      "finding": "Optional Materials extension Core-target condition absent from discovery/draft applicability.",
+      "classification": "MATERIAL_INCOMPLETE_IN_LINEAGE",
+      "final_resolution": "Explicit unresolved applicability boundary before any reliance; Core-only route and preview/note retained.",
+      "remaining": false,
+      "source_refs": [
+        "I02",
+        "I15",
+        "C1"
+      ]
+    }
+  ],
+  "claim_assessments": [
+    {
+      "id": "Q01",
+      "exact_subject": "3MF package",
+      "operation": "Contain manufacturing geometry and defined package parts",
+      "version": "Core 1.4.0",
+      "default_unit_type_domain_exceptions": "ZIP/OPC; format capability, not application interoperability. Optional fields and consumer-specific settings remain distinct.",
+      "source_refs": [
+        "I01 §§1.1, 2.1"
+      ],
+      "final_locator": "Comparison: 3MF and wrapper",
+      "judgment": "SUPPORTED",
+      "independent_assessment": ""
+    },
+    {
+      "id": "Q02",
+      "exact_subject": "3MF model unit attribute",
+      "operation": "Interpret coordinates/measurements",
+      "version": "Core 1.4.0 §3.4",
+      "default_unit_type_domain_exceptions": "ST_Unit; default millimeter; micron/millimeter/centimeter/inch/foot/meter. Application size checks still needed.",
+      "source_refs": [
+        "I01 §3.4"
+      ],
+      "final_locator": "Units and geometry",
+      "judgment": "SUPPORTED",
+      "independent_assessment": ""
+    },
+    {
+      "id": "Q03",
+      "exact_subject": "STL coordinates",
+      "operation": "Exchange a surface mesh without an encoded unit contract",
+      "version": "Autodesk support 2026-04-29; live vendor docs",
+      "default_unit_type_domain_exceptions": "Export/import units and common mm assumptions are tool behavior. Does not preserve every project property.",
+      "source_refs": [
+        "I06",
+        "I08",
+        "I17"
+      ],
+      "final_locator": "STL fallback and units",
+      "judgment": "SUPPORTED",
+      "independent_assessment": ""
+    },
+    {
+      "id": "Q04",
+      "exact_subject": "3MF components and manufacturing devices",
+      "operation": "Represent object references/transforms and preserve relative positions during manufacturing",
+      "version": "Core 1.4.0 §4.2",
+      "default_unit_type_domain_exceptions": "Device-specific MUST, not blanket viewer/slicer guarantee; overlapping components unite with ordered properties. No native CAD joints/history guarantee.",
+      "source_refs": [
+        "I01 §4.2",
+        "I19"
+      ],
+      "final_locator": "Objects, parts, and assembly relationships",
+      "judgment": "SUPPORTED_WITH_MINOR_DOMAIN_WORDING",
+      "independent_assessment": "L01 records final's broader consumers wording; no tested placement claim follows from it."
+    },
+    {
+      "id": "Q05",
+      "exact_subject": "3MF base material and displaycolor",
+      "operation": "Express material intent versus rendering appearance",
+      "version": "Core 1.4.0 §5.1",
+      "default_unit_type_domain_exceptions": "Name is xs:string design intent; displaycolor is render-only. Physical color intent needs a corresponding extension; printer mapping is separate.",
+      "source_refs": [
+        "I01 §5.1"
+      ],
+      "final_locator": "Material intent",
+      "judgment": "SUPPORTED",
+      "independent_assessment": ""
+    },
+    {
+      "id": "Q06",
+      "exact_subject": "PrintTicket and receiving consumer",
+      "operation": "Apply device/settings intent",
+      "version": "Core 1.4.0 §2.1.4",
+      "default_unit_type_domain_exceptions": "Optional ticket; environment-governed format. Unsupported/absent ticket leaves defaults to that consumer. Not universal saved-slicer settings.",
+      "source_refs": [
+        "I01 §2.1.4"
+      ],
+      "final_locator": "Application-specific settings",
+      "judgment": "SUPPORTED",
+      "independent_assessment": ""
+    },
+    {
+      "id": "Q07",
+      "exact_subject": "Core thumbnails and model metadata",
+      "operation": "Provide optional review content",
+      "version": "Core 1.4.0 §§2.1.3, 3.4.1, 6.1",
+      "default_unit_type_domain_exceptions": "Package/object thumbnails are optional PNG/JPEG with relationships; JPEG excludes CMYK. Description is a well-known metadata field; type defaults xs:string, preserve defaults false. Format capability does not ensure every app displays/preserves it.",
+      "source_refs": [
+        "I01"
+      ],
+      "final_locator": "Optional preview and reviewer note",
+      "judgment": "SUPPORTED",
+      "independent_assessment": ""
+    },
+    {
+      "id": "Q08",
+      "exact_subject": "3MF model extension declarations and materials extension",
+      "operation": "Qualify extension support and applicability",
+      "version": "Core 1.4.0; Materials 1.2.1",
+      "default_unit_type_domain_exceptions": "Optional producer resources vs consumers claiming extension support. Unsupported required extensions prevent processing; recommended extensions call for warning/user input. Materials Preface explicitly targets Core 1.2. Final withholds disputed 1.4 pairing.",
+      "source_refs": [
+        "I01 §§2.3.1, 3.4",
+        "I02 Preface",
+        "I15",
+        "I20",
+        "I21"
+      ],
+      "final_locator": "Recommendation, material intent, C1",
+      "judgment": "HONESTLY_UNRESOLVED_WITH_SUPPORTED_RELIANCE_BOUNDARY",
+      "independent_assessment": "The index/suite combination does not establish conformance; no public target clarification found in bounded release/issues review."
+    },
+    {
+      "id": "Q09",
+      "exact_subject": "3MF document naming",
+      "operation": "Distinguish model/project/build roles",
+      "version": "Core 1.4.0 §2.2.1",
+      "default_unit_type_domain_exceptions": "Recommended double extensions; model data vs printer-prepared plate vs comprehensive project. Not a guarantee tools enforce or honor names.",
+      "source_refs": [
+        "I01 §2.2.1"
+      ],
+      "final_locator": "Recommendation and useful discovery",
+      "judgment": "SUPPORTED",
+      "independent_assessment": ""
+    },
+    {
+      "id": "Q10",
+      "exact_subject": "Autodesk Fusion Save As Mesh",
+      "operation": "Export bodies/components to 3MF/STL/OBJ",
+      "version": "Live documentation, no build pinned",
+      "default_unit_type_domain_exceptions": "Solid/surface/mesh body; component selection includes bodies. Does not guarantee all exporter assembly/material/extension semantics.",
+      "source_refs": [
+        "I04"
+      ],
+      "final_locator": "Default 3MF route",
+      "judgment": "SUPPORTED",
+      "independent_assessment": ""
+    },
+    {
+      "id": "Q11",
+      "exact_subject": "Fusion STEP exchange and PrusaSlicer STEP import",
+      "operation": "Exchange CAD geometry then triangulate at slicer boundary",
+      "version": "Fusion live docs; PrusaSlicer 2.9 (Legacy) documentation, point build unpinned",
+      "default_unit_type_domain_exceptions": "Export loses source associativity; no universal assembly/material/feature-history retention. Direct Prusa import triangulates. Exact protocol/build choices remain open.",
+      "source_refs": [
+        "I05",
+        "I07",
+        "I17"
+      ],
+      "final_locator": "STEP secondary route",
+      "judgment": "SUPPORTED",
+      "independent_assessment": ""
+    },
+    {
+      "id": "Q12",
+      "exact_subject": "Prusa saved project and 3.0 preview importer",
+      "operation": "Retain or discard application settings according to tool/version",
+      "version": "Prusa live Save Project docs; 3.0 unfinished alpha announcement 2026-09-01; 2.9.6 stable release",
+      "default_unit_type_domain_exceptions": "Snapshot includes objects/settings/modifiers; cross-version and third-party settings behavior is scoped to preview. Bambu/Orca third-party geometry-only observation is not an all-slicer rule.",
+      "source_refs": [
+        "I08",
+        "I10",
+        "I18"
+      ],
+      "final_locator": "Application-specific settings",
+      "judgment": "SUPPORTED",
+      "independent_assessment": ""
+    },
+    {
+      "id": "Q13",
+      "exact_subject": "Consortium compatibility matrix",
+      "operation": "Seed candidate tool discovery",
+      "version": "Live matrix, build-level guarantees absent",
+      "default_unit_type_domain_exceptions": "Self-reported, not independently verified; Core and extensions are separate. No universal compatibility claim.",
+      "source_refs": [
+        "I03"
+      ],
+      "final_locator": "Owner decisions and open inputs",
+      "judgment": "SUPPORTED",
+      "independent_assessment": ""
+    },
+    {
+      "id": "Q14",
+      "exact_subject": "Prusa issue 8401 and linked importer commit",
+      "operation": "Report old silent import and improve error outcome",
+      "version": "2022-06-13 report; PrusaSlicer 2.4.2+arm64/macOS 12.4; non-stable FreeCAD 0.20 family; 040a8467bd0809bed7dad64cdf79ca6e5c340c20 dated 2022-06-14",
+      "default_unit_type_domain_exceptions": "Reporter/maintainer account, not reproduction. AMF 0,0 and STL success are case-specific; leading-backslash fix submitted. Code returns nonempty model objects OR nonempty config. Attachments and first stable fixed versions remain unknown.",
+      "source_refs": [
+        "I11",
+        "I12"
+      ],
+      "final_locator": "Bounded released issue and pilot effect",
+      "judgment": "SUPPORTED_WITH_HISTORICAL_LIMITS",
+      "independent_assessment": "L03 supplies omitted non-stable qualifier. Intended geometry needs a separate oracle even if config loads."
+    },
+    {
+      "id": "Q15",
+      "exact_subject": "AMF and historical Prusa format choice",
+      "operation": "Offer a bounded alternate interchange route",
+      "version": "ISO/ASTM52915-20 AMF 1.2 active public abstract; Prusa 2.0 announcement 2019; 2.9 docs",
+      "default_unit_type_domain_exceptions": "XML schema conformance, public abstract only; no detailed full-standard claim. Historic 3MF preference/AMF support is not a current all-tool census.",
+      "source_refs": [
+        "I13",
+        "I14",
+        "I07"
+      ],
+      "final_locator": "AMF legacy comparator",
+      "judgment": "SUPPORTED",
+      "independent_assessment": ""
+    },
+    {
+      "id": "Q16",
+      "exact_subject": "3MF conformance suite",
+      "operation": "Supplement proposed format-level validation",
+      "version": "README suite 2.4.1; Core 1.4.0/Materials 1.2.1 listing",
+      "default_unit_type_domain_exceptions": "Coverage groups, not application interoperability, optional display, exact project preservation, or printer suitability. Not executed. Pairing issue remains unresolved.",
+      "source_refs": [
+        "I15"
+      ],
+      "final_locator": "Validation table and C1",
+      "judgment": "SUPPORTED",
+      "independent_assessment": ""
+    },
+    {
+      "id": "Q17",
+      "exact_subject": "Fusion native assembly components",
+      "operation": "Describe nested part intent and external references",
+      "version": "Live Autodesk assembly documentation, build unpinned",
+      "default_unit_type_domain_exceptions": "Components can have own origins/coordinate systems/timeline; external references may fail from permissions, source deletion/archive or translation. Does not establish portable export retention.",
+      "source_refs": [
+        "I19"
+      ],
+      "final_locator": "Objects, parts, and assembly relationships",
+      "judgment": "SUPPORTED",
+      "independent_assessment": ""
+    }
+  ],
+  "preservation_assessment": [
+    {
+      "topic": "Two routes and mesh/CAD boundary",
+      "discovery": "3MF mesh + STEP; no native CAD-history promise",
+      "draft": "Both carried into a complete proposal",
+      "critique": "Accepted with no material false route correction",
+      "final": "Both retained and exact testing condition preserved",
+      "judgment": "PRESERVED"
+    },
+    {
+      "topic": "Portable package and optional review scope",
+      "discovery": "OPC capabilities plus outer note/PNG; optional embedding",
+      "draft": "Authorized option explicitly retained",
+      "critique": "No exclusion justified",
+      "final": "Still optional; sidecars + conditional embedded thumbnail/Description; revision-detachment caveat added",
+      "judgment": "PRESERVED_AND_QUALIFIED"
+    },
+    {
+      "topic": "Units/material intent and process separation",
+      "discovery": "Author intent and technician settings separated",
+      "draft": "Written notes and dimension checks; no universal settings",
+      "critique": "Unit locator request",
+      "final": "Owners and exact unit table preserved; L01 affects a separate device-domain wording",
+      "judgment": "PRESERVED"
+    },
+    {
+      "topic": "Materials extension",
+      "discovery": "Rich extension support conditional but Core target omitted",
+      "draft": "Tests proposed alongside 1.4.0 without target warning",
+      "critique": "C1 identifies explicit target discrepancy",
+      "final": "Retains opportunity while withholding unresolved combination; Core option not dropped",
+      "judgment": "LINEAGE_DEFECT_QUALIFIED_IN_FINAL"
+    },
+    {
+      "topic": "History and implementation",
+      "discovery": "Old report plus source return-condition change; slash ambiguous",
+      "draft": "Invalid path content, no first fixed stable release or reproduction",
+      "critique": "C3 identifies backslash/part-name distinction",
+      "final": "Both report and commit retained, slash distinction and absent attachment made explicit",
+      "judgment": "PRESERVED_WITH_CORRECTION"
+    },
+    {
+      "topic": "Alternatives and unfamiliar opportunities",
+      "discovery": "AMF/STL, role naming, test suite, vendor compatibility boundaries",
+      "draft": "Alternatives and useful opportunities retained",
+      "critique": "No demanded removal",
+      "final": "Retained with scope/version/source-quality conditions",
+      "judgment": "PRESERVED"
+    },
+    {
+      "topic": "Owners, exclusions, owner inputs",
+      "discovery": "Fixed roles and no printer/safety-critical work",
+      "draft": "Preserved and actual values left open",
+      "critique": "Accepted",
+      "final": "Preserved with no invented implementation/deployment obligation",
+      "judgment": "PRESERVED"
+    },
+    {
+      "topic": "Validation and process evidence",
+      "discovery": "Research only; all product checks NOT_RUN; technician preview suggestion",
+      "draft": "Same status plus release receipt row",
+      "critique": "Receipt unavailable in frozen map; C4",
+      "final": "Listed plan-reveal hash check, meaningful future tests; preview/walkthrough compression recorded L04",
+      "judgment": "PRESERVED_WITH_NONMATERIAL_COMPRESSION"
+    }
+  ],
+  "validation_assessment": [
+    {
+      "check": "Original public documentation/source/issue retrieval",
+      "claimed_status": "EXECUTED_RESEARCH_ONLY",
+      "evidence_basis": "Authored source maps with access records; reviewer independently retrieved primary meaning. No full predecessor tool transcript supplied.",
+      "oracle": "Supports documented behavior/conditions; not exported file or product success.",
+      "assessment": "APPROPRIATE_BOUNDARY_ACTION_EXECUTION_NOT_FULLY_INDEPENDENTLY_AUDITED"
+    },
+    {
+      "check": "Plan/discovery freeze hash check",
+      "claimed_status": "EXECUTED_LOCAL_PROCESS_CHECK",
+      "evidence_basis": "Reviewer verified all 32 listed freeze entries and plan/discovery identity; hashes match.",
+      "oracle": "Frozen byte identity only, never semantic correctness.",
+      "assessment": "VERIFIED_PROCESS_RESULT"
+    },
+    {
+      "check": "Ten-project 3MF/STEP/STL/AMF route comparison",
+      "claimed_status": "NOT_RUN_PROPOSED",
+      "evidence_basis": "No pilot samples or app sessions; exact exporter/receiver builds to be selected.",
+      "oracle": "Author-declared dimensions/units, visible geometry, part count/names and relative placement; owner tolerance decisions remain explicit.",
+      "assessment": "MEANINGFUL_DISCRIMINATING_PROPOSAL"
+    },
+    {
+      "check": "Core/Materials extension preservation",
+      "claimed_status": "NOT_RUN_PROPOSED",
+      "evidence_basis": "Docs and listing only; no round-trip executed.",
+      "oracle": "Resolve version target first; compare intended extension values and observed loss/warnings across exact apps. Unsupported required extension cannot be treated as harmless ignored data.",
+      "assessment": "MEANINGFUL_CONDITIONED_PROPOSAL"
+    },
+    {
+      "check": "No-CAD review of note/preview",
+      "claimed_status": "NOT_RUN_PROPOSED",
+      "evidence_basis": "Supported optional standard capability; no selected display app or package tested.",
+      "oracle": "Reviewer can access readable sidecars/optional embedded fields and associate them with correct model revision. Standard existence does not prove display.",
+      "assessment": "MEANINGFUL_PROPOSAL"
+    },
+    {
+      "check": "Invalid/no-geometry import and recovery",
+      "claimed_status": "NOT_RUN_PROPOSED_OPTIONAL_FIXTURE",
+      "evidence_basis": "Issue/commit read; no attachment downloaded or test fixture run.",
+      "oracle": "Explicit failure/warnings plus expected actual geometry. Source commit alone accepts config-only state and is not sufficient geometry-preservation proof.",
+      "assessment": "MEANINGFUL_PROPOSAL_WITH_ORACLE_LIMIT"
+    },
+    {
+      "check": "3MF conformance suite",
+      "claimed_status": "NOT_RUN_PROPOSED",
+      "evidence_basis": "Only README coverage inspected.",
+      "oracle": "Chosen specification subset; cannot certify application-specific settings, no-CAD review, or whole-project intent.",
+      "assessment": "CORRECTLY_LIMITED_SUPPLEMENT"
+    },
+    {
+      "check": "Printer operation or safety-critical validation",
+      "claimed_status": "NOT_RUN_OUT_OF_SCOPE",
+      "evidence_basis": "Brief exclusions; no asserted operation.",
+      "oracle": "No pilot print or nonexistent deployment required for research proposal.",
+      "assessment": "CORRECT_NEGATIVE_CONSTRAINT"
+    }
+  ],
+  "useful_discoveries": [
+    {
+      "discovery": "Role-specific 3MF filenames",
+      "utility": "Distinguishes author design models from technician projects/builds before opening; convention still needs receiver awareness.",
+      "source_refs": [
+        "I01 §2.2.1"
+      ]
+    },
+    {
+      "discovery": "Embedded Core thumbnail/Description plus independent sidecars",
+      "utility": "Retains authorized review scope while covering apps that do not surface optional data; revision-detachment is a concrete tradeoff.",
+      "source_refs": [
+        "I01",
+        "I04"
+      ]
+    },
+    {
+      "discovery": "STEP CAD review versus slicer triangulation",
+      "utility": "Explains why the second route can help shape review without promising parametric history or complete assembly/material retention.",
+      "source_refs": [
+        "I05",
+        "I07",
+        "I17"
+      ]
+    },
+    {
+      "discovery": "AMF formal alternative and STL restricted fallback",
+      "utility": "Meaningful competing approaches at pilot scale with schema/support/units tradeoffs.",
+      "source_refs": [
+        "I06",
+        "I07",
+        "I13",
+        "I14"
+      ]
+    },
+    {
+      "discovery": "Geometry/settings compatibility diverges by project origin/version",
+      "utility": "Makes machine-setting authority and separate technician artifact actionable. Preview source remains alpha-specific.",
+      "source_refs": [
+        "I08",
+        "I10",
+        "I18"
+      ]
+    },
+    {
+      "discovery": "Importer return-condition change and visible failure check",
+      "utility": "Source code shows why successful load status must be distinguished from intended geometry; history provides a bounded prospective test.",
+      "source_refs": [
+        "I11",
+        "I12"
+      ]
+    },
+    {
+      "discovery": "Format suite with explicit Core/extension combinations",
+      "utility": "A proposed supplementary oracle with limited applicability, not a substitute for exact application/file tests.",
+      "source_refs": [
+        "I15"
+      ]
+    }
+  ],
+  "unknowns": [
+    "Actual native provider/model and effective service tiers of candidate stages.",
+    "Independently verifiable native terminal receipts for investigator/reviser and independent event audit for critic.",
+    "Complete predecessor session/action history, including blind discovery and initial-save/Goal-terminal ordering.",
+    "Effective inference time, token billing and cost; authored Goal tokens/elapsed values are not billing telemetry.",
+    "Materials 1.2.1 normative target for Core 1.4.0 remains unresolved after bounded primary-source investigation.",
+    "Exact issue attachment bytes and first stable FreeCAD/Prusa release containing the historical fixes.",
+    "Actual pilot samples, selected applications/builds/OS, STEP protocol options, native-source sharing and tolerances.",
+    "Actual export/import retention and no-CAD display behavior: all product checks NOT_RUN.",
+    "Full paid AMF standard not inspected; no unsupported detailed AMF clause is inferred."
+  ],
+  "native_t3_effective_billing": {
+    "candidate_stage_evidence": {
+      "investigator": {
+        "evidence": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/goal-observation.json",
+        "authored_record": "create/get active, thread 01a12401-fc92-7e02-ba13-b0d64e19e5f1; numeric createdAt 1791605516",
+        "native_terminal_proof": "UNKNOWN: no direct terminal receipt inspected",
+        "reviewer_direct_native_observation": "UNKNOWN"
+      },
+      "critic": {
+        "evidence": "ER12_RUNTIME/runs/A7-01/control/stages/critic/source-map.json native_goal_observation",
+        "authored_record": "Active and complete fields, thread 01a12410-2f0c-74f2-bd04-fc7196b9b47e; terminal timeUsedSeconds 832; tokensUsed 177103",
+        "reviewer_direct_native_observation": "UNKNOWN: these are candidate-authored preserved fields, not independently obtained native tool events"
+      },
+      "reviser": {
+        "evidence": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/source-map.json native_goal_observation; terminal-science-freeze-root.json",
+        "authored_record": "Active create/get fields, thread 01a1241e-b3f2-7102-91be-344bb0b66a8f; final T3 summary claims native completion and 578 seconds",
+        "native_terminal_proof": "UNKNOWN: root T3 terminal summary is not direct native completion proof",
+        "reviewer_direct_native_observation": "UNKNOWN"
+      }
+    },
+    "candidate_t3": {
+      "delivery": "Root terminal freeze records final reviser task completed, result_available, no pending child runs at 2026-10-10T04:53:53.834607+00:00. This is explicit root-observed T3 evidence, distinct from native proof.",
+      "returned_route": "All three dispatch returned records say providerInstanceId AUTHORIZED_PROVIDER_INSTANCE, model gpt-6-luna. These are T3 returned routing fields, not proof of actual native Goal/model execution.",
+      "native_actual_provider_model": "UNKNOWN",
+      "effective_service_tier": "UNKNOWN: priority requested for investigator/critic and default requested for reviser; change record is prospective intent, not execution telemetry.",
+      "effective_inference_time": "UNKNOWN",
+      "billing_tokens_cost": "UNKNOWN"
+    },
+    "reviewer": {
+      "native_goal_id": "01a12429-1836-74c3-b8f3-bc08adce41fc",
+      "activation": "DIRECTLY_OBSERVED_ACTIVE",
+      "evidence": "evidence/reviewer-goal-active.json",
+      "completion_at_assessment_save": "PENDING_REQUIRED_AFTER_SCIENCE_SAVE",
+      "terminal_receipt_path": "evidence/reviewer-goal-complete.json",
+      "subagents_spawned": 0
+    }
+  },
+  "protocol": {
+    "review_method": "Independent full-pipeline semantic assessment of A7-01 control only; no other arm/result/status/history read; no ER11 rescore; no candidate feedback/repair, nested delegation, account/repository/publication changes. Only own mailbox checked. Raw public primary retrieval is evidence, not a product run.",
+    "candidate_discovery_blindness": "Release record freezes discovery before plan reveal, and current hashes match. No complete tool transcript supplied to independently prove absence of pre-reveal access or extra reveal attempts; UNKNOWN beyond the record.",
+    "candidate_assistance": "No unauthorized assistance observed in supplied evidence; full interaction audit UNKNOWN. Do not claim assistance occurred.",
+    "candidate_native_completion_order": "UNKNOWN as independent proof; authored records say files were saved before completion, but final mtimes and candidate summaries cannot establish every initial-save ordering. Critic map was updated after its recorded terminal to add fields.",
+    "candidate_time_contract": "VIOLATION_OBSERVED_AT_CRITIC_STAGE; separate from source judgment.",
+    "reviewer_constraints": "COMPLIED_WITHIN_OBSERVED_REVIEW: one native Goal, no nested work, writes restricted to reserved output, original bytes unchanged."
+  },
+  "time": {
+    "reviewer_start_utc": "2026-10-10T04:54:11Z",
+    "reviewer_deadline_utc": "2026-10-10T05:39:11Z",
+    "assessment_saved_utc": "2026-10-10T05:06:13.902872+00:00",
+    "reviewer_capped": false,
+    "unassessed_axes": [],
+    "candidate_whole_deadline_utc": "2026-10-10T05:11:09.530Z",
+    "candidate_final_t3_observed_utc": "2026-10-10T04:53:53.834607+00:00",
+    "whole_delivery": "BEFORE_ASSIGNED_WHOLE_DEADLINE",
+    "critic_stage_deadline_utc": "2026-10-10T04:38:41.276Z",
+    "critic_authored_expiry_clock_utc": "2026-10-10T04:40:12Z",
+    "critic_reported_overrun_seconds_at_that_clock": 90.724,
+    "critic_critique_frozen_mtime_utc": "2026-10-10T04:41:10.238437+00:00",
+    "critic_critique_last_write_after_deadline_seconds": 148.962437,
+    "critic_map_frozen_mtime_utc": "2026-10-10T04:42:03.744933+00:00",
+    "critic_map_last_write_after_deadline_seconds": 202.468933,
+    "interpretation": "Critic delivery/finalization crossed fixed cap. Authored critique says substantive research stopped at expiry; absence of complete event telemetry means post-expiry inference activity cannot be independently reconstructed. Investigator and reviser listed science mtimes precede their stage caps. Mtime/Goal occupancy is not effective inference time or billed work; no efficiency or cross-arm comparison is made."
+  },
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A7-01/brief.md",
+      "bytes": 3358,
+      "sha256": "dcd62504463a57569adbc66d85753f8a178764bb5d80b7c17dad4f4088a1b1f5",
+      "mtime_ns": 1791605469529805464
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A7-01/plan.md",
+      "bytes": 6015,
+      "sha256": "b9063b147acff997c7c788eac44d2149ca6946fa4ee2a3ce6f0bdf80789397e7",
+      "mtime_ns": 1791605469529934211
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/inputs/brief.md",
+      "bytes": 3358,
+      "sha256": "dcd62504463a57569adbc66d85753f8a178764bb5d80b7c17dad4f4088a1b1f5",
+      "mtime_ns": 1791605471924383738
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/critic/assignment.md",
+      "bytes": 3306,
+      "sha256": "d8e3a0889d50555c7615bf105cc1c1a2542ab4a9b66306a3036ad28fce14774f",
+      "mtime_ns": 1791606401276839847
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/critic/critique.md",
+      "bytes": 10330,
+      "sha256": "40986b4c2b3c438c13d13e20df811d58f1c7bced0e53439be957d30c660cb04d",
+      "mtime_ns": 1791607270238436834
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/critic/dispatch.json",
+      "bytes": 4124,
+      "sha256": "c6276fee6a4f5eb3e5e7cd5b405ba29451e6349ea8d1087cbbcad20428b0922b",
+      "mtime_ns": 1791606402688962101
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/critic/freeze.json",
+      "bytes": 3135,
+      "sha256": "a4b760e6c89407250ce401fb9cc9ffb243d9e13f26e8a95743e3d228c36208d2",
+      "mtime_ns": 1791606401277412537
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/critic/input-map.json",
+      "bytes": 1390,
+      "sha256": "6a166cad1681f1bb0c23df32209db33dfa2848732b91b552834e567de83c32b9",
+      "mtime_ns": 1791606401276645982
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/critic/request.json",
+      "bytes": 890,
+      "sha256": "382ede9ea23c87925de3200a199fd359fef30877a9933d546806f1854d4d52eb",
+      "mtime_ns": 1791606401277557209
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/critic/source-map.json",
+      "bytes": 39383,
+      "sha256": "372272951e49ffedfc5a1d0449b8d407ec5d9d7afc101ec9c67f1501ccfd3b82",
+      "mtime_ns": 1791607323744932677
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/critic/sources/index.md",
+      "bytes": 4239,
+      "sha256": "37a4c73dc6b50c0c64defcd243589ca41807002face1e6698205dc0cab175ce0",
+      "mtime_ns": 1791607001988239869
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/assignment.md",
+      "bytes": 3712,
+      "sha256": "371b71cdd3a935fd693879a4a33e7e9398c34f2c23d31016dafff9b553ee5863",
+      "mtime_ns": 1791605471925254509
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/discovery.md",
+      "bytes": 14812,
+      "sha256": "17ff8435c3352da4d6ab501fb6a90272c342a2b04bedf7a04afb4eeaa6b04dfb",
+      "mtime_ns": 1791606156235060153
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/dispatch.json",
+      "bytes": 4220,
+      "sha256": "b3cd4e47e21eff073c18fd6a25008f19ec0830095286d4d75653f48806f65519",
+      "mtime_ns": 1791605472546951437
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/draft.md",
+      "bytes": 19339,
+      "sha256": "f187c5e9a18a4a5b3e30ef3e263704374bf08512bfb3cab116d106f6c3976442",
+      "mtime_ns": 1791606289646668988
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/freeze.json",
+      "bytes": 1654,
+      "sha256": "ef8af6d039339341c505a006c371f39da405370e238749b9490b0fb4f625c340",
+      "mtime_ns": 1791605471925543793
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/goal-observation.json",
+      "bytes": 1285,
+      "sha256": "96a4bbb302e93d3dab38ee1ad32268e5e056a9478dfb251b6535d756184a1ad6",
+      "mtime_ns": 1791606089358763735
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/input-map.json",
+      "bytes": 714,
+      "sha256": "e2fd6c96efe53f7f85d8582ddd3b51a7c76cf44c96a94be797feb598fc7dc0d6",
+      "mtime_ns": 1791605471925085435
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/plan-reveal.json",
+      "bytes": 427,
+      "sha256": "20543cca5883a33b02c0f62452de58d027f5088edc5812f692a80c684eba099e",
+      "mtime_ns": 1791606185319723429
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/release-receipt.json",
+      "bytes": 640,
+      "sha256": "e0aa2b019c4a6d839df6e9aaa477835a34114c01117696952a76e0f463bbc966",
+      "mtime_ns": 1791606196465243486
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/request.json",
+      "bytes": 914,
+      "sha256": "8942c71e6bf7fbf1bf93fdaff3692cd6932b6ff45e3e344d1fdb912d4d50bd84",
+      "mtime_ns": 1791605471925652242
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/revealed-plan.md",
+      "bytes": 6015,
+      "sha256": "b9063b147acff997c7c788eac44d2149ca6946fa4ee2a3ce6f0bdf80789397e7",
+      "mtime_ns": 1791606185319611415
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/source-map.json",
+      "bytes": 24810,
+      "sha256": "ca05e8dfe48e66a179c754a65a485593502eced26d1b38cd2613b94fd0c14fa1",
+      "mtime_ns": 1791606156234060149
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/sources/index.md",
+      "bytes": 6778,
+      "sha256": "3d85af0028365984a7432ad2b1194e0a3142141177e4b8b60d876ae5f7e65185",
+      "mtime_ns": 1791606156236060157
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/assignment.md",
+      "bytes": 3286,
+      "sha256": "4b46b17b1a07bbc01312ddfc084f529e8af27137049412d3cdbd76b600f39916",
+      "mtime_ns": 1791607348035855801
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/dispatch.json",
+      "bytes": 4139,
+      "sha256": "ed142ed6d6c99a873001cdada4cdfe46dda8c39e2bc430354016cae26fb1a028",
+      "mtime_ns": 1791607350279814747
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/final.md",
+      "bytes": 24904,
+      "sha256": "9b96a8ba94e1567069ad240b192f203ec7b7a360e7aaa95c1fa11c7c43793383",
+      "mtime_ns": 1791607903365579844
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/freeze.json",
+      "bytes": 3973,
+      "sha256": "3d797c5f08ed310c7e4c403eaf75ee715c4cb0eb8967cd8a8ecde9055e2b37db",
+      "mtime_ns": 1791607348188594415
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/input-map.json",
+      "bytes": 1768,
+      "sha256": "f1729d35c6e31cc008a513ea51092fa64321fe59929a7970fd5286bfa1436845",
+      "mtime_ns": 1791607348187953838
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/request.json",
+      "bytes": 893,
+      "sha256": "cb935010d7e52067e2ec41eebb44fb1903a2ebdaf7b6ed4a77de8ecf1869c855",
+      "mtime_ns": 1791607348188165279
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/service-tier-change.json",
+      "bytes": 479,
+      "sha256": "f796bff027638ba4a29e934f42cc13ac03f3eda3f4e63f5e18cd2c0d723c9786",
+      "mtime_ns": 1791607348188771887
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/source-map.json",
+      "bytes": 77043,
+      "sha256": "d825831ff50b46682ba6d9ceb261c4aafdf1c89fc7a700be5800c98b351cdfe6",
+      "mtime_ns": 1791607919751592587
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/sources/index.md",
+      "bytes": 14029,
+      "sha256": "18831167e2799780732bdaee807ee8d5dab003d5f5847a7f4e25903973cfb491",
+      "mtime_ns": 1791607919749413385
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/control/terminal-science-freeze-root.json",
+      "bytes": 7278,
+      "sha256": "adc8e46c3846027f983d0440699ababa7836ff542db2852e042ebb0ef61a651f",
+      "mtime_ns": 1791608033834948323
+    }
+  ],
+  "independent_primary_urls_versions": [
+    {
+      "id": "I01",
+      "candidate_source_id": "S01",
+      "url": "https://github.com/3MFConsortium/spec_core/blob/1.4.0/3MF%20Core%20Specification.md",
+      "candidate_version_record": "Published version 1.4.0; release tag 1.4.0, commit 997b385 (2025-02-06).",
+      "independent_version_status": "See source-map and L02; candidate records are not blindly adopted."
+    },
+    {
+      "id": "I02",
+      "candidate_source_id": "S02",
+      "url": "https://github.com/3MFConsortium/spec_materials/blob/1.2.1/3MF%20Materials%20Extension.md",
+      "candidate_version_record": "Published version 1.2.1; released 2025-02-27 according to the official specification index. Release commit not recorded in the accessed page.",
+      "independent_version_status": "See source-map and L02; candidate records are not blindly adopted."
+    },
+    {
+      "id": "I03",
+      "candidate_source_id": "S03",
+      "url": "https://3mf.io/compatibility-matrix/",
+      "candidate_version_record": "Live matrix; no product build/version timestamp supplied on the page.",
+      "independent_version_status": "See source-map and L02; candidate records are not blindly adopted."
+    },
+    {
+      "id": "I04",
+      "candidate_source_id": "S04",
+      "url": "https://help.autodesk.com/cloudhelp/ENU/Fusion-Mesh/files/MESH-EXPORT-TOOLS.htm",
+      "candidate_version_record": "Current online product documentation; article does not pin a Fusion build.",
+      "independent_version_status": "See source-map and L02; candidate records are not blindly adopted."
+    },
+    {
+      "id": "I05",
+      "candidate_source_id": "S05",
+      "url": "https://help.autodesk.com/view/fusion360/ENU/?contextId=ASM-EXPORT-DESIGN",
+      "candidate_version_record": "Current online product documentation; no fixed Fusion release identified.",
+      "independent_version_status": "See source-map and L02; candidate records are not blindly adopted."
+    },
+    {
+      "id": "I06",
+      "candidate_source_id": "S06",
+      "url": "https://help.autodesk.com/view/fusion360/ENU/?caas=caas/sfdcarticles/sfdcarticles/STL-files-exported-from-Fusion-360-are-scaled-down-in-3d-printing-software.html",
+      "candidate_version_record": "Support article dated 2026-04-29.",
+      "independent_version_status": "See source-map and L02; candidate records are not blindly adopted."
+    },
+    {
+      "id": "I07",
+      "candidate_source_id": "S07",
+      "url": "https://help.prusa3d.com/article/supported-file-formats_1772?product=cw1",
+      "candidate_version_record": "Knowledge-base topic is PrusaSlicer 2.9 (legacy); exact point build is not specified on the page.",
+      "independent_version_status": "See source-map and L02; candidate records are not blindly adopted."
+    },
+    {
+      "id": "I08",
+      "candidate_source_id": "S08",
+      "url": "https://help.prusa3d.com/article/saving-projects-as-3mf_1773?product=sl1",
+      "candidate_version_record": "Live Knowledge Base page, product-family examples; no exact application version pinned.",
+      "independent_version_status": "See source-map and L02; candidate records are not blindly adopted."
+    },
+    {
+      "id": "I09",
+      "candidate_source_id": "S09",
+      "url": "https://help.prusa3d.com/article/first-print-with-prusaslicer-2-9_1753",
+      "candidate_version_record": "PrusaSlicer 2.9 workflow documentation; exact point build not specified.",
+      "independent_version_status": "See source-map and L02; candidate records are not blindly adopted."
+    },
+    {
+      "id": "I10",
+      "candidate_source_id": "S10",
+      "url": "https://blog.prusa3d.com/prusaslicer-3-0-preview-built-for-the-future-of-3d-printing_137672/",
+      "candidate_version_record": "3.0.0 public preview announced 2026-09-01; explicitly an unfinished alpha, not a production build.",
+      "independent_version_status": "See source-map and L02; candidate records are not blindly adopted."
+    },
+    {
+      "id": "I11",
+      "candidate_source_id": "S11",
+      "url": "https://github.com/prusa3d/PrusaSlicer/issues/8401",
+      "candidate_version_record": "Issue opened 2022-06-13; reporter used FreeCAD 0.20 export and PrusaSlicer 2.4.2+arm64 on macOS 12.4. Reporter later said FreeCAD fixed the exporter. No first fixed stable FreeCAD/Prusa point release is stated.",
+      "independent_version_status": "See source-map and L02; candidate records are not blindly adopted."
+    },
+    {
+      "id": "I12",
+      "candidate_source_id": "S12",
+      "url": "https://github.com/prusa3d/PrusaSlicer/commit/040a846",
+      "candidate_version_record": "Commit 040a846, 2022-06-14, linked by issue 8401.",
+      "independent_version_status": "See source-map and L02; candidate records are not blindly adopted."
+    },
+    {
+      "id": "I13",
+      "candidate_source_id": "S13",
+      "url": "https://store.astm.org/f2915-20.html",
+      "candidate_version_record": "Active ISO/ASTM 52915-20, AMF version 1.2; ASTM last updated 2020-08-14.",
+      "independent_version_status": "See source-map and L02; candidate records are not blindly adopted."
+    },
+    {
+      "id": "I14",
+      "candidate_source_id": "S14",
+      "url": "https://blog.prusa3d.com/prusaslicer-2-release_30008/",
+      "candidate_version_record": "PrusaSlicer 2.0 release announcement (2019).",
+      "independent_version_status": "See source-map and L02; candidate records are not blindly adopted."
+    },
+    {
+      "id": "I15",
+      "candidate_source_id": "S15",
+      "url": "https://github.com/3MFConsortium/test_suites",
+      "candidate_version_record": "Published suite version 2.4.1; cases target Core 1.4.0, Materials 1.2.1, Production 1.2.0, Slice 1.0.2 and listed extension versions.",
+      "independent_version_status": "See source-map and L02; candidate records are not blindly adopted."
+    },
+    {
+      "id": "I16",
+      "candidate_source_id": "S16",
+      "url": "https://3mf.io/spec/",
+      "candidate_version_record": "Live index; Materials and Properties 1.2.1 published 2025-02-27; Core release 1.4.0 separately pinned at S01.",
+      "independent_version_status": "See source-map and L02; candidate records are not blindly adopted."
+    },
+    {
+      "id": "I17",
+      "candidate_source_id": "S17",
+      "url": "https://3mf.io/resources/faq/",
+      "candidate_version_record": "Live FAQ; publication version/date not stated.",
+      "independent_version_status": "See source-map and L02; candidate records are not blindly adopted."
+    },
+    {
+      "id": "I18",
+      "candidate_source_id": "S18",
+      "url": "https://github.com/prusa3d/PrusaSlicer/releases/tag/version_2.9.6",
+      "candidate_version_record": "PrusaSlicer 2.9.6 final release, tag version_2.9.6, commit b028299.",
+      "independent_version_status": "See source-map and L02; candidate records are not blindly adopted."
+    },
+    {
+      "id": "I19",
+      "candidate_source_id": "S19",
+      "url": "https://help.autodesk.com/cloudhelp/ENU/Fusion-Assemble/files/ASM-COMPONENTS.htm",
+      "candidate_version_record": "Current online Fusion documentation; no fixed product build stated.",
+      "independent_version_status": "See source-map and L02; candidate records are not blindly adopted."
+    }
+  ],
+  "source_map": "source-map.json",
+  "evidence_index": "evidence/index.md",
+  "original_freeze_preserved": true
+}

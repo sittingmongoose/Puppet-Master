@@ -1,0 +1,119 @@
+{
+  "synthetic_only": true,
+  "live_templates_unchanged": true,
+  "helpers_unchanged": true,
+  "cases": [
+    {
+      "case": "A2/investigator/treatment",
+      "passed": true,
+      "dispatch_rejection": "missing stage or dispatch present; no transformation",
+      "historical_rejection": "expired/historical stage rejected; never reset clocks",
+      "used_stage_rejection": "used/partial stage member rejected: goal-active.json",
+      "checks": [
+        "updated request/assignment/map carried hashes",
+        "service Tier and all non-task args unchanged",
+        "all non-hash freeze fields/deadlines/Goal unchanged",
+        "old bytes preserved",
+        "idempotence byte-stable",
+        "applicable exact commands",
+        "rejections do not mutate"
+      ]
+    },
+    {
+      "case": "A2/critic/control",
+      "passed": true,
+      "dispatch_rejection": "missing stage or dispatch present; no transformation",
+      "historical_rejection": "expired/historical stage rejected; never reset clocks",
+      "used_stage_rejection": "used/partial stage member rejected: goal-active.json",
+      "checks": [
+        "updated request/assignment/map carried hashes",
+        "service Tier and all non-task args unchanged",
+        "all non-hash freeze fields/deadlines/Goal unchanged",
+        "old bytes preserved",
+        "idempotence byte-stable",
+        "applicable exact commands",
+        "rejections do not mutate"
+      ]
+    },
+    {
+      "case": "A7/investigator/control",
+      "passed": true,
+      "dispatch_rejection": "missing stage or dispatch present; no transformation",
+      "historical_rejection": "expired/historical stage rejected; never reset clocks",
+      "used_stage_rejection": "used/partial stage member rejected: goal-active.json",
+      "checks": [
+        "updated request/assignment/map carried hashes",
+        "service Tier and all non-task args unchanged",
+        "all non-hash freeze fields/deadlines/Goal unchanged",
+        "old bytes preserved",
+        "idempotence byte-stable",
+        "applicable exact commands",
+        "rejections do not mutate"
+      ]
+    },
+    {
+      "case": "A7/critic-finalizer/treatment",
+      "passed": true,
+      "dispatch_rejection": "missing stage or dispatch present; no transformation",
+      "historical_rejection": "expired/historical stage rejected; never reset clocks",
+      "used_stage_rejection": "used/partial stage member rejected: goal-active.json",
+      "checks": [
+        "updated request/assignment/map carried hashes",
+        "service Tier and all non-task args unchanged",
+        "all non-hash freeze fields/deadlines/Goal unchanged",
+        "old bytes preserved",
+        "idempotence byte-stable",
+        "applicable exact commands",
+        "rejections do not mutate"
+      ]
+    },
+    {
+      "case": "role/role/control",
+      "passed": true,
+      "dispatch_rejection": "missing stage or dispatch present; no transformation",
+      "historical_rejection": "expired/historical stage rejected; never reset clocks",
+      "used_stage_rejection": "used/partial stage member rejected: goal-active.json",
+      "checks": [
+        "updated request/assignment/map carried hashes",
+        "service Tier and all non-task args unchanged",
+        "all non-hash freeze fields/deadlines/Goal unchanged",
+        "old bytes preserved",
+        "idempotence byte-stable",
+        "applicable exact commands",
+        "rejections do not mutate"
+      ]
+    },
+    {
+      "case": "role/role/treatment",
+      "passed": true,
+      "dispatch_rejection": "missing stage or dispatch present; no transformation",
+      "historical_rejection": "expired/historical stage rejected; never reset clocks",
+      "used_stage_rejection": "used/partial stage member rejected: goal-active.json",
+      "checks": [
+        "updated request/assignment/map carried hashes",
+        "service Tier and all non-task args unchanged",
+        "all non-hash freeze fields/deadlines/Goal unchanged",
+        "old bytes preserved",
+        "idempotence byte-stable",
+        "applicable exact commands",
+        "rejections do not mutate"
+      ]
+    },
+    {
+      "case": "generic/investigator/control",
+      "passed": true,
+      "dispatch_rejection": "missing stage or dispatch present; no transformation",
+      "historical_rejection": "expired/historical stage rejected; never reset clocks",
+      "used_stage_rejection": "used/partial stage member rejected: goal-active.json",
+      "checks": [
+        "updated request/assignment/map carried hashes",
+        "service Tier and all non-task args unchanged",
+        "all non-hash freeze fields/deadlines/Goal unchanged",
+        "old bytes preserved",
+        "idempotence byte-stable",
+        "applicable exact commands",
+        "rejections do not mutate"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,123 @@
+{
+  "operations": [
+    {
+      "source_id": "S01",
+      "locator": "Core 1.4.0 §§2.2, 3, 4.2, 5.1, 6.1-6.2",
+      "observed_operation": "Opened official spec and directly read/find unit, component, material, metadata, thumbnail, extension and naming rules; read-only browser review.",
+      "accessed_at_utc": "2026-10-10T04:39:48Z",
+      "result": "Confirmed unit default/allowed units, component transforms, design-intent base materials, optional thumbnail/Description, extension caution, and .model.3mf/.project.3mf recommendation."
+    },
+    {
+      "source_id": "S02",
+      "locator": "Save As Mesh steps 3-5",
+      "observed_operation": "Opened official Fusion help and inspected format, unit and body/file structure steps; no export run.",
+      "accessed_at_utc": "2026-10-10T04:39:48Z",
+      "result": "Confirmed 3MF/STL/OBJ; units and one-file/all-bodies vs one-body-per-file choices."
+    },
+    {
+      "source_id": "S03",
+      "locator": "Export designs format list and tips",
+      "observed_operation": "Opened official Fusion help and searched STEP and associativity; no export run.",
+      "accessed_at_utc": "2026-10-10T04:39:48Z",
+      "result": "Confirmed 3MF and STEP choices and non-associative export statement."
+    },
+    {
+      "source_id": "S04",
+      "locator": "Supported format sections 3MF/STL/STEP/OBJ",
+      "observed_operation": "Opened official Prusa help and inspected relevant format entries; no import run.",
+      "accessed_at_utc": "2026-10-10T04:39:48Z",
+      "result": "Confirmed 3MF preferred, STEP triangulated, OBJ material/texture ignored."
+    },
+    {
+      "source_id": "S05",
+      "locator": "PrusaSlicer 2.5.0 release summary",
+      "observed_operation": "Opened official release page and read version, tag, commit and STEP introduction note; no binary run.",
+      "accessed_at_utc": "2026-10-10T04:39:48Z",
+      "result": "Confirmed STEP import introduction in 2.5.0, tag version_2.5.0, commit ec2f533."
+    },
+    {
+      "source_id": "S06",
+      "locator": "Issue #8998 original description and Sep 18 2026 comment",
+      "observed_operation": "Opened official issue and read original reproducer report, maintainer discussion and current beta follow-up; no attachments or software run.",
+      "accessed_at_utc": "2026-10-10T04:39:48Z",
+      "result": "Confirmed original 2.5.0 report and newer Flathub-beta report with no exact build; no linked PR/branch is shown."
+    },
+    {
+      "source_id": "S07",
+      "locator": "Issue #15545 repro/build/status",
+      "observed_operation": "Opened official issue and read exact example/build and closure comments; no reproducer or app run.",
+      "accessed_at_utc": "2026-10-10T04:39:48Z",
+      "result": "Confirmed specific 2.9.6 non-mm translation report and inactivity closure without linked fix."
+    },
+    {
+      "source_id": "S08",
+      "locator": "Issue #15662 version, metadata path and activity",
+      "observed_operation": "Opened official issue and read version/path/activity; no project downloaded.",
+      "accessed_at_utc": "2026-10-10T04:39:48Z",
+      "result": "Confirmed alpha11 report concerns Bambu-private metadata names rather than Core object names."
+    },
+    {
+      "source_id": "S09",
+      "locator": "Official 3MF specification suite table",
+      "observed_operation": "Opened official 3MF specification index and read Core/extension rows.",
+      "accessed_at_utc": "2026-10-10T04:39:48Z",
+      "result": "Confirmed Core 1.4.0 and M&P 1.2.1 listed separately; index labels M&P full color/multi-material."
+    },
+    {
+      "source_id": "S10",
+      "locator": "Prusa project-save/article format sections",
+      "observed_operation": "Opened official Prusa project 3MF help; read project content and sharing caveat.",
+      "accessed_at_utc": "2026-10-10T04:39:48Z",
+      "result": "Confirmed Prusa project snapshot may include settings/modifiers; documentation scopes sharing to Prusa-compatible use."
+    },
+    {
+      "source_id": "S11",
+      "locator": "Cura 5.7.0 UCP, 3MF position/import mode and reset-tip release notes",
+      "observed_operation": "Opened official release tag and read version/commit and relevant release notes; no app run.",
+      "accessed_at_utc": "2026-10-10T04:39:48Z",
+      "result": "Confirmed UCP contents and project-load vs Import Models distinction; settings reset tip."
+    },
+    {
+      "source_id": "S12",
+      "locator": "Cura issue #19456 activity Mar 2025/current status",
+      "observed_operation": "Opened official issue and read full relevant activity through the 5.10.0 report and closure; no issue file or Cura binary run.",
+      "accessed_at_utc": "2026-10-10T04:39:48Z",
+      "result": "Confirmed reporter says the specific sample worked in 5.10.0 and closes completed; earlier comments distinguish Import Models from Open Project."
+    },
+    {
+      "source_id": "S13",
+      "locator": "Cura issue #17110 description/status",
+      "observed_operation": "Opened official issue and inspected exact claim/status; attachment not downloaded.",
+      "accessed_at_utc": "2026-10-10T04:39:48Z",
+      "result": "Confirmed user report says Core object.name ignored; no exact tested release is given."
+    },
+    {
+      "source_id": "S14",
+      "locator": "Cura release index stable/alpha entries",
+      "observed_operation": "Opened official release index; read stable/pre-release labels and commits.",
+      "accessed_at_utc": "2026-10-10T04:39:48Z",
+      "result": "Confirmed 5.13.0 latest stable at access and 5.14.0-alpha.0 pre-release."
+    },
+    {
+      "source_id": "S15",
+      "locator": "PrusaSlicer release index stable/alpha entries",
+      "observed_operation": "Opened official release index; read stable/pre-release labels and commits.",
+      "accessed_at_utc": "2026-10-10T04:39:48Z",
+      "result": "Confirmed 2.9.6 latest stable at access and 3.0.0-alpha12 pre-release."
+    },
+    {
+      "source_id": "S16",
+      "locator": "M&P extension v1.2.1 version and preface",
+      "observed_operation": "Followed official index link to primary extension text and read version, a-la-carte and Core pairing condition.",
+      "accessed_at_utc": "2026-10-10T04:39:48Z",
+      "result": "Found extension preface says it must be used only with Core 1.2 while index currently lists Core 1.4.0; pairing remains an explicit unresolved condition."
+    },
+    {
+      "source_id": "S17",
+      "locator": "Cura 5.14.0-alpha.0 release notes",
+      "observed_operation": "Opened the official tag from the release list; inspected tag, commit, prerelease label and non-project 3MF positioning change.",
+      "accessed_at_utc": "2026-10-10T04:39:48Z",
+      "result": "Confirmed a relevant position improvement is documented in an alpha, without a claim it fixes the exact S12 case."
+    }
+  ]
+}

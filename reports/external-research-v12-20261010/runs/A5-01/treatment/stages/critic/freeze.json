@@ -1,0 +1,71 @@
+{
+  "prepared_at_utc": "2026-10-10T04:30:09.834Z",
+  "stage": "critic",
+  "stage_deadline_utc": "2026-10-10T04:42:09.834Z",
+  "whole_deadline_utc": "2026-10-10T05:20:14.471Z",
+  "stage_budget_s": 720,
+  "predecessors": [
+    {
+      "stage": "investigator",
+      "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A5-01-treatment-investigator-v1",
+      "statusPath": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/status.json"
+    }
+  ],
+  "frozen_inputs": [
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/inputs/brief.md",
+      "sha256": "e26ff5f138c34638ec94bc7d4ff3bf93a23f27ddca1a17cca3090868737430e8",
+      "bytes": 3440
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/critic/assignment.md",
+      "sha256": "26cf0511ed925bd27956f093ea0ac44f86b1cdb3d7f8084b7f93a004d99504ad",
+      "bytes": 3310
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/critic/input-map.json",
+      "sha256": "e129b9e9effaaa66bd015d2cc59f5342561fa432cbd75e0c5b469f1034e76b76",
+      "bytes": 1410
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/discovery.md",
+      "sha256": "6e1f863f80f94caf851622885353b113f755cde02ae88eb67ba0510926c2aa80",
+      "bytes": 10175
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/draft.md",
+      "sha256": "10bf7a652992cdfe13054c57ad06a22e6f55749827645f046efc8c4901b9709b",
+      "bytes": 23750
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/source-map.json",
+      "sha256": "96139a7b0799b3159b1a75d24b2ecdf368cb826b1b356d90605d8506f46ac7f8",
+      "bytes": 15841
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/revealed-plan.md",
+      "sha256": "b80e30c3938344528a49c1b43144af18f14b0d8ed27a2603b845042467e4e067",
+      "bytes": 6139
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A5-01/treatment/stages/investigator/plan-reveal.json",
+      "sha256": "6263d26e84192838d3b031818eb29bfd4e594b978aca7534dec5cdf116800bf5",
+      "bytes": 429
+    }
+  ],
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    }
+  },
+  "runtime_mode_requested": "full-access",
+  "native_goal_objective": "ER12 critic stage, run A5-01-treatment: execute ER12_RUNTIME/runs/A5-01/treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+  "native_goal_status": "UNKNOWN until directly observed",
+  "method_id": "A5",
+  "stage_prompt_delta": null,
+  "time_contract": "fixed_stage_caps",
+  "available_stage_seconds_at_prepare": 720.0
+}

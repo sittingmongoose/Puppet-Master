@@ -1,0 +1,129 @@
+{
+  "captured_at_utc": "2026-10-10T04:45:11.731810+00:00",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "read_extent": "FULL",
+      "mtime_utc": "2026-10-10T03:56:48.938287+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/input-map.json",
+      "bytes": 507,
+      "sha256": "f4a640ccb6452e4cd03eb7d98160bf9cf8e4d686203d26f7cd0d0d5486668cec",
+      "read_extent": "FULL",
+      "mtime_utc": "2026-10-10T04:37:27.030965+00:00",
+      "input_freeze_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/assignment.md",
+      "bytes": 2383,
+      "sha256": "852ad7871bb8dee4ffc252b7155353eda796e2f71445b19642bc918b43fdaa6f",
+      "read_extent": "FULL",
+      "mtime_utc": "2026-10-10T04:37:27.031119+00:00",
+      "input_freeze_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/freeze.json",
+      "bytes": 2193,
+      "sha256": "fe1e33a7f696d49e8d49d63f492e42b1c1dced2be8df2f5f18c1d804f2318c1a",
+      "read_extent": "FULL",
+      "mtime_utc": "2026-10-10T04:37:27.031725+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/inputs/assignment.md",
+      "bytes": 2642,
+      "sha256": "96c86b7591b7a87ba61dac12c4c21a3daa8c20e9fd4b50e09266471d6d11a1db",
+      "read_extent": "FULL",
+      "mtime_utc": "2026-10-10T04:37:27.029994+00:00",
+      "input_freeze_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/inputs/fixture.json",
+      "bytes": 1033,
+      "sha256": "1b10c5fad028e42ff6e2367e5df37e6f550a4d28a27ead680c77c44d1b60c7f5",
+      "read_extent": "FULL",
+      "mtime_utc": "2026-10-10T04:37:27.030186+00:00",
+      "input_freeze_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/inputs/manifest.json",
+      "bytes": 241,
+      "sha256": "fe164e06074640cccbda200b67202cb2cc9dad08579ba478a1bbaa768dfcc595",
+      "read_extent": "FULL",
+      "mtime_utc": "2026-10-10T04:37:27.030359+00:00",
+      "input_freeze_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/discovery.md",
+      "bytes": 7046,
+      "sha256": "95154750f3d32e40e9dc4292bdc3b253dc143e29fd5a32ced69de1cd70ca136e",
+      "read_extent": "FULL",
+      "mtime_utc": "2026-10-10T04:41:09.682433+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/source-map.json",
+      "bytes": 4992,
+      "sha256": "78bb36f7d093648f17654c43f210de12805d4482f0da99df5d7d99dad21bf26c",
+      "read_extent": "FULL",
+      "mtime_utc": "2026-10-10T04:41:26.756540+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/records/goal-activation-receipt.json",
+      "bytes": 566,
+      "sha256": "8b1aca2cf30f310fb2750fd797dcb5ee5740fc7031a82068cf0931f67a5e4d99",
+      "read_extent": "FULL",
+      "mtime_utc": "2026-10-10T04:38:17.172095+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/dispatch.json",
+      "bytes": 4381,
+      "sha256": "fff24ae8ab8f70dc6dafc0a8ee37b79823af3ee7ab6056bb7685d021414b042c",
+      "read_extent": "FULL",
+      "mtime_utc": "2026-10-10T04:37:27.920687+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/mechanics/task-observations/er12-B-DISC-M-02-treatment-role-v2.json",
+      "bytes": 10342,
+      "sha256": "b35477ab967fec69ab6748684d816e2e10334ffef388d6ff708880498eb0bb2d",
+      "read_extent": "FULL",
+      "mtime_utc": "2026-10-10T04:42:21.826931+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-DISC-M-02/treatment-v1/root-review-request.json",
+      "bytes": 2616,
+      "sha256": "5e54462a5082082a508e8225474a42136c67b0f373cde0b6555af6fe69cf72fa",
+      "read_extent": "FULL",
+      "mtime_utc": "2026-10-10T04:42:22.865890+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/sources/borg-internals-security.excerpt.md",
+      "bytes": 2662,
+      "sha256": "9972c9d53641286a27c5adb8ac450402ac8ed5f79ab15e4ae50109028bbe36b7",
+      "read_extent": "FULL",
+      "mtime_utc": "2026-10-10T04:39:58.916991+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/sources/restic-references.excerpt.md",
+      "bytes": 2883,
+      "sha256": "7608005a07ccaf8e87a1f682c11116f06728b373f42379d87aa96e05b713c8e8",
+      "read_extent": "FULL",
+      "mtime_utc": "2026-10-10T04:39:52.387950+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/sources/retrieval-log.md",
+      "bytes": 2108,
+      "sha256": "c649192991ae8224fd5ad8ede7e0b8fdcdbef1266115f104b54ee40bd4f2c717",
+      "read_extent": "FULL",
+      "mtime_utc": "2026-10-10T04:40:17.199106+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/sources/tarsnap-crypto-dedup.excerpt.md",
+      "bytes": 3112,
+      "sha256": "0c8e83d23bf5795a0e43e442941a5ce26085f4f8a4ebe43b71c53df1e8ac5fb9",
+      "read_extent": "FULL",
+      "mtime_utc": "2026-10-10T04:40:09.567058+00:00"
+    }
+  ]
+}

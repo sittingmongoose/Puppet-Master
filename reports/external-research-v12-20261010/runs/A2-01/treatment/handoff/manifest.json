@@ -1,0 +1,75 @@
+{
+  "topology": "A2",
+  "native_goal_identity": {
+    "threadId": "01a12401-f9b4-7770-94a9-565d16f9654e",
+    "createdAt": 1791605514,
+    "objective": "ER11 investigator stage, run A2-01-treatment: execute ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal."
+  },
+  "raw_native_response": {
+    "goal": {
+      "threadId": "01a12401-f9b4-7770-94a9-565d16f9654e",
+      "objective": "ER11 investigator stage, run A2-01-treatment: execute ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "status": "active",
+      "tokensUsed": 276667,
+      "timeUsedSeconds": 733,
+      "createdAt": 1791605514,
+      "updatedAt": 1791606248
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "investigator_dispatch": {
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A2-A2-01-treatment-investigator-topology-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A2-A2-01-treatment-investigator-topology-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A2-A2-01-treatment-investigator-topology-v1:ordinal:1"
+  },
+  "review_finalization_deadline_utc": "2026-10-10T04:54:23.145Z",
+  "frozen_at_utc": "2026-10-10T04:24:23.147Z",
+  "files": [
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/treatment/handoff/inputs/brief.md",
+      "origin_path": "ER12_RUNTIME/runs/A2-01/treatment/inputs/brief.md",
+      "sha256": "3715d3b3364ed8d47ed60b7d2f7c3e4ed0151f8c7e6ed26598de908a292b051f",
+      "bytes": 3292
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/treatment/handoff/stages/investigator/discovery.md",
+      "origin_path": "ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/discovery.md",
+      "sha256": "c3f190e4f5a8606033b1aa5d73a958dbe67dbbe0607bc8a0284df78852daf0d7",
+      "bytes": 16771
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/treatment/handoff/stages/investigator/draft.md",
+      "origin_path": "ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/draft.md",
+      "sha256": "4d3113c12c5d8ce08f866095e223dafaddc20ab6ba1f8fa9ca26a30ec1161a07",
+      "bytes": 26362
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/treatment/handoff/stages/investigator/source-map.json",
+      "origin_path": "ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/source-map.json",
+      "sha256": "2ebcfa0707a1dfd4d67f911adf00ca8fa242ea06ce20cde8ab746584b4154e29",
+      "bytes": 18629
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/treatment/handoff/stages/investigator/revealed-plan.md",
+      "origin_path": "ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/revealed-plan.md",
+      "sha256": "57c6e740ac94d7c3b783621e59b759460ff10e4d157288e72d590e3f1f41666b",
+      "bytes": 5925
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/treatment/handoff/stages/investigator/plan-reveal.json",
+      "origin_path": "ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/plan-reveal.json",
+      "sha256": "1903195b99f69fcf766996dce6024d80c4180213aa3eed72d2c1e6e9d2dcb77e",
+      "bytes": 429
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/treatment/handoff/stages/investigator/sources/index.md",
+      "origin_path": "ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/sources/index.md",
+      "sha256": "a445e06a1f4effda4181b2594675a6a2d782c70a0a905834b365f95c64309492",
+      "bytes": 3568
+    }
+  ],
+  "identity_only": true,
+  "source_truth_proven": false,
+  "native_provenance_attested_by_helper": false
+}

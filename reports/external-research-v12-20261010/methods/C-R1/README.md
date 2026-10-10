@@ -1,0 +1,1 @@
+C-R1 freezes the complete A1 single-account recipe at standard service tier against R0. Two source-passing development treatments versus one source-passing control justify a quality/feasibility test; the one same-quality latency observation is about11percent, with no established20percent gain. Full original failures and unknown economics remain.

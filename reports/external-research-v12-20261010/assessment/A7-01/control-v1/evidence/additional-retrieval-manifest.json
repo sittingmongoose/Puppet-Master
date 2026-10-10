@@ -1,0 +1,35 @@
+[
+  {
+    "id": "I20-materials-release",
+    "url": "https://api.github.com/repos/3MFConsortium/spec_materials/releases/tags/1.2.1",
+    "start_utc": "2026-10-10T04:58:30.139356+00:00",
+    "operation": "Independent read-only public HTTP GET",
+    "status": 200,
+    "path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I20-materials-release.json",
+    "sha256": "299f238496fd8a6496b829b0c22e5d3768e577863f4f3cbae3739cfbacb80431",
+    "bytes": 3882,
+    "end_utc": "2026-10-10T04:58:30.291828+00:00"
+  },
+  {
+    "id": "I21-materials-issues",
+    "url": "https://api.github.com/repos/3MFConsortium/spec_materials/issues?state=all&per_page=100",
+    "start_utc": "2026-10-10T04:58:30.291861+00:00",
+    "operation": "Independent read-only public HTTP GET",
+    "status": 200,
+    "path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I21-materials-issues.json",
+    "sha256": "e5bf1e19f09726d4f9af00077d06a11cb90ecad5056ec6c36c2320bf9364ecae",
+    "bytes": 59848,
+    "end_utc": "2026-10-10T04:58:30.558410+00:00"
+  },
+  {
+    "id": "I22-core-tag",
+    "url": "https://api.github.com/repos/3MFConsortium/spec_core/git/ref/tags/1.4.0",
+    "start_utc": "2026-10-10T04:58:30.558450+00:00",
+    "operation": "Independent read-only public HTTP GET",
+    "status": 200,
+    "path": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I22-core-tag.json",
+    "sha256": "6dd059f7a14b30516e2e49b747d6172a2098cd9a85383de274dd03a3ca3a0e91",
+    "bytes": 353,
+    "end_utc": "2026-10-10T04:58:30.686695+00:00"
+  }
+]

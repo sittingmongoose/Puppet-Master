@@ -1,0 +1,94 @@
+{
+  "observed_at_utc": "2026-10-10T04:39:14.636613+00:00",
+  "basis": "root observed terminal final T3 task/no pending; separate from native proof",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/critic/critique.md",
+      "bytes": 11549,
+      "sha256": "8c089f40e37e5270788aee52a93ea38d5e6dfbae2be1e30a0f31cd719a2df1f4",
+      "mtime_ns": 1791606406259201499
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/critic/source-map.json",
+      "bytes": 16957,
+      "sha256": "2d71d54bde4f8789a88110f5e4f5aeeeb3172f3ead2aaf0b67864c1b470cfe30",
+      "mtime_ns": 1791606354615965657
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/critic/sources/index.md",
+      "bytes": 2983,
+      "sha256": "2592dcd06d90b95f15fb4b9e753db6ab9daada3b1a17785d1ed2e223cc404afc",
+      "mtime_ns": 1791606366224018664
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/discovery.md",
+      "bytes": 11323,
+      "sha256": "42a82081247090e0679e0826c3d84a8f1d6a55a5314c6f8c07c35f6b7ecf5bc9",
+      "mtime_ns": 1791605621418716295
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/draft.md",
+      "bytes": 14386,
+      "sha256": "ce68079f8f2d1f42d114faabd4acd3427fd960c05401a8e708ed2e490c400548",
+      "mtime_ns": 1791605675177071848
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 5986,
+      "sha256": "13c9e444018c0578380616e96b0a5df493431b8ba1148aec08fdb68c50b05c7f",
+      "mtime_ns": 1791605630289733820
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/source-map.json",
+      "bytes": 17909,
+      "sha256": "fc066ae420da2aca73a66cf80f1242623a7d0bec88947937bb1b6aa34c9ca6e1",
+      "mtime_ns": 1791605621426142387
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/investigator/sources/index.md",
+      "bytes": 2826,
+      "sha256": "cc2ba661f6b762da04202ee7f08ed11a31101851a76bdb5b54807173431c39e5",
+      "mtime_ns": 1791605621432716380
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md",
+      "bytes": 21573,
+      "sha256": "d451bf92920f64778176d1d9efc7ba38a07b6e09429c45c301909c20a21ec29a",
+      "mtime_ns": 1791607126249629537
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/source-map.json",
+      "bytes": 46107,
+      "sha256": "d0039986227f2fc46716fdb175b8aa036f4e174cbbda85d4d5bf8352740215dc",
+      "mtime_ns": 1791607101257766429
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/sources/index.md",
+      "bytes": 3521,
+      "sha256": "a6ea58fd49e1a664eccd268db90fb0fdbe691d267f527ac96ec0f08398dddac2",
+      "mtime_ns": 1791607101258059154
+    }
+  ],
+  "final_stage_task": {
+    "slot": "A4-01",
+    "arm": "treatment",
+    "stage": "reviser",
+    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-01-treatment-reviser-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-01-treatment-reviser-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-01-treatment-reviser-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-01-treatment-reviser-v1",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-01-treatment-reviser-v1:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "Completed the reviser stage and completed the native Goal after saving the outputs. It used **124,794 tokens** over **10m 41s**.\n\n- [Final proposal](<ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md>)\n- [Source map](<ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/source-map.json>)\n- [Evidence index](<ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/sources/index.md>)\n\nThe proposal addresses all eight obligations and the four critique findings. Provider and product validation remains marked **NOT_RUN**.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-01-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:7719646c-d784-43ee-9c4c-0614f5a81d7a",
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "summary": "Completed the reviser stage and completed the native Goal after saving the outputs. It used **124,794 tokens** over **10m 41s**.\n\n- [Final proposal](<ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md>)\n- [Source map](<ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/source-map.json>)\n- [Evidence index](<ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/sources/index.md>)\n\nThe proposal addresses all eight obligations and the four critique findings. Provider and product validation remains marked **NOT_RUN**.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-01-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:7719646c-d784-43ee-9c4c-0614f5a81d7a",
+    "waitTimedOut": false
+  }
+}

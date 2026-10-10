@@ -1,0 +1,290 @@
+[
+  {
+    "freeze_path": "ER12_RUNTIME/runs/A7-01/control/terminal-science-freeze-root.json",
+    "artifact_path": "ER12_RUNTIME/runs/A7-01/control/stages/critic/critique.md",
+    "expected_sha256": "40986b4c2b3c438c13d13e20df811d58f1c7bced0e53439be957d30c660cb04d",
+    "observed_sha256": "40986b4c2b3c438c13d13e20df811d58f1c7bced0e53439be957d30c660cb04d",
+    "matches": true,
+    "expected_bytes": 10330,
+    "observed_bytes": 10330
+  },
+  {
+    "freeze_path": "ER12_RUNTIME/runs/A7-01/control/terminal-science-freeze-root.json",
+    "artifact_path": "ER12_RUNTIME/runs/A7-01/control/stages/critic/source-map.json",
+    "expected_sha256": "372272951e49ffedfc5a1d0449b8d407ec5d9d7afc101ec9c67f1501ccfd3b82",
+    "observed_sha256": "372272951e49ffedfc5a1d0449b8d407ec5d9d7afc101ec9c67f1501ccfd3b82",
+    "matches": true,
+    "expected_bytes": 39383,
+    "observed_bytes": 39383
+  },
+  {
+    "freeze_path": "ER12_RUNTIME/runs/A7-01/control/terminal-science-freeze-root.json",
+    "artifact_path": "ER12_RUNTIME/runs/A7-01/control/stages/critic/sources/index.md",
+    "expected_sha256": "37a4c73dc6b50c0c64defcd243589ca41807002face1e6698205dc0cab175ce0",
+    "observed_sha256": "37a4c73dc6b50c0c64defcd243589ca41807002face1e6698205dc0cab175ce0",
+    "matches": true,
+    "expected_bytes": 4239,
+    "observed_bytes": 4239
+  },
+  {
+    "freeze_path": "ER12_RUNTIME/runs/A7-01/control/terminal-science-freeze-root.json",
+    "artifact_path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/discovery.md",
+    "expected_sha256": "17ff8435c3352da4d6ab501fb6a90272c342a2b04bedf7a04afb4eeaa6b04dfb",
+    "observed_sha256": "17ff8435c3352da4d6ab501fb6a90272c342a2b04bedf7a04afb4eeaa6b04dfb",
+    "matches": true,
+    "expected_bytes": 14812,
+    "observed_bytes": 14812
+  },
+  {
+    "freeze_path": "ER12_RUNTIME/runs/A7-01/control/terminal-science-freeze-root.json",
+    "artifact_path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/draft.md",
+    "expected_sha256": "f187c5e9a18a4a5b3e30ef3e263704374bf08512bfb3cab116d106f6c3976442",
+    "observed_sha256": "f187c5e9a18a4a5b3e30ef3e263704374bf08512bfb3cab116d106f6c3976442",
+    "matches": true,
+    "expected_bytes": 19339,
+    "observed_bytes": 19339
+  },
+  {
+    "freeze_path": "ER12_RUNTIME/runs/A7-01/control/terminal-science-freeze-root.json",
+    "artifact_path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/revealed-plan.md",
+    "expected_sha256": "b9063b147acff997c7c788eac44d2149ca6946fa4ee2a3ce6f0bdf80789397e7",
+    "observed_sha256": "b9063b147acff997c7c788eac44d2149ca6946fa4ee2a3ce6f0bdf80789397e7",
+    "matches": true,
+    "expected_bytes": 6015,
+    "observed_bytes": 6015
+  },
+  {
+    "freeze_path": "ER12_RUNTIME/runs/A7-01/control/terminal-science-freeze-root.json",
+    "artifact_path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/source-map.json",
+    "expected_sha256": "ca05e8dfe48e66a179c754a65a485593502eced26d1b38cd2613b94fd0c14fa1",
+    "observed_sha256": "ca05e8dfe48e66a179c754a65a485593502eced26d1b38cd2613b94fd0c14fa1",
+    "matches": true,
+    "expected_bytes": 24810,
+    "observed_bytes": 24810
+  },
+  {
+    "freeze_path": "ER12_RUNTIME/runs/A7-01/control/terminal-science-freeze-root.json",
+    "artifact_path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/sources/index.md",
+    "expected_sha256": "3d85af0028365984a7432ad2b1194e0a3142141177e4b8b60d876ae5f7e65185",
+    "observed_sha256": "3d85af0028365984a7432ad2b1194e0a3142141177e4b8b60d876ae5f7e65185",
+    "matches": true,
+    "expected_bytes": 6778,
+    "observed_bytes": 6778
+  },
+  {
+    "freeze_path": "ER12_RUNTIME/runs/A7-01/control/terminal-science-freeze-root.json",
+    "artifact_path": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/final.md",
+    "expected_sha256": "9b96a8ba94e1567069ad240b192f203ec7b7a360e7aaa95c1fa11c7c43793383",
+    "observed_sha256": "9b96a8ba94e1567069ad240b192f203ec7b7a360e7aaa95c1fa11c7c43793383",
+    "matches": true,
+    "expected_bytes": 24904,
+    "observed_bytes": 24904
+  },
+  {
+    "freeze_path": "ER12_RUNTIME/runs/A7-01/control/terminal-science-freeze-root.json",
+    "artifact_path": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/source-map.json",
+    "expected_sha256": "d825831ff50b46682ba6d9ceb261c4aafdf1c89fc7a700be5800c98b351cdfe6",
+    "observed_sha256": "d825831ff50b46682ba6d9ceb261c4aafdf1c89fc7a700be5800c98b351cdfe6",
+    "matches": true,
+    "expected_bytes": 77043,
+    "observed_bytes": 77043
+  },
+  {
+    "freeze_path": "ER12_RUNTIME/runs/A7-01/control/terminal-science-freeze-root.json",
+    "artifact_path": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/sources/index.md",
+    "expected_sha256": "18831167e2799780732bdaee807ee8d5dab003d5f5847a7f4e25903973cfb491",
+    "observed_sha256": "18831167e2799780732bdaee807ee8d5dab003d5f5847a7f4e25903973cfb491",
+    "matches": true,
+    "expected_bytes": 14029,
+    "observed_bytes": 14029
+  },
+  {
+    "freeze_path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/freeze.json",
+    "artifact_path": "ER12_RUNTIME/runs/A7-01/control/inputs/brief.md",
+    "expected_sha256": "dcd62504463a57569adbc66d85753f8a178764bb5d80b7c17dad4f4088a1b1f5",
+    "observed_sha256": "dcd62504463a57569adbc66d85753f8a178764bb5d80b7c17dad4f4088a1b1f5",
+    "matches": true,
+    "expected_bytes": 3358,
+    "observed_bytes": 3358
+  },
+  {
+    "freeze_path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/freeze.json",
+    "artifact_path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/assignment.md",
+    "expected_sha256": "371b71cdd3a935fd693879a4a33e7e9398c34f2c23d31016dafff9b553ee5863",
+    "observed_sha256": "371b71cdd3a935fd693879a4a33e7e9398c34f2c23d31016dafff9b553ee5863",
+    "matches": true,
+    "expected_bytes": 3712,
+    "observed_bytes": 3712
+  },
+  {
+    "freeze_path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/freeze.json",
+    "artifact_path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/input-map.json",
+    "expected_sha256": "e2fd6c96efe53f7f85d8582ddd3b51a7c76cf44c96a94be797feb598fc7dc0d6",
+    "observed_sha256": "e2fd6c96efe53f7f85d8582ddd3b51a7c76cf44c96a94be797feb598fc7dc0d6",
+    "matches": true,
+    "expected_bytes": 714,
+    "observed_bytes": 714
+  },
+  {
+    "freeze_path": "ER12_RUNTIME/runs/A7-01/control/stages/critic/freeze.json",
+    "artifact_path": "ER12_RUNTIME/runs/A7-01/control/inputs/brief.md",
+    "expected_sha256": "dcd62504463a57569adbc66d85753f8a178764bb5d80b7c17dad4f4088a1b1f5",
+    "observed_sha256": "dcd62504463a57569adbc66d85753f8a178764bb5d80b7c17dad4f4088a1b1f5",
+    "matches": true,
+    "expected_bytes": 3358,
+    "observed_bytes": 3358
+  },
+  {
+    "freeze_path": "ER12_RUNTIME/runs/A7-01/control/stages/critic/freeze.json",
+    "artifact_path": "ER12_RUNTIME/runs/A7-01/control/stages/critic/assignment.md",
+    "expected_sha256": "d8e3a0889d50555c7615bf105cc1c1a2542ab4a9b66306a3036ad28fce14774f",
+    "observed_sha256": "d8e3a0889d50555c7615bf105cc1c1a2542ab4a9b66306a3036ad28fce14774f",
+    "matches": true,
+    "expected_bytes": 3306,
+    "observed_bytes": 3306
+  },
+  {
+    "freeze_path": "ER12_RUNTIME/runs/A7-01/control/stages/critic/freeze.json",
+    "artifact_path": "ER12_RUNTIME/runs/A7-01/control/stages/critic/input-map.json",
+    "expected_sha256": "6a166cad1681f1bb0c23df32209db33dfa2848732b91b552834e567de83c32b9",
+    "observed_sha256": "6a166cad1681f1bb0c23df32209db33dfa2848732b91b552834e567de83c32b9",
+    "matches": true,
+    "expected_bytes": 1390,
+    "observed_bytes": 1390
+  },
+  {
+    "freeze_path": "ER12_RUNTIME/runs/A7-01/control/stages/critic/freeze.json",
+    "artifact_path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/discovery.md",
+    "expected_sha256": "17ff8435c3352da4d6ab501fb6a90272c342a2b04bedf7a04afb4eeaa6b04dfb",
+    "observed_sha256": "17ff8435c3352da4d6ab501fb6a90272c342a2b04bedf7a04afb4eeaa6b04dfb",
+    "matches": true,
+    "expected_bytes": 14812,
+    "observed_bytes": 14812
+  },
+  {
+    "freeze_path": "ER12_RUNTIME/runs/A7-01/control/stages/critic/freeze.json",
+    "artifact_path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/draft.md",
+    "expected_sha256": "f187c5e9a18a4a5b3e30ef3e263704374bf08512bfb3cab116d106f6c3976442",
+    "observed_sha256": "f187c5e9a18a4a5b3e30ef3e263704374bf08512bfb3cab116d106f6c3976442",
+    "matches": true,
+    "expected_bytes": 19339,
+    "observed_bytes": 19339
+  },
+  {
+    "freeze_path": "ER12_RUNTIME/runs/A7-01/control/stages/critic/freeze.json",
+    "artifact_path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/source-map.json",
+    "expected_sha256": "ca05e8dfe48e66a179c754a65a485593502eced26d1b38cd2613b94fd0c14fa1",
+    "observed_sha256": "ca05e8dfe48e66a179c754a65a485593502eced26d1b38cd2613b94fd0c14fa1",
+    "matches": true,
+    "expected_bytes": 24810,
+    "observed_bytes": 24810
+  },
+  {
+    "freeze_path": "ER12_RUNTIME/runs/A7-01/control/stages/critic/freeze.json",
+    "artifact_path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/revealed-plan.md",
+    "expected_sha256": "b9063b147acff997c7c788eac44d2149ca6946fa4ee2a3ce6f0bdf80789397e7",
+    "observed_sha256": "b9063b147acff997c7c788eac44d2149ca6946fa4ee2a3ce6f0bdf80789397e7",
+    "matches": true,
+    "expected_bytes": 6015,
+    "observed_bytes": 6015
+  },
+  {
+    "freeze_path": "ER12_RUNTIME/runs/A7-01/control/stages/critic/freeze.json",
+    "artifact_path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/plan-reveal.json",
+    "expected_sha256": "20543cca5883a33b02c0f62452de58d027f5088edc5812f692a80c684eba099e",
+    "observed_sha256": "20543cca5883a33b02c0f62452de58d027f5088edc5812f692a80c684eba099e",
+    "matches": true,
+    "expected_bytes": 427,
+    "observed_bytes": 427
+  },
+  {
+    "freeze_path": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/freeze.json",
+    "artifact_path": "ER12_RUNTIME/runs/A7-01/control/inputs/brief.md",
+    "expected_sha256": "dcd62504463a57569adbc66d85753f8a178764bb5d80b7c17dad4f4088a1b1f5",
+    "observed_sha256": "dcd62504463a57569adbc66d85753f8a178764bb5d80b7c17dad4f4088a1b1f5",
+    "matches": true,
+    "expected_bytes": 3358,
+    "observed_bytes": 3358
+  },
+  {
+    "freeze_path": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/freeze.json",
+    "artifact_path": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/assignment.md",
+    "expected_sha256": "4b46b17b1a07bbc01312ddfc084f529e8af27137049412d3cdbd76b600f39916",
+    "observed_sha256": "4b46b17b1a07bbc01312ddfc084f529e8af27137049412d3cdbd76b600f39916",
+    "matches": true,
+    "expected_bytes": 3286,
+    "observed_bytes": 3286
+  },
+  {
+    "freeze_path": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/freeze.json",
+    "artifact_path": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/input-map.json",
+    "expected_sha256": "f1729d35c6e31cc008a513ea51092fa64321fe59929a7970fd5286bfa1436845",
+    "observed_sha256": "f1729d35c6e31cc008a513ea51092fa64321fe59929a7970fd5286bfa1436845",
+    "matches": true,
+    "expected_bytes": 1768,
+    "observed_bytes": 1768
+  },
+  {
+    "freeze_path": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/freeze.json",
+    "artifact_path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/discovery.md",
+    "expected_sha256": "17ff8435c3352da4d6ab501fb6a90272c342a2b04bedf7a04afb4eeaa6b04dfb",
+    "observed_sha256": "17ff8435c3352da4d6ab501fb6a90272c342a2b04bedf7a04afb4eeaa6b04dfb",
+    "matches": true,
+    "expected_bytes": 14812,
+    "observed_bytes": 14812
+  },
+  {
+    "freeze_path": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/freeze.json",
+    "artifact_path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/draft.md",
+    "expected_sha256": "f187c5e9a18a4a5b3e30ef3e263704374bf08512bfb3cab116d106f6c3976442",
+    "observed_sha256": "f187c5e9a18a4a5b3e30ef3e263704374bf08512bfb3cab116d106f6c3976442",
+    "matches": true,
+    "expected_bytes": 19339,
+    "observed_bytes": 19339
+  },
+  {
+    "freeze_path": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/freeze.json",
+    "artifact_path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/source-map.json",
+    "expected_sha256": "ca05e8dfe48e66a179c754a65a485593502eced26d1b38cd2613b94fd0c14fa1",
+    "observed_sha256": "ca05e8dfe48e66a179c754a65a485593502eced26d1b38cd2613b94fd0c14fa1",
+    "matches": true,
+    "expected_bytes": 24810,
+    "observed_bytes": 24810
+  },
+  {
+    "freeze_path": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/freeze.json",
+    "artifact_path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/revealed-plan.md",
+    "expected_sha256": "b9063b147acff997c7c788eac44d2149ca6946fa4ee2a3ce6f0bdf80789397e7",
+    "observed_sha256": "b9063b147acff997c7c788eac44d2149ca6946fa4ee2a3ce6f0bdf80789397e7",
+    "matches": true,
+    "expected_bytes": 6015,
+    "observed_bytes": 6015
+  },
+  {
+    "freeze_path": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/freeze.json",
+    "artifact_path": "ER12_RUNTIME/runs/A7-01/control/stages/investigator/plan-reveal.json",
+    "expected_sha256": "20543cca5883a33b02c0f62452de58d027f5088edc5812f692a80c684eba099e",
+    "observed_sha256": "20543cca5883a33b02c0f62452de58d027f5088edc5812f692a80c684eba099e",
+    "matches": true,
+    "expected_bytes": 427,
+    "observed_bytes": 427
+  },
+  {
+    "freeze_path": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/freeze.json",
+    "artifact_path": "ER12_RUNTIME/runs/A7-01/control/stages/critic/critique.md",
+    "expected_sha256": "40986b4c2b3c438c13d13e20df811d58f1c7bced0e53439be957d30c660cb04d",
+    "observed_sha256": "40986b4c2b3c438c13d13e20df811d58f1c7bced0e53439be957d30c660cb04d",
+    "matches": true,
+    "expected_bytes": 10330,
+    "observed_bytes": 10330
+  },
+  {
+    "freeze_path": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/freeze.json",
+    "artifact_path": "ER12_RUNTIME/runs/A7-01/control/stages/critic/source-map.json",
+    "expected_sha256": "372272951e49ffedfc5a1d0449b8d407ec5d9d7afc101ec9c67f1501ccfd3b82",
+    "observed_sha256": "372272951e49ffedfc5a1d0449b8d407ec5d9d7afc101ec9c67f1501ccfd3b82",
+    "matches": true,
+    "expected_bytes": 39383,
+    "observed_bytes": 39383
+  }
+]

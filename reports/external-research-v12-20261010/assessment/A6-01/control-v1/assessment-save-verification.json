@@ -1,0 +1,35 @@
+{
+  "verified_at_utc": "2026-10-10T04:58:35.008322+00:00",
+  "judgment_saved_before_native_completion": true,
+  "structural_check": "6 complete axes, 8 exact plan clauses, 5 criticism dispositions; coherent FAIL finding; all local assessment/evidence links and primary captures verified",
+  "original_files_unchanged": true,
+  "originals_checked": 36,
+  "primary_sources_checked": 26,
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/A6-01/control-v1/assessment.md",
+      "bytes": 42312,
+      "sha256": "55a335668b0d60706dee21c3ddfd9917bebb8063fca57a24b83081243822b676"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A6-01/control-v1/assessment.json",
+      "bytes": 74560,
+      "sha256": "4850f2f799e7f959d0c18ace032bd25e9bb30bb82ab3dd7f8c7d8c3a6cc0689e"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A6-01/control-v1/source-map.json",
+      "bytes": 61710,
+      "sha256": "7a8e299272aa7aed2ef3fe27f92c2ff5f16a7ba95534726ad87f31f7d1f60037"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/index.md",
+      "bytes": 13686,
+      "sha256": "f39d7f47e8b385c9e882ec77baf3c37b60802a326166813a23431b34d30f4a3e"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A6-01/control-v1/original-inspected-hashes.json",
+      "bytes": 8418,
+      "sha256": "1ed61acd7e5ad7014eac1af8fce679dec1df81b7f75fd20cbc8996ba2f04006e"
+    }
+  ]
+}

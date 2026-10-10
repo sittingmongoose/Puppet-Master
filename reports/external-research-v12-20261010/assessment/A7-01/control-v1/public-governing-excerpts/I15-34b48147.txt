@@ -1,0 +1,30 @@
+URL: https://raw.githubusercontent.com/3MFConsortium/test_suites/master/README.md
+Original locator: ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I15.txt
+Original SHA256: 34b48147785fd08e48305b74bb36584392d8ff12aa9828137928676135b461e5
+Original numbered lines; gaps omitted. Not full response.
+
+8: This repository contains 3MF conformance test suites. Each test suite provides coverage for a specific combination of 3MF Core and Extension Specification requirements:
+9: 
+10: | **Test Suite** | **Core Spec** | **Production Extension** | **Materials Extension** | **Slice Extension** |**Beam Lattice Extension** |**Secure Content Extension** |**Boolean Operations** |**Displacement** |
+11: | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+12: | Suite 1  | X | X |   | X |   |   |   |   |
+13: | Suite 2  | X | X | X |   |   |   |   |   |
+14: | Suite 3  | X |   |   |   |   |   |   |   |
+15: | Suite 4  | X |   |   | X |   |   |   |   |
+16: | Suite 5  | X | X |   |   |   |   |   |   |
+17: | Suite 6  | X |   | X |   |   |   |   |   |
+18: | Suite 7  | X |   |   |   | X |   |   |   |
+19: | Suite 8  | X | X |   |   |   | X |   |   |
+20: | Suite 9  | X |   |   |   |   |   |   |   |
+21: | Suite 10 | X |   |   |   |   |   | X |   |
+22: | Suite 11 | X |   |   |   |   |   |   | X |
+27: All test cases are based on the following versions of the 3MF specifications:
+28: * 3MF Core Specification - [Version 1.4.0](https://github.com/3MFConsortium/spec_core/blob/1.4.0/3MF%20Core%20Specification.md)
+29: * 3MF Materials and Properties Extension - [Version 1.2.1](https://github.com/3MFConsortium/spec_materials/blob/1.2.1/3MF%20Materials%20Extension.md)
+30: * 3MF Production Extension - [Version 1.2.0](https://github.com/3MFConsortium/spec_production/blob/1.2.0/3MF%20Production%20Extension.md)
+31: * 3MF Slice Extension - [Version 1.0.2](https://github.com/3MFConsortium/spec_slice/blob/1.0.2/3MF%20Slice%20Extension.md) 
+32: * 3MF Beam Lattice Extension - [Version 1.2.0](https://github.com/3MFConsortium/spec_beamlattice/blob/1.2.0/3MF%20Beam%20Lattice%20Extension.md) 
+33: * 3MF Secure Content Extension - [Version 1.0.2](https://github.com/3MFConsortium/spec_securecontent/blob/1.0.2/3MF%20Secure%20Content.md) 
+34: * 3MF Boolean Operations Extension - [Version 1.1.1](https://github.com/3MFConsortium/spec_booleans/blob/1.1.1/3MF%20Boolean%20operations.md)
+35: * 3MF Displacement Extension - [Version 1.0.0](https://github.com/3MFConsortium/spec_displacement/blob/1.0.0/3MF%20Displacement%20Extension.md)
+36: * [Office Open XML File Formats - Open Packaging Conventions - December 2012](https://www.ecma-international.org/news/TC45_current_work/Office%20Open%20XML%20Part%202%20-%20Open%20Packaging%20Conventions.pdf)

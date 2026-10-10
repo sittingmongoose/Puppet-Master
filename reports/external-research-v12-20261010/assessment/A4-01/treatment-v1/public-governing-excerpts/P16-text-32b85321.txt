@@ -1,0 +1,148 @@
+URL: https://docs.aws.amazon.com/cli/latest/reference/s3/cp.html
+Original locator: ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P16-text.txt
+Original SHA256: 32b8532140ea9590cbb37add09d0c10748734122b2bc3237924de7cedb3200ed
+Original numbered lines; gaps omitted. Not full response.
+
+73: [--checksum-mode <value>]
+74: [--checksum-algorithm <value>]
+75: [--metadata <value>]
+76: [--copy-props <value>]
+77: [--metadata-directive <value>]
+78: [--expected-size <value>]
+79: [--recursive]
+80: [--case-conflict <value>]
+81: [--no-overwrite]
+82: [--debug]
+83: [--endpoint-url <value>]
+84: [--no-verify-ssl]
+85: [--no-paginate]
+86: [--output <value>]
+87: [--query <value>]
+88: [--profile <value>]
+89: [--region <value>]
+90: [--version <value>]
+91: [--color <value>]
+92: [--no-sign-request]
+93: [--ca-bundle <value>]
+94: [--cli-read-timeout <value>]
+95: [--cli-connect-timeout <value>]
+96: [--cli-binary-format <value>]
+97: [--no-cli-pager]
+98: [--cli-auto-prompt]
+99: [--no-cli-auto-prompt]
+100: [--cli-error-format <value>]
+101: Options¶
+102: paths (string)
+103: --dryrun (boolean)
+104: Displays the operations that would be performed using the specified command without actually running them.
+105: --quiet (boolean)
+106: Does not display the operations performed from the specified command.
+107: --include (string)
+108: Don’t exclude files or objects in the command that match the specified pattern. See Use of Exclude and Include Filters for details.
+109: --exclude (string)
+110: Exclude all files or objects from the command that matches the specified pattern.
+111: --acl (string)
+112: Sets the ACL for the object when the command is performed. If you use this parameter you must have the “s3:PutObjectAcl” permission included in the list of actions for your IAM policy. Only accepts values of private, public-read, public-read-write, authenticated-read, aws-exec-read, bucket-owner-read, bucket-owner-full-control and log-delivery-write. See Canned ACL for details
+113: --follow-symlinks | --no-follow-symlinks (boolean)
+114: Symbolic links are followed when uploading to S3 from the local filesystem. Note that S3 does not support symbolic links, so the contents of the link target are uploaded under the name of the link. When downloading from S3, --no-follow-symlinks skips any object whose destination is a symbolic link, or is located under one, starting at the destination you specified. Symbolic links in the path leading up to that destination are still followed. When neither --follow-symlinks nor --no-follow-symlinks is specified, the default is to follow symlinks.
+115: --no-guess-mime-type (boolean)
+116: Do not try to guess the mime type for uploaded files. By default the mime type of a file is guessed when it is uploaded.
+117: --sse (string)
+118: Specifies server-side encryption of the object in S3. Valid values are AES256 and aws:kms. If the parameter is specified but no value is provided, AES256 is used.
+119: --sse-c (string)
+120: Specifies server-side encryption using customer provided keys of the the object in S3. AES256 is the only valid value. If the parameter is specified but no value is provided, AES256 is used. If you provide this value, --sse-c-key must be specified as well.
+121: --sse-c-key (blob)
+122: The customer-provided encryption key to use to server-side encrypt the object in S3. If you provide this value, --sse-c must be specified as well. The key provided should not be base64 encoded.
+123: --sse-kms-key-id (string)
+124: The customer-managed AWS Key Management Service (KMS) key ID that should be used to server-side encrypt the object in S3. You should only provide this parameter if you are using a customer managed customer master key (CMK) and not the AWS managed KMS CMK.
+125: --sse-c-copy-source (string)
+126: This parameter should only be specified when copying an S3 object that was encrypted server-side with a customer-provided key. It specifies the algorithm to use when decrypting the source object. AES256 is the only valid value. If the parameter is specified but no value is provided, AES256 is used. If you provide this value, --sse-c-copy-source-key must be specified as well.
+127: --sse-c-copy-source-key (blob)
+128: This parameter should only be specified when copying an S3 object that was encrypted server-side with a customer-provided key. Specifies the customer-provided encryption key for Amazon S3 to use to decrypt the source object. The encryption key provided must be one that was used when the source object was created. If you provide this value, --sse-c-copy-source be specified as well. The key provided should not be base64 encoded.
+129: --storage-class (string)
+130: The type of storage to use for the object. Valid choices are: STANDARD | REDUCED_REDUNDANCY | STANDARD_IA | ONEZONE_IA | INTELLIGENT_TIERING | GLACIER | DEEP_ARCHIVE | GLACIER_IR. Defaults to ‘STANDARD’
+131: --grants (string)
+132: Grant specific permissions to individual users or groups. You can supply a list of grants of the form
+133: --grants Permission=Grantee_Type=Grantee_ID [Permission=Grantee_Type=Grantee_ID ...]
+134: To specify the same permission type for multiple grantees, specify the permission as such as
+135: --grants Permission=Grantee_Type=Grantee_ID,Grantee_Type=Grantee_ID,...
+136: Each value contains the following elements:
+137: Permission - Specifies the granted permissions, and can be set to read, readacl, writeacl, or full.
+138: Grantee_Type - Specifies how the grantee is to be identified, and can be set to uri or id.
+139: Grantee_ID - Specifies the grantee based on Grantee_Type. The Grantee_ID value can be one of:
+140: uri - The group’s URI. For more information, see Who Is a Grantee?
+141: id - The account’s canonical ID
+142: For more information on Amazon S3 access control, see Access Control
+143: --website-redirect (string)
+144: If the bucket is configured as a website, redirects requests for this object to another object in the same bucket or to an external URL. Amazon S3 stores the value of this header in the object metadata.
+145: --content-type (string)
+146: Specify an explicit content type for this operation. This value overrides any guessed mime types.
+147: --cache-control (string)
+148: Specifies caching behavior along the request/reply chain.
+149: --content-disposition (string)
+150: Specifies presentational information for the object.
+151: --content-encoding (string)
+152: Specifies what content encodings have been applied to the object and thus what decoding mechanisms must be applied to obtain the media-type referenced by the Content-Type header field.
+153: --content-language (string)
+154: The language the content is in.
+155: --expires (string)
+156: The date and time at which the object is no longer cacheable.
+157: --source-region (string)
+158: When transferring objects from an s3 bucket to an s3 bucket, this specifies the region of the source bucket. Note the region specified by --region or through configuration of the CLI refers to the region of the destination bucket. If --source-region is not specified the region of the source will be the same as the region of the destination bucket.
+159: --only-show-errors (boolean)
+160: Only errors and warnings are displayed. All other output is suppressed.
+161: --no-progress (boolean)
+162: File transfer progress is not displayed. This flag is only applied when the quiet and only-show-errors flags are not provided.
+163: --progress-frequency (integer)
+164: Number of seconds to wait before updating file transfer progress. This flag is only applied when the quiet and only-show-errors flags are not provided.
+165: --progress-multiline (boolean)
+166: Show progress on multiple lines.
+167: --page-size (integer)
+168: The number of results to return in each response to a list operation. The default value is 1000 (the maximum allowed). Using a lower value may help if an operation times out.
+169: --ignore-glacier-warnings (boolean)
+170: Turns off glacier warnings. Warnings about an operation that cannot be performed because it involves copying, downloading, or moving a glacier object will no longer be printed to standard error and will no longer cause the return code of the command to be 2.
+171: --force-glacier-transfer (boolean)
+172: Forces a transfer request on all Glacier objects in a sync or recursive copy.
+173: --request-payer (string)
+174: Confirms that the requester knows that they will be charged for the request. Bucket owners need not specify this parameter in their requests. Documentation on downloading objects from requester pays buckets can be found at http://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html
+175: --checksum-mode (string)
+176: To retrieve the checksum, this mode must be enabled. If the object has a checksum, it will be verified.
+177: --checksum-algorithm (string)
+178: Indicates the algorithm used to create the checksum for the object.
+179: --metadata (map)
+180: A map of metadata to store with the objects in S3. This will be applied to every object which is part of this request. In a sync, this means that files which haven’t changed won’t receive the new metadata. key -> (string)
+181: value -> (string)
+182: Shorthand Syntax:
+183: KeyName1=string,KeyName2=string
+184: JSON Syntax:
+185: {"string": "string"
+186: ...}
+187: --copy-props (string)
+188: Determines which properties are copied from the source S3 object. This parameter only applies for S3 to S3 copies. Valid values are:
+189: none - Do not copy any of the properties from the source S3 object.
+190: metadata-directive - Copies the following properties from the source S3 object: content-type, content-language, content-encoding, content-disposition, cache-control, --expires, and metadata
+191: default - The default value. Copies tags and properties covered under the metadata-directive value from the source S3 object.
+192: all - Copies annotations in addition to the tags and properties covered under the default value from the source S3 object.
+193: In order to copy the appropriate properties for multipart copies, some of the options may require additional API calls if a multipart copy is involved. Specifically:
+194: metadata-directive may require additional HeadObject API calls.
+195: default may require additional HeadObject, GetObjectTagging, and PutObjectTagging API calls.
+196: all may require the additional API calls covered under the default value, as well as ListObjectAnnotations, GetObjectAnnotation, and PutObjectAnnotation API calls. Note this list of API calls may grow in the future in order to ensure multipart copies preserve the exact properties a CopyObject API call would preserve.
+197: If you want to guarantee no additional API calls are made other than than the ones needed to perform the actual copy, set this option to none.
+198: --metadata-directive (string)
+199: Sets the x-amz-metadata-directive header for CopyObject operations. It is recommended to use the --copy-props parameter instead to control copying of metadata properties. If --metadata-directive is set, the --copy-props parameter will be disabled and will have no affect on the transfer.
+200: --expected-size (string)
+201: This argument specifies the expected size of a stream in terms of bytes. Note that this argument is needed only when a stream is being uploaded to s3 and the size is larger than 50GB. Failure to include this argument under these conditions may result in a failed upload due to too many parts in upload.
+202: --recursive (boolean)
+203: Command is performed on all files or objects under the specified directory or prefix.
+204: --case-conflict (string)
+205: Configures behavior when attempting to download multiple objects whose keys differ only by case, which can cause undefined behavior on case-insensitive filesystems. This parameter only applies for commands that perform multiple S3 to local downloads. See Handling case conflicts for details. Valid values are:
+206: error - Raise an error and abort downloads.
+207: warn - Emit a warning and download the object.
+208: skip - Skip downloading the object.
+209: ignore - The default value. Ignore the conflict and download the object.
+210: --no-overwrite (boolean)
+211: This flag prevents overwriting of files at the destination. With this flag, only files not present at the destination will be transferred.
+212: Global Options¶
+213: --debug (boolean)
+214: Turn on debug logging.
+215: --endpoint-url (string)

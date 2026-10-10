@@ -1,0 +1,142 @@
+URL: https://raw.githubusercontent.com/restic/chunker/master/chunker.go
+Original locator: ER12_RUNTIME/assessment/B-DISC-M-02/treatment-v1/primary-evidence/P6-restic-chunker-source.txt
+Original SHA256: 2f8581caa44e0f798561f6ad522c5f08527d1be2ffd7c39e24980d503866c243
+Original numbered lines; gaps omitted. Not full response.
+
+8: 0008: const (
+9: 0009: 	kiB = 1024
+10: 0010: 	miB = 1024 * kiB
+11: 0011: 
+12: 0012: 	// WindowSize is the size of the sliding window.
+13: 0013: 	windowSize = 64
+14: 0014: 
+15: 0015: 	// MinSize is the default minimal size of a chunk.
+16: 0016: 	MinSize = 512 * kiB
+17: 0017: 	// MaxSize is the default maximal size of a chunk.
+18: 0018: 	MaxSize = 8 * miB
+19: 0019: 
+20: 0020: 	chunkerBufSize = 512 * kiB
+63: 0063: func NewBase(pol Pol, opts ...baseOption) *BaseChunker {
+64: 0064: 	c := &BaseChunker{
+65: 0065: 		chunkerState: chunkerState{},
+66: 0066: 		chunkerConfig: chunkerConfig{
+67: 0067: 			pol:       pol,
+68: 0068: 			MinSize:   MinSize,
+69: 0069: 			MaxSize:   MaxSize,
+70: 0070: 			splitmask: (1 << 20) - 1, // aim to create chunks of 20 bits or about 1MiB on average.
+71: 0071: 		},
+72: 0072: 	}
+73: 0073: 
+74: 0074: 	for _, opt := range opts {
+75: 0075: 		opt(c)
+76: 0076: 	}
+77: 0077: 
+78: 0078: 	c.reset()
+79: 0079: 	return c
+159: 0159: // NextSplitPoint scans buf for a chunk boundary.
+160: 0160: // Returns index before which to split buf, or -1 if no boundary found in this buffer.
+161: 0161: // This operation is stateful. All buffers passed to it until a split point is found
+162: 0162: // then form a single chunk.
+163: 0163: func (c *BaseChunker) NextSplitPoint(buf []byte) int {
+164: 0164: 	split, _ := c.nextSplitPoint(buf)
+165: 0165: 	return split
+166: 0166: }
+167: 0167: 
+168: 0168: func (c *BaseChunker) nextSplitPoint(buf []byte) (int, uint64) {
+169: 0169: 	if !c.tablesInitialized {
+170: 0170: 		panic("tables for polynomial computation not initialized")
+171: 0171: 	}
+172: 0172: 
+173: 0173: 	tab := &c.tables
+174: 0174: 	polShift := c.polShift
+175: 0175: 	// go guarantees the expected behavior for bit shifts even for shift counts
+176: 0176: 	// larger than the value width. Bounding the value of polShift allows the compiler
+177: 0177: 	// to optimize the code for 'digest >> polShift'
+178: 0178: 	if polShift > 53-8 {
+179: 0179: 		panic("the polynomial must have a degree less than or equal 53")
+180: 0180: 	}
+181: 0181: 	minSize := c.MinSize
+182: 0182: 	maxSize := c.MaxSize
+183: 0183: 
+184: 0184: 	idx := 0
+185: 0185: 	// check if bytes have to be dismissed before starting a new chunk
+186: 0186: 	if c.pre > 0 {
+187: 0187: 		if c.pre >= uint(len(buf)) {
+188: 0188: 			c.pre -= uint(len(buf))
+189: 0189: 			c.count += uint(len(buf))
+190: 0190: 			return -1, 0
+191: 0191: 		}
+192: 0192: 
+193: 0193: 		buf = buf[c.pre:]
+194: 0194: 		idx = int(c.pre)
+195: 0195: 		c.count += c.pre
+196: 0196: 		c.pre = 0
+197: 0197: 	}
+198: 0198: 
+199: 0199: 	add := c.count
+200: 0200: 	digest := c.digest
+201: 0201: 	win := c.window
+202: 0202: 	wpos := c.wpos
+203: 0203: 	for i, b := range buf {
+204: 0204: 		// limit wpos to elide array bound checks
+205: 0205: 		out := win[wpos%windowSize]
+206: 0206: 		win[wpos%windowSize] = b
+207: 0207: 		digest ^= uint64(tab.out[out])
+208: 0208: 		wpos++
+209: 0209: 
+210: 0210: 		digest = updateDigest(digest, polShift, tab, b)
+211: 0211: 		// end manual inline
+212: 0212: 
+213: 0213: 		add++
+214: 0214: 
+215: 0215: 		if (digest&c.splitmask) == 0 || add >= maxSize {
+216: 0216: 			if add < minSize {
+217: 0217: 				continue
+218: 0218: 			}
+219: 0219: 			c.reset()
+220: 0220: 			return idx + i + 1, digest
+221: 0221: 		}
+222: 0222: 	}
+223: 0223: 	c.digest = digest
+224: 0224: 	c.window = win
+225: 0225: 	c.wpos = wpos % windowSize
+226: 0226: 	c.count += uint(len(buf))
+227: 0227: 	return -1, 0
+332: 0332: // Next returns the position and length of the next chunk of data. If an error
+333: 0333: // occurs while reading, the error is returned. Afterwards, the state of the
+334: 0334: // current chunk is undefined. When the last chunk has been returned, all
+335: 0335: // subsequent calls yield an io.EOF error.
+336: 0336: func (c *Chunker) Next(data []byte) (Chunk, error) {
+337: 0337: 	data = data[:0]
+338: 0338: 	start := c.pos
+339: 0339: 	for {
+340: 0340: 		if c.bpos >= c.bmax {
+341: 0341: 			n, err := io.ReadFull(c.rd, c.buf)
+342: 0342: 
+343: 0343: 			if err == io.ErrUnexpectedEOF {
+344: 0344: 				err = nil
+345: 0345: 			}
+346: 0346: 
+347: 0347: 			// io.ReadFull only returns io.EOF when no bytes could be read. If
+348: 0348: 			// this is the case and we're in this branch, there are no more
+349: 0349: 			// bytes to buffer, so this was the last chunk. If a different
+350: 0350: 			// error has occurred, return that error and abandon the current
+351: 0351: 			// chunk.
+352: 0352: 			if err == io.EOF && !c.closed {
+353: 0353: 				c.closed = true
+354: 0354: 
+355: 0355: 				// return current chunk, if any bytes have been processed
+356: 0356: 				if len(data) > 0 {
+357: 0357: 					return Chunk{
+358: 0358: 						Start:  start,
+359: 0359: 						Length: uint(len(data)),
+360: 0360: 						// somewhat meaningless as this is not a split point
+361: 0361: 						Cut:  c.digest,
+362: 0362: 						Data: data,
+363: 0363: 					}, nil
+364: 0364: 				}
+365: 0365: 			}
+366: 0366: 
+367: 0367: 			if err != nil {
+368: 0368: 				return Chunk{}, err
+369: 0369: 			}

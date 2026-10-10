@@ -1,0 +1,486 @@
+{
+  "captured_at_utc": "2026-10-10T04:53:43.515397+00:00",
+  "scope": "Only A7-01 treatment and its original rubric/brief/plan. Inventory hashes are integrity records, not semantic proof.",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/control/handoff-binding.json",
+      "bytes": 112,
+      "sha256": "6ca39d2c34ed52986eafbb996364739b4030907130652f814ec2c4a70019155e"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/control/investigator-frozen-active.json",
+      "bytes": 736,
+      "sha256": "86c4db4578761ec10d70c114f136d059de9ca3199858e45fc9bb8a440cabb3d6"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/control/run.json",
+      "bytes": 532,
+      "sha256": "72d3d2a664001edba2be2b8dcf50b639d543365213e989c4c1891df341e132d3"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/control/topology.json",
+      "bytes": 484,
+      "sha256": "fd4de368995c89f0c93e5e8c60a9a453d3d07b85e7b3f56e7627dc5969dcb3b1"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/inputs/brief.md",
+      "bytes": 3358,
+      "sha256": "dcd62504463a57569adbc66d85753f8a178764bb5d80b7c17dad4f4088a1b1f5"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/manifest.json",
+      "bytes": 10604,
+      "sha256": "b0afeb8a07169c08585fbf002763e89e23b38e7f006c861917ccea5f625da63f"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/discovery.md",
+      "bytes": 9644,
+      "sha256": "419a380cc972621488d814158939cfe7150dd018a23dcfba696664d66acec8ff"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/draft.md",
+      "bytes": 24147,
+      "sha256": "9f6d66b6842f698692d59fa0737894d78cdfcf0927555ba8d41de67aeb5cd846"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/plan-reveal.json",
+      "bytes": 428,
+      "sha256": "8b20bf1d67f7492fa543f8c7c17c15242dc044055b7d824e80876956f72e5bab"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/revealed-plan.md",
+      "bytes": 6015,
+      "sha256": "b9063b147acff997c7c788eac44d2149ca6946fa4ee2a3ce6f0bdf80789397e7"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/source-map.json",
+      "bytes": 15686,
+      "sha256": "764f7abfe399eaad6a6fcc4e9f45df2f6ad2eb93b9eb4c59dfcbbe16238dcbf6"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/README.md",
+      "bytes": 3801,
+      "sha256": "1024802883343dcf360f2e9c88ebfd43fe29e25c68276eac74afc48e0547d429"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S01-3mf-core.md",
+      "bytes": 1356,
+      "sha256": "b89d7799963de7c317479a8aa7dac7d76a7028f2286c2ecd51d72c2778291158"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S02-fusion-mesh.md",
+      "bytes": 679,
+      "sha256": "2f24c205f7be2de6d5d96cdd0ecdd33b61e444f9f05454f873f4c1436fa6f5a5"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S03-fusion-export.md",
+      "bytes": 713,
+      "sha256": "3aa71f40ade5109e8b51e99d2f0f697b37575b70e014603b520faff2b6c70d41"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S04-prusa-formats.md",
+      "bytes": 693,
+      "sha256": "27168f078229656e170146e8fe9220c982fb84dfe28e3cc9fa0a712efb1f77c4"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S05-prusaslicer-250.md",
+      "bytes": 487,
+      "sha256": "02d3548f20e8070faa591701a224d63c333d57f27d182372b43127577ec972bb"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S06-step-issue-8998.md",
+      "bytes": 872,
+      "sha256": "b57175041d61ac0c5c55f4b66ce049d82cce9f419ff114627498188d3d608a01"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S07-unit-issue-15545.md",
+      "bytes": 1032,
+      "sha256": "352ddaf44d0e938acf785479b4df276e20b8d3503e5550b7d3abae0cd829049a"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S08-bambu-names-issue.md",
+      "bytes": 931,
+      "sha256": "63883086c34cdb10e7ab6606afc4c3e8b0af084c6294090b697ac54dce073d00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S09-3mf-spec-index.md",
+      "bytes": 632,
+      "sha256": "914ca3c0620e377d000c5932f6052092d7353a292eba8c29ad889bf03cbf434a"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S10-prusa-project-3mf.md",
+      "bytes": 810,
+      "sha256": "4093bb0a29d33bca2e1c70b4e48f1c50b316ea45b82abd8a8d9e879a5b929b15"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S11-cura-570-release.md",
+      "bytes": 1060,
+      "sha256": "0660ac8e5e5e35b9e091b6566afecc1aff994ed9a2d63c1a46f0daba022bdf53"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S12-cura-3mf-position-issue.md",
+      "bytes": 1055,
+      "sha256": "582256aef60f160c185fe3c42dfaf988f65fa0210e933b6d5e058262bce8e3ec"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S13-cura-object-name-issue.md",
+      "bytes": 870,
+      "sha256": "23eca2eeddc832da9c6d03fa9c7305f3c6ba358c61a9e6397ba4428c42284aac"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S14-cura-releases.md",
+      "bytes": 544,
+      "sha256": "e8a371d01cd31e35774b1c370ef3ac601b29bfd9ad630f5f981076553c38cc35"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/handoff/stages/investigator/sources/S15-prusaslicer-releases.md",
+      "bytes": 551,
+      "sha256": "e7748ad281c9a6bb09a4dc6bff0948c0a3892a41b21cdccb3e9be7f7f733d2f1"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/inputs/brief.md",
+      "bytes": 3358,
+      "sha256": "dcd62504463a57569adbc66d85753f8a178764bb5d80b7c17dad4f4088a1b1f5"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/assignment.md",
+      "bytes": 5967,
+      "sha256": "6b6a73960d2d4ad1e60ecc91a614492512287a0bddf23dfdea2a041547efebd1"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/checks.json",
+      "bytes": 6822,
+      "sha256": "799a33df5b0769e5e606449b74e7304addc6c0d7a70cc7533bf9daf7e339bea3"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/critique-dispositions.json",
+      "bytes": 3739,
+      "sha256": "b0ae2a1914b98d8e1e14cac2e4d26f1490c00043558e5b0dbcbc0227e9d56784"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/critique-index.json",
+      "bytes": 153,
+      "sha256": "a14556b10b580911548aca0b2e4ed43fb1ad3a8acf66b4b573d3feb0d5125c44"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/critique.md",
+      "bytes": 13527,
+      "sha256": "ee3f528beee5a948bb2f0f2076694cfe6598f6ed79894b60bb0392d83f1b4fd4"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/dispatch.json",
+      "bytes": 4435,
+      "sha256": "e6d4e2cc8da2399db3337646f9f82ac86cd621447ce34022947f6514899927e8"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/final.md",
+      "bytes": 25122,
+      "sha256": "3571f30137e3e7abee055360f231dd50b99a5fc98219ca762ddf914d5cbeff08"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/freeze.json",
+      "bytes": 8074,
+      "sha256": "2b7903941fddfde4e478ddde903c9ed97778f61255a36ea9d077398d585e4a7e"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/goal-activation.json",
+      "bytes": 546,
+      "sha256": "4f956fea986488de72f70b9ef4bdcf14890767ac1e2da9c39c4a6d3cc6f2beda"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/goal-current.json",
+      "bytes": 496,
+      "sha256": "256f4154d033842bf18b3ea705c57aec33bde9760a4e9eedd5c0a45a1bf27c81"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/goal-final-attempt.json",
+      "bytes": 496,
+      "sha256": "4bf87581ab6fd7fb83c9364ad1a9f9a824d62220180dda95623d30f53f3e1e46"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/goal-postseal-attempt.json",
+      "bytes": 496,
+      "sha256": "b66b778b3ffdd5689e608c53bbd27cdb53ce2915698c5f00cc7dc48f05a257f5"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/goal-preseal.json",
+      "bytes": 496,
+      "sha256": "32a0f96d3241b79ecbbbe7d5bd51b2aae055ff04fca5112623e6334b0e2aaddf"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/input-integrity.json",
+      "bytes": 8130,
+      "sha256": "1915b9066762f6574fc32812ec3a642be08ffd93159317e99adb87c59af13165"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/input-map.json",
+      "bytes": 4009,
+      "sha256": "37c8dc5d5752aeedcf4541417d04859788231e892bd5f46b9501d80db8714b7d"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/request.json",
+      "bytes": 949,
+      "sha256": "39f3f2510707de50a145a05df67156f778a20ae7e365e30db9c070dc004eebd2"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/source-map.json",
+      "bytes": 18504,
+      "sha256": "2cc897c9524936757b9b6828db0a2d85d68ccc9c2f5ccfa8e4d0d4aae538e410"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/README.md",
+      "bytes": 3169,
+      "sha256": "25e7fc5051e65af32d7cc5fbb4b169c0bf7cbcfb62524f4de65d00da5fe4eb0d"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S01-3mf-core.md",
+      "bytes": 1644,
+      "sha256": "40042bd200feb9e25c63dc80b5be6240747096d74a232c60dae4b4506b526fba"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S02-fusion-mesh.md",
+      "bytes": 813,
+      "sha256": "c0e580f2cb357d077905f1959c4dea7c14889d66b17156b1e9c5b4027f9589bd"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S03-fusion-export.md",
+      "bytes": 815,
+      "sha256": "53e7a5da7917c92724cb4a287bc5e4aa1017f7a9fd80f259e3236ac660131e6d"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S04-prusa-formats.md",
+      "bytes": 806,
+      "sha256": "f376b0160978f01753abcbe39ef72c2c4020f16fc17ffc0f3fb76b49f18811a7"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S05-prusaslicer-250.md",
+      "bytes": 646,
+      "sha256": "c019cc32c6b7d7d95d16847b21d3f0f35d4af2712b79f53ce01e07757d8a4564"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S06-step-issue-8998.md",
+      "bytes": 1397,
+      "sha256": "9547c29ff57246af3c97df35f971db601c94b5b1a3fe1be2f22d91d4ab7cd887"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S07-unit-issue-15545.md",
+      "bytes": 1104,
+      "sha256": "316c8d3e277e8ace25f6e430775ebba7facd2ff5f3f65f29c79d09f98c8ffb92"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S08-bambu-names-issue.md",
+      "bytes": 903,
+      "sha256": "7ecb71da556cb9583a4d09365278268cd2ca64f7149682d559fae95b956b4972"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S09-3mf-spec-index.md",
+      "bytes": 785,
+      "sha256": "f0cc63189c64550542c08a10bbf4e1849893337e0f01f13d6262767af9558c7f"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S10-prusa-project-3mf.md",
+      "bytes": 945,
+      "sha256": "0374f45f67cb3392f905cd1179b7afe8dbf5cccc19fe30105cdf71c4af9c9fd9"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S11-cura-570-release.md",
+      "bytes": 998,
+      "sha256": "24e16aac50ca4cf654f3fa3c61420858dfa7cab9090ede8f85c2353a0839c14f"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S12-cura-3mf-position-issue.md",
+      "bytes": 1203,
+      "sha256": "8460307a91b5f66feb841d52da6c6008fac190c696a236e6889beb2501c90ab2"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S13-cura-object-name-issue.md",
+      "bytes": 738,
+      "sha256": "b69154f69984d83567b6cad0965204f913b43b273f2e5226772962715a1dc4b5"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S14-cura-releases.md",
+      "bytes": 728,
+      "sha256": "72c55a30e28002de60f5808d8109955f62f2fc37f3e553683f7eb10104aaadf0"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S15-prusaslicer-releases.md",
+      "bytes": 720,
+      "sha256": "1988a085d51af21e317f10c6804fb9248120c5d81cf4749edea3e129adeda892"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S16-3mf-materials-extension.md",
+      "bytes": 1129,
+      "sha256": "4bdd80f2700a7793f17bf8f4fe933f202c69d99547ea625fef4f2992fc32a100"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/sources/S17-cura-514-alpha.md",
+      "bytes": 941,
+      "sha256": "2a73fb6b2caae6995a8ce7513660932d8d4b1886a7ced683a465fede012a0045"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/stage-control.json",
+      "bytes": 3347,
+      "sha256": "cea66f155d2bdd728ef963bcfa029720bc3a1bac9d9dd6ed618dd1a6f9ef4f78"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/assignment.md",
+      "bytes": 4598,
+      "sha256": "a9a058a895f812d4020a25484b51b30b0b133e33f2700654bb2852be90392363"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/discovery.md",
+      "bytes": 9644,
+      "sha256": "419a380cc972621488d814158939cfe7150dd018a23dcfba696664d66acec8ff"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/dispatch.json",
+      "bytes": 4371,
+      "sha256": "23ceff59c697e680716f47cecd6f2bc1b252b201e8dcfdee5e0f7a68d19f1d0c"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/draft.md",
+      "bytes": 24147,
+      "sha256": "9f6d66b6842f698692d59fa0737894d78cdfcf0927555ba8d41de67aeb5cd846"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/freeze.json",
+      "bytes": 1526,
+      "sha256": "b2078001dee33b648bd6dbde7425c1bc9252771b471d51ba814ebf03a7b0bce0"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/goal-active.json",
+      "bytes": 737,
+      "sha256": "3e74e77e9595973eb98411f9a1d647c7918fc6e1dce32e18dfae8a23a1f13476"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/input-map.json",
+      "bytes": 722,
+      "sha256": "7bc82160fcd7a6bc9bd030b96dd9dc1a5dcc76431842a832c8bbf8166edf14ee"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/plan-reveal.json",
+      "bytes": 428,
+      "sha256": "8b20bf1d67f7492fa543f8c7c17c15242dc044055b7d824e80876956f72e5bab"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/request.json",
+      "bytes": 933,
+      "sha256": "ecc44f558970f789350aa1d99485e59d9657336b41ed82921bfb39a4e8eee169"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 6015,
+      "sha256": "b9063b147acff997c7c788eac44d2149ca6946fa4ee2a3ce6f0bdf80789397e7"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/source-map.json",
+      "bytes": 15686,
+      "sha256": "764f7abfe399eaad6a6fcc4e9f45df2f6ad2eb93b9eb4c59dfcbbe16238dcbf6"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/README.md",
+      "bytes": 3801,
+      "sha256": "1024802883343dcf360f2e9c88ebfd43fe29e25c68276eac74afc48e0547d429"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S01-3mf-core.md",
+      "bytes": 1356,
+      "sha256": "b89d7799963de7c317479a8aa7dac7d76a7028f2286c2ecd51d72c2778291158"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S02-fusion-mesh.md",
+      "bytes": 679,
+      "sha256": "2f24c205f7be2de6d5d96cdd0ecdd33b61e444f9f05454f873f4c1436fa6f5a5"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S03-fusion-export.md",
+      "bytes": 713,
+      "sha256": "3aa71f40ade5109e8b51e99d2f0f697b37575b70e014603b520faff2b6c70d41"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S04-prusa-formats.md",
+      "bytes": 693,
+      "sha256": "27168f078229656e170146e8fe9220c982fb84dfe28e3cc9fa0a712efb1f77c4"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S05-prusaslicer-250.md",
+      "bytes": 487,
+      "sha256": "02d3548f20e8070faa591701a224d63c333d57f27d182372b43127577ec972bb"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S06-step-issue-8998.md",
+      "bytes": 872,
+      "sha256": "b57175041d61ac0c5c55f4b66ce049d82cce9f419ff114627498188d3d608a01"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S07-unit-issue-15545.md",
+      "bytes": 1032,
+      "sha256": "352ddaf44d0e938acf785479b4df276e20b8d3503e5550b7d3abae0cd829049a"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S08-bambu-names-issue.md",
+      "bytes": 931,
+      "sha256": "63883086c34cdb10e7ab6606afc4c3e8b0af084c6294090b697ac54dce073d00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S09-3mf-spec-index.md",
+      "bytes": 632,
+      "sha256": "914ca3c0620e377d000c5932f6052092d7353a292eba8c29ad889bf03cbf434a"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S10-prusa-project-3mf.md",
+      "bytes": 810,
+      "sha256": "4093bb0a29d33bca2e1c70b4e48f1c50b316ea45b82abd8a8d9e879a5b929b15"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S11-cura-570-release.md",
+      "bytes": 1060,
+      "sha256": "0660ac8e5e5e35b9e091b6566afecc1aff994ed9a2d63c1a46f0daba022bdf53"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S12-cura-3mf-position-issue.md",
+      "bytes": 1055,
+      "sha256": "582256aef60f160c185fe3c42dfaf988f65fa0210e933b6d5e058262bce8e3ec"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S13-cura-object-name-issue.md",
+      "bytes": 870,
+      "sha256": "23eca2eeddc832da9c6d03fa9c7305f3c6ba358c61a9e6397ba4428c42284aac"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S14-cura-releases.md",
+      "bytes": 544,
+      "sha256": "e8a371d01cd31e35774b1c370ef3ac601b29bfd9ad630f5f981076553c38cc35"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/sources/S15-prusaslicer-releases.md",
+      "bytes": 551,
+      "sha256": "e7748ad281c9a6bb09a4dc6bff0948c0a3892a41b21cdccb3e9be7f7f733d2f1"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/stages/investigator/status.json",
+      "bytes": 4033,
+      "sha256": "c80965114c17996eaecb7478e094e65a63a254e59f0c90eaea264f70545db97d"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-01/treatment/terminal-science-freeze-root.json",
+      "bytes": 17002,
+      "sha256": "fec3b71d3c2278ba10312e51ff395c10661193277b053fe8382246988ed68a10"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A7-01/brief.md",
+      "bytes": 3358,
+      "sha256": "dcd62504463a57569adbc66d85753f8a178764bb5d80b7c17dad4f4088a1b1f5"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A7-01/plan.md",
+      "bytes": 6015,
+      "sha256": "b9063b147acff997c7c788eac44d2149ca6946fa4ee2a3ce6f0bdf80789397e7"
+    }
+  ]
+}

@@ -1,0 +1,176 @@
+{
+  "schema": "er12.independent.inspection-hashes.v1",
+  "recorded_at_utc": "2026-10-10T05:09:18.407454+00:00",
+  "corpus": null,
+  "all_terminal_artifacts_match": true,
+  "all_frozen_inputs_match": true,
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "bytes": 2790,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": null,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/input-map.json",
+      "sha256": "672d301a188a5f86b7dd56c705aef41894ceaf62b963055780fcba18d46f0b32",
+      "bytes": 507,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": true,
+      "input_freeze_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/assignment.md",
+      "sha256": "c70c939ce8aa6671ad8fc9adea48f357570ab7c411f398fa82d4089cdf98984a",
+      "bytes": 2383,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": true,
+      "input_freeze_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/freeze.json",
+      "sha256": "3cbf11a47170d2eadf44fd5ad682785f5cbb0253e8d0a2ebc32e452e13980fc8",
+      "bytes": 2193,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": true,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/inputs/assignment.md",
+      "sha256": "599616a793cbad684a884396d85246ca2ab2a72cd0030379da4abe004f75357c",
+      "bytes": 2635,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": null,
+      "input_freeze_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/inputs/fixture.json",
+      "sha256": "8bd7bc2d640033063d6db3d4c31343f3e88d9ae0366a231c6f525a355c62d583",
+      "bytes": 1575,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": null,
+      "input_freeze_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/inputs/manifest.json",
+      "sha256": "f806e440e8fb13f91018cdd184ac9b533c6d1098387284a6e7f624fe942b064d",
+      "bytes": 241,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": null,
+      "input_freeze_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/discovery.md",
+      "sha256": "683fb7869b0013df2e756c434f8f057893789297cc45e12ef004815566501543",
+      "bytes": 6066,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": true,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/source-map.json",
+      "sha256": "b57047dc6e605145436f9f15d1fc6a9e8b149e3b55f2338af4ce05d62f532df0",
+      "bytes": 4925,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": true,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/terminal-science-freeze-root.json",
+      "sha256": "c40c9dd5f0aba0f721257f45f8037673ec256717fe6240217fcc747b6ae7c07f",
+      "bytes": 9599,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": null,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/native-goal-receipt.json",
+      "sha256": "1ec20a9b2df4dee87f18d7d819373ebc8ab2af21c8c7b74cae9022f9c4f6dd4f",
+      "bytes": 566,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": true,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/dispatch.json",
+      "sha256": "ec5b8aec5ddef51abca1dbfa6b0f7446059ce16faba3a5b4adca1aa369710461",
+      "bytes": 4381,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": true,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/raw-dispatch.json",
+      "sha256": "259cf35bbc769b7d4986633f043e59252cf2b911c08c8c79db7cc7796142353f",
+      "bytes": 2130,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": true,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/request.json",
+      "sha256": "9396fcafe6e2fa26432f4cd5aaabcfcc269d24e88994e6775994b7fd9b990545",
+      "bytes": 1076,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": true,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/sources/s01-slsa-provenance-v1.json",
+      "sha256": "ca468eaebb1d69c21fedec116f3e7d7135340f7f53a8d685aa066cefe5b648ea",
+      "bytes": 852,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": true,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/sources/s02-slsa-verifying-artifacts.json",
+      "sha256": "1fbf02623ad1d4a5393853a9e33185dee449cabbdd1113caa93b9302a8bbd788",
+      "bytes": 815,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": true,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/sources/s03-sigstore-overview.json",
+      "sha256": "e1c702691add835d6e979c0b4a80b4cd704e718e6571b01ef7bca3527d2dfde7",
+      "bytes": 677,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": true,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/sources/s04-cosign-attestation.json",
+      "sha256": "02023384e48351046d4b7e9920c3339542bbd71cb0dfa38c95e2bbfc22094f9c",
+      "bytes": 657,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": true,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/sources/s05-tuf-overview.json",
+      "sha256": "0a02d15d76a9b04e13cb24ebc25e38d5652630052f0f246445f4d41793c0b764",
+      "bytes": 747,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": true,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/sources/s06-intoto-docs.json",
+      "sha256": "058415a0f38a36c347827a7cb0931602a4e0ec73a408acb7c2cfaea55edd7e4d",
+      "bytes": 637,
+      "inspection": "full_content_read",
+      "terminal_freeze_match": true,
+      "input_freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/records/dispatch-20261010T045605491599-357b05138c794cde84c9dcd7e7e083f0.json",
+      "sha256": "ec5b8aec5ddef51abca1dbfa6b0f7446059ce16faba3a5b4adca1aa369710461",
+      "bytes": 4381,
+      "inspection": "hash_checked; byte-identical duplicate of fully read dispatch.json",
+      "terminal_freeze_match": true
+    }
+  ]
+}

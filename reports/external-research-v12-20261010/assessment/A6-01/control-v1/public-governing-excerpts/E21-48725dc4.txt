@@ -1,0 +1,38 @@
+URL: https://raw.githubusercontent.com/opentripplanner/OpenTripPlanner/v2.10.0/doc/user/Changelog.md
+Original locator: ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E21.txt
+Original SHA256: 48725dc4a3356dd6d526b2d026c1d6d3070b53af144590ea436bf4d87e682277
+Original numbered lines; gaps omitted. Not full response.
+
+6: ## 2.10.0 (2026-09-09)
+7: 
+8: ### Notable changes
+9: 
+10: - Improvements in routing and graph build performance [#7440](https://github.com/opentripplanner/OpenTripPlanner/pull/7440)
+11: [#7536](https://github.com/opentripplanner/OpenTripPlanner/pull/7536)
+12: [#7516](https://github.com/opentripplanner/OpenTripPlanner/pull/7516)
+13: [#7563](https://github.com/opentripplanner/OpenTripPlanner/pull/7563)
+14: [#7559](https://github.com/opentripplanner/OpenTripPlanner/pull/7559)
+15: [#7583](https://github.com/opentripplanner/OpenTripPlanner/pull/7583)
+16: [#7665](https://github.com/opentripplanner/OpenTripPlanner/pull/7665)
+17: [#7668](https://github.com/opentripplanner/OpenTripPlanner/pull/7668)
+18: [#7685](https://github.com/opentripplanner/OpenTripPlanner/pull/7685)
+19: [#7333](https://github.com/opentripplanner/OpenTripPlanner/pull/7333)
+20: [#7682](https://github.com/opentripplanner/OpenTripPlanner/pull/7682)
+21: [#7753](https://github.com/opentripplanner/OpenTripPlanner/pull/7753)
+22: [#7823](https://github.com/opentripplanner/OpenTripPlanner/pull/7823)
+23: [#7925](https://github.com/opentripplanner/OpenTripPlanner/pull/7925)
+24: 
+25: - Implement on-board access in Transmodel trip API [#7429](https://github.com/opentripplanner/OpenTripPlanner/pull/7429)
+26: - Make TransitGroupPriority an official feature [#7738](https://github.com/opentripplanner/OpenTripPlanner/pull/7738)
+27:  
+28: ### Detailed changes by Pull Request
+29: 
+30: - Add select/not filters to estimatedCalls in Transmodel [#7305](https://github.com/opentripplanner/OpenTripPlanner/pull/7305)
+31: - Cleanup regular transfer build parameters [#7425](https://github.com/opentripplanner/OpenTripPlanner/pull/7425)
+32: - Add CostlyAssertions feature that should be turned off in production and improve performance of via routing with coordinates [#7301](https://github.com/opentripplanner/OpenTripPlanner/pull/7301)
+33: - Added carpooling as an access/egress mode [#7341](https://github.com/opentripplanner/OpenTripPlanner/pull/7341)
+34: - Cache TransferIndexGenerator results to skip redundant regeneration [#7355](https://github.com/opentripplanner/OpenTripPlanner/pull/7355)
+35: - Improve compatibility with Swiss NeTEx data [#7427](https://github.com/opentripplanner/OpenTripPlanner/pull/7427)
+36: - fix: Introduce stable order for fareZones (tariffZones) [#7434](https://github.com/opentripplanner/OpenTripPlanner/pull/7434)
+37: - Prevent long routes mistakenly getting grouped across service-date [#7452](https://github.com/opentripplanner/OpenTripPlanner/pull/7452)
+38: - Expose GTFS feed version in the GTFS GraphQL API [#7445](https://github.com/opentripplanner/OpenTripPlanner/pull/7445)

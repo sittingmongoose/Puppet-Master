@@ -1,0 +1,869 @@
+{
+  "schema": "er12-independent-assessment-v1",
+  "assessment_id": "B-DISC-G-02/control-v1",
+  "case_id": "ER12-B-DISC-G-02-FRESH",
+  "track": "B",
+  "role": "Brief-only discovery",
+  "arm": "control",
+  "source_judgment": "FAIL",
+  "judgment_scope": "Assigned brief-only discovery; not full-pipeline qualification; no ER11 rescore",
+  "material_findings": [
+    {
+      "id": "F1",
+      "severity": "MATERIAL",
+      "kind": "omitted consequential source condition / overbroad applicability inference",
+      "axis": "source_conditions_and_failure_boundaries",
+      "candidate_locator": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/discovery.md:9",
+      "candidate_exact_text": "Inference: this directly addresses a job claiming the right commit while using another builder or changing build parameters.",
+      "additional_candidate_locators": [
+        "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/discovery.md:19",
+        "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/discovery.md:35",
+        "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/discovery.md:36",
+        "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/source-map.json sources[S1]"
+      ],
+      "primary_evidence": [
+        {
+          "id": "S1",
+          "url": "https://slsa.dev/spec/v1.2/verifying-artifacts",
+          "section": "Step 1: Check SLSA Build level; Resulting threat mitigation",
+          "local_locator": "ER12_RUNTIME/assessment/B-DISC-G-02/control-v1/primary-evidence/S1.txt:118-136"
+        },
+        {
+          "id": "P9",
+          "url": "https://slsa.dev/spec/v1.2/build-track-basics",
+          "section": "Build levels; Build L2 / Build L3",
+          "local_locator": "ER12_RUNTIME/assessment/B-DISC-G-02/control-v1/primary-evidence/P9.txt:106-165"
+        },
+        {
+          "id": "P10",
+          "url": "https://slsa.dev/spec/v1.2/build-requirements",
+          "section": "Provenance generation: Authentic / Unforgeable",
+          "local_locator": "ER12_RUNTIME/assessment/B-DISC-G-02/control-v1/primary-evidence/P10.txt:179-238"
+        }
+      ],
+      "finding": "The SLSA entry describes signature/digest/expected-field checks as directly addressing the compromised-job scenario without exposing the separate accuracy and tenant anti-forgery condition. It omits verification of the trusted builder maximum Build level and the distinction between platform-generated authentic claims and protection against a user-controlled job forging them. An honest accepted platform with weaker job isolation or tenant-controlled optional fields is distinct from compromise of the platform itself; the existing platform-compromise caveat does not express this failure boundary. The proposed matrix changes visible source/builder/parameters, but does not distinguish correct recorded claims from a job forging apparently correct claims.",
+      "why_material": "The starting threat is a compromised job falsely claiming a correct build. A digest-matching signed statement from an expected identity can contain job-controlled false data. Generic SLSA provenance plus equality checks must not be presented as addressing that threat without a bounded provenance-generation trust/accuracy condition. This is a missing mechanism failure boundary, not a requirement to deploy or certify a particular SLSA level.",
+      "supported_scope_preserved": "The listed signature, digest, predicate, source/builder/parameter checks and optional dependency recursion remain accurate. Trusted-platform compromise remains excluded. No finding asserts that L3 guarantees complete dependency evidence, hermetic builds, safe producer behavior, or a universal winning mechanism.",
+      "disposition": "Material finding retained; independent source judgment FAIL. No candidate repair or feedback."
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L1",
+      "severity": "MINOR",
+      "candidate_locator": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/discovery.md:13",
+      "primary_locator": "ER12_RUNTIME/assessment/B-DISC-G-02/control-v1/primary-evidence/S4.txt:324-333",
+      "description": "The --check-claims=false discussion is not expressly labeled image-signature-specific in the paragraph. The source example is cosign verify on an image, not generic blob or arbitrary predicate policy. The blob implementation lead separately distinguishes packaging and proposes investigation, so no incorrect blob command or executed check is asserted."
+    },
+    {
+      "id": "L2",
+      "severity": "EVIDENCE_LIMITATION",
+      "candidate_locator": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/sources/evidence.md:3",
+      "description": "Candidate evidence consists of concise authored notes and live/main-branch URLs, not immutable per-page source captures. Independent retrieval corroborates the claims as reviewed; historical identity of each candidate-fetched byte and per-page original fetch time remain UNKNOWN. No installed Cosign/in-toto or producer versions are specified."
+    }
+  ],
+  "axis_coverage": [
+    {
+      "axis": "original_obligations_and_negative_constraints",
+      "coverage": "ASSESSED",
+      "judgment": "PASS_EXCEPT_MATERIAL_FAILURE_BOUNDARY_F1",
+      "evidence": "All required structural discovery components present; 995 whitespace-delimited words. Source-backed negative scope retained. Full execution/order prohibitions cannot be proven from authored records alone."
+    },
+    {
+      "axis": "bounded_unfamiliar_mechanisms_alternatives",
+      "coverage": "ASSESSED",
+      "judgment": "PASS",
+      "evidence": "Four distinct complementary mechanisms: provenance expectations, signed workflow links, signing/identity, independent reproducible rebuild. Not a seeded shortlist or universal-winner prescription."
+    },
+    {
+      "axis": "consequential_source_conditions_applicability",
+      "coverage": "ASSESSED",
+      "judgment": "FAIL",
+      "finding_ids": [
+        "F1"
+      ],
+      "limitation_ids": [
+        "L1",
+        "L2"
+      ],
+      "evidence": "All eight cited sources corroborated; job-versus-platform accuracy condition omitted from SLSA applicability inference."
+    },
+    {
+      "axis": "implementation_history_opportunity_coverage",
+      "coverage": "ASSESSED",
+      "judgment": "PASS",
+      "evidence": "Two inspectable CLI paths, documented input requirements, correct v1.1 history and installed-verifier compatibility question; tradeoffs and complementary use retained."
+    },
+    {
+      "axis": "wrong_corrections_rejections_exact_dispositions_supported_scope",
+      "coverage": "ASSESSED_WITH_NOT_APPLICABLE_SUBAXES",
+      "judgment": "PASS",
+      "evidence": "No prior plan, draft, critique or corpus exists. No correction/disposition lineage can be graded. Missing-provenance rejection is a prospective bounded scenario; no supplier-wide certification or blanket mechanism mandate inferred."
+    },
+    {
+      "axis": "prospective_tests_actual_validation_oracle",
+      "coverage": "ASSESSED",
+      "judgment": "PASS_WITH_COVERAGE_GAP_F1",
+      "evidence": "Three discriminating question/test groups and valid/negative matrix; documented retrieval only executed, all verifier/rebuild tests proposed. Matrix can exercise expected-value comparison but does not establish provenance accuracy against a lying job."
+    }
+  ],
+  "exact_obligations": [
+    {
+      "obligation": "discovery.md 700-1000 words",
+      "result": "MET",
+      "evidence": "995 whitespace-delimited words in inspected complete bytes"
+    },
+    {
+      "obligation": "four-item mechanism-diverse shortlist with evidence and failure boundaries",
+      "result": "PARTIAL",
+      "evidence": "Four mechanisms and citations present; material SLSA accuracy boundary omitted, F1"
+    },
+    {
+      "obligation": "two inspectable implementation leads",
+      "result": "MET",
+      "evidence": "discovery.md:26-27; Cosign blob bundle and in-toto verifier/layout/link/public key"
+    },
+    {
+      "obligation": "one historical/version lead",
+      "result": "MET",
+      "evidence": "discovery.md:31; SLSA v1.1 2025-04-21 announcement; actual-tool compatibility remains prospective"
+    },
+    {
+      "obligation": "compact tradeoff comparison",
+      "result": "MET",
+      "evidence": "discovery.md:17-22"
+    },
+    {
+      "obligation": "three discriminating questions or prospective small tests",
+      "result": "MET_WITH_RELEVANT_COVERAGE_GAP",
+      "evidence": "discovery.md:35-37; F1 accuracy discrimination missing"
+    },
+    {
+      "obligation": "at least three primary sources across at least two organizations/projects",
+      "result": "MET_AS_DELIVERED",
+      "evidence": "Eight cited primary pages across SLSA, in-toto, Sigstore and Reproducible Builds; candidate original retrieval count is not independently logged"
+    },
+    {
+      "obligation": "capabilities versus product choices; uncertainty and bounded next step",
+      "result": "MET",
+      "evidence": "discovery.md:5,9,15,26-39"
+    },
+    {
+      "obligation": "missing provenance explanation and pre-installation bounded decision",
+      "result": "MET_AT_DISCOVERY_SCOPE",
+      "evidence": "discovery.md:5,35,39; explainable rejection and fixture matrix, no installer implementation required"
+    },
+    {
+      "obligation": "no supplier-wide certification, whole supply-chain program, certificate infrastructure or installer implementation",
+      "result": "PRESERVED",
+      "evidence": "discovery.md:5 and bounded mechanism/lead scope"
+    },
+    {
+      "obligation": "no universal winner",
+      "result": "MET",
+      "evidence": "discovery.md:5,15,39"
+    },
+    {
+      "obligation": "source URLs, versions, locators, retrieval operation/UTC; statements versus inference",
+      "result": "MET_WITH_EVIDENCE_LIMITATION",
+      "evidence": "Complete candidate source-map.json plus sources/evidence.md; per-page original fetch timestamps not exposed, recorded as such"
+    },
+    {
+      "obligation": "no local fixture modification/install/downloaded-code execution/delegation/accounts/Git/history",
+      "result": "NO_SCIENTIFIC_ARTIFACT_CONTRADICTION; EXECUTION_AUDIT_UNKNOWN",
+      "evidence": "Input hashes match; candidate states no installed software or local verification. This reviewer did not inspect a complete execution transcript."
+    }
+  ],
+  "useful_discoveries": [
+    {
+      "discovery": "SLSA compares authenticated artifact-bound claims with product expectations; recursive dependencies are optional/best effort.",
+      "candidate_locator": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/discovery.md:9",
+      "primary_ids": [
+        "S1",
+        "S2"
+      ]
+    },
+    {
+      "discovery": "in-toto layouts bind authorized steps and recorded artifacts; unspecified artifacts default to allowed and unpassed files are not captured.",
+      "candidate_locator": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/discovery.md:11",
+      "primary_ids": [
+        "S3"
+      ]
+    },
+    {
+      "discovery": "Cosign separates identity/signature/digest verification from product semantic policy and distinguishes blob from image operations.",
+      "candidate_locator": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/discovery.md:13,26",
+      "primary_ids": [
+        "S4",
+        "S7"
+      ]
+    },
+    {
+      "discovery": "Independent rebuild equality can corroborate compilation integrity, subject to environment reproducibility and cost.",
+      "candidate_locator": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/discovery.md:15",
+      "primary_ids": [
+        "S5",
+        "S6"
+      ]
+    },
+    {
+      "discovery": "SLSA v1.1 compatibility is a specification-history fact, not proof of installed verifier support.",
+      "candidate_locator": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/discovery.md:31",
+      "primary_ids": [
+        "S8"
+      ]
+    },
+    {
+      "discovery": "Governing additional evidence distinguishes provenance authenticity, accuracy and completeness and identifies tenant-forgery and dependency-field exceptions.",
+      "reviewer_discovery": true,
+      "primary_ids": [
+        "P9",
+        "P10"
+      ]
+    }
+  ],
+  "validation": {
+    "candidate_executed": "Public documentation retrieval/inspection claimed and cited; no artifact verification, rebuild, installation or candidate CLI execution claimed.",
+    "candidate_proposed": "Cosign/in-toto prototypes; producer/verifier version compatibility; expected-source/builder/parameter/digest/dependency and missing-provenance matrix.",
+    "reviewer_executed": "Complete mapped-input/candidate/source inspection; independent HTTPS retrieval/inspection of eight cited and two governing primary pages; independent SHA-256/byte freeze comparison; structural word count. No verifier/rebuild science executed.",
+    "oracle_applicability": "The proposed matrix tests visible expectations and explanation behavior under selected policies; not proof that a malicious job cannot fabricate apparently compliant provenance. No nonexistent deployment or supplier-wide certification is demanded."
+  },
+  "delivery": {
+    "status": "PRESENT",
+    "required_artifact": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/discovery.md",
+    "word_count_whitespace": 995,
+    "source_map_present": true,
+    "sources_members_fully_read": [
+      "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/sources/evidence.md"
+    ],
+    "corpus": "NONE (input-map corpus null; no seeded evidence)",
+    "t3_task": "Root recorded completed/result_available/no pending at terminal freeze; accepted per assignment; not native proof",
+    "final_section": "UNASSESSED_NOT_ASSIGNED; this is discovery role, not missing full-pipeline final"
+  },
+  "native": {
+    "activation": "RECORDED_NATIVE_ACTIVATION_RESPONSE_PRESENT",
+    "recorded_response": {
+      "goal": {
+        "threadId": "01a1242b-1a4c-7690-926e-e34131a9f0a1",
+        "objective": "Execute exactly the research assignment at ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/assignment.md and its input-map.json, following the user's constraints.",
+        "status": "active",
+        "tokensUsed": 0,
+        "timeUsedSeconds": 0,
+        "createdAt": 1791608175,
+        "updatedAt": 1791608175
+      },
+      "remainingTokens": null,
+      "completionBudgetReport": null
+    },
+    "required_objective": "ER12 B-DISC-G-02/control: execute ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/assignment.md; save the complete bounded role output and source map before completing this actual native Goal.",
+    "objective_exact_match": false,
+    "current_or_terminal_actual_state": "UNKNOWN",
+    "completion": "UNKNOWN; no native completion receipt in frozen files",
+    "root_reported_summary": "Reports blocked; not an actual native status response",
+    "reviewer_goal_thread_id": "01a12432-64dd-75b3-a0d5-323e11ecb340",
+    "reviewer_goal_created_at_utc": "2026-10-10T05:04:18+00:00",
+    "reviewer_goal_completion_rule": "Judgment and evidence saved before actual reviewer native completion."
+  },
+  "protocol": {
+    "status": "INVALID_FOR_EXACT_ROLE_GOAL_PROTOCOL",
+    "findings": [
+      {
+        "id": "P1",
+        "kind": "verbatim activation-objective requirement violated",
+        "evidence": [
+          "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/assignment.md",
+          "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/records/native-goal-activation-response.json",
+          "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/records/protocol-deviation.md"
+        ],
+        "description": "Recorded actual activation objective differs from required verbatim objective. Candidate acknowledges the deviation; no second Goal or repair was performed by this reviewer."
+      }
+    ],
+    "completion_requirement": "NOT_EVIDENCED; no native terminal completion receipt",
+    "unauthorized_assistance": "UNKNOWN from frozen artifacts; none observed; no full transcript inspected",
+    "source_diagnostic_independence": "F1 and source FAIL arise from independent primary evidence, not protocol status."
+  },
+  "route_and_billing": {
+    "requested": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna",
+      "options": {
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      }
+    },
+    "t3_accepted_route": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna"
+    },
+    "provider_effective_model": "UNKNOWN",
+    "provider_effective_reasoning_effort": "UNKNOWN",
+    "provider_effective_service_tier": "UNKNOWN",
+    "run_token_usage": "UNKNOWN",
+    "billing": "UNKNOWN",
+    "savings_or_speed_claim": "NONE"
+  },
+  "time": {
+    "arm_whole_seconds": 900,
+    "arm_deadline_utc": "2026-10-10T05:11:04.161000+00:00",
+    "writing_reserve_seconds": 300,
+    "request_utc": "2026-10-10T04:56:04.161000+00:00",
+    "native_recorded_created_epoch": 1791608175,
+    "discovery_mtime_utc": "2026-10-10T05:01:10.283221+00:00",
+    "source_map_mtime_utc": "2026-10-10T05:00:20.781890+00:00",
+    "root_terminal_observation_utc": "2026-10-10T05:04:03.723503+00:00",
+    "request_to_root_observation_seconds": 479.562503,
+    "interpretation": "Required science existed before the deadline and writing boundary; finishing early is allowed. File mtimes and root observation are not exact task occupancy, inference latency or billing. Actual final native completion remains unproven.",
+    "review_started_utc": "2026-10-10T05:04:18+00:00",
+    "review_save_utc": "2026-10-10T05:11:07.566479+00:00",
+    "review_deadline_utc": "2026-10-10T05:29:18+00:00"
+  },
+  "unknowns": [
+    "Candidate actual final native Goal state and completion telemetry; root T3 completion is distinct.",
+    "Candidate provider-effective model, reasoning effort and service tier; route acceptance does not establish backend-effective settings.",
+    "Candidate inference-token usage and billing/cost; activation zero usage is not run usage.",
+    "Exact candidate T3 terminal timestamp and occupancy/inference latency; root freeze is an observation boundary only.",
+    "Candidate per-page fetched bytes/timestamps and full chronological tool/prohibition audit.",
+    "Installer packaging and producer/installed verifier versions, CI provenance accuracy/completeness, dependency evidence policy, accepted repository/revision and workflow identities, reproducibility feasibility; legitimate open product/evidence questions."
+  ],
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "bytes": 2790,
+      "inspection": "FULL content"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/input-map.json",
+      "sha256": "0196b3d44521e6e908c55cfe8c6bdd27aa8252fc0189bdefe7ab95e80233d735",
+      "bytes": 573,
+      "inspection": "FULL content"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/assignment.md",
+      "sha256": "80e061cf30bdfd97db56aebe1843d029592d2685c8af0697dba31fdc764b3322",
+      "bytes": 2375,
+      "inspection": "FULL content"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/freeze.json",
+      "sha256": "0ca65e83cfb4d904b21aef63d974607ecc30b912837e53578b1365e30d823090",
+      "bytes": 2276,
+      "inspection": "FULL content"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/inputs/assignment.md",
+      "sha256": "599616a793cbad684a884396d85246ca2ab2a72cd0030379da4abe004f75357c",
+      "bytes": 2635,
+      "inspection": "FULL content"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/inputs/fixture.json",
+      "sha256": "8bd7bc2d640033063d6db3d4c31343f3e88d9ae0366a231c6f525a355c62d583",
+      "bytes": 1575,
+      "inspection": "FULL content"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/inputs/manifest.json",
+      "sha256": "f806e440e8fb13f91018cdd184ac9b533c6d1098387284a6e7f624fe942b064d",
+      "bytes": 241,
+      "inspection": "FULL content"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/discovery.md",
+      "sha256": "021b0a1e56c4cca4b4c67fd68aed2addd8fa07fa990cff99b28766910b42ffeb",
+      "bytes": 7675,
+      "inspection": "FULL content"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/source-map.json",
+      "sha256": "d72afc3e1c0f7dd80b8c9254d5714df6c7c754aa667aad018b00791468035eaa",
+      "bytes": 8324,
+      "inspection": "FULL content"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/terminal-science-freeze-root.json",
+      "sha256": "0918da4eeae6a155240b27d67e942c130a3bc54c4b81dfbaf34f2fc3a9959510",
+      "bytes": 7429,
+      "inspection": "FULL content"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/records/native-goal-activation-response.json",
+      "sha256": "a882014b9c06f3874e9ca028442340ef23810e1662f29f99794a9499b69aaff4",
+      "bytes": 430,
+      "inspection": "FULL content"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/records/protocol-deviation.md",
+      "sha256": "cbb71c875f78a7cea83e32f9d757a343915061855ea179a7d3752ab5b8a8e028",
+      "bytes": 1425,
+      "inspection": "FULL content"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/request.json",
+      "sha256": "2f2a222bd8bb56ac47527ec8f66daa25f6683ff889417e83c14531a95f6fe63a",
+      "bytes": 1093,
+      "inspection": "FULL content"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/dispatch.json",
+      "sha256": "e2da6bed9ec148f394a55db7e33b5b15635a6e16d8fe6a303404d200061d9cfd",
+      "bytes": 4347,
+      "inspection": "FULL content"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/raw-dispatch.json",
+      "sha256": "5ae2fa6be0c283013356dcf43e02df06b66ae6fe42b1b3b88c536ea65751b261",
+      "bytes": 2096,
+      "inspection": "FULL content"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/service-tier-change.json",
+      "sha256": "1bea1a32b6c2c7c6c2cd27ab63fda3d03150aa1c98a951cf65218c91500eb289",
+      "bytes": 479,
+      "inspection": "FULL content"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/sources/evidence.md",
+      "sha256": "ccbf5126df01d0cc3b2d82fcc0089febe4f7549e3d9bed68e326f57c379d366d",
+      "bytes": 2620,
+      "inspection": "FULL content"
+    }
+  ],
+  "freeze_verification": {
+    "status": "ALL_MATCH",
+    "terminal_artifact_count": 13,
+    "input_artifact_count": 5,
+    "comparisons": [
+      {
+        "freeze": "terminal_science_freeze",
+        "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/assignment.md",
+        "expected_sha256": "80e061cf30bdfd97db56aebe1843d029592d2685c8af0697dba31fdc764b3322",
+        "actual_sha256": "80e061cf30bdfd97db56aebe1843d029592d2685c8af0697dba31fdc764b3322",
+        "expected_bytes": 2375,
+        "actual_bytes": 2375,
+        "match": true,
+        "content_inspected": true
+      },
+      {
+        "freeze": "terminal_science_freeze",
+        "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/discovery.md",
+        "expected_sha256": "021b0a1e56c4cca4b4c67fd68aed2addd8fa07fa990cff99b28766910b42ffeb",
+        "actual_sha256": "021b0a1e56c4cca4b4c67fd68aed2addd8fa07fa990cff99b28766910b42ffeb",
+        "expected_bytes": 7675,
+        "actual_bytes": 7675,
+        "match": true,
+        "content_inspected": true
+      },
+      {
+        "freeze": "terminal_science_freeze",
+        "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/dispatch.json",
+        "expected_sha256": "e2da6bed9ec148f394a55db7e33b5b15635a6e16d8fe6a303404d200061d9cfd",
+        "actual_sha256": "e2da6bed9ec148f394a55db7e33b5b15635a6e16d8fe6a303404d200061d9cfd",
+        "expected_bytes": 4347,
+        "actual_bytes": 4347,
+        "match": true,
+        "content_inspected": true
+      },
+      {
+        "freeze": "terminal_science_freeze",
+        "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/freeze.json",
+        "expected_sha256": "0ca65e83cfb4d904b21aef63d974607ecc30b912837e53578b1365e30d823090",
+        "actual_sha256": "0ca65e83cfb4d904b21aef63d974607ecc30b912837e53578b1365e30d823090",
+        "expected_bytes": 2276,
+        "actual_bytes": 2276,
+        "match": true,
+        "content_inspected": true
+      },
+      {
+        "freeze": "terminal_science_freeze",
+        "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/input-map.json",
+        "expected_sha256": "0196b3d44521e6e908c55cfe8c6bdd27aa8252fc0189bdefe7ab95e80233d735",
+        "actual_sha256": "0196b3d44521e6e908c55cfe8c6bdd27aa8252fc0189bdefe7ab95e80233d735",
+        "expected_bytes": 573,
+        "actual_bytes": 573,
+        "match": true,
+        "content_inspected": true
+      },
+      {
+        "freeze": "terminal_science_freeze",
+        "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/raw-dispatch.json",
+        "expected_sha256": "5ae2fa6be0c283013356dcf43e02df06b66ae6fe42b1b3b88c536ea65751b261",
+        "actual_sha256": "5ae2fa6be0c283013356dcf43e02df06b66ae6fe42b1b3b88c536ea65751b261",
+        "expected_bytes": 2096,
+        "actual_bytes": 2096,
+        "match": true,
+        "content_inspected": true
+      },
+      {
+        "freeze": "terminal_science_freeze",
+        "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/records/dispatch-20261010T045607047236-5132b3486b7847d29cf33fb664b23a38.json",
+        "expected_sha256": "e2da6bed9ec148f394a55db7e33b5b15635a6e16d8fe6a303404d200061d9cfd",
+        "actual_sha256": "e2da6bed9ec148f394a55db7e33b5b15635a6e16d8fe6a303404d200061d9cfd",
+        "expected_bytes": 4347,
+        "actual_bytes": 4347,
+        "match": true,
+        "content_inspected": false
+      },
+      {
+        "freeze": "terminal_science_freeze",
+        "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/records/native-goal-activation-response.json",
+        "expected_sha256": "a882014b9c06f3874e9ca028442340ef23810e1662f29f99794a9499b69aaff4",
+        "actual_sha256": "a882014b9c06f3874e9ca028442340ef23810e1662f29f99794a9499b69aaff4",
+        "expected_bytes": 430,
+        "actual_bytes": 430,
+        "match": true,
+        "content_inspected": true
+      },
+      {
+        "freeze": "terminal_science_freeze",
+        "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/records/protocol-deviation.md",
+        "expected_sha256": "cbb71c875f78a7cea83e32f9d757a343915061855ea179a7d3752ab5b8a8e028",
+        "actual_sha256": "cbb71c875f78a7cea83e32f9d757a343915061855ea179a7d3752ab5b8a8e028",
+        "expected_bytes": 1425,
+        "actual_bytes": 1425,
+        "match": true,
+        "content_inspected": true
+      },
+      {
+        "freeze": "terminal_science_freeze",
+        "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/request.json",
+        "expected_sha256": "2f2a222bd8bb56ac47527ec8f66daa25f6683ff889417e83c14531a95f6fe63a",
+        "actual_sha256": "2f2a222bd8bb56ac47527ec8f66daa25f6683ff889417e83c14531a95f6fe63a",
+        "expected_bytes": 1093,
+        "actual_bytes": 1093,
+        "match": true,
+        "content_inspected": true
+      },
+      {
+        "freeze": "terminal_science_freeze",
+        "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/service-tier-change.json",
+        "expected_sha256": "1bea1a32b6c2c7c6c2cd27ab63fda3d03150aa1c98a951cf65218c91500eb289",
+        "actual_sha256": "1bea1a32b6c2c7c6c2cd27ab63fda3d03150aa1c98a951cf65218c91500eb289",
+        "expected_bytes": 479,
+        "actual_bytes": 479,
+        "match": true,
+        "content_inspected": true
+      },
+      {
+        "freeze": "terminal_science_freeze",
+        "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/source-map.json",
+        "expected_sha256": "d72afc3e1c0f7dd80b8c9254d5714df6c7c754aa667aad018b00791468035eaa",
+        "actual_sha256": "d72afc3e1c0f7dd80b8c9254d5714df6c7c754aa667aad018b00791468035eaa",
+        "expected_bytes": 8324,
+        "actual_bytes": 8324,
+        "match": true,
+        "content_inspected": true
+      },
+      {
+        "freeze": "terminal_science_freeze",
+        "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/sources/evidence.md",
+        "expected_sha256": "ccbf5126df01d0cc3b2d82fcc0089febe4f7549e3d9bed68e326f57c379d366d",
+        "actual_sha256": "ccbf5126df01d0cc3b2d82fcc0089febe4f7549e3d9bed68e326f57c379d366d",
+        "expected_bytes": 2620,
+        "actual_bytes": 2620,
+        "match": true,
+        "content_inspected": true
+      },
+      {
+        "freeze": "input_freeze",
+        "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/assignment.md",
+        "expected_sha256": "80e061cf30bdfd97db56aebe1843d029592d2685c8af0697dba31fdc764b3322",
+        "actual_sha256": "80e061cf30bdfd97db56aebe1843d029592d2685c8af0697dba31fdc764b3322",
+        "expected_bytes": 2375,
+        "actual_bytes": 2375,
+        "match": true,
+        "content_inspected": true
+      },
+      {
+        "freeze": "input_freeze",
+        "path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/input-map.json",
+        "expected_sha256": "0196b3d44521e6e908c55cfe8c6bdd27aa8252fc0189bdefe7ab95e80233d735",
+        "actual_sha256": "0196b3d44521e6e908c55cfe8c6bdd27aa8252fc0189bdefe7ab95e80233d735",
+        "expected_bytes": 573,
+        "actual_bytes": 573,
+        "match": true,
+        "content_inspected": true
+      },
+      {
+        "freeze": "input_freeze",
+        "path": "ER12_RUNTIME/runs/B-DISC-G-02/inputs/fixture.json",
+        "expected_sha256": "8bd7bc2d640033063d6db3d4c31343f3e88d9ae0366a231c6f525a355c62d583",
+        "actual_sha256": "8bd7bc2d640033063d6db3d4c31343f3e88d9ae0366a231c6f525a355c62d583",
+        "expected_bytes": 1575,
+        "actual_bytes": 1575,
+        "match": true,
+        "content_inspected": true
+      },
+      {
+        "freeze": "input_freeze",
+        "path": "ER12_RUNTIME/runs/B-DISC-G-02/inputs/manifest.json",
+        "expected_sha256": "f806e440e8fb13f91018cdd184ac9b533c6d1098387284a6e7f624fe942b064d",
+        "actual_sha256": "f806e440e8fb13f91018cdd184ac9b533c6d1098387284a6e7f624fe942b064d",
+        "expected_bytes": 241,
+        "actual_bytes": 241,
+        "match": true,
+        "content_inspected": true
+      },
+      {
+        "freeze": "input_freeze",
+        "path": "ER12_RUNTIME/runs/B-DISC-G-02/inputs/assignment.md",
+        "expected_sha256": "599616a793cbad684a884396d85246ca2ab2a72cd0030379da4abe004f75357c",
+        "actual_sha256": "599616a793cbad684a884396d85246ca2ab2a72cd0030379da4abe004f75357c",
+        "expected_bytes": 2635,
+        "actual_bytes": 2635,
+        "match": true,
+        "content_inspected": true
+      }
+    ],
+    "semantic_note": "Hashes establish inspected-byte identity, not source correctness."
+  },
+  "urls_versions_and_evidence": [
+    {
+      "id": "S1",
+      "url": "https://slsa.dev/spec/v1.2/verifying-artifacts",
+      "request_url": "https://slsa.dev/spec/v1.2/verifying-artifacts",
+      "retrieval_start_utc": "2026-10-10T05:05:15.546143+00:00",
+      "operation": "independent HTTPS GET; source data only",
+      "http_status": 200,
+      "effective_url": "https://slsa.dev/spec/v1.2/verifying-artifacts",
+      "content_type": "text/html; charset=UTF-8",
+      "etag": "\"1eb0c7031f99aee81cff2f9ce25ca7f4-ssl\"",
+      "last_modified": null,
+      "raw_path": "ER12_RUNTIME/assessment/B-DISC-G-02/control-v1/primary-evidence/S1.html",
+      "raw_sha256": "3922b210da9ea002d2c267edf89864382bf4e582d3da9bbc8164ef8fe977a8b1",
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-G-02/control-v1/primary-evidence/S1.txt",
+      "text_sha256": "22956eba4d839a1bb80ed689903269d50ec9cc7d62f71effd98fb5729b0a7307",
+      "raw_bytes": 35578,
+      "line_count": 280,
+      "retrieval_end_utc": "2026-10-10T05:05:15.971632+00:00",
+      "version_or_date": "SLSA v1.2, Approved",
+      "governing_section": "How to verify; Step 1; Step 2; optional Step 3",
+      "local_locator": "S1.txt:63-76,118-188",
+      "conditions_exceptions": "Artifact subject digest and provenance signature/predicate checks; configured builder-key identity/maximum-level roots; product-specific expected source, buildType and parameters. Approved ignored parameters and known safe value ranges are allowed; unrecognized parameters should fail. Equivalent-format checks are possible; recursive dependencies are optional/best effort. Accuracy against build-process compromise is level-dependent; platform compromise is excluded.",
+      "inspected": true
+    },
+    {
+      "id": "S2",
+      "url": "https://slsa.dev/spec/v1.2/provenance",
+      "request_url": "https://slsa.dev/spec/v1.2/provenance",
+      "retrieval_start_utc": "2026-10-10T05:05:15.971749+00:00",
+      "operation": "independent HTTPS GET; source data only",
+      "http_status": 200,
+      "effective_url": "https://slsa.dev/spec/v1.2/provenance",
+      "content_type": "text/html; charset=UTF-8",
+      "etag": "\"c32814a4bb821ee503bc80c17aa9aab0-ssl\"",
+      "last_modified": null,
+      "raw_path": "ER12_RUNTIME/assessment/B-DISC-G-02/control-v1/primary-evidence/S2.html",
+      "raw_sha256": "9a176a8193aff28144dbab80584f0e9dd707a7c24f98c436349674a4a0e51e44",
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-G-02/control-v1/primary-evidence/S2.txt",
+      "text_sha256": "b27f283fe16e53981c82dc20a5f1419c15395f9b12b9ebefe68e8824cdc3e40a",
+      "raw_bytes": 17253,
+      "line_count": 67,
+      "retrieval_end_utc": "2026-10-10T05:05:16.057575+00:00",
+      "version_or_date": "SLSA v1.2, Approved",
+      "governing_section": "Provenance; Build provenance",
+      "local_locator": "S2.txt:41-58",
+      "conditions_exceptions": "General provenance definition; distinguishes build from source provenance. Predicate-specific URL leads to Build Provenance rather than treating this definition page as a field schema.",
+      "inspected": true
+    },
+    {
+      "id": "S3",
+      "url": "https://in-toto.io/docs/getting-started/",
+      "request_url": "https://in-toto.io/docs/getting-started/",
+      "retrieval_start_utc": "2026-10-10T05:05:16.057670+00:00",
+      "operation": "independent HTTPS GET; source data only",
+      "http_status": 200,
+      "effective_url": "https://in-toto.io/docs/getting-started/",
+      "content_type": "text/html; charset=UTF-8",
+      "etag": "\"765bf0af2eeffb905ef968e57c1445d7-ssl\"",
+      "last_modified": null,
+      "raw_path": "ER12_RUNTIME/assessment/B-DISC-G-02/control-v1/primary-evidence/S3.html",
+      "raw_sha256": "9de19afb8ac5ca47bd8ae7017e50e26f45df6e5774f6d6c3ebcc046819171fd4",
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-G-02/control-v1/primary-evidence/S3.txt",
+      "text_sha256": "07e0b25b67039abee9f0ee092620eabe50dfe4faf880eee89e9b9818d09dfd43",
+      "raw_bytes": 34132,
+      "line_count": 182,
+      "retrieval_end_utc": "2026-10-10T05:05:16.162827+00:00",
+      "version_or_date": "Getting started; last modified 2024-12-13; no release tag",
+      "governing_section": "Layout; Artifact Rules; in-toto-run; Release final product; Verification",
+      "local_locator": "S3.txt:45-54,63-79,109-130,146-158",
+      "conditions_exceptions": "Signed owner layout and authorized signed links; expiry, rules and inspections. Artifacts default to allowed unless disallowed. Only explicitly supplied files are recorded, and supplied files may be recorded even if not used. Inspecting link claims is not independent observation of actual dependency use. Inspections execute commands during verification; no candidate inspection was run.",
+      "inspected": true
+    },
+    {
+      "id": "S4",
+      "url": "https://docs.sigstore.dev/cosign/verifying/verify/",
+      "request_url": "https://docs.sigstore.dev/cosign/verifying/verify/",
+      "retrieval_start_utc": "2026-10-10T05:05:16.162931+00:00",
+      "operation": "independent HTTPS GET; source data only",
+      "http_status": 200,
+      "effective_url": "https://docs.sigstore.dev/cosign/verifying/verify/",
+      "content_type": "text/html; charset=UTF-8",
+      "etag": "\"4fe0406dc8cf83147d177eac996eaf87-ssl\"",
+      "last_modified": null,
+      "raw_path": "ER12_RUNTIME/assessment/B-DISC-G-02/control-v1/primary-evidence/S4.html",
+      "raw_sha256": "cddc158241a16c414589b05f77674d24902660e61c722f9630414c16a753e298",
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-G-02/control-v1/primary-evidence/S4.txt",
+      "text_sha256": "990210e623bf89bd027c5a66d9e90f1b264e9739f35cf78b8f32836eba2214fe",
+      "raw_bytes": 73554,
+      "line_count": 457,
+      "retrieval_end_utc": "2026-10-10T05:05:16.283480+00:00",
+      "version_or_date": "Live Cosign documentation; release tag UNKNOWN",
+      "governing_section": "Keyless verification using OpenID Connect; Important Note; Verify attestation",
+      "local_locator": "S4.txt:311-333,356-362",
+      "conditions_exceptions": "Identity/issuer-constrained verification; verify-blob consumes a file and bundle, while verify and verify-attestation examples target container images. Digest claim validation and --check-claims=false discussion concern image signature payloads, not arbitrary semantic validation of every predicate or a generic blob flag. Blob verification and predicate policy are separate operations. No installed version or compatible installer packaging is established.",
+      "inspected": true
+    },
+    {
+      "id": "S5",
+      "url": "https://reproducible-builds.org/docs/which-problems-do-reproducible-builds-solve/",
+      "request_url": "https://reproducible-builds.org/docs/which-problems-do-reproducible-builds-solve/",
+      "retrieval_start_utc": "2026-10-10T05:05:16.283537+00:00",
+      "operation": "independent HTTPS GET; source data only",
+      "http_status": 200,
+      "effective_url": "https://reproducible-builds.org/docs/which-problems-do-reproducible-builds-solve/",
+      "content_type": "text/html; charset=utf-8",
+      "etag": "\"9515-65d6691c5a127\"",
+      "last_modified": "Fri, 09 Oct 2026 11:22:53 GMT",
+      "raw_path": "ER12_RUNTIME/assessment/B-DISC-G-02/control-v1/primary-evidence/S5.html",
+      "raw_sha256": "d07c00981d0591578fd445039c3b315b70222678603381a04c72f4e4041b6f0e",
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-G-02/control-v1/primary-evidence/S5.txt",
+      "text_sha256": "e495b09467fdcba81c5b03ca9193a311270cbae996d59d124f01d626b95afe2f",
+      "raw_bytes": 38165,
+      "line_count": 96,
+      "retrieval_end_utc": "2026-10-10T05:05:16.911581+00:00",
+      "version_or_date": "Live Reproducible Builds documentation; no version tag",
+      "governing_section": "Which problems do Reproducible Builds Solve?",
+      "local_locator": "S5.txt:13-30",
+      "conditions_exceptions": "Independent agreement on build outputs can reveal compilation deviations. Requires reproducible source/environment; output equality does not select authoritative repository, policy, builder or actual dependency-use history.",
+      "inspected": true
+    },
+    {
+      "id": "S6",
+      "url": "https://reproducible-builds.org/docs/",
+      "request_url": "https://reproducible-builds.org/docs/",
+      "retrieval_start_utc": "2026-10-10T05:05:16.911705+00:00",
+      "operation": "independent HTTPS GET; source data only",
+      "http_status": 200,
+      "effective_url": "https://reproducible-builds.org/docs/",
+      "content_type": "text/html; charset=utf-8",
+      "etag": "\"6d5d-65d6691b1ea3c\"",
+      "last_modified": "Fri, 09 Oct 2026 11:22:52 GMT",
+      "raw_path": "ER12_RUNTIME/assessment/B-DISC-G-02/control-v1/primary-evidence/S6.html",
+      "raw_sha256": "00c3015d70aeed3d68a6325747bc7097418821cbbd3925c4b59b30111c0ee32b",
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-G-02/control-v1/primary-evidence/S6.txt",
+      "text_sha256": "80e23799074b8b286f5f9dd5c66699baf1d3db61d5fa9dd2d4526e8be8c55700",
+      "raw_bytes": 27997,
+      "line_count": 78,
+      "retrieval_end_utc": "2026-10-10T05:05:17.535750+00:00",
+      "version_or_date": "Live Reproducible Builds documentation index; no version tag",
+      "governing_section": "Documentation introduction; environment/verification links",
+      "local_locator": "S6.txt:11-16,47-59",
+      "conditions_exceptions": "Build-system changes and a method for recreating the environment may be needed. An index does not establish this installer is reproducible.",
+      "inspected": true
+    },
+    {
+      "id": "S7",
+      "url": "https://github.com/in-toto/attestation/blob/main/docs/validation.md",
+      "request_url": "https://raw.githubusercontent.com/in-toto/attestation/main/docs/validation.md",
+      "retrieval_start_utc": "2026-10-10T05:05:17.535841+00:00",
+      "operation": "independent HTTPS GET; source data only",
+      "http_status": 200,
+      "effective_url": "https://raw.githubusercontent.com/in-toto/attestation/main/docs/validation.md",
+      "content_type": "text/plain; charset=utf-8",
+      "etag": "\"ffee1328a32c2f7a08cc65974822fbf511df1263c2a6ddf12104440ab19e5ac5\"",
+      "last_modified": null,
+      "raw_path": "ER12_RUNTIME/assessment/B-DISC-G-02/control-v1/primary-evidence/S7.md",
+      "raw_sha256": "dfd52035ca5e08557c113465237b723c24f52c7258516a68b73515cf9bdfbab4",
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-G-02/control-v1/primary-evidence/S7.txt",
+      "text_sha256": "a37df9e2282504f41651bdb33f2b0718fa107bb77a5d3212bb9fb398ae950cfc",
+      "raw_bytes": 2059,
+      "line_count": 49,
+      "retrieval_end_utc": "2026-10-10T05:05:17.631769+00:00",
+      "version_or_date": "in-toto attestation main branch, commit UNKNOWN; retrieved bytes SHA-256 pinned",
+      "governing_section": "Validation model; Inputs; Envelope/Statement layers; Output",
+      "local_locator": "S7.txt:3-15,19-49",
+      "conditions_exceptions": "Single artifact/attestation pseudocode; recognized attesters, acceptable digest algorithms and matched artifact subjects precede output to a policy engine. Multiple artifacts/attestations remain TODO. It is a design model, not proof that a specific released verifier implements these checks.",
+      "inspected": true
+    },
+    {
+      "id": "S8",
+      "url": "https://slsa.dev/blog/2025/04/slsa-v1.1",
+      "request_url": "https://slsa.dev/blog/2025/04/slsa-v1.1",
+      "retrieval_start_utc": "2026-10-10T05:05:17.631863+00:00",
+      "operation": "independent HTTPS GET; source data only",
+      "http_status": 200,
+      "effective_url": "https://slsa.dev/blog/2025/04/slsa-v1.1",
+      "content_type": "text/html; charset=UTF-8",
+      "etag": "\"0963d850e1db61fcc0b4e7e2905808eb-ssl\"",
+      "last_modified": null,
+      "raw_path": "ER12_RUNTIME/assessment/B-DISC-G-02/control-v1/primary-evidence/S8.html",
+      "raw_sha256": "169681663a5ba908aaa1f08396bf77f00e31d08c7660aeb346d17acaa65b445f",
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-G-02/control-v1/primary-evidence/S8.txt",
+      "text_sha256": "37adde4b3756a4686d18adabf7b4e3fcc2240bcfc035234c693ec639853b5904",
+      "raw_bytes": 14139,
+      "line_count": 36,
+      "retrieval_end_utc": "2026-10-10T05:05:18.028237+00:00",
+      "version_or_date": "SLSA v1.1 release announcement, 2025-04-21",
+      "governing_section": "Release status; backwards compatibility; verifier metadata",
+      "local_locator": "S8.txt:13-27",
+      "conditions_exceptions": "v1.1 replaced v1.0 at publication, was backwards compatible and added verifier metadata to VSA. Does not prove installed-tool field/schema support or make a universal claim about v1.2 tool support.",
+      "inspected": true
+    },
+    {
+      "id": "P9",
+      "url": "https://slsa.dev/spec/v1.2/build-track-basics",
+      "request_url": "https://slsa.dev/spec/v1.2/build-track-basics",
+      "operation": "independent HTTPS GET; additional governing accuracy conditions; source data only",
+      "retrieval_start_utc": "2026-10-10T05:06:54.137578+00:00",
+      "http_status": 200,
+      "effective_url": "https://slsa.dev/spec/v1.2/build-track-basics",
+      "content_type": "text/html; charset=UTF-8",
+      "etag": "\"543efb4e21b21d151e238d1bbcafeb8e-ssl\"",
+      "last_modified": null,
+      "raw_path": "ER12_RUNTIME/assessment/B-DISC-G-02/control-v1/primary-evidence/P9.html",
+      "raw_sha256": "3a09da943842375118b49b2df3ae7983f972befd843b7e6b90bc93b20cd61a54",
+      "raw_bytes": 24309,
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-G-02/control-v1/primary-evidence/P9.txt",
+      "text_sha256": "52f1c7349c776881151764b53be94190d1179a20cd357eae94bd3a25a5344223",
+      "line_count": 176,
+      "retrieval_end_utc": "2026-10-10T05:06:54.427531+00:00",
+      "version_or_date": "SLSA v1.2, Approved",
+      "governing_section": "Build levels table; Build L1/L2/L3",
+      "local_locator": "P9.txt:49-54,77-105,106-165",
+      "conditions_exceptions": "L1 supports mistakes/documentation; L2 addresses post-build tampering; L3 adds resistance to tampering during builds, isolation and signing-secret protection. No supplier-wide certification or deployment is required for this review.",
+      "inspected": true
+    },
+    {
+      "id": "P10",
+      "url": "https://slsa.dev/spec/v1.2/build-requirements",
+      "request_url": "https://slsa.dev/spec/v1.2/build-requirements",
+      "operation": "independent HTTPS GET; additional governing accuracy conditions; source data only",
+      "retrieval_start_utc": "2026-10-10T05:06:54.427634+00:00",
+      "http_status": 200,
+      "effective_url": "https://slsa.dev/spec/v1.2/build-requirements",
+      "content_type": "text/html; charset=UTF-8",
+      "etag": "\"469a7efe4e041e7bde041d73197475a6-ssl\"",
+      "last_modified": null,
+      "raw_path": "ER12_RUNTIME/assessment/B-DISC-G-02/control-v1/primary-evidence/P10.html",
+      "raw_sha256": "fb91571cef368dc080c7f0b12902b0fb62d7494d3a9b3705e28db1b61494fcf5",
+      "raw_bytes": 32934,
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-G-02/control-v1/primary-evidence/P10.txt",
+      "text_sha256": "1c3e8a31271b96a4c8ac50caca137ced47292e30c39e933ac2127d4754a47da7",
+      "line_count": 295,
+      "retrieval_end_utc": "2026-10-10T05:06:54.519537+00:00",
+      "version_or_date": "SLSA v1.2, Approved",
+      "governing_section": "Build Platform; Provenance generation; Provenance is Authentic/Unforgeable; Isolated",
+      "local_locator": "P10.txt:150-177,179-238,252-285",
+      "conditions_exceptions": "Authenticity, accuracy and completeness are distinct. L2 control-plane generation has exceptions including tenant-generated non-required fields such as resolvedDependencies and no minimum anti-tamper strength. L3 adds strong tenant-forgery resistance, protects signing secrets from user build steps and enumerates external parameters; exceptions and best-effort dependency completeness remain. Isolation does not require a hermetic build or prohibit a producer from risky behavior or invoking external runners.",
+      "inspected": true
+    }
+  ],
+  "assessment_outputs": {
+    "assessment_md": "ER12_RUNTIME/assessment/B-DISC-G-02/control-v1/assessment.md",
+    "assessment_json": "ER12_RUNTIME/assessment/B-DISC-G-02/control-v1/assessment.json",
+    "source_map": "ER12_RUNTIME/assessment/B-DISC-G-02/control-v1/source-map.json",
+    "primary_index": "ER12_RUNTIME/assessment/B-DISC-G-02/control-v1/primary-evidence/index.md"
+  },
+  "reviewer_constraints": "No delegation, candidate feedback/repair, accounts, Git/publication, other arms/history, shared roster/outcome labels or ER11 rescore. Only own inbox checked; all task file writes under reserved assessment root."
+}

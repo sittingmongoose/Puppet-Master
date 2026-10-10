@@ -1,0 +1,166 @@
+{
+  "checked_at_utc": "2026-10-10T04:35:58.433477+00:00",
+  "checks": [
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/critic/critique.md",
+      "matches_terminal_freeze": true,
+      "actual_sha256": "31330b7b4c5196bfcdfbcabe6e8daf73a3932fc10492e533f2939ca6b492434c"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/critic/source-map.json",
+      "matches_terminal_freeze": true,
+      "actual_sha256": "533a4d78c4df2eae9e4053f04126233c22d64bc633117938cc8165dc71490cbb"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/critic/sources/index.md",
+      "matches_terminal_freeze": true,
+      "actual_sha256": "e1906e941556ea0e34215198c5538b25a5041d25010ccdb76a4d3e5bfa84c70b"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/discovery.md",
+      "matches_terminal_freeze": true,
+      "actual_sha256": "21699f340e71b5bb93439ca32aadd2f330d321ff0c64f70fbbb5b6369a107ad0"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/draft.md",
+      "matches_terminal_freeze": true,
+      "actual_sha256": "002c140b7c4635163eecc30b1541953133ebe319b684ecb78c68c54a4b9b9cab"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/revealed-plan.md",
+      "matches_terminal_freeze": true,
+      "actual_sha256": "d490464e9066ef07d933d5e8fb1b91980c28695182e280fc0e0722837e7d2718"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/source-map.json",
+      "matches_terminal_freeze": true,
+      "actual_sha256": "16b1a6b88d236fc25da3dad049c43a4d6b14fa86dd71720032b5f5e4351e68d5"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/sources/index.md",
+      "matches_terminal_freeze": true,
+      "actual_sha256": "65fb1e796bc6b4c2c9ef96660e729b877081b127520304d74775c053759c2303"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+      "matches_terminal_freeze": true,
+      "actual_sha256": "e8c7dd3e5da59cd11b5cc6fbc3962f533d343ad7f7511661800443f4ef78a0e4"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/source-map.json",
+      "matches_terminal_freeze": true,
+      "actual_sha256": "10e2f6ea5814374f3ec5e6d08fd8b7ca6008c07d4b7e15f0ea54a330834c4126"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/sources/index.md",
+      "matches_terminal_freeze": true,
+      "actual_sha256": "b82d83c13ab6ff18e30c6c10f31349f3dc400b29affcd9cafdbe8614d0cc4e23"
+    },
+    {
+      "stage": "investigator",
+      "path": "ER12_RUNTIME/runs/A3-01/control/inputs/brief.md",
+      "matches_stage_freeze": true
+    },
+    {
+      "stage": "investigator",
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/assignment.md",
+      "matches_stage_freeze": true
+    },
+    {
+      "stage": "investigator",
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/input-map.json",
+      "matches_stage_freeze": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/A3-01/control/inputs/brief.md",
+      "matches_stage_freeze": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/critic/assignment.md",
+      "matches_stage_freeze": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/critic/input-map.json",
+      "matches_stage_freeze": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/discovery.md",
+      "matches_stage_freeze": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/draft.md",
+      "matches_stage_freeze": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/source-map.json",
+      "matches_stage_freeze": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/revealed-plan.md",
+      "matches_stage_freeze": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/plan-reveal.json",
+      "matches_stage_freeze": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A3-01/control/inputs/brief.md",
+      "matches_stage_freeze": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/assignment.md",
+      "matches_stage_freeze": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/input-map.json",
+      "matches_stage_freeze": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/discovery.md",
+      "matches_stage_freeze": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/draft.md",
+      "matches_stage_freeze": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/source-map.json",
+      "matches_stage_freeze": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/revealed-plan.md",
+      "matches_stage_freeze": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/plan-reveal.json",
+      "matches_stage_freeze": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/critic/critique.md",
+      "matches_stage_freeze": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/critic/source-map.json",
+      "matches_stage_freeze": true
+    }
+  ],
+  "semantic_proof": false
+}

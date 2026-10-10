@@ -1,0 +1,54 @@
+{
+  "topology": "A2",
+  "raw_active_native_response": {
+    "goal": {
+      "threadId": "01a12401-f9b4-7770-94a9-565d16f9654e",
+      "objective": "ER11 investigator stage, run A2-01-treatment: execute ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "status": "active",
+      "tokensUsed": 562132,
+      "timeUsedSeconds": 2185,
+      "createdAt": 1791605514,
+      "updatedAt": 1791607700
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "native_goal_identity": {
+    "threadId": "01a12401-f9b4-7770-94a9-565d16f9654e",
+    "createdAt": 1791605514,
+    "objective": "ER11 investigator stage, run A2-01-treatment: execute ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal."
+  },
+  "saved_before_native_completion": "active observation supplied; terminal evidence separate",
+  "scope_fidelity_proven": false,
+  "explicit_disposition_count": 3,
+  "frozen_at_utc": "2026-10-10T04:48:20.192Z",
+  "files": [
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/treatment/final-package/final.md",
+      "origin_path": "ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/final/final.md",
+      "sha256": "98078e8fd7b329a5d314e003cb64907088ed39e4a83f314fd2e9b76b665b4bfe",
+      "bytes": 34960
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/treatment/final-package/source-map.json",
+      "origin_path": "ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/final/source-map.json",
+      "sha256": "66e91326519a8df0ba75967fc1b89922837d4f40fc062998e0e3eeeab5697645",
+      "bytes": 23216
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/treatment/final-package/critique-dispositions.json",
+      "origin_path": "ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/final/critique-dispositions.json",
+      "sha256": "621de2d69959b40c6818fc796984e9fec5aa6d325c40c667d2e3b95cd3275e46",
+      "bytes": 2955
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A2-01/treatment/final-package/sources/index.md",
+      "origin_path": "ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/final/sources/index.md",
+      "sha256": "4cc345e65c5752b4a74a6246d416052146440de03f8b44b7102069c543732ecc",
+      "bytes": 5314
+    }
+  ],
+  "identity_only": true,
+  "source_truth_proven": false,
+  "native_provenance_attested_by_helper": false
+}

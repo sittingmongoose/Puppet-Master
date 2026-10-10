@@ -1,0 +1,156 @@
+{
+  "inspection_at_utc": "2026-10-10T04:54:25.390387+00:00",
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "bytes": 2790,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/treatment/stages/role/input-map.json",
+      "sha256": "cbfe13abc8728ec988675c793d20f76c277e9b5370f8e9cffc9c62cfef2161c3",
+      "bytes": 507,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/treatment/stages/role/assignment.md",
+      "sha256": "dc12ca7f67237612b6117220698527b05738c22d1a5f69b3f85936c2102ebb8a",
+      "bytes": 2383,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/treatment/stages/role/freeze.json",
+      "sha256": "3d1122a33b300c890ea11c8cfcffa09124de00cf9098ecc38b576b3deee2bb78",
+      "bytes": 2193,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/inputs/assignment.md",
+      "sha256": "848cd2e8b9ef3078e2333ae05a62a8e04662b2b1628f5c9b3b34b1c6c896a83b",
+      "bytes": 2583,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/inputs/fixture.json",
+      "sha256": "d9e63ea84e74f37b9e33e8087dcbff1359fed87ebb3401c22435573ec9598d4f",
+      "bytes": 1583,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/inputs/manifest.json",
+      "sha256": "7d9b298c18a2e876f1d41d4f4f94ce92c43f48db8ae8d95f622b91be30035d0c",
+      "bytes": 241,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/treatment/stages/role/discovery.md",
+      "sha256": "c773718f5d0dabfd06e8990ad797afdd7734a28a40c9bc4e08e2af0bbff2e2b6",
+      "bytes": 6830,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/treatment/stages/role/source-map.json",
+      "sha256": "9eaf4a8ee869e6e80006c4192d8703f1cea0bc88cfcdee619ec9623a8554ae78",
+      "bytes": 4001,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/treatment/stages/role/activation-receipt.json",
+      "sha256": "6bb1005526c0638ef42b621e88da76b5c0415085a56fa458416f13dd180087d6",
+      "bytes": 566,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/treatment/stages/role/completion-receipt.json",
+      "sha256": "8a49b77029bed5aa4e183b46a2f2123636700bbfb18cf48e4682ce5eeeb5c1d3",
+      "bytes": 575,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/treatment/stages/role/sources/ev-01-yjs-intro.md",
+      "sha256": "547cf37ca64e31265241e6191e6b7664233220f5b648f5f2550796f99223ba03",
+      "bytes": 998,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/treatment/stages/role/sources/ev-02-sharedb-intro.md",
+      "sha256": "f8e1b6af74a96053c013a05fe35fa127668f04cb684a7d87c06ad395d348c635",
+      "bytes": 743,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/treatment/stages/role/sources/ev-03-fraser-sync.md",
+      "sha256": "30dd6511f932b2d18962865900194c04f25e9fd2247c96f1c5bf9142ddd60968",
+      "bytes": 1135,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/treatment/stages/role/sources/ev-04-gnu-diffutils.md",
+      "sha256": "2ab24eca729da67f0fc417da9c680265b3a2cc76db9c644fe4d494f67c60352b",
+      "bytes": 860,
+      "read_full": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/treatment/stages/role/sources/ev-05-yjs-undo.md",
+      "sha256": "0947fda8a481b1e9538358e2506a05075c57bda65d149701266bbb5c836d8209",
+      "bytes": 785,
+      "read_full": true
+    }
+  ],
+  "initial_freeze_checks": [
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/treatment/stages/role/assignment.md",
+      "expected_sha256": "dc12ca7f67237612b6117220698527b05738c22d1a5f69b3f85936c2102ebb8a",
+      "observed_sha256": "dc12ca7f67237612b6117220698527b05738c22d1a5f69b3f85936c2102ebb8a",
+      "expected_bytes": 2383,
+      "observed_bytes": 2383,
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/treatment/stages/role/input-map.json",
+      "expected_sha256": "cbfe13abc8728ec988675c793d20f76c277e9b5370f8e9cffc9c62cfef2161c3",
+      "observed_sha256": "cbfe13abc8728ec988675c793d20f76c277e9b5370f8e9cffc9c62cfef2161c3",
+      "expected_bytes": 507,
+      "observed_bytes": 507,
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/inputs/fixture.json",
+      "expected_sha256": "d9e63ea84e74f37b9e33e8087dcbff1359fed87ebb3401c22435573ec9598d4f",
+      "observed_sha256": "d9e63ea84e74f37b9e33e8087dcbff1359fed87ebb3401c22435573ec9598d4f",
+      "expected_bytes": 1583,
+      "observed_bytes": 1583,
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/inputs/manifest.json",
+      "expected_sha256": "7d9b298c18a2e876f1d41d4f4f94ce92c43f48db8ae8d95f622b91be30035d0c",
+      "observed_sha256": "7d9b298c18a2e876f1d41d4f4f94ce92c43f48db8ae8d95f622b91be30035d0c",
+      "expected_bytes": 241,
+      "observed_bytes": 241,
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-G-01/inputs/assignment.md",
+      "expected_sha256": "848cd2e8b9ef3078e2333ae05a62a8e04662b2b1628f5c9b3b34b1c6c896a83b",
+      "observed_sha256": "848cd2e8b9ef3078e2333ae05a62a8e04662b2b1628f5c9b3b34b1c6c896a83b",
+      "expected_bytes": 2583,
+      "observed_bytes": 2583,
+      "match": true
+    }
+  ],
+  "all_initial_freeze_members_match": true,
+  "existing_terminal_freeze": {
+    "searched_exact_treatment_tree": "ER12_RUNTIME/runs/B-DISC-G-01/treatment",
+    "matching_files": [],
+    "status": "NOT_FOUND",
+    "last_checked_utc": "2026-10-10T05:00:10.748998+00:00"
+  },
+  "candidate_word_counts": {
+    "whitespace": 959,
+    "regex": 926
+  },
+  "rechecked_at_utc": "2026-10-10T05:00:10.748998+00:00",
+  "all_inspected_bytes_unchanged": true
+}

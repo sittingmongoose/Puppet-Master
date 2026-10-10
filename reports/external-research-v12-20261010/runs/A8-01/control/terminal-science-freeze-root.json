@@ -1,0 +1,94 @@
+{
+  "observed_at_utc": "2026-10-10T04:42:25.405359+00:00",
+  "basis": "root observed terminal final T3 task/no pending; separate from native proof",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/critic/critique.md",
+      "bytes": 9203,
+      "sha256": "ca81a473a4bd3fe05fdfe6c3161e2443b8cd8fdfabf6351daab0216ab4b9aca6",
+      "mtime_ns": 1791606875278174910
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/critic/source-map.json",
+      "bytes": 11355,
+      "sha256": "3155117e1d1743976fcd931eb63d4b2579f311bc449ea416a5c78a0baff5498d",
+      "mtime_ns": 1791606875286174972
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/critic/sources/index.md",
+      "bytes": 6047,
+      "sha256": "a525ca596879f0ababd30261207d040cecc891d2dfa5875b66a2b5bda5352495",
+      "mtime_ns": 1791606953524804671
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/investigator/discovery.md",
+      "bytes": 10336,
+      "sha256": "dd80136d34f5fd176bd887efdd550f913784c959fb8cffe4de251f566bcd3cfa",
+      "mtime_ns": 1791605662485984069
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/investigator/draft.md",
+      "bytes": 26125,
+      "sha256": "20822d8274afb1a4a1bc8199b3866ce68ad3bfd3988f2b357d6050b71aaf6abf",
+      "mtime_ns": 1791606371059964535
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/investigator/revealed-plan.md",
+      "bytes": 6136,
+      "sha256": "6964f85a4fdd4b74e4a40cbda44e93524aec1b8ed3860fa5ddec434dd8a2fdca",
+      "mtime_ns": 1791605815249948393
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/investigator/source-map.json",
+      "bytes": 12602,
+      "sha256": "eb1e41887508d9c2a71c8917f217527292d506b36d6d0408f7b7dae02dc4b2db",
+      "mtime_ns": 1791606335340877642
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/investigator/sources/index.md",
+      "bytes": 8173,
+      "sha256": "bd06bcfd01ebc0781de6e198ab326dab517cb9f51abc447676e27f0b2b1473f3",
+      "mtime_ns": 1791606335341625448
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/reviser/final.md",
+      "bytes": 26338,
+      "sha256": "1ef15b43b4015d0bed2bfb9a21113f8a2a892f19c5b4c44be13f4cef507595aa",
+      "mtime_ns": 1791607236473225997
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/reviser/source-map.json",
+      "bytes": 16495,
+      "sha256": "4363bd3009110f8b18731d7f772bf5ae3748d729c6e771a3850503f0a1f15e60",
+      "mtime_ns": 1791607264997404106
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/control/stages/reviser/sources/index.md",
+      "bytes": 6436,
+      "sha256": "bd4ec959f4c95cbe20cab9b038a713f5ed5af4bd6e7cdce119496d54bdbb54b0",
+      "mtime_ns": 1791607277015479152
+    }
+  ],
+  "final_stage_task": {
+    "slot": "A8-01",
+    "arm": "control",
+    "stage": "reviser",
+    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A8-01-control-reviser-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A8-01-control-reviser-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A8-01-control-reviser-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A8-01-control-reviser-v1",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A8-01-control-reviser-v1:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "Completed the reviser stage. The full proposal, source map and navigable source index are saved:\n\n- [final.md](ER12_RUNTIME/runs/A8-01/control/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A8-01/control/stages/reviser/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A8-01/control/stages/reviser/sources/index.md)\n\nThe proposal addresses all eight plan clauses, explicitly sources the restore rehearsal from the existing offsite copy, and records each critic finding\u2019s disposition. Rechecks covered the BagIt specification, OCFL\u2019s version-directory wording, and the path issue\u2019s distinction between the reporter\u2019s destination and a later Linux reproduction. ([RFC 8493](https://www.rfc-editor.org/rfc/rfc8493), [OCFL v1.1](https://ocfl.io/1.1.0/spec/), [issue #51](https://github.com/LibraryOfCongress/bagit-python/issues/51))\n\nExactly one native Goal was created with the frozen objective. The Goal tool returned **complete**; its completion result reported 100,450 tokens used and 239 seconds elapsed. Unexposed provenance and activation fields are marked UNKNOWN in the artifact.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A8-01-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:c51642ad-494c-41f8-bcc9-09d611b9db4e",
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "summary": "Completed the reviser stage. The full proposal, source map and navigable source index are saved:\n\n- [final.md](ER12_RUNTIME/runs/A8-01/control/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A8-01/control/stages/reviser/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A8-01/control/stages/reviser/sources/index.md)\n\nThe proposal addresses all eight plan clauses, explicitly sources the restore rehearsal from the existing offsite copy, and records each critic finding\u2019s disposition. Rechecks covered the BagIt specification, OCFL\u2019s version-directory wording, and the path issue\u2019s distinction between the reporter\u2019s destination and a later Linux reproduction. ([RFC 8493](https://www.rfc-editor.org/rfc/rfc8493), [OCFL v1.1](https://ocfl.io/1.1.0/spec/), [issue #51](https://github.com/LibraryOfCongress/bagit-python/issues/51))\n\nExactly one native Goal was created with the frozen objective. The Goal tool returned **complete**; its completion result reported 100,450 tokens used and 239 seconds elapsed. Unexposed provenance and activation fields are marked UNKNOWN in the artifact.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A8-01-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:c51642ad-494c-41f8-bcc9-09d611b9db4e",
+    "waitTimedOut": false
+  }
+}

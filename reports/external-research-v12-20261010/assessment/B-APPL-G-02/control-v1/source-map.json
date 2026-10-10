@@ -1,0 +1,331 @@
+{
+  "schema": "er12-assessor-source-map-v1",
+  "case_id": "ER12-B-APPL-G-02-FRESH",
+  "arm": "control",
+  "version": "v257",
+  "retrieval": [
+    {
+      "id": "systemd.timer.xml",
+      "url": "https://raw.githubusercontent.com/systemd/systemd/v257/man/systemd.timer.xml",
+      "version": "v257",
+      "retrieved_at_utc": "2026-10-10T05:18:59.799151+00:00",
+      "operation": "HTTPS GET via Python standard library; no code execution",
+      "http_status": 200,
+      "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/control-v1/primary/systemd.timer.xml",
+      "sha256": "4862ce0331198c5b3d24b69af45fc8dd55b2c1ad98ce839b042b1cc70d01d9cc",
+      "bytes": 25003
+    },
+    {
+      "id": "systemd.time.xml",
+      "url": "https://raw.githubusercontent.com/systemd/systemd/v257/man/systemd.time.xml",
+      "version": "v257",
+      "retrieved_at_utc": "2026-10-10T05:18:59.889139+00:00",
+      "operation": "HTTPS GET via Python standard library; no code execution",
+      "http_status": 200,
+      "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/control-v1/primary/systemd.time.xml",
+      "sha256": "7973199a518696a838e2750d6b2a4a5420778a88c569086f27f1089481d61a09",
+      "bytes": 16766
+    },
+    {
+      "id": "systemd.service.xml",
+      "url": "https://raw.githubusercontent.com/systemd/systemd/v257/man/systemd.service.xml",
+      "version": "v257",
+      "retrieved_at_utc": "2026-10-10T05:18:59.979713+00:00",
+      "operation": "HTTPS GET via Python standard library; no code execution",
+      "http_status": 200,
+      "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/control-v1/primary/systemd.service.xml",
+      "sha256": "80f479747740d98e20ec214231a710616013238323596ea619d9159b3649e584",
+      "bytes": 108781
+    }
+  ],
+  "sources": [
+    {
+      "id": "systemd.timer.xml",
+      "url": "https://raw.githubusercontent.com/systemd/systemd/v257/man/systemd.timer.xml",
+      "version": "v257",
+      "retrieved_at_utc": "2026-10-10T05:18:59.799151+00:00",
+      "operation": "HTTPS GET via Python standard library; no code execution",
+      "http_status": 200,
+      "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/control-v1/primary/systemd.timer.xml",
+      "sha256": "4862ce0331198c5b3d24b69af45fc8dd55b2c1ad98ce839b042b1cc70d01d9cc",
+      "bytes": 25003,
+      "upstream_navigable_url": "https://github.com/systemd/systemd/blob/v257/man/systemd.timer.xml",
+      "locators": [
+        {
+          "section": "Description: active targets / RemainAfterExit",
+          "line_start": 50,
+          "line_end": 56,
+          "url": "https://github.com/systemd/systemd/blob/v257/man/systemd.timer.xml#L50-L56",
+          "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/control-v1/primary/systemd.timer.xml"
+        },
+        {
+          "section": "Calendar default ordering",
+          "line_start": 86,
+          "line_end": 91,
+          "url": "https://github.com/systemd/systemd/blob/v257/man/systemd.timer.xml#L86-L91",
+          "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/control-v1/primary/systemd.timer.xml"
+        },
+        {
+          "section": "Monotonic starting points and exceptions",
+          "line_start": 109,
+          "line_end": 186,
+          "url": "https://github.com/systemd/systemd/blob/v257/man/systemd.timer.xml#L109-L186",
+          "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/control-v1/primary/systemd.timer.xml"
+        },
+        {
+          "section": "Calendar clock and suspend exceptions",
+          "line_start": 190,
+          "line_end": 225,
+          "url": "https://github.com/systemd/systemd/blob/v257/man/systemd.timer.xml#L190-L225",
+          "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/control-v1/primary/systemd.timer.xml"
+        },
+        {
+          "section": "Accuracy and randomized delay",
+          "line_start": 229,
+          "line_end": 289,
+          "url": "https://github.com/systemd/systemd/blob/v257/man/systemd.timer.xml#L229-L289",
+          "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/control-v1/primary/systemd.timer.xml"
+        },
+        {
+          "section": "v257 DeferReactivation history",
+          "line_start": 308,
+          "line_end": 324,
+          "url": "https://github.com/systemd/systemd/blob/v257/man/systemd.timer.xml#L308-L324",
+          "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/control-v1/primary/systemd.timer.xml"
+        },
+        {
+          "section": "Persistent",
+          "line_start": 354,
+          "line_end": 370,
+          "url": "https://github.com/systemd/systemd/blob/v257/man/systemd.timer.xml#L354-L370",
+          "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/control-v1/primary/systemd.timer.xml"
+        },
+        {
+          "section": "WakeSystem",
+          "line_start": 374,
+          "line_end": 394,
+          "url": "https://github.com/systemd/systemd/blob/v257/man/systemd.timer.xml#L374-L394",
+          "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/control-v1/primary/systemd.timer.xml"
+        }
+      ],
+      "inspection": "full manual inspected"
+    },
+    {
+      "id": "systemd.time.xml",
+      "url": "https://raw.githubusercontent.com/systemd/systemd/v257/man/systemd.time.xml",
+      "version": "v257",
+      "retrieved_at_utc": "2026-10-10T05:18:59.889139+00:00",
+      "operation": "HTTPS GET via Python standard library; no code execution",
+      "http_status": 200,
+      "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/control-v1/primary/systemd.time.xml",
+      "sha256": "7973199a518696a838e2750d6b2a4a5420778a88c569086f27f1089481d61a09",
+      "bytes": 16766,
+      "upstream_navigable_url": "https://github.com/systemd/systemd/blob/v257/man/systemd.time.xml",
+      "locators": [
+        {
+          "section": "Time-span/D-Bus units",
+          "line_start": 79,
+          "line_end": 87,
+          "url": "https://github.com/systemd/systemd/blob/v257/man/systemd.time.xml#L79-L87",
+          "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/control-v1/primary/systemd.time.xml"
+        },
+        {
+          "section": "Calendar daily shorthand and timezone",
+          "line_start": 249,
+          "line_end": 268,
+          "url": "https://github.com/systemd/systemd/blob/v257/man/systemd.time.xml#L249-L268",
+          "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/control-v1/primary/systemd.time.xml"
+        },
+        {
+          "section": "Calendar syntax oracle",
+          "line_start": 311,
+          "line_end": 314,
+          "url": "https://github.com/systemd/systemd/blob/v257/man/systemd.time.xml#L311-L314",
+          "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/control-v1/primary/systemd.time.xml"
+        }
+      ],
+      "inspection": "full manual inspected"
+    },
+    {
+      "id": "systemd.service.xml",
+      "url": "https://raw.githubusercontent.com/systemd/systemd/v257/man/systemd.service.xml",
+      "version": "v257",
+      "retrieved_at_utc": "2026-10-10T05:18:59.979713+00:00",
+      "operation": "HTTPS GET via Python standard library; no code execution",
+      "http_status": 200,
+      "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/control-v1/primary/systemd.service.xml",
+      "sha256": "80f479747740d98e20ec214231a710616013238323596ea619d9159b3649e584",
+      "bytes": 108781,
+      "upstream_navigable_url": "https://github.com/systemd/systemd/blob/v257/man/systemd.service.xml",
+      "locators": [
+        {
+          "section": "Oneshot exact state distinction",
+          "line_start": 209,
+          "line_end": 219,
+          "url": "https://github.com/systemd/systemd/blob/v257/man/systemd.service.xml#L209-L219",
+          "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/control-v1/primary/systemd.service.xml"
+        },
+        {
+          "section": "RemainAfterExit default",
+          "line_start": 332,
+          "line_end": 337,
+          "url": "https://github.com/systemd/systemd/blob/v257/man/systemd.service.xml#L332-L337",
+          "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/control-v1/primary/systemd.service.xml"
+        },
+        {
+          "section": "Oneshot startup timeout default",
+          "line_start": 602,
+          "line_end": 611,
+          "url": "https://github.com/systemd/systemd/blob/v257/man/systemd.service.xml#L602-L611",
+          "local_path": "ER12_RUNTIME/assessment/B-APPL-G-02/control-v1/primary/systemd.service.xml"
+        }
+      ],
+      "inspection": "full timer/time manuals inspected; service scoped sections only"
+    }
+  ],
+  "candidate_claim_locators": [
+    {
+      "claim": 1,
+      "candidate_line": 5,
+      "candidate_disposition": "SUPPORTED_CALENDAR_ONLY",
+      "judgment": "PASS",
+      "primary": [
+        "P1:354-370",
+        "P1:50-56"
+      ],
+      "analysis": "Persistent=true stores the last-trigger timestamp on disk, applies only when OnCalendar is configured, and requests catch-up at timer activation if at least one event was missed. RandomizedDelaySec still applies. Candidate preserves activation versus successful run/completion, avoids per-missed-day replay, and does not promise an exact start. The already-active target condition is covered independently under claim 3.",
+      "conditions": [
+        "systemd 257",
+        "OnCalendar=daily",
+        "Persistent=true",
+        "timer activated after inactive interval",
+        "effective random delay and target state remain relevant"
+      ]
+    },
+    {
+      "claim": 2,
+      "candidate_line": 7,
+      "candidate_disposition": "REJECTED",
+      "judgment": "PASS",
+      "primary": [
+        "P1:115-186",
+        "P1:354-370",
+        "P1:374-394"
+      ],
+      "analysis": "Correctly rejects identical power-off persistence for OnUnitInactiveSec. Persistent has effect only with OnCalendar; a monotonic interval is distinct from realtime scheduling. WakeSystem can change suspend clock behavior and requires supported hardware/privileges, but cannot establish power-off catch-up. Candidate only invokes supported suspend wakeups, not a guarantee.",
+      "conditions": [
+        "systemd 257",
+        "OnUnitInactiveSec=10min",
+        "Persistent=true does not persist this monotonic schedule",
+        "suspend distinct from powered off"
+      ]
+    },
+    {
+      "claim": 3,
+      "candidate_line": 9,
+      "candidate_disposition": "REJECTED",
+      "judgment": "PASS",
+      "primary": [
+        "P1:50-56",
+        "P3:209-219",
+        "P3:332-337"
+      ],
+      "analysis": "Manual explicitly excludes restart/new instance when the target is already active. Candidate correctly preserves a possible later activation conditional on inactivity and the schedule. For a oneshot without RemainAfterExit, running is normally activating rather than literal active; this state distinction does not reverse the stated conditional or authorize parallel instances. RemainAfterExit=yes may leave a finished unit active; no value was supplied and candidate does not promise repeated runs.",
+      "conditions": [
+        "same target unit",
+        "already-active target at elapse",
+        "actual service/drop-ins unknown",
+        "later activation conditional on inactivity"
+      ]
+    },
+    {
+      "claim": 4,
+      "candidate_line": 11,
+      "candidate_disposition": "SUPPORTED_WITH_BOUNDS",
+      "judgment": "PASS",
+      "primary": [
+        "P1:229-289"
+      ],
+      "analysis": "AccuracySec defaults to 1min, defining an expiry window beginning at nominal elapse. Candidate preserves host-specific stable positioning and timer slack, and correctly separates RandomizedDelaySec default 0 and the order of random delay then coalescing. This is expiry accuracy, not a completion or dispatch-latency guarantee.",
+      "conditions": [
+        "systemd 257 defaults unless overridden",
+        "minute time unit",
+        "AccuracySec and RandomizedDelaySec distinct",
+        "TimerSlackNSec also relevant"
+      ]
+    },
+    {
+      "claim": 5,
+      "candidate_line": 13,
+      "candidate_disposition": "SUPPORTED",
+      "judgment": "PASS",
+      "primary": [
+        "P1:145-186"
+      ],
+      "analysis": "OnUnitInactiveSec is relative to last deactivation of the activated target unit, not timer activation, boot or midnight. Candidate retains the explicit ten-minute duration and accuracy/runtime qualification. It does not assert first activation or powered-off state survives. The immediate overdue-start exception documented for OnBootSec/OnStartupSec is not extended to this directive.",
+      "conditions": [
+        "systemd 257",
+        "last target-unit deactivation exists",
+        "10min plus relevant expiry accuracy",
+        "monotonic clock may pause during suspend"
+      ]
+    },
+    {
+      "claim": 6,
+      "candidate_line": 15,
+      "candidate_disposition": "REJECTED",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "primary": [
+        "P1:86-91",
+        "P1:192-225",
+        "P1:229-289",
+        "P1:354-370",
+        "P2:249-268",
+        "P2:311-314",
+        "P3:209-219",
+        "P3:602-611"
+      ],
+      "analysis": "daily is midnight in the applicable timezone; calendar syntax/next-occurrence validation says nothing about successful cleanup completion. Default accuracy, activation after downtime, clock/ordering, and possible three-minute runtime defeat the alleged two-second guarantee. Candidate names missing case evidence and does not invent run results. It retains the literal 00:00:02 but also uses relative two-seconds-after-boot wording: minor deadline ambiguity, not a changed verdict.",
+      "conditions": [
+        "systemd 257",
+        "daily wall-clock midnight",
+        "timezone and clock synchronization unknown",
+        "cleanup may take three minutes",
+        "00:00:02 is not intrinsically boot+2s"
+      ]
+    }
+  ],
+  "candidate_source_map": "ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/source-map.json",
+  "all_candidate_sources": [
+    "ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/sources/S1-evidence.md",
+    "ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/sources/S2-evidence.md"
+  ],
+  "inspected_hashes": "inspected-hashes.json",
+  "limitations": [
+    {
+      "id": "L1",
+      "severity": "MINOR",
+      "candidate_locator": "verification.md:15 and :20",
+      "finding": "The text uses both the literal wall-clock deadline 00:00:02 and relative two seconds after boot. The acceptance trace should distinguish these clocks. Both interpretations remain correctly rejected on the supplied evidence.",
+      "primary_locators": [
+        "P2:249-268",
+        "P1:192-198",
+        "P1:354-362"
+      ],
+      "material": false
+    },
+    {
+      "id": "L2",
+      "severity": "MINOR",
+      "candidate_locator": "verification.md:20",
+      "finding": "The second acceptance check is concrete but leaves the calendar-versus-monotonic catch-up and no-overlap expectations implicit in the six claim paragraphs. It also uses active colloquially for a running oneshot, whose exact unit state can be activating. This reduces oracle precision without an unsupported conclusion or a claimed test pass.",
+      "primary_locators": [
+        "P1:50-56",
+        "P1:354-362",
+        "P3:209-219"
+      ],
+      "material": false
+    }
+  ],
+  "evidence_index": "primary/index.md"
+}

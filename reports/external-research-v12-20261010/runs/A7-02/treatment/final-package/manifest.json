@@ -1,0 +1,78 @@
+{
+  "topology": "A7",
+  "raw_active_native_response": {
+    "goal": {
+      "threadId": "01a1241d-3055-7802-b068-8c27557a5ae6",
+      "objective": "ER11 critic-finalizer stage, run A7-02-treatment: execute ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "status": "active",
+      "tokensUsed": 204761,
+      "timeUsedSeconds": 1193,
+      "createdAt": 1791607282,
+      "updatedAt": 1791608476
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "native_goal_identity": {
+    "threadId": "01a1241d-3055-7802-b068-8c27557a5ae6",
+    "createdAt": 1791607282,
+    "objective": "ER11 critic-finalizer stage, run A7-02-treatment: execute ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal."
+  },
+  "saved_before_native_completion": "active observation supplied; terminal evidence separate",
+  "scope_fidelity_proven": false,
+  "explicit_disposition_count": 6,
+  "frozen_at_utc": "2026-10-10T05:01:22.855Z",
+  "files": [
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/final-package/final.md",
+      "origin_path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+      "sha256": "87c78f9d594f1506980830ea7cdd802c701a088a010d049b5d8381cb673045dd",
+      "bytes": 22479
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/final-package/source-map.json",
+      "origin_path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/source-map.json",
+      "sha256": "f886568ecf01a0689219f7bcd52a0cfbc49c086eaa44b50cd289f56f6a3abd25",
+      "bytes": 33549
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/final-package/critique-dispositions.json",
+      "origin_path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/critique-dispositions.json",
+      "sha256": "05175340b4801e8f4ea3093b890709baedf282c99caa7b13f0305b3bb4542db5",
+      "bytes": 4407
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/final-package/critique.md",
+      "origin_path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/critique.md",
+      "sha256": "cbd23bac4618222be9d567fbb2e6147719422b15e3de1b131ebcb81fef48e186",
+      "bytes": 7837
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/final-package/checks.json",
+      "origin_path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/checks.json",
+      "sha256": "da9f1f3a21b83ea24fc72ee144b7440a8073bf03e4642960a8cbbf36be6d1634",
+      "bytes": 12114
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/final-package/critique-index.json",
+      "origin_path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/critique-index.json",
+      "sha256": "a14556b10b580911548aca0b2e4ed43fb1ad3a8acf66b4b573d3feb0d5125c44",
+      "bytes": 153
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/final-package/review-binding.json",
+      "origin_path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/review-binding.json",
+      "sha256": "acffa9340691088b1cec849fc4e398b6e33c04edcbb00c161900612cc926278b",
+      "bytes": 923
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A7-02/treatment/final-package/sources/index.md",
+      "origin_path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/sources/index.md",
+      "sha256": "0d05a15c1bb586f90481873ba9fffe5f336f7d8494e2b9fa21badda1192e0143",
+      "bytes": 4551
+    }
+  ],
+  "identity_only": true,
+  "source_truth_proven": false,
+  "native_provenance_attested_by_helper": false
+}

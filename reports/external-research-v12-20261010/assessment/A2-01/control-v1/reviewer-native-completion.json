@@ -1,0 +1,20 @@
+{
+  "evidence_kind": "Actual supported native update_goal complete return in this reviewer context",
+  "judgment_saved_before_completion": true,
+  "following_clock_observation": {
+    "current_time": "2026-10-10 05:08:45 UTC"
+  },
+  "raw_return": {
+    "goal": {
+      "threadId": "01a12429-1ccc-7232-895b-863b6120f5a1",
+      "objective": "Independently assess the single completed ER12 A2-01 control full pipeline within a finite 45-minute envelope, using the complete assessment rubric, original frozen brief and plan, terminal science freeze, actual stage maps and authored evidence, plus independently retrieved governing primary evidence. Evaluate all six semantic axes and every exact plan clause; preserve corrected lineage defects separately from final qualification. Do not delegate, repair candidates, alter accounts, use Git/publication, inspect other arms/results/history or rescore ER11. Save full assessment.md, assessment.json, navigable independent source-map/evidence and original inspected hashes only under ER12_RUNTIME/assessment/A2-01/control-v1, preserving original freeze, then complete this Goal and report result and paths.",
+      "status": "complete",
+      "tokensUsed": 240771,
+      "timeUsedSeconds": 873,
+      "createdAt": 1791608051,
+      "updatedAt": 1791608925
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+  }
+}

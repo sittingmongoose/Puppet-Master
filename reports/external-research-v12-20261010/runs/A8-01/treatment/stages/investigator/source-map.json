@@ -1,0 +1,90 @@
+{
+  "run_id": "A8-01-treatment",
+  "stage": "investigator",
+  "discovery_phase": "pre-plan-release; exact plan not consulted",
+  "access_window_utc": ["2026-10-10T04:14:43Z", "2026-10-10T04:14:49Z"],
+  "source_index": "sources/index.md",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "The BagIt File Packaging Format (V1.0)",
+      "exact_url": "https://www.rfc-editor.org/rfc/rfc8493.html",
+      "released_version_or_commit": "RFC 8493, BagIt v1.0, October 2018",
+      "locator": ["§1.1", "§2.1.3", "§2.2.1–2.2.4", "§2.4", "§3", "§5.4", "§6.1.1–6.1.2"],
+      "access_utc": "2026-10-10T04:14:43Z",
+      "observed_operation": "Read official RFC text in a read-only browser; no BagIt product or validator executed.",
+      "governing_condition_default_exception": "BagIt 1.0 requires at least one payload manifest and each manifest lists every payload file exactly once; completeness requires listed files and every payload file to be listed, while validity additionally requires checksums to verify. Creation/validation tools MUST support SHA-256 and SHA-512 and SHOULD enable SHA-512 by default. Extra tag files are allowed but generic implementations ignore their contents unless validating their listed bytes. The format addresses corruption, not active attacks. Filesystem normalization and Windows/Unix naming can affect paths.",
+      "applicability": "Portable, inspectable package per deposit; does not natively provide corrected-version history or curatorial completeness.",
+      "evidence_note": "sources/S01-bagit-rfc8493.md"
+    },
+    {
+      "id": "S02",
+      "title": "Oxford Common File Layout (OCFL) Specification",
+      "exact_url": "https://ocfl.io/1.1/spec/",
+      "released_version_or_commit": "OCFL 1.1 series; latest listed release 1.1.1, tag 1.1.1, commit c3f88b3 (release record S04)",
+      "locator": ["§3.3", "§3.5.1–3.5.3", "§3.6", "§3.8"],
+      "access_utc": "2026-10-10T04:14:43Z",
+      "observed_operation": "Read official 1.1 specification HTML and official release history; no OCFL validator or implementation executed.",
+      "governing_condition_default_exception": "Versions are continuous directories and expected immutable; each version's content files must be referenced by its inventory manifest. The stable object id must not change. Inventories map digests to stored paths and version states to logical paths, use UTF-8 JSON and slash paths with path safety constraints, and require matching digest sidecars written after inventory edits. An optional logs directory can hold local action records whose format is outside the spec.",
+      "applicability": "Filesystem-native structured version history; suitable if the gallery needs accumulated/reconstructable history, with greater update and validator discipline than one BagIt deposit per correction.",
+      "evidence_note": "sources/S02-ocfl-spec-1.1.md"
+    },
+    {
+      "id": "S03",
+      "title": "Clarity on manifest requirements in historic inventories, OCFL issue #538",
+      "exact_url": "https://github.com/OCFL/spec/issues/538",
+      "released_version_or_commit": "Issue opened 2021-04-02; closed by #547; 1.1 milestone; released clarification documented in v1.1.0 (S04)",
+      "locator": ["issue status/metadata", "description, especially discussion of per-version inventory and content-directory references"],
+      "access_utc": "2026-10-10T04:14:43Z",
+      "observed_operation": "Read public issue body and metadata; no failure incident or implementation defect asserted by this issue.",
+      "governing_condition_default_exception": "The issue identifies ambiguity in how historical inventory manifests account for version directories; the actual released wording clarification is taken from the official change log, not inferred from the issue alone.",
+      "applicability": "Historical version-copy/validation caution if OCFL is selected; not a BagIt defect and not evidence that any gallery copy failed.",
+      "evidence_note": "sources/S03-ocfl-issue-538.md"
+    },
+    {
+      "id": "S04",
+      "title": "OCFL specification change log and release history",
+      "exact_url": "https://ocfl.io/1.1/spec/change-log.html",
+      "related_release_url": "https://github.com/OCFL/spec/releases",
+      "released_version_or_commit": "v1.1.0 release tag 1.1 / commit 4b05472; latest listed 1.1.1 release tag 1.1.1 / commit c3f88b3",
+      "locator": ["Changes from v1.0 to v1.1.0", "Clarifications in v1.1.0", "Clarify manifest requirements in historic inventories", "official release page entries 1.1 and 1.1.1"],
+      "access_utc": "2026-10-10T04:14:43Z",
+      "observed_operation": "Read official OCFL change log and GitHub release listing; no code was run.",
+      "governing_condition_default_exception": "The change log states that v1.1.0 clarified that every historical inventory manifest references all files in that version directory and associates the change with issue #538. v1.1.1 is the latest release listed; 1.1.0 documents remain available.",
+      "applicability": "Establishes release/fix-history and the exact standard family relevant to a copy workflow; does not establish third-party validator behavior.",
+      "evidence_note": "sources/S04-ocfl-release-history.md"
+    },
+    {
+      "id": "S05",
+      "title": "PREMIS Data Dictionary for Preservation Metadata v3.0",
+      "exact_url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+      "related_page_url": "https://www.loc.gov/standards/premis/v3/index.html",
+      "released_version_or_commit": "PREMIS v3.0, Library of Congress page marks full document updated November 2015",
+      "locator": ["data model overview", "§1.5.2, pp. 58–60", "§2 Event entity, pp. 137–157", "event date/outcome and Agent/Object relationships"],
+      "access_utc": "2026-10-10T04:14:49Z",
+      "observed_operation": "Read official LOC standard page and PDF; no PREMIS record or validator executed.",
+      "governing_condition_default_exception": "PREMIS distinguishes Objects, Events, Rights, Agents; fixity records digest algorithm/value, while an observed check and its result/date are recorded as an Event/outcome. Event identifier, type and datetime are mandatory in the data model. Some backup-copy actions may instead be kept in system logs/audit trails.",
+      "applicability": "Design basis for a compact readable identity/custody log. The recommendation is PREMIS-inspired, not a claim of formal conformance or a new preservation platform.",
+      "evidence_note": "sources/S05-premis-3.0.md"
+    },
+    {
+      "id": "S06",
+      "title": "git-annex whereis, log, and fsck manuals",
+      "exact_url": "https://git-annex.branchable.com/git-annex-whereis/",
+      "related_urls": ["https://git-annex.branchable.com/git-annex-log/", "https://git-annex.branchable.com/git-annex-fsck/"],
+      "released_version_or_commit": "Online manuals do not identify an inspected release version; version-sensitive documentation, accessed 2026-10-10",
+      "locator": ["whereis Description and stale-location note", "log Description and historical-path limitation", "fsck Description and --from/--fast conditions"],
+      "access_utc": "2026-10-10T04:14:49Z",
+      "observed_operation": "Read official project manuals only; did not install/configure/execute git-annex.",
+      "governing_condition_default_exception": "whereis reports last received location data and does not contact remotes to confirm presence. `fsck --from` normally fetches remote contents for checksumming; `--fast` avoids checksums/transfers and checks expected presence only. Location-log visibility can be affected by history-forget/private settings.",
+      "applicability": "Higher-capability identity/location alternative for a team already comfortable with Git and annex remotes; not selected for the pilot because it introduces a workflow and location records are not live custody evidence.",
+      "evidence_note": "sources/S06-git-annex.md"
+    }
+  ],
+  "executed_research_operations": [
+    "Read-only retrieval and reading of the public primary sources listed above."
+  ],
+  "local_checks_executed": [],
+  "product_validation_executed": [],
+  "note": "Source IDs are immutable identifiers for this stage. No exact plan was accessed before the designated release helper."
+}
