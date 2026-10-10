@@ -7,7 +7,8 @@
      the PM8 set, every .pm-sheen, the Usage .pmu-card (not the band, nor while it is pending, leaving, lifted,
      resized, morphing or flying), and any element with [data-pmh] (an opt-in for future panels; its value names the
      kind: card | row | tile | icon, empty = card; data-pmh="off" takes an element out of the set). Tabs, text
-     surfaces (inputs, editors, terminals) and resize dividers are never targets.
+     surfaces (inputs, editors, terminals) and resize dividers are never targets, and nothing inside
+     [data-pm-hover-exempt] (the home redesign's terminal input and text surfaces) is a target or hovers one.
    Kinds: every target gets data-pmh-kind="card|row|tile|icon" the first time the engine meets it (one attribute
      write per element for its lifetime), so CSS and tokens can differ per kind.
    CSS contract (written only on the hovered target and its lit neighbours, only on a visible change)
@@ -65,6 +66,7 @@
     var SEL = '[data-pmh],.pm-sheen,' + KIND_ORDER.map(function (k) { return KINDS[k]; }).join(',');
     var BOUNDARY = '[role="tab"],.page-tab,[class*="resizer"],[class*="-divider"],.xterm,textarea,input,select,' +
       '[contenteditable=""],[contenteditable="true"]';
+    var EXEMPT = '[data-pm-hover-exempt]';
     /* Usage plates: the whole head is a move handle and seven resize zones sit 4 px outside the edge, so the magnet
        stays off there (light and glow only); a plate is not a target while the board runs an operation on it. */
     var PMU_SKIP = '[data-head="band"],[data-pending],[data-leaving],[data-lifted],[data-resizing],[data-morphing]';
@@ -129,12 +131,13 @@
     function valid(el) {
       var v = el.getAttribute('data-pmh');
       if (v === 'off' || v === 'none') return false;
-      if (el.matches(BOUNDARY)) return false;
+      if (el.matches(BOUNDARY) || el.closest(EXEMPT)) return false;
       if (el.classList.contains('pmu-card') &&
           (el.matches(PMU_SKIP) || el._pmuLeaving || el.closest('.pmu-ghostboard,#pmuFlight,.pmu-board[data-op]'))) return false;
       return true;
     }
     function resolve(start) {
+      if (start && start.closest && start.closest(EXEMPT)) return null;   /* the pointer is on an exempt surface */
       var t = start && start.closest ? start.closest(SEL) : null, best = null;
       while (t) {
         if (valid(t)) best = t;
