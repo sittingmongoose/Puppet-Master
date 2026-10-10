@@ -116,7 +116,9 @@ model.removeTab = function (l, tabId, opts) {
   var rec = l.tabs[tabId];
   if (!opts.keepRecord) delete l.tabs[tabId];
   if (opts.remember && rec) {
-    l.closed.push({ tab: rec, panelId: p.id, index: i });
+    // the reopen stack keeps a copy without the live-only marks: a reopened tab is a fresh mount, and its kind
+    // pushes dirty, busy, exit code and agent again if they still hold
+    l.closed.push({ tab: model.stripLive(model.clone(rec)), panelId: p.id, index: i });
     if (l.closed.length > CLOSED_MAX) l.closed.splice(0, l.closed.length - CLOSED_MAX);
   }
   if (p.active === tabId) {
@@ -125,6 +127,14 @@ model.removeTab = function (l, tabId, opts) {
     p.active = mru.length ? mru[0] : (p.tabs[Math.min(i, p.tabs.length - 1)] || null);
   }
   return { panelId: p.id, index: i, record: rec };
+};
+/* Marks a kind pushes about a live instance (CONTRACT section 4): never written to storage or the reopen stack, because
+   buffers, processes and agents do not survive a reload or a close, and a restored background tab is not mounted
+   until it is shown, so nothing would correct a stale mark. */
+var LIVE_MARKS = model.LIVE_MARKS = ['dirty', 'busy', 'exitCode', 'agent', 'attention'];
+model.stripLive = function (rec) {
+  if (rec) for (var i = 0; i < LIVE_MARKS.length; i++) delete rec[LIVE_MARKS[i]];
+  return rec;
 };
 model.moveTab = function (l, tabId, toPanelId, index) {
   var from = model.panelOf(l, tabId), to = model.panel(l, toPanelId);
@@ -278,16 +288,22 @@ model.normalize = function (l, opts) {
     return n;
   }
   l.root = tidy(l.root, null);
-  // a lone collapsed panel cannot stay collapsed
+  // a lone collapsed panel cannot stay collapsed, and no split (at any depth) may have every kid collapsed: geometry
+  // gives a collapsed kid only its strip, so such a split would leave its leftover space to nobody (a blank area).
+  // A split kid is always flexible, so checking the panels of each split is enough.
   if (l.root && l.root.t === 'panel') l.root.collapsed = false;
-  if (l.root && l.root.t === 'split') {
-    var open = l.root.kids.filter(function (k) { return !(k.t === 'panel' && k.collapsed); });
-    if (!open.length) l.root.kids[0].collapsed = false;
-  }
+  walk(l.root, function (n) {
+    if (n.t !== 'split') return;
+    if (n.kids.every(function (k) { return k.t === 'panel' && k.collapsed; })) n.kids[n.kids.length - 1].collapsed = false;
+  });
   // 5. view state
   var panelIds = model.panels(l).map(function (p) { return p.id; });
   if (panelIds.indexOf(l.view.focus) < 0) l.view.focus = panelIds[0] || null;
   if (panelIds.indexOf(l.view.maximized) < 0) l.view.maximized = null;
+  // maximize follows focus (VS Code: opening into another group leaves maximized mode). A commit that moves focus to
+  // another panel (an open, a split, a tab moved out) restores the panels, so what it shows is never hidden; a
+  // background open leaves focus, and so the maximized panel, alone.
+  if (l.view.maximized && l.view.maximized !== l.view.focus) l.view.maximized = null;
   l.view.mru = (l.view.mru || []).filter(function (t) { return !!l.tabs[t]; }).slice(0, MRU_MAX);
   return l;
 };

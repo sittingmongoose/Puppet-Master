@@ -80,6 +80,8 @@ function buildNamed(name, existing, opts) {
     if (node.slot) {
       var p = model.newPanel(l, []);
       p.slotName = node.slot;
+      p.locked = !!node.locked;          // a saved locked panel survives even when it comes back empty
+      p.collapsed = !!node.collapsed;
       slots.push({ def: node, panel: p });
       return p;
     }
@@ -88,30 +90,44 @@ function buildNamed(name, existing, opts) {
   }
   l.root = build(def.tree);
   var restSlot = slots.filter(function (s) { return s.def.rest; })[0] || slots[0];
-  // 1. existing tabs, in their old order (panel by panel), to the first slot that accepts them
+  // 1. existing tabs, in their old order (panel by panel). A saved layout's slot that held a tab when it was saved
+  //    takes it back; the others go to a slot that accepts their kind, preferring one nothing has gone to yet (so two
+  //    slots that accept the same kinds both keep a tab: a generalised oneEach), else the first that accepts them.
   if (existing) {
     var focusTab = null;
     var fp = existing.view && existing.view.focus && model.panel(existing, existing.view.focus);
     if (fp) focusTab = fp.active;
-    var oneEachUsed = {};
-    model.panels(existing).forEach(function (op) {
-      op.tabs.forEach(function (tid) {
-        var rec = existing.tabs[tid];
-        if (!rec) return;
-        var target = null;
-        for (var i = 0; i < slots.length; i++) {
-          var acc = slots[i].def.accepts;
-          if (acc && acc.indexOf(rec.kind) < 0) continue;
-          if (!acc) { target = slots[i]; break; }
-          if (def.oneEach === rec.kind && oneEachUsed[i]) continue;
-          target = slots[i];
-          if (def.oneEach === rec.kind) oneEachUsed[i] = true;
-          break;
-        }
-        if (!target) target = restSlot;
-        var copy = JSON.parse(JSON.stringify(rec));
-        model.addTab(l, target.panel.id, copy, { activate: false });
-      });
+    var order = [];
+    model.panels(existing).forEach(function (op) { op.tabs.forEach(function (tid) { if (existing.tabs[tid]) order.push(tid); }); });
+    var targetOf = {}, used = {};
+    order.forEach(function (tid) {
+      for (var i = 0; i < slots.length; i++) {
+        if (slots[i].def.tabs && slots[i].def.tabs.indexOf(tid) >= 0) { targetOf[tid] = slots[i]; used[i] = true; return; }
+      }
+    });
+    order.forEach(function (tid) {
+      if (targetOf[tid]) return;
+      var rec = existing.tabs[tid];
+      var first = null, fresh = null;
+      for (var i = 0; i < slots.length; i++) {
+        var acc = slots[i].def.accepts;
+        if (!acc) { if (def.saved) continue; first = first || slots[i]; break; }   // a saved empty panel (older records) takes nothing new
+        if (acc.indexOf(rec.kind) < 0) continue;
+        if (!first) first = slots[i];
+        if (!used[i]) { fresh = slots[i]; break; }
+      }
+      var target = fresh || (def.oneEach === rec.kind ? null : first);
+      if (target) used[slots.indexOf(target)] = true;   // a tab sent to the rest slot does not fill it for its kind
+      targetOf[tid] = target || restSlot;
+    });
+    order.forEach(function (tid) {
+      var copy = JSON.parse(JSON.stringify(existing.tabs[tid]));
+      // added as a kept tab: addTab replaces a panel's preview in place, and two panels' previews meeting in one slot
+      // would delete one. The flag goes back on afterwards; normalize keeps one preview per panel and keeps the rest.
+      var wasPreview = !!copy.preview;
+      copy.preview = false;
+      model.addTab(l, targetOf[tid].panel.id, copy, { activate: false });
+      if (wasPreview && l.tabs[copy.id]) l.tabs[copy.id].preview = true;
     });
     if (focusTab && l.tabs[focusTab]) {
       var holder = model.panelOf(l, focusTab);
@@ -151,7 +167,8 @@ function buildNamed(name, existing, opts) {
 }
 PMW.buildNamed = buildNamed;
 
-/* Saved layouts: the user's own trees (shape and sizes only; tabs are redistributed like a named layout). */
+/* Saved layouts: the user's own trees (shape, sizes, each panel's tabs, lock and collapse). Applied, each tab still
+   open goes back to its own panel; the rest are distributed like a named layout. */
 var SAVED_KEY = 'pm.home.panels.saved:v1';
 PMW.savedLayouts = function () { return store.get(SAVED_KEY) || {}; };
 PMW.saveNamed = function (name, layout) {
@@ -159,7 +176,9 @@ PMW.saveNamed = function (name, layout) {
     if (n.t === 'panel') {
       var kinds = {};
       n.tabs.forEach(function (t) { var r = layout.tabs[t]; if (r) kinds[r.kind] = 1; });
-      return { slot: n.id, accepts: Object.keys(kinds).length ? Object.keys(kinds) : null };
+      // the tab ids bring each tab back to its own slot; an empty panel accepts nothing new (it is kept by its lock)
+      return { slot: n.id, accepts: Object.keys(kinds), tabs: n.tabs.slice(), active: n.active || null,
+        locked: !!n.locked, collapsed: !!n.collapsed };
     }
     return { dir: n.dir, sizes: n.sizes.slice(), kids: n.kids.map(shape) };
   }
@@ -169,7 +188,7 @@ PMW.saveNamed = function (name, layout) {
   var marked = false;
   (function mark(n) {
     if (marked) return;
-    if (n.slot) { if (!n.accepts || n.accepts.some(function (k) { return PMW.isDocumentKind(k); })) { n.rest = true; marked = true; } return; }
+    if (n.slot) { if ((n.accepts || []).some(function (k) { return PMW.isDocumentKind(k); })) { n.rest = true; marked = true; } return; }
     n.kids.forEach(mark);
   })(tree);
   if (!marked) (function first(n) { if (n.slot) { n.rest = true; return; } first(n.kids[0]); })(tree);

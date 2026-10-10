@@ -107,6 +107,9 @@ PMW.catalogPicker = function (anchor, o) {
         alt: { label: 'Open in new panel', run: function () { PM_HOME.catalog.open(it.id, { where: 'panel', source: o.panelId, mode: 'keep' }); } } };
     }) };
   });
-  return PMW.menu.open(anchor || state.centre, { id: 'picker:' + kinds.join(','), title: o.title, search: { placeholder: o.placeholder || 'Find by name' },
-    width: 360, sections: sections, empty: 'Nothing to open yet.', at: anchor ? null : { x: state.centre.getBoundingClientRect().left + 40, y: state.centre.getBoundingClientRect().top + 40 } });
+  // Never anchor to the centre: a menu ignores clicks inside its anchor, so a centre anchor would stay open over every
+  // panel click (and swallow the panel shortcuts). Without an anchor it opens at a point near the centre's top left.
+  var cr = PMW.state && PMW.state.centre ? PMW.state.centre.getBoundingClientRect() : { left: 0, top: 0 };
+  return PMW.menu.open(anchor || null, { id: 'picker:' + kinds.join(','), title: o.title, search: { placeholder: o.placeholder || 'Find by name' },
+    width: 360, sections: sections, empty: 'Nothing to open yet.', at: anchor ? null : { x: cr.left + 40, y: cr.top + 40 } });
 };

@@ -52,15 +52,23 @@ function naturalWidth(rec, font, host) {
   return clamp(w, TAB.natural, TAB.max);
 }
 
-/* fit(): decide each tab's width and which tabs hide. Pure: returns { widths: {id: px}, size: {id: 'full'|'shrunk'|'icon'}, hidden: [ids] } */
+/* fit(): decide each tab's width and which tabs hide. Pure: returns { widths: {id: px}, size: {id: 'full'|'shrunk'|'icon'}, hidden: [ids] }
+   frozen (during a tab drag): { id: px } as the tabs were at the grab, -1 for a tab that was behind "+N" */
 strip.fit = function (tabs, recs, activeId, avail, font, frozen, host) {
   var res = { widths: {}, size: {}, hidden: [] };
   var pinned = tabs.filter(function (t) { return recs[t].pinned; });
   var rest = tabs.filter(function (t) { return !recs[t].pinned; });
   pinned.forEach(function (t) { res.widths[t] = TAB.pinned; res.size[t] = 'pinned'; });
   var room = avail - pinned.length * (TAB.pinned + TAB.gap);
-  if (frozen) {   // while a tab is dragged, widths do not reflow under the silhouette
-    rest.forEach(function (t) { res.widths[t] = frozen[t] || TAB.shrunk; res.size[t] = frozen[t] && frozen[t] <= TAB.icon ? 'icon' : 'full'; });
+  if (frozen) {
+    // while a tab is dragged, nothing reflows under the silhouette: the same widths, and the same tabs behind "+N"
+    // (so "+N" keeps its count and stays a drop target); a tab opened during the drag waits behind "+N" too
+    rest.forEach(function (t) {
+      var fw = frozen[t];
+      if (fw === -1 || fw == null) { res.hidden.push(t); return; }
+      res.widths[t] = fw || TAB.shrunk;
+      res.size[t] = fw && fw <= TAB.icon ? 'icon' : 'full';
+    });
     return res;
   }
   if (!rest.length) return res;
@@ -69,15 +77,21 @@ strip.fit = function (tabs, recs, activeId, avail, font, frozen, host) {
   var activeIn = rest.indexOf(activeId) >= 0;
   var aW = activeIn ? Math.max(TAB.activeMin, nat[activeId]) : 0;
   var others = rest.filter(function (t) { return t !== activeId; });
-  var sumNat = others.reduce(function (a, t) { return a + nat[t]; }, 0) + aW + rest.length * TAB.gap;
+  var gaps = rest.length * TAB.gap;
+  // the active tab gives up width (down to 120) before the others shrink past a step; it never covers "+" or "+N"
+  function activeFor(each) { return activeIn ? Math.max(TAB.activeMin, Math.min(aW, room - gaps - others.length * each)) : 0; }
+  var sumNat = others.reduce(function (a, t) { return a + nat[t]; }, 0) + aW + gaps;
   if (sumNat <= room) {
     rest.forEach(function (t) { res.widths[t] = t === activeId ? aW : nat[t]; res.size[t] = 'full'; });
     return res;
   }
-  var roomOthers = room - aW - rest.length * TAB.gap;
+  if (!others.length) {   // the active tab alone: as wide as the room allows, never under 120
+    res.widths[activeId] = activeFor(0); res.size[activeId] = res.widths[activeId] < nat[activeId] ? 'shrunk' : 'full';
+    return res;
+  }
   // 1. shrink inactive tabs evenly toward 72 (a tab never grows past its natural width)
-  if (others.length && roomOthers / others.length >= TAB.shrunk) {
-    var share = roomOthers / others.length;
+  var a1 = activeFor(TAB.shrunk), roomOthers = room - a1 - gaps;
+  if (roomOthers / others.length >= TAB.shrunk) {
     // tabs narrower than the share keep their width; the rest split what is left
     var sorted = others.slice().sort(function (a, b) { return nat[a] - nat[b]; });
     var left = roomOthers, n = sorted.length;
@@ -87,16 +101,18 @@ strip.fit = function (tabs, recs, activeId, avail, font, frozen, host) {
       res.widths[t] = Math.floor(w); left -= res.widths[t];
       res.size[t] = w < nat[t] ? 'shrunk' : 'full';
     });
-    if (activeIn) { res.widths[activeId] = aW; res.size[activeId] = 'full'; }
+    if (activeIn) { res.widths[activeId] = a1; res.size[activeId] = a1 < nat[activeId] ? 'shrunk' : 'full'; }
     return res;
   }
   // 2. icons at 36
-  if (others.length && roomOthers / others.length >= TAB.icon) {
+  var a2 = activeFor(TAB.icon);
+  if ((room - a2 - gaps) / others.length >= TAB.icon) {
     others.forEach(function (t) { res.widths[t] = TAB.icon; res.size[t] = 'icon'; });
-    if (activeIn) { res.widths[activeId] = aW; res.size[activeId] = 'full'; }
+    if (activeIn) { res.widths[activeId] = a2; res.size[activeId] = a2 < nat[activeId] ? 'shrunk' : 'full'; }
     return res;
   }
-  // 3. a window of icon tabs around the active tab; the rest hide behind "+N"
+  // 3. a window of icon tabs around the active tab; the rest hide behind "+N" (the active tab leaves room for it)
+  if (activeIn) aW = Math.max(TAB.activeMin, Math.min(aW, room - TAB.more - 2 * TAB.gap));
   var capacity = Math.max(0, Math.floor((room - TAB.more - (activeIn ? aW + TAB.gap : 0)) / (TAB.icon + TAB.gap)));
   var order = rest.slice();
   var ai = order.indexOf(activeId);
@@ -109,7 +125,7 @@ strip.fit = function (tabs, recs, activeId, avail, font, frozen, host) {
   }
   var shown = 0;
   order.forEach(function (t, i) {
-    if (t === activeId) { res.widths[t] = aW; res.size[t] = 'full'; return; }
+    if (t === activeId) { res.widths[t] = aW; res.size[t] = aW < nat[t] ? 'shrunk' : 'full'; return; }
     if (i >= start && shown < visibleOthers) { res.widths[t] = TAB.icon; res.size[t] = 'icon'; shown += 1; }
     else res.hidden.push(t);
   });
@@ -143,8 +159,13 @@ strip.render = function (panelEl, p, l, opts) {
   restIds.forEach(function (tid, i) { placeTab(s, s.tabsEl, tid, i, l, p); });
   setAttr(s.pins, 'hidden', !pinnedIds.length);
   setAttr(s.sep, 'hidden', !pinnedIds.length || !restIds.length);
-  // fit
-  var stripW = host.clientWidth || (render.rects() && render.rects().panels[p.id] ? render.rects().panels[p.id].w : 0);
+  // fit against the panel's target width: an animated paint has only just written the new width, so the strip's own
+  // clientWidth still reports where the glide starts (the panel-to-strip inset is the same at either end of it)
+  var tr = opts.rects && opts.rects.panels && opts.rects.panels[p.id];
+  var stripW = host.clientWidth;
+  if (tr && panelEl.offsetWidth) stripW = Math.max(0, tr.w - (panelEl.offsetWidth - host.clientWidth));
+  else if (!stripW) stripW = render.rects() && render.rects().panels[p.id] ? render.rects().panels[p.id].w : 0;
+  s.fitW = stripW;
   var fixed = TAB.stripPadL + TAB.stripPadR + TAB.plus + TAB.menu + TAB.gripReserve + (narrow && panels.length > 1 ? 52 : 0) + (pinnedIds.length && restIds.length ? 9 : 0);
   var font = stripFont(host);
   var fit = strip.fit(p.tabs, l.tabs, p.active, Math.max(0, stripW - fixed), font, s.frozen, host);
@@ -197,7 +218,10 @@ function middleEllipsis(el, rec, size, w, active, host, font) {
 
 function placeTab(s, container, tid, index, l, p) {
   var el = s.tabEls[tid] || (s.tabEls[tid] = createTab(s, tid));
-  if (container.children[index] !== el) container.insertBefore(el, container.children[index] || null);
+  // while a tab is carried, the DOM order is the drag's (33-tabdrag.js commits it on release): a paint during the
+  // drag only adds a tab that is new, at its group's end, and never moves one
+  if (s.dragging) { if (el.parentNode !== container) container.appendChild(el); }
+  else if (container.children[index] !== el) container.insertBefore(el, container.children[index] || null);
   updateTab(el, l.tabs[tid], p, l);
 }
 

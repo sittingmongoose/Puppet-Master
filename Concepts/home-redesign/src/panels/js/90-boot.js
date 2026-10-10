@@ -12,15 +12,16 @@ PMW.restoreSnapshot = function (snap, source) {
   var copy = model.clone(snap);
   model.normalize(copy);
   if (model.validate(copy).length) return { ok: false, reason: 'invalid_snapshot' };
-  return commit('cmd.workspace.layout.restore', { source: source || 'restore' }, function (d) {
+  return commit(CMD.restore, { source: source || 'restore' }, function (d) {
     for (var k in d) delete d[k];
     Object.assign(d, copy);
     return {};
-  });
+  }, { source: source || 'restore' });
 };
 PMW.resetLayout = PMW.resetLayout || function () { return PMW.applyNamed('home', { reset: true }); };
 
 function firstLayout() {
+  persist.bind();   // the layout belongs to the project it was loaded for, whatever the title bar says later
   var saved = persist.load();
   if (saved) return saved;
   var name = PMW.settings.get('panels.layout.named') || 'home';
@@ -64,6 +65,7 @@ PM_HOME.boot = function () {
   DEAD_PORTALS.forEach(function (id) { var el = doc.getElementById(id); if (el) el.remove(); });
   bus.emit('boot:kinds', {});
   state.layout = firstLayout();
+  try { persist.watchProject(); } catch (err) { try { console.error('[pm-home] project watch failed', err); } catch (_) {} }
   if (typeof ResizeObserver === 'function') {
     new ResizeObserver(function () {
       if (!homeShown()) return;

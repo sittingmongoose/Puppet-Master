@@ -140,6 +140,28 @@ geom.splitFits = function (layout, panelId, edge, rects, incomingMin) {
   if (edge === 'left' || edge === 'right') return (r.w - GAP) / 2 >= Math.max(m.w, inc.w) - 0.5;
   return (r.h - GAP) / 2 >= Math.max(m.h, inc.h) - 0.5;
 };
+/* Tree-mode rects for the current centre: what the panels would get with nothing maximized (narrow still applies).
+   Every fit check measures these, never the maximized rects, where one panel fills the whole centre and a split that
+   only fits while it is maximized would be approved. When the centre is not laid out (Home hidden) the last painted
+   rects stand in, measured over the box they tile. */
+function rectsUnion(rects) {
+  var x1 = Infinity, y1 = Infinity, x2 = -Infinity, y2 = -Infinity;
+  for (var id in rects.panels) {
+    var r = rects.panels[id];
+    x1 = Math.min(x1, r.x); y1 = Math.min(y1, r.y); x2 = Math.max(x2, r.x + r.w); y2 = Math.max(y2, r.y + r.h);
+  }
+  return x2 > x1 && y2 > y1 ? { x: x1, y: y1, w: x2 - x1, h: y2 - y1 } : null;
+}
+PMW.treeRects = function () {
+  var l = PMW.state && PMW.state.layout;
+  if (!l || !l.root) return null;
+  var last = PMW.render && PMW.render.rects ? PMW.render.rects() : null;
+  var cr = PMW.render && PMW.render.centreRect ? PMW.render.centreRect() : null;
+  if (!cr || !(cr.w > 0 && cr.h > 0)) cr = last ? rectsUnion(last) : null;
+  if (!cr) return last;
+  var narrow = !!(PMW.narrow && PMW.narrow.singleColumn());
+  return geom.layout(l, cr, { narrow: narrow, narrowFocus: l.view.focus });
+};
 geom.rootFits = function (layout, edge, centreRect, incomingMin) {
   var inc = incomingMin || PMW.PANEL_MIN;
   var axis = edge === 'left' || edge === 'right' ? 'w' : 'h';

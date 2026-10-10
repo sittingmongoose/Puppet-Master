@@ -10,12 +10,35 @@ function demo() { return window.PM_DEMO || null; }
    byte for byte); the open is rerouted BEHIND the shell's handler: the demo router hands its cmd.file.open action the
    click event, and that action (re-registered below, last registration wins) applies D7: a single click opens the
    preview tab, a double click keeps it, Alt+click opens a new panel, Ctrl/Cmd+click opens in the background. */
+/* the path a cmd.file.open row names. A row's data-path is the tree's own and is trusted; otherwise the row's visible
+   path (.fm-path / .fm-cpath), then the demo arg ('cmd.file.open -> image.rs (note)'), never the raw arg (it would
+   become a tab called 'cmd.file.open -> ...'). Anything but a data-path is resolved through the project's file index,
+   so a bare name or a partial path lands on the same id the tree opens (one id, one tab). */
+var FILE_ARG_RE = /^cmd\.file\.open\s*(?:->|:)\s*(.+?)(?:\s+\(.*\))?\s*$/;
+function resolveProjectPath(name) {
+  if (typeof PMW.fileIndex !== 'function') return name;
+  var all = [];
+  try { all = PMW.fileIndex('', 100000) || []; } catch (_) { return name; }
+  if (all.indexOf(name) >= 0) return name;
+  var tail = '/' + name.replace(/^\.?\//, '');
+  for (var i = 0; i < all.length; i++) if (all[i].slice(-tail.length) === tail) return all[i];
+  return null;
+}
+function rowFilePath(ctx) {
+  var el = ctx && ctx.el;
+  var path = el && el.dataset ? (el.dataset.path || '') : '';
+  if (path) return { path: path };
+  if (ctx && ctx.path) return { path: String(ctx.path) };
+  var vis = el && el.querySelector ? el.querySelector('.fm-path, .fm-cpath') : null;
+  var name = vis ? (vis.textContent || '').trim() : '';
+  if (!name && ctx && typeof ctx.arg === 'string') { var m = FILE_ARG_RE.exec(ctx.arg.trim()); name = m ? m[1] : ''; }
+  if (!name) return { path: '' };
+  return { path: resolveProjectPath(name), name: name };
+}
 function fileOpenFromRow(ctx) {
   var el = ctx && ctx.el, e = ctx && ctx.event;
-  var path = el && el.dataset ? (el.dataset.path || '') : '';
-  if (!path && ctx) path = ctx.path || '';
-  if (!path && ctx && typeof ctx.arg === 'string') path = ctx.arg.indexOf('cmd.file.open:') === 0 ? ctx.arg.slice(14) : ctx.arg;
-  if (!path) return { ok: false };
+  var found = rowFilePath(ctx), path = found.path;
+  if (!path) return found.name ? { ok: false, toast: found.name.split('/').pop() + ' is not in this project.' } : { ok: false };
   if (window.PM_PAGES && PM_PAGES.current && PM_PAGES.current !== 'dashboard') { try { PM_PAGES.go('dashboard'); } catch (_) {} }
   var dbl = !!(e && e.detail >= 2);
   // a single click previews and leaves focus in the tree (arrows keep walking it); a double click keeps and moves focus
@@ -42,14 +65,49 @@ shims.demoFacades = function () {
   }
   if (D.actions && typeof D.actions.register === 'function') {
     D.actions.register('cmd.file.open', fileOpenFromRow);
-    var reveal = function (kind, spec) {
-      return function () { return PM_HOME.open(Object.assign({ kind: kind }, spec || {})); };
-    };
-    D.actions.register('cmd.terminal.show', reveal('terminal'));
-    D.actions.register('cmd.run_debug.console.reveal', reveal('debug-console'));
-    D.actions.register('cmd.run_debug.terminal.reveal', reveal('terminal'));
+    // reveals go through revealKind (rule 1: an existing tab of the kind is revealed, never a new one per click);
+    // PMW.revealKind is defined by bottomPanel below and looked up at click time
+    D.actions.register('cmd.terminal.show', terminalAt);
+    D.actions.register('cmd.run_debug.console.reveal', function () { return PMW.revealKind('debug'); });
+    D.actions.register('cmd.run_debug.terminal.reveal', function () { return PMW.revealKind('terminal'); });
   }
 };
+
+/* 'Open in terminal' (a tree row's button: 'cmd.terminal.show -> cwd src/' on a folder, '-> <file>' on a file) and
+   'Reveal in terminal' (the file context menu: '... at row cwd'). The folder is worked out from the arg or the row;
+   a terminal already in that folder is revealed, else one opens there. With no folder to go on, the existing
+   terminal is revealed (or one opened), as the page's own handler did. */
+var PROJECT_CWD = '~/tastebook/api';   // the concept's project root: the home layout's terminals start here
+var ctxRow = null;                     // the row the file context menu was opened on ({ path, folder })
+function folderOf(path, folder) { path = String(path || '').replace(/\/+$/, ''); return folder ? path : (path.indexOf('/') >= 0 ? path.slice(0, path.lastIndexOf('/')) : ''); }
+function normCwd(p) { return String(p || '').replace(/\/+$/, '').replace(/^(?:~|\/home\/[^\/]+|\/Users\/[^\/]+)(?=\/|$)/, ''); }
+function terminalCwdFor(ctx) {
+  var arg = String(ctx && ctx.arg || '');
+  var m = /->\s*cwd\s+(\S+)/.exec(arg);
+  if (m) return folderOf(m[1], true);
+  var row = ctx && ctx.el && ctx.el.closest ? ctx.el.closest('[data-path]') : null;
+  if (row) return folderOf(row.getAttribute('data-path'), row.getAttribute('data-kind') === 'folder');
+  if (/row cwd/.test(arg) && ctxRow) return folderOf(ctxRow.path, ctxRow.folder);
+  m = /->\s*(\S+)\s*$/.exec(arg);
+  if (m && /[.\/]/.test(m[1])) return folderOf(m[1], /\/$/.test(m[1]));
+  return null;
+}
+function terminalAt(ctx) {
+  var rel = terminalCwdFor(ctx);
+  if (rel == null) return PMW.revealKind('terminal');
+  var cwd = PROJECT_CWD + (rel ? '/' + rel : '');
+  var want = normCwd(cwd), l = state.layout, live = {};
+  try { if (window.PMT && typeof PMT.sessions === 'function') PMT.sessions().forEach(function (x) { live[x.id] = x.cwd; }); } catch (_) {}
+  var hit = Object.keys(l.tabs).filter(function (t) {
+    var rec = l.tabs[t];
+    if (rec.kind !== 'terminal') return false;
+    var sid = t.indexOf('terminal:') === 0 ? t.slice(9) : t;
+    var now = live[sid] != null ? live[sid] : (rec.state && rec.state.cwd);
+    return now != null && normCwd(now) === want;
+  })[0];
+  if (hit) return PM_HOME.reveal(hit);
+  return PM_HOME.open({ kind: 'terminal', cwd: cwd });
+}
 
 /* the old bottom panel's reveal paths: open or reveal that kind under rule 2 */
 var BOTTOM_KIND = { terminal: 'terminal', problems: 'problems', output: 'output', ports: 'ports', debug: 'debug-console', browser: 'browser' };
@@ -86,6 +144,7 @@ shims.fileContextMenu = function () {
   doc.addEventListener('contextmenu', function (e) {
     var row = e.target.closest && e.target.closest('.fm-row[data-path], .fm-openrow[data-path]');
     target = row ? row.getAttribute('data-path') : null;
+    ctxRow = row ? { path: target, folder: row.getAttribute('data-kind') === 'folder' } : null;
   }, true);
   if (!menuEl.querySelector('[data-pmw-open]')) {
     var rows = [

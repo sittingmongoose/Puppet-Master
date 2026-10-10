@@ -65,13 +65,20 @@ var shim = {
   setTerminalPaneCount: retired,
   setCollapsed: retired,
   reset: function () { var w = W(); return w ? { ok: !!w.resetLayout() } : retired(); },
+  /* The tour reads r.ok to decide whether the layout came back (and shows its own notice when it did not), so the
+     layout restore runs first and its result is passed through; chat visibility follows only after it worked. */
   o55RestoreSnapshot: function (snapshot) {
     var w = W();
     if (!snapshot || !Array.isArray(snapshot.surfaces)) return { ok: false, reason: 'invalid_snapshot' };
+    var restoreId = w && w.CMD && w.CMD.restore ? w.CMD.restore : 'cmd.workspace_layout.restore';
+    if (w && w.restoreSnapshot) {
+      if (!snapshot.pmw) return { ok: false, reason: 'snapshot_unavailable' };
+      var r = w.restoreSnapshot(snapshot.pmw, 'guided_tour_restore');
+      if (!r || !r.ok) return { ok: false, reason: (r && r.reason) || 'restore_failed' };
+    }
     var chat = snapshot.surfaces.filter(function (s) { return s && s.surface_kind === 'chat'; })[0];
     if (chat) shim.setSurfaceVisible('chat', chat.visible !== false, 'cmd.panel.switch');
-    if (w && snapshot.pmw && w.restoreSnapshot) w.restoreSnapshot(snapshot.pmw, 'guided_tour_restore');
-    return { ok: true, result: { command: { command_id: 'cmd.workspace.layout.restore' } } };
+    return { ok: true, result: { command: { command_id: restoreId } } };
   },
   failNextPersistenceWrite: function () { var w = W(); if (w && w.faults) w.faults.failNextWrite = true; },
   validate: function () { var w = W(); return w && w.state && w.state.layout ? { ok: w.model.validate(w.state.layout).length === 0 } : { ok: true }; },

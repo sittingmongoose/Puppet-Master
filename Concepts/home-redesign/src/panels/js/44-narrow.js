@@ -44,14 +44,23 @@ narrow.solve = function (base, railUser, chatW, chatShown, pinned, prev) {
   return { rail: rail, railWidth: s, chat: chatShown ? c : null, chatStrip: strip, oneColumn: one, C: C, step: step };
 };
 
+/* does el take room in the row? An overlay (the rail peek, the chat peek, the popped-out chat) is absolute or fixed and
+   takes none; counting it as docked width made the ladder undo the overlay it had just opened, frame after frame */
+function inFlow(el) { var p = getComputedStyle(el).position; return p !== 'absolute' && p !== 'fixed'; }
+
+/* the docked footprint only: base = the centre plus the columns that really share the row with it */
 narrow.measure = function () {
   var centre = state.centre;
   if (!centre || !centre.getClientRects().length) return null;
   var chat = qs('#chatPanel');
-  var chatShown = !!chat && !chat.classList.contains('hidden');
+  var ma = mainArea();
+  var floating = !!(ma && ma.hasAttribute('data-pmw-chat-float'));
+  // a popped-out chat is not in the row at all: the ladder treats it as not shown (no strip for a floating window)
+  var chatShown = !!chat && !chat.classList.contains('hidden') && !floating;
   var s = slotEl();
-  var railApplied = s && !s.classList.contains('hidden') && s.offsetParent !== null ? s.getBoundingClientRect().width : 0;
-  var chatApplied = chatShown ? chat.getBoundingClientRect().width : 0;
+  var railApplied = s && !s.classList.contains('hidden') && s.offsetParent !== null && inFlow(s) ? s.getBoundingClientRect().width : 0;
+  // during the chat peek the chat is absolute and the centre already holds the strip's room, so it adds nothing
+  var chatApplied = chatShown && inFlow(chat) ? chat.getBoundingClientRect().width : 0;
   var base = centre.clientWidth + railApplied + chatApplied;
   return { base: base, railUser: railUserWidth(), chatW: chatUser(), chatShown: chatShown };
 };
@@ -85,6 +94,7 @@ narrow.apply = function (next, prev) {
     setAttr(ma, 'data-pmw-rail', next.rail === 'open' ? null : next.rail);
     if (next.rail !== 'fold') ma.removeAttribute('data-pmw-rail-peek');
     setAttr(ma, 'data-pmw-chat', next.chatStrip ? 'strip' : null);
+    if (!next.chatStrip) ma.removeAttribute('data-pmw-chat-peek');   // no strip, no peek: it would come back with the next strip
   }
   var chat = qs('#chatPanel');
   if (chat && next.chat != null) {
