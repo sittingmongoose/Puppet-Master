@@ -84,7 +84,9 @@
 /* one scroll area: the list has no height cap or scrollbar of its own; it grows with the popover body, which scrolls
    and is capped by the room the popover has (76-popover.js place) */
 .pmt-schemes { margin: 0 -4px 8px; padding: 0 4px; border: 1px solid var(--pmw-line, var(--border-light)); border-radius: 4px; }
-.pmt-scheme-group { position: sticky; top: 0; z-index: 1; padding: 6px 6px 3px; font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--pmw-text-3, var(--text-muted)); background: var(--pmw-surface-2, var(--surface-elevated)); }
+/* sticky to the body's very top edge: the body's 4 px top padding would otherwise leave a band where the rows scrolling
+   under the family name peek out above it */
+.pmt-scheme-group { position: sticky; top: -4px; z-index: 1; padding: 6px 6px 3px; font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--pmw-text-3, var(--text-muted)); background: var(--pmw-surface-2, var(--surface-elevated)); }
 .pmt-scheme { display: flex; align-items: center; gap: 8px; min-height: 28px; padding: 2px 6px; border-radius: 3px; cursor: pointer; outline: none; }
 .pmt-scheme:hover, .pmt-scheme:focus { background: color-mix(in srgb, var(--pmw-text, currentColor) 8%, transparent); }
 .pmt-scheme[aria-selected="true"] { background: color-mix(in srgb, var(--pmw-accent, var(--accent-primary)) 16%, transparent); }

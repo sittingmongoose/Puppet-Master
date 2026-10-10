@@ -21,7 +21,7 @@ given and labelled "target". Section numbers are stable; later installments add 
 | Restored after reload | A restored tab (after a reload, or a closed tab reopened) gets its saved scrollback back above a new session and says so ("This terminal was restored with its scrollback. Its earlier session ended when the page reloaded; this is a new session."); section 7 has the saved-scrollback rules. Never a fake live PTY (F3-226, F3-228). |
 | Closing a running terminal | `canClose` shows an inline row: "Close this terminal? <process> is still running and will be stopped." Close terminal / Keep it open. |
 | Notices | Inline rows above the screen, never modals: 30 px minimum height, 12 px text, 24 px text buttons, no side stripes. Warning tone is a tinted surface. |
-| Gutter | 20 px wide (18 px when the body is under 400 px wide), one glyph per prompt line, never a stripe. Glyph 12 px; hit target 20 x 24 px. |
+| Gutter | 20 px wide (18 px when the body is under 400 px wide), one glyph per prompt line, never a stripe. Glyph 12 px; hit target 20 x 24 px. Under Full CRT a mark sits beside its row as the tube shows it (inset by the case, bent by the curvature). A prompt the shell draws again (Ctrl+L, a completion list) keeps its mark. |
 | Scrollbar | 14 px wide (10 px under 400 px), the editor minimap's language: a viewport box (2 px radius, 1 px border), command marks as short heat strips (55 % width, neutral), failed commands as full-width strips in the failure colour, find matches as 45 % strips in the search colour, the current match in the link colour. Marks widen on hover. |
 | Sticky command header | When the top of the view is inside a command's output, a one-line header shows that command's prompt line and its state (Running, Exit 0, Exit N); clicking it jumps to the command. Height: one cell + 8 px. Hidden below 150 px body height and in the alternate screen. |
 
@@ -142,7 +142,9 @@ no evaluation, fixed error messages that never echo the file.
 
 Four layers, resolved field by field: look defaults ("Follow look") < app (`terminal.<field>`) < project
 (`terminal.project.<field>`, written only by Settings) < this tab. The popover writes "This terminal" or "All
-terminals". Everything applies live; no field has a restart badge. Fields (settings key `terminal.<name>`):
+terminals". Everything applies live; no field has a restart badge. Hovering a scheme in the popover previews it on this terminal once
+the pointer rests on the row for 110 ms (the arrow keys preview at once, and after 110 ms while a key repeats), so a
+pointer sweeping the list or a list scrolling under it never strobes the terminal through the schemes it passes. Fields (settings key `terminal.<name>`):
 
 `scheme` (follow | id), `schemePair` (true), `minContrast` (4.5), `font` (follow | jetbrains-mono | atkinson | vt323 |
 departure | sixtyfour | system), `fontSize`, `fontWeight` (400), `lineHeight`, `letterSpacing` (0), `ligatures`
@@ -279,7 +281,7 @@ the glyphs, does not draw curvature, burn-in or noise, and the Appearance popove
 | Inactive dimming | on, overlay of the background at 18 % | content at 80 % opacity (more translucent) | on, black at 40 % (brightness to 60 %) | off | on, parchment at 32 % | `inactiveDim` |
 | Focus | 1 px accent ring at 45 % | luminous rim: 1 px white at 30 % plus a top highlight | a 2 px rule in the screen's text colour under the header; the header keeps the panel surface | 1 px accent line under the header | ink corner brackets (10 px arms, 2 px) | static |
 | Cursor | block | bar | block | block | block | blink 530 ms phases, stops after 15 s idle; unfocused: hollow block; secret input: padlock |
-| Cursor trail | soft, 120 ms | glow, 160 ms | phosphor, 200 ms | off | trace (thin ink line), 140 ms | fires only on jumps over 2 cells after the cursor rested 60 ms |
+| Cursor trail | soft, 120 ms | glow, 160 ms | phosphor, 200 ms | off | trace (thin ink line), 140 ms | fires only on jumps over 2 cells after the cursor rested 60 ms; never while a program hides the cursor (a progress bar redrawing its line) |
 | Smooth scrolling | on | on | off (line steps) | on | on | wheel moves 35 % of the remaining distance per frame |
 | Background | soft vertical gradient from the scheme background | scheme background at 74 % (dark) / 70 % (light) over the shell's one blur; the terminal adds no blur | scheme | scheme | static parchment grain at 55 %, under the text | `background`, `opacity` |
 | Scanlines | off | off | on in Retro dark | off | off | strength 0.30, period 3 device px |

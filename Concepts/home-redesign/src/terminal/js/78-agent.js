@@ -52,23 +52,25 @@
     if (st.mode === 'driving') {
       html = SQ + '<span class="pmt-agent-text"><b>' + nm + '</b> is driving this terminal' +
         (st.steps ? ' · step ' + st.step + ' of ' + st.steps : '') + (st.label ? ' · ' + T.util.esc(st.label) : '') + '</span>';
-      acts = [['takeover', 'Take over'], ['interrupt', 'Interrupt'], ['stop', 'Stop']];
+      acts = [['takeover', 'Take over', 'You type here; ' + nm + ' pauses and is told'], ['interrupt', 'Interrupt', 'Sends Ctrl+C to the running program'],
+        ['stop', 'Stop', 'Ends ' + nm + '\'s run and gives the terminal back to you']];
     } else if (st.mode === 'paused') {
       html = SQ + '<span class="pmt-agent-text">You took over. <b>' + nm + '</b> is paused and has been told.</span>';
-      acts = [['handback', 'Hand back'], ['stop', 'Stop ' + nm]];
+      acts = [['handback', 'Hand back', nm + ' carries on with its run'], ['stop', 'Stop ' + nm, 'Ends ' + nm + '\'s run here']];
     } else if (st.mode === 'permission') {
       /* the command exactly as it would be typed: a control key shows as ^X, never as a space or nothing */
       var shown = st.cmd ? String(st.cmd).replace(/[\x00-\x1f\x7f]/g, function (c) { return '^' + String.fromCharCode(c.charCodeAt(0) ^ 64); }) : '';
       html = SQ + '<span class="pmt-agent-text"><b>' + nm + '</b> wants to type in this terminal' + (shown ? ': <code>' + T.util.esc(shown) + '</code>' : '') + '</span>';
       acts = [['allow', 'Allow once', nm + ' types this one command'],
         ['terminal', 'Allow in this terminal', nm + ' may type here until its run ends or you take over. Each command still needs its own approval.'],
-        ['deny', 'Deny']];
+        ['deny', 'Deny', nm + ' does not type this command']];
     } else if (st.mode === 'secret') {
       html = LOCK + '<span class="pmt-agent-text">Password needed. Only you can answer this prompt' + (st.agent ? '; <b>' + nm + '</b> is waiting' : '') + '.</span>';
-      acts = [['focus', 'Type it']];
+      acts = [['focus', 'Type it', 'Puts the keyboard in this terminal']];
     }
     var actsHtml = '<span class="pmt-agent-acts">' + acts.map(function (a) {
-      return '<button type="button" class="pmt-textbtn" data-act="' + a[0] + '"' + (a[2] ? ' data-pm-hover-label="' + a[2] + '"' : '') + '>' + a[1] + '</button>';
+      /* the hover tag names the action and says what it does (a label alone gets the tag engine's generic line) */
+      return '<button type="button" class="pmt-textbtn" data-act="' + a[0] + '" data-pm-hover-label="' + a[1] + '"' + (a[2] ? ' data-pm-hover-detail="' + a[2] + '"' : '') + '>' + a[1] + '</button>';
     }).join('') + '</span>';
     row.setAttribute('role', st.mode === 'permission' || st.mode === 'secret' ? 'alert' : 'status');
     row.onclick = function (e) { var b = e.target.closest('.pmt-agent-in:not(.pmt-agent-old) button'); if (b) self.act(b.getAttribute('data-act')); };

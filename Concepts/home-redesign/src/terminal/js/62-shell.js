@@ -952,9 +952,13 @@
   };
   LineEditor.prototype.redrawPrompt = function () {
     var sh = this.sh;
+    /* the prompt drawn again carries its marks again, as a shell-integrated prompt does: the terminal moves the waiting
+       command's prompt to this line (14-terminal.js) */
+    sh.mark('A');
     sh.rawOut(sh.promptText());
     var pw = visibleWidth(sh.promptText());
     if (pw && pw % this.term.cols === 0) sh.rawOut(' \r');
+    sh.mark('B');
     this.startX = pw % this.term.cols; this.startOff = pw; this.curRow = 0;
   };
   LineEditor.prototype.histMove = function (d) {

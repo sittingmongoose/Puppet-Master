@@ -281,6 +281,7 @@
     this.charsets = s.charsets.slice(); this.gl = s.gl; this.modes.origin = s.origin; this.modes.autowrap = s.autowrap;
   };
   Terminal.prototype.fullReset = function () {
+    this.erases = (this.erases || 0) + 1;
     this.primary = new T.Buffer(this.cols, this.rows, { scrollback: this.primary.maxScrollback });
     this.alt = new T.Buffer(this.cols, this.rows, { alt: true });
     this.buf = this.primary;
@@ -360,6 +361,8 @@
 
   Terminal.prototype._eraseDisplay = function (mode) {
     var buf = this.buf, cur = buf.cursor, st = this._eraseStyle(), y;
+    /* a whole-screen erase (clear) counts, so the cursor trail never draws the jump home that comes with it */
+    if (mode === 2 || mode === 3) this.erases = (this.erases || 0) + 1;
     if (mode === 0) {
       buf.line(cur.y).clear(cur.x, buf.cols, st);
       for (y = cur.y + 1; y < buf.rows; y++) { buf.line(y).clear(0, buf.cols, st); buf.line(y).wrapped = false; }
@@ -707,7 +710,20 @@
     if (this.buf !== buf) return;
     var line = buf.line(buf.cursor.y), now = Date.now();
     if (kind === 'A') {
-      if (this.curCmd && !this.curCmd.end && this.curCmd.outputLine) this._endCmd(null);
+      var cur = this.curCmd;
+      /* the shell drew its prompt again for the same command line (Ctrl+L, a completion list printed above it): the
+         command's prompt moves to the new line, so its gutter mark stays beside the prompt the person sees, instead of
+         staying on the line the clear pushed into the scrollback */
+      if (cur && !cur.outputLine && (cur.state === 'prompt' || cur.state === 'input') && cur.promptLine) {
+        if (cur.promptLine !== line) {
+          if (cur.promptLine.mark && cur.promptLine.mark.cmd === cur) { cur.promptLine.mark = null; cur.promptLine.ver++; }
+          cur.promptLine = line; line.mark = { cmd: cur, kind: 'prompt' }; line.ver++;
+        }
+        cur.inputLine = null; cur.state = 'prompt';
+        this.emit('command', { type: 'prompt', cmd: cur });
+        return;
+      }
+      if (cur && !cur.end && cur.outputLine) this._endCmd(null);
       var cmd = { id: ++this.cmdSeq, cmdline: '', cwd: this.cwd || '', by: 'user', exit: null, start: 0, end: 0,
         promptLine: line, inputLine: null, inputCol: 0, outputLine: null, endLine: null, state: 'prompt' };
       line.mark = { cmd: cmd, kind: 'prompt' }; line.ver++;
