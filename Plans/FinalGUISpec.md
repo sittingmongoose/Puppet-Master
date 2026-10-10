@@ -44493,6 +44493,10 @@ canonical_text: >-
   editor syntax amber. That choice is stored once in F3-642's terminal appearance model; the editor reads it
   and keeps no copy.
   The active tab and its panel are one shape in every look; the shape's fill follows the look's selection grammar: the body's fill in Friendly, Glass and Basic, reverse video in Retro, ink in NieR. Glass's 1 px rim along the crown is material, not an accent.
+  Text and state colours, including dim text, accent, ok, warn, bad and inactive tabs, reach at least 4.5:1
+  in every look and in NieR. They are mixed from the page's own colours so the Settings accent flows
+  through. A primary button chooses black or white ink from the fill's luminance and keeps at least 4.5:1
+  contrast.
 gui_related: true
 gui_classification_reason: Defines how panels, strips, menus, dividers and drags render in each look, NieR Mode and Reduced Motion.
 split_recommended: false
@@ -44520,6 +44524,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D27)"
   - "Plans/Decision_Log.md#DL-180"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D23, D24)"
@@ -44546,6 +44551,7 @@ negative_constraints:
 compatibility_only_notes:
   - "The concept also gates some touches by its own hook names and by part keys outside this list; only the existing part keys named here are canon."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Requires page-derived text and state contrast and luminance-selected primary-button ink."
   - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Retro editor syntax reads the terminal Retro scheme choice once and keeps no copy."
   - "Amended 2026-10-10 (lead ruling L5): The active tab and its panel share one shape and the look selection fill; the Glass crown rim is material."
 owner_hints:

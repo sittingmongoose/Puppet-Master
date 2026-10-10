@@ -6007,6 +6007,7 @@ acceptance_criteria:
   - "No result from the panels concept or its harness is reported as native certification."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
   - "Editor and terminal list the same code colour-scheme catalog and open the same Appearance popover component."
+  - "In every look and in NieR, text and state colours (dim text, accent, ok, warn, bad and inactive tabs) mixed from the page's own colours reach 4.5:1 while the Settings accent flows through, and primary buttons choose black or white ink from fill luminance with at least 4.5:1 contrast."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -6022,6 +6023,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D27)"
   - "Plans/Decision_Log.md#DL-180"
   - "Plans/Decision_Log.md#DL-184"
@@ -6045,6 +6047,7 @@ negative_constraints:
 compatibility_only_notes:
   - "The panels concept's harness hooks and storage keys are concept lineage and are not product test names."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Certifies both text/state contrast and primary-button ink across looks and NieR."
   - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
   - "Superseded 2026-10-09 (DL-180): ATS-029's four-panel live matrix and its exact 72-case visual matrix."
 owner_boundary_notes:
