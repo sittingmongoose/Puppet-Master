@@ -44,3 +44,7 @@ html[data-o55-nier="on"] .pmt-agentrow .pmt-agent-sq { stroke: currentColor; }
 html[data-o55-nier="on"] .pmt-agentrow .pmt-textbtn:hover { background: rgba(var(--o55-nier-paper-rgb), .14); }
 html[data-o55-nier="on"] .pmt-notice-warn { background: var(--o55-nier-warn-surface); }
 html[data-o55-nier="on"] .pmt-a11y-body h3 { text-transform: uppercase; letter-spacing: .1em; }
+
+/* parchment grain (50-fx.css .pmt-fx-paper) sits under the text, not over it, and stays quiet: ink keeps its contrast */
+html[data-o55-nier="on"] .pmt-fx-paper { --pmt-paper-strength: .55; }
+html[data-o55-nier="on"] .pmt-fx-paper::before { z-index: 0; }

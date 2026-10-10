@@ -1,0 +1,699 @@
+<!doctype html>
+<html lang="en" data-theme="retro-dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Terminal effects lab</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="../css/50-fx.css">
+<style>
+  @font-face { font-family: 'VT323'; font-style: normal; font-weight: 400; src: url("../fonts/pmt-vt323-latin-400.woff2") format("woff2"); }
+  @font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 400 800; src: url("../fonts/pmt-jetbrains-mono-latin-var.woff2") format("woff2"); }
+  :root { color-scheme: dark; --lab-bg: #0f1113; --lab-panel: #16191c; --lab-line: #2a2f35; --lab-text: #d9dee3; --lab-dim: #8d969f; --lab-accent: #8fe39a; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--lab-bg); color: var(--lab-text); font: 12px/1.45 system-ui, -apple-system, 'Segoe UI', sans-serif; }
+  header { display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: baseline; padding: 10px 16px; border-bottom: 1px solid var(--lab-line); }
+  header h1 { font-size: 14px; font-weight: 600; margin: 0; }
+  header .lab-path { color: var(--lab-accent); }
+  header .lab-path.lab-cpu { color: #ffb963; }
+  header .lab-meta { color: var(--lab-dim); }
+  main { display: grid; grid-template-columns: minmax(0, auto) 350px; gap: 16px; padding: 14px 16px; align-items: start; }
+  .lab-stagecol { min-width: 0; }
+  .lab-backdrop { display: inline-block; padding: 16px; border-radius: 6px; background: #0b0d0f; }
+  .lab-backdrop.lab-glassy { background: linear-gradient(125deg, #3a2466 0%, #0f4b5c 45%, #5a3416 100%); }
+  .lab-root { position: relative; }
+  .pmt-screen { position: relative; overflow: hidden; background: var(--pmt-bg); cursor: crosshair; border-radius: 4px; }
+  .pmt-screen.pmt-fx-gl { background: transparent; }
+  .pmt-screen > canvas { position: absolute; left: 0; top: 0; display: block; }
+  .pmt-fxcanvas, .pmt-trail, .lab-probe { pointer-events: none; }
+  .lab-marker { position: absolute; width: 13px; height: 13px; margin: -6px 0 0 -6px; pointer-events: none; z-index: 5; display: none; }
+  .lab-marker::before, .lab-marker::after { content: ""; position: absolute; background: #ff3df2; }
+  .lab-marker::before { left: 6px; top: 0; width: 1px; height: 13px; }
+  .lab-marker::after { top: 6px; left: 0; height: 1px; width: 13px; }
+  [hidden] { display: none !important; }
+  .lab-banner { margin: 10px 0 0; padding: 6px 10px; border: 1px solid #6b4b1f; background: #241a0e; color: #ffcf8f; border-radius: 4px; }
+  .lab-readouts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 18px; margin-top: 10px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11.5px; }
+  .lab-readouts div { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .lab-readouts b { color: var(--lab-dim); font-weight: 400; }
+  aside { display: flex; flex-direction: column; gap: 10px; }
+  fieldset { margin: 0; padding: 8px 10px 10px; border: 1px solid var(--lab-line); border-radius: 5px; background: var(--lab-panel); }
+  legend { padding: 0 4px; color: var(--lab-dim); font-size: 11px; letter-spacing: .04em; text-transform: uppercase; }
+  .lab-row { display: flex; align-items: center; gap: 8px; min-height: 24px; }
+  .lab-row label { flex: 0 0 auto; }
+  .lab-row .lab-k { flex: 0 0 74px; color: var(--lab-dim); }
+  .lab-row input[type=range] { flex: 1 1 auto; min-width: 0; accent-color: var(--lab-accent); }
+  .lab-row output { flex: 0 0 64px; text-align: right; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; }
+  .lab-fx { padding: 3px 0 4px; border-top: 1px solid #22262b; }
+  .lab-fx:first-of-type { border-top: 0; }
+  .lab-fx .lab-name { font-weight: 600; }
+  .lab-fx .lab-note { color: var(--lab-dim); font-size: 11px; margin-left: auto; }
+  button, select { font: inherit; color: var(--lab-text); background: #20252a; border: 1px solid #353b42; border-radius: 4px; min-height: 26px; padding: 2px 10px; }
+  button:hover { background: #283038; }
+  button:disabled { opacity: .45; }
+  button.lab-on { border-color: var(--lab-accent); color: var(--lab-accent); }
+  select { padding: 2px 6px; }
+  .lab-btns { display: flex; flex-wrap: wrap; gap: 6px; }
+  .lab-hint { color: var(--lab-dim); font-size: 11px; margin-top: 6px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Terminal effects lab</h1>
+  <span class="lab-path" id="labPath">starting</span>
+  <span class="lab-meta" id="labRenderer"></span>
+  <span class="lab-meta" id="labDpr"></span>
+</header>
+<main>
+  <section class="lab-stagecol">
+    <div class="lab-backdrop" id="backdrop">
+      <div class="lab-root" id="root" data-pmt-scheme="dark">
+        <div class="pmt-screen" id="screen" data-pmh="off" tabindex="0" aria-label="Simulated terminal screen">
+          <canvas class="pmt-grid" id="grid"></canvas>
+          <canvas class="pmt-fxcanvas" id="fx"></canvas>
+          <canvas class="pmt-trail" id="trail"></canvas>
+          <canvas class="lab-probe" id="probe"></canvas>
+          <div class="lab-marker" id="marker"></div>
+        </div>
+      </div>
+    </div>
+    <div class="lab-banner" id="cpuBanner" hidden>No GPU path: CSS fallback. Not drawn here: curvature, bezel, vignette, burn-in, noise, flicker, degauss.</div>
+    <div class="lab-readouts">
+      <div><b>pointer</b> <span id="roPointer">move over the screen</span></div>
+      <div><b>cell</b> <span id="roCell">-</span></div>
+      <div><b>loop</b> <span id="roLoop">-</span></div>
+      <div><b>animating()</b> <span id="roAnim">-</span></div>
+      <div><b>render() upload</b> <span id="roUpload">-</span></div>
+      <div><b>render() no upload</b> <span id="roStatic">-</span></div>
+      <div><b>render()+sync</b> <span id="roSync">-</span></div>
+      <div><b>GPU timer</b> <span id="roGpu">-</span></div>
+      <div><b>corner check</b> <span id="roCorner">-</span></div>
+      <div><b>context</b> <span id="roCtx">-</span></div>
+    </div>
+  </section>
+  <aside>
+    <fieldset>
+      <legend>Preset and screen</legend>
+      <div class="lab-btns" id="presets">
+        <button type="button" data-preset="retroDark">Retro dark default</button>
+        <button type="button" data-preset="fullCRT">Full CRT</button>
+        <button type="button" data-preset="off">Off</button>
+      </div>
+      <div class="lab-row" style="margin-top:8px"><span class="lab-k">Scheme</span>
+        <select id="scheme">
+          <option value="green">PM Phosphor Green</option>
+          <option value="amber">PM Phosphor Amber</option>
+          <option value="parchment">PM YoRHa Parchment (NieR)</option>
+          <option value="glass">Tokyo Night Storm (Glass)</option>
+        </select></div>
+      <div class="lab-row"><span class="lab-k">Font</span>
+        <select id="font"><option value="vt323">VT323 20 px</option><option value="jbm">JetBrains Mono 13 px</option></select></div>
+      <div class="lab-row"><span class="lab-k">Size</span>
+        <select id="size"><option value="1000x500">1000 x 500</option><option value="720x360">720 x 360</option><option value="480x240">480 x 240</option><option value="320x240">320 x 240</option></select></div>
+      <div class="lab-row"><label><input type="checkbox" id="forceCss"> Force CSS fallback</label></div>
+      <div class="lab-row"><label><input type="checkbox" id="reduced"> Reduced Motion</label></div>
+    </fieldset>
+    <fieldset id="fxset">
+      <legend>Effects</legend>
+      <div id="fxControls"></div>
+      <div class="lab-row lab-fx"><span class="lab-name lab-k">Dim</span>
+        <input type="range" id="dim" min="0" max="0.9" step="0.01"><output id="dimOut"></output></div>
+      <div class="lab-btns" style="margin-top:6px"><button type="button" id="degauss">Degauss</button>
+        <button type="button" id="stream">Stream a build</button><button type="button" id="clearScr">Clear screen</button></div>
+    </fieldset>
+    <fieldset>
+      <legend>Cursor trail</legend>
+      <div class="lab-row"><span class="lab-k">Style</span>
+        <select id="trailStyle"><option value="soft">soft (Friendly)</option><option value="glow">glow (Glass)</option>
+          <option value="phosphor">phosphor (Retro)</option><option value="trace">trace (NieR)</option><option value="off">off (Basic)</option></select></div>
+      <div class="lab-btns"><button type="button" id="farJump">Far jump</button><button type="button" id="probeBtn" class="lab-on">Probe crosshair</button></div>
+      <div class="lab-hint">Click the screen to move the cursor there. Arrow keys move one cell, which never fires a trail (it needs more than 2 cells after a 60 ms rest).</div>
+    </fieldset>
+    <fieldset>
+      <legend>Measure</legend>
+      <div class="lab-btns"><button type="button" id="measure">Frame times (120 frames)</button><button type="button" id="corner">Corner check</button>
+        <button type="button" id="lose">Lose context</button></div>
+      <div class="lab-hint">Median and p95 of render(): with an upload each frame, without one (an animation frame), and with a readPixels sync (the real GPU cost upper bound).</div>
+    </fieldset>
+  </aside>
+</main>
+<script>var T = {};</script>
+<script src="../js/50-fx-gl.js"></script>
+<script src="../js/51-fx-trail.js"></script>
+<script>
+(function () {
+  'use strict';
+  var $ = function (s) { return document.querySelector(s); };
+  var Q = new URLSearchParams(location.search);
+
+  /* ---------- schemes (from schemes/pm-originals.json and Tokyo Night Storm) ---------- */
+  var SCHEMES = {
+    green: { look: 'retro', dark: true, bg: '#071109', fg: '#77ea83', cursor: '#7eff8c', cursorText: '#071109', glow: '#12fb56', trail: 'phosphor',
+      ansi: ['#203a24', '#c4ec35', '#3dcc56', '#d3ffb0', '#42ae8e', '#88b297', '#6bd6a9', '#accdae', '#4b7a4f', '#d6f941', '#25e954', '#deff9f', '#62cba9', '#a1d0b1', '#87f2c4', '#e9fee9'] },
+    amber: { look: 'retro', dark: true, bg: '#150c06', fg: '#ffb963', cursor: '#ffd29e', cursorText: '#150c06', glow: '#ffa842', trail: 'phosphor',
+      ansi: ['#432d1a', '#f5642b', '#fea621', '#ffe58b', '#b98e6c', '#cf9a7d', '#dfc691', '#ddc9ac', '#8c6843', '#ff7f51', '#ffc781', '#ffef90', '#d8a984', '#e9b396', '#f6dda7', '#fff3e2'] },
+    parchment: { look: 'nier', dark: false, bg: '#ccc8b1', fg: '#211f1b', cursor: '#211f1b', cursorText: '#dcd8c2', glow: '#211f1b', trail: 'trace',
+      ansi: ['#211f1b', '#7d3427', '#425731', '#5c5022', '#3e505a', '#5d4452', '#3b5654', '#4d4b3f', '#6f6c5e', '#7d3427', '#364b23', '#524413', '#2c3e4b', '#4e3343', '#274543', '#454138'] },
+    glass: { look: 'glass', dark: true, bg: '#24283b', bgAlpha: 0.78, fg: '#c0caf5', cursor: '#c0caf5', cursorText: '#24283b', glow: '#7aa2f7', trail: 'glow',
+      ansi: ['#1d202f', '#f7768e', '#9ece6a', '#e0af68', '#7aa2f7', '#bb9af7', '#7dcfff', '#a9b1d6', '#414868', '#f7768e', '#9ece6a', '#e0af68', '#7aa2f7', '#bb9af7', '#7dcfff', '#c0caf5'] }
+  };
+  var ROLES = { p: [10, 1], path: [12, 0], ok: [10, 1], err: [9, 1], em: [15, 1], dim: [8, 0], blue: [12, 0], warn: [11, 0], bad: [9, 0], good: [10, 0], hdr: [15, 1] };
+  /* VT323 has no bold face: bold shows as the bright colour only (no synthetic bold), as the terminal renderer does */
+  var FONTS = { vt323: { family: "'VT323', monospace", px: 20, lh: 1.1, bold: false }, jbm: { family: "'JetBrains Mono', ui-monospace, monospace", px: 13, lh: 1.3, bold: true } };
+
+  var PROMPT = '{p}pm@tastebook{/} {path}~/tastebook/api{/} $ ';
+  var SESSION = [
+    PROMPT + 'cargo build --release',
+    '   {ok}Compiling{/} proc-macro2 v1.0.89',
+    '   {ok}Compiling{/} unicode-ident v1.0.13',
+    '   {ok}Compiling{/} serde v1.0.214',
+    '   {ok}Compiling{/} tokio v1.41.0',
+    '   {ok}Compiling{/} tastebook-api v0.4.2 (/home/pm/tastebook/api)',
+    '{err}error[E0308]{/}{em}: mismatched types{/}',
+    '   {blue}-->{/} src/media/import.rs:128:24',
+    '    {blue}|{/}',
+    '{blue}128{/} {blue}|{/}     let bytes: Vec<u8> = reader.read_all().await;',
+    '    {blue}|{/}                {blue}-------{/}   {err}^^^^^^^^^^^^^^^^^^^^^^^ expected `Vec<u8>`, found `Result<Vec<u8>, io::Error>`{/}',
+    '    {blue}|{/}                {blue}|{/}',
+    '    {blue}|{/}                {blue}expected due to this{/}',
+    '{err}error{/}{em}: could not compile `tastebook-api` (bin "tastebook-api") due to 1 previous error{/}',
+    PROMPT + 'pm services --table',
+    '{dim}┌──────────────┬──────────┬─────────┬──────────┐{/}',
+    '{dim}│{/} {hdr}service{/}      {dim}│{/} {hdr}state{/}    {dim}│{/} {hdr}uptime{/}  {dim}│{/} {hdr}requests{/} {dim}│{/}',
+    '{dim}├──────────────┼──────────┼─────────┼──────────┤{/}',
+    '{dim}│{/} api          {dim}│{/} {good}running{/}  {dim}│{/} 3h 12m  {dim}│{/}   48,210 {dim}│{/}',
+    '{dim}│{/} media-worker {dim}│{/} {warn}degraded{/} {dim}│{/} 0h 41m  {dim}│{/}    1,907 {dim}│{/}',
+    '{dim}│{/} search       {dim}│{/} {bad}stopped{/}  {dim}│{/} -       {dim}│{/}        - {dim}│{/}',
+    '{dim}└──────────────┴──────────┴─────────┴──────────┘{/}',
+    PROMPT
+  ];
+  var CRATES = ['libc v0.2.161', 'cfg-if v1.0.0', 'memchr v2.7.4', 'bytes v1.8.0', 'pin-project-lite v0.2.15', 'itoa v1.0.11',
+    'smallvec v1.13.2', 'once_cell v1.20.2', 'log v0.4.22', 'mio v1.0.2', 'socket2 v0.5.7', 'tracing-core v0.1.32',
+    'hashbrown v0.15.0', 'indexmap v2.6.0', 'http v1.1.0', 'httparse v1.9.5', 'hyper v1.5.0', 'tower v0.5.1',
+    'axum-core v0.4.5', 'serde_json v1.0.132', 'image v0.25.4', 'axum v0.7.7', 'sqlx-core v0.8.2', 'tastebook-api v0.4.2 (/home/pm/tastebook/api)'];
+
+  function parseLine(s) {
+    var out = [], re = /\{(\w+)\}([\s\S]*?)\{\/\}/g, last = 0, m;
+    while ((m = re.exec(s))) { if (m.index > last) out.push([s.slice(last, m.index), null]); out.push([m[2], m[1]]); last = re.lastIndex; }
+    if (last < s.length) out.push([s.slice(last), null]);
+    return out;
+  }
+
+  /* ---------- state ---------- */
+  var dpr = window.devicePixelRatio || 1;
+  var params = T.FXGL.preset('retroDark');
+  var st = {
+    scheme: 'green', font: 'vt323', cssW: 1000, cssH: 500, reduced: false, forceCss: false, probe: true,
+    trailStyle: 'phosphor', lines: SESSION.map(parseLine), cur: { col: 0, row: 0 }, curAuto: true,
+    manual: false, gridDirty: true, probeDirty: true, trailWas: false, lastRender: 0, frames: 0, fpsT: 0, fps: 0,
+    pointer: null, streaming: null
+  };
+  var PAD = { x: 12, y: 10 };
+  var M = { cellW: 8, cellH: 22, asc: 16, cols: 80, rows: 20 };
+
+  var screen = $('#screen'), grid = $('#grid'), fxc = $('#fx'), trailC = $('#trail'), probeC = $('#probe'), marker = $('#marker');
+  var gctx = grid.getContext('2d'), pctx = probeC.getContext('2d');
+  var fx = T.FXGL.create(fxc, { allowSoftware: Q.get('software') === '1',
+    onLost: function () { $('#roCtx').textContent = 'lost (CSS fallback while lost)'; applyPath(); },
+    onRestored: function () { $('#roCtx').textContent = 'restored, re-uploaded'; st.gridDirty = true; applyPath(); } });
+  var trail = T.FXTrail.create(trailC);
+  var gl = fx ? fx.gl : null;
+
+  function gpu() { return !!fx && !fx.lost && !st.forceCss; }
+  function now() { return performance.now(); }
+  function eff() {
+    var p = JSON.parse(JSON.stringify(params));
+    if (st.reduced) { p.burnIn.on = false; p.noise.on = false; p.flicker.on = false; p.degauss = null; }
+    return p;
+  }
+  function trailStyle() { return st.reduced ? 'off' : st.trailStyle; }
+
+  /* ---------- metrics and layout ---------- */
+  function measure() {
+    var f = FONTS[st.font];
+    gctx.setTransform(1, 0, 0, 1, 0, 0);
+    gctx.font = f.px + 'px ' + f.family;
+    var tm = gctx.measureText('0');
+    var adv = tm.width;
+    M.cellW = Math.ceil(adv * dpr) / dpr;
+    M.cellH = Math.round(f.px * f.lh * dpr) / dpr;
+    var asc = tm.fontBoundingBoxAscent || f.px * 0.8, desc = tm.fontBoundingBoxDescent || f.px * 0.2;
+    M.asc = Math.round(((M.cellH - (asc + desc)) / 2 + asc) * dpr) / dpr;
+    M.cols = Math.max(4, Math.floor((st.cssW - PAD.x * 2) / M.cellW));
+    M.rows = Math.max(2, Math.floor((st.cssH - PAD.y * 2) / M.cellH));
+  }
+  function layout() {
+    var W = Math.round(st.cssW * dpr), H = Math.round(st.cssH * dpr);
+    screen.style.width = st.cssW + 'px'; screen.style.height = st.cssH + 'px';
+    [grid, fxc, trailC, probeC].forEach(function (c) { c.width = W; c.height = H; c.style.width = st.cssW + 'px'; c.style.height = st.cssH + 'px'; });
+    if (fx) fx.resize(W, H, dpr);
+    measure();
+    if (st.curAuto) placeCursorAtEnd();
+    st.gridDirty = true; st.probeDirty = true;
+    trail.clear();
+  }
+  function visibleLines() { var L = st.lines; return L.slice(Math.max(0, L.length - M.rows)); }
+  function lineText(segs) { return segs.map(function (s) { return s[0]; }).join(''); }
+  function placeCursorAtEnd() {
+    var vis = visibleLines(), r = vis.length - 1;
+    st.cur = { col: Math.min(M.cols - 1, lineText(vis[r]).length), row: r };
+  }
+  function cellRect(col, row) { return { x: PAD.x + col * M.cellW, y: PAD.y + row * M.cellH, w: M.cellW, h: M.cellH }; }
+
+  /* ---------- the fake terminal ---------- */
+  var BOX = { '─': 'lr', '│': 'ud', '┌': 'rd', '┐': 'ld', '└': 'ru', '┘': 'lu', '├': 'udr', '┤': 'udl', '┬': 'lrd', '┴': 'lru', '┼': 'lrud' };
+  function drawBox(ctx, arms, x, y, w, h) {          /* in device pixels, so every line covers whole pixel rows */
+    var X = Math.round(x * dpr), Y = Math.round(y * dpr), X1 = Math.round((x + w) * dpr), Y1 = Math.round((y + h) * dpr);
+    var t = Math.max(1, Math.round(w * dpr * 0.12));
+    var hx = X + Math.floor((X1 - X - t) / 2), hy = Y + Math.floor((Y1 - Y - t) / 2);
+    ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0);
+    if (arms.indexOf('l') >= 0) ctx.fillRect(X, hy, hx + t - X, t);
+    if (arms.indexOf('r') >= 0) ctx.fillRect(hx, hy, X1 - hx, t);
+    if (arms.indexOf('u') >= 0) ctx.fillRect(hx, Y, t, hy + t - Y);
+    if (arms.indexOf('d') >= 0) ctx.fillRect(hx, hy, t, Y1 - hy);
+    ctx.restore();
+  }
+  function drawGrid(opaque) {
+    var S = SCHEMES[st.scheme], f = FONTS[st.font], ctx = gctx;
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, grid.width, grid.height);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    if (opaque) {
+      ctx.globalAlpha = S.bgAlpha === undefined ? 1 : S.bgAlpha;
+      ctx.fillStyle = S.bg; ctx.fillRect(0, 0, st.cssW, st.cssH);
+      ctx.globalAlpha = 1;
+    }
+    var vis = visibleLines();
+    for (var r = 0; r < vis.length; r++) {
+      var col = 0, y0 = PAD.y + r * M.cellH;
+      for (var s = 0; s < vis[r].length; s++) {
+        var seg = vis[r][s], role = seg[1] ? ROLES[seg[1]] : null;
+        ctx.fillStyle = role ? S.ansi[role[0]] : S.fg;
+        ctx.font = (role && role[1] && f.bold ? '700 ' : '400 ') + f.px + 'px ' + f.family;
+        for (var i = 0; i < seg[0].length && col < M.cols; i++, col++) {
+          var ch = seg[0][i], x = PAD.x + col * M.cellW;
+          if (ch === ' ') continue;
+          if (BOX[ch]) drawBox(ctx, BOX[ch], x, y0, M.cellW, M.cellH);
+          else ctx.fillText(ch, x, y0 + M.asc);
+        }
+      }
+    }
+    /* block cursor and the glyph under it */
+    var c = cellRect(st.cur.col, st.cur.row);
+    ctx.fillStyle = S.cursor; ctx.fillRect(c.x, c.y, c.w, c.h);
+    var under = (lineText(vis[st.cur.row] || []) || '')[st.cur.col];
+    if (under && under !== ' ' && !BOX[under]) { ctx.fillStyle = S.cursorText; ctx.font = '400 ' + f.px + 'px ' + f.family; ctx.fillText(under, c.x, c.y + M.asc); }
+  }
+  /* test pattern for the corner check: every cell its own colour (R = col, G = row, B = 200), padding white */
+  function drawPattern(cv) {
+    var ctx = cv.getContext('2d');
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, cv.width, cv.height);
+    for (var r = 0; r < M.rows; r++) for (var c = 0; c < M.cols; c++) {
+      var x0 = Math.round((PAD.x + c * M.cellW) * dpr), y0 = Math.round((PAD.y + r * M.cellH) * dpr);
+      var x1 = Math.round((PAD.x + (c + 1) * M.cellW) * dpr), y1 = Math.round((PAD.y + (r + 1) * M.cellH) * dpr);
+      ctx.fillStyle = 'rgb(' + c + ',' + r + ',200)'; ctx.fillRect(x0, y0, x1 - x0, y1 - y0);
+    }
+  }
+
+  /* ---------- probe: a crosshair drawn in SOURCE space, so it goes through the warp ---------- */
+  function drawProbe() {
+    var ctx = pctx;
+    ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, probeC.width, probeC.height);
+    if (!st.probe || !st.pointer || !st.pointer.src) return;
+    var s = st.pointer.src;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var px = 1 / dpr, x = (Math.floor(s.x * dpr) + 0.5) / dpr, y = (Math.floor(s.y * dpr) + 0.5) / dpr;
+    ctx.strokeStyle = 'rgba(255, 214, 0, 0.95)'; ctx.lineWidth = px;
+    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(st.cssW, y); ctx.moveTo(x, 0); ctx.lineTo(x, st.cssH); ctx.stroke();
+    if (st.pointer.cell) {
+      var c = cellRect(st.pointer.cell.col, st.pointer.cell.row);
+      ctx.strokeStyle = 'rgba(255, 214, 0, 0.9)';
+      ctx.strokeRect(c.x + px / 2, c.y + px / 2, c.w - px, c.h - px);
+    }
+  }
+
+  /* ---------- path switching ---------- */
+  function applyPath() {
+    var S = SCHEMES[st.scheme], g = gpu(), p = eff();
+    var root = $('#root');
+    root.setAttribute('data-pmt-scheme', S.dark ? 'dark' : 'light');
+    root.style.setProperty('--pmt-bg', S.bgAlpha ? hexA(S.bg, S.bgAlpha) : S.bg);
+    root.style.setProperty('--pmt-glow-color', S.glow);
+    root.style.setProperty('--pmt-glow-radius', p.glow.radius + 'px');
+    root.style.setProperty('--pmt-glow-strength', String(p.glow.strength));
+    root.style.setProperty('--pmt-scan-strength', String(p.scanlines.strength));
+    root.style.setProperty('--pmt-scan-period', String(p.scanlines.period));
+    root.style.setProperty('--pmt-dpr', String(dpr));
+    $('#backdrop').classList.toggle('lab-glassy', st.scheme === 'glass');
+    screen.classList.toggle('pmt-fx-gl', g);
+    screen.classList.toggle('pmt-fx-scan', !g && p.scanlines.on);
+    screen.classList.toggle('pmt-fx-glow', !g && p.glow.on);
+    screen.classList.toggle('pmt-fx-paper', S.look === 'nier');
+    screen.classList.toggle('pmt-fx-glass', S.look === 'glass');
+    fxc.hidden = !g; trailC.hidden = g; probeC.hidden = g;
+    $('#cpuBanner').hidden = g;
+    var lp = $('#labPath');
+    lp.textContent = g ? (fx.info.webgl2 ? 'WebGL2 path' : 'WebGL1 path') : (fx ? 'CSS fallback (forced or context lost)' : 'No GPU path: CSS fallback');
+    lp.classList.toggle('lab-cpu', !g);
+    $('#degauss').disabled = !g || st.reduced;
+    document.documentElement.setAttribute('data-motion', st.reduced ? 'reduced' : 'full');
+    st.gridDirty = true; st.probeDirty = true;
+  }
+  function hexA(hex, a) { var n = parseInt(hex.slice(1), 16); return 'rgba(' + (n >> 16 & 255) + ',' + (n >> 8 & 255) + ',' + (n & 255) + ',' + a + ')'; }
+
+  /* ---------- the frame loop (a stand-in for the policy module: event driven, idle stop, 30 fps ambient cap) ---------- */
+  function renderNow(t, changedGrid, changedTrail, changedProbe) {
+    return fx.render([grid, { canvas: trailC, blend: trail.blend }, probeC], eff(), t,
+      [!!changedGrid, !!changedTrail, !!changedProbe]);
+  }
+  function tick() {
+    requestAnimationFrame(tick);
+    if (st.manual) return;
+    var t = now();
+    if (t - st.fpsT >= 1000) { st.fps = st.frames; st.frames = 0; st.fpsT = t; $('#roLoop').textContent = st.fps ? st.fps + ' renders/s' : 'idle (0 renders/s)'; }
+    var g = gpu();
+    var trailMoving = trail.active ? trail.frame(t) : false;
+    var trailChanged = trailMoving || st.trailWas; st.trailWas = trailMoving;
+    if (st.gridDirty) drawGrid(g);
+    if (st.probeDirty) drawProbe();
+    if (!g) { if (st.gridDirty || trailChanged || st.probeDirty) st.frames++; st.gridDirty = false; st.probeDirty = false; $('#roAnim').textContent = 'CSS path (static)'; return; }
+    var p = eff(), anim = fx.animating(p, t);
+    $('#roAnim').textContent = anim ? 'yes' : 'no';
+    var need = st.gridDirty || st.probeDirty || trailChanged || anim;
+    if (!need) return;
+    if (!st.gridDirty && !st.probeDirty && !trailChanged) {
+      var q = JSON.parse(JSON.stringify(p)); q.noise.on = false; q.flicker.on = false;
+      var fast = fx.animating(q, t);
+      if (!fast && t - st.lastRender < 1000 / T.FXGL.AMBIENT_FPS - 2) return;   // ambient effects: at most 30 fps
+    }
+    renderNow(t, st.gridDirty, trailChanged, st.probeDirty);
+    st.gridDirty = false; st.probeDirty = false; st.lastRender = t; st.frames++;
+  }
+
+  /* ---------- pointer ---------- */
+  function pointerAt(clientX, clientY) {
+    var r = screen.getBoundingClientRect(), x = clientX - r.left, y = clientY - r.top;
+    var src = gpu() ? fx.mapPointer(x, y, r.width, r.height) : { x: x, y: y };
+    var cell = null;
+    if (src) {
+      var c = Math.floor((src.x - PAD.x) / M.cellW), rr = Math.floor((src.y - PAD.y) / M.cellH);
+      if (c >= 0 && rr >= 0 && c < M.cols && rr < M.rows) cell = { col: c, row: rr };
+    }
+    return { x: x, y: y, src: src, cell: cell };
+  }
+  screen.addEventListener('pointermove', function (e) {
+    var p = st.pointer = pointerAt(e.clientX, e.clientY);
+    marker.style.display = 'block'; marker.style.left = p.x + 'px'; marker.style.top = p.y + 'px';
+    $('#roPointer').textContent = 'screen ' + p.x.toFixed(1) + ', ' + p.y.toFixed(1) + (p.src ? '  ->  source ' + p.src.x.toFixed(2) + ', ' + p.src.y.toFixed(2) : '  ->  outside the screen');
+    var vis = visibleLines();
+    $('#roCell').textContent = p.cell ? 'col ' + p.cell.col + ', row ' + p.cell.row + "  '" + ((lineText(vis[p.cell.row] || []))[p.cell.col] || ' ') + "'" : '-';
+    st.probeDirty = true;
+  });
+  screen.addEventListener('pointerleave', function () { st.pointer = null; marker.style.display = 'none'; st.probeDirty = true; });
+  function moveCursor(col, row, t) {
+    var from = cellRect(st.cur.col, st.cur.row);
+    st.cur = { col: col, row: row }; st.curAuto = false;
+    var to = cellRect(col, row);
+    trail.jump(from, to, SCHEMES[st.scheme].cursor, trailStyle(), t === undefined ? now() : t);
+    st.gridDirty = true;
+  }
+  screen.addEventListener('pointerdown', function (e) {
+    screen.focus();
+    var p = pointerAt(e.clientX, e.clientY);
+    if (p.cell) moveCursor(p.cell.col, p.cell.row);
+  });
+  screen.addEventListener('keydown', function (e) {
+    var d = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] }[e.key];
+    if (!d) return;
+    e.preventDefault();
+    moveCursor(Math.max(0, Math.min(M.cols - 1, st.cur.col + d[0])), Math.max(0, Math.min(M.rows - 1, st.cur.row + d[1])));
+  });
+
+  /* ---------- controls ---------- */
+  var GROUPS = [
+    ['scanlines', 'Scanlines', 'static', [['strength', 0, 0.6, 0.01], ['period', 2, 8, 1, ' dpx']]],
+    ['glow', 'Glow', 'static', [['strength', 0, 1.5, 0.01], ['radius', 0.5, 8, 0.1, ' px']]],
+    ['curvature', 'Curvature', 'Full CRT', [['amount', 0, 0.3, 0.005]]],
+    ['bezel', 'Bezel', 'Full CRT', []],
+    ['vignette', 'Vignette', 'Full CRT', [['strength', 0, 0.6, 0.01]]],
+    ['burnIn', 'Burn-in', 'moves', [['persistMs', 50, 1600, 10, ' ms']]],
+    ['noise', 'Noise', 'moves, 30 fps', [['amount', 0, 0.12, 0.001]]],
+    ['flicker', 'Flicker', 'cap 0.03', [['amount', 0, T.FXGL.FLICKER_CAP, 0.001]]]
+  ];
+  var inputs = [];
+  function fmt(v, step) { return step >= 1 ? String(Math.round(v)) : (+v).toFixed(step < 0.01 ? 3 : 2); }
+  function buildControls() {
+    var box = $('#fxControls');
+    GROUPS.forEach(function (g) {
+      var wrap = document.createElement('div'); wrap.className = 'lab-fx';
+      var row = document.createElement('div'); row.className = 'lab-row';
+      var lab = document.createElement('label'); lab.className = 'lab-name';
+      var cb = document.createElement('input'); cb.type = 'checkbox'; cb.id = 'on-' + g[0];
+      lab.appendChild(cb); lab.appendChild(document.createTextNode(' ' + g[1]));
+      var note = document.createElement('span'); note.className = 'lab-note'; note.textContent = g[2];
+      row.appendChild(lab); row.appendChild(note); wrap.appendChild(row);
+      cb.addEventListener('change', function () { params[g[0]].on = cb.checked; changed(); });
+      inputs.push(function () { cb.checked = !!params[g[0]].on; });
+      g[3].forEach(function (s) {
+        var r2 = document.createElement('div'); r2.className = 'lab-row';
+        var k = document.createElement('span'); k.className = 'lab-k'; k.textContent = s[0];
+        var rg = document.createElement('input'); rg.type = 'range'; rg.min = s[1]; rg.max = s[2]; rg.step = s[3]; rg.id = 'v-' + g[0] + '-' + s[0];
+        var out = document.createElement('output');
+        r2.appendChild(k); r2.appendChild(rg); r2.appendChild(out); wrap.appendChild(r2);
+        rg.addEventListener('input', function () { params[g[0]][s[0]] = +rg.value; out.textContent = fmt(rg.value, s[3]) + (s[4] || ''); changed(); });
+        inputs.push(function () { rg.value = params[g[0]][s[0]]; out.textContent = fmt(params[g[0]][s[0]], s[3]) + (s[4] || ''); });
+      });
+      box.appendChild(wrap);
+    });
+    var dim = $('#dim');
+    dim.addEventListener('input', function () { params.dim = +dim.value; $('#dimOut').textContent = (+dim.value).toFixed(2); changed(); });
+    inputs.push(function () { dim.value = params.dim; $('#dimOut').textContent = params.dim.toFixed(2); });
+  }
+  function syncControls() {
+    inputs.forEach(function (f) { f(); });
+    ['burnIn', 'noise', 'flicker'].forEach(function (k) { $('#on-' + k).disabled = st.reduced; });
+  }
+  function changed() { applyPath(); st.gridDirty = true; }
+
+  function setPreset(name) {
+    params = T.FXGL.preset(name);
+    document.querySelectorAll('#presets button').forEach(function (b) { b.classList.toggle('lab-on', b.dataset.preset === name); });
+    syncControls(); changed();
+  }
+  function setScheme(id) {
+    st.scheme = id; $('#scheme').value = id;
+    st.trailStyle = SCHEMES[id].trail; $('#trailStyle').value = st.trailStyle;
+    changed();
+  }
+  function setSize(w, h) { st.cssW = w; st.cssH = h; $('#size').value = w + 'x' + h; layout(); applyPath(); }
+
+  document.querySelectorAll('#presets button').forEach(function (b) { b.addEventListener('click', function () { setPreset(b.dataset.preset); }); });
+  $('#scheme').addEventListener('change', function (e) { setScheme(e.target.value); });
+  $('#font').addEventListener('change', function (e) { st.font = e.target.value; ready().then(function () { layout(); applyPath(); }); });
+  $('#size').addEventListener('change', function (e) { var v = e.target.value.split('x'); setSize(+v[0], +v[1]); });
+  $('#forceCss').addEventListener('change', function (e) { st.forceCss = e.target.checked; changed(); });
+  $('#reduced').addEventListener('change', function (e) { st.reduced = e.target.checked; trail.clear(); syncControls(); changed(); });
+  $('#trailStyle').addEventListener('change', function (e) { st.trailStyle = e.target.value; });
+  $('#probeBtn').addEventListener('click', function (e) { st.probe = !st.probe; e.target.classList.toggle('lab-on', st.probe); st.probeDirty = true; });
+  $('#degauss').addEventListener('click', function () { params.degauss = { startMs: now() }; });
+  $('#farJump').addEventListener('click', function () {
+    var far = st.cur.col < M.cols / 2 ? { col: M.cols - 3, row: 1 } : { col: 2, row: M.rows - 2 };
+    moveCursor(far.col, far.row);
+  });
+  $('#clearScr').addEventListener('click', function () { clearScreen(); });
+  $('#stream').addEventListener('click', function () { streamBuild(); });
+  $('#measure').addEventListener('click', function () { measureFrames(120).then(showTimes); });
+  $('#corner').addEventListener('click', function () { var r = cornerCheck(); showCorner(r); });
+  $('#lose').addEventListener('click', function () {
+    var x = gl && gl.getExtension('WEBGL_lose_context');
+    if (!x) return;
+    x.loseContext();
+    setTimeout(function () { x.restoreContext(); }, 800);
+  });
+
+  function clearScreen() { st.lines = [parseLine(PROMPT)]; st.curAuto = true; placeCursorAtEnd(); st.gridDirty = true; }
+  function streamBuild() {
+    if (st.streaming) return;
+    st.lines = SESSION.slice(-1).map(parseLine);
+    st.lines[0] = parseLine(PROMPT + 'cargo build --release');
+    var i = 0;
+    st.streaming = setInterval(function () {
+      if (i < CRATES.length) st.lines.push(parseLine('   {ok}Compiling{/} ' + CRATES[i]));
+      else if (i === CRATES.length) st.lines.push(parseLine('    {ok}Finished{/} `release` profile [optimized] target(s) in 41.72s'));
+      else { st.lines.push(parseLine(PROMPT)); clearInterval(st.streaming); st.streaming = null; }
+      i++; st.curAuto = true; placeCursorAtEnd(); st.gridDirty = true;
+    }, 90);
+  }
+
+  /* ---------- measurement ---------- */
+  function raf() { return new Promise(function (r) { requestAnimationFrame(r); }); }
+  function stats(a) { var s = a.slice().sort(function (x, y) { return x - y; }); return { median: s[Math.floor(s.length / 2)], p95: s[Math.min(s.length - 1, Math.floor(s.length * 0.95))], n: s.length }; }
+  async function measureFrames(n) {
+    if (!gpu()) return null;
+    st.manual = true;
+    drawGrid(true); drawProbe();
+    var up = [], stat = [], sync = [], px = new Uint8Array(4), gpuT = [];
+    var tq = fx.info.webgl2 ? gl.getExtension('EXT_disjoint_timer_query_webgl2') : null, queries = [];
+    for (var i = 0; i < n; i++) {
+      await raf(); var t0 = now(); renderNow(t0, true, false, false); up.push(now() - t0);
+    }
+    for (i = 0; i < n; i++) {
+      await raf(); t0 = now(); renderNow(t0, false, false, false); stat.push(now() - t0);
+    }
+    for (i = 0; i < n; i++) {
+      await raf(); t0 = now();
+      var q = null;
+      if (tq) { q = gl.createQuery(); gl.beginQuery(tq.TIME_ELAPSED_EXT, q); }
+      renderNow(t0, true, false, false);
+      if (tq) { gl.endQuery(tq.TIME_ELAPSED_EXT); queries.push(q); }
+      gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px);
+      sync.push(now() - t0);
+    }
+    if (tq) {
+      for (var tries = 0; tries < 30 && queries.length; tries++) {
+        await raf();
+        queries = queries.filter(function (qq) {
+          if (!gl.getQueryParameter(qq, gl.QUERY_RESULT_AVAILABLE)) return true;
+          if (!gl.getParameter(tq.GPU_DISJOINT_EXT)) gpuT.push(gl.getQueryParameter(qq, gl.QUERY_RESULT) / 1e6);
+          gl.deleteQuery(qq); return false;
+        });
+      }
+    }
+    st.manual = false; st.gridDirty = true;
+    var res = { upload: stats(up), noUpload: stats(stat), sync: stats(sync), gpu: gpuT.length ? stats(gpuT) : null,
+      size: [fxc.width, fxc.height], css: [st.cssW, st.cssH], dpr: dpr, params: eff() };
+    return res;
+  }
+  function f2(v) { return v === undefined ? '-' : v.toFixed(2); }
+  function showTimes(r) {
+    if (!r) { $('#roUpload').textContent = 'CSS path: nothing to time'; return; }
+    $('#roUpload').textContent = 'median ' + f2(r.upload.median) + ' ms, p95 ' + f2(r.upload.p95) + ' ms';
+    $('#roStatic').textContent = 'median ' + f2(r.noUpload.median) + ' ms, p95 ' + f2(r.noUpload.p95) + ' ms';
+    $('#roSync').textContent = 'median ' + f2(r.sync.median) + ' ms, p95 ' + f2(r.sync.p95) + ' ms';
+    $('#roGpu').textContent = r.gpu ? 'median ' + f2(r.gpu.median) + ' ms, p95 ' + f2(r.gpu.p95) + ' ms' : 'not exposed';
+  }
+
+  /* ---------- corner check: GPU pixels against mapPointer, every pixel at least 1.5 device px inside a cell ---------- */
+  function cornerCheck() {
+    if (!gpu()) return null;
+    var pat = document.createElement('canvas'); pat.width = fxc.width; pat.height = fxc.height;
+    drawPattern(pat);
+    var p = eff();
+    p.scanlines.on = false; p.glow.on = false; p.vignette.on = false; p.noise.on = false; p.flicker.on = false;
+    p.burnIn.on = false; p.degauss = null; p.dim = 0;
+    fx.render(pat, p, now(), true);
+    var W = fxc.width, H = fxc.height, buf = new Uint8Array(W * H * 4);
+    gl.readPixels(0, 0, W, H, gl.RGBA, gl.UNSIGNED_BYTE, buf);
+    var cw = st.cssW, ch = st.cssH, checked = 0, bad = 0, corner = { tl: [0, 0], tr: [0, 0], bl: [0, 0], br: [0, 0] }, samples = [];
+    var marginCss = 1.5 / dpr;
+    for (var py = 0; py < H; py++) for (var px = 0; px < W; px++) {
+      var m = fx.mapPointer((px + 0.5) / dpr, (py + 0.5) / dpr, cw, ch);
+      if (!m) continue;
+      var fc = (m.x - PAD.x) / M.cellW, fr = (m.y - PAD.y) / M.cellH;
+      var c = Math.floor(fc), r = Math.floor(fr);
+      if (c < 0 || r < 0 || c >= M.cols || r >= M.rows) continue;
+      var dx = Math.min(fc - c, c + 1 - fc) * M.cellW, dy = Math.min(fr - r, r + 1 - fr) * M.cellH;
+      if (dx < marginCss || dy < marginCss) continue;
+      var i = ((H - 1 - py) * W + px) * 4;                      // readPixels rows are bottom-up
+      var ok = buf[i] === c && buf[i + 1] === r && Math.abs(buf[i + 2] - 200) <= 1;
+      checked++; if (!ok) { bad++; if (samples.length < 5) samples.push({ px: px, py: py, want: [c, r], got: [buf[i], buf[i + 1], buf[i + 2]] }); }
+      var key = (py < H * 0.2 ? 't' : py > H * 0.8 ? 'b' : '') + (px < W * 0.2 ? 'l' : px > W * 0.8 ? 'r' : '');
+      if (corner[key]) { corner[key][0]++; if (!ok) corner[key][1]++; }
+    }
+    /* the four corner cells: their centres pushed through unmapPointer, then back through mapPointer and the GPU */
+    var cells = [[0, 0], [M.cols - 1, 0], [0, M.rows - 1], [M.cols - 1, M.rows - 1]], cornerCells = [];
+    cells.forEach(function (cc) {
+      var sx = PAD.x + (cc[0] + 0.5) * M.cellW, sy = PAD.y + (cc[1] + 0.5) * M.cellH;
+      var scr = fx.unmapPointer(sx, sy, cw, ch);
+      if (!scr) { cornerCells.push({ cell: cc, screen: null }); return; }
+      var back = fx.mapPointer(scr.x, scr.y, cw, ch);
+      var bx = Math.floor(scr.x * dpr), by = Math.floor(scr.y * dpr), j = ((H - 1 - by) * W + bx) * 4;
+      cornerCells.push({ cell: cc, screen: [+scr.x.toFixed(2), +scr.y.toFixed(2)],
+        mapBack: [Math.floor((back.x - PAD.x) / M.cellW), Math.floor((back.y - PAD.y) / M.cellH)], gpu: [buf[j], buf[j + 1]],
+        errPx: Math.hypot(back.x - sx, back.y - sy) });
+    });
+    st.gridDirty = true; st.probeDirty = true;
+    return { checked: checked, mismatches: bad, corners: corner, samples: samples, cornerCells: cornerCells,
+      curvature: p.curvature.on ? p.curvature.amount : 0, bezel: p.bezel.on, dpr: dpr };
+  }
+  function showCorner(r) {
+    if (!r) { $('#roCorner').textContent = 'CSS path: no warp'; return; }
+    var okCells = r.cornerCells.every(function (c) { return c.screen && c.mapBack[0] === c.cell[0] && c.mapBack[1] === c.cell[1] && c.gpu[0] === c.cell[0] && c.gpu[1] === c.cell[1]; });
+    $('#roCorner').textContent = r.mismatches + ' / ' + r.checked + ' px wrong; corner cells ' + (okCells ? 'all right' : 'WRONG');
+  }
+
+  /* ---------- automation hooks (Playwright) ---------- */
+  function setManual(on) { st.manual = on; }
+  function frameAt(t, changedGrid) { drawGrid(gpu()); drawProbe(); var tr = trail.frame(t); return renderNow(t, changedGrid !== false, tr, false); }
+  window.fxLab = {
+    info: function () { return { path: gpu() ? 'gl' : 'css', created: !!fx, webgl2: fx ? fx.info.webgl2 : null, renderer: fx ? fx.info.renderer : null,
+      vendor: fx ? fx.info.vendor : null, dpr: dpr, css: [st.cssW, st.cssH], device: [fxc.width, fxc.height], cols: M.cols, rows: M.rows, cell: [M.cellW, M.cellH] }; },
+    preset: setPreset, scheme: setScheme, size: setSize,
+    set: function (obj) { Object.keys(obj).forEach(function (k) { if (typeof obj[k] === 'object' && obj[k] && params[k]) Object.assign(params[k], obj[k]); else params[k] = obj[k]; }); syncControls(); changed(); },
+    params: function () { return eff(); },
+    forceCss: function (on) { st.forceCss = !!on; $('#forceCss').checked = st.forceCss; changed(); },
+    reduced: function (on) { st.reduced = !!on; $('#reduced').checked = st.reduced; trail.clear(); syncControls(); changed(); },
+    probe: function (on) { st.probe = !!on; st.probeDirty = true; },
+    pointer: function (x, y) { var r = screen.getBoundingClientRect(); screen.dispatchEvent(new PointerEvent('pointermove', { clientX: r.left + x, clientY: r.top + y, bubbles: true })); return st.pointer; },
+    manual: setManual,
+    session: function () { st.lines = SESSION.map(parseLine); st.curAuto = true; placeCursorAtEnd(); st.gridDirty = true; },
+    /* degauss frame at t ms after the press (manual clock) */
+    degaussAt: function (t) { setManual(true); trail.clear(); params.degauss = { startMs: 100000 }; var ok = frameAt(100000 + t, true); return { ok: ok, animating: fx ? fx.animating(eff(), 100000 + t + 0.001) : false }; },
+    /* burn-in: the full session settles, the screen is cleared at T0, then a frame at T0 + t */
+    burnAt: function (t) {
+      setManual(true); trail.clear(); params.degauss = null;
+      var T0 = 200000, persist = eff().burnIn.persistMs;
+      st.lines = SESSION.map(parseLine); st.curAuto = true; placeCursorAtEnd();
+      frameAt(T0 - 2000); frameAt(T0 - 2000 + persist + 1, false);
+      clearScreen(); frameAt(T0, true);
+      if (t > 0) frameAt(T0 + t, false);
+      return { animating: fx.animating(eff(), T0 + t + 0.001), persist: persist };
+    },
+    /* trail: the cursor rests, jumps from A to B at T0, frame at T0 + t */
+    trailAt: function (style, t) {
+      setManual(true); params.degauss = null; st.trailStyle = style; $('#trailStyle').value = style;
+      var T0 = 300000; trail.clear(); trail.lastMove = -Infinity;
+      st.cur = { col: 4, row: M.rows - 2 }; st.curAuto = false;
+      var A = cellRect(4, M.rows - 2), B = cellRect(Math.min(M.cols - 6, 70), 2);
+      st.cur = { col: Math.min(M.cols - 6, 70), row: 2 };
+      var fired = trail.jump(A, B, SCHEMES[st.scheme].cursor, trailStyle(), T0);
+      drawGrid(gpu()); drawProbe(); var moving = trail.frame(T0 + t);
+      if (gpu()) renderNow(T0 + t, true, true, true);
+      return { fired: fired, moving: moving };
+    },
+    live: function () { st.manual = false; params.degauss = null; st.gridDirty = true; },
+    measure: measureFrames,
+    cornerCheck: cornerCheck,
+    jumpRule: function () {
+      var a = cellRect(10, 5), out = {};
+      trail.clear(); trail.lastMove = -Infinity;
+      out.twoCells = trail.jump(a, cellRect(12, 5), '#fff', 'phosphor', 1000);
+      out.threeCellsTooSoon = trail.jump(cellRect(12, 5), cellRect(15, 5), '#fff', 'phosphor', 1030);
+      out.threeCellsRested = trail.jump(cellRect(15, 5), cellRect(18, 5), '#fff', 'phosphor', 1200);
+      out.offStyle = trail.jump(cellRect(18, 5), cellRect(40, 9), '#fff', 'off', 2000);
+      trail.clear();
+      return out;
+    }
+  };
+
+  /* ---------- start ---------- */
+  function ready() {
+    var f = FONTS[st.font];
+    return document.fonts && document.fonts.load ? document.fonts.load(f.px + 'px ' + f.family).catch(function () {}) : Promise.resolve();
+  }
+  buildControls();
+  $('#labRenderer').textContent = fx ? (fx.info.renderer || 'renderer hidden') : 'T.FXGL.create returned null';
+  $('#labDpr').textContent = 'DPR ' + dpr;
+  $('#roCtx').textContent = fx ? 'ok' : 'none';
+  if (Q.get('scheme') && SCHEMES[Q.get('scheme')]) st.scheme = Q.get('scheme');
+  $('#scheme').value = st.scheme; st.trailStyle = SCHEMES[st.scheme].trail; $('#trailStyle').value = st.trailStyle;
+  ready().then(function () {
+    layout();
+    setPreset(Q.get('preset') || 'retroDark');
+    document.documentElement.setAttribute('data-lab-ready', '1');
+    requestAnimationFrame(tick);
+  });
+})();
+</script>
+</body>
+</html>
