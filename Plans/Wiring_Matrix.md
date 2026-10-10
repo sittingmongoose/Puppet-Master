@@ -5520,8 +5520,10 @@ Every control below commits through the gesture transaction of `Plans/UI_Wiring_
 | "+" > Plan or document... > a choice in its picker: the trailing cell, Alt+click, Alt+Enter | `cmd.nav.open_subject`, `where: panel` | `home.plus_menu.plan_or_document_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | "+" > Artifact... > a choice in its picker: the row's body | `cmd.nav.open_subject` with the artifact subject, `where: tab` | `home.plus_menu.artifact` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | "+" > Artifact... > a choice in its picker: the trailing cell, Alt+click, Alt+Enter | `cmd.nav.open_subject` with the artifact subject, `where: panel` | `home.plus_menu.artifact_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
-| "+" > Output, Problems, Ports, Debug Console > Output: the row's body | `cmd.panel_tab.open` with `{ kind: output }`, `where: tab` | `home.plus_menu.output` | `workspace.layout_changed` when a tab is added; none on a reveal |
-| "+" > Output, Problems, Ports, Debug Console > Output: the trailing cell, Alt+click, Alt+Enter | `cmd.panel_tab.open` with `{ kind: output }`, `where: panel` | `home.plus_menu.output_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
+| "+" > Output, Problems, Ports, Debug Console > Output: the row's body | `cmd.panel_tab.open` with `{ kind: output }`, tab id `output`, `where: tab` | `home.plus_menu.output` | `workspace.layout_changed` when a tab is added; none on a reveal |
+| Output channel picker > switch channel | `ui.output.select_channel` with `channel`, view state of `output` | none | typed local action, no receipt, no event |
+| Output channel picker > Open in new tab | `cmd.panel_tab.open` with `output:<channel>` | same `cmd.panel_tab.open` wiring (UCC-200) | `workspace.layout_changed` when a tab is added; none on a reveal |
+| "+" > Output, Problems, Ports, Debug Console > Output: the trailing cell, Alt+click, Alt+Enter | `cmd.panel_tab.open` with `{ kind: output }`, tab id `output`, `where: panel` | `home.plus_menu.output_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | "+" > Output, Problems, Ports, Debug Console > Problems: the row's body | `cmd.panel_tab.open` with `{ kind: problems }`, `where: tab` | `home.plus_menu.problems` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | "+" > Output, Problems, Ports, Debug Console > Problems: the trailing cell, Alt+click, Alt+Enter | `cmd.panel_tab.open` with `{ kind: problems }`, `where: panel` | `home.plus_menu.problems_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | "+" > Output, Problems, Ports, Debug Console > Ports: the row's body | `cmd.panel_tab.open` with `{ kind: ports }`, `where: tab` | `home.plus_menu.ports` | `workspace.layout_changed` when a tab is added; none on a reveal |
@@ -5544,8 +5546,8 @@ Every control below commits through the gesture transaction of `Plans/UI_Wiring_
 | Empty-panel launcher > Plan or document... > a choice in its picker: the trailing cell, Alt+click, Alt+Enter | `cmd.nav.open_subject`, `where: panel` | `home.launcher.plan_or_document_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | Empty-panel launcher > Artifact... > a choice in its picker: the row's body | `cmd.nav.open_subject` with the artifact subject, `where: tab` | `home.launcher.artifact` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | Empty-panel launcher > Artifact... > a choice in its picker: the trailing cell, Alt+click, Alt+Enter | `cmd.nav.open_subject` with the artifact subject, `where: panel` | `home.launcher.artifact_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
-| Empty-panel launcher > Output: the row's body | `cmd.panel_tab.open` with `{ kind: output }`, `where: tab` | `home.launcher.output` | `workspace.layout_changed` when a tab is added; none on a reveal |
-| Empty-panel launcher > Output: the trailing cell, Alt+click, Alt+Enter | `cmd.panel_tab.open` with `{ kind: output }`, `where: panel` | `home.launcher.output_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
+| Empty-panel launcher > Output: the row's body | `cmd.panel_tab.open` with `{ kind: output }`, tab id `output`, `where: tab` | `home.launcher.output` | `workspace.layout_changed` when a tab is added; none on a reveal |
+| Empty-panel launcher > Output: the trailing cell, Alt+click, Alt+Enter | `cmd.panel_tab.open` with `{ kind: output }`, tab id `output`, `where: panel` | `home.launcher.output_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | Empty-panel launcher > Problems: the row's body | `cmd.panel_tab.open` with `{ kind: problems }`, `where: tab` | `home.launcher.problems` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | Empty-panel launcher > Problems: the trailing cell, Alt+click, Alt+Enter | `cmd.panel_tab.open` with `{ kind: problems }`, `where: panel` | `home.launcher.problems_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | Empty-panel launcher > Ports: the row's body | `cmd.panel_tab.open` with `{ kind: ports }`, `where: tab` | `home.launcher.ports` | `workspace.layout_changed` when a tab is added; none on a reveal |
@@ -5658,6 +5660,9 @@ canonical_text: >-
   ui.workspace_layout.focus_panel are typed local actions with no entry. Fifty-one home.* entries of the fixed-zone
   model retire and are recorded in the reconciliation file; five are rebuilt on the v2 model. The History list's pin
   has no row until its id is ruled (UIW-040's pending exception).
+  Output opens or reveals `output`. The channel picker switches its channel with `ui.output.select_channel`, a
+  typed local action with no production entry, receipt or event. "Open in new tab" uses `cmd.panel_tab.open`
+  with `output:<channel>`; it emits workspace.layout_changed only when it adds a tab (UCC-200, F3-635).
 gui_related: true
 gui_classification_reason: "Binds every visible control of the universal panels, the chat column and the Home keys to exactly one command or typed local action."
 split_recommended: false
@@ -5670,6 +5675,7 @@ acceptance_criteria:
   - "No production entry names editor_panel_1 to editor_panel_4, a dock host, the floating host, a terminal section, a workgroup, Collapse Bottom Terminal or a chat grab."
   - "In the web client the four browser-owned chords are answered as Alt+T, Alt+W, Alt+Shift+T and Alt+`, and the key entries say so."
   - "All rows sharing a command name one handler."
+  - "Output opens or reveals output; its picker switch is ui.output.select_channel without a production entry, and Open in new tab dispatches cmd.panel_tab.open with output:<channel>."
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -5686,12 +5692,17 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D28)"
   - "Plans/Decision_Log.md#DL-180"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md (SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md (SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9; sections 6 to 9 and 13; concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md (SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162; the \"+\" menu, Commands and keys; concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md (SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8; section 6.2 items 2, 7 and 10)"
 preserved_exact_tokens:
+  - "Open in new tab"
+  - "output:<channel>"
+  - "output"
+  - "ui.output.select_channel"
   - "cmd.panel_tab.open"
   - "cmd.panel_tab.close"
   - "cmd.panel_tab.move"
@@ -5713,6 +5724,7 @@ negative_constraints:
 compatibility_only_notes:
   - "cmd.workspace_layout.size_surface still normalizes to cmd.workspace_layout.resize_surface and has no entry."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (Addendum 2 D28, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
   - "Retired 2026-10-09 (DL-180): 51 home.* entries of the fixed-zone model; the list is control_census.retired_rows_2026_10_09 in Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json."
 owner_hints:
   - Plans/Wiring_Matrix.md

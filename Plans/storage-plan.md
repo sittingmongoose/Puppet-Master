@@ -27561,6 +27561,9 @@ canonical_text: >-
   asset is deleted. Images an app or project layer references are backed up with Settings; an image only a tab
   override references follows the Home record, is not backed up, and when missing the tab falls through to the next
   layer. This replaces SP-122's terminal_font.v1:global and terminal_color.v1:global.
+  The editor's scheme choice is stored as SSYS-050's code.editing.color-scheme row beside the terminal's scheme row, in the
+  same Project settings snapshot through Settings transactions. The code colour-scheme catalog is built in and
+  never stored; each surface stores only its own choice.
 gui_related: true
 gui_classification_reason: Decides where each terminal look choice is kept and what survives a move, a reopen and a restore.
 split_recommended: false
@@ -27574,6 +27577,7 @@ acceptance_criteria:
   - "A background image is stored once by content hash and referenced, never inlined in a settings row or tab state; an unreferenced image is deleted."
   - "Backup includes images the app or project layer references and excludes images only a tab override references."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+  - "The editor scheme choice is a Settings row stored beside the terminal scheme choice in the same way, and the built-in catalog itself is never stored."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -27589,6 +27593,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D27)"
   - "Plans/Decision_Log.md#DL-183"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D15)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b (section 6, the appearance model; concept lineage only)"
@@ -27606,6 +27611,7 @@ negative_constraints:
 compatibility_only_notes:
   - "terminal_font.v1:global and terminal_color.v1:global were prose-only keys (SP-122) and map to the app layer."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Stores the editor scheme choice beside the terminal choice as Settings values and never stores the built-in catalog."
   - "Replaces SP-122's global font and colour keys (DL-183)."
 owner_hints:
   - Plans/storage-plan.md

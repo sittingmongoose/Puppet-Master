@@ -64452,7 +64452,10 @@
         "The launcher reads the same row list as the \"+\" menu and dispatches the same id; the row's body opens its item as a new tab in this panel (where: tab), and its trailing cell, Alt+click and Alt+Enter are home.launcher.output_new_panel.",
         "The File... row opens Quick Open (view-local) and the hint line dispatches nothing.",
         "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
-        "An open that adds a tab emits exactly one workspace.layout_changed (CV-361); an open of an id already open anywhere reveals that tab where it is, never moves or duplicates it, and emits nothing."
+        "An open that adds a tab emits exactly one workspace.layout_changed (CV-361); an open of an id already open anywhere reveals that tab where it is, never moves or duplicates it, and emits nothing.",
+        "Output opens or reveals the one tab with id output; its channel is view state, never part of that id.",
+        "The Output channel picker switches with ui.output.select_channel, a typed local action with no command, production entry, receipt or event.",
+        "Open in new tab dispatches cmd.panel_tab.open with output:<channel> and shows only that channel; an added tab emits workspace.layout_changed and a reveal emits nothing."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler, dispatcher or runtime exists. owner_doc_ref: Plans/FinalGUISpec.md#F3-632. Registration: Plans/UI_Command_Catalog.md#UCC-200. Wiring: Plans/Wiring_Matrix.md#WM-090; census: Plans/UI_Wiring_Rules.md#UIW-040. Production certification requires render/control evidence, a dispatcher fixture, the typed payload and result, the projected state selector and disabled reason, the receipt or event assertion, an accessibility check and a regression test. The fixed-model cases of Concepts/pm7-tools/verify/home_workspace_matrix.mjs do not prove this row; replacement executable cases are owed (Plans/Automated_Testing_System.md#ATS-075).",
       "state_selector": "state.home_workspace.home_launcher_output.availability",
@@ -64520,7 +64523,10 @@
         "The launcher reads the same row list as the \"+\" menu and dispatches the same id. The trailing cell, Alt+click and Alt+Enter open the item as a new panel placed by the fit rule (where: panel, F3-630). In the narrow one-column state no panel is created: the item opens in the next panel of the switcher and the announcement says so (F3-636).",
         "The File... row opens Quick Open (view-local) and the hint line dispatches nothing.",
         "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
-        "An open that adds a tab emits exactly one workspace.layout_changed (CV-361); an open of an id already open anywhere reveals that tab where it is, never moves or duplicates it, and emits nothing."
+        "An open that adds a tab emits exactly one workspace.layout_changed (CV-361); an open of an id already open anywhere reveals that tab where it is, never moves or duplicates it, and emits nothing.",
+        "Output opens or reveals the one tab with id output; its channel is view state, never part of that id.",
+        "The Output channel picker switches with ui.output.select_channel, a typed local action with no command, production entry, receipt or event.",
+        "Open in new tab dispatches cmd.panel_tab.open with output:<channel> and shows only that channel; an added tab emits workspace.layout_changed and a reveal emits nothing."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler, dispatcher or runtime exists. owner_doc_ref: Plans/FinalGUISpec.md#F3-632. Registration: Plans/UI_Command_Catalog.md#UCC-200. Wiring: Plans/Wiring_Matrix.md#WM-090; census: Plans/UI_Wiring_Rules.md#UIW-040. Production certification requires render/control evidence, a dispatcher fixture, the typed payload and result, the projected state selector and disabled reason, the receipt or event assertion, an accessibility check and a regression test. The fixed-model cases of Concepts/pm7-tools/verify/home_workspace_matrix.mjs do not prove this row; replacement executable cases are owed (Plans/Automated_Testing_System.md#ATS-075).",
       "state_selector": "state.home_workspace.home_launcher_output_new_panel.availability",
@@ -67794,7 +67800,10 @@
         "The row's body opens the item as a new tab in this panel (where: tab); an agent never raises this control.",
         "Opening the menu, typing in its filter field and opening a sub-row or submenu dispatch nothing.",
         "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
-        "An open that adds a tab emits exactly one workspace.layout_changed (CV-361); an open of an id already open anywhere reveals that tab where it is, never moves or duplicates it, and emits nothing."
+        "An open that adds a tab emits exactly one workspace.layout_changed (CV-361); an open of an id already open anywhere reveals that tab where it is, never moves or duplicates it, and emits nothing.",
+        "Output opens or reveals the one tab with id output; its channel is view state, never part of that id.",
+        "The Output channel picker switches with ui.output.select_channel, a typed local action with no command, production entry, receipt or event.",
+        "Open in new tab dispatches cmd.panel_tab.open with output:<channel> and shows only that channel; an added tab emits workspace.layout_changed and a reveal emits nothing."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler, dispatcher or runtime exists. owner_doc_ref: Plans/FinalGUISpec.md#F3-632. Registration: Plans/UI_Command_Catalog.md#UCC-200. Wiring: Plans/Wiring_Matrix.md#WM-090; census: Plans/UI_Wiring_Rules.md#UIW-040. Production certification requires render/control evidence, a dispatcher fixture, the typed payload and result, the projected state selector and disabled reason, the receipt or event assertion, an accessibility check and a regression test. The fixed-model cases of Concepts/pm7-tools/verify/home_workspace_matrix.mjs do not prove this row; replacement executable cases are owed (Plans/Automated_Testing_System.md#ATS-075).",
       "state_selector": "state.home_workspace.home_plus_menu_output.availability",
@@ -67862,7 +67871,10 @@
         "The trailing cell, Alt+click and Alt+Enter open the item as a new panel placed by the fit rule (where: panel, F3-630). In the narrow one-column state no panel is created: the item opens in the next panel of the switcher and the announcement says so (F3-636).",
         "Opening the menu, typing in its filter field and opening a sub-row or submenu dispatch nothing.",
         "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
-        "An open that adds a tab emits exactly one workspace.layout_changed (CV-361); an open of an id already open anywhere reveals that tab where it is, never moves or duplicates it, and emits nothing."
+        "An open that adds a tab emits exactly one workspace.layout_changed (CV-361); an open of an id already open anywhere reveals that tab where it is, never moves or duplicates it, and emits nothing.",
+        "Output opens or reveals the one tab with id output; its channel is view state, never part of that id.",
+        "The Output channel picker switches with ui.output.select_channel, a typed local action with no command, production entry, receipt or event.",
+        "Open in new tab dispatches cmd.panel_tab.open with output:<channel> and shows only that channel; an added tab emits workspace.layout_changed and a reveal emits nothing."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler, dispatcher or runtime exists. owner_doc_ref: Plans/FinalGUISpec.md#F3-632. Registration: Plans/UI_Command_Catalog.md#UCC-200. Wiring: Plans/Wiring_Matrix.md#WM-090; census: Plans/UI_Wiring_Rules.md#UIW-040. Production certification requires render/control evidence, a dispatcher fixture, the typed payload and result, the projected state selector and disabled reason, the receipt or event assertion, an accessibility check and a regression test. The fixed-model cases of Concepts/pm7-tools/verify/home_workspace_matrix.mjs do not prove this row; replacement executable cases are owed (Plans/Automated_Testing_System.md#ATS-075).",
       "state_selector": "state.home_workspace.home_plus_menu_output_new_panel.availability",

@@ -6683,10 +6683,10 @@
   {
    "id": "code.terminal.theme",
    "label": "Terminal Colors",
-   "desc": "The terminal's color scheme. Follow theme uses each look's own scheme, light and dark: Catppuccin in Friendly, Tokyo Night in Glass, Phosphor and Paper Teletype in Retro, One Half in Basic and YoRHa in NieR Mode. Or pick one of the 34 built-in schemes or one you imported. Applies at once.",
+   "desc": "The terminal's color scheme from the same code colour-scheme catalog as the editor. Follow look uses each look's own scheme, light and dark: Catppuccin in Friendly, Tokyo Night in Glass, Phosphor and Paper Teletype in Retro, One Half in Basic and YoRHa in NieR Mode. Or pick one of the 34 built-in schemes or one you imported. Applies at once.",
    "type": "select",
    "options": [
-    "Follow theme",
+    "Follow look",
     "PM Phosphor Green",
     "PM Phosphor Amber",
     "PM Paper Teletype",
@@ -6722,13 +6722,13 @@
     "GitHub Dark",
     "Ayu Mirage"
    ],
-   "default": "Follow theme",
+   "default": "Follow look",
    "scope": [
     "global",
     "project"
    ],
    "tier": "simple",
-   "recommended": "Follow theme",
+   "recommended": "Follow look",
    "curated": true,
    "search": [
     "terminal theme",
@@ -8192,6 +8192,64 @@
     "monospace",
     "typeface",
     "JetBrains Mono"
+   ],
+   "related_features": [
+    "editor"
+   ]
+  },
+  {
+   "id": "code.editing.color-scheme",
+   "label": "Editor Colors",
+   "desc": "The editor syntax colours from the same code colour-scheme catalog as Terminal Colors. Follow look uses the editor syntax colours for the current look; or choose any catalog scheme. Applies at once.",
+   "type": "select",
+   "options": [
+    "Follow look",
+    "PM Phosphor Green",
+    "PM Phosphor Amber",
+    "PM Paper Teletype",
+    "PM YoRHa Parchment",
+    "PM YoRHa Ink",
+    "PM High Contrast Light",
+    "PM High Contrast Dark",
+    "Catppuccin Latte",
+    "Catppuccin Frappé",
+    "Catppuccin Macchiato",
+    "Catppuccin Mocha",
+    "Tokyo Night Day",
+    "Tokyo Night Storm",
+    "Tokyo Night",
+    "One Half Light",
+    "One Half Dark",
+    "Rosé Pine Dawn",
+    "Rosé Pine Moon",
+    "Rosé Pine",
+    "Solarized Light",
+    "Solarized Dark",
+    "Gruvbox Light",
+    "Gruvbox Dark",
+    "Dracula",
+    "Nord",
+    "Kanagawa Wave",
+    "Kanagawa Lotus",
+    "Everforest Light",
+    "Everforest Dark",
+    "Flexoki Light",
+    "Flexoki Dark",
+    "GitHub Light",
+    "GitHub Dark",
+    "Ayu Mirage"
+   ],
+   "default": "Follow look",
+   "scope": [
+    "global"
+   ],
+   "tier": "simple",
+   "recommended": "Follow look",
+   "search": [
+    "editor colours",
+    "color scheme",
+    "syntax colours",
+    "Follow look"
    ],
    "related_features": [
     "editor"

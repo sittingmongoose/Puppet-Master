@@ -3431,6 +3431,9 @@ canonical_text: >-
   DR-050's one set. The effects (F3-643) are paint on the terminal's own screen inside this model, not motion voices:
   DR-043's per-family motion voices and its accent rule stand, so the scheme colours the screen and the terminal's
   chrome takes the theme's token roles.
+  One code colour-scheme catalog and one Appearance popover serve the editor and the terminal (F3-642, F3-639).
+  Each curated scheme carries the terminal palette and editor syntax colours. Each surface has its own scheme
+  choice, defaulting to "Follow look"; neither surface keeps its own scheme list or popover.
 gui_related: true
 gui_classification_reason: "Fixes one layered appearance model for every terminal."
 split_recommended: false
@@ -3441,6 +3444,7 @@ acceptance_criteria:
   - "No terminal theme, font, background or effects value is stored outside SP-331's places, and no shell profile carries an appearance of its own."
   - "Every terminal appearance field applies live and no terminal setting shows a restart badge."
   - "Terminal effects stay paint on the terminal's screen; no terminal setting overrides DR-043's motion voices or hard-codes the accent role."
+  - "The editor and terminal read one catalog and use one Appearance popover component; neither has its own scheme list or popover."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -3457,6 +3461,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D27)"
   - "Plans/Decision_Log.md#DL-183"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D15, D16)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, section 6 (concept lineage only)"
@@ -3472,6 +3477,8 @@ negative_constraints:
   - "Do not keep a second terminal theme, scheme, font, background or effects store."
   - "Do not mark a terminal appearance setting as needing a restart."
   - "Do not let the popover write the project default."
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/FinalGUISpec.md

@@ -100,7 +100,7 @@
     "tab_id": {
       "type": "string",
       "pattern": "^[a-z][a-z0-9-]*(?:[:-].+)?$",
-      "description": "Opaque, stable tab id whose prefix names its kind (file:, buffer:, terminal:, browser:, link:, dashboard:, plan:, artifact:, output:, problems, ports, debug-console: and the rest of Plans/FinalGUISpec.md#F3-635). Forms without a colon (problems, ports, thread-<agentId>) are allowed; the part after the prefix may hold any characters. Never shown as text in the UI."
+      "description": "Opaque, stable tab id whose prefix names its kind (file:, buffer:, terminal:, browser:, link:, dashboard:, plan:, artifact:, output, output:<channel>, problems, ports, debug-console: and the rest of Plans/FinalGUISpec.md#F3-635). Forms without a colon (output, problems, ports, thread-<agentId>) are allowed; the part after the prefix may hold any characters. Never shown as text in the UI. Output uses output for the one tab with its channel as view state; output:<channel> is only a split-off channel (Addendum 2 D28, Plans/FinalGUISpec.md#F3-635)."
     },
     "tab_kind": {
       "type": "string",

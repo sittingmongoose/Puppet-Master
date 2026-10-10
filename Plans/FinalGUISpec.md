@@ -4293,7 +4293,10 @@ These decisions are final and must not be revisited during implementation:
 9. **Model/platform selection via dropdowns**, not text entry
 10. **Product name: `Puppet Master`**
 11. **All 12 former future considerations are MVP** -- browser, instant project switch, sound effects, hot reload, instructions editor, custom themes, language detection, catalog, sync, SSH, Debug Mode workflows, and terminal tab management
-12. **Bottom runtime zone includes the classical debugger surface** -- Superseded 2026-10-09 (DL-180, DL-181): there is no fixed bottom runtime zone. Terminal, Output, Problems, Ports and Debug Console are tab kinds that open in any panel, the tools landing beside the terminals by kind affinity, and the default Home layout's full-width bottom row is an ordinary panel row (F3-630, F3-634, F3-635); each terminal tab holds one session (F3-640, SMPFS-180). What stands: the Debugger / DAP Debugger stays part of the product (decision 14), and browser-capable preview/browsing is not a debug substitute. Earlier text, kept for lineage: "Terminal, Problems, Output, Ports, and Debugger / DAP Debugger remain runtime-zone occupants; browser-capable preview/browsing is not a bottom-panel debug substitute"
+12. **Bottom runtime zone includes the classical debugger surface** -- Superseded 2026-10-09 (DL-180, DL-181): there is no fixed bottom runtime zone. Terminal, Output (one tab; its channel switches inside it), Problems, Ports and Debug Console are tab kinds that open in any panel, the tools landing beside the terminals by kind affinity, and the default Home layout's full-width bottom row is an ordinary panel row (F3-630, F3-634, F3-635); each terminal tab holds one session (F3-640, SMPFS-180). What stands: the Debugger / DAP Debugger stays part of the product (decision 14), and browser-capable preview/browsing is not a debug substitute. Earlier text, kept for lineage: "Terminal, Problems, Output, Ports, and Debugger / DAP Debugger remain runtime-zone occupants; browser-capable preview/browsing is not a bottom-panel debug substitute"
+
+Amended 2026-10-10 (Addendum 2 D28, DL-180): Output is one tab with its channel switched inside it (F3-635).
+
 13. **Browser runtime contract is capability-first, not crate-name-first** -- implementation must satisfy the promoted browser/session model rather than hard-locking the spec to stale `wry` wording
 14. **Classical debugger uses DAP** -- the integrated debugger surface is DAP-based and distinct from Assistant Debug Mode
 15. **SSH uses system keychain / agent flows** -- credentials stay in OS-managed stores, never in config files
@@ -43665,6 +43668,7 @@ canonical_text: >-
   label and its shortcut, no tiles and no pills, then the five most recent files, then a one-line hint. The menu and the
   launcher read one row list, so a kind that joins one joins the other. This supersedes F3-HOME-003's and F3-502's Open
   Panel and Open Browser in Panel rows with their Panel 1 to Panel 4 flyouts.
+  The Output row opens or reveals `output`, the one Output tab whose channel switches inside it (F3-635).
 gui_related: true
 gui_classification_reason: Defines the plus menu after the last tab and the empty-panel launcher.
 split_recommended: false
@@ -43677,6 +43681,7 @@ acceptance_criteria:
   - "Opening and browsing the menu dispatch nothing; each chosen row dispatches one command; disabled rows show their reason."
   - "An empty panel shows the same rows as 32 px full-width list rows, then five recent files, then a hint, with no tiles and no pills."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+  - "The Output row opens or reveals output and never makes output:<channel>; a reveal leaves its tab where it is."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -43691,6 +43696,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D28)"
   - "Plans/Decision_Log.md#DL-180"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D6)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (concept lineage only)"
@@ -43698,6 +43704,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html, SHA-256 52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981 (the agreed anatomy; concept lineage only)"
   - "Concepts/home-redesign/src/panels/js/38-menus.js on branch concept/home-panels-20261009 at 1565156bce (the disabled Split and Reopen closed tab rows with their reasons; concept lineage only)"
 preserved_exact_tokens:
+  - "output"
   - "Open anything: kinds, files, URLs"
   - "Terminal"
   - "Browser"
@@ -43717,7 +43724,8 @@ negative_constraints:
   - "Do not dispatch anything when the menu opens, filters or closes."
 compatibility_only_notes:
   - "The contract's Split down shortcut Ctrl+K Ctrl+\\ is retired: the shell owns Ctrl+K, and Split down is Ctrl+Shift+\\ (F3-635)."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (Addendum 2 D28, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
@@ -43818,7 +43826,7 @@ canonical_text: >-
   the "+" menu's recent files and every file an agent opens open kept tabs. Placement of a new tab: a document kind goes
   to the last-focused panel that holds documents; panels holding only dedicated kinds (terminals, browsers, dashboards,
   tool kinds) and locked panels are skipped. A terminal, browser or dashboard goes to the last-focused panel already
-  holding that kind, else the last-focused document panel. A tool kind (Output, Problems, Ports, Debug Console) goes to
+  holding that kind, else the last-focused document panel. A tool kind (Output (one tab; its channel switches inside it), Problems, Ports, Debug Console) goes to
   the last-focused panel holding that kind, then to the last-focused panel holding a terminal, then to the last-focused
   document panel, so tools land beside the terminals. With no such panel, a new panel by the fit rule (F3-630).
   Alt+click anywhere opens a new panel by the fit rule; an open may also ask for the panel it came from or a split of it
@@ -43832,6 +43840,9 @@ canonical_text: >-
   narrow return works ACD-500's. This supersedes the per-caller open rules for Home: F3-HOME-003's Open Panel and Open
   Browser in Panel targets, section 7.3's bottom_panel destination class, the "left editor tab
   bar" of APR-036 to APR-038, the "beside the chat" wording of F3-569, and, through F-090, F-080's four-panel routing.
+  Opening an Output channel from anywhere switches the `output` tab to that channel, or focuses a split-off tab
+  already showing it. With no Output tab, the opening module opens `output` by the tools rule above, beside the
+  terminals. The channel picker's "Open in new tab" alone splits off `output:<channel>` (F3-635).
 gui_related: true
 gui_classification_reason: Defines the one set of rules that decides where anything opened in the home centre lands and whether it takes focus.
 split_recommended: false
@@ -43846,6 +43857,7 @@ acceptance_criteria:
   - "A user click opens with focus; an agent's open lands in the background with the hollow square and an announcement, never takes keyboard focus and never changes the active tab of a panel the user is typing in."
   - "Below a centre width of 600 px no new panel is created and the announcement says where the item opened."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+  - "A channel opened from anywhere switches output or focuses a split-off tab already showing it; with no Output tab it opens output by the tools rule beside the terminals."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -43863,6 +43875,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D28)"
   - "Plans/Decision_Log.md#DL-180"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D7, D8)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (concept lineage only)"
@@ -43870,6 +43883,9 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/chat56-audit.md, SHA-256 6d1563bd1776860739e6be272b191c419aba3c38b9dd9fe8ba44fd1ebb3231b5 (sections 9 and 10; audit lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8 (audit lineage only)"
 preserved_exact_tokens:
+  - "Open in new tab"
+  - "output:<channel>"
+  - "output"
   - "where"
   - "mode"
   - "by"
@@ -43888,7 +43904,8 @@ negative_constraints:
   - "Do not create a new panel below a centre width of 600 px."
 compatibility_only_notes:
   - "The concept names its module PM_HOME.open and its chat bridge openEditor; those names are concept lineage, not product names."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (Addendum 2 D28, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Contracts_V0.md
@@ -43918,7 +43935,8 @@ canonical_text: >-
   artifact ids; a subtype per artifact kind, versioned; RAP-065); run (`collab-run:`, `crew-work:`, `review:`, `room:`,
   `brainstorm:`, `review-evidence:`, `brainstorm-evidence:`: Crew, Review, Chat Room, BrainStorm and their evidence);
   transcript (`thread-<agentId>`: an agent's read-only live feed); context (`context:<threadId>`: thread-keyed context
-  detail); record (`search:`, `mcp:`, `app:`, `work-record:`: read-only records); output (`output:<channel>`); problems
+  detail); record (`search:`, `mcp:`, `app:`, `work-record:`: read-only records); output (`output`, one Output tab whose channel switches inside it; `output:<channel>` only for a channel
+  split off with "Open in new tab", showing only that channel); problems
   (`problems`); ports (`ports`); and debug_console (`debug-console:<session>`). The document kinds are editor, plan,
   document, artifact, run, transcript, context and record; terminal, browser, dashboard and the four tool kinds output,
   problems, ports and debug_console are dedicated; a panel holding only tool kinds and terminals has the role tools.
@@ -43967,6 +43985,7 @@ canonical_text: >-
   keeps, Ctrl+T, Ctrl+W, Ctrl+Shift+T and Ctrl+Tab, are answered as Alt+T, Alt+W, Alt+Shift+T and Alt+` (Alt+Shift+`
   backwards), and every label, menu shortcut and hover tag shows the key that works where the app runs. This supersedes
   F3-HOME-001's typed surface kinds and F3-152's terminal-and-browser-only tab identity, which now holds for every kind.
+  The channel shown in `output` is view state, never part of its id (Addendum 2 D28).
 gui_related: true
 gui_classification_reason: Defines the list of tab kinds, how a kind plugs into a panel, the shared header row, the overlay order and the panel keyboard.
 split_recommended: false
@@ -43983,6 +44002,7 @@ acceptance_criteria:
   - "Every menu, list, ghost and preview opens in the one overlay root in the stated order, and no kind appends its own overlay."
   - "Every key in the desktop map works while focus is in the centre, none uses Ctrl+K or Ctrl+1..9 or a bare letter or digit, and in a web browser Alt+T, Alt+W, Alt+Shift+T and Alt+` replace the four browser-owned chords with every label showing the key that works."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+  - "Output has id output and switches channel as view state; Open in new tab produces output:<channel> showing only that channel."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -43999,6 +44019,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D28)"
   - "Plans/Decision_Log.md#DL-180"
   - "Plans/Decision_Log.md#DL-181"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D9, D11, D12)"
@@ -44007,6 +44028,8 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/chat56-audit.md, SHA-256 6d1563bd1776860739e6be272b191c419aba3c38b9dd9fe8ba44fd1ebb3231b5 (sections 9 and 10; audit lineage only)"
   - "Concepts/home-redesign on branch concept/home-panels-20261009 at 1565156bce (concept lineage only)"
 preserved_exact_tokens:
+  - "Open in new tab"
+  - "output:<channel>"
   - "editor"
   - "terminal"
   - "browser"
@@ -44040,7 +44063,8 @@ negative_constraints:
 compatibility_only_notes:
   - "The concept's registration call, host API names, container name and z-index values are concept lineage; the stacking order is canon, its numbers are not."
   - "The concept spells the tool kind debug-console in its id prefix; the kind's schema name is debug_console."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (Addendum 2 D28, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/UI_Command_Catalog.md
@@ -44315,8 +44339,14 @@ canonical_text: >-
   and inline when it is narrow, switching by the body's own width (F3-635); preview tabs (F3-634); syntax colours per
   look from each look's token table (F3-426); and the JetBrains Mono code face in every look, Retro included (D17a;
   F3-644 owns the face, and DL-161, F3-426 and F3-430 own general code text elsewhere). It uses the shared header row
-  only where it needs one (F3-635). Its settings (font size, minimap, sticky scroll, diff layout, word wrap) are
+  only where it needs one (F3-635). Its settings (scheme choice, font size, minimap, sticky scroll, diff layout, word wrap) are
   SSYS-050's. This amends F3-140 and section 7.18 (editor groups are now panels, F3-630) and F3-505's editor-only scope.
+  The editor's ⋮ menu opens F3-642's shared Appearance popover. Its own scheme choice defaults to "Follow look",
+  using the per-look syntax colours above, and can select any scheme from the same code colour-scheme catalog.
+  Retro's editor syntax stays monochrome: brightness and weight in dark, the black and red ribbon in light.
+  Its colour follows the terminal's Retro scheme choice, Phosphor Green or Amber; choosing Amber turns Retro's
+  editor syntax amber. That choice is stored once in F3-642's terminal appearance model; the editor reads it
+  and keeps no copy.
 gui_related: true
 gui_classification_reason: Defines the code editor as a tab kind and the editing features it adds.
 split_recommended: false
@@ -44326,8 +44356,10 @@ acceptance_criteria:
   - "The editor's tabs use the one strip and silhouette, and the minimap is the only code-pane scrollbar with its change marks."
   - "Sticky scroll, find and replace, go to line and preview tabs work in every editor tab."
   - "The diff mode shows side by side when the tab body is wide and inline when it is narrow, decided by the body's width, never the window's."
-  - "Syntax colours follow each look's token table, and the code face is JetBrains Mono in every look, Retro included."
+  - "With Follow look, syntax colours follow each look's token table, and the code face is JetBrains Mono in every look, Retro included."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+  - "The editor scheme choice defaults to Follow look, can select any catalog scheme and opens the same Appearance popover component from its ⋮ menu."
+  - "Retro editor syntax remains monochrome in dark and keeps the black and red ribbon in light; Phosphor Green or Amber follows the one terminal Retro scheme choice, Amber turns the editor amber, and the editor stores no copy."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -44343,6 +44375,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D27)"
   - "Plans/Decision_Log.md#DL-180"
   - "Plans/Decision_Log.md#DL-183"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D21, D17)"
@@ -44359,7 +44392,9 @@ negative_constraints:
   - "Do not use IBM Plex Mono or VT323 as the editor's code face in Retro."
 compatibility_only_notes:
   - "The width at which the diff turns inline is a concept number still to come (wave 2)."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Retro editor syntax reads the terminal Retro scheme choice once and keeps no copy."
+  - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/FileManager.md
@@ -44405,6 +44440,10 @@ canonical_text: >-
   icon kind with a static tint; and hover rests while a divider is dragged. No look draws a pill, a coloured side stripe
   or an emoji (F3-648). This supersedes F3-505's and F3-466's per-theme tab skins where they differ, and gives the home
   panels the NieR Mode treatment they lacked (DL-144 and DL-152 covered the chat, onboarding and the Tour).
+  Retro's editor syntax stays monochrome: brightness and weight in dark, the black and red ribbon in light.
+  Its colour follows the terminal's Retro scheme choice, Phosphor Green or Amber; choosing Amber turns Retro's
+  editor syntax amber. That choice is stored once in F3-642's terminal appearance model; the editor reads it
+  and keeps no copy.
 gui_related: true
 gui_classification_reason: Defines how panels, strips, menus, dividers and drags render in each look, NieR Mode and Reduced Motion.
 split_recommended: false
@@ -44418,6 +44457,7 @@ acceptance_criteria:
   - "No tab, tab button or divider receives magnet displacement or glow; at most a static tint."
   - "Glass adds no backdrop blur for panels or strips."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+  - "Retro editor syntax remains monochrome in dark and keeps the black and red ribbon in light; Phosphor Green or Amber follows the one terminal Retro scheme choice, Amber turns the editor amber, and the editor stores no copy."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -44431,6 +44471,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D27)"
   - "Plans/Decision_Log.md#DL-180"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D23, D24)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/NIER-RULES-for-new-surfaces.md, SHA-256 4634aba3abe147493c0f71de49419e63ba667a6784ca4b36967b537abb231728 (the NieR lead's rule for new surfaces)"
@@ -44455,7 +44496,8 @@ negative_constraints:
   - "Do not use an emoji as a kind icon in any look."
 compatibility_only_notes:
   - "The concept also gates some touches by its own hook names and by part keys outside this list; only the existing part keys named here are canon."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Retro editor syntax reads the terminal Retro scheme choice once and keeps no copy."
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
@@ -44858,6 +44900,12 @@ canonical_text: >-
   (MIT): Wave, Lotus. Everforest (MIT): Light, Dark. Flexoki (MIT): Light, Dark. GitHub (MIT): Light, Dark. Ayu
   (MIT): Mirage. Every third-party scheme ships with its licence text and its source address and SHA-256; the
   iTerm2-Color-Schemes collection (no single licence) and Modus (GPL-3.0) are not bundled, and import covers them.
+  These schemes are one code colour-scheme catalog that serves the editor and the terminal (Addendum 2 D27, amending
+  D15 and D21): each curated scheme carries the terminal palette and the editor's syntax colours. Each surface's
+  scheme choice defaults to "Follow look" — the terminal's "Follow theme" per-look scheme above, the editor's
+  per-look syntax colours (F3-426, F3-639) — and each surface keeps its own scheme choice. The Appearance popover is
+  one component, opened from the terminal's ⋮ menu and from the editor's ⋮ menu (F3-639); no surface keeps a scheme
+  list or popover of its own (DR-068).
   "Switch with light and dark", on by default, swaps a chosen scheme for its family's other appearance when the app
   changes between light and dark. A minimum-contrast floor applies per cell to the text colour against its cell
   background by moving OKLab lightness only, keeping hue and chroma: default 4.5:1, with the choices Off, 3:1, 4.5:1
@@ -44886,6 +44934,10 @@ canonical_text: >-
   tab's override lives in the terminal tab's serialized state; a custom background image is kept as SP-331 says.
   There is one model: the look's defaults, the popover and Settings read and write it, and no second terminal theme
   or font store exists (DR-068).
+  The Retro scheme choice also colours Retro's editor syntax: Phosphor Green or Amber, with Amber turning the
+  Retro editor amber. Retro syntax stays monochrome, using brightness and weight in dark and the black and red
+  ribbon in light. This choice is stored once in the terminal's appearance model; the editor reads it and keeps
+  no copy (F3-639, F3-647).
 gui_related: true
 gui_classification_reason: Defines the terminal's visible schemes, contrast floor, import, appearance fields, cell geometry and Appearance popover.
 split_recommended: false
@@ -44901,6 +44953,8 @@ acceptance_criteria:
   - "Cells are whole device pixels by the geometry rule, and no stripe shows between the last cell and the padding."
   - "The popover writes This terminal or All terminals, and only Settings writes the project default."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+  - "The editor and terminal list the same catalog, each curated scheme carries terminal and syntax colours, both scheme choices default to Follow look and remain separate, and both menus open the same Appearance popover component."
+  - "Retro editor syntax remains monochrome in dark and keeps the black and red ribbon in light; Phosphor Green or Amber follows the one terminal Retro scheme choice, Amber turns the editor amber, and the editor stores no copy."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -44917,6 +44971,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D27)"
   - "Plans/Decision_Log.md#DL-183"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D15)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, sections 5 and 6 (concept lineage only)"
@@ -44937,6 +44992,8 @@ negative_constraints:
 compatibility_only_notes:
   - "The concept's field names and its settings keys under a terminal prefix are lineage only; the product ids are SSYS-051's rows."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Retro editor syntax reads the terminal Retro scheme choice once and keeps no copy."
+  - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
   - "Makes F3-083's terminal colour-scheme catalogue, preview and instant apply real, and replaces the restart badges on the old terminal theme and font rows (DL-183)."
 owner_hints:
   - Plans/FinalGUISpec.md
@@ -44956,8 +45013,9 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The terminal's effects are Puppet Master's own (DL-183) and follow one policy. They are event-driven: the effect
   pass runs only after the screen repainted or while something is still animating. Only the focused, visible
-  terminal animates; ambient motion stops when the terminal is idle; motion is off on battery saver; and where no GPU
-  draws the terminal (on the desktop, the Skia CPU raster of F3-582), only the static fallbacks remain (a static
+  terminal animates; every effect goes idle within 10 s of the last output or keystroke; motion is off on battery
+  saver; and where no GPU draws the terminal (on the desktop, the Skia CPU raster of F3-582), the effects layer
+  stays off, no effects frames run, and plain static fallbacks paint (a static
   scanline pattern and a static glow), curvature, burn-in and noise are not drawn, and the Appearance popover says
   what it could not draw. Under Reduced Motion every moving part is off (cursor blink, cursor trail, smooth
   scrolling, burn-in, noise, flicker, degauss, bell flashes, progress sweeps and image animation) and the static looks
@@ -44978,6 +45036,7 @@ canonical_text: >-
   stepped, with no glow, filter or blur, and loops only by transform or opacity; no surface larger than 340x256 px
   reverses its opacity more than once a second; and Reduced Motion and the Still and Colors only presets show end
   states at once. Motion voices belong to the theme family (DR-043).
+  An effects frame takes at most 2 ms of CPU at DPR 2 on P1000-class hardware (R34).
 gui_related: true
 gui_classification_reason: Defines the terminal's visible effects, their defaults and the policy that limits when they run.
 split_recommended: false
@@ -44985,13 +45044,14 @@ depends_on: [DL-183, F3-642, F3-431, F3-582, DR-043, DL-152, DR-056]
 unblocks: [ATS-076]
 acceptance_criteria:
   - "Only the focused, visible terminal animates; an idle terminal draws no ambient frames; battery saver turns motion off."
-  - "Where no GPU draws the terminal, only the static scanlines and glow are drawn, curvature, burn-in and noise are not, and the Appearance popover names what it could not draw."
+  - "Where no GPU draws the terminal, the effects layer stays off with zero effects frames, plain static scanlines and glow are drawn, curvature, burn-in and noise are not, and the Appearance popover names what it could not draw."
   - "Under Reduced Motion no part of the terminal moves, and the static looks stay."
   - "A fresh Retro dark terminal shows scanlines and phosphor glow; no other look shows them by default; Full CRT and flicker are off by default in every look."
   - "The flicker amount defaults to 0.02 and cannot exceed 0.03 of relative luminance."
   - "Degauss is a one-shot action in Retro, not a setting, and stops at its end."
   - "With NieR Mode on, the parchment shows only with the ground part and the focus brackets only with the brackets part, NieR's own terminal look has no glow, filter or blur, and no surface larger than 340x256 px reverses its opacity more than once a second."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+  - "An effects frame takes at most 2 ms of CPU at DPR 2 on P1000-class hardware; every effect, including Full CRT ambient noise and flicker, stops within 10 s of the last output or keystroke; without a GPU the effects layer stays off with zero effects frames and plain fallbacks paint."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -45005,12 +45065,17 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-wave2-numbers-5e549d6961.md, SHA-256 f9d7756f94f26c5285b35400a380afed57fb27dfaee6d29683c3916604b4a15a (R34, adopted effects budgets; concept lineage only)"
   - "Plans/Decision_Log.md#DL-183"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D16)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, section 6 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-ARCHITECTURE-542703c07c.md, SHA-256 b6daf31a8953b3d7b633dd0db0a7b8a0ecba41f4533e8d6db6df5fa0f08bf476, section 6 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/NIER-RULES-for-new-surfaces.md, SHA-256 4634aba3abe147493c0f71de49419e63ba667a6784ca4b36967b537abb231728"
 preserved_exact_tokens:
+  - "10 s"
+  - "P1000-class"
+  - "DPR 2"
+  - "2 ms"
   - "Full CRT"
   - "WCAG 2.3.1"
   - "0.02"
@@ -45023,8 +45088,9 @@ negative_constraints:
   - "Do not turn on Full CRT or flicker by default in any look, or let flicker exceed 0.03 of relative luminance."
   - "Do not add a NieR part, or give NieR's terminal look a glow, filter or blur."
 compatibility_only_notes:
-  - "The concept's per-look effect parameters, its GPU frame times, its battery-saver threshold and its performance measurements are lineage only until a later terminal installment settles them."
-stale_retired_dispositions: []
+  - "The concept's per-look effect parameters, its GPU frame times, its battery-saver threshold and its measured performance are lineage only; R34 adopts the 2 ms CPU budget at DPR 2 on P1000-class hardware and the 10 s idle deadline as canon."
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (R34, DL-183): Adopts the effects CPU budget, idle deadline and no-GPU fallback rule."
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
