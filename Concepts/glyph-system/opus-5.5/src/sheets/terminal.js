@@ -71,7 +71,7 @@
         '<div class="tm-agent"><span class="pmt-agent-live" style="line-height:0">' + S.icon('agent-driving', 14, tone('working')) + '</span><span><b>Codex</b> is driving this terminal · step 2 of 5</span><span class="tm-acts"><span>Take over</span><span>Interrupt</span><span>Stop</span></span></div>' +
         '<div class="tm-agent">' + S.icon('agent-cursor', 14, 'nx-t-paused') + '<span>You took over. <b>Codex</b> is paused and has been told.</span><span class="tm-acts"><span>Hand back</span></span></div>' +
         '<div class="tm-agent">' + S.status('waiting', 14) + '<span><b>Codex</b> wants to type in this terminal</span><span class="tm-acts"><span>Allow once</span><span>Deny</span></span></div>' +
-        '<div class="tm-agent" style="border-bottom:0">' + S.icon('lock', 14, 'nx-r-concept') + '<span>Password needed. Only you can answer this prompt.</span></div>' +
+        '<div class="tm-agent" style="border-bottom:0">' + S.icon('key', 14, 'nx-r-concept') + '<span>Password needed. Only you can answer this prompt.</span></div>' +
       '</div></section>' +
       '<section class="sh-sec"><h3>Find bar and header facts (14 px)</h3><div class="sh-row">' +
         '<span class="tm-find"><span class="tm-q">error</span><span class="tm-n">3 of 12</span>' +

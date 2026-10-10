@@ -113,19 +113,27 @@ backlight still carry each state. Act overlays (smoke, strike fills, glints) sta
 (the halo snaps on and the ink brightens) but plays no act. In NieR, the inverted needs-you block, the working diamond
 and the bar's underline still carry state.
 
-## 9. Retro: phosphor, stepped (source for the motion; the rest is proposed)
-- **Source:** the same drawing and the same halo tokens. Every act is `steps(4)` and spins are `steps(16)`.
-- **Proposed, Retro Dark (a phosphor CRT):** the ink is the phosphor palette (`--accent-primary` #b8d066 for the lit
-  default; tones from the Retro tables). Phosphor lights instantly and decays slowly, so **ignite has no fade**: the halo
-  cuts on in one 33 ms tick, the tube shows the text ink for one tick (an over-bright strike) and then settles to its
-  ink. On leave, the halo decays in two ticks (`transition: stroke-opacity 66ms steps(2)`). The core band narrows to
-  3.0 px and the status backlight halves, so it reads as phosphor on glass rather than a sign on a wall. One-shots
-  snap to the rail's clock: 396 ms in `steps(4)`, three ticks a step. Draw-ons then print in four chunks, matching the
-  rail's line-by-line print.
-- **Proposed, Retro Light (print on cream):** no halo (as on every light look), cobalt print ink, the same stepped
-  motion, and the same instant cut on ignite, shown by ink alone.
-- **Both:** on an inverse cell (Retro's one-tick inverse flash on a landed tab), the glyph takes the cell's paper ink for
-  that tick, the same rule NieR's cursor bar uses. Caps stay round: square caps belong to NieR.
+## 9. Retro: phosphor, stepped (built: `src/bridge/pm7-retro-phosphor.css`)
+- **Source:** the same drawing and the same halo tokens; every act is `steps(4)` and spins are `steps(16)`.
+- **Ignite on the rule's tick** (timing agreed with pm7-hover against PMH's Retro "Raise"). PMH raises a hovered plate
+  on the hover-start frame and draws its phosphor rule 33 ms later. The glyph strikes with the rule: at +33 ms its tube
+  takes the hover ink and its halo powers on in two held ticks (half strength, then full). There is no 180 ms fade and
+  no neon flicker. Its one-shot act starts on the same tick and runs 396 ms, twelve ticks, three per step.
+- **Decay from the leave frame:** the halo drops to half on the leave frame (with the rule going off) and goes out one
+  tick later (with the plate dropping), and the tube returns to its rest ink on that second tick. Nothing glows after
+  the plate drops.
+- **Retro Dark:** a tighter phosphor bloom. The core band is 3.0 px and the status backlights are halved, so it reads as
+  phosphor on glass rather than a sign on a wall. **Retro Light** keeps the light looks' faint band, so its strike is
+  the ink alone, on the same ticks.
+- **Frame check (P1000, 60 fps, with a marker that flips on the true hover frame):** in Retro Dark a control and a
+  concept glyph light 2 frames after the marker (+33 ms), stay at half for 2 frames and reach full at +66 ms. On leave
+  they drop to half on the marker frame and reach rest 2 frames later. In Retro Light the ink flips at +33 ms both ways.
+  Basic keeps neon's instant ink and its 180 ms fade.
+- **Untouched:** status marks, the bar, the other self-lit hosts, filled chips and the bespoke acts (the wand's sparkle,
+  the Fast bolt) keep their own timing: the Retro scope sits inside `:where()`. Only opacity and transform animate, with
+  no filter. On an inverse cell (Retro's one-tick inverse flash on a landed tab) a glyph takes the cell's paper ink for
+  that tick, as on NieR's cursor bar. Caps stay round; square caps belong to NieR.
+- **Reduced Motion:** the end state at once (no delay, no ticks).
 
 ## 10. NieR: ink, no glow (source, PMConcept7 contract)
 No halo and no backlight (`display: none`). The inks come from the NieR tables. Idle and paused are ink at .45 (.545
@@ -151,6 +159,5 @@ source set already draws the concept, I map the item to it instead of redrawing.
 ## Questions for pm7-glyphs
 1. Do you confirm the weight ladder (12: 2.6, 14: 2.3, 16: 2.0, 20: 1.8) as each context's `--nx-stroke-base`?
 2. Should the moving-part cap stay at two, or allow three for a sequence (three ticks, three sparkles), as the source does?
-3. Do you confirm the Retro phosphor rules in section 9 (instant cut on ignite, two-tick decay, 3.0 px band in Retro
-   Dark, the 33 ms clock)? I will check them frame by frame on the P1000 before I send any family.
+3. Do you confirm the Retro phosphor rules in section 9? Confirmed, built and frame-checked (2026-10-10).
 4. What are the names of the per-look glyph ink tokens, so my families consume them?

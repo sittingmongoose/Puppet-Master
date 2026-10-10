@@ -101,7 +101,9 @@
   G.map('st-idle', { family: F, replaces: ['terminal 70-view.js SVG.idle when the prompt awaits input'], surfaces: ['terminal command-mark gutter'] });
   G.map('st-skipped', { family: F, replaces: ['terminal 70-view.js SVG.idle when the command ended with the earlier session', 'terminal 80-card.js card:interrupted', 'gutter exit 130 (interrupted; today drawn as fail)'], surfaces: ['terminal command-mark gutter', 'chat command card'] });
   G.map('st-waiting', { family: F, replaces: ['terminal 78-agent.js SQ (permission row: an agent asks to type)', 'terminal 80-card.js card:waiting ("Needs input")'], surfaces: ['terminal agent row (permission)', 'chat command card'] });
-  G.map('lock', { family: F, meaning: 'A secret: only you can answer this prompt.', replaces: ['terminal 78-agent.js LOCK (secret row: a password prompt)'], surfaces: ['terminal agent row (secret)'] });
+  /* the secret row is the objects family's key (a credential): lock is st-blocked's drawing, so it cannot also mean
+     "a secret only you can answer" (lead ruling, 2026-10-10) */
+  G.map('key', { family: F, replaces: ['terminal 78-agent.js LOCK (secret row: "Password needed", a password prompt)'], surfaces: ['terminal agent row (secret)'] });
   /* find, header facts, card */
   /* find previous and next are the controls family's arrow-up and arrow-down (one pair for every find bar, panels and
      terminal alike); the card's expand toggle is the chat's chevron */

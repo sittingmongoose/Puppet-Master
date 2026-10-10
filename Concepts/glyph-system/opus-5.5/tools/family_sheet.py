@@ -59,7 +59,11 @@ def main() -> int:
         return 2
     out = Path(sys.argv[sys.argv.index('--out') + 1]).resolve()
     css, js, data = bc.parts()
-    css = [p for p in css if p.parent.name != 'catalog'] + [SHEETS / 'sheet.css']
+    css = [p for p in css if p.parent.name != 'catalog']
+    phos = HERE.parent / 'src' / 'bridge' / 'pm7-retro-phosphor.css'
+    if phos.exists() and phos not in css:  # until build_catalog.py lists it (after pm7-bridge.css)
+        css.insert(next(i for i, p in enumerate(css) if p.name == 'pm7-bridge.css') + 1, phos)
+    css += [SHEETS / 'sheet.css']
     js = [p for p in js if p.parent.name != 'catalog'] + [SHEETS / 'sheet.js', SHEETS / (family + '.js')]
     for p in css + js:
         if not p.exists():
