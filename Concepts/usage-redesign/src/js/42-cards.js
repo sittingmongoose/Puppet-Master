@@ -27,17 +27,29 @@
   };
 
   function text(v, ctx) { try { return typeof v === 'function' ? (v(ctx) || '') : (v || ''); } catch (error) { console.error('[pm-usage] text', error); return ''; } }
+  /* the board a call belongs to (D10 3.5): the engine hands its board, a card knows its own (card._pmuBoard), and id-only
+     code reads the ambient board that PMU.boards.run sets (the Usage board outside any run). Usage keys stay bare widget
+     ids; a hosted board's preset memory is keyed by its id, so the same widget on two boards never shares a pick. */
+  function boardNow() { return PMU.boards && PMU.boards.current ? PMU.boards.current() : PMU.board; }
+  function inBoard(b, fn) { return PMU.boards && PMU.boards.run ? PMU.boards.run(b || boardNow(), fn) : fn(); }
+  function hostedNow() { var b = boardNow(); return !!b && b !== PMU.board; }
+  function bk(id) { var b = boardNow(); return !b || b === PMU.board ? id : b.id + '|' + id; }
   /* a per-widget fixed range / scope (gear) is applied by swapping the shared view state around the widget's own calls,
-     so PMU.data (which reads the page state) answers for the widget's window without any change in the content code */
-  function cfgOf(id) { return PMU.board && PMU.board.config ? PMU.board.config(id) : {}; }
-  function withView(id, fn) {
-    var cfg = cfgOf(id), saved = null;
-    if (cfg.range || cfg.scope) { saved = { range: st.range, scope: st.scope }; if (cfg.range) st.range = cfg.range; if (cfg.scope) st.scope = cfg.scope; }
-    try { return fn(cfg); } finally { if (saved) { st.range = saved.range; st.scope = saved.scope; } }
+     so PMU.data (which reads the page state) answers for the widget's window without any change in the content code; a
+     hosted board's own range and scope are swapped in the same way (for the Usage board its view is the page state) */
+  function cfgOf(id) { var b = boardNow(); return b && b.config ? b.config(id) : {}; }
+  function withView(id, fn, card) {
+    var b = (card && card._pmuBoard) || boardNow();
+    return inBoard(b, function () {
+      var cfg = cfgOf(id), saved = null, bs = b && b.state ? b.state : st;
+      if (bs !== st || cfg.range || cfg.scope) { saved = { range: st.range, scope: st.scope }; st.range = cfg.range || bs.range; st.scope = cfg.scope || bs.scope; }
+      try { return fn(cfg); } finally { if (saved) { st.range = saved.range; st.scope = saved.scope; } }
+    });
   }
   function ctxBase(id, room, cfg) {
     cfg = cfg || cfgOf(id);
-    return { id: id, room: room, state: { range: cfg.range || st.range, scope: cfg.scope || st.scope, detail: st.detail, pageRange: st.range, pageScope: st.scope },
+    var b = boardNow(), bs = b && b.state ? b.state : st;
+    return { id: id, room: room, state: { range: cfg.range || bs.range, scope: cfg.scope || bs.scope, detail: bs.detail, pageRange: bs.range, pageScope: bs.scope },
       look: PMU.theme.look(), thresholds: PMU.roster && PMU.roster.thresholds ? PMU.roster.thresholds() : null, config: cfg };
   }
   function ctxFor(card, tier, entering) {
@@ -94,7 +106,7 @@
      board pitch, the text in the theme face (NieR: tracked capitals). A plate whose title does not fit wraps the title to
      two lines and gives the subtitle line to it (the subtitle stays in the title's hover tag). */
   function titleFits(card, text, form) {
-    var cls = PMU.board && PMU.board.cls ? PMU.board.cls() : null;
+    var b = boardNow(), cls = b && b.cls ? b.cls() : null;
     if (!cls || !cls.pitchX || !PMU.charts || !PMU.charts.textW) return true;
     var w = (+card.dataset.w || 0) * cls.pitchX - 8 - 28 - (card.querySelector('.pmu-cardkey:not([hidden])') ? 34 : 0) - 6;
     var nier = document.documentElement.getAttribute('data-o55-nier') === 'on';
@@ -107,7 +119,7 @@
      engine 4: Retro and NieR fonts run wider); the full line stays in the title's hover tag. Canvas measure, no layout read. */
   function fitSub(card, sub, asideText, form) {
     if (form !== 'plate' || !sub || sub.indexOf(' · ') < 0 || !PMU.charts || !PMU.charts.textW) return sub;
-    var cls = PMU.board && PMU.board.cls ? PMU.board.cls() : null;
+    var b = boardNow(), cls = b && b.cls ? b.cls() : null;
     if (!cls || !cls.pitchX) return sub;
     var cardW = (+card.dataset.w || 0) * cls.pitchX - 8;
     var key = card.querySelector('.pmu-cardkey:not([hidden])') ? 34 : 0;
@@ -181,12 +193,12 @@
      then re-resolves it there (a reload in another look, a narrower board) */
   var held = {};
   function pickedAt(id, cls) {
-    var pk = picked[id] ? picked[id][cls] || null : null;
-    if (pk || !held[id] || cls !== clsNow().name) return pk;
-    var r = PMU.board && PMU.board.rect ? PMU.board.rect(id) : null; if (!r) return null;
-    var h0 = held[id]; delete held[id];
+    var k = bk(id), pk = picked[k] ? picked[k][cls] || null : null;
+    if (pk || !held[k] || cls !== clsNow().name) return pk;
+    var b = boardNow(), r = b && b.rect ? b.rect(id) : null; if (!r) return null;
+    var h0 = held[k]; delete held[k];
     var pid = typeof h0 === 'string' ? h0 : legacyId(id, r, h0);
-    return pid ? ((picked[id] = picked[id] || {})[cls] = { w: r.w, h: r.h, px: pxOf(r.w), pid: pid }) : null;
+    return pid ? ((picked[k] = picked[k] || {})[cls] = { w: r.w, h: r.h, px: pxOf(r.w), pid: pid }) : null;
   }
   /* preset_id_restore (WS-020): a stored value that is not one of the kind's table ids (a display name such as
      'Expanded', 'custom', a retired id, or the earlier per-class presets map) maps once to the current preset of the same
@@ -199,10 +211,10 @@
     var byName = same.filter(function (p) { return p.name === old.name && ids.indexOf(p.id) >= 0; })[0];
     return (byMap || byName || fixed[0] || {}).id || null;
   }
-  function clsNow() { return PMU.board && PMU.board.cls ? PMU.board.cls() : { name: 'S', tracks: 12, pitchX: 47 }; }
+  function clsNow() { var b = boardNow(); return b && b.cls ? b.cls() : { name: 'S', tracks: 12, pitchX: 47 }; }
   function viewKey(id) {
-    var l = PMU.theme.look(), c = cfgOf(id);
-    return l.slug + (l.nier ? '+nier' : '') + '|' + st.range + '|' + st.scope + '|' + Object.keys(c).sort().map(function (k) { return k + '=' + c[k]; }).join(',');
+    var l = PMU.theme.look(), c = cfgOf(id), b = boardNow(), bs = b && b.state ? b.state : st;
+    return l.slug + (l.nier ? '+nier' : '') + '|' + bs.range + '|' + bs.scope + '|' + Object.keys(c).sort().map(function (k) { return k + '=' + c[k]; }).join(',');
   }
   function offered(p, cls) { return !p.from || CLS_ORDER.indexOf(cls) >= CLS_ORDER.indexOf(p.from); }
   function widthOf(p, cls) { return typeof p.w === 'object' ? (p.w[cls] != null ? p.w[cls] : p.w.S) : p.w; }
@@ -285,20 +297,18 @@
       h = k;
     }
     if (p.w === r.w && h === r.h) return null;
-    (picked[id] = picked[id] || {})[cls] = { w: p.w, px: pxOf(p.w), h: h, pid: p.id };
+    var k = bk(id); (picked[k] = picked[k] || {})[cls] = { w: p.w, px: pxOf(p.w), h: h, pid: p.id };
     return { w: p.w, h: h };
   }
 
   /* ---- the hidden card: the real kind rendered at a preset's size (the fit measure and the picker's miniature) ---- */
-  var measureHost = null;
-  function hostEl() {
-    var app = document.getElementById('pmuApp'); if (!app) return null;
-    if (!measureHost || !measureHost.isConnected) { measureHost = document.createElement('div'); measureHost.className = 'pmu-szmeasure'; measureHost.setAttribute('aria-hidden', 'true'); app.appendChild(measureHost); }
-    return measureHost;
-  }
+  /* where it renders is the board's (D10 3.7): #pmuApp's measure host for the Usage board, the shared hosted layer's for a
+     dashboard (always rendered, so its rects are real while the Usage page is hidden) */
+  function hostEl() { var b = boardNow(); return b && b.measureHost ? b.measureHost() : null; }
   function ghostCard(id) {
-    var live = PMU.board.card(id), room = live ? live.getAttribute('data-room') : st.room;
-    var card = PMU.cards.build(id, room);
+    var b = boardNow(), live = b.card(id), room = live ? live.getAttribute('data-room') : b.state.room;
+    var card = PMU.cards.build(id, room, null, b);
+    card._pmuBoard = b;   /* its renders resolve its board's view and config (withView) wherever they run */
     card._pmuPreview = true;
     card.classList.add('pmu-szcard');
     card.removeAttribute('tabindex'); card.removeAttribute('aria-roledescription');
@@ -321,7 +331,7 @@
     card.style.height = (h * ROW_PX - GAP_PX) + 'px';
     var form = headForm(def, w, h, cls.pitchX);
     if (card.getAttribute('data-head') !== form) card.setAttribute('data-head', form);
-    var tier = PMU.board.measure(card);
+    var tier = boardNow().measure(card);
     card.setAttribute('data-tw', tier.w); card.setAttribute('data-th', tier.h);
     PMU.cards.renderBody(card, tier, false);
     var body = card.querySelector('.pmu-cardbody');
@@ -367,7 +377,7 @@
      measure in idle slices (one render, 15-30 ms, a slice) and a pick can finish it at once. */
   var jobs = {};
   function fitJob(id, w, fit) {
-    var cls = clsNow(), key = fitKeyOf(id, cls.name, w, fit);
+    var jb = boardNow(), cls = clsNow(), key = fitKeyOf(id, cls.name, w, fit);
     if (jobs[key] && !jobs[key].done) return jobs[key];
     var job = { key: key, done: false, h: fitCache[key] != null ? fitCache[key] : null, renders: 0, t0: performance.now() };
     if (job.h != null) { job.done = true; return job; }
@@ -406,15 +416,18 @@
     };
     /* the tallest size first (how many items there are, whether everything can show), then the fallback height (usually
        within a row or two of the answer), then a bisection on the side it points to */
+    /* a step renders on the board the job was made for (its pitch, its measure host, its view), whoever steps it */
     job.step = function () {
       if (job.done) return true;
-      try {
-        if (phase === 'top') { top = at(hMax); phase = 'fb'; }
-        else if (phase === 'fb') { if (ok(at(fb))) { lo = hMin; hi = fb; } else { lo = fb + 1; hi = hMax; } phase = 'bisect'; }
-        else if (lo < hi) { var mid = (lo + hi) >> 1; if (ok(at(mid))) hi = mid; else lo = mid + 1; }
-        if (phase === 'bisect' && lo >= hi) finish(lo);
-      } catch (error) { console.error('[pm-usage] preset fit ' + id, error); finish(null); }
-      return job.done;
+      return inBoard(jb, function () {
+        try {
+          if (phase === 'top') { top = at(hMax); phase = 'fb'; }
+          else if (phase === 'fb') { if (ok(at(fb))) { lo = hMin; hi = fb; } else { lo = fb + 1; hi = hMax; } phase = 'bisect'; }
+          else if (lo < hi) { var mid = (lo + hi) >> 1; if (ok(at(mid))) hi = mid; else lo = mid + 1; }
+          if (phase === 'bisect' && lo >= hi) finish(lo);
+        } catch (error) { console.error('[pm-usage] preset fit ' + id, error); finish(null); }
+        return job.done;
+      });
     };
     job.cancel = function () { if (!job.done) { job.done = true; delete jobs[key]; dropGhost(card); card = null; } };
     return job;
@@ -448,7 +461,7 @@
       '<rect x="1" y="1" width="' + cw + '" height="' + ch + '" rx="1.6" fill="currentColor" fill-opacity=".9"/></svg>';
   }
   function sizeRows(id, list) {
-    var me = PMU.board.rect(id), cls = clsNow(), hRef = Math.max(12, Math.max.apply(null, list.map(function (p) { return p.h; }).concat([1])));
+    var me = boardNow().rect(id), cls = clsNow(), hRef = Math.max(12, Math.max.apply(null, list.map(function (p) { return p.h; }).concat([1])));
     return list.map(function (p) {
       var key = 'szfp:' + p.w + 'x' + p.h + ':' + cls.tracks + ':' + hRef;
       if (!SVG[key]) SVG[key] = footprint(p.w, p.h, cls.tracks, hRef);
@@ -459,18 +472,18 @@
   function applySize(id, v) {
     var m = /^size:(.+)$/.exec(v); if (!m) return false;
     var raw = /^(\d+)x(\d+)$/.exec(m[1]);
-    if (raw) { PMU.board.resize(id, { w: +raw[1], h: +raw[2] }, 'size_menu'); return true; }
+    if (raw) { boardNow().resize(id, { w: +raw[1], h: +raw[2] }, 'size_menu'); return true; }
     /* a row the idle measure has since folded into a larger preset of the same size (a click that lands while the rows
        update) still picks: the preset itself, at its size */
     var p = presetsOf(id).filter(function (x) { return x.id === m[1]; })[0] || presetsOf.all(id).filter(function (x) { return x.id === m[1]; })[0];
     if (!p) return false;
-    var h = presetH(id, p), cls = clsNow().name;
-    (picked[id] = picked[id] || {})[cls] = { w: p.w, px: pxOf(p.w), h: h, pid: p.id };
-    PMU.board.resize(id, { w: p.w, h: h }, 'size_menu');
+    var h = presetH(id, p), cls = clsNow().name, k = bk(id);
+    (picked[k] = picked[k] || {})[cls] = { w: p.w, px: pxOf(p.w), h: h, pid: p.id };
+    boardNow().resize(id, { w: p.w, h: h }, 'size_menu');
     return true;
   }
   function currentLabel(id) {
-    var me = PMU.board.rect(id), ks = PMU.widgets.spec(id) || {}; if (!me) return '';
+    var me = boardNow().rect(id), ks = PMU.widgets.spec(id) || {}; if (!me) return '';
     var nm = sizeName(ks, me.w, me.h, id);
     return (nm ? nm + ' · ' : '') + me.w + ' x ' + me.h;
   }
@@ -565,19 +578,21 @@
   function measureLater(h, id) {
     if (!pv) return;
     var idle = window.requestIdleCallback || function (fn) { return setTimeout(function () { fn({ timeRemaining: function () { return 12; } }); }, 30); };
-    var job = null;
+    var job = null, mb = boardNow();   /* the idle steps run on the picker's board (D10 3.5: captured when scheduled) */
     var step = function (deadline) {
       if (!pv || pv.id !== id || pv.h !== h || !h.open) { if (job) job.cancel(); return; }
-      var t0 = performance.now();
-      do {
-        if (!job || job.done) {
-          var next = presetsOf(id).filter(function (p) { return p.fit != null && (!p.measured || p.stale); })[0];
-          if (!next) { if (h.spec && h.spec.id === 'size:' + id) settleRows(h, id); return; }
-          job = fitJob(id, next.w, next.fit);
-        }
-        job.step();
-      } while (performance.now() - t0 < 8 && deadline && deadline.timeRemaining && deadline.timeRemaining() > 20);
-      pv.idle = idle(step, { timeout: 500 });
+      inBoard(mb, function () {
+        var t0 = performance.now();
+        do {
+          if (!job || job.done) {
+            var next = presetsOf(id).filter(function (p) { return p.fit != null && (!p.measured || p.stale); })[0];
+            if (!next) { if (h.spec && h.spec.id === 'size:' + id) settleRows(h, id); return; }
+            job = fitJob(id, next.w, next.fit);
+          }
+          job.step();
+        } while (performance.now() - t0 < 8 && deadline && deadline.timeRemaining && deadline.timeRemaining() > 20);
+        pv.idle = idle(step, { timeout: 500 });
+      });
     };
     pv.idle = idle(step, { timeout: 500 });
   }
@@ -609,19 +624,21 @@
   /* the same idle measure without a picker (the keyboard's resize mode): while alive() holds */
   function warmFits(id, alive) {
     var idle = window.requestIdleCallback || function (fn) { return setTimeout(function () { fn({ timeRemaining: function () { return 12; } }); }, 30); };
-    var job = null;
+    var job = null, wb = boardNow();
     var step = function (deadline) {
       if (!alive()) { if (job) job.cancel(); return; }
-      var t0 = performance.now();
-      do {
-        if (!job || job.done) {
-          var next = presetsOf(id).filter(function (p) { return p.fit != null && (!p.measured || p.stale); })[0];
-          if (!next) return;
-          job = fitJob(id, next.w, next.fit);
-        }
-        job.step();
-      } while (performance.now() - t0 < 8 && deadline && deadline.timeRemaining && deadline.timeRemaining() > 20);
-      idle(step, { timeout: 500 });
+      inBoard(wb, function () {
+        var t0 = performance.now();
+        do {
+          if (!job || job.done) {
+            var next = presetsOf(id).filter(function (p) { return p.fit != null && (!p.measured || p.stale); })[0];
+            if (!next) return;
+            job = fitJob(id, next.w, next.fit);
+          }
+          job.step();
+        } while (performance.now() - t0 < 8 && deadline && deadline.timeRemaining && deadline.timeRemaining() > 20);
+        idle(step, { timeout: 500 });
+      });
     };
     idle(step, { timeout: 500 });
   }
@@ -630,14 +647,17 @@
     if (!pv || pv.id !== id || pv.h !== h) {
       dropStage();
       var el = document.createElement('div'); el.className = 'pmu-szstage'; el.innerHTML = stageMarkup();
-      pv = { id: id, h: h, el: el, view: el.querySelector('.pmu-szview'), key: null };
+      /* the stage keeps its board: the miniatures render at that board's pitch, in its measure host, in its view */
+      pv = { id: id, h: h, el: el, view: el.querySelector('.pmu-szview'), key: null, board: boardNow() };
       /* the first miniature waits for the menu's sprout (a render inside it would cost the open its frames) */
       pv.t0 = setTimeout(function () {
         if (!pv || pv.h !== h || !h.open) return;
-        var rows = Array.prototype.slice.call(h.el.querySelectorAll('.pmu-mitem')), act = rows.filter(function (r) { return r.classList.contains('active'); })[0];
-        var focus = rows.indexOf(document.activeElement) >= 0 ? document.activeElement : null;
-        previewTo(presetOfRow(h, focus) || presetOfRow(h, act) || presetOfRow(h, rows[0]));
-        measureLater(h, id);
+        inBoard(pv.board, function () {
+          var rows = Array.prototype.slice.call(h.el.querySelectorAll('.pmu-mitem')), act = rows.filter(function (r) { return r.classList.contains('active'); })[0];
+          var focus = rows.indexOf(document.activeElement) >= 0 ? document.activeElement : null;
+          previewTo(presetOfRow(h, focus) || presetOfRow(h, act) || presetOfRow(h, rows[0]));
+          measureLater(h, id);
+        });
       }, reducedNow() ? 0 : 340 * speedNow());
     }
     slot.appendChild(pv.el);
@@ -653,7 +673,7 @@
         var row = event.target.closest && event.target.closest('.pmu-mitem'), p = presetOfRow(h, row);
         if (!p || pv.key === null) return;
         pv.want = p;
-        if (!pv.raf) pv.raf = requestAnimationFrame(function () { if (!pv) return; pv.raf = 0; previewTo(pv.want); });
+        if (!pv.raf) pv.raf = requestAnimationFrame(function () { if (!pv) return; pv.raf = 0; inBoard(pv.board, function () { previewTo(pv.want); }); });
       };
       h.el.addEventListener('pointerover', onRow);
       h.el.addEventListener('focusin', onRow);
@@ -664,7 +684,8 @@
      opened (a drill-in from the card menu keeps the card menu's side), else the larger side, as place will choose */
   var STAGE_PX = 160, STAGE_MIN = 72;
   function fitStage(h) {
-    var appEl = document.getElementById('pmuApp'), a = h.anchor && h.anchor.isConnected ? h.anchor.getBoundingClientRect() : h.lastAnchor;
+    /* the room is the menu's host's (45-menu.js h.host: #pmuApp on the Usage page, the hosted layer's shell on a dashboard) */
+    var appEl = h.host || document.getElementById('pmuApp'), a = h.anchor && h.anchor.isConnected ? h.anchor.getBoundingClientRect() : h.lastAnchor;
     if (!appEl || !a || !pv || !pv.view) return;
     var hostR = appEl.getBoundingClientRect(), capped = parseFloat(h.el.style.maxHeight);
     var room = capped > 0 ? capped : Math.max(hostR.bottom - a.bottom, a.top - hostR.top) - 6 - 8;
@@ -697,15 +718,17 @@
       onClose: function () { dropStage(); } };
   }
   var RANGES = [['5h', 'Last 5 hours'], ['24h', 'Last 24 hours'], ['7d', 'Last 7 days'], ['30d', 'Last 30 days']];
+  /* the gear, the card menu and their actions act on the board they were opened from (45-menu.js runs every callback of
+     a menu in its board); a dashboard's card follows that dashboard's range and scope (D10 2.5) */
   function gearSpec(id) {
-    var def = PMU.widgets.get(id) || {}, cfg = cfgOf(id), sections = [];
-    var title = text(def.title, ctxBase(id, st.room));
-    if (def.range !== false) sections.push({ label: t('gear.range'), rows: [{ value: 'range:', label: t('gear.range_follow'), sub: t('gear.range_follow_sub', { range: st.range }), active: !cfg.range }]
+    var b = boardNow(), bs = b.state, def = PMU.widgets.get(id) || {}, cfg = cfgOf(id), sections = [];
+    var title = text(def.title, ctxBase(id, bs.room));
+    if (def.range !== false) sections.push({ label: t('gear.range'), rows: [{ value: 'range:', label: t(hostedNow() ? 'hosted.range_follow' : 'gear.range_follow'), sub: t('gear.range_follow_sub', { range: bs.range }), active: !cfg.range }]
       .concat(RANGES.map(function (r) { return { value: 'range:' + r[0], label: r[1], sub: t('gear.range_fixed_sub'), right: r[0], active: cfg.range === r[0] }; })) });
-    if (def.scope !== false) sections.push({ label: t('gear.scope'), rows: [{ value: 'scope:', label: t('gear.scope_follow'), sub: t('gear.scope_follow_sub', { scope: PMU.shell.scopeLabel(st.scope) }), active: !cfg.scope }]
+    if (def.scope !== false) sections.push({ label: t('gear.scope'), rows: [{ value: 'scope:', label: t('gear.scope_follow'), sub: t('gear.scope_follow_sub', { scope: PMU.shell.scopeLabel(bs.scope) }), active: !cfg.scope }]
       .concat(DATA.providers.map(function (p) { return { value: 'scope:provider:' + p.id, label: PMU.shell.providerName(p.id) + ' only', mark: p.id, active: cfg.scope === 'provider:' + p.id }; })) });
     (Array.isArray(def.config) ? def.config : []).forEach(function (opt) {
-      var cur = cfg[opt.id] !== undefined ? cfg[opt.id] : (typeof opt.value === 'function' ? opt.value(ctxBase(id, st.room)) : opt.value);
+      var cur = cfg[opt.id] !== undefined ? cfg[opt.id] : (typeof opt.value === 'function' ? opt.value(ctxBase(id, bs.room)) : opt.value);
       sections.push({ label: opt.label, rows: (opt.options || []).map(function (o) {
         return { value: 'cfg:' + opt.id + ':' + o.value, label: o.label, sub: o.sub, right: o.right, active: String(cur) === String(o.value), disabled: o.disabled, reason: o.reason };
       }) });
@@ -720,28 +743,28 @@
           var opt = (def.config || []).filter(function (o) { return o.id === c[1]; })[0];
           var val = opt ? (opt.options || []).filter(function (o) { return String(o.value) === c[2]; })[0] : null;
           patch[c[1]] = val ? val.value : c[2];
-          if (opt && typeof opt.set === 'function') { try { opt.set(patch[c[1]], ctxBase(id, st.room)); } catch (error) { console.error('[pm-usage] config set', error); } }
+          if (opt && typeof opt.set === 'function') { try { opt.set(patch[c[1]], ctxBase(id, boardNow().state.room)); } catch (error) { console.error('[pm-usage] config set', error); } }
         }
-        PMU.board.setConfig(id, patch);
+        boardNow().setConfig(id, patch);
         h.spec = gearSpec(id);
         return false;
       } };
   }
   function cardMenuSpec(id) {
-    var def = PMU.widgets.get(id) || {}, me = PMU.board.rect(id), ks = PMU.widgets.spec(id) || {};
-    var title = text(def.title, ctxBase(id, st.room)), nm = me ? sizeName(ks, me.w, me.h, id) : null;
+    var b = boardNow(), room = b.state.room, def = PMU.widgets.get(id) || {}, me = b.rect(id), ks = PMU.widgets.spec(id) || {};
+    var title = text(def.title, ctxBase(id, room)), nm = me ? sizeName(ks, me.w, me.h, id) : null;
     var cur = me ? (nm ? t('cardmenu.current_size', { name: nm, w: me.w, h: me.h }) : t('cardmenu.custom_size', { w: me.w, h: me.h })) : '';
     var kind = PMU.widgets.kindOf(id);
     var panelRows = [{ value: 'configure', label: t('cardmenu.configure'), sub: t('cardmenu.configure_sub'), icon: 'gear', submenu: function () { return gearSpec(id); } }];
     /* "Fit" only when it would change the card (the kind's autoH names a taller height that shows every row) */
     var fitH = null;
-    if (kind && typeof kind.autoH === 'function') { try { var cb = PMU.board.card(id), bd = cb && cb.querySelector('.pmu-cardbody'); fitH = kind.autoH(bd && bd._pmuCtx ? bd._pmuCtx : ctxBase(id, st.room)); } catch (error) { fitH = null; } }
+    if (kind && typeof kind.autoH === 'function') { try { var cb = b.card(id), bd = cb && cb.querySelector('.pmu-cardbody'); fitH = kind.autoH(bd && bd._pmuCtx ? bd._pmuCtx : ctxBase(id, room)); } catch (error) { fitH = null; } }
     if (fitH) panelRows.push({ value: 'fit', label: t('cardmenu.fit'), sub: t('cardmenu.fit_sub'), icon: 'size', action: true });
     if (typeof def.inspect === 'function') panelRows.push({ value: 'details', label: t('cardmenu.details'), sub: t('cardmenu.details_sub'), icon: 'info', action: true });
     panelRows.push({ value: 'kbmove', label: t('cardmenu.move'), sub: t('cardmenu.move_sub'), icon: 'grip', action: true },
       { value: 'kbresize', label: t('cardmenu.resize'), sub: t('cardmenu.resize_sub'), icon: 'resize', action: true },
       { value: 'tidy', label: t('cardmenu.tidy'), sub: t('cardmenu.tidy_sub'), icon: 'tidy', action: true },
-      { value: 'hide', label: t('cardmenu.hide'), sub: t('cardmenu.hide_sub'), icon: 'eyeOff', action: true, danger: true });
+      { value: 'hide', label: t(b !== PMU.board ? 'hosted.hide' : 'cardmenu.hide'), sub: t('cardmenu.hide_sub'), icon: 'eyeOff', action: true, danger: true });
     /* the sizes are one row that drills into the size picker and its previews (lane c-presets) */
     var sizeRow = { value: 'sizes', label: t('cardmenu.size'), sub: (cur ? cur + ' · ' : '') + 'preview each preset', icon: 'size', submenu: function () { freshFits(id); return sizeMenuSpec(id, true); } };
     return { id: 'card:' + id, title: title, current: cur, align: 'end', width: 360,
@@ -749,19 +772,20 @@
       onPick: function (v) { return cardAction(id, v); }, onClose: function () { dropStage(); } };
   }
   function cardAction(id, v) {
-    var card = PMU.board.card(id), def = PMU.widgets.get(id) || {};
+    var b = boardNow(), room = b.state.room, card = b.card(id), def = PMU.widgets.get(id) || {};
     if (applySize(id, v)) return true;
     if (v === 'fit') {
       var kind = PMU.widgets.kindOf(id), body = card && card.querySelector('.pmu-cardbody');
-      var rows = null; try { rows = kind.autoH(body && body._pmuCtx ? body._pmuCtx : ctxBase(id, st.room)); } catch (error) { rows = null; }
-      if (rows) PMU.board.resize(id, { h: rows }, 'size_menu');
+      var rows = null; try { rows = kind.autoH(body && body._pmuCtx ? body._pmuCtx : ctxBase(id, room)); } catch (error) { rows = null; }
+      if (rows) b.resize(id, { h: rows }, 'size_menu');
       return true;
     }
-    if (v === 'details') { try { PMU.inspector.open(def.inspect(ctxBase(id, st.room)), card); } catch (error) { console.error('[pm-usage] inspect', error); } return true; }
-    if (v === 'kbmove') { setTimeout(function () { PMU.board.keyboard(id, 'move'); }, 0); return true; }
-    if (v === 'kbresize') { setTimeout(function () { PMU.board.keyboard(id, 'resize'); }, 0); return true; }
-    if (v === 'tidy') { PMU.board.tidy(); return true; }
-    if (v === 'hide') { var name = text(def.title, ctxBase(id, st.room)); PMU.board.setVisible(id, false); PMU.shell.toast(t('toast.hidden', { name: name })); return true; }
+    if (v === 'details') { try { PMU.inspector.open(def.inspect(ctxBase(id, room)), card); } catch (error) { console.error('[pm-usage] inspect', error); } return true; }
+    /* the keyboard modes start after the menu has closed: on the board the menu was opened from */
+    if (v === 'kbmove') { setTimeout(function () { b.keyboard(id, 'move'); }, 0); return true; }
+    if (v === 'kbresize') { setTimeout(function () { b.keyboard(id, 'resize'); }, 0); return true; }
+    if (v === 'tidy') { b.tidy(); return true; }
+    if (v === 'hide') { var name = text(def.title, ctxBase(id, room)); b.setVisible(id, false); PMU.shell.toast(t('toast.hidden', { name: name })); return true; }
     return true;
   }
 
@@ -770,11 +794,14 @@
      titles are measured in, so every card's head is fitted again (Mac NieR 1920: a plate subtitle fitted in the Basic
      face kept its third part and ended in an ellipsis) */
   function resyncHeads() {
-    var board = document.getElementById('pmuBoard'); if (!board) return;
-    Array.prototype.forEach.call(board.querySelectorAll(':scope > .pmu-card'), function (card) {
-      var body = card.querySelector('.pmu-cardbody'), ctx = body && body._pmuCtx;
-      if (!ctx || !ctx.def) return;
-      try { withView(card.getAttribute('data-widget'), function () { syncHead(card, ctx); }); } catch (error) {}
+    /* every board's live cards (the Usage board's live element is #pmuBoard), each in its board's view */
+    PMU.boards.all().forEach(function (b) {
+      var board = b.el(); if (!board) return;
+      Array.prototype.forEach.call(board.querySelectorAll(':scope > .pmu-card'), function (card) {
+        var body = card.querySelector('.pmu-cardbody'), ctx = body && body._pmuCtx;
+        if (!ctx || !ctx.def) return;
+        try { withView(card.getAttribute('data-widget'), function () { syncHead(card, ctx); }, card); } catch (error) {}
+      });
     });
   }
   var headT = 0;
@@ -782,10 +809,12 @@
   if (PMU.theme && PMU.theme.onChange) PMU.theme.onChange(resyncSoon);
   try { if (document.fonts && document.fonts.addEventListener) document.fonts.addEventListener('loadingdone', resyncSoon); } catch (error) {}
   if (PMU.charts && PMU.charts.onFaces) PMU.charts.onFaces(resyncSoon);   /* a face that landed after a measure (item 9) */
+  /* the functions the engine calls take its board as the last argument and run in it (D10 3.5); without one, the ambient
+     board (the Usage board outside any run) */
   PMU.cards = {
     HEAD_PX: HEAD_PX,
     headForm: headForm,
-    build: function (id, room, rect) {
+    build: function (id, room, rect, b) { return inBoard(b, function () {
       var def = PMU.widgets.get(id) || { title: id, kind: 'unknown' };
       var card = document.createElement('article');
       card.className = 'pmu-card';
@@ -811,9 +840,9 @@
         '<button type="button" class="pmu-iconbtn pmu-cardgear" data-tool="gear" aria-haspopup="menu" aria-expanded="false" aria-label="' + esc(t('board.gear_tool')) + '">' + SVG.toolGear + '</button>' +
         '<button type="button" class="pmu-iconbtn pmu-cardmenu" data-tool="menu" aria-haspopup="menu" aria-expanded="false" aria-label="' + esc(t('board.menu_tool')) + '">' + SVG.toolKebab + '</button></span></header>' +
         '<div class="pmu-cardbody"></div>' + EDGES.map(function (e) { return '<i class="pmu-h" data-edge="' + e + '" aria-hidden="true"></i>'; }).join('');
-      if (rect) PMU.board.place(card, rect);
+      if (rect) boardNow().place(card, rect);   /* the board it is handed places it (and marks the card as its own) */
       return card;
-    },
+    }); },
     /* (re)build the body for a tier: destroy the old kind instance, render, and play the one entrance when entering */
     renderBody: function (card, tier, entering) {
       var body = card.querySelector('.pmu-cardbody'); if (!body) return;
@@ -825,8 +854,8 @@
         /* the head's title just changed (the short title of a narrow tile): the tier was measured under the old head (a
            wrapped title took the tile's second line, so a 4 x 4 tile rendered its h0 strip with a free line under it);
            measure again and render for the head as it is now (lane c-presets) */
-        if (titleEl && titleEl.textContent !== title0 && PMU.board && PMU.board.measure) {
-          var t2 = PMU.board.measure(card);
+        if (titleEl && titleEl.textContent !== title0 && boardNow() && boardNow().measure) {
+          var t2 = boardNow().measure(card);
           if (t2.w !== tier.w || t2.h !== tier.h || t2.bw !== tier.bw || t2.bh !== tier.bh) {
             tier = t2;
             if (card.getAttribute('data-tw') !== tier.w) card.setAttribute('data-tw', tier.w);
@@ -847,11 +876,11 @@
           /* the inner entrance runs through PMU.film.cue: at once (with the card's wave delay + 160), or, while the
              first arrival holds the board, at its release (WOW-SPEC 3.1) */
           if (entering && kind.enter) {
-            if (PMU.film && PMU.film.cue) PMU.film.cue(card, function (d) { withView(id, function () { kind.enter(body, ctx, d); }); });
+            if (PMU.film && PMU.film.cue) PMU.film.cue(card, function (d) { withView(id, function () { kind.enter(body, ctx, d); }, card); });
             else kind.enter(body, ctx, (card._pmuEnterDelay || 0) + 160);
           }
         } catch (error) { console.error('[pm-usage] render ' + id, error); body.innerHTML = '<div class="pmu-todo">' + esc(id) + '</div>'; }
-      });
+      }, card);
       refitSoon(card);
     },
     /* the same tier at a new pixel size (a resize within the tier, a dock drag): kind.resize when the kind has one */
@@ -864,7 +893,7 @@
         var ctx = ctxFor(card, tier, false); ctx.reason = 'resize';
         body._pmuCtx = ctx; body._pmuSize = ctx.size.w + 'x' + ctx.size.h + '@' + tier.bw + 'x' + tier.bh;
         try { kind.resize(body, ctx); } catch (error) { console.error('[pm-usage] resize ' + id, error); }
-      });
+      }, card);
       refitSoon(card);
     },
     updateAll: function (cards, reason) {
@@ -873,48 +902,58 @@
     update: function (card, reason) {
       var body = card.querySelector('.pmu-cardbody'); if (!body) return;
       var id = card.getAttribute('data-widget');
-      var kind = body._pmuKind, tier = body._pmuCtx ? body._pmuCtx.tier : PMU.board.measure(card);
+      var kind = body._pmuKind, tier = body._pmuCtx ? body._pmuCtx.tier : (card._pmuBoard || boardNow()).measure(card);
       withView(id, function () {
         var ctx = ctxFor(card, tier, false); ctx.reason = reason;
         syncHead(card, ctx);
         if (kind && kind.update) { try { body._pmuCtx = ctx; kind.update(body, ctx); } catch (error) { console.error('[pm-usage] update ' + id, error); } }
         else if (kind) PMU.cards.renderBody(card, tier, false);
-      });
+      }, card);
       refitSoon(card);
     },
-    empty: function (room) {
+    /* an empty board's note: on the Usage board the level note; a dashboard holds only what was added to it */
+    empty: function (room, b) { return inBoard(b, function () {
       var el = document.createElement('div');
       el.className = 'pmu-empty pmu-board-empty';
-      var rank = (DETAIL[st.detail] || DETAIL.glance).rank;
-      var holder = ['detailed', 'diagnostics'].filter(function (lv) { return DETAIL[lv].rank > rank && PMU.board.layout(room).some(function (r) { return (PMU.widgets.get(r.id) || {}).level === lv; }); })[0];
-      el.textContent = holder ? t('board.empty_level', { level: DETAIL[st.detail].label, holder: DETAIL[holder].label }) : t('board.empty_none');
+      if (hostedNow()) el.textContent = t('hosted.empty');
+      else {
+        var rank = (DETAIL[st.detail] || DETAIL.glance).rank, lay = boardNow().layout(room);
+        var holder = ['detailed', 'diagnostics'].filter(function (lv) { return DETAIL[lv].rank > rank && lay.some(function (r) { return (PMU.widgets.get(r.id) || {}).level === lv; }); })[0];
+        el.textContent = holder ? t('board.empty_level', { level: DETAIL[st.detail].label, holder: DETAIL[holder].label }) : t('board.empty_none');
+      }
       /* an empty board's note rises 12 px, 320 OUT (WOW-SPEC 3.16) */
       if (PMU.motion) PMU.motion.animate(el, [{ opacity: 0, transform: 'translateY(12px)' }, { opacity: 1, transform: 'none' }], { dur: 320, delay: 80, easing: 'cubic-bezier(.22,.8,.28,1)', fill: 'backwards' });
       return el;
-    },
+    }); },
+    /* the card's menus, opened from its tools (run in its board by the tool delegation below) */
     menu: function (id, anchor) { return PMU.menu.toggle(anchor, cardMenuSpec(id)); },
-    sizeMenu: function (id, anchor) { if (!(pv && pv.id === id)) freshFits(id); return PMU.menu.toggle(anchor, sizeMenuSpec(id)); },
+    sizeMenu: function (id, anchor) { if (!(pv && pv.id === id && pv.board === boardNow())) freshFits(id); return PMU.menu.toggle(anchor, sizeMenuSpec(id)); },
     gear: function (id, anchor) { return PMU.menu.toggle(anchor, gearSpec(id)); },
-    sizeName: sizeName, sizeId: sizeId, holdTarget: holdTarget,
+    sizeName: function (ks, w, h, id, b) { return inBoard(b, function () { return sizeName(ks, w, h, id); }); },
+    sizeId: function (ks, w, h, id, b) { return inBoard(b, function () { return sizeId(ks, w, h, id); }); },
+    holdTarget: function (id, r, b) { return inBoard(b, function () { return holdTarget(id, r); }); },
     /* the presets of a panel at the board's class now ([{id, name, desc, w, h, fit, measured}]), a fit preset's measured
        height, and applying one (the keyboard's Shift steps, the API, the probes) */
-    presets: presetsOf, presetH: function (id, p) { return presetH(id, p); }, measureFit: measureFit,
-    applyPreset: function (id, pid) { return applySize(id, 'size:' + pid); }, _fitLog: null, warmFits: warmFits,
+    presets: function (id, b) { return inBoard(b, function () { return presetsOf(id); }); },
+    presetH: function (id, p, b) { return inBoard(b, function () { return presetH(id, p); }); }, measureFit: measureFit,
+    applyPreset: function (id, pid, b) { return inBoard(b, function () { return applySize(id, 'size:' + pid); }); }, _fitLog: null,
+    warmFits: function (id, alive, b) { return inBoard(b, function () { return warmFits(id, alive); }); },
     /* a preset the keyboard's Shift steps landed on, at the size it landed (40-board, on Enter) */
-    notePick: function (id, pid, w, h) { (picked[id] = picked[id] || {})[clsNow().name] = { w: w, px: pxOf(w), h: h, pid: pid }; },
+    notePick: function (id, pid, w, h, b) { inBoard(b, function () { var k = bk(id); (picked[k] = picked[k] || {})[clsNow().name] = { w: w, px: pxOf(w), h: h, pid: pid }; }); },
     /* the layout record's preset_id, read on load (40-board): a table id of the widget's kind is held as it is; anything
        else (a display name, 'custom', a retired id, with the earlier per-class presets map if the record has one) is
        mapped once by size (legacyId); null holds nothing */
-    holdStored: function (id, stored, legacyMap) {
-      delete held[id];
+    holdStored: function (id, stored, legacyMap, b) { inBoard(b, function () {
+      var k = bk(id);
+      delete held[k];
       var ids = ((PMU.widgets.spec(id) || {}).presets || []).map(function (p) { return p.id; });
-      if (typeof stored === 'string' && ids.indexOf(stored) >= 0) { held[id] = stored; return; }
-      if ((stored != null && stored !== '') || (legacyMap && typeof legacyMap === 'object')) held[id] = { name: stored, map: legacyMap || null, ids: ids };
-    },
+      if (typeof stored === 'string' && ids.indexOf(stored) >= 0) { held[k] = stored; return; }
+      if ((stored != null && stored !== '') || (legacyMap && typeof legacyMap === 'object')) held[k] = { name: stored, map: legacyMap || null, ids: ids };
+    }); },
     /* the preset id a card is held at but not yet seen at the board's class (another room): kept as it is by a save */
-    heldId: function (id) { return typeof held[id] === 'string' ? held[id] : null; },
+    heldId: function (id, b) { return inBoard(b, function () { var k = bk(id); return typeof held[k] === 'string' ? held[k] : null; }); },
     /* the preset a card was set to at a board class, while its size there is still w x h */
-    pickedId: function (id, cls, w, h) { var pk = picked[id] && picked[id][cls]; return pk && pk.w === w && pk.h === h ? pk.pid : null; }
+    pickedId: function (id, cls, w, h, b) { return inBoard(b, function () { var k = bk(id), pk = picked[k] && picked[k][cls]; return pk && pk.w === w && pk.h === h ? pk.pid : null; }); }
   };
 
   /* ---- the head's room for its actions (Jared's note 6b, 2026-10-09) ----
@@ -1017,40 +1056,58 @@
   var M = PMU.motion;
 
   /* tool clicks (delegated on the board) */
-  /* delegated on the scroll pane: the board element is swapped on a room change (the old one leaves as the ghost) */
-  var boardEl = document.getElementById('pmuScroll') || document.getElementById('pmuBoard');
-  if (boardEl) {
-    boardEl.addEventListener('pointerover', function (event) {
+  /* delegated on each board's scroll pane: the Usage board's element is swapped on a room change (the old one leaves as
+     the ghost). Every board gets the same five listeners when it is made (the Usage board now, at the same moment as
+     before; a dashboard at its create) and loses them when it is destroyed; a click acts in its board (D10 3.7). */
+  function bindTools(b) {
+    var boardEl = b.scrollEl || b.el();
+    if (!boardEl) return null;
+    var onOver = function (event) {
       var card = event.target.closest && event.target.closest('.pmu-card');
-      if (!card || card.contains(event.relatedTarget) || card.parentNode !== document.getElementById('pmuBoard')) return;
+      if (!card || card.contains(event.relatedTarget) || card.parentNode !== b.el()) return;
       try { fitTools(card); } catch (error) { console.error('[pm-usage] head fit', error); }
-    });
-    boardEl.addEventListener('pointerout', function (event) {
+    };
+    var onOut = function (event) {
       var card = event.target.closest && event.target.closest('.pmu-card');
       if (card && !card.contains(event.relatedTarget)) unfitSoon(card);
-    });
-    boardEl.addEventListener('focusin', function (event) {
+    };
+    var onFocusIn = function (event) {
       var card = event.target.closest && event.target.closest('.pmu-card'); if (!card) return;
       var inTools = !!event.target.closest('.pmu-cardtools'), head = card.querySelector(':scope > .pmu-cardhead');
       if (head && inTools !== head.hasAttribute('data-tools-on')) head.toggleAttribute('data-tools-on', inTools);
       if (inTools || event.target === card) { try { fitTools(card); } catch (error) { console.error('[pm-usage] head fit', error); } }
-    });
-    boardEl.addEventListener('focusout', function (event) {
+    };
+    var onFocusOut = function (event) {
       var card = event.target.closest && event.target.closest('.pmu-card'); if (!card) return;
       if (card.contains(event.relatedTarget) && event.relatedTarget.closest('.pmu-cardtools')) return;
       var head = card.querySelector(':scope > .pmu-cardhead'); if (head) head.removeAttribute('data-tools-on');
       unfitSoon(card);
-    });
+    };
+    var onClick = function (event) {
+      var tool = event.target.closest('.pmu-cardtools [data-tool]');
+      if (!tool) return;
+      var card = tool.closest('.pmu-card'); if (!card || card._pmuLeaving || card.hasAttribute('data-leaving')) return;
+      var id = card.getAttribute('data-widget'), which = tool.getAttribute('data-tool');
+      event.stopPropagation();
+      inBoard(b, function () {
+        if (which === 'menu') PMU.cards.menu(id, tool);
+        else if (which === 'size') PMU.cards.sizeMenu(id, tool);
+        else if (which === 'gear') PMU.cards.gear(id, tool);
+        else if (which === 'grip' && event.detail === 0) b.keyboard(id, 'move');   /* keyboard activation of the grip */
+      });
+    };
+    boardEl.addEventListener('pointerover', onOver);
+    boardEl.addEventListener('pointerout', onOut);
+    boardEl.addEventListener('focusin', onFocusIn);
+    boardEl.addEventListener('focusout', onFocusOut);
+    boardEl.addEventListener('click', onClick);
+    return function () {
+      boardEl.removeEventListener('pointerover', onOver);
+      boardEl.removeEventListener('pointerout', onOut);
+      boardEl.removeEventListener('focusin', onFocusIn);
+      boardEl.removeEventListener('focusout', onFocusOut);
+      boardEl.removeEventListener('click', onClick);
+    };
   }
-  if (boardEl) boardEl.addEventListener('click', function (event) {
-    var tool = event.target.closest('.pmu-cardtools [data-tool]');
-    if (!tool) return;
-    var card = tool.closest('.pmu-card'); if (!card || card._pmuLeaving || card.hasAttribute('data-leaving')) return;
-    var id = card.getAttribute('data-widget'), which = tool.getAttribute('data-tool');
-    event.stopPropagation();
-    if (which === 'menu') PMU.cards.menu(id, tool);
-    else if (which === 'size') PMU.cards.sizeMenu(id, tool);
-    else if (which === 'gear') PMU.cards.gear(id, tool);
-    else if (which === 'grip' && event.detail === 0) PMU.board.keyboard(id, 'move');   /* keyboard activation of the grip */
-  });
+  PMU.boards.each(bindTools);
 })();

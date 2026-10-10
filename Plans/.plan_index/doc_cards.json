@@ -5725,7 +5725,7 @@
         "scripts/pm_pnc019_currentness.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 13456,
+      "line_count": 13466,
       "path": "Plans/Decision_Log.md",
       "plan_unit_count": 158,
       "plan_unit_ids": [
@@ -6045,7 +6045,7 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "e1ef133a4d4692290cd7f234326ea4e9514107f021733c3f94a2d1a9f672ea5e",
+      "sha256": "b1132a18b51eed37ac79fbd1982f7bfcd241371df1048fb05fec6a409e2bacf5",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 158
@@ -7591,7 +7591,7 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 43070,
+      "line_count": 43079,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 617,
       "plan_unit_ids": [
@@ -8350,7 +8350,7 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "36b39136fcca30359772b200e9677ed8b6f6ad04fc753b832b87fd4ace92c619",
+      "sha256": "643904c4950b638495bc1a59e09b9d865935e2f1ad7298fb093789150d3f4b73",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 616,
@@ -11028,7 +11028,7 @@
         "False": 32,
         "True": 41
       },
-      "heading_count": 130,
+      "heading_count": 131,
       "implementation_surfaces": [
         "Plans/Automated_Testing_System.md",
         "Plans/CLI_Bridged_Providers.md",
@@ -11047,7 +11047,7 @@
         "future AuthenticationProfileRegistry handlers",
         "future provider account/profile and credential-reference contracts"
       ],
-      "line_count": 5483,
+      "line_count": 5506,
       "path": "Plans/Multi-Account.md",
       "plan_unit_count": 73,
       "plan_unit_ids": [
@@ -11204,7 +11204,7 @@
         "usage_pressure_owner",
         "usage_runtime_visibility"
       ],
-      "sha256": "474dbbcfa80086acff88f62eed476ea5d59059858f58dce18df44ea073b13628",
+      "sha256": "449b238228de750c1964bf4283f7935677a4e79e98094f507a1e1c6443182dad",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 73
@@ -17214,7 +17214,7 @@
         "theme_or_layout_cross_project_leak",
         "unowned_preference_or_scope_drift"
       ],
-      "sha256": "40369f57bf2553609057c55726f15c1471c5f7f83ed8f8795593c43cad5c2845",
+      "sha256": "27030db3923ba46e0851a8772b1d9e464d2fc25ba725b71ef96a9cddb741081d",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 44
@@ -20729,7 +20729,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-10-10T19:37:19Z",
+  "generated_at_utc": "2026-10-10T20:20:23Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

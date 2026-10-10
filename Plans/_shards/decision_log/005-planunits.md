@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L3938-L13428
+Source lines: L3942-L13438
 
-Source SHA256: `e1ef133a4d4692290cd7f234326ea4e9514107f021733c3f94a2d1a9f672ea5e`
+Source SHA256: `b1132a18b51eed37ac79fbd1982f7bfcd241371df1048fb05fec6a409e2bacf5`
 
 ---
 
@@ -9030,6 +9030,11 @@ canonical_text: >-
   tool to be idle, paid credit draws a warning, and a manual activation past the switch point asks first without
   becoming consent for automatic switching. The room reads one roster with Settings, in Settings' names, order,
   groups and windows, and Plans & limits shows one row per account (MA-049).
+  Owner decision 2026-10-10 (USG-1): ai.accounts.hard-switch-level keeps its account scope and
+  ai.accounts.account-threshold-override is retired; every threshold resolves through one scope ladder, global,
+  project, provider, account, the most specific set value winning, and a value stored under the retired id is
+  carried once to ai.accounts.hard-switch-level at scope account. Owner decision 2026-10-10 (USG-2): each MA-073
+  status state is defined by a set of section 5 reason codes, in the MA-073 state table.
 gui_related: true
 gui_classification_reason: Records an owner decision on the Usage Accounts room's actions and the per-provider auto-switch settings.
 split_recommended: false
@@ -9041,6 +9046,7 @@ acceptance_criteria:
   - "Use this account dispatches cmd.account.select_profile and appears only when supports_manual_set_active allows it."
   - "Plans & limits lists every account of a provider, one row per account."
   - "No command is added for the Accounts room."
+  - "An account's own switch level is ai.accounts.hard-switch-level at scope account, and nothing reads or writes ai.accounts.account-threshold-override after its stored value is carried there once."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate

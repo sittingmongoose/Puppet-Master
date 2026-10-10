@@ -10,7 +10,7 @@ var DEFAULT_TABS = PMW.DEFAULT_TABS = {
   'plan:ap-index': { kind: 'plan', label: 'Tenant-scoped analytics read path', state: { plan: 'ap-index' } },
   'terminal:t1': { kind: 'terminal', state: { profile: 'zsh', cwd: '~/tastebook/api', session: 't1', script: 'idle' } },
   'terminal:t2': { kind: 'terminal', state: { profile: 'zsh', cwd: '~/tastebook/api', session: 't2', script: 'cargo-test' } },
-  // D28: one Output tab, the channel is its view state; no fixed label, so the kind's own label shows. A saved layout
+  // D31: one Output tab, the channel is its view state; no fixed label, so the kind's own label shows. A saved layout
   // holding 'output:build' keeps it: that is a split-off tab fixed to the Build channel now
   'output': { kind: 'output', state: { channel: 'build' } }
 };
@@ -195,5 +195,12 @@ PMW.saveNamed = function (name, layout) {
   })(tree);
   if (!marked) (function first(n) { if (n.slot) { n.rest = true; return; } first(n.kids[0]); })(tree);
   all[name] = { label: name, tree: tree, saved: true };
+  try {
+    if (PMW.dashboard && typeof PMW.dashboard.snapshot === 'function') {
+      var bids = Object.keys(layout.tabs || {}).filter(function (id) { return id.indexOf('dashboard:') === 0; })
+        .map(function (id) { return id.slice('dashboard:'.length); });
+      if (bids.length) all[name].boards = PMW.dashboard.snapshot(bids);
+    }
+  } catch (_) {}
   return store.set(SAVED_KEY, all);
 };

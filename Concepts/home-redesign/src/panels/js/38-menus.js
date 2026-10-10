@@ -23,6 +23,35 @@ function openIn(panelId, spec, newPanel) {
   return PM_HOME.open(Object.assign({}, spec, { where: newPanel ? 'panel' : panelId, source: panelId }));
 }
 
+/* Sub-row groups (D39, agreed with the terminal thread): a kind's plus.sub() is one flat list [{ id, label, detail,
+   icon, group? }]. Entries without a group are its row's inline links, every one of them unless the kind caps them with
+   plus.subMax (the Terminal row lists all the installed shells). Entries with a group this table knows go into one row
+   of their own right under the kind's row, opening a submenu of them (one row each: the label, the detail as its second
+   line, the body opens it in this panel and the trailing cell in a new panel); a group with no entries draws no row.
+   Typing in the "+" field lists the matching entries themselves (by label and detail). An entry whose group the table
+   does not know stays an inline link. Another kind groups its entries by adding a line here. */
+var SUB_GROUPS = PMW.SUB_GROUPS = {
+  ssh: { label: 'SSH hosts', icon: 'remote', one: 'SSH host', keywords: 'ssh remote host server', search: 'Find a host' }
+};
+function subGroupRow(k, p, panelId, g) {
+  var def = SUB_GROUPS[g.id];
+  function entryRow(s, flat) {
+    return { id: 'sub:' + k.id + ':' + s.id, label: s.label, sub: flat ? def.one + (s.detail ? ' · ' + s.detail : '') : (s.detail || ''),
+      kind: flat ? def.icon : (s.icon || def.icon), keywords: def.keywords,
+      run: function (info) { openIn(panelId, p.spec(s.id), !!(info && info.alt)); },
+      alt: { label: 'Open in new panel', run: function () { openIn(panelId, p.spec(s.id), true); } } };
+  }
+  return {
+    id: 'kind-' + k.id + '-' + g.id, label: def.label, kind: def.icon, keywords: def.keywords,
+    // the "+" field lists the entries themselves (quickOpenSections), so a host is one Enter away
+    flat: g.items.map(function (s) { return entryRow(s, true); }),
+    submenu: function () {
+      return { id: 'plus-' + k.id + '-' + g.id, title: def.label, rows: g.items.map(function (s) { return entryRow(s, false); }),
+        search: g.items.length > 7 ? { placeholder: def.search } : null };
+    }
+  };
+}
+
 /* the kind rows, from the registry (CONTRACT section 7); a kind joins through its `plus` field */
 PMW.plusRows = function (panelId, o) {
   o = o || {};
@@ -45,12 +74,21 @@ PMW.plusRows = function (panelId, o) {
       } }
     };
     var sub = typeof p.sub === 'function' ? (function () { try { return p.sub(); } catch (_) { return []; } })() : null;
-    if (sub && sub.length) {
-      row.links = sub.slice(0, p.subMax || 4).map(function (s) {
+    var plain = [], groups = [];
+    (Array.isArray(sub) ? sub : []).forEach(function (s) {
+      if (!s || s.id == null) return;
+      if (!s.group || !SUB_GROUPS[s.group]) { plain.push(s); return; }
+      var g = groups.filter(function (x) { return x.id === s.group; })[0];
+      if (!g) groups.push(g = { id: s.group, items: [] });
+      g.items.push(s);
+    });
+    if (plain.length) {
+      row.links = (p.subMax ? plain.slice(0, p.subMax) : plain).map(function (s) {
         return { label: s.label, title: s.detail || s.label, run: function (info) { openIn(panelId, p.spec(s.id), !!(info && info.alt)); } };
       });
     }
     rows.push(row);
+    groups.forEach(function (g) { rows.push(subGroupRow(k, p, panelId, g)); });
   });
   var tools = list.filter(function (k) { return k.plus.group === 'tools'; });
   if (tools.length) {
@@ -96,7 +134,8 @@ menus.plus = function (panelId, anchor) {
 
 /* typing in the "+" field: the kind rows that match, then files, then a URL row when it looks like one */
 PMW.quickOpenSections = function (panelId, q, rows, actions) {
-  var out = [{ rows: rows }];
+  // a group row (SSH hosts) gives way to its entries, so a host is found by its name or its detail and opened at once
+  var out = [{ rows: rows.reduce(function (acc, r) { return acc.concat(r.flat || [r]); }, []) }];
   var files = PMW.fileIndex ? PMW.fileIndex(q, 6) : [];
   if (files.length) out.push({ label: 'Files', rows: files.map(function (path) {
     return { id: 'file:' + path, label: path.split('/').pop(), sub: path, kind: 'file', keywords: path,
@@ -275,9 +314,12 @@ menus.tab = function (tabId, anchor, at) {
     { id: 'split-right', label: 'Split right with this tab', icon: 'splitRight', disabled: narrow, run: function () { PMW.moveTabToSplit(tabId, p.id, 'right'); } },
     { id: 'split-down', label: 'Split down with this tab', icon: 'splitDown', disabled: narrow, run: function () { PMW.moveTabToSplit(tabId, p.id, 'bottom'); } }
   ].filter(Boolean);
+  /* a kind's own rows (CONTRACT 3: tabMenu(state, tabId) -> items in api.menu's shape; missing or [] adds nothing) go
+     last, after a hairline: the terminal's notification mute (D38) */
   var k = kindDef(rec.kind);
   if (k && typeof k.tabMenu === 'function') {
-    try { var extra = k.tabMenu(tabId, rec); if (extra && extra.length) rows = extra.concat(['-'], rows); } catch (_) {}
+    try { var extra = kindRows(k.tabMenu(rec.state || {}, tabId) || [], rec); if (extra.length) rows = rows.concat(['-'], extra); }
+    catch (err) { try { console.error('[pm-home] the ' + rec.kind + ' tab menu rows failed', err); } catch (_) {} }
   }
   return menu.open(anchor, { id: 'tab:' + tabId, title: tabLabel(rec), rows: rows, width: 270, at: at || null });
 };

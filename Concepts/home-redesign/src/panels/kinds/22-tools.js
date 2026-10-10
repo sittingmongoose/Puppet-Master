@@ -2,12 +2,13 @@
    replace PMConcept7's bottom-panel hosts (#bottomOutputHost, #bottomProblemsHost, #bottomPortsHost, #bottomDebugHost)
    and keep their demo story: the Tastebook import worker reads "1 1/2 cup" as 11.5, the build and the tests say so,
    Problems lists it, the debugger is paused on it.
-     output             one Output tab, the channel switched inside it (D28): Build, Tests, Language server, Puppet Master;
+     output             one Output tab, the channel switched inside it (D31): Build, Tests, Language server, Puppet Master;
                         lines stream while the tab is visible
      output:<channel>   a channel split off into its own tab from the picker, fixed to that channel
      problems           one per workspace; grouped by file; a click opens the editor at the line (D7)
      ports              one per workspace; Open in browser opens a Browser tab, Copy address copies it
-     debug-console:<s>  a console for the paused program: seeded evaluations and an input line
+     debug-console      one Debug Console tab, a sub-tab per debug session (D33): each session its console, its state
+                        and an input line for the paused frame
    Every file reference opens the D7 way: a single click is a preview tab, a double click keeps it, Alt+click opens a
    new panel. Each uses the shared header row; no internal ids are shown (the PM7 hosts printed session ids). */
 
@@ -189,7 +190,7 @@ var SCRIPTS = {
 };
 var OUT_CAP = 600;
 
-/* D28: Output is one tab ('output') with the channel as view state, switched inside it by the header row's channel
+/* D31: Output is one tab ('output') with the channel as view state, switched inside it by the header row's channel
    picker, like VS Code. A picker row's trailing cell opens a split-off tab 'output:<channel>' fixed to that channel.
    PM_HOME.open({ kind: 'output', channel }) focuses a split-off tab already showing the channel, otherwise it switches
    the Output tab (idFor picks the id; the core hands { channel } to reveal on an open tab). A saved 'output:build'
@@ -595,40 +596,99 @@ PM_HOME.registerKind('ports', {
 /* Debug Console                                                                                                       */
 /* ------------------------------------------------------------------------------------------------------------------ */
 
-var SESSIONS = { main: { name: 'tastebook-api', how: 'cargo run', at: 'src/services/import.rs:95' } };
-function debugLabel(sid) { return !sid || sid === 'main' ? 'Debug Console' : 'Debug Console · ' + ((SESSIONS[sid] || {}).name || sid); }
-var SEED = [
-  ['dbg', 'Debugger attached to tastebook-api (process 88431)'],
-  ['out', '    Finished `dev` profile [unoptimized + debuginfo] target(s) in 8.42s'],
-  ['out', '     Running `target/debug/tastebook-api`'],
-  ['out', 'listening on http://127.0.0.1:8080'],
-  ['err', 'warning: unused variable `servings_hint`'],
-  ['dbg', 'Paused on a breakpoint at src/services/import.rs:95 (thread main)'],
-  ['in', 'raw'], ['res', '"1 1/2 cup"'],
-  ['in', 'qty.value'], ['res', '11.5'],
-  ['in', 'caps.get(2)'], ['res', 'None']
+/* D33 (Jared): "One Debug tab with a sub-tab per debug session." The tab id is 'debug-console' and the session on
+   screen is its view state (serialize: session), switched inside the tab the way Output (D31) switches its channel: a
+   row of sub-tabs in the header row, one per debug session, each the session's name and its state in plain words with
+   the state dot. It is a real tablist (roving tabindex; Left, Right, Home and End move and choose; Enter and Space
+   choose) whose underline rides the row's hairline and glides to the chosen session (a cut in NieR, reverse video in
+   Retro, instant under Reduced Motion). The header row's actions and the input line act on the chosen session; each
+   session keeps its own console and its own state while another one is on screen. PM_HOME.open({ kind:
+   'debug-console', session }) reveals the tab and switches it (reveal). The ids of the old one-tab-per-session shape,
+   'debug-console:<session>', fold into this tab with that session chosen wherever they turn up (opens, saved and named
+   layouts, the reopen list: the kind's fold, CONTRACT section 3). */
+var SESSIONS = [
+  { id: 'main', name: 'tastebook-api', how: 'cargo run', mode: 'paused', pid: 88431, thread: 'main',
+    bp: 'src/services/import.rs:95', pauseAt: 'src/services/import.rs:31', pauseThread: 'worker-2',
+    boot: ['     Running `target/debug/tastebook-api`', 'listening on http://127.0.0.1:8080'],
+    run: ['import job 91: fetched 48 KB from seriouseats.com', 'import job 91: parsed 14 ingredients'],
+    seed: [
+      ['dbg', 'Debugger attached to tastebook-api (process 88431)'],
+      ['out', '    Finished `dev` profile [unoptimized + debuginfo] target(s) in 8.42s'],
+      ['out', '     Running `target/debug/tastebook-api`'],
+      ['out', 'listening on http://127.0.0.1:8080'],
+      ['err', 'warning: unused variable `servings_hint`'],
+      ['dbg', 'Paused on a breakpoint at src/services/import.rs:95 (thread main)'],
+      ['in', 'raw'], ['res', '"1 1/2 cup"'],
+      ['in', 'qty.value'], ['res', '11.5'],
+      ['in', 'caps.get(2)'], ['res', 'None']
+    ],
+    /* what the paused frame knows (the import worker reading "1 1/2 cup") */
+    frame: {
+      'raw': '"1 1/2 cup"',
+      's': '"1 1/2 cup"',
+      'qty': 'Quantity { value: 11.5, unit: Some("cup") }',
+      'qty.value': '11.5',
+      'qty.unit': 'Some("cup")',
+      'whole': '11.0',
+      'frac': '0.5',
+      'caps': 'Captures { 0: "11/2 cup", 1: "11", 2: None, 3: None, 4: "cup" }',
+      'caps.get(1)': 'Some(Match { start: 0, end: 2, text: "11" })',
+      'caps.get(2)': 'None',
+      'job': 'ImportJob { id: 91, url: "seriouseats.com/recipe/pan-pizza", attempt: 1 }',
+      'job.id': '91',
+      'job.url': '"seriouseats.com/recipe/pan-pizza"',
+      'job.attempt': '1',
+      'recipe.title': '"Pan Pizza"',
+      'line': '3',
+      's.trim()': '"1 1/2 cup"',
+      's.len()': '9'
+    } },
+  /* the import worker drains the queue while the API sits on its breakpoint: running, so it streams while the tab is on
+     screen; a Pause lands in the mixed-fraction parser the run #47 fix rewrote */
+  { id: 'worker', name: 'import-worker', how: 'cargo run -p import-worker', mode: 'running', pid: 88502, thread: 'queue-1',
+    bp: null, pauseAt: 'src/services/import/normalize_units/mixed_fractions.rs:19', pauseThread: 'queue-1',
+    boot: ['     Running `target/debug/import-worker`', 'import queue: 4 jobs waiting'],
+    seed: [
+      ['dbg', 'Debugger attached to import-worker (process 88502)'],
+      ['out', '     Running `target/debug/import-worker`'],
+      ['out', 'import queue: 4 jobs waiting'],
+      ['out', 'import job 92: fetched 31 KB from bonappetit.com'],
+      ['out', 'import job 92: parsed 9 ingredients, 9 quantities'],
+      ['out', 'import job 92: saved "Buttermilk Pancakes"']
+    ],
+    loop: [
+      'import job 93: fetched 22 KB from smittenkitchen.com',
+      'import job 93: parsed 11 ingredients, 11 quantities',
+      'import job 93: saved "Cream Scones"',
+      'import queue: 2 jobs waiting',
+      'import job 94: fetched 40 KB from seriouseats.com',
+      'import job 94: parsed 16 ingredients, 15 quantities',
+      'import job 94: kept "a pinch of salt" as written',
+      'import job 94: saved "Weeknight Ragu"',
+      'import queue: 1 job waiting'
+    ],
+    frame: {
+      'raw': '"2 3/4"',
+      's': '"2 3/4"',
+      'whole': '"2"',
+      'frac': '"3/4"',
+      'w': '2.0',
+      'parse_simple(frac)': 'Some(0.75)',
+      'job': 'ImportJob { id: 95, url: "kingarthurbaking.com/recipes/scones", attempt: 1 }',
+      'job.id': '95',
+      'job.url': '"kingarthurbaking.com/recipes/scones"',
+      'job.attempt': '1',
+      'queue.len()': '1',
+      's.trim()': '"2 3/4"',
+      's.len()': '5'
+    } }
 ];
-/* what the paused frame knows (the import worker reading "1 1/2 cup") */
-var FRAME = {
-  'raw': '"1 1/2 cup"',
-  's': '"1 1/2 cup"',
-  'qty': 'Quantity { value: 11.5, unit: Some("cup") }',
-  'qty.value': '11.5',
-  'qty.unit': 'Some("cup")',
-  'whole': '11.0',
-  'frac': '0.5',
-  'caps': 'Captures { 0: "11/2 cup", 1: "11", 2: None, 3: None, 4: "cup" }',
-  'caps.get(1)': 'Some(Match { start: 0, end: 2, text: "11" })',
-  'caps.get(2)': 'None',
-  'job': 'ImportJob { id: 91, url: "seriouseats.com/recipe/pan-pizza", attempt: 1 }',
-  'job.id': '91',
-  'job.url': '"seriouseats.com/recipe/pan-pizza"',
-  'job.attempt': '1',
-  'recipe.title': '"Pan Pizza"',
-  'line': '3',
-  's.trim()': '"1 1/2 cup"',
-  's.len()': '9'
-};
+function sessionOf(sid) { for (var i = 0; i < SESSIONS.length; i++) if (SESSIONS[i].id === sid) return SESSIONS[i]; return null; }
+var DBG_WORD = { paused: 'Paused', running: 'Running', ended: 'Ended' };
+var DBG_DOT = { paused: 'is-warn', running: 'is-ok', ended: 'is-dim' };
+var DBG_CAP = 400;
+function splitLoc(at) { var m = /^(.*):(\d+)$/.exec(String(at || '')); return m ? { path: m[1], line: +m[2] } : { path: String(at || ''), line: null }; }
+function shortLoc(at) { var p = splitLoc(at); return p.path.split('/').pop() + (p.line ? ':' + p.line : ''); }
 /* a small arithmetic reader (numbers, + - * / %, parentheses); never eval */
 function arith(src) {
   var i = 0, s = src.replace(/\s+/g, '');
@@ -656,16 +716,18 @@ function arith(src) {
   if (i !== s.length) throw new Error('x');
   return out;
 }
-function evaluate(src) {
+/* an expression in a paused frame: a name the frame knows, a literal, or arithmetic over numbers and the frame's
+   numeric values (whole + frac, qty.value * 2) */
+function evaluate(src, frame) {
+  var has = function (k) { return Object.prototype.hasOwnProperty.call(frame, k); };
   var e = src.trim().replace(/;$/, '');
   if (!e) return null;
-  if (Object.prototype.hasOwnProperty.call(FRAME, e)) return { ok: true, text: FRAME[e] };
+  if (has(e)) return { ok: true, text: frame[e] };
   if (/^"[^"]*"$/.test(e)) return { ok: true, text: e };
   if (e === 'true' || e === 'false') return { ok: true, text: e };
-  /* arithmetic over numbers and the frame's numeric values (whole + frac, qty.value * 2) */
   var unknown = null;
   var subst = e.replace(/[A-Za-z_][\w.]*(\(\d*\))?/g, function (name) {
-    var v = Object.prototype.hasOwnProperty.call(FRAME, name) ? FRAME[name] : null;
+    var v = has(name) ? frame[name] : null;
     if (v != null && /^-?\d+(\.\d+)?$/.test(v)) return '(' + v + ')';
     if (!unknown) unknown = name;
     return name;
@@ -676,111 +738,234 @@ function evaluate(src) {
     catch (_) { return { ok: false, text: 'expected an expression' }; }
   }
   var id = /^[A-Za-z_]\w*/.exec(e);
-  if (id && !Object.prototype.hasOwnProperty.call(FRAME, id[0])) return { ok: false, text: 'cannot find value `' + id[0] + '` in this scope' };
+  if (id && !has(id[0])) return { ok: false, text: 'cannot find value `' + id[0] + '` in this scope' };
   return { ok: false, text: 'no field or method `' + e.replace(/^[A-Za-z_]\w*\.?/, '') + '` here' };
 }
 
 PM_HOME.registerKind('debug-console', {
-  label: 'Debug Console', group: 'Tools', icon: 'console', prefixes: ['debug-console:'], min: { w: 280, h: 120 }, dedicated: true,
-  idFor: function (spec) { return 'debug-console:' + ((spec && spec.session) || 'main'); },
-  labelFor: function (id, st) { return debugLabel((st && st.session) || String(id).replace(/^debug-console:/, '')); },
+  label: 'Debug Console', group: 'Tools', icon: 'console', prefixes: ['debug-console:', 'debug-console'], min: { w: 280, h: 120 }, dedicated: true,
+  idFor: function () { return 'debug-console'; },
+  /* the old one-tab-per-session ids: the one tab, with that session chosen */
+  fold: function (id) { var m = /^debug-console:(.+)$/.exec(String(id || '')); return m ? { id: 'debug-console', state: { session: m[1] } } : null; },
+  labelFor: function () { return 'Debug Console'; },
   plus: { order: 73, group: 'tools', label: 'Debug Console', spec: function () { return { kind: 'debug-console' }; } },
   mount: function (host, st, api) {
     st = st || {};
-    var sessId = st.session || String(api.id).replace(/^debug-console:/, '') || 'main';
-    var sess = SESSIONS[sessId] || { name: sessId, how: '', at: 'src/services/import.rs:95' };
-    var mode = 'paused';    // 'paused' | 'running' | 'ended'
-    var timers = [];
+    var cur = sessionOf(st.session) ? String(st.session) : SESSIONS[0].id;
     var hist = Array.isArray(st.history) ? st.history.slice(-30) : [];
     var hAt = hist.length;
+    var shown = false, offs = [];
+    var base = PMW.uid('pmw-dbg-');
     var root = h('div', { class: 'pmw-tool pmw-tool-dbg' });
     host.appendChild(root);
 
-    function stateFact() {
-      if (mode === 'running') return { id: 'state', el: h('span', { class: 'pmw-tool-state is-ok' }, [h('i', { class: 'pmw-tool-sdot', 'aria-hidden': 'true' }), 'Running']) };
-      if (mode === 'ended') return { id: 'state', el: h('span', { class: 'pmw-tool-state is-dim' }, [h('i', { class: 'pmw-tool-sdot', 'aria-hidden': 'true' }), 'Ended']) };
-      return { id: 'state', el: h('span', { class: 'pmw-tool-state is-warn' }, [h('i', { class: 'pmw-tool-sdot', 'aria-hidden': 'true' }), 'Paused at ' + sess.at.split('/').pop()]) };
+    /* one record per session: its sub-tab, its console (a tabpanel) and its live state */
+    var recs = {};
+    var tabsEl = h('div', { class: 'pmw-tool-stabs', role: 'tablist', 'aria-label': 'Debug sessions' });
+    var indEl = h('span', { class: 'pmw-tool-sind', 'aria-hidden': 'true' });
+    var panes = h('div', { class: 'pmw-tool-dpanes' });
+    SESSIONS.forEach(function (s) {
+      var r = recs[s.id] = { s: s, mode: s.mode, where: s.mode === 'paused' ? (s.bp || s.pauseAt) : null, timers: [], stream: 0, loopAt: 0, follow: true, top: 0 };
+      r.dot = h('i', { class: 'pmw-tool-sdot', 'aria-hidden': 'true' });
+      r.word = h('span', { class: 'pmw-tool-sword' });
+      r.tab = h('button', { type: 'button', role: 'tab', id: base + '-' + s.id, class: 'pmw-tool-stab', tabindex: '-1', 'aria-selected': 'false',
+        'aria-controls': base + '-' + s.id + '-pane', 'data-session': s.id, 'data-pmh': 'icon', 'data-pmh-tag': 'literal' },
+        [r.dot, h('span', { class: 'pmw-tool-sname', text: s.name }), r.word]);
+      r.tab.addEventListener('click', function () { select(s.id, { user: true }); });
+      tabsEl.appendChild(r.tab);
+      r.log = h('div', { class: 'pmw-tool-log pmw-tool-con', role: 'log', 'aria-live': 'off', 'aria-label': s.name + ' console', tabindex: '0', 'data-pmh': 'off', 'data-pm-hover-exempt': 'true' });
+      r.pane = h('div', { class: 'pmw-tool-dpane', role: 'tabpanel', id: base + '-' + s.id + '-pane', 'aria-labelledby': base + '-' + s.id, hidden: true }, [r.log]);
+      r.log.addEventListener('scroll', function () { if (!r.pane.hidden) r.follow = r.log.scrollHeight - r.log.scrollTop - r.log.clientHeight < 24; });
+      r.log.addEventListener('click', function (e) { if (!e.target.closest('button') && !window.getSelection().toString()) input.focus({ preventScroll: true }); });
+      panes.appendChild(r.pane);
+    });
+    tabsEl.appendChild(indEl);
+    /* Left and Right (wrapping), Home and End move to a session and choose it (automatic activation: the console is
+       already drawn); Enter and Space choose the one with focus */
+    tabsEl.addEventListener('keydown', function (e) {
+      if (e.altKey || e.ctrlKey || e.metaKey) return;
+      var ids = SESSIONS.map(function (s) { return s.id; });
+      var i = ids.indexOf(e.target && e.target.getAttribute ? e.target.getAttribute('data-session') : null);
+      if (i < 0) return;
+      var n = ids.length;
+      var to = e.key === 'ArrowRight' ? (i + 1) % n : e.key === 'ArrowLeft' ? (i - 1 + n) % n : e.key === 'Home' ? 0 : e.key === 'End' ? n - 1 : -1;
+      if (to >= 0) { e.preventDefault(); select(ids[to], { user: true, focus: true }); return; }
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(ids[i], { user: true }); }
+    });
+
+    /* where the chosen session is paused: a D7 file reference (click previews, double click keeps, Alt opens a new
+       panel), shown only while it is paused */
+    var atBtn = h('button', { type: 'button', class: 'pmw-tool-flink pmw-tool-dat', 'data-pmh': 'off', 'data-pmh-tag': 'literal' });
+    atBtn.addEventListener('click', function (e) {
+      var w = recs[cur].where; if (!w) return;
+      var p = splitLoc(w); fileOpener(api, p.path, p.line).click(e);
+    });
+    atBtn.addEventListener('dblclick', function () {
+      var w = recs[cur].where; if (!w) return;
+      var p = splitLoc(w); fileOpener(api, p.path, p.line).dbl();
+    });
+    function left() {
+      var r = recs[cur];
+      var out = [{ id: 'sessions', el: tabsEl, grow: true }];
+      if (r.mode === 'paused' && r.where) {
+        setText(atBtn, shortLoc(r.where));
+        atBtn.setAttribute('aria-label', 'Paused at ' + r.where + '. Open it');
+        atBtn.setAttribute('data-pm-hover-label', r.where);
+        atBtn.setAttribute('data-pm-hover-detail', 'Where ' + r.s.name + ' is paused. Click previews the file; double-click keeps it open.');
+        out.push({ id: 'at', el: atBtn, icon: 'target', mono: true });
+      }
+      return out;
     }
-    function left() { return [{ id: 'sess', text: sess.name + (sess.how ? ' · ' + sess.how : ''), strong: true }, stateFact()]; }
     function actions() {
+      var m = recs[cur].mode;
+      var act = function (fn) { return function () { fn(recs[cur]); }; };
       return [
-        mode === 'running' ? { id: 'pause', label: 'Pause', icon: 'pause', run: pause }
-          : { id: 'cont', label: mode === 'ended' ? 'Start' : 'Continue', icon: 'play', run: mode === 'ended' ? restart : cont },
-        { id: 'restart', label: 'Restart', icon: 'reload', disabled: mode === 'ended', run: restart },
-        { id: 'stop', label: 'Stop', icon: 'stop', disabled: mode === 'ended', danger: mode !== 'ended', run: stopSession },
-        { id: 'clear', label: 'Clear', icon: CLEAR_ICON, detail: 'Clear the console', run: clear }
+        m === 'running' ? { id: 'pause', label: 'Pause', icon: 'pause', run: act(pause) }
+          : { id: 'cont', label: m === 'ended' ? 'Start' : 'Continue', icon: 'play', run: act(function (r) { if (r.mode === 'ended') restart(r); else cont(r); }) },
+        { id: 'restart', label: 'Restart', icon: 'reload', disabled: m === 'ended', run: act(restart) },
+        { id: 'stop', label: 'Stop', icon: 'stop', disabled: m === 'ended', danger: m !== 'ended', run: act(stopSession) },
+        { id: 'clear', label: 'Clear', icon: CLEAR_ICON, detail: 'Clear this session’s console', run: act(clear) }
       ];
     }
-    var row = api.headerRow({ label: 'Debug controls', left: left(), actions: actions() });
+    /* the sub-tabs and the session facts cost the buttons their words below 820 px */
+    var row = api.headerRow({ label: 'Debug controls', left: left(), actions: actions(), labelsAt: 820 });
     root.appendChild(row.el);
-    var log = h('div', { class: 'pmw-tool-log pmw-tool-con', role: 'log', 'aria-live': 'polite', 'aria-label': 'Debug console', tabindex: '0', 'data-pmh': 'off', 'data-pm-hover-exempt': 'true' });
-    root.appendChild(log);
-    var input = h('input', { type: 'text', class: 'pmw-tool-in', spellcheck: 'false', autocomplete: 'off', 'aria-label': 'Evaluate an expression', 'data-pmh': 'off',
+    root.appendChild(panes);
+    var input = h('input', { type: 'text', class: 'pmw-tool-in', spellcheck: 'false', autocomplete: 'off', 'data-pmh': 'off',
       'data-pm-hover-label': 'Evaluate', 'data-pm-hover-detail': 'Type an expression and press Enter; Up and Down bring back earlier ones' });
     var inRow = h('label', { class: 'pmw-tool-inrow' }, [h('span', { class: 'pmw-tool-prompt', 'aria-hidden': 'true', text: '›' }), input]);
     root.appendChild(inRow);
 
-    function refresh() {
-      row.set({ left: left(), actions: actions() });
-      input.placeholder = mode === 'paused' ? 'Evaluate an expression in the paused frame' : mode === 'running' ? 'Pause the program to evaluate' : 'Start a session to evaluate';
-      root.setAttribute('data-mode', mode);
-      api.update({ busy: mode === 'running', title: 'Debug Console: ' + sess.name + ', ' + (mode === 'paused' ? 'paused' : mode) });
+    /* the underline under the chosen sub-tab; it glides from the one before (a cut in NieR; Retro draws the chosen
+       sub-tab in reverse video instead; Reduced Motion places it at once) */
+    function placeInd(from) {
+      var t = recs[cur].tab;
+      if (!t.offsetWidth) return;
+      var x = t.offsetLeft, w = t.offsetWidth;
+      indEl.style.width = w + 'px';
+      indEl.style.transform = 'translateX(' + x + 'px)';
+      var fam = PMW.motion.family();
+      if (!from || from === t || !from.offsetWidth || fam === 'nier' || fam === 'retro') return;
+      PMW.motion.animate(indEl, [
+        { transform: 'translateX(' + from.offsetLeft + 'px) scaleX(' + (from.offsetWidth / w) + ')' },
+        { transform: 'translateX(' + x + 'px) scaleX(1)' }
+      ], { dur: 260, easing: PMW.motion.ease('slide') });
     }
-    function line(kind, text) {
+    function paintTab(r) {
+      r.tab.setAttribute('data-mode', r.mode);
+      r.dot.className = 'pmw-tool-sdot ' + DBG_DOT[r.mode];
+      setText(r.word, DBG_WORD[r.mode]);
+      r.tab.setAttribute('data-pm-hover-label', r.s.name);
+      r.tab.setAttribute('data-pm-hover-detail', r.s.how + ' · ' + (r.mode === 'paused' && r.where ? 'paused at ' + r.where : r.mode === 'running' ? 'running' : 'ended'));
+    }
+    function setText(el, t) { if (el.textContent !== t) el.textContent = t; }
+    function refresh() {
+      var r = recs[cur];
+      SESSIONS.forEach(function (s) { paintTab(recs[s.id]); });
+      row.set({ left: left(), actions: actions() });
+      input.placeholder = r.mode === 'paused' ? 'Evaluate an expression in the paused frame' : r.mode === 'running' ? 'Pause the program to evaluate' : 'Start the session to evaluate';
+      input.setAttribute('aria-label', 'Evaluate an expression in ' + r.s.name);
+      root.setAttribute('data-mode', r.mode);
+      var busy = SESSIONS.some(function (s) { return recs[s.id].mode === 'running'; });
+      api.update({ busy: busy, title: 'Debug Console: ' + r.s.name + ', ' + DBG_WORD[r.mode].toLowerCase() });
+      placeInd(null);
+    }
+    /* choose a session: its sub-tab, its console and the actions; the console comes back where it was left */
+    function select(sid, o) {
+      o = o || {};
+      if (!recs[sid]) return false;
+      var prev = recs[cur], changed = sid !== cur;
+      if (changed && !prev.pane.hidden) prev.top = prev.log.scrollTop;
+      cur = sid;
+      var r = recs[sid];
+      SESSIONS.forEach(function (s) {
+        var x = recs[s.id], on = s.id === sid;
+        x.tab.setAttribute('aria-selected', on ? 'true' : 'false');
+        x.tab.tabIndex = on ? 0 : -1;
+        x.pane.hidden = !on;
+      });
+      r.log.scrollTop = r.follow ? r.log.scrollHeight : r.top;
+      if (o.focus) r.tab.focus({ preventScroll: true });
+      refresh();
+      if (!changed) return true;
+      placeInd(o.instant ? null : prev.tab);
+      if (!o.instant) PMW.motion.animate(r.pane, [{ opacity: 0, transform: 'translateY(3px)' }, { opacity: 1, transform: 'none' }], { dur: 170, easing: PMW.motion.ease('out') });
+      api.saveSoon();
+      if (!o.user) api.announce('Debug Console shows ' + r.s.name);
+      return true;
+    }
+    function line(r, kind, text) {
       var el = h('div', { class: 'pmw-tool-cl is-' + kind }, [
         h('span', { class: 'pmw-tool-clg', 'aria-hidden': 'true' }, kind === 'in' ? '›' : kind === 'err' || kind === 'rerr' ? [mark(kind === 'err' ? 'warn' : 'error', 12)] : null),
         h('span', { class: 'pmw-tool-ct' }, [linkify(api, text)])
       ]);
-      log.appendChild(el);
-      while (log.childElementCount > 400) log.firstElementChild.remove();
-      log.scrollTop = log.scrollHeight;
+      r.log.appendChild(el);
+      while (r.log.childElementCount > DBG_CAP) r.log.firstElementChild.remove();
+      if (r.follow && !r.pane.hidden) r.log.scrollTop = r.log.scrollHeight;
     }
-    function later(ms, fn) { var t = setTimeout(fn, PMW.reduced() ? Math.min(ms, 60) : ms); timers.push(t); }
-    function clearTimers() { timers.forEach(clearTimeout); timers = []; }
-    function cont() {
-      clearTimers();
-      mode = 'running'; refresh();
-      line('dbg', 'Continued');
-      later(500, function () { line('out', 'import job 91: fetched 48 KB from seriouseats.com'); });
-      later(1100, function () { line('out', 'import job 91: parsed 14 ingredients'); });
-      later(1900, function () {
-        line('dbg', 'Paused on a breakpoint at ' + sess.at + ' (thread main)');
-        mode = 'paused'; refresh();
-        api.announce('Paused on a breakpoint');
-      });
+    function later(r, ms, fn) { var t = setTimeout(fn, PMW.reduced() ? Math.min(ms, 60) : ms); r.timers.push(t); }
+    function clearTimers(r) { r.timers.forEach(clearTimeout); r.timers = []; stopStream(r); }
+    /* a running session with a loop prints while the tab is on screen */
+    function streamStep(r) {
+      r.stream = 0;
+      if (r.mode !== 'running' || !shown || !r.s.loop) return;
+      line(r, 'out', r.s.loop[r.loopAt % r.s.loop.length]);
+      r.loopAt += 1;
+      r.stream = setTimeout(function () { streamStep(r); }, 1400 + Math.round(Math.random() * 1600));
     }
-    function pause() {
-      clearTimers();
-      line('dbg', 'Paused at src/services/import.rs:31 (thread worker-2)');
-      mode = 'paused'; refresh();
+    function startStream(r) { if (!r.stream && r.mode === 'running' && shown && r.s.loop) r.stream = setTimeout(function () { streamStep(r); }, 900); }
+    function stopStream(r) { clearTimeout(r.stream); r.stream = 0; }
+    function pausedOnBreakpoint(r) {
+      line(r, 'dbg', 'Paused on a breakpoint at ' + r.s.bp + ' (thread ' + r.s.thread + ')');
+      r.mode = 'paused'; r.where = r.s.bp; refresh();
+      api.announce(r.s.name + ' paused on a breakpoint');
     }
-    function restart() {
-      clearTimers();
-      line('dbg', mode === 'ended' ? 'Starting tastebook-api' : 'Restarting tastebook-api');
-      mode = 'running'; refresh();
-      later(600, function () { line('out', '     Running `target/debug/tastebook-api`'); });
-      later(1000, function () { line('out', 'listening on http://127.0.0.1:8080'); });
-      later(1700, function () { line('dbg', 'Paused on a breakpoint at ' + sess.at + ' (thread main)'); mode = 'paused'; refresh(); });
+    function cont(r) {
+      clearTimers(r);
+      r.mode = 'running'; r.where = null; refresh();
+      line(r, 'dbg', 'Continued');
+      if (!r.s.bp) { startStream(r); return; }
+      (r.s.run || []).forEach(function (t, i) { later(r, 500 + i * 600, function () { line(r, 'out', t); }); });
+      later(r, 1900, function () { pausedOnBreakpoint(r); });
     }
-    function stopSession() {
-      clearTimers();
-      line('dbg', 'Session ended, exit code 0');
-      mode = 'ended'; refresh();
-      api.announce('Debug session ended');
+    function pause(r) {
+      clearTimers(r);
+      line(r, 'dbg', 'Paused at ' + r.s.pauseAt + ' (thread ' + r.s.pauseThread + ')');
+      r.mode = 'paused'; r.where = r.s.pauseAt; refresh();
+      api.announce(r.s.name + ' paused');
     }
-    function clear() { log.textContent = ''; api.announce('Debug console cleared'); }
+    function restart(r) {
+      clearTimers(r);
+      line(r, 'dbg', (r.mode === 'ended' ? 'Starting ' : 'Restarting ') + r.s.name);
+      r.mode = 'running'; r.where = null; refresh();
+      r.s.boot.forEach(function (t, i) { later(r, 600 + i * 400, function () { line(r, 'out', t); }); });
+      if (r.s.bp) later(r, 1700, function () { pausedOnBreakpoint(r); });
+      else later(r, 600 + r.s.boot.length * 400, function () { startStream(r); });
+    }
+    function stopSession(r) {
+      clearTimers(r);
+      line(r, 'dbg', 'Session ended, exit code 0');
+      r.mode = 'ended'; r.where = null; refresh();
+      api.announce(r.s.name + ' debug session ended');
+    }
+    function clear(r) { r.log.textContent = ''; api.announce(r.s.name + ' console cleared'); }
     input.addEventListener('keydown', function (e) {
+      var r = recs[cur];
       if (e.key === 'Enter') {
         e.preventDefault();
         var src = input.value;
         if (!src.trim()) return;
         hist.push(src); if (hist.length > 30) hist.shift(); hAt = hist.length;
         input.value = '';
-        line('in', src);
-        if (mode !== 'paused') { line('rerr', mode === 'running' ? 'The program is running. Pause it to evaluate expressions.' : 'No session. Start one to evaluate expressions.'); return; }
-        var r = evaluate(src);
-        if (r) line(r.ok ? 'res' : 'rerr', r.text);
+        r.follow = true;
+        line(r, 'in', src);
         api.saveSoon();
+        if (r.mode !== 'paused') {
+          var why = r.mode === 'running' ? 'The program is running. Pause it to evaluate expressions.' : 'No session. Start one to evaluate expressions.';
+          line(r, 'rerr', why); api.announce(why); return;
+        }
+        var res = evaluate(src, r.s.frame || {});
+        if (res) { line(r, res.ok ? 'res' : 'rerr', res.text); api.announce(res.text); }
       } else if (e.key === 'ArrowUp') {
         if (!hist.length) return;
         e.preventDefault(); hAt = Math.max(0, hAt - 1); input.value = hist[hAt] || '';
@@ -791,24 +976,29 @@ PM_HOME.registerKind('debug-console', {
         e.preventDefault(); e.stopPropagation(); input.value = '';
       }
     });
-    log.addEventListener('click', function (e) { if (!e.target.closest('button') && !window.getSelection().toString()) input.focus({ preventScroll: true }); });
 
-    SEED.forEach(function (l) { line(l[0], l[1]); });
-    refresh();
-    api.update({ label: debugLabel(sessId) });
+    SESSIONS.forEach(function (s) { s.seed.forEach(function (l) { line(recs[s.id], l[0], l[1]); }); });
+    select(cur, { instant: true, user: true });
+    api.update({ label: 'Debug Console' });
+    // a look changes the sub-tabs' face (NieR's caption, Retro's code face): the underline is measured again
+    offs.push(api.on('look', function () { placeInd(null); }));
 
     return {
       focus: function () { input.focus({ preventScroll: true }); },
       wantsKey: function (e) { return e.key === 'Escape' && document.activeElement === input && !!input.value; },
-      serialize: function () { return { session: sessId, history: hist.slice(-20) }; },
-      onHide: function () {},
-      unmount: clearTimers
+      /* an open of this tab with a session (the catalog, an old 'debug-console:<session>' id): switch to it */
+      reveal: function (f) { if (f && f.session != null && sessionOf(String(f.session))) select(String(f.session), {}); },
+      serialize: function () { return { session: cur, history: hist.slice(-20) }; },
+      onResize: function () { placeInd(null); },
+      onShow: function () { shown = true; placeInd(null); SESSIONS.forEach(function (s) { startStream(recs[s.id]); }); },
+      onHide: function () { shown = false; SESSIONS.forEach(function (s) { stopStream(recs[s.id]); }); },
+      unmount: function () { SESSIONS.forEach(function (s) { clearTimers(recs[s.id]); }); offs.forEach(function (f) { try { f(); } catch (_) {} }); }
     };
   }
 });
 
 /* ------------------------------------------------------------------------------------------------------------------ */
-/* The catalog (Ctrl+P, the "+" pickers, the stand-in chat): an Output channel opens the D28 way                       */
+/* The catalog (Ctrl+P, the "+" pickers, the stand-in chat): a channel or a session switches its one tab (D31, D33)   */
 /* ------------------------------------------------------------------------------------------------------------------ */
 
 PM_HOME.catalog.add('output', CHANNELS.map(function (c) {
@@ -816,4 +1006,7 @@ PM_HOME.catalog.add('output', CHANNELS.map(function (c) {
 }));
 PM_HOME.catalog.add('problems', [{ id: 'problems', label: 'Problems', sub: problemsSummary(), icon: 'problems', keywords: 'errors warnings diagnostics', spec: { kind: 'problems' } }]);
 PM_HOME.catalog.add('ports', [{ id: 'ports', label: 'Ports', sub: PORTS.length + ' forwarded', icon: 'ports', keywords: 'ports forwarded localhost', spec: { kind: 'ports' } }]);
-PM_HOME.catalog.add('debug-console', [{ id: 'debug-console:main', label: 'Debug Console', sub: 'tastebook-api · paused', icon: 'console', keywords: 'debug console evaluate repl', spec: { kind: 'debug-console' } }]);
+PM_HOME.catalog.add('debug-console', SESSIONS.map(function (s) {
+  return { id: 'debug-console:' + s.id, label: 'Debug Console · ' + s.name, sub: s.how, icon: 'console', keywords: 'debug console evaluate repl session ' + s.name,
+    spec: { kind: 'debug-console', session: s.id, label: 'Debug Console' } };
+}));

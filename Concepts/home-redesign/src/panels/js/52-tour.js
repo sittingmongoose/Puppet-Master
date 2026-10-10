@@ -6,7 +6,9 @@
    - three new action steps, each finished by what the panels report, never by a timer: open a tab from "+"
      (open_from_plus), open a file from the rail (open_file_from_rail), split by dragging a tab to a panel edge
      (split_by_drag; the tab menu's Split right / Split down with this tab counts too);
-   - widget_action first shows the Home dashboard tab, then keeps its own add-and-place logic.
+   - widget_action teaches Upcoming resets on the Home dashboard board (D10 round two P10): it opens dashboard:home,
+     hides the widget when the board already shows it so the step can add it, and is done when the board's log shows
+     the widget added and then moved or resized.
    Steps are re-indexed after the splice. A saved checkpoint holds a position, not a step id, so a run saved under
    another step order (the published page's 18 steps) would pick up at the wrong step: every save is stamped with its
    step id and this order's signature, and at install a checkpoint without this signature is moved to its step by id.
@@ -50,14 +52,18 @@ var TOUR_COPY = {
     after: 'The tab has a panel of its own now. Drag it back onto the other tabs to join them again.'
   },
   widget_action: {
-    do: 'Add the Approval queue widget to the Home dashboard, then place it where you can glance at it while planning.'
+    title: 'Add a widget',
+    do: 'On your Home dashboard, choose Add widget, find Upcoming resets and add it. Then drag it up to where you can glance at it.',
+    doEli5: 'Add Upcoming resets to Home.',
+    after: 'Upcoming resets is on your Home dashboard now. Each dashboard keeps its own widgets.'
   }
 };
 var POD_COPY = {
   workspace_orientation: { line: 'Report: Scan complete. Pages on top, panels in the middle, Chat on the right.' },
   open_from_plus: { line: 'Proposal: Use + to open a new tab. Any kind will do.' },
   open_file_from_rail: { line: 'Report: One click previews a file. Two clicks keep it.' },
-  split_by_drag: { line: 'Proposal: Drag the tab to an edge. It gets a panel of its own.' }
+  split_by_drag: { line: 'Proposal: Drag the tab to an edge. It gets a panel of its own.' },
+  widget_action: { line: 'Proposal: Add Upcoming resets to Home. It shows the next limit resets.' }
 };
 
 /* ---- small helpers (the page's own lookups; nothing here throws into the core) ---- */
@@ -77,15 +83,26 @@ function stepDone(id) { var TR = tourApi(); return !!(TR && TR.st && TR.st.sess 
 
 /* what each new step has seen since it began (reset at its entry) */
 var marks = { plus: null, file: null, split: null };
-/* the panels as each step found them: Back puts them back (the tour's rewind covers the chat and the widgets) */
+/* the panels and the dashboard boards as each step found them: Back puts them back (the tour's rewind covers the chat
+   and the page's own widgets; the boards go back through PMW.dashboard) */
 var entrySnaps = {};
+function dashSnapshot() { try { return PMW.dashboard && PMW.dashboard.snapshot ? PMW.dashboard.snapshot() : null; } catch (_) { return null; } }
+function dashRestore(snap) {
+  if (!snap) return;
+  try { if (PMW.dashboard && PMW.dashboard.restore) PMW.dashboard.restore(snap); }
+  catch (err) { try { console.warn('[pm-home] tour: Back could not put the dashboards back', err); } catch (_) {} }
+}
 function stepEntry(id, o) {
   if (o && o.back && entrySnaps[id]) {
-    try { PMW.restoreSnapshot(entrySnaps[id], 'guided_tour_back'); } catch (err) { try { console.warn('[pm-home] tour: Back could not put the panels back', err); } catch (_) {} }
+    var e = entrySnaps[id], panels = e && e.panels ? e.panels : e;
+    try { PMW.restoreSnapshot(panels, 'guided_tour_back'); } catch (err) { try { console.warn('[pm-home] tour: Back could not put the panels back', err); } catch (_) {} }
+    if (e && e.dash) dashRestore(e.dash);
     return;
   }
-  try { entrySnaps[id] = PMW.snapshot(); } catch (_) {}
+  try { entrySnaps[id] = { panels: PMW.snapshot(), dash: dashSnapshot() }; } catch (_) {}
 }
+/* the boards as the run found them: Skip and Finish put them back after the panels are restored (P10) */
+var tourStartDash = null;
 
 /* the rail marks the file a click opened (.fm-row.active-file, 48-shims.js); the tour's restore puts the panels back,
    so the mark goes back with them */
@@ -202,12 +219,47 @@ function splitCommitted(since) { return splitMoves(since).length > 0; }
 function splitMovedTab(since) { var m = splitMoves(since); return m.length ? m[m.length - 1].args.tabId : null; }
 function lastSeq() { var log = PM_HOME.command_log || []; return log.length ? log[log.length - 1].seq : 0; }
 
-/* the Home dashboard tab, shown and active, so the widget step's Add widget button is on screen */
+/* the Home dashboard tab, open and holding its board, so the widget step's Add widget button is on screen. An open of
+   the open tab reveals it. Waits, polling each frame, until the Home board exists and its element is in the document. */
 async function showDashboard() {
-  var l = state.layout; if (!l) return;
-  if (l.tabs['dashboard:home']) PM_HOME.reveal('dashboard:home');
-  else PM_HOME.open({ kind: 'dashboard', board: 'home' });
-  await waitFor(function () { return tVis(document.getElementById('pm6DashAddBtn')); }, 1500);
+  var l = state.layout; if (!l) return null;
+  try { PM_HOME.open({ id: 'dashboard:home', kind: 'dashboard', board: 'home', mode: 'keep' }); } catch (_) {}
+  var t0 = Date.now();
+  while (Date.now() - t0 < 1500) {
+    var b = null, el = null;
+    try { b = PMW.dashboard && PMW.dashboard.board ? PMW.dashboard.board('home') : null; } catch (_) {}
+    try { el = b && b.el ? b.el() : null; } catch (_) {}
+    if (b && el && el.isConnected) return b;
+    await new Promise(function (r) { requestAnimationFrame(function () { r(); }); });
+  }
+  return null;
+}
+/* the Home dashboard tab's Add widget button (the header row of the panel whose active tab is dashboard:home) */
+function widgetAddBtn() {
+  var btns = qsa('.pmw-tabbody[data-pmw-tab="dashboard:home"] .pmw-hrow .pmw-hbtn[data-id="add"]');
+  for (var i = 0; i < btns.length; i++) if (tVis(btns[i])) return btns[i];
+  return null;
+}
+/* done when, since the step began, the Usage log shows Upcoming resets added to the Home board and then moved or
+   resized there. Entries join their receipts by the command's instance id; only accepted ones count. */
+function widgetDone(st) {
+  var U = window.PM7_USAGE;
+  if (!U || !U.command_log || !U.receipt_log) return false;
+  var cmds = U.command_log.slice(st.wlog || 0), ok = {};
+  U.receipt_log.forEach(function (r) {
+    if (r && (r.status === 'accepted' || r.outcome === 'accepted' || r.outcome === 'applied')) ok[r.command_instance_id] = true;
+  });
+  function mine(c, id) {
+    return c && c.command_id === id && c.payload && c.payload.room === 'home' && c.payload.widget_id === 'ov-resets' &&
+      ok[c.command_instance_id];
+  }
+  var at = -1;
+  for (var i = 0; i < cmds.length; i++) if (mine(cmds[i], 'cmd.widget.add')) { at = i; break; }
+  if (at < 0) return false;
+  for (var j = at + 1; j < cmds.length; j++) {
+    if (mine(cmds[j], 'cmd.widget.move') || mine(cmds[j], 'cmd.widget.resize')) return true;
+  }
+  return false;
 }
 
 /* While a tab is carried the tour's callout and bar hold still and step back, as they do for any drag in the tour
@@ -345,17 +397,31 @@ function patchOrientation(TR) {
 function patchWidget(TR) {
   var d = TR.byId.widget_action; if (!d || d._pmwPatched) return;
   d._pmwPatched = true;
-  var enter0 = d.enter, goTo0 = d.goTo;
   d.enter = async function (st, o) {
     stepEntry('widget_action', o);
     goPage('dashboard');
-    await showDashboard();
-    if (enter0) return enter0.call(this, st, o);
+    var b = await showDashboard();
+    /* the step adds Upcoming resets, so it starts hidden when the Home board already shows it */
+    try { if (b && b.visible && b.visible().indexOf('ov-resets') >= 0) b.setVisible('ov-resets', false); } catch (_) {}
+    var U = window.PM7_USAGE;
+    st.wlog = U && U.command_log ? U.command_log.length : 0;
   };
-  d.goTo = function (st) {
-    if (goTo0) goTo0.call(this, st);
-    showDashboard();
+  d.target = function () { return widgetAddBtn(); };
+  d.done = function (st) { return widgetDone(st); };
+  d.showMe = async function () {
+    var b = null;
+    try { b = PMW.dashboard && PMW.dashboard.board ? PMW.dashboard.board('home') : null; } catch (_) {}
+    if (!b) return;
+    try { b.add('ov-resets'); } catch (_) {}
+    await new Promise(function (r) { requestAnimationFrame(function () { r(); }); });
+    try {
+      var rect = b.rect ? b.rect('ov-resets') : null;
+      if (rect) b.move('ov-resets', Object.assign({}, rect, { x: 0, y: 0 }), 'tour');
+    } catch (_) {}
   };
+  d.goTo = function () { goPage('dashboard'); showDashboard(); };
+  /* the old step's add-and-place phases went with it: one move, one target */
+  d.tick = null; d.doKey = null; d.place = null;
 }
 
 function splice(TR, steps) {
@@ -437,16 +503,19 @@ function wireEvents(TR) {
     if (marks.plus && marks.plus.used && stepIs('open_from_plus')) { marks.plus.opened.push(ev.tabId); kick(); }
     if (marks.file && ev.kind === 'editor' && stepIs('open_file_from_rail')) { marks.file.opened.push(ev.tabId); kick(); }
   });
-  // a new run remembers nothing of the last one
+  // a new run remembers nothing of the last one (and the boards as the run found them, for Skip and Finish)
   window.addEventListener('o55:tour', function (e) {
     var t = e && e.detail && e.detail.type;
-    if (t === 'started') { entrySnaps = {}; marks = { plus: null, file: null, split: null }; startMarks = railMarks(); fileMarks = null; }
-    if (t === 'skipped' || t === 'finished') { entrySnaps = {}; syncDragHold(false); }
+    if (t === 'started') { entrySnaps = {}; marks = { plus: null, file: null, split: null }; startMarks = railMarks(); fileMarks = null; tourStartDash = dashSnapshot(); }
+    else if (t === 'resumed' && !tourStartDash) tourStartDash = dashSnapshot();
+    if (t === 'skipped' || t === 'finished') { entrySnaps = {}; tourStartDash = null; syncDragHold(false); }
   });
-  // the tour ended mid-carry: the hold goes with it
+  // the tour ended mid-carry: the hold goes with it. Skip and Finish put the boards back after the panels are
+  // restored (the 'end' hook runs after the restore); Keep this layout keeps them as they are.
   if (TR.on) TR.on('end', function (d) {
     syncDragHold(false);
     if (d && !d.keep && d.status !== 'restore-pending' && startMarks) setRailMarks(startMarks);
+    if (d && !d.keep && d.status !== 'restore-pending' && tourStartDash) dashRestore(tourStartDash);
   });
   // about 5.2 minutes at 200 words a minute with every action shown, estimated (three actions replace one; the
   // census tool measures it at publish), rounded up so the promise is kept

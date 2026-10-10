@@ -69,6 +69,8 @@ function commit(id, args, mutate, opts) {
     pushLog(receiptLog, { seq: cmdSeq, command_id: id, outcome: 'rejected', reason: reason });
     return { ok: false, reason: reason };
   }
+  // an older id a kind folds (a saved named layout, the reopen list, a tour snapshot) never becomes a tab of its own
+  if (PMW.foldLayout) PMW.foldLayout(draft);
   PMW.model.normalize(draft);
   var problems = PMW.model.validate(draft);
   if (problems.length) {

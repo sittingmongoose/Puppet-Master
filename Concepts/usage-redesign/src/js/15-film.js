@@ -26,7 +26,8 @@
   /* the no-GPU motion profile (PERF-3): html[data-pmu-soft], set by 90-api.js when Usage first shows on a software-
      rendered machine, forced on by ?pmu-soft=1 (a GPU film of what the VM plays) and off by ?pmu-soft=0 */
   function soft() { return root.hasAttribute('data-pmu-soft'); }
-  function inView(card) { return !card || !PMU.board || !PMU.board.inView ? true : PMU.board.inView(card); }
+  /* the card's own board says whether it is in view (D10 3.6; PMU.boards is made by 40-board.js, after this file) */
+  function inView(card) { var b = card && PMU.boards ? PMU.boards.of(card) : null; return !card || !b ? true : b.inView(card); }
   /* the cards that keep their inner entrance in a moment: on the no-GPU profile only the hero (WOW-SPEC-3 3.3: light
      and rolls belong to the hero; supporting plates arrive final); on any profile never a card outside the viewport */
   function innerOn(card) { return !!card && inView(card) && (!soft() || card.hasAttribute('data-hero')); }
@@ -1839,7 +1840,11 @@
    change + 1 s, a gesture, a menu, the inspector, a crosshair, a sliced refresh, the guided tour or onboarding) queue
    and coalesce: the deltas still apply, and when the hold ends one beat patches what is shown to the latest values.
    Reduce Motion: every change final at once, no pulse. The viewer's choice (Live / Paused) is remembered; ?pmu-live=off
-   pauses for one load (harnesses). */
+   pauses for one load (harnesses).
+   Dashboards (D10 P12): every beat's share keys also go to the Home dashboards (PMU.boards.live.beat); a shown one patches
+   only the cards they match, a hidden one keeps them for its show. While the Usage page is hidden the beats go on, one
+   per 3 ticks, only while a shown dashboard holds a Usage widget (and the tab shows): the deltas apply and the dashboards
+   patch; the Usage board is left alone, since its next arrival builds it from the overlay as it is then. */
 (function () {
   var root = document.documentElement, M = PMU.motion;
   var STORE_KEY = 'pm7:usage:live:v1';
@@ -1847,7 +1852,7 @@
   var urlOff = (function () { try { return /[?&]pmu-live=(off|0)\b/.test(location.search); } catch (error) { return false; } })();
   var overlay = {};
   var S = { on: enabled && !urlOff && STORE.get(STORE_KEY, 'on') !== 'paused', ticks: 0, lastTick: 0, lastBeat: 0, firstAt: 0, armed: false,
-    pending: null, subscribed: false, momentEnd: 0, count: 0 };
+    pending: null, subscribed: false, momentEnd: 0, count: 0, hostTicks: 0 };
   var log = [];
   function usageShown() { var p = document.getElementById('panel-usage'); return !!p && p.classList.contains('active'); }
   function heldBy() {
@@ -1887,7 +1892,8 @@
     if (now - S.lastTick < period * 0.5) return;
     S.lastTick = now;
     if (H.on) { hourTick(); return; }
-    if (!S.armed || !usageShown() || document.hidden) return;
+    if (!usageShown()) { hostedTick(); return; }
+    if (!S.armed || document.hidden) return;
     if (S.firstAt && now < S.firstAt - period * 0.5) return;
     var due = S.firstAt ? (S.firstAt = 0, true) : (++S.ticks >= 3);
     if (!due && S.pending && !heldBy()) { flush(); return; }
@@ -1895,14 +1901,31 @@
     S.ticks = 0;
     advance();
   }
-  /* one step of the script: the deltas apply now; the page patches now or, while held, at the end of the hold */
-  function advance(index) {
+  /* the Usage page hidden (D10 P12): a beat per 3 ticks while a shown dashboard holds a Usage widget and the tab shows;
+     between them a dashboard whose hold ended patches what it kept. No dashboard shown: nothing runs. */
+  function hostedTick() {
+    var B = PMU.boards && PMU.boards.live;
+    if (document.hidden || !B || !B.wanted()) return;
+    if (++S.hostTicks < 3) { B.flush(); return; }
+    S.hostTicks = 0;
+    advance(null, true);
+  }
+  /* a beat's share keys to the dashboards: a shown one patches the cards they match, a hidden one keeps them */
+  function hosted(keys) {
+    var B = PMU.boards && PMU.boards.live;
+    if (B && keys && keys.length) { try { B.beat(keys); } catch (error) { console.error('[pm-usage] live boards', error); } }
+  }
+  /* one step of the script: the deltas apply now; the dashboards hear it; the page patches now or, while held, at the end
+     of the hold (hostedOnly: the Usage page is hidden and keeps nothing for it) */
+  function advance(index, hostedOnly) {
     var L = PMU.data && PMU.data.live; if (!L || !L.apply) return null;
     var i = index != null ? index : (L.next ? L.next(overlay) : 0);
     if (i == null || i < 0) return null;
     var info = null;
     try { info = L.apply(overlay, i); } catch (error) { console.error('[pm-usage] live apply', error); return null; }
     if (!info) return null;
+    hosted(info.shares);
+    if (hostedOnly) return info;
     var p = S.pending || { shares: {}, lead: [], beats: [] };
     (info.shares || []).forEach(function (k) { p.shares[k] = true; });
     p.lead = (info.lead || []).concat(p.lead);
@@ -1923,11 +1946,9 @@
     var cards = [], leadRect = null;
     if (board && keys.length) {
       var all = PMU.board && PMU.board.cardsNow ? PMU.board.cardsNow() : Array.prototype.slice.call(board.querySelectorAll(':scope > .pmu-card'));
-      all.forEach(function (c) {
-        var hit = keys.some(function (k) { return c.querySelector('[data-share="' + cssq(k) + '"], [data-share-v="' + cssq(k) + '"]'); })
-          || (c.getAttribute('data-live') && keys.some(function (k) { return c.getAttribute('data-live').split(' ').some(function (pre) { return pre && k.indexOf(pre) === 0; }); }));
-        if (hit) cards.push(c);
-      });
+      /* a reading inside the card carries a changed share key, or its data-live names a prefix of one (the dashboards'
+         match too: PMU.boards.live.hit, 40-board.js) */
+      all.forEach(function (c) { if (PMU.boards.live.hit(c, keys)) cards.push(c); });
       cards.sort(function (a, b) { return (PMU.board.inView(b) - PMU.board.inView(a)) || (+a.dataset.y - +b.dataset.y) || (+a.dataset.x - +b.dataset.x); });
       /* the lead's place is read before anything is written (one read, clean layout) */
       leadRect = lead(board, p.lead);
@@ -1955,6 +1976,7 @@
       if (list.length) requestAnimationFrame(step);
     }
     step();
+    /* the dashboards had the beat's keys when its deltas applied (advance, hourTick): each patches only what they match */
     return rec;
   }
   function cssq(v) { return window.CSS && CSS.escape ? CSS.escape(v) : String(v).replace(/"/g, '\\"'); }
@@ -2047,6 +2069,7 @@
   function hourLabel() { return t('live.demo_time', { time: PMU.fmt && PMU.fmt.clock ? PMU.fmt.clock(PMU.clock.now()) : '' }); }
   function hourPlay() {
     if (!hourAvailable()) return false;
+    subscribe();   /* played from a dashboard (PMU.boards.hour) before Usage was ever opened, the tick may not be heard yet */
     if (!S.on) setOn(true, 'hour');
     H.on = true; H.step = 0; H.done = false;
     try { viewAction('view.usage.demo_hour_started', {}); } catch (error) {}
@@ -2060,6 +2083,7 @@
     PMU.clock.advance(120000);
     var info = null;
     try { info = PMU.data.live.hourStep(overlay, PMU.clock.now(), H.step); } catch (error) { console.error('[pm-usage] demo hour', error); }
+    hosted((info && info.shares) || []);   /* a shown dashboard patches every step (D10 P12) */
     var p = S.pending || { shares: {}, lead: [], beats: [] };
     ((info && info.shares) || []).forEach(function (k) { p.shares[k] = true; });
     p.lead = ((info && info.lead) || []).concat(p.lead);
@@ -2096,7 +2120,10 @@
     flush: flush,
     log: log,
     state: function () { return { enabled: enabled, on: S.on, held: heldBy(), pending: !!S.pending, ticks: S.ticks, beats: S.count, armed: S.armed, subscribed: S.subscribed, overlay: JSON.parse(JSON.stringify(overlay)) }; },
-    reset: function () { var L = PMU.data && PMU.data.live; if (L && L.reset) L.reset(overlay); else Object.keys(overlay).forEach(function (k) { delete overlay[k]; }); S.pending = null; S.ticks = 0; if (window.PM7_USAGE && PM7_USAGE.rerender && usageShown()) PM7_USAGE.rerender(); return true; },
-    sync: syncCtl
+    reset: function () { var L = PMU.data && PMU.data.live; if (L && L.reset) L.reset(overlay); else Object.keys(overlay).forEach(function (k) { delete overlay[k]; }); S.pending = null; S.ticks = 0; if (window.PM7_USAGE && PM7_USAGE.rerender && usageShown()) PM7_USAGE.rerender(); else if (PMU.boards) PMU.boards.touch('data'); return true; },
+    sync: syncCtl,
+    /* the tick subscription, asked for by a dashboard as it shows (40-board.js show): the demo engine boots after this
+       script, and Usage may never be opened (D10 P12) */
+    wake: subscribe
   };
 })();

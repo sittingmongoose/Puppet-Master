@@ -351,7 +351,11 @@ PMW.reopenClosed = function () {
   // an entry whose tab is open again (opened from the tree since) is stale: it would use up a press and reopen
   // nothing. Drop those quietly first (the open module also drops them as it opens a tab).
   var live = l.closed.filter(function (c) { return c && c.tab && !(l.tabs[c.tab.id] && model.panelOf(l, c.tab.id)); });
-  if (live.length !== l.closed.length) { l.closed = live; PMW.persist.saveSoon(); }
+  if (live.length !== l.closed.length) {
+    var gone = l.closed.filter(function (c) { return live.indexOf(c) < 0; }).map(function (c) { return c && c.tab && c.tab.id; }).filter(Boolean);
+    l.closed = live; PMW.persist.saveSoon();
+    if (gone.length) bus.emit('closed-dropped', { ids: gone });
+  }
   if (!l.closed.length) { announce('No closed tab to reopen'); return false; }
   var res = commit(CMD.reopen, {}, function (d) {
     var it = d.closed.pop();
@@ -386,6 +390,9 @@ PMW.applyNamed = function (name, opts) {
   if (res.ok) {
     PMW.settings.set('panels.layout.named', name);
     var def = PMW.NAMED[name] || PMW.savedLayouts()[name];
+    if (def && def.boards && PMW.dashboard && typeof PMW.dashboard.restore === 'function') {
+      try { PMW.dashboard.restore(def.boards); } catch (_) {}
+    }
     announce((def && def.label ? def.label : name) + ' layout');
   }
   return res.ok;

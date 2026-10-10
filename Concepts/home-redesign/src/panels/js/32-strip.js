@@ -46,12 +46,14 @@ function stripFont(stripEl) {
 // a look change (theme, NieR and its parts, motion) can change every label's width: measure again and refit
 bus.on('look', function () { measureCache = {}; fontCache.value = ''; render.schedule({ animate: false }); });
 
+/* a failed command's mark says what it is in words (a bare number did not; the cross-look review) */
+function exitWords(code) { return 'exited ' + code; }
 /* natural width of a tab: icon + gap + label + marks + close slot + padding, clamped */
 function naturalWidth(rec, font, host, active) {
   var label = tabLabel(rec);
   // padding, icon, the two 6 px gaps (icon-label, label-close), the label, the 24 px close slot, 2 px of slack
   var w = TAB.padL + TAB.iconSlot + TAB.iconGap + labelWidth(label, font, host, !!rec.preview, !!active) + TAB.iconGap + TAB.close + TAB.padR + 2;
-  if (rec.exitCode != null) w += labelWidth(String(rec.exitCode), font, host) + 18;
+  if (rec.exitCode != null && rec.exitCode !== 0) w += labelWidth(exitWords(rec.exitCode), font, host) + 18;
   if (rec.agent) w += 14;
   return clamp(w, TAB.natural, TAB.max);
 }
@@ -309,7 +311,7 @@ function updateTab(el, rec, p, l) {
   if (ico._name !== iconName) { ico.textContent = ''; ico.appendChild(kindIcon(iconName)); ico._name = iconName; }
   // marks: failed command's exit code (D12), agent mark
   var mark = el.querySelector('.pmw-tmark');
-  var markText = rec.exitCode != null && rec.exitCode !== 0 ? String(rec.exitCode) : '';
+  var markText = rec.exitCode != null && rec.exitCode !== 0 ? exitWords(rec.exitCode) : '';
   setAttr(mark, 'hidden', !markText && !rec.agent);
   if (mark._t !== markText + '|' + (rec.agent || '')) {
     mark.textContent = '';
@@ -322,35 +324,25 @@ function updateTab(el, rec, p, l) {
   if (rec.dirty) desc.push('unsaved changes');
   if (rec.pinned) desc.push('pinned');
   if (rec.attention) desc.push('new');
-  if (markText) desc.push('last command failed with exit code ' + markText);
+  if (markText) desc.push('last command failed with exit code ' + rec.exitCode);
   if (rec.agent) desc.push(rec.agent + ' is driving it');
   el.setAttribute('aria-label', label + (desc.length ? ', ' + desc.join(', ') : ''));
   var tag = hoverWords(rec, k);
+  if (el.getAttribute('data-pmh-tag') !== 'literal') el.setAttribute('data-pmh-tag', 'literal');
   el.setAttribute('data-pm-hover-label', tag.label);
   el.setAttribute('data-pm-hover-detail', [tag.place].concat(desc).concat(k && !desc.length ? [k.label] : []).filter(Boolean).join(' · '));
 }
 
-/* The tab's hover tag. The page's tag controller (PMConcept7.html, descriptor and looksInternal) replaces any label or
-   detail that holds a dotted word ("recipes.rs", "postgresql.org", "host:5173") with "Choose this option", and has no
-   opt-out for literal text (41-fileref.js keeps paths out of its tag for the same reason). So a file tab's tag names
-   the file by its stem and its type ("recipes, Rust file") and its folder ("In src/routes"); the exact name is the
-   tab's own text and the "+N" list's. */
-var DOTTED = /\b[a-z][a-z0-9-]*(?:[.:][a-z0-9_-]+)+\b/i;
-var EXT_WORDS = { rs: 'Rust', md: 'Markdown', toml: 'TOML', json: 'JSON', ts: 'TypeScript', tsx: 'TypeScript', js: 'JavaScript', mjs: 'JavaScript',
-  css: 'CSS', html: 'HTML', svelte: 'Svelte', sql: 'SQL', yml: 'YAML', yaml: 'YAML', xml: 'XML', log: 'log', bin: 'binary', py: 'Python', sh: 'script', txt: 'text' };
+/* The tab's hover tag: the file's name and its folder, or the tab's title, as written. Tabs carry data-pmh-tag="literal"
+   (the hover thread's opt-out), so the page's tag controller keeps a dotted name ("recipes.rs", "postgresql.org")
+   instead of swapping it for generic copy. */
 function hoverWords(rec, k) {
-  var title = tabTitle(rec), path = rec.state && rec.state.path;
+  var path = rec.state && rec.state.path;
   if (path) {
     var name = String(path).split('/').pop(), dir = String(path).slice(0, Math.max(0, String(path).length - name.length - 1));
-    var dot = name.lastIndexOf('.');
-    var stem = dot > 0 ? name.slice(0, dot) : name, ext = dot > 0 ? name.slice(dot + 1).toLowerCase() : '';
-    var kind = ext ? (EXT_WORDS[ext] || ext.toUpperCase()) + ' file' : (dot === 0 ? 'Hidden file' : 'File');
-    var lab = dot === 0 ? name.slice(1) : stem;
-    return { label: DOTTED.test(lab) ? kind : lab + ', ' + kind, place: dir && !DOTTED.test(dir) ? 'In ' + dir : '' };
+    return { label: name, place: dir ? 'In ' + dir : '' };
   }
-  if (!DOTTED.test(title)) return { label: title, place: '' };
-  var short = tabLabel(rec);
-  return { label: !DOTTED.test(short) ? short : (k ? k.label : 'Tab'), place: '' };
+  return { label: tabTitle(rec) || tabLabel(rec) || (k ? k.label : 'Tab'), place: '' };
 }
 
 function buildStrip(host, panelId) {

@@ -27,8 +27,7 @@ chatCol.setVisible = function (visible, commandId) {
   if (!accepted) return { ok: false, reason: 'dispatch_cancelled' };
   c.classList.toggle('hidden', !visible);
   if (r) r.classList.toggle('hidden', !visible);
-  var icon = qs('#activityBar .icon[data-ab-id="chat"]');
-  if (icon) icon.classList.toggle('active', !!visible);
+  chatCol.syncRailEntry();
   if (!visible) { var ma = qs('.main-area'); if (ma) ma.removeAttribute('data-pmw-chat-peek'); }
   store.set(CHAT_VIS_KEY, { visible: !!visible });
   var receipt = { receipt_id: record.command_instance_id + '-r', command_instance_id: record.command_instance_id, command_id: id, status: 'applied', outcome: 'applied', completed_at: new Date().toISOString() };
@@ -59,8 +58,13 @@ chatCol.beginDrag = function (e, handle) {
   var hist = narrow.state.hist || 0;
   // one rule with the ladder: the chat widens only while the centre stays at or above the step where the ladder starts
   // easing the chat (C 960); past it the ladder would ease the width straight back on release
-  var C = state.centre ? state.centre.clientWidth : 0;
-  var lo = LADDER.chatMin + hist, hi = clamp(startW + Math.max(0, C - LADDER.chatEase), lo, LADDER.chatMax + hist);
+  // On the Usage page the board keeps its 400 px floor (narrow.usageFloor); another page (the centre is hidden there and
+  // measured 0, which froze the drag) takes the whole range
+  var C = homeIsPage() && state.centre && state.centre.getClientRects().length ? state.centre.clientWidth : 0;
+  var ub = qs('#panel-usage #pmuBoard'), room = Infinity;
+  if (C) room = C - LADDER.chatEase;
+  else if (ub && ub.offsetParent !== null) room = ub.getBoundingClientRect().width - LADDER.usageBoardMin;
+  var lo = LADDER.chatMin + hist, hi = clamp(startW + Math.max(0, room), lo, LADDER.chatMax + hist);
   var last = startW, moved = false;
   try { handle.setPointerCapture(e.pointerId); } catch (_) {}
   handle.classList.add('resizing');
@@ -140,6 +144,18 @@ chatCol.dockBack = function () {
   bus.emit('chat', { floating: false });
   return { ok: true };
 };
+/* D32: a popped-out chat starts back in its column after a restart. The page asks for a pop out through the shim from
+   its saved Settings value (Chat Layout: Overlay or Detached) when it paints at start, and nothing a person does can ask
+   before their first press or key, so a request from the page before then is that saved value replaying: the chat
+   stays in its column. The chat's own Pop out and a Settings change made later go through as before. */
+var chatActed = false;
+function chatActedNow() { chatActed = true; doc.removeEventListener('pointerdown', chatActedNow, true); doc.removeEventListener('keydown', chatActedNow, true); }
+doc.addEventListener('pointerdown', chatActedNow, true);
+doc.addEventListener('keydown', chatActedNow, true);
+chatCol.popOutFromPage = function () {
+  if (!chatActed) return { ok: false, no_change: true, reason: 'restart' };
+  return chatCol.popOut();
+};
 chatCol.isFloating = function () { var ma = qs('.main-area'); return !!(ma && ma.hasAttribute('data-pmw-chat-float')); };
 
 /* the folded chat strip (D4, C < 480): a button opens the chat over the centre until Escape or a click outside */
@@ -173,7 +189,8 @@ chatCol.installStrip = function () {
   btn.addEventListener('click', function () { setPeek(true); });
   doc.addEventListener('pointerdown', function (e) {
     if (!peeking()) return;
-    if (e.target.closest && e.target.closest('#chatPanel, #pmw-chat-strip, #pmw-overlay .pmw-menu')) return;
+    // the rail's Chat entry decides for itself (a click there hides the open chat, D40)
+    if (e.target.closest && e.target.closest('#chatPanel, #pmw-chat-strip, #pmw-overlay .pmw-menu, ' + RAIL_CHAT)) return;
     setPeek(false);
   }, true);
   doc.addEventListener('keydown', function (e) { if (e.key === 'Escape' && peeking()) setPeek(false); });
@@ -188,6 +205,66 @@ chatCol.installStrip = function () {
   }
   bus.on('narrow', place);
   bus.on('paint', place);
+};
+
+/* The rail's Chat entry (D40, Jared: "Chat stays a left-rail entry; it shows or hides the chat column"). A click on
+   #activityBar's Chat icon, on every page, toggles the column and never changes the page in front: while the chat is
+   on screen (isOpen) it hides it (one cmd.panel.switch with its receipt), otherwise show() brings it on screen, which
+   follows the narrow ladder (where the chat is folded to its strip it opens over the centre). The listener sits in the
+   window's capture phase, ahead of the tour core's document handler (that one only flipped visibility, so a folded
+   chat was hidden instead of opened) and the shell's legacy title-matched branch, and it answers only that one icon.
+   A press that turned into the rail's own drag (body.pm-ab-dragging at release, or a move past its 4 px threshold) is
+   left to the rail: it reorders or hides the icon in More, and the rail's suppressor takes the click that follows.
+   Enter and Space do the same when the page makes the icon focusable. The icon is lit while the column is shown (a
+   folded strip counts; a hidden column does not), however that came about. */
+var RAIL_CHAT = '#activityBar .icon[data-ab-id="chat"]';
+chatCol.syncRailEntry = function () {
+  var ic = qs(RAIL_CHAT);
+  if (!ic) return;
+  var on = chatCol.isVisible();
+  if (ic.classList.contains('active') !== on) ic.classList.toggle('active', on);
+};
+chatCol.toggleFromRail = function () {
+  if (chatCol.isOpen()) return chatCol.setVisible(false, 'cmd.panel.switch');
+  chatCol.show();
+  chatCol.syncRailEntry();
+  return { ok: chatCol.isOpen() };
+};
+chatCol.installRailEntry = function () {
+  var press = null;
+  function entryOf(e) { return e.target && e.target.closest ? e.target.closest(RAIL_CHAT) : null; }
+  window.addEventListener('pointerdown', function (e) {
+    press = entryOf(e) && e.button === 0 ? { x: e.clientX, y: e.clientY, id: e.pointerId, dragged: false } : null;
+  }, true);
+  window.addEventListener('pointermove', function (e) {
+    if (press && e.pointerId === press.id && (Math.abs(e.clientX - press.x) >= 4 || Math.abs(e.clientY - press.y) >= 4)) press.dragged = true;
+  }, true);
+  window.addEventListener('pointerup', function (e) {
+    if (press && e.pointerId === press.id && doc.body.classList.contains('pm-ab-dragging')) press.dragged = true;
+  }, true);
+  window.addEventListener('click', function (e) {
+    if (!entryOf(e)) return;
+    var p = press;
+    press = null;
+    if (p && p.dragged) return;
+    e.stopPropagation();
+    e.preventDefault();
+    chatCol.toggleFromRail();
+  }, true);
+  window.addEventListener('keydown', function (e) {
+    if ((e.key !== 'Enter' && e.key !== ' ') || e.repeat || e.altKey || e.ctrlKey || e.metaKey || !entryOf(e)) return;
+    e.stopPropagation();
+    e.preventDefault();
+    chatCol.toggleFromRail();
+  }, true);
+  // its hover tag says what a click does (the tag controller gave it the generic "Choose this option.")
+  var ic = qs(RAIL_CHAT);
+  if (ic) { setAttr(ic, 'data-pm-hover-label', 'Chat'); setAttr(ic, 'data-pm-hover-detail', 'Shows or hides the chat column'); }
+  // the lit state follows the column whoever shows or hides it (the chat's own close, a layout restore, the tour); the
+  // tour core's own sync after each receipt sets the same thing
+  var c = chatPanel();
+  if (c && typeof MutationObserver === 'function') new MutationObserver(chatCol.syncRailEntry).observe(c, { attributes: true, attributeFilter: ['class'] });
+  chatCol.syncRailEntry();
 };
 
 /* The chat hooks for the kinds (CONTRACT 6.1 additions). The chat surface on screen (the stand-in layer today, the
@@ -254,8 +331,7 @@ chatCol.install = function () {
   var visible = !saved || saved.visible !== false;
   c.classList.toggle('hidden', !visible);
   if (r) r.classList.toggle('hidden', !visible);
-  var icon0 = qs('#activityBar .icon[data-ab-id="chat"]');
-  if (icon0) icon0.classList.toggle('active', visible);
+  chatCol.installRailEntry();
   window.addEventListener('pointerdown', function (e) {
     var h0 = e.target && e.target.closest && e.target.closest('#chatResizer');
     if (!h0 || e.button !== 0) return;

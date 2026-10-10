@@ -1,208 +1,17 @@
-/* The Dashboard tab kind (kinds/30-dashboard.js). Two parts:
-   1. the page's own #dashboardView, adopted into a tab body: its plate (border, fill, radius, shadow, blur) is
-      neutralised, its own Main / Metrics / Monitoring strip is hidden (one strip per panel, D5), its pills go (D22):
-      the Add widget pill becomes a header-row button, status chips become plain text with a small drawn glyph, the
-      catalog's size chips become plain text. The page's card rules (and the NieR world's) keep styling the cards.
-      Friendly and Glass style #dashboardView with id rules and !important, so these rules carry two ids.
-   2. what this file draws itself: the note a second visible grid tab shows, and the Agents board.
-   Sizes key on the tab body (@container pmw-body), never the window. */
+/* The Dashboard tab kind (kinds/30-dashboard.js, D10 step two). The engine dashboards (Home, Metrics, Monitoring and
+   each Dashboard n) are Usage boards: their DOM under the stage is made by the Usage engine and styled by the Usage CSS,
+   so this file only gives them the stage (a column that fills the tab body under the header row). Two parts:
+   1. the quiet note a dashboard shows when it cannot run (no Usage engine in the build, an id the kind does not run).
+   2. the Agents board, drawn here.
+   D10 round two (P1): the page's own Home widgets (#dashboardView) are no longer used by any tab. The node stays parked
+   and hidden in #panel-dashboard; no rule here names it.
+   Sizes key on the tab body (@container pmw-body), never the window. NieR touches beyond colour are gated by their
+   part (square corners: square; uppercase: headers). */
 
 .pmw-dash { position: absolute; inset: 0; display: flex; flex-direction: column; color: var(--pmw-text); font-family: var(--pm-font-ui); }
-.pmw-dash-stage { position: relative; flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+.pmw-dash-stage { position: relative; flex: 1 1 auto; min-width: 0; min-height: 0; display: flex; flex-direction: column; }
 
-/* ---- 1. the adopted page node ---- */
-html[data-pmw-home="on"] #pm-home-centre .pmw-dash-stage > #dashboardView.dashboard-view {
-  flex: 1 1 auto !important;
-  width: auto !important;
-  height: auto !important;
-  min-width: 0 !important;
-  max-width: none !important;
-  min-height: 0 !important;
-  margin: 0 !important;
-  position: relative !important;
-  inset: auto !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  -webkit-backdrop-filter: none !important;
-  backdrop-filter: none !important;
-  outline: 0 !important;
-  overflow: hidden !important;
-  transform: none !important;
-  --pm6-dash-head-h: 0px;
-}
-html[data-pmw-home="on"] #pm-home-centre .pmw-dash-stage.is-noted > #dashboardView { display: none !important; }
-html[data-pmw-home="on"] #pm-home-centre #dashboardView > .dashboard-header { display: none !important; }
-html[data-pmw-home="on"] #pm-home-centre #dashboardView #pm6DashScroll.pm6-dash-scroll {
-  margin-top: 0 !important;
-  padding: 12px 12px 16px !important;
-  background: transparent !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  overscroll-behavior: contain;
-  scrollbar-width: thin;
-}
-html[data-pmw-home="on"] #pm-home-centre #dashboardView #pm6DashScroll::-webkit-scrollbar-track:vertical { margin-top: 0; }
-@container pmw-body (max-width: 419.98px) {
-  html[data-pmw-home="on"] #pm-home-centre #dashboardView #pm6DashScroll.pm6-dash-scroll { padding: 8px 8px 12px !important; }
-}
-
-/* the page's Add widget button, seated in the header row: a header button like its neighbours (no pill) */
-html[data-pmw-home="on"] #pm-home-centre .pmw-hrow #pm6DashAddBtn.pmw-dash-add {
-  height: 24px !important;
-  min-width: 24px !important;
-  padding: 0 7px !important;
-  margin: 0 !important;
-  gap: 5px !important;
-  border: 0 !important;
-  border-radius: 6px !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  color: var(--pmw-text-2) !important;
-  font: inherit !important;
-  font-size: 12px !important;
-  font-weight: 400 !important;
-  letter-spacing: 0 !important;
-  text-transform: none !important;
-  transform: none !important;
-  -webkit-backdrop-filter: none !important;
-  backdrop-filter: none !important;
-}
-html[data-pmw-home="on"] #pm-home-centre .pmw-hrow #pm6DashAddBtn.pmw-dash-add:hover { background: var(--pmw-hover) !important; color: var(--pmw-text) !important; }
-html[data-pmw-home="on"] #pm-home-centre .pmw-hrow #pm6DashAddBtn.pmw-dash-add:focus-visible { outline: 2px solid var(--pmw-focus) !important; outline-offset: -2px !important; }
-html[data-pmw-home="on"] #pm-home-centre .pmw-hrow #pm6DashAddBtn.pmw-dash-add > .pm6-ico { display: none !important; }
-html[data-pmw-home="on"] #pm-home-centre .pmw-hrow #pm6DashAddBtn.pmw-dash-add::before,
-html[data-pmw-home="on"] #pm-home-centre .pmw-hrow #pm6DashAddBtn.pmw-dash-add::after { content: none !important; display: none !important; }
-@container pmw-body (max-width: 519px) {
-  html[data-pmw-home="on"] #pm-home-centre .pmw-hrow #pm6DashAddBtn.pmw-dash-add { padding: 0 !important; width: 24px !important; }
-}
-html[data-theme^="retro"] #pm-home-centre .pmw-hrow #pm6DashAddBtn.pmw-dash-add,
-html[data-o55-nier="on"] #pm-home-centre .pmw-hrow #pm6DashAddBtn.pmw-dash-add { border-radius: 0 !important; }
-html[data-o55-nier="on"][data-o55-nier-parts~="headers"] #pm-home-centre .pmw-hrow #pm6DashAddBtn.pmw-dash-add { text-transform: uppercase !important; letter-spacing: .07em !important; }
-
-/* the interim column fix (kinds/30-dashboard.js fitColumns): with 4 or 2 columns set in the page's 3-column range,
-   a card spans up to the new count (the page caps it at 3 there) */
-html[data-pmw-home="on"] #pm-home-centre #pm6DashGrid[data-pmw-dash-cols="4"] .pm6-dash-card { grid-column: span min(var(--dw, 1), 4); }
-html[data-pmw-home="on"] #pm-home-centre #pm6DashGrid[data-pmw-dash-cols="2"] .pm6-dash-card { grid-column: span min(var(--dw, 1), 2); }
-
-/* status chips (Running, passed, building, degraded ...): plain text with a small drawn glyph, never a capsule */
-html[data-pmw-home="on"] #pm-home-centre #dashboardView .pm6-dash-chip {
-  --pmw-dash-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Ccircle cx='5' cy='5' r='3'/%3E%3C/svg%3E");
-  --pmw-dash-tone: var(--pmw-accent);
-  display: inline-flex !important;
-  align-items: center;
-  gap: 5px;
-  padding: 0 !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  color: var(--pmw-text-2) !important;
-  font-size: 11px !important;
-  font-weight: 550 !important;
-  letter-spacing: 0 !important;
-  text-transform: none !important;
-  line-height: 16px !important;
-}
-html[data-pmw-home="on"] #pm-home-centre #dashboardView .pm6-dash-chip::before {
-  content: "";
-  flex: none;
-  width: 10px;
-  height: 10px;
-  background: var(--pmw-dash-tone);
-  -webkit-mask: var(--pmw-dash-glyph) center / contain no-repeat;
-  mask: var(--pmw-dash-glyph) center / contain no-repeat;
-}
-html[data-pmw-home="on"] #pm-home-centre #dashboardView .pm6-dash-chip--pass {
-  --pmw-dash-tone: var(--pmw-ok);
-  --pmw-dash-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M1.5 5.3 4 7.8 8.6 2.4' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-}
-html[data-pmw-home="on"] #pm-home-centre #dashboardView .pm6-dash-chip--live { --pmw-dash-tone: var(--pmw-ok); }
-html[data-pmw-home="on"] #pm-home-centre #dashboardView .pm6-dash-chip--run {
-  --pmw-dash-tone: var(--pmw-accent);
-  --pmw-dash-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Ccircle cx='5' cy='5' r='3.6' fill='none' stroke='%23000' stroke-width='1.4'/%3E%3Cpath d='M5 1.4A3.6 3.6 0 0 1 5 8.6z'/%3E%3C/svg%3E");
-}
-html[data-pmw-home="on"] #pm-home-centre #dashboardView .pm6-dash-chip--warn {
-  --pmw-dash-tone: var(--pmw-warn);
-  --pmw-dash-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M5 .8 9.4 9H.6z'/%3E%3C/svg%3E");
-}
-html[data-pmw-home="on"] #pm-home-centre #dashboardView .pm6-dash-chip--fail {
-  --pmw-dash-tone: var(--pmw-bad);
-  --pmw-dash-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M2 2l6 6M8 2 2 8' stroke='%23000' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E");
-}
-html[data-pmw-home="on"] #pm-home-centre #dashboardView .pm6-dash-chip--gate {
-  --pmw-dash-tone: var(--pmw-warn);
-  --pmw-dash-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M2.5 1.5h1.8v7H2.5zM5.7 1.5h1.8v7H5.7z'/%3E%3C/svg%3E");
-}
-/* Retro and NieR: square glyphs (a block for the dot) */
-html[data-theme^="retro"] #pm-home-centre #dashboardView .pm6-dash-chip--live,
-html[data-o55-nier="on"] #pm-home-centre #dashboardView .pm6-dash-chip--live {
-  --pmw-dash-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M2 2h6v6H2z'/%3E%3C/svg%3E");
-}
-html[data-o55-nier="on"] #pm-home-centre #dashboardView .pm6-dash-chip { color: var(--o55-nier-ink) !important; }
-html[data-o55-nier="on"] #pm-home-centre #dashboardView .pm6-dash-chip::before { background: currentColor; }
-
-/* the catalog's size chips (2x1, 2x2) are plain text */
-html[data-pmw-home="on"] #pm-home-centre #dashboardView .pm6-dash-size-chip {
-  padding: 0 !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  color: var(--pmw-text-3) !important;
-  font-size: 11px !important;
-  font-variant-numeric: tabular-nums;
-}
-
-/* the cards' own buttons: no capsules (Friendly rounds them fully) */
-html[data-pmw-home="on"] #pm-home-centre #dashboardView .pm6-dash-btn { border-radius: 8px !important; }
-html[data-theme^="retro"] #pm-home-centre #dashboardView .pm6-dash-btn,
-html[data-o55-nier="on"] #pm-home-centre #dashboardView .pm6-dash-btn { border-radius: 0 !important; }
-
-/* readable type in the widgets: nothing under 11 px (the page's smallest step is 10 px, its card facts 9 px) */
-html[data-pmw-home="on"] #pm-home-centre #dashboardView { --fs-2xs: 11px; }
-html[data-pmw-home="on"] #pm-home-centre #dashboardView .pm7-dash-extra div,
-html[data-pmw-home="on"] #pm-home-centre #dashboardView .pm7-dash-extra b { font-size: 11px !important; }
-
-/* every card title at the board's size: the page's compact density (a 1x1 card) drops it to 10 px */
-html[data-pmw-home="on"] #pm-home-centre #dashboardView .pm6-dash-card[data-pm7-density="compact"] .pm6-dash-card-title { font-size: var(--fs-sm); }
-html[data-pmw-home="on"][data-theme^="retro"] #pm-home-centre #dashboardView .pm6-dash-card[data-pm7-density="compact"] .pm6-dash-card-title { font-size: var(--fs-xs); }
-
-/* the lane and quota tracks: no capsules (the page rounds them with --radius-pill), a 1 px radius like the Agents
-   board's bar; Retro keeps its own 2 px, NieR's blocks part its square track */
-html[data-pmw-home="on"]:not([data-theme^="retro"]) #pm-home-centre #dashboardView .pm6-dash-bar { border-radius: 1px; }
-
-/* text-glyph marks drawn instead (D22, no emoji-range glyphs): the remove and close crosses, the lane dots */
-html[data-pmw-home="on"] #pm-home-centre #dashboardView .pm6-dash-iconbtn:is([data-pm6-dash="remove"], [data-pm6-dash="catalog-close"]) { font-size: 0 !important; }
-html[data-pmw-home="on"] #pm-home-centre #dashboardView .pm6-dash-iconbtn:is([data-pm6-dash="remove"], [data-pm6-dash="catalog-close"])::before {
-  content: "";
-  width: 10px;
-  height: 10px;
-  background: currentColor;
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M1.8 1.8l6.4 6.4M8.2 1.8 1.8 8.2' stroke='%23000' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M1.8 1.8l6.4 6.4M8.2 1.8 1.8 8.2' stroke='%23000' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
-}
-html[data-pmw-home="on"] #pm-home-centre #dashboardView .pm6-dash-dot {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  font-size: 0 !important;
-  line-height: 0;
-  border-radius: 50%;
-  background: currentColor;
-}
-html[data-pmw-home="on"] #pm-home-centre #dashboardView .pm6-dash-dot.is-done { color: var(--pmw-ok); }
-html[data-pmw-home="on"] #pm-home-centre #dashboardView .pm6-dash-dot.is-run { color: var(--pmw-accent); }
-html[data-pmw-home="on"] #pm-home-centre #dashboardView .pm6-dash-dot.is-fail { color: var(--pmw-bad); }
-html[data-pmw-home="on"] #pm-home-centre #dashboardView .pm6-dash-dot.is-queue { color: var(--pmw-text-3); }
-html[data-theme^="retro"] #pm-home-centre #dashboardView .pm6-dash-dot,
-html[data-o55-nier="on"] #pm-home-centre #dashboardView .pm6-dash-dot { border-radius: 0; }
-html[data-o55-nier="on"] #pm-home-centre #dashboardView .pm6-dash-dot.is-queue { background: transparent; box-shadow: inset 0 0 0 1px var(--o55-nier-ink); }
-html[data-o55-nier="on"] #pm-home-centre #dashboardView .pm6-dash-dot:not(.is-queue) { color: var(--o55-nier-ink); }
-
-/* ---- 2a. the note a second visible grid tab shows ---- */
+/* ---- 1. the quiet note ---- */
 .pmw-dash-note { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 16px; overflow: auto; }
 .pmw-dash-note[hidden] { display: none; }
 .pmw-dash-note-col { max-width: 320px; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; }
@@ -210,9 +19,8 @@ html[data-o55-nier="on"] #pm-home-centre #dashboardView .pm6-dash-dot:not(.is-qu
 .pmw-dash-note-t { margin: 0; font-size: 13px; line-height: 19px; font-weight: 550; color: var(--pmw-text); }
 .pmw-dash-note-sub { margin: 0 0 8px; font-size: 12px; line-height: 17px; color: var(--pmw-text-3); }
 @container pmw-body (max-height: 199px) { .pmw-dash-note-sub, .pmw-dash-note-ico { display: none; } }
-html[data-theme^="retro"] .pmw-dash-note-btn, html[data-o55-nier="on"] .pmw-dash-note-btn { border-radius: 0; }
 
-/* ---- 2b. the Agents board ---- */
+/* ---- 2. the Agents board ---- */
 .pmw-dash-agents { position: absolute; inset: 0; overflow: auto; overscroll-behavior: contain; scrollbar-width: thin; padding: 12px 12px 16px; box-sizing: border-box; }
 .pmw-dash-agent-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 8px; align-content: start; }
 @container pmw-body (max-width: 419.98px) {
@@ -259,21 +67,23 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dash-agent-acts .pmw-ac
 /* Glass: legible over the blur of the page behind, no blur of its own */
 html[data-theme^="glass"] .pmw-dash-agent { background: color-mix(in srgb, var(--pmw-surface) 82%, transparent); }
 
-/* NieR: ink and parchment, square corners, no glow, uppercase small headers */
+/* NieR: ink and parchment, no glow; square corners with the square part, uppercase small headers with the headers part */
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-dash-agent { border-radius: 0; }
 html[data-o55-nier="on"] .pmw-dash-agent {
-  border-radius: 0;
   border-color: rgba(var(--o55-nier-ink-rgb), .45);
   background: var(--o55-nier-raised, var(--pmw-surface-2));
   box-shadow: 3px 3px 0 rgba(var(--o55-nier-shadow-rgb), .12);
 }
 html[data-o55-nier="on"] .pmw-dash-agent .pmw-dash-st-ico { color: var(--o55-nier-ink); }
 html[data-o55-nier="on"] .pmw-dash-agent[data-tone="bad"] .pmw-dash-st-ico { color: var(--o55-nier-error); }
-html[data-o55-nier="on"] .pmw-dash-st { text-transform: uppercase; letter-spacing: .12em; font-size: 11px; }
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-dash-st { text-transform: uppercase; letter-spacing: .12em; font-size: 11px; }
 html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-dash-agent-name { text-transform: uppercase; letter-spacing: .08em; font-size: 13px; }
-html[data-o55-nier="on"] .pmw-dash-agent-bar { border-radius: 0; background: rgba(var(--o55-nier-ink-rgb), .18); }
+html[data-o55-nier="on"] .pmw-dash-agent-bar { background: rgba(var(--o55-nier-ink-rgb), .18); }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-dash-agent-bar { border-radius: 0; }
 html[data-o55-nier="on"] .pmw-dash-agent-fill { background: var(--o55-nier-ink); transition-timing-function: steps(4, end); }
-html[data-o55-nier="on"] .pmw-dash-agent-acts .pmw-act, html[data-o55-nier="on"] .pmw-dash-note-btn { border-radius: 0; border-color: var(--o55-nier-ink); }
-html[data-o55-nier="on"] .pmw-dash-note-t { text-transform: uppercase; letter-spacing: .1em; font-size: 12px; }
+html[data-o55-nier="on"] .pmw-dash-agent-acts .pmw-act { border-color: var(--o55-nier-ink); }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-dash-agent-acts .pmw-act { border-radius: 0; }
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-dash-note-t { text-transform: uppercase; letter-spacing: .1em; font-size: 12px; }
 
 /* Reduced Motion: nothing moves (the bar jumps to its value) */
 html[data-motion="reduced"] .pmw-dash-agent-fill { transition: none; }

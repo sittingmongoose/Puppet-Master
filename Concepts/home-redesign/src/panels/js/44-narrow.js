@@ -11,7 +11,7 @@
    and eases like the rest of the column; it is never saved. */
 
 var LADDER = PMW.LADDER = { railEase: 960, railFold: 760, chatEase: 960, oneColumn: 600, chatStrip: 480, hyst: 48, railEased: 240, chatMin: 400, chatMax: 760, chatStripW: 32,
-  chatHistoryW: 240, chatHistoryWNarrow: 200, chatHistoryAt: 540 };
+  chatHistoryW: 240, chatHistoryWNarrow: 200, chatHistoryAt: 540, usageBoardMin: 400 };
 var narrow = PMW.narrow = { state: { rail: 'open', chat: null, chatStrip: false, oneColumn: false, C: 0, step: 0, hist: 0, histDropped: false }, frozen: false };
 
 function mainArea() { return qs('.main-area'); }
@@ -71,7 +71,9 @@ function inFlow(el) { var p = getComputedStyle(el).position; return p !== 'absol
 /* the docked footprint only: base = the centre plus the columns that really share the row with it */
 narrow.measure = function () {
   var centre = state.centre;
-  if (!centre || !centre.getClientRects().length) return null;
+  // only while Home is the page shown: on another page the centre can still have boxes (it is hidden, not removed), and
+  // solving against it there overwrote the chat's width
+  if (!centre || !centre.getClientRects().length || !homeIsPage()) return null;
   var chat = qs('#chatPanel');
   var ma = mainArea();
   var floating = !!(ma && ma.hasAttribute('data-pmw-chat-float'));
@@ -87,10 +89,46 @@ narrow.measure = function () {
   return { base: base, railUser: railUserWidth(), chatW: chatUser() + hist, chatShown: chatShown, hist: hist };
 };
 
+/* The Usage page's board floor (the planner, 2026-10-10): the chat column never squeezes the Usage board (#pmuBoard)
+   under 400 px. Home has the ladder above; on the Usage page the column gives way first by dropping a pinned History,
+   then down to its 400 px minimum, and grows back toward the user's width as the board gets room. Measured from what
+   is applied now, never saved. */
+function usageBoard() { var b = qs('#panel-usage #pmuBoard'); return b && b.offsetParent !== null && b.getClientRects().length ? b : null; }
+var usageWatched = null;
+narrow.usageFloor = function () {
+  var board = usageBoard(), chat = qs('#chatPanel'), ma = mainArea();
+  if (!board || !chat || chat.classList.contains('hidden') || (ma && ma.hasAttribute('data-pmw-chat-float')) || !inFlow(chat)) return false;
+  if (usageWatched !== board && typeof ResizeObserver === 'function') { usageWatched = board; new ResizeObserver(narrow.schedule).observe(board); }
+  var hist = historyW();
+  var room = chat.getBoundingClientRect().width + board.getBoundingClientRect().width - LADDER.usageBoardMin;
+  var want = chatUser() + hist, h = hist;
+  var c = Math.min(want, room);
+  if (hist && c < LADDER.chatMin + hist) { h = 0; c = Math.min(want - hist, room); }
+  c = Math.max(LADDER.chatMin, Math.round(c));
+  var px = c + 'px', hpx = h + 'px';
+  if (chat.style.getPropertyValue('--pmw-chat-w') !== px) chat.style.setProperty('--pmw-chat-w', px);
+  if (chat.style.getPropertyValue('--pmw-chat-hist-w') !== hpx) chat.style.setProperty('--pmw-chat-hist-w', hpx);
+  var dropped = hist > 0 && h === 0;
+  if (narrow.state.histDropped !== dropped || narrow.state.chat !== c) {
+    narrow.state = Object.assign({}, narrow.state, { chat: c, hist: h, histDropped: dropped });
+    bus.emit('narrow', narrow.state);
+  }
+  return true;
+};
+
+/* any other page: the chat column is the user's width (plus a pinned History), no centre to ease it for */
+narrow.plainChat = function () {
+  var chat = qs('#chatPanel'), ma = mainArea();
+  if (!chat || chat.classList.contains('hidden') || (ma && ma.hasAttribute('data-pmw-chat-float'))) return;
+  var hist = historyW(), px = Math.round(chatUser() + hist) + 'px', hpx = hist + 'px';
+  if (chat.style.getPropertyValue('--pmw-chat-w') !== px) chat.style.setProperty('--pmw-chat-w', px);
+  if (chat.style.getPropertyValue('--pmw-chat-hist-w') !== hpx) chat.style.setProperty('--pmw-chat-hist-w', hpx);
+};
+
 narrow.update = function () {
   if (narrow.frozen) return;
   var m = narrow.measure();
-  if (!m) return;
+  if (!m) { if (!narrow.usageFloor()) narrow.plainChat(); return; }
   var prev = narrow.state;
   var next = narrow.solve(m.base, m.railUser, m.chatW, m.chatShown, !!PMW.settings.get('chat.pinOpen'), prev, m.hist);
   narrow.apply(next, prev);

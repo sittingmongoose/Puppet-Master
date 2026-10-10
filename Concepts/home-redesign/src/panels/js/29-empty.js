@@ -1,13 +1,15 @@
 /* The empty panel (D6): a panel survives empty only when it is the last one or locked; it then shows the "+" menu's
-   rows as a launcher: full-width list rows (no tiles, no pills), then Recent, then a dim hint. Narrow panels show only
-   the kind rows; very short ones a single line. The whole body is a drop target (the tab drag treats it as a merge). */
+   rows as a launcher: full-width list rows (no tiles, no pills), then Recent, then a dim hint. A row's inline choices
+   (the Terminal row's installed shells, D39) sit under it as in the menu, and a group row (SSH hosts) opens its
+   submenu from the row. Narrow panels show only the kind rows; very short ones a single line. The whole body is a drop
+   target (the tab drag treats it as a merge). */
 
 PMW.renderEmpty = function (panelEl, p) {
   var body = panelEl.querySelector('.pmw-body');
   var el = body.querySelector('.pmw-empty');
-  if (p.tabs.length) { if (el) el.remove(); return; }
+  if (p.tabs.length) { if (el) dropEmpty(el); return; }
   if (el && el._pmwFor === p.id && el._pmwKinds === Object.keys(KINDS).join(',')) return;
-  if (el) el.remove();
+  if (el) dropEmpty(el);
   el = h('div', { class: 'pmw-empty', role: 'group', 'aria-label': 'Empty panel' });
   el._pmwFor = p.id;
   el._pmwKinds = Object.keys(KINDS).join(',');
@@ -15,7 +17,8 @@ PMW.renderEmpty = function (panelEl, p) {
   col.appendChild(h('p', { class: 'pmw-empty-title', text: 'Open something here' }));
   var list = h('div', { class: 'pmw-empty-list', role: 'list' });
   PMW.plusRows(p.id, {}).forEach(function (r) {
-    var row = h('div', { class: 'pmw-empty-row', role: 'listitem', 'data-pmh': 'row' });
+    var links = r.links && r.links.length ? r.links : null;
+    var row = h('div', { class: 'pmw-empty-row', role: links ? null : 'listitem', 'data-pmh': 'row' });
     var trail = r.submenu ? h('span', { class: 'pmw-empty-chev', 'aria-hidden': 'true' }, [icon('chevronRight', { size: 14 })])
       : r.right ? h('span', { class: 'pmw-empty-key', text: PMW.keyLabel(r.right) }) : null;
     var b = h('button', { type: 'button', class: 'pmw-empty-btn pmw-cur' }, [kindIcon(r.kind || 'file'), h('b', { text: r.label }), trail]);
@@ -32,7 +35,17 @@ PMW.renderEmpty = function (panelEl, p) {
       c.addEventListener('click', function () { r.alt.run({ row: r, anchor: c }); });
       row.appendChild(c);
     }
-    list.appendChild(row);
+    if (!links) { list.appendChild(row); return; }
+    // the menu's own link row (30-menu.css), so the two read alike; Alt+click opens a new panel
+    var lr = h('div', { class: 'pmw-mlinks pmw-empty-links' });
+    links.forEach(function (lk, i) {
+      var a = h('button', { type: 'button', class: 'pmw-mlink pmw-cur', text: lk.label, 'data-pm-hover-label': lk.title || lk.label,
+        'data-pm-hover-detail': 'Opens here; Alt+click opens a new panel' });
+      a.addEventListener('click', function (e) { lk.run({ alt: e.altKey }); });
+      if (i) lr.appendChild(h('span', { class: 'pmw-mlinkpair' }, [h('span', { class: 'pmw-mlinksep', 'aria-hidden': 'true', text: '·' }), a]));
+      else lr.appendChild(a);
+    });
+    list.appendChild(h('div', { class: 'pmw-empty-group', role: 'listitem' }, [row, lr]));
   });
   col.appendChild(list);
   var recent = PMW.recent.list().slice(0, 5);
@@ -50,4 +63,8 @@ PMW.renderEmpty = function (panelEl, p) {
   el.appendChild(col);
   el.appendChild(h('p', { class: 'pmw-empty-short', text: 'Empty panel. ' + PMW.keyLabel(KEYS.plusMenu) + ' opens the menu.' }));
   body.appendChild(el);
+  // a wrapped row of links starts its new line with a link (36-menu.js), measured again as the panel changes size
+  tidyLinkRows(el);
+  if (typeof ResizeObserver === 'function') { el._pmwRo = new ResizeObserver(function () { tidyLinkRows(el); }); el._pmwRo.observe(col); }
 };
+function dropEmpty(el) { if (el._pmwRo) el._pmwRo.disconnect(); el.remove(); }

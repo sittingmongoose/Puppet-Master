@@ -23,16 +23,20 @@ PMW.resetLayout = PMW.resetLayout || function () { return PMW.applyNamed('home',
 function firstLayout() {
   persist.bind();   // the layout belongs to the project it was loaded for, whatever the title bar says later
   var saved = persist.load();
-  if (saved) return saved;
   var name = PMW.settings.get('panels.layout.named') || 'home';
-  var l = PMW.buildNamed(PMW.NAMED[name] ? name : 'home', null);
+  var l = saved || PMW.buildNamed(PMW.NAMED[name] ? name : 'home', null);
+  // ids written before a kind folded them (debug-console:<session>, D33) load as the one tab they name now
+  if (l && PMW.foldLayout(l)) model.normalize(l);
   return l;
 }
 
-function homeShown() { var p = qs('#panel-dashboard'); return !!p && (p.classList.contains('active') || p.classList.contains('pm8-page-out')); }
+/* Home is the page in front. (pm8-page-out is not a sign of it: the page leaves that class on #panel-dashboard after
+   its exit animation.) Tab show and hide, the size observer, the ladder and the notice anchor all ask this. */
+function homeIsPage() { var p = qs('#panel-dashboard'); return !!p && p.classList.contains('active'); }
 var wasShown = null;
 function onPageChange() {
-  var shown = homeShown();
+  // show and hide follow the page in front (counting the lingering page-out class, no tab ever heard onHide)
+  var shown = homeIsPage();
   if (shown === wasShown) return;
   wasShown = shown;
   if (shown) {
@@ -65,10 +69,11 @@ PM_HOME.boot = function () {
   DEAD_PORTALS.forEach(function (id) { var el = doc.getElementById(id); if (el) el.remove(); });
   bus.emit('boot:kinds', {});
   state.layout = firstLayout();
+  try { persist.foldSaved(); } catch (err) { try { console.error('[pm-home] saved layouts could not be folded', err); } catch (_) {} }
   try { persist.watchProject(); } catch (err) { try { console.error('[pm-home] project watch failed', err); } catch (_) {} }
   if (typeof ResizeObserver === 'function') {
     new ResizeObserver(function () {
-      if (!homeShown()) return;
+      if (!homeIsPage()) return;
       narrow.schedule();
       render.schedule({ animate: false });
     }).observe(centre);
@@ -82,7 +87,8 @@ PM_HOME.boot = function () {
      ['title bar', function () { PMW.installTitlebar(); }],
      ['narrow ladder', function () { narrow.install(); }],
      ['stand-in chat', function () { if (PMW.standIn) PMW.standIn.install(); }],
-     ['tour', function () { if (PMW.tour) PMW.tour.install(); }]
+     ['tour', function () { if (PMW.tour) PMW.tour.install(); }],
+     ['status bar dock', function () { if (PMW.pageShell) PMW.pageShell.install(); }]
     ].forEach(function (step) {
       try { step[1](); } catch (err) { try { console.error('[pm-home] ' + step[0] + ' failed', err); } catch (_) {} }
     });

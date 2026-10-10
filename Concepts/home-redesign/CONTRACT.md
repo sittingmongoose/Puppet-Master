@@ -1,10 +1,11 @@
 # Home panels: tab-kind registry and host contract
 
-Contract version **1** (2026-10-09). Owner: the panels concept thread (branch `concept/home-panels-20261009`). Readers:
-the terminal thread (it plugs the Terminal kind in), the Plans thread (canon follows this), and the later 5.6 Pro chat
-port (its `openEditor` contract maps onto section 6). Decisions D1-D28 are in
-`/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md`; where this file and DECISIONS.md
-disagree, DECISIONS.md wins and this file is wrong.
+Contract version **1.3** (2026-10-10; section 15 lists the changes). Owner: the panels concept thread (branch
+`concept/home-panels-20261009`). Readers: the terminal thread (it plugs the Terminal kind in), the Plans thread (canon
+follows this), and the later 5.6 Pro chat port (its `openEditor` contract maps onto section 6). Decisions D1-D28 are in
+`/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md`, and D17a and D29-D41 are in the addenda
+beside it (`DECISIONS-ADDENDUM-1.md` to `DECISIONS-ADDENDUM-3.md`); where this file and the decisions disagree, the
+decisions win and this file is wrong.
 
 Changes to this file are additive within a version. A breaking change bumps the version, is listed in section 15, and
 is announced to the terminal and Plans threads before it is pushed.
@@ -64,17 +65,17 @@ lands in the right kind. One id is one tab in the whole workspace: opening an id
 | `transcript` | `thread-<agentId>` | read-only live feed |
 | `context` | `context:<threadId>` | thread-keyed context detail |
 | `record` | `search:`, `mcp:`, `app:`, `work-record:` | read-only tool-call records |
-| `output` | `output`, `output:<channel>` | one Output tab, the channel is its view state (D28); a channel opened as its own tab from the picker is `output:<channel>`, fixed to that channel |
+| `output` | `output`, `output:<channel>` | one Output tab, the channel is its view state (D31); a channel opened as its own tab from the picker is `output:<channel>`, fixed to that channel |
 | `problems` | `problems` | one per workspace |
 | `ports` | `ports` | one per workspace |
-| `debug-console` | `debug-console:<session>` | |
+| `debug-console` | `debug-console` | one Debug Console tab with a sub-tab per debug session; the session on screen is its view state (`state.session`, D33). `PM_HOME.open({ kind: 'debug-console', session })` reveals the tab and switches it. The ids of the old one-tab-per-session shape, `debug-console:<session>`, fold into this tab with that session chosen (section 3, `fold`) |
 
 Retired, never registered: the chat's Goal tab (`goal-artifact`, DL-147), its lab-only workspaces (`order-export:`,
 `b16-work:`, `b17-work:`, `bsd12:`, `eli5-evidence:`). Activity Detail stays inside the chat (D3) and is not a kind.
 
 `PM_HOME.kindOf(id)` returns the kind for an id (`null` for an unknown prefix). A kind can claim more prefixes in its
 registration (section 3); two kinds claiming one prefix is a boot error. `PM_HOME.kindOf('output')` returns `'output'`
-for the bare id even before the Output kind registers, as it does for `problems` and `ports`.
+for the bare id even before the Output kind registers, as it does for `problems`, `ports` and `debug-console`.
 
 ## 3. Registering a kind
 
@@ -88,12 +89,13 @@ PM_HOME.registerKind('terminal', {
   dedicated: true,              // a panel holding only these tabs is skipped by file opens (D7) and its Ctrl+T makes one
   idFor(spec) { ... },          // stable tab id for an open spec; may mint one (terminal: a new session id)
   canonical(id, spec) { ... },  // optional: one tab per canonical id (plan-query -> plan:ap-index, collab-run:X -> room:X)
+  fold(id) { ... },             // optional: an older id form -> { id, state } (debug-console:<s> -> debug-console, { session: s })
   labelFor(id, state) { ... },  // optional: the label of a tab not mounted yet (background, agent-opened, restored)
   iconFor(id, state) { ... },   // optional: its icon likewise (a PM_HOME.icons name)
   plus: {                       // optional: a row in the "+" menu and the empty-panel launcher
     order: 10,                  // rows sort by order; section 7 lists the built order
     shortcut: 'Ctrl+Shift+`',
-    sub() { return PMT.profiles(); },   // optional sub-row: [{ id, label, detail, icon }]
+    sub() { return PMT.profiles(); },   // optional sub-row: [{ id, label, detail, icon, group? }] (below)
     spec(subId) { return { kind: 'terminal', profile: subId || null }; }
   },
   mount(host, state, api) {     // build the tab's body; return the instance (below)
@@ -101,6 +103,20 @@ PM_HOME.registerKind('terminal', {
   }
 });
 ```
+
+`plus.sub()` returns one flat list. Entries without a `group` are the row's inline sub-row, every one of them unless
+the kind caps them with `plus.subMax` (the Terminal row lists all the installed shells, D39). Entries with a `group` go
+into one row of their own right under the kind's row, with a submenu of them; `'ssh'` renders as the row "SSH hosts"
+(one submenu row per host: its `label`, its `detail` as the second line; the body opens it in this panel, the trailing
+cell in a new panel). There is no group row when no entry has that group; the "+" field finds the entries by label and
+detail. A group the panels do not know stays inline; the panels map groups to rows in one table (`PMW.SUB_GROUPS`,
+`js/38-menus.js`). `plus.spec(id)` opens any of them.
+
+`fold(id)` names an older id form the kind folds into one tab, with the view state that id carried: it returns
+`{ id, state }` or `null`. Opens, saved layouts, saved named layouts, the reopen list and the tour's snapshots all pass
+through it (`PMW.foldId`, `PMW.foldLayout`), so an old id never becomes a tab of its own; two old tabs that fold into one
+keep the record of the one used most recently. The state rides in the open as kind fields, so it reaches a new tab's
+state or an open tab's `reveal`.
 
 `mount(host, state, api)` is called once per tab when the tab is first shown (lazily: a restored background tab is
 not mounted until it is activated, unless the kind sets `eager: true`). The body is already attached to its panel and
@@ -214,10 +230,10 @@ records why.
   reference (32 px, 24 px inline): a click previews after 240 ms unless a double click arrives (a link inside a
   document opens its preview in the same panel, which would hide the link before the second click), a double click
   keeps, Alt opens in a new panel, Ctrl or Cmd in the background, Enter opens kept. `view: 'diff'` rides in the
-  editor's state and stays a preview. Its hover tag says what it does in words ("Open file" / "Click previews it.
-  Double-click keeps it open."; "No file to open" without a path) and the path stays in the button's text: the page's
-  tag controller replaces any tag text that looks like a path, a file name or host:port with generic copy and has no
-  opt-out for literal text. `PM_HOME.fileExists(path)` says whether the demo project has the file.
+  editor's state and stays a preview. Its hover tag names the file as written (`path:line`, detail "Click previews it.
+  Double-click keeps it open.") and carries `data-pmh-tag="literal"`, the hover thread's opt-out: without it the
+  page's tag controller swaps any text that looks like a path, a file name or host:port for generic copy. Tabs carry it
+  too, and any element whose tag must show such text should. `PM_HOME.fileExists(path)` says whether the demo project has the file.
 - `PM_HOME.catalog.add(kind, items)` / `.list()` / `.find()` / `.open(id, o)` and `PMW.catalogPicker(anchor, { kind |
   kinds, title, placeholder, panelId, newPanel, sectionLabels })`: every openable thing a kind knows, and the one
   picker over them (`sectionLabels` names each kind's section).
@@ -300,6 +316,15 @@ Kinds reach the chat through `PM_HOME.chat`, never the chat surface directly:
 | `PM_HOME.chat.reveal({ thread, messageId })` | shows the chat, switches to the thread when the chat knows it, scrolls the message into view and marks it briefly; an unknown message shows the thread and announces "That message is not in this demo". Returns `{ ok, found, thread }` |
 | `PM_HOME.chat.isOpen()` | the chat is docked, popped out, or open over the centre from its strip |
 
+The chat column itself (D3, `js/46-chat.js`, `PMW.chatCol`): it shows and hides through `chatCol.setVisible(on)` (one
+`cmd.panel.switch` with its receipt) and comes on screen through `chatCol.show()`, which follows the narrow ladder (where
+the chat is folded to its strip it opens over the centre). The left rail's Chat entry (`#activityBar .icon[data-ab-id="chat"]`)
+toggles the column on every page (D40): while the chat is on screen (`chatCol.isOpen()`) a click hides it, otherwise it
+calls `show()`; it never changes the page in front, Enter and Space do the same when the page makes the entry
+focusable, a press that becomes the rail's drag still reorders the rail (or hides the entry in More) and toggles nothing,
+and the entry is lit while the column is shown (its folded strip counts). A popped-out chat starts back in its column
+after a restart (D32): the float is never saved, while the column's visibility (`pm.home.chat:v1`) and `chat.width` are.
+
 The chat takes the browser kind's bus events: `'browser:capture'` `{ tabId, capture: { kind, w, h, comp, at, title,
 url } }` becomes an attachment card in its composer (a 1 px box with the look's corner, never a pill), and
 `'browser:send'` `{ tabId, how: 'send' | 'list' | 'insert' | 'capture', what }` posts, lists or inserts it. The chat
@@ -330,6 +355,9 @@ only while `drawsHistory()` is true.
   The home layer only places the overlay (position, width, stacking, dismiss); the rail's concept D gives it its look
   per family (an opaque plate, a hairline, the family's shadow and entrance) and refits on the event (main
   37de861164).
+- **The Chat entry.** A click on the rail's Chat icon shows or hides the chat column and never changes the page in front
+  (D40, section 6.1); the panels answer it in the window's capture phase, ahead of the page's own handlers, and leave a
+  press that becomes the rail's drag to the rail.
 - **Build order.** Settings, Usage, the rail (`rail_layer.apply_published`, step 4 of opus `build_text()`), then the home
   layer, which inserts just before `</head>` and `</body>` and never rewrites the rail's band markup.
 
@@ -342,7 +370,8 @@ Kinds join through `plus` (section 3). Built order:
 
 | Order | Row | Shortcut | Sub-row |
 |---|---|---|---|
-| 10 | Terminal | Ctrl+Shift+` | profiles from `PMT.profiles()`: `[{ id, label, detail, icon }]`, each clickable |
+| 10 | Terminal | Ctrl+Shift+` | profiles from `PMT.profiles()`: `[{ id, label, detail, icon, group? }]`; every entry without a group inline (all the installed shells), each clickable |
+| (10) | SSH hosts (only when an entry has `group: 'ssh'`) | | one row with a submenu, right under Terminal: one row per host (label, detail as the second line), the body opens it here, the trailing cell in a new panel (D39) |
 | 20 | Browser | Ctrl+Shift+B | |
 | 30 | File... | Ctrl+P | three recent files inline, each clickable |
 | 40 | Dashboard | | |
@@ -351,8 +380,10 @@ Kinds join through `plus` (section 3). Built order:
 | 70 | Output, Problems, Ports, Debug Console | | one row with a submenu |
 | hairline | Split right (Ctrl+\\), Split down (Ctrl+Shift+\\), Reopen closed tab (Ctrl+Shift+T; Alt+Shift+T in a browser) | | |
 
-A type-to-filter field heads the menu ("Open anything: kinds, files, URLs"). The empty-panel launcher shows the same
-rows as full-width list rows (no tiles, no pills), then Recent.
+A type-to-filter field heads the menu ("Open anything: kinds, files, URLs"); typing lists a group row's entries
+themselves (an SSH host is found by its label or its detail, and Enter opens it). The empty-panel launcher shows the same
+rows as full-width list rows (no tiles, no pills), each row's inline sub-row under it, a submenu row opening its list
+from the row, then Recent. A sub-row that wraps starts its new line with an entry, never with the separator dot.
 
 ## 8. Commands
 
@@ -455,7 +486,7 @@ Shared tokens the panels CSS defines on `#pm-home-centre` (use them so every kin
 Every moving part is off under Reduced Motion (instant, no blink). Retro and NieR renderings follow
 `research-ide-layout.md` section 11.
 
-### 10.1 Code colour schemes (D27, agreed with the terminal thread 2026-10-10)
+### 10.1 Code colour schemes (D30, agreed with the terminal thread 2026-10-10)
 
 One scheme catalog serves the editor and the terminal. It is one data module in the terminal package
 (`src/terminal/schemes/*.json`, compiled into the terminal's JS), reached through `window.PMT`:
@@ -468,7 +499,7 @@ One scheme catalog serves the editor and the terminal. It is one data module in 
 | `PMT.Appearance.retroPhosphor()`, `PMT.Appearance.on('retro-phosphor', fn)` | `'green'` or `'amber'`: the Retro scheme choice, stored once in the terminal's look record; the editor's monochrome Retro dark follows it and never writes it |
 | `PMT.AppearancePopover.open(anchor, { surface, get, set, onClose })` | the one Appearance popover, floating in `#pmw-overlay`; returns `{ el, close, refresh }`. `get()` returns `{ scheme, font, size }` (`'follow'` for Follow look; `size: null` is the default) and `get(key)` one of them; `set(key, value)` takes the keys `'scheme'`, `'font'` and `'size'`. `surface: 'editor'` shows Scheme (Follow look first), font and size only |
 
-Both surfaces word the default "Follow look" (D27; D16 had "Follow theme"). Each surface has its own pick and both
+Both surfaces word the default "Follow look" (D30; D16 had "Follow theme"). Each surface has its own pick and both
 default to it (D21's per-look syntax colours for the editor, the
 look's default scheme for the terminal): `editor.scheme` (`'follow'` or a scheme id) and the terminal's own key under
 `terminal.*`. The editor opens the popover from its More menu ("Appearance..."). In a build without `src/terminal`
@@ -488,7 +519,7 @@ lists. The terminal's parchment and ink are its own CSS under `html[data-o55-nie
 `pm.home.settings:v1`; every choice a user will later make in Settings reads from here with a default. Panels keys:
 `panels.layout.named`, `panels.tabs.preview` (true), `panels.plus.default` ('menu'), `panels.tabs.sizing` ('shrink'),
 `editor.font.family`, `editor.font.size` (13), `editor.minimap` (true), `editor.stickyScroll` (true),
-`editor.scheme` ('follow', D27; registered by the editor kind), `chat.width` (null = the default for the window),
+`editor.scheme` ('follow', D30; registered by the editor kind), `chat.width` (null = the default for the window),
 `chat.history` ('flyout' or 'pinned'). A pinned History widens the chat column by 240 px (the chat draws it at 200
 while its whole column is under 540); `chat.width` and the 400-760 drag range stay the message area's. The widening
 counts in the narrow ladder, the peek (400 plus History) and the popped-out window (440 plus History), and is never
@@ -551,12 +582,21 @@ root. A kind never appends its own overlay to `document.body`.
   (pending the Plans thread). `api.menu` gains point anchors, `reason`, function submenus and `o`.
   Same day: a header-row action's `menu` and `PMW.frames.button`'s `menu` map items through the same mapping as
   `api.menu` (the terminal thread found contract items printed "[object Object]" there).
-- v1.2 (2026-10-10): D26-D28 and the integration round. Section 2: Output is one tab, `output`, with the channel as
-  view state, and `output:<channel>` for a channel opened as its own tab (D28). Section 3: `labelFor` and `iconFor`, the
+- v1.2 (2026-10-10): D29-D31 (published then as Addendum 2's D26-D28) and the integration round. Section 2: Output is
+  one tab, `output`, with the channel as view state, and `output:<channel>` for a channel opened as its own tab (D31). Section 3: `labelFor` and `iconFor`, the
   body attached before `mount`, view modes and `title` reach the state, `reveal(fields)` tolerates any key. Section 4:
   `api.saveSoon()`, empty check slots. Section 5: fact `el`/`detail`/`grow`, `{ id, el }` actions, in-place `set()`,
   `labelsAt`; new 5.1 (frames, `PMW.fileRef`, the catalog and picker, `registerIcon`). Section 6: the open's fields
   reach `reveal`; 6.1 `PM_HOME.chat`, the `'chat'` events, browser captures, the chat surface slot; 6.3 the rail's own
   overlay look. Section 9: `data-pmw-keys="host"`. Section 10.1: the shared code colour-scheme catalog and popover
-  (D27, agreed with the terminal thread). Sections 12-13: `editor.scheme`, pinned History widening, Friendly radius
+  (D30, agreed with the terminal thread). Sections 12-13: `editor.scheme`, pinned History widening, Friendly radius
   restatements, the settled hover contract, field hover tags.
+- v1.3 (2026-10-10): Addendum 3. D41: Addendum 2's items are D29 (tab strip visuals), D30 (code colour schemes) and D31
+  (Output channels) everywhere here; `DECISIONS.md`'s own D26-D28 keep their numbers. Section 2 (D33): the Debug Console
+  is one tab, `debug-console`, with a sub-tab per debug session and the session as its view state; `kindOf` knows the
+  bare id. Section 3: `fold(id)` for older id forms (`debug-console:<session>` folds into `debug-console` with that
+  session) across opens, saved and named layouts and the reopen list; `plus.sub()` entries may carry `group` (D39,
+  agreed with the terminal thread), `'ssh'` drawing one "SSH hosts" submenu row, and ungrouped entries are no longer
+  capped. Section 6.1: the chat column's API, the rail's Chat entry toggling the column on every page (D40), and a
+  popped-out chat starting back in its column after a restart (D32). Section 7: the SSH hosts row, the filter finding
+  hosts, the launcher's inline sub-rows.
