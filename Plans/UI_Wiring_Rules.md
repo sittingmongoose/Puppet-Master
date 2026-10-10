@@ -2047,9 +2047,10 @@ canonical_text: >-
   chat, Pop out the chat or Dock the chat back, Keep the chat open in narrow windows, Save this layout..., Restore home
   layout, Run setup wizard) and Settings' Restore home layout row. The chat column: the activity bar's Chat toggle,
   its inner edge (width), its header menu's Pop out, the popped-out window's Dock back, the History list's pin and the
-  32 px edge strip of a narrow window. The narrow switcher. The Home keys of R28 with the web-client mapping (Ctrl+T,
-  Ctrl+W, Ctrl+Shift+T and Ctrl+Tab answered as Alt+T, Alt+W, Alt+Shift+T and Alt+` in a browser). Retired, with no
-  row: the four editor panels' grab, close, pop-out, Open Browser and resizers; Open Panel and Open Browser in Panel
+  32 px edge strip of a narrow window. The narrow switcher. The Home keys of the keyboard map in
+  `Plans/FinalGUISpec.md#F3-635` and `Plans/UI_Command_Catalog.md#UCC-200` (the rows of WM-090's Keys table) with the
+  web-client mapping (Ctrl+T, Ctrl+W, Ctrl+Shift+T and Ctrl+Tab answered as Alt+T, Alt+W, Alt+Shift+T and Alt+` in a
+  browser). Retired, with no row: the four editor panels' grab, close, pop-out, Open Browser and resizers; Open Panel and Open Browser in Panel
   with Panel 1 to Panel 4; File Manager's Open in Panel 1 to 4; the host drop targets, the dock track and the floating
   corner resizer; the dashboard's grab, pop-out and resizer; the chat's grab; the terminal sections (grab, bottom
   toggle, new section, split pane, move workgroup, resizer); and Collapse Bottom Terminal. A disabled control projects

@@ -63306,7 +63306,7 @@
         "home.keys.close_tab dispatches cmd.panel_tab.close exactly once per activation and preserves command_id, correlation_id and the receipt.",
         "The payload is panel_tab_ids with the focused tab; the kind's close check answers first.",
         "A focused terminal keeps Ctrl+W for the shell and gives back Alt+W in the web client (F3-640).",
-        "The shell keeps Ctrl+1..9 and Ctrl+K; no panel key uses them, and no bare letter or digit is a panel key (R28).",
+        "The shell keeps Ctrl+1..9 and Ctrl+K; no panel key uses them, and no bare letter or digit is a panel key (F3-635, UCC-200).",
         "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
         "A changed commit writes pm.home_workspace_layout.v2 once (SP-330) and emits exactly one workspace.layout_changed with the v2 payload naming the change (CV-361); nothing else is emitted."
       ],
@@ -63372,7 +63372,7 @@
         "home.keys.move_tab reads state.home_workspace.home_keys_move_tab.availability and shows state.home_workspace.home_keys_move_tab.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
         "home.keys.move_tab dispatches cmd.panel_tab.move exactly once per activation and preserves command_id, correlation_id and the receipt.",
         "The payload is panel_tab_id, the same panel_id and the index one step over; at an end of the strip it dispatches nothing.",
-        "The shell keeps Ctrl+1..9 and Ctrl+K; no panel key uses them, and no bare letter or digit is a panel key (R28).",
+        "The shell keeps Ctrl+1..9 and Ctrl+K; no panel key uses them, and no bare letter or digit is a panel key (F3-635, UCC-200).",
         "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
         "A changed commit writes pm.home_workspace_layout.v2 once (SP-330) and emits exactly one workspace.layout_changed with the v2 payload naming the change (CV-361); nothing else is emitted."
       ],
@@ -63438,7 +63438,7 @@
         "home.keys.move_tab_to_panel reads state.home_workspace.home_keys_move_tab_to_panel.availability and shows state.home_workspace.home_keys_move_tab_to_panel.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
         "home.keys.move_tab_to_panel dispatches cmd.panel_tab.move exactly once per activation and preserves command_id, correlation_id and the receipt.",
         "The payload is panel_tab_id and the neighbouring panel_id, or split: { panel_id, edge } when there is no panel that way and the fit rule allows a split; otherwise it dispatches nothing.",
-        "The shell keeps Ctrl+1..9 and Ctrl+K; no panel key uses them, and no bare letter or digit is a panel key (R28).",
+        "The shell keeps Ctrl+1..9 and Ctrl+K; no panel key uses them, and no bare letter or digit is a panel key (F3-635, UCC-200).",
         "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
         "A changed commit writes pm.home_workspace_layout.v2 once (SP-330) and emits exactly one workspace.layout_changed with the v2 payload naming the change (CV-361); nothing else is emitted."
       ],
@@ -63504,7 +63504,7 @@
         "home.keys.new_browser reads state.home_workspace.home_keys_new_browser.availability and shows state.home_workspace.home_keys_new_browser.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
         "home.keys.new_browser dispatches cmd.panel_tab.open exactly once per activation and preserves command_id, correlation_id and the receipt.",
         "The payload is { kind: browser }, placed by kind affinity.",
-        "The shell keeps Ctrl+1..9 and Ctrl+K; no panel key uses them, and no bare letter or digit is a panel key (R28).",
+        "The shell keeps Ctrl+1..9 and Ctrl+K; no panel key uses them, and no bare letter or digit is a panel key (F3-635, UCC-200).",
         "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
         "An open that adds a tab emits exactly one workspace.layout_changed (CV-361); an open of an id already open anywhere reveals that tab where it is, never moves or duplicates it, and emits nothing."
       ],
@@ -63573,7 +63573,7 @@
         "The payload is the panel's dedicated kind, else its active tab's kind, else an editor buffer (F3-632), with where: tab.",
         "In the web client the browser keeps Ctrl+T; the label shows Alt+T, the key that works where the app runs.",
         "A focused terminal keeps Ctrl+T for the shell and gives back Alt+T (F3-640).",
-        "The shell keeps Ctrl+1..9 and Ctrl+K; no panel key uses them, and no bare letter or digit is a panel key (R28).",
+        "The shell keeps Ctrl+1..9 and Ctrl+K; no panel key uses them, and no bare letter or digit is a panel key (F3-635, UCC-200).",
         "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
         "An open that adds a tab emits exactly one workspace.layout_changed (CV-361); an open of an id already open anywhere reveals that tab where it is, never moves or duplicates it, and emits nothing."
       ],
@@ -63640,7 +63640,7 @@
         "home.keys.new_terminal reads state.home_workspace.home_keys_new_terminal.availability and shows state.home_workspace.home_keys_new_terminal.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
         "home.keys.new_terminal dispatches cmd.panel_tab.open exactly once per activation and preserves command_id, correlation_id and the receipt.",
         "The payload is { kind: terminal } with the default profile, placed by kind affinity (F3-634).",
-        "The shell keeps Ctrl+1..9 and Ctrl+K; no panel key uses them, and no bare letter or digit is a panel key (R28).",
+        "The shell keeps Ctrl+1..9 and Ctrl+K; no panel key uses them, and no bare letter or digit is a panel key (F3-635, UCC-200).",
         "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
         "An open that adds a tab emits exactly one workspace.layout_changed (CV-361); an open of an id already open anywhere reveals that tab where it is, never moves or duplicates it, and emits nothing."
       ],
@@ -63707,7 +63707,7 @@
         "home.keys.reopen_closed reads state.home_workspace.home_keys_reopen_closed.availability and shows state.home_workspace.home_keys_reopen_closed.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
         "home.keys.reopen_closed dispatches cmd.panel_tab.reopen_closed exactly once per activation and preserves command_id, correlation_id and the receipt.",
         "Disabled with no_closed_tab when nothing has been closed.",
-        "The shell keeps Ctrl+1..9 and Ctrl+K; no panel key uses them, and no bare letter or digit is a panel key (R28).",
+        "The shell keeps Ctrl+1..9 and Ctrl+K; no panel key uses them, and no bare letter or digit is a panel key (F3-635, UCC-200).",
         "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
         "A changed commit writes pm.home_workspace_layout.v2 once (SP-330) and emits exactly one workspace.layout_changed with the v2 payload naming the change (CV-361); nothing else is emitted."
       ],
@@ -63773,7 +63773,7 @@
         "home.keys.split_down reads state.home_workspace.home_keys_split_down.availability and shows state.home_workspace.home_keys_split_down.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
         "home.keys.split_down dispatches cmd.workspace_layout.split exactly once per activation and preserves command_id, correlation_id and the receipt.",
         "The payload is panel_id with direction: down; disabled with narrow_centre or no_room. There are no Ctrl+K chords.",
-        "The shell keeps Ctrl+1..9 and Ctrl+K; no panel key uses them, and no bare letter or digit is a panel key (R28).",
+        "The shell keeps Ctrl+1..9 and Ctrl+K; no panel key uses them, and no bare letter or digit is a panel key (F3-635, UCC-200).",
         "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
         "A changed commit writes pm.home_workspace_layout.v2 once (SP-330) and emits exactly one workspace.layout_changed with the v2 payload naming the change (CV-361); nothing else is emitted."
       ],
@@ -63839,7 +63839,7 @@
         "home.keys.split_right reads state.home_workspace.home_keys_split_right.availability and shows state.home_workspace.home_keys_split_right.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
         "home.keys.split_right dispatches cmd.workspace_layout.split exactly once per activation and preserves command_id, correlation_id and the receipt.",
         "The payload is panel_id with direction: right; disabled with narrow_centre or no_room.",
-        "The shell keeps Ctrl+1..9 and Ctrl+K; no panel key uses them, and no bare letter or digit is a panel key (R28).",
+        "The shell keeps Ctrl+1..9 and Ctrl+K; no panel key uses them, and no bare letter or digit is a panel key (F3-635, UCC-200).",
         "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
         "A changed commit writes pm.home_workspace_layout.v2 once (SP-330) and emits exactly one workspace.layout_changed with the v2 payload naming the change (CV-361); nothing else is emitted."
       ],
@@ -69384,7 +69384,7 @@
         "cmd.panel_tab.pin is registered with typed arguments (UCC-200) and its owner revision and idempotency contract.",
         "home.tab_menu.pin reads state.home_workspace.home_tab_menu_pin.availability and shows state.home_workspace.home_tab_menu_pin.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
         "home.tab_menu.pin dispatches cmd.panel_tab.pin exactly once per activation and preserves command_id, correlation_id and the receipt.",
-        "Pin is in the tab menu only (no key, R28); the pinned tab becomes a 36 px icon-only tab at the left that never hides.",
+        "Pin is in the tab menu only, with no key (F3-635); the pinned tab becomes a 36 px icon-only tab at the left that never hides.",
         "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
         "A changed commit writes pm.home_workspace_layout.v2 once (SP-330) and emits exactly one workspace.layout_changed with the v2 payload naming the change (CV-361); nothing else is emitted."
       ],
