@@ -2479,9 +2479,9 @@ Orchestrator consumes the named Progress catalog from FinalGUISpec Appendix C. T
 
 Amended 2026-10-09 (DL-180): a dashboard is a tab kind, not a singleton surface. Several dashboard tabs may be open, each a board with its own widget layout, and `dashboard:home` is the pinned Home dashboard (F3-638); a dashboard tab can show every Usage widget, with Orchestrator widgets after that page's redesign (`Plans/usage-feature.md#UF-062`, `Plans/Widget_System.md#WS-030`). The sentences below that said otherwise are amended in place.
 
-Dashboard is the first-pass operational summary surface. It uses a rearrangeable card grid with grid-based resizing and an Add Widget command, but only source-backed Dashboard widgets are live canon for MVP. A dashboard tab can show every Usage widget (F3-638); the Home dashboard's default widgets and the catalogue are `Plans/Widget_System.md#WS-030`'s. Amended 2026-10-09 (DL-180): the earlier exact default set (`widget-orchestrator-progress`, `widget-active-lanes`, `widget-recent-results`, `widget-custom-metrics`) and the rule that broader `widget.*` entries wait for an owner's promotion are lineage; DL-180 is that promotion for Usage widgets.
+Dashboard is the first-pass operational summary surface. It uses a rearrangeable card grid with grid-based resizing and an Add Widget command, but only source-backed Dashboard widgets are live canon for MVP. A dashboard tab can show every Usage widget (F3-638); the Home dashboard's default widgets and the catalogue are `Plans/Widget_System.md#WS-030`'s. Amended 2026-10-09 (DL-180): the earlier exact default set (`widget-orchestrator-progress`, `widget-active-lanes`, `widget-recent-results`, `widget-custom-metrics`) stays as the Home board's starting set (WS-030) and is lineage only as a limit on the catalogue; the rule that broader `widget.*` entries wait for an owner's promotion is lineage, and DL-180 is that promotion for Usage widgets.
 
-Each dashboard board keeps its own widget layout under `widget_layout:v1:dashboard:<board_id>`, never inside the Home layout record; today's `widget_layout:v1:dashboard` moves into the Home dashboard's board as WS-030 says (amended 2026-10-09, DL-180). `dashboard_layout:v1` remains a read-only migration and backup key. Dashboard may deep-link into Orchestrator, Usage, History, Ledger, Evidence, Source Control, Actions & Pipelines, Docker Manager, and Runtime Artifacts, but it does not re-own those destination records or commands.
+Each dashboard board keeps its own widget layout under `widget_layout:v1:dashboard:<board_id>`, never inside the Home layout record; today's `widget_layout:v1:dashboard` converts into `widget_layout:v1:dashboard:home`, the Home dashboard's board, as WS-030 says (amended 2026-10-09, DL-180). `dashboard_layout:v1` remains a read-only migration and backup key. Dashboard may deep-link into Orchestrator, Usage, History, Ledger, Evidence, Source Control, Actions & Pipelines, Docker Manager, and Runtime Artifacts, but it does not re-own those destination records or commands.
 
 ### 7.3 Shared route and open behavior
 
@@ -3625,10 +3625,13 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.
 - Ledger search
 
 ### 15.4 Startup Restore
+
+Amended 2026-10-09 (DL-180): Home restores from its v2 layout record `home_workspace_layout.v2:{project_id}:{workspace_tab_id}` (`Plans/storage-plan.md#SP-330`), the only Home layout authority: the split tree, its tabs, the view state and the chat column. A v1 Home layout converts on first read and is never reset. `layout:v1` restores only the side panels' dock state and the popped-out chat window's geometry, and each dashboard board restores its own widget layout (`Plans/Widget_System.md#WS-030`). Steps 1 and 3 are amended in place.
+
 On startup:
-1. Resolve the active Project's detached shell snapshot. Read its `layout:v1` and restore panel positions, sizes, dock states, and detached-terminal geometry; only a genuinely absent fresh-project snapshot receives the factory layout. A copied Project reads its destination-owned snapshot, never a live source-project value.
+1. Resolve the active Project's detached shell snapshot. Read its `layout:v1` and restore panel positions, sizes, dock states, and detached-terminal geometry; only a genuinely absent fresh-project snapshot receives the factory layout. A copied Project reads its destination-owned snapshot, never a live source-project value. Amended 2026-10-09 (DL-180): `layout:v1` restores only side-panel dock state and the popped-out chat window's geometry, and detached-terminal geometry goes with the bottom terminal (F3-061); the home panels, their tabs and the chat column restore from `home_workspace_layout.v2:{project_id}:{workspace_tab_id}` (SP-330), and the factory layout is the Home named layout (F3-630).
 2. Read the active Project's `theme:v1` and apply its explicit saved selection. Only an untouched first-open/fresh-project absence seeds Basic Dark; startup never replaces an existing saved selection with either Basic Dark or the superseded Friendly Dark default.
-3. Read `widget_layout:v1:dashboard` and restore dashboard widget layout. On first launch after migration, read from deprecated `dashboard_layout:v1` only when the canonical key is absent, then write back to `widget_layout:v1:dashboard`.
+3. Read `widget_layout:v1:dashboard` and restore dashboard widget layout. On first launch after migration, read from deprecated `dashboard_layout:v1` only when the canonical key is absent, then write back to `widget_layout:v1:dashboard`. Amended 2026-10-09 (DL-180): each dashboard board restores its widget layout from `widget_layout:v1:dashboard:<board_id>`; `widget_layout:v1:dashboard` converts into `widget_layout:v1:dashboard:home` on first read and is never reset, and stays, like `dashboard_layout:v1`, a read-only migration input (WS-030).
 4. Read `activity_bar_order:v1` and restore icon order.
 5. Read `editor_workspace_state.v1:{project_id}` and restore open tabs and view positions. Restore each dirty per-file buffer from `editor_state.v1:{project_id}:{file_path_hash}` before focusing the active tab; if the disk baseline differs, present a diff and never overwrite either side implicitly.
 6. Read `project_state:v1:{project_id}` and restore the active project-facing shell state.
@@ -6097,11 +6100,15 @@ canonical_text: >-
   Widget layout migration uses widget_layout as the active layout family while dashboard_layout
   and dashboard_layout:v1 remain read-only migration or backup names with explicit persistence
   scope.
+  Amended 2026-10-09 (DL-180): the active Dashboard family is one namespace per board,
+  `widget_layout:v1:dashboard:<board_id>` (WS-030); `widget_layout:v1:dashboard` joins `dashboard_layout:v1` as a
+  read-only migration input and backup, converting into `widget_layout:v1:dashboard:home` on first read and never
+  reset.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
 split_recommended: true
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -6133,6 +6140,7 @@ compatibility_only_notes:
 - "dashboard_layout and dashboard_layout:v1 are backup/migration names."
 stale_retired_dispositions:
 - "Retired layout keys are read-only migration backups."
+- "Amended 2026-10-09 (DL-180): `widget_layout:v1:dashboard` is no longer the active Dashboard key; each board has its own (WS-030)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -14319,10 +14327,14 @@ canonical_text: >-
   Persistence boundaries discard unpromoted ephemeral state, require stable keys and versioned
   migrations, rewrite deprecated keys during forward migration, and keep shell persistence plus
   Orchestrator Progress widget layout in narrow project shell records.
+  Amended 2026-10-09 (DL-180): Home's shell layout persists in its own record,
+  `home_workspace_layout.v2:{project_id}:{workspace_tab_id}` (SP-330), and each dashboard board's widget layout in
+  `widget_layout:v1:dashboard:<board_id>` (WS-030); the Orchestrator Progress widget layout and the narrow project
+  shell records are unchanged.
 gui_related: true
 gui_classification_reason: This unit defines GUI shell persistence, widget layout, and view-state storage behavior.
 split_recommended: true
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -14359,6 +14371,7 @@ compatibility_only_notes:
 - "Migration reads from deprecated keys are allowed only during forward migration and must rewrite to the canonical family."
 stale_retired_dispositions:
 - "Deprecated key reads are forward-migration only."
+- "Amended 2026-10-09 (DL-180): Home's layout and the dashboard boards' widget layouts are not kept in the project shell records (SP-330, WS-030)."
 owner_boundary_notes:
 - "Shell persistence remains in narrow project shell records, not in canonical blocked or `/attention` truth."
 owner_hints:
@@ -17777,11 +17790,15 @@ canonical_text: >-
   hot-reload state, project onboarding/tour state, and safe detached-window coordinates from
   canonical persistence keys. Resettable corruption is secured before a disclosed reset;
   canonical editor loss uses mandatory-backup recovery and never becomes a false empty project.
+  Amended 2026-10-09 (DL-180): Home's layout restores from `home_workspace_layout.v2:{project_id}:{workspace_tab_id}`
+  (SP-330), the only Home layout authority, with `layout:v1` holding only side-panel dock state and the popped-out
+  chat window's geometry; each dashboard board's widget layout restores from `widget_layout:v1:dashboard:<board_id>`
+  (WS-030); section 15.4 gives the order.
 gui_related: true
 gui_classification_reason: >-
   This unit defines startup restoration of visible shell state.
 split_recommended: false
-depends_on: [F3-458]
+depends_on: [F3-458, DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -17820,6 +17837,7 @@ negative_constraints: []
 compatibility_only_notes: []
 stale_retired_dispositions:
 - "`dashboard_layout:v1`, `editor_state:v1:{project_id}`, `hotreload_state:v1:{project_id}`, and `onboarding:v1` are read-only coordinator migration inputs; ordinary startup does not use them as fallbacks."
+- "Amended 2026-10-09 (DL-180): `layout:v1` no longer restores the Home layout or detached-terminal geometry, and the single `widget_layout:v1:dashboard` is a read-only migration input into `widget_layout:v1:dashboard:home` (SP-330, WS-030)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -20912,11 +20930,14 @@ canonical_text: >-
   Dashboard layout persistence migrates from `dashboard_layout:v1` card-order input to
   `widget_layout:v1:dashboard` by mapping card IDs to Widget Catalog IDs, assigning default
   grid positions/sizes, and writing the richer widget layout schema.
+  Amended 2026-10-09 (DL-180): the Dashboard now keeps one widget layout per board,
+  `widget_layout:v1:dashboard:<board_id>`; the `widget_layout:v1:dashboard` this migration writes converts into
+  `widget_layout:v1:dashboard:home` on first read and is never reset (WS-030).
 gui_related: false
 gui_classification_reason: >-
   This unit defines storage migration logic rather than a visible GUI surface.
 split_recommended: true
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -20953,6 +20974,7 @@ compatibility_only_notes:
 - "`dashboard_layout:v1` is migration input only."
 stale_retired_dispositions:
 - "`dashboard_layout:v1` is deprecated after migration."
+- "Amended 2026-10-09 (DL-180): `widget_layout:v1:dashboard` is no longer the end of this migration; it is a read-only migration input into the Home board's `widget_layout:v1:dashboard:home` (WS-030)."
 owner_boundary_notes:
 - "storage-plan.md and Widget_System.md own storage namespace and widget schema details."
 owner_hints:
@@ -20970,11 +20992,15 @@ canonical_text: >-
   After widget layout migration, future reads use `widget_layout:v1:dashboard` only; if both
   dashboard layout keys exist, `widget_layout:v1:dashboard` takes precedence and
   `dashboard_layout:v1` does not remain canonical.
+  Amended 2026-10-09 (DL-180): future reads now use each board's `widget_layout:v1:dashboard:<board_id>` (WS-030);
+  `widget_layout:v1:dashboard` is itself a read-only migration input that converts into
+  `widget_layout:v1:dashboard:home` on first read and is never reset, and once it has converted the per-board key is
+  the one read.
 gui_related: false
 gui_classification_reason: >-
   This unit constrains legacy dashboard layout key usage.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -21005,7 +21031,8 @@ preserved_exact_tokens:
 negative_constraints:
 - "`dashboard_layout:v1` must not remain canonical after migration completes."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): the single dashboard key is no longer the read target; each board reads its own `widget_layout:v1:dashboard:<board_id>` (WS-030)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
