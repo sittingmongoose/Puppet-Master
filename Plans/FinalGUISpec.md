@@ -17161,13 +17161,15 @@ canonical_text: >-
   account/server profile, pressure/switch records, MCP/skill records, `web_operation_payload`,
   terminal layout/session summaries, and `ssh_remotes/{id}`. The former
   `editor_unsaved_buffer.v1:{project_id}:{document_id}` token is source-lineage only; live
-  buffer recovery uses `editor_state.v1:{project_id}:{file_path_hash}`.
+  buffer recovery uses `editor_state.v1:{project_id}:{file_path_hash}`. Since DL-180 and DL-181,
+  `terminal_layout.v1:{project_id}` is a migration input only: terminal tabs and their panels are kept in the Home
+  layout record (SP-330) and the old sections and pane arrangement are read once (SP-332, F3-221).
 gui_related: true
 gui_classification_reason: >-
   This unit defines GUI preview, browser, recovery, LSP, account, MCP, skill, web-operation,
   terminal, and remote persistence keys.
 split_recommended: false
-depends_on: []
+depends_on: [DL-181, SP-330, SP-332]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -17210,6 +17212,7 @@ negative_constraints:
 compatibility_only_notes: []
 stale_retired_dispositions:
 - "`editor_unsaved_buffer.v1:{project_id}:{document_id}` and wildcard `editor_unsaved_buffer.v1:*` are source-lineage only; they are not registered live write keys."
+- "Amended 2026-10-09 (DL-180, DL-181): `terminal_layout.v1:{project_id}` is a migration input only; terminal tabs and their panels persist in the Home layout record (SP-330) and the old sections and pane arrangement are read once (SP-332)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
