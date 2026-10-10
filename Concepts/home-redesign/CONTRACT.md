@@ -183,7 +183,8 @@ PM_HOME.open({
   id: 'file:src/main.rs',    // optional; otherwise kind.idFor(spec)
   path: 'src/main.rs', line: 128, col: 14,      // editor
   text: '...', language: 'text', title: 'cargo test output',   // editor buffer (no path): read-only unless edit: true
-  mode: 'preview' | 'keep',  // files only, D7; default 'keep' except a single click in the file tree
+  mode: 'preview' | 'keep',  // files only, D7: a person's single click opens 'preview' (the default for user file opens);
+                             // a double click keeps; Ctrl+P with Enter, the "+" menu's recent files and agents open 'keep'
   where: 'auto' | 'tab' | 'panel' | 'right' | 'down' | '<panelId>',   // default 'auto'
   by: 'user' | 'agent:<name>',  // default 'user'
   background: false,         // user-requested background open (Ctrl/Cmd+click); agents are always background
@@ -203,8 +204,13 @@ Rules, in order (D7, D8):
    the fit rule (right if both halves stay at least 280 px wide, else down, else the largest panel). Locked panels are
    skipped. `where: 'panel'` (Alt+click anywhere) is a new panel by the fit rule; `'right'` / `'down'` split the
    source panel; `'tab'` is the source panel itself.
-3. **Preview** (files, D7): `mode: 'preview'` opens into the panel's single preview tab (italic label), replacing the
-   previous preview there. Double click, editing, or dragging the tab keeps it. Every other caller opens kept tabs.
+3. **Preview** (files, D7, Jared: files referenced anywhere in the chat or its wizards "open the same way as the rules
+   you stated for the file tree"): every file reference a person single-clicks opens as the panel's single preview tab
+   (italic label), replacing the previous preview there: the file tree, file names and paths in chat messages and
+   cards, the chat's diff views and Changes rows, transcript file records, search results, and the terminal's
+   `path:line:col` links. A double click, editing, or dragging the tab keeps it. Ctrl+P with Enter and the "+" menu's
+   recent files are deliberate opens and open kept tabs. Agent-opened files open kept, in the background (D8). So a
+   user file open without `mode` is a preview; pass `mode: 'keep'` for a double click.
 4. **Focus** (D8): `by: 'user'` opens and takes focus. `by: 'agent:<name>'` lands as a background tab with the
    hollow-square attention mark and an announcement, and never takes keyboard focus or changes the active tab of a
    panel the user is typing in.
@@ -292,29 +298,39 @@ with the Plans thread on 2026-10-09; the concept keeps them in one table (`src/p
 
 ## 9. Keyboard
 
-The host owns these while focus is anywhere in the centre, unless the focused tab's `wantsKey(e)` returns `true`
-(a terminal keeps Ctrl+W, Ctrl+K and similar for the shell; it should still give back Ctrl+Tab, Ctrl+PgUp/PgDn,
-Ctrl+Shift+T, Ctrl+\\, F6 and the Ctrl+K chord's second key when the first was given back):
+The page already owns Ctrl+1..9 (activity-bar pages) and Ctrl+K (Settings search; canon's command palette), so the
+panels use neither: there are no Ctrl+K chords and tab N is Alt+N. In a browser four chords belong to the browser and
+a page cannot take them (Ctrl+T, Ctrl+W, Ctrl+Shift+T, Ctrl+Tab); the concept, like the later web client, answers
+the Alt column for those, and every label shows the key that works where the page runs (`PMW.KEYS`, one table).
 
-| Action | Keys |
-|---|---|
-| New tab of the panel's usual kind / "+" menu | Ctrl+T / Ctrl+Shift+Space |
-| New terminal / browser | Ctrl+Shift+` / Ctrl+Shift+B |
-| Close tab / reopen closed | Ctrl+W / Ctrl+Shift+T |
-| Next / previous tab in the panel | Ctrl+PgDn / Ctrl+PgUp |
-| Tab 1-8 / last tab | Ctrl+1..8 / Ctrl+9 |
-| MRU switcher across panels and kinds | Ctrl+Tab / Ctrl+Shift+Tab |
-| Every tab, searchable | Ctrl+Shift+A |
-| Move tab left / right | Ctrl+Shift+PgUp / Ctrl+Shift+PgDn |
-| Move tab to the panel in a direction | Ctrl+Alt+arrows |
-| Focus panel N / in a direction / cycle regions | Ctrl+K 1..9 / Ctrl+K arrows / F6, Shift+F6 (rail, panels, chat) |
-| Split right / down | Ctrl+\\ / Ctrl+K Ctrl+\\ |
-| Maximize / restore | Ctrl+K M (Esc restores while focus is in the strip) |
-| Resize mode | Ctrl+K R, then arrows 8 px, Shift+arrows 48 px, Esc ends |
-| Pin tab | Ctrl+K Shift+Enter |
-| In a strip (ARIA tabs) | arrows, Home/End, Enter/Space, Delete closes, Shift+F10 menu |
+The host owns these while focus is in the centre, unless the focused tab's `wantsKey(e)` returns `true` (a terminal
+keeps the shell's keys; it should still give back Alt+1..9, Alt+arrows, Alt+Shift+arrows, Ctrl+PgUp/PgDn, Ctrl+\\,
+Shift+Escape and F6). Text inputs keep their own keys.
 
-No bare digits, no bare letters, and Escape stays scoped to the innermost open thing.
+| Action | Native app | In a browser |
+|---|---|---|
+| New tab of the panel's usual kind | Ctrl+T | Alt+T |
+| Close tab | Ctrl+W | Alt+W |
+| Reopen closed tab | Ctrl+Shift+T | Alt+Shift+T |
+| Recent tabs across panels and kinds (hold, step, release) | Ctrl+Tab / Ctrl+Shift+Tab | Alt+\` / Alt+Shift+\` |
+| "+" menu | Ctrl+Shift+Space | same |
+| New terminal / browser | Ctrl+Shift+\` / Ctrl+Shift+B | same |
+| Open a file | Ctrl+P | same |
+| Every tab, searchable | Ctrl+Shift+A | same |
+| Next / previous tab in the panel | Ctrl+PgDn / Ctrl+PgUp | same |
+| Tab 1-8 / last tab in the panel | Alt+1..8 / Alt+9 | same |
+| Move tab left / right | Ctrl+Shift+PgUp / Ctrl+Shift+PgDn | same |
+| Focus the panel in a direction | Alt+arrows | same |
+| Focus panel N | Alt+Shift+1..9 | same |
+| Move the tab to the panel in a direction (splits that way when there is none and it fits) | Alt+Shift+arrows | same |
+| Cycle regions: rail, panels, chat | F6 / Shift+F6 | same |
+| Split right / down | Ctrl+\\ / Ctrl+Shift+\\ | same |
+| Maximize / restore | Shift+Escape (Escape also restores while focus is in a strip) | same |
+| Resize | Tab to a divider, then arrows 8 px, Shift+arrows 48 px, Home/End, Enter evens | same |
+| In a strip (ARIA tabs) | arrows, Home/End, Enter/Space, Delete closes, Shift+F10 the tab menu | same |
+| Panel grip | Enter opens Move panel | same |
+
+No bare letters or digits, and Escape stays scoped to the innermost open thing.
 
 ## 10. Looks
 
@@ -376,6 +392,8 @@ root. A kind never appends its own overlay to `document.body`.
 
 ## 15. Change log
 
-- v1 (2026-10-09): first publication. Same day, additive: command names agreed with the Plans thread (activation and
+- v1 (2026-10-09): first publication. Same day: section 6 rule 3 corrected to D7 as Jared worded it (every person-clicked
+  file reference opens a preview tab, not only the file tree); the keyboard table is replaced (PM7's Ctrl+1..9 and Ctrl+K are taken;
+  browser-owned chords get Alt stand-ins). Additive: command names agreed with the Plans thread (activation and
   maximize are `ui.*` view-state actions, `cmd.panel_tab.rename`, one `workspace.layout_changed` event), `onResize` gains
   `final`.
