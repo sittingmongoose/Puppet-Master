@@ -55,11 +55,13 @@ in an editor tab · Select output.
 | Split | Ctrl+Shift+5 (Cmd+D) |
 
 Given back to the host while a terminal is focused (CONTRACT.md section 9): Alt+1..9, Alt+Shift+1..9, Alt+arrows,
-Alt+Shift+arrows, Ctrl+PageUp/PageDown, Ctrl+Shift+PageUp/PageDown, Ctrl+\\ and Ctrl+Shift+\\ (Ctrl+\\ is SIGQUIT in
-shells; programs that need it get it from Send signal), Shift+Escape, F6 and Shift+F6, Ctrl+Shift+Space,
+Alt+Shift+arrows, Ctrl+PageUp/PageDown, Ctrl+Shift+PageUp/PageDown, Alt+PageUp/PageDown (next and previous tab in a
+browser, where Chrome keeps Ctrl+PageUp/PageDown), Ctrl+\\ and Ctrl+Shift+\\ (Ctrl+\\ is SIGQUIT in shells; programs that
+need it get it from Send signal), Shift+Escape, Ctrl+Shift+Space,
 Ctrl+Shift+backtick, Ctrl+Tab, and the browser stand-ins Alt+T, Alt+W, Alt+Shift+T and Alt+backtick. The shell loses
 zsh's Alt+digit arguments, Alt+arrow word moves (Ctrl+Left/Right still move by word) and Alt+T / Alt+W; that is the
-accepted cost. Every other Ctrl+key belongs to the shell (Ctrl+W, Ctrl+K, Ctrl+T ...).
+accepted cost. Every other Ctrl+key belongs to the shell (Ctrl+W, Ctrl+K, Ctrl+T ...). The host takes F6 and Shift+F6
+before the terminal sees them, and ignores keys during IME composition (CONTRACT.md v1.1).
 
 Links (D7): Ctrl+click (Cmd+click) opens a file reference in the panel's preview tab, a Ctrl+double-click keeps it,
 Ctrl+Alt+click opens it in a new panel; a plain click selects text, as in every terminal. URLs open a Browser tab.

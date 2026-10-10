@@ -1,6 +1,7 @@
 /* The terminal's own shortcuts, scoped to a focused terminal. Chosen not to collide with shells (Ctrl+letter stays
    the shell's), with the panels host (CONTRACT.md section 9: Ctrl+Shift+Space, Ctrl+Shift+A, Ctrl+Shift+T,
-   Ctrl+Shift+backtick, Ctrl+Tab, Ctrl+PgUp/PgDn, Ctrl+\\, F6), or with the browser where it matters. */
+   Ctrl+Shift+backtick, Ctrl+Tab, Ctrl+PgUp/PgDn and Alt+PgUp/PgDn, Ctrl+\\; the host takes F6 before the terminal
+   sees it), or with the browser where it matters. */
 (function () {
   var mac = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent || '');
   /* [action, other platforms, macOS] ; a binding is 'Mods+Key' with Mods from Ctrl Shift Alt Cmd */

@@ -344,7 +344,8 @@
       { id: 'find', label: 'Find', icon: 'search', shortcut: T.keys.label('find'), run: function () { self.openFind(); } },
       { id: 'split', label: 'Split', icon: 'splitRight', shortcut: T.keys.label('split'), run: function () { self.split(); } },
       { id: 'max', label: api && api.isMaximized && api.isMaximized() ? 'Restore' : 'Maximize', icon: api && api.isMaximized && api.isMaximized() ? 'restore' : 'maximize', run: function () { self.toggleMaximize(); } },
-      { id: 'more', label: 'More', icon: 'more', menu: function () { return self.moreMenu(); } }
+      /* through api.menu (the contract's item shape: sub menus, shortcuts); the row's own `menu` takes raw rows */
+      { id: 'more', label: 'More', icon: 'more', run: function (e, b) { self.menu(self.moreMenu(), b || e, { align: 'end', width: 260 }); } }
     ];
   };
   View.prototype._updateHeader = function () {
@@ -423,14 +424,18 @@
   View.prototype.markMenu = function (cmd, anchor) {
     var self = this, out = this.term.commandOutput(cmd);
     var who = /^agent:/.test(cmd.by) ? cmd.by.slice(6) + ' typed this' : 'You typed this';
-    var meta = (cmd.state === 'done' ? (cmd.exit === 0 ? 'Exit 0' : cmd.exit === null ? 'Ended' : 'Exit ' + cmd.exit) + ' · ' + T.util.fmtElapsed(cmd.end - cmd.start) : 'Running') + ' · ' + who;
+    /* a prompt still waiting for its command has nothing to copy or rerun yet */
+    var waiting = cmd.state === 'prompt' || cmd.state === 'input', has = !!cmd.cmdline;
+    var meta = waiting ? 'Waiting for a command' : cmd.state === 'running' ? 'Running · ' + who
+      : (cmd.indeterminate ? 'Ended with the earlier session' : cmd.exit === 0 ? 'Exit 0' : cmd.exit === null ? 'Ended' : 'Exit ' + cmd.exit) +
+        (cmd.end && cmd.start ? ' · ' + T.util.fmtElapsed(cmd.end - cmd.start) : '') + (has ? ' · ' + who : '');
     var items = [
-      { id: 'meta', label: cmd.cmdline || '(empty)', detail: meta, disabled: true },
+      { id: 'meta', label: has ? cmd.cmdline : waiting ? 'This prompt' : '(empty)', detail: meta, disabled: true },
       '-',
-      { id: 'copy-cmd', label: 'Copy command', run: function () { self.copyText(cmd.cmdline); } },
+      { id: 'copy-cmd', label: 'Copy command', disabled: !has, run: function () { self.copyText(cmd.cmdline); } },
       { id: 'copy-out', label: 'Copy output', disabled: !out, run: function () { self.copyText(out); } },
-      { id: 'rerun', label: 'Rerun', disabled: this.session.state !== 'running', run: function () { self.session.shell.typeCommand(cmd.cmdline, 'user'); self.focus(); } },
-      { id: 'insert', label: 'Insert command', detail: 'Without Enter', disabled: this.session.state !== 'running', run: function () { self.session.input(cmd.cmdline, 'user'); self.focus(); } },
+      { id: 'rerun', label: 'Rerun', disabled: !has || this.session.state !== 'running', run: function () { self.session.shell.typeCommand(cmd.cmdline, 'user'); self.focus(); } },
+      { id: 'insert', label: 'Insert command', detail: 'Without Enter', disabled: !has || this.session.state !== 'running', run: function () { self.session.input(cmd.cmdline, 'user'); self.focus(); } },
       { id: 'open-out', label: 'Open output in an editor tab', disabled: !out, run: function () { self.openOutput(cmd); } },
       { id: 'select', label: 'Select output', disabled: !out, run: function () { if (self.selectCommandOutput) self.selectCommandOutput(cmd); } }
     ];
@@ -645,10 +650,9 @@
     var backtick = e.code === 'Backquote' || k === '`' || k === '~';
     if (alt && !ctrl && (digit || arrow)) return false;                         /* Alt(+Shift)+1..9, Alt(+Shift)+arrows */
     if (alt && !ctrl && (k === 't' || k === 'T' || k === 'w' || k === 'W' || backtick)) return false; /* browser stand-ins */
-    if (ctrl && (k === 'PageUp' || k === 'PageDown')) return false;              /* Ctrl(+Shift)+PgUp/PgDn */
+    if ((ctrl || alt) && (k === 'PageUp' || k === 'PageDown')) return false;     /* Ctrl(+Shift)+PgUp/PgDn; Alt+PgUp/PgDn in a browser */
     if (ctrl && (k === '\\' || k === '|' || e.code === 'Backslash')) return false; /* Ctrl(+Shift)+\\ split */
     if (sh && k === 'Escape') return false;                                      /* maximize / restore */
-    if (k === 'F6') return false;
     if (ctrl && sh && (k === ' ' || e.code === 'Space' || backtick)) return false; /* "+" menu, new terminal */
     if (ctrl && k === 'Tab') return false;
     if (ctrl && !e.metaKey) return true;                                         /* every other Ctrl+key is the shell's */
@@ -740,8 +744,8 @@
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).catch(function () {});
     this.announce('Copied');
   };
-  View.prototype.menu = function (items, anchor) {
-    if (this.api && this.api.menu) return this.api.menu(items, anchor);
+  View.prototype.menu = function (items, anchor, o) {
+    if (this.api && this.api.menu) return this.api.menu(items, anchor, o);
     console.warn('[pmt] no host menu');
   };
   View.prototype.split = function () {
