@@ -1112,12 +1112,13 @@ canonical_text: >-
   cannot cover the title bar, and cannot produce a second chat surface. Floating is never
   a boot state; persisted floating surfaces demote to last_docked_host at boot with a
   storage.boot_demote_floating receipt.
-  Amended 2026-10-09 (DL-180): the chat is a fixed column and Pop out is its only way to move (F3-637). In the desktop
-  app Pop out opens the one chat in its own native window through the multi-window registry, and Dock back returns it to
-  its column; in the web client Pop out presents the chat as an in-canvas float under this unit's web boundary, never a
-  dock and never a second chat. No other Home surface floats or opens a window: panels and tabs move only inside the
-  split tree (F3-630). The chat's popped-out state belongs to the chat column state the v2 Home layout record keeps
-  (SP-330).
+  Amended 2026-10-09 (DL-180): the chat is a fixed column and Pop out is its only way to move (F3-637). Pop out is a
+  desktop app action (native builds, D3): it opens the one chat in its own native window through the multi-window
+  registry, and Dock back returns it to its column. In the web client the chat is never floated, docked or moved inside
+  the page either, so the in-canvas chat float above is retired; whether the web client offers a Pop out of its own is
+  not decided here and stays an open question for the lead. No other Home surface floats or opens a window: panels and
+  tabs move only inside the split tree (F3-630). The chat's popped-out state belongs to the chat column state the v2
+  Home layout record keeps (SP-330).
 gui_related: true
 gui_classification_reason: This unit owns visible native/web capability behavior and degradation disclosure.
 split_recommended: false
@@ -1126,9 +1127,9 @@ unblocks: []
 acceptance_criteria:
 - Native reusable surfaces are backed by shared Rust models and a multi-window registry; Slint input areas do not own layout identity.
 - Wayland window position restoration is best effort with a valid in-app fallback.
-- window.open is never the only path, is attempted only under direct user activation, and blocked popup state falls back to in-canvas floating.
+- "window.open is never the only path and is attempted only under direct user activation; a blocked popup never falls back to floating the chat inside the page (amended 2026-10-09, DL-180)."
 - Reduced motion disables interpolation but retains target and state cues.
-- The chat pop-out floats in-canvas in the Home float layer with no full-viewport scrim, the title bar stays visible above it, and no re-render while it is open yields a second chat surface.
+- "The chat never floats in-canvas: no Home surface has an in-window or in-page float, no full-viewport scrim covers the title bar, and no re-render yields a second chat surface (amended 2026-10-09, DL-180; the in-canvas chat pop-out is lineage)."
 - A reload never restores a floating surface; each persisted floating surface demotes to its last_docked_host and the demotion persists with a storage.boot_demote_floating receipt.
 - "In the desktop app Pop out opens the one chat in its own window and Dock back returns it to its column; no panel or tab floats (amended 2026-10-09, DL-180; F3-637)."
 validation_surfaces:
@@ -1147,10 +1148,12 @@ preserved_exact_tokens: [Slint 1.17.1, Wayland, direct user activation, in-canva
 negative_constraints:
 - Do not claim OS docking or unrestricted popup placement as a web guarantee.
 - Do not reintroduce a full-viewport chat overlay or any scrim that can cover the title bar.
+- "Do not float the chat inside the page in the web client (DL-180)."
 compatibility_only_notes: []
 stale_retired_dispositions:
 - "Amended 2026-08-13: the PM6 base full-screen chat overlay (.pm6-chat-overlay fixed panel plus viewport scrim) is retired in PM7 via a T20-anchored guard on the base applyLayout; its scrim CSS remains dead code in the base for census stability but no code path can show it."
 - "Amended 2026-10-09 (DL-180): editor panels and the Dashboard no longer pop out or float; Pop out is the chat's alone and returns to the chat's fixed column (F3-637)."
+- "Amended 2026-10-09 (DL-180): the web client's in-canvas chat float is retired with every other in-window float; Pop out is a desktop app action (D3), and a web Pop out is an open question for the lead, not canon."
 owner_hints: [Plans/FinalGUISpec.md]
 ```
 
@@ -29922,9 +29925,9 @@ canonical_text: >-
   max(380px, min(var(--floating-chat-w), 40vw)) so the selector row is not clipped on first
   open. The docked #chatPanel mount and the floating #floatingChat mount render both layouts
   from the shared chat template of the unified component.
-  Amended 2026-10-09 (DL-180): the chat no longer floats inside the window. This width floor now holds only for a
-  popped-out chat in the web client (F3-504); the desktop app's popped-out chat is a native window the user sizes, and
-  the chat column's own width is F3-637's.
+  Amended 2026-10-09 (DL-180): the chat no longer floats inside the window or the page. This 380px floor now holds only
+  for the chat's popped-out window in the desktop app (F3-504, F3-637), which the user sizes and places above it; the
+  chat column's own width is F3-637's.
 gui_related: true
 gui_classification_reason: This unit defines visible composer, selector row, and floating chat width layout.
 split_recommended: false
@@ -29933,7 +29936,7 @@ unblocks: []
 acceptance_criteria:
 - "Composer left rail renders attach plus ELI5, YOLO, and CREW toggles; the right side renders the rewind FAB with an extra gap before icon-only inline-SVG send and stop controls."
 - "The selector row renders Persona, Model, and Mode as equal-shrink slots with label ellipsis when narrow, in both mounts."
-- "The floating chat window width floor resolves as max(380px, min(var(--floating-chat-w), 40vw)) and the selector row is not clipped on first open."
+- "The desktop app's popped-out chat window is never narrower than 380px and the selector row is not clipped on first open; the expression max(380px, min(var(--floating-chat-w), 40vw)) is lineage of the retired in-page float (amended 2026-10-09, DL-180)."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -29965,6 +29968,7 @@ compatibility_only_notes:
 - "Slint portability: the width floor maps to a min-width constraint on the floating window; toggles and FABs are opaque precomputed surfaces with no arbitrary-content backdrop blur, no SVG filters, and precomputed color math."
 stale_retired_dispositions:
 - "Amended 2026-10-09 (DL-180): the floating chat floor no longer applies to the chat in the window; F3-637 owns the column's width."
+- "Amended 2026-10-09 (DL-180): the floor applies to the desktop app's popped-out chat window, not to a web float; the web client floats no chat."
 owner_boundary_notes:
 - "Plans/assistant-chat-design.md owns selector-row behavior semantics (ACD-437); this unit records layout geometry."
 owner_hints:
@@ -39238,8 +39242,8 @@ canonical_text: >-
   on hover or focus, text inside cards breaks long unbroken tokens, and the turn spine is paint-only
   (ACD-469). Send and Stop remain reachable at every width (section 16).
   Amended 2026-10-09 (DL-180): inside the window the chat column never drops below 400 px; in narrow windows it folds to
-  its edge strip instead (F3-637, F3-636). These resilience rules now hold for a popped-out chat window narrower than
-  that.
+  its edge strip instead (F3-637, F3-636). These resilience rules now hold for the desktop app's popped-out chat window
+  (F3-504) when it is narrower than that.
 gui_related: true
 gui_classification_reason: "Keeps the transcript intact in narrow chat panes."
 split_recommended: false
@@ -43931,7 +43935,8 @@ canonical_text: >-
   to move it (D3: the desktop app). In the desktop app Pop out opens the same chat, with its History and Activity
   Detail, in its own window that the user sizes and places (cmd.panel.undock with chat; panel.undocked, F3-527), and
   Dock back returns it to its column (cmd.panel.redock; panel.redocked); exactly one chat exists at a time. In the web
-  client Pop out follows F3-504's web boundary. The title bar's Home options menu carries Show the chat or Hide the
+  client the chat never floats inside the page (F3-504), and whether the web client offers a Pop out is an open question
+  for the lead. The title bar's Home options menu carries Show the chat or Hide the
   chat, Pop out the chat or Dock the chat back, and Keep the chat open in narrow windows (F3-502). The 5.6 Pro chat's
   History list is a flyout over the chat by default; pinning it widens the chat by the list's own width instead of
   squeezing the messages. Activity Detail stays inside the chat as the 5.6 Pro chat designs it (APR-001), never a panel
@@ -43939,8 +43944,8 @@ canonical_text: >-
   (ACD-501). Everything the chat opens lands in the centre through F3-634 (ACD-500). This supersedes chat docking to any
   host, the chat's grip, its grab and keyboard move, floating it inside the window and its Dock back to a host
   (F3-HOME-001, F3-HOME-002 and F3-HOME-003 as they apply to the chat; F3-516's saved dock), and the four different chat
-  minimums: F3-HOME-002's 260 px nominal minimum, F3-423's floating floor (it now holds only for a popped-out chat in
-  the web client), F3-565's narrowest chat (its resilience rules now hold for a popped-out window narrower than 400 px),
+  minimums: F3-HOME-002's 260 px nominal minimum, F3-423's floating floor (it now holds only for the desktop app's
+  popped-out chat window), F3-565's narrowest chat (its resilience rules now hold for a popped-out window narrower than 400 px),
   and the 360 px chat beside an open document of APR-038 and F3-569.
 gui_related: true
 gui_classification_reason: Defines the chat's fixed column, its width, show and hide, Pop out, History flyout and Activity Detail.
@@ -43990,7 +43995,7 @@ preserved_exact_tokens:
   - "Keep the chat open in narrow windows"
   - "The chat assistant window should be full vertical height, unless it pops out, then the user can adjust it."
 negative_constraints:
-  - "Do not dock, grab, float or move the chat inside the window, or make it a tab."
+  - "Do not dock, grab, float or move the chat inside the window or, in the web client, inside the page, or make it a tab."
   - "Do not size the chat against the window inside its column."
   - "Do not make Activity Detail or the History list a panel tab."
   - "Do not keep a second thread-history list."
