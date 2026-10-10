@@ -28950,7 +28950,7 @@
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "$id": "https://puppetmaster.local/schemas/home_workspace_layout/1.0.0/home_workspace_layout.schema.json",
         "title": "Puppet Master Home Workspace Layout V1",
-        "description": "Project/workspace-scoped presentation layout. It stores stable surface references only and never owns editor buffers, terminal sessions, PTYs, browser sessions, chat messages, or Dashboard widget layout. Since DL-180 (2026-10-09) this v1 record is a read-only migration input: Storage converts it on first read to pm.home_workspace_layout.v2 (Plans/home_workspace_layout_v2.schema.json, Plans/storage-plan.md#SP-330), keeps it unchanged where it was, and never writes or resets it again. Its four-editor, four-terminal-section and four-visible-pane limits describe only records written before that conversion.",
+        "description": "Project/workspace-scoped presentation layout. It stores stable surface references only and never owns editor buffers, terminal sessions, PTYs, browser sessions, chat messages, or Dashboard widget layout.",
         "type": "object",
         "additionalProperties": false,
         "required": [
