@@ -41216,7 +41216,7 @@
         {
           "test_id": "wiring.catalog.panel_switch.pm7_shared_assistant",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "Assert Chat switch/re-seat preserves node and store identity across primary pages and back to the saved Home dock, with no duplicate Assistant component or state fork."
+          "requirement": "Assert Chat switch preserves node and store identity across primary pages and back to the chat column (amended 2026-10-09, DL-180: the saved Home dock and the re-seat are retired; the chat is a fixed column), with no duplicate Assistant component or state fork."
         }
       ],
       "event_test_requirements": [

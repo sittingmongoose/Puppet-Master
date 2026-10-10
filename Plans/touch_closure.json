@@ -5098,7 +5098,7 @@
       ],
       "owner_plan": "Plans/FinalGUISpec.md",
       "plan_unit": "F3-HOME-003",
-      "dry_contract_ref": "Plans/UI_Command_Catalog.md#panel switch and float/dock commands",
+      "dry_contract_ref": "Plans/UI_Command_Catalog.md#panel switch and float/dock commands (amended 2026-10-09, DL-180: float and in-window dock are retired; the chat's Pop out and Dock back are UCC-203)",
       "payload_schema_ref": "typed panel_id, host/window, layout revision, idempotency request",
       "result_schema_ref": "typed panel/layout result",
       "error_schema_ref": "invalid args, stale projection, target or host unavailable",
