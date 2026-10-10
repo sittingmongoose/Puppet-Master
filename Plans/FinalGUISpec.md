@@ -44960,7 +44960,7 @@ canonical_text: >-
   (MIT): Mirage. Every third-party scheme ships with its licence text and its source address and SHA-256; the
   iTerm2-Color-Schemes collection (no single licence) and Modus (GPL-3.0) are not bundled, and import covers them.
   These schemes are one code colour-scheme catalog that serves the editor and the terminal (Addendum 2 D27, amending
-  D15 and D21): each curated scheme carries the terminal palette and the editor's syntax colours. Each surface's
+  D15 and D21): each of the 34 schemes carries the terminal palette and the editor's 17 syntax tokens. Each surface's
   scheme choice defaults to "Follow look" — the terminal's "Follow look" per-look scheme above, the editor's
   per-look syntax colours (F3-426, F3-639) — and each surface keeps its own scheme choice. The Appearance popover is
   one component, opened from the terminal's ⋮ menu and from the editor's ⋮ menu (F3-639); no surface keeps a scheme
@@ -45052,6 +45052,7 @@ negative_constraints:
 compatibility_only_notes:
   - "The concept's field names and its settings keys under a terminal prefix are lineage only; the product ids are SSYS-051's rows."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): States that each of the 34 shared schemes carries 17 editor syntax tokens."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for editor and terminal appearance defaults."
   - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Retro editor syntax reads the terminal Retro scheme choice once and keeps no copy."
   - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
