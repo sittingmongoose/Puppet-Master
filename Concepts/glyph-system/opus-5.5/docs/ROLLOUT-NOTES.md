@@ -40,8 +40,8 @@ Sources: home-terminal `js/70-view.js`, `72-find.js`, `76-popover.js`, `78-agent
    (`PM56_NEON.icon('agent-driving', 12, 'nx-t-working nx-self')`), so hovering the tab plays only the kind glyph's act
    and the mark keeps its own rhythm. Replace `.pmw-agentmark` (the 7 px warn square). Busy (a foreground command):
    the kind glyph runs its own `seq` loop at 3.6 s in the tab's ink, no colour (lead: agreed for the terminal;
-   the general busy tab is decided with the panels family). *Superseded if the lead takes panels item 3's busy rule
-   (`st-working` in the mark slot for every tab kind, the terminal included); one rule for every tab.*
+   the general busy tab is decided with the panels family). *Superseded (lead ruling 2026-10-10, panels review): a busy
+   terminal tab shows `st-working` in the mark slot like every other kind (panels item 3); the kind glyph stays still.*
 8. **Find:** previous and next are the controls family's `arrow-up` and `arrow-down`, close is `close` (14 px controls
    in 24 px targets). **Header facts:** `folder`, `branch`, `clock` as concept glyphs at 14 px.
 9. **The chat's command card:** running `working`, ok `complete`, failed `failed`, interrupted `skipped`, needs input
@@ -53,7 +53,7 @@ Sources: home-terminal `js/70-view.js`, `72-find.js`, `76-popover.js`, `78-agent
 11. **One settle, not two.** The gutter's per-look settle (check draws, Friendly pops, Glass rings, Retro reverse flash,
     NieR steps) is replaced by the neon mark's own mount act at rollout, never both (agreed with home-terminal).
 
-## panels (pm7-glyphs-designer2, 2026-10-10; for pm7-glyphs' review)
+## panels (pm7-glyphs-designer2, 2026-10-10; family approved by pm7-glyphs, merged 4f68d4ef8c)
 
 Family: `src/registry/families/panels.js` (28 glyphs). Contact sheet: `python3 tools/family_sheet.py panels --out
 <scratch>`. Sources: panels `js/06-icons.js`, `js/32-strip.js`, `css/10-panels.css`, `kinds/22-tools.js`,
@@ -71,9 +71,9 @@ element) and `11bad014f6` (add selection).
    `agent-cursor` (tone paused), busy `status('working')`, news `st-info` (tone idle). Every mark gets `nx-self`, so a
    tab's hover plays only its kind glyph. The tooltip lists any marks the winner hides. Remove `.pmw-agentmark`,
    `.pmw-tattn` and every rule that paints them; the warning-coloured square goes, because an agent's ask (needs you)
-   and a background tab's news must not look alike. **Busy (for the lead to decide):** recommended `st-working` in the
-   slot for every kind, since a naming glyph stays still and motion is a status's; the alternative is terminal item
-   7's kind-glyph loop. Busy had no strip visual at all before (`[data-busy]` had no CSS).
+   and a background tab's news must not look alike (order and split: lead ruling). **Busy** is `st-working` in the
+   slot for every kind, the terminal included (lead ruling): a naming glyph stays still and motion is a status's.
+   Busy had no strip visual at all before (`[data-busy]` had no CSS).
 4. **Dirty** stays in the close slot as `change-modified` (12 px, status role, still), swapped for `close` on the tab's
    hover or focus as `.pmw-tdot` is today. **Preview** stays the italic label; no glyph.
 5. **Toolbars:** controls at 14 px in 24 px targets (the debug toolbar at 16 px). Find toggles `match-case`,
@@ -87,13 +87,15 @@ element) and `11bad014f6` (add selection).
    item 3's rule), so a breakpoint's drop plays once, when it is set.
 7. **Browser picking:** `pointer` (pick an element) and `select-area` (select a region) sit side by side with `camera`;
    select-area also replaces 06-icons.js `region` (mapped to `expand` today: expand is full screen).
-8. **Map corrections for map.json** (the lead's file): `diff` -> `diff` (not `changes`), `region` -> `select-area`,
+8. **Map corrections** (applied by the lead in build_map.py; all 491 PM7 icons resolve): `diff` -> `diff` (not `changes`), `region` -> `select-area`,
    `WRAP_ICON` -> `wrap`, `doc:filePlus` -> `file-plus`, dashboard -> `widget`, `stepOver` / `stepInto` ->
    `step-over` / `step-into` (three side by side in one toolbar cannot share the chat's `step`, which stays continue;
-   reasons in the records). `casesense`, `wholeword`, `regex`, `splitright`, `splitdown`, `split-side`,
+   lead ruling). `casesense`, `wholeword`, `regex`, `splitright`, `splitdown`, `split-side`,
    `split-stacked`, `workgroup-plus` resolve as aliases.
-9. **Looks:** the Retro phosphor applies by itself on button hosts and PMH targets. NieR acts depend on the hover
-   bridge fix reported to pm7-glyphs on 2026-10-10 (single-path parts lost their act). Contrast holds 3:1 at rest in
+9. **Looks:** the Retro phosphor applies by itself on button hosts and PMH targets. NieR plays every act since the
+   lead's hover-bridge fix (4f68d4ef8c). NieR needs no form of its own for `bp-log`: its solid diamond in the blocked
+   ink never reads as NieR's working mark (a hollow double diamond in plain ink, turning), checked in NieR Dark and
+   Light at 12-20 px with the diamonds part on. Contrast holds 3:1 at rest in
    all ten looks (lowest: the breakpoints' blocked ink, 3.16:1 in NieR Dark and 3.58:1 in Friendly Light; every other
    glyph is 3.79:1 or more).
 10. **Reduced Motion:** nothing extra; neon-icons.css stops every act and the lit rest pose carries each state.
