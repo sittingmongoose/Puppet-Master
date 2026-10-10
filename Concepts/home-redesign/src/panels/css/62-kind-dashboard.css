@@ -1,14 +1,18 @@
-/* The Dashboard tab kind (kinds/30-dashboard.js). Two parts:
-   1. the page's own #dashboardView, adopted into a tab body: its plate (border, fill, radius, shadow, blur) is
-      neutralised, its own Main / Metrics / Monitoring strip is hidden (one strip per panel, D5), its pills go (D22):
-      the Add widget pill becomes a header-row button, status chips become plain text with a small drawn glyph, the
-      catalog's size chips become plain text. The page's card rules (and the NieR world's) keep styling the cards.
+/* The Dashboard tab kind (kinds/30-dashboard.js, D10 step two). The engine dashboards (Home, Metrics, Monitoring and
+   each Dashboard n) are Usage boards: their DOM under the stage is made by the Usage engine and styled by the Usage CSS,
+   so this file only gives them the stage (a column that fills the tab body under the header row). Three parts:
+   1. Home (current): the page's own #dashboardView, adopted into a tab body: its plate (border, fill, radius, shadow,
+      blur) is neutralised, its own Main / Metrics / Monitoring strip is hidden (one strip per panel, D5), its pills go
+      (D22): the Add widget pill becomes a header-row button, status chips become plain text with a small drawn glyph,
+      the catalog's size chips become plain text. The page's card rules (and the NieR world's) keep styling the cards.
       Friendly and Glass style #dashboardView with id rules and !important, so these rules carry two ids.
-   2. what this file draws itself: the note a second visible grid tab shows, and the Agents board.
-   Sizes key on the tab body (@container pmw-body), never the window. */
+   2. the quiet note a dashboard shows when it cannot run (no Usage engine in the build, an id the kind does not run).
+   3. the Agents board, drawn here.
+   Sizes key on the tab body (@container pmw-body), never the window. NieR touches beyond colour are gated by their
+   part (square corners: square; uppercase: headers). */
 
 .pmw-dash { position: absolute; inset: 0; display: flex; flex-direction: column; color: var(--pmw-text); font-family: var(--pm-font-ui); }
-.pmw-dash-stage { position: relative; flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+.pmw-dash-stage { position: relative; flex: 1 1 auto; min-width: 0; min-height: 0; display: flex; flex-direction: column; }
 
 /* ---- 1. the adopted page node ---- */
 html[data-pmw-home="on"] #pm-home-centre .pmw-dash-stage > #dashboardView.dashboard-view {
@@ -32,7 +36,6 @@ html[data-pmw-home="on"] #pm-home-centre .pmw-dash-stage > #dashboardView.dashbo
   transform: none !important;
   --pm6-dash-head-h: 0px;
 }
-html[data-pmw-home="on"] #pm-home-centre .pmw-dash-stage.is-noted > #dashboardView { display: none !important; }
 html[data-pmw-home="on"] #pm-home-centre #dashboardView > .dashboard-header { display: none !important; }
 html[data-pmw-home="on"] #pm-home-centre #dashboardView #pm6DashScroll.pm6-dash-scroll {
   margin-top: 0 !important;
@@ -79,7 +82,7 @@ html[data-pmw-home="on"] #pm-home-centre .pmw-hrow #pm6DashAddBtn.pmw-dash-add::
   html[data-pmw-home="on"] #pm-home-centre .pmw-hrow #pm6DashAddBtn.pmw-dash-add { padding: 0 !important; width: 24px !important; }
 }
 html[data-theme^="retro"] #pm-home-centre .pmw-hrow #pm6DashAddBtn.pmw-dash-add,
-html[data-o55-nier="on"] #pm-home-centre .pmw-hrow #pm6DashAddBtn.pmw-dash-add { border-radius: 0 !important; }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] #pm-home-centre .pmw-hrow #pm6DashAddBtn.pmw-dash-add { border-radius: 0 !important; }
 html[data-o55-nier="on"][data-o55-nier-parts~="headers"] #pm-home-centre .pmw-hrow #pm6DashAddBtn.pmw-dash-add { text-transform: uppercase !important; letter-spacing: .07em !important; }
 
 /* the interim column fix (kinds/30-dashboard.js fitColumns): with 4 or 2 columns set in the page's 3-column range,
@@ -136,9 +139,9 @@ html[data-pmw-home="on"] #pm-home-centre #dashboardView .pm6-dash-chip--gate {
   --pmw-dash-tone: var(--pmw-warn);
   --pmw-dash-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M2.5 1.5h1.8v7H2.5zM5.7 1.5h1.8v7H5.7z'/%3E%3C/svg%3E");
 }
-/* Retro and NieR: square glyphs (a block for the dot) */
+/* Retro and NieR's square part: square glyphs (a block for the dot) */
 html[data-theme^="retro"] #pm-home-centre #dashboardView .pm6-dash-chip--live,
-html[data-o55-nier="on"] #pm-home-centre #dashboardView .pm6-dash-chip--live {
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] #pm-home-centre #dashboardView .pm6-dash-chip--live {
   --pmw-dash-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M2 2h6v6H2z'/%3E%3C/svg%3E");
 }
 html[data-o55-nier="on"] #pm-home-centre #dashboardView .pm6-dash-chip { color: var(--o55-nier-ink) !important; }
@@ -159,7 +162,7 @@ html[data-pmw-home="on"] #pm-home-centre #dashboardView .pm6-dash-size-chip {
 /* the cards' own buttons: no capsules (Friendly rounds them fully) */
 html[data-pmw-home="on"] #pm-home-centre #dashboardView .pm6-dash-btn { border-radius: 8px !important; }
 html[data-theme^="retro"] #pm-home-centre #dashboardView .pm6-dash-btn,
-html[data-o55-nier="on"] #pm-home-centre #dashboardView .pm6-dash-btn { border-radius: 0 !important; }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] #pm-home-centre #dashboardView .pm6-dash-btn { border-radius: 0 !important; }
 
 /* readable type in the widgets: nothing under 11 px (the page's smallest step is 10 px, its card facts 9 px) */
 html[data-pmw-home="on"] #pm-home-centre #dashboardView { --fs-2xs: 11px; }
@@ -198,11 +201,11 @@ html[data-pmw-home="on"] #pm-home-centre #dashboardView .pm6-dash-dot.is-run { c
 html[data-pmw-home="on"] #pm-home-centre #dashboardView .pm6-dash-dot.is-fail { color: var(--pmw-bad); }
 html[data-pmw-home="on"] #pm-home-centre #dashboardView .pm6-dash-dot.is-queue { color: var(--pmw-text-3); }
 html[data-theme^="retro"] #pm-home-centre #dashboardView .pm6-dash-dot,
-html[data-o55-nier="on"] #pm-home-centre #dashboardView .pm6-dash-dot { border-radius: 0; }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] #pm-home-centre #dashboardView .pm6-dash-dot { border-radius: 0; }
 html[data-o55-nier="on"] #pm-home-centre #dashboardView .pm6-dash-dot.is-queue { background: transparent; box-shadow: inset 0 0 0 1px var(--o55-nier-ink); }
 html[data-o55-nier="on"] #pm-home-centre #dashboardView .pm6-dash-dot:not(.is-queue) { color: var(--o55-nier-ink); }
 
-/* ---- 2a. the note a second visible grid tab shows ---- */
+/* ---- 2. the quiet note ---- */
 .pmw-dash-note { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 16px; overflow: auto; }
 .pmw-dash-note[hidden] { display: none; }
 .pmw-dash-note-col { max-width: 320px; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; }
@@ -210,9 +213,8 @@ html[data-o55-nier="on"] #pm-home-centre #dashboardView .pm6-dash-dot:not(.is-qu
 .pmw-dash-note-t { margin: 0; font-size: 13px; line-height: 19px; font-weight: 550; color: var(--pmw-text); }
 .pmw-dash-note-sub { margin: 0 0 8px; font-size: 12px; line-height: 17px; color: var(--pmw-text-3); }
 @container pmw-body (max-height: 199px) { .pmw-dash-note-sub, .pmw-dash-note-ico { display: none; } }
-html[data-theme^="retro"] .pmw-dash-note-btn, html[data-o55-nier="on"] .pmw-dash-note-btn { border-radius: 0; }
 
-/* ---- 2b. the Agents board ---- */
+/* ---- 3. the Agents board ---- */
 .pmw-dash-agents { position: absolute; inset: 0; overflow: auto; overscroll-behavior: contain; scrollbar-width: thin; padding: 12px 12px 16px; box-sizing: border-box; }
 .pmw-dash-agent-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 8px; align-content: start; }
 @container pmw-body (max-width: 419.98px) {
@@ -259,21 +261,23 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dash-agent-acts .pmw-ac
 /* Glass: legible over the blur of the page behind, no blur of its own */
 html[data-theme^="glass"] .pmw-dash-agent { background: color-mix(in srgb, var(--pmw-surface) 82%, transparent); }
 
-/* NieR: ink and parchment, square corners, no glow, uppercase small headers */
+/* NieR: ink and parchment, no glow; square corners with the square part, uppercase small headers with the headers part */
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-dash-agent { border-radius: 0; }
 html[data-o55-nier="on"] .pmw-dash-agent {
-  border-radius: 0;
   border-color: rgba(var(--o55-nier-ink-rgb), .45);
   background: var(--o55-nier-raised, var(--pmw-surface-2));
   box-shadow: 3px 3px 0 rgba(var(--o55-nier-shadow-rgb), .12);
 }
 html[data-o55-nier="on"] .pmw-dash-agent .pmw-dash-st-ico { color: var(--o55-nier-ink); }
 html[data-o55-nier="on"] .pmw-dash-agent[data-tone="bad"] .pmw-dash-st-ico { color: var(--o55-nier-error); }
-html[data-o55-nier="on"] .pmw-dash-st { text-transform: uppercase; letter-spacing: .12em; font-size: 11px; }
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-dash-st { text-transform: uppercase; letter-spacing: .12em; font-size: 11px; }
 html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-dash-agent-name { text-transform: uppercase; letter-spacing: .08em; font-size: 13px; }
-html[data-o55-nier="on"] .pmw-dash-agent-bar { border-radius: 0; background: rgba(var(--o55-nier-ink-rgb), .18); }
+html[data-o55-nier="on"] .pmw-dash-agent-bar { background: rgba(var(--o55-nier-ink-rgb), .18); }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-dash-agent-bar { border-radius: 0; }
 html[data-o55-nier="on"] .pmw-dash-agent-fill { background: var(--o55-nier-ink); transition-timing-function: steps(4, end); }
-html[data-o55-nier="on"] .pmw-dash-agent-acts .pmw-act, html[data-o55-nier="on"] .pmw-dash-note-btn { border-radius: 0; border-color: var(--o55-nier-ink); }
-html[data-o55-nier="on"] .pmw-dash-note-t { text-transform: uppercase; letter-spacing: .1em; font-size: 12px; }
+html[data-o55-nier="on"] .pmw-dash-agent-acts .pmw-act { border-color: var(--o55-nier-ink); }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-dash-agent-acts .pmw-act { border-radius: 0; }
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-dash-note-t { text-transform: uppercase; letter-spacing: .1em; font-size: 12px; }
 
 /* Reduced Motion: nothing moves (the bar jumps to its value) */
 html[data-motion="reduced"] .pmw-dash-agent-fill { transition: none; }

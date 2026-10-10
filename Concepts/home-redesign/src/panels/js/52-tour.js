@@ -6,7 +6,8 @@
    - three new action steps, each finished by what the panels report, never by a timer: open a tab from "+"
      (open_from_plus), open a file from the rail (open_file_from_rail), split by dragging a tab to a panel edge
      (split_by_drag; the tab menu's Split right / Split down with this tab counts too);
-   - widget_action first shows the Home dashboard tab, then keeps its own add-and-place logic.
+   - widget_action first shows the Home (current) dashboard tab (the page's own widgets, D10 A1: the pinned Home tab
+     runs on the Usage board engine now), then keeps its own add-and-place logic.
    Steps are re-indexed after the splice. A saved checkpoint holds a position, not a step id, so a run saved under
    another step order (the published page's 18 steps) would pick up at the wrong step: every save is stamped with its
    step id and this order's signature, and at install a checkpoint without this signature is moved to its step by id.
@@ -202,11 +203,12 @@ function splitCommitted(since) { return splitMoves(since).length > 0; }
 function splitMovedTab(since) { var m = splitMoves(since); return m.length ? m[m.length - 1].args.tabId : null; }
 function lastSeq() { var log = PM_HOME.command_log || []; return log.length ? log[log.length - 1].seq : 0; }
 
-/* the Home dashboard tab, shown and active, so the widget step's Add widget button is on screen */
+/* the Home (current) dashboard tab on its Main board, shown and active: it holds the page's own widgets
+   (PM7_DASH_WIDGETS, D10 A1), so the widget step's Add widget button (#pm6DashAddBtn, adopted into that tab's header
+   row) is on screen. An open of the open tab reveals it and points it at Main (the kind's reveal). */
 async function showDashboard() {
   var l = state.layout; if (!l) return;
-  if (l.tabs['dashboard:home']) PM_HOME.reveal('dashboard:home');
-  else PM_HOME.open({ kind: 'dashboard', board: 'home' });
+  PM_HOME.open({ kind: 'dashboard', board: 'current', id: 'dashboard:current', label: 'Home (current)', sub: 'main' });
   await waitFor(function () { return tVis(document.getElementById('pm6DashAddBtn')); }, 1500);
 }
 
