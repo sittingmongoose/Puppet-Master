@@ -466,7 +466,10 @@ status: accepted
 owner_doc: Plans/Settings_System.md
 canonical_text: >-
   Each Project independently persists theme family, Light/Dark/Auto presentation mode, Glass background mode, Glass
-  alpha/transparency, tooltip enablement, reduced-motion request, background selection, and chat layout. The eight built-in variants are Friendly Dark, Friendly
+  alpha/transparency, tooltip enablement, reduced-motion request and background selection. The chat layout is no longer
+  a Settings value (DL-180): the chat stays fixed on the right, its width, pinned History and popped-out state live in
+  the Project's Home layout record (Plans/storage-plan.md#SP-330), and general.visual.chat-layout-mode is retired
+  (SSYS-050). The eight built-in variants are Friendly Dark, Friendly
   Light, Glass Dark, Glass Light, Retro Dark, Retro Light, Basic Dark, and Basic Light. Final GUI owns the untouched
   first-open/fresh-Project Basic Dark factory selection; Settings consumes that seed only when no committed Project theme
   exists. Existing explicit selections and copied detached snapshots win. No-Project rendering is ephemeral Basic Dark.
@@ -478,17 +481,17 @@ canonical_text: >-
   apply uses the same preview hash and atomic transaction as every other Settings change. Disabling hover tooltips never
   removes keyboard-focus accessible descriptions or Help/Details. Effective reduced motion is true when either the Project
   request or platform preference is true; it calms nonessential entrance, hover, parallax, shimmer, and background motion
-  while retaining focus, progress, error, and state-change feedback. Background, transparency, and chat layout apply to the
+  while retaining focus, progress, error, and state-change feedback. Background and transparency apply to the
   current Project only and never leak through app-global local storage. The application's first frame shows the
   committed appearance of the Project it opens on, NieR Mode included, read by the pre-paint layer from that Project's
   Settings (F3-468, DL-153); the pre-paint keeps no copy, and no app-global or cross-Project theme key or paint hint
   exists.
 gui_related: true
 gui_classification_reason: Themes, Glass composition, backgrounds, and chat layout are directly visible.
-depends_on: [SSYS-002, SSYS-009, F3-425]
+depends_on: [SSYS-002, SSYS-009, F3-425, DL-180]
 unblocks: [SSYS-016, SSYS-017]
 acceptance_criteria:
-  - Switching Projects restores each Project's independent appearance and chat-layout snapshot.
+  - Switching Projects restores each Project's independent appearance snapshot; the chat column comes back from that Project's Home layout record, never from a Settings value.
   - Eight built-in variants remain available and fresh/no-Project defaults are distinct.
   - Non-Glass contexts disclose why Glass-only controls are unavailable instead of hiding them.
   - Preview writes no durable value and every non-apply exit restores the committed Project appearance.
@@ -504,8 +507,9 @@ source_lineage:
   - Plans/FinalGUISpec.md#F3-425
   - source_ref:chat:settings-canonical-owner-lane-2026-08-31
 preserved_exact_tokens: [Friendly Dark, Friendly Light, Glass Dark, Glass Light, Retro Dark, Retro Light, Basic Dark, Basic Light, 0.35, 0.45, tooltips, reduced motion, chat layout]
-negative_constraints: [Do not persist appearance or chat layout outside the Project settings namespace., Do not hide unavailable Glass controls., Do not make no-Project Basic Dark durable., Do not remove accessible descriptions when hover tooltips are off., Do not suppress progress or error feedback under reduced motion.]
+negative_constraints: [Do not persist appearance outside the Project settings namespace., Do not store the chat column's width, History or pop-out as a Settings value., Do not hide unavailable Glass controls., Do not make no-Project Basic Dark durable., Do not remove accessible descriptions when hover tooltips are off., Do not suppress progress or error feedback under reduced motion.]
 owner_hints: [Plans/Settings_System.md, Plans/FinalGUISpec.md, Plans/assistant-chat-design.md]
+stale_retired_dispositions: ["Amended 2026-10-09 (DL-180): the chat layout setting retires; the chat column's state is the Home layout record's (SP-330), and SSYS-050 records the retired row."]
 ```
 
 ### SSYS-011 - Provider Installation Actions And Continuation
@@ -1240,11 +1244,13 @@ Settings Home uses cached bounded manager summaries, then hydrates only the sele
 
 ### 4.4 Theme and shell integration
 
-Project theme and layout changes update the active Project shell only after atomic acceptance. `pm.settings_appearance_preview.v1` may temporarily paint a candidate Project appearance but writes nothing and reverts on cancel, close, expiry, route change, or Project switch. Title bar, status bar, bottom panel, Chat, and Settings consume the same committed effective Project theme snapshot; no surface keeps a second local theme authority.
+Amended 2026-10-09 (DL-180, DL-183): Home has no bottom panel any more, so the consumers of the committed theme snapshot are named as every panel and tab; the chat layout is no longer a Settings row (SSYS-010, SSYS-050); and the terminal's own look is the one appearance model whose Settings rows are SSYS-051, layered over the look's defaults rather than a second theme authority.
+
+Project theme and layout changes update the active Project shell only after atomic acceptance. `pm.settings_appearance_preview.v1` may temporarily paint a candidate Project appearance but writes nothing and reverts on cancel, close, expiry, route change, or Project switch. Title bar, status bar, every panel and tab, Chat, and Settings consume the same committed effective Project theme snapshot; no surface keeps a second local theme authority. The terminal's scheme, font and effects follow that snapshot through "Follow theme" unless the terminal look rows of SSYS-051 choose otherwise.
 
 The theme family/mode pair yields exactly eight built-in variants. Glass background mode is `Mesh`, `Depth`, or `Minimal`; Glass alpha is bounded to 0.35..1.0 for Dark and 0.45..1.0 for Light, and the Glass controls show only while a Glass family is active (decided 2026-09-27; they were previously kept visible but disabled with `not_applicable`), as do the Retro texture rows under a Retro family and High contrast under a Basic family. `general.interaction.show-tooltips=false` suppresses hover hints only; focus descriptions and Help/Details remain. Effective reduced motion is the logical OR of Project request and platform preference and calms nonessential movement without suppressing progress, focus, error, or state-change feedback.
 
-Appearance application model (decided 2026-09-27, SSYS-041). Every appearance row changes what the app shows; none is stored without effect. Beyond the theme pair, Glass rows, reduced motion, chat layout and NieR Mode (the three paragraphs after this one), the rows apply through the per-variant token contract of `Plans/FinalGUISpec.md#F3-426` as overrides layered over the active variant's table: `general.visual.ui-scale` scales the whole app; `general.visual.font-size`, `general.visual.line-height` and the animation-speed choice scale the variant's type sizes, line heights and motion durations (scripted motion included) and exist only while one of them differs from its default; `general.visual.interface-density` and `general.visual.padding-scale` set the spacing steps; `general.visual.border-width`, `general.visual.border-radius` and `general.visual.scrollbar-width` set the border-width, radius and scrollbar-size tokens; `general.visual.app-font` swaps the display and body fonts for the system fonts; `general.visual.high-contrast` (Basic families) and `general.visual.focus-indicator` set contrast and the keyboard focus outline; `general.visual.retro-effects`, `general.visual.pixel-grid-opacity` and `general.visual.scanline-opacity` set the Retro textures. An accent choice sets the primary accent, its RGB triple and the accent tokens derived from it from precomputed per-mode values (a brighter shade in Dark, a deeper one in Light), never by runtime colour derivation. Unchanged means the theme's own: a row whose value was never changed writes no override, so each variant keeps its own accent, corners, borders, fonts, spacing and scrollbar; the first accent choice and a "use the theme's" action on the theme-owned fine-tuning rows (border width, corner roundness, scrollbar width) mean exactly that, and those rows present the active variant's value rather than an inventory literal until a value is chosen. Reset removes exactly the override the row wrote and nothing else. Overrides follow the same atomic acceptance, preview and Project scope as the theme pair. Corner roundness, Border width and Scrollbar width store the default `theme` until a number is set, so the theme's own corners, borders and scrollbar width apply.
+Appearance application model (decided 2026-09-27, SSYS-041). Every appearance row changes what the app shows; none is stored without effect. Beyond the theme pair, Glass rows, reduced motion and NieR Mode (the three paragraphs after this one), the rows apply through the per-variant token contract of `Plans/FinalGUISpec.md#F3-426` as overrides layered over the active variant's table: `general.visual.ui-scale` scales the whole app; `general.visual.font-size`, `general.visual.line-height` and the animation-speed choice scale the variant's type sizes, line heights and motion durations (scripted motion included) and exist only while one of them differs from its default; `general.visual.interface-density` and `general.visual.padding-scale` set the spacing steps; `general.visual.border-width`, `general.visual.border-radius` and `general.visual.scrollbar-width` set the border-width, radius and scrollbar-size tokens; `general.visual.app-font` swaps the display and body fonts for the system fonts; `general.visual.high-contrast` (Basic families) and `general.visual.focus-indicator` set contrast and the keyboard focus outline; `general.visual.retro-effects`, `general.visual.pixel-grid-opacity` and `general.visual.scanline-opacity` set the Retro textures. An accent choice sets the primary accent, its RGB triple and the accent tokens derived from it from precomputed per-mode values (a brighter shade in Dark, a deeper one in Light), never by runtime colour derivation. Unchanged means the theme's own: a row whose value was never changed writes no override, so each variant keeps its own accent, corners, borders, fonts, spacing and scrollbar; the first accent choice and a "use the theme's" action on the theme-owned fine-tuning rows (border width, corner roundness, scrollbar width) mean exactly that, and those rows present the active variant's value rather than an inventory literal until a value is chosen. Reset removes exactly the override the row wrote and nothing else. Overrides follow the same atomic acceptance, preview and Project scope as the theme pair. Corner roundness, Border width and Scrollbar width store the default `theme` until a number is set, so the theme's own corners, borders and scrollbar width apply.
 
 NieR Mode (decided 2026-09-28, user-approved inventory wave, SSYS-043; `general.visual.nier-mode`, `general.visual.nier-parts` and `general.visual.nier-background`, on App & Input under Theme & colors). NieR Mode is a switch, off by default and applying instantly, that paints the whole app in the ink-and-parchment look of NieR: Automata. It is a hidden theme painted over the Basic family, not a ninth selectable theme: the theme family/mode pair still yields exactly the eight built-in variants of SSYS-010 and `Plans/FinalGUISpec.md#F3-425`, the theme selector and the onboarding look choice list no NieR theme or family entry, and the pair's atomic acceptance, the Glass alpha floors and the family-specific controls are unchanged. Besides its row here, the switch is reached wherever a look is chosen (decided 2026-10-07, DL-152): the title-bar theme selector, the onboarding look choice and the Look menu of onboarding and of the Guided Tour each carry, below their family and Light/Dark choices, one NieR Mode checkbox with an Adjust NieR look button beside it that opens the NieR Mode editor described in the next paragraph (`Plans/FinalGUISpec.md#F3-082`, `#F3-598`). Outside the onboarding window each of these controls is an ordinary Settings change (lead ruling of 2026-10-09 recorded in DL-153): a local affordance that composes `cmd.settings.transaction.preview` then `cmd.settings.transaction.apply` over the exact IDs, as category reset does, with those commands' availability and disabled reasons; the switch alone is one row, and several NieR rows changed together are one atomic group (SSYS-009). Inside the onboarding window the same checkbox is a `ui.onboarding.choose_look` preview (`Plans/Planning_Wizard.md` PWIZ-021). While the switch is on, the app renders the Basic variant that the Light, Dark or Auto choice resolves to (Auto follows the operating system, as it does for every family) with NieR's own token table for that mode painted over Basic's table. The two tables, one light and one dark, are the palette of the T3 Code theme "NieR: Automata" by SunkenInTime (`Concepts/onboarding/opus-5.5/src/settings/nier/nier-automata.json`, verbatim); they are literal precomputed constants under `Plans/FinalGUISpec.md#F3-426`, and nothing in them is derived at runtime through color-mix(). The person's chosen theme family and mode are not read, written or replaced by the switch: `theme:v1` keeps the family, presentation mode and resolved variant they chose, and turning the switch off shows exactly that variant again. The switch writes `html[data-o55-nier]`, present only while NieR Mode is on. While it is on, NieR decides the accent color and the app font: the Accent color and App font rows say so and keep their stored values, which apply again when the switch is off. The type is the game's: M PLUS 1, embedded as the free stand-in for the game's commercial Rodin face, and JetBrains Mono, both under the SIL Open Font License 1.1 and loaded from the app's own files, never from the network. High contrast still applies over NieR's tables, and the family-specific rows follow the family being painted, which is Basic while NieR Mode is on: High contrast shows, and the Glass rows and Retro texture rows do not, each keeping its stored value. Every other appearance row keeps applying as an override under SSYS-041, so NieR takes over only the two rows named. The three NieR rows take the same atomic acceptance, non-persistent preview and scope as the theme pair. Inside the onboarding window the NieR checkbox and the editor's parts and background change a preview only: it paints exactly as stored values would, writes nothing, and is written with the theme pair, through the same Settings binding, when the look is committed to the Project (`Plans/FinalGUISpec.md#F3-520`). Closing or skipping setup before then writes nothing: the NieR preview ends together with the onboarding look preview it belongs to (in the concept both stay painted until the next Settings write or Project load), and resuming setup paints it again from the onboarding session, never from the setup draft, whose closed schema has no NieR field. The onboarding look, NieR Mode included, is an explicit new choice (SSYS-036): a settings copy into the new Project never proposes the three NieR rows, as it never proposes the theme pair.
 
@@ -2102,11 +2108,13 @@ depends_on:
 - SMPFS-164
 - SMPFS-165
 - UCC-160
+- DL-182
 unblocks: []
 acceptance_criteria:
 - P3 exposes supported versioned profile options only from the terminal owner, separates requested from effective
-  capability and identifies unsupported pinned toolkit/platform/transport paths. No untested enhancement, image
-  support or new default is silently enabled.
+  capability and identifies unsupported pinned toolkit/platform/transport paths. No untested enhancement or new
+  default is silently enabled. Terminal images are decided by DL-182 (kitty graphics, sixel and iTerm2 images in the
+  first release, Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-181); no Settings row turns them on or off.
 - P6 routes cmd.terminal.remote_compatibility_setup with the exact authenticated Host/Environment and current authorization.
   An action is not a generic boolean permission to write to all hosts; denied/read-only/no-tic/failed-transfer states
   stay explicit and ordinary SSH is preserved when declined.
@@ -2146,9 +2154,12 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/design_atoms.jsonl:atom-0011
 - Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/design_atoms.jsonl:atom-0012
 negative_constraints:
-- Do not treat P3 optional protocol support as an image-protocol decision or bypass effective-capability checks.
+- Do not treat P3 optional protocol support as an image-protocol decision or bypass effective-capability checks; the
+  image-protocol decision is DL-182's.
 - Do not move live-pane actions into persistent Settings or silently choose held policies.
 - No implementation, WorkNodes, NodeSeeds, runtime acceptance or governance seal is created by this PlanUnit.
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-182): image support leaves the list of things never silently enabled, because DL-182 puts the complete image protocols in the first terminal release with no Settings row."
 ```
 
 ```yaml
@@ -2446,14 +2457,16 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-107, ContractName:Plans/Decis
 
 Every decision in this section is dated 2026-09-27. It records the product decisions demonstrated by the Settings rework in `Concepts/onboarding/opus-5.5/src/settings` (placement in `o55/placement.d/*.json`, row wording, conditions, units, routes, flows and editors in `o55/rows.d/*.json`, behaviour in `kit.d/*.js` and `managers/*.js`). The concept remains `concept_fixture_only` (§4.6): its fixture values, simulated flows, counts and screenshots are not runtime, persistence, handler or readiness evidence. The 38-key manager registry, every `manager_id`, route, detail id and command id, and every inventory id are unchanged; page names, groups and moves are presentation over the same registry (SSYS-015, SSYS-035). Where an existing unit already governs a topic (SSYS-010 Glass control disclosure, SSYS-013 container and SCM operation boundaries, `Plans/Commands_System.md#CS-081` Commands & Shortcuts controls, `Plans/Personas.md` §4 persona editing), that unit still governs and this section does not change it.
 
+Amended 2026-10-09 (DL-180 to DL-183): the layout, tab, editor and chat column rows of SSYS-050 and the terminal look rows of SSYS-051 join the groups below as those units place them; Window & panels names its layout action Restore home layout, the same words as the title bar's Home menu; the Terminal look group grows into the terminal's appearance model and its finer rows fold into a new Terminal look: more options; and the eight rows SSYS-050 retires are drawn on no page.
+
 ### 1. Page and group structure
 
 Every Settings view, manager tab or plain page, draws its short everyday groups first (a list the manager draws itself counts as one group; on plain pages they replace single groups of up to 26 rows) and folds rarely changed groups into the view's one disclosure at the end, labelled More options (§22 principle 9). A group lists its rows in reading order, master switch first and the choices it unlocks after it, instead of inventory order. A group whose every row waits on a switch that is off steps aside with its rows. Each group reads the same way: a title, one line of help, the rows, and at most one owner line (for example the single Open Docker Manager line at the top of Docker on this computer instead of one on every group holding a container id); the numbered section kicker and per-section guide button are retired because every row has its own About.
 
 | Plain page | Everyday groups, in order | More options |
 |---|---|---|
-| App & Input | Theme & colors; Size & readability; Sending messages; How the assistant works; What the chat shows; Help & explanations; Window & panels (including Choose widgets and Reset the layout); When Puppet Master opens; Spelling | Custom themes; Fine-tuning the look; More about help |
-| Editor & Terminal (was Editor & Runtime; its containers moved to Containers) | Saving & tabs; File tree; Editing; Terminal; Terminal look; Terminal output & history; Copy & paste; Project search index | Big files & folders; Terminal: more options; Search index: more options |
+| App & Input | Theme & colors; Size & readability; Sending messages; How the assistant works; What the chat shows; Help & explanations; Window & panels (including Choose widgets and Restore home layout); When Puppet Master opens; Spelling | Custom themes; Fine-tuning the look; More about help |
+| Editor & Terminal (was Editor & Runtime; its containers moved to Containers) | Saving & tabs; File tree; Editing; Terminal; Terminal look; Terminal output & history; Copy & paste; Project search index | Big files & folders; Terminal look: more options; Terminal: more options; Search index: more options |
 | Containers (was Containers & Execution) | Docker on this computer; Docker Hub and other registries; Building & publishing images; Running containers; Changed containers; Disk cleanup; Kubernetes; Unraid templates; Your app's store listing; Your publisher profile | Docker panel views & records; Template repository details |
 | Planning & Interviews | Plan and Deep Plan; Planning Wizard; Interview topics; Helpers | Question limits; This wizard session only; Files & formats |
 | Advanced Settings | Sharing with the makers; Troubleshooting; Startup and drawing; Start over | none |
@@ -2545,7 +2558,7 @@ A row whose meaning depends on another switch or choice shows only while that sw
 
 ### 6. Owner routes and flows instead of a generic action panel
 
-No Settings action opens the generic "What this does" preview panel whose button only reported that the action was requested. An inventory action row does one of two things. It routes to the owner surface that does the job and lands on the exact control: `ai.accounts.github-connect` to Source Control; `ai.usage.quota-management` to Providers & Accounts › Usage & budgets; `personas.library.persona-manager` to Personas; `general.interaction.settings-search` (Search all settings) to the Settings search box (`settings.search.focus`); `general.interaction.dashboard-widgets` (Choose widgets) to the Home dashboard's own widget picker, since a typed list of widget names could never be valid; `general.startup.reset-home-layout` (Reset the layout) to Home's own Reset Layout (`cmd.workspace_layout.reset`) after one plain question naming what moves back and what is kept; a per-account or per-service row, including every API key row, to its account or service. Or it runs one small flow bound to the owner's command and availability: a form (fields to fill in; non-secret answers are kept, secrets are only marked as saved in the keychain), a check (steps run in order with an outcome and the time of the last run), a confirm (a plain question with the consequence, marked dangerous when it removes something), a list (things to read or act on, each with its own action or Remove) or an order (an ordered list). A flow performs no owner operation itself: it dispatches the owner's registered command or shows the owner's unavailable reason (SSYS-015, SSYS-020), and where SSYS-013 requires a route (container, registry, publish and SCM operations) the row routes to the owner surface instead.
+No Settings action opens the generic "What this does" preview panel whose button only reported that the action was requested. An inventory action row does one of two things. It routes to the owner surface that does the job and lands on the exact control: `ai.accounts.github-connect` to Source Control; `ai.usage.quota-management` to Providers & Accounts › Usage & budgets; `personas.library.persona-manager` to Personas; `general.interaction.settings-search` (Search all settings) to the Settings search box (`settings.search.focus`); `general.interaction.dashboard-widgets` (Choose widgets) to the Home dashboard's own widget picker, since a typed list of widget names could never be valid; `general.startup.reset-home-layout` (Restore home layout) to Home's own Restore home layout (`cmd.workspace_layout.reset`, which keeps every open tab) after one plain question naming what moves back and what is kept; a per-account or per-service row, including every API key row, to its account or service. Or it runs one small flow bound to the owner's command and availability: a form (fields to fill in; non-secret answers are kept, secrets are only marked as saved in the keychain), a check (steps run in order with an outcome and the time of the last run), a confirm (a plain question with the consequence, marked dangerous when it removes something), a list (things to read or act on, each with its own action or Remove) or an order (an ordered list). A flow performs no owner operation itself: it dispatches the owner's registered command or shows the owner's unavailable reason (SSYS-015, SSYS-020), and where SSYS-013 requires a route (container, registry, publish and SCM operations) the row routes to the owner surface instead.
 
 A Settings search result for an action row, such as Restore home layout for `general.startup.reset-home-layout`, lands on that exact row and asks the row's own plain question; search never opens Details for an id that is not on the page it opens, which would draw an empty panel.
 
@@ -2654,12 +2667,12 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Governs the visible grouping, order, disclosure, labels, visibility, action routes and editors of every Settings page and manager.
 split_recommended: false
-depends_on: [SSYS-006, SSYS-013, SSYS-015, SSYS-020, SSYS-033, SSYS-035]
+depends_on: [SSYS-006, SSYS-013, SSYS-015, SSYS-020, SSYS-033, SSYS-035, DL-180]
 unblocks: []
 acceptance_criteria:
   - Every manager view and plain page renders its everyday groups first and at most one More options disclosure, last; a landing from search, the page index or Details on a folded row opens it first.
   - Plain-page and manager group orders and the canonical-id moves match this section; manager_id keys, routes, detail ids, command ids and inventory ids are unchanged.
-  - No retired hand-written row or manager-owned copy renders, and each inventory id still renders exactly once, a manager's bound control counting as its home.
+  - No retired hand-written row or manager-owned copy renders, and each inventory id still renders exactly once, a manager's bound control counting as its home; an inventory row retired by SSYS-050 renders nowhere.
   - Every label, option, unit and search result reads in plain words while stored values and inventory titles stay unchanged and searchable; word defaults of toggles resolve by the on/off table without overwriting a saved choice.
   - A dependent row hides only while its condition fails, keeps its stored value, stays findable, and never hides a blocking error, consent boundary, unavailable reason or requested/effective difference; Glass controls keep SSYS-010 disclosure.
   - No Settings action opens a generic preview panel; each action row reaches its owner route or a flow that dispatches its owner command, or shows the owner's unavailable reason, and SSYS-013 operations route to their owner surface.
@@ -2699,6 +2712,8 @@ negative_constraints:
 owner_hints:
   - Plans/Settings_System.md
   - Plans/FinalGUISpec.md
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the rows SSYS-050 retires render nowhere, Reset the layout reads Restore home layout, and Terminal look: more options joins Editor & Terminal's folded groups."
 ```
 
 ContractRef: ContractName:Plans/Settings_System.md#SSYS-035, ContractName:Plans/Settings_System.md#SSYS-013, ContractName:Plans/Settings_System.md#SSYS-020, ContractName:Plans/FinalGUISpec.md#F3-551
