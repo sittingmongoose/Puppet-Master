@@ -19,11 +19,19 @@ function normalizeSpec(spec) {
 }
 
 /* The stable id for a spec: given, or the kind's idFor, or a default per kind. */
+/* one tab per canonical id: a kind may map aliases (plan-query -> plan:ap-index, collab-run:X -> room:X) */
+function canonicalId(s, id) {
+  var k = kindDef(s.kind);
+  if (k && typeof k.canonical === 'function') {
+    try { var c = k.canonical(id, s); if (c) return c; } catch (_) {}
+  }
+  return id;
+}
 function idForSpec(s) {
-  if (s.id) return s.id;
+  if (s.id) return canonicalId(s, s.id);
   var k = kindDef(s.kind);
   if (k && typeof k.idFor === 'function') {
-    try { var got = k.idFor(s); if (got) return got; } catch (err) { try { console.error('[pm-home] idFor failed', err); } catch (_) {} }
+    try { var got = k.idFor(s); if (got) return canonicalId(s, got); } catch (err) { try { console.error('[pm-home] idFor failed', err); } catch (_) {} }
   }
   if (s.kind === 'editor') {
     if (s.path) return 'file:' + s.path;

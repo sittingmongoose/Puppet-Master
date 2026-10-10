@@ -7,7 +7,7 @@ var DEFAULT_TABS = PMW.DEFAULT_TABS = {
   'dashboard:agents': { kind: 'dashboard', label: 'Agents', state: { board: 'agents' } },
   'file:src/main.rs': { kind: 'editor', state: { path: 'src/main.rs' } },
   'file:src/routes/recipes.rs': { kind: 'editor', state: { path: 'src/routes/recipes.rs' } },
-  'plan:read-path': { kind: 'plan', label: 'Plan: Read path', state: { plan: 'read-path' } },
+  'plan:ap-index': { kind: 'plan', label: 'Tenant-scoped analytics read path', state: { plan: 'ap-index' } },
   'terminal:t1': { kind: 'terminal', state: { profile: 'zsh', cwd: '~/tastebook/api', session: 't1', script: 'idle' } },
   'terminal:t2': { kind: 'terminal', state: { profile: 'zsh', cwd: '~/tastebook/api', session: 't2', script: 'cargo-test' } },
   'output:build': { kind: 'output', label: 'Output', state: { channel: 'build' } }
@@ -21,7 +21,7 @@ var NAMED = PMW.NAMED = {
       { dir: 'row', sizes: [0.5, 0.5], kids: [
         { slot: 'dash', accepts: ['dashboard'], ensure: ['dashboard:home', 'dashboard:agents'], active: 'dashboard:home' },
         { slot: 'docs', accepts: ['editor', 'plan', 'document', 'artifact', 'run', 'transcript', 'context', 'record', 'browser'], rest: true,
-          ensure: ['file:src/main.rs', 'file:src/routes/recipes.rs', 'plan:read-path'], active: 'file:src/main.rs' }
+          ensure: ['file:src/main.rs', 'file:src/routes/recipes.rs', 'plan:ap-index'], active: 'file:src/main.rs' }
       ] },
       { slot: 'tools', accepts: ['terminal', 'output', 'problems', 'ports', 'debug-console'], ensure: ['terminal:t1', 'terminal:t2', 'output:build'], active: 'terminal:t1' }
     ] }

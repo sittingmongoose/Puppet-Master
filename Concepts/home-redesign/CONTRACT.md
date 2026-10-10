@@ -59,7 +59,7 @@ lands in the right kind. One id is one tab in the whole workspace: opening an id
 | `dashboard` | `dashboard:<board>` | `dashboard:home` is the pinned Home dashboard |
 | `plan` | `plan:<id>`, `plan-query`, `deep-discovery:<run>` | sticky Build / Revise / More footer |
 | `document` | `teach:`, `memory:`, `revert:`, `debug:`, `lens-source:`, `lens-effective:`, `wonderer:`, `wonder-source:`, `doc:<path>` | rules, memory, revert, debug investigation, lens source, wonderer |
-| `artifact` | `artifact:<id>`, `artifact:<id>@v<n>`, and the chat's artifact ids passed with `kind: 'artifact'` | per-kind subtype in `state.subtype` |
+| `artifact` | `artifact:<id>`, `artifact:<id>@v<n>`, `artifact-revision:<encoded JSON>` (the chat's versioned route), and the chat's bare artifact ids passed with `kind: 'artifact'` | per-kind subtype in `state.subtype` |
 | `run` | `collab-run:`, `crew-work:`, `review:`, `room:`, `brainstorm:`, `review-evidence:`, `brainstorm-evidence:` | Crew, Review, Chat Room, BrainStorm and their evidence |
 | `transcript` | `thread-<agentId>` | read-only live feed |
 | `context` | `context:<threadId>` | thread-keyed context detail |
@@ -86,6 +86,7 @@ PM_HOME.registerKind('terminal', {
   min: { w: 320, h: 120 },      // content minimum; a panel's minimum is the largest of its tabs' minimums
   dedicated: true,              // a panel holding only these tabs is skipped by file opens (D7) and its Ctrl+T makes one
   idFor(spec) { ... },          // stable tab id for an open spec; may mint one (terminal: a new session id)
+  canonical(id, spec) { ... },  // optional: one tab per canonical id (plan-query -> plan:ap-index, collab-run:X -> room:X)
   plus: {                       // optional: a row in the "+" menu and the empty-panel launcher
     order: 10,                  // rows sort by order; section 7 lists the built order
     shortcut: 'Ctrl+Shift+`',

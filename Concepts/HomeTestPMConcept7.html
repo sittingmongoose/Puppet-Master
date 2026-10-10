@@ -117081,6 +117081,47 @@ PMW.panelHolds = function (layout, panel, kind) {
   for (var i = 0; i < panel.tabs.length; i++) { var r = layout.tabs[panel.tabs[i]]; if (r && r.kind === kind) return true; }
   return false;
 };
+
+/* The demo catalog: each kind lists what it can open (plans, documents, artifacts, runs, records, files, dashboards),
+   so the "+" menu's pickers, Ctrl+P, the empty launcher and the stand-in chat all draw from one source (DRY).
+   item = { id, label, sub, icon, spec } where spec is a PM_HOME.open spec (defaults to { id }). */
+var CATALOG = {};
+PM_HOME.catalog = {
+  add: function (kind, items) {
+    var list = CATALOG[kind] || (CATALOG[kind] = []);
+    (items || []).forEach(function (it) {
+      if (!it || !it.id) return;
+      var at = list.findIndex(function (x) { return x.id === it.id; });
+      var rec = Object.assign({ kind: kind }, it);
+      if (at >= 0) list[at] = rec; else list.push(rec);
+    });
+    bus.emit('catalog', { kind: kind });
+  },
+  list: function (kind) { return (CATALOG[kind] || []).slice(); },
+  all: function () { var out = []; Object.keys(CATALOG).forEach(function (k) { out = out.concat(CATALOG[k]); }); return out; },
+  find: function (id) { var all = PM_HOME.catalog.all(); for (var i = 0; i < all.length; i++) if (all[i].id === id) return all[i]; return null; },
+  open: function (id, extra) {
+    var it = PM_HOME.catalog.find(id);
+    var spec = Object.assign({}, it && it.spec ? it.spec : { id: id, kind: it ? it.kind : PM_HOME.kindOf(id) }, extra || {});
+    if (it && !spec.label && it.label) spec.label = it.label;
+    return PM_HOME.open(spec);
+  }
+};
+
+/* a picker on PMW.menu over catalog items (kinds use it for their "+" rows: Plan or document..., Artifact...) */
+PMW.catalogPicker = function (anchor, o) {
+  var kinds = o.kinds || [o.kind];
+  var sections = kinds.map(function (k) {
+    var def = KINDS[k];
+    return { label: kinds.length > 1 ? (def ? def.group : k) : null, rows: PM_HOME.catalog.list(k).map(function (it) {
+      return { id: it.id, label: it.label, sub: it.sub || '', kind: it.icon || (def && def.icon) || 'file', keywords: it.keywords || '',
+        run: function (info) { PM_HOME.catalog.open(it.id, { where: info.alt || o.newPanel ? 'panel' : (o.panelId || 'auto'), source: o.panelId, mode: 'keep' }); },
+        alt: { label: 'Open in new panel', run: function () { PM_HOME.catalog.open(it.id, { where: 'panel', source: o.panelId, mode: 'keep' }); } } };
+    }) };
+  });
+  return PMW.menu.open(anchor || state.centre, { id: 'picker:' + kinds.join(','), title: o.title, search: { placeholder: o.placeholder || 'Find by name' },
+    width: 360, sections: sections, empty: 'Nothing to open yet.', at: anchor ? null : { x: state.centre.getBoundingClientRect().left + 40, y: state.centre.getBoundingClientRect().top + 40 } });
+};
 /* ---- panels/js/14-layouts.js ---- */
 /* Named layouts (D2): Home, Build, Terminals 2x2, Focus, plus the user's saved ones. A named layout is a tree of slots;
    applying it keeps every open tab (no terminal is killed, no dirty buffer dropped): each tab goes to the first slot
@@ -117091,7 +117132,7 @@ var DEFAULT_TABS = PMW.DEFAULT_TABS = {
   'dashboard:agents': { kind: 'dashboard', label: 'Agents', state: { board: 'agents' } },
   'file:src/main.rs': { kind: 'editor', state: { path: 'src/main.rs' } },
   'file:src/routes/recipes.rs': { kind: 'editor', state: { path: 'src/routes/recipes.rs' } },
-  'plan:read-path': { kind: 'plan', label: 'Plan: Read path', state: { plan: 'read-path' } },
+  'plan:ap-index': { kind: 'plan', label: 'Tenant-scoped analytics read path', state: { plan: 'ap-index' } },
   'terminal:t1': { kind: 'terminal', state: { profile: 'zsh', cwd: '~/tastebook/api', session: 't1', script: 'idle' } },
   'terminal:t2': { kind: 'terminal', state: { profile: 'zsh', cwd: '~/tastebook/api', session: 't2', script: 'cargo-test' } },
   'output:build': { kind: 'output', label: 'Output', state: { channel: 'build' } }
@@ -117105,7 +117146,7 @@ var NAMED = PMW.NAMED = {
       { dir: 'row', sizes: [0.5, 0.5], kids: [
         { slot: 'dash', accepts: ['dashboard'], ensure: ['dashboard:home', 'dashboard:agents'], active: 'dashboard:home' },
         { slot: 'docs', accepts: ['editor', 'plan', 'document', 'artifact', 'run', 'transcript', 'context', 'record', 'browser'], rest: true,
-          ensure: ['file:src/main.rs', 'file:src/routes/recipes.rs', 'plan:read-path'], active: 'file:src/main.rs' }
+          ensure: ['file:src/main.rs', 'file:src/routes/recipes.rs', 'plan:ap-index'], active: 'file:src/main.rs' }
       ] },
       { slot: 'tools', accepts: ['terminal', 'output', 'problems', 'ports', 'debug-console'], ensure: ['terminal:t1', 'terminal:t2', 'output:build'], active: 'terminal:t1' }
     ] }
@@ -120306,11 +120347,19 @@ function normalizeSpec(spec) {
 }
 
 /* The stable id for a spec: given, or the kind's idFor, or a default per kind. */
+/* one tab per canonical id: a kind may map aliases (plan-query -> plan:ap-index, collab-run:X -> room:X) */
+function canonicalId(s, id) {
+  var k = kindDef(s.kind);
+  if (k && typeof k.canonical === 'function') {
+    try { var c = k.canonical(id, s); if (c) return c; } catch (_) {}
+  }
+  return id;
+}
 function idForSpec(s) {
-  if (s.id) return s.id;
+  if (s.id) return canonicalId(s, s.id);
   var k = kindDef(s.kind);
   if (k && typeof k.idFor === 'function') {
-    try { var got = k.idFor(s); if (got) return got; } catch (err) { try { console.error('[pm-home] idFor failed', err); } catch (_) {} }
+    try { var got = k.idFor(s); if (got) return canonicalId(s, got); } catch (err) { try { console.error('[pm-home] idFor failed', err); } catch (_) {} }
   }
   if (s.kind === 'editor') {
     if (s.path) return 'file:' + s.path;
