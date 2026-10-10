@@ -3160,6 +3160,21 @@ canonical_text: >-
   (section 1) stays a side panel that lists, previews and links; it is not a tab and holds no viewer of its own. Shell
   state still never replaces artifact identity: which panel the tab lands in is F3-634's, and nothing about the tab
   is written into the artifact, its index row or its events.
+  Artifact viewer content has a 280 × 160 px minimum; Artifact... is plus order 60. Status words are Ready,
+  Stale, Needs retry, Rendering and Pinned, and the metadata row names subtype, version, status, updated
+  time and source thread. Charts use columns from 520 px body width and horizontal bars below; plots are 200
+  px high, 170 px below 520 px. Bars are 24 px wide with a 4 px rounded data end and square foot, using the
+  page accent; targets use a 1 px dashed line with a label. Line charts use 2 px strokes, 8 px dots with a 2
+  px surface ring and a 10 % area wash. Money has 2 decimals and nulls read not reported. Diagram nodes are
+  38 px high, 52 px with a sub-label, with 48 px row gaps, 22 px node gaps and label/sub/edge text 13/12/12
+  px. Fit shrinks to at most 92 %, never below 11 px text; narrower bodies scroll horizontally and start
+  centred; Actual size is 100 %. Viewer body rhythm is 12 px, with the existing 6 px note-under-figure
+  exceptions and 24 px identity block; below 520 px metric controls wrap with a 0/12 px gap, versus the
+  shared 18 px segment gap. Saved subtype state includes fit/actual/source view, metric, all/hit/miss
+  filter, column/direction sort or null and quiz answers by question/choice index. Source loading preview
+  starts at progress 0.4 with 2400 ms ETA, about 1.44 s remaining, updates every 120 ms and retries in 900
+  ms, 300 ms under Reduced Motion. These timings describe preview presentation; live loading/stale/error
+  truth remains the artifact's own projection.
 gui_related: true
 gui_classification_reason: Defines where and how a person sees an opened artifact, its versions and its states in the home panels.
 split_recommended: false
@@ -3188,6 +3203,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
   - "Plans/Decision_Log.md#DL-180"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D9)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (section 2, artifact tab ids; concept lineage only)"
@@ -3208,6 +3224,7 @@ negative_constraints:
 compatibility_only_notes:
   - "The concept's demo artifacts, its versioned chat route form and its subtype list are concept lineage; the product's subtypes follow the artifact types canon owns."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds artifact chart, diagram, document rhythm and preview timing numbers."
   - "Retired 2026-10-09 (DL-180): `cmd.artifacts.open_panel`, which was never registered; an artifact opens through `cmd.nav.open_subject` into the artifact tab."
 owner_boundary_notes:
   - "F3-635 owns the tab kind, its ids and the shared header row; F3-634 owns placement; this document owns which artifacts the viewer shows, how each type renders and the version rule."

@@ -8307,6 +8307,7 @@
    "label": "Editor Line Spacing",
    "desc": "Space between lines of code in editor tabs, as a multiple of the text size, separate from the app's line spacing. Applies at once.",
    "type": "slider",
+   "default": 1.55,
    "scope": [
     "global"
    ],

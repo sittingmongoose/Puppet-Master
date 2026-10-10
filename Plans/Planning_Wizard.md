@@ -2744,6 +2744,17 @@ canonical_text: >-
   Skip and Finish restore the captured v2 layout.
   Every saved tour position is stamped with its step id and the signature of the step order under which it
   was saved.
+  The workspace chapter has 4 action steps rather than 2, within the 20-step tour rather than 18. Show Me
+  aims the split drop 34 px inside the documents panel's right edge or 30 px above its bottom, clear of the
+  centre's 12 px root-edge band, and proceeds only when a split target is ready. In the source's 1920 × 1080
+  Home layout with the rail open and chat about 600 px, the documents panel is 511 × 598 px against a 280 ×
+  120 px editor minimum, so only Split down fits and the copy names it. The widget action waits at most 1500
+  ms for Add widget after revealing dashboard:home; the file step waits at most 900 ms for a file row. The
+  source's 6-minute estimate is a publish census measurement to confirm, not a completion deadline. The plus
+  step completes only after the menu is used and a tab is opened or a new tab id appears; the file step
+  requires an editor tab created since the step began; the drag step requires an applied cmd.panel_tab.move
+  with a split and increased panel count, with the menu alternative above retained. Back and Skip/Finish use
+  their respective restore paths.
 gui_related: true
 gui_classification_reason: Defines the workspace chapter's steps, copy, owner commands, completion observation, and saved-position and restore rules.
 split_recommended: false
@@ -2795,6 +2806,7 @@ negative_constraints:
   - Do not start a saved position fresh while its chapter still exists.
   - Do not keep the demonstrated layout without an explicit Keep selection.
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds workspace action census, split demonstration geometry and bounded reveal waits."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Stamps saved positions with step id and step-order signature."
 owner_hints:
   - Plans/Planning_Wizard.md

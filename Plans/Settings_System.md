@@ -3089,7 +3089,7 @@ canonical_text: >-
   start for a workspace with no saved choice; Flyout), general.interaction.preview-tabs (on),
   general.interaction.tab-sizing (Shrink to fit, F3-631's cascade, or Fixed width; Shrink to fit),
   code.editing.font-family (JetBrains Mono, Atkinson Hyperlegible Mono or System monospace; JetBrains Mono in every
-  look), code.editing.font-size (13), code.editing.line-height (no settled default yet), code.editing.minimap (on),
+  look), code.editing.font-size (13), code.editing.line-height (1.55), code.editing.minimap (on),
   code.editing.sticky-scroll (on) and code.editing.diff-layout (Automatic, side by side when the tab is wide and
   inline when narrow, or a fixed choice; Automatic). Amended: general.interaction.dashboard-widgets opens the Home
   dashboard tab's own widget picker and stores no widget layout, every dashboard tab keeping its own (WS-030);
@@ -3138,6 +3138,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
   - "hpt-plans-lead pm-mail 1010084328-3f4b (2026-10-10): code.editing.color-scheme, Editor Colors, Follow look; existing editing subgroup and neighbouring select-row shape."
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D27)"
   - "Plans/Decision_Log.md#DL-180"
@@ -3168,6 +3169,7 @@ owner_hints:
   - Plans/settings_inventory.json
   - Plans/FinalGUISpec.md
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Sets the already-listed editor line-height default to 1.55."
   - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Requires an Editor scheme row using the shared catalog and defaulting to Follow look."
   - "Amended 2026-10-10 (lead ruling L18): Adds code.terminal.search to the retired rows because find is always present (F3-641)."
   - "Retired 2026-10-09 (DL-180, DL-181): general.interaction.panel-dock, general.visual.chat-layout-mode, code.terminal.layout-style, code.terminal.auto-second-pane, code.editing.editor-strip-collapsed, code.terminal.explanations and code.terminal.tab-role."

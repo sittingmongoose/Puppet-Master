@@ -44005,6 +44005,108 @@ canonical_text: >-
   fields and the editor, and never trigger the Alt stand-ins; a Dead key never triggers them on any
   platform. Keys during IME composition are ignored. F6 is handled before the tab's key claim and reaches
   the chat composer from every region.
+  Browser and tool measurements: a browser body is at least 360 × 200 px. DevTools docks right at body
+  widths of 900 px or more, otherwise below. Its right width defaults to 340 px, ranging from 240 px to
+  min(60 % of body, body minus 200 px); below, its height defaults to 42 % and ranges from 25-70 %. Keyboard
+  resize moves 8 px, or 48 px with Shift. Capture labels appear at 1100 px and session labels at 620 px; the
+  shared icons-only step is below 520 px; below 480 px Full, Region, Select unless armed, and Forward move
+  into More. The address field is at least 96 px. Load-line motion lasts 320 ms, 0 under Reduced Motion;
+  shutter flash lasts 240 ms and is off under Reduced Motion. History is capped at 30 entries, 20 saved;
+  captures at 24, 12 saved; capture regions are at least 8 × 8 px. Browser saved view state includes URL,
+  ordinary/protected session choice, DevTools visibility, details/DevTools/captures rail choice,
+  elements/console/network/access tool choice, dock dimensions, history and index, ordinary URL, captures,
+  page title and policy differences only. The agent-access policy has 14 rows: Navigation, Tabs and frames,
+  Page structure and components, Styles, Console, Source maps and files, Screenshots and recording and
+  Viewport and device sizes default On; Network, Performance, Storage and cookies, Form input and Downloads
+  default Ask; Request simulation defaults Off; rows cycle Off, Ask, On. Browser is the plus menu's order-20
+  kind, with Ctrl+Shift+B and recent-address sub-rows. The four tools each have a 280 × 120 px minimum and
+  follow in plus order 70/71/72/73. Output caps at 600 lines, turns Follow off beyond 24 px from the end,
+  hides time below 520 px, and saves channel, follow and wrap. Its channel picker is 300 px wide, with a
+  trailing Open in new tab cell; Alt+Enter opens the split-off tab and Alt+click a new panel. A split-off
+  tab has a plain channel fact and More's Show in the Output tab. Problems rows are 28 px; source hides
+  below 520 px and line/column and folder below 360 px; saved view state is error/warning/info visibility
+  and collapsed files. Ports columns are 96 px / 1fr / 1.3fr / 140 px / 220 px; below 760 px Origin hides
+  and actions become icon-only in 108 px; below 480 px rows stack; actions are 32 px and rows at least 44
+  px. Ports saves added and removed port numbers. Debug Console caps at 400 lines, input history at 30 (20
+  saved), with a 34 px input row and session/history saved state. Browser and Debug Console fields have one
+  focus ring drawn by the header row, with no second field border, shadow or outline. The source's scripted
+  Output preview begins after 700 ms, adds a line every 260-680 ms and pauses 1.8-5 s; Debug Console preview
+  Continue re-hits at 1.9 s and Restart pauses at 1.7 s (60 ms under Reduced Motion). Those scripted timings
+  describe preview presentation, not actual process or debugger completion.
+  Plans and documents have 280 × 160 px content minima. The Plan or document... plus row is order 50. A
+  plan's sticky footer uses 32 px controls in one row with 10 px vertical padding, a maximum 960 px inner
+  column, 28 px sides or 16 px below 720 px body width; Revise moves into More below 420 px and the footnote
+  hides below 520 px. Document frames have a maximum 960 px column, 24 px vertical and 28 px horizontal
+  padding at 720 px or wider, 16 px below; titles are 22 px, 18 px below 420 px; body text is 13/20 px,
+  metadata 12/18 px and fine print 11.5/17 px, never below 11 px. Step marks use a 20 px column and 16 px
+  SVG marks; titles are 13/20 px at weight 600, body 12.5/19 px, metadata 12/18 px and code ids 11.5 px;
+  children indent 32 px. Step file rows use the final 32 px reference height and shift left 6 px, with top
+  margin 2 px, bottom margin -4 px and gaps 0 vertically/8 px horizontally; Revert file marks and state use
+  8 px top padding. Tables have a 440 px minimum width, horizontal scroll below it, and 7 × 12 px cell
+  padding. Markdown uses 12 px code text at line height 1.65, a 14 px rail and 6 px state dots, with blank
+  lines between blocks. Embed previews are 320 × about 116 px at natural size and scroll sideways below
+  that, with 11 px tick text. Memory panes are side by side from 720 px, with a 300 px list and 28 px gap,
+  stacked with Back below that. Debug phases are 4 columns from 640 px, 2 below and 1 below 340 px; debug
+  arguments and Revert file state move below their primary row below 520 px. Wonderer has an aside from 900
+  px and a top hairline below. Document text actions are 32 px, 24 px inline; frame button radii cap at 8
+  px. View state saves rich/markdown mode with separate scroll positions and optional older version,
+  discovery choices and disclosures, and each document's own view/model state, always within 16 KB. The
+  source's scripted Plan build advances a step every 2600 ms while visible and pauses while hidden; checking
+  previews take 1100-1200 ms, 300 ms under Reduced Motion. These scripted delays are preview presentation,
+  not actual workflow completion.
+  Run bodies have a 360 × 200 px minimum. They place a 220 px aside beside the body from 900 px, otherwise
+  below in an auto-fit grid of at least 180 px; at 904 px the grid is 652 px + 32 px gap + 220 px aside, or
+  904 px without an aside. BrainStorm options use 3 columns from 900 px, 2 from 600 px and 1 below; vote
+  tables stack below 640 px. The participant plate is one row from 720 px, or from 1200 px with 5 or more
+  seats; below that the input card has its own row, the plate wraps from 420-719 px and becomes a caption
+  line below 420 px. Chat Room head actions get their own row below 900 px; team outcomes move under names
+  and cost lists hide the model column below 520 px. Puppets are 28 px in the plate, 26 px for the hub and
+  You, 22 px in team rows, 20 px in timelines and 34 px in participant views; state corner marks are 12 px.
+  Five seat hues are blue, magenta, lime, orange and the page accent, all ink in NieR; hub and You are
+  neutral. Run view state saves overview/conversation/team/cost, person and filter;
+  paused/progress/rounds/ticks/promotions are session-only per run. Friendly controls and table-of-
+  contents/back/picker have 6 px radii; choice/seat/team rows cap at 8 px, sorting has 0 and run links 3 px.
+  File references are 24 px inline and appear only for files that exist; hover uses the shared tile
+  treatment for seats, row for team rows and quiz choices, and off for the hub. Source preview timing runs
+  only while visible and not paused: Crew ticks every 1 s; Review reader previews finish at 3, 6 and 8 s and
+  the report preview at 10 s; Chat Room reveals 2 words every 60 ms, arriving whole while hidden or under
+  Reduced Motion; Write the plan preview lasts 1400 ms, 400 ms reduced. These scripted times do not set real
+  agent or workflow completion deadlines.
+  Transcript and Context content minima are 280 × 160 px; records are 280 × 120 px. Transcript feed columns
+  cap at 760 px with padding 18/24/44 px, or 14/14/40 below 720 px; the spine is 1 px with 6 px dots and an
+  8 px live-dot ring. Stretch toggles are at least 30 px; step-rail discs are 16 px with 10 px glyphs, fold
+  after 10 discs into +N, and record-row glyphs are 13 px. Transcript prose is 13/21 px, record title
+  12.5/19 px, detail 12/18 px and time 11.5 px. Follow-bottom threshold is 28 px, elapsed ticks every 1 s
+  for Working, Retrying, Fallback route and Waiting, and live breathe is 1.6 s or a 1-1.2 s stepped
+  Retro/NieR blink. Step discs hide below 420 px, model below 700 px, Parent below 560 px, Read-only · live
+  words below 440 px (the lock stays), and agent name below 360 px. Transcript saves agent reference,
+  follow, open stretches and scroll top. The source preview streams at 3400 + ((delivered × 7) modulo 4) ×
+  700 ms, 3.4-5.5 s, and reveals 2 words every 55 ms; the new-item slide uses the shared slow motion.
+  Context columns cap at 720 px, 960 px from a 960 px body; Source composition and Context growth appear
+  side by side and start open at that width until the reader toggles them. Hero numbers are 32 px, bars 6
+  px, disclosures 34 px; tiles use 3 columns from 360 px and 1 below; four-tile groups use 4 from 600 px, 2
+  below and 1 below 300 px. Plan-limit rows have name, bar and a 128 px figure, with the bar on its own line
+  below 460 px; the usage fact hides below 380 px. Growth charts are 168 px high; the source's
+  131,000-token-limit fixture uses an axis to 140,000, gridlines at 0/50K/100K, ceiling 131,000 and turns
+  1/5/9. Limit tone is ok below 70 %, warn from 70 % and bad from 90 %. Context saves thread reference,
+  curated/raw view, open sections (null while width decides) and scroll top; sections are tokens, sources,
+  growth, route, limits, caps, cost and compaction. The six categorical colours are dark #3987e5 #d95926
+  #199e70 #c98500 #d55181 #008300 and light #2a78d6 #eb6834 #1baf7a #eda100 #e87ba4 #008300; NieR's charts
+  part uses ink at .92/.72/.56/.42/.30/.20 with hatching on even segments. Record columns cap at 960 px;
+  results have 10 px padding; tables scroll sideways with nowrap cells and notes at least 160 px. A search
+  query label longer than 28 characters is cut at 27 plus an ellipsis; MCP uses the tool label, or MCP;
+  records save scroll top. Shared document actions are 32 px and header targets 24 px, with no text below 11
+  px. Header labels appear at 1100 px for Transcript, 720 px for Context and 600 px for Record. Friendly
+  stretch/disclosure rows use the shared row radius, Parent links 6 px and Jump to latest/Source-thread
+  buttons cap at 8 px.
+  Header-row labels default to a 520 px body threshold; kinds may set their own: Browser and Transcript 1100
+  px, Context 720 px, Record 600 px. Icon-only buttons are 24 px wide. File references are 32 px tall with a
+  6 px radius and 12 px code face, or 24 px inline with a 4 px radius and 11.5 px code face. Their 240 ms
+  double-click window delays preview so double click can keep the file open; their hover tag says Open file
+  / Click previews it. Double-click keeps it open., or No file to open / This reference names no file.
+  without a path. In-tab view saves coalesce at 250 ms. Document action radii are Friendly 8 px, Glass 8 px,
+  Basic 6 px and Retro/NieR square 0. Metadata separator slots are 16 px with 3 px wrapped-line clipping
+  slack.
 gui_related: true
 gui_classification_reason: Defines the list of tab kinds, how a kind plugs into a panel, the shared header row, the overlay order and the panel keyboard.
 split_recommended: false
@@ -44085,6 +44187,7 @@ compatibility_only_notes:
   - "The concept's registration call, host API names, container name and z-index values are concept lineage; the stacking order is canon, its numbers are not."
   - "The concept spells the tool kind debug-console in its id prefix; the kind's schema name is debug_console."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds settled browser, tool, document, run, transcript, context, record and shared-helper dimensions and timings."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Passes host navigation keys from tab typing fields and cycles F6 to the chat composer."
   - "Amended 2026-10-10 (Addendum 2 D28, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
 owner_hints:
@@ -44313,6 +44416,19 @@ canonical_text: >-
   widgets. This supersedes F3-279's exact four-widget catalogue and the dashboard catalogue limit of Appendix C.4 and
   C.4.1, F3-517's "distinct tab models" for Home and Dashboard, section 7.2's singleton dashboard, and the dashboard's
   own Main, Metrics and Monitoring strip of F3-505.
+  Dashboard body padding is 12/12/16 px, or 8/8/12 below 420 px width. Agents cards use tracks of at least
+  240 px and one column below 420 px. Below 200 px height the shared-holder note hides its icon and sub-
+  line; the shared header is icon-only below 520 px and hidden below 150 px. Add widget is a 24 px target,
+  about 98-119 px with its label and 24 × 24 px below 520 px; Show it here and Open transcript use 32 px
+  document actions. Text formerly 10 px or 9 px inside the board is 11 px; compact status labels are 11/16
+  px with 10 px glyphs, lane dots 8 px and agent bars 4 px high with a 1 px radius. Card buttons have an 8
+  px radius and header Add widget 6 px, both 0 in Retro and NieR. The visible Agents clock ticks every 1 s;
+  the source preview's working progress increases 1 % per 9 s, caps at 96 % and transitions in 260 ms,
+  stepped in NieR and instant under Reduced Motion. Agents filters are all, working, needs, waiting and
+  done; the non-default filter is per-tab state and saves coalesced at about 250 ms. Shared grid content has
+  one holder: explicit activate or reveal claims it; an open while another grid is visible shows the note;
+  hiding hands over to another visible grid and closing parks it. Widget-grid columns, reset sizes and
+  reset-save timing are Plans/Widget_System.md#WS-030's.
 gui_related: true
 gui_classification_reason: Defines how a dashboard looks and behaves as a tab kind in any panel.
 split_recommended: false
@@ -44340,6 +44456,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
   - "Plans/Decision_Log.md#DL-180"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D10)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (concept lineage only)"
@@ -44353,6 +44470,8 @@ negative_constraints:
   - "Do not limit a dashboard tab to the four widgets of F3-279."
   - "Do not lay out panels with the widget grid or store dashboard widget layout in the Home layout record."
   - "Do not give a dashboard tab a strip or tab model of its own."
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds dashboard tab presentation dimensions and shared-holder behaviour."
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
@@ -44392,6 +44511,42 @@ canonical_text: >-
   tokens, text, secondary and dim text, line numbers and diff signs keep at least 4.5:1 contrast, and the
   find-hit ring keeps 3:1. The ⋮ menu's Appearance... row shows the scheme name or Follow look together with
   the font and size.
+  Editor measurements: line height is round(font size × line-height multiplier), 20 px at 13 px × 1.55;
+  character width is measured, 7.8 px for JetBrains Mono at 13 px. The line-number gutter is max(3 digits,
+  line-count digits) × character width + 16 px, plus a 16 px sign column, 56 px under 1,000 lines, with 10
+  px between gutter and text. The header plate is a 30 px row and 1 px hairline, with 11 px blur and 140 %
+  saturation at 72 % opacity; Glass uses an unblurred 90 % plate and NieR an unblurred 92 % paper plate. The
+  row hides below 150 px body height. The minimap track is 22 px wide, with a 13 px line lane and 4 px mark
+  lane; below 420 px body width, or with the minimap off, it becomes a 10 px marks-only track. Its thumb is
+  at least 24 px and centred on the exact visible range; the lane maps 80 columns. Files that fit draw at 3
+  px pitch with no thumb; long files aggregate per pixel row. The horizontal thumb is 6 px, appears on hover
+  or scroll, and fades after 900 ms. Sticky scroll shows at most 3 lines, with a 1-5 line range, and turns
+  off below 240 px code-area height. Automatic diff uses side by side at 900 px and returns inline below 852
+  px, with 48 px hysteresis; forced side by side falls back inline below 600 px, and switching waits for the
+  final resize call. Changes show 3 context lines, never fold 1-2 lines at file edges, and mark words only
+  for pairs at least 40 % alike. Find is min(440 px, body minus track minus 24 px), becomes a full-width bar
+  below 440 px, hides toggles below 340 px, uses 24 px targets and caps hits at 9,999, displayed as 9999+.
+  Go to line is min(320 px, body minus 24 px). The focus band uses code.editing.goto-highlight-ms, default
+  5,000 ms, then fades for 600 ms, instantly under Reduced Motion. Reveal is 150 ms per row with an 8 ms
+  stagger capped at 40 rows in the first viewport only; caret blink is 1.06 s and the thumb has no easing.
+  Undo groups changes of one kind on one line within 900 ms and keeps 400 steps. Rendering covers visible
+  lines plus 24 above and below; a far jump guesses when more than 300 lines past the tokenized prefix;
+  background tokenizing processes 1,200 lines per 12 ms slice; brace scopes wait for full tokenizing above
+  3,000 lines. Saved editor state carries path, reveal line, scroll top, mode and optional diff layout;
+  buffer state adds title, language, edit or read-only state and text up to 12,000 characters. The line is a
+  reveal target and top restores scroll. Untitled buffers are numbered Untitled 1, Untitled 2 and onward.
+  Editor keys are Ctrl+F, Ctrl+H, Ctrl+G, Ctrl+S, F3/Shift+F3 and Alt+F5/Shift+Alt+F5 for next/previous
+  change; find uses Alt+C and Alt+R, Ctrl+Shift+1 replaces one and Ctrl+Alt+Enter replaces all; Alt+W
+  remains the host close key and whole word has no shortcut. Scheme tints in dark/light are add 12 %/10 %,
+  modified 10 %/8 %, deleted 12 %/9 %, conflict 15 %/12 %, added-word marks 30 %/22 % and deleted-word marks
+  30 %/20 %. Current line is 5 %/6 % of foreground, focus band ANSI blue at 16 %, minimap ink alpha .28/.34.
+  Retro dark Amber uses foreground, caret and selection #ffc25f; keywords and current line numbers #ffedd1;
+  strings, links and code #ffd797; comments and line numbers #c37800; functions, macros and tags #ffdfad;
+  types #ffce7e; numbers, escapes, headings and variables #fff3de; punctuation #e38c00; properties and
+  attributes #ffcc79; current-line wash rgba(255,194,95,.06), focus band .14, find-hit fills
+  rgba(255,243,222,.18/.34) and ring #fff3de. The concept's measured 10,000-line scroll step about 1.2 ms,
+  far jump about 8 ms and keystroke about 8 ms (about 120 ms before isolation) are source measurements, not
+  native certification.
 gui_related: true
 gui_classification_reason: Defines the code editor as a tab kind and the editing features it adds.
 split_recommended: false
@@ -44440,6 +44595,7 @@ negative_constraints:
 compatibility_only_notes:
   - "The width at which the diff turns inline is a concept number still to come (wave 2)."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds editor metrics, minimap, sticky scroll, diff, find, rendering, undo, state and scheme tint numbers."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Specifies scheme-painted editor surfaces, contrast floors and Appearance row detail."
   - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Retro editor syntax reads the terminal Retro scheme choice once and keeps no copy."
   - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
@@ -44465,7 +44621,7 @@ canonical_text: >-
   glass rim on the plate, goes to .92 opacity only while a tab is carried (F3-505), adds no backdrop blur of its own to
   panels or strips, and F3-431's closed blur budget is unchanged. Retro: reverse-video tabs (the
   active tab a phosphor-filled block with dark text), bracket glyphs ("[+7]", "[+]"), stepped corners on the silhouette,
-  kind icons as one-cell glyphs from the code face (never emoji), the dirty mark an asterisk after the label, box-drawn
+  kind icons as glyphs of at most two cells from the code face (never emoji), the dirty mark an asterisk after the label, box-drawn
   menus with a hard frame and reverse-video rows, dividers drawn as a single box-drawing line that doubles while
   hovered or dragged, and a dithered landing preview with a box-drawn outline; Retro motion snaps and never springs, and
   its three rotating effects play on selection and reorder (F3-631). NieR Mode paints only while NieR Mode is on, and
@@ -44497,6 +44653,13 @@ canonical_text: >-
   in every look and in NieR. They are mixed from the page's own colours so the Settings accent flows
   through. A primary button chooses black or white ink from the fill's luminance and keeps at least 4.5:1
   contrast.
+  The shared icon grammar uses 16 px strokes and Retro glyphs of at most 2 cells; this amends the one-cell
+  wording for kinds where needed. Crew, Review, Chat Room and BrainStorm use &, ?, ~ and ^ respectively;
+  Open in new tab uses + and Appearance uses *. Each kind supplies its icon to the strip, +N list, every-tab
+  list and recent-tab switcher through the one registered icon source. Primary-button black/white ink
+  switches at fill luminance Y 0.1791, with a 4.58:1 theoretical floor. Source measurements changed Glass
+  light from 1.75:1 to 4.68:1 (hover 7.3:1), Friendly light from 2.97:1 to 6.79:1, and give at least 4.68:1
+  in every look; the required floor remains 4.5:1.
 gui_related: true
 gui_classification_reason: Defines how panels, strips, menus, dividers and drags render in each look, NieR Mode and Reduced Motion.
 split_recommended: false
@@ -44504,7 +44667,7 @@ depends_on: [DL-180, DL-152, SSYS-043, F3-598, F3-465, F3-631, F3-632, F3-633]
 unblocks: [ATS-075]
 acceptance_criteria:
   - "Each panel surface listed here renders in the eight family variants, NieR Mode and Reduced Motion with the treatments stated."
-  - "Retro shows reverse-video tabs, bracket glyphs, stepped corners, box-drawn menus and dividers and one-cell kind glyphs, and its motion snaps."
+  - "Retro shows reverse-video tabs, bracket glyphs, stepped corners, box-drawn menus and dividers and kind glyphs of at most two cells, and its motion snaps."
   - "With NieR Mode off no NieR touch draws; with it on each touch appears only when its part is installed, every colour resolves to NieR or repainted theme tokens, and no glow, filter or blur is used."
   - "Under Reduced Motion every panel and tab duration is 0 and drags still show landing previews."
   - "No tab, tab button or divider receives magnet displacement or glow; at most a static tint."
@@ -44551,6 +44714,7 @@ negative_constraints:
 compatibility_only_notes:
   - "The concept also gates some touches by its own hook names and by part keys outside this list; only the existing part keys named here are canon."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses the shared icon glyph grammar and primary-button luminance crossover."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Requires page-derived text and state contrast and luminance-selected primary-button ink."
   - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Retro editor syntax reads the terminal Retro scheme choice once and keeps no copy."
   - "Amended 2026-10-10 (lead ruling L5): The active tab and its panel share one shape and the look selection fill; the Glass crown rim is material."
