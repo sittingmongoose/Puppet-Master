@@ -44113,6 +44113,10 @@ canonical_text: >-
   window-width columns, is superseded by F3-638), F3-503's below-1320
   px overflow-x exception, F3-517's rule that Home collapses to a single column, and the chat's own narrow-width rules
   as they apply to Home (APR-038's full-width plan tab is read through the switcher and ACD-500).
+  With History pinned and the rail folded, History drops to a flyout at 1170 px of window width going
+  narrower and returns at 1210 px going wider; the chat folds to its strip at 930 px going narrower and
+  unfolds at 990 px going wider. The ladder uses 48 px hysteresis; these measured transition pairs and
+  temporary History drops are never saved.
 gui_related: true
 gui_classification_reason: Defines what gives way, and in what order, when the room left for the panels gets narrow.
 split_recommended: false
@@ -44125,6 +44129,7 @@ acceptance_criteria:
   - "At the measured window widths the rail, chat and centre widths match the values stated here."
   - "No dashboard, header row or other tab content reads the window width, and the centre never scrolls sideways."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+  - "With the rail folded, History drops at 1170 px and returns at 1210 px; the chat folds at 930 px and returns at 990 px; the 48 px ladder hysteresis and temporary states are never saved."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -44139,6 +44144,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
   - "Plans/Decision_Log.md#DL-180"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D4)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)"
@@ -44155,6 +44161,8 @@ negative_constraints:
   - "Do not key a Home narrow rule on the window width."
   - "Do not save a narrow state or destroy the split tree to fit a narrow window."
   - "Do not fold the chat before the rail's side panel."
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds History drop and strip fold thresholds with the rail folded, without saving narrow state."
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
@@ -44177,7 +44185,7 @@ canonical_text: >-
   and it is never moved, docked, grabbed or floated inside the window: it carries no grip and no surface menu of the
   home centre. Its default width follows the window: clamp(400, 0.26667 x window width + 88, 640) px, so 480 px on a
   1470 px window, 600 px at 1920 px and 640 px from 2070 px. The user drags the column's inner edge between 400 and 760
-  px, never so wide that the centre drops below 600 px; the drag previews locally and commits once on release as
+  px, never so wide that the centre drops below 960 px; the drag previews locally and commits once on release as
   cmd.workspace_layout.resize_surface with the surface chat and its width, kept in the v2 layout record (SP-330), and a
   width the user never set follows the window. Showing and hiding the chat stay cmd.panel.switch with chat. The narrow
   ladder (F3-636) eases it toward 400 px and, below a centre width of 480 px, folds it to a 32 px edge strip that opens
@@ -44196,6 +44204,11 @@ canonical_text: >-
   and the 360 px chat beside an open document of APR-038 and F3-569.
   After a restart the chat starts in its column (F3-504); whether a popped-out chat reopens popped out is an open question for Jared.
   ui.chat_column.pin_history is a typed local action (view state); its value is the v2 record's chat column history_pinned, committed with the chat_column_changed change.
+  The saved width and the 400-760 px drag range describe the message area. Pinning History adds 240 px to
+  the column, or 200 px while the whole column is under 540 px; the messages keep their width. The pinned
+  column's minimum is 640 px; its drag range is 640 to 760 + 240 px, capped by the 960 px centre budget. A
+  folded chat has History dropped to a flyout; its peek is 400 px, or 640 px when History is pinned, capped
+  at the row width minus 48 px.
 gui_related: true
 gui_classification_reason: Defines the chat's fixed column, its width, show and hide, Pop out, History flyout and Activity Detail.
 split_recommended: false
@@ -44204,11 +44217,12 @@ unblocks: [ACD-500, ACD-501, SSYS-050, UCC-203, PWIZ-035, ATS-075]
 acceptance_criteria:
   - "The chat column spans from the title bar to the status bar at full width of both bars, and no gesture, menu or key moves it inside the window."
   - "The default width equals clamp(400, 0.26667 x window width + 88, 640) px (480 at 1470, 600 at 1920, 640 from 2070) until the user drags it."
-  - "A width drag stays within 400-760 px and never leaves the centre below 600 px, and commits once on release as cmd.workspace_layout.resize_surface with the surface chat."
+  - "A width drag stays within 400-760 px and never leaves the centre below 960 px, and commits once on release as cmd.workspace_layout.resize_surface with the surface chat."
   - "Pop out in the desktop app opens the one chat in its own window and Dock back returns it to its column; no second chat surface ever exists."
   - "History opens as a flyout by default and pinning it widens the column by the list's width without narrowing the messages; Activity Detail stays in the chat."
   - "Below a centre width of 480 px the chat folds to a 32 px strip unless Keep the chat open in narrow windows is on."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+  - "History adds 240 px, or 200 px below a 540 px whole-column width, without changing the message area's width or its 400-760 px drag range; the pinned column and peek obey the stated minima and centre budget."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -44225,6 +44239,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
   - "Plans/FinalGUISpec.md#F3-636 (the narrow ladder consumes the chat column; cited, not a dependency (lead ruling L22, 2026-10-10))"
   - "Plans/Decision_Log.md#DL-180"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D3, D4)"
@@ -44252,6 +44267,7 @@ negative_constraints:
 compatibility_only_notes:
   - "The concept floats the popped-out chat inside the page at 440 x min(720, window - 140) px with Dock back; that is the concept's browser stand-in, not a canon size."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds pinned History widths and keeps width and drag range tied to the messages."
   - "Amended 2026-10-10 (lead ruling L9): The History pin names ui.chat_column.pin_history and commits history_pinned with chat_column_changed."
   - "Amended 2026-10-10 (lead ruling L7): After restart the chat starts in its column; reopening popped out remains an open question for Jared."
   - "Amended 2026-10-10 (lead ruling L6): Pop out is desktop only; the web chat stays in its column."
