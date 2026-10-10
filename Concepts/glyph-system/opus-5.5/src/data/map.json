@@ -6258,6 +6258,368 @@
 "glyph": "terminal",
 "by": "high",
 "at": "terminal/js/90-kind.js:8"
+},
+{
+"surface": "settings-ai",
+"surfaces": [
+"settings-ai",
+"settings-code",
+"settings-general",
+"settings-memory",
+"settings-planning",
+"settings-safety",
+"settings-source",
+"settings-system"
+],
+"table": "runtime",
+"name": "settings-about",
+"old": "<circle cx=\"12\" cy=\"12\" r=\"9\"></circle><path d=\"M9.6 9.3a2.5 2.5 0 0 1 4.8.9c0 1.7-2.4 2.2-2.4 3.8M12 17h.01\"></path>",
+"vb": "0 0 24 24",
+"glyph": "help",
+"by": "lead",
+"at": "runtime fb203a79ee (the help circle beside every Settings field (219 seen))"
+},
+{
+"surface": "usage",
+"surfaces": [
+"usage"
+],
+"table": "runtime",
+"name": "usage-panel-options",
+"old": "<path d=\"M10.35 5a1.65 1.65 0 1 0 3.3 0a1.65 1.65 0 1 0-3.3 0zM10.35 12a1.65 1.65 0 1 0 3.3 0a1.65 1.65 0 1 0-3.3 0zM10.35 19a1.65 1.65 0 1 0 3.3 0a1.65 1.65 0 1 0-3.3 0z\"></path>",
+"vb": "0 0 24 24",
+"glyph": "more",
+"by": "lead",
+"at": "runtime 56ad57d37d (Usage panel options (vertical kebab))"
+},
+{
+"surface": "usage",
+"surfaces": [
+"usage"
+],
+"table": "runtime",
+"name": "usage-move-panel",
+"old": "<path d=\"M6.5 6a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0-3 0zM14.5 6a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0-3 0zM6.5 12a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0-3 0zM14.5 12a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0-3 0zM6.5 18a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0-3 0zM14.5 18a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0-3 0z\"></path>",
+"vb": "0 0 24 24",
+"glyph": "grip",
+"by": "lead",
+"at": "runtime 5a12f72e65 (Usage panel move handle)"
+},
+{
+"surface": "usage",
+"surfaces": [
+"usage"
+],
+"table": "runtime",
+"name": "usage-panel-size",
+"old": "<path d=\"M6 3.5h12a2.5 2.5 0 0 1 2.5 2.5v12a2.5 2.5 0 0 1-2.5 2.5h-12a2.5 2.5 0 0 1-2.5-2.5v-12a2.5 2.5 0 0 1 2.5-2.5zM13 17h4v-4M11 7H7v4\"></path>",
+"vb": "0 0 24 24",
+"glyph": "resize",
+"by": "lead",
+"at": "runtime 7871af28c2 (Usage panel size)"
+},
+{
+"surface": "usage",
+"surfaces": [
+"usage"
+],
+"table": "runtime",
+"name": "usage-configure-panel",
+"old": "<path d=\"M9 12a3 3 0 1 0 6 0a3 3 0 1 0-6 0zM12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1\"></path>",
+"vb": "0 0 24 24",
+"glyph": "settings",
+"by": "lead",
+"at": "runtime 9a8e1a6e28 (Usage configure panel)"
+},
+{
+"surface": "onboarding",
+"surfaces": [
+"onboarding",
+"tour"
+],
+"table": "runtime",
+"name": "onboarding-change-look",
+"old": "<path d=\"M12 3.5a8.5 8.5 0 1 0 0 17c1.2 0 1.9-.8 1.9-1.8 0-.5-.2-.9-.5-1.3-.3-.4-.5-.8-.5-1.3 0-1 .8-1.8 1.8-1.8h2.1a4.2 4.2 0 0 0 4.2-4.2C21 6.6 17 3.5 12 3.5z\"></path><circle cx=\"7.6\" cy=\"11.4\" r=\"1.2\" fill=\"currentColor\"></circle><circle cx=\"10.2\" cy=\"7.6\" r=\"1.2\" fill=\"currentColor\"></circle><circle cx=\"14.6\" cy=\"7.6\" r=\"1.2\" fill=\"currentColor\"></circle><circle cx=\"17.2\" cy=\"11\" r=\"1.2\" fill=\"currentColor\"></circle>",
+"vb": "0 0 24 24",
+"glyph": "palette",
+"by": "lead",
+"at": "runtime 290c19fc43 (onboarding and tour look picker)"
+},
+{
+"surface": "onboarding",
+"surfaces": [
+"onboarding",
+"tour"
+],
+"table": "runtime",
+"name": "onboarding-sound-on",
+"old": "<path d=\"M4 9.5h3.5L12 5.5v13l-4.5-4H4z\"></path><path d=\"M15.5 8.5a5 5 0 0 1 0 7\"></path><path d=\"M18.4 5.6a9 9 0 0 1 0 12.8\"></path>",
+"vb": "0 0 24 24",
+"glyph": "speaker",
+"by": "lead",
+"at": "runtime 95a561f0fc (onboarding and tour sound)"
+},
+{
+"surface": "rail-panel-files",
+"surfaces": [
+"rail-panel-files"
+],
+"table": "runtime",
+"name": "files-rust-source",
+"old": "<path d=\"M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z\"></path><polyline points=\"14 2 14 8 20 8\"></polyline><path d=\"M9 13l2 2 4-4\"></path>",
+"vb": "0 0 24 24",
+"glyph": "page",
+"by": "lead",
+"at": "runtime 4e0a183fd9 (file-type icon (page; the type stays in the label))"
+},
+{
+"surface": "rail-panel-files",
+"surfaces": [
+"rail-panel-files"
+],
+"table": "runtime",
+"name": "files-svelte",
+"old": "<path d=\"M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z\"></path><polyline points=\"14 2 14 8 20 8\"></polyline><path d=\"M11 11h2\"></path><path d=\"M12 9l-1.6 2.4L12 14\"></path>",
+"vb": "0 0 24 24",
+"glyph": "page",
+"by": "lead",
+"at": "runtime 507d38fcdf (file-type icon)"
+},
+{
+"surface": "rail-panel-files",
+"surfaces": [
+"rail-panel-files"
+],
+"table": "runtime",
+"name": "files-xml",
+"old": "<path d=\"M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z\"></path><polyline points=\"14 2 14 8 20 8\"></polyline><path d=\"M10 11.4l-1.6 1.6 1.6 1.6\"></path><path d=\"M14 11.4l1.6 1.6-1.6 1.6\"></path>",
+"vb": "0 0 24 24",
+"glyph": "page",
+"by": "lead",
+"at": "runtime 90e2cf7feb (file-type icon)"
+},
+{
+"surface": "rail-panel-files",
+"surfaces": [
+"rail-panel-files"
+],
+"table": "runtime",
+"name": "files-markdown",
+"old": "<path d=\"M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z\"></path><polyline points=\"14 2 14 8 20 8\"></polyline><path d=\"M8 15v-3l1.5 1.6L11 12v3\"></path><path d=\"M14 15v-3l2 1.8\"></path>",
+"vb": "0 0 24 24",
+"glyph": "page",
+"by": "lead",
+"at": "runtime e450cb6d63 (file-type icon)"
+},
+{
+"surface": "rail-panel-files",
+"surfaces": [
+"rail-panel-files"
+],
+"table": "runtime",
+"name": "files-toml",
+"old": "<path d=\"M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z\"></path><polyline points=\"14 2 14 8 20 8\"></polyline><path d=\"M9.5 12h2.2\"></path><path d=\"M10.6 12v3.2\"></path><circle cx=\"15\" cy=\"13.6\" r=\"1.4\"></circle>",
+"vb": "0 0 24 24",
+"glyph": "page",
+"by": "lead",
+"at": "runtime ff1aebe8c2 (file-type icon)"
+},
+{
+"surface": "tour",
+"surfaces": [
+"tour"
+],
+"table": "runtime",
+"name": "tour-back",
+"old": "<path d=\"M12.5 4.5 7 10l5.5 5.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>",
+"vb": "0 0 24 24",
+"glyph": "chevron-left",
+"by": "lead",
+"at": "runtime 8028d2d5b3 (tour back)"
+},
+{
+"surface": "onboarding",
+"surfaces": [
+"onboarding"
+],
+"table": "runtime",
+"name": "onboarding-back",
+"old": "<path d=\"M15 6l-6 6 6 6\"></path>",
+"vb": "0 0 24 24",
+"glyph": "chevron-left",
+"by": "lead",
+"at": "runtime b50d6411d9 (onboarding back)"
+},
+{
+"surface": "home",
+"surfaces": [
+"home"
+],
+"table": "runtime",
+"name": "home-forward",
+"old": "<polyline points=\"9 18 15 12 9 6\"></polyline>",
+"vb": "0 0 24 24",
+"glyph": "chevron-right",
+"by": "lead",
+"at": "runtime 40639b2b4f (home forward)"
+},
+{
+"surface": "menu-home-more",
+"surfaces": [
+"menu-home-more"
+],
+"table": "runtime",
+"name": "home-more-open",
+"old": "<path d=\"m6 3 5 5-5 5\"></path>",
+"vb": "0 0 24 24",
+"glyph": "chevron-right",
+"by": "lead",
+"at": "runtime 7e56d39921 (home more menu open)"
+},
+{
+"surface": "chat",
+"surfaces": [
+"chat",
+"home"
+],
+"table": "runtime",
+"name": "chat-edit",
+"old": "<path d=\"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"></path><path d=\"M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z\"></path>",
+"vb": "0 0 24 24",
+"glyph": "edit",
+"by": "lead",
+"at": "runtime fd31780a85 (chat and home edit)"
+},
+{
+"surface": "menu-theme",
+"surfaces": [
+"menu-theme",
+"onboarding"
+],
+"table": "runtime",
+"name": "nier-adjust",
+"old": "<path d=\"M1.5 4h13M1.5 8h13M1.5 12h13\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.3\" stroke-linecap=\"square\"></path><rect x=\"3.2\" y=\"2.2\" width=\"3.2\" height=\"3.6\" fill=\"currentColor\"></rect><rect x=\"9.2\" y=\"6.2\" width=\"3.2\" height=\"3.6\" fill=\"currentColor\"></rect><rect x=\"5.2\" y=\"10.2\" width=\"3.2\" height=\"3.6\" fill=\"currentColor\"></rect>",
+"vb": "0 0 24 24",
+"glyph": "menu",
+"by": "lead",
+"at": "runtime 1bc0a9cce0 (theme menu NieR adjust)"
+},
+{
+"surface": "statusbar",
+"surfaces": [
+"statusbar"
+],
+"table": "runtime",
+"name": "statusbar-project-root",
+"old": "<path d=\"M2.5 5.5h5l1.6 1.8h8.4v8.2h-15z\"></path>",
+"vb": "0 0 24 24",
+"glyph": "folder",
+"by": "lead",
+"at": "runtime 04547ec042 (status bar project root)"
+},
+{
+"surface": "topbar",
+"surfaces": [
+"topbar"
+],
+"table": "runtime",
+"name": "topbar-notifications",
+"old": "<path d=\"M15 17h5l-1.4-1.4A2 2 0 0 1 18 14.2V11a6 6 0 1 0-12 0v3.2c0 .5-.2 1-.6 1.4L4 17h5\"></path><path d=\"M9 17a3 3 0 0 0 6 0\"></path>",
+"vb": "0 0 24 24",
+"glyph": "bell",
+"by": "lead",
+"at": "runtime 19d5e6e439 (top bar notifications)"
+},
+{
+"surface": "settings-general",
+"surfaces": [
+"settings-general"
+],
+"table": "runtime",
+"name": "settings-choose-widgets",
+"old": "<path d=\"m12 3 9 5-9 5-9-5 9-5Z\"></path><path d=\"m3 13 9 5 9-5\"></path>",
+"vb": "0 0 24 24",
+"glyph": "layers",
+"by": "lead",
+"at": "runtime 33406315b2 (Settings choose widgets)"
+},
+{
+"surface": "rail",
+"surfaces": [
+"rail"
+],
+"table": "runtime",
+"name": "rail-dashboard",
+"old": "<rect x=\"3\" y=\"3\" width=\"7\" height=\"9\"></rect><rect x=\"14\" y=\"3\" width=\"7\" height=\"5\"></rect><rect x=\"14\" y=\"12\" width=\"7\" height=\"9\"></rect><rect x=\"3\" y=\"16\" width=\"7\" height=\"5\"></rect>",
+"vb": "0 0 24 24",
+"glyph": "grid",
+"by": "lead",
+"at": "runtime 4c5d668348 (rail dashboard)"
+},
+{
+"surface": "home",
+"surfaces": [
+"home"
+],
+"table": "runtime",
+"name": "home-open-browser",
+"old": "<circle cx=\"12\" cy=\"12\" r=\"10\"></circle><line x1=\"2\" y1=\"12\" x2=\"22\" y2=\"12\"></line><path d=\"M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z\"></path>",
+"vb": "0 0 24 24",
+"glyph": "globe",
+"by": "lead",
+"at": "runtime 4f1701278e (home open browser)"
+},
+{
+"surface": "statusbar",
+"surfaces": [
+"statusbar"
+],
+"table": "runtime",
+"name": "statusbar-source-control",
+"old": "<circle cx=\"5\" cy=\"4.5\" r=\"2\"></circle><circle cx=\"5\" cy=\"15.5\" r=\"2\"></circle><circle cx=\"15\" cy=\"10\" r=\"2\"></circle><path d=\"M5 6.5v7M7 6c4.5 0 3 4 6 4\"></path>",
+"vb": "0 0 24 24",
+"glyph": "branch",
+"by": "lead",
+"at": "runtime 5ca16c1276 (status bar source control)"
+},
+{
+"surface": "home",
+"surfaces": [
+"home"
+],
+"table": "runtime",
+"name": "home-share",
+"old": "<circle cx=\"18\" cy=\"5\" r=\"3\"></circle><circle cx=\"6\" cy=\"12\" r=\"3\"></circle><circle cx=\"18\" cy=\"19\" r=\"3\"></circle><line x1=\"8.59\" y1=\"13.51\" x2=\"15.42\" y2=\"17.49\"></line><line x1=\"15.41\" y1=\"6.51\" x2=\"8.59\" y2=\"10.49\"></line>",
+"vb": "0 0 24 24",
+"glyph": "share",
+"by": "lead",
+"at": "runtime 59b0c1aabd (home share with)"
+},
+{
+"surface": "home",
+"surfaces": [
+"home"
+],
+"table": "runtime",
+"name": "home-pick-element",
+"old": "<path d=\"M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z\"></path><path d=\"M13 13l6 6\"></path>",
+"vb": "0 0 24 24",
+"glyph": "pointer",
+"by": "lead",
+"at": "runtime 55b0453912 (pick an element (designer2 panels: pointer))"
+},
+{
+"surface": "home",
+"surfaces": [
+"home"
+],
+"table": "runtime",
+"name": "home-add-selection",
+"old": "<path d=\"M4 7V4h3\"></path><path d=\"M20 7V4h-3\"></path><path d=\"M4 17v3h3\"></path><path d=\"M20 17v3h-3\"></path>",
+"vb": "0 0 24 24",
+"glyph": "select-area",
+"by": "lead",
+"at": "runtime 11bad014f6 (add a selection (designer2 panels))"
 }
 ]
 }

@@ -123,6 +123,18 @@ def main() -> None:
         out.append({'surface': pkg, 'surfaces': [pkg], 'table': 'home-' + pkg, 'name': name, 'old': markup, 'vb': vb or viewbox(markup),  # the packages' 16-grid icons say so; guess only when they don't
                    
                     'glyph': glyph, 'by': conf, 'at': f"{r['file']}:{r['line']}"})
+    # the runtime census (W1) cross-checked against this map (W4, Kimi): shapes PMConcept7 shows that no source table
+    # held, mapped by the lead in runtime-lead-map.csv (the rail's knock-out badges, the tour spotlights and the
+    # onboarding art in its wrapper are left out on purpose: GLY-3 and the T-art rows cover them)
+    shapes = {r['geometry_hash']: r for r in rows('runtime-shapes.csv')}
+    for r in rows('runtime-lead-map.csv'):
+        sh = shapes.get(r['geometry_hash'])
+        markup = clean(unwrap(sh['svg_markup'])[1]) if sh else ''
+        if not markup:
+            continue
+        sl = surfaces(sh.get('surfaces', '').replace(':', '-'))
+        out.append({'surface': sl[0], 'surfaces': sl, 'table': 'runtime', 'name': r['name'], 'old': markup,
+                    'vb': '0 0 24 24', 'glyph': r['glyph'], 'by': 'lead', 'at': 'runtime ' + r['geometry_hash'] + ' (' + r['why'] + ')'})
     OUT.write_text(json.dumps({'source': 'reports/pm7-glyphs-20261010/inventory', 'items': out}, indent=0) + '\n', encoding='utf-8')
     print(f'wrote {OUT.relative_to(REPO)}: {len(out)} icons')
 

@@ -228,7 +228,7 @@
     ['Usage', ['T-usage-svg', 'T-usage-base', 'T-single']], ['Chat (PMConcept7 today)', ['T-chat']],
     ['Terminal in the shell', ['T-term', 'T-term-split', 'T-term-wg']], ['Terminal package', ['home-terminal']],
     ['Panels package', ['home-panels']], ['Left rail', ['T-rail-solid', 'T-jj']], ['Onboarding art', ['T-art', 'T-obfall']],
-    ['Status marks', ['T-marks']]
+    ['Status marks', ['T-marks']], ['Seen on screen only (runtime census)', ['runtime']]
   ];
   function oldSvg(it) { return '<svg class="pmg-old" viewBox="' + esc(it.vb) + '" width="22" height="22" fill="none" stroke="currentColor" stroke-width="' + (it.vb === '0 0 16 16' ? 1.3 : 1.8) + '" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + it.old + '</svg>'; }
   function renderMap(el) {

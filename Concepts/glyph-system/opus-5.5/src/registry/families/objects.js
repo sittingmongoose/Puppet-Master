@@ -207,6 +207,14 @@
       { els: ['<path d="M9.5 9.4a2.6 2.6 0 0 1 5 .9c0 1.7-2.5 2.2-2.5 3.7"/>', '<path d="M12 17.1v.1"/>'], move: { ay: -3, b: 1 } }]
   });
 
+  def('share', {
+    meaning: 'Share with someone or somewhere else.', act: 'seq', aliases: [],
+    replaces: ['home share-with (runtime census 59b0c1aabd)'], note: 'The two far nodes reach out from the near one in turn.',
+    parts: ['<circle cx="6" cy="12" r="2.6"/>',
+      { els: ['<circle cx="18" cy="5.5" r="2.6"/>', '<path d="M8.3 10.7 15.7 6.8"/>'], move: { ax: -3, ay: 1.6, ao: .5 } },
+      { els: ['<circle cx="18" cy="18.5" r="2.6"/>', '<path d="M8.3 13.3 15.7 17.2"/>'], move: { ax: -3, ay: -1.6, ao: .5, ad: 120 } }]
+  });
+
   /* people, agents and safekeeping */
   def('robot', {
     meaning: 'An agent: an AI worker acting for you (the noun; the terminal\'s spark and cursor cell mark an agent at the keyboard).', act: 'seq', aliases: ['agent', 'agents', 'bot'],
