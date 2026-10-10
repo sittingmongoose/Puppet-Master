@@ -526,6 +526,49 @@ B = {
     },
 }
 
+# Host default sets (home/panels planner, 2026-10-10): the boards a host other than the Usage page starts from (the home
+# page and the dashboard tabs of home-panels' per-instance boards). PMU_BOARDS.hosts[id][class], with their own version:
+# the engine stores 'pmu-host:' + HOSTS_VERSION, independent of the Usage page's default_set_version (PMU_BOARDS.version),
+# so changing a host never resets a Usage room and the reverse. Every card is 'widget@preset': its size is that preset's at
+# the class (validated), packed first-fit with no hole like the room boards; written for S, M and L (XL is projected from L
+# as for the rooms). Positions keep the summary tiles first where they pack without a hole; where a short tile beside a
+# taller card would leave one, the tiles close the board instead. 'widget@preset:h' gives a preset sized by content (fit)
+# its fallback height h (inside the kind's range); a fixed preset always takes its own height. Compact provider plates show the active account and fold
+# a provider's other accounts to their "N more" line (hover, Details). HOSTS_DIGEST is the hash of the generated host
+# boards: --check fails when HOSTS changes without a new HOSTS_VERSION (and HOSTS_DIGEST) or a version without a change.
+HOSTS_VERSION = 'pmu-hosts-2026-10-10b'
+HOSTS_DIGEST = '3ce745e8635d68a7'
+HOST_CLASSES = {'S': 12, 'M': 20, 'L': 24}
+HOST_PLATES = ['acct-claude-code', 'acct-openai-codex', 'acct-antigravity', 'acct-muse', 'acct-github-copilot',
+               'acct-qwen-coding', 'acct-zai-coding', 'acct-kimi-coding', 'acct-opencode-go', 'acct-anthropic-api',
+               'acct-gemini-direct', 'acct-cursor-cli']
+# 10 rows: the fallback height of the fit=1 Compact plate (the height the engine measures for one complete account; at 7
+# rows a 196 px Claude or Copilot plate showed none of its accounts over its auto-switch line)
+_PLATES = ' '.join(pid + '@compact:10' for pid in HOST_PLATES)
+HOSTS = {
+    # new dash-<n> tabs: the usage summary (Overview's Usage health) and one provider plate per provider
+    'dashboard': {cls: 'health@standard ' + _PLATES for cls in HOST_CLASSES},
+    'home': {
+        'S': 'health@standard month@standard next-reset@standard active-runs@standard budget-now@expanded '
+             'attention-now@expanded ov-resets@wide',
+        'M': 'health@standard month@standard budget-now@standard next-reset@standard active-runs@standard '
+             'ov-resets@standard attention-now@expanded',
+        'L': 'health@standard month@standard next-reset@standard active-runs@standard budget-now@standard '
+             'attention-now@standard ov-resets@standard',
+    },
+    'metrics': {
+        'S': 'token-trend@wide quota-history@standard budget-now@expanded ov-headroom@panel cost-month@standard',
+        'M': 'token-trend@full quota-history@wide budget-now@standard ov-headroom@panel cost-month@standard',
+        'L': 'token-trend@full quota-history@wide budget-now@expanded ov-headroom@panel cost-month@compact',
+    },
+    'monitoring': {
+        'S': 'alert-0@compact provider-probe-state@compact anom@wide signal-history@wide tool-health@expanded',
+        'M': 'alert-0@compact provider-probe-state@compact tool-health@expanded anom@full signal-history@full',
+        'L': 'anom@full signal-history@full alert-0@compact provider-probe-state@compact tool-health@expanded',
+    },
+}
+
+
 # WOW-SPEC-3 section 7 / WOW-TASKS-3 N3-2 (content, 2026-10-02): the explicit hero of each room per board class (one
 # widget id, or a list of ids that act as one hero). The engine marks it `data-hero` (E3-5) instead of guessing the largest
 # plate. XL is projected from L by the engine and uses L's hero. `--check` fails when a hero is not on the room's first
@@ -693,7 +736,10 @@ def build():
                 top, h, first = e['y'], e['h'], FIRST_ROWS[cls]
                 if top >= first or (min(top + h, first) - top) * 2 < h:
                     problems.append(f'{room}/{cls}: hero {hid} rows {top}-{top + h} is not on the first screen ({first} rows)')
-    placed_ids = {e['id'] for r in boards.values() for e in r['M']}
+    hosts, host_problems = build_hosts()
+    problems += host_problems
+    boards['_hosts'] = hosts
+    placed_ids = {e['id'] for r in ROOMS for e in boards[r]['M']}
     dynamic = re.compile(r'^(plan-|tok-|free-\d|alert-\d|cache-\d|tool-\d|signal-\d)')
     for wid in known_ids():
         if wid not in placed_ids and wid not in MIGRATE:
@@ -704,6 +750,71 @@ def build():
     return boards, problems
 
 
+def build_hosts():
+    """The host default sets: each card at a preset of its kind (its size at that class), packed with the room boards'
+    first-fit rule, no hole, every widget a known one at Glance and none of the group kind, the same widgets at every
+    class; and the drift check of HOSTS_DIGEST against HOSTS_VERSION."""
+    problems, out = [], {}
+    for hid, spec in HOSTS.items():
+        out[hid] = {}
+        for cls, cols in HOST_CLASSES.items():
+            items, presets = [], {}
+            for tok in spec[cls].split():
+                wid, _, pid = tok.partition('@')
+                pid, _, hfit = pid.partition(':')
+                if wid not in W:
+                    problems.append(f'host {hid}/{cls}: {wid} is not a widget')
+                    continue
+                kind = W[wid][0]
+                if kind == 'group':
+                    problems.append(f'host {hid}/{cls}: {wid} is a group band')
+                pr = next((p for p in KINDS[kind][4] if p['id'] == pid), None)
+                if pr is None:
+                    problems.append(f'host {hid}/{cls}: {wid} has no preset {pid!r} ({kind})')
+                    continue
+                if pr.get('from') and CLS_ORDER.index(cls) < CLS_ORDER.index(pr['from']):
+                    problems.append(f'host {hid}/{cls}: preset {pid} of {kind} is offered from {pr["from"]}')
+                if pr.get('minPx'):
+                    problems.append(f'host {hid}/{cls}: preset {pid} of {kind} needs {pr["minPx"]} px (not offered on every board)')
+                if W[wid][1] != 'G':
+                    problems.append(f'host {hid}/{cls}: {wid} is not at Glance')
+                w, h = pr['w'][cls], pr['h']
+                if hfit:
+                    h = int(hfit)
+                    if pr.get('fit') is None:
+                        problems.append(f'host {hid}/{cls}: {wid} preset {pid} has a fixed height ({pr["h"]}), not {h}')
+                    if not KINDS[kind][2] <= h <= KINDS[kind][3]:
+                        problems.append(f'host {hid}/{cls}: {wid} height {h} outside {kind} range')
+                if w > cols:
+                    problems.append(f'host {hid}/{cls}: {wid} {w} tracks is wider than the board')
+                items.append((wid, w, h))
+                presets[wid] = pid
+            placed = pack(items, cols)
+            if holes(placed, cols, 0):
+                problems.append(f'host {hid}/{cls}: {holes(placed, cols, 0)} empty cells inside the board')
+            out[hid][cls] = [{'id': wid, 'x': x, 'y': y, 'w': w, 'h': h, 'preset': presets[wid]} for wid, x, y, w, h in placed]
+        ids = [sorted(e['id'] for e in out[hid][c]) for c in HOST_CLASSES]
+        if any(i != ids[0] for i in ids):
+            problems.append(f'host {hid}: classes do not hold the same widgets')
+    digest = hosts_digest(out)
+    if digest != HOSTS_DIGEST:
+        problems.append(f'hosts changed since HOSTS_DIGEST was recorded: give HOSTS_VERSION a new value (now {HOSTS_VERSION!r}) '
+                        f'and set HOSTS_DIGEST = {digest!r}')
+    return out, problems
+
+
+def host_rows(hosts):
+    return {hid: {cls: [[e['id'], e['x'], e['y'], e['w'], e['h'], e['preset']] for e in b] for cls, b in hb.items()}
+            for hid, hb in hosts.items()}
+
+
+def hosts_digest(hosts) -> str:
+    """The hash of the generated host boards with their version: HOSTS_DIGEST must be re-recorded with a new version."""
+    import hashlib
+    body = json.dumps({'version': HOSTS_VERSION, 'hosts': host_rows(hosts)}, sort_keys=True, separators=(',', ':'))
+    return hashlib.sha256(body.encode('utf-8')).hexdigest()[:16]
+
+
 def js(boards) -> str:
     widgets = {wid: {'kind': k, 'level': LEVELS[lv], 'title': t, 'meta': m} for wid, (k, lv, t, m) in W.items()}
     kinds = {k: {'wMin': a, 'wMax': b, 'hMin': c, 'hMax': d, 'presets': p} for k, (a, b, c, d, p) in KINDS.items()}
@@ -712,11 +823,16 @@ def js(boards) -> str:
         rooms[room] = {cls: [[e['id'], e['x'], e['y'], e['w'], e['h']] for e in boards[room][cls]] for cls in CLASSES}
     data = {'version': 'pmu-b2-boards-2026-10-10-presets', 'classes': CLASSES, 'kinds': kinds, 'widgets': widgets, 'rooms': rooms,
             'migrate': MIGRATE, 'promoted_from': PROMOTED,
-            'heroes': {room: {cls: HEROES[room] for cls in list(CLASSES) + ['XL']} for room in ROOMS}}
+            'heroes': {room: {cls: HEROES[room] for cls in list(CLASSES) + ['XL']} for room in ROOMS},
+            # hosts[host_id][class] = [[widget_id, x, y, w, h, preset_id], ...] for S, M and L; the engine keys them by
+            # 'pmu-host:' + hosts_version (not by version, the Usage rooms' default set)
+            'hosts_version': HOSTS_VERSION, 'hosts': host_rows(boards['_hosts'])}
     body = json.dumps(data, ensure_ascii=False, separators=(',', ':'))
     return ('/* Usage default boards (B v2), generated by tools/boards.py; do not edit by hand: change tools/boards.py and run it.\n'
             '   Data only. rooms[room][class] = [[widget_id, x, y, w, h], ...] in tracks and rows (row pitch 30 px);\n'
-            '   classes S = 12 tracks, M = 20, L = 24 (XL = 30 is projected from L by the engine). */\n'
+            '   classes S = 12 tracks, M = 20, L = 24 (XL = 30 is projected from L by the engine).\n'
+            '   hosts[host_id][class] = [[widget_id, x, y, w, h, preset_id], ...]: the default sets of the other hosts (home,\n'
+            '   dashboard tabs), keyed by hosts_version, written for S, M and L. */\n'
             f'var PMU_BOARDS = {body};\n')
 
 
@@ -752,6 +868,9 @@ def main() -> int:
     for p in problems:
         print('BOARDS:', p)
     if '--check' in sys.argv:
+        if not OUT_JS.exists() or OUT_JS.read_text(encoding='utf-8') != js(boards):
+            problems.append(f'{OUT_JS.name} is not what boards.py writes: run tools/boards.py')
+            print('BOARDS:', problems[-1])
         print('boards', 'ok' if not problems else f'failed ({len(problems)})')
         return 1 if problems else 0
     if problems:

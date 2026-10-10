@@ -641,7 +641,10 @@
          when neither side has room they go to the hover only (the marker stays) */
       var labOf = function (m) { return ({ fiveHour: '5H', weekly: 'WK', monthly: 'MO' }[m.w.key] || m.w.short.slice(0, 3).toUpperCase()) + ' ' + C.fmt(m.w.pct, m.w.pct < 10 && m.w.pct % 1 ? 'pct1' : 'pct') + (m.at && m.at - now > span ? ' · ' + F.date(m.at) : ''); };
       var pendLab = function (w) { return ({ fiveHour: '5H', weekly: 'WK', monthly: 'MO' }[w.key] || w.short.slice(0, 3).toUpperCase()) + ' pending'; };
-      var labPx = function (t) { return (PMU.charts && PMU.charts.textW ? PMU.charts.textW(t, 11, true) : t.length * 6.6) + 22; };
+      /* a marker's drawn width: its words as laid out (textW's mono reading is 0.9 of the canvas width, and the em adds
+         .03em a letter), its 6 px of em padding and the 11 px glyph with its 5 px gap. The 0.9 reading let a 487 px
+         board print "WK 44%" into "MO 31% · Nov 1" (lane c-presets GPU bprobe, S at a 41 px pitch) */
+      var labPx = function (t) { return (PMU.charts && PMU.charts.textW ? PMU.charts.textW(t, 11, true) / 0.9 : t.length * 6.6) + t.length * 0.33 + 22; };
       lanes.forEach(function (ln) {
         /* a pending window (reset passed, no new reading) sits at NOW and its words come first */
         var items = ln.pend.map(function (w) { return { pend: w, x: 0, w: labPx(pendLab(w)), beyond: false, m: {} }; }).concat(ln.ms.filter(function (m) { return m.at; }).map(function (m) {
@@ -652,9 +655,11 @@
           var next = items[i + 1], prev = items[i - 1];
           /* integ3: a label beyond the week also gives way to the previous MARKER itself, not only to its right-hand words
              (Friendly Light 1440: Kimi's "MO 36% · Nov 1" was printed over the WK 52% diamond) */
-          if (it.beyond) { var pEnd = prev ? (prev.side === 'r' ? prev.x + prev.w : prev.x + 16) : -labW; it.side = pEnd > it.x - it.w ? 'none' : 'l'; it.m.side = it.side; return; }
+          if (it.beyond) { var pEnd = prev ? (prev.side === 'r' ? prev.x + prev.w : prev.x + 16) : -8; it.side = pEnd > it.x - it.w ? 'none' : 'l'; it.m.side = it.side; return; }
           var rightEnd = it.x + it.w, nextStart = next ? (next.beyond ? next.x - next.w : next.x - 8) : trackW + edge;
-          var leftStart = it.x - it.w, prevEnd = prev ? (prev.side === 'r' ? prev.x + prev.w : prev.x + 8) : -labW;
+          /* words read to the left stay on the track: the first marker's never run into the lane's name (Retro at 472 px:
+             "5H 12%" printed over "Qwen Global") */
+          var leftStart = it.x - it.w, prevEnd = prev ? (prev.side === 'r' ? prev.x + prev.w : prev.x + 8) : -8;
           it.side = rightEnd <= nextStart ? 'r' : leftStart >= prevEnd && !it.pend ? 'l' : 'none';
           it.m.side = it.side; if (it.pend) it.pend._side = it.side;
         });

@@ -64,6 +64,11 @@
 #panel-usage .pmu-accmeter.is-na { display: flex; flex-direction: column; gap: 5px; }
 #panel-usage .pmu-natrack { height: 8px; border: 1px dashed var(--pmu-rule-strong); border-radius: 4px; }
 #panel-usage .pmu-accmeter.is-na .pmu-vs { font-size: 13px; font-weight: 520; }
+/* a "not exposed" word wraps under its glyph on a narrow plate instead of running past the card (a 4-track plate on a
+   487 px board is 157 px: "Usage not exposed" ran 1 px past Cursor's plate and to its edge on Z.AI's); the plate counts
+   the second line (54-w-accounts.js single) */
+#panel-usage .pmu-accmeter.is-na .pmu-vs { white-space: normal; align-items: flex-start; line-height: 17px; }
+#panel-usage .pmu-accmeter.is-na .pmu-vs .pmu-ico { margin-top: 2px; }
 #panel-usage .pmu-naplan { font-size: 12px; color: var(--pmu-ink-3); }
 #panel-usage .pmu-amtv { display: block; min-width: 0; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 #panel-usage .pmu-amtv .pmu-vs { display: inline; }
@@ -135,6 +140,9 @@
 #panel-usage .pmu-card[data-head="band"] .pmu-cardsub { display: block; flex: 1 1 auto; margin: 0; font-family: var(--pmu-mono); font-size: 11px; letter-spacing: .05em; text-transform: uppercase;
   font-stretch: 87.5%; }
 #panel-usage .pmu-card[data-head="band"] .pmu-cardtools { top: 14px; right: 0; }
+/* the count line wraps under itself on a narrow board instead of running past it ("11 PROVIDERS · 9 SET UP · 16 AC" at a
+   400 px board); the band's head is 52 px and grows upward from its rule */
+#panel-usage .pmu-card[data-head="band"] .pmu-cardsub { min-width: 0; white-space: normal; overflow: visible; text-overflow: clip; line-height: 14px; }
 #panel-usage .pmu-provword[data-tone="good"] { color: var(--pmu-ink-good, var(--pmu-ink-ok)); font-weight: 600; }
 #panel-usage .pmu-provword[data-tone="warn"] { color: var(--pmu-ink-warn); font-weight: 600; }
 #panel-usage .pmu-provrow.is-setup { cursor: pointer; border-radius: 6px; margin: 0 -6px; padding: 2px 6px; transition: background-color 160ms; }

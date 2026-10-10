@@ -121,7 +121,11 @@
       var bw = ctx.tier.bw, bh = ctx.tier.bh, narrow = bw < 300;
       /* priority: ring + savings, the read / write split, cache cost, the explanation, the foot, the 30-day spark */
       var ring = narrow ? Math.max(72, Math.min(96, bh - 150)) : Math.max(80, Math.min(bw < 360 ? 104 : 120, bh - 50));
-      var used = 0, saveH = 56, costH = 70, explH = 34, splitH = 48, footH = 56, sparkH = 50;
+      /* the read / write legend on two lines where one does not fit the card (a 6-track card on a 400 px board is 196 px:
+         "Reads 6.42M · Writes 425k" ran 24 px past it), 18 px more */
+      var legRead = 'Reads ' + PMU.fmt.tok(m.read), legWrite = 'Writes ' + (m.write ? PMU.fmt.tok(m.write) : 'none recorded');
+      var legTwo = (PMU.charts && PMU.charts.textW ? PMU.charts.textW(legRead + ' · ' + legWrite, 12, false, 600) * 1.06 : (legRead.length + legWrite.length + 3) * 7) + 2 * 16 + 12 > bw;
+      var used = 0, saveH = 56, costH = 70, explH = 34, splitH = legTwo ? 66 : 48, footH = 56, sparkH = 50;
       var top = function (cost, expl) { var f = saveH + (cost ? costH : 0) + (expl ? explH : 0); return narrow ? ring + 10 + f : Math.max(ring, f); };
       used = top(false, false);
       var splitOk = used + splitH <= bh; if (splitOk) used += splitH;
@@ -144,8 +148,8 @@
         (explOk ? '<em>Cache reads priced at the cache-read rate instead of the input rate · PM estimate</em>' : '') + '</div>' +
         (costOk ? '<div class="pmu-effcost"><span>Cache cost</span>' + C.valHtml(m.cost, 'money2', 'pmu-factv', ctx.id + ':cc') +
           '<em>writes ' + esc(C.money(m.costWrite)) + ' · reads ' + esc(C.money(m.costRead)) + '</em></div>' : '') + '</div></div>' +
-        (splitOk ? '<div class="pmu-effsplit"></div><p class="pmu-efflegend"><i class="pmu-swatch" data-sw="box" data-tk="cr"></i>Reads <b>' + esc(PMU.fmt.tok(m.read)) + '</b> · <i class="pmu-swatch" data-sw="box" data-tk="cw"></i>Writes <b>' +
-          esc(m.write ? PMU.fmt.tok(m.write) : 'none recorded') + '</b></p>' : '') + (sparkOk ? '<div class="pmu-effspark"></div>' : '') + '</div>' +
+        (splitOk ? '<div class="pmu-effsplit"></div><p class="pmu-efflegend' + (legTwo ? ' is-two' : '') + '"><span><i class="pmu-swatch" data-sw="box" data-tk="cr"></i>Reads <b>' + esc(PMU.fmt.tok(m.read)) + '</b></span>' + (legTwo ? '' : '<span>·</span>') + '<span><i class="pmu-swatch" data-sw="box" data-tk="cw"></i>Writes <b>' +
+          esc(m.write ? PMU.fmt.tok(m.write) : 'none recorded') + '</b></span></p>' : '') + (sparkOk ? '<div class="pmu-effspark"></div>' : '') + '</div>' +
         (footOk ? C.foot(esc(m.notes[0]) + (foot2 && m.notes[1] ? '<br>' + esc(m.notes[1]) : ''), 'info') : '');
       C.chart(body, 'ring', body.querySelector('.pmu-effring'), { value: m.share, max: 100, centre: m.share.toFixed(1) + '%', caption: 'read share', token: 'cr' }, { label: 'Cache read share ' + m.share.toFixed(1) + '%' });
       if (splitOk) C.chart(body, 'split', body.querySelector('.pmu-effsplit'), { parts: [{ name: 'Reads', value: m.read, token: 'cr' }, { name: 'Writes', value: m.write, token: 'cw' }], legend: false }, { label: 'Cache reads versus writes' });
