@@ -44315,8 +44315,10 @@ canonical_text: >-
   and inline when it is narrow, switching by the body's own width (F3-635); preview tabs (F3-634); syntax colours per
   look from each look's token table (F3-426); and the JetBrains Mono code face in every look, Retro included (D17a;
   F3-644 owns the face, and DL-161, F3-426 and F3-430 own general code text elsewhere). It uses the shared header row
-  only where it needs one (F3-635). Its settings (font size, minimap, sticky scroll, diff layout, word wrap) are
+  only where it needs one (F3-635). Its settings (scheme choice, font size, minimap, sticky scroll, diff layout, word wrap) are
   SSYS-050's. This amends F3-140 and section 7.18 (editor groups are now panels, F3-630) and F3-505's editor-only scope.
+  The editor's ⋮ menu opens F3-642's shared Appearance popover. Its own scheme choice defaults to "Follow look",
+  using the per-look syntax colours above, and can select any scheme from the same code colour-scheme catalog.
 gui_related: true
 gui_classification_reason: Defines the code editor as a tab kind and the editing features it adds.
 split_recommended: false
@@ -44326,8 +44328,9 @@ acceptance_criteria:
   - "The editor's tabs use the one strip and silhouette, and the minimap is the only code-pane scrollbar with its change marks."
   - "Sticky scroll, find and replace, go to line and preview tabs work in every editor tab."
   - "The diff mode shows side by side when the tab body is wide and inline when it is narrow, decided by the body's width, never the window's."
-  - "Syntax colours follow each look's token table, and the code face is JetBrains Mono in every look, Retro included."
+  - "With Follow look, syntax colours follow each look's token table, and the code face is JetBrains Mono in every look, Retro included."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+  - "The editor scheme choice defaults to Follow look, can select any catalog scheme and opens the same Appearance popover component from its ⋮ menu."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -44343,6 +44346,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D27)"
   - "Plans/Decision_Log.md#DL-180"
   - "Plans/Decision_Log.md#DL-183"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D21, D17)"
@@ -44359,7 +44363,8 @@ negative_constraints:
   - "Do not use IBM Plex Mono or VT323 as the editor's code face in Retro."
 compatibility_only_notes:
   - "The width at which the diff turns inline is a concept number still to come (wave 2)."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/FileManager.md
@@ -44858,6 +44863,12 @@ canonical_text: >-
   (MIT): Wave, Lotus. Everforest (MIT): Light, Dark. Flexoki (MIT): Light, Dark. GitHub (MIT): Light, Dark. Ayu
   (MIT): Mirage. Every third-party scheme ships with its licence text and its source address and SHA-256; the
   iTerm2-Color-Schemes collection (no single licence) and Modus (GPL-3.0) are not bundled, and import covers them.
+  These schemes are one code colour-scheme catalog that serves the editor and the terminal (Addendum 2 D27, amending
+  D15 and D21): each curated scheme carries the terminal palette and the editor's syntax colours. Each surface's
+  scheme choice defaults to "Follow look" — the terminal's "Follow theme" per-look scheme above, the editor's
+  per-look syntax colours (F3-426, F3-639) — and each surface keeps its own scheme choice. The Appearance popover is
+  one component, opened from the terminal's ⋮ menu and from the editor's ⋮ menu (F3-639); no surface keeps a scheme
+  list or popover of its own (DR-068).
   "Switch with light and dark", on by default, swaps a chosen scheme for its family's other appearance when the app
   changes between light and dark. A minimum-contrast floor applies per cell to the text colour against its cell
   background by moving OKLab lightness only, keeping hue and chroma: default 4.5:1, with the choices Off, 3:1, 4.5:1
@@ -44901,6 +44912,7 @@ acceptance_criteria:
   - "Cells are whole device pixels by the geometry rule, and no stripe shows between the last cell and the padding."
   - "The popover writes This terminal or All terminals, and only Settings writes the project default."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+  - "The editor and terminal list the same catalog, each curated scheme carries terminal and syntax colours, both scheme choices default to Follow look and remain separate, and both menus open the same Appearance popover component."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -44917,6 +44929,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D27)"
   - "Plans/Decision_Log.md#DL-183"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D15)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, sections 5 and 6 (concept lineage only)"
@@ -44937,6 +44950,7 @@ negative_constraints:
 compatibility_only_notes:
   - "The concept's field names and its settings keys under a terminal prefix are lineage only; the product ids are SSYS-051's rows."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
   - "Makes F3-083's terminal colour-scheme catalogue, preview and instant apply real, and replaces the restart badges on the old terminal theme and font rows (DL-183)."
 owner_hints:
   - Plans/FinalGUISpec.md

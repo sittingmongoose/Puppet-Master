@@ -3106,6 +3106,8 @@ canonical_text: >-
   Teacher persona explains commands in the chat) and code.terminal.tab-role (shell profiles and the tab label). The chat width, revealing an already open file, an empty panel's
   fate, what "+" does and the close button's side are not rows. With SSYS-051's thirty-six rows, the inventory
   holds 963 rows (916 plus 47 added), of which 7 are retired, leaving 956 live rows.
+  Settings > Editor requires a scheme row bound to F3-642's shared code colour-scheme catalog, defaulting to
+  "Follow look" and applying live through the same Settings transaction as the other editor rows.
 gui_related: true
 gui_classification_reason: Each row is a visible Settings control for the home panels, tabs, editor or chat column, and the retirements remove visible rows.
 split_recommended: false
@@ -3120,6 +3122,7 @@ acceptance_criteria:
   - "Max Open Editor Tabs counts only editor tabs and never closes a pinned tab, a tab with unsaved changes or a tab of another kind; Tabs Remembered Between Sessions counts tabs of every kind."
   - "A terminal session verified still running comes back in its tab whatever Remember Window Layout and Terminals When Reopening a Project say."
   - "No row exists for the chat width, revealing an open file, closing an empty panel, the + button's behaviour or the close button's side."
+  - "Settings > Editor offers a scheme row defaulting to Follow look and bound to the same catalog as Settings > Terminal."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -3135,6 +3138,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D27)"
   - "Plans/Decision_Log.md#DL-180"
   - "Plans/Decision_Log.md#DL-181"
   - "Plans/Decision_Log.md#DL-183"
@@ -3160,6 +3164,7 @@ owner_hints:
   - Plans/settings_inventory.json
   - Plans/FinalGUISpec.md
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Requires an Editor scheme row using the shared catalog and defaulting to Follow look."
   - "Retired 2026-10-09 (DL-180, DL-181): general.interaction.panel-dock, general.visual.chat-layout-mode, code.terminal.layout-style, code.terminal.auto-second-pane, code.editing.editor-strip-collapsed, code.terminal.explanations and code.terminal.tab-role."
 ```
 
@@ -3184,8 +3189,8 @@ canonical_text: >-
   records as q-035), a field's app default is the row's bundled inventory default and both app-default edits are
   disabled with the Settings owner's reason, their editable requirement kept and no app-wide write admitted from
   scope metadata alone. The tab's override is the tab's serialized state (SP-331), written by the popover's This
-  terminal, never by Settings. Amended rows carry five fields: code.terminal.theme (Follow theme or
-  one of the 34 schemes or an imported one; Follow theme), code.terminal.font-family (Follow theme, JetBrains Mono,
+  terminal, never by Settings. Amended rows carry five fields: code.terminal.theme (Follow look or
+  one of the shared catalog schemes or an imported one; Follow look), code.terminal.font-family (Follow theme, JetBrains Mono,
   Atkinson Hyperlegible Mono, VT323, Departure Mono, Sixtyfour, Sixtyfour Raster or System monospace; Follow
   theme), code.terminal.font-size (Font default), code.terminal.copy-on-select (off) and code.terminal.sticky-header
   (on). Added rows carry the rest: code.terminal.scheme-pair (on), min-contrast (Off, 3:1, 4.5:1 or 7:1; 4.5:1),
@@ -3208,6 +3213,8 @@ canonical_text: >-
   reads it) and code.terminal.transcript-retention (Saved Terminal Output: Keep Saved Scrollback, the default, keeps
   the saved scrollback of Plans/storage-plan.md#SP-332 that restore brings back, or Session Only, which saves none). Degauss and
   a terminal's Text size zoom are not rows.
+  The terminal scheme row binds the same code colour-scheme catalog as Settings > Editor (SSYS-050, F3-642).
+  Its scheme choice defaults to "Follow look"; this is the per-look scheme previously labelled "Follow theme".
 gui_related: true
 gui_classification_reason: Each row is a visible Settings > Terminal control whose change shows at once in every terminal.
 split_recommended: false
@@ -3218,12 +3225,13 @@ acceptance_criteria:
   - "Changing a row changes every open terminal at once unless that terminal's own override sets the field, and a field left at Follow theme, Font default or no default falls through to the look's default."
   - "Only Settings writes a row (the project default), through the Settings transaction over its exact id; only the popover's This terminal writes a tab override, and Settings never does."
   - "While q-035 is open, a field's app default is the row's bundled inventory default, the app-default edit in Settings > Terminal and the popover's All terminals are disabled with the Settings owner's reason, and no surface writes an app-wide value."
-  - "Terminal Colors offers Follow theme and the 34 schemes of F3-642 plus imported ones; Terminal Font offers Follow theme, the six built-in faces and System monospace; Minimum Text Contrast offers Off, 3:1, 4.5:1 and 7:1."
+  - "Terminal Colors offers Follow look and the shared catalog of F3-642 plus imported ones; Terminal Font offers Follow theme, the six built-in faces and System monospace; Minimum Text Contrast offers Off, 3:1, 4.5:1 and 7:1."
   - "Each detail row shows only while the row it depends on applies, keeps its stored value while hidden, and Terminal Opacity (Glass) shows only under a Glass theme."
   - "With any row set, effects stay in the focused terminal and every moving part stops under Reduce Animations and on battery saver."
   - "Settings shows the terminal rows under SSYS-040's groups and Terminal look: more options, with no row for degauss or the Text size zoom."
   - "Search in Terminal shows on and unavailable because Find is in every terminal, and nothing reads its stored value."
   - "Saved Terminal Output offers Keep Saved Scrollback (the default) and Session Only; with the default a restored or reopened terminal shows its saved scrollback by SP-332's rule, and no choice keeps it longer than SP-332 allows."
+  - "Settings > Terminal and Settings > Editor bind the same catalog, with each scheme choice defaulting to Follow look."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -3239,6 +3247,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D27)"
   - "Plans/storage-plan.md#SP-332 (terminal records consume these rows; cited, not a dependency (lead ruling L22, 2026-10-10))"
   - "Plans/Decision_Log.md#DL-183"
   - "Plans/Decision_Log.md#DL-181"
@@ -3266,6 +3275,7 @@ owner_hints:
   - Plans/settings_inventory.json
   - Plans/FinalGUISpec.md
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
   - "Superseded 2026-10-09 (DL-183): the restart badges on code.terminal.theme and code.terminal.font-family, the six-entry colour list, and Fira Code, SF Mono and Custom as terminal fonts."
   - "Superseded 2026-10-09 (DL-182): code.terminal.transcript-retention's Session Only default and its 24 Hours, 7 Days, 30 Days and Forever choices, which SP-332's saved scrollback rule replaces."
 ```
