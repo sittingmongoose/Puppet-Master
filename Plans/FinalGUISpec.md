@@ -43966,10 +43966,8 @@ canonical_text: >-
   tab. Each kind registers its label, its group name for the "+N" list, its icon (a bundled
   SVG icon_id, never an emoji), its id prefixes, its content minimum, whether it is dedicated, its "+" menu row and
   sub-row, how it makes a tab id for an open (the terminal mints a new session), how it mounts, what it serializes and
-  whether a tab may close now. Content minimums: terminal 320 x 120 px, browser 360 x 200, dashboard 320 x 120, run 360
-  x 200, every other kind 280 x 120. The host mounts a tab's body only when the tab is first shown, so a restored
-  background tab costs nothing until it is opened. A kind's serialized state is at most 16 KB of plain data, with no
-  scrollback and no buffers. Before a tab closes its kind may ask first: a dirty editor offers to save, and a running
+  whether a tab may close now. Content minimums: terminal 320 x 120 px, browser 360 x 200, dashboard 320 x 120, run 360 x 200, plan, document, artifact, transcript and context 280 x 160, and editor, record and tools 280 x 120. The host mounts a tab's body only when the tab is first shown, so a restored
+  background tab costs nothing until it is opened. A kind's serialized state is at most 16 KB of plain data, with no scrollback; an editor buffer may carry the bounded text state of F3-639. Before a tab closes its kind may ask first: a dirty editor offers to save, and a running
   terminal says what will stop (F3-640). A tab body is its own box, sized by its panel: it never sizes against the
   window, only against its own width and height; it is told when they change, with a last call once a divider drag or a
   layout animation has settled so costly work can wait for it; it is told when it is shown, hidden, focused and blurred
@@ -44187,6 +44185,7 @@ compatibility_only_notes:
   - "The concept's registration call, host API names, container name and z-index values are concept lineage; the stacking order is canon, its numbers are not."
   - "The concept spells the tool kind debug-console in its id prefix; the kind's schema name is debug_console."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses the per-kind document minima and permits the bounded editor-buffer state."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds settled browser, tool, document, run, transcript, context, record and shared-helper dimensions and timings."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Passes host navigation keys from tab typing fields and cycles F6 to the chat composer."
   - "Amended 2026-10-10 (Addendum 2 D28, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
