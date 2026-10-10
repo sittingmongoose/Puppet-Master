@@ -1,0 +1,79 @@
+vocab_id,file,line,surface,state_name,shape_or_glyph,colour_token,notes
+V-engstatus,Concepts/Onboarding concepts/TestPMConcept.html,42022,settings,active,badge green + status-dot active,green,statusClass words: active/ready/healthy/pass/verified; rendered by renderStatus Test:42029-42031
+V-engstatus,Concepts/Onboarding concepts/TestPMConcept.html,42023,settings,attention,badge amber + status-dot attention,amber,words: attention/setup/warning/sign in/retry
+V-engstatus,Concepts/Onboarding concepts/TestPMConcept.html,42024,settings,error,badge red + status-dot error,red,words: error/fail/blocked/deny
+V-engstatus,Concepts/Onboarding concepts/TestPMConcept.html,42025,settings,running,badge plain + status-dot running,(none),words: running/refresh; no badge-colour branch
+V-engstatus,Concepts/Onboarding concepts/TestPMConcept.html,42026,settings,slug-fallback,badge plain + status-dot <slug(status)>,(none),return slug(status): any other word becomes its own dot class
+V-pltone,Concepts/Onboarding concepts/TestPMConcept.html,47128,settings,ready,pm51-status tone-ready dot + status-dot ready,--k3-green,words: ready connected working on running current passed verified saved in-use tested enabled; PM51.tone Test:47138; dot CSS Test:8259; token CSS Test:25329
+V-pltone,Concepts/Onboarding concepts/TestPMConcept.html,47129,settings,attention,pm51-status tone-attention dot + status-dot attention,--k3-amber,words: attention needs-attention needs-sign-in needs-setup needs-permission warning waiting update-ready restart-required not-tested waiting-for-host paused 1-failure; CSS Test:8260/25331-25332
+V-pltone,Concepts/Onboarding concepts/TestPMConcept.html,47130,settings,off,pm51-status tone-off dot + status-dot disabled,--k3-muted,words: off not-set-up not-installed not-connected disabled not-run none available complete queued; PM51.dot maps off->disabled Test:47145; CSS Test:8263/25335
+V-pltone,Concepts/Onboarding concepts/TestPMConcept.html,47131,settings,info,pm51-status tone-info dot + status-dot info,--k3-blue,words: checking syncing ready-to-resume-here recommended info locked default; CSS Test:8262/25330
+V-pltone,Concepts/Onboarding concepts/TestPMConcept.html,47132,settings,blocked,pm51-status tone-blocked dot + status-dot error,--k3-red,words: unavailable blocked failed has-problems error can't-reach-the-address; PM51.dot maps blocked->error Test:47145; CSS Test:8261/25333-25334
+V-plabel,Concepts/Onboarding concepts/TestPMConcept.html,47135,settings,active,"pm51-status token ""Ready""",--k3-green,PLAIN_STATUS active->Ready; tone ready; rendered via PM51.statusPill Test:47143
+V-plabel,Concepts/Onboarding concepts/TestPMConcept.html,47135,settings,ready,"pm51-status token ""Ready""",--k3-green,ready->Ready; tone ready
+V-plabel,Concepts/Onboarding concepts/TestPMConcept.html,47135,settings,ok,"pm51-status token ""Ready""",--k3-green,"ok->Ready; tone ready (ok folds to ready here, unlike V-rail ok)"
+V-plabel,Concepts/Onboarding concepts/TestPMConcept.html,47135,settings,attention,"pm51-status token ""Needs attention""",--k3-amber,attention->Needs attention; tone attention
+V-plabel,Concepts/Onboarding concepts/TestPMConcept.html,47135,settings,needs-signin,"pm51-status token ""Needs sign-in""",--k3-amber,needs-signin->Needs sign-in; tone attention
+V-plabel,Concepts/Onboarding concepts/TestPMConcept.html,47135,settings,not-installed,"pm51-status token ""Not installed""",--k3-muted,not-installed->Not installed; tone off
+V-plabel,Concepts/Onboarding concepts/TestPMConcept.html,47135,settings,setup,"pm51-status token ""Not set up""",--k3-muted,setup->Not set up; tone off
+V-plabel,Concepts/Onboarding concepts/TestPMConcept.html,47135,settings,not-connected,"pm51-status token ""Not connected""",--k3-muted,not-connected->Not connected; tone off
+V-plabel,Concepts/Onboarding concepts/TestPMConcept.html,47135,settings,disabled,"pm51-status token ""Off""",--k3-muted,disabled->Off; tone off
+V-plabel,Concepts/Onboarding concepts/TestPMConcept.html,47135,settings,off,"pm51-status token ""Off""",--k3-muted,off->Off; tone off
+V-plabel,Concepts/Onboarding concepts/TestPMConcept.html,47135,settings,unavailable,"pm51-status token ""Unavailable""",--k3-red,unavailable->Unavailable; tone blocked
+V-plabel,Concepts/Onboarding concepts/TestPMConcept.html,47135,settings,blocked,"pm51-status token ""Unavailable""",--k3-red,"blocked->Unavailable; tone blocked (state ""blocked"" renders as Unavailable)"
+V-plabel,Concepts/Onboarding concepts/TestPMConcept.html,47135,settings,error,"pm51-status token ""Has a problem""",--k3-muted,"error->Has a problem; tone NEUTRAL: singular ""has a problem"" is not in TONE_BY_WORD (only plural ""has problems"") so PM51.tone falls through"
+V-plabel,Concepts/Onboarding concepts/TestPMConcept.html,47135,settings,failed,"pm51-status token ""Has a problem""",--k3-muted,failed->Has a problem; tone NEUTRAL (same fall-through as error)
+V-plabel,Concepts/Onboarding concepts/TestPMConcept.html,47135,settings,running,"pm51-status token ""Running""",--k3-green,running->Running; tone ready
+V-plabel,Concepts/Onboarding concepts/TestPMConcept.html,47135,settings,paused,"pm51-status token ""Paused""",--k3-amber,paused->Paused; tone attention
+V-plabel,Concepts/Onboarding concepts/TestPMConcept.html,47135,settings,checking,"pm51-status token ""Checking""",--k3-blue,checking->Checking; tone info
+V-route,Concepts/Onboarding concepts/TestPMConcept.html,53807,settings,active,"route token ""In use"" tone-ready",ready,label In use; tone ready; lifecycle active; via routeInfo Test:53873 + routeToken Test:53875
+V-route,Concepts/Onboarding concepts/TestPMConcept.html,53808,settings,ready,"route token ""Ready"" tone-ready",ready,lifecycle ready
+V-route,Concepts/Onboarding concepts/TestPMConcept.html,53809,settings,not-set-up,"route token ""Not set up"" tone-off",off,lifecycle: no route record yet
+V-route,Concepts/Onboarding concepts/TestPMConcept.html,53810,settings,needs-sign-in,"route token ""Needs sign-in"" tone-attention",attention,lifecycle waiting_for_auth
+V-route,Concepts/Onboarding concepts/TestPMConcept.html,53811,settings,needs-attention,"route token ""Needs attention"" tone-attention",attention,lifecycle degraded
+V-route,Concepts/Onboarding concepts/TestPMConcept.html,53812,settings,testing,"route token ""Testing"" tone-info",info,lifecycle testing
+V-route,Concepts/Onboarding concepts/TestPMConcept.html,53813,settings,offline,"route token ""Offline"" tone-blocked",blocked,lifecycle offline
+V-route,Concepts/Onboarding concepts/TestPMConcept.html,53814,settings,off,"route token ""Off"" tone-off",off,lifecycle disabled
+V-route,Concepts/Onboarding concepts/TestPMConcept.html,53874,settings,needs-sign-in(remote-link),"route token ""Needs pairing"" tone-attention",attention,routeLabel override: remote-link + needs-sign-in shows Needs pairing; tone still via routeInfo
+V-rold,Concepts/Onboarding concepts/TestPMConcept.html,53825,settings,ready,"OLD_ROUTE_STATUS fold -> ready (migration map, no direct render)",(none),legacy status name -> canonical ROUTE_STATUS key; shape migration at load
+V-rold,Concepts/Onboarding concepts/TestPMConcept.html,53825,settings,in use,OLD_ROUTE_STATUS fold -> active,(none),legacy -> canonical
+V-rold,Concepts/Onboarding concepts/TestPMConcept.html,53825,settings,active,OLD_ROUTE_STATUS fold -> active,(none),legacy -> canonical
+V-rold,Concepts/Onboarding concepts/TestPMConcept.html,53825,settings,not set up,OLD_ROUTE_STATUS fold -> not-set-up,(none),legacy -> canonical
+V-rold,Concepts/Onboarding concepts/TestPMConcept.html,53825,settings,needs sign-in,OLD_ROUTE_STATUS fold -> needs-sign-in,(none),legacy -> canonical
+V-rold,Concepts/Onboarding concepts/TestPMConcept.html,53825,settings,needs attention,OLD_ROUTE_STATUS fold -> needs-attention,(none),legacy -> canonical
+V-rold,Concepts/Onboarding concepts/TestPMConcept.html,53825,settings,testing,OLD_ROUTE_STATUS fold -> testing,(none),legacy -> canonical
+V-rold,Concepts/Onboarding concepts/TestPMConcept.html,53825,settings,offline,OLD_ROUTE_STATUS fold -> offline,(none),legacy -> canonical
+V-rold,Concepts/Onboarding concepts/TestPMConcept.html,53825,settings,off,OLD_ROUTE_STATUS fold -> off,(none),legacy -> canonical
+V-destst,Concepts/Onboarding concepts/TestPMConcept.html,48461,settings,active,"PM51.status ""Ready"" (built-in) / ""Connected"" (other)",--k3-green,destStatus: active -> Ready if isBuiltIn else Connected; both tone ready
+V-destst,Concepts/Onboarding concepts/TestPMConcept.html,48461,settings,attention,"PM51.status ""Needs attention""",--k3-amber,attention -> Needs attention
+V-destst,Concepts/Onboarding concepts/TestPMConcept.html,48461,settings,disabled,"PM51.status ""Off""",--k3-muted,disabled -> Off
+V-destst,Concepts/Onboarding concepts/TestPMConcept.html,48461,settings,else,"PM51.status ""Not set up""",--k3-muted,any other status -> Not set up
+V-provst,Concepts/Onboarding concepts/TestPMConcept.html,49055,settings,active,"PM51.status ""Ready""",--k3-green,routeStatus (providers): active -> Ready
+V-provst,Concepts/Onboarding concepts/TestPMConcept.html,49055,settings,attention,"PM51.status ""Needs attention""",--k3-amber,attention -> Needs attention
+V-provst,Concepts/Onboarding concepts/TestPMConcept.html,49055,settings,else,"PM51.status ""Off""",--k3-muted,any other status -> Off
+V-lsppill,Concepts/Onboarding concepts/TestPMConcept.html,50164,settings,off,"PM51.pill ""Off""",--k3-muted,pillFor: !isOn -> Off (language servers + formatters)
+V-lsppill,Concepts/Onboarding concepts/TestPMConcept.html,50164,settings,ready,"PM51.pill ""Ready""",--k3-green,status ready -> Ready
+V-lsppill,Concepts/Onboarding concepts/TestPMConcept.html,50164,settings,attention,"PM51.pill ""Needs attention""",--k3-amber,status attention -> Needs attention
+V-lsppill,Concepts/Onboarding concepts/TestPMConcept.html,50164,settings,setup,"PM51.pill ""Not set up""",--k3-muted,status setup -> Not set up
+V-lsppill,Concepts/Onboarding concepts/TestPMConcept.html,50164,settings,fallback,PM51.statusPill(x.status),(varies),any other status passes through V-plabel at runtime
+V-mcptone,Concepts/Onboarding concepts/TestPMConcept.html,50165,settings,off,list-item tone off,off,toneFor: !isOn -> off (language servers + formatters rows)
+V-mcptone,Concepts/Onboarding concepts/TestPMConcept.html,50165,settings,ready,list-item tone ready,ready,status ready -> ready
+V-mcptone,Concepts/Onboarding concepts/TestPMConcept.html,50165,settings,attention,list-item tone attention,attention,status attention -> attention
+V-mcptone,Concepts/Onboarding concepts/TestPMConcept.html,50165,settings,neutral,list-item tone neutral,neutral,any other status -> neutral (default grey)
+V-profstad,Concepts/Onboarding concepts/TestPMConcept.html,51668,settings,ready,"PM51.pill ""Ready""",--k3-green,profilePill: every profile gets Ready
+V-profstad,Concepts/Onboarding concepts/TestPMConcept.html,51668,settings,default,"PM51.chip ""Default"" tag",(tag),"isDefault -> extra Default chip (PM51.tag, no tone)"
+V-groupill,Concepts/Onboarding concepts/TestPMConcept.html,52646,settings,locked,"PM51.pill ""Core · locked"" tone-info",--k3-blue,"groupPill: locked -> info pill (explicit tone arg, not via PM51.tone)"
+V-groupill,Concepts/Onboarding concepts/TestPMConcept.html,52646,settings,Custom,"PM51.pill ""<group>"" tone-ready",--k3-green,"group Custom -> pill with group name, tone ready"
+V-groupill,Concepts/Onboarding concepts/TestPMConcept.html,52646,settings,group,"PM51.pill ""<group>"" tone-info",--k3-blue,"any other group -> pill with group name, tone info"
+V-repost,Concepts/Onboarding concepts/TestPMConcept.html,52941,settings,Clean,"PM51.pill ""Ready""",--k3-green,repoPill: state Clean -> Ready
+V-repost,Concepts/Onboarding concepts/TestPMConcept.html,52941,settings,Checking,"PM51.pill ""Checking""",--k3-blue,state Checking -> Checking (tone info)
+V-repost,Concepts/Onboarding concepts/TestPMConcept.html,52941,settings,else,"PM51.pill ""Needs attention""",--k3-amber,any other r.state -> Needs attention
+V-plugst,Concepts/Onboarding concepts/TestPMConcept.html,50618,settings,not-installed,"PM51.pill ""Not installed""",--k3-muted,stateFor (plugins): !installed -> Not installed
+V-plugst,Concepts/Onboarding concepts/TestPMConcept.html,50618,settings,problem,"PM51.pill ""Needs attention""",--k3-amber,p.problem -> Needs attention; also shown as note text
+V-plugst,Concepts/Onboarding concepts/TestPMConcept.html,50618,settings,enabled,"PM51.pill ""Ready""",--k3-green,p.enabled -> Ready
+V-plugst,Concepts/Onboarding concepts/TestPMConcept.html,50618,settings,disabled,"PM51.pill ""Off""",--k3-muted,"installed, no problem, not enabled -> Off"
+V-mcpst,Concepts/Onboarding concepts/TestPMConcept.html,50783,settings,off,"PM51.pill ""Off""",--k3-muted,stateFor (mcp): !isOn -> Off
+V-mcpst,Concepts/Onboarding concepts/TestPMConcept.html,50783,settings,on,PM51.pill m.state (passthrough),(varies),isOn -> pill of raw m.state string; tone via V-pltone at runtime
+V-pathst,Concepts/Onboarding concepts/TestPMConcept.html,54810,settings,active,"PM51.pill ""Ready"" tone-ready",--k3-green,pathPill Test:54811 + pathTone Test:54810: active -> Ready/ready
+V-pathst,Concepts/Onboarding concepts/TestPMConcept.html,54810,settings,attention,"PM51.pill ""Needs attention"" tone-attention",--k3-amber,attention -> Needs attention/attention
+V-pathst,Concepts/Onboarding concepts/TestPMConcept.html,54810,settings,else,"PM51.pill ""Off"" tone-off",--k3-muted,any other st -> Off/off

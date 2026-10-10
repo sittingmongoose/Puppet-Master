@@ -207,6 +207,16 @@ html[data-theme^="retro"] :is(.pmg-tab, .pmg-rail, .pmg-btn) { border-radius: 0;
 .pmg-menu-row { display: flex; align-items: center; gap: 10px; width: 220px; padding: 7px 10px; border-radius: 6px; background: var(--surface); color: var(--text-primary); font-size: 13px; border: 0; cursor: pointer; text-align: left; }
 .pmg-menu-row:hover { background: var(--surface-alt, var(--surface)); }
 
+/* ---------------------------------------------------------------- before and after */
+.pmg-map { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); padding: 6px; }
+.pmg-map-row { display: grid; grid-template-columns: 22px 14px 22px minmax(0, 1fr); align-items: center; gap: 8px; padding: 7px 10px; border-radius: var(--radius-md, 6px); color: var(--pmg-ink-concept); }
+.pmg-map-row:hover { background: var(--surface-elevated); }
+.pmg-old { color: var(--text-muted); opacity: .85; }
+.pmg-map-arrow { color: var(--text-muted); display: grid; place-items: center; }
+.pmg-map-todo { font-size: 10.5px; line-height: 1.1; color: var(--pmg-ink-attention); }
+.pmg-map-name { font: 12px var(--mono-font, ui-monospace, monospace); color: var(--text-secondary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pmg-map-name small { color: var(--text-muted); font-size: 11px; }
+
 /* ---------------------------------------------------------------- notes */
 .pmg-note { color: var(--text-muted); font-size: 12.5px; max-width: 900px; }
 .pmg-empty { color: var(--text-muted); font-size: 13px; padding: 18px 20px; }

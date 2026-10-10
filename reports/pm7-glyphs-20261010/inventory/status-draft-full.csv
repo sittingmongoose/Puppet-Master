@@ -1,0 +1,217 @@
+vocab_id,file,line,surface,state_name,pm7_shape,neon_status,tone,confidence,why
+V-rail,Concepts/leftrail-redesign/src/concepts/d/00-d.js,107,rail,ok,SOLID circle (mask knockout),complete,done,high,STATUS complete aliases (done/completed/verified/restored) match ok words; shape changes circle->check
+V-rail,Concepts/leftrail-redesign/src/concepts/d/00-d.js,108,rail,fail,SOLID X,failed,blocked,high,"exact semantics (failed/error); NOTE shape cross: neon failed is triangle+! like PM7 warn, while PM7 fail is X"
+V-rail,Concepts/leftrail-redesign/src/concepts/d/00-d.js,109,rail,warn,SOLID triangle,mixed,changed,medium,partial is a warn word and a st-mixed alias; degraded->mixed; alt st-recovering; triangle shape has no same-tone neon match
+V-rail,Concepts/leftrail-redesign/src/concepts/d/00-d.js,110,rail,blocked,SOLID octagon,blocked,blocked,high,exact semantics (aliases stalled/locked); shape changes octagon->padlock
+V-rail,Concepts/leftrail-redesign/src/concepts/d/00-d.js,111,rail,info,SOLID i-square,info,idle,high,proposed info extra (a neutral notice) fits exactly; round-1 said pending/low only because no info-status existed
+V-rail,Concepts/leftrail-redesign/src/concepts/d/00-d.js,112,rail,conflict,SOLID diamond,mixed,changed,medium,conflict ~= mixed/partial; alt st-blocked if conflicts should read as blocking
+V-rail,Concepts/leftrail-redesign/src/concepts/d/00-d.js,115,rail,live,G dot+ring,working,working,high,STATUS aliases of working include live/running/active; ring+bead matches live dot+ring kinetics
+V-rail,Concepts/leftrail-redesign/src/concepts/d/00-d.js,116,rail,run,G play,working,working,medium,restarting/building read as working; alt st-recovering for restarting (ratchet)
+V-rail,Concepts/leftrail-redesign/src/concepts/d/00-d.js,117,rail,current,G bullseye dot+2rings,idle,idle,low,checked-out/current marker has no neon equivalent; idle ring is the quietest steady-state holder
+V-rail,Concepts/leftrail-redesign/src/concepts/d/00-d.js,118,rail,idle,G ring,idle,idle,high,exact semantics; ring matches ring
+V-rail,Concepts/leftrail-redesign/src/concepts/d/00-d.js,119,rail,pending,G hourglass,pending,idle,high,exact semantics (aliases queued/scheduled); dashed ring vs hourglass differ in shape only
+V-rail,Concepts/leftrail-redesign/src/concepts/d/00-d.js,120,rail,stale,G clock,skipped,paused,medium,STATUS skipped aliases include stale; shape changes clock->slash-circle
+V-rail,Concepts/leftrail-redesign/src/concepts/d/00-d.js,121,rail,unknown,G question,pending,idle,medium,STATUS pending aliases include unverified (an unknown word); ? motif lost (alt st-waiting keeps ? but means needs-you)
+V-rail,Concepts/leftrail-redesign/src/concepts/d/00-d.js,122,rail,dirty,G pencil,mixed,changed,medium,modified ~= mixed; tone changed fits uncommitted edits
+V-rail,Concepts/leftrail-redesign/src/concepts/d/00-d.js,123,rail,orphan,G broken link,skipped,paused,low,orphaned ~= parked/skipped; no detached-link glyph in neon
+V-rail,Concepts/leftrail-redesign/src/concepts/d/00-d.js,124,rail,stash,G box+lid,skipped,paused,low,stashed ~= parked; no box glyph in st-* set
+V-rail,Concepts/leftrail-redesign/src/concepts/d/15-jj.js,30,rail,immutable,SOLID circle + padlock knockout,blocked,blocked,low,STATUS blocked aliases include locked; padlock ~= immutable padlock-knockout (jj); tone blocked may over-alarm
+V-kit-tone,Concepts/onboarding/opus-5.5/src/settings/kit.js,43,settings,ready,pm51-status 7px dot + text,idle,idle,high,exact (alias ready)
+V-kit-tone,Concepts/onboarding/opus-5.5/src/settings/kit.js,44,settings,attention,pm51-status dot + amber text,warning,attention,high,"attention words = needs care, nothing failed"
+V-kit-tone,Concepts/onboarding/opus-5.5/src/settings/kit.js,45,settings,off,pm51-status dot (default grey),paused,paused,medium,off/dormant ~= stopped (alias stopped); alt NONE (power state)
+V-kit-tone,Concepts/onboarding/opus-5.5/src/settings/kit.js,46,settings,info,pm51-status dot,info,idle,high,proposed info extra fits exactly
+V-kit-tone,Concepts/onboarding/opus-5.5/src/settings/kit.js,47,settings,blocked,pm51-status dot,blocked,blocked,high,exact semantics (failed/error words included)
+V-s4,Concepts/pm7-tools/base/PM7-base.html,33622,settings,restart,s4-badge + PM_ICONS.restart,warning,attention,medium,"restart-needed = needs care, nothing failed; proposed warning extra fits"
+V-s4,Concepts/pm7-tools/base/PM7-base.html,33623,settings,adjudication,s4-badge + PM_ICONS.scales,waiting,attention,medium,pending team decision ~= needs a decision (aliases decide/yourmove)
+V-s4,Concepts/pm7-tools/base/PM7-base.html,33624,settings,new,"s4-badge + PM_ICONS.sparkle + "" new""",NONE,NONE,high,"novelty marker (recently added), not a process status; no neon new"
+V-s4,Concepts/pm7-tools/base/PM7-base.html,33628,settings,ok,"s4-pill ""ok""",complete,done,high,ok pill = verified-good; V-rail ok precedent
+V-s4,Concepts/pm7-tools/base/PM7-base.html,33630,settings,needs-setup,"s4-pill ""needs setup""",warning,attention,high,proposed warning extra lists setup incomplete explicitly
+V-s4,Concepts/pm7-tools/base/PM7-base.html,33630,settings,attention,"s4-pill ""attention"" (default)",warning,attention,high,"default attention pill = needs care, nothing failed"
+V-opstate,Concepts/pm7-tools/base/PM7-base.html,53366,chat,completed,"pm6-opcard-chip completed + "" ✓""",complete,done,high,exact (alias completed)
+V-opstate,Concepts/pm7-tools/base/PM7-base.html,53366,chat,running,pm6-opcard-chip running,working,working,high,exact (alias running)
+V-opstate,Concepts/pm7-tools/base/PM7-base.html,53367,chat,queued,pm6-opcard-chip waiting,pending,idle,high,exact (alias queued)
+V-opstate,Concepts/pm7-tools/base/PM7-base.html,53367,chat,failed,pm6-opcard-chip failed,failed,blocked,high,exact semantics
+V-opstate,Concepts/pm7-tools/base/PM7-base.html,53368,chat,cancelled,pm6-opcard-chip canceled,skipped,paused,high,exact (alias cancelled)
+V-opstate,Concepts/pm7-tools/base/PM7-base.html,53368,chat,degraded,pm6-opcard-chip degraded,warning,attention,high,proposed warning extra lists degraded explicitly
+V-thread,Concepts/pm7-tools/base/PM7-base.html,53722,chat,working,thread-status-working pulse div,working,working,high,exact semantics
+V-thread,Concepts/pm7-tools/base/PM7-base.html,53723,chat,unread,thread-status-unread div,info,idle,medium,neutral notice of new content; alt waiting if unread demands reading
+V-thread,Concepts/pm7-tools/base/PM7-base.html,53724,chat,draft,thread-status-draft div + data-status=draft dims thread,NONE,NONE,medium,"authorship state (draft exists), not a process status; pending/skipped both force it"
+V-thread,Concepts/pm7-tools/base/PM7-base.html,53726,chat,read,thread-status-read div + data-status=read dims thread,NONE,NONE,high,seen marker / explicit non-state (dims thread)
+V-proj,Concepts/pm7-tools/base/PM7-base.html,2662,projects,running,status-badge (lime chip; pm6-live pulses),working,working,high,exact (alias running)
+V-proj,Concepts/pm7-tools/base/PM7-base.html,2671,projects,idle,status-badge idle,idle,idle,high,exact semantics
+V-proj,Concepts/pm7-tools/base/PM7-base.html,2672,projects,paused,status-badge paused,paused,paused,high,exact semantics
+V-proj,Concepts/pm7-tools/base/PM7-base.html,2673,projects,error,status-badge error,failed,blocked,high,exact (alias error)
+V-proj,Concepts/pm7-tools/base/PM7-base.html,12288,projects,ready,status-badge pm6-ready,idle,idle,high,exact (alias ready)
+V-proj,Concepts/pm7-tools/base/PM7-base.html,12289,projects,attn,status-badge pm6-attn,warning,attention,high,"attention chip = needs care, nothing failed"
+V-proj,Concepts/pm7-tools/base/PM7-base.html,12290,projects,archived,status-badge pm6-archived,skipped,paused,medium,"archived ~= parked; alt NONE (storage state, not process state)"
+V-health,Concepts/pm7-tools/base/PM7-base.html,6100,projects,healthy,health-dot healthy,complete,done,medium,healthy ~= verified-good; V-rail ok precedent (healthy is an ok word)
+V-health,Concepts/pm7-tools/base/PM7-base.html,6101,projects,stale,health-dot stale,skipped,paused,high,exact (alias stale)
+V-health,Concepts/pm7-tools/base/PM7-base.html,6102,projects,error,health-dot error,failed,blocked,high,exact (alias error)
+V-orchbadge,Concepts/pm7-tools/base/PM7-base.html,50255,orchestrator,planning,"pm6-orch-run-level badge text ""Planning""",working,working,medium,planning is in-progress orchestration; alt pending
+V-orchbadge,Concepts/pm7-tools/base/PM7-base.html,50256,orchestrator,ready,"badge text ""Ready""",idle,idle,high,exact (alias ready)
+V-orchbadge,Concepts/pm7-tools/base/PM7-base.html,50257,orchestrator,running,"badge text ""Running""",working,working,high,exact (alias running)
+V-orchbadge,Concepts/pm7-tools/base/PM7-base.html,50258,orchestrator,paused,badge text = stage label,paused,paused,high,exact semantics (badge shows stage label)
+V-orchbadge,Concepts/pm7-tools/base/PM7-base.html,50256,orchestrator,blocked,"badge text ""Blocked""",blocked,blocked,high,exact semantics
+V-orchbadge,Concepts/pm7-tools/base/PM7-base.html,50257,orchestrator,complete,"badge text ""Complete""",complete,done,high,exact semantics
+V-orchbadge,Concepts/pm7-tools/base/PM7-base.html,14001,orchestrator,running,pm6-orch-status bordered chip,working,working,high,exact (alias running); bordered-chip shape
+V-orchbadge,Concepts/pm7-tools/base/PM7-base.html,14002,orchestrator,complete,pm6-orch-status bordered chip,complete,done,high,exact semantics; bordered-chip shape
+V-orchbadge,Concepts/pm7-tools/base/PM7-base.html,14003,orchestrator,blocked,pm6-orch-status bordered chip,blocked,blocked,high,exact semantics; bordered-chip shape
+V-orchbadge,Concepts/pm7-tools/base/PM7-base.html,14004,orchestrator,paused,pm6-orch-status chip,paused,paused,high,exact semantics; chip shape
+V-orchbadge,Concepts/pm7-tools/base/PM7-base.html,14005,orchestrator,pending-launch,pm6-orch-status bordered chip,pending,idle,high,queued-for-launch ~= queued/scheduled
+V-orchbadge,Concepts/pm7-tools/base/PM7-base.html,14006,orchestrator,compiling,pm6-orch-status bordered chip,working,working,high,in-progress build = working
+V-orchbadge,Concepts/pm7-tools/base/PM7-base.html,13995,orchestrator,live-run,pm6-orch-run-mode lime chip,working,working,high,exact (alias live)
+V-orchfresh,Concepts/pm7-tools/base/PM7-base.html,50264,orchestrator,current,"fresh chip, banner hidden",idle,idle,low,fresh/current marker; V-rail current precedent (quietest holder)
+V-orchfresh,Concepts/pm7-tools/base/PM7-base.html,50264,orchestrator,(not current),fresh chip + historical banner,skipped,paused,low,historical/superseded run ~= expired/parked; alt NONE
+V-sa,Concepts/pm7-tools/base/PM7-base.html,7437,chat,queued,sa-status-badge queued (dashed border),pending,idle,high,exact (alias queued)
+V-sa,Concepts/pm7-tools/base/PM7-base.html,7438,chat,running,sa-status-badge running (animated),working,working,high,exact (alias running)
+V-sa,Concepts/pm7-tools/base/PM7-base.html,7439,chat,awaiting,sa-status-badge awaiting,waiting,attention,medium,awaiting input/turn ~= needs-you; alt waiting-dep if it awaits a dependency
+V-sa,Concepts/pm7-tools/base/PM7-base.html,7440,chat,blocked,sa-status-badge blocked,blocked,blocked,high,exact semantics
+V-sa,Concepts/pm7-tools/base/PM7-base.html,7441,chat,complete,sa-status-badge complete,complete,done,high,exact semantics
+V-sa,Concepts/pm7-tools/base/PM7-base.html,7442,chat,failed,sa-status-badge failed,failed,blocked,high,exact semantics
+V-sa,Concepts/pm7-tools/base/PM7-base.html,7443,chat,cancelled,sa-status-badge cancelled (dimmed),skipped,paused,high,exact (alias cancelled)
+V-wizpill,Concepts/pm7-tools/base/PM7-base.html,48784,wizard,approved-ok,statepill ok,complete,done,high,approved ~= verified/done
+V-wizpill,Concepts/pm7-tools/base/PM7-base.html,48786,wizard,pack-warn,statepill warn,warning,attention,high,"pack warning = needs care, nothing failed"
+V-wizpill,Concepts/pm7-tools/base/PM7-base.html,48788,wizard,pack-ready,statepill (ready),idle,idle,high,exact (alias ready)
+V-wizpill,Concepts/pm7-tools/base/PM7-base.html,48790,wizard,interviewing,statepill interviewing,working,working,medium,interview in progress = working; alt waiting (awaits answers)
+V-wizschip,Concepts/pm7-tools/base/PM7-base.html,12889,wizard,ready,pm6-wiz-schip + sdot,idle,idle,high,exact (alias ready)
+V-wizschip,Concepts/pm7-tools/base/PM7-base.html,12890,wizard,active,pm6-wiz-schip + sdot,working,working,high,exact (alias active)
+V-wizschip,Concepts/pm7-tools/base/PM7-base.html,12891,wizard,auditing,pm6-wiz-schip + sdot,reviewing,working,high,auditing ~= review/verifying
+V-wizschip,Concepts/pm7-tools/base/PM7-base.html,12894,wizard,impacted,pm6-wiz-schip + sdot,warning,attention,medium,impacted by change = needs care; no neon impacted
+V-wizschip,Concepts/pm7-tools/base/PM7-base.html,12896,wizard,blocked,pm6-wiz-schip + sdot,blocked,blocked,high,exact semantics
+V-wizschip,Concepts/pm7-tools/base/PM7-base.html,12897,wizard,ledger_syncing,pm6-wiz-schip + sdot,working,working,medium,sync in progress = working; alt recovering
+V-wizschip,Concepts/pm7-tools/base/PM7-base.html,12898,wizard,reopened,pm6-wiz-schip + sdot,recovering,attention,medium,reopened ~= replanned/retrying; alt pending (queued again)
+V-wiztstate,Concepts/pm7-tools/base/PM7-base.html,12915,wizard,ready,topic prog-fill,idle,idle,high,exact (alias ready)
+V-wiztstate,Concepts/pm7-tools/base/PM7-base.html,12916,wizard,blocked,topic prog-fill,blocked,blocked,high,exact semantics
+V-wiztstate,Concepts/pm7-tools/base/PM7-base.html,12917,wizard,impacted,topic prog-fill,warning,attention,medium,impacted by change = needs care; no neon impacted
+V-wiztstate,Concepts/pm7-tools/base/PM7-base.html,12919,wizard,auditing,topic prog-fill,reviewing,working,high,auditing ~= review/verifying
+V-wt,Concepts/pm7-tools/base/PM7-base.html,52250,chat,wt-clean,thread-wt-glyph branch 8px (accent-teal),complete,done,medium,clean tree = verified-good; V-rail clean-word precedent
+V-wt,Concepts/pm7-tools/base/PM7-base.html,52722,chat,wt-dirty,thread-wt-glyph branch 8px (accent-warning),mixed,changed,high,uncommitted edits = modified; V-rail dirty precedent
+V-statusbar,Concepts/pm7-tools/base/PM7-base.html,26161,statusbar,running,status item + pm7-status-dot,working,working,high,exact (alias running)
+V-statusbar,Concepts/pm7-tools/base/PM7-base.html,26162,statusbar,attention,status item + pm7-status-dot,warning,attention,high,"attention = needs care, nothing failed"
+V-statusbar,Concepts/pm7-tools/base/PM7-base.html,26163,statusbar,complete,status item + pm7-status-dot,complete,done,high,exact semantics
+V-statusbar,Concepts/pm7-tools/base/PM7-base.html,26151,statusbar,dot-ok,pm7-status-dot 6px + glow,complete,done,high,ok dot = verified-good; V-rail ok precedent
+V-gitfile,Concepts/pm7-tools/base/PM7-base.html,58363,rail,M (modified),fm-row.M: name in warning,change-modified,changed,high,proposed change mark fits exactly
+V-gitfile,Concepts/pm7-tools/base/PM7-base.html,58364,rail,A (added),fm-row.A: name in passed,change-added,changed,high,proposed change mark fits exactly
+V-gitfile,Concepts/pm7-tools/base/PM7-base.html,58368,rail,Q/? (untracked),fm-row.Q: name in blue (both Q and ? map to class Q),change-added,changed,medium,untracked new file ~= added; alt NONE (untracked is not staged)
+V-gitfile,Concepts/pm7-tools/base/PM7-base.html,58365,rail,D (deleted),fm-row.D: name in failed,change-deleted,changed,high,proposed change mark fits exactly
+V-gitfile,Concepts/pm7-tools/base/PM7-base.html,58366,rail,C (conflict),fm-row.C: name in blue,mixed,changed,medium,V-rail conflict precedent (conflict ~= mixed/partial)
+V-gitfile,Concepts/pm7-tools/base/PM7-base.html,58368,rail,? (untracked),fm-row.Q: same as Q (folded at 58368),change-added,changed,medium,folded with Q at 58368; same reasoning
+V-usage-state,Concepts/usage-redesign/src/js/18-model.js,15,usage,active,checkCircle glyph,working,working,high,exact (alias active); checkCircle glyph
+V-usage-state,Concepts/usage-redesign/src/js/18-model.js,15,usage,standby,(no glyph; null),paused,paused,medium,"standby = on hold, ready to resume; no glyph (null)"
+V-usage-state,Concepts/usage-redesign/src/js/18-model.js,15,usage,exhausted,alert glyph,failed,blocked,medium,"usage exhausted = hard stop, further use refused; warning is only for low quota"
+V-usage-state,Concepts/usage-redesign/src/js/18-model.js,15,usage,cooldown,hourglass glyph,recovering,attention,medium,cooldown-until-time ~= backing-off (alias backing-off)
+V-usage-state,Concepts/usage-redesign/src/js/18-model.js,15,usage,signed-out,key glyph,warning,attention,medium,signed out = needs sign-in = needs care; key glyph motif lost
+V-usage-state,Concepts/usage-redesign/src/js/18-model.js,15,usage,needs-seat,minusCircle glyph,waiting,attention,medium,needs a seat ~= needs allocation/approval (aliases needs/needs-you)
+V-usage-state,Concepts/usage-redesign/src/js/18-model.js,15,usage,unknown,dashedCircle glyph,pending,idle,medium,V-rail unknown precedent (alias unverified)
+V-usage-live,Concepts/usage-redesign/src/markup.html,7,usage,on,pmu-livectl toggle (live dot pulses),working,working,medium,live pulsing dot = active (alias live)
+V-usage-live,Concepts/usage-redesign/src/markup.html,7,usage,paused,pmu-livectl toggle (Paused label),paused,paused,high,exact semantics
+V-toast,Concepts/pm7-tools/base/PM7-base.html,34864,toast,ephemeral,plain toast (text only),NONE,NONE,high,"display behaviour (auto-dismiss), not a status"
+V-toast,Concepts/pm7-tools/base/PM7-base.html,34865,toast,important/durable,sticky toast (text only),NONE,NONE,high,"display behaviour (sticky), not a status"
+V-toast,Concepts/pm7-tools/base/PM7-base.html,34880,toast,warn/info,toast with severity,warning,attention,low,"row folds two severities: warn->warning, info->info; single pick forced"
+V-notify,Concepts/pm7-tools/base/PM7-base.html,16371,toast,info,n-sev-dot + text,info,idle,high,proposed info extra fits exactly
+V-notify,Concepts/pm7-tools/base/PM7-base.html,16372,toast,success,n-sev-dot + text,complete,done,high,success ~= done/verified
+V-notify,Concepts/pm7-tools/base/PM7-base.html,16373,toast,warn,n-sev-dot + text,warning,attention,high,"warn = needs care, nothing failed"
+V-notify,Concepts/pm7-tools/base/PM7-base.html,16374,toast,error,n-sev-dot + text,failed,blocked,high,exact (alias error)
+V-tourpips,Concepts/onboarding/opus-5.5/src/css/40-tour.css,155,tour,pip-todo,o55t-pip (default),pending,idle,medium,todo step = next up (alias next)
+V-tourpips,Concepts/onboarding/opus-5.5/src/css/40-tour.css,156,tour,pip-current,o55t-pip o55t-cur (name expands),idle,idle,low,current marker; V-rail current precedent (quietest holder)
+V-tourpips,Concepts/onboarding/opus-5.5/src/css/40-tour.css,157,tour,pip-done,o55t-pip o55t-done,complete,done,high,done step = complete
+V-tourpips,Concepts/onboarding/opus-5.5/src/css/40-tour.css,161,tour,tick-todo,o55t-tick 6px dot (round; square in retro),pending,idle,medium,todo tick = next up (alias next)
+V-tourpips,Concepts/onboarding/opus-5.5/src/css/40-tour.css,162,tour,tick-done,o55t-tick o55t-on,complete,done,high,done tick = complete
+V-tourpips,Concepts/onboarding/opus-5.5/src/css/40-tour.css,163,tour,tick-current,o55t-tick o55t-cur (halo),idle,idle,low,current marker; V-rail current precedent
+V-onbrail,Concepts/onboarding/opus-5.5/src/js/60-ui-core.js,269,onboarding,done,o55-railitem node (check/filled),complete,done,high,done node = complete
+V-onbrail,Concepts/onboarding/opus-5.5/src/js/60-ui-core.js,269,onboarding,current,o55-railitem node (ring),idle,idle,low,current marker; V-rail current precedent
+V-onbrail,Concepts/onboarding/opus-5.5/src/js/60-ui-core.js,270,onboarding,next/todo,o55-railitem node (hollow),pending,idle,medium,next/todo node = next up (alias next)
+V-dashdot,Concepts/pm7-tools/base/PM7-base.html,11179,home,is-done,"pm6-dash-dot ● + ""complete""",complete,done,high,done lane dot = complete
+V-dashdot,Concepts/pm7-tools/base/PM7-base.html,11180,home,is-run,"pm6-dash-dot ● + ""running""",working,working,high,running lane dot = working
+V-dashdot,Concepts/pm7-tools/base/PM7-base.html,11181,home,is-fail,pm6-dash-dot ●,failed,blocked,high,fail lane dot = failed
+V-dashdot,Concepts/pm7-tools/base/PM7-base.html,11182,home,is-queue,"pm6-dash-dot ● + ""queued""",pending,idle,high,queued lane dot ~= queued
+V-deadcss,Concepts/pm7-tools/base/PM7-base.html,3180,chrome,ready,state-badge,idle,idle,high,exact (alias ready)
+V-deadcss,Concepts/pm7-tools/base/PM7-base.html,3181,chrome,needs-setup,state-badge,warning,attention,high,proposed warning extra lists setup incomplete explicitly
+V-deadcss,Concepts/pm7-tools/base/PM7-base.html,3182,chrome,logged-in,state-badge,complete,done,medium,authenticated-good ~= verified; V-rail ok precedent
+V-deadcss,Concepts/pm7-tools/base/PM7-base.html,3183,chrome,validating,state-badge,reviewing,working,medium,validating ~= verifying
+V-deadcss,Concepts/pm7-tools/base/PM7-base.html,3184,chrome,auth-expired,state-badge,skipped,paused,medium,STATUS skipped aliases include expired; alt blocked (re-auth blocks work)
+V-deadcss,Concepts/pm7-tools/base/PM7-base.html,3185,chrome,disconnected,state-badge,offline,blocked,high,proposed offline extra fits exactly (cannot be reached)
+V-deadcss,Concepts/pm7-tools/base/PM7-base.html,3190,chrome,authoritative,confidence-badge,NONE,NONE,high,"data-confidence mark, not a process status"
+V-deadcss,Concepts/pm7-tools/base/PM7-base.html,3191,chrome,estimated,confidence-badge,NONE,NONE,high,"data-confidence mark, not a process status"
+V-deadcss,Concepts/pm7-tools/base/PM7-base.html,3192,chrome,inferred,confidence-badge,NONE,NONE,high,"data-confidence mark, not a process status"
+V-deadcss,Concepts/pm7-tools/base/PM7-base.html,3197,chrome,healthy,pressure-bar-fill,complete,done,medium,V-health healthy precedent
+V-deadcss,Concepts/pm7-tools/base/PM7-base.html,3198,chrome,warning,pressure-bar-fill,warning,attention,high,"warning = needs care, nothing failed"
+V-deadcss,Concepts/pm7-tools/base/PM7-base.html,3199,chrome,critical,pressure-bar-fill,failed,blocked,high,"critical alarm reads as failure, one step past warning"
+V-engstatus,Concepts/Onboarding concepts/TestPMConcept.html,42022,settings,active,badge green + status-dot active,working,working,low,branch folds active/ready/healthy/pass/verified under one green badge; active word itself is a working alias; low (ready/verified inside point at idle/complete)
+V-engstatus,Concepts/Onboarding concepts/TestPMConcept.html,42023,settings,attention,badge amber + status-dot attention,warning,attention,high,"attention/setup/warning words = needs care, nothing failed"
+V-engstatus,Concepts/Onboarding concepts/TestPMConcept.html,42024,settings,error,badge red + status-dot error,failed,blocked,high,error/fail/blocked/deny words = failure
+V-engstatus,Concepts/Onboarding concepts/TestPMConcept.html,42025,settings,running,badge plain + status-dot running,working,working,high,running/refresh words = working (refresh ~= loading)
+V-engstatus,Concepts/Onboarding concepts/TestPMConcept.html,42026,settings,slug-fallback,badge plain + status-dot <slug(status)>,NONE,NONE,medium,open-ended passthrough: any other word becomes its own dot class; unmappable statically
+V-pltone,Concepts/Onboarding concepts/TestPMConcept.html,47128,settings,ready,pm51-status tone-ready dot + status-dot ready,idle,idle,high,exact (alias ready); V-kit-tone ready precedent
+V-pltone,Concepts/Onboarding concepts/TestPMConcept.html,47129,settings,attention,pm51-status tone-attention dot + status-dot attention,warning,attention,high,"attention words = needs care, nothing failed"
+V-pltone,Concepts/Onboarding concepts/TestPMConcept.html,47130,settings,off,pm51-status tone-off dot + status-dot disabled,paused,paused,medium,off/dormant ~= stopped (alias stopped); alt NONE (power state)
+V-pltone,Concepts/Onboarding concepts/TestPMConcept.html,47131,settings,info,pm51-status tone-info dot + status-dot info,info,idle,high,proposed info extra fits exactly
+V-pltone,Concepts/Onboarding concepts/TestPMConcept.html,47132,settings,blocked,pm51-status tone-blocked dot + status-dot error,blocked,blocked,high,exact semantics (failed/error words included)
+V-plabel,Concepts/Onboarding concepts/TestPMConcept.html,47135,settings,active,"pm51-status token ""Ready""",idle,idle,high,label Ready = ready (alias ready); note V-rail ok->complete differs (there ok is a verdict)
+V-plabel,Concepts/Onboarding concepts/TestPMConcept.html,47135,settings,ready,"pm51-status token ""Ready""",idle,idle,high,label Ready = ready
+V-plabel,Concepts/Onboarding concepts/TestPMConcept.html,47135,settings,ok,"pm51-status token ""Ready""",idle,idle,high,ok folds to label Ready here; label meaning governs
+V-plabel,Concepts/Onboarding concepts/TestPMConcept.html,47135,settings,attention,"pm51-status token ""Needs attention""",warning,attention,high,label Needs attention = needs care
+V-plabel,Concepts/Onboarding concepts/TestPMConcept.html,47135,settings,needs-signin,"pm51-status token ""Needs sign-in""",warning,attention,high,label Needs sign-in = needs care
+V-plabel,Concepts/Onboarding concepts/TestPMConcept.html,47135,settings,not-installed,"pm51-status token ""Not installed""",paused,paused,medium,grey dormant token; alt waiting-dep (use held until installed)
+V-plabel,Concepts/Onboarding concepts/TestPMConcept.html,47135,settings,setup,"pm51-status token ""Not set up""",warning,attention,high,label Not set up; warning extra lists setup incomplete explicitly
+V-plabel,Concepts/Onboarding concepts/TestPMConcept.html,47135,settings,not-connected,"pm51-status token ""Not connected""",offline,blocked,high,label Not connected = cannot be reached
+V-plabel,Concepts/Onboarding concepts/TestPMConcept.html,47135,settings,disabled,"pm51-status token ""Off""",paused,paused,medium,label Off ~= stopped (alias stopped)
+V-plabel,Concepts/Onboarding concepts/TestPMConcept.html,47135,settings,off,"pm51-status token ""Off""",paused,paused,medium,label Off ~= stopped (alias stopped)
+V-plabel,Concepts/Onboarding concepts/TestPMConcept.html,47135,settings,unavailable,"pm51-status token ""Unavailable""",offline,blocked,medium,label Unavailable = cannot be reached/used
+V-plabel,Concepts/Onboarding concepts/TestPMConcept.html,47135,settings,blocked,"pm51-status token ""Unavailable""",offline,blocked,medium,state blocked renders as label Unavailable -> offline; NOTE the state name alone would say st-blocked
+V-plabel,Concepts/Onboarding concepts/TestPMConcept.html,47135,settings,error,"pm51-status token ""Has a problem""",failed,blocked,high,label Has a problem = failure; NOTE label tone falls to neutral (singular not in TONE_BY_WORD) so the red meaning shows on a grey dot
+V-plabel,Concepts/Onboarding concepts/TestPMConcept.html,47135,settings,failed,"pm51-status token ""Has a problem""",failed,blocked,high,label Has a problem = failure; same neutral-tone fall-through as error
+V-plabel,Concepts/Onboarding concepts/TestPMConcept.html,47135,settings,running,"pm51-status token ""Running""",working,working,high,label Running = working (alias running)
+V-plabel,Concepts/Onboarding concepts/TestPMConcept.html,47135,settings,paused,"pm51-status token ""Paused""",paused,paused,high,exact semantics
+V-plabel,Concepts/Onboarding concepts/TestPMConcept.html,47135,settings,checking,"pm51-status token ""Checking""",reviewing,working,medium,checking ~= verifying (alias verifying)
+V-route,Concepts/Onboarding concepts/TestPMConcept.html,53807,settings,active,"route token ""In use"" tone-ready",working,working,high,label In use = active (alias active)
+V-route,Concepts/Onboarding concepts/TestPMConcept.html,53808,settings,ready,"route token ""Ready"" tone-ready",idle,idle,high,exact (alias ready)
+V-route,Concepts/Onboarding concepts/TestPMConcept.html,53809,settings,not-set-up,"route token ""Not set up"" tone-off",warning,attention,high,warning extra lists setup incomplete explicitly
+V-route,Concepts/Onboarding concepts/TestPMConcept.html,53810,settings,needs-sign-in,"route token ""Needs sign-in"" tone-attention",warning,attention,high,needs sign-in = needs care
+V-route,Concepts/Onboarding concepts/TestPMConcept.html,53811,settings,needs-attention,"route token ""Needs attention"" tone-attention",warning,attention,high,needs attention = needs care
+V-route,Concepts/Onboarding concepts/TestPMConcept.html,53812,settings,testing,"route token ""Testing"" tone-info",reviewing,working,medium,testing ~= verifying
+V-route,Concepts/Onboarding concepts/TestPMConcept.html,53813,settings,offline,"route token ""Offline"" tone-blocked",offline,blocked,high,proposed offline extra fits exactly
+V-route,Concepts/Onboarding concepts/TestPMConcept.html,53814,settings,off,"route token ""Off"" tone-off",paused,paused,medium,off/dormant ~= stopped (alias stopped)
+V-route,Concepts/Onboarding concepts/TestPMConcept.html,53874,settings,needs-sign-in(remote-link),"route token ""Needs pairing"" tone-attention",waiting,attention,medium,label Needs pairing = needs user action (aliases needs/needs-you)
+V-rold,Concepts/Onboarding concepts/TestPMConcept.html,53825,settings,ready,"OLD_ROUTE_STATUS fold -> ready (migration map, no direct render)",idle,idle,high,canonical ready; V-route ready precedent
+V-rold,Concepts/Onboarding concepts/TestPMConcept.html,53825,settings,in use,OLD_ROUTE_STATUS fold -> active,working,working,high,canonical active; V-route active precedent
+V-rold,Concepts/Onboarding concepts/TestPMConcept.html,53825,settings,active,OLD_ROUTE_STATUS fold -> active,working,working,high,canonical active; V-route active precedent
+V-rold,Concepts/Onboarding concepts/TestPMConcept.html,53825,settings,not set up,OLD_ROUTE_STATUS fold -> not-set-up,warning,attention,high,canonical not-set-up; V-route precedent
+V-rold,Concepts/Onboarding concepts/TestPMConcept.html,53825,settings,needs sign-in,OLD_ROUTE_STATUS fold -> needs-sign-in,warning,attention,high,canonical needs-sign-in; V-route precedent
+V-rold,Concepts/Onboarding concepts/TestPMConcept.html,53825,settings,needs attention,OLD_ROUTE_STATUS fold -> needs-attention,warning,attention,high,canonical needs-attention; V-route precedent
+V-rold,Concepts/Onboarding concepts/TestPMConcept.html,53825,settings,testing,OLD_ROUTE_STATUS fold -> testing,reviewing,working,medium,canonical testing; V-route precedent
+V-rold,Concepts/Onboarding concepts/TestPMConcept.html,53825,settings,offline,OLD_ROUTE_STATUS fold -> offline,offline,blocked,high,canonical offline; V-route precedent
+V-rold,Concepts/Onboarding concepts/TestPMConcept.html,53825,settings,off,OLD_ROUTE_STATUS fold -> off,paused,paused,medium,canonical off; V-route precedent
+V-destst,Concepts/Onboarding concepts/TestPMConcept.html,48461,settings,active,"PM51.status ""Ready"" (built-in) / ""Connected"" (other)",idle,idle,high,Ready/Connected labels both tone-ready = ready-good
+V-destst,Concepts/Onboarding concepts/TestPMConcept.html,48461,settings,attention,"PM51.status ""Needs attention""",warning,attention,high,label Needs attention = needs care
+V-destst,Concepts/Onboarding concepts/TestPMConcept.html,48461,settings,disabled,"PM51.status ""Off""",paused,paused,medium,label Off ~= stopped (alias stopped)
+V-destst,Concepts/Onboarding concepts/TestPMConcept.html,48461,settings,else,"PM51.status ""Not set up""",warning,attention,high,any other -> Not set up; setup incomplete
+V-provst,Concepts/Onboarding concepts/TestPMConcept.html,49055,settings,active,"PM51.status ""Ready""",idle,idle,high,label Ready = ready
+V-provst,Concepts/Onboarding concepts/TestPMConcept.html,49055,settings,attention,"PM51.status ""Needs attention""",warning,attention,high,label Needs attention = needs care
+V-provst,Concepts/Onboarding concepts/TestPMConcept.html,49055,settings,else,"PM51.status ""Off""",paused,paused,medium,any other -> Off ~= stopped
+V-lsppill,Concepts/Onboarding concepts/TestPMConcept.html,50164,settings,off,"PM51.pill ""Off""",paused,paused,medium,label Off ~= stopped (alias stopped)
+V-lsppill,Concepts/Onboarding concepts/TestPMConcept.html,50164,settings,ready,"PM51.pill ""Ready""",idle,idle,high,label Ready = ready
+V-lsppill,Concepts/Onboarding concepts/TestPMConcept.html,50164,settings,attention,"PM51.pill ""Needs attention""",warning,attention,high,label Needs attention = needs care
+V-lsppill,Concepts/Onboarding concepts/TestPMConcept.html,50164,settings,setup,"PM51.pill ""Not set up""",warning,attention,high,label Not set up; setup incomplete
+V-lsppill,Concepts/Onboarding concepts/TestPMConcept.html,50164,settings,fallback,PM51.statusPill(x.status),NONE,NONE,medium,"open-ended passthrough to PM51.statusPill(x.status); resolves via V-plabel at runtime, unmappable statically"
+V-mcptone,Concepts/Onboarding concepts/TestPMConcept.html,50165,settings,off,list-item tone off,paused,paused,medium,tone off = dormant ~= stopped
+V-mcptone,Concepts/Onboarding concepts/TestPMConcept.html,50165,settings,ready,list-item tone ready,idle,idle,high,tone ready = ready
+V-mcptone,Concepts/Onboarding concepts/TestPMConcept.html,50165,settings,attention,list-item tone attention,warning,attention,high,tone attention = needs care
+V-mcptone,Concepts/Onboarding concepts/TestPMConcept.html,50165,settings,neutral,list-item tone neutral,info,idle,low,default grey tone = neutral notice at best; alt NONE (absence of state)
+V-profstad,Concepts/Onboarding concepts/TestPMConcept.html,51668,settings,ready,"PM51.pill ""Ready""",idle,idle,high,every profile gets Ready = ready
+V-profstad,Concepts/Onboarding concepts/TestPMConcept.html,51668,settings,default,"PM51.chip ""Default"" tag",NONE,NONE,medium,"Default chip is a configuration marker, not a process state"
+V-groupill,Concepts/Onboarding concepts/TestPMConcept.html,52646,settings,locked,"PM51.pill ""Core · locked"" tone-info",blocked,blocked,medium,"locked is a blocked alias; NOTE pill tone is info (blue), disagreeing with the blocked red"
+V-groupill,Concepts/Onboarding concepts/TestPMConcept.html,52646,settings,Custom,"PM51.pill ""<group>"" tone-ready",NONE,NONE,medium,"category label (group name) with decorative ready tone, not a state"
+V-groupill,Concepts/Onboarding concepts/TestPMConcept.html,52646,settings,group,"PM51.pill ""<group>"" tone-info",NONE,NONE,medium,"category label (group name) with decorative info tone, not a state"
+V-repost,Concepts/Onboarding concepts/TestPMConcept.html,52941,settings,Clean,"PM51.pill ""Ready""",idle,idle,medium,"renders as pill Ready (label governs, V-plabel ok precedent); underlying Clean is a verdict but the token reads Ready"
+V-repost,Concepts/Onboarding concepts/TestPMConcept.html,52941,settings,Checking,"PM51.pill ""Checking""",reviewing,working,medium,checking ~= verifying
+V-repost,Concepts/Onboarding concepts/TestPMConcept.html,52941,settings,else,"PM51.pill ""Needs attention""",warning,attention,high,any other r.state -> Needs attention = needs care
+V-plugst,Concepts/Onboarding concepts/TestPMConcept.html,50618,settings,not-installed,"PM51.pill ""Not installed""",paused,paused,medium,grey dormant token; V-plabel not-installed precedent
+V-plugst,Concepts/Onboarding concepts/TestPMConcept.html,50618,settings,problem,"PM51.pill ""Needs attention""",warning,attention,high,problem -> Needs attention = needs care
+V-plugst,Concepts/Onboarding concepts/TestPMConcept.html,50618,settings,enabled,"PM51.pill ""Ready""",idle,idle,high,label Ready = ready
+V-plugst,Concepts/Onboarding concepts/TestPMConcept.html,50618,settings,disabled,"PM51.pill ""Off""",paused,paused,medium,label Off ~= stopped
+V-mcpst,Concepts/Onboarding concepts/TestPMConcept.html,50783,settings,off,"PM51.pill ""Off""",paused,paused,medium,label Off ~= stopped
+V-mcpst,Concepts/Onboarding concepts/TestPMConcept.html,50783,settings,on,PM51.pill m.state (passthrough),NONE,NONE,medium,"open-ended passthrough of raw m.state; tone resolves via V-pltone at runtime, unmappable statically"
+V-pathst,Concepts/Onboarding concepts/TestPMConcept.html,54810,settings,active,"PM51.pill ""Ready"" tone-ready",idle,idle,high,label Ready tone-ready = ready
+V-pathst,Concepts/Onboarding concepts/TestPMConcept.html,54810,settings,attention,"PM51.pill ""Needs attention"" tone-attention",warning,attention,high,label Needs attention = needs care
+V-pathst,Concepts/Onboarding concepts/TestPMConcept.html,54810,settings,else,"PM51.pill ""Off"" tone-off",paused,paused,medium,any other -> Off/off ~= stopped
