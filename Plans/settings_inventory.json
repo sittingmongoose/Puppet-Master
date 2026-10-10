@@ -3071,7 +3071,7 @@
   {
    "id": "ai.accounts.account-threshold-override",
    "label": "Per-Account Switch Override",
-   "desc": "Give one account its own switch trigger, different from the global level — useful for small trial accounts.",
+   "desc": "Give one account its own switch trigger, different from the global level — useful for small trial accounts. (Superseded by ai.accounts.hard-switch-level at scope account)",
    "type": "number",
    "default": "",
    "scope": [
