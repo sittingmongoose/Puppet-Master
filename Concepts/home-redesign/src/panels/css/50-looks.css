@@ -106,3 +106,5 @@ html[data-theme^="basic"] :is(#pm-home-centre, #pmw-overlay, #pmw-chat, .pmw-sco
 html[data-theme="basic-light"] :is(#pm-home-centre, #pmw-overlay, #pmw-chat, .pmw-scope) {
   --pmw-strip: color-mix(in srgb, color-mix(in srgb, var(--surface) 88%, #000) 72%, var(--surface));
 }
+/* the Glass drag frost (rev 21): the plate goes to .92 only while a tab is carried; opaque at rest; never a backdrop blur */
+html[data-theme^="glass"]:not([data-o55-nier="on"]) .pmw-strip.is-dragging .pmw-plate { opacity: .92; }

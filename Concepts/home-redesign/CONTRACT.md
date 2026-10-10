@@ -377,10 +377,18 @@ and writes through the same model, so Settings > Terminal only binds controls.
   or output chrome (a program's own output may contain them). The layer lint fails the build on each.
 - No `:has(` in the layer CSS. No viewport width `@media` queries inside a tab body. No internal ids in the UI
   (session ids, tab ids, panel ids never appear as text).
-- Hover (the hover thread's engine `PMH`): tab strips use `role="tab"` and are never hover targets; dividers carry
-  `-divider` in their class; text surfaces (editor, terminal screen) carry `data-pmh="off"`; header-row buttons are
-  `data-pmh="icon"` (a static tint only, DR-059). Magnet and glow never touch tabs, tab buttons, dividers or text.
-  While the user drags a divider the host sets `body.pm-resizing`, which rests the engine.
+- Hover (the hover thread's merged engine `PMH`, opus-5.5 `src/js/18-hover.js`): it never targets tabs, `[role="tab"]`,
+  resizers and dividers (`-divider` in the class), inputs, textareas, selects, contenteditable or `.xterm`; it skips
+  everything inside `[data-pm-hover-exempt]` (no magnet, light, glow, state class or kind tag); `data-pmh="off"` takes
+  one element out; `data-pmh="card|row|tile|icon"` opts an element in. So: list rows opt in with `data-pmh="row"` (the
+  "+" menu rows, the "+N" list, the empty-panel launcher and its Recent rows, the recent-tabs switcher: the engine puts
+  it on the row wrapper, `.pmw-mrow`, so the trailing new-panel cell moves with its row); header-row buttons and other
+  small icon buttons are `data-pmh="icon"` (a static tint only, DR-059); text surfaces (the editor, a terminal screen)
+  carry `data-pmh="off"` or sit inside `[data-pm-hover-exempt]`; strips and dividers get nothing. Dashboard cards come
+  through the Usage board. Hover TAGS (the page's tag controller) stay off rows whose label is already visible with
+  `data-pm-hover-visual-suppressed="true"`, never with `data-pm-hover-exempt` (that would also take them out of the
+  hover engine). While the user drags a divider or a tab the host sets `body.pm-resizing`, which rests the engine, and
+  hides the tag layer. The full hover contract (the look per family) follows from the hover thread.
 - Fonts: faces in `src/terminal/fonts/` are not mirrored into PM Symbols; the layer exempts them from the
   face/symbol pairing check. Box-drawing, block, braille and powerline glyphs are drawn by the terminal.
 
@@ -398,4 +406,4 @@ root. A kind never appends its own overlay to `document.body`.
   file reference opens a preview tab, not only the file tree); the keyboard table is replaced (PM7's Ctrl+1..9 and Ctrl+K are taken;
   browser-owned chords get Alt stand-ins). Additive: command names agreed with the Plans thread (activation and
   maximize are `ui.*` view-state actions, `cmd.panel_tab.rename`, one `workspace.layout_changed` event), `onResize` gains
-  `final`.
+  `final`. Hover section rewritten for the merged hover engine (data-pmh rows, visual-suppressed tags).

@@ -173,7 +173,7 @@ mru.paint = function () {
   mru.el.textContent = '';
   mru.list.slice(0, 12).forEach(function (t, i) {
     var r = l.tabs[t], def = kindDef(r.kind);
-    var row = h('div', { class: 'pmw-mru-row pmw-cur' + (i === mru.i ? ' is-current' : ''), role: 'option', 'aria-selected': i === mru.i ? 'true' : 'false' }, [
+    var row = h('div', { class: 'pmw-mru-row pmw-cur' + (i === mru.i ? ' is-current' : ''), role: 'option', 'aria-selected': i === mru.i ? 'true' : 'false', 'data-pmh': 'row' }, [
       kindIcon((def && def.icon) || 'file'), h('b', { text: tabLabel(r) }), h('span', { text: model.describe(l, model.panelOf(l, t).id) })]);
     mru.el.appendChild(row);
   });
