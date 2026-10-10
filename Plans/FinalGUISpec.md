@@ -339,6 +339,8 @@ F3-635). The paragraphs above remain lineage.
 
 ### F3-HOME-002 — Model-first movement and resize behavior
 
+Amended 2026-10-10 (lead ruling L13): A lost pointer capture now cancels a move (DR-066); the earlier no-cancel rule below is retired.
+
 Surface movement and resize use a committed layout plus a local draft layout. Pointer
 offset, lift, placeholder, neighbor reflow, edge-zone detection, cancellation, and
 reduced-motion behavior follow the approved U10 interaction semantics. DOM/Slint
