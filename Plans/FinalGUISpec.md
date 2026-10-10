@@ -44163,7 +44163,7 @@ canonical_text: >-
   panels or strips, and F3-431's closed blur budget is unchanged. Retro: reverse-video tabs (the
   active tab a phosphor-filled block with dark text), bracket glyphs ("[+7]", "[+]"), stepped corners on the silhouette,
   kind icons as one-cell glyphs from the code face (never emoji), the dirty mark an asterisk after the label, box-drawn
-  menus with a hard 1 px frame and reverse-video rows, dividers drawn as a single box-drawing line that doubles while
+  menus with a hard frame and reverse-video rows, dividers drawn as a single box-drawing line that doubles while
   hovered or dragged, and a dithered landing preview with a box-drawn outline; Retro motion snaps and never springs, and
   its three rotating effects play on selection and reorder (F3-631). NieR Mode paints only while NieR Mode is on, and
   each touch is gated by its own installed part, using the existing part keys only and never a new part (SSYS-043,
