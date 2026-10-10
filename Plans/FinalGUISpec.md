@@ -30062,7 +30062,7 @@ canonical_text: >-
   Nunito and IBM Plex Mono Latin Extended, Vietnamese and Cyrillic; PM NieR Sans Latin Extended and Vietnamese; PM
   NieR Mono those and Cyrillic and Greek. Scripts no family carries use the computer's fonts. Code text follows the
   look's code face, the --mono-font token: JetBrains Mono, embedded under that name with PM NieR Mono's files and
-  slices, in Basic, Glass and Friendly (the home redesign's D17), IBM Plex Mono in Retro, its whole face (owner,
+  slices and, in PMConcept7, JetBrains Mono's own italic with the same slices, in Basic, Glass and Friendly (the home redesign's D17), IBM Plex Mono in Retro, its whole face (owner,
   2026-10-10), and PM NieR Mono in NieR Mode; both concepts set their code blocks, inline code, file paths and logs
   through that token. The home redesign's editor and terminal faces are decided separately (its D17, which its Plans thread records). The page's symbol characters (arrows, check and cross marks,
   triangles, the warning sign, dots, math signs, the command key and box lines) are PM Symbols, drawn as SVG in

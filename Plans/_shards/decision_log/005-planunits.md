@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L3634-L12504
+Source lines: L3637-L12519
 
-Source SHA256: `07c9e45a17cbf53fc94e9d79d4f2326b200c9be7d0dbdf526c7dfede2eb9e584`
+Source SHA256: `b6d9ae7078d9a088a0a0b93f76f4a032f6ebc68f187bdbce5f4b3f712577a3e4`
 
 ---
 
@@ -8495,9 +8495,14 @@ canonical_text: >-
   Inter, Poppins with Nunito behind it, and IBM Plex Mono, at the weights and italics its looks use, as Latin woff2
   data, and Gelasio stands in under the name Georgia for the info-badge glyph because Georgia cannot be embedded
   (F3-430). Its Inter, Poppins and IBM Plex Mono files are the 5.6 Pro chat concept's, byte for byte (DR-050).
-  Orbitron, Rajdhani and JetBrains Mono are not embedded because no text draws in them, and platform font names
-  stay the computer's. The page's symbol characters are PM Symbols, drawn for Puppet Master as SVG and embedded
-  beside every text face for those characters only, and form controls take the look's face (F3-430).
+  Orbitron and Rajdhani are not embedded because no text draws in them, and platform font names stay the
+  computer's. The page's symbol characters are PM Symbols, drawn for Puppet Master as SVG and embedded beside every
+  text face for those characters only, and form controls take the look's face (F3-430). Amended 2026-10-09 by the
+  owner's two follow-ups: every embedded family carries the scripts it supports as unicode-range slices, in both
+  concepts, and scripts no family carries are measured, not embedded; and code text follows the look's designated
+  code face, JetBrains Mono in Basic, Glass and Friendly (the home redesign's D17), embedded under that name with
+  PM NieR Mono's bytes, while Retro's stays IBM Plex Mono (owner, 2026-10-10) and NieR Mode's PM NieR Mono; the home
+  redesign's editor and terminal faces are decided separately in its own Plans record (F3-430, F3-426).
 gui_related: true
 gui_classification_reason: Records an owner request on the concepts' fonts.
 split_recommended: false
@@ -8506,6 +8511,7 @@ unblocks: [DR-050]
 acceptance_criteria:
   - "Every theme face PMConcept7 draws in Basic, Glass, Friendly and Retro comes from embedded data."
   - "Every symbol character the page uses draws from PM Symbols in every look."
+  - "Every script an embedded family carries draws from embedded data in both concepts, and code text in Basic, Glass and Friendly draws in the embedded JetBrains Mono."
   - "The owner's request is recorded in plain words with its source hashes."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -8524,13 +8530,19 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/README.md, SHA-256 51df0972bff7f0f909d1cf3438aa1389eaa9e76c3b12b5ac8363814fbded11e4"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/proof-after.json, SHA-256 bfda89d92f00e53a7ad8dec195de68ff5ef1774443e4fb70868ce32bc061a82a"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/symbols-proof.json, SHA-256 e0f74c7c89eb6d80a7f48776822310df03989c1cf4e9d421cfe962af30f8ceae"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-scripts-20261009/README.md, SHA-256 352dfdc3063e90c0ad68361057c6be9e089fd3835470baba6347d0590cd268ae"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-scripts-20261009/pm7-final-verdict.json, SHA-256 47f3eccae609f6926e4e8240211a79b1032aab93184ed68a5dc0a923b6354006"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-scripts-20261009/pro-final-verdict.json, SHA-256 10aadd340894dc9bff422b2252828c48c04c9f7ac9a240f84b215c9a91792188"
 preserved_exact_tokens:
   - "DL-161"
   - "Gelasio"
   - "Georgia"
   - "PM Symbols"
+  - "JetBrains Mono"
+  - "unicode-range"
 negative_constraints:
   - "Do not load a concept font from the network."
+  - "Do not embed a face for a script no theme family carries without the owner's decision."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/DRY_Rules.md
