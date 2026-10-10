@@ -1,0 +1,114 @@
+/* Shell integration (keyed on html[data-pmw-home="on"], set by the early script; ?home=current leaves it off).
+   The layer's CSS is in <head>, ahead of the page's body-level blocks, so every override wins on specificity. */
+
+/* the old Home model no longer runs: its nodes are hidden, never removed (other code holds references) */
+html[data-pmw-home="on"] #pm-home-workspace,
+html[data-pmw-home="on"] #editorView,
+html[data-pmw-home="on"] #editorDashResizer,
+html[data-pmw-home="on"] #terminalResizer,
+html[data-pmw-home="on"] #bottomPanel,
+html[data-pmw-home="on"] #detachedTerminalWindow,
+html[data-pmw-home="on"] #floatingChat,
+html[data-pmw-home="on"] #panel-dashboard > :not(#pm-home-centre) { display: none !important; }
+
+/* the centre fills Home's page box (the same box the old workspace used) */
+html[data-pmw-home="on"] #pm-home-centre {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+html[data-pmw-home="on"] #panel-dashboard.pm-home-owned.pm8-page-out { position: absolute; }
+body.pmu-page-active #pm-home-centre { pointer-events: none !important; }
+
+/* the chat column (D3): one width model on every page, from an inline custom property the ladder writes */
+html[data-pmw-home="on"] body #chatPanel.chat-panel {
+  flex: 0 0 var(--pmw-chat-w, clamp(400px, calc(26.667vw + 88px), 640px)) !important;
+  width: var(--pmw-chat-w, clamp(400px, calc(26.667vw + 88px), 640px)) !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  transition: flex-basis var(--pmw-t-med, 180ms) cubic-bezier(.22, 1, .36, 1), width var(--pmw-t-med, 180ms) cubic-bezier(.22, 1, .36, 1);
+}
+html[data-pmw-home="on"] body.pm-resizing #chatPanel.chat-panel { transition: none; }
+html[data-pmw-home="on"] #chatResizer:not(.hidden) { cursor: col-resize; }
+
+/* the rail side panel eases to 240, then folds to its icon bar (D4); the user's own width is never overwritten */
+html[data-pmw-home="on"] .main-area[data-pmw-rail="ease"] #sidePanelSlot:not(.hidden) { max-width: 240px !important; }
+html[data-pmw-home="on"] .main-area[data-pmw-rail="fold"] > .left-panel { position: relative; z-index: 30; }
+html[data-pmw-home="on"] .main-area[data-pmw-rail="fold"] #sidePanelSlot { display: none !important; }
+html[data-pmw-home="on"] .main-area[data-pmw-rail="fold"] > #leftPanelResizer { display: none !important; }
+html[data-pmw-home="on"] .main-area[data-pmw-rail="fold"][data-pmw-rail-peek] #sidePanelSlot:not(.hidden) {
+  display: flex !important;
+  position: absolute;
+  left: 100%;
+  top: 0;
+  bottom: 0;
+  width: 280px !important;
+  max-width: none !important;
+  z-index: 31;
+  box-shadow: 18px 0 40px -12px rgba(0, 0, 0, .45);
+}
+
+/* the chat folds to an edge strip below C 480 (unless pinned); its button sits over the strip */
+html[data-pmw-home="on"] .main-area[data-pmw-chat="strip"] #chatPanel.chat-panel > * { visibility: hidden; }
+html[data-pmw-home="on"] .main-area[data-pmw-chat="strip"][data-pmw-chat-peek] #chatPanel.chat-panel {
+  position: absolute !important;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 400px !important;
+  flex: none !important;
+  z-index: 60 !important;
+  box-shadow: -18px 0 40px -12px rgba(0, 0, 0, .45);
+}
+html[data-pmw-home="on"] .main-area[data-pmw-chat="strip"][data-pmw-chat-peek] #chatPanel.chat-panel > * { visibility: visible; }
+html[data-pmw-home="on"] .main-area { position: relative; }
+.pmw-chat-strip {
+  position: fixed;
+  width: 32px;
+  border: 0;
+  padding: 10px 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background: transparent;
+  color: var(--pmw-text-2);
+  cursor: pointer;
+  z-index: 61;
+}
+.pmw-chat-strip[hidden] { display: none; }
+.pmw-chat-strip:hover { color: var(--pmw-text); background: var(--pmw-hover); }
+
+/* Pop out (the browser concept's stand-in for the native window): the chat floats over the page with Dock back */
+html[data-pmw-home="on"] .main-area[data-pmw-chat-float] #chatResizer { display: none !important; }
+html[data-pmw-home="on"] .main-area[data-pmw-chat-float] #chatPanel.chat-panel {
+  position: fixed !important;
+  right: 24px;
+  bottom: 48px;
+  top: auto;
+  height: min(720px, calc(100vh - 140px)) !important;
+  width: 440px !important;
+  flex: none !important;
+  z-index: 70 !important;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 28px 70px -20px rgba(0, 0, 0, .55), 0 0 0 1px var(--border, rgba(255, 255, 255, .12));
+}
+
+/* the title bar's Home options button */
+.pmw-tb-btn {
+  width: 28px;
+  height: 28px;
+  display: inline-grid;
+  place-items: center;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--text-secondary, #a0a0a0);
+  cursor: pointer;
+}
+.pmw-tb-btn .pmw-ico { width: 15px; height: 15px; }
+.pmw-tb-btn:hover, .pmw-tb-btn.pmw-anchor-open { background: color-mix(in srgb, var(--text-primary, #fff) 8%, transparent); color: var(--text-primary, #fff); }
+
+/* the file menu's new rows */
+.pmw-ctx-item { cursor: pointer; }
+.pmw-ctx-sep { height: 1px; margin: 4px 6px; background: var(--border-light, rgba(255, 255, 255, .08)); }

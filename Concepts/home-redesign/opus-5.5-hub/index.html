@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en" data-concept-model="Opus 5.5"><head><meta charset="utf-8">
+<title>Home panels PM7 · Puppet Master</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  html, body { margin: 0; height: 100%; background: #111; }
+  iframe { display: block; border: 0; width: 100%; height: 100%; }
+  .model { position: fixed; right: 8px; bottom: 30px; z-index: 2; font: 600 11px/1 system-ui, sans-serif; color: rgba(255, 255, 255, .55); pointer-events: none; }
+</style>
+</head><body>
+<!-- The Concept Hub registers this model folder; the review copy itself is Concepts/HomeTestPMConcept7.html, built by
+     Concepts/home-redesign/tools/build_home.py (the layer-package pattern of the Usage and left-rail redesigns, not a
+     per-model concept folder). This page frames it and passes the Hub's theme and Reduced Motion through. -->
+<span class="model" data-concept-model="Opus 5.5">Opus 5.5</span>
+<iframe id="review" title="Home panels review copy" src="../../HomeTestPMConcept7.html"></iframe>
+<script>
+(function () {
+  'use strict';
+  var frame = document.getElementById('review');
+  frame.src = '../../HomeTestPMConcept7.html' + (location.search || '?o55=off') + location.hash;
+  var pending = null;
+  function apply(state) {
+    var w = frame.contentWindow;
+    if (!w || !w.document || !w.document.documentElement) { pending = state; return; }
+    try {
+      if (state.theme && w.PM_THEME && typeof w.PM_THEME.set === 'function') w.PM_THEME.set(state.theme);
+      else if (state.theme) w.document.documentElement.setAttribute('data-theme', state.theme);
+      if (state.reducedMotion) w.document.documentElement.setAttribute('data-motion', 'reduced');
+      else if (w.document.documentElement.getAttribute('data-motion') === 'reduced') w.document.documentElement.removeAttribute('data-motion');
+    } catch (_) { pending = state; }
+  }
+  window.addEventListener('message', function (event) {
+    var m = event.data;
+    if (!m || m.source !== 'pm-concept-hub' || m.type !== 'pm-concept-state') return;
+    apply(m.state || {});
+  });
+  frame.addEventListener('load', function () { if (pending) { var s = pending; pending = null; apply(s); } });
+  function ready() {
+    if (window.parent === window) return;
+    window.parent.postMessage({ source: 'pm-concept', type: 'pm-concept-ready', version: 1,
+      capabilities: { theme: true, reducedMotion: true, testWidth: false } }, '*');
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', ready, { once: true });
+  else ready();
+})();
+</script>
+</body></html>
