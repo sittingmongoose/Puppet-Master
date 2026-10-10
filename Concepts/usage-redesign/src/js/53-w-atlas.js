@@ -149,6 +149,33 @@
 
   /* ================================================================== qhist: quota history rows (A1 7.9) */
   var openRows = {};
+  /* lane d-plans (AAC's quota focus, research R3 2): the open row's focus chart can compare its main window across every
+     account of its provider ("Compare weekly across Claude accounts"): one step line per account, the open account solid
+     and the others dashed, never added, averaged or merged; an account without history is named "no history" in the
+     legend, never drawn as 0. The open account's active spans (from the switch log) run along the plot's top edge. View
+     state only, per card, like the open row. */
+  var compareOn = {};
+  /* when an account was the active one, from the provider's switch log: a span starts at a switch to it and ends at the
+     next switch away from it, or now while it is still the active account; a span whose end the log does not show (the
+     next switch leaves another account) is not drawn */
+  function activeSpans(acct, now) {
+    var log = PMU.roster.read().switchLog.filter(function (e) { return e.providerId === acct.providerId && e.to && (!e.outcome || e.outcome === 'switched'); })
+      .sort(function (a, b) { return a.at - b.at; }), out = [];
+    log.forEach(function (e, i) {
+      if (e.to !== acct.id) return;
+      var nx = log[i + 1];
+      if (nx) { if (nx.from === acct.id) out.push({ from: e.at, to: nx.at }); }
+      else if (acct.effective) out.push({ from: e.at, to: now });
+    });
+    return out;
+  }
+  function compareGroup(q, key) {
+    var hit = null;
+    q.groups.forEach(function (g) { g.rows.forEach(function (r) { if (r.account.key === key) hit = { g: g, r: r }; }); });
+    if (!hit || !hit.r.main || hit.g.rows.length < 2) return null;
+    var mk = hit.r.main.key, peers = hit.g.rows.filter(function (x) { return x.focus.some(function (f) { return f.key === mk && f.points; }); });
+    return peers.length > 1 ? { g: hit.g, r: hit.r, key: mk, label: String(hit.r.main.short).toLowerCase() } : null;
+  }
   /* Details of the quota history (CONTENT-3): each account's main window now and its next reset */
   C.kindReadings.qhist = function (ctx) {
     var q = ctx.model, rows = [];
@@ -190,7 +217,8 @@
       var tmpl = wide ? 'minmax(210px,26%) minmax(160px,1fr) 76px 110px 26px' : mid ? 'minmax(170px,36%) minmax(110px,1fr) 64px 96px 22px' : 'minmax(120px,40%) minmax(80px,1fr) 56px 20px';
       var collapsed = (C.view(ctx.id, 'collapsed', '') || '').split(',').filter(Boolean);
       var open = openRows[ctx.id] || '';
-      var rowH = mid ? 36 : 40, headH = 36, focusH = 236;
+      var cmpG = open ? compareGroup(q, open) : null, cmpOn = !!(cmpG && compareOn[ctx.id]);
+      var rowH = mid ? 36 : 40, headH = 36, focusH = 236 + (cmpG ? 32 : 0);
       var budget = ctx.tier.bh - 22 - (q.noWindows.length ? 34 : 0) - (open ? focusH : 0);
       var used = 0, hiddenRows = 0, out = [], rowsDrawn = [], hiddenNames = [];
       var tlW = wide ? bw * 0.66 - 230 : mid ? bw * 0.64 - 200 : bw * 0.6 - 110;
@@ -226,7 +254,8 @@
             (mid ? '' : '<em>' + esc(nextTxt) + '</em>') + '</span>' + (mid ? '<span class="pmu-qnext" data-align="r"' + C.hover('Next reset', nextHover) + '>' + esc(nextTxt) + '</span>' : '') +
             '<span class="pmu-qchev pmu-qrowchev' + (isOpen ? ' is-open' : '') + '">' + SVG.chevronDown + '</span></div>');
           rowsDrawn.push(r);
-          if (isOpen) out.push('<div class="pmu-qfocus" data-key="' + esc(key) + '"><div class="pmu-qfocushost"></div></div>');
+          if (isOpen) out.push('<div class="pmu-qfocus" data-key="' + esc(key) + '">' + (cmpG ? '<div class="pmu-qfocustools">' + C.switchBtn('qcompare', cmpOn, 'Compare ' + cmpG.label + ' across ' + cmpG.g.name + ' accounts',
+            'One line per account, never added or averaged; the open account is the solid line and its active time runs along the top') + '</div>' : '') + '<div class="pmu-qfocushost"></div></div>');
         });
       });
       if (hiddenRows) out.push(C.more(hiddenRows, hiddenRows === 1 ? 'account' : 'accounts', false, hiddenNames));
@@ -259,9 +288,14 @@
         if (r && fh) {
           /* the account's own provider's switch and warn lines (lane d-plans: thresholds(providerId), shared levels as fallback) */
           var th = (r.account.providerId && PMU.roster.thresholds(r.account.providerId)) || PMU.roster.thresholds();
-          body._pmuFocusChart = C.chart(body, 'qspark', fh, { windows: r.focus.filter(function (f) { return f.points; }).map(function (f, i) { return { label: f.label, dash: ['', '9 4', '9 3 2 3'][i % 3], points: f.points }; }),
-            thresholds: { warn: 100 - th.warnLeft, switch: 100 - th.switchLeft }, resets: r.focus.map(function (f) { return f.resetAt; }).filter(Boolean), now: q.now, bucketMs: q.bucketMs, n: q.points },
-            { label: r.account.nickname + ', every window, 7 days', readout: true });
+          var bands = activeSpans(r.account, q.now).map(function (sp) { return { from: sp.from, to: sp.to, label: 'active' }; });
+          var wins = cmpOn ? [r].concat(cmpG.g.rows.filter(function (x) { return x !== r; })).map(function (x, i) {
+            var f = x.focus.filter(function (ff) { return ff.key === cmpG.key; })[0], pts = x.main && x.main.key === cmpG.key && x.points ? x.points : f && f.points;
+            return { label: x.account.nickname + (x.account.effective ? ' (active)' : '') + (pts ? '' : ' · no history'), dash: ['', '9 4', '9 3 2 3', '2 3'][i % 4], points: pts || [] };
+          }) : r.focus.filter(function (f) { return f.points; }).map(function (f, i) { return { label: f.label, dash: ['', '9 4', '9 3 2 3'][i % 3], points: f.points }; });
+          body._pmuFocusChart = C.chart(body, 'qspark', fh, { windows: wins, bands: bands,
+            thresholds: { warn: 100 - th.warnLeft, switch: 100 - th.switchLeft }, resets: cmpOn ? [r.main && r.main.resetAt].filter(Boolean) : r.focus.map(function (f) { return f.resetAt; }).filter(Boolean), now: q.now, bucketMs: q.bucketMs, n: q.points },
+            { label: cmpOn ? cmpG.g.name + ' accounts, ' + cmpG.label + ' window, 7 days' : r.account.nickname + ', every window, 7 days', readout: true });
         }
       }
     }
@@ -282,6 +316,14 @@
   });
   /* opening a row grows it to its focus chart (WOW-SPEC 3.10): the rows below slide to their new places (FLIP 250
      SLIDE), the focus opens top-down and its chart draws with its comet */
+  C.act('qcompare', function (el, id) {
+    compareOn[id] = !compareOn[id];
+    viewAction('view.usage.quota_compare_toggled', { widget_id: id, account: openRows[id] || '', compare: !!compareOn[id] });
+    var card = PMU.board.card(id); if (!card) return;
+    PMU.cards.updateAll([card], 'config');
+    var body = card.querySelector('.pmu-cardbody');
+    if (body && body._pmuFocusChart && body._pmuFocusChart.enter) { try { body._pmuFocusChart.enter(0); } catch (error) {} }
+  });
   C.act('qrow', function (el, id) {
     var v = el.getAttribute('data-value');
     openRows[id] = openRows[id] === v ? '' : v;

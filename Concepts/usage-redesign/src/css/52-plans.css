@@ -63,3 +63,13 @@ html[data-o55-nier="on"] #panel-usage .pmu-wpend em { border-radius: 0; backgrou
 #panel-usage .pmu-wnone .pmu-vs { white-space: normal; }
 /* a passed reset waiting for its next reading ("Reset at 21:56 · new reading pending") reads at 12 px in a meter cell */
 #panel-usage .pmu-meterna .pmu-vs[data-vs="reset_pending"] { font-size: 12px; line-height: 15px; }
+
+/* ------------------------------------------------------------------ quota history: compare across a provider's accounts */
+/* the open row's focus: the compare switch over its chart (AAC's "Compare <window> across <provider> accounts") */
+#panel-usage .pmu-qfocustools { display: flex; align-items: center; min-height: 28px; margin: 2px 0 4px; }
+/* when the open account was the active one (from the switch log): a 3 px rule along the plot's top edge and its word */
+#panel-usage .pmu-chart path.pmu-qband { stroke: var(--pmu-ink-good); stroke-width: 3; stroke-linecap: round; fill: none; opacity: .85; }
+#panel-usage .pmu-chart text.pmu-tick.is-band { fill: var(--pmu-ink-good); }
+html[data-theme^="retro"] #panel-usage .pmu-chart path.pmu-qband, html[data-o55-nier="on"] #panel-usage .pmu-chart path.pmu-qband { stroke-linecap: butt; }
+html[data-o55-nier="on"] #panel-usage .pmu-chart path.pmu-qband { stroke: var(--o55-nier-ink); }
+html[data-o55-nier="on"] #panel-usage .pmu-chart text.pmu-tick.is-band { fill: var(--o55-nier-ink); }
