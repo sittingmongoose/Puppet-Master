@@ -1636,7 +1636,7 @@ gui_classification_reason: The record determines restored widget placement, sema
 depends_on: [UF-060, WS-004, WS-009, WS-018, WS-019]
 unblocks: []
 acceptance_criteria:
-  - Usage and Dashboard restore from their own namespaces while Home surfaces restore only from home_workspace_layout.v1.
+  - Usage and Dashboard restore from their own namespaces while Home surfaces restore only from home_workspace_layout.v2 (amended 2026-10-09, DL-180: Plans/storage-plan.md#SP-330 reads home_workspace_layout.v1 only as a migration input).
   - "UsageWidgetLayoutRecord is the named public contract for a settled Usage widget layout and has exactly the required fields layout_schema_version, default_set_version, host_id, room_id, widget_id, visible, order_index, slot_id, geometry_id, semantic_tier_id, preset_id, configuration_refs, and committed_revision, including semantic size or preset identity in addition to supported geometry so adaptive content restores deterministically; every configuration_ref resolves to an existing stable, non-secret widget-configuration identity governed by WS-004 and UF-060, and filter payloads remain in the configuration record rather than becoming new UsageWidgetLayoutRecord fields."
   - "No preview rectangle, pointer or pointer coordinate, ghost, placeholder, animation state, draft, or per-frame draft appears in UsageWidgetLayoutRecord."
   - A widget mutation never writes Home surface placement and a Home surface mutation never writes Usage or Dashboard widget placement.
@@ -1734,7 +1734,7 @@ canonical_text: >-
   and its track count chosen from the board's own measured width, never the window (F3-638). The Usage board engine
   becomes the dashboard engine once it runs several boards at once; this thread family does that refactor after the
   Usage port lands, and until then the panels concept's stand-in board is lineage only. The per-kind preset table
-  tested at 400, 550 and 700 px of board width comes from the Usage thread in wave 2. Add widget sits inside the
+  tested at 400, 550 and 700 px of board width is WS-017's one per-kind preset table (DL-176). Add widget sits inside the
   dashboard tab, in its header row (F3-635), and adds to that board only. Every `cmd.widget.*` row inside a dashboard
   tab is addressed by board_id (UCC-200), commits only to that board's namespace, and emits no
   `workspace.layout_changed`, which stays the Home layout's event (Plans/Contracts_V0.md#CV-361). Home's panels, tabs

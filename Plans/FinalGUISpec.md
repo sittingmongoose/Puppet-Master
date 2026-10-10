@@ -35665,7 +35665,7 @@ acceptance_criteria:
   - "While a pointer or keyboard preview is active, command, result, receipt, persisted-event, and storage-write spies remain empty; Usage pointer resize advances the target footprint and visibly displaces only obstructed peers, with Usage board gravity applied only at settle as WS-019 sets out, while Dashboard resize peers remain frozen, and reorder peers visibly displace around the same stable two-dimensional candidate, including empty same-footprint cavities and lower rows, without peer-node remount, opacity loss, board blackout, child-list churn, or entrance-animation replay; Usage pointer targeting aligns the ghost's anchored top-left with one stable candidate origin under a geometric hysteresis margin so overlapping multi-span rectangles cannot steal the target, and keyboard pickup exposes truthful aria-grabbed plus a visible picked-card outline while traversing the same candidate set."
   - "A changed reorder release/drop commits the last painted intent without pointer-up re-hit-testing or retargeting; horizontal-only resize advances strictly along the requested supported curated axis at right/left/middle positions, minimizes companion-axis drift, admits an edge-limited one-step gesture, and commits an in-viewport last-painted maximum despite same-direction overshoot; it and every other changed final-coordinate release or semantic activation dispatch exactly one existing command and reconcile exactly one settled owner outcome without duplicate effects."
   - "Escape, pointercancel, lostpointercapture, blur, invalid target, stale revision, no-change release/drop, popup dismissal, and pre-dispatch validation failure restore the prior authoritative state with no command or receipt and clear capture, ghosts, placeholders, portals, classes, animation frames, and transient listeners; an owner-rejected or post-dispatch adapter-failed attempt retains exactly one command and one rejected/failed receipt but no settled event or successful owner-store write; changed pointer and keyboard reorder restore the exact pre-transaction inline board minimum height, leave scroll extent bounded to settled card geometry without a compounding blank tail, and exclude concurrent resize/reorder acquisition until the sole owner terminates."
-  - "The current workspace.layout_changed 1.1.0 payload is emitted only for an applicable changed committed layout, requires settled_only=true, preview_state_included=false, persisted=true, interaction/command/correlation identities, accepted result and receipt references, prior/new revisions, mutation, final target and settled-layout data, and the required nullable semantic_size_preset_id through its closed schema."
+  - "The current workspace.layout_changed 1.1.0 payload is emitted only for an applicable changed committed layout, requires settled_only=true, preview_state_included=false, persisted=true, interaction/command/correlation identities, accepted result and receipt references, prior/new revisions, mutation, final target and settled-layout data, and the required nullable semantic_size_preset_id through its closed schema. (amended 2026-10-09, DL-180: from the v2 Home record every committed structural change emits payload 2.0.0 instead, Plans/Contracts_V0.md#CV-361, and the 1.1.0 fields above describe the v1 record only)."
   - "No PM7-only command family, preview-frame event family, second layout store, or registered cmd.workspace_layout.size_surface command is introduced."
 validation_surfaces:
   - "python3 scripts/pm-plan-index.py validate"
@@ -44824,8 +44824,8 @@ canonical_text: >-
   tab's own width (F3-635), never the window. Hosting, the boards, the per-board widget layout
   `widget_layout:v1:dashboard:<board_id>`, the catalogue and the move of today's one dashboard into `dashboard:home` are
   Plans/Widget_System.md#WS-030's. The Usage board engine runs several boards at once after the Usage port lands (this
-  thread family does that refactor), and the per-kind widget presets tested at 400, 550 and 700 px come later from the
-  Usage thread. A dashboard's widget layout is never stored inside the Home layout record, and Home's panels are not
+  thread family does that refactor), and the per-kind widget presets tested at 400, 550 and 700 px are
+  Plans/Widget_System.md#WS-017's one per-kind table (DL-176). A dashboard's widget layout is never stored inside the Home layout record, and Home's panels are not
   widgets. This supersedes F3-279's exact four-widget catalogue and the dashboard catalogue limit of Appendix C.4 and
   C.4.1, F3-517's "distinct tab models" for Home and Dashboard, section 7.2's singleton dashboard, and the dashboard's
   own Main, Metrics and Monitoring strip of F3-505.
@@ -45780,10 +45780,11 @@ canonical_text: >-
   Raster and Departure Mono are Retro options and JetBrains Mono stays selectable there; Atkinson Hyperlegible Mono
   is offered for readability; and the system monospace is also a choice (F3-642). JetBrains Mono is provided by the
   page, not by the terminal: its upright bytes are NieR Mode's PM NieR Mono files under the general family name
-  'JetBrains Mono', which the 5.6 Pro fonts work builds through DL-161's pipeline, and its italic is synthesised
-  unless the page's code face adds the italic file (42,964 bytes, offered). The faces, with licence, bytes, axes and
+  'JetBrains Mono', which the 5.6 Pro fonts work builds through DL-161's pipeline, and its italic is
+  JetBrains Mono's own italic, which the page's code face embeds in PMConcept7 with the same script slices (Latin
+  file 42,964 bytes; DL-161, F3-430), so italic code is drawn, not slanted, and the terminal adds no italic of its own. The faces, with licence, bytes, axes and
   default size and line height in CSS px: JetBrains Mono, the code face of the editor and the terminal, OFL-1.1, the
-  page's face (31,432 bytes), weight 400 to 800, 13 px and 1.30; VT323, Retro's terminal default, OFL-1.1, 17,936
+  page's face (31,432 bytes for its Latin upright file), weight 400 to 800, 13 px and 1.30; VT323, Retro's terminal default, OFL-1.1, 17,936
   bytes, no axes, 19 px and 1.05; Sixtyfour, a Retro option whose own axes give a CRT look without motion, OFL-1.1,
   4,236 bytes, SCAN -53 to 100 and BLED 0 to 100, 10 px and 1.45; Sixtyfour Raster, a Retro option that is Sixtyfour
   baked at SCAN 45 and BLED 40, OFL-1.1, 3,068 bytes, no axes; Atkinson Hyperlegible Mono, for readability, OFL-1.1,

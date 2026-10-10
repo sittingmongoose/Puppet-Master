@@ -27588,7 +27588,9 @@ canonical_text: >-
   Activity Detail, the composer's selector row) keys on its own container. Layers: its menus, popouts, sheets,
   drawers, toasts and drag ghosts open in the page's one overlay root, in its one stacking order
   (Plans/DRY_Rules.md#DR-067); it appends no overlay of its own to the page. Hover: PMConcept7's hover controller
-  owns every hover tag in the chat (Plans/DRY_Rules.md#DR-072, Plans/FinalGUISpec.md#F3-465); the chat draws no
+  owns every hover tag in the chat (Plans/FinalGUISpec.md#F3-523), and its cards, rows, tiles and icons take
+  PMConcept7's one hover grammar with no hover effect of their own (Plans/DRY_Rules.md#DR-072,
+  Plans/FinalGUISpec.md#F3-465); the chat draws no
   second tag and keeps no native titles, and its Activity Bar previews stay its own bounded previews (ACD-453). Bans:
   its pills and coloured side stripes are removed (Plans/DRY_Rules.md#DR-069, Plans/FinalGUISpec.md#F3-648),
   among them the meta chips, the goal and to-do chips, the Ask Card's capsule buttons, the attachment chips, the
@@ -27655,7 +27657,7 @@ owner_hints:
   - Plans/DRY_Rules.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-185, ContractName:Plans/DRY_Rules.md#DR-067, ContractName:Plans/DRY_Rules.md#DR-072, ContractName:Plans/DRY_Rules.md#DR-069, ContractName:Plans/DRY_Rules.md#DR-070, ContractName:Plans/FinalGUISpec.md#F3-649
+ContractRef: ContractName:Plans/Decision_Log.md#DL-185, ContractName:Plans/DRY_Rules.md#DR-067, ContractName:Plans/DRY_Rules.md#DR-072, ContractName:Plans/FinalGUISpec.md#F3-523, ContractName:Plans/DRY_Rules.md#DR-069, ContractName:Plans/DRY_Rules.md#DR-070, ContractName:Plans/FinalGUISpec.md#F3-649
 
 ### ACD-502 - The Chat's Terminal Cards Hand Off To Terminal Tabs
 
