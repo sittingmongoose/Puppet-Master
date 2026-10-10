@@ -129,20 +129,25 @@ function clearFit() {
   clearFitCache();
   document.querySelectorAll('[data-d-tabs]').forEach(el => el.removeAttribute('data-d-tabs'));
   document.querySelectorAll('[data-d-stack]').forEach(el => el.removeAttribute('data-d-stack'));
+  document.querySelectorAll('[data-d-owner]').forEach(el => el.removeAttribute('data-d-owner'));
   document.querySelectorAll('.sh-head[style*="--d-stack-x"]').forEach(el => el.style.removeProperty('--d-stack-x'));
   document.querySelectorAll('[data-d-hov]').forEach(el => { el.removeAttribute('data-d-hov'); el.removeAttribute('data-pm-hover-label'); el.removeAttribute('data-pm-hover-detail'); });
 }
 /* a registry row whose state and account do not fit on one line puts the account on a third line */
 function stackRows(root) {
-  /* worktrees: the diff sits beside the branch when the whole branch name fits there, else under it */
+  /* worktrees: the diff sits beside the branch when the whole branch name fits there, else under it; the owner sits
+     beside the state word when it fits there whole, else on a line of its own under it (a column beside the diff
+     broke "lane-b worker · run #47" into three lines) */
   root.querySelectorAll('.sh-wt-h').forEach(h => {
-    const b = h.querySelector(':scope > .sh-branch');
+    const b = h.querySelector(':scope > .sh-branch'), ow = h.querySelector(':scope > .sh-owner');
     const w = h.offsetWidth;
     if (!b || !w || h._dStackW === w) return;
     h._dStackW = w;
     if (b._dFull != null && b.textContent !== b._dFull) b.textContent = b._dFull;
     h.removeAttribute('data-d-stack');
+    h.removeAttribute('data-d-owner');
     if (b.scrollWidth > b.clientWidth) h.setAttribute('data-d-stack', '');
+    if (ow && ow.offsetParent && overflows(ow)) h.setAttribute('data-d-owner', '');
   });
   root.querySelectorAll('[data-pane="registries"] .sh-ctr-h').forEach(h => {
     const m = h.querySelector('.sh-meta');

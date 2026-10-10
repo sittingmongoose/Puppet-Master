@@ -30247,8 +30247,9 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 [data-rail-skin="d"] #panel-source[data-scm-engine="jj"] > .pm-segtab { display: none !important; }
 [data-rail-skin="d"] #panel-source .sh-scroll [data-pane] .sh-chg-h .sh-name { gap: 6px; }
 [data-rail-skin="d"] #panel-source .sh-scroll [data-pane] .sh-chg-h > .sh-ds { align-self: center; }
-/* worktrees: branch and diff on the first line, the state word and the owner on the second (the owner wraps rather
-   than losing its end); no capsule crushes the name; the chevron sits on the branch's line */
+/* worktrees: branch and diff on the first line, the state word and the owner on the second; no capsule crushes the
+   name; the chevron sits on the branch's line. An owner that does not fit beside the state word takes a line of its own
+   (data-d-owner, 20-fit stackRows) instead of being cut. */
 [data-rail-skin="d"] #panel-source .sh-wt-h {
   display: grid !important; grid-template-columns: 10px auto minmax(0, 1fr) auto; column-gap: var(--d-gap); row-gap: 1px;
   grid-template-areas: "chev branch branch ds" "chev pill owner owner"; align-items: center;
@@ -30260,7 +30261,7 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 [data-rail-skin="d"] #panel-source .sh-wt-h > .sh-owner {
   grid-area: owner; display: block !important; margin: 0 !important; max-width: none !important; min-width: 0;
   font: 400 var(--d-fs-meta)/1.3 var(--body-font) !important; color: var(--d-text-3) !important;
-  white-space: normal; overflow: visible; text-overflow: clip; overflow-wrap: anywhere;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 [data-rail-skin="d"] #panel-source .sh-wt-h > .sh-owner::before { content: '\00B7'; margin: 0 6px 0 0; color: var(--d-text-3); }
 [data-rail-skin="d"] #panel-source .sh-wtnote { padding: 0 var(--d-pad) 6px calc(var(--d-pad) + 16px) !important; font: 400 var(--d-fs-small)/1.4 var(--mono-font) !important; white-space: normal !important; color: var(--accent-orange, var(--d-warn)) !important; }
@@ -30363,6 +30364,11 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 [data-rail-skin="d"] #panel-source .pm7-scm-context-row > .pm7-post-state { grid-area: state; margin-top: 0; }
 
 [data-rail-skin="d"] #panel-source .sh-wt-h[data-d-stack] { grid-template-areas: "chev branch branch branch" "chev pill owner ds"; }
+[data-rail-skin="d"] #panel-source .sh-wt-h[data-d-owner] { grid-template-areas: "chev branch branch ds" "chev pill pill pill" "chev owner owner owner"; }
+[data-rail-skin="d"] #panel-source .sh-wt-h[data-d-owner][data-d-stack] { grid-template-areas: "chev branch branch branch" "chev pill . ds" "chev owner owner owner"; }
+[data-rail-skin="d"] #panel-source .sh-wt-h[data-d-owner] > .sh-pill { justify-self: start; }
+[data-rail-skin="d"] #panel-source .sh-wt-h[data-d-owner] > .sh-owner { white-space: normal; overflow: visible; text-overflow: clip; overflow-wrap: anywhere; }
+[data-rail-skin="d"] #panel-source .sh-wt-h[data-d-owner] > .sh-owner::before { content: none; }
 
 /* both Source strips fit by one rule (15-jj.js jjStripMode, DECISION [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts)4.4): inactive tabs down to 24 px (the 15 px icon
    and 4.5 px a side), the active tab 6 px a side and 5 px before its label */
@@ -120104,20 +120110,25 @@ function clearFit() {
   clearFitCache();
   document.querySelectorAll('[data-d-tabs]').forEach(el => el.removeAttribute('data-d-tabs'));
   document.querySelectorAll('[data-d-stack]').forEach(el => el.removeAttribute('data-d-stack'));
+  document.querySelectorAll('[data-d-owner]').forEach(el => el.removeAttribute('data-d-owner'));
   document.querySelectorAll('.sh-head[style*="--d-stack-x"]').forEach(el => el.style.removeProperty('--d-stack-x'));
   document.querySelectorAll('[data-d-hov]').forEach(el => { el.removeAttribute('data-d-hov'); el.removeAttribute('data-pm-hover-label'); el.removeAttribute('data-pm-hover-detail'); });
 }
 /* a registry row whose state and account do not fit on one line puts the account on a third line */
 function stackRows(root) {
-  /* worktrees: the diff sits beside the branch when the whole branch name fits there, else under it */
+  /* worktrees: the diff sits beside the branch when the whole branch name fits there, else under it; the owner sits
+     beside the state word when it fits there whole, else on a line of its own under it (a column beside the diff
+     broke "lane-b worker · run #47" into three lines) */
   root.querySelectorAll('.sh-wt-h').forEach(h => {
-    const b = h.querySelector(':scope > .sh-branch');
+    const b = h.querySelector(':scope > .sh-branch'), ow = h.querySelector(':scope > .sh-owner');
     const w = h.offsetWidth;
     if (!b || !w || h._dStackW === w) return;
     h._dStackW = w;
     if (b._dFull != null && b.textContent !== b._dFull) b.textContent = b._dFull;
     h.removeAttribute('data-d-stack');
+    h.removeAttribute('data-d-owner');
     if (b.scrollWidth > b.clientWidth) h.setAttribute('data-d-stack', '');
+    if (ow && ow.offsetParent && overflows(ow)) h.setAttribute('data-d-owner', '');
   });
   root.querySelectorAll('[data-pane="registries"] .sh-ctr-h').forEach(h => {
     const m = h.querySelector('.sh-meta');
