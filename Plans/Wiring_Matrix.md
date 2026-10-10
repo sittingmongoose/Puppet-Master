@@ -5603,7 +5603,7 @@ Every control below commits through the gesture transaction of `Plans/UI_Wiring_
 | The popped-out chat window > Dock back (return) | `cmd.panel.redock` with `chat` | `home.chat.dock_back` | `panel.redocked` |
 | Home options menu > Dock the chat back | `cmd.panel.redock` with `chat` | `home.more_options.chat_dock_back` | `panel.redocked` |
 | Home options menu > Keep the chat open in narrow windows | `cmd.settings.transaction.preview` then `cmd.settings.transaction.apply` over its SSYS-050 row | none | the existing `catalog.settings_transaction_preview` and `catalog.settings_transaction_apply` rows; receipt, no event |
-| The History list's pin (5.6 Pro History flyout) | id pending: no command or local action id is settled yet; its value is History pinned in the Home record's chat column (`Plans/storage-plan.md#SP-330`); ACD-500 owns the control | none | no row until the id is ruled (UIW-040's pending exception) |
+| The History list's pin (5.6 Pro History flyout) | `ui.chat_column.pin_history` with `history_pinned` | none | typed local action (view state); the v2 chat column's `history_pinned` is committed with `chat_column_changed` |
 | The chat's 32 px edge strip in a narrow window: opening the chat from it | nothing: a narrow-ladder state, never saved (F3-636) | none | none |
 
 **The narrow switcher** (`Plans/FinalGUISpec.md#F3-636`)
@@ -5658,8 +5658,7 @@ canonical_text: >-
   that only reveals a tab emits nothing; cmd.panel.switch is receipt only; cmd.panel.undock and cmd.panel.redock emit
   panel.undocked and panel.redocked for the chat only. ui.panel_tab.activate, ui.workspace_layout.maximize and
   ui.workspace_layout.focus_panel are typed local actions with no entry. Fifty-one home.* entries of the fixed-zone
-  model retire and are recorded in the reconciliation file; five are rebuilt on the v2 model. The History list's pin
-  has no row until its id is ruled (UIW-040's pending exception).
+  model retire and are recorded in the reconciliation file; five are rebuilt on the v2 model. ui.chat_column.pin_history is a typed local action (view state); its value is the v2 record's chat column history_pinned, committed with the chat_column_changed change. It has no production entry, like the other typed local actions.
   Output opens or reveals `output`. The channel picker switches its channel with `ui.output.select_channel`, a
   typed local action with no production entry, receipt or event. "Open in new tab" uses `cmd.panel_tab.open`
   with `output:<channel>`; it emits workspace.layout_changed only when it adds a tab (UCC-200, F3-635).
@@ -5725,6 +5724,7 @@ compatibility_only_notes:
   - "cmd.workspace_layout.size_surface still normalizes to cmd.workspace_layout.resize_surface and has no entry."
 stale_retired_dispositions:
   - "Amended 2026-10-10 (Addendum 2 D28, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
+  - "Amended 2026-10-10 (lead ruling L9): The History pin is wired as ui.chat_column.pin_history with no production entry."
   - "Retired 2026-10-09 (DL-180): 51 home.* entries of the fixed-zone model; the list is control_census.retired_rows_2026_10_09 in Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json."
 owner_hints:
   - Plans/Wiring_Matrix.md

@@ -14908,7 +14908,7 @@ The "+" opens the menu and never creates a tab by itself; opening the menu, typi
 | Terminal | `cmd.panel_tab.open` with `{ kind: terminal }` and the default profile | each shell profile and SSH host: the same with its `profile` |
 | Browser | `cmd.panel_tab.open` with `{ kind: browser }`, a blank browser | each recent address: `cmd.browser.open_workspace_preview` |
 | File... | opens Quick Open (view-local); Enter there dispatches `cmd.file.open` with `mode: keep` | each of the three recent files: `cmd.file.open` with `mode: keep` |
-| Dashboard | `cmd.panel_tab.open` with `{ kind: dashboard }` and no `board_id`: a new dashboard tab on a new, empty board (the dashboard kind makes the board, `Plans/Widget_System.md#WS-030`) | each board: `cmd.panel_tab.open` with its `board_id` (revealed when already open) |
+| Dashboard | `cmd.panel_tab.open` opens or reveals `dashboard:home` | each sub-row opens or reveals one of the other starting boards by its `board_id`; no board is created, renamed or deleted in wave 1 |
 | Plan or document... | opens a picker (view-local); a choice dispatches `cmd.nav.open_subject` | none |
 | Artifact... | opens a picker (view-local); a choice dispatches `cmd.nav.open_subject` with the artifact subject | none |
 | Output, Problems, Ports, Debug Console | opens the submenu (view-local) | each: `cmd.panel_tab.open` with `kind` `output`, `problems`, `ports` or `debug_console` (Output opens or reveals `output`; Problems and Ports reveal their one tab) |
@@ -14998,7 +14998,9 @@ The shell keeps Ctrl+1..9 (pages) and Ctrl+K (the command palette), so the panel
 
 ### The dashboard tab
 
-A dashboard tab is opened by `cmd.panel_tab.open` with `{ kind: dashboard, board_id }`; `dashboard:home` is the pinned Home dashboard of the default layout, and the "+" menu's Dashboard row body opens a new tab on a new, empty board. Several dashboard tabs may be open, each with its own board and widget layout. Inside a dashboard tab the widget commands stay `cmd.widget.add`, `cmd.widget.remove`, `cmd.widget.resize`, `cmd.widget.configure`, `cmd.widget.move` and `cmd.widget.reset_layout`, addressed by `board_id` (`Plans/Widget_System.md#WS-030`), with `page` kept for the Usage page; the Add widget picker reads `cmd.dashboard.catalog`. A widget-layout change is a change to that board, not to the Home layout, so it emits no `workspace.layout_changed`. UCC-144's criterion "No Home surface uses cmd.widget.*" retires with UCC-144.
+Amended 2026-10-10 (lead ruling L10): The Dashboard row and sub-rows open or reveal the starting boards; wave 1 creates, renames and deletes no board.
+
+A dashboard tab is opened by `cmd.panel_tab.open` with `{ kind: dashboard, board_id }`; `dashboard:home` is the pinned Home dashboard of the default layout, and the "+" menu's Dashboard row body opens or reveals `dashboard:home`, while its sub-rows open or reveal the other starting boards; no board is created, renamed or deleted in wave 1. Several dashboard tabs may be open, each with its own board and widget layout. Inside a dashboard tab the widget commands stay `cmd.widget.add`, `cmd.widget.remove`, `cmd.widget.resize`, `cmd.widget.configure`, `cmd.widget.move` and `cmd.widget.reset_layout`, addressed by `board_id` (`Plans/Widget_System.md#WS-030`), with `page` kept for the Usage page; the Add widget picker reads `cmd.dashboard.catalog`. A widget-layout change is a change to that board, not to the Home layout, so it emits no `workspace.layout_changed`. UCC-144's criterion "No Home surface uses cmd.widget.*" retires with UCC-144.
 
 ### Home producer dispositions (for the wiring owner)
 
@@ -15045,8 +15047,7 @@ canonical_text: >-
   dispatched directly only for a new terminal, a blank browser, a dashboard tab, an editor buffer and the tool tabs.
   cmd.editor.close_tab is an alias of cmd.panel_tab.close. cmd.editor.open_panel, cmd.editor.close_panel and the
   never-registered cmd.artifacts.open_panel retire, and target_editor_panel_id, target_editor_group_id and
-  target_group never select a home panel. A dashboard tab opens with cmd.panel_tab.open and a board_id (no board_id
-  makes a new, empty board); widget commands inside it stay cmd.widget.* addressed by board_id (WS-030) and emit no
+  target_group never select a home panel. A dashboard tab opens or reveals with cmd.panel_tab.open and a board_id; the Dashboard row body opens or reveals dashboard:home and its sub-rows open or reveal the other starting boards; no board is created, renamed or deleted in wave 1; widget commands inside it stay cmd.widget.* addressed by board_id (WS-030) and emit no
   workspace.layout_changed. The shell keeps Ctrl+1..9 and Ctrl+K, so tab N is Alt+N and there are no Ctrl+K chords;
   in the web client Ctrl+T, Ctrl+W, Ctrl+Shift+T and Ctrl+Tab are answered as Alt+T, Alt+W, Alt+Shift+T and Alt+`.
   This unit supersedes UCC-144.
@@ -15128,6 +15129,7 @@ compatibility_only_notes:
   - "cmd.workspace_layout.size_surface still normalizes to cmd.workspace_layout.resize_surface (CS-068)."
 stale_retired_dispositions:
   - "Amended 2026-10-10 (Addendum 2 D28, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
+  - "Amended 2026-10-10 (lead ruling L10): The Dashboard row opens or reveals dashboard:home and its sub-rows the other starting boards, without board creation, rename or deletion."
   - "Supersedes UCC-144 (2026-10-09, DL-180): four editor panels, Panel 1 to 4 routing, the singleton Dashboard, chat grab and in-canvas float, cmd.terminal.move_workgroup and Collapse Bottom Terminal retire; its leaf semantics carry forward here."
   - "Retired 2026-10-09 (DL-180): cmd.editor.open_panel, cmd.editor.close_panel and cmd.artifacts.open_panel, with their replacements in CS-101."
 owner_hints:
@@ -15481,6 +15483,12 @@ The chat is fixed on the right, from the title bar to the status bar; it is neve
 
 Pop out is the chat's only way to move, and it returns to its column. `panel.undocked` and `panel.redocked` stay for the chat's pop-out only. From the home layout `cmd.panel.undock` is dispatched with `chat` and nothing else: no panel, tab or dashboard pops out. The chat is never a `cmd.panel_tab.*` target and never a `cmd.workspace_layout.move_surface`, `split` or `set_collapsed` target; such a dispatch refuses with `invalid_target`. Folding the chat to its edge strip in a narrow window and opening it from there are narrow-ladder states that are never saved (`#F3-636`) and dispatch nothing. "Keep the chat open in narrow windows" is a Settings write (UCC-200's Home menu table).
 
+Amended 2026-10-10 (lead ruling L9): the History pin is the typed local action below.
+
+| Action id | Arguments | Effect | Producers and keys |
+|---|---|---|---|
+| `ui.chat_column.pin_history` | `history_pinned` | Writes the v2 record's chat column `history_pinned`, committed with the `chat_column_changed` change | The History list's pin |
+
 Retired chat rows: the chat grab (`home.chat.grab`), dragging the chat into a dock, the dock-left, dock-right, dock-top and dock-bottom targets, the in-canvas float and its corner resize (`home.drop_target.*`, `home.resizer.floating_corner`), and UCC-144's Pop Out into the in-canvas float layer. `home.chat.pop_out` stays as the Pop out producer of `cmd.panel.undock` with `chat`, into a window; `home.resizer.chat` stays as the width producer of `cmd.workspace_layout.resize_surface` with `{ surface: chat, width }`; `home.chat.activity_toggle` stays `cmd.panel.switch` with `chat`.
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/FinalGUISpec.md#F3-637, ContractName:Plans/UI_Command_Catalog.md#UCC-138, ContractName:Plans/Commands_System.md#CS-061
@@ -15503,6 +15511,7 @@ canonical_text: >-
   it into a dock, the dock-left, dock-right, dock-top and dock-bottom targets, the in-canvas float and its corner
   resize, and UCC-144's Pop Out into the in-canvas float layer retire. Folding the chat to its narrow edge strip and
   opening it from there dispatch nothing and are never saved.
+  ui.chat_column.pin_history is a typed local action (view state); its value is the v2 record's chat column history_pinned, committed with the chat_column_changed change.
 gui_related: true
 gui_classification_reason: "Owns the chat column's visible commands and retires the chat docking and floating controls."
 split_recommended: false
@@ -15533,6 +15542,9 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md (SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64; D3)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md (SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162; Commands and keys, Chat; concept lineage only)"
 preserved_exact_tokens:
+  - "ui.chat_column.pin_history"
+  - "history_pinned"
+  - "chat_column_changed"
   - "cmd.panel.switch"
   - "cmd.panel.undock"
   - "cmd.panel.redock"
@@ -15545,6 +15557,7 @@ negative_constraints:
   - "Do not dispatch cmd.panel.undock for a home panel, tab or dashboard."
 compatibility_only_notes: []
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (lead ruling L9): Registers the History pin as ui.chat_column.pin_history, writing history_pinned with chat_column_changed."
   - "Retired 2026-10-09 (DL-180): the chat grab, the dock drop targets, the in-canvas float and its corner resize, and UCC-144's Pop Out generalization to editor panels, Chat and Dashboard."
 owner_hints:
   - Plans/UI_Command_Catalog.md

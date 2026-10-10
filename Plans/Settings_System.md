@@ -3103,7 +3103,7 @@ canonical_text: >-
   nowhere and read by nothing: general.interaction.panel-dock, general.visual.chat-layout-mode (being popped out
   is a window state the layout record keeps, so the row retires whole), code.terminal.layout-style,
   code.terminal.auto-second-pane, code.editing.editor-strip-collapsed, code.terminal.explanations (D19, the
-  Teacher persona explains commands in the chat) and code.terminal.tab-role (shell profiles and the tab label). The chat width, revealing an already open file, an empty panel's
+  Teacher persona explains commands in the chat) and code.terminal.tab-role (shell profiles and the tab label), plus code.terminal.search (find is always present, F3-641; DL-181). The chat width, revealing an already open file, an empty panel's
   fate, what "+" does and the close button's side are not rows. With SSYS-051's thirty-six rows, the inventory
   holds 964 rows (916 plus 48 added), of which 7 are retired, leaving 957 live rows.
   Settings > Editor has code.editing.color-scheme (Editor Colors), a scheme row bound to F3-642's shared code colour-scheme catalog, defaulting to
@@ -3169,6 +3169,7 @@ owner_hints:
   - Plans/FinalGUISpec.md
 stale_retired_dispositions:
   - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Requires an Editor scheme row using the shared catalog and defaulting to Follow look."
+  - "Amended 2026-10-10 (lead ruling L18): Adds code.terminal.search to the retired rows because find is always present (F3-641)."
   - "Retired 2026-10-09 (DL-180, DL-181): general.interaction.panel-dock, general.visual.chat-layout-mode, code.terminal.layout-style, code.terminal.auto-second-pane, code.editing.editor-strip-collapsed, code.terminal.explanations and code.terminal.tab-role."
 ```
 
@@ -3186,13 +3187,7 @@ canonical_text: >-
   Plans/DRY_Rules.md#DR-068; DL-183) with one row per field, each applying live with no restart badge: the restart
   badges on code.terminal.theme and code.terminal.font-family are removed. The model resolves field by field: the
   look's defaults ("Follow theme"), the app default, the project default, then the tab's override. Each row is a
-  field's project default, held, like every Settings value, in the open Project's settings snapshot (SSYS-002), and
-  only Settings writes it, through cmd.settings.transaction.preview then cmd.settings.transaction.apply over its
-  exact id. The app default, which Settings > Terminal and the Appearance popover's All terminals write (F3-642),
-  follows SSYS-028's rule for ELI5's All chats: until an app-wide store is admitted (the open question SSYS-028
-  records as q-035), a field's app default is the row's bundled inventory default and both app-default edits are
-  disabled with the Settings owner's reason, their editable requirement kept and no app-wide write admitted from
-  scope metadata alone. The tab's override is the tab's serialized state (SP-331), written by the popover's This
+  field's project default, held, like every Settings value, in the open Project's settings snapshot (SSYS-002), and Settings and the Appearance popover's All terminals write it through cmd.settings.transaction.preview then cmd.settings.transaction.apply over its exact id. The popover's All terminals is enabled and writes the project default row of SSYS-051 through the same Settings transaction Settings uses, so it changes every terminal while this Project is open; its hover tag says in this project; no surface writes an app-wide value until q-035 admits one. The tab's override is the tab's serialized state (SP-331), written by the popover's This
   terminal, never by Settings. Amended rows carry five fields: code.terminal.theme (Follow look or
   one of the shared catalog schemes or an imported one; Follow look), code.terminal.font-family (Follow theme, JetBrains Mono,
   Atkinson Hyperlegible Mono, VT323, Departure Mono, Sixtyfour, Sixtyfour Raster or System monospace; Follow
@@ -3213,8 +3208,7 @@ canonical_text: >-
   code.terminal.allowed-profiles (shells, named profiles and SSH computers, as the "+" menu and New terminal list
   them), code.terminal.right-click-paste (off; a right click opens the terminal's menu), code.terminal.rendering-mode
   (render modes only, never colours, fonts or effects), code.terminal.shell-integration (a switch),
-  code.terminal.search (find is in every terminal, Ctrl+Shift+F, so the switch shows on and unavailable and nothing
-  reads it) and code.terminal.transcript-retention (Saved Terminal Output: Keep Saved Scrollback, the default, keeps
+  code.terminal.search (retired: find is always present, F3-641; DL-181) and code.terminal.transcript-retention (Saved Terminal Output: Keep Saved Scrollback, the default, keeps
   the saved scrollback of Plans/storage-plan.md#SP-332 that restore brings back, or Session Only, which saves none). Degauss and
   a terminal's Text size zoom are not rows.
   The terminal scheme row binds the same code colour-scheme catalog as Settings > Editor (SSYS-050, F3-642).
@@ -3227,13 +3221,13 @@ unblocks: [F3-120, F3-121, F3-642, SP-331]
 acceptance_criteria:
   - "Every field of F3-642 has exactly one inventory row, each with the default listed here, scope global and project, and no terminal row carries a restart badge."
   - "Changing a row changes every open terminal at once unless that terminal's own override sets the field, and a field left at Follow theme, Font default or no default falls through to the look's default."
-  - "Only Settings writes a row (the project default), through the Settings transaction over its exact id; only the popover's This terminal writes a tab override, and Settings never does."
-  - "While q-035 is open, a field's app default is the row's bundled inventory default, the app-default edit in Settings > Terminal and the popover's All terminals are disabled with the Settings owner's reason, and no surface writes an app-wide value."
+  - "Settings and the enabled popover's All terminals write the project default through the same Settings transaction over its exact id; only the popover's This terminal writes a tab override, and Settings never does."
+  - "The popover's All terminals is enabled, writes the SSYS-051 project default through the same Settings transaction Settings uses and changes every terminal while this Project is open; its hover tag says in this project, and no surface writes an app-wide value until q-035 admits one."
   - "Terminal Colors offers Follow look and the shared catalog of F3-642 plus imported ones; Terminal Font offers Follow theme, the six built-in faces and System monospace; Minimum Text Contrast offers Off, 3:1, 4.5:1 and 7:1."
   - "Each detail row shows only while the row it depends on applies, keeps its stored value while hidden, and Terminal Opacity (Glass) shows only under a Glass theme."
   - "With any row set, effects stay in the focused terminal and every moving part stops under Reduce Animations and on battery saver."
   - "Settings shows the terminal rows under SSYS-040's groups and Terminal look: more options, with no row for degauss or the Text size zoom."
-  - "Search in Terminal shows on and unavailable because Find is in every terminal, and nothing reads its stored value."
+  - "code.terminal.search is retired by SSYS-050: find is always present (F3-641), the row renders nowhere and nothing reads its stored value."
   - "Saved Terminal Output offers Keep Saved Scrollback (the default) and Session Only; with the default a restored or reopened terminal shows its saved scrollback by SP-332's rule, and no choice keeps it longer than SP-332 allows."
   - "Settings > Terminal and Settings > Editor bind the same catalog, with each scheme choice defaulting to Follow look."
 validation_surfaces:
@@ -3271,7 +3265,7 @@ negative_constraints:
   - Do not keep a second terminal theme, font or effect store beside the one appearance model.
   - Do not show a restart badge on any terminal row.
   - Do not write a terminal tab's override from Settings, or an app-global value from any surface.
-  - Do not write a row, the project default, from the Appearance popover; its All terminals edit stays disabled while q-035 is open.
+  - Do not bypass the Settings transaction for the popover's All terminals project-default edit, or write an app-wide value until q-035 admits one.
   - Do not let a row turn on motion that Reduce Animations, battery saver or the no-GPU path keeps off.
   - Do not offer a face that is not built in under the licence rule of F3-644, other than System monospace, which uses the computer's own monospace face.
 owner_hints:
@@ -3280,6 +3274,8 @@ owner_hints:
   - Plans/FinalGUISpec.md
 stale_retired_dispositions:
   - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
+  - "Amended 2026-10-10 (lead ruling L18): The search switch is retired; find stays always present and the retired row renders nowhere."
+  - "Amended 2026-10-10 (lead ruling L16): All terminals is enabled and writes the project default through the Settings transaction, with the hover tag in this project and no app-wide write."
   - "Superseded 2026-10-09 (DL-183): the restart badges on code.terminal.theme and code.terminal.font-family, the six-entry colour list, and Fira Code, SF Mono and Custom as terminal fonts."
   - "Superseded 2026-10-09 (DL-182): code.terminal.transcript-retention's Session Only default and its 24 Hours, 7 Days, 30 Days and Forever choices, which SP-332's saved scrollback rule replaces."
 ```

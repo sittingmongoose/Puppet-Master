@@ -6586,7 +6586,7 @@
         "schema_version",
         "project_id",
         "terminal_session_id",
-        "tab_id",
+        "panel_tab_id",
         "session_status",
         "shell_profile_ref",
         "cwd_ref",
@@ -6604,11 +6604,11 @@
         "exit_code",
         "last_command_block_id",
         "process_identity_ref",
-        "tab_id",
+        "panel_tab_id",
         "legacy_terminal_leaf_pane_id"
       ],
-      "replay_behavior": "Restores historical session identity and status; active process identity must be revalidated by runtime before reuse. A session outlives every view change of its tab; tab_id names the tab that shows it (or last showed it, once ended), or null; it need not equal terminal:<this session id>.",
-      "migration": "Explicit value-only migration at the unchanged terminal_session_record.v1 key (SP-332). StorageMigrationCoordinator converts every row: terminal_leaf_pane_id moves to legacy_terminal_leaf_pane_id, and tab_id is the id of the terminal tab the SP-330 conversion placed the session in (minted from that session), else null. The exact v1 value schema is retained under $defs.legacy_v1 for old-store admission, conversion and backup inspection.",
+      "replay_behavior": "Restores historical session identity and status; active process identity must be revalidated by runtime before reuse. A session outlives every view change of its tab; panel_tab_id names the tab that shows it (or last showed it, once ended), or null; it need not equal terminal:<this session id>.",
+      "migration": "Explicit value-only migration at the unchanged terminal_session_record.v1 key (SP-332). StorageMigrationCoordinator converts every row: terminal_leaf_pane_id moves to legacy_terminal_leaf_pane_id, and panel_tab_id is the id of the terminal tab the SP-330 conversion placed the session in (minted from that session), else null. The exact v1 value schema is retained under $defs.legacy_v1 for old-store admission, conversion and backup inspection.",
       "retention_compaction": "Retain active and recently closed sessions while command blocks or receipts reference them; compact orphaned historical sessions under terminal retention policy.",
       "redaction_no_secret_rule": "Session rows store refs and status only; no raw command output, environment, secrets, or credentials.",
       "legacy_canonical_crosswalk_status": "materialized_from_deferred_terminal_group",
@@ -6620,7 +6620,7 @@
           "schema_version",
           "project_id",
           "terminal_session_id",
-          "tab_id",
+          "panel_tab_id",
           "session_status",
           "shell_profile_ref",
           "cwd_ref",
@@ -6643,7 +6643,7 @@
             "type": "string",
             "minLength": 1
           },
-          "tab_id": {
+          "panel_tab_id": {
             "type": [
               "string",
               "null"
@@ -29549,7 +29549,7 @@
           "tabs": {
             "type": "object",
             "propertyNames": {
-              "$ref": "#/$defs/tab_id"
+              "$ref": "#/$defs/panel_tab_id"
             },
             "additionalProperties": {
               "$ref": "#/$defs/tab"
@@ -29597,7 +29597,7 @@
             "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
             "description": "Opaque, stable split id; never shown as text in the UI."
           },
-          "tab_id": {
+          "panel_tab_id": {
             "type": "string",
             "pattern": "^[a-z][a-z0-9-]*(?:[:-].+)?$",
             "description": "Opaque, stable tab id whose prefix names its kind (file:, buffer:, terminal:, browser:, link:, dashboard:, plan:, artifact:, output:, problems, ports, debug-console: and the rest of Plans/FinalGUISpec.md#F3-635). Forms without a colon (problems, ports, thread-<agentId>) are allowed; the part after the prefix may hold any characters. Never shown as text in the UI."
@@ -29755,14 +29755,14 @@
                 "type": "array",
                 "uniqueItems": true,
                 "items": {
-                  "$ref": "#/$defs/tab_id"
+                  "$ref": "#/$defs/panel_tab_id"
                 },
                 "description": "The panel's tabs in strip order, pinned tabs first."
               },
               "active_tab_id": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/tab_id"
+                    "$ref": "#/$defs/panel_tab_id"
                   },
                   {
                     "type": "null"
@@ -29772,7 +29772,7 @@
               "preview_tab_id": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/tab_id"
+                    "$ref": "#/$defs/panel_tab_id"
                   },
                   {
                     "type": "null"
@@ -30318,7 +30318,7 @@
                 "type": "array",
                 "uniqueItems": true,
                 "items": {
-                  "$ref": "#/$defs/tab_id"
+                  "$ref": "#/$defs/panel_tab_id"
                 },
                 "description": "Most recently used first, across panels and kinds (Ctrl+Tab order)."
               }
@@ -30514,7 +30514,7 @@
             "type": "object",
             "additionalProperties": false,
             "required": [
-              "tab_id",
+              "panel_tab_id",
               "tab",
               "panel_id",
               "index",
@@ -30522,8 +30522,8 @@
             ],
             "description": "A closed tab that Reopen closed tab can bring back. A terminal comes back as a new session in the same folder and profile, never as the old one (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180).",
             "properties": {
-              "tab_id": {
-                "$ref": "#/$defs/tab_id"
+              "panel_tab_id": {
+                "$ref": "#/$defs/panel_tab_id"
               },
               "tab": {
                 "$ref": "#/$defs/tab"

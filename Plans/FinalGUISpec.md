@@ -339,6 +339,8 @@ F3-635). The paragraphs above remain lineage.
 
 ### F3-HOME-002 — Model-first movement and resize behavior
 
+Amended 2026-10-10 (lead ruling L13): A lost pointer capture now cancels a move (DR-066); the earlier no-cancel rule below is retired.
+
 Surface movement and resize use a committed layout plus a local draft layout. Pointer
 offset, lift, placeholder, neighbor reflow, edge-zone detection, cancellation, and
 reduced-motion behavior follow the approved U10 interaction semantics. DOM/Slint
@@ -2505,7 +2507,9 @@ Graph and evidence schemas add work-package `/seam/promotion/account/lane` ident
 
 Route payload passthroughs include `correlation_id` as a matrix-verifiable field when owner contracts require it, rather than relying on prose-only correlation.
 
-A route whose destination is a terminal, problems, output, ports, browser or debug console opens a tab of that kind through the one opening module (F3-634), carrying the placement fields of `Plans/Contracts_V0.md#CV-360`; the `bottom_panel` destination class is retired (amended 2026-10-09, DL-180). `embedded_surface` covers embedded sub-surfaces such as `document_pane` and `agent_activity` without turning those panes into route-object taxonomy.
+Amended 2026-10-10 (lead ruling L2): Home panel tab routes use primary_view (Contracts CV-163).
+
+A route whose destination is a terminal, problems, output, ports, browser or debug console opens a tab of that kind through the one opening module (F3-634), carrying the placement fields of `Plans/Contracts_V0.md#CV-360`; the `bottom_panel` destination class is retired; a route to a home panel tab uses `primary_view` (Contracts CV-163) (amended 2026-10-09, DL-180). `embedded_surface` covers embedded sub-surfaces such as `document_pane` and `agent_activity` without turning those panes into route-object taxonomy.
 
 Usage-event identity stays primary for Usage `/Ledger` navigation, while node `/attempt` identity stays primary for runtime and graph inspectors.
 
@@ -18091,11 +18095,11 @@ canonical_text: >-
   `kubectl exec`, and `kubectl port-forward` never auto-resume live attachment after crash or
   restart. Since DL-181 the terminal workspace state it restores is the Home layout record's terminal tabs (SP-330),
   terminal sections and panes being migration inputs only (SP-332). For a terminal tab whose session did not
-  survive, the explicit historical banner is F3-640's restored notice, an inline row above its saved scrollback, and
-  the tab starts a new session in the same folder and shell profile (the lead ruling in DL-181); a command that was
+  survive, the explicit historical banner is F3-640's restored notice, an inline row above its saved scrollback, and a local terminal tab starts a new session in the same folder and shell profile (the lead ruling in DL-181); a command that was
   running comes back ended and indeterminate, never done, and is never run again. A terminal tab whose profile is
   itself a privileged attachment (`docker exec/attach`, `kubectl exec`, `kubectl port-forward`) starts no new session
   by itself: it restores as an `interrupted_session` with Reconnect / Start new session, as above.
+  Restoring a terminal tab whose profile is an SSH host asks first (Reconnect / Close tab), as privileged attachments do (F3-228); a restore never reconnects to a remote host by itself.
 gui_related: true
 gui_classification_reason: >-
   This unit constrains terminal/dev-session recovery and privileged attach semantics.
@@ -18107,7 +18111,7 @@ acceptance_criteria:
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
-- "After a restart a terminal tab whose session ended shows the restored notice and a new session, its running command reads as ended with the earlier session, and a privileged-attachment tab waits for Reconnect / Start new session."
+- "After a restart a local terminal tab whose session ended shows the restored notice and a new session; an SSH-host tab asks Reconnect / Close tab first, its running command reads as ended with the earlier session, and a privileged-attachment tab waits for Reconnect / Start new session."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -18142,6 +18146,7 @@ negative_constraints:
 - "A restored terminal tab never re-runs a command that was running when its earlier session ended."
 compatibility_only_notes: []
 stale_retired_dispositions:
+- "Amended 2026-10-10 (lead ruling L14): An SSH-host terminal tab, like a privileged attachment, waits for a user choice instead of reconnecting on restore."
 - "Amended 2026-10-09 (DL-181): terminal sections and panes leave the restored state; a terminal tab whose session did not survive gets F3-640's restored notice and a new session, except a privileged-attachment tab, which keeps the interrupted-session rule."
 owner_boundary_notes: []
 owner_hints:
@@ -33222,6 +33227,7 @@ canonical_text: >-
   the sidebar builder.
   Amended 2026-10-09 (DL-184): the 3 px inset left accent bar on the selected thread and the left accent bar on active
   collapsed rows are retired; selection is the tinted fill, the hairline ring and the bolder title (F3-648).
+  PMConcept7's Chats rail retires when the 5.6 Pro chat is ported (ACD-444), not now.
 gui_related: true
 gui_classification_reason: This unit defines visible chats rail labeling, collapse geometry, row chrome, and selection presentation.
 split_recommended: false
@@ -33261,6 +33267,7 @@ negative_constraints:
 compatibility_only_notes:
 - "Slint portability: rail rows, glow, and accent bars render as opaque precomputed surfaces with width-threshold state switching; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
 stale_retired_dispositions:
+- "Amended 2026-10-10 (lead ruling L12): The Chats rail stays until the 5.6 Pro chat port (ACD-444)."
 - "The HISTORY rail label, the chevron collapse control, and the stream provenance banner are retired per PMConcept7 chats rail cleanup; resize-driven collapse and the Chats label supersede them."
 - "Amended 2026-10-09 (DL-184): the inset left accent bar and the collapsed rows' left accent bar are retired as coloured side bars (F3-648)."
 owner_boundary_notes:
@@ -37433,6 +37440,9 @@ invariants.
   (e.g., full prompt breakdown, BSD sensitivity, catch-up configuration, and stage bindings) is
   placed behind intentional disclosure toggles. Back Seat Driver's section is three plain facts and
   three native disclosures with no metric-card grid (DL-122, F3-580).
+
+Amended 2026-10-10 (lead ruling L21): the ban on side stripes is now shell-wide (DR-069); the structural rails of working activities stay as its carve-out.
+
 - **Strict Elimination of Left-Edge Accent Stripes (APR-034):** Decorative left-edge vertical
   accent bars, colored side stripes, inset accent borders, and pseudo-element stripes are strictly
   prohibited across all Assistant and Settings surfaces (including gray or muted substitutes).
@@ -43669,6 +43679,7 @@ canonical_text: >-
   launcher read one row list, so a kind that joins one joins the other. This supersedes F3-HOME-003's and F3-502's Open
   Panel and Open Browser in Panel rows with their Panel 1 to Panel 4 flyouts.
   The Output row opens or reveals `output`, the one Output tab whose channel switches inside it (F3-635).
+  The Dashboard row body opens or reveals dashboard:home; its sub-rows open or reveal the other starting boards. No board is created, renamed or deleted in wave 1.
 gui_related: true
 gui_classification_reason: Defines the plus menu after the last tab and the empty-panel launcher.
 split_recommended: false
@@ -43726,6 +43737,7 @@ compatibility_only_notes:
   - "The contract's Split down shortcut Ctrl+K Ctrl+\\ is retired: the shell owns Ctrl+K, and Split down is Ctrl+Shift+\\ (F3-635)."
 stale_retired_dispositions:
   - "Amended 2026-10-10 (Addendum 2 D28, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
+  - "Amended 2026-10-10 (lead ruling L10): The Dashboard row and sub-rows open or reveal the starting boards without creating, renaming or deleting boards."
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
@@ -44172,10 +44184,7 @@ canonical_text: >-
   it again; the setting "Keep the chat open in narrow windows" (SSYS-050) keeps it open instead. Pop out is the only way
   to move it (D3: the desktop app). In the desktop app Pop out opens the same chat, with its History and Activity
   Detail, in its own window that the user sizes and places (cmd.panel.undock with chat; panel.undocked, F3-527), and
-  Dock back returns it to its column (cmd.panel.redock; panel.redocked); exactly one chat exists at a time. In the web
-  client the chat never floats inside the page (F3-504), and whether the web client offers a Pop out is an open question
-  for the lead. The title bar's Home options menu carries Show the chat or Hide the
-  chat, Pop out the chat or Dock the chat back, and Keep the chat open in narrow windows (F3-502). The 5.6 Pro chat's
+  Dock back returns it to its column (cmd.panel.redock; panel.redocked); exactly one chat exists at a time. The web client offers no Pop out; the chat stays in its column. The title bar's Home options menu carries Show the chat or Hide the chat, and in the desktop app Pop out the chat or Dock the chat back, and Keep the chat open in narrow windows (F3-502). The 5.6 Pro chat's
   History list is a flyout over the chat by default; pinning it widens the chat by the list's own width instead of
   squeezing the messages. Activity Detail stays inside the chat as the 5.6 Pro chat designs it (APR-001), never a panel
   tab. One thread-history list survives, the 5.6 Pro one. The chat sizes itself by its own column, never by the window
@@ -44185,6 +44194,8 @@ canonical_text: >-
   minimums: F3-HOME-002's 260 px nominal minimum, F3-423's floating floor (it now holds only for the desktop app's
   popped-out chat window), F3-565's narrowest chat (its resilience rules now hold for a popped-out window narrower than 400 px),
   and the 360 px chat beside an open document of APR-038 and F3-569.
+  After a restart the chat starts in its column (F3-504); whether a popped-out chat reopens popped out is an open question for Jared.
+  ui.chat_column.pin_history is a typed local action (view state); its value is the v2 record's chat column history_pinned, committed with the chat_column_changed change.
 gui_related: true
 gui_classification_reason: Defines the chat's fixed column, its width, show and hide, Pop out, History flyout and Activity Detail.
 split_recommended: false
@@ -44240,7 +44251,10 @@ negative_constraints:
   - "Do not keep a second thread-history list."
 compatibility_only_notes:
   - "The concept floats the popped-out chat inside the page at 440 x min(720, window - 140) px with Dock back; that is the concept's browser stand-in, not a canon size."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (lead ruling L9): The History pin names ui.chat_column.pin_history and commits history_pinned with chat_column_changed."
+  - "Amended 2026-10-10 (lead ruling L7): After restart the chat starts in its column; reopening popped out remains an open question for Jared."
+  - "Amended 2026-10-10 (lead ruling L6): Pop out is desktop only; the web chat stays in its column."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/assistant-chat-design.md
@@ -44425,7 +44439,7 @@ canonical_text: >-
   F3-598, DL-152): square gives the chamfered silhouette with a straight foot (crown 6, shoulder 0, flare 14 px), an ink
   rule under each strip, square dirty and attention marks, hairline dividers with ticks and a hatched landing preview;
   cursor fills the active tab and hovered or chosen menu and launcher rows with ink, the YoRHa menu cursor, puts the
-  square list cursor before the focused panel's active label and gives other panels' active tabs a half-ink plate;
+  square list cursor before the focused panel's active label and gives other panels' active tabs the same ink fill as their fused panel;
   headers sets tab labels, "+N" and menu headings in the YoRHa caption treatment; brackets puts target brackets on the
   focused or chosen item; icons draws kind icons with square strokes; empty draws the empty-panel launcher's ink empty
   state; ground shows the parchment dot grid between panels. NieR colours come only from the NieR token tables or the
@@ -44444,6 +44458,7 @@ canonical_text: >-
   Its colour follows the terminal's Retro scheme choice, Phosphor Green or Amber; choosing Amber turns Retro's
   editor syntax amber. That choice is stored once in F3-642's terminal appearance model; the editor reads it
   and keeps no copy.
+  The active tab and its panel are one shape in every look; the shape's fill follows the look's selection grammar: the body's fill in Friendly, Glass and Basic, reverse video in Retro, ink in NieR. Glass's 1 px rim along the crown is material, not an accent.
 gui_related: true
 gui_classification_reason: Defines how panels, strips, menus, dividers and drags render in each look, NieR Mode and Reduced Motion.
 split_recommended: false
@@ -44498,6 +44513,7 @@ compatibility_only_notes:
   - "The concept also gates some touches by its own hook names and by part keys outside this list; only the existing part keys named here are canon."
 stale_retired_dispositions:
   - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Retro editor syntax reads the terminal Retro scheme choice once and keeps no copy."
+  - "Amended 2026-10-10 (lead ruling L5): The active tab and its panel share one shape and the look selection fill; the Glass crown rim is material."
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
@@ -44529,14 +44545,14 @@ canonical_text: >-
   statements of the rule (APR-034, F3-534, Settings section 22, F3-618, F3-619, DR-057) stay, as instances of this one
   rule. Checks: F3-619's pill detector (an element whose corner radius is at least half its height and which has a fill
   or a border, key caps excepted) and a side-border detector (a coloured border, or an inset shadow standing in for one,
-  of 2 px or more on one side only) find nothing in any look, and no emoji appears in chrome text or icons.
+  of 2 px or more on one side only) find nothing in any look except the structural rails of working activities (APR-034, DR-069), and no emoji appears in chrome text or icons.
 gui_related: true
 gui_classification_reason: Owns how the shell-wide ban on side stripes, emoji and pills looks, and lists the retired defaults.
 split_recommended: false
 depends_on: [DL-184, DL-141, F3-585, F3-619]
 unblocks: [DR-069, ATS-075]
 acceptance_criteria:
-  - "The pill detector and the side-border detector find nothing on any surface in any look or NieR Mode, key caps excepted."
+  - "The pill detector finds nothing on any surface in any look or NieR Mode, key caps excepted; the side-border detector exempts the structural rails of working activities (APR-034, DR-069) and otherwise finds nothing."
   - "No emoji appears in Puppet Master's chrome; a terminal program's own output is exempt."
   - "Every retired default listed here carries a dated note in its own unit or section."
   - "Selection everywhere is shown by the element's own surface, never by an edge stripe."
@@ -44564,11 +44580,13 @@ preserved_exact_tokens:
   - "pill"
   - "key caps"
 negative_constraints:
-  - "Do not draw a coloured border or stripe on one side of a box."
+  - "Do not draw a coloured border or stripe on one side of a box, except the structural rails of working activities (APR-034, DR-069)."
   - "Do not draw a pill-shaped tab, tag, badge, button or status chip."
   - "Do not put an emoji in Puppet Master's chrome."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (lead ruling L21): The structural-rail carve-out applies to the side-border check only."
+  - "Amended 2026-10-10 (lead ruling L21): The side-border check exempts the structural rails of working activities (APR-034, DR-069)."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/DRY_Rules.md
@@ -44669,13 +44687,13 @@ canonical_text: >-
   "Close this terminal? <process> is still running and will be stopped.", with Close terminal and Keep it open. A tab
   with no live session (restored after a restart or a reload, or a closed tab reopened) loads its saved scrollback
   before its new session starts (F3-645, SP-332), draws the dim rule `── Restored <time> · the earlier session ended ──`
-  above the new prompt, starts a new session in the same folder and shell profile, never presents itself as the old
+  above the new prompt, starts a new local session in the same folder and shell profile, never presents itself as the old
   session (F3-226, F3-228), and says so: "This terminal was restored with its scrollback (N images were not kept).
   Its earlier session ended when the page reloaded; this is a new session.", the parenthesis shown only when images
   were dropped, and for a reopened tab "This terminal was reopened with its scrollback" with "Its earlier session
   ended when the tab closed; this is a new session.". A command still running when the earlier session ended comes
   back ended and indeterminate, "ended with the earlier session", never as done. When the saved scrollback cannot be
-  loaded within its load budget (SP-332), the tab starts without it and says so. The gutter is 20 px wide (18 px
+  loaded within its load budget (SP-332), a local terminal tab starts without it and says so; an SSH-host tab still waits for Reconnect / Close tab. The gutter is 20 px wide (18 px
   when the body is under 400 px wide) and draws one 12 px glyph per prompt line with a 20 x 24 px hit target, never
   a stripe (F3-641). The scrollbar is 14 px wide (10 px when the body is under 400 px wide) and speaks the editor
   minimap's language: a viewport box with a 2 px radius and a 1 px border, command marks 55 % of the track wide in a
@@ -44716,6 +44734,7 @@ canonical_text: >-
   same tab by the explicit replacement of F3-548, Copy and Paste follow F3-238's clipboard rules, and the screen is
   the terminal core's own grid (F3-193, F3-216). The header row's buttons are the hover engine's icon kind, a static
   tint only, and the screen is never a hover target (DR-059, F3-465).
+  Restoring a terminal tab whose profile is an SSH host asks first (Reconnect / Close tab), as privileged attachments do (F3-228); a restore never reconnects to a remote host by itself.
 gui_related: true
 gui_classification_reason: Defines the terminal tab's label, header row, notices, gutter, scrollbar, sticky header, menus and keys in the universal panels.
 split_recommended: false
@@ -44727,7 +44746,7 @@ acceptance_criteria:
   - "The header row is F3-635's shared row with the folder, branch and, while a command runs, the command cut at 48 characters and its `m:ss` time on the left, and Find, Split, Maximize or Restore, and More on the right."
   - "At body widths of 399 and 400 px the gutter is 18 and 20 px and the scrollbar 10 and 14 px wide; below 150 px of body height the header row and the sticky command header are hidden."
   - "An ended session shows \"Session ended\" with Restart and Close tab and dims the screen to 72 %; closing a running terminal asks \"Close this terminal? <process> is still running and will be stopped.\" inline."
-  - "A restored or reopened terminal shows its saved scrollback, the dim rule and the restored notice above a new session in the same folder and profile, and a command that was running reads \"ended with the earlier session\"."
+  - "A restored or reopened terminal shows its saved scrollback, the dim rule and the restored notice above a new local session in the same folder and profile; an SSH-host tab asks Reconnect / Close tab before reconnecting, and a command that was running reads \"ended with the earlier session\"."
   - "The More, context and command-mark menus show exactly the items above in that order, and every menu opens in the one overlay root."
   - "Each key above does its action in a focused terminal, each key in the given-back list reaches the host, and every other Ctrl+key reaches the shell."
   - "No session id, tab id or nonce appears as text, and no notice is a modal or carries a coloured side stripe."
@@ -44777,6 +44796,7 @@ negative_constraints:
 compatibility_only_notes:
   - "The concept's kind registration, its script globals, its class and data-attribute prefixes and its terminal settings keys are lineage only; the concept's example profiles (zsh, bash, pwsh and one SSH host) and the agent name in its mark menu are demo data."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (lead ruling L14): SSH-host terminal restore asks Reconnect / Close tab before any remote reconnection."
   - "Supersedes F3-062's bottom runtime workgroup strip and F3-450's four-pane split guard, and retires the workgroup, sub-tab and editor-terminal-stack parts of F3-063 and F3-064 (DL-181)."
 owner_hints:
   - Plans/FinalGUISpec.md
@@ -44884,8 +44904,7 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The terminal's appearance is one layered model (DL-183, DR-068), resolved field by field: the look's defaults
-  ("Follow theme") under the app default (Settings > Terminal, SSYS-051) under the project default (written only from
-  Settings, in the Project's settings) under this tab's override; a field left unset falls through to the layer
+  ("Follow theme") under the app default (Settings > Terminal, SSYS-051) under the project default (written through Settings transactions, in the Project's settings) under this tab's override; a field left unset falls through to the layer
   below. Every field applies live, and no terminal appearance setting carries a restart badge; the terminal draws its
   own glyphs (DL-035), so section 6.4's restart rule for the app's font families does not reach it. "Follow theme"
   resolves per look, light and dark: Friendly Catppuccin Latte and Mocha; Glass Tokyo Night Day and Storm, drawn at
@@ -44928,9 +44947,8 @@ canonical_text: >-
   pixel ratio), never less than 90 % of the font's ascent plus descent, with the baseline centred; the padding is
   painted in the cell background, so the remainder smaller than a cell never shows as a stripe. The Appearance
   popover (More, Appearance...) previews every change live on the terminal and writes either This terminal (the
-  tab's override) or All terminals (the app default, through the Settings transaction over SSYS-051's rows); it
-  commits with `cmd.terminal.appearance.set` (UCC-201). Settings > Terminal binds the same model with the same fields
-  (SSYS-051) and is the only writer of the project layer. The app and project layers are Settings values and the
+  tab's override) or All terminals (enabled, the project default through the same Settings transaction Settings uses over SSYS-051's rows); This terminal commits with `cmd.terminal.appearance.set` (UCC-201). Settings > Terminal binds the same model with the same fields
+  (SSYS-051) and writes the project layer through that same Settings transaction. The app and project layers are Settings values and the
   tab's override lives in the terminal tab's serialized state; a custom background image is kept as SP-331 says.
   There is one model: the look's defaults, the popover and Settings read and write it, and no second terminal theme
   or font store exists (DR-068).
@@ -44938,6 +44956,7 @@ canonical_text: >-
   Retro editor amber. Retro syntax stays monochrome, using brightness and weight in dark and the black and red
   ribbon in light. This choice is stored once in the terminal's appearance model; the editor reads it and keeps
   no copy (F3-639, F3-647).
+  The popover's All terminals is enabled and writes the project default row of SSYS-051 through the same Settings transaction Settings uses, so it changes every terminal while this Project is open; its hover tag says in this project; no surface writes an app-wide value until q-035 admits one.
 gui_related: true
 gui_classification_reason: Defines the terminal's visible schemes, contrast floor, import, appearance fields, cell geometry and Appearance popover.
 split_recommended: false
@@ -44951,7 +44970,7 @@ acceptance_criteria:
   - "Import accepts the seven formats listed, refuses input over 256 KB, evaluates nothing and shows fixed errors that never echo the file."
   - "Every field changes the terminal at once, from the popover and from Settings, and no terminal appearance setting shows a restart badge."
   - "Cells are whole device pixels by the geometry rule, and no stripe shows between the last cell and the padding."
-  - "The popover writes This terminal or All terminals, and only Settings writes the project default."
+  - "The popover's All terminals is enabled and writes the project default row of SSYS-051 through the same Settings transaction Settings uses, so it changes every terminal while this Project is open; its hover tag says in this project; no surface writes an app-wide value until q-035 admits one."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
   - "The editor and terminal list the same catalog, each curated scheme carries terminal and syntax colours, both scheme choices default to Follow look and remain separate, and both menus open the same Appearance popover component."
   - "Retro editor syntax remains monochrome in dark and keeps the black and red ribbon in light; Phosphor Green or Amber follows the one terminal Retro scheme choice, Amber turns the editor amber, and the editor stores no copy."
@@ -44994,6 +45013,7 @@ compatibility_only_notes:
 stale_retired_dispositions:
   - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Retro editor syntax reads the terminal Retro scheme choice once and keeps no copy."
   - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
+  - "Amended 2026-10-10 (lead ruling L16): All terminals writes the project default through the Settings transaction and shows in this project; no app-wide value is written until q-035 admits one."
   - "Makes F3-083's terminal colour-scheme catalogue, preview and instant apply real, and replaces the restart badges on the old terminal theme and font rows (DL-183)."
 owner_hints:
   - Plans/FinalGUISpec.md
@@ -45203,8 +45223,7 @@ canonical_text: >-
   that cell, follows it when the grid reflows, clips to the tab, and goes when the screen is cleared or its lines
   leave the scrollback. Text written over a sixel or iTerm2 image cuts the image out of those cells. While an image
   decodes or a file is read, later output waits, so text after an image always lands after it. Animation plays no
-  faster than SMPFS-181's fastest frame; it pauses while the terminal is hidden and under Reduced Motion, where an
-  animated image holds its first frame. The desktop draws the tiers through Skia (F3-582) and the web client draws
+  faster than SMPFS-181's fastest frame; under Reduced Motion an animated image holds its first frame; while the terminal is hidden it pauses. The desktop draws the tiers through Skia (F3-582) and the web client draws
   the same tiers over its text rows, positioned by row, so images scroll and clip with the rows (F3-583). Images
   persist with the terminal's saved scrollback inside its storage quota (SP-332), the separate terminal scrollback
   cap F3-416 asks for, so a restored terminal's
@@ -45229,7 +45248,7 @@ acceptance_criteria:
   - "Images draw in the paint order above, and Unicode-placeholder images draw in their cells under the text."
   - "An image scrolls, reflows and clips with its anchor cell, and text written over a sixel or iTerm2 image cuts it out of those cells."
   - "Output after an image never paints before the image is decoded."
-  - "An animated image pauses while its terminal is hidden and holds its first frame under Reduced Motion."
+  - "Under Reduced Motion an animated image holds its first frame; while the terminal is hidden it pauses."
   - "A restored terminal shows its saved images where they were; an image the quota dropped shows the dashed placeholder with its name and size, and the restore notice counts it."
   - "The accessible buffer and agent reads show `[image W×H px]`, `[image]` or the placeholder label, and never image data."
   - "A refused image is not drawn, and the program's error reply is one of SMPFS-181's fixed strings."
@@ -45267,6 +45286,7 @@ negative_constraints:
 compatibility_only_notes:
   - "The concept's image store, renderer layers and demo images are lineage only."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (lead ruling L15): Under Reduced Motion an animated image holds its first frame; while the terminal is hidden it pauses."
   - "Replaces F3-544's sentence that no image protocol is approved (DL-182)."
 owner_hints:
   - Plans/FinalGUISpec.md

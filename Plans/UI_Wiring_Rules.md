@@ -2062,10 +2062,7 @@ canonical_text: >-
   with Panel 1 to Panel 4; File Manager's Open in Panel 1 to 4; the host drop targets, the dock track and the floating
   corner resizer; the dashboard's grab, pop-out and resizer; the chat's grab; the terminal sections (grab, bottom
   toggle, new section, split pane, move workgroup, resizer); and Collapse Bottom Terminal. A disabled control projects
-  its owner's reason (UCC-200) and dispatches nothing. One control is a pending exception, recorded 2026-10-09 and
-  left out of unresolved_count until its id is ruled: the chat's History list pin (Plans/assistant-chat-design.md#ACD-500
-  owns the control). Where its value lives is settled: the Home record's chat column holds History pinned
-  (Plans/storage-plan.md#SP-330); only its command or typed local action id is open. The census reports
+  its owner's reason (UCC-200) and dispatches nothing. ui.chat_column.pin_history is a typed local action (view state); its value is the v2 record's chat column history_pinned, committed with the chat_column_changed change. WM-090 lists it as a typed local action with no production entry; ACD-500 owns the control. The census reports
   unresolved_count=0. This census supersedes
   the fixed-zone rows that UIW-010's amendments and the 2026-08-04 Home rules list.
 gui_related: true
@@ -2075,7 +2072,7 @@ depends_on: [DL-180, UIW-010, UIW-012, UCC-200, UCC-203, F3-502, F3-630, F3-631,
 unblocks: [ATS-075]
 acceptance_criteria:
   - "Every control on the list maps to exactly one WM-090 row, and every home.* production entry maps to a control on the list: the census reports unresolved_count=0."
-  - "The History list pin is the one pending exception: it has no WM-090 row and is not counted in unresolved_count until its id is ruled; once ruled, it gets exactly one WM-090 row and the exception is removed."
+  - "The History list pin has exactly one WM-090 row for ui.chat_column.pin_history; history_pinned is committed with chat_column_changed, and no pending exception remains."
   - "No row exists for a retired control on the list's retired part, and Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json records those rows as retired."
   - "A disabled control (for example Split right when the centre is too narrow to split, Reopen closed tab when no tab has been closed) shows its owner's reason and dispatches nothing."
   - "Every key label on the list shows the key that works where the app runs; a browser shows Alt+T, Alt+W, Alt+Shift+T and Alt+` for the four browser-owned chords."
@@ -2109,6 +2106,7 @@ negative_constraints:
   - "Do not wire a control that is not on the list, or leave a control on the list without a row."
   - "Do not keep a row for a fixed editor panel, a dock or floating host, a terminal section, a chat grab or Collapse Bottom Terminal."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (lead ruling L9): Replaces the pending History pin exception with ui.chat_column.pin_history in the closed census."
   - "Superseded 2026-10-09 (DL-180): the fixed-zone census rows of the 2026-08-04 Home rules and UIW-010's 2026-08-13 amendments (Panel 1 to Panel 4, Chat and Dashboard Pop Out, the floating corner and dock track resizers, terminal add and split leaves, terminal caps, Collapse Bottom Terminal)."
 owner_hints:
   - Plans/UI_Wiring_Rules.md

@@ -4318,7 +4318,7 @@ canonical_text: >-
   FileManager owns file-surface placement for editor, terminal, browser tab, image viewing, HTML/browser preview, and hot-reload entrypoints.
   Missing Sections 5 through 8 and 13 through 14, plus the three-line Section 9 Tabs stub, must recover by consuming live browser,
   terminal, preview, persistence, and command-owner PlanUnits rather than inventing separate FileManager-only behavior.
-  Amended 2026-10-09 (DL-180): FileManager keeps these entrypoints, but where an editor, terminal, browser or preview tab lands in the home panels is the one opening module's (Plans/FinalGUISpec.md#F3-634), not FileManager's. Open in Terminal on a folder opens a new terminal tab in that folder, and on a file a new terminal tab in its folder (F-090).
+  Amended 2026-10-09 (DL-180): FileManager keeps these entrypoints, but where an editor, terminal, browser or preview tab lands in the home panels is the one opening module's (Plans/FinalGUISpec.md#F3-634), not FileManager's. Open in Terminal on a folder reveals the last-focused terminal tab whose folder is that folder, else opens a new terminal tab there; on a file it uses the file's folder in the same way (F-090).
 gui_related: true
 gui_classification_reason: This unit governs visible file manager tabs, previews, browser/terminal panes, image viewing, and hot-reload controls.
 depends_on: [F-002, F-009, F-010, DL-180]
@@ -4343,6 +4343,7 @@ source_lineage:
   - source_ref:chat:next-gui-filemanager-cluster
 preserved_exact_tokens: ["§5", "§8.1", "§8.2", "§9", "§13", "§14", "§14.6", "Tabs: Editor, Terminal, Browser", "built-in browser", "browser/terminal tabs", "hot-reload controls", "image viewing"]
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (lead ruling L11): Open in Terminal reveals the last-focused terminal tab in the target folder, else opens one there."
   - 'Amended 2026-10-09 (DL-180): FileManager no longer owns where editor, terminal, browser and preview tabs are placed; F3-634 does.'
 negative_constraints:
   - Do not make FileManager the browser behavior SSOT.
@@ -5350,8 +5351,7 @@ canonical_text: >-
   file row's context menu starts with Open (kept, in that target), Open in new panel (`where: panel`) and Open to the
   side (`where: right`, a new panel to the right of the target panel), then a separator and the existing file-tree
   actions of section 11. The Open in Panel submenu with Panel 1 to Panel 4 and its `target_editor_panel_id` routing
-  retire. Open in Terminal on a folder opens a new terminal tab whose folder is that folder, and on a file a new
-  terminal tab in the file's folder; the terminal tab lands where F3-634 places a terminal. A folder row's single
+  retire. Open in Terminal on a folder reveals the last-focused terminal tab whose folder is that folder, else opens a new terminal tab there; on a file it uses the file's folder in the same way; the terminal tab lands where F3-634 places a terminal. A folder row's single
   click still expands or collapses it and opens nothing. Opening, revealing and keeping a file change only the Home
   layout and the file's tab: the tree's selection, expansion, filter and multi-select state are its own (F-009,
   F-011) and never written into the Home layout record. This supersedes F-080 and the editor-panel targets of F-017,
@@ -5368,7 +5368,7 @@ acceptance_criteria:
   - "Clicking a file that is already open in any panel, including a collapsed panel or one hidden in \"+N\", reveals that tab and opens no second tab."
   - "Alt+click opens the file in a new panel by the fit rule, and Ctrl+click (Cmd+click) opens it without taking focus."
   - "The file row's context menu starts with Open, Open in new panel and Open to the side, and has no Open in Panel submenu."
-  - "Open in Terminal on a folder opens a new terminal tab in that folder, and on a file a new terminal tab in its folder."
+  - "Open in Terminal on a folder reveals the last-focused terminal tab whose folder is that folder, else opens a new terminal tab there; on a file it uses the file's folder in the same way."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -5408,6 +5408,7 @@ negative_constraints:
 compatibility_only_notes:
   - "The concept routes the tree through a compatibility shim over its old handlers; the shim and its names are concept lineage, not product names."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (lead ruling L11): Open in Terminal reveals the last-focused terminal tab in the target folder, else opens one there."
   - "Superseded 2026-10-09 (DL-180): F-080's Open in Panel submenu with Panel 1 to Panel 4, its four stable editor panel identities and its target_editor_panel_id routing."
 owner_boundary_notes:
   - "F3-634 owns the opening rules and where a new tab lands, CV-360 the placement fields, F3-635 the tab kinds, and F3-639 the editor tab; this unit owns only the file tree's gestures and its context-menu open rows."

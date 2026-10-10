@@ -3284,8 +3284,7 @@ canonical_text: >-
   held item following the pointer one to one, the landing preview, target hysteresis and dwell, edge auto-scroll, the
   settle on drop and the glide back on cancel, a keyboard path for every pointer move, and polite announcements of
   where the item would land and where it landed. Its transaction is one rule for both layouts: the preview is local and dispatches nothing, writes nothing
-  and emits no event; a changed release commits exactly one owner command; an unchanged or invalid release, Escape, a
-  pointer cancel or the window losing focus commits nothing and restores the exact earlier picture; and a failed
+  and emits no event; a changed release commits exactly one owner command; an unchanged or invalid release, Escape, a pointer cancel, a lost pointer capture or the window losing focus commits nothing and restores the exact earlier picture; and a failed
   commit rolls back (UIW-012, CS-068). The pointer rules are F3-HOME-002's and F3-503's, which F3-630 applies to
   panels and tabs; the Usage board uses the same kit under WS-019. Each layout supplies only its own target model, its
   keys and its numbers: the split tree resolves strips, panel edges and the "+N" list with F3-630's
@@ -3337,6 +3336,8 @@ negative_constraints:
   - "Do not build a second gesture controller, preview transaction or keyboard move path for panels or for widgets."
   - "Do not lay out panels on the widget grid or widgets in the split tree."
   - "Do not write widget layout into the Home record or panel layout into a widget board."
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (lead ruling L13): Lost pointer capture cancels a gesture and restores the earlier picture without a commit."
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/FinalGUISpec.md
