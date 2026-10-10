@@ -23,9 +23,10 @@ PMW.resetLayout = PMW.resetLayout || function () { return PMW.applyNamed('home',
 function firstLayout() {
   persist.bind();   // the layout belongs to the project it was loaded for, whatever the title bar says later
   var saved = persist.load();
-  if (saved) return saved;
   var name = PMW.settings.get('panels.layout.named') || 'home';
-  var l = PMW.buildNamed(PMW.NAMED[name] ? name : 'home', null);
+  var l = saved || PMW.buildNamed(PMW.NAMED[name] ? name : 'home', null);
+  // ids written before a kind folded them (debug-console:<session>, D33) load as the one tab they name now
+  if (l && PMW.foldLayout(l)) model.normalize(l);
   return l;
 }
 
@@ -68,6 +69,7 @@ PM_HOME.boot = function () {
   DEAD_PORTALS.forEach(function (id) { var el = doc.getElementById(id); if (el) el.remove(); });
   bus.emit('boot:kinds', {});
   state.layout = firstLayout();
+  try { persist.foldSaved(); } catch (err) { try { console.error('[pm-home] saved layouts could not be folded', err); } catch (_) {} }
   try { persist.watchProject(); } catch (err) { try { console.error('[pm-home] project watch failed', err); } catch (_) {} }
   if (typeof ResizeObserver === 'function') {
     new ResizeObserver(function () {

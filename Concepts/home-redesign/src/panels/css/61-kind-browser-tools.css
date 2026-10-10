@@ -408,12 +408,37 @@
   .pmw-tool-acts { grid-area: acts; }
 }
 
-/* Debug Console */
-.pmw-tool-state { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; }
-.pmw-tool-state.is-warn { color: var(--pmw-warn); }
-.pmw-tool-state.is-ok { color: var(--pmw-ok); }
-.pmw-tool-state.is-dim { color: var(--pmw-text-3); }
-.pmw-tool-sdot { flex: none; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+/* Debug Console (D33): one tab, a sub-tab per debug session in the header row. The sub-tabs are the Plan viewer's
+   header toggle grammar (text options whose underline rides the row's hairline), each the session's state dot, its
+   name and its state in words; one underline (.pmw-tool-sind) glides to the chosen one (22-tools.js). The first
+   sub-tab's dot lines up with the console's glyph column. Words go below 460 px of body, names shorten last; the
+   paused-at reference goes below 640 px; the buttons lose their words below 820 px (the row's labelsAt). */
+.pmw-tool-dbg .pmw-hrow-left { align-self: stretch; }
+.pmw-tool-dbg .pmw-hfact[data-id="sessions"] { align-self: stretch; margin-left: -8px; }
+.pmw-tool-stabs { position: relative; display: flex; align-items: stretch; gap: 2px; height: 100%; min-width: 0; }
+.pmw-tool-stab { position: relative; flex: 0 1 auto; min-width: 44px; display: inline-flex; align-items: center; gap: 7px; height: 100%; padding: 0 8px;
+  border: 0; border-radius: 6px; background: transparent; color: var(--pmw-text-2); font: inherit; font-size: 12px; white-space: nowrap; cursor: pointer;
+  transition: color var(--pmw-t-fast) var(--pmw-ease); }
+.pmw-tool-stab:hover, .pmw-tool-stab[aria-selected="true"] { color: var(--pmw-text); }
+/* the focus ring sits inside the row, clear of the underline under it */
+.pmw-tool-stab:focus-visible { outline: none; }
+.pmw-tool-stab:focus-visible::before { content: ""; position: absolute; inset: 5px 2px 7px; border-radius: 5px; box-shadow: 0 0 0 2px var(--pmw-focus); pointer-events: none; }
+.pmw-tool-sname { min-width: 0; overflow: hidden; text-overflow: ellipsis; font-weight: 500; }
+.pmw-tool-sword { flex: none; font-size: 11px; color: var(--pmw-text-2); font-variant-numeric: tabular-nums; }
+/* the dot sits where the console's glyph column has its marks and the name starts on the console's text column */
+.pmw-tool-sdot { flex: none; width: 7px; height: 7px; margin: 0 3px 0 2.5px; border-radius: 50%; background: currentColor; }
+.pmw-tool-sdot.is-warn { color: var(--pmw-warn); }
+.pmw-tool-sdot.is-ok { color: var(--pmw-ok); }
+.pmw-tool-sdot.is-dim { color: var(--pmw-text-3); }
+.pmw-tool-stab:not([aria-selected="true"]):not(:hover) .pmw-tool-sdot { opacity: .8; }
+/* the underline takes the look's active-tab ink (Friendly's accent, Glass dark's white): it answers the strip */
+.pmw-tool-sind { position: absolute; left: 0; bottom: 0; width: 0; height: 2px; background: var(--pmw-tab-active, var(--pmw-text)); transform-origin: 0 0; pointer-events: none; }
+.pmw-tool-dat { flex: none; font-size: inherit; }
+.pmw-tool-dpanes { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+.pmw-tool-dpane { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+.pmw-tool-dpane[hidden] { display: none; }
+@container pmw-body (max-width: 639.98px) { .pmw-tool-dbg .pmw-hfact[data-id="at"] { display: none; } }
+@container pmw-body (max-width: 459.98px) { .pmw-tool-sword { display: none; } }
 .pmw-tool-con { padding-bottom: 6px; }
 .pmw-tool-cl { display: grid; grid-template-columns: 14px minmax(0, 1fr); column-gap: 6px; align-items: start; padding: 1px 12px; white-space: pre-wrap; overflow-wrap: anywhere; }
 .pmw-tool-clg { display: inline-flex; align-items: center; height: 18px; color: var(--pmw-text-3); }
@@ -441,7 +466,7 @@
    above and turned the channel picker into a capsule and every full-width row's hover and focus plate into one. These
    restate each button's own radius at that weight (CONTRACT 13), in Friendly only, so the two-class state rules above
    still win and NieR's square part keeps its square corners. Rows that span the body stay square, as in every look. */
-:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) :is(button.pmw-tool-chan, button.pmw-tool-btn, button.pmw-br-pbtn,
+:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) :is(button.pmw-tool-chan, button.pmw-tool-btn, button.pmw-tool-stab, button.pmw-br-pbtn,
   button.pmw-br-tb-signin, button.pmw-br-tb-cta, button.pmw-br-sso-btn) { border-radius: 6px; }
 :where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) :is(button.pmw-tool-file, button.pmw-tool-prow, button.pmw-br-prow, button.pmw-br-ttw) { border-radius: 0; }
 :where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) :is(button.pmw-tool-flink, button.pmw-br-back) { border-radius: 2px; }
@@ -457,8 +482,16 @@ html[data-theme^="glass"] .pmw-br-addr { background: color-mix(in srgb, var(--pm
 /* Retro: square corners, the code face in the chrome, reverse-video rows and selection */
 html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-br-addr, .pmw-br-prompt, .pmw-br-pbtn, .pmw-br-tpick, .pmw-br-cap, .pmw-br-thumb, .pmw-br-hltag, .pmw-br-rhint, .pmw-br-rsize,
   .pmw-tool-chan, .pmw-tool-btn) { border-radius: 0; }
-html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-br-dbody, .pmw-tool-list, .pmw-tool-ptable, .pmw-tool-count, .pmw-tool-state, .pmw-tool-chan) { font-family: var(--pm-font-code); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-br-dbody, .pmw-tool-list, .pmw-tool-ptable, .pmw-tool-count, .pmw-tool-stab, .pmw-tool-chan) { font-family: var(--pm-font-code); }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tool-sdot { border-radius: 0; }
+/* the debug sub-tabs: the chosen session is the reverse-video cell (no underline), a hover lights the name */
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tool-stab { border-radius: 0; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tool-stab:hover { color: var(--accent-lime); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tool-stab[aria-selected="true"] { background: var(--accent-lime); color: var(--surface); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tool-stab[aria-selected="true"] :is(.pmw-tool-sword, .pmw-tool-sdot) { color: var(--surface); opacity: 1; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tool-stab:focus-visible::before { border-radius: 0; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tool-stab[aria-selected="true"]:focus-visible::before { box-shadow: 0 0 0 2px var(--surface); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tool-sind { display: none; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-br-prow, .pmw-br-cap:not(.is-refused), .pmw-br-tpick, .pmw-tool-file, .pmw-tool-prow, .pmw-tool-btn):is(:hover, :focus-visible) {
   background: var(--accent-lime); color: var(--surface); outline: none; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-br-prow, .pmw-br-cap, .pmw-br-tpick, .pmw-tool-file, .pmw-tool-prow, .pmw-tool-btn):is(:hover, :focus-visible) :is(span, b, .pmw-ico, .pmw-tool-mark, .pmw-br-ttag, .pmw-br-tattr, .pmw-br-ttext) {
@@ -476,6 +509,13 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-br-view.is-loading::aft
 
 /* NieR: ink and parchment, square corners, no glow; small headers go uppercase with the headers part */
 html[data-o55-nier="on"] :is(.pmw-br-addr, .pmw-br-prompt, .pmw-br-pbtn, .pmw-br-tpick, .pmw-br-cap, .pmw-br-thumb, .pmw-br-hltag, .pmw-br-rhint, .pmw-br-rsize, .pmw-tool-chan, .pmw-tool-btn, .pmw-tool-sdot) { border-radius: 0; }
+/* the debug sub-tabs: ink underline; with the cursor part the chosen session is the ink block (the selected item) */
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-tool-stab, html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-tool-stab::before { border-radius: 0; }
+html[data-o55-nier="on"] .pmw-tool-sind { background: var(--o55-nier-ink); }
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmw-tool-stab[aria-selected="true"] { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmw-tool-stab[aria-selected="true"] :is(.pmw-tool-sword, .pmw-tool-sdot) { color: var(--o55-nier-on-ink); opacity: 1; }
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmw-tool-stab[aria-selected="true"]:focus-visible::before { box-shadow: 0 0 0 2px var(--o55-nier-on-ink); }
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmw-tool-sind { display: none; }
 html[data-o55-nier="on"] .pmw-br-prompt { box-shadow: 3px 3px 0 rgba(var(--o55-nier-shadow-rgb), .16); border-color: var(--o55-nier-ink); }
 html[data-o55-nier="on"] .pmw-br-pbtn:first-child { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
 html[data-o55-nier="on"] :is(.pmw-br-hl, .pmw-br-hl.is-picked) { outline-color: var(--o55-nier-ink); }

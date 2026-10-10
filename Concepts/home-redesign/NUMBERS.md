@@ -64,7 +64,11 @@ slot holds.
 ## The "+" menu (D6), exact order and labels
 
 1. Filter field "Open anything: kinds, files, URLs" (typing also finds files and an address)
-2. Terminal · Ctrl+Shift+\` · sub-row: the terminal thread's profiles
+2. Terminal · Ctrl+Shift+\` · sub-row: every entry of the terminal thread's `PMT.profiles()` without a group (all the
+   installed shells; ungrouped sub-rows are no longer capped, a kind may still cap its own with `plus.subMax`)
+   - SSH hosts (D39; only when an entry has `group: 'ssh'`), right under Terminal: one row with a submenu titled "SSH
+     hosts", one row per host (label; the detail as the second line), icon `remote` (Retro glyph `//`); the submenu
+     gets its own filter field above 7 hosts
 3. Browser · Ctrl+Shift+B · sub-row: localhost:5173, Query dashboard
 4. File... · Ctrl+P · sub-row: three recent files
 5. Dashboard · sub-row: Home, Metrics, Monitoring, Agents
@@ -74,7 +78,10 @@ slot holds.
 9. (hairline) Split right · Ctrl+\\ ; Split down · Ctrl+Shift+\\ ; Reopen closed tab · Alt+Shift+T in a browser (Ctrl+Shift+T native)
 
 Each row's body opens a new tab in this panel; its trailing cell (34 x 34) opens a new panel; Alt+click or Alt+Enter
-does the same. The empty-panel launcher shows the same rows (32 px list rows), then five recent files, then a hint.
+does the same. Typing in the field lists the SSH hosts themselves ("SSH host · <detail>"), found by label or detail. The
+empty-panel launcher shows the same rows (32 px list rows), each row's inline sub-row under it (the menu's link row, text
+32 px in from the row's edge, hidden below 360 px of panel), the SSH hosts row opening its submenu from the row, then
+five recent files, then a hint. A wrapped sub-row hides the separator dot that would start its new line.
 
 ## Opening (D7, D8)
 
@@ -97,6 +104,8 @@ does the same. The empty-panel launcher shows the same rows (32 px list rows), t
 | Ladder (on C, the centre width) | C < 960: the rail side panel eases to 240, then folds to its icon bar below 760 (opens as an overlay), then the chat eases toward 400; C < 600: one panel column with a panel switcher ("2/3") in the strip; C < 480: the chat folds to a 32 px strip unless "Keep the chat open in narrow windows" is on |
 | Hysteresis | 48 px per step; nothing is ever saved |
 | Measured | 1920: rail 240, chat 600, C 1041. 1680: chat 441, C 960. 1470: rail folded, chat 473, C 960. 1440: chat 443. 1280: chat 400, C 847. 1024: one column, C 567. 900: chat strip, C 811 |
+| Rail Chat entry (D40) | a click (or Enter / Space when focusable) hides the chat while it is on screen, else `chatCol.show()` (over the centre where the chat is folded to its strip); every page; the page in front never changes; one `cmd.panel.switch` and one receipt per hide or show; a press that moves 4 px or more (or ends as the rail's drag) is the rail's reorder; the entry is lit while the column is shown; its hover tag reads 'Chat' / 'Shows or hides the chat column' |
+| After a restart (D32) | a popped-out chat comes back docked in its column: the float is never saved; visibility (`pm.home.chat:v1`) and `chat.width` are |
 | Pinned History width | 240 px (chat draws it at 200 while its whole column is under 540) |
 | Pinned column minimum | 640 px; drag with History pinned: lowest column 640, highest 760 + 240 (capped by the C 960 rule) |
 | Peek with History | 400 px with History as a flyout and 640 px with History pinned (+240 pinned, capped at row width - 48), opening over the right side; a folded chat always has History dropped, so its peek opens at 400 px |
@@ -112,7 +121,7 @@ does the same. The empty-panel launcher shows the same rows (32 px list rows), t
 | File reference hover tag | label 'Open file', detail 'Click previews it. Double-click keeps it open.'; without a path: 'No file to open' / 'This reference names no file.' |
 | api.saveSoon | 250 ms coalesced (PMW.persist.saveSoon) |
 | registerIcon | Retro glyph at most 2 cells |
-| New icons | registered via PMW.registerIcon (16 px stroke grammar), with Retro glyphs: crew '&', review '?', room '~', brainstorm '^', outputNewTab '+' (path 'M2.5 13.5v-9h4.5l1 2h5.5v7zM10.5 8.5v3.5M8.75 10.25h3.5'), edPalette '*' |
+| New icons | registered via PMW.registerIcon (16 px stroke grammar), with Retro glyphs: crew '&', review '?', room '~', brainstorm '^', outputNewTab '+' (path 'M2.5 13.5v-9h4.5l1 2h5.5v7zM10.5 8.5v3.5M8.75 10.25h3.5'), edPalette '*'; core icon remote '//' (two stacked units, the "+" menu's SSH hosts, D39) |
 | registerKind iconFor | iconFor(id, state): the strip, the '+N' list, the every-tab list and the recent-tabs switcher show it |
 | Primary frame buttons | black or white ink chosen from the fill's luminance (crossover Y 0.1791, at least 4.58:1); measured Glass light 1.75 -> 4.68 (hover 7.3), Friendly light 2.97 -> 6.79; every look at least 4.68 |
 | Document action buttons (.pmw-act) radius | Friendly 8, Glass 8, Basic 6, Retro 0, NieR square 0 |
@@ -170,10 +179,11 @@ header-row targets, 32 px document actions, nothing under 11 px) are in CONTRACT
 | Output | Output is one tab, id `output`; the channel (build, tests, language-server, puppet-master) is view state, switched inside the tab; a channel opened as its own tab is `output:<channel>`, labelled 'Output · <Channel>'. Line cap 600. Streaming starts 700 ms after the tab is shown, then one line every 260-680 ms, with scripted pauses of 1.8-5 s. Follow turns off more than 24 px from the end. Time column hidden below 520 px. Serialize: channel, follow, wrap. |
 | Problems | id 'problems'; demo counts 2 errors, 4 warnings, 1 note across 4 files. Source column hidden below 520 px; line/column and folder hidden below 360 px. Row height 28 px. Serialize: show {error, warn, info}, collapsed {path: bool}. |
 | Ports | id 'ports'; columns 96 px / 1fr / 1.3fr / 140 px / 220 px; at < 760 px the Origin column goes and buttons are icon-only (actions 108 px); at < 480 px rows stack. Row action buttons are 32 px; rows at least 44 px. Serialize: extra (added ports), removed (port numbers). |
-| Debug Console | idFor 'debug-console:' + (session \|\| 'main'); label 'Debug Console' (other sessions 'Debug Console · <name>'). Console cap 400 lines; input history 30 (20 saved); input row 34 px. Continue re-hits the breakpoint after 1.9 s; Restart pauses after 1.7 s (60 ms under Reduced Motion). Serialize: session, history. |
-| Demo ids | `web:tastebook`, `web:query-dashboard`, `link:postgresql.org\|PostgreSQL%2016%20%C2%B7%20Multicolumn%20Indexes`, `link:postgresql.org\|PostgreSQL%2016%20%C2%B7%20Index-Only%20Scans`, `link:wiki.postgresql.org\|Locking%20notes%20for%20concurrent%20index%20builds`, `output`, `problems`, `ports`, `debug-console:main` |
-| Output D28 channel picker | menu width 300 px (was 280); each row has trailing cell 'Open in new tab' (Alt+Enter; Alt+click opens in new panel), icon 'outputNewTab' (Retro glyph '+'); split-off tab shows plain fact with no picker, More menu adds 'Show in the Output tab' |
-| Output D28 kind and ids | tab ids: 'output' (one tab, channel is view state) and 'output:<channel>' (split-off, fixed); labels: 'Output', and 'Output · <Channel>'; prefixes ['output:', 'output']; reveal({ channel }) switches main Output tab |
+| Debug Console (D33) | one tab, id `debug-console` (idFor always), label 'Debug Console'; prefixes ['debug-console:', 'debug-console']; fold: 'debug-console:<session>' -> 'debug-console' with { session }. Demo sessions: tastebook-api ('main', cargo run, paused at src/services/import.rs:95) and import-worker ('worker', cargo run -p import-worker, running; a Pause lands at src/services/import/normalize_units/mixed_fractions.rs:19). Each session keeps its console (cap 400 lines), its state and its frame; the input history (30, 20 saved) is shared. Continue re-hits the main breakpoint after 1.9 s; Restart pauses it after 1.7 s (60 ms under Reduced Motion); the running worker prints a line every 1.4-3.0 s while the tab is shown. Input row 34 px. Serialize: session, history. |
+| Debug Console sub-tabs | in the header row (the Plan viewer's toggle grammar): role tablist / tab with aria-controls on each session's tabpanel; roving tabindex; Left/Right wrap, Home/End, all choosing at once; Enter/Space choose. Each sub-tab 29 px tall, 8 px side padding, 12 px name (500), 11 px state word (Paused, Running, Ended), 7 px state dot (warn, ok, dim; square in Retro and NieR); the first dot sits in the console's glyph column and its name starts on the console's text column. Underline 2 px in the look's active-tab ink, gliding 260 ms on the slide curve (a cut in NieR and Retro, instant under Reduced Motion); the console fades in 170 ms from 3 px. Focus ring 2 px, inset 5 / 2 / 7 px, 5 px radius (0 in Retro and NieR's square part). Retro: the chosen sub-tab is the reverse-video cell. NieR with the cursor part: the ink block. Hover tag: the session's name, then how it runs and its state ('cargo run · paused at src/services/import.rs:95'). The paused-at reference: a D7 file reference (mono, the target icon) beside the buttons. Below 460 px of body the state words go; below 640 px the paused-at reference goes; the buttons lose their words below 820 px (labelsAt). |
+| Demo ids | `web:tastebook`, `web:query-dashboard`, `link:postgresql.org\|PostgreSQL%2016%20%C2%B7%20Multicolumn%20Indexes`, `link:postgresql.org\|PostgreSQL%2016%20%C2%B7%20Index-Only%20Scans`, `link:wiki.postgresql.org\|Locking%20notes%20for%20concurrent%20index%20builds`, `output`, `problems`, `ports`, `debug-console` |
+| Output D31 channel picker | menu width 300 px (was 280); each row has trailing cell 'Open in new tab' (Alt+Enter; Alt+click opens in new panel), icon 'outputNewTab' (Retro glyph '+'); split-off tab shows plain fact with no picker, More menu adds 'Show in the Output tab' |
+| Output D31 kind and ids | tab ids: 'output' (one tab, channel is view state) and 'output:<channel>' (split-off, fixed); labels: 'Output', and 'Output · <Channel>'; prefixes ['output:', 'output']; reveal({ channel }) switches main Output tab |
 | Browser and Debug Console fields | one focus ring: the header row draws it, the field itself has no border, shadow or outline |
 
 ### Dashboard (kinds/30-dashboard.js)

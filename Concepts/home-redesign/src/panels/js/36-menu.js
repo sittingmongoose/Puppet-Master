@@ -326,6 +326,7 @@ menu.open = function (anchor, spec) {
     el.style.setProperty('--pmw-mox', ox + 'px');
     el.style.setProperty('--pmw-moy', up ? '100%' : '0%');
     hnd.placed = true;
+    tidyLinkRows(el);
   }
   var lastH = 0;
   function morph() {
@@ -372,6 +373,29 @@ menu.open = function (anchor, spec) {
   focusFirst();
   return hnd;
 };
+
+/* A row of inline links that wraps (the Terminal row's installed shells, D39, or Dashboard's boards) starts its new
+   line with a link, never with the dot: each separator travels with the link after it (so no line ends on a dot), and
+   a link that begins a line hides its dot and gets a line break before it, so it cannot climb back onto the line above
+   without one. Measured after layout: the menu's place(), the launcher's render and its resize. */
+function tidyLinkRows(root) {
+  qsa('.pmw-mlinks', root).forEach(function (lr) {
+    qsa('.pmw-mlinkbr', lr).forEach(function (b) { b.remove(); });
+    qsa('.pmw-mlinksep', lr).forEach(function (sep) { if (sep.style.display) sep.style.display = ''; });
+    var prevTop = null;
+    Array.prototype.slice.call(lr.children).forEach(function (c) {
+      var top = c.offsetTop;
+      var sep = c.classList.contains('pmw-mlinkpair') ? c.querySelector('.pmw-mlinksep') : null;
+      if (sep && prevTop != null && top > prevTop + 2) {
+        lr.insertBefore(h('span', { class: 'pmw-mlinkbr', 'aria-hidden': 'true' }), c);
+        sep.style.display = 'none';
+        top = c.offsetTop;
+      }
+      prevTop = top;
+    });
+  });
+}
+PMW.tidyLinkRows = tidyLinkRows;
 
 /* one-line prompt inside a menu-styled popover (rename, save layout) */
 menu.prompt = function (anchor, o) {

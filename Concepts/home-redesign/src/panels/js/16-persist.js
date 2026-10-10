@@ -97,6 +97,30 @@ var persist = PMW.persist = {
   },
   clear: function () { store.remove(persist.key()); },
 
+  /* Saved named layouts name their tabs by id (14-layouts.js, SAVED_KEY): an id a kind folds now
+     (debug-console:<session>, D33) is rewritten, once at boot, to the one tab it names, so that tab still goes back to
+     its own panel and stays the panel's active tab when the layout is applied. Returns whether anything was rewritten. */
+  foldSaved: function () {
+    var all = store.get(SAVED_KEY);
+    if (!all || typeof all !== 'object') return false;
+    var changed = false;
+    function folded(id) { var f = PMW.foldId(id); if (f) changed = true; return f ? f.id : id; }
+    function fix(n) {
+      if (!n || typeof n !== 'object') return;
+      if (n.slot) {
+        if (Array.isArray(n.tabs)) {
+          var seen = {};
+          n.tabs = n.tabs.map(folded).filter(function (id) { if (seen[id]) return false; seen[id] = 1; return true; });
+        }
+        if (typeof n.active === 'string') n.active = folded(n.active);
+        return;
+      }
+      (n.kids || []).forEach(fix);
+    }
+    Object.keys(all).forEach(function (name) { if (all[name] && all[name].tree) fix(all[name].tree); });
+    return changed ? store.set(SAVED_KEY, all) : false;
+  },
+
   /* A project switch: flush the layout to the project it belongs to, then show the new project's own layout (or the
      default). The swap is one restore command that is not written again (the new layout came from its own key). */
   checkProject: function () {

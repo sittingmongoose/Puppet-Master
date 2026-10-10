@@ -2,8 +2,9 @@
 
 The new PMConcept7 Home: one universal panel system (an n-ary split tree of tab groups) between the left rail and the
 chat column, replacing today's separate editor panels, dashboard and terminal dock. Decisions D1-D28 are in
-`/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md`; the host contract every tab kind builds
-against is [`CONTRACT.md`](CONTRACT.md).
+`/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md`, and D17a and D29-D41 are in the addenda
+beside it (`DECISIONS-ADDENDUM-1.md` to `DECISIONS-ADDENDUM-3.md`); the host contract every tab kind builds against is
+[`CONTRACT.md`](CONTRACT.md).
 
 This package follows the **layer pattern** of the Usage and left-rail redesigns (`Concepts/usage-redesign`,
 `Concepts/leftrail-redesign`), not the per-model concept folder of `Concepts/CONCEPT_RULES.md`: it is a build layer over
@@ -32,7 +33,7 @@ Concepts/home-redesign/
 | `kinds/00-fallbacks.js` | stand-ins for kinds another thread owns (the terminal until `src/terminal/` is present) | `terminal:` |
 | `kinds/10-editor.js` | Editor (D21): file and changes views, find, sticky scroll, the minimap scrollbar, Ctrl+P | `file:`, `buffer:` |
 | `kinds/20-browser.js` | Browser with docked DevTools and captures | `browser:`, `link:` |
-| `kinds/22-tools.js` | Output, Problems, Ports, Debug Console | `output:`, `problems`, `ports`, `debug-console:` |
+| `kinds/22-tools.js` | Output (one tab, the channel inside, D31), Problems, Ports, Debug Console (one tab, a sub-tab per debug session, D33) | `output`, `output:`, `problems`, `ports`, `debug-console` |
 | `kinds/30-dashboard.js` | Dashboard (D10 step one: the page's widgets in dashboard tabs) | `dashboard:` |
 | `kinds/40-plan.js` | Plan viewer and Deep Plan discovery | `plan:`, `plan-query`, `deep-discovery:` |
 | `kinds/42-document.js` | Documents: rules, notes, revert, debug, lens, wonderer | `teach:`, `memory:`, `revert:`, `debug:`, `lens-*:`, `wonder*:`, `doc:` |

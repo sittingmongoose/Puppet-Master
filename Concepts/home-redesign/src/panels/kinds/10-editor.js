@@ -14,7 +14,7 @@
      - code that visibly scrolls under the header row's frosted plate (J2), sticky scroll, find and replace, go to
        line, a caret and a selection model, typing with undo, and diff mode (side by side from 900 px, inline below).
    Settings (one model): editor.font.size, editor.lineHeight, editor.minimap, editor.stickyScroll,
-   editor.stickyScroll.maxLines, editor.diff.layout, editor.scheme (D27: 'follow' or a scheme id from the catalog the
+   editor.stickyScroll.maxLines, editor.diff.layout, editor.scheme (D30: 'follow' or a scheme id from the catalog the
    terminal package publishes on window.PMT; see "Code colour schemes" below). No emoji, no pills, no side stripes:
    diff lines are a tinted row plus a sign glyph. */
 
@@ -58,7 +58,7 @@ try {
   PM_HOME.settings.register('editor', {
     'stickyScroll.maxLines': { type: 'number', min: 1, max: 5, label: 'Sticky scroll lines' },
     'diff.sideBySideMin': { type: 'number', min: 600, max: 1600, label: 'Side by side from (px)' },
-    'scheme': { type: 'string', label: 'Code colours', detail: "'follow' keeps the look's colours (D21); otherwise a scheme id from the shared catalog (D27)" }
+    'scheme': { type: 'string', label: 'Code colours', detail: "'follow' keeps the look's colours (D21); otherwise a scheme id from the shared catalog (D30)" }
   }, { 'stickyScroll.maxLines': 3, 'diff.sideBySideMin': 900, 'scheme': 'follow' });
 } catch (_) {}
 function setting(key, dflt) {
@@ -812,7 +812,7 @@ function paintTokens(el, text, toks, words) {
 }
 
 /* ======================================================================================================== */
-/* Code colour schemes (D27, CONTRACT 10.1): one catalog shared with the terminal, published by the terminal        */
+/* Code colour schemes (D30, CONTRACT 10.1): one catalog shared with the terminal, published by the terminal        */
 /* package on window.PMT. Everything here is feature-detected: in a build without src/terminal the editor keeps    */
 /* Follow look, Retro dark stays green and the Appearance row is absent.                                           */
 /* ======================================================================================================== */
@@ -1112,7 +1112,7 @@ function mountEditor(host, st, api) {
         run: function () { PM_HOME.settings.set('editor.minimap', !setting('editor.minimap', true)); } });
       rows.push({ id: 'sticky', label: 'Sticky scroll', detail: 'Keep the enclosing lines in view', checked: !!setting('editor.stickyScroll', true),
         run: function () { PM_HOME.settings.set('editor.stickyScroll', !setting('editor.stickyScroll', true)); } });
-      // D27: the one Appearance popover, shared with the terminal; absent when the terminal package is not in the build
+      // D30: the one Appearance popover, shared with the terminal; absent when the terminal package is not in the build
       if (edPopover()) rows.push({ id: 'appearance', label: 'Appearance...', icon: 'edPalette', detail: schemeName(setting('editor.scheme', 'follow')) + ' · font and size',
         run: function () { setTimeout(function () { openAppearance(hrow.action('more') || head); }, 0); } });
       if (isEditable() && isDirty()) { rows.push('-'); rows.push({ id: 'save', label: 'Save', icon: 'check', shortcut: 'Ctrl+S', run: function () { save(); } }); }
@@ -1150,7 +1150,7 @@ function mountEditor(host, st, api) {
     ]));
   }
 
-  /* ==== code colour scheme (D27): written on the code elements only, so the header row and popovers keep the look ==== */
+  /* ==== code colour scheme (D30): written on the code elements only, so the header row and popovers keep the look ==== */
   var codeEls = [scroller, sticky, track, hbar];
   var schemeOn = null;
   function applyScheme() {
@@ -2986,7 +2986,7 @@ function setup() {
     FILES[f.p] = { lines: lines, base: base, conflicts: conflicts };
   });
   CHAT_CHANGES.forEach(function (c) { CHAT[c.path] = c; });
-  // the Appearance row's mark (D27): a painter's palette in the 16 px stroke grammar
+  // the Appearance row's mark (D30): a painter's palette in the 16 px stroke grammar
   try { PMW.registerIcon('edPalette', 'M8 2.2a5.8 5.8 0 1 0 0 11.6c1 0 1.4-.7 1.1-1.5-.3-.8.3-1.6 1.1-1.6h1.6a2.2 2.2 0 0 0 2.2-2.2C14 5 11.3 2.2 8 2.2zM5 8.3h.01M6.4 5.3h.01M9.7 5.1h.01', '*'); } catch (_) {}
 
   PM_HOME.registerKind('editor', {

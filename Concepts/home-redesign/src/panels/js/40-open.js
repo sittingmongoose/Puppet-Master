@@ -22,8 +22,15 @@ function normalizeSpec(spec) {
 }
 
 /* The stable id for a spec: given, or the kind's idFor, or a default per kind. */
-/* one tab per canonical id: a kind may map aliases (plan-query -> plan:ap-index, collab-run:X -> room:X) */
+/* one tab per canonical id: a kind may map aliases (plan-query -> plan:ap-index, collab-run:X -> room:X). An older id
+   form the kind folds (debug-console:<session>, D33) names its one tab, and the view state it carried rides in the open
+   (fields the open sets itself win), so it reaches the new tab's state or the open tab's reveal */
 function canonicalId(s, id) {
+  var f = PMW.foldId(id, s.kind);
+  if (f) {
+    id = f.id;
+    for (var key in f.state) if (Object.prototype.hasOwnProperty.call(f.state, key) && s[key] === undefined) s[key] = f.state[key];
+  }
   var k = kindDef(s.kind);
   if (k && typeof k.canonical === 'function') {
     try { var c = k.canonical(id, s); if (c) return c; } catch (_) {}
@@ -41,10 +48,10 @@ function idForSpec(s) {
     bufferSeq += 1;
     return 'buffer:' + Date.now().toString(36) + bufferSeq;
   }
-  // the Output kind's idFor picks 'output' or a split-off 'output:<channel>' (D28); without the kind it is the one tab
-  if (s.kind === 'problems' || s.kind === 'ports' || s.kind === 'output') return s.kind;
+  // the Output kind's idFor picks 'output' or a split-off 'output:<channel>' (D31); without the kind it is the one tab,
+  // as the Debug Console is one tab with its session inside (D33)
+  if (s.kind === 'problems' || s.kind === 'ports' || s.kind === 'output' || s.kind === 'debug-console') return s.kind;
   if (s.kind === 'dashboard') return 'dashboard:' + (s.board || ('board-' + Date.now().toString(36)));
-  if (s.kind === 'debug-console') return 'debug-console:' + (s.session || 'main');
   if (s.kind === 'browser') { bufferSeq += 1; return 'browser:' + Date.now().toString(36) + bufferSeq; }
   bufferSeq += 1;
   return s.kind + ':' + Date.now().toString(36) + bufferSeq;
@@ -239,7 +246,12 @@ PMW.openAs = openAs;
 
 PM_HOME.openFile = function (path, o) { return PM_HOME.open(Object.assign({ kind: 'editor', path: path }, o || {})); };
 PM_HOME.reveal = function (id) {
-  if (!state.layout.tabs[id]) return { ok: false, reason: 'not_open' };
+  if (!state.layout.tabs[id]) {
+    // an older id of a tab that is open now (debug-console:<session>): reveal that tab with the old id's view state
+    var f = PMW.foldId(id);
+    if (f && state.layout.tabs[f.id]) { var r = PM_HOME.open({ id: id }); return r.ok ? { ok: true, tabId: r.tabId } : r; }
+    return { ok: false, reason: 'not_open' };
+  }
   PMW.activateTab(id, { focus: true, reason: 'reveal' });
   return { ok: true, tabId: id };
 };

@@ -71,12 +71,14 @@ var ICON_PATHS = {
   widget: 'M2.5 2.5h11v11h-11zM2.5 6.5h11M6.5 6.5v7',
   eye: 'M1.8 8S4 3.8 8 3.8 14.2 8 14.2 8 12 12.2 8 12.2 1.8 8 1.8 8zM8 6.3a1.7 1.7 0 1 0 0 3.4 1.7 1.7 0 0 0 0-3.4z',
   rename: 'M3 12.5h2l7-7-2-2-7 7zM9 4.5l2 2',
-  target: 'M8 2.5v2M8 11.5v2M2.5 8h2M11.5 8h2M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z'
+  target: 'M8 2.5v2M8 11.5v2M2.5 8h2M11.5 8h2M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z',
+  // a host reached over SSH (the "+" menu's SSH hosts row, D39): two stacked units, each with its light
+  remote: 'M2.5 3h11v4h-11zM2.5 9h11v4h-11zM5 5h.1M5 11h.1M8 5h3.5M8 11h3.5'
 };
 var DOT_ICONS = { more: 1, moreH: 1 };
 var RETRO_GLYPH = {
   terminal: '>_', browser: '@', file: '#', code: '#', dashboard: '::', plan: '=', document: '¶', artifact: '%',
-  run: '&', transcript: '"', context: 'o', record: '$', output: '|', problems: '!', ports: ':', debug: '*', console: '>'
+  run: '&', transcript: '"', context: 'o', record: '$', output: '|', problems: '!', ports: ':', debug: '*', console: '>', remote: '//'
 };
 
 function icon(name, opts) {

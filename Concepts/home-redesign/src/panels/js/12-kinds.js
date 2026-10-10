@@ -42,13 +42,71 @@ PM_HOME.kindOf = function (tabId) {
   if (!tabId) return null;
   if (PMW.state && PMW.state.layout && PMW.state.layout.tabs[tabId]) return PMW.state.layout.tabs[tabId].kind;
   for (var i = 0; i < PREFIXES.length; i++) if (tabId.indexOf(PREFIXES[i].prefix) === 0) return PREFIXES[i].kind;
-  // the one-per-workspace ids, before (or without) their kind's registration: the Output tab is 'output' (D28)
-  if (tabId === 'problems' || tabId === 'ports' || tabId === 'output') return tabId;
+  // the one-per-workspace ids, before (or without) their kind's registration: the Output tab is 'output' (D31) and the
+  // Debug Console tab is 'debug-console' (D33)
+  if (tabId === 'problems' || tabId === 'ports' || tabId === 'output' || tabId === 'debug-console') return tabId;
   return null;
 };
 PM_HOME.kinds = function () { return Object.keys(KINDS); };
 function kindDef(id) { return KINDS[id] || null; }
 PMW.kindDef = kindDef;
+/* fold(id) -> { id, state } | null (CONTRACT section 3): an older id form a kind folds into one tab, with the view
+   state the old id carried (debug-console:<session> -> debug-console with { session }, D33). PMW.foldId asks the kind
+   that owns the id. PMW.foldLayout(l) folds a whole layout in place and says whether it changed anything: the open
+   tabs (the folded tab takes the place of the first old one and the record of the one used most recently; normalize
+   drops the rest), the view's recent list and the reopen list (an entry whose tab is open is spent, as for any tab).
+   Opens (40-open.js), every commit (02-commands.js: named layouts, the reopen list, the tour's snapshots, a project
+   switch) and the layout loaded at boot (90-boot.js) pass through it, so an old id never becomes a tab of its own. */
+PMW.foldId = function (id, kind) {
+  if (typeof id !== 'string' || !id) return null;
+  var k = KINDS[kind || PM_HOME.kindOf(id)];
+  if (!k || typeof k.fold !== 'function') return null;
+  var f = null;
+  try { f = k.fold(id); } catch (err) { try { console.error('[pm-home] fold failed for ' + k.id, err); } catch (_) {} }
+  if (!f || typeof f.id !== 'string' || !f.id || f.id === id) return null;
+  return { id: f.id, state: f.state && typeof f.state === 'object' ? f.state : {} };
+};
+function foldedRecord(rec, f) {
+  // the label and title a kind pushed belong to the old tab: the folded tab's kind pushes its own once it mounts
+  return Object.assign({}, rec, { id: f.id, label: null, title: null, state: Object.assign({}, rec.state || {}, f.state) });
+}
+PMW.foldLayout = function (l) {
+  if (!l || !l.tabs) return false;
+  var map = {}, olds = [];
+  Object.keys(l.tabs).forEach(function (id) { var f = PMW.foldId(id, l.tabs[id] && l.tabs[id].kind); if (f) { map[id] = f; olds.push(id); } });
+  var changed = olds.length > 0;
+  if (changed) {
+    var mru = (l.view && l.view.mru) || [];
+    var rank = function (id) { var i = mru.indexOf(id); return i < 0 ? Infinity : i; };
+    var keeper = {};   // folded id -> the old id whose record it takes
+    model.walk(l.root, function (n) {
+      if (n.t !== 'panel') return;
+      n.tabs.forEach(function (old) {
+        if (!map[old]) return;
+        var nid = map[old].id, k0 = keeper[nid];
+        if (k0 === undefined || rank(old) < rank(k0)) keeper[nid] = old;
+      });
+    });
+    Object.keys(keeper).forEach(function (nid) { if (!l.tabs[nid]) l.tabs[nid] = foldedRecord(l.tabs[keeper[nid]], map[keeper[nid]]); });
+    model.walk(l.root, function (n) {
+      if (n.t !== 'panel') return;
+      n.tabs = n.tabs.map(function (t) { return map[t] ? map[t].id : t; });
+      if (map[n.active]) n.active = map[n.active].id;
+    });
+    olds.forEach(function (old) { delete l.tabs[old]; });
+    if (l.view && Array.isArray(l.view.mru)) {
+      var seen = {};
+      l.view.mru = l.view.mru.map(function (t) { return map[t] ? map[t].id : t; }).filter(function (t) { if (seen[t]) return false; seen[t] = 1; return true; });
+    }
+  }
+  (l.closed || []).forEach(function (c) {
+    var f = c && c.tab ? PMW.foldId(c.tab.id, c.tab.kind) : null;
+    if (!f) return;
+    c.tab = foldedRecord(c.tab, f);
+    changed = true;
+  });
+  return changed;
+};
 PMW.isDocumentKind = function (id) { var k = KINDS[id]; return k ? !!k.document : !!DOCUMENT_KINDS[id]; };
 PMW.isDedicatedKind = function (id) { var k = KINDS[id]; return k ? !!k.dedicated : !!DEDICATED_DEFAULT[id]; };
 
