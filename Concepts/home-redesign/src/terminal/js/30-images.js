@@ -376,7 +376,8 @@
       var col = this._anchorCol(pl);
       var x = col * W + pl.offX * dpr, y = y0 - (abs - a) * H + pl.offY * dpr;
       var dw, dh;
-      if (pl.fit) {
+      if (pl.stretch) { dw = pl.cols * W; dh = pl.rows * H; }
+      else if (pl.fit) {
         var bw = pl.cols * W - pl.offX * dpr, bh = pl.rows * H - pl.offY * dpr, sc = Math.min(bw / pl.sw, bh / pl.sh);
         dw = pl.sw * sc; dh = pl.sh * sc;
       } else { dw = pl.sw * (W / (m.cellW * dpr)) * dpr; dh = pl.sh * (H / (m.cellH * dpr)) * dpr; }
@@ -631,7 +632,7 @@
     cols = Math.min(cols, buf.cols - buf.cursor.x);
     var anchor = this._cursorAnchor();
     var pl = { image: im, pid: 0, line: anchor.line, col: anchor.col, cols: cols, rows: rows, sx: 0, sy: 0, sw: cv.width, sh: cv.height,
-      offX: 0, offY: 0, z: 0, virtual: false, fit: !!(o.cols || o.rows || o.drawW), parent: null, H: 0, V: 0, masks: null, cuttable: true };
+      offX: 0, offY: 0, z: 0, virtual: false, fit: !!(o.cols || o.rows || o.drawW), stretch: !!o.stretch, parent: null, H: 0, V: 0, masks: null, cuttable: true };
     B.placements.push(pl);
     if (!o.noCursor) {
       /* scroll so the whole image is on screen, cursor on the image's last row (xterm, iTerm2) */

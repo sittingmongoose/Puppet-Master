@@ -92,10 +92,15 @@
     var minC = v.opts.minContrast || 0;
     ctx.save();
     ctx.beginPath(); ctx.rect(0, y0, cols * W, H); ctx.clip();
-    /* 1. default background */
+    /* 1. default background: the screen body paints it (--pmt-bg), so the canvas stays transparent there. That keeps
+       translucent (Glass) backgrounds single-layered and lets glow and effects act on glyphs only. */
     ctx.clearRect(0, y0, cols * W, H);
-    var bgA = th.bgAlpha === undefined ? 1 : th.bgAlpha;
-    if (bgA > 0) { ctx.fillStyle = C.css(reverse ? th.fg : defBg, bgA); ctx.fillRect(0, y0, cols * W, H); }
+    if (reverse) { ctx.fillStyle = C.toHex(th.fg); ctx.fillRect(0, y0, cols * W, H); }
+    else if (v.fx && v.fx.active) {
+      /* the GPU effects see the whole screen (curvature, bezel and scanlines act on the background too) */
+      var bgA = th.bgAlpha === undefined ? 1 : th.bgAlpha;
+      if (bgA > 0) { ctx.fillStyle = C.css(defBg, bgA); ctx.fillRect(0, y0, cols * W, H); }
+    }
     if (!line) { ctx.restore(); return; }
     var images = term.images;
     if (images) images.drawRow(ctx, abs, y0, 'under-bg', v);

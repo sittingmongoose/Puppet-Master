@@ -39,7 +39,9 @@
       gpu = !!this.gl;
       if (this.gl) { var m = v.metrics; if (m) this.gl.resize(v.canvas.width, v.canvas.height, m.dpr); }
     }
+    var wasActive = this.active;
     this.active = !!(wantGL && this.gl);
+    if (wasActive !== this.active) v.renderer.invalidate();
     v.fxCanvas.hidden = !this.active;
     v.canvas.style.opacity = this.active ? '0' : '';
     /* CPU path (or no GL wanted): static fallbacks only */
