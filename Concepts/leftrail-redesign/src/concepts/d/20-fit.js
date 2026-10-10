@@ -165,6 +165,9 @@ function watchFit() {
   if (document.fonts && document.fonts.addEventListener) listen(document.fonts, 'loadingdone', () => { if (D.on) { clearFitCache(); fitSoon(); } });
   /* a tab shows a pane that was hidden (no width) at the last fit, often in another theme's face: fit it once shown */
   listen(document, 'click', e => { if (D.on && e.target && e.target.closest && e.target.closest('[data-tab]') && inPanels(e.target)) fitSoon(); }, true);
+  /* the home layer folds the side panel on narrow windows (css/24-fold.src.css); a width change is caught above, this
+     covers a fold that keeps the width */
+  listen(document, 'pm:rail-fold', () => { if (D.on) { clearFitCache(); fitSoon(); } });
 }
 
 /* Middle truncation for names that are paths or long ids: keep the head and the tail (the file name, the last part of

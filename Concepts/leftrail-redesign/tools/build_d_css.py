@@ -36,7 +36,7 @@ FAM = {
 TAIL = {'': ' ' + PANELS, 'R': '', 'F': ' #panel-files', 'S': ' #panel-source', 'K': ' #panel-docker', 'B': ' #activityBar'}
 HEAD = ('/* Concept D (Polish): today\'s rail, polished. GENERATED from src/concepts/d/css/*.src.css by\n'
         '   tools/build_d_css.py: edit the sources, never this file. Every rule is scoped to html[data-rail-skin="d"] and\n'
-        '   to the three panels it restyles (#panel-files, #panel-source, #panel-docker) plus the activity bar. Written flat\n'
+        '   to what it restyles: the nine rail panels, the bottom Debug tab, the activity bar and the More tray. Written flat\n'
         '   on purpose: the Look settings scaler (text size, animation speed) only rescales top-level rules. */\n')
 
 

@@ -29525,7 +29525,7 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 /* ---- concepts/d/d.css ---- */
 /* Concept D (Polish): today's rail, polished. GENERATED from src/concepts/d/css/*.src.css by
    tools/build_d_css.py: edit the sources, never this file. Every rule is scoped to html[data-rail-skin="d"] and
-   to the three panels it restyles (#panel-files, #panel-source, #panel-docker) plus the activity bar. Written flat
+   to what it restyles: the nine rail panels, the bottom Debug tab, the activity bar and the More tray. Written flat
    on purpose: the Look settings scaler (text size, animation speed) only rescales top-level rules. */
 /* ---- 1. Tokens ------------------------------------------------------------------------------------------------------
    One geometry for the whole rail: an outer radius R for every box that groups (shelves, the tab strip, cards) and an
@@ -29875,6 +29875,43 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 @media (prefers-reduced-motion: reduce) {
   [data-rail-skin="d"] #sidePanelSlot .pm-segtab * { transition: none !important; }
 }
+
+/* ---- narrow windows: the side panel as an overlay ---------------------------------------------------------------------
+   Agreed with the home redesign (2026-10-09, home-redesign-planner): when the centre (window minus rail minus chat) gets
+   narrow, the home layer first eases the side panel to 240 px, then below a 760 px centre folds the rail to its icon
+   bar and opens the side panel as an overlay over the centre (pin restores docking; never saved). It writes
+   data-pm-rail-fold="eased" | "overlay" on #sidePanelSlot (no attribute when docked) and dispatches 'pm:rail-fold'.
+   The home layer positions the overlay and keeps it at least 240 px wide; D's fit follows the width by itself (the
+   ResizeObserver on the slot, 20-fit.js). D only gives the overlay its look: an opaque plate lifted off the page, a
+   hairline edge all round (never a coloured side bar), the family's shadow and the family's entrance. Dormant until
+   the home layer sets the attribute. */
+[data-rail-skin="d"] #sidePanelSlot[data-pm-rail-fold="overlay"] {
+  background: var(--surface);
+  box-shadow: 0 0 0 1px var(--d-line-2), 0 14px 36px rgba(0, 0, 0, .3);
+  animation: d-fold-in 240ms cubic-bezier(.2, .8, .2, 1);
+}
+[data-rail-skin="d"][data-theme^="friendly"] #sidePanelSlot[data-pm-rail-fold="overlay"] {
+  border-radius: 0 var(--d-R) var(--d-R) 0;
+  box-shadow: 0 0 0 1px var(--d-line), 0 18px 44px rgba(0, 0, 0, .26);
+  animation: d-fold-in 420ms cubic-bezier(.34, 1.4, .64, 1);
+}
+/* Glass: the shell's slot already is a frosted box (gradient pane, backdrop blur, rim, shadow, radius, all
+   !important), so the overlay keeps it and only glides in */
+[data-rail-skin="d"][data-theme^="glass"] #sidePanelSlot[data-pm-rail-fold="overlay"] {
+  animation: d-fold-in 480ms cubic-bezier(.16, 1, .3, 1);
+}
+[data-rail-skin="d"][data-theme^="retro"] #sidePanelSlot[data-pm-rail-fold="overlay"] {
+  box-shadow: 0 0 0 1px var(--d-line-2), 6px 6px 0 rgba(0, 0, 0, .35);
+  animation: d-fold-in 198ms steps(6, end);
+}
+[data-rail-skin="d"][data-o55-nier="on"] #sidePanelSlot[data-pm-rail-fold="overlay"] {
+  box-shadow: 0 0 0 1px var(--d-line-2);
+  animation: d-fold-ink 260ms cubic-bezier(.2, .8, .2, 1);
+}
+@keyframes d-fold-in { from { opacity: 0; transform: translateX(-14px); } to { opacity: 1; transform: none; } }
+@keyframes d-fold-ink { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+[data-rail-skin="d"][data-motion="reduced"] #sidePanelSlot[data-pm-rail-fold], [data-rail-skin="d"][data-reduced-motion="1"] #sidePanelSlot[data-pm-rail-fold] { animation: none !important; }
+@media (prefers-reduced-motion: reduce) { [data-rail-skin="d"] #sidePanelSlot[data-pm-rail-fold] { animation: none !important; } }
 
 /* ---- 3. Shelves: the coloured boxes that group the rail -------------------------------------------------------------
    The shelf is the only box. Its head is a band flush with the shelf's top (the shelf clips, so the band always has
@@ -121891,6 +121928,9 @@ function watchFit() {
   if (document.fonts && document.fonts.addEventListener) listen(document.fonts, 'loadingdone', () => { if (D.on) { clearFitCache(); fitSoon(); } });
   /* a tab shows a pane that was hidden (no width) at the last fit, often in another theme's face: fit it once shown */
   listen(document, 'click', e => { if (D.on && e.target && e.target.closest && e.target.closest('[data-tab]') && inPanels(e.target)) fitSoon(); }, true);
+  /* the home layer folds the side panel on narrow windows (css/24-fold.src.css); a width change is caught above, this
+     covers a fold that keeps the width */
+  listen(document, 'pm:rail-fold', () => { if (D.on) { clearFitCache(); fitSoon(); } });
 }
 
 /* Middle truncation for names that are paths or long ids: keep the head and the tail (the file name, the last part of
