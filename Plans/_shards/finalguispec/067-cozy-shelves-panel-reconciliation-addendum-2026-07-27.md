@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L32734-L33415
+Source lines: L32768-L33463
 
-Source SHA256: `4fda7c380979f66f7d2b4aea2bcd243da6ef37306b055648aa27ae58d4d3e771`
+Source SHA256: `30c23bb4de94c31eb7c49350a5304f6aa83ad1a981a00a804aa54278c73464f6`
 
 ---
 
@@ -218,7 +218,10 @@ canonical_text: >-
   basic-light sets the category purple to #9C27B0 and the category amber to #F57C00.
   --accent-primary is reserved for selection state and never doubles as a category color.
   Category tint fills use the fixed tint steps 7%, 11%, 16%, and 20% over the panel base
-  color, precomputed per theme at build time; no runtime color mixing occurs.
+  color, precomputed per theme at build time; no runtime color mixing occurs. Amended
+  2026-10-09 (DL-162): the left rail's shelves take their tints from the roles of F3-618
+  (fill, head band, edge hairline, row hover, open row) at that unit's per-family steps; the
+  --cat-* family, its two override sets and the selection-only rule stand.
 gui_related: true
 gui_classification_reason: This unit defines the visible category color system for panel shelves and its theme overrides.
 split_recommended: false
@@ -406,6 +409,11 @@ canonical_text: >-
   map to bundled SVG icon_id entries; no emoji ever renders. The panel has no file-locks
   section: file-lock semantics are retired, and rows may show declared touch sets and
   file-activity claims only.
+  Amended 2026-10-09 (DL-162): in the rail the lifecycle states draw as F3-619's glyph and word, the same in the row
+  head and in the opened row, with blocked awaiting input shown as needs input (the warning triangle); the blocked
+  question stays readable in the collapsed row and the waiting or elapsed time appears once, in the row head; the
+  economics and lane facts read as plain words and numbers, and model names are plain words, not capsules; the
+  vocabulary, mapping and ordering above are unchanged.
 gui_related: true
 gui_classification_reason: This unit defines the visible Agents panel lifecycle chips, queue and attention presentation, economics, staleness treatment, and icon substitution.
 split_recommended: false
@@ -432,6 +440,7 @@ node_compile_hint:
 source_lineage:
 - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves winning concept; source-lineage-only per Plans/usage-feature.md)"
 - "Plans/orchestrator-subagent-integration.md (OSI-175, OSI-190, OSI-425..OSI-432 registry-mirror and tracking canon)"
+- "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
 preserved_exact_tokens:
 - "queued"
 - "running"
@@ -591,7 +600,10 @@ canonical_text: >-
   status pill may keep its longer form; width tiers (min/mid/wide) remain layout-chrome
   signals only (padding, owner hide, generic icon-only tab chrome) and never decide
   label truncation; the Slint realization selects among precomputed label variants by
-  measured available width. (4) ONE-SHOT PANEL ENTER + ABRUPT-ONLY REMEASURE - the
+  measured available width. Amended 2026-10-09 (DL-162): in the left rail the ladder has no
+  abbreviated form and no label is shortened; F3-620 owns rail fitting (every tab label, then
+  the active tab's label with icons for the rest, then icons only, and names that stack or
+  lose their middle). (4) ONE-SHOT PANEL ENTER + ABRUPT-ONLY REMEASURE - the
   panel enter animation applies once on activation and is removed on completion (never
   a persistent animation on the active view, which restarts on style invalidation and
   reads as a black flash), and expanded-accordion height remeasure runs only on abrupt
@@ -621,6 +633,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Concepts/ChatGuiUpdates2.md section 'Cozy Shelves rail concepts (2026-07-27)' (fix-wave change ledger; source-lineage-only)"
+- "Plans/Decision_Log.md#DL-162 (owner decision, 2026-10-09; amends (3) for the left rail)"
 - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (source-lineage-only)"
 - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (source-lineage-only)"
 preserved_exact_tokens:
@@ -632,8 +645,9 @@ compatibility_only_notes:
 - "Slint portability: popup layering via PopupWindow; label variants precomputed and chosen by measured width; enter animation is a one-shot property animation; no arbitrary-content backdrop blur, no SVG filters, precomputed color math."
 stale_retired_dispositions:
 - "Hardcoded px-breakpoint label swapping in earlier concept revisions is retired lineage; measure-based fitting supersedes it."
+- "The abbreviated step of the (3) fit ladder is retired for the left rail on 2026-10-09 (DL-162); F3-620 owns rail label fitting."
 owner_boundary_notes:
-- "F3-472 owns expander anatomy; F3-473 owns the motion map; this unit owns popup layering, chevron uniqueness, label-fit policy, and enter/remeasure timing."
+- "F3-472 owns expander anatomy; F3-473 owns the motion map; this unit owns popup layering, chevron uniqueness, label-fit policy, and enter/remeasure timing; in the left rail F3-620 owns label fitting and F3-619 replaces pill, banner-status and chip capsules with a glyph and a word."
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```

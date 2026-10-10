@@ -2315,6 +2315,9 @@ canonical_text: >-
   recovery/disclosure provenance link required by the Case L consumer contract. The health dot never uses
   --accent-primary, which stays reserved for selection (user decision 2026-07-27); category shelf tinting
   is a separate --cat-* per-theme indirection concern and does not encode health or freshness.
+  Amended 2026-10-09 (DL-162): in the left rail the health dot is drawn as FinalGUISpec F3-619's status glyph
+  with its word, and the staleness chip as a glyph and a word with no capsule; the two channels, the nine
+  distinguishable combinations and the selection-only accent are unchanged.
 gui_related: true
 gui_classification_reason: Defines the visible badge/chip treatment for artifact projection trust states.
 depends_on: [RAP-045]
@@ -2341,6 +2344,7 @@ source_lineage:
   - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (source-lineage-only)"
   - "user decision 2026-07-27"
   - "Plans/Runtime_Artifacts_Panel.md:2037-2042"
+  - "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; glyph and word in place of dot and chip, FinalGUISpec F3-619)"
 preserved_exact_tokens:
   - projection_freshness
   - projection_health
@@ -2370,6 +2374,8 @@ canonical_text: >-
   snapshot; root_mismatch, root_unavailable, fallback_diverged, viewer/blocked, and
   unprovable-snapshot conditions keep the RAP-047 owner posture and never render as an apparently
   empty artifact list.
+  Amended 2026-10-09 (DL-162): in the rail the clear-filter chip is a quiet button (FinalGUISpec F3-618, F3-619)
+  with the same action.
 gui_related: true
 gui_classification_reason: Empty, filtered-empty, and blocked-empty renderings are user-visible panel states.
 depends_on: [RAP-026, RAP-047]
@@ -2396,6 +2402,7 @@ source_lineage:
   - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (source-lineage-only)"
   - "user decision 2026-07-27"
   - "Plans/Runtime_Artifacts_Panel.md:2056"
+  - "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
 negative_constraints:
   - Do not render storage-access or continuity failures as an empty artifact list.
   - Do not let the empty-state CTA execute runs from the panel.
@@ -2423,6 +2430,11 @@ canonical_text: >-
   line and pin action, a copyable canonical artifact id, and truncation_state for any excerpted content.
   Investigation-bundle groups collapse with same-kind grouping and per-kind count badges, remaining the
   RAP-013 index/navigation layer over canonical artifact records rather than a new family.
+  Amended 2026-10-09 (DL-162): in the rail the collapsed receipt row shows the label across line 1 and the family
+  word, age and state on line 2, the family word at every width (the width tiers gate chrome only, F3-498); when the
+  state does not fit beside them it moves to a third line instead of being cut; the per-kind count badges are plain
+  counts, spelled with their words (15 records, 2 runs, 6 days), and the investigation steps read as a word and a
+  line of detail (F3-619, F3-620).
 gui_related: true
 gui_classification_reason: Row anatomy, expansion behavior, and grouped-bundle presentation are visible panel structure.
 depends_on: [RAP-008, RAP-013, RAP-041, RAP-042]
@@ -2450,6 +2462,7 @@ source_lineage:
   - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (source-lineage-only)"
   - "user decision 2026-07-27"
   - "Plans/Runtime_Artifacts_Panel.md:193-260"
+  - "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
 preserved_exact_tokens:
   - blocked_reason_code
   - "allowed_action_ids[]"

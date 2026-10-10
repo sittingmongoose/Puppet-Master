@@ -664,6 +664,21 @@ def expected_inventory() -> tuple[dict[str, tuple[str, str, str]], list[str]]:
     expected_system_locals = set().union(*local_profiles.values())
     for profile, actions in local_profiles.items():
         add(profile, "ui_action", actions)
+    # DL-153 (lead rulings R2, R4): the NieR Mode editor's open, close and replay and the sound
+    # library's look filter and takes disclosure are Settings-owned typed local presentation
+    # actions under the same profile. Their owners are SSYS-043 and F3-599 and their concept is
+    # the opus-5.5 package, not the PMConcept7 systems source, so they skip the check below.
+    add(
+        "TCP-SET-LOCAL",
+        "ui_action",
+        {
+            "ui.settings.nier_editor.open",
+            "ui.settings.nier_editor.close",
+            "ui.settings.nier_editor.replay",
+            "ui.settings.sound_library.look.select",
+            "ui.settings.sound_library.takes.toggle",
+        },
+    )
     missing_source_locals = expected_system_locals - system_locals
     if missing_source_locals:
         raise ValueError(f"PMConcept7 system local actions missing from authored source: {sorted(missing_source_locals)}")
@@ -1872,8 +1887,13 @@ def verify() -> tuple[list[str], dict[str, Any]]:
     # 2026-10-09 Settings route-only resume action (SSYS-019, UIW-014, CS-069): one
     # partial TCP-SET-ROUTE ui_action row, TOUCH-SET-016 (675 -> 676); no profile,
     # exclusion, alias, production-intent entry or native proof is added.
+    # 2026-10-09 DL-153 wiring rulings: +6 partial ui_action rows, TOUCH-ONB-014
+    # (ui.onboarding.choose_look, TCP-ONBOARD from the owner schema enum) and
+    # TOUCH-SETLOC-004..008 (the NieR Mode editor's open/close/replay and the sound
+    # library's look filter and takes toggle, TCP-SET-LOCAL) (676 -> 682). No profile,
+    # production row, exclusion, alias, handler or proof is added.
     exact_resolved_denominators = {
-        "row_count": 676,
+        "row_count": 682,
         # ATS-048 / RAP-056 split seven existing consumers out of capture's
         # ten-ID schema. No row, command, handler or evidence promotion added.
         "profile_count": 135,

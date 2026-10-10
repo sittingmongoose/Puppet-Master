@@ -2,9 +2,9 @@
 
 Source: `Plans/GitHub_Integration.md`
 
-Source lines: L2118-L2516
+Source lines: L2119-L2533
 
-Source SHA256: `a128627d85b0eb7cafb591dd7f33e769fcad42a272294631f99c93f272a50e4c`
+Source SHA256: `924201ae5917470118eca679dbf546249dad0cd80de2f7b93d5e7b2fc9ac92ed`
 
 ---
 
@@ -32,6 +32,11 @@ canonical_text: >-
   (non-interactive, expiry date disclosed) rather than failing downloads, and in-progress runs show an
   available-after-completion placeholder instead of an empty strip. This refines the Failure triage view and
   its auto-expand failing-step behavior; log excerpts remain evidence, never canonical product state.
+  Amended 2026-10-09 (DL-162): in the rail a run row shows its name on line 1 and number, ref and age with the state
+  word on line 2, the state moving under them when they do not fit beside it; a failed run's failure line stays
+  visible while the row is closed and wraps rather than being cut; job states draw as FinalGUISpec F3-619's glyphs
+  (passed as done, failed, running as live, queued as pending, skipped as the stopped ring); and counts are spelled
+  out with their words (4 passed · 2 failed · 1 running, the same wording in the banner and the Readiness fact).
 gui_related: true
 gui_classification_reason: Defines the user-visible in-rail run detail depth, expansion, log excerpt, attempts, and artifacts presentation.
 depends_on: []
@@ -57,6 +62,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - 'Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves concept; source-lineage-only)'
+- "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
 preserved_exact_tokens:
 - failure-first compact expansion
 - Previous attempts
@@ -94,6 +100,8 @@ canonical_text: >-
   to an explicit unresolved-dispatch state rather than disappearing. Workflows whose triggers are
   schedule-only expose no dispatch affordance at all - absence of workflow_dispatch renders no disabled
   button and no dispatch form entry point.
+  Amended 2026-10-09 (DL-162): in the rail the dispatch form is a section of its run or workflow row, not a box
+  inside a box, and a disabled Run shows its blocked reason as a line under it.
 gui_related: true
 gui_classification_reason: Defines the user-visible typed dispatch form, submit discipline, and post-dispatch correlation behavior.
 depends_on: []
@@ -119,6 +127,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - 'Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves concept; source-lineage-only)'
+- "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
 preserved_exact_tokens:
 - workflow_dispatch
 - actions_dispatch_input_invalid
@@ -265,7 +274,10 @@ canonical_text: >-
   contract with full logs escalating to the bottom runtime zone, and section stacks reuse the Source Control
   two-level scroll model (expanded sections scroll internally under max-height; the outer stack scrolls when
   combined sections exceed the panel). The Current Branch / Workflows / Settings ownership split is
-  unchanged; this unit governs only their presentation inside the rail.
+  unchanged; this unit governs only their presentation inside the rail. Amended 2026-10-09 (DL-162):
+  segmented-tab labels no longer abbreviate at any tier; they fit as FinalGUISpec F3-620 says (every full
+  label, then the active tab's full label with glyphs for the others, then glyphs only), and each tab keeps
+  its full accessible label.
 gui_related: true
 gui_classification_reason: Defines the user-visible subview navigation and width-tier behavior of the GitHub Actions rail panel.
 depends_on: [GI-020]
@@ -273,7 +285,7 @@ unblocks: []
 acceptance_criteria:
 - The three subviews present as segmented tabs with exactly one active subview; no accordion or drill-in substitute IA.
 - Behavior is specified across the 240-480px envelope with 280px default; nothing depends on widths below 240px outside test-only adversarial checks.
-- Abbreviated or glyph tabs retain full accessible labels.
+- Glyph-only tabs retain full accessible labels, and no tab label is abbreviated (DL-162).
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
@@ -289,6 +301,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - 'Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves concept; source-lineage-only)'
+- 'Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; tab labels fit by FinalGUISpec F3-620, never abbreviated)'
 preserved_exact_tokens:
 - Current Branch
 - Workflows
@@ -319,6 +332,8 @@ canonical_text: >-
   maps to actions_observation_stale (warning, retryable, refresh CTA), and receipts keep the shared
   wait_state_class?, timeout_class?, and observation timestamps from Plans/Contracts_V0.md. Pinned-workflow
   health badges for scheduled workflows follow the same rule and must not go red on staleness alone.
+  Amended 2026-10-09 (DL-162): in the rail the pinned-workflow health badges draw as FinalGUISpec F3-619's glyph and
+  word, stale as the stale clock, never a capsule.
 gui_related: true
 gui_classification_reason: Governs how scheduled-workflow rows and health badges render staleness versus failure.
 depends_on: []
@@ -340,6 +355,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - 'Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves concept; source-lineage-only)'
+- "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
 preserved_exact_tokens:
 - actions_observation_stale
 - wait_state_class?

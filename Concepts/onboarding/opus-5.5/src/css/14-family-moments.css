@@ -1,0 +1,58 @@
+/* ---- The four looks' hero moments (O55.famWindow, src/js/66-family-window.js) ----------------------------------
+   The stage overlay the act card, the wake's rule, curtain, veil or attract screen are drawn in (one SVG in the
+   scene's own units), the transform boxes the troupe and the cards act about, the wake's start states (the stage
+   asleep from the first painted frame), the rail markers and Ready's re-stamp. Everything here is one-shot and is
+   gone, or inert, once a moment has ended; none of it applies while NieR Mode is painted (the family skin never runs
+   then). No filters, blurs, blend modes or masks. */
+.o55fm-layer { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+.o55fm-layer > svg { display: block; width: 100%; height: 100%; }
+/* the troupe acts about its feet; stamps, stars, roses, cores and plates about their centres */
+.o55fm-body, .o55fm-wobble { transform-box: fill-box; transform-origin: 50% 100%; }
+.o55fm-stamp, .o55fm-spin, .o55fm-flare, .o55fm-pop, .o55fm-focus { transform-box: fill-box; transform-origin: 50% 50%; }
+/* Glass's spotlights swell at the rise about the top of their cone */
+.o55fm-swell { transform-box: fill-box; transform-origin: 50% 0%; }
+.o55fm-travel > * { transform-box: view-box; transform-origin: 0 0; }
+/* Friendly's house curtain gathers into the side drapes, each half toward its own edge */
+.o55fm-layer .o55-cur-l { transform-origin: 0% 50%; }
+.o55fm-layer .o55-cur-r { transform-origin: 100% 50%; }
+
+/* Basic's Ready inks its troupe faster when its curtain call plays (A.famCall.inkFast), so the bows start on finished
+   heads; the rest of the drawing inks as always */
+.o55-f-basic.o55fm-inkfast .o55-ens-h .o55-draw { animation-duration: 640ms, 400ms; animation-delay: var(--d, 0ms), calc(var(--d, 0ms) + 380ms); }
+
+/* the wake's start states, written before the first screen is built (open()) and gone when the stage is awake:
+   Friendly's paper troupe lies folded flat behind the closed curtain; Retro's sprites and their strings are not there
+   until they spawn */
+.o55-stage[data-o55fm-wake="friendly"] .o55-ens-h > .o55-in > .o55-am > g { transform-box: fill-box; transform-origin: 50% 100%; transform: scale(1, 0.06); }
+.o55-stage[data-o55fm-wake="retro"] .o55-ens-h > .o55-in > .o55-am > g, .o55-stage[data-o55fm-wake="retro"] .o55-tie { opacity: 0; }
+
+/* the rail walks to the new chapter: Basic a dimension line with its end ticks, Friendly a paper pennant, Glass a
+   light pulse, Retro the cursor block (moved by transform; 66-family-window.js) */
+.o55fm-walk { position: absolute; z-index: 2; pointer-events: none; display: block; }
+.o55fm-walk-basic { height: 1.5px; margin-top: -0.75px; background: color-mix(in srgb, var(--o55-accent) 90%, transparent); transform-origin: 0 50%; }
+.o55fm-walk-basic::before, .o55fm-walk-basic::after { content: ''; position: absolute; top: -4px; width: 1.5px; height: 9.5px; background: color-mix(in srgb, var(--o55-accent) 90%, transparent); }
+.o55fm-walk-basic::before { left: 0; }
+.o55fm-walk-basic::after { right: 0; }
+.o55fm-walk-friendly { width: 2px; height: 17px; margin-left: -1px; border-radius: 1px; background: color-mix(in srgb, var(--text-primary) 60%, transparent); transform-origin: 50% 100%; }
+.o55fm-walk-friendly::before { content: ''; position: absolute; left: 1px; top: -2px; width: 17px; height: 14px; background: var(--text-primary); clip-path: polygon(0 0, 100% 50%, 0 100%); }
+.o55fm-walk-friendly::after { content: ''; position: absolute; left: 2px; top: 0; width: 13px; height: 10px; background: var(--o55-accent); clip-path: polygon(0 0, 100% 50%, 0 100%); }
+.o55fm-walk-glass { width: 24px; height: 24px; margin-left: -12px; margin-top: -6px; border-radius: 50%;
+  background: radial-gradient(circle, #fff 0 16%, color-mix(in srgb, var(--o55-accent) 75%, transparent) 30%, color-mix(in srgb, var(--accent-magenta) 30%, transparent) 50%, transparent 70%); }
+.o55fm-walk-retro { width: 10px; height: 10px; background: var(--o55-accent); }
+
+/* Ready: every finished chapter re-stamps, left to right (--o55fm-d), in the family's way */
+.o55-railitem.o55fm-restamp .o55-railnode { animation: o55fm-rs 300ms cubic-bezier(0.2, 0, 0, 1) var(--o55fm-d, 0ms) both; }
+#pm-o55-onboarding[data-family="friendly"] .o55-railitem.o55fm-restamp .o55-railnode { animation: o55fm-rs-friendly 420ms cubic-bezier(0.34, 1.56, 0.64, 1) var(--o55fm-d, 0ms) both; }
+#pm-o55-onboarding[data-family="glass"] .o55-railitem.o55fm-restamp .o55-railnode { animation: o55fm-rs-glass 520ms cubic-bezier(0.05, 0.7, 0.1, 1) var(--o55fm-d, 0ms) both; }
+#pm-o55-onboarding[data-family="retro"] .o55-railitem.o55fm-restamp .o55-railnode { animation: o55fm-rs-retro 360ms steps(1, end) var(--o55fm-d, 0ms) both; }
+@keyframes o55fm-rs { 0% { transform: scale(1); } 35% { transform: scale(1.7); } 100% { transform: scale(1); } }
+@keyframes o55fm-rs-friendly { 0% { transform: scale(1); } 40% { transform: scale(1.6); } 100% { transform: scale(1); } }
+@keyframes o55fm-rs-glass { 0% { transform: scale(1); } 30% { transform: scale(1.55); } 100% { transform: scale(1); } }
+@keyframes o55fm-rs-retro { 0% { opacity: 1; } 25% { opacity: 0.15; } 50% { opacity: 1; } 75% { opacity: 0.15; } 100% { opacity: 1; } }
+/* Retro's Ready arrow blinks between the accent and nothing; held still (shown) wherever the drawings' small loops are */
+.o55fm-blink { animation: o55fm-blink 1.1s steps(1, end) infinite; }
+@keyframes o55fm-blink { 0%, 62% { opacity: 1; } 63%, 100% { opacity: 0; } }
+.o55-scene-wrap:is(.o55-scene-held, .o55-scene-waiting) .o55fm-blink, .o55-still .o55fm-blink, [data-o55-ambient="off"] .o55fm-blink,
+html[data-o55-lowres] .o55fm-blink, html[data-motion="reduced"] .o55fm-blink { animation: none; }
+html[data-motion="reduced"] .o55fm-layer, html[data-motion="reduced"] .o55fm-walk { display: none; }
+@media (prefers-reduced-motion: reduce) { .o55fm-layer, .o55fm-walk { display: none; } .o55fm-blink { animation: none; } }

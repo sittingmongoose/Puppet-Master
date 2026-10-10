@@ -83,7 +83,7 @@ This section reconciles GitHub integration consumer semantics with the canonical
 
 ### Source Control and GitHub Actions surface split
 
-GitHub Integration owns two distinct user-facing surfaces. **Source Control** is the Git-first repo/worktree surface for `Changes`, `History`, `Graph`, `Worktrees`, `Branches / Stash`, review/compare, conflicts, worktree-native recovery, and `/safe` local repo actions. **GitHub Actions** is the GitHub-hosted workflow/admin/runtime surface for workflow runs, logs, dispatch, workflow files, and repository Actions settings. The legacy `Git (GitHub)` wording is a migration alias only and must not collapse hosted Actions behavior back into Source Control.
+GitHub Integration owns two distinct user-facing surfaces. **Source Control** is the Git-first repo/worktree surface for `Changes`, `History`, `Graph`, `Worktrees`, `Branches / Stash`, review/compare, conflicts, worktree-native recovery, and `/safe` local repo actions. **GitHub Actions** is the GitHub-hosted workflow/admin/runtime surface for workflow runs, logs, dispatch, workflow files, and repository Actions settings. The legacy `Git (GitHub)` wording is a migration alias only and must not collapse hosted Actions behavior back into Source Control. (Amended 2026-10-09, DL-163: the Source Control section set per engine is owned by `Plans/Source_Control_System.md#SCS-005`; in the left rail Git shows `Changes`, `Worktrees`, `History` with its graph and `Branches` with its stashes, and Jujutsu its own five views, as `Plans/FinalGUISpec.md#F3-623` says.)
 
 Four GitHub-adjacent concepts stay separate. `GitHub Copilot` is a provider capability and is out of scope as a user-facing GitHub Integration GUI surface for this research pass. `GitHub API` is internal integration plumbing for GitHub-hosted features, not a visible GUI panel. `GitHub Actions` is the user-facing hosted workflow surface and may use the GitHub Actions VS Code extension as a functional parity baseline without copying its visual design. `Source Control` is the user-facing repo-control surface and may use VS Code Source Control as a functional parity baseline without copying its visual design.
 
@@ -348,7 +348,7 @@ plan_unit_id: GI-004
 unit_type: requirement
 status: accepted
 owner_doc: Plans/GitHub_Integration.md
-canonical_text: Source Control exposes Changes, History, Graph, Worktrees, Branches/Stash, diff preview, staging, commit, sync, stash, branch, incoming/outgoing, conflict, and multi-SCM provider behavior; accordion headers are accessible buttons and compare defaults are deterministic by origin.
+canonical_text: Source Control exposes Changes, History, Graph, Worktrees, Branches/Stash, diff preview, staging, commit, sync, stash, branch, incoming/outgoing, conflict, and multi-SCM provider behavior; accordion headers are accessible buttons and compare defaults are deterministic by origin. Amended 2026-10-09 by DL-163, this is the Git view's section list; the section set per engine is owned by Plans/Source_Control_System.md SCS-005, and the left rail shows each engine's sections as its own tab strip (FinalGUISpec F3-623), Jujutsu with no staging or stash.
 gui_related: true
 gui_classification_reason: This unit defines user-visible Source Control, GitHub Actions, readiness, workflow, routing, or remote-disclosure behavior.
 split_recommended: true
@@ -372,6 +372,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_Integration-S0008
+- Plans/Decision_Log.md#DL-163 (2026-10-09; section set per engine owned by SCS-005, rail tabs per F3-623)
 preserved_exact_tokens:
 - Changes
 - History
@@ -2139,6 +2140,11 @@ canonical_text: >-
   (non-interactive, expiry date disclosed) rather than failing downloads, and in-progress runs show an
   available-after-completion placeholder instead of an empty strip. This refines the Failure triage view and
   its auto-expand failing-step behavior; log excerpts remain evidence, never canonical product state.
+  Amended 2026-10-09 (DL-162): in the rail a run row shows its name on line 1 and number, ref and age with the state
+  word on line 2, the state moving under them when they do not fit beside it; a failed run's failure line stays
+  visible while the row is closed and wraps rather than being cut; job states draw as FinalGUISpec F3-619's glyphs
+  (passed as done, failed, running as live, queued as pending, skipped as the stopped ring); and counts are spelled
+  out with their words (4 passed · 2 failed · 1 running, the same wording in the banner and the Readiness fact).
 gui_related: true
 gui_classification_reason: Defines the user-visible in-rail run detail depth, expansion, log excerpt, attempts, and artifacts presentation.
 depends_on: []
@@ -2164,6 +2170,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - 'Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves concept; source-lineage-only)'
+- "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
 preserved_exact_tokens:
 - failure-first compact expansion
 - Previous attempts
@@ -2201,6 +2208,8 @@ canonical_text: >-
   to an explicit unresolved-dispatch state rather than disappearing. Workflows whose triggers are
   schedule-only expose no dispatch affordance at all - absence of workflow_dispatch renders no disabled
   button and no dispatch form entry point.
+  Amended 2026-10-09 (DL-162): in the rail the dispatch form is a section of its run or workflow row, not a box
+  inside a box, and a disabled Run shows its blocked reason as a line under it.
 gui_related: true
 gui_classification_reason: Defines the user-visible typed dispatch form, submit discipline, and post-dispatch correlation behavior.
 depends_on: []
@@ -2226,6 +2235,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - 'Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves concept; source-lineage-only)'
+- "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
 preserved_exact_tokens:
 - workflow_dispatch
 - actions_dispatch_input_invalid
@@ -2372,7 +2382,10 @@ canonical_text: >-
   contract with full logs escalating to the bottom runtime zone, and section stacks reuse the Source Control
   two-level scroll model (expanded sections scroll internally under max-height; the outer stack scrolls when
   combined sections exceed the panel). The Current Branch / Workflows / Settings ownership split is
-  unchanged; this unit governs only their presentation inside the rail.
+  unchanged; this unit governs only their presentation inside the rail. Amended 2026-10-09 (DL-162):
+  segmented-tab labels no longer abbreviate at any tier; they fit as FinalGUISpec F3-620 says (every full
+  label, then the active tab's full label with glyphs for the others, then glyphs only), and each tab keeps
+  its full accessible label.
 gui_related: true
 gui_classification_reason: Defines the user-visible subview navigation and width-tier behavior of the GitHub Actions rail panel.
 depends_on: [GI-020]
@@ -2380,7 +2393,7 @@ unblocks: []
 acceptance_criteria:
 - The three subviews present as segmented tabs with exactly one active subview; no accordion or drill-in substitute IA.
 - Behavior is specified across the 240-480px envelope with 280px default; nothing depends on widths below 240px outside test-only adversarial checks.
-- Abbreviated or glyph tabs retain full accessible labels.
+- Glyph-only tabs retain full accessible labels, and no tab label is abbreviated (DL-162).
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
@@ -2396,6 +2409,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - 'Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves concept; source-lineage-only)'
+- 'Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; tab labels fit by FinalGUISpec F3-620, never abbreviated)'
 preserved_exact_tokens:
 - Current Branch
 - Workflows
@@ -2426,6 +2440,8 @@ canonical_text: >-
   maps to actions_observation_stale (warning, retryable, refresh CTA), and receipts keep the shared
   wait_state_class?, timeout_class?, and observation timestamps from Plans/Contracts_V0.md. Pinned-workflow
   health badges for scheduled workflows follow the same rule and must not go red on staleness alone.
+  Amended 2026-10-09 (DL-162): in the rail the pinned-workflow health badges draw as FinalGUISpec F3-619's glyph and
+  word, stale as the stale clock, never a capsule.
 gui_related: true
 gui_classification_reason: Governs how scheduled-workflow rows and health badges render staleness versus failure.
 depends_on: []
@@ -2447,6 +2463,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - 'Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves concept; source-lineage-only)'
+- "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
 preserved_exact_tokens:
 - actions_observation_stale
 - wait_state_class?

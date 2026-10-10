@@ -3511,7 +3511,11 @@
             "owner_route_preview",
             "automatic_preparation",
             "choose_first_project",
-            "finish"
+            "finish",
+            "choose_look",
+            "preview_nier",
+            "toggle_look_menu",
+            "toggle_look_editor"
           ]
         },
         "review_confirmation": {
@@ -3650,6 +3654,133 @@
           "oneOf": [
             {
               "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/onboarding_project_setup_binding"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "look_choice": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/onboarding_look_choice"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "onboarding_look_choice": {
+      "title": "OnboardingLookChoice",
+      "description": "The closed look one ui.onboarding.choose_look request previews inside the onboarding window (DL-153): the theme family and Light/Dark mode for intent choose_look, or NieR Mode's three Settings rows (Settings_System SSYS-043) by their canonical inventory labels for intent preview_nier. Only the fields the intent changes are non-null; a NieR preset is one value of nier_parts. It is a preview written with the Project at commit (FinalGUISpec F3-520), never a Settings transaction or a cmd.theme.* dispatch.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "theme_family",
+        "theme_mode",
+        "nier_mode",
+        "nier_parts",
+        "nier_background"
+      ],
+      "properties": {
+        "theme_family": {
+          "oneOf": [
+            {
+              "enum": [
+                "friendly",
+                "glass",
+                "retro",
+                "basic"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "theme_mode": {
+          "oneOf": [
+            {
+              "enum": [
+                "light",
+                "dark"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "nier_mode": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "nier_parts": {
+          "oneOf": [
+            {
+              "type": "array",
+              "uniqueItems": true,
+              "maxItems": 29,
+              "items": {
+                "enum": [
+                  "Square hairlines",
+                  "Menu cursor",
+                  "YoRHa headers",
+                  "Parchment ground",
+                  "Target brackets",
+                  "Diamond loaders",
+                  "Reboot moment",
+                  "Slice open",
+                  "Text decode",
+                  "Page wipe",
+                  "Drifting particles",
+                  "Scan sweep",
+                  "Alert glitch",
+                  "Menu sounds",
+                  "Pod voice",
+                  "Pod companion",
+                  "Square pointer",
+                  "Boot sequence",
+                  "Unit readouts",
+                  "Block progress",
+                  "Ink charts",
+                  "Map ticks",
+                  "Machine glyphs",
+                  "Intel tooltips",
+                  "Square icon strokes",
+                  "Pod 042 in Chat",
+                  "Quest banners",
+                  "Ink empty states",
+                  "Save signal"
+                ]
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "nier_background": {
+          "oneOf": [
+            {
+              "enum": [
+                "Parchment",
+                "City Ruins",
+                "The Bunker",
+                "Desert",
+                "Forest Castle",
+                "Amusement Park",
+                "Flooded City",
+                "Follow the page"
+              ]
             },
             {
               "type": "null"
@@ -4177,7 +4308,8 @@
             "ui.onboarding.open_owner_flow",
             "ui.onboarding.run_automatic_preparation",
             "ui.onboarding.choose_first_project",
-            "ui.onboarding.finish"
+            "ui.onboarding.finish",
+            "ui.onboarding.choose_look"
           ]
         },
         "action_instance_id": {
@@ -5474,6 +5606,245 @@
               }
             }
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "not": {
+                  "const": "ui.onboarding.choose_look"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "local_context": {
+                "properties": {
+                  "look_choice": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "const": "ui.onboarding.choose_look"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "choice": {
+                "type": "null"
+              },
+              "owner_route_ref": {
+                "type": "null"
+              },
+              "local_context": {
+                "required": [
+                  "look_choice"
+                ],
+                "properties": {
+                  "intent": {
+                    "enum": [
+                      "choose_look",
+                      "preview_nier",
+                      "toggle_look_menu",
+                      "toggle_look_editor"
+                    ]
+                  },
+                  "scope": {
+                    "type": "null"
+                  },
+                  "branch_kind": {
+                    "type": "null"
+                  },
+                  "branch_step": {
+                    "type": "null"
+                  },
+                  "selection_ref": {
+                    "type": "null"
+                  },
+                  "target_ref": {
+                    "type": "null"
+                  },
+                  "owner_operation_ref": {
+                    "type": "null"
+                  },
+                  "owner_branch_ref": {
+                    "type": "null"
+                  },
+                  "start_tour": {
+                    "type": "null"
+                  },
+                  "recovery_condition": {
+                    "type": "null"
+                  },
+                  "owner_phase": {
+                    "type": "null"
+                  },
+                  "owner_command_id": {
+                    "type": "null"
+                  },
+                  "precommit_authorization_ref": {
+                    "type": "null"
+                  },
+                  "project_commit_ref": {
+                    "type": "null"
+                  },
+                  "setup_commit_binding": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "const": "ui.onboarding.choose_look"
+              },
+              "local_context": {
+                "properties": {
+                  "intent": {
+                    "const": "choose_look"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "local_context": {
+                "properties": {
+                  "expanded": {
+                    "type": "null"
+                  },
+                  "look_choice": {
+                    "type": "object",
+                    "properties": {
+                      "theme_family": {
+                        "type": "string"
+                      },
+                      "theme_mode": {
+                        "type": "string"
+                      },
+                      "nier_mode": {
+                        "type": "null"
+                      },
+                      "nier_parts": {
+                        "type": "null"
+                      },
+                      "nier_background": {
+                        "type": "null"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "const": "ui.onboarding.choose_look"
+              },
+              "local_context": {
+                "properties": {
+                  "intent": {
+                    "const": "preview_nier"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "local_context": {
+                "properties": {
+                  "expanded": {
+                    "type": "null"
+                  },
+                  "look_choice": {
+                    "type": "object",
+                    "properties": {
+                      "theme_family": {
+                        "type": "null"
+                      },
+                      "theme_mode": {
+                        "type": "null"
+                      }
+                    },
+                    "anyOf": [
+                      {
+                        "properties": {
+                          "nier_mode": {
+                            "type": "boolean"
+                          }
+                        }
+                      },
+                      {
+                        "properties": {
+                          "nier_parts": {
+                            "type": "array"
+                          }
+                        }
+                      },
+                      {
+                        "properties": {
+                          "nier_background": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "const": "ui.onboarding.choose_look"
+              },
+              "local_context": {
+                "properties": {
+                  "intent": {
+                    "enum": [
+                      "toggle_look_menu",
+                      "toggle_look_editor"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "local_context": {
+                "properties": {
+                  "expanded": {
+                    "type": "boolean"
+                  },
+                  "look_choice": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          }
         }
       ],
       "x-primary-identity-fields": [
@@ -5530,7 +5901,8 @@
             "ui.onboarding.open_owner_flow",
             "ui.onboarding.run_automatic_preparation",
             "ui.onboarding.choose_first_project",
-            "ui.onboarding.finish"
+            "ui.onboarding.finish",
+            "ui.onboarding.choose_look"
           ]
         },
         "action_instance_id": {
@@ -5579,7 +5951,8 @@
             "owner_flow_opened",
             "automatic_preparation_started",
             "first_project_selected",
-            "finished"
+            "finished",
+            "look_previewed"
           ]
         },
         "onboarding_session_written": {
@@ -6727,6 +7100,95 @@
           },
           "then": {
             "$ref": "#/$defs/same_stage_transition"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "applied"
+              },
+              "action_id": {
+                "const": "ui.onboarding.choose_look"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/same_stage_transition",
+            "properties": {
+              "session_status_after": {
+                "const": "active"
+              },
+              "local_effect": {
+                "enum": [
+                  "look_previewed",
+                  "disclosure_opened",
+                  "disclosure_closed"
+                ]
+              },
+              "owner_route_ref": {
+                "type": "null"
+              },
+              "owner_operation_ref": {
+                "type": "null"
+              },
+              "production_receipt_ref": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "applied"
+              },
+              "action_id": {
+                "const": "ui.onboarding.choose_look"
+              },
+              "local_effect": {
+                "const": "look_previewed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "onboarding_session_written": {
+                "const": true
+              },
+              "continuation_snapshot": {
+                "$ref": "#/$defs/onboarding_continuation_snapshot"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "applied"
+              },
+              "action_id": {
+                "const": "ui.onboarding.choose_look"
+              },
+              "local_effect": {
+                "enum": [
+                  "disclosure_opened",
+                  "disclosure_closed"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "onboarding_session_written": {
+                "const": false
+              },
+              "continuation_snapshot": {
+                "type": "null"
+              }
+            }
           }
         }
       ],

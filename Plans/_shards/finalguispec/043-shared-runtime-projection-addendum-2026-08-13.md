@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5339-L26470
+Source lines: L5341-L26490
 
-Source SHA256: `4fda7c380979f66f7d2b4aea2bcd243da6ef37306b055648aa27ae58d4d3e771`
+Source SHA256: `30c23bb4de94c31eb7c49350a5304f6aa83ad1a981a00a804aa54278c73464f6`
 
 ---
 
@@ -2410,6 +2410,12 @@ canonical_text: >-
   Search is a one-visible-at-a-time side-panel occupant with explicit open-focus behavior,
   user/content search UI, grep-style result rows, replace-in-files, and shared OpenFile path/range
   routing.
+  Amended 2026-10-09 (DL-162): in the rail each result group shows the file name on line 1 and its folder on line 2,
+  each keeping its head and end (F3-620); a hit shows at most two lines and, when it is cut, starts at an ellipsis
+  on a whole word just before the match, and the match is never split across the two lines; the three match options
+  join as one control beside a full-width scope field whose choices read in sentence case (All files, Open files,
+  src/ only); counts read with their words (16 in 6 files, 3 of 16); the footer and the notes say Previous and Next
+  in full; and notes are quiet text, not boxes.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -2434,6 +2440,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0039"
+- "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
 preserved_exact_tokens:
 - "/open-focus"
 - "/user-search"
@@ -2461,6 +2468,10 @@ canonical_text: >-
   Search owns indexing controls for enable/disable, rebuild, large-file threshold default 10 MB,
   generated-file exclusions, follow-symlinks, visible freshness states, cancellation, and remote
   watcher freshness copy without duplicate watcher setup.
+  Amended 2026-10-09 (DL-162): in the rail index freshness shows under the panel title as F3-619's glyph and word
+  with the file count (Indexed · 1,284 files): indexing as running, stale as the stale clock, and unindexed or
+  fallback as a warning. The rebuild strip is one sentence with its action, such as the build progress with Cancel
+  or the changes since a revision with Refresh.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -2485,6 +2496,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0039"
+- "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
 preserved_exact_tokens:
 - "search-owner"
 - "10 MB"
@@ -4364,7 +4376,10 @@ canonical_text: >-
   dropdown when >4 themes are available in it (built-in + custom). Below the family rows, after a divider, one NieR
   Mode row carries a checkbox (menuitemcheckbox), checked while NieR Mode is on, and beside it an Adjust NieR look
   button that opens the NieR Mode editor as a popup dialog (F3-598); toggling keeps the menu open, and NieR Mode
-  is never a family row or a theme variant. In Auto the selected family
+  is never a family row or a theme variant. The segmented control dispatches cmd.theme.set_mode. A family row and
+  the NieR Mode checkbox are ordinary Settings changes that compose cmd.settings.transaction.preview then
+  cmd.settings.transaction.apply over the exact IDs, the family with the current mode as SSYS-009's atomic pair, and
+  Adjust NieR look is the typed local action ui.settings.nier_editor.open (SSYS-043, DL-153). In Auto the selected family
   resolves to its dark or light variant by following the OS appearance (prefers-color-scheme)
   live. Settings > General exposes the theme family + mode controls and theme folder, create,
   import, and export actions.
@@ -4376,6 +4391,7 @@ depends_on: []
 unblocks: []
 acceptance_criteria:
 - "Below the four family rows the menu shows one NieR Mode menuitemcheckbox with an Adjust NieR look button that opens the NieR Mode editor as a popup dialog; NieR Mode never appears as a family row or a ninth variant, and the selector still exposes exactly eight built-in variants."
+- "The segmented control dispatches cmd.theme.set_mode; a family row and the NieR Mode checkbox dispatch cmd.settings.transaction.preview then cmd.settings.transaction.apply with those commands' availability and disabled reasons; Adjust NieR look emits ui.settings.nier_editor.open (DL-153)."
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
@@ -10488,7 +10504,8 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Side panels adapt at 480px+, 360-479px, 280-359px, and 240px minimum widths by reducing
   text, moving footer context to icons or context percent, and placing extras behind an
-  overflow menu with tooltips where needed.
+  overflow menu with tooltips where needed. Amended 2026-10-09 (DL-162): the left rail's
+  panels never reduce or abbreviate text by width; they fit by layout as F3-620 says.
 gui_related: true
 gui_classification_reason: >-
   This unit defines side-panel responsive control density.
@@ -10513,6 +10530,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0131"
+- "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; the left rail never reduces text by width)"
 preserved_exact_tokens:
 - "480px+"
 - "360-479px"
