@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L36014-L36172
+Source lines: L36080-L36245
 
-Source SHA256: `6c5c21f4243da1e3e553ad7a12acfafc3b059a1725e54f0bfd9ebc23790bc07b`
+Source SHA256: `30c23bb4de94c31eb7c49350a5304f6aa83ad1a981a00a804aa54278c73464f6`
 
 ---
 
@@ -27,7 +27,7 @@ canonical_text: >-
   additional live section is retained or explicitly migrated. Git renders Staged/Unstaged, index-aware diff,
   Commit, stash, branches/upstream, and Worktrees. Jujutsu renders Current Change @, description and parent/change
   context, New Change/Edit/Split/Squash/Abandon, bookmarks/tracking, stable change ID plus current commit ID,
-  rewritten/abandoned/conflicted state, local/remote bookmarks, Workspaces, and Operation History; staging and
+  rewritten/abandoned/conflicted state, local/remote bookmarks, Workspaces, and Operation Log; staging and
   stash are hidden, operation restore is previewed and distinct from Backup, and no UI-only action hides a Git
   mutation. Reviews use one common list shell while detail preserves Pull request or Merge request vocabulary,
   native status, source/target refs, author, draft, permissions, threads, checks, and currentness. Publish preview
@@ -56,6 +56,12 @@ canonical_text: >-
   capability/receipt data without another forge/host banner. Bottom/status shows truthful publication, Backup,
   and connector work without routine Synced, secrets, or Backup-as-token-usage. Cross-panel routes preserve exact
   repository, revision, provider artifact, Backup, and initiating Client/Server destination identity.
+  Amended 2026-10-09 (DL-163): the Jujutsu view's operation section is labelled Operation Log, JJI-006's registered
+  string, where this unit said Operation History; the rail presents Jujutsu's five views as its own tab strip
+  (F3-623, F3-624). Edit works on a change chosen in History, not only on @; Discard edits is
+  cmd.jujutsu.change.restore on the current change, back to its parent; the protected state Jujutsu renders is
+  immutable, read from the adapter's immutable set rather than from what was pushed; and rewritten and abandoned
+  show as a change's evolution facts and in operation details.
 gui_related: true
 gui_classification_reason: This unit is the canonical detailed user-visible Source Control and Actions & Pipelines interaction contract.
 depends_on: [F3-528, SCS-015, SCS-016, FGI-014, FGI-015, GAAAF-016, GAAAF-017]
@@ -89,7 +95,8 @@ source_lineage:
   - source_ref:corrected-slice:machine__requirements.json__part-011__lines-002001-002196.txt:142-158
   - source_ref:corrected-slice:machine__panel_sections.json__part-001__lines-000001-000220.txt:1-220
   - source_ref:corrected-slice:machine__panel_sections.json__part-002__lines-000201-000263.txt:201-263
-preserved_exact_tokens: [Staged, Unstaged, Commit, Current Change, New Change, Edit, Split, Squash, Abandon, Operation History, Pull request, Merge request, outcome_unknown, Actions & Pipelines, GitHub Actions, GitLab Pipelines, Azure Pipelines, Bitbucket Pipelines, Forgejo Actions, Gitea Actions, Restore this file, Synced, ui.source_control.profile.preview, ui.repository_automation.binding.select, ui.source_control.backup_history.open, owner_local_typed_ui_controller, backup_history_repository_revision]
+  - Plans/Decision_Log.md#DL-163 (2026-10-09; Operation Log label, Jujutsu tab strip in F3-623 and F3-624)
+preserved_exact_tokens: [Staged, Unstaged, Commit, Current Change, New Change, Edit, Split, Squash, Abandon, Operation Log, Pull request, Merge request, outcome_unknown, Actions & Pipelines, GitHub Actions, GitLab Pipelines, Azure Pipelines, Bitbucket Pipelines, Forgejo Actions, Gitea Actions, Restore this file, Synced, ui.source_control.profile.preview, ui.repository_automation.binding.select, ui.source_control.backup_history.open, owner_local_typed_ui_controller, backup_history_repository_revision]
 negative_constraints:
   - Do not show Git staging/stash in Jujutsu, label Jujutsu edits as unstaged Git, or map a Jujutsu action to hidden Git mutation.
   - Do not infer provider, automation, auth, target, or outcome from remote name, display label, focus, or cached selection.

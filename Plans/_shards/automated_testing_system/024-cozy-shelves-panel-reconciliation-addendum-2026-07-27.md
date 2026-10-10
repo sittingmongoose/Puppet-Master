@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L2734-L3046
+Source lines: L2734-L3049
 
-Source SHA256: `d363f60b140a001b843beb5b61aabfa3999121a3217d95439a6334cdb87e7dcd`
+Source SHA256: `6dafd1db8537fab7df8c76a3003bec2d0b39ba27c6a40e58919b04c3174607b6`
 
 ---
 
@@ -269,7 +269,9 @@ canonical_text: >-
   default never hides flakiness; repeated flaky results feed the cmd.testing.quarantine suggestion flow.
   Cancelled runs render their partial counts plus artifact disposition from the receipt. The panel is a
   projection/consumer only: it cites, never re-owns, the visible-session surface (ATS-009), artifact presentation
-  (Runtime_Artifacts_Panel.md), and the expander contract owner.
+  (Runtime_Artifacts_Panel.md), and the expander contract owner. Amended 2026-10-09 (DL-162): in the rail the n/m attempt
+  badges, states and counts draw as FinalGUISpec F3-619 says, a status glyph with its word and plain numbers, never
+  a capsule; the states and the severity order above are unchanged.
 gui_related: true
 gui_classification_reason: This unit defines the visible Testing panel regions, expander binding, status rendering, and honesty invariants.
 depends_on: [ATS-025, ATS-026, ATS-027, ATS-009]
@@ -302,6 +304,7 @@ source_lineage:
   - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves concept; source-lineage-only)"
   - "Plans/Automated_Testing_System.md (FABLE GUI Result Surfacing 2026-07-08; ATS-009 visible sessions and redaction)"
   - "user decision 2026-07-27 (rail width envelope 240/480/280, 220 test-only)"
+  - "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; glyph and word, plain counts, FinalGUISpec F3-619)"
 preserved_exact_tokens:
   - "run_list"
   - "active_run_detail"

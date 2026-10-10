@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L3550-L12289
+Source lines: L3634-L12504
 
-Source SHA256: `38d55fb5a0b66f1a663a18966c668afbd01a4b5dfdc6ab57c396d24b2208f4bc`
+Source SHA256: `07c9e45a17cbf53fc94e9d79d4f2326b200c9be7d0dbdf526c7dfede2eb9e584`
 
 ---
 
@@ -8747,4 +8747,135 @@ negative_constraints:
   - "Do not add a command, wiring row or setting for the removed button."
 owner_hints:
   - Plans/FinalGUISpec.md
+```
+
+### DL-162 - The Left Rail Takes The Polish Design
+
+```yaml
+plan_unit_id: DL-162
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-162 records the owner decision of 2026-10-09 that the left rail takes concept D, "Polish", of the left-rail
+  review copy. The nine rail panels keep the Cozy Shelves structure and coloured shelf boxes with tighter geometry
+  (a 3 px gutter, a 2 px inset, an outer radius R and an inner radius R minus the inset, row names 24 px from the
+  rail edge), one type ladder with nothing under 11 px, and the looks' own faces (F3-618). Statuses are a glyph
+  whose shape is the state plus a coloured word, counts are plain tabular numbers, and nothing is a pill or carries a
+  coloured side bar (F3-619). Text fits by layout and is never abbreviated, tab strips included (F3-620; F3-480 (3),
+  F3-445, CRAU-098, UCC-136 and GI-039 amended). Every rail dropdown is the chat picker, and motion is per theme family:
+  Basic crisp, Friendly springy, Glass gliding with blur only on the shelf boxes, Retro stepped and NieR Mode ink,
+  under the Animation speed and reduced-motion settings (F3-621). The worktree owner filter becomes an Owner
+  dropdown and the publish and review card folds (F3-622, W-075 amended), with no new command. DR-057 keeps the
+  grammar in one owner. Open owner questions: whether the rail's glyphs and the chat's 13 status marks (F3-585)
+  should be one set, and whether the rail's frosted scroll-under plates fit F3-431's blur budget. Settled later
+  under this decision: the Jujutsu view's tabs (DL-163), the remaining panels and the bottom Debug tab in their
+  owner units with no new command, action or wiring row, the paused, immutable and errored glyphs (F3-619), and the
+  More tray as the chat picker (F3-625).
+gui_related: true
+gui_classification_reason: Records an owner decision on the left rail's presentation.
+split_recommended: false
+depends_on: [F3-472, F3-474, F3-480, F3-445, F3-471]
+unblocks: [F3-618, F3-619, F3-620, F3-621, F3-622, F3-625, DR-057]
+acceptance_criteria:
+  - "The rail's geometry, type, statuses, fitting, dropdowns and motion are owned by F3-618 to F3-622, and the amended consumer units point at them."
+  - "No command, action or wiring row is added by this decision."
+  - "The owner's decision is recorded in plain words with its source hash."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: rail_presentation_drift
+reasoning_tier: high
+context_scope: left_rail_polish
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+  - Plans/Containers_Registry_and_Unraid.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/GitHub_Integration.md
+  - Plans/WorktreeGitImprovement.md
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/FileManager.md
+  - Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md, SHA-256 4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06"
+  - "Concepts/leftrail-redesign/src/concepts/d/ at commit c93e341606 (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-162"
+  - "Polish"
+  - "never abbreviated"
+negative_constraints:
+  - "Do not add a command, an action or a wiring row through this decision."
+  - "Do not reintroduce pills, coloured side bars or abbreviated labels in the left rail."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+```
+
+### DL-163 - The Jujutsu View Of Source Control Gets Its Own Five Tabs
+
+```yaml
+plan_unit_id: DL-163
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-163 records the answer of 2026-10-09 to the owner's question whether the Jujutsu view of Source Control should
+  have tabs, which he left to the left-rail build (DL-162). It does: Jujutsu gets its own strip of five views, one at
+  a time, Changes, Workspaces, History, Bookmarks and Operation Log, in JJI section 4.1's order and JJI-006's
+  registered words, while Git keeps its own Changes, Worktrees, History and Branches strip, hidden in Jujutsu mode;
+  neither strip relabels the other (JJI-001, JJI-006). The first four views share slot positions with Git's, so the
+  presentation-only engine switch (ui.source_control.profile.preview) opens the same slot and Operation Log opens
+  Git's History. Both Source Control strips fit by their longest label, so a strip never changes mode while one
+  clicks through it. Publish and review stays the footer card in both engines, and Jujutsu mode adds Undo and
+  Refresh to the panel head (F3-623). The five views list the current change, workspaces, stacks of changes,
+  bookmarks per remote and operations with existing commands only (F3-624). SCS-005 records the per-engine tab
+  strips, the footer card and the bookmark state axes; F3-529, F3-552, UCC-163 and JJI-008 call the fifth view
+  Operation Log. Open: disabled-reason codes for the concept's local reasons, an update command for an out-of-date
+  workspace, what Undo reverts after an automatic working-copy save, and, for the owner, whether a change's short
+  ID shows on its row and whether to keep "Operation Log".
+gui_related: true
+gui_classification_reason: Records an owner decision on the Jujutsu view of the Source Control rail panel.
+split_recommended: false
+depends_on: [DL-162, JJI-006, SCS-005, F3-529]
+unblocks: [F3-623, F3-624]
+acceptance_criteria:
+  - "The Jujutsu view's strip, views, rows and actions are owned by F3-623 and F3-624, and SCS-005, F3-529, F3-552, UCC-163 and JJI-008 point at them or use their label."
+  - "No command, action, schema value or wiring row is added by this decision."
+  - "The owner's question and the two choices left to him are recorded in plain words with the request's source hash."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: rail_presentation_drift
+reasoning_tier: high
+context_scope: left_rail_polish
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Source_Control_System.md
+  - Plans/Jujutsu_Integration.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/GitHub_Integration.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md, SHA-256 4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06 (issue 2)"
+  - "The left-rail build's Jujutsu tab decision, revision 2 of 2026-10-09, summarised in the DL-163 entry (not a repository file)"
+  - "Concepts/leftrail-redesign/src/concepts/d/ from lane commits 8693996260 and 2f77b78710 (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-163"
+  - "Operation Log"
+  - "ui.source_control.profile.preview"
+negative_constraints:
+  - "Do not add a command, an action, a disabled-reason code or a wiring row through this decision."
+  - "Do not alias Bookmarks to Branches or Workspaces to Worktrees by relabelling one strip for both engines."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/Jujutsu_Integration.md
+  - Plans/Source_Control_System.md
 ```

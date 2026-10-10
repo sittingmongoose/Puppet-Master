@@ -3541,6 +3541,90 @@ SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-plan-card-actions-2026
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-606, ContractName:Plans/FinalGUISpec.md#F3-607, ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-015, ContractName:Plans/DRY_Rules.md#DR-047
 
+### DL-162: The left rail takes the Polish design
+
+**Question:** Which of the left-rail concepts becomes the left rail?
+
+**Why it came up:** Jared found the left rail cramped and hard to read: type as small as 7 px, too much on one line, pills and chips everywhere, and tab labels shortened to fit. On 2026-10-02 he asked for concepts in a review copy, `Concepts/LeftRailPMConcept7.html`, under hard rules: no pills, no boxes with coloured side bars, no emoji, the chat assistant's dropdown style, every theme and NieR Mode, motion that matters and readable type. Four concepts were built: A "Ledger", B "Stack", C "Lens" and, landed on 2026-10-05, D "Polish", next to today's rail as "Current".
+
+**What you get:**
+- Today's panels and their coloured shelf boxes stay; Polish tidies them. Each shelf is one box, its head is a band across its top, a closed shelf is just its head, and rows sit 2 px inside the box with matching rounded corners, so every hover and selection lines up with its box.
+- More room for names on a narrow rail: 3 px from the rail edge to a box, 5 px of padding in a row, 4 px between a chevron, a status mark and the text, and names start 24 px from the edge instead of 31.
+- One readable type ladder: titles 13 px, labels 12 px, names 12.5 px, facts and code 11.5 px, nothing under 11 px; Retro half a pixel smaller because its font runs wide. Text uses each look's own fonts.
+- No pills anywhere. A status is a small mark whose shape is the state (a solid disc with a check for done, a cross for failed, a triangle for a warning, a dot with a halo for something live, an empty ring for stopped, a slowly turning dashed ring for pending, a half-filled circle for changed, a tray for a stash, and a few more) followed by the state in words, in the same colour. Counts are plain numbers in one column.
+- Nothing is abbreviated. A summary that does not fit moves under its label, long names keep their end and lose their middle (`ci-build-…-publish.yml`), a changed file shows its name on the first line and its folder and changes on the second, and tabs show every label when they fit, then only the open tab's label, then icons, each with its full name on hover.
+- Every dropdown in the rail opens like the chat's model and mode pickers, with their look, their sprouting motion and the keyboard.
+- Motion in each look's own voice: Basic crisp, Friendly springy, Glass gliding (a soft blur only on the shelf boxes as they arrive), Retro stepped, NieR Mode drawn in ink. Animation speed and reduced motion are respected.
+- Two small additions in Source Control: the worktree owner filter becomes one Owner dropdown, and the publish and review card's details fold away and stay folded until opened.
+
+**What it costs:**
+- Every rail panel's owner text that spoke of chips, pills, badges or abbreviated tab labels now reads through the rail's rules; Docker Manager, Actions & Pipelines and the worktree filters change in their own units.
+- At the narrowest widths tabs show icons rather than short words, so a tab's name is on hover only.
+- The rail's status marks are not the chat's 13 status marks: the two sets differ (the chat's failed mark is a triangle, the rail's warning mark is). Whether one set should serve both is an open question for Jared.
+- The rail's header and tab plates keep the frosted scroll-under they already had in Basic, Friendly and Retro, which F3-431's closed blur budget does not list; Glass turns it off. Whether the budget admits it, or the product draws those plates solid, is an open question for Jared.
+- The concept still has three issues Jared raised on the same day (Jujutsu sub-text alignment, Jujutsu tabs that do nothing, and Retro and NieR tab-switch motion); they are being fixed under this decision, and any canon they change is recorded with it.
+
+**Options considered:** A "Ledger" (read in place: calm two-line rows, an overflow dropdown for tabs), B "Stack" (drill in: a summary page per panel and no tabs), C "Lens" (a detail sheet beside the rail and morphing icon tabs), D "Polish" (today's rail, polished), or keeping the current rail. Jared chose D. The rail's width envelope (240 px minimum, 280 px default, 480 px maximum, F3-471) and the 48 px icon-only activity bar (F3-198) are unchanged.
+
+**What the owner decided** (in plain words):
+- 2026-10-09, in his request: go with the Polish design, finish the rest of the rail in it with the newer NieR Mode changes and the looks' built-in fonts in mind, fix the three issues he found, and update the plans, DRY rules, commands and wiring wherever the work changes them.
+
+**What the spec now says:**
+1. **Geometry, shelves and type** (`Plans/FinalGUISpec.md#F3-618`; F3-474's shelf tints and section 3.5's selection stripe amended for the rail).
+2. **Statuses and counts** (`Plans/FinalGUISpec.md#F3-619`), which the panel owners' chip, pill and badge wording now reads through (`Plans/Runtime_Artifacts_Panel.md#RAP-049`, `Plans/FileManager.md#F-074` and `Plans/Automated_Testing_System.md#ATS-028` amended).
+3. **Fitting by layout** (`Plans/FinalGUISpec.md#F3-620`; `#F3-480` (3), `#F3-445`'s tab recipe and `#F3-196` amended for the rail; `Plans/Containers_Registry_and_Unraid.md#CRAU-098`, `Plans/UI_Command_Catalog.md#UCC-136` and `Plans/GitHub_Integration.md#GI-039` amended: tab labels are never abbreviated).
+4. **Dropdowns and motion** (`Plans/FinalGUISpec.md#F3-621`), including the tab switch redone for the owner's issue 3: one move per theme family on one clock, Retro stepping its ink tab by tab on a 33 ms tick with only the tab under the ink lit, and NieR Mode cutting the ink to the tab and locking the target brackets onto the chosen tab's final box once the click has landed.
+5. **The Owner dropdown and the folding publish card** (`Plans/FinalGUISpec.md#F3-622`; `Plans/WorktreeGitImprovement.md#W-075` amended). Neither adds a command or a wiring row.
+6. **One owner for the rail's look** (`Plans/DRY_Rules.md#DR-057`).
+7. **Settled later the same day:** the Jujutsu view's tabs are DL-163's. The six other panels and the bottom Debug tab take this design through amendments in their owner units, all on the commands they already had, with no new command, action or wiring row (`Plans/FinalGUISpec.md#F3-045`, `#F3-046`, `#F3-477`, `#F3-483`, `#F3-484`, `#F3-485`, `#F3-488`, `#F3-490`, `#F3-528`, `Plans/GitHub_Integration.md#GI-035`, `#GI-036`, `#GI-040`, `Plans/Runtime_Artifacts_Panel.md#RAP-050`, `#RAP-051` and `Plans/FileManager.md#F-076`). The status glyphs gain paused, immutable and errored (`Plans/FinalGUISpec.md#F3-619`). The More tray opens as the chat picker (`Plans/FinalGUISpec.md#F3-625`, `#F3-419` amended).
+8. **Published:** as he asked, the Polish rail is carried into the published concept. `Concepts/PMConcept7.html` shows it, built through its opus-5.5 build from the same sources as the review copy, and `Concepts/LeftRailPMConcept7.html` stays the comparison copy with A, B, C and "Original" (today's rail before Polish). The concept's NieR Mode kit gains a cursor hook and a target-brackets hook for the rail. No canon unit changes for the publication itself (`Plans/UI_Wiring_Rules.md` notes it for wiring review).
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md`, SHA-256 `4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06` (the owner request, verbatim, and the design he chose); the concept source `Concepts/leftrail-redesign/src/concepts/d/` at commit c93e341606 (concept lineage only).
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-618, ContractName:Plans/FinalGUISpec.md#F3-619, ContractName:Plans/FinalGUISpec.md#F3-620, ContractName:Plans/FinalGUISpec.md#F3-621, ContractName:Plans/FinalGUISpec.md#F3-622, ContractName:Plans/DRY_Rules.md#DR-057
+
+### DL-163: The Jujutsu view of Source Control gets its own five tabs
+
+**Question:** Should the Jujutsu view of Source Control have tabs, and if so which?
+
+**Why it came up:** In the Polish rail (DL-162) Jared saw four tabs in the Jujutsu view, Changes, Worktrees, History and Branches, and nothing happened when he clicked them. They were Git's tabs showing through because of a styling mistake, and the Git lists they switch are hidden in Jujutsu mode. He asked whether tabs apply to Jujutsu at all: if they do, flesh them out; if not, remove them, and treat it as a thought experiment rather than a quick fix.
+
+**What you get:**
+- Jujutsu gets its own strip of five views, one at a time, in the order and words the Jujutsu owner already uses (JJI §4.1, JJI-006): Changes, Workspaces, History, Bookmarks and Operation Log. Git keeps its own four, Changes, Worktrees, History (with the graph) and Branches (with stashes), and its strip stays hidden in Jujutsu mode, as the shell intended.
+- Changes shows the change you are on (`@`), its files and any conflicts. There is no staging and no stash, because every edit is already part of the current change; Describe and New change do the job Commit does in Git.
+- Workspaces is Jujutsu's version of worktrees, where threads and agents work side by side, with the same Owner dropdown as Git's worktrees.
+- History shows your unfinished stacks of changes and main, grouped by stack, and lets you go back into any change. Only main and the other changes Jujutsu keeps as they are (its immutable set) cannot be rewritten; a change pushed to a tracked bookmark still can.
+- Bookmarks shows whether each name matches each remote, and every button says which remote it touches (DL-057).
+- Operation Log lists everything that happened, with Undo naming what it undoes. Undo and Refresh also sit at the top of the panel in Jujutsu mode.
+- The first four views sit where Git's tabs are, so the Git/Jujutsu presentation switch keeps you in the same place; from Operation Log it opens Git's History. To fit five tabs at 240 px, the tabs you are not on may shrink to their icons while the one you are on keeps its name, and the strip picks that mode from its longest label, so it never changes while you click through it.
+- Publishing and the pull request stay in the card at the foot of the panel, in both engines, with one fold state.
+- Every button is a command Puppet Master already has. Nothing new is admitted.
+
+**What it costs:**
+- Two strips to maintain in one panel instead of one relabelled strip. Relabelling Git's strip was rejected: the view sets differ (four against five), and the canon forbids aliasing Branches to Bookmarks or Worktrees to Workspaces (JJI-001, JJI-006).
+- Several controls the concept shows disabled have no code in the closed Jujutsu disabled-reason vocabulary (JJI-003), so the concept uses its own: rewriting an immutable change, squashing into an immutable parent, squashing an empty change, removing the workspace you are in, moving a bookmark backwards, tracking at a remote that has no such bookmark, pushing an undescribed change, and DL-056's read-only Jujutsu conflicts. Admitting codes for them is left to the Jujutsu owner.
+- There is still no command that brings an out-of-date workspace up to date; Open and Switch stay enabled on such a row and a note says what to run there.
+- The concept renders one ready repository; the empty, blocked, setup and no-remote states are specified but not drawn.
+
+**Options considered:** No tabs, one long scroll of cards (today's Jujutsu view: very long at 240 px and unlike Git's panel); reusing Git's strip relabelled (rejected above); folding Operation Log into History (rejected: source history, operation history and Backup history are separate domains, SCS-017, JJI-011, F3-552); and five Jujutsu tabs in their own strip, which was chosen.
+
+**What the owner decided** (in plain words):
+- 2026-10-09, in his request (issue 2): "On the source control panel, in jujutsu, should there be tabs? There is a changes, worktrees, history, and branches tab but nothing happens when you click them? If they apply, then they need to be fleshed out, if not, then they should be removed. This is more of a thought experiment rather than a simple task." He left the answer to the build, which worked it through and had it reviewed twice; this record is that answer.
+- Two choices remain his. The plans called the fifth view both "Operation Log" (JJI §4.1, JJI-006's registered string, the command catalogue and the wiring rows) and "Operation History" (F3-529, F3-552, UCC-163 and JJI-008); the consumers now follow the Jujutsu owner's registered "Operation Log", written as a proper name in title case, and he may reverse that (or ask for sentence case, "Operation log"). And the plans disagree on whether a change's short ID shows on its row: JJI §4.1 puts raw IDs only in Technical details, while F3-529 lists the change ID among what Jujutsu renders. The concept shows the short change ID on the row's second line because Jujutsu users name changes by it; the spec leaves that open until he chooses.
+
+**What the spec now says:**
+1. **The strip, the engine switch, the fit rule, the panel head and the footer card** (`Plans/FinalGUISpec.md#F3-623`).
+2. **The five views, their rows, states and actions** (`Plans/FinalGUISpec.md#F3-624`).
+3. **Source Control's sections per engine** (`Plans/Source_Control_System.md#SCS-005` amended): each engine's sections show as its own tab strip, Git says Worktrees and Jujutsu says Workspaces, Reviews and publication are the footer card rather than a tab, and the bookmark words of DL-057 name the remote-scope axis while conflicted and deleted-here are separate states beside them; the rename confirmation says the old name stays on the remote and the new one is not there yet.
+4. **The view label** (`Plans/FinalGUISpec.md#F3-529`, `#F3-552`, `Plans/UI_Command_Catalog.md#UCC-163` and `Plans/Jujutsu_Integration.md#JJI-008` amended to "Operation Log"; F3-529 also records that Edit works on a change chosen in History, that Discard edits restores the current change to its parent, and that the protected state is the adapter's immutable set).
+5. **The tab command and the older section lists** (`cmd.source_control.select_tab` in `Plans/UI_Command_Catalog.md` takes each engine's own tab set and stash is Git-only; the Source Control section lists in `Plans/GitHub_Integration.md` and `#GI-004` point at SCS-005; `Plans/Jujutsu_Integration.md` section 4.1 notes the strip).
+6. **No new command, action or wiring row.** The 31 `cmd.jujutsu.*` wiring rows already name "Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log".
+7. **Left open for the Jujutsu owner:** disabled-reason codes for the concept-local reasons above; a command to update an out-of-date workspace; what Undo reverts when the newest operation is an automatic working-copy save, checked against the certified Jujutsu version; whether JJI-012's "restoring an old operation view" should say, as the view now does, that restoring to an operation undoes every later operation and keeps that one; and the short change ID on the row (for Jared).
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md`, SHA-256 `4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06` (the owner request, verbatim, issue 2); the left-rail build's Jujutsu tab decision, revision 2 of 2026-10-09, folded with two reviews and summarised in this entry (not a repository file); the concept source `Concepts/leftrail-redesign/src/concepts/d/` from lane commits 8693996260 and 2f77b78710 (concept lineage only).
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-623, ContractName:Plans/FinalGUISpec.md#F3-624, ContractName:Plans/Source_Control_System.md#SCS-005, ContractName:Plans/Jujutsu_Integration.md#JJI-006, ContractName:Plans/FinalGUISpec.md#F3-529
+
 ## Owner / Consumer Map
 
 This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Decision_Log.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
@@ -12286,6 +12370,137 @@ negative_constraints:
   - "Do not add a command, wiring row or setting for the removed button."
 owner_hints:
   - Plans/FinalGUISpec.md
+```
+
+### DL-162 - The Left Rail Takes The Polish Design
+
+```yaml
+plan_unit_id: DL-162
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-162 records the owner decision of 2026-10-09 that the left rail takes concept D, "Polish", of the left-rail
+  review copy. The nine rail panels keep the Cozy Shelves structure and coloured shelf boxes with tighter geometry
+  (a 3 px gutter, a 2 px inset, an outer radius R and an inner radius R minus the inset, row names 24 px from the
+  rail edge), one type ladder with nothing under 11 px, and the looks' own faces (F3-618). Statuses are a glyph
+  whose shape is the state plus a coloured word, counts are plain tabular numbers, and nothing is a pill or carries a
+  coloured side bar (F3-619). Text fits by layout and is never abbreviated, tab strips included (F3-620; F3-480 (3),
+  F3-445, CRAU-098, UCC-136 and GI-039 amended). Every rail dropdown is the chat picker, and motion is per theme family:
+  Basic crisp, Friendly springy, Glass gliding with blur only on the shelf boxes, Retro stepped and NieR Mode ink,
+  under the Animation speed and reduced-motion settings (F3-621). The worktree owner filter becomes an Owner
+  dropdown and the publish and review card folds (F3-622, W-075 amended), with no new command. DR-057 keeps the
+  grammar in one owner. Open owner questions: whether the rail's glyphs and the chat's 13 status marks (F3-585)
+  should be one set, and whether the rail's frosted scroll-under plates fit F3-431's blur budget. Settled later
+  under this decision: the Jujutsu view's tabs (DL-163), the remaining panels and the bottom Debug tab in their
+  owner units with no new command, action or wiring row, the paused, immutable and errored glyphs (F3-619), and the
+  More tray as the chat picker (F3-625).
+gui_related: true
+gui_classification_reason: Records an owner decision on the left rail's presentation.
+split_recommended: false
+depends_on: [F3-472, F3-474, F3-480, F3-445, F3-471]
+unblocks: [F3-618, F3-619, F3-620, F3-621, F3-622, F3-625, DR-057]
+acceptance_criteria:
+  - "The rail's geometry, type, statuses, fitting, dropdowns and motion are owned by F3-618 to F3-622, and the amended consumer units point at them."
+  - "No command, action or wiring row is added by this decision."
+  - "The owner's decision is recorded in plain words with its source hash."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: rail_presentation_drift
+reasoning_tier: high
+context_scope: left_rail_polish
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+  - Plans/Containers_Registry_and_Unraid.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/GitHub_Integration.md
+  - Plans/WorktreeGitImprovement.md
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/FileManager.md
+  - Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md, SHA-256 4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06"
+  - "Concepts/leftrail-redesign/src/concepts/d/ at commit c93e341606 (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-162"
+  - "Polish"
+  - "never abbreviated"
+negative_constraints:
+  - "Do not add a command, an action or a wiring row through this decision."
+  - "Do not reintroduce pills, coloured side bars or abbreviated labels in the left rail."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+```
+
+### DL-163 - The Jujutsu View Of Source Control Gets Its Own Five Tabs
+
+```yaml
+plan_unit_id: DL-163
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-163 records the answer of 2026-10-09 to the owner's question whether the Jujutsu view of Source Control should
+  have tabs, which he left to the left-rail build (DL-162). It does: Jujutsu gets its own strip of five views, one at
+  a time, Changes, Workspaces, History, Bookmarks and Operation Log, in JJI section 4.1's order and JJI-006's
+  registered words, while Git keeps its own Changes, Worktrees, History and Branches strip, hidden in Jujutsu mode;
+  neither strip relabels the other (JJI-001, JJI-006). The first four views share slot positions with Git's, so the
+  presentation-only engine switch (ui.source_control.profile.preview) opens the same slot and Operation Log opens
+  Git's History. Both Source Control strips fit by their longest label, so a strip never changes mode while one
+  clicks through it. Publish and review stays the footer card in both engines, and Jujutsu mode adds Undo and
+  Refresh to the panel head (F3-623). The five views list the current change, workspaces, stacks of changes,
+  bookmarks per remote and operations with existing commands only (F3-624). SCS-005 records the per-engine tab
+  strips, the footer card and the bookmark state axes; F3-529, F3-552, UCC-163 and JJI-008 call the fifth view
+  Operation Log. Open: disabled-reason codes for the concept's local reasons, an update command for an out-of-date
+  workspace, what Undo reverts after an automatic working-copy save, and, for the owner, whether a change's short
+  ID shows on its row and whether to keep "Operation Log".
+gui_related: true
+gui_classification_reason: Records an owner decision on the Jujutsu view of the Source Control rail panel.
+split_recommended: false
+depends_on: [DL-162, JJI-006, SCS-005, F3-529]
+unblocks: [F3-623, F3-624]
+acceptance_criteria:
+  - "The Jujutsu view's strip, views, rows and actions are owned by F3-623 and F3-624, and SCS-005, F3-529, F3-552, UCC-163 and JJI-008 point at them or use their label."
+  - "No command, action, schema value or wiring row is added by this decision."
+  - "The owner's question and the two choices left to him are recorded in plain words with the request's source hash."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: rail_presentation_drift
+reasoning_tier: high
+context_scope: left_rail_polish
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Source_Control_System.md
+  - Plans/Jujutsu_Integration.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/GitHub_Integration.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md, SHA-256 4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06 (issue 2)"
+  - "The left-rail build's Jujutsu tab decision, revision 2 of 2026-10-09, summarised in the DL-163 entry (not a repository file)"
+  - "Concepts/leftrail-redesign/src/concepts/d/ from lane commits 8693996260 and 2f77b78710 (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-163"
+  - "Operation Log"
+  - "ui.source_control.profile.preview"
+negative_constraints:
+  - "Do not add a command, an action, a disabled-reason code or a wiring row through this decision."
+  - "Do not alias Bookmarks to Branches or Workspaces to Worktrees by relabelling one strip for both engines."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/Jujutsu_Integration.md
+  - Plans/Source_Control_System.md
 ```
 
 ## Migration Coverage

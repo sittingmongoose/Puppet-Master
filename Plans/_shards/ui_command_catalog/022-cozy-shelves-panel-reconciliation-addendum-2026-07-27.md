@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L9736-L10653
+Source lines: L9736-L10655
 
-Source SHA256: `7e7a12bc3665362a924617f7c64082425560954817ded9433258a97dec0db260`
+Source SHA256: `a02a8597998228205894531eeb4a41350f2551dfa77a710e9536aae6e3d5e45d`
 
 ---
 
@@ -766,7 +766,8 @@ canonical_text: >-
   and cmd.docker.image.delete register the expander actions; container and image delete are destructive with
   strong confirmation, and prune is destructive over scan results. Docker Manager keeps six subview tabs with
   distinct glyphs and abbreviated mid-width labels (user decision 2026-07-27); no tab-switch commands are
-  minted.
+  minted. Amended 2026-10-09 (DL-162): the tab labels are no longer abbreviated; they fit as FinalGUISpec
+  F3-620 says, and still no tab-switch command is minted.
 gui_related: true
 gui_classification_reason: Registers and adjudicates user-visible Docker container, image, and cleanup controls.
 depends_on: [UCC-049, UCC-105, UCC-121]
@@ -794,6 +795,7 @@ source_lineage:
   - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves concept; source-lineage-only)"
   - "Plans/UI_Command_Catalog.md (UCC-105 existing-token list; UCC-121 container subfamily direction)"
   - "user decision 2026-07-27 (Docker Manager keeps 6 subview tabs)"
+  - "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; tab labels fit by FinalGUISpec F3-620, never abbreviated)"
 preserved_exact_tokens:
   - "cmd.docker.container.stop"
   - "cmd.docker.container.restart"
