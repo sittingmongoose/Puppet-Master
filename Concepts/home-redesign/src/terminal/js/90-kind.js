@@ -192,8 +192,9 @@
         spec: function (subId) { return { kind: 'terminal', profile: subId || null }; }
       },
       /* rows this kind adds to its tab's menu (asked of home-panels; D38): the notification mute */
-      tabMenu: function (state) {
-        var rec = recordFor(state && state.session);
+      tabMenu: function (state, tabId) {
+        /* a tab that has not serialized yet has no state.session: its tab id names the terminal */
+        var rec = recordFor(state && state.session) || recordFor(String(tabId || '').replace(/^terminal:/, ''));
         if (!rec || !canNotify()) return [];
         return [{ id: 'notify-mute', label: 'Mute notifications', detail: 'System notifications from this terminal', checked: !!rec.muted,
           run: function () { setMuted(rec, !rec.muted); } }];
