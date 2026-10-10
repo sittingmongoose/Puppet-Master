@@ -350,7 +350,9 @@
   C.pace = function (text) { return String(text == null ? '' : text).replace(/([+\-−]?\d+(?:\.\d+)?)\s?%(\s+(?:vs|above|below)\b)/g, '$1 pts$2'); };
   C.fit = function (bh, rowH, reserve) { return Math.max(0, Math.floor((bh - (reserve || 0) + 0.5) / rowH)); };
   C.foot = function (html, glyph, when) {
-    return html ? '<div class="pmu-cardfoot pmu-cfoot">' + (glyph ? C.glyph(glyph) : '') + '<span class="pmu-cfoot-text">' + html + '</span>' + (when ? '<span class="pmu-cfoot-when">' + esc(when) + '</span>' : '') + '</div>' : '';
+    /* (lane c-presets) a plate's foot keeps to two lines (40-widgets.css): a long one carries its whole words in its hover tag */
+    var plain = html ? String(html).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim() : '';
+    return html ? '<div class="pmu-cardfoot pmu-cfoot">' + (glyph ? C.glyph(glyph) : '') + '<span class="pmu-cfoot-text"' + (plain.length > 56 ? C.hover('Note', plain) : '') + '>' + html + '</span>' + (when ? '<span class="pmu-cfoot-when">' + esc(when) + '</span>' : '') + '</div>' : '';
   };
   C.empty = function (sentence, facts) {
     return '<div class="pmu-empty pmu-wempty"><p>' + esc(sentence || 'No results for current filter') + '</p>' + (facts ? '<span>' + esc(facts) + '</span>' : '') + '</div>';
