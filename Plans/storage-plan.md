@@ -27405,11 +27405,11 @@ The conversion table:
 
 | v1 source | v2 result |
 |---|---|
-| A shown editor panel (`editor_panel_1` to `editor_panel_4`) | A panel holding that editor group's open tabs, in order, as kept `file:<path>` tabs, its active tab kept; the tabs come from the editor's own workspace state (`editor_workspace_state.v1:{project_id}`). When the panel's browser was active, a browser tab bound to its `browser_session_id` joins the panel and stays active. |
-| A hidden editor panel that holds tabs | A collapsed panel holding them. |
-| A hidden editor panel with no tabs | Nothing. |
-| The dashboard surface | A panel holding `dashboard:home`, pinned; its widgets stay where `Plans/Widget_System.md#WS-030` puts the Home board. |
-| Each terminal section | A panel in the bottom row, in slot order. Each workgroup pane becomes its own terminal tab `terminal:<terminal_session_id>` bound to its existing session, in workgroup and pane order, read from the section, workgroup, pane, leaf-pane and session records (SP-332). The tab of the section's active session is active. A pane's own tab title becomes the tab's user label; section and workgroup titles are not carried. A pane with no attached session makes no tab. The conversion never starts, ends or restarts a session; the terminal runtime checks liveness later (SP-125). |
+| A shown editor panel (`editor_panel_1` to `editor_panel_4`) | A panel holding that editor group's open tabs, in order, as kept `file:<path>` tabs, its active tab kept; the tabs come from the editor's own workspace state (`editor_workspace_state.v1:{project_id}`). When the panel has a `browser_session_id`, a browser tab bound to it joins the panel after the editor tabs: the active tab when `browser_active` was true, else a background tab, so no browser session is dropped. |
+| A hidden editor panel (`visible: false`) that holds tabs or a browser session | A collapsed panel holding them, by the row above. |
+| A hidden editor panel with no tabs and no browser session | Nothing: it holds nothing to keep. |
+| The dashboard surface | A panel holding `dashboard:home`, pinned; its widgets stay where `Plans/Widget_System.md#WS-030` puts the Home board. A hidden dashboard becomes the same panel, collapsed. |
+| Each terminal section | A panel in the bottom row, in slot order. Each workgroup pane becomes its own terminal tab `terminal:<terminal_session_id>` bound to its existing session, in workgroup and pane order, read from the section, workgroup, pane, leaf-pane and session records (SP-332). The tab of the section's active session is active. A pane's own tab title becomes the tab's user label; section and workgroup titles are not carried. A pane with no attached session makes no tab. A hidden terminal section becomes the same panel, collapsed, and one with no attached session makes no panel. The conversion never starts, ends or restarts a session; the terminal runtime checks liveness later (SP-125). |
 | A docked or floating chat | The fixed chat column, shown as it was shown, at the window's default width; its host, slot and floating bounds are dropped. A chat popped out into its own window stays popped out. |
 | A floating editor panel or dashboard | Docked: it joins the top row at its end. |
 | Geometry | The top row holds the non-terminal surfaces in host order (`dock_left`, `home_main` by slot index, `dock_right`, `dock_top`, then floating ones); the bottom row holds the terminal sections; the column is 0.6 over 0.4, the Home layout's proportions, because v1 stores the bottom dock's thickness in pixels without the window height. A row's shares are its surfaces' `flex_weight` normalized to sum to 1, and the row uses equal shares when every weight is 0 or any normalized share would be at or below 0.02. A row with one panel is that panel; with no terminal sections the top row is the root. |
@@ -27446,7 +27446,9 @@ canonical_text: >-
   of layout:v1, through the StorageMigrationCoordinator by the conversion table of this section: editor panels
   become panels holding their editor tabs, the dashboard a panel with dashboard:home, each terminal section a
   bottom-row panel whose workgroup panes become terminal tabs bound to their existing sessions, a docked or
-  floating chat returns to the fixed column (a popped-out chat stays popped out), floating surfaces dock. The
+  floating chat returns to the fixed column (a popped-out chat stays popped out), floating surfaces dock, an editor
+  panel's inactive browser session becomes a background browser tab there, and a hidden surface that holds anything
+  becomes a collapsed panel. The
   source stays read-only and is never reset; an unreadable source yields the default Home layout, the old record
   kept and a notice. The concept's pm.home.panels keys are lineage only.
 gui_related: true
@@ -27461,6 +27463,7 @@ acceptance_criteria:
   - "View-state writes, the chat column's shown and popped_out, and a terminal tab's ref moving to a new session never advance revision, take a receipt or append an event."
   - "A newly created default layout, and the default written after an unreadable source, are at revision 0 with no event."
   - "The fixture's v1 record (four editor panels, a dashboard, two terminal sections with workgroups and a floating chat) converts to exactly its expected_v2 record, the v1 record is unchanged afterwards and one migrated_from_v1 event is appended."
+  - "No v1 surface that holds a tab, a browser session or a terminal session is dropped: an inactive browser session becomes a background browser tab in its panel, and a hidden editor panel, dashboard or terminal section becomes a collapsed panel."
   - "An unreadable v1 record yields the default Home layout with stamp default_after_unreadable_source, the old record kept unchanged and a notice; no source record is ever reset or deleted by the conversion."
   - "No v2 record holds a buffer, scrollback, browser history, chat message, credential, dashboard widget layout, narrow state, overlay, menu or drag state."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
