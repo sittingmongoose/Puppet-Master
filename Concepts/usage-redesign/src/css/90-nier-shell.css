@@ -53,9 +53,9 @@ html[data-o55-nier="on"] #panel-usage :is(.pmu-cap, .pmu-msec, .pmu-range button
 /* marks: a 1 px ink outline square with ink letters, no vendor hue (A1 12) */
 html[data-o55-nier="on"] #panel-usage .pmu-pmark:not(.is-logo) { background: transparent; color: var(--o55-nier-ink); box-shadow: inset 0 0 0 1px var(--o55-nier-ink); font-family: "PM NieR Mono", var(--pmu-mono); }
 
-/* the board under NieR: plates are ink-framed paper; hover draws the ink rule under the head instead of lifting */
+/* the board under NieR: plates are ink-framed paper. A hovered plate does not change: PMH's "Lock-on" reticle
+   (opus-5.5 src/css/22-hover.css NIER) acquires it, as it does every card in PMConcept7 */
 html[data-o55-nier="on"] #panel-usage .pmu-card { border-color: rgba(var(--o55-nier-ink-rgb), .38); box-shadow: none; }
-html[data-o55-nier="on"] #panel-usage .pmu-card:hover { transform: none; border-color: var(--o55-nier-ink); box-shadow: 3px 3px 0 rgba(var(--o55-nier-ink-rgb), .18); }
 html[data-o55-nier="on"] #panel-usage .pmu-landing { border: 1.5px dashed var(--o55-nier-ink); background: repeating-linear-gradient(135deg, rgba(var(--o55-nier-ink-rgb), .10) 0 2px, transparent 2px 7px); }
 html[data-o55-nier="on"] #panel-usage .pmu-outline { border: 1.5px solid var(--o55-nier-ink); background: rgba(var(--o55-nier-ink-rgb), .05); box-shadow: 4px 4px 0 rgba(var(--o55-nier-ink-rgb), .16); }
 html[data-o55-nier="on"] #panel-usage .pmu-outline-label { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); border-color: var(--o55-nier-ink); box-shadow: none;
@@ -104,8 +104,8 @@ html[data-o55-nier-parts~="headers"] #panel-usage .pmu-card[data-head="band"] > 
 /* the room title keeps its whole name in a narrow head: lighter tracking and a smaller size (REVIEW-data should-fix 5) */
 @container (max-width: 999px) { html[data-o55-nier-parts~="headers"] #panel-usage #pmuRoomTitle { letter-spacing: .03em; font-size: 16px; } }
 @container (max-width: 860px) { html[data-o55-nier-parts~="headers"] #panel-usage #pmuRoomTitle { font-size: 14px; letter-spacing: .02em; } }
-/* hover (WOW-SPEC 3.17, NieR): the corner brackets lock on 2 px outside the plate, in two steps, on the pre-rendered hover
-   layer (opacity only); the hard ink offset shadow stays on the same layer */
+/* the lift (B v2 8.3): the corner brackets lock on 4 px outside a lifted or resized plate, on the pre-rendered lift layer
+   (opacity only; 20-board.css [data-lifted] / [data-resizing]). A hover is PMH's reticle instead (above). */
 html[data-o55-nier="on"] #panel-usage .pmu-card:not([data-head="band"])::before { inset: -4px; border-radius: 0;
   --nb: var(--o55-nier-ink); --nl: 12px; --nw: 1.5px;
   background:
@@ -114,7 +114,6 @@ html[data-o55-nier="on"] #panel-usage .pmu-card:not([data-head="band"])::before 
     linear-gradient(var(--nb), var(--nb)) left bottom / var(--nl) var(--nw) no-repeat, linear-gradient(var(--nb), var(--nb)) left bottom / var(--nw) var(--nl) no-repeat,
     linear-gradient(var(--nb), var(--nb)) right bottom / var(--nl) var(--nw) no-repeat, linear-gradient(var(--nb), var(--nb)) right bottom / var(--nw) var(--nl) no-repeat;
   box-shadow: none; }
-html[data-o55-nier="on"] #panel-usage .pmu-card:not([data-head="band"]):hover::before { transition: opacity calc(120ms * var(--pmu-speed, 1)) steps(2, jump-start); }
 
 /* No GPU (PERF-3): the app's NieR scene (#o55-nier-scene: a translucent art layer and a fade layer across the window,
    shown through the clear Usage board) made every software draw ~33 ms (glassbisect.py: one plate moving 33 ms, the

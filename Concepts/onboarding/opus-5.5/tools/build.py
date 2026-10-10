@@ -442,6 +442,83 @@ PATCHES = [
     ("var PERSONA_CATALOG = ['Product Manager', 'Architect Reviewer', 'Rust Engineer'];",
      "var PERSONA_CATALOG = ['Product Manager', 'Architect Reviewer', 'Rust Engineer', 'Teacher'];",
      'teacher persona'),
+    # PMH, the merged hover engine (src/js/18-hover.js + src/css/22-hover.css, 2026-10-09), owns hover on every card,
+    # row, tile and icon. The PM8 engine read every target's rect each pointer frame, wrote inherited custom properties
+    # on the cards (a subtree restyle per write), animated a blurred box-shadow on a card-sized proxy and never stopped
+    # its loop while the pointer rested on a box. It now stops right after it makes the shared pointermove dispatcher
+    # (canon F3-446: exactly one document pointermove handler; the glass parallax hook and PMH both ride it). What
+    # follows the return is dead code; its other patches (the nier-next theme observer, Usage A3) still find their
+    # anchors there and stay harmless.
+    ("    var F = { bleed: 12, edge: .45, ramp: 18, glow: .8, wash: .5, mag: 1, stiff: 170, damp: 22 };\n",
+     "    /* O55 PMH (src/js/18-hover.js) owns hover; PM8 stops here. The shared pointermove dispatcher stays (F3-446). */\n"
+     "    window.PM7_PMOVE = window.PM7_PMOVE || [];\n"
+     "    document.addEventListener('pointermove', function (e) {\n"
+     "      var hooks = window.PM7_PMOVE;\n"
+     "      for (var i = 0; i < hooks.length; i++) { try { hooks[i](e); } catch (err) {} }\n"
+     "    });\n"
+     "    return;\n"
+     "    var F = { bleed: 12, edge: .45, ramp: 18, glow: .8, wash: .5, mag: 1, stiff: 170, damp: 22 };\n",
+     'pmh: pm8 engine off, dispatcher kept'),
+    # With no engine the PM8 ring ::after and wash ::before would still be generated, transparent, on about 100 hosts
+    # (each repaint of a card painted the ring through its four-gradient mask). Only `content` changes: the wash rule's
+    # z-index:-1 and the hosts' isolation stay, because the Glass ::before highlight (its own content) relies on them.
+    ('.pm6-search-hit)::after {\n      content: "";\n',
+     '.pm6-search-hit)::after {\n      content: none;   /* PMH: the PM8 ring is off */\n',
+     'pmh: pm8 ring off'),
+    ('.pm6-search-hit)::before {\n      content: "";\n',
+     '.pm6-search-hit)::before {\n      content: none;   /* PMH: the PM8 wash is off; z-index:-1 stays for Glass */\n',
+     'pmh: pm8 wash off'),
+    # The .pm-sheen:hover accent ring, glow and lift (base, Friendly, Glass) showed whenever the PM8 engine was not
+    # running, so Reduced Motion was glowier than motion. PMH's CSS defines every hover state now. The reduced twins
+    # and .pm-hover-icon stay.
+    ("    .pm-sheen:hover {\n"
+     "      transition-duration: var(--motion-fast);           /* fast in (120ms), instant-ish out (70ms base) */\n"
+     "      transform: translateY(-2px);\n"
+     "      border-color: color-mix(in srgb, var(--accent-primary) 40%, var(--border));\n"
+     "      box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent-primary) 30%, transparent),\n"
+     "                  0 6px 18px color-mix(in srgb, var(--accent-primary) 16%, transparent);\n"
+     "    }\n",
+     "    /* .pm-sheen:hover: removed, PMH (src/css/22-hover.css) owns hover */\n",
+     'pmh: sheen hover off (base)'),
+    ("    [data-theme^=\"friendly\"] .pm-sheen:hover {\n"
+     "      transform: translateY(-2px) scale(1.005);\n"
+     "      border-color: color-mix(in srgb, var(--pm6-sheen-accent, var(--accent-primary)) 45%, var(--border));\n"
+     "      box-shadow: 0 0 0 2px var(--pm6-sheen-accent, var(--accent-primary)),\n"
+     "                  0 0 22px color-mix(in srgb, var(--pm6-sheen-accent, var(--accent-primary)) 55%, transparent);\n"
+     "    }\n",
+     "    /* [data-theme^=\"friendly\"] .pm-sheen:hover: removed, PMH owns hover */\n",
+     'pmh: sheen hover off (friendly)'),
+    ("    [data-theme^=\"glass\"] .pm-sheen:hover {\n"
+     "      transform: translateY(-2px) scale(1.005);\n"
+     "      border-color: color-mix(in srgb, var(--accent-primary) 40%, var(--border));\n"
+     "      box-shadow: 0 0 0 1px var(--glass-hairline),\n"
+     "                  0 8px 22px rgba(var(--pm6-glass-a-rgb), .22);\n"
+     "    }\n",
+     "    /* [data-theme^=\"glass\"] .pm-sheen:hover: removed, PMH owns hover */\n",
+     'pmh: sheen hover off (glass)'),
+    # Hover tags swapped any label or detail that looked internal (a file name, a path, host:port, a dotted id) for
+    # generic copy ("Choose this option"), with no way out, so file refs and editor tabs in the home panels could not
+    # show their path. data-pmh-tag="literal" on the element or an ancestor keeps the tag's literal text (2026-10-10).
+    ("    if(looksInternal(label))label=actionCopy[0]||'Choose this option';\n",
+     "    var literalTag=!!(el.closest&&el.closest('[data-pmh-tag=\"literal\"]'));   /* O55: opt out of the internal-copy swap */\n"
+     "    if(!literalTag&&looksInternal(label))label=actionCopy[0]||'Choose this option';\n",
+     'pmh: literal hover tag label'),
+    ("    if(looksInternal(detail))detail=actionCopy[1]||'See what this control does.';\n",
+     "    if(!literalTag&&looksInternal(detail))detail=actionCopy[1]||'See what this control does.';\n",
+     'pmh: literal hover tag detail'),
+    # NieR intel tags (src/settings/styles.d/15-nier-world.css) open below their target and go above only when below
+    # has no room; the clamps that follow keep them in the viewport. The tag also carries data-literal while its target
+    # opted out of the copy swap, so the intel band shows a path in its own case instead of uppercase.
+    ("    var top=anchor.top-rect.height-GAP,placement='above';\n"
+     "    if(top<viewport.top+marginY){top=anchor.bottom+GAP;placement='below';}\n",
+     "    var top=anchor.top-rect.height-GAP,placement='above';\n"
+     "    if(top<viewport.top+marginY){top=anchor.bottom+GAP;placement='below';}\n"
+     "    if(document.documentElement.matches('[data-o55-nier-parts~=\"intel\"]')&&anchor.bottom+GAP+rect.height<=viewportBottom-marginY){top=anchor.bottom+GAP;placement='below';}   /* O55 NieR intel: below first */\n",
+     'pmh: nier intel tag below'),
+    ("    var rect=this.tag.getBoundingClientRect(),left=anchor.left+anchor.width/2-rect.width/2;\n",
+     "    this.tag.toggleAttribute('data-literal',!!(this.active.closest&&this.active.closest('[data-pmh-tag=\"literal\"]')));   /* O55: before the measure */\n"
+     "    var rect=this.tag.getBoundingClientRect(),left=anchor.left+anchor.width/2-rect.width/2;\n",
+     'pmh: literal hover tag mark'),
     # Setup and tour previews stop on the same events as the built-in tone preview. That player is frozen, so these
     # call the hook the notifications manager exposes (window.PM51_NOTIF_APP_PREVIEW_STOP), which calls
     # O55.sound.stopPreview(). The close line stays a prefix of SETTINGS_ANCHOR so the exposure splice still matches.
@@ -820,11 +897,13 @@ def check(built: str) -> list[str]:
 
 def syntax_check(built: str, usage: bool = True) -> list[str]:
     """node --check the scripts this package writes (the Settings engine with its managers, the O55 module, and the
-    Usage page's pm-usage-js from Concepts/usage-redesign, which must be there exactly once unless usage=False)."""
+    Usage page's pm-usage-js from Concepts/usage-redesign, which must be there exactly once unless usage=False), the
+    head boot script, and pm6-js-globals, which the base-engine PATCHES (the PMH switch-off, nier-next's next-frame
+    readers) rewrite: a broken patch there would otherwise pass the build and fail only in the browser."""
     import subprocess
     import tempfile
     out = []
-    for sid in ('pm4-settings-js', 'pm-o55-js', 'pm6 boot'):
+    for sid in ('pm4-settings-js', 'pm-o55-js', 'pm6 boot', 'pm6-js-globals'):
         if sid == 'pm6 boot':  # the head boot script (no id), which first_paint_patches() extends
             m = re.search(r'<script>(\s*/\* pm6 boot: .*?)</script>', built, re.S)
         else:

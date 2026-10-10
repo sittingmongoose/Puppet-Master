@@ -9254,13 +9254,7 @@ html[data-theme^="glass"] #panel-settings :is(.rail-search,.hero-search) input {
       position: relative;
       transition: transform 70ms var(--ease-out), box-shadow 70ms var(--ease-out), border-color 70ms var(--ease-out);
     }
-    .pm-sheen:hover {
-      transition-duration: var(--motion-fast);           /* fast in (120ms), instant-ish out (70ms base) */
-      transform: translateY(-2px);
-      border-color: color-mix(in srgb, var(--accent-primary) 40%, var(--border));
-      box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent-primary) 30%, transparent),
-                  0 6px 18px color-mix(in srgb, var(--accent-primary) 16%, transparent);
-    }
+    /* .pm-sheen:hover: removed, PMH (src/css/22-hover.css) owns hover */
     .pm-hover-icon { transition: transform var(--motion-med) var(--ease-spring); }   /* keep micro-motion */
     .pm-sheen:hover .pm-hover-icon { transform: scale(1.06); }
     [data-motion="reduced"] .pm-sheen:hover { transform: none; }
@@ -9363,7 +9357,7 @@ html[data-theme^="glass"] #panel-settings :is(.rail-search,.hero-search) input {
        instead of a hard inner cut. Idle defaults resolve the band to
        nothing. */
     :is(.pm-sheen,.pm-term-icon-btn,.pm6-dash-iconbtn,.browser-action-btn,.activity-bar .icon,.pm6-dash-card,.pm7u-card,.pm6-dash-catalog-item,.pm6-proj-card,.project-card-bento,.pm6-wiz-choice-card,.pm6-wiz-attach-card,.pm6-wiz-disc-card,.pm6-orch-ctl,.pm6-orch-pc-stat,.pm6-orch-hist-state,.pm6-usage-acct-status,.pm6-sp-row,.pm6-art-row,.pm6-search-hit)::after {
-      content: "";
+      content: none;   /* PMH: the PM8 ring is off */
       position: absolute; inset: 0;
       border-radius: inherit;
       background: radial-gradient(var(--pm8-ring-spot) circle at var(--pm8-x, 50%) var(--pm8-y, 50%),
@@ -9408,7 +9402,7 @@ html[data-theme^="glass"] #panel-settings :is(.rail-search,.hero-search) input {
        escapes. */
     :is(.pm-sheen,.pm6-dash-card,.pm7u-card,.pm6-dash-catalog-item,.pm6-proj-card,.project-card-bento,.pm6-wiz-choice-card,.pm6-wiz-attach-card,.pm6-wiz-disc-card,.pm6-orch-ctl,.pm6-orch-pc-stat,.pm6-usage-acct-status,.pm6-sp-row,.pm6-art-row,.pm6-search-hit) { isolation: isolate; }
     :is(.pm-sheen,.pm6-dash-card,.pm7u-card,.pm6-dash-catalog-item,.pm6-proj-card,.project-card-bento,.pm6-wiz-choice-card,.pm6-wiz-attach-card,.pm6-wiz-disc-card,.pm6-orch-ctl,.pm6-orch-pc-stat,.pm6-usage-acct-status,.pm6-sp-row,.pm6-art-row,.pm6-search-hit)::before {
-      content: "";
+      content: none;   /* PMH: the PM8 wash is off; z-index:-1 stays for Glass */
       position: absolute; inset: 0;
       border-radius: inherit;
       z-index: -1;
@@ -9694,12 +9688,7 @@ html[data-theme^="glass"] #panel-settings :is(.rail-search,.hero-search) input {
     /* cozy hover/focus: own-accent glow ring + tiny scale on top of the
        shared .pm-sheen lift; --pm6-sheen-accent is set by the category
        scopes below and defaults to accent-primary (sky) elsewhere */
-    [data-theme^="friendly"] .pm-sheen:hover {
-      transform: translateY(-2px) scale(1.005);
-      border-color: color-mix(in srgb, var(--pm6-sheen-accent, var(--accent-primary)) 45%, var(--border));
-      box-shadow: 0 0 0 2px var(--pm6-sheen-accent, var(--accent-primary)),
-                  0 0 22px color-mix(in srgb, var(--pm6-sheen-accent, var(--accent-primary)) 55%, transparent);
-    }
+    /* [data-theme^="friendly"] .pm-sheen:hover: removed, PMH owns hover */
     [data-theme^="friendly"][data-motion="reduced"] .pm-sheen:hover { transform: none; }
     [data-theme^="friendly"] :where(button, [href], input, select, textarea, [role="tab"], [tabindex]):focus-visible {
       outline: 2px solid var(--pm6-sheen-accent, var(--accent-primary));
@@ -9779,12 +9768,7 @@ html[data-theme^="glass"] #panel-settings :is(.rail-search,.hero-search) input {
        bar icon .symbol scale, or primary-button brightness — so those elements
        felt flat vs other themes. Use glass tokens so the motion reads as glass
        (frosted edge + accent tint) rather than a copy of the cozy palette. */
-    [data-theme^="glass"] .pm-sheen:hover {
-      transform: translateY(-2px) scale(1.005);
-      border-color: color-mix(in srgb, var(--accent-primary) 40%, var(--border));
-      box-shadow: 0 0 0 1px var(--glass-hairline),
-                  0 8px 22px rgba(var(--pm6-glass-a-rgb), .22);
-    }
+    /* [data-theme^="glass"] .pm-sheen:hover: removed, PMH owns hover */
     [data-theme^="glass"][data-motion="reduced"] .pm-sheen:hover { transform: none; }
     [data-theme^="glass"] .activity-bar .icon:hover { color: var(--text-primary); }
     [data-theme^="glass"] .activity-bar .icon:hover .symbol {
@@ -24882,23 +24866,32 @@ html[data-o55-nier-parts~="glyphs"][data-o55-nier-parts~="headers"] :is(.o55-gro
 
 /* ================================================================================ Intel tooltips [intel] */
 /* Hover and focus tags (the #pm-hover-tag-root layer that also replaces native titles) become intel cards: a square
-   frame, the title in an ink band behind a square bullet, the detail below, one corner notch. They unfold. */
+   frame, the title in an ink band behind a square bullet, the detail below, one corner notch. They unfold in stepped
+   frames away from their target. The unfold is a clip, not a scale: the tag controller measures the tag with
+   getBoundingClientRect() before and right after it opens, and a scaleY(.08) start read as a 4 px tag, so the tag was
+   placed as if it were 4 px tall and covered its target (2026-10-10 home-panels review). The PATCH "pmh: nier intel
+   tag below" in tools/build.py places it below the target, above only when below has no room. The insets reach 5 px
+   past the right and bottom edges so the clip keeps the offset shadow. Labels 12 px, details 12 px (were 10 and 11). */
 html[data-o55-nier-parts~="intel"] #pm-hover-tag-root .pm-hover-tag {
-  padding: 0 0 6px !important; min-width: 120px; border: 1px solid var(--o55-nier-ink) !important; border-radius: 0 !important;
+  padding: 0 0 7px !important; min-width: 140px; border: 1px solid var(--o55-nier-ink) !important; border-radius: 0 !important;
   background: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) right 2px bottom 2px / 5px 5px no-repeat, var(--o55-nier-overlay) !important;
   color: var(--o55-nier-ink) !important; box-shadow: 3px 3px 0 rgba(var(--o55-nier-shadow-rgb), .16) !important;
-  transform: scaleY(.08) !important; transform-origin: 50% 0 !important;
-  transition: opacity 90ms linear, transform 140ms cubic-bezier(.2, .85, .25, 1), visibility 0ms linear 140ms !important;
+  transform: none !important; clip-path: inset(0 -5px 100% 0);
+  transition: opacity 90ms steps(2, end), clip-path 160ms steps(4, end), visibility 0ms linear 160ms !important;
 }
-html[data-o55-nier-parts~="intel"] #pm-hover-tag-root .pm-hover-tag[data-open="true"] { transform: none !important; transition-delay: 0ms !important; }
+html[data-o55-nier-parts~="intel"] #pm-hover-tag-root .pm-hover-tag[data-placement$="above"] { clip-path: inset(100% -5px -5px 0); }
+html[data-o55-nier-parts~="intel"] #pm-hover-tag-root .pm-hover-tag[data-open="true"] { clip-path: inset(0 -5px -5px 0); transition-delay: 0ms !important; }
 html[data-o55-nier-parts~="intel"] #pm-hover-tag-root .pm-hover-tag[data-detail="false"] { padding-bottom: 0 !important; background: var(--o55-nier-ink) !important; }
 html[data-o55-nier-parts~="intel"] #pm-hover-tag-root .pm-hover-tag strong {
-  position: relative; padding: 4px 9px 3px 21px; background: var(--o55-nier-ink); color: var(--o55-nier-on-ink);
-  font: 600 10px/1.4 var(--mono-font); letter-spacing: .12em; text-transform: uppercase;
+  position: relative; padding: 5px 10px 4px 23px; background: var(--o55-nier-ink); color: var(--o55-nier-on-ink);
+  font: 600 12px/1.4 var(--mono-font); letter-spacing: .1em; text-transform: uppercase;
 }
+/* a tag whose target carries data-pmh-tag="literal" (a path, a file name) keeps the text in its own case */
+html[data-o55-nier-parts~="intel"] #pm-hover-tag-root .pm-hover-tag[data-literal] strong { letter-spacing: .02em; text-transform: none; }
 html[data-o55-nier-parts~="intel"] #pm-hover-tag-root .pm-hover-tag strong::before {
-  content: ""; position: absolute; left: 9px; top: 50%; width: 5px; height: 5px; margin-top: -3px; background: var(--o55-nier-on-ink); }
-html[data-o55-nier-parts~="intel"] #pm-hover-tag-root .pm-hover-tag p { margin: 5px 0 0; padding: 0 9px; color: var(--o55-nier-ink); opacity: .82; }
+  content: ""; position: absolute; left: 10px; top: 50%; width: 5px; height: 5px; margin-top: -3px; background: var(--o55-nier-on-ink); }
+html[data-o55-nier-parts~="intel"] #pm-hover-tag-root .pm-hover-tag p {
+  margin: 6px 0 0; padding: 0 10px; color: var(--o55-nier-ink); opacity: .86; font: 500 12px/1.45 var(--body-font); }
 html[data-motion="reduced"][data-o55-nier-parts~="intel"] #pm-hover-tag-root .pm-hover-tag { transform: none !important; transition: none !important; }
 
 /* ================================================================================ Square icon strokes [icons] */
@@ -28141,6 +28134,480 @@ html[data-motion="reduced"] #pm-o55-onboarding * { transition: none !important; 
 html, [data-theme], [data-o55-nier-preview] {
   --o55-tokpack: var(--background, #121212) | var(--surface, #1e1e1e) | var(--text-primary, #e8e8e8) | var(--text-secondary, #aaa) | var(--text-muted, #888) | var(--border, #333) | var(--accent-blue, #64b5f6) | var(--accent-magenta, #ff69b4) | var(--accent-lime, #3dd68c) | var(--accent-orange, #ffa347) | var(--accent-warning, #f5c542) | var(--accent-error, #ef5350) | var(--accent-primary, var(--accent-blue, #64b5f6)) | var(--surface-elevated, var(--surface, #1e1e1e)) | var(--o55-nier-on-ink, var(--background, #121212));
 }
+
+/* ---- css/22-hover.css ---- */
+/* PMH: the merged hover system (engine: src/js/18-hover.js, which documents the whole contract). This file has two
+   parts. The ENGINE PART (registrations, pseudo plumbing, proxy bases, the PM8-parity resets, Reduced Motion and the
+   software-rendered path) is meant to stay. The PROVISIONAL PART (every token value and the three visual layers) is a
+   middle-ground placeholder: the design panel's result replaces it, and a design changes only CSS. */
+
+/* ===== ENGINE PART ===== */
+
+/* Continuous values, written only on the hovered target and its lit neighbours. Registered as NON-inherited, so a write
+   restyles that one element, not its subtree; a pseudo-element takes them with an explicit `inherit` (below). */
+@property --pmh-i  { syntax: '<number>';     inherits: false; initial-value: 0; }
+@property --pmh-x  { syntax: '<length>';     inherits: false; initial-value: 0px; }
+@property --pmh-y  { syntax: '<length>';     inherits: false; initial-value: 0px; }
+@property --pmh-px { syntax: '<percentage>'; inherits: false; initial-value: 50%; }
+@property --pmh-py { syntax: '<percentage>'; inherits: false; initial-value: 50%; }
+@property --pmh-dx { syntax: '<number>';     inherits: false; initial-value: 0; }
+@property --pmh-dy { syntax: '<number>';     inherits: false; initial-value: 0; }
+[data-pmh-kind]::before,
+[data-pmh-kind]::after {
+  --pmh-i: inherit; --pmh-x: inherit; --pmh-y: inherit; --pmh-px: inherit; --pmh-py: inherit; --pmh-dx: inherit; --pmh-dy: inherit;
+}
+
+/* The Firefox scrollbar-reveal hook of the base (`:is(.pm6-sb-active, :hover) { --pm6-sb-ink: ... }`, base line 264, the
+   Usage layer's A1 anchor) matches every hovered element. Registered non-inherited, a hover change restyles only the
+   elements on the hover chain, not their subtrees. The base already registers it this way (line 241); this repeats the
+   registration so the hover cost does not depend on that line staying (measurements in the PMH ENGINE.md). */
+@property --pm6-sb-ink { syntax: '*'; inherits: false; }
+
+/* The token probe: one <i data-pmh-kind> per kind, read with getComputedStyle at the first frame and after a look
+   change. Never laid out, never painted. */
+#pmh-probe {
+  position: fixed; left: 0; top: 0; width: 0; height: 0; overflow: hidden;
+  visibility: hidden; pointer-events: none; contain: strict;
+}
+
+/* The magnet writes `translate` every frame while it moves; .pmh-mv keeps it out of hosts that transition `all`
+   (the PM8 .pm8-live rule did the same). */
+.pmh-mv { transition-property: transform, box-shadow, border-color, background-color, color, opacity !important; }
+
+/* PM8 parity: a hovered card, tile or row keeps its resting border and the elev-2 shadow instead of each page's own
+   :hover ring and glow (bento lime border, catalog accent border, and so on), so the PMH layers are the only hover
+   light. Also under Reduced Motion, where PM8 let the old rings come back. Usage plates keep their own border and
+   shadow (they take the family light on ::before, Usage 20-board.css, because their ::after is the rim light). */
+:is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):is(.pmh-on, :hover):not(.pmu-card) {
+  border-color: var(--border) !important;
+  box-shadow: var(--elev-2) !important;
+}
+/* The light layer below sits at z-index -1 inside its host; the PM8 hosts are already isolated (base pm6-css-global),
+   this one is not. */
+.pm6-orch-hist-state { isolation: isolate; }
+
+/* Proxy bases. Placed by transform, sized inline, clipped inline (clip-path) to the target's visible part. */
+#pmh-glow {
+  position: fixed; left: 0; top: 0; width: 0; height: 0;
+  z-index: 95; pointer-events: none;
+}
+#pmh-glow > i {
+  position: absolute; left: 0; top: 0; display: block;
+  opacity: 0; will-change: opacity;
+  transition: opacity var(--pmh-glow-out-ms, 240ms) var(--ease-out, ease-out);
+}
+#pmh-glow > i.pmh-glow-on { opacity: 1; transition-duration: var(--pmh-glow-in-ms, 160ms); }
+#pmh-frame {
+  position: fixed; left: 0; top: 0; width: 0; height: 0;
+  z-index: 96; pointer-events: none; opacity: 0;
+  /* promoted once and kept (as the glow layers are): its opacity cut and its corners' stepped translate are
+     compositor animations, which otherwise create a layer at each lock and drop it at each release, two whole-page
+     layerizations per hover */
+  will-change: opacity;
+}
+#pmh-frame.pmh-frame-on { opacity: 1; }
+#pmh-frame > i { position: absolute; display: block; will-change: transform; }
+
+/* Reduced Motion: states switch at once (the engine stops the magnet, the travel and the pointer-following field). */
+[data-motion="reduced"] :is(#pmh-glow > i, #pmh-frame) { transition: none; }
+@media (prefers-reduced-motion: reduce) {
+  :is(#pmh-glow > i, #pmh-frame) { transition: none; }
+}
+
+/* Software-rendered (html[data-pmh-soft], set by the engine from O55.motion.softwareRendered()): no pointer-following
+   light and no emitted glow; the state classes, the frame and the magnet stay. */
+html[data-pmh-soft] [data-pmh-kind] { --pmh-field: 0; --pmh-glow: 0; }
+html[data-pmh-soft] #pmh-glow { display: none; }
+
+/* ===== PROVISIONAL PART (replace with the design panel's result) ===== */
+
+/* Tokens the engine reads (defaults in 18-hover.js TOKENS) and the look's own values. Family rows sit on <html>; the
+   kind rows below apply to the targets and the probe directly, so they win over the family for what they name. */
+:root {
+  --pmh-mag: 3; --pmh-mag-k: .02; --pmh-stiff: 240; --pmh-damp: 30;
+  --pmh-bleed: 10; --pmh-edge: .4; --pmh-ramp: 16; --pmh-out-ms: 220;
+  --pmh-glow: 1; --pmh-glow-reach: 28; --pmh-frame: 0;
+  --pmh-light-r: 150px; --pmh-light-a: .07;
+  --pmh-glow-blur: 12px; --pmh-glow-alpha: .12; --pmh-glow-in-ms: 160ms; --pmh-glow-out-ms: 240ms;
+}
+/* Basic, Friendly and Glass: the FAMILY LOOK section below. */
+/* Retro and NieR: their own forms, the RETRO and NIER sections at the end of this file. */
+
+[data-pmh-kind="icon"] { --pmh-mag-gain: 0; --pmh-field: 0; --pmh-near: 0; --pmh-glow: 0; --pmh-frame: 0; }
+[data-pmh-kind="row"]  { --pmh-mag-gain: .35; --pmh-glow: 0; }
+[data-pmh-kind="tile"] { --pmh-mag-gain: .7; }
+
+/* ===== FAMILY LOOK: Basic, Friendly, Glass (final, 2026-10-10) =====
+   Usage's plate merged with PM8's field, both smaller and calmer. A hovered card, tile or row:
+     1. leans toward the pointer on the engine's `translate` spring, 2-2.5 px at an edge (icons never move);
+     2. takes ONE light, its own ::after UNDER the content (z-index -1 in the host's isolated stacking context): a faint
+        surface sheen and a hairline catch along the border, both pre-painted and revealed by a single soft radial mask
+        centred on the pointer (--pmh-x/-y, registered and non-inherited). Its opacity is the field intensity --pmh-i, so
+        a neighbour inside the bleed catches the same light on its near edge, continuously;
+     3. gets the plate: a short elevation shadow plus half of PM8's emitted bloom, pre-painted on #pmh-glow at the box's
+        REST rect. It never follows the magnet; only its opacity fades.
+   The box's own paint never changes. Only translate and opacity animate; no blend modes, filters, canvas or :has().
+   Every rule is scoped to the three families and leaves Retro and NieR (html[data-o55-nier]) alone. */
+
+/* --- engine tokens (read through the probe) and paint tokens --- */
+:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) {
+  --pmh-pos: 1;                         /* only --pmh-x/-y are used */
+  --pmh-field: 1; --pmh-near: 1; --pmh-glow: 1; --pmh-frame: 0; --pmh-edge: .4;
+  --pmf-ease-out: cubic-bezier(.3, 0, .2, 1);
+  /* the light's falloff: a Gaussian exp(-4.5 t^2) tapered to 0 at the radius, sampled every 10 % (hand-set stops left
+     Mach rings in a warm pool). The few-% sheen shows only in the inner third; the hairline reads to about two thirds. */
+  --pmf-mask: #000 0, rgb(0 0 0 / .956) 10%, rgb(0 0 0 / .833) 20%, rgb(0 0 0 / .663) 30%, rgb(0 0 0 / .481) 40%, rgb(0 0 0 / .317) 50%, rgb(0 0 0 / .189) 60%, rgb(0 0 0 / .1) 70%, rgb(0 0 0 / .046) 80%, rgb(0 0 0 / .015) 90%, transparent 100%;
+}
+/* Basic: crisp. Critically damped and quick; a cool hairline over a short inner band; a small faint sheen; a tight
+   plate. */
+:root[data-theme="basic-dark"]:not([data-o55-nier]) {
+  --pmh-mag: 2; --pmh-mag-k: .025; --pmh-stiff: 320; --pmh-damp: 36;
+  --pmh-bleed: 14; --pmh-ramp: 14; --pmh-out-ms: 220; --pmh-glow-reach: 28;
+  --pmf-r: 90px; --pmf-band: 6px;
+  --pmf-rim: color-mix(in srgb, color-mix(in srgb, rgb(var(--accent-primary-rgb)) 70%, #fff) 80%, transparent);
+  --pmf-rim2: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 40%, transparent);
+  --pmf-sheen: rgb(255 255 255 / .07);
+  --pmf-in: 90ms; --pmf-out: 220ms;
+  --pmf-plate: 0 6px 14px -6px rgba(0, 0, 0, .5);
+  --pmf-bloom: 0 0 10px rgba(var(--accent-primary-rgb), .2);
+  --pmh-glow-in-ms: 140ms; --pmh-glow-out-ms: 240ms;
+}
+:root[data-theme="basic-light"]:not([data-o55-nier]) {
+  --pmh-mag: 2; --pmh-mag-k: .025; --pmh-stiff: 320; --pmh-damp: 36;
+  --pmh-bleed: 14; --pmh-ramp: 14; --pmh-out-ms: 220; --pmh-glow-reach: 28;
+  --pmf-r: 90px; --pmf-band: 6px;
+  --pmf-rim: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 80%, transparent);
+  --pmf-rim2: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 26%, transparent);
+  --pmf-sheen: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 7.5%, transparent);
+  --pmf-in: 90ms; --pmf-out: 220ms;
+  --pmf-plate: 0 6px 14px -6px rgba(16, 24, 40, .2);
+  --pmf-bloom: 0 0 10px rgba(var(--accent-primary-rgb), .12);
+  --pmh-glow-in-ms: 140ms; --pmh-glow-out-ms: 240ms;
+}
+/* Friendly: soft and warm. A little more travel on a softer, slightly underdamped spring; no hard line, a wide warm
+   band in the area's own cozy accent (rule below); a warm sheen; a soft, deep plate with a warm bloom; slower. */
+:root[data-theme="friendly-dark"]:not([data-o55-nier]) {
+  --pmh-mag: 2.5; --pmh-mag-k: .03; --pmh-stiff: 170; --pmh-damp: 22;
+  --pmh-bleed: 18; --pmh-ramp: 18; --pmh-out-ms: 320; --pmh-glow-reach: 36;
+  --pmf-r: 100px; --pmf-band: 16px;
+  --pmf-sheen: rgb(255 228 206 / .1);
+  --pmf-in: 130ms; --pmf-out: 320ms;
+  --pmf-plate: 0 10px 22px -10px rgba(10, 6, 18, .55);
+  --pmf-bloom: 0 0 14px color-mix(in srgb, color-mix(in srgb, var(--accent-primary) 55%, #ffc9b0) 18%, transparent);
+  --pmh-glow-in-ms: 200ms; --pmh-glow-out-ms: 340ms;
+}
+:root[data-theme="friendly-light"]:not([data-o55-nier]) {
+  --pmh-mag: 2.5; --pmh-mag-k: .03; --pmh-stiff: 170; --pmh-damp: 22;
+  --pmh-bleed: 18; --pmh-ramp: 18; --pmh-out-ms: 320; --pmh-glow-reach: 36;
+  --pmf-r: 100px; --pmf-band: 16px;
+  --pmf-sheen: color-mix(in srgb, #f07a55 11%, transparent);
+  --pmf-in: 130ms; --pmf-out: 320ms;
+  --pmf-plate: 0 10px 22px -10px rgba(122, 109, 140, .32);
+  --pmf-bloom: 0 0 14px color-mix(in srgb, color-mix(in srgb, var(--accent-primary) 50%, #f07a55) 11%, transparent);
+  --pmh-glow-in-ms: 200ms; --pmh-glow-out-ms: 340ms;
+}
+/* Glass: depth and light. A slow drift; a bright specular hairline (white into the accent in the dark, the accent in
+   the light) with a medium roll-off; the strongest sheen, light through glass (accent-tinted in the light look, where
+   white on white would not show); the deepest plate. */
+:root[data-theme="glass-dark"]:not([data-o55-nier]) {
+  --pmh-mag: 2.25; --pmh-mag-k: .028; --pmh-stiff: 130; --pmh-damp: 21;
+  --pmh-bleed: 20; --pmh-ramp: 20; --pmh-out-ms: 360; --pmh-glow-reach: 40;
+  --pmf-r: 96px; --pmf-band: 10px;
+  --pmf-rim: color-mix(in srgb, color-mix(in srgb, rgb(var(--accent-primary-rgb)) 45%, #fff) 85%, transparent);
+  --pmf-rim2: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 38%, transparent);
+  --pmf-sheen: rgb(255 255 255 / .11);
+  --pmf-in: 140ms; --pmf-out: 360ms;
+  --pmf-plate: 0 14px 28px -12px rgba(0, 4, 14, .55);
+  --pmf-bloom: 0 0 14px rgba(var(--accent-primary-rgb), .2);
+  --pmh-glow-in-ms: 220ms; --pmh-glow-out-ms: 380ms;
+}
+:root[data-theme="glass-light"]:not([data-o55-nier]) {
+  --pmh-mag: 2.25; --pmh-mag-k: .028; --pmh-stiff: 130; --pmh-damp: 21;
+  --pmh-bleed: 20; --pmh-ramp: 20; --pmh-out-ms: 360; --pmh-glow-reach: 40;
+  --pmf-r: 96px; --pmf-band: 10px;
+  --pmf-rim: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 85%, transparent);
+  --pmf-rim2: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 28%, transparent);
+  --pmf-sheen: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 10%, transparent);
+  --pmf-in: 140ms; --pmf-out: 360ms;
+  --pmf-plate: 0 12px 24px -12px rgba(30, 40, 60, .18);
+  --pmf-bloom: 0 0 14px rgba(var(--accent-primary-rgb), .14);
+  --pmh-glow-in-ms: 220ms; --pmh-glow-out-ms: 380ms;
+}
+/* kinds: tiles lean and glow less, rows take the light and a token of the magnet but no plate, icons nothing (they keep
+   their own quiet hover tint; a lean on a 24-32 px button moves the click target) */
+:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) [data-pmh-kind="tile"] { --pmh-mag-gain: .7; }
+:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) [data-pmh-kind="row"] { --pmh-mag-gain: .35; --pmh-glow: 0; }
+:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) [data-pmh-kind="icon"] { --pmh-mag-gain: 0; --pmh-field: 0; --pmh-near: 0; --pmh-glow: 0; --pmh-frame: 0; }
+
+/* --- the light: one ::after per card, tile and row, always present (opacity 0 at rest), under the content --- */
+:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) :is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):not(.pmu-card)::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; border-radius: inherit;
+  /* pre-painted: the sheen is the layer's flat tint, the hairline an inset line plus a soft inset band that follow any
+     border radius; only the mask moves with the pointer */
+  background: var(--pmf-sheen);
+  box-shadow: inset 0 0 0 1px var(--pmf-rim), inset 0 0 var(--pmf-band) 0 var(--pmf-rim2);
+  -webkit-mask: radial-gradient(circle var(--pmf-r) at var(--pmh-x) var(--pmh-y), var(--pmf-mask)) no-repeat;
+          mask: radial-gradient(circle var(--pmf-r) at var(--pmh-x) var(--pmh-y), var(--pmf-mask)) no-repeat;
+  opacity: var(--pmh-i);
+  /* going dark: the engine removes --pmh-i and the position together; the light fades where it was, and the position
+     falls back to its initial value only once the fade is over (a zero-length transition after a delay) */
+  transition: opacity var(--pmf-out) var(--pmf-ease-out), --pmh-x 0s linear var(--pmf-out), --pmh-y 0s linear var(--pmf-out);
+}
+:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) :is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):not(.pmu-card):is(.pmh-on, .pmh-near)::after {
+  transition: opacity var(--pmf-in) linear;
+}
+/* Friendly's catch takes the area's own cozy accent (--pm6-sheen-accent is set on panels, so it resolves on the box):
+   a faint line inside a wide warm band, no crisp edge */
+:root[data-theme="friendly-dark"]:not([data-o55-nier]) :is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):not(.pmu-card)::after {
+  --pmf-rim: color-mix(in srgb, color-mix(in srgb, var(--pm6-sheen-accent, var(--accent-primary)) 60%, #ffe6d6) 45%, transparent);
+  --pmf-rim2: color-mix(in srgb, color-mix(in srgb, var(--pm6-sheen-accent, var(--accent-primary)) 60%, #ffe6d6) 50%, transparent);
+}
+:root[data-theme="friendly-light"]:not([data-o55-nier]) :is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):not(.pmu-card)::after {
+  --pmf-rim: color-mix(in srgb, color-mix(in srgb, var(--pm6-sheen-accent, var(--accent-primary)) 70%, #f07a55) 75%, transparent);
+  --pmf-rim2: color-mix(in srgb, color-mix(in srgb, var(--pm6-sheen-accent, var(--accent-primary)) 70%, #f07a55) 50%, transparent);
+}
+/* smaller boxes take a smaller light (a row is a strip; the card radius would light all of it) */
+:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) [data-pmh-kind="tile"]::after { --pmf-r: 64px; }
+:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) [data-pmh-kind="row"]::after { --pmf-r: 56px; }
+
+/* --- the plate: elevation plus half bloom, pre-painted on the rest-rect proxy; only its opacity moves --- */
+:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) #pmh-glow > i { box-shadow: var(--pmf-plate), var(--pmf-bloom); }
+:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) #pmh-glow > i[data-pmh-kind="tile"] {
+  box-shadow: 0 4px 10px -5px rgba(0, 0, 0, .28), var(--pmf-bloom);
+}
+
+/* --- Glass's own dashboard-card :hover (base: a brighter fill, a deeper shadow and a translateY(-1px), all !important,
+   so the engine part's PM8-parity rule cannot reach them) swapped the whole card in one frame, a pop before the pointer
+   was even inside. The card keeps its resting paint; the plate and the light above are the hover. The two values
+   restate the base's resting Glass dash card. --- */
+html[data-theme^="glass"]:not([data-o55-nier]) .pm6-dash-card.pm6-dash-card[data-pmh-kind]:is(:hover, .pmh-on) {
+  transform: none !important;
+  background:
+    linear-gradient(152deg, rgba(255,255,255,.08), transparent 38%),
+    linear-gradient(var(--rg-card), var(--rg-card)) padding-box,
+    linear-gradient(145deg, var(--rg-rim-soft), rgba(255,255,255,.035) 65%, var(--rg-rim-low)) border-box !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.20), 0 16px 30px var(--rg-shadow-soft) !important;
+}
+
+/* --- Reduced Motion: no magnet and no following light (the engine). The state still reads at once: the whole
+   hairline at half strength, no sheen, and the plate (the base patch already makes every transition none). --- */
+:root[data-motion="reduced"]:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) :is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):not(.pmu-card)::after {
+  -webkit-mask: none; mask: none; background: none; opacity: calc(var(--pmh-i) * .5); transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  :root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) :is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):not(.pmu-card)::after {
+    -webkit-mask: none; mask: none; background: none; opacity: calc(var(--pmh-i) * .5); transition: none;
+  }
+}
+/* --- software-rendered (html[data-pmh-soft]): the engine writes no field and hides #pmh-glow, so the hovered box gets
+   the same static half-strength hairline, painted once per hover; the magnet is off too (a translate per frame
+   repaints the whole card on a software compositor). --- */
+:root[data-pmh-soft]:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) [data-pmh-kind] { --pmh-mag-gain: 0; }
+:root[data-pmh-soft]:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) :is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):not(.pmu-card)::after {
+  -webkit-mask: none; mask: none; background: none; opacity: 0; transition: none;
+}
+:root[data-pmh-soft]:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) :is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):not(.pmu-card).pmh-on::after { opacity: .5; }
+/* ===== end of FAMILY LOOK ===== */
+
+/* ===== RETRO: "Raise" (final, 2026-10-10; design/retro/FINAL.md) =====
+   Retro presses a control by stepping it into its hard shadow (the rail's .pm-btn:active translate(1px,1px), the
+   onboarding cards' translate(3px,3px), both hard cuts); a hover is the same move turned round. The plate rises 2 px
+   up-left in one hard cut while its hard shadow grows from 3 to 5 px, so the shadow's far edge stays exactly where it
+   was on the page and the card reads as raised off it, not slid. One 33 ms tick later a 1 px phosphor rule appears one
+   pixel inside the border: the Turbo Vision active window (single frame idle, double frame active). Leaving, the rule
+   goes at once and the plate drops one tick later (.pmh-out). Two beats in, two beats out, on the left rail's 33 ms tab
+   tick; nothing moves while the pointer moves inside, nothing glows, nothing is blurred, nothing scales, no neighbour
+   is lit. translate and box-shadow change in the same style change, so plate and shadow can never disagree; neither
+   is transitioned (cuts), the rule's one-tick hold is an opacity animation.
+   One phosphor: --accent-primary (#b8d066 dark, cobalt #0047AB light), the left rail's own Retro ink (activity tile,
+   seg-tab ink, focus ring); --accent-lime stays the shell's running/ok status green.
+   Engine: no magnet, no field, no glow, no frame, so the engine writes only the state classes (and the kind
+   attribute once): nothing per pointer frame. Kinds: cards rise 2 px with the rule; tiles rise 1 px over a 3 px cast,
+   no rule; rows take the left rail's row fill (3 steps in, 2 out); icons nothing (their own quiet hover stays). */
+html[data-theme^="retro"],
+html[data-theme^="retro"] [data-pmh-kind] {
+  --pmh-mag: 0; --pmh-mag-gain: 0; --pmh-field: 0; --pmh-near: 0; --pmh-pos: 0;
+  --pmh-glow: 0; --pmh-frame: 0; --pmh-out-ms: 34;
+  /* the plate rises off 2 px of its own edge: the engine keeps the hover while a slow pointer crosses that strip */
+  --pmh-hold: 2;
+}
+html[data-theme^="retro"] [data-pmh-kind="tile"] { --pmh-hold: 1; }
+html[data-theme^="retro"] [data-pmh-kind="row"] { --pmh-out-ms: 66; --pmh-hold: 0; }
+html[data-theme^="retro"] [data-pmh-kind="icon"] { --pmh-hold: 0; }
+/* the cast is each card's own rest shadow colour (the dash cards' grey, elsewhere the elev-2 olive / ink) */
+html[data-theme="retro-dark"] {
+  --pmh-r-cast: rgba(107, 118, 84, .56);
+  --pmh-r-rule: color-mix(in srgb, var(--accent-primary) 60%, var(--surface));
+  --pmh-r-row: color-mix(in srgb, var(--accent-primary) 10%, transparent);
+}
+html[data-theme="retro-dark"] .pm6-dash-card { --pmh-r-cast: rgba(224, 224, 224, .35); }
+html[data-theme="retro-light"] {
+  --pmh-r-cast: rgba(26, 26, 26, .30);
+  --pmh-r-rule: color-mix(in srgb, var(--accent-primary) 70%, var(--surface));
+  --pmh-r-row: color-mix(in srgb, var(--accent-primary) 8%, transparent);
+}
+/* hard cuts: the base gives cards and tiles a 70-140 ms cubic on box-shadow, border and background (and pages their
+   own :hover lifts); only the transform transition stays, and hover never changes transform */
+html[data-theme^="retro"] :is([data-pmh-kind="card"], [data-pmh-kind="tile"]) { transition-property: transform !important; }
+html[data-theme^="retro"] :is([data-pmh-kind="card"], [data-pmh-kind="tile"]):is(.pmh-on, .pmh-out, :hover) { transform: none; }
+/* the plate: raised while hovered and through the one-tick drop (.pmh-out); a Usage plate too (its cast and its resize
+   zones: Usage 20-board.css) */
+html[data-theme^="retro"] [data-pmh-kind="card"]:is(.pmh-on, .pmh-out) {
+  translate: -2px -2px; box-shadow: 5px 5px 0 0 var(--pmh-r-cast) !important;
+}
+html[data-theme^="retro"] [data-pmh-kind="tile"]:is(.pmh-on, .pmh-out) {
+  translate: -1px -1px; box-shadow: 3px 3px 0 0 var(--pmh-r-cast) !important;
+}
+/* hovered while the engine rests (a gesture): the rest-sized cast, not the engine part's elev-2 swap */
+html[data-theme^="retro"] [data-pmh-kind="card"]:hover:not(.pmh-on, .pmh-out, .pmu-card) { box-shadow: 3px 3px 0 0 var(--pmh-r-cast) !important; }
+html[data-theme^="retro"] [data-pmh-kind="tile"]:hover:not(.pmh-on, .pmh-out) { box-shadow: 2px 2px 0 0 var(--pmh-r-cast) !important; }
+/* the border stays the card's rest border (the engine part's reset would ink the light-bordered ones; the rule is the mark) */
+html[data-theme^="retro"] :is(.pm6-orch-widget, .pm6-chat-card)[data-pmh-kind]:is(.pmh-on, .pmh-out, :hover),
+html[data-theme="retro-light"] .pm6-dash-card[data-pmh-kind]:is(.pmh-on, .pmh-out, :hover) { border-color: var(--border-light) !important; }
+html[data-theme^="retro"] .pm6-orch-ctl-primary[data-pmh-kind]:is(.pmh-on, .pmh-out, :hover) { border-color: var(--accent-primary) !important; }
+/* the rule: double frame on the second beat; gone on the first beat out */
+html[data-theme^="retro"] [data-pmh-kind="card"].pmh-on::after {
+  content: ""; position: absolute; inset: 1px; z-index: 3; display: block; pointer-events: none;
+  border: 1px solid var(--pmh-r-rule); border-radius: 0;
+  background: none !important; box-shadow: none !important; -webkit-mask: none !important; mask: none !important;
+  opacity: 1; transition: none; animation: pmh-r-hold 33ms step-end;
+}
+/* the hold is a visibility step, not an opacity one: an opacity animation is run on the compositor, so it would make a
+   layer for the rule at every hover and drop it 33 ms later; hidden and transparent draw the same nothing */
+@keyframes pmh-r-hold { from, to { visibility: hidden; } }
+/* the card's own hover tools (close, size, drag and resize grips) cut in with the raise instead of a cubic fade */
+html[data-theme^="retro"] [data-pmh-kind="card"] :is(.pm6-dash-iconbtn, .pm7-dash-size-btn, .pm6-dash-drag, .pm6-dash-resize) { transition-duration: 0s !important; }
+/* rows (none renders in this build): the rail's row hover, a fill only, 3 steps in and 2 out; rows never rise */
+html[data-theme^="retro"] [data-pmh-kind="row"]:is(.pmh-on, .pmh-out)::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; display: block; pointer-events: none; border-radius: 0;
+  background: var(--pmh-r-row) !important; -webkit-mask: none !important; mask: none !important;
+  opacity: 1; animation: pmh-r-fill 99ms steps(3, jump-start);
+}
+html[data-theme^="retro"] [data-pmh-kind="row"].pmh-out::before { opacity: 0; animation: pmh-r-unfill 66ms steps(2, jump-start); }
+@keyframes pmh-r-fill { from { opacity: 0; } }
+@keyframes pmh-r-unfill { from { opacity: 1; } }
+/* Reduced Motion: the plate never moves; the shadow is 5 px (tiles 3) at once, so the state still reads as raised; the
+   rule shows at once and goes at once (the engine sets no .pmh-out under Reduced Motion) */
+html[data-motion="reduced"][data-theme^="retro"] :is([data-pmh-kind="card"], [data-pmh-kind="tile"]):is(.pmh-on, .pmh-out) { translate: none; }
+html[data-motion="reduced"][data-theme^="retro"] [data-pmh-kind]::after,
+html[data-motion="reduced"][data-theme^="retro"] [data-pmh-kind]::before { animation: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme^="retro"] :is([data-pmh-kind="card"], [data-pmh-kind="tile"]):is(.pmh-on, .pmh-out) { translate: none; }
+  html[data-theme^="retro"] [data-pmh-kind]::after, html[data-theme^="retro"] [data-pmh-kind]::before { animation: none !important; }
+}
+/* software-rendered: every piece is a hard rect painted once per hover, so Retro keeps its whole form */
+/* ===== end of RETRO ===== */
+
+/* ===== NIER: "Lock-on" (final, 2026-10-10; design/nier/FINAL.md) =====
+   A hovered card is acquired the way NieR's target brackets acquire a target. ONE reticle per page (#pmh-frame, never
+   the shared #o55np-reticle or #o55np-cursor, which focus, clicks and the left rail own): four hairline corners, 8 x 1 px
+   (the card ticks' own size, so each inner tick finds a twin 3 px outside the border), cut onto the card 4 px open and
+   closed in two hard steps (7, 5, 3 px out, 45 ms apart). On the landing step the card's frame inks: a 1 px line of
+   ink at .6 exactly over its own border (the corners stay full ink and carry the lock; a full-ink line beside them
+   was a second, louder mark). Leaving onto nothing, the line drops at once, the corners back off one step and the
+   reticle is gone at 90 ms. To a neighbour the reticle cuts across (never glides) and closes again there. The card
+   itself never changes: no lift, no magnet, no glow, no blur, no fill, no pointer-following field. Ink only through
+   the --o55-nier-* helpers (ink is dark in NieR light and parchment in NieR dark, so the form inverts for free); only
+   translate and opacity change, one-shot and stepped.
+   Gate: the corners are the "brackets" part (Target brackets); without it the lock is the ink line alone, on the same
+   90 ms beat. Kinds: cards only; tiles and rows take the left rail's NieR row hover (ink .10, a hard cut), the
+   dashboard catalog items stay with the Menu cursor part; icons keep their own hover with no motion. */
+html[data-o55-nier],
+html[data-o55-nier][data-theme] [data-pmh-kind] {
+  --pmh-mag: 0; --pmh-mag-gain: 0; --pmh-field: 0; --pmh-near: 0; --pmh-pos: 0; --pmh-glow: 0; --pmh-out-ms: 0;
+  /* the reticle on the rest rect, on whole device pixels (crisp hairlines); between targets a cut on the next frame,
+     and after any hidden frame it is placed, never moved (snap window 0) */
+  --pmh-frame: 1; --pmh-frame-follow: 0; --pmh-frame-hz: 120; --pmh-frame-k: 1; --pmh-frame-snap-ms: 0;
+  --pmh-frame-reach: 8; --pmh-snap: 1;
+}
+html[data-o55-nier][data-theme] :is([data-pmh-kind="tile"], [data-pmh-kind="row"], [data-pmh-kind="icon"]) { --pmh-frame: 0; }
+/* the release: the reticle stays 90 ms after .pmh-frame-on goes (the corners' backing-off step), then is cut */
+#pmh-frame[data-pmh-family="nier"] { transition: opacity 0s linear 90ms; }
+#pmh-frame[data-pmh-family="nier"].pmh-frame-on { transition-delay: 0s; }
+/* the ink line over the card's own border; it lands with the corners' last step and drops at once */
+#pmh-frame[data-pmh-family="nier"]::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .6); opacity: 0; transition: opacity 0s;
+  will-change: opacity;   /* kept promoted: see #pmh-frame */
+}
+#pmh-frame[data-pmh-family="nier"].pmh-frame-on::before { opacity: 1; transition: opacity 0s linear 90ms; }
+/* the four corners: an 8 x 8 box drawing an L of two 1 px ink lines, 3 px outside the card; --pmh-n-o is the open offset */
+#pmh-frame[data-pmh-family="nier"] > i {
+  display: none; width: 8px; height: 8px; border: 0;
+  background: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / 100% 1px no-repeat,
+              linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / 1px 100% no-repeat;
+  translate: var(--pmh-n-o); transition: translate 90ms steps(2, end);
+}
+html[data-o55-nier-parts~="brackets"] #pmh-frame[data-pmh-family="nier"] > i { display: block; }
+#pmh-frame[data-pmh-family="nier"] > i:nth-child(1) { left: -3px;  top: -3px;    --pmh-n-o: -4px -4px; }
+#pmh-frame[data-pmh-family="nier"] > i:nth-child(2) { right: -3px; top: -3px;    --pmh-n-o: 4px -4px;  scale: -1 1; }
+#pmh-frame[data-pmh-family="nier"] > i:nth-child(3) { right: -3px; bottom: -3px; --pmh-n-o: 4px 4px;   scale: -1 -1; }
+#pmh-frame[data-pmh-family="nier"] > i:nth-child(4) { left: -3px;  bottom: -3px; --pmh-n-o: -4px 4px;  scale: 1 -1; }
+#pmh-frame[data-pmh-family="nier"].pmh-frame-on > i { translate: 0 0; }
+/* the very first lock: the engine makes the frame and shows it in one frame, so there is no before-change style
+   (WebKit without @starting-style: the first lock of a page load cuts in closed, every later one steps) */
+@starting-style {
+  #pmh-frame[data-pmh-family="nier"].pmh-frame-on > i { translate: var(--pmh-n-o); }
+  #pmh-frame[data-pmh-family="nier"].pmh-frame-on::before { opacity: 0; }
+}
+/* the card itself does not change on hover. The engine part's PM8-parity reset (border --border, the blurred
+   --elev-2) and the pages' own :hover lifts and borders are answered with each card's rest values */
+html[data-o55-nier] :is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):is(.pmh-on, :hover) { transform: none; translate: none; }
+html[data-o55-nier] .pm6-dash-card:is(:hover, .pmh-on) { box-shadow: var(--elev-1) !important; border-color: var(--border-light) !important; }
+html[data-o55-nier] :is(.pm6-proj-card, .project-card-bento):is(:hover, .pmh-on) { box-shadow: var(--elev-2) !important; border-color: var(--border) !important; }
+html[data-o55-nier] :is(.pm6-chat-card, .pm6-orch-widget, .pm6-wiz-attach-card, .pm6-wiz-choice-card, .pm6-wiz-disc-card, .pm6-wiz-topic-card):not(.selected):is(:hover, .pmh-on) { box-shadow: none !important; border-color: var(--border-light) !important; }
+html[data-o55-nier] :is(.pm6-wiz-attach-card, .pm6-wiz-choice-card, .pm6-wiz-disc-card, .pm6-wiz-topic-card).selected:is(:hover, .pmh-on) { box-shadow: 0 0 0 1px var(--o55-nier-ink), var(--elev-2) !important; border-color: var(--o55-nier-ink) !important; }
+html[data-o55-nier] .pm6-orch-ctl-primary[data-pmh-kind]:is(:hover, .pmh-on) { border-color: var(--o55-nier-ink) !important; }
+/* the card's own hover micro-motion (the base's .pm-hover-icon scale(1.06) on a spring overshoot, the tools' 120 ms
+   ease): NieR keeps the icon still and cuts the tools in */
+html[data-o55-nier] .pm-sheen .pm-hover-icon { transform: none; transition: none; }
+html[data-o55-nier] [data-pmh-kind="card"] :is(.pm6-dash-iconbtn, .pm7-dash-size-btn, .pm6-dash-drag, .pm6-dash-resize) { transition-duration: 0s !important; }
+/* tiles and rows: the left rail's NieR row hover, ink .10, a hard cut (the catalog items are Menu cursor items) */
+html[data-o55-nier] :is([data-pmh-kind="tile"], [data-pmh-kind="row"]):not(.pm6-dash-catalog-item).pmh-on {
+  background: rgba(var(--o55-nier-ink-rgb), .10) !important; box-shadow: none !important; transition-duration: 0s !important;
+}
+/* Reduced Motion: the lock is drawn and released at once (the engine already cuts the reticle between targets) */
+html[data-motion="reduced"] #pmh-frame[data-pmh-family="nier"],
+html[data-motion="reduced"] #pmh-frame[data-pmh-family="nier"]::before,
+html[data-motion="reduced"] #pmh-frame[data-pmh-family="nier"] > i { transition: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  #pmh-frame[data-pmh-family="nier"], #pmh-frame[data-pmh-family="nier"]::before, #pmh-frame[data-pmh-family="nier"] > i { transition: none !important; }
+}
+/* software-rendered: the engine keeps the frame on that path; four 8 px corners and a line are cheap anywhere */
+/* ===== end of NIER ===== */
+
+/* ---- css/23-hover-perf.css ---- */
+/* Hover cost of the base scrollbar reveal (measured 2026-10-10, P1000 GPU; ~/pm-scratch/pm7-hover-20261009/perf-entry/
+   PERF-ENTRY.md). This file changes no look: it only stops two base rules from restyling the page when the pointer
+   enters or leaves the window or a large pane. It is a cascade override; the base rules themselves stay as they are
+   (base line 264 is the Usage layer's A1 anchor).
+
+   1. Base line 264, `:is(.pm6-sb-active, :hover) { --pm6-sb-ink: var(--pm6-sb-thumb); }`, writes the hook on every
+      hovered element, from <html> down. Only the opt-in scroll panes (base line 266) read it. Even registered
+      non-inherited, a hook that appears or changes on a chain element makes Blink restyle far below it: on <html> alone it
+      restyled the whole rendered document, about 1,700 elements; with the shell wrappers, 2,200 elements and 80-180 ms
+      each time the pointer entered or left the window. Every element that is not an opt-in pane declares the hook once,
+      unconditionally, so a hover no longer changes it there. The selector's specificity is that of its most specific
+      argument, `#bottomDebugHost .rd-console` (1,1,0), so it also wins over the Usage layer's A1 rewrite of line 264
+      (`body:not(.pmu-page-active) :hover`, 0,2,1).
+   2. An opt-in pane's own `scrollbar-color` does change with its hover, and `scrollbar-color` inherits, so the whole
+      pane (.primary-content holds the page) was restyled with it. A pane's children take the pane's idle value as their
+      own (transparent, as they inherit it today while the pane is not hovered), so the change stops at them. Specificity
+      0: every rule that declares a scrollbar-color (the panes themselves, the roster list, the NieR onboarding scroller)
+      still wins. Only the panes named by one class are listed: every element tests this rule against its parent, and
+      the six compound panes (textarea, the pre blocks, the debug console, the old Usage scrollers) are small.
+      The same holds for a pane's scroll-idle .pm6-sb-active toggle (the demo chat stream on Projects: 320 elements to 18).
+   3. The rules that give an element a thin bar without a scrollbar-color (so it inherited the bar ink of its pane:
+      .page-orchestrator .orch-tabs under 760 px, the Settings manager tabs, popout, inspector body and layer, and the
+      onboarding .o55-scroll) keep their reveal: they show the thumb while a pane around them is hovered or scrolling.
+      The subject is a list of plain classes, so Blink keys the invalidation on them (complex arguments there made a
+      pane's .pm6-sb-active toggle restyle its whole subtree); on an element of those classes that draws no bar it is
+      inert. Their children take the idle value too (rule 2), so the reveal stops at them.
+   The pane list is a copy of base line 266 (the base is pinned, so it cannot drift). The reveal hook is still read only
+   by the panes, which keep their exact behaviour. */
+:not(.primary-content, .page-projects, .panel-content, .message-stream, .messageStream, .chat-thread-list, .terminal-pane-body, .file-tree, .s4-shell, .s4-stage, .s4-panel-body, .s4-psm-body, .s4-rail, .pm6-usage-wrap [class*="scroll"], .pm6-usage-tblwrap, .dashboard-grid, .bento-card, .chat-dropdown-list, textarea, .browser-viewport, .browser-permissions-panel, .browser-console-pane, .browser-network-pane, .browser-evidence-pane, .wizard-step-panel, .wizard-annotation-drawer, .wizard-activity-log, .pm6-wiz-intake-scroll, .pm6-wiz-topic-list, .pm6-wiz-thread-body, .pm6-wiz-doc, .pm6-wiz-doc-overlay-body, .pm6-wiz-chat-log, .pm6-wiz-prdrail, .pm6-wiz-prdgrid, .pm6-wiz-workgrid, .pm6-wiz-disc-card, .orch-tab-content, .pm6-orch-w-body, .pm6-orch-pc-feed, .pm6-orch-pc-sidecol, .pm6-orch-seams, .pm6-orch-inspector-body, .pm6-orch-evlist, .pm6-orch-history, .pm6-orch-ledger-wrap, .pm-editor-term-stack, .pm-inspector-drawer, .pm-debug-cell, .pm6-dash-scroll, .pm6-dash-catalog-panel, .pm6-proj-sheet, .pm6-bottom-scroll, .pm6-bottom-pre, .pm6-bottom-empty, .context-detail-pane, .cdp-scroll, .cdp-raw-view, .wt-test-output, .sa-work-stream, .sc-accordion-body, .sh-scroll, .sh-wtchips, .rs-panel-list, .pm6-route-tree, .pm-ctx-menu, .msg-body, .msg-body .pm6-preblock, .message-block .block-body pre, .pm-command-card.expanded pre, .sa-crew-board, .sa-crew-msg, .debug-thread-header, .debug-investigation-ctx, .activity-card-body, #bottomDebugHost .rd-console) { --pm6-sb-ink: initial; }
+:where(.primary-content, .page-projects, .panel-content, .message-stream, .messageStream, .chat-thread-list, .terminal-pane-body, .file-tree, .s4-shell, .s4-stage, .s4-panel-body, .s4-psm-body, .s4-rail, .pm6-usage-tblwrap, .dashboard-grid, .bento-card, .chat-dropdown-list, .browser-viewport, .browser-permissions-panel, .browser-console-pane, .browser-network-pane, .browser-evidence-pane, .wizard-step-panel, .wizard-annotation-drawer, .wizard-activity-log, .pm6-wiz-intake-scroll, .pm6-wiz-topic-list, .pm6-wiz-thread-body, .pm6-wiz-doc, .pm6-wiz-doc-overlay-body, .pm6-wiz-chat-log, .pm6-wiz-prdrail, .pm6-wiz-prdgrid, .pm6-wiz-workgrid, .pm6-wiz-disc-card, .orch-tab-content, .pm6-orch-w-body, .pm6-orch-pc-feed, .pm6-orch-pc-sidecol, .pm6-orch-seams, .pm6-orch-inspector-body, .pm6-orch-evlist, .pm6-orch-history, .pm6-orch-ledger-wrap, .pm-editor-term-stack, .pm-inspector-drawer, .pm-debug-cell, .pm6-dash-scroll, .pm6-dash-catalog-panel, .pm6-proj-sheet, .pm6-bottom-scroll, .pm6-bottom-pre, .pm6-bottom-empty, .context-detail-pane, .cdp-scroll, .cdp-raw-view, .wt-test-output, .sa-work-stream, .sc-accordion-body, .sh-scroll, .sh-wtchips, .rs-panel-list, .pm6-route-tree, .pm-ctx-menu, .msg-body, .sa-crew-board, .sa-crew-msg, .debug-thread-header, .debug-investigation-ctx, .activity-card-body, .orch-tabs, .manager-tabs, .pm51-popout, .o55-insp-body, .o55g-layer, .o55-scroll) > * { scrollbar-color: transparent transparent; }
+:where(.primary-content, .page-projects, .panel-content, .message-stream, .messageStream, .chat-thread-list, .terminal-pane-body, .file-tree, .s4-shell, .s4-stage, .s4-panel-body, .s4-psm-body, .s4-rail, .pm6-usage-wrap [class*="scroll"], .pm6-usage-tblwrap, .dashboard-grid, .bento-card, .chat-dropdown-list, textarea, .browser-viewport, .browser-permissions-panel, .browser-console-pane, .browser-network-pane, .browser-evidence-pane, .wizard-step-panel, .wizard-annotation-drawer, .wizard-activity-log, .pm6-wiz-intake-scroll, .pm6-wiz-topic-list, .pm6-wiz-thread-body, .pm6-wiz-doc, .pm6-wiz-doc-overlay-body, .pm6-wiz-chat-log, .pm6-wiz-prdrail, .pm6-wiz-prdgrid, .pm6-wiz-workgrid, .pm6-wiz-disc-card, .orch-tab-content, .pm6-orch-w-body, .pm6-orch-pc-feed, .pm6-orch-pc-sidecol, .pm6-orch-seams, .pm6-orch-inspector-body, .pm6-orch-evlist, .pm6-orch-history, .pm6-orch-ledger-wrap, .pm-editor-term-stack, .pm-inspector-drawer, .pm-debug-cell, .pm6-dash-scroll, .pm6-dash-catalog-panel, .pm6-proj-sheet, .pm6-bottom-scroll, .pm6-bottom-pre, .pm6-bottom-empty, .context-detail-pane, .cdp-scroll, .cdp-raw-view, .wt-test-output, .sa-work-stream, .sc-accordion-body, .sh-scroll, .sh-wtchips, .rs-panel-list, .pm6-route-tree, .pm-ctx-menu, .msg-body, .msg-body .pm6-preblock, .message-block .block-body pre, .pm-command-card.expanded pre, .sa-crew-board, .sa-crew-msg, .debug-thread-header, .debug-investigation-ctx, .activity-card-body, #bottomDebugHost .rd-console):is(:hover, .pm6-sb-active) :is(.orch-tabs, .manager-tabs, .pm51-popout, .o55-insp-body, .o55g-layer, .o55-scroll) { scrollbar-color: var(--pm6-sb-thumb) transparent; }
 
 /* ---- css/30-art.css ---- */
 /* ---- O55 art: scene layers, family choreography, ambient loops -------------------------------------------------
@@ -36267,20 +36734,18 @@ html[data-motion="reduced"] #panel-usage .pmu-menu { transition: none !important
 
 /* ---- the plate (A1 3.2) with real depth (WOW-SPEC 2.2, E-8) ---- */
 /* depth tokens: dark plates carry a 1 px inner top highlight (8 % white) and a soft ambient shadow; light plates a warm
-   paper shadow and a 70 % white top highlight. The hover / lift shadow is pre-rendered on ::before and only its opacity
-   moves (E-4: no box-shadow or border-color transition on a plate, ever). --pmu-speed: the Animation speed (46-shell.js). */
+   paper shadow and a 70 % white top highlight. The lift and resize shadow (--pmu-plate-lift, --pmu-plate-hover) is
+   pre-rendered on ::before and only its opacity moves (E-4: no box-shadow or border-color transition on a plate, ever);
+   the hover is PMH's (below). --pmu-speed: the Animation speed (46-shell.js). */
 #panel-usage .pmu-shell {
   --pmu-plate-rest: inset 0 1px 0 rgba(255,255,255,.08), 0 18px 40px -18px rgba(0,0,0,.45);
   --pmu-plate-hover: inset 0 1px 0 rgba(255,255,255,.10), 0 18px 40px -12px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.05);
   --pmu-plate-lift: inset 0 1px 0 rgba(255,255,255,.12), 0 28px 60px -18px rgba(0,0,0,.6), 0 0 0 1px color-mix(in srgb, var(--pmu-accent) 40%, transparent);
-  --pmu-sheen: rgba(255,255,255,.06);
-  --pmu-lift-y: -4px;
 }
 html[data-theme$="-light"] #panel-usage .pmu-shell {
   --pmu-plate-rest: inset 0 1px 0 rgba(255,255,255,.7), 0 10px 26px -14px rgba(21,32,43,.14);
   --pmu-plate-hover: inset 0 1px 0 rgba(255,255,255,.6), 0 14px 32px -12px rgba(21,32,43,.18), 0 0 0 1px rgba(21,32,43,.05);
   --pmu-plate-lift: inset 0 1px 0 rgba(255,255,255,.6), 0 22px 48px -16px rgba(21,32,43,.22), 0 0 0 1px color-mix(in srgb, var(--pmu-accent) 40%, transparent);
-  --pmu-sheen: color-mix(in srgb, var(--pmu-accent) 5%, transparent);
 }
 html[data-theme="friendly-light"] #panel-usage .pmu-shell {
   --pmu-plate-rest: inset 0 1px 0 rgba(255,255,255,.75), 0 10px 26px -14px rgba(92,64,51,.16);
@@ -36292,44 +36757,87 @@ html[data-theme="glass-light"] #panel-usage .pmu-shell {
   --pmu-plate-rest: inset 0 1px 0 rgba(255,255,255,.85), 0 12px 28px -14px rgba(23,34,42,.16);
   --pmu-plate-hover: inset 0 1px 0 rgba(255,255,255,.9), 0 16px 34px -12px rgba(23,34,42,.2), 0 0 0 1px rgba(255,255,255,.5); }
 html[data-theme^="retro"] #panel-usage .pmu-shell {
-  --pmu-plate-rest: var(--pmu-shadow-1); --pmu-plate-hover: 4px 4px 0 rgba(0,0,0,.38); --pmu-plate-lift: 7px 7px 0 rgba(0,0,0,.35); --pmu-lift-y: 0px; }
+  --pmu-plate-rest: var(--pmu-shadow-1); --pmu-plate-hover: 4px 4px 0 rgba(0,0,0,.38); --pmu-plate-lift: 7px 7px 0 rgba(0,0,0,.35); }
 html[data-theme="retro-light"] #panel-usage .pmu-shell { --pmu-plate-hover: 4px 4px 0 rgba(23,26,20,.22); --pmu-plate-lift: 7px 7px 0 rgba(23,26,20,.2); }
-html[data-o55-nier="on"] #panel-usage .pmu-shell { --pmu-plate-rest: none; --pmu-plate-hover: 3px 3px 0 rgba(var(--o55-nier-ink-rgb), .18); --pmu-lift-y: 0px; --pmu-sheen: transparent; }
+html[data-o55-nier="on"] #panel-usage .pmu-shell { --pmu-plate-rest: none; --pmu-plate-hover: 3px 3px 0 rgba(var(--o55-nier-ink-rgb), .18); }
 
 #panel-usage .pmu-card { position: relative; display: flex; flex-direction: column; min-width: 0; min-height: 0; border: var(--pmu-bw) solid var(--pmu-rule);
   border-radius: var(--pmu-r-card); background: var(--pmu-card); box-shadow: var(--pmu-plate-rest); outline: none;
   transition: transform calc(260ms * var(--pmu-speed, 1)) var(--pmu-ease-settle); }
-/* the pre-rendered hover / lift shadow and top highlight: one layer whose opacity moves */
+/* the pre-rendered lift / resize shadow and top highlight: one layer whose opacity moves (the [data-lifted],
+   [data-settling] and [data-resizing] rules below). At every other time it is the plate's PMH light (hover, next). */
 #panel-usage .pmu-card::before { content: ""; position: absolute; inset: calc(-1 * var(--pmu-bw)); border-radius: inherit; pointer-events: none;
   box-shadow: var(--pmu-plate-hover); opacity: 0; transition: opacity calc(260ms * var(--pmu-speed, 1)) var(--pmu-ease-settle); }
 #panel-usage .pmu-card[data-head="band"]::before { display: none; }
-/* hover depth (WOW-SPEC 3.17): lift 4 px on the spring (tiles 5 px), shadow layer in 220; unhover 260 SETTLE. The hovered
-   plate sits above its neighbours.
-   Sharp text (Jared's note 5, 2026-10-09): the lift is a whole-pixel translate with no scale, and the plate carries no
-   will-change. The transition gives it a compositor layer only while it moves; at rest (lifted or not) it paints at a
-   whole-pixel offset at its own raster scale. The old scale(1.01) under will-change: transform drew the hovered plate's
-   text from a layer resampled at 1.01 for the whole hover (GPU probe: title Laplacian sharpness 0.45-0.70 of rest in
-   Basic, Friendly and Glass, back to 1.0 only after the 260 ms settle). The depth comes from the pre-painted shadow. */
-#panel-usage .pmu-card:not([data-head="band"]):hover { z-index: 3; transform: translateY(var(--pmu-lift-y));
-  transition: transform calc(220ms * var(--pmu-speed, 1)) var(--pmu-ease-spring); }
-/* a tile lifts 5 px: written as the transform itself, never as a custom property set on hover (an inherited custom
-   property changed on the card restyles its whole subtree on every hover, PERF-3) */
-#panel-usage .pmu-card[data-head="tile"]:not([data-head="band"]):hover { transform: translateY(-5px); }
-#panel-usage .pmu-card:not([data-head="band"]):hover::before { opacity: 1; transition: opacity calc(220ms * var(--pmu-speed, 1)) var(--pmu-ease-out); }
-/* Retro and NieR do not lift: no transform at all (an identity translateY(0) would still run a transition and take a layer) */
-html[data-theme^="retro"] #panel-usage .pmu-card:not([data-head="band"]):hover, html[data-o55-nier="on"] #panel-usage .pmu-card:not([data-head="band"]):hover { transform: none; }
-/* Retro: the hard 4 px offset shadow appears in two steps, no lift */
-html[data-theme^="retro"] #panel-usage .pmu-card:hover::before { transition-timing-function: steps(2, jump-start); transition-duration: calc(120ms * var(--pmu-speed, 1)); }
+/* ---- hover: the merged hover system PMH (Concepts/onboarding/opus-5.5 src/js/18-hover.js and src/css/22-hover.css) ----
+   A plate takes its family's PMH look, as a dashboard card does (Jared's items 10 and 11, 2026-10-09):
+     Basic, Friendly, Glass: a small soft light at the pointer and a faint line where the edge catches it, both on the
+       ::before light below, revealed by one radial mask at PMH's --pmh-x/-y and at the field's intensity --pmh-i (so a
+       neighbour across the 8 px gap catches the same light on its near edge); and the plate's short elevation shadow
+       with half a bloom, pre-painted on PMH's rest-rect proxy (#pmh-glow), which only fades;
+     Retro: "Raise" (22-hover.css RETRO; the plates' own cast and the resize zones below);
+     NieR: "Lock-on", PMH's reticle (#pmh-frame); the plate itself does not change (90-nier-shell.css).
+   No lift and no magnet (PMH's NOMAG: the whole head is a move handle and the resize zones sit 4 px outside the edge),
+   so in Basic, Friendly and Glass nothing on a plate moves, nothing changes its stacking, and the resize zones stay
+   exactly where they rest. The old 4 px lift was dropped, not kept at a whole pixel: every hover made the plate a
+   compositor layer for its transition and re-rastered it after, re-sampled the Glass backdrop blur every frame, moved
+   the resize zones (the bottom zones then grew 6 px on hover, a layout change per hover), and put PMH's rest-rect light
+   and plate off the moving card; the pre-painted plate gives the depth. While the pointer moves only the light's
+   opacity and mask centre change: no box-shadow, border, background or filter animates. PMH rests through every board
+   operation (body.pmu-pointer-op and pm-resizing, html[data-pmu-moment], .pmu-board[data-op]) and never lights a band
+   or a plate that is pending, leaving, lifted, resizing, settling or morphing, the ghost board or the flyers. */
+:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) #panel-usage .pmu-card[data-pmh-kind]:not([data-lifted], [data-settling], [data-resizing], [data-morphing])::before {
+  /* above the plate's own paint, under its head and body (both positioned and later in tree order), in the padding box
+     like a dashboard card's light; the tokens are the look's own (22-hover.css FAMILY LOOK) */
+  inset: 0; background: var(--pmf-sheen);
+  box-shadow: inset 0 0 0 1px var(--pmf-rim), inset 0 0 var(--pmf-band) 0 var(--pmf-rim2);
+  -webkit-mask: radial-gradient(circle var(--pmf-r) at var(--pmh-x) var(--pmh-y), var(--pmf-mask)) no-repeat;
+          mask: radial-gradient(circle var(--pmf-r) at var(--pmh-x) var(--pmh-y), var(--pmf-mask)) no-repeat;
+  opacity: var(--pmh-i);
+  /* going dark the light fades where it was: the position falls back only once the fade is over */
+  transition: opacity var(--pmf-out) var(--pmf-ease-out), --pmh-x 0s linear var(--pmf-out), --pmh-y 0s linear var(--pmf-out);
+}
+:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) #panel-usage .pmu-card[data-pmh-kind]:is(.pmh-on, .pmh-near):not([data-lifted], [data-settling], [data-resizing], [data-morphing])::before {
+  transition: opacity var(--pmf-in) linear;
+}
+/* Friendly: no crisp line, a wide warm band in the page's own accent (the dashboard's area accent, 22-hover.css) */
+:root[data-theme="friendly-dark"]:not([data-o55-nier]) #panel-usage .pmu-card[data-pmh-kind]::before {
+  --pmf-rim: color-mix(in srgb, color-mix(in srgb, var(--pmu-accent) 60%, #ffe6d6) 45%, transparent);
+  --pmf-rim2: color-mix(in srgb, color-mix(in srgb, var(--pmu-accent) 60%, #ffe6d6) 50%, transparent);
+}
+:root[data-theme="friendly-light"]:not([data-o55-nier]) #panel-usage .pmu-card[data-pmh-kind]::before {
+  --pmf-rim: color-mix(in srgb, color-mix(in srgb, var(--pmu-accent) 70%, #f07a55) 75%, transparent);
+  --pmf-rim2: color-mix(in srgb, color-mix(in srgb, var(--pmu-accent) 70%, #f07a55) 50%, transparent);
+}
+/* Reduced Motion (PMH stops the following light and the neighbours): the hovered plate shows the whole line at half
+   strength with its plate, at once; software-rendered (html[data-pmh-soft], no field and no #pmh-glow): the same line,
+   painted once per hover */
+:root[data-motion="reduced"]:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) #panel-usage .pmu-card[data-pmh-kind]:not([data-lifted], [data-settling], [data-resizing], [data-morphing])::before {
+  -webkit-mask: none; mask: none; background: none; opacity: calc(var(--pmh-i) * .5); transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  :root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) #panel-usage .pmu-card[data-pmh-kind]:not([data-lifted], [data-settling], [data-resizing], [data-morphing])::before {
+    -webkit-mask: none; mask: none; background: none; opacity: calc(var(--pmh-i) * .5); transition: none;
+  }
+}
+:root[data-pmh-soft]:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) #panel-usage .pmu-card[data-pmh-kind]:not([data-lifted], [data-settling], [data-resizing], [data-morphing])::before {
+  -webkit-mask: none; mask: none; background: none; opacity: 0; transition: none;
+}
+:root[data-pmh-soft]:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) #panel-usage .pmu-card[data-pmh-kind].pmh-on:not([data-lifted], [data-settling], [data-resizing], [data-morphing])::before { opacity: .5; }
+/* Retro "Raise": the plate rises 2 px up-left in one cut while its hard shadow grows from 3 to 5 px in the plate's own rest
+   colour (00-base.css --pmu-shadow-1), so the shadow's far edge stays put; the phosphor rule lands one tick later. The
+   resize zones do not rise with it (their marks do), so a pointer resting on an edge stays on its zone and a grab at the
+   edge never misses: the plate moves off them, and PMH's 2 px edge hold keeps the hover in the strip it left. */
+html[data-theme="retro-dark"] #panel-usage .pmu-card { --pmh-r-cast: rgba(223,230,207,.25); }
+html[data-theme="retro-light"] #panel-usage .pmu-card { --pmh-r-cast: rgba(26,26,26,.25); }
+html[data-theme^="retro"]:not([data-motion="reduced"]) #panel-usage .pmu-card:is(.pmh-on, .pmh-out) > .pmu-h { translate: 2px 2px; }
+html[data-theme^="retro"]:not([data-motion="reduced"]) #panel-usage .pmu-card:is(.pmh-on, .pmh-out) > .pmu-h::before,
+html[data-theme^="retro"]:not([data-motion="reduced"]) #panel-usage .pmu-card:is(.pmh-on, .pmh-out) > .pmu-h::after { translate: -2px -2px; }
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme^="retro"] #panel-usage .pmu-card > .pmu-h, html[data-theme^="retro"] #panel-usage .pmu-card > .pmu-h::before,
+  html[data-theme^="retro"] #panel-usage .pmu-card > .pmu-h::after { translate: none !important; }
+}
 #panel-usage .pmu-card:focus-visible { box-shadow: 0 0 0 2px var(--pmu-accent), var(--pmu-plate-rest); }
-#panel-usage .pmu-board[data-op] .pmu-card:not([data-lifted]):hover { transform: none; z-index: auto; }
-#panel-usage .pmu-board[data-op] .pmu-card:not([data-lifted]):hover::before { opacity: 0; }
-/* the pointer sheen (40-board.js): a 280 px radial light inside the hovered plate, moved by transform only */
-#panel-usage .pmu-sheen { position: absolute; inset: 0; z-index: 0; overflow: hidden; border-radius: inherit; pointer-events: none; opacity: 0;
-  transition: opacity calc(200ms * var(--pmu-speed, 1)) var(--pmu-ease-out); }
-#panel-usage .pmu-sheen.on { opacity: 1; }
-#panel-usage .pmu-sheen.on > i { will-change: transform; }
-#panel-usage .pmu-sheen > i { position: absolute; left: 0; top: 0; width: 280px; height: 280px; margin: -140px 0 0 -140px; border-radius: 50%;
-  background: radial-gradient(circle, var(--pmu-sheen) 0, transparent 70%); }
 /* Glass with a GPU (not data-pmu-soft): plates blur what is behind them and carry a rim light (18 % white at the top,
    4 % at the bottom) and a static specular sheet on the room's hero plate (the first plate of the board) */
 html[data-theme^="glass"]:not([data-pmu-soft]) #panel-usage .pmu-card:not([data-head="band"]) { -webkit-backdrop-filter: blur(18px) saturate(1.2); backdrop-filter: blur(18px) saturate(1.2); }
@@ -36511,11 +37019,8 @@ html[data-theme^="retro"] #panel-usage .pmu-irow { border-radius: 0; }
 #panel-usage .pmu-h:hover::before, #panel-usage .pmu-card[data-resizing="e"] > .pmu-h[data-edge="e"]::before, #panel-usage .pmu-card[data-resizing="w"] > .pmu-h[data-edge="w"]::before,
 #panel-usage .pmu-card[data-resizing="s"] > .pmu-h[data-edge="s"]::before { opacity: 1; transform: none; }
 #panel-usage .pmu-board[data-op] .pmu-card:not([data-resizing]) > .pmu-h { pointer-events: none; }
-/* the hover lift moves a card's bottom edge up 4-5 px: its bottom handles reach 6 px further down while it is lifted, so
-   a pointer resting on the edge stays on the handle (no hover jitter, no missed grab) */
-#panel-usage .pmu-card:hover > .pmu-h[data-edge="s"] { bottom: -10px; height: 14px; }
-#panel-usage .pmu-card:hover > .pmu-h:is([data-edge="se"], [data-edge="sw"]) { bottom: -10px; height: 22px; }
-#panel-usage .pmu-card:hover > .pmu-h[data-edge="se"]::after { bottom: 13px; }
+/* (a hovered plate does not lift, so its resize zones keep their rest place and size; Retro's 2 px raise leaves them in
+   place too, above) */
 /* (PERF-3 open item: no board cursor during a resize; the captured handle keeps its own edge cursor, so an inherited
    cursor on the board no longer restyles its ~650 elements at the start and the end of a resize) */
 
@@ -36563,14 +37068,15 @@ html[data-theme^="glass"] #panel-usage .pmu-morph { border-color: rgba(255,255,2
 #panel-usage .pmu-rim.is-held { opacity: 1; transition: opacity calc(160ms * var(--pmu-speed, 1)) var(--pmu-ease-out); }
 html[data-o55-nier="on"] #panel-usage .pmu-rim { box-shadow: 0 0 0 1px var(--o55-nier-ink), 0 0 0 4px rgba(var(--o55-nier-ink-rgb), .12); }
 #panel-usage .pmu-card[data-leaving] { z-index: 0; }
-/* Reduce Motion (WOW-SPEC 9): no lift; the shadow layer keeps a 120 ms opacity change */
-html[data-motion="reduced"] #panel-usage .pmu-card, html[data-motion="reduced"] #panel-usage .pmu-card:hover, html[data-motion="reduced"] #panel-usage .pmu-card[data-head="tile"]:hover { transition: none; transform: none; }
-html[data-motion="reduced"] #panel-usage .pmu-card::before, html[data-motion="reduced"] #panel-usage .pmu-card:hover::before { transition: opacity calc(120ms * var(--pmu-speed, 1)) linear; }
+/* Reduce Motion (WOW-SPEC 9): no settle transition; the lift and resize shadow layer keeps a 120 ms opacity change (the
+   hover is PMH's instant Reduced Motion form, above) */
+html[data-motion="reduced"] #panel-usage .pmu-card { transition: none; transform: none; }
+html[data-motion="reduced"] #panel-usage .pmu-card::before { transition: opacity calc(120ms * var(--pmu-speed, 1)) linear; }
 /* the head's reveal is instant: the head tools, the cluster and the title's room change in the same frame */
 html[data-motion="reduced"] #panel-usage :is(.pmu-headtools, .pmu-cardtools, .pmu-cardtitles, .pmu-cardmeta) { transition: none !important; }
 @media (prefers-reduced-motion: reduce) { #panel-usage :is(.pmu-headtools, .pmu-cardtools, .pmu-cardtitles, .pmu-cardmeta) { transition: none !important; } }
-@media (prefers-reduced-motion: reduce) { #panel-usage .pmu-card, #panel-usage .pmu-card:hover, #panel-usage .pmu-card[data-head="tile"]:not([data-head="band"]):hover { transition: none; transform: none; }
-  #panel-usage .pmu-card::before, #panel-usage .pmu-card:hover::before { transition: opacity calc(120ms * var(--pmu-speed, 1)) linear; } }
+@media (prefers-reduced-motion: reduce) { #panel-usage .pmu-card { transition: none; transform: none; }
+  #panel-usage .pmu-card::before { transition: opacity calc(120ms * var(--pmu-speed, 1)) linear; } }
 
 /* ---- css/30-charts.css ---- */
 /* Chart kit styles (owner: charts; DESIGN-SPEC 7, DESIGN-SPEC-ATLAS 4, 6 and 7). Marks are painted from these rules, never
@@ -38767,9 +39273,9 @@ html[data-o55-nier="on"] #panel-usage :is(.pmu-cap, .pmu-msec, .pmu-range button
 /* marks: a 1 px ink outline square with ink letters, no vendor hue (A1 12) */
 html[data-o55-nier="on"] #panel-usage .pmu-pmark:not(.is-logo) { background: transparent; color: var(--o55-nier-ink); box-shadow: inset 0 0 0 1px var(--o55-nier-ink); font-family: "PM NieR Mono", var(--pmu-mono); }
 
-/* the board under NieR: plates are ink-framed paper; hover draws the ink rule under the head instead of lifting */
+/* the board under NieR: plates are ink-framed paper. A hovered plate does not change: PMH's "Lock-on" reticle
+   (opus-5.5 src/css/22-hover.css NIER) acquires it, as it does every card in PMConcept7 */
 html[data-o55-nier="on"] #panel-usage .pmu-card { border-color: rgba(var(--o55-nier-ink-rgb), .38); box-shadow: none; }
-html[data-o55-nier="on"] #panel-usage .pmu-card:hover { transform: none; border-color: var(--o55-nier-ink); box-shadow: 3px 3px 0 rgba(var(--o55-nier-ink-rgb), .18); }
 html[data-o55-nier="on"] #panel-usage .pmu-landing { border: 1.5px dashed var(--o55-nier-ink); background: repeating-linear-gradient(135deg, rgba(var(--o55-nier-ink-rgb), .10) 0 2px, transparent 2px 7px); }
 html[data-o55-nier="on"] #panel-usage .pmu-outline { border: 1.5px solid var(--o55-nier-ink); background: rgba(var(--o55-nier-ink-rgb), .05); box-shadow: 4px 4px 0 rgba(var(--o55-nier-ink-rgb), .16); }
 html[data-o55-nier="on"] #panel-usage .pmu-outline-label { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); border-color: var(--o55-nier-ink); box-shadow: none;
@@ -38818,8 +39324,8 @@ html[data-o55-nier-parts~="headers"] #panel-usage .pmu-card[data-head="band"] > 
 /* the room title keeps its whole name in a narrow head: lighter tracking and a smaller size (REVIEW-data should-fix 5) */
 @container (max-width: 999px) { html[data-o55-nier-parts~="headers"] #panel-usage #pmuRoomTitle { letter-spacing: .03em; font-size: 16px; } }
 @container (max-width: 860px) { html[data-o55-nier-parts~="headers"] #panel-usage #pmuRoomTitle { font-size: 14px; letter-spacing: .02em; } }
-/* hover (WOW-SPEC 3.17, NieR): the corner brackets lock on 2 px outside the plate, in two steps, on the pre-rendered hover
-   layer (opacity only); the hard ink offset shadow stays on the same layer */
+/* the lift (B v2 8.3): the corner brackets lock on 4 px outside a lifted or resized plate, on the pre-rendered lift layer
+   (opacity only; 20-board.css [data-lifted] / [data-resizing]). A hover is PMH's reticle instead (above). */
 html[data-o55-nier="on"] #panel-usage .pmu-card:not([data-head="band"])::before { inset: -4px; border-radius: 0;
   --nb: var(--o55-nier-ink); --nl: 12px; --nw: 1.5px;
   background:
@@ -38828,7 +39334,6 @@ html[data-o55-nier="on"] #panel-usage .pmu-card:not([data-head="band"])::before 
     linear-gradient(var(--nb), var(--nb)) left bottom / var(--nl) var(--nw) no-repeat, linear-gradient(var(--nb), var(--nb)) left bottom / var(--nw) var(--nl) no-repeat,
     linear-gradient(var(--nb), var(--nb)) right bottom / var(--nl) var(--nw) no-repeat, linear-gradient(var(--nb), var(--nb)) right bottom / var(--nw) var(--nl) no-repeat;
   box-shadow: none; }
-html[data-o55-nier="on"] #panel-usage .pmu-card:not([data-head="band"]):hover::before { transition: opacity calc(120ms * var(--pmu-speed, 1)) steps(2, jump-start); }
 
 /* No GPU (PERF-3): the app's NieR scene (#o55-nier-scene: a translucent art layer and a fade layer across the window,
    shown through the clear Usage board) made every software draw ~33 ms (glassbisect.py: one plate moving 33 ms, the
@@ -49445,7 +49950,6 @@ var PMU_SERIES = {
   function beginGesture(g) {
     completeStream();
     flushGravity();
-    sheenOff();
     gesture = g;
     if (PMU.menu) PMU.menu.close();
     g.snapshot = snapshotNow();
@@ -49830,51 +50334,11 @@ var PMU_SERIES = {
     }
     if (onCard && (event.key === 'r' || event.key === 'R')) { event.preventDefault(); keyboard(card.getAttribute('data-widget'), 'resize'); }
   }
-  /* ---- the pointer sheen (WOW-SPEC 3.17): a 280 px radial light inside the hovered plate, under its content, moved by
-     transform only (one rAF write per pointer frame, the card's rect read once on entry), fading out 200 on leave ---- */
-  var sheen = { card: null, el: null, rect: null, x: 0, y: 0, raf: 0 };
-  /* the sheen layer is made once per card, on its first hover, and kept (PERF-3): inserting it on every hover changed
-     the card's child list, and the app's positional rules then restyled the card's whole subtree (14 ms per hover on the
-     VM); leaving only turns it off */
-  function sheenOff() {
-    var el = sheen.el;
-    sheen.card = null; sheen.rect = null; sheen.el = null;
-    if (!el) return;
-    el.classList.remove('on');
-  }
-  function sheenMove() {
-    sheen.raf = 0;
-    if (!sheen.el || !sheen.card) return;
-    if (!sheen.rect) sheen.rect = sheen.card.getBoundingClientRect();
-    sheen.el.firstChild.style.transform = 'translate(' + (sheen.x - sheen.rect.left).toFixed(1) + 'px,' + (sheen.y - sheen.rect.top).toFixed(1) + 'px)';
-  }
-  function onSheen(e) {
-    if (e.pointerType === 'touch') return;
-    var card = gesture || reduced() ? null : (e.target.closest ? e.target.closest('.pmu-card') : null);
-    if (card && (card.parentNode !== boardEl || isLeaving(card) || card.hasAttribute('data-pending') || card.getAttribute('data-head') === 'band')) card = null;
-    if (card !== sheen.card) {
-      sheenOff();
-      if (card && PMU.theme.look().nier) card = null;
-      if (card) {
-        var el = card._pmuSheen;
-        if (!el || el.parentNode !== card) {
-          el = card._pmuSheen = document.createElement('i'); el.className = 'pmu-sheen'; el.setAttribute('aria-hidden', 'true'); el.appendChild(document.createElement('i'));
-          card.insertBefore(el, card.firstChild);
-        }
-        sheen.card = card; sheen.el = el; sheen.x = e.clientX; sheen.y = e.clientY;
-        /* the rect is read in the next frame's rAF, never in the pointer event (a read here forced the hover's style
-           recalc into the event: 14 ms on the VM) */
-        if (!sheen.raf) sheen.raf = requestAnimationFrame(function () { sheenMove(); if (sheen.el === el) el.classList.add('on'); });
-        return;
-      }
-    }
-    if (card) { sheen.x = e.clientX; sheen.y = e.clientY; if (!sheen.raf) sheen.raf = requestAnimationFrame(sheenMove); }
-  }
+  /* (the hover is PMH's, the merged hover engine of PMConcept7, opus-5.5 src/js/18-hover.js: it rides the app's one
+     pointer-move dispatcher, rests through every gesture of this board and lights a plate from CSS only;
+     20-board.css. The board has no pointer-move listener of its own.) */
   /* the listeners sit on the scroll pane: a room change swaps the board element (the old one leaves as the ghost) */
   if (boardEl && scroll) {
-    scroll.addEventListener('pointermove', onSheen, { passive: true });
-    scroll.addEventListener('pointerleave', sheenOff);
-    scroll.addEventListener('scroll', function () { sheen.rect = null; }, { passive: true });
     scroll.addEventListener('pointerdown', onPointerDown);
     scroll.addEventListener('keydown', function (event) { if (boardEl.contains(event.target)) onKeyDown(event); });
     document.addEventListener('keydown', function (event) { if (gesture && event.key === 'Escape' && !gesture.kb) { event.preventDefault(); endGesture(gesture, 'escape'); } }, true);
@@ -92951,6 +93415,13 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
     ',.pm6-usage-acct-status,.pm6-sp-row,.pm6-art-row,.pm6-search-hit';
   (function () {
     var root = document.documentElement;
+    /* O55 PMH (src/js/18-hover.js) owns hover; PM8 stops here. The shared pointermove dispatcher stays (F3-446). */
+    window.PM7_PMOVE = window.PM7_PMOVE || [];
+    document.addEventListener('pointermove', function (e) {
+      var hooks = window.PM7_PMOVE;
+      for (var i = 0; i < hooks.length; i++) { try { hooks[i](e); } catch (err) {} }
+    });
+    return;
     var F = { bleed: 12, edge: .45, ramp: 18, glow: .8, wash: .5, mag: 1, stiff: 170, damp: 22 };
     var probe = null;
     var px = 0, py = 0, havePointer = false;
@@ -93067,7 +93538,6 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
          resize event, so s.base would otherwise be stale). Keep the rAF
          alive rather than dropping `running` — no resume plumbing and no
          window where the loop is stopped but the state says otherwise. */
-      if (document.documentElement.hasAttribute('data-pmu-moment')) { baseDirty = true; running = false; return; } /* usage layer A3 */
       if (document.body.classList.contains('pm-resizing')) {
         baseDirty = true;
         requestAnimationFrame(tick);
@@ -122234,6 +122704,891 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   new MutationObserver(onNier).observe(html, { attributes: true, attributeFilter: ['data-o55-nier', 'data-o55-nier-parts'] });
 })();
 
+/* ---- js/18-hover.js ---- */
+/* PMH: the merged hover engine for PMConcept7 (2026-10-09; Jared's items 10 and 11). It replaces the PM8 magnet and
+   spotlight (pm6-js-globals, turned off by build.py's 'pmh: pm8 engine off' patch) for every hoverable card, row,
+   tile and icon, the new Usage cards included. The look lives in src/css/22-hover.css; this file only measures and
+   writes state, so a design is shipped by editing CSS tokens and rules, not this file.
+
+   Targets (the outermost match of SEL; a target inside another target resolves to the outer box)
+     the PM8 set, every .pm-sheen, the Usage .pmu-card (not the band, nor while it is pending, leaving, lifted,
+     resized, settling after a drop, morphing or flying), and any element with [data-pmh] (an opt-in for future
+     panels; its value names the kind: card | row | tile | icon, empty = card; data-pmh="off" takes an element out of
+     the set). Tabs, text surfaces (inputs, editors, terminals) and resize dividers are never targets, and a pointer on a
+     [data-pm-hover-exempt] surface inside a target (the home terminal's input and text) hovers nothing; a target that
+     carries the attribute itself, or sits inside an exempt container, still hovers.
+   Kinds: every target gets data-pmh-kind="card|row|tile|icon" once for its lifetime, ahead of time at idle (a few per
+     idle callback, after load, after a look change and after a frame met a new target), so CSS and tokens can differ
+     per kind and no hover frame writes it; a frame stamps only a target that appeared since.
+   CSS contract (written only on the hovered target and its lit neighbours, only on a visible change)
+     class .pmh-on    the hovered target              class .pmh-near  a neighbour inside the bleed (i > 0)
+     class .pmh-out   for --pmh-out-ms after the pointer left the target, then removed
+     class .pmh-mv    while the magnet holds a translate (CSS keeps `translate` out of the target's transitions)
+     style translate  the magnet offset; the standalone property, never `transform`
+     --pmh-i          intensity 0..1, continuous: 0 at --pmh-bleed px outside a box, --pmh-edge at its edge, 1 at
+                      --pmh-ramp px inside (registered inherits:false in 22-hover.css; pseudo-elements take it with
+                      an explicit `inherit`)
+     --pmh-x/-y       pointer in the box, px   --pmh-px/-py the same in %   --pmh-dx/-dy offset from the centre -1..1
+                      (which of them are written: --pmh-pos bits 1 = px, 2 = %, 4 = d)
+   Proxies (fixed, made on first use, each with data-pmh-family = basic|friendly|glass|retro|nier and data-pmh-kind)
+     #pmh-glow        holds two <i> layers that take turns, so one fades out where it was while the next fades in.
+                      A layer sits at the hovered target's REST rect (it never follows the magnet), is clipped to the
+                      target's visible part inside scroll containers (slack --pmh-glow-reach px on open sides), takes
+                      the target's border-radius, and gets .pmh-glow-on: CSS pre-paints its shadow and animates only
+                      its opacity.
+     #pmh-frame       one overlay with four <i> corners, over the target's rest rect (or following the magnet with
+                      --pmh-frame-follow: 1), travelling between targets on a spring or in discrete steps
+                      (--pmh-frame-hz > 0); .pmh-frame-on while shown, .pmh-frame-travel while it moves.
+   Tokens: read from #pmh-probe (one <i data-pmh-kind> per kind, so family rows on <html> and kind rows both apply) at
+     the first frame and at the frame after a change of data-theme, data-motion, data-o55-nier, data-o55-nier-parts or
+     data-pmh-soft (never inside the observer itself). Names and defaults: TOKENS below.
+   Rests: body.pm-resizing / pm-ab-dragging / pmu-pointer-op / pm7u-pointer-op, html[data-pmu-moment] and a Usage
+     board with [data-op] drop the hover and let the magnet settle to 0; a held pointer button keeps the state but
+     calms the magnet to 0 and freezes the field. The next pointer move after a rest resumes.
+   Reduced Motion (O55.motion.reduced(): the Settings switch or the system setting): no magnet, no frame travel, no
+     pointer-following field; the hovered target gets --pmh-i: 1 and its classes at once.
+   Software-rendered (O55.motion.softwareRendered(), asked off the main thread): html[data-pmh-soft], so CSS can drop
+     its expensive layers and turn the field off (tokens are re-read).
+   Cost rules: one hook on window.PM7_PMOVE (no pointermove listener of its own, canon F3-446); rects (with each
+     proxy target's radius, clipping ancestors and visible part) are read after a frame, when style and layout are
+     clean, and an enter inside a scope whose rects are known reads nothing at all, so its :hover restyle and the
+     engine's writes share the frame's one recalc; a target never measured (a new scope) gets its classes in its first
+     frame and its light, plate, magnet and reticle one frame later, once the read after that frame has measured it; a
+     frame reads rects itself only after a scroll around the scope, a resize, an element added or removed inside the
+     scope, a gesture rest or a look change (a known box may have moved); every
+     frame reads first, then writes; the proxies are made at idle and keep their layers; the rAF loop stops as soon as no
+     spring, travel or pointer change is pending, so a pointer resting on a card stops it once the spring has settled,
+     and nothing runs at idle.
+   Test API: window.PMH = { sel, kinds, state(), retoken(), stats(), resolve(el), kindOf(el) }; stats().enters counts
+     how enters met their rects (cached = read nothing in the frame). ?pmh=off leaves the
+     engine out (for A/B measurements). */
+(function () {
+  'use strict';
+  try { pmh(); } catch (err) { try { console.warn('[pmh] hover engine not started:', err); } catch (_) {} }
+
+  function pmh() {
+    var root = document.documentElement;
+    if (/(?:^|[?&])pmh=off(?:&|$)/.test(location.search)) { window.PMH = { off: true }; return; }
+
+    /* ---- targets and kinds ---- */
+    var KINDS = {
+      icon: '.activity-bar .icon,.pm-term-icon-btn,.pm6-dash-iconbtn,.browser-action-btn',
+      tile: '.pm6-dash-catalog-item,.pm6-orch-ctl,.pm6-orch-pc-stat,.pm6-orch-hist-state',
+      row: '.pm6-sp-row,.pm6-art-row,.pm6-search-hit',
+      card: '.pm6-dash-card,.pm6-proj-card,.project-card-bento,.pm6-wiz-choice-card,.pm6-wiz-attach-card,' +
+        '.pm6-wiz-disc-card,.pm6-wiz-topic-card,.pm6-orch-widget,.pm6-chat-card,.pm6-usage-acct-status,.pmu-card,.pm7u-card'
+    };
+    var KIND_ORDER = ['icon', 'tile', 'row', 'card'];
+    var SEL = '[data-pmh],.pm-sheen,' + KIND_ORDER.map(function (k) { return KINDS[k]; }).join(',');
+    var BOUNDARY = '[role="tab"],.page-tab,[class*="resizer"],[class*="-divider"],.xterm,textarea,input,select,' +
+      '[contenteditable=""],[contenteditable="true"]';
+    /* [data-pm-hover-exempt] marks surfaces that must not hover (the home terminal's input and text) and, in the page's
+       hover-tag controller, containers and plates whose tags are off. PMH honours it only where it sits INSIDE the
+       target under the pointer (a text surface in a card): a target that carries it itself, or sits inside an
+       exempt container (a focus landmark, the Usage board), still hovers. */
+    var EXEMPT = '[data-pm-hover-exempt]';
+    /* Usage plates: the whole head is a move handle and seven resize zones sit 4 px outside the edge, so the magnet
+       stays off there (light and glow only); a plate is not a target while the board runs an operation on it, nor
+       while it settles into its slot after a drop (a transform animation: a rect read then is not where it lands). */
+    var PMU_SKIP = '[data-head="band"],[data-pending],[data-leaving],[data-lifted],[data-resizing],[data-settling],[data-morphing]';
+    var NOMAG = '.pmu-card,[data-pmh-mag="0"]';
+    var REST_BODY = ['pm-resizing', 'pm-ab-dragging', 'pmu-pointer-op', 'pm7u-pointer-op', 'pmw-dragging'];   /* pmw-dragging: home panels' tab or panel drag */
+
+    var TOKENS = [
+      /* magnet: max px, fraction of min(w,h), kind gain, spring, quantum (px, 0 = smooth), write cadence (Hz, 0 = every frame) */
+      ['mag', '--pmh-mag', 3], ['magK', '--pmh-mag-k', 0.03], ['gain', '--pmh-mag-gain', 1],
+      ['stiff', '--pmh-stiff', 220], ['damp', '--pmh-damp', 28], ['step', '--pmh-step', 0], ['hz', '--pmh-hz', 0],
+      /* field: on/off, neighbours on/off, bleed px, edge intensity, ramp px, which positions to write */
+      ['field', '--pmh-field', 1], ['near', '--pmh-near', 1], ['bleed', '--pmh-bleed', 10], ['edge', '--pmh-edge', 0.45],
+      ['ramp', '--pmh-ramp', 16], ['pos', '--pmh-pos', 7],
+      ['outMs', '--pmh-out-ms', 240],
+      /* glow proxy */
+      ['glow', '--pmh-glow', 0], ['glowReach', '--pmh-glow-reach', 40],
+      /* frame proxy: on/off, follow the magnet, stepped cadence (Hz) and the share of the way each step covers,
+         spring, how long the frame may be hidden and still travel (ms), clip slack */
+      ['frame', '--pmh-frame', 0], ['follow', '--pmh-frame-follow', 0], ['fhz', '--pmh-frame-hz', 0],
+      ['fk', '--pmh-frame-k', 0.5], ['fstiff', '--pmh-frame-stiff', 520], ['fdamp', '--pmh-frame-damp', 44],
+      ['fsnap', '--pmh-frame-snap-ms', 180], ['freach', '--pmh-frame-reach', 12],
+      /* proxies on whole device pixels (0 = off): edges rounded the way Blink snaps the target's own border box, so a
+         1 px line drawn on a proxy lands on the target's border instead of smearing over two half-intensity pixels at
+         a fractional rect (NieR's hairline brackets) */
+      ['snap', '--pmh-snap', 0],
+      /* edge hold, px (0 = off): over no other target and within this band around the hovered box's edge, the hover
+         stays. A look that moves its box on hover (Retro's 2 px raise) would otherwise toggle while a slow pointer
+         crosses the strip the box moved off; deep inside a box it never holds, so an overlay still occludes */
+      ['hold', '--pmh-hold', 0]
+    ];
+
+    var T = {}, probe = null, tokensDirty = true, tokenFrame = 0;
+    var stats = { frames: 0, rects: 0, writes: 0, scopes: 0, tokenReads: 0, lastFrameMs: 0, maxFrameMs: 0, errors: 0, slow: [], totalMs: 0, enters: { cached: 0, deferred: 0, noRect: 0, old: 0, dirty: 0 }, hist: { lt1: 0, lt2: 0, lt4: 0, lt8: 0, ge8: 0 } };
+    var phase = { tokens: false, scope: false, rects: 0 };   /* what the current frame did, for stats.slow */
+    var raf = window.requestAnimationFrame.bind(window);
+    var M = window.O55 && window.O55.motion;
+    var reduceMq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+    function isReduced() {
+      if (M && typeof M.reduced === 'function') { try { return !!M.reduced(); } catch (_) {} }
+      return root.getAttribute('data-motion') === 'reduced' || !!(reduceMq && reduceMq.matches);
+    }
+    function family() {
+      if (root.hasAttribute('data-o55-nier')) return 'nier';
+      var f = (root.getAttribute('data-theme') || 'basic-dark').split('-')[0];
+      return /^(basic|friendly|glass|retro)$/.test(f) ? f : 'basic';
+    }
+
+    var kindCache = new WeakMap();
+    function kindOf(el) {
+      var k = kindCache.get(el);
+      if (k) return k;
+      var v = el.getAttribute('data-pmh');
+      if (v && KINDS[v]) k = v;
+      else {
+        k = 'card';
+        for (var i = 0; i < KIND_ORDER.length; i++) { if (el.matches(KINDS[KIND_ORDER[i]])) { k = KIND_ORDER[i]; break; } }
+      }
+      kindCache.set(el, k);
+      if (el.getAttribute('data-pmh-kind') !== k) kindQueue.push(el);   /* written in the frame's write phase */
+      return k;
+    }
+    var kindQueue = [];
+    function flushKinds() {
+      for (var i = 0; i < kindQueue.length; i++) {
+        var el = kindQueue[i], k = kindCache.get(el);
+        if (k && el.getAttribute('data-pmh-kind') !== k) { el.setAttribute('data-pmh-kind', k); stats.writes++; }
+      }
+      kindQueue.length = 0;
+    }
+    function valid(el) {
+      var v = el.getAttribute('data-pmh');
+      if (v === 'off' || v === 'none') return false;
+      if (el.matches(BOUNDARY)) return false;
+      if (el.classList.contains('pmu-card') &&
+          (el.matches(PMU_SKIP) || el._pmuLeaving || el.closest('.pmu-ghostboard,#pmuFlight,.pmu-board[data-op]'))) return false;
+      return true;
+    }
+    function resolve(start) {
+      var t = start && start.closest ? start.closest(SEL) : null, best = null;
+      while (t) {
+        if (valid(t)) best = t;
+        var p = t.parentElement;
+        t = p ? p.closest(SEL) : null;
+      }
+      var ex = best && start.closest(EXEMPT);
+      if (ex && ex !== best && best.contains(ex)) return null;   /* the pointer is on an exempt surface inside the target */
+      return best;
+    }
+
+    /* ---- per-element state ---- */
+    var ST = new WeakMap();
+    function st(el) {
+      var s = ST.get(el);
+      if (!s) {
+        s = { el: el, kind: kindOf(el), nomag: el.matches(NOMAG), x: 0, y: 0, vx: 0, vy: 0, wx: 0, wy: 0, acc: 0,
+          fi: 0, fx: NaN, fy: NaN, near: false, mv: false, outTimer: 0, radius: null, clippers: null, vis: null, box: null };
+        ST.set(el, s);
+      }
+      return s;
+    }
+
+    /* ---- pointer state (written by the hook, applied by the frame) ---- */
+    var px = 0, py = 0, have = false, buttons = 0, hit = null, want = null, moved = false;
+    var lastHitEl = null, lastHitT = null, lastHitAt = 0;
+    var hover = null, springs = new Set(), lit = new Set();
+    var running = false, lastT = 0, wasRest = false, bodyRest = false, visCache = null;
+
+    function gestureRest() {
+      var b = document.body;
+      if (b) for (var i = 0; i < REST_BODY.length; i++) { if (b.classList.contains(REST_BODY[i])) return true; }
+      if (root.hasAttribute('data-pmu-moment')) return true;
+      return !!(hit && hit.closest && hit.closest('.pmu-board[data-op]'));
+    }
+
+    function onMove(e) {
+      if (e.pointerType === 'touch') return;
+      px = e.clientX; py = e.clientY; have = true; buttons = e.buttons | 0; hit = e.target;
+      var now = e.timeStamp || performance.now();
+      if (e.target === lastHitEl && now - lastHitAt < 400) want = lastHitT;
+      else { want = resolve(e.target); lastHitEl = e.target; lastHitT = want; lastHitAt = now; }
+      moved = true;
+      start();
+    }
+    function onLeave(e) {
+      if (e.relatedTarget) return;
+      have = false; hit = null; want = null; lastHitEl = null; moved = true;
+      start();
+    }
+
+    /* ---- scope: the targets the field may light, with cached rects ---- */
+    /* rectsDirty: the scope's rects must be read; geomDirty: boxes may have moved since they were read (scroll, resize,
+       elements added or removed in the scope, a gesture, a look change), so a known rect may be wrong */
+    var scopeEl = null, scopeScan = null, scopeMode = '', cands = [], scopeDirty = true, rectsDirty = true, geomDirty = false, rectsAt = 0, mo = null;
+    var CAP = 160;
+    /* The outermost valid targets of a querySelectorAll list (document order): a match inside the last kept target is
+       nested and belongs to it. No target sits above the container (in hover mode the container is above the resolved,
+       outermost target; in gap mode the pointer's element resolved to none), so the whole parent chain of every match
+       is never walked again (it was a closest(SEL) per level per candidate, 2-6 ms per scope). */
+    function outermostIn(list, c) {
+      var out = [], outer = null;
+      for (var i = 0; i < list.length && out.length < CAP; i++) {
+        var el = list[i];
+        if (outer && outer.contains(el)) continue;   /* nested: the outer box owns it */
+        if (valid(el)) { out.push(el); outer = el; }
+      }
+      return out;
+    }
+    function hasEl(list) { for (var i = 0; i < list.length; i++) if (list[i].nodeType === 1) return true; return false; }
+    function buildScope(anchor, gap) {
+      var c, found, scan = null;
+      if (gap) { c = anchor; scan = c; found = c && c.querySelectorAll ? outermostIn(c.querySelectorAll(SEL), c) : []; }
+      else {
+        /* climb from the hovered box until its neighbours are in view (at most four levels, never to <body>) */
+        c = anchor.parentElement; found = [anchor];
+        for (var lv = 0; c && c !== document.body && lv < 4; lv++) {
+          found = outermostIn(c.querySelectorAll(SEL), c); scan = c;
+          if (found.length >= 4) break;
+          var up = c.parentElement;
+          if (!up || up === document.body || up === root) break;
+          c = up;
+        }
+        if (found.indexOf(anchor) < 0) found.push(anchor);
+      }
+      stats.scopes++; phase.scope = true;
+      var prev = new Map();
+      for (var i = 0; i < cands.length; i++) prev.set(cands[i].el, cands[i]);
+      cands = found.map(function (el) { return prev.get(el) || { el: el, kind: kindOf(el), l: 0, t: 0, w: 0, h: 0 }; });
+      if (scopeEl !== c) {
+        scopeEl = c;
+        if (mo) mo.disconnect();
+        if (c && typeof MutationObserver === 'function') {
+          /* only elements added or removed count: a live widget that rewrites its text (the dashboard's counters, a
+             few times a second) cannot add a target, and a box its new text moves is caught by the read after the
+             next frame */
+          mo = mo || new MutationObserver(function (ms) {
+            for (var i = 0; i < ms.length; i++) {
+              if (hasEl(ms[i].addedNodes) || hasEl(ms[i].removedNodes)) { scopeDirty = rectsDirty = geomDirty = true; if (proxyShown()) start(); return; }
+            }
+          });
+          mo.observe(c, { childList: true, subtree: true });
+        }
+      }
+      scopeMode = gap ? 'gap' : 'hover'; scopeScan = scan;
+      scopeDirty = false; rectsDirty = true;
+      for (var j = 0; j < cands.length; j++) if (!cands[j].el.hasAttribute('data-pmh-kind')) { stampSoon(); break; }
+    }
+    /* the translate a box shows on top of its rest position: the magnet's (written by this engine), else a hover form's
+       own (Retro's raise on .pmh-on / .pmh-out), read from the computed style only for those two states */
+    function shiftOf(el, s) {
+      if (s && (s.wx || s.wy)) return [s.wx, s.wy];
+      if (!el.classList.contains('pmh-on') && !el.classList.contains('pmh-out')) return null;
+      var tr = getComputedStyle(el).translate;
+      if (!tr || tr === 'none') return null;
+      var p = tr.split(' '), x = parseFloat(p[0]) || 0, y = parseFloat(p[1]) || 0;
+      return x || y ? [x, y] : null;
+    }
+    /* returns whether any rest rect moved by half a pixel or more */
+    function readRects() {
+      var changed = false;
+      for (var i = 0; i < cands.length; i++) {
+        var c = cands[i], r = c.el.getBoundingClientRect(), s = ST.get(c.el), d = shiftOf(c.el, s), dx = d ? d[0] : 0, dy = d ? d[1] : 0;
+        stats.rects++;
+        /* the rest rect: the rendered rect less the translate on top of it */
+        var l = r.left - dx, t = r.top - dy;
+        if (Math.abs(l - c.l) >= 0.5 || Math.abs(t - c.t) >= 0.5 || Math.abs(r.width - c.w) >= 0.5 || Math.abs(r.height - c.h) >= 0.5) changed = true;
+        c.l = l; c.t = t; c.w = r.width; c.h = r.height;
+        if (s && s.box) {   /* the proxies' box (an activity icon's .symbol) */
+          var b = s.box.getBoundingClientRect(); stats.rects++;
+          s.boxR = { l: b.left - dx, t: b.top - dy, w: b.width, h: b.height };
+        }
+      }
+      rectsDirty = geomDirty = false; rectsAt = performance.now();
+      return changed;
+    }
+    /* What a frame would otherwise read on enter (rects, the target's radius, its clipping ancestors and their rects) is
+       read after the frame instead, when style and layout are clean and a read costs no recalc: from a message posted in
+       the frame, which runs after its rendering. Then the next enter inside this scope reads nothing, so its :hover
+       restyle and the engine's class writes share one recalc instead of a forced one plus another. If a rect or the
+       visible part moved, the next frame applies it. */
+    var post = typeof MessageChannel === 'function' ? new MessageChannel() : null, postWanted = false;
+    function afterFrameSoon() {
+      if (postWanted) return;
+      postWanted = true;
+      if (post) post.port2.postMessage(0); else setTimeout(afterFrame, 0);
+    }
+    function afterFrame() {
+      postWanted = false;
+      if (!cands.length || gestureRest()) return;
+      var changed = readRects(), memo = new Map();
+      for (var i = 0; i < cands.length; i++) {
+        var s = st(cands[i].el);
+        if (proxyWanted(s.kind)) { prefetch(s); s.vis = visibleRect(s, memo); }
+      }
+      if (hover && hover.isConnected) {
+        var hs = ST.get(hover), v = hs && hs.vis;
+        if (v && (!visCache || v.l !== visCache.l || v.t !== visCache.t || v.r !== visCache.r || v.b !== visCache.b)) { visCache = v; changed = true; }
+      }
+      if (changed && (hover || lit.size)) { moved = true; start(); }
+    }
+    if (post) post.port1.onmessage = afterFrame;
+    /* what the proxies need of a target, read once: its box, radius and clipping ancestors */
+    function prefetch(s) {
+      if (s.kind === 'icon' && s.box === null) s.box = s.el.matches('.activity-bar .icon') ? s.el.querySelector('.symbol') || false : false;
+      if (!proxyWanted(s.kind)) return;
+      if (s.radius === null) s.radius = getComputedStyle(s.box || s.el).borderRadius || '';
+      if (!s.clippers) s.clippers = clippersOf(s.el);
+    }
+    function candOf(el) { for (var i = 0; i < cands.length; i++) if (cands[i].el === el) return cands[i]; return null; }
+
+    /* ---- tokens ---- */
+    function ensureProbe() {
+      if (probe || !document.body) return;
+      probe = document.createElement('div');
+      probe.id = 'pmh-probe'; probe.setAttribute('aria-hidden', 'true');
+      for (var i = 0; i < KIND_ORDER.length; i++) {
+        var p = document.createElement('i'); p.setAttribute('data-pmh-kind', KIND_ORDER[i]); probe.appendChild(p);
+      }
+      document.body.appendChild(probe);
+    }
+    function readTokens() {
+      ensureProbe();
+      if (!probe) return;
+      stats.tokenReads++; phase.tokens = true;
+      var kids = probe.children;
+      for (var i = 0; i < kids.length; i++) {
+        var cs = getComputedStyle(kids[i]), o = {};
+        for (var j = 0; j < TOKENS.length; j++) {
+          var v = parseFloat(cs.getPropertyValue(TOKENS[j][1]));
+          o[TOKENS[j][0]] = isNaN(v) ? TOKENS[j][2] : v;
+        }
+        T[kids[i].getAttribute('data-pmh-kind')] = o;
+      }
+      tokensDirty = false;
+      var fam = family();
+      if (glowEl) glowEl.setAttribute('data-pmh-family', fam);
+      if (frameEl) frameEl.setAttribute('data-pmh-family', fam);
+    }
+    function tk(kind) { return T[kind] || T.card; }
+    function retokenNextFrame() {
+      tokensDirty = true; rectsDirty = geomDirty = true;   /* a look change can change every box's size */
+      if (tokenFrame) return;
+      tokenFrame = raf(function retokenFrame() {
+        tokenFrame = 0;
+        if (tokensDirty) readTokens();
+        if (isReduced()) snapMagnets();
+        stampSoon(300);
+        if (hover || springs.size || lit.size) { moved = true; start(); }
+      });
+    }
+
+    /* ---- the loop ---- */
+    function start() { if (!running) { running = true; lastT = performance.now(); raf(tick); } }
+
+    function tick(now) {
+      var t0 = performance.now();
+      phase.tokens = phase.scope = false; phase.rects = stats.rects;
+      try { frame(now); } catch (err) {
+        stats.errors++;
+        if (stats.errors < 4) { try { console.warn('[pmh] frame failed:', err); } catch (_) {} }
+        running = false; return;
+      }
+      var ms = performance.now() - t0;
+      stats.frames++; stats.lastFrameMs = Math.round(ms * 1000) / 1000; stats.totalMs += ms;
+      stats.hist[ms < 1 ? 'lt1' : ms < 2 ? 'lt2' : ms < 4 ? 'lt4' : ms < 8 ? 'lt8' : 'ge8']++;
+      if (ms > stats.maxFrameMs) stats.maxFrameMs = stats.lastFrameMs;
+      /* the last few frames over 4 ms, with what they did (a token read or a rect read flushes style the page had
+         left dirty, so that cost is the page's pending style, met early in the frame) */
+      if (ms > 4) {
+        stats.slow.push({ ms: stats.lastFrameMs, tokens: phase.tokens, scope: phase.scope, rects: stats.rects - phase.rects, cands: cands.length });
+        if (stats.slow.length > 6) stats.slow.shift();
+      }
+    }
+
+    function frame(now) {
+      var dt = Math.min(1 / 30, Math.max(1 / 240, (now - lastT) / 1000 || 1 / 60));
+      lastT = now;
+      var reduced = isReduced(), rest = gestureRest(), calm = !rest && buttons !== 0;
+      var wasMoved = moved; moved = false;
+
+      /* READ ------------------------------------------------------------ */
+      if (tokensDirty) readTokens();
+      var next = rest || !have ? null : (calm ? hover : want);
+      if (!next && hover && have && !rest && hover.isConnected && inHoldBand(hover)) next = hover;
+      if (next && !next.isConnected) next = null;
+      var enter = next !== hover;
+      if (next) {
+        if (enter || scopeDirty || scopeMode !== 'hover' || !candOf(next)) {
+          /* the scope already holds the target (the gap scope of its container, or a neighbour's scope): keep it */
+          if (!scopeDirty && candOf(next) && scopeEl && scopeEl.contains(next)) scopeMode = 'hover';
+          else buildScope(next, false);
+        }
+      } else if (have && !rest && hit && hit.isConnected && (scopeDirty || scopeMode !== 'gap' || scopeScan !== hit) && !calm) {
+        if (!scopeDirty && scopeScan === hit) scopeMode = 'gap';   /* the gap of the container the hover scope scanned: the same list */
+        else if (!scopeDirty && scopeScan && scopeScan.contains(hit) && cands.length < CAP) {
+          /* a gap inside the scanned container (the grid between two cards): its targets are the list's own subset, with
+             their rects (the scope element and its observer stay) */
+          cands = cands.filter(function (c) { return hit.contains(c.el); });
+          scopeScan = hit; scopeMode = 'gap';
+        } else buildScope(hit, true);
+      }
+      var cached = false, defer = false;
+      if (next && enter) {
+        var ns = st(next), nc = candOf(next);
+        /* rects read within the last five seconds (and again after every frame that runs) are used as they are: an
+           enter reads nothing, and the read after this frame corrects a box that moved without a scroll, resize or DOM
+           change in the scope (each of those marks the rects dirty, and a dirty rect is read in the frame as before) */
+        cached = !rectsDirty && !!nc && nc.w > 0 && now - rectsAt < 5000 && (ns.kind !== 'icon' || ns.box !== null) &&
+          (!proxyWanted(ns.kind) || (ns.radius !== null && !!ns.clippers && !!ns.vis));
+        /* a target never measured (a new scope) while nothing moved: this frame writes its classes only and the read after
+           the frame measures it, so this frame's :hover restyle is not forced early and then repeated; the light, plate,
+           magnet and reticle start on the next frame. A box that may have moved (geomDirty) is read here, as before. */
+        if (!cached) {
+          defer = !geomDirty && (!nc || !nc.w);
+          if (!defer) { prefetch(ns); rectsDirty = true; }
+        }
+        /* test API: how enters met their rects (cached = read nothing in the frame) */
+        stats.enters[cached ? 'cached' : defer ? 'deferred' : !nc || !nc.w ? 'noRect' : now - rectsAt >= 5000 ? 'old' : 'dirty']++;
+      }
+      var reread = rectsDirty && !defer;
+      if (reread) readRects();
+      var hc = next ? candOf(next) : null;
+      if (hc && !hc.w) hc = null;   /* not measured yet: no magnet, light or proxy until it is */
+      /* the visible part (clipping ancestors' rects) is read with the rects, never on its own in a frame */
+      var nst = next ? st(next) : null;
+      if (!next || !hc || !proxyWanted(nst.kind)) visCache = null;
+      else if (reread || !nst.vis) visCache = nst.vis = visibleRect(nst);
+      else if (enter || !visCache) visCache = nst.vis;
+      var vis = visCache;
+
+      /* WRITE ----------------------------------------------------------- */
+      if (kindQueue.length) flushKinds();
+      if (enter) swapHover(hover, next, reduced);
+      hover = next;
+      if (hover && (wasMoved || enter) && !st(hover).nomag) springs.add(st(hover));
+      if (calm && hover) springs.add(st(hover));
+      if (rest) { if (lit.size) clearField(); }
+      else if (!calm && (wasMoved || enter || rest !== wasRest)) field(reduced);
+      wasRest = rest;
+      magnets(dt, reduced, calm);
+      glowUpdate(hc, vis);
+      var travelling = frameUpdate(hc, vis, dt, reduced, now);
+
+      if (cached || defer || reread || enter || (wasMoved && now - rectsAt > 1000)) afterFrameSoon();
+      if (springs.size || travelling || moved) raf(tick); else running = false;
+    }
+
+    function inHoldBand(el) {
+      var s = ST.get(el), h = s ? tk(s.kind).hold : 0, c = h > 0 ? candOf(el) : null;
+      if (!c || !c.w) return false;
+      return px >= c.l - h && px <= c.l + c.w + h && py >= c.t - h && py <= c.t + c.h + h &&
+        !(px > c.l + h && px < c.l + c.w - h && py > c.t + h && py < c.t + c.h - h);
+    }
+    function swapHover(prev, next, reduced) {
+      if (prev && prev.isConnected) {
+        var ps = st(prev);
+        prev.classList.remove('pmh-on'); stats.writes++;
+        var out = tk(ps.kind).outMs;
+        if (!reduced && out > 0) {
+          prev.classList.add('pmh-out');
+          clearTimeout(ps.outTimer);
+          ps.outTimer = setTimeout(function () { ps.outTimer = 0; prev.classList.remove('pmh-out'); }, out);
+        }
+        springs.add(ps);
+      }
+      if (next) {
+        var s = st(next);
+        if (s.outTimer) { clearTimeout(s.outTimer); s.outTimer = 0; next.classList.remove('pmh-out'); }
+        next.classList.add('pmh-on'); stats.writes++;
+      }
+    }
+
+    /* ---- field ---- */
+    function setI(s, i) {
+      if (Math.abs(i - s.fi) >= 0.01 || (i === 0 && s.fi !== 0)) {
+        if (i === 0) s.el.style.removeProperty('--pmh-i'); else s.el.style.setProperty('--pmh-i', i.toFixed(2));
+        s.fi = i; stats.writes++;
+      }
+    }
+    function setPos(s, c, x, y, mask) {
+      if (Math.abs(x - s.fx) < 0.5 && Math.abs(y - s.fy) < 0.5) return;
+      var es = s.el.style;
+      if (mask & 1) { es.setProperty('--pmh-x', x.toFixed(1) + 'px'); es.setProperty('--pmh-y', y.toFixed(1) + 'px'); }
+      if (mask & 2) {
+        es.setProperty('--pmh-px', Math.min(100, Math.max(0, x / c.w * 100)).toFixed(1) + '%');
+        es.setProperty('--pmh-py', Math.min(100, Math.max(0, y / c.h * 100)).toFixed(1) + '%');
+      }
+      if (mask & 4) {
+        es.setProperty('--pmh-dx', Math.max(-1, Math.min(1, (x - c.w / 2) / (c.w / 2))).toFixed(3));
+        es.setProperty('--pmh-dy', Math.max(-1, Math.min(1, (y - c.h / 2) / (c.h / 2))).toFixed(3));
+      }
+      s.fx = x; s.fy = y; stats.writes++;
+    }
+    function unlight(s) {
+      var es = s.el.style;
+      if (s.fi !== 0 || !isNaN(s.fx)) {
+        ['--pmh-i', '--pmh-x', '--pmh-y', '--pmh-px', '--pmh-py', '--pmh-dx', '--pmh-dy'].forEach(function (n) { es.removeProperty(n); });
+        stats.writes++;
+      }
+      s.fi = 0; s.fx = s.fy = NaN;
+      if (s.near) { s.el.classList.remove('pmh-near'); s.near = false; stats.writes++; }
+    }
+    function clearField() { lit.forEach(unlight); lit.clear(); }
+    function field(reduced) {
+      var now = new Set();
+      if (have) {
+        for (var k = 0; k < cands.length; k++) {
+          var c = cands[k];
+          if (!c.w || !c.h) continue;
+          var tok = tk(c.kind);
+          if (!tok.field) continue;
+          var isHover = c.el === hover;
+          if (reduced && !isHover) continue;
+          var s0 = ST.get(c.el), ox = s0 ? s0.wx : 0, oy = s0 ? s0.wy : 0;
+          var l = c.l + ox, t = c.t + oy, r = l + c.w, b = t + c.h, i;
+          if (isHover) {
+            if (reduced) i = 1;
+            else {
+              var depth = Math.min(px - l, r - px, py - t, b - py);
+              i = tok.edge + (1 - tok.edge) * Math.min(1, Math.max(0, depth) / Math.max(1, tok.ramp));
+            }
+          } else {
+            if (!tok.near || tok.bleed <= 0) continue;
+            if (px < l - tok.bleed || px > r + tok.bleed || py < t - tok.bleed || py > b + tok.bleed) continue;
+            var dx = Math.max(l - px, 0, px - r), dy = Math.max(t - py, 0, py - b), d = Math.sqrt(dx * dx + dy * dy);
+            i = d >= tok.bleed ? 0 : tok.edge * (tok.bleed - d) / tok.bleed;
+          }
+          if (i <= 0.004) continue;
+          var s = st(c.el);
+          now.add(s);
+          setI(s, i);
+          if (!reduced && tok.pos) setPos(s, c, px - l, py - t, tok.pos);
+          var nearNow = !isHover;
+          if (nearNow !== s.near) { s.el.classList.toggle('pmh-near', nearNow); s.near = nearNow; stats.writes++; }
+        }
+      }
+      lit.forEach(function (s) { if (!now.has(s)) unlight(s); });
+      lit = now;
+    }
+
+    /* ---- magnet ---- */
+    function snapMagnets() {
+      springs.forEach(function (s) {
+        s.x = s.y = s.vx = s.vy = 0;
+        if (s.wx || s.wy) { s.el.style.translate = ''; s.wx = s.wy = 0; stats.writes++; }
+        if (s.mv) { s.el.classList.remove('pmh-mv'); s.mv = false; }
+      });
+      springs.clear();
+    }
+    function magnets(dt, reduced, calm) {
+      springs.forEach(function (s) {
+        var tok = tk(s.kind), tx = 0, ty = 0;
+        if (s.el === hover && have && !reduced && !calm && !s.nomag && s.el.isConnected) {
+          var c = candOf(s.el);
+          if (c && c.w && c.h) {
+            var m = Math.min(tok.mag, Math.min(c.w, c.h) * tok.magK) * tok.gain;
+            if (m > 0) {
+              tx = Math.max(-1, Math.min(1, (px - (c.l + c.w / 2)) / (c.w / 2))) * m;
+              ty = Math.max(-1, Math.min(1, (py - (c.t + c.h / 2)) / (c.h / 2))) * m;
+            }
+          }
+        }
+        if (reduced) { s.x = tx; s.y = ty; s.vx = s.vy = 0; }
+        else {
+          s.vx += (tok.stiff * (tx - s.x) - tok.damp * s.vx) * dt;
+          s.vy += (tok.stiff * (ty - s.y) - tok.damp * s.vy) * dt;
+          s.x += s.vx * dt; s.y += s.vy * dt;
+        }
+        var settled = Math.abs(tx - s.x) < 0.05 && Math.abs(ty - s.y) < 0.05 && Math.abs(s.vx) < 0.5 && Math.abs(s.vy) < 0.5;
+        if (settled) { s.x = tx; s.y = ty; s.vx = s.vy = 0; }
+        var writeNow = true;
+        if (tok.hz > 0 && !settled) { s.acc += dt; if (s.acc < 1 / tok.hz) writeNow = false; else s.acc = 0; }
+        if (writeNow) {
+          var q = tok.step > 0 ? tok.step : 0.05;
+          var wx = Math.round(s.x / q) * q, wy = Math.round(s.y / q) * q;
+          if (wx !== s.wx || wy !== s.wy) {
+            if (!s.mv && (wx || wy)) { s.el.classList.add('pmh-mv'); s.mv = true; }
+            s.el.style.translate = (wx || wy) ? wx.toFixed(2) + 'px ' + wy.toFixed(2) + 'px' : '';
+            s.wx = wx; s.wy = wy; stats.writes++;
+          }
+        }
+        if (settled) {
+          if (!tx && !ty) {
+            if (s.wx || s.wy) { s.el.style.translate = ''; s.wx = s.wy = 0; stats.writes++; }
+            if (s.mv) { s.el.classList.remove('pmh-mv'); s.mv = false; stats.writes++; }
+          }
+          springs.delete(s);
+        }
+      });
+    }
+
+    /* ---- proxies ---- */
+    var glowEl = null, GL = [], glowCur = -1, glowLastOff = 1;
+    var frameEl = null, FR = { on: false, x: 0, y: 0, w: 0, h: 0, vx: 0, vy: 0, vw: 0, vh: 0, acc: 0, offAt: -1e9, travel: false, clip: '', host: null };
+    function proxyWanted(kind) { var t = tk(kind); return !!(t.glow || t.frame); }
+    function proxyShown() { return !!(glowCur >= 0 || FR.on); }
+    var clipMemo = new WeakMap();   /* ancestor -> 1 clips, 2 clips and is fixed, 3 is fixed, 0 neither (siblings share them) */
+    function clippersOf(el) {
+      var out = [];
+      for (var a = el.parentElement; a && a !== document.body && a !== root; a = a.parentElement) {
+        var m = clipMemo.get(a);
+        if (m === undefined) {
+          var cs = getComputedStyle(a), clips = /(hidden|auto|scroll|clip)/.test(cs.overflowX + cs.overflowY), fx = cs.position === 'fixed';
+          m = (clips ? 1 : 0) + (fx ? 2 : 0); clipMemo.set(a, m);
+        }
+        if (m & 1) out.push(a);
+        if (m & 2) break;
+      }
+      return out;
+    }
+    function visibleRect(s, memo) {
+      var v = { l: -1e9, t: -1e9, r: 1e9, b: 1e9 };
+      var list = s.clippers || [];
+      for (var i = 0; i < list.length; i++) {
+        var r = memo && memo.get(list[i]);
+        if (!r) { r = list[i].getBoundingClientRect(); stats.rects++; if (memo) memo.set(list[i], r); }
+        if (r.left > v.l) v.l = r.left; if (r.top > v.t) v.t = r.top;
+        if (r.right < v.r) v.r = r.right; if (r.bottom < v.b) v.b = r.bottom;
+      }
+      return v;
+    }
+    function boxFor(c) {
+      var s = ST.get(c.el);
+      return s && s.boxR ? s.boxR : { l: c.l, t: c.t, w: c.w, h: c.h };
+    }
+    function clipFor(b, v, reach) {
+      if (!v) return '';
+      if (v.r <= v.l || v.b <= v.t || v.r <= b.l - reach || v.l >= b.l + b.w + reach || v.b <= b.t - reach || v.t >= b.t + b.h + reach) return 'hide';
+      var it = Math.max(-reach, v.t - b.t), ir = Math.max(-reach, b.l + b.w - v.r), ib = Math.max(-reach, b.t + b.h - v.b), il = Math.max(-reach, v.l - b.l);
+      if (it === -reach && ir === -reach && ib === -reach && il === -reach) return '';
+      return 'inset(' + it.toFixed(0) + 'px ' + ir.toFixed(0) + 'px ' + ib.toFixed(0) + 'px ' + il.toFixed(0) + 'px)';
+    }
+    function placeBox(el, memo, b, radius, clip, snap) {
+      var es = el.style;
+      if (snap) {
+        var d = window.devicePixelRatio || 1, sl = Math.round(b.l * d) / d, sr = Math.round(b.t * d) / d;
+        b = { l: sl, t: sr, w: Math.round((b.l + b.w) * d) / d - sl, h: Math.round((b.t + b.h) * d) / d - sr };
+      }
+      var tr = 'translate(' + b.l.toFixed(1) + 'px,' + b.t.toFixed(1) + 'px)';
+      if (memo.tr !== tr) { es.transform = tr; memo.tr = tr; stats.writes++; }
+      var w = Math.round(b.w * 2) / 2, h = Math.round(b.h * 2) / 2;
+      if (memo.w !== w) { es.width = w + 'px'; memo.w = w; stats.writes++; }
+      if (memo.h !== h) { es.height = h + 'px'; memo.h = h; stats.writes++; }
+      if (radius !== undefined && memo.radius !== radius) { es.borderRadius = radius; memo.radius = radius; stats.writes++; }
+      if (memo.clip !== clip) { es.clipPath = clip; memo.clip = clip; stats.writes++; }
+    }
+    function ensureGlow() {
+      if (glowEl || !document.body) return glowEl;
+      glowEl = document.createElement('div');
+      glowEl.id = 'pmh-glow'; glowEl.setAttribute('aria-hidden', 'true');
+      glowEl.setAttribute('data-pmh-family', family()); glowEl.setAttribute('data-pmh-kind', 'card');
+      for (var i = 0; i < 2; i++) {
+        var l = document.createElement('i'); l.setAttribute('data-pmh-kind', 'card'); glowEl.appendChild(l);
+        GL.push({ el: l, host: null, on: false, memo: {} });
+      }
+      document.body.appendChild(glowEl);
+      return glowEl;
+    }
+    function glowOn(L, on) { if (L.on !== on) { L.el.classList.toggle('pmh-glow-on', on); L.on = on; stats.writes++; } }
+    function glowUpdate(hc, vis) {
+      var s = hover ? st(hover) : null, tok = s ? tk(s.kind) : null;
+      var target = s && tok.glow && hc ? hover : null;
+      var cur = glowCur >= 0 ? GL[glowCur] : null;
+      if (cur && cur.host !== target) {
+        /* the old layer fades out where it is (its host is kept, so a quick return re-lights the same layer) */
+        glowOn(cur, false); glowLastOff = glowCur; glowCur = -1; cur = null;
+      }
+      if (!target || !ensureGlow()) return;
+      if (!cur) {
+        glowCur = GL[0].host === target ? 0 : GL[1].host === target ? 1 : 1 - glowLastOff;
+        cur = GL[glowCur]; cur.host = target;
+        if (cur.el.getAttribute('data-pmh-kind') !== s.kind) { cur.el.setAttribute('data-pmh-kind', s.kind); glowEl.setAttribute('data-pmh-kind', s.kind); }
+      }
+      var b = boxFor(hc), clip = clipFor(b, vis, tok.glowReach);
+      placeBox(cur.el, cur.memo, b, s.radius, clip === 'hide' ? '' : clip, tok.snap);
+      glowOn(cur, clip !== 'hide');
+    }
+    function ensureFrame() {
+      if (frameEl || !document.body) return frameEl;
+      frameEl = document.createElement('div');
+      frameEl.id = 'pmh-frame'; frameEl.setAttribute('aria-hidden', 'true');
+      frameEl.setAttribute('data-pmh-family', family()); frameEl.setAttribute('data-pmh-kind', 'card');
+      for (var i = 0; i < 4; i++) frameEl.appendChild(document.createElement('i'));
+      document.body.appendChild(frameEl);
+      return frameEl;
+    }
+    var frameMemo = {};
+    /* one discrete step of the way (whole pixels, at least one), landing exactly once it is within 1.5 px */
+    function stepTo(cur, goal, k) {
+      var d = goal - cur;
+      if (Math.abs(d) < 1.5) return goal;
+      var m = Math.round(d * k);
+      return cur + (Math.abs(m) >= 1 ? m : (d > 0 ? 1 : -1));
+    }
+    function frameUpdate(hc, vis, dt, reduced, now) {
+      var s = hover ? st(hover) : null, tok = s ? tk(s.kind) : null;
+      var target = s && tok.frame && hc ? hover : null;
+      if (!target) {
+        if (FR.on) { frameEl.classList.remove('pmh-frame-on', 'pmh-frame-travel'); FR.on = false; FR.travel = false; FR.offAt = now; FR.host = null; stats.writes++; }
+        return false;
+      }
+      ensureFrame();
+      if (!frameEl) return false;
+      var b = boxFor(hc), gx = b.l + (tok.follow ? s.wx : 0), gy = b.t + (tok.follow ? s.wy : 0), gw = b.w, gh = b.h;
+      if (FR.host !== target) {
+        if (frameEl.getAttribute('data-pmh-kind') !== s.kind) frameEl.setAttribute('data-pmh-kind', s.kind);
+        FR.host = target;
+      }
+      var snap = reduced || !FR.on && now - FR.offAt > tok.fsnap;
+      if (!FR.on) { FR.on = true; frameEl.classList.add('pmh-frame-on'); stats.writes++; }
+      if (snap) { FR.x = gx; FR.y = gy; FR.w = gw; FR.h = gh; FR.vx = FR.vy = FR.vw = FR.vh = 0; }
+      else if (tok.fhz > 0) {
+        FR.acc += dt;
+        if (FR.acc >= 1 / tok.fhz) {
+          FR.acc = 0;
+          var k = Math.max(0.05, Math.min(1, tok.fk));
+          FR.x = stepTo(FR.x, gx, k); FR.y = stepTo(FR.y, gy, k); FR.w = stepTo(FR.w, gw, k); FR.h = stepTo(FR.h, gh, k);
+        }
+      } else {
+        var ks = tok.fstiff, kd = tok.fdamp;
+        FR.vx += (ks * (gx - FR.x) - kd * FR.vx) * dt; FR.vy += (ks * (gy - FR.y) - kd * FR.vy) * dt;
+        FR.vw += (ks * (gw - FR.w) - kd * FR.vw) * dt; FR.vh += (ks * (gh - FR.h) - kd * FR.vh) * dt;
+        FR.x += FR.vx * dt; FR.y += FR.vy * dt; FR.w += FR.vw * dt; FR.h += FR.vh * dt;
+        if (Math.abs(gx - FR.x) < 0.3 && Math.abs(gy - FR.y) < 0.3 && Math.abs(gw - FR.w) < 0.3 && Math.abs(gh - FR.h) < 0.3 &&
+            Math.abs(FR.vx) + Math.abs(FR.vy) + Math.abs(FR.vw) + Math.abs(FR.vh) < 2) {
+          FR.x = gx; FR.y = gy; FR.w = gw; FR.h = gh; FR.vx = FR.vy = FR.vw = FR.vh = 0;
+        }
+      }
+      var travel = FR.x !== gx || FR.y !== gy || FR.w !== gw || FR.h !== gh;
+      if (travel !== FR.travel) { frameEl.classList.toggle('pmh-frame-travel', travel); FR.travel = travel; stats.writes++; }
+      var clip = clipFor({ l: gx, t: gy, w: gw, h: gh }, vis, tok.freach);
+      placeBox(frameEl, frameMemo, { l: FR.x, t: FR.y, w: FR.w, h: FR.h }, s.radius, clip === 'hide' ? 'inset(50%)' : (travel ? '' : clip), tok.snap);
+      return travel;
+    }
+
+    /* ---- listeners ---- */
+    var PM = window.PM7_PMOVE;
+    if (!PM || typeof PM.push !== 'function') {
+      /* the shared dispatcher (pm6-js-globals, kept by build.py's patch) is missing: make it, once */
+      PM = window.PM7_PMOVE = [];
+      document.addEventListener('pointermove', function (e) {
+        var hooks = window.PM7_PMOVE;
+        for (var i = 0; i < hooks.length; i++) { try { hooks[i](e); } catch (err) {} }
+      });
+    }
+    PM.push(onMove);
+    document.addEventListener('pointerout', onLeave);
+    document.addEventListener('pointerdown', function (e) {
+      if (e.pointerType === 'touch') return;
+      buttons = e.buttons | 0 || 1;
+      if (hover) { springs.add(st(hover)); start(); }
+    }, { capture: true, passive: true });
+    document.addEventListener('pointerup', function (e) { buttons = e.buttons | 0; }, { capture: true, passive: true });
+    window.addEventListener('scroll', function (e) {
+      /* only a scroller around the scope moves its boxes (the demo chat stream scrolls on its own all the time) */
+      var t = e.target;
+      if (scopeEl && t && t !== document && t !== root && t !== document.body && !(t.contains && t.contains(scopeEl))) return;
+      rectsDirty = geomDirty = true;   /* also with nothing lit: the cached rects of the scope are stale now */
+      if (!hover && !lit.size && !proxyShown()) return;
+      moved = true; start();
+    }, { capture: true, passive: true });
+    window.addEventListener('resize', function () {
+      scopeDirty = rectsDirty = geomDirty = true;
+      clipMemo = new WeakMap();
+      cands.forEach(function (c) { var s = ST.get(c.el); if (s) s.clippers = null; });
+      if (hover || lit.size) { moved = true; start(); }
+    }, { passive: true });
+    if (typeof MutationObserver === 'function') {
+      new MutationObserver(function (muts) {
+        for (var i = 0; i < muts.length; i++) {
+          if (muts[i].attributeName === 'data-pmu-moment') { if (hover || springs.size) { moved = true; start(); } }
+          else { retokenNextFrame(); return; }
+        }
+      }).observe(root, { attributes: true, attributeFilter: ['data-theme', 'data-motion', 'data-o55-nier', 'data-o55-nier-parts', 'data-pmh-soft', 'data-pmu-moment'] });
+      if (document.body) {
+        new MutationObserver(function () {
+          var r = gestureRest();
+          if (r !== bodyRest) { bodyRest = r; rectsDirty = geomDirty = true; }   /* a resize or drag gesture moves boxes */
+          if (r !== wasRest && (hover || springs.size || lit.size)) { moved = true; start(); }
+        }).observe(document.body, { attributes: true, attributeFilter: ['class'] });
+      }
+    }
+    if (reduceMq) {
+      var mqChange = function () { retokenNextFrame(); };
+      if (reduceMq.addEventListener) reduceMq.addEventListener('change', mqChange); else if (reduceMq.addListener) reduceMq.addListener(mqChange);
+    }
+
+    /* Ahead of time, at idle: every outermost target gets its data-pmh-kind (and the kind cache its value), a few per idle
+       callback so the restyle a kind attribute brings (the per-kind pseudo-element appears) is spread over idle frames
+       instead of landing in the first hover frame near a box; and the proxies the look uses are made, so their layers
+       exist before the first hover. Again after a look change and whenever a frame meets a target not stamped yet (new
+       DOM). */
+    var stampTimer = 0, stampList = null, stampAt = 0, stampOuter = null;
+    function stampSoon(ms) {
+      if (stampTimer || stampList) return;
+      stampTimer = setTimeout(function () { stampTimer = 0; idle(stampRun); }, ms || 700);
+    }
+    function stampRun(dl) {
+      if (!document.body) return;
+      if (!stampList) {
+        if (tokensDirty) readTokens();
+        var g = false, f = false;
+        for (var k in T) { if (T[k].glow) g = true; if (T[k].frame) f = true; }
+        if (g) ensureGlow();
+        if (f) ensureFrame();
+        stampList = document.querySelectorAll(SEL); stampAt = 0; stampOuter = null;
+      }
+      var n = 0, t0 = performance.now();
+      while (stampAt < stampList.length) {
+        var el = stampList[stampAt++];
+        if (stampOuter && stampOuter.contains(el)) continue;
+        if (!el.isConnected || !valid(el)) continue;
+        stampOuter = el;
+        if (el.hasAttribute('data-pmh-kind')) continue;
+        var kd = kindOf(el);
+        el.setAttribute('data-pmh-kind', kd); stats.writes++; stats.stamped = (stats.stamped || 0) + 1;
+        if (++n >= 12 || performance.now() - t0 > 4 || (dl && dl.timeRemaining && dl.timeRemaining() < 2)) break;
+      }
+      for (var q = kindQueue.length - 1; q >= 0; q--) if (kindQueue[q].hasAttribute('data-pmh-kind')) kindQueue.splice(q, 1);
+      if (stampAt < stampList.length) idle(stampRun); else stampList = null;
+    }
+
+    /* software rendering: asked twice, late and off the main thread (the worker answers within a few seconds; where no
+       worker can ask, the main-thread probe would cost about 210 ms, so it is not asked at all) */
+    function askSoft() {
+      try {
+        if (!M || typeof M.softwareRendered !== 'function' || typeof Worker !== 'function' || typeof OffscreenCanvas !== 'function') return;
+        var soft = !!M.softwareRendered();
+        if (soft !== root.hasAttribute('data-pmh-soft')) { if (soft) root.setAttribute('data-pmh-soft', ''); else root.removeAttribute('data-pmh-soft'); }
+      } catch (_) {}
+    }
+    var idle = window.requestIdleCallback ? function (fn) { window.requestIdleCallback(fn, { timeout: 1500 }); } : function (fn) { setTimeout(fn, 0); };
+    stampSoon(1200);
+    setTimeout(function () { idle(askSoft); }, 2500);
+    setTimeout(function () { idle(askSoft); }, 6500);
+
+    /* ---- test API ---- */
+    function desc(el) {
+      if (!el) return null;
+      return { tag: el.tagName.toLowerCase(), id: el.id || '', cls: String(el.className || '').slice(0, 80), kind: kindOf(el) };
+    }
+    window.PMH = {
+      sel: SEL,
+      kinds: JSON.parse(JSON.stringify(KINDS)),
+      resolve: resolve,
+      kindOf: function (el) { return el ? kindOf(el) : null; },
+      retoken: function () { readTokens(); return JSON.parse(JSON.stringify(T)); },
+      stats: function () { var o = {}; for (var k in stats) o[k] = stats[k]; o.slow = stats.slow.slice(); o.hist = Object.assign({}, stats.hist); o.enters = Object.assign({}, stats.enters); o.totalMs = Math.round(stats.totalMs * 100) / 100; o.running = running; o.springs = springs.size; o.lit = lit.size; return o; },
+      state: function () {
+        var hs = hover ? ST.get(hover) : null;
+        return {
+          hover: desc(hover), translate: hs ? [hs.wx, hs.wy] : null, intensity: hs ? hs.fi : 0,
+          near: Array.from(lit).filter(function (s) { return s.near; }).map(function (s) { return desc(s.el); }),
+          running: running, springs: springs.size, scope: { mode: scopeMode, size: cands.length },
+          rest: gestureRest(), calm: buttons !== 0, reduced: isReduced(), soft: root.hasAttribute('data-pmh-soft'),
+          family: family(), glow: glowCur >= 0 && GL[glowCur].on, frame: FR.on, travelling: FR.travel, tokens: T
+        };
+      }
+    };
+  }
+})();
+
 /* ---- js/20-store.js ---- */
 /* O55.store — durable, secret-free session state. Keys: pm.o55.onboarding.v1 (setup draft(s), screen, completed owner
    work refs), pm.o55.tour.v1 (safe-step checkpoint: ids + completed predicates only; the tour's restoration basis, layout and
@@ -138211,13 +139566,14 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       detail=pin?'Move it back to its normal order.':'Keep it at the top.';
     }
     if(!label&&actionCopy[0])label=actionCopy[0];
-    if(looksInternal(label))label=actionCopy[0]||'Choose this option';
+    var literalTag=!!(el.closest&&el.closest('[data-pmh-tag="literal"]'));   /* O55: opt out of the internal-copy swap */
+    if(!literalTag&&looksInternal(label))label=actionCopy[0]||'Choose this option';
     if(!label&&el.tagName==='INPUT')label=attr(el,'placeholder')||'Enter a value';
     var technical=facts.technical;
     if(!label){
       label=facts.status?'Current status':facts.chart?'Chart value':facts.badge?'Current state':facts.actionable?'Use this control':'More information';
     }
-    if(looksInternal(detail))detail=actionCopy[1]||'See what this control does.';
+    if(!literalTag&&looksInternal(detail))detail=actionCopy[1]||'See what this control does.';
     var disabledReason=attr(el,'data-disabled-reason');
     if(facts.disabled&&disabledReason)detail=disabledReason;
     if(!detail&&facts.disabled)detail='This choice is not ready yet. Move over it to learn what is still needed.';
@@ -138575,10 +139931,12 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     var viewportRight=viewport.left+viewport.width,viewportBottom=viewport.top+viewport.height;
     this.tag.style.maxWidth=Math.min(MAX_WIDTH,Math.max(1,viewport.width-marginX*2))+'px';
     var availableHeight=Math.max(1,viewport.height-marginY*2);this.tag.style.minHeight=Math.min(24,availableHeight)+'px';this.tag.style.maxHeight=availableHeight+'px';
+    this.tag.toggleAttribute('data-literal',!!(this.active.closest&&this.active.closest('[data-pmh-tag="literal"]')));   /* O55: before the measure */
     var rect=this.tag.getBoundingClientRect(),left=anchor.left+anchor.width/2-rect.width/2;
     left=clamp(left,viewport.left+marginX,viewportRight-marginX-rect.width);
     var top=anchor.top-rect.height-GAP,placement='above';
     if(top<viewport.top+marginY){top=anchor.bottom+GAP;placement='below';}
+    if(document.documentElement.matches('[data-o55-nier-parts~="intel"]')&&anchor.bottom+GAP+rect.height<=viewportBottom-marginY){top=anchor.bottom+GAP;placement='below';}   /* O55 NieR intel: below first */
     /* A tag inside a teaching card must explain the control without covering
        the lesson. Prefer a free edge outside the active modal/callout; only
        fall back to ordinary anchor placement when the viewport has no such

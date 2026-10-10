@@ -15,20 +15,18 @@
 
 /* ---- the plate (A1 3.2) with real depth (WOW-SPEC 2.2, E-8) ---- */
 /* depth tokens: dark plates carry a 1 px inner top highlight (8 % white) and a soft ambient shadow; light plates a warm
-   paper shadow and a 70 % white top highlight. The hover / lift shadow is pre-rendered on ::before and only its opacity
-   moves (E-4: no box-shadow or border-color transition on a plate, ever). --pmu-speed: the Animation speed (46-shell.js). */
+   paper shadow and a 70 % white top highlight. The lift and resize shadow (--pmu-plate-lift, --pmu-plate-hover) is
+   pre-rendered on ::before and only its opacity moves (E-4: no box-shadow or border-color transition on a plate, ever);
+   the hover is PMH's (below). --pmu-speed: the Animation speed (46-shell.js). */
 #panel-usage .pmu-shell {
   --pmu-plate-rest: inset 0 1px 0 rgba(255,255,255,.08), 0 18px 40px -18px rgba(0,0,0,.45);
   --pmu-plate-hover: inset 0 1px 0 rgba(255,255,255,.10), 0 18px 40px -12px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.05);
   --pmu-plate-lift: inset 0 1px 0 rgba(255,255,255,.12), 0 28px 60px -18px rgba(0,0,0,.6), 0 0 0 1px color-mix(in srgb, var(--pmu-accent) 40%, transparent);
-  --pmu-sheen: rgba(255,255,255,.06);
-  --pmu-lift-y: -4px;
 }
 html[data-theme$="-light"] #panel-usage .pmu-shell {
   --pmu-plate-rest: inset 0 1px 0 rgba(255,255,255,.7), 0 10px 26px -14px rgba(21,32,43,.14);
   --pmu-plate-hover: inset 0 1px 0 rgba(255,255,255,.6), 0 14px 32px -12px rgba(21,32,43,.18), 0 0 0 1px rgba(21,32,43,.05);
   --pmu-plate-lift: inset 0 1px 0 rgba(255,255,255,.6), 0 22px 48px -16px rgba(21,32,43,.22), 0 0 0 1px color-mix(in srgb, var(--pmu-accent) 40%, transparent);
-  --pmu-sheen: color-mix(in srgb, var(--pmu-accent) 5%, transparent);
 }
 html[data-theme="friendly-light"] #panel-usage .pmu-shell {
   --pmu-plate-rest: inset 0 1px 0 rgba(255,255,255,.75), 0 10px 26px -14px rgba(92,64,51,.16);
@@ -40,44 +38,87 @@ html[data-theme="glass-light"] #panel-usage .pmu-shell {
   --pmu-plate-rest: inset 0 1px 0 rgba(255,255,255,.85), 0 12px 28px -14px rgba(23,34,42,.16);
   --pmu-plate-hover: inset 0 1px 0 rgba(255,255,255,.9), 0 16px 34px -12px rgba(23,34,42,.2), 0 0 0 1px rgba(255,255,255,.5); }
 html[data-theme^="retro"] #panel-usage .pmu-shell {
-  --pmu-plate-rest: var(--pmu-shadow-1); --pmu-plate-hover: 4px 4px 0 rgba(0,0,0,.38); --pmu-plate-lift: 7px 7px 0 rgba(0,0,0,.35); --pmu-lift-y: 0px; }
+  --pmu-plate-rest: var(--pmu-shadow-1); --pmu-plate-hover: 4px 4px 0 rgba(0,0,0,.38); --pmu-plate-lift: 7px 7px 0 rgba(0,0,0,.35); }
 html[data-theme="retro-light"] #panel-usage .pmu-shell { --pmu-plate-hover: 4px 4px 0 rgba(23,26,20,.22); --pmu-plate-lift: 7px 7px 0 rgba(23,26,20,.2); }
-html[data-o55-nier="on"] #panel-usage .pmu-shell { --pmu-plate-rest: none; --pmu-plate-hover: 3px 3px 0 rgba(var(--o55-nier-ink-rgb), .18); --pmu-lift-y: 0px; --pmu-sheen: transparent; }
+html[data-o55-nier="on"] #panel-usage .pmu-shell { --pmu-plate-rest: none; --pmu-plate-hover: 3px 3px 0 rgba(var(--o55-nier-ink-rgb), .18); }
 
 #panel-usage .pmu-card { position: relative; display: flex; flex-direction: column; min-width: 0; min-height: 0; border: var(--pmu-bw) solid var(--pmu-rule);
   border-radius: var(--pmu-r-card); background: var(--pmu-card); box-shadow: var(--pmu-plate-rest); outline: none;
   transition: transform calc(260ms * var(--pmu-speed, 1)) var(--pmu-ease-settle); }
-/* the pre-rendered hover / lift shadow and top highlight: one layer whose opacity moves */
+/* the pre-rendered lift / resize shadow and top highlight: one layer whose opacity moves (the [data-lifted],
+   [data-settling] and [data-resizing] rules below). At every other time it is the plate's PMH light (hover, next). */
 #panel-usage .pmu-card::before { content: ""; position: absolute; inset: calc(-1 * var(--pmu-bw)); border-radius: inherit; pointer-events: none;
   box-shadow: var(--pmu-plate-hover); opacity: 0; transition: opacity calc(260ms * var(--pmu-speed, 1)) var(--pmu-ease-settle); }
 #panel-usage .pmu-card[data-head="band"]::before { display: none; }
-/* hover depth (WOW-SPEC 3.17): lift 4 px on the spring (tiles 5 px), shadow layer in 220; unhover 260 SETTLE. The hovered
-   plate sits above its neighbours.
-   Sharp text (Jared's note 5, 2026-10-09): the lift is a whole-pixel translate with no scale, and the plate carries no
-   will-change. The transition gives it a compositor layer only while it moves; at rest (lifted or not) it paints at a
-   whole-pixel offset at its own raster scale. The old scale(1.01) under will-change: transform drew the hovered plate's
-   text from a layer resampled at 1.01 for the whole hover (GPU probe: title Laplacian sharpness 0.45-0.70 of rest in
-   Basic, Friendly and Glass, back to 1.0 only after the 260 ms settle). The depth comes from the pre-painted shadow. */
-#panel-usage .pmu-card:not([data-head="band"]):hover { z-index: 3; transform: translateY(var(--pmu-lift-y));
-  transition: transform calc(220ms * var(--pmu-speed, 1)) var(--pmu-ease-spring); }
-/* a tile lifts 5 px: written as the transform itself, never as a custom property set on hover (an inherited custom
-   property changed on the card restyles its whole subtree on every hover, PERF-3) */
-#panel-usage .pmu-card[data-head="tile"]:not([data-head="band"]):hover { transform: translateY(-5px); }
-#panel-usage .pmu-card:not([data-head="band"]):hover::before { opacity: 1; transition: opacity calc(220ms * var(--pmu-speed, 1)) var(--pmu-ease-out); }
-/* Retro and NieR do not lift: no transform at all (an identity translateY(0) would still run a transition and take a layer) */
-html[data-theme^="retro"] #panel-usage .pmu-card:not([data-head="band"]):hover, html[data-o55-nier="on"] #panel-usage .pmu-card:not([data-head="band"]):hover { transform: none; }
-/* Retro: the hard 4 px offset shadow appears in two steps, no lift */
-html[data-theme^="retro"] #panel-usage .pmu-card:hover::before { transition-timing-function: steps(2, jump-start); transition-duration: calc(120ms * var(--pmu-speed, 1)); }
+/* ---- hover: the merged hover system PMH (Concepts/onboarding/opus-5.5 src/js/18-hover.js and src/css/22-hover.css) ----
+   A plate takes its family's PMH look, as a dashboard card does (Jared's items 10 and 11, 2026-10-09):
+     Basic, Friendly, Glass: a small soft light at the pointer and a faint line where the edge catches it, both on the
+       ::before light below, revealed by one radial mask at PMH's --pmh-x/-y and at the field's intensity --pmh-i (so a
+       neighbour across the 8 px gap catches the same light on its near edge); and the plate's short elevation shadow
+       with half a bloom, pre-painted on PMH's rest-rect proxy (#pmh-glow), which only fades;
+     Retro: "Raise" (22-hover.css RETRO; the plates' own cast and the resize zones below);
+     NieR: "Lock-on", PMH's reticle (#pmh-frame); the plate itself does not change (90-nier-shell.css).
+   No lift and no magnet (PMH's NOMAG: the whole head is a move handle and the resize zones sit 4 px outside the edge),
+   so in Basic, Friendly and Glass nothing on a plate moves, nothing changes its stacking, and the resize zones stay
+   exactly where they rest. The old 4 px lift was dropped, not kept at a whole pixel: every hover made the plate a
+   compositor layer for its transition and re-rastered it after, re-sampled the Glass backdrop blur every frame, moved
+   the resize zones (the bottom zones then grew 6 px on hover, a layout change per hover), and put PMH's rest-rect light
+   and plate off the moving card; the pre-painted plate gives the depth. While the pointer moves only the light's
+   opacity and mask centre change: no box-shadow, border, background or filter animates. PMH rests through every board
+   operation (body.pmu-pointer-op and pm-resizing, html[data-pmu-moment], .pmu-board[data-op]) and never lights a band
+   or a plate that is pending, leaving, lifted, resizing, settling or morphing, the ghost board or the flyers. */
+:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) #panel-usage .pmu-card[data-pmh-kind]:not([data-lifted], [data-settling], [data-resizing], [data-morphing])::before {
+  /* above the plate's own paint, under its head and body (both positioned and later in tree order), in the padding box
+     like a dashboard card's light; the tokens are the look's own (22-hover.css FAMILY LOOK) */
+  inset: 0; background: var(--pmf-sheen);
+  box-shadow: inset 0 0 0 1px var(--pmf-rim), inset 0 0 var(--pmf-band) 0 var(--pmf-rim2);
+  -webkit-mask: radial-gradient(circle var(--pmf-r) at var(--pmh-x) var(--pmh-y), var(--pmf-mask)) no-repeat;
+          mask: radial-gradient(circle var(--pmf-r) at var(--pmh-x) var(--pmh-y), var(--pmf-mask)) no-repeat;
+  opacity: var(--pmh-i);
+  /* going dark the light fades where it was: the position falls back only once the fade is over */
+  transition: opacity var(--pmf-out) var(--pmf-ease-out), --pmh-x 0s linear var(--pmf-out), --pmh-y 0s linear var(--pmf-out);
+}
+:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) #panel-usage .pmu-card[data-pmh-kind]:is(.pmh-on, .pmh-near):not([data-lifted], [data-settling], [data-resizing], [data-morphing])::before {
+  transition: opacity var(--pmf-in) linear;
+}
+/* Friendly: no crisp line, a wide warm band in the page's own accent (the dashboard's area accent, 22-hover.css) */
+:root[data-theme="friendly-dark"]:not([data-o55-nier]) #panel-usage .pmu-card[data-pmh-kind]::before {
+  --pmf-rim: color-mix(in srgb, color-mix(in srgb, var(--pmu-accent) 60%, #ffe6d6) 45%, transparent);
+  --pmf-rim2: color-mix(in srgb, color-mix(in srgb, var(--pmu-accent) 60%, #ffe6d6) 50%, transparent);
+}
+:root[data-theme="friendly-light"]:not([data-o55-nier]) #panel-usage .pmu-card[data-pmh-kind]::before {
+  --pmf-rim: color-mix(in srgb, color-mix(in srgb, var(--pmu-accent) 70%, #f07a55) 75%, transparent);
+  --pmf-rim2: color-mix(in srgb, color-mix(in srgb, var(--pmu-accent) 70%, #f07a55) 50%, transparent);
+}
+/* Reduced Motion (PMH stops the following light and the neighbours): the hovered plate shows the whole line at half
+   strength with its plate, at once; software-rendered (html[data-pmh-soft], no field and no #pmh-glow): the same line,
+   painted once per hover */
+:root[data-motion="reduced"]:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) #panel-usage .pmu-card[data-pmh-kind]:not([data-lifted], [data-settling], [data-resizing], [data-morphing])::before {
+  -webkit-mask: none; mask: none; background: none; opacity: calc(var(--pmh-i) * .5); transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  :root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) #panel-usage .pmu-card[data-pmh-kind]:not([data-lifted], [data-settling], [data-resizing], [data-morphing])::before {
+    -webkit-mask: none; mask: none; background: none; opacity: calc(var(--pmh-i) * .5); transition: none;
+  }
+}
+:root[data-pmh-soft]:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) #panel-usage .pmu-card[data-pmh-kind]:not([data-lifted], [data-settling], [data-resizing], [data-morphing])::before {
+  -webkit-mask: none; mask: none; background: none; opacity: 0; transition: none;
+}
+:root[data-pmh-soft]:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) #panel-usage .pmu-card[data-pmh-kind].pmh-on:not([data-lifted], [data-settling], [data-resizing], [data-morphing])::before { opacity: .5; }
+/* Retro "Raise": the plate rises 2 px up-left in one cut while its hard shadow grows from 3 to 5 px in the plate's own rest
+   colour (00-base.css --pmu-shadow-1), so the shadow's far edge stays put; the phosphor rule lands one tick later. The
+   resize zones do not rise with it (their marks do), so a pointer resting on an edge stays on its zone and a grab at the
+   edge never misses: the plate moves off them, and PMH's 2 px edge hold keeps the hover in the strip it left. */
+html[data-theme="retro-dark"] #panel-usage .pmu-card { --pmh-r-cast: rgba(223,230,207,.25); }
+html[data-theme="retro-light"] #panel-usage .pmu-card { --pmh-r-cast: rgba(26,26,26,.25); }
+html[data-theme^="retro"]:not([data-motion="reduced"]) #panel-usage .pmu-card:is(.pmh-on, .pmh-out) > .pmu-h { translate: 2px 2px; }
+html[data-theme^="retro"]:not([data-motion="reduced"]) #panel-usage .pmu-card:is(.pmh-on, .pmh-out) > .pmu-h::before,
+html[data-theme^="retro"]:not([data-motion="reduced"]) #panel-usage .pmu-card:is(.pmh-on, .pmh-out) > .pmu-h::after { translate: -2px -2px; }
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme^="retro"] #panel-usage .pmu-card > .pmu-h, html[data-theme^="retro"] #panel-usage .pmu-card > .pmu-h::before,
+  html[data-theme^="retro"] #panel-usage .pmu-card > .pmu-h::after { translate: none !important; }
+}
 #panel-usage .pmu-card:focus-visible { box-shadow: 0 0 0 2px var(--pmu-accent), var(--pmu-plate-rest); }
-#panel-usage .pmu-board[data-op] .pmu-card:not([data-lifted]):hover { transform: none; z-index: auto; }
-#panel-usage .pmu-board[data-op] .pmu-card:not([data-lifted]):hover::before { opacity: 0; }
-/* the pointer sheen (40-board.js): a 280 px radial light inside the hovered plate, moved by transform only */
-#panel-usage .pmu-sheen { position: absolute; inset: 0; z-index: 0; overflow: hidden; border-radius: inherit; pointer-events: none; opacity: 0;
-  transition: opacity calc(200ms * var(--pmu-speed, 1)) var(--pmu-ease-out); }
-#panel-usage .pmu-sheen.on { opacity: 1; }
-#panel-usage .pmu-sheen.on > i { will-change: transform; }
-#panel-usage .pmu-sheen > i { position: absolute; left: 0; top: 0; width: 280px; height: 280px; margin: -140px 0 0 -140px; border-radius: 50%;
-  background: radial-gradient(circle, var(--pmu-sheen) 0, transparent 70%); }
 /* Glass with a GPU (not data-pmu-soft): plates blur what is behind them and carry a rim light (18 % white at the top,
    4 % at the bottom) and a static specular sheet on the room's hero plate (the first plate of the board) */
 html[data-theme^="glass"]:not([data-pmu-soft]) #panel-usage .pmu-card:not([data-head="band"]) { -webkit-backdrop-filter: blur(18px) saturate(1.2); backdrop-filter: blur(18px) saturate(1.2); }
@@ -259,11 +300,8 @@ html[data-theme^="retro"] #panel-usage .pmu-irow { border-radius: 0; }
 #panel-usage .pmu-h:hover::before, #panel-usage .pmu-card[data-resizing="e"] > .pmu-h[data-edge="e"]::before, #panel-usage .pmu-card[data-resizing="w"] > .pmu-h[data-edge="w"]::before,
 #panel-usage .pmu-card[data-resizing="s"] > .pmu-h[data-edge="s"]::before { opacity: 1; transform: none; }
 #panel-usage .pmu-board[data-op] .pmu-card:not([data-resizing]) > .pmu-h { pointer-events: none; }
-/* the hover lift moves a card's bottom edge up 4-5 px: its bottom handles reach 6 px further down while it is lifted, so
-   a pointer resting on the edge stays on the handle (no hover jitter, no missed grab) */
-#panel-usage .pmu-card:hover > .pmu-h[data-edge="s"] { bottom: -10px; height: 14px; }
-#panel-usage .pmu-card:hover > .pmu-h:is([data-edge="se"], [data-edge="sw"]) { bottom: -10px; height: 22px; }
-#panel-usage .pmu-card:hover > .pmu-h[data-edge="se"]::after { bottom: 13px; }
+/* (a hovered plate does not lift, so its resize zones keep their rest place and size; Retro's 2 px raise leaves them in
+   place too, above) */
 /* (PERF-3 open item: no board cursor during a resize; the captured handle keeps its own edge cursor, so an inherited
    cursor on the board no longer restyles its ~650 elements at the start and the end of a resize) */
 
@@ -311,11 +349,12 @@ html[data-theme^="glass"] #panel-usage .pmu-morph { border-color: rgba(255,255,2
 #panel-usage .pmu-rim.is-held { opacity: 1; transition: opacity calc(160ms * var(--pmu-speed, 1)) var(--pmu-ease-out); }
 html[data-o55-nier="on"] #panel-usage .pmu-rim { box-shadow: 0 0 0 1px var(--o55-nier-ink), 0 0 0 4px rgba(var(--o55-nier-ink-rgb), .12); }
 #panel-usage .pmu-card[data-leaving] { z-index: 0; }
-/* Reduce Motion (WOW-SPEC 9): no lift; the shadow layer keeps a 120 ms opacity change */
-html[data-motion="reduced"] #panel-usage .pmu-card, html[data-motion="reduced"] #panel-usage .pmu-card:hover, html[data-motion="reduced"] #panel-usage .pmu-card[data-head="tile"]:hover { transition: none; transform: none; }
-html[data-motion="reduced"] #panel-usage .pmu-card::before, html[data-motion="reduced"] #panel-usage .pmu-card:hover::before { transition: opacity calc(120ms * var(--pmu-speed, 1)) linear; }
+/* Reduce Motion (WOW-SPEC 9): no settle transition; the lift and resize shadow layer keeps a 120 ms opacity change (the
+   hover is PMH's instant Reduced Motion form, above) */
+html[data-motion="reduced"] #panel-usage .pmu-card { transition: none; transform: none; }
+html[data-motion="reduced"] #panel-usage .pmu-card::before { transition: opacity calc(120ms * var(--pmu-speed, 1)) linear; }
 /* the head's reveal is instant: the head tools, the cluster and the title's room change in the same frame */
 html[data-motion="reduced"] #panel-usage :is(.pmu-headtools, .pmu-cardtools, .pmu-cardtitles, .pmu-cardmeta) { transition: none !important; }
 @media (prefers-reduced-motion: reduce) { #panel-usage :is(.pmu-headtools, .pmu-cardtools, .pmu-cardtitles, .pmu-cardmeta) { transition: none !important; } }
-@media (prefers-reduced-motion: reduce) { #panel-usage .pmu-card, #panel-usage .pmu-card:hover, #panel-usage .pmu-card[data-head="tile"]:not([data-head="band"]):hover { transition: none; transform: none; }
-  #panel-usage .pmu-card::before, #panel-usage .pmu-card:hover::before { transition: opacity calc(120ms * var(--pmu-speed, 1)) linear; } }
+@media (prefers-reduced-motion: reduce) { #panel-usage .pmu-card { transition: none; transform: none; }
+  #panel-usage .pmu-card::before { transition: opacity calc(120ms * var(--pmu-speed, 1)) linear; } }
