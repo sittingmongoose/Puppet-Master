@@ -2051,23 +2051,44 @@ This addendum repairs non-runtime DRY rows without creating WorkNodes, implement
 
 ## PMConcept7 Home Workspace owner boundary — 2026-08-04
 
-`Plans/FinalGUISpec.md` owns Home shell composition, hosts, visible movement and
-resize behavior, and web/native capability disclosure. `Plans/home_workspace_layout.schema.json`
-and `Plans/storage-plan.md` own the layout record, persistence scope, revisions,
-migration, validation, and off-screen recovery. `Plans/UI_Command_Catalog.md`,
+Amended 2026-10-09 (DL-180, DL-181): Home is now one universal panel system and the
+terminal one session per tab, so the owners below are restated for panels and tabs.
+The per-surface owners of 2026-08-04 (four editor panels, the Dashboard surface,
+terminal sections and workgroups, the movable chat) retire with that model. The
+2026-08-04 sentence "U10 interaction behavior is a reusable interaction vocabulary
+only" is replaced by DR-066: the panels and the Usage widget board share one gesture
+kit. The panel and tab grammar is DR-065's, the overlay root DR-067's and the opening
+module DR-071's. The ban on a second Home state machine and the one-change-set rule
+stand.
+
+`Plans/FinalGUISpec.md` owns Home shell composition, the panel model and its tab
+kinds (F3-630 to F3-639, the terminal tab F3-640 to F3-646), visible movement and
+resize behavior, and web/native capability disclosure.
+`Plans/home_workspace_layout_v2.schema.json` and `Plans/storage-plan.md` (SP-330) own
+the layout record, persistence scope, revisions, migration, validation, and
+off-screen recovery; the v1 schema `Plans/home_workspace_layout.schema.json` is a
+read-only migration input. `Plans/UI_Command_Catalog.md`,
 `Plans/Contracts_V0.md`, `Plans/event_family_registry.json`,
 `Plans/UI_Wiring_Rules.md`, and `Plans/Wiring_Matrix.production.json` own command,
-event, and wiring contracts. `Plans/FileManager.md` owns editor/file routing;
-`Plans/Section15_MVP_Promoted_Features_Spec.md` owns terminal section/workgroup
-identity and limits; `Plans/Widget_System.md` owns Dashboard widget hostability and
-widget layout. Consumers cite these owners and do not re-declare the layout field
-shape or create a second Home state machine.
+event, and wiring contracts. `Plans/FileManager.md` owns file-path realization and
+the file tree's opens (F-090), which go through the one opening module (F3-634,
+DR-071); `Plans/Section15_MVP_Promoted_Features_Spec.md` owns the terminal session,
+its identity and its life, one session per terminal tab (SMPFS-180), while a
+terminal tab's place among the panels and every panel limit belong to the panel
+model (F3-630, F3-635); `Plans/Widget_System.md` owns Dashboard widget hostability
+and widget layout, each dashboard tab's board in its own namespace (WS-030).
+Consumers cite these owners and do not re-declare the layout field shape or create
+a second Home state machine.
 
-U10 interaction behavior is a reusable interaction vocabulary only. It does not
-transfer widget commands, widget hostability, DOM FLIP/order, or Dashboard widget
-state into the Home workspace. A Home command/contract change must update the owner,
-its consumer references, the production wiring row, and the traceability artifact
-in one change set.
+U10 interaction behavior is shared, not only borrowed: since DL-180 the panels and
+the Usage widget board move with one gesture kit, owned by DR-066. The kit carries no
+layout model. It does not transfer widget commands, widget hostability, the widget
+grid's order or geometry, or Dashboard widget state into the Home workspace, and the
+snapping widget grid lays out widgets only, inside dashboard tabs in the home centre.
+A Home command/contract change must update the owner, its consumer references, the
+production wiring row, and the traceability artifact in one change set.
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/Decision_Log.md#DL-181, ContractName:Plans/DRY_Rules.md#DR-065, ContractName:Plans/DRY_Rules.md#DR-066, ContractName:Plans/DRY_Rules.md#DR-071, ContractName:Plans/FinalGUISpec.md#F3-630, ContractName:Plans/storage-plan.md#SP-330, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180, ContractName:Plans/Widget_System.md#WS-030
 
 <a id="shared-runtime-service-registry"></a>
 ## Shared Integration Runtime DRY service registry — 2026-08-13
@@ -2324,7 +2345,7 @@ architecture layer merely because the concept contains self-contained fixture ad
 | Usage data semantics and view state | `Plans/usage-feature.md` | PM7-local Usage service, provider-management service, or second Usage store |
 | Usage/Ledger drill-through | `Plans/Contracts_V0.md` plus `Plans/usage-feature.md`; event-primary callers use `usage_event`/`usage_event_ref`, while a PMConcept7 Ledger attempt row uses `usage_attempt`/`attempt_id`, retains `usage_event_ref` as correlation, and carries no `OpenSubject` | correlation or presentation identity substituted for the selected object id, current PMConcept7 aggregate-card route command, or unregistered object kind |
 | Usage/Dashboard widget layout | `Plans/Widget_System.md` plus `Plans/storage-plan.md` namespaces | PM7-local widget store, `dashboard_layout:v1` peer writes, per-frame preview persistence |
-| Home shell surface layout | `Plans/home_workspace_layout.schema.json` and `Plans/storage-plan.md` | Dashboard widget layout inside the Home record, concept-only size command/store |
+| Home shell surface layout | `Plans/home_workspace_layout_v2.schema.json` and `Plans/storage-plan.md` (SP-330); the v1 `Plans/home_workspace_layout.schema.json` is a read-only migration input | Dashboard widget layout inside the Home record (several dashboard tabs are allowed, each board's widget layout in its own `widget_layout:v1:dashboard:<board_id>` namespace, WS-030), concept-only size command/store |
 | Command language | `Plans/Commands_System.md` and `Plans/UI_Command_Catalog.md` | PM7 command family, popup/hover commands, duplicate `size_surface` primary command |
 | Production wiring | `Plans/Wiring_Matrix.md` and `Plans/Wiring_Matrix.production.json` | concept report or demo event log as production wiring authority |
 | Shared Assistant/context | `Plans/assistant-chat-design.md` | second Assistant node, controller, transcript store, context store, or page-local clone |
@@ -2334,6 +2355,12 @@ architecture layer merely because the concept contains self-contained fixture ad
 The PM7 prototype keys and concept events are source-lineage fixtures only. Production adapters must
 normalize them into the owner contracts above, and one shared Assistant node must be re-seated rather than
 recreated.
+
+Amended 2026-10-09 (DL-180): the Home shell surface layout row now names the v2 Home layout record
+(`home_workspace_layout.v2`, SP-330). Its ban stands: no dashboard's widget layout lives in the Home record.
+Several dashboard tabs are allowed, each showing one board whose widget layout lives in its own
+`widget_layout:v1:dashboard:<board_id>` namespace under WS-030; the Home record holds only the dashboard tab
+and its board reference.
 
 ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Widget_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/UI_Wiring_Rules.md, ContractName:Plans/assistant-chat-design.md
 
@@ -2354,15 +2381,21 @@ canonical_text: >-
   current PMConcept7 aggregate provider/account/panel inspectors are local. Event-primary Usage callers cross
   the route-command boundary with usage_event/usage_event_ref; a PMConcept7 Ledger attempt row crosses it with
   usage_attempt/attempt_id, retains usage_event_ref plus provider/account/runtime refs as correlation, and carries
-  no OpenSubject. Only settled owner commands cross the command/persistence boundary.
+  no OpenSubject. Only settled owner commands cross the command/persistence boundary. Since DL-180 the
+  dashboard host has one namespace per board: each dashboard tab shows one board whose widget layout lives in
+  widget_layout:v1:dashboard:<board_id> (WS-030), which replaces the single widget_layout:v1:dashboard namespace
+  (WS-030 says how the existing layout carries over), and no board's widget layout enters the Home record. The one Home layout schema is pm.home_workspace_layout.v2,
+  its record home_workspace_layout.v2 (SP-330); the home_workspace_layout.v1 record is a read-only migration input,
+  converted on first read and never reset.
 gui_related: true
 gui_classification_reason: The DRY boundary prevents visible state divergence across Usage, Home, Dashboard, and the shared Assistant on different pages.
 split_recommended: false
-depends_on: [DR-037, DR-038, CS-068, UCC-147, WM-045, UIW-012]
+depends_on: [DR-037, DR-038, CS-068, UCC-147, WM-045, UIW-012, DL-180]
 unblocks: [ACD-448]
 acceptance_criteria:
   - Usage semantics, widget layout, Home layout, commands, wiring, events, and Assistant state each name one current owner and no peer PM7 authority; event-primary callers use usage_event/usage_event_ref and a PMConcept7 Ledger attempt row uses usage_attempt/attempt_id with usage_event_ref correlation, while current aggregate inspectors dispatch no command, receipt, or domain event.
   - Production never writes PM7 fixture keys as a peer to widget_layout:v1:usage, widget_layout:v1:dashboard, or home_workspace_layout.v1.
+  - Production never writes PM7 fixture keys as a peer to a board's widget_layout:v1:dashboard:<board_id> namespace or to home_workspace_layout.v2, and no dashboard board's widget layout is written into the Home layout record.
   - No primary cmd.workspace_layout.size_surface or PM7 command family is registered.
   - No pointer-preview or unregistered context-compaction event family is admitted.
   - Every page reuses the same Assistant node/controller/transcript/context store and re-seats it instead of cloning it.
@@ -2393,11 +2426,16 @@ preserved_exact_tokens:
   - cmd.workspace_layout.size_surface
   - chatPanel
   - chatResizer
+  - widget_layout:v1:dashboard:<board_id>
+  - home_workspace_layout.v2
 negative_constraints:
   - Do not create a second Usage store, widget-layout store, Home layout store, command language, Event Authority, or production wiring matrix.
   - Do not create a second Assistant node, controller, transcript store, context store, or page-local clone.
   - Do not treat concept fixture logs, keys, or events as production authority.
   - Do not attach OpenSubject to either typed cmd.nav.open_usage_subject selector branch, substitute correlation or presentation identity for the selected object_id, or invent a route kind for aggregate Usage cards; pre-existing artifact route/open source realization remains separately owned.
+  - Do not store a dashboard board's widget layout inside the Home layout record or share one widget namespace between two boards.
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): one widget namespace per dashboard board (widget_layout:v1:dashboard:<board_id>, WS-030) replaces the single widget_layout:v1:dashboard namespace, and the one Home layout schema is now the v2 record of SP-330 with v1 a read-only migration input."
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/assistant-chat-design.md
@@ -2409,7 +2447,9 @@ Every capability touched by the Settings, Product Onboarding, Guided Tour, Docto
 
 Settings, Onboarding, Guided Tour, Doctor, and PMConcept7 remain consumers. They may cache and render owner projections, open exact owner routes, and observe `ObservableWork` and receipts, but they cannot duplicate Server, route, backup, Browser, capture, SCM, forge, plugin, Project, Named Plan, installation, authentication, update, storage, or repair state machines. `AuthBrowserSession` is outside agent, adapter, capture, inspection, replay, export, and restore authority. A concept simulation is not a native handler, production wiring receipt, runtime result, or Slint certification.
 
-The Guided Tour's restoration basis is the layout owner's snapshot, reached only through the bounded checkpoint's snapshot ref (PWIZ-023); the tour keeps no second copy of layout, dashboard placement, or Chat state, and never composer text. Settings' Run Onboarding Again, Resume Guided Tour, and Replay Guided Tour entries are the route-only consumers `settings.onboarding.run_again`, `settings.guided_tour.resume`, and `settings.guided_tour.replay` (SSYS-019), each with its own touch-closure row; the reset, resume, and replay semantics stay with the Onboarding and Guided Tour owners.
+Amended 2026-10-09 (DL-180): the layout owner's snapshot is now the v2 Home layout record (SP-330), which the tour's workspace chapter captures and restores (PWIZ-035); the dashboard is a tab, so the placement the tour never copies is a dashboard tab's, and the chat is a fixed column the tour never asks the learner to move.
+
+The Guided Tour's restoration basis is the layout owner's snapshot, reached only through the bounded checkpoint's snapshot ref (PWIZ-023, PWIZ-035); the tour keeps no second copy of layout, dashboard tab placement, or Chat state, and never composer text. Settings' Run Onboarding Again, Resume Guided Tour, and Replay Guided Tour entries are the route-only consumers `settings.onboarding.run_again`, `settings.guided_tour.resume`, and `settings.guided_tour.replay` (SSYS-019), each with its own touch-closure row; the reset, resume, and replay semantics stay with the Onboarding and Guided Tour owners.
 
 The September 27 packet repairs use the same rule at semantic joins: Named Plan owns child-parent resolution consumed by PRD/Wizard/Compile/Orchestrator; Azure owns the optional team-project official-route context consumed by Onboarding and Auth; Backup owns verification depth and immutable recovery-point selection; Release owns durable app-check scheduling; Testing owns actual-versus-required execution assurance. Reference-only GUI caches, return acknowledgements, matching command names, and opaque preview IDs cannot replace those owner validations. Concept fixtures model the same decisions without claiming production effects. A new exact Git adapter command must register its single owner/request/result/permission/currentness/receipt path and reverse GUI consumers; hunk routes cannot silently stand in for whole-file untracked or binary operations.
 
@@ -2670,7 +2710,7 @@ canonical_text: >-
   F3-567 through F3-577, F3-592, F3-594, F3-595, F3-601 and F3-602: the configuration sheet anatomy, sizes and yield
   rules, the plate and the cast plate (its floor and wrap, with the shared parts DR-045 names), kind marks and the agent puppets (one puppet primitive draws
   every agent everywhere, DL-149), run card budgets and width tiers, the one-line receipt, the dock, the one-line
-  reply traces and the run view as an editor document (ACD-480). Every implementation builds these
+  reply traces and the run view as a run tab in a home panel (ACD-480, F3-635). Every implementation builds these
   from one shared set of primitives; a module owner supplies content only and never forks or
   restyles a primitive. Every module's finished trace uses the one receipt grammar, and time,
   cost and token phrases each come from one shared formatter (there is no stand-in phrase, DL-121), with one time-zone
@@ -2682,11 +2722,12 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: "Fixes one owner for the wand modules' presentation grammar."
 split_recommended: false
-depends_on: [DR-043, F3-566, DL-109]
+depends_on: [DR-043, F3-566, DL-109, DL-180]
 unblocks: []
 acceptance_criteria:
   - "No second sheet grammar, receipt grammar, dock or time formatter exists for a wand module."
   - "No wand-module owner restates the family map, the accent rule or EP-128's vocabulary."
+  - "The run view opens as a run tab in a home panel through the one opening module (F3-635, DR-071), with the grammar above unchanged."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -2714,6 +2755,8 @@ preserved_exact_tokens:
 negative_constraints:
   - "Do not restate the wand modules' grammar in a module owner."
   - "Do not restate the family map, the accent rule or EP-128's vocabulary in the wand grammar."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the run view is a run tab in a home panel (F3-635), no longer an editor document; the wand grammar is unchanged."
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/FinalGUISpec.md
@@ -2850,7 +2893,7 @@ status: accepted
 owner_doc: Plans/DRY_Rules.md
 canonical_text: >-
   Every Plan surface that shows actions draws them with the one action row the wand modules use (F3-566 J-2): the
-  transcript Plan card, the editor's sticky footer and its More row, the compact Completed or Canceled card, a
+  transcript Plan card, the plan tab's sticky footer and its More row (F3-635), the compact Completed or Canceled card, a
   Building plan's attention actions, the schedule line's decision and the Build-started receipt. The Build control is
   a boxed primary inside that row, not a control with sizes of its own, and the row's spacing rule treats it as one
   (F3-606). A Plan surface supplies its controls and their order only; it never restates the row's height, type,
@@ -2860,7 +2903,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: "Keeps one action-row grammar for every Plan surface."
 split_recommended: false
-depends_on: [DR-044, F3-566, DL-156]
+depends_on: [DR-044, F3-566, DL-156, DL-180]
 unblocks: [F3-606]
 acceptance_criteria:
   - "No Plan surface defines its own button height, type size, padding or gap for its actions."
@@ -2887,6 +2930,8 @@ preserved_exact_tokens:
   - "action row"
 negative_constraints:
   - "Do not give a Plan surface its own action sizes or a tinted footer band."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the plan viewer is the plan tab kind in a home panel (F3-635), so the editor's sticky footer is now the plan tab's; the action row rule is unchanged."
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/FinalGUISpec.md
