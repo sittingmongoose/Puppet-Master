@@ -19,9 +19,9 @@
 
 ## Summary
 
-The app provides a **File Manager** (pop-out side panel), an **in-app IDE-style editor** (File Editor strip), and **@ mention in chat** for file context. File Manager and editor share the same project context; chat integrates via @ mention and **click-to-open** so file paths and code blocks in the thread open in the editor. Full behavior and MVP scope are defined below.
+The app provides a **File Manager** (pop-out side panel), an **in-app IDE-style editor** (File Editor strip), and **@ mention in chat** for file context. File Manager and editor share the same project context; chat integrates via @ mention and **click-to-open** so file paths and code blocks in the thread open in the editor. Full behavior and MVP scope are defined below. Amended 2026-10-09 (DL-180): the editor is the editor tab kind in the home panels (`Plans/FinalGUISpec.md#F3-635`, `#F3-639`); the File Editor strip is lineage (section 2.1).
 
-This plan also covers **image viewing** and **HTML-in-browser preview with hot reload**; **split editor panes**; **drag editor out to its own window and back** (detach/snap); **tabs** in the editor and Terminal and **browser tabs plus detached preview windows**; **language/framework presets**; and the editor enhancement set. **LSP (Language Server Protocol) is in scope for MVP**: diagnostics, hover, autocomplete, go-to-definition, and symbol search use language servers when available for the current preset; see **§10.10**. Full LSP integration in the **Chat Window** remains in **Plans/LSPSupport.md §5.1** and **Plans/assistant-chat-design.md §9.1**.
+This plan also covers **image viewing** and **HTML-in-browser preview with hot reload**; **split editor panes**; **drag editor out to its own window and back** (detach/snap); **tabs** in the editor and Terminal and **browser tabs plus detached preview windows**; **language/framework presets**; and the editor enhancement set. **LSP (Language Server Protocol) is in scope for MVP**: diagnostics, hover, autocomplete, go-to-definition, and symbol search use language servers when available for the current preset; see **§10.10**. Full LSP integration in the **Chat Window** remains in **Plans/LSPSupport.md §5.1** and **Plans/assistant-chat-design.md §9.1**. Amended 2026-10-09 (DL-180): the editor is now the editor tab kind in the home panels (`Plans/FinalGUISpec.md#F3-635`, `#F3-639`); the File Editor strip, dragging the editor out to its own window and back, and split editor panes as editor-only groups are lineage (section 2.1), and split panes are the panels' own splits (`#F3-630`).
 
 **Scope of this document:** This spec defines File Manager, editor, @ mention, click-to-open, image/HTML preview, tabs, and editor enhancements. It defers chat UX details to `Plans/assistant-chat-design.md`, layout to `Plans/FinalGUISpec.md`, and browser click-to-context / agent-driven browser actions to the promoted browser owner in `Plans/Section15_MVP_Promoted_Features_Spec.md` plus the reconciled browser chat, prompt, permission, and storage docs. Storage terms (`redb`, `seglog`, project storage design) are defined in rewrite-tie-in and storage-plan docs.
 
@@ -92,8 +92,8 @@ ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/L
 ### Definitions
 
 - **Buffer:** In-memory representation of a file's content; one per file path. Edits apply to the buffer until Save.
-- **Tab:** UI handle for an open buffer; one tab per path per editor group (no duplicate tabs for same path in one group).
-- **Editor group:** One pane in a split editor layout; has its own tab list and active tab; shares the global buffer model.
+- **Tab:** UI handle for an open buffer; one tab per path per editor group (no duplicate tabs for same path in one group). Amended 2026-10-09 (DL-180): a path is at most one editor tab in the whole workspace, and opening it again reveals that tab where it is (`Plans/FinalGUISpec.md#F3-635`, `#F3-634`).
+- **Editor group:** One pane in a split editor layout; has its own tab list and active tab; shares the global buffer model. Amended 2026-10-09 (DL-180): an editor group is now a home panel holding editor tabs among other kinds (`Plans/FinalGUISpec.md#F3-630`, `#F3-639`).
 - **Dirty:** Buffer state when in-memory content differs from last-saved content; UI shows unsaved indicator.
 - **Preset:** Language/framework configuration (e.g. Rust, Python) that defines run/debug configs and tools (§11).
 - **redb:** Durable key-value store for settings, sessions, project state, and editor state (see rewrite-tie-in-memo).
@@ -164,7 +164,7 @@ ContractRef: Plans/Decision_Policy.md, Plans/storage-plan.md §2.3, Plans/Tools.
 
 - **Placement:** Docked File Manager is the Activity Bar side-panel occupant in the single right-hand shell slot by default, with the same detachable/pop-out behavior as Chat and re-docking back to that slot. Per FinalGUISpec §4.1, Composergui5 §5, and feature-list layout: header ("FILES"), refresh, pop-out; search; virtualized file tree; optional Git status strip.
 - **Virtualized file tree:** Only visible nodes are rendered; scroll position determines which slice of the tree is shown. Total height uses an estimated row height (AutoDecision: `row_height_px = 24`) so the scrollbar is correct. Supports deep trees; **very large directories** (e.g. node_modules): virtualize by row, apply a row cap per directory (AutoDecision: 10_000 entries; key `file_manager/row_cap_per_directory`) with "Show more" or type-ahead to narrow; AutoDecision: no explicit depth limit (children are loaded lazily on expand).
-- **Behavior:** Lists all files in the current project. **Selecting a file opens it in the in-app IDE-style editor** (§2). File Manager and editor share the same project context.
+- **Behavior:** Lists all files in the current project. **Selecting a file opens it in the in-app IDE-style editor** (§2). File Manager and editor share the same project context. Amended 2026-10-09 (DL-180): the file opens as an editor tab in the home panels by F-090: a single click opens the panel's preview tab, a double click or Enter keeps it, Alt+click opens a new panel, and a file already open anywhere is revealed where it is.
 - **.gitignore / exclude:** File tree respects `.gitignore` (and optionally a project exclude list) as the File Manager's gitignore-aware traversal contract. Ignored files/folders are **dimmed** by default. Optional user setting **"Hide ignored"** hides them entirely (toggle in header or Settings).
 - **Context menu:** Summary-only entrypoint for the canonical file-tree action catalog in §11.1 and §11.4. Core actions include create/rename/delete/path copy, workspace-node clipboard actions, Add to Assistant Chat, Open in Terminal, Open With, and Save Local Copy. Aligns with selectable labels and context menus (AGENTS.md).
 - **Drag and drop (external ↔ File Manager):** User can **drop** files/folders from the desktop (or another app) **onto** a folder or project root in the tree (items are copied into that folder), and **drag** files/folders **out** of the tree onto the desktop or another app (copied to drop target). Copy is default; optional modifier for move. Full specification: **§1.1**.
@@ -172,7 +172,7 @@ ContractRef: Plans/Decision_Policy.md, Plans/storage-plan.md §2.3, Plans/Tools.
 - **Keyboard:** Arrow keys navigate the tree; Enter opens the selected file (or expands/collapses folders). Type-ahead (or search) narrows to matching nodes. Keyboard-only use must be supported for accessibility.
 - **Current file ("you are here"):** When the editor has focus, optionally highlight and scroll the File Manager tree to the current file so the two surfaces stay visually connected.
 - The selection-model keeps one active row while allowing additive/range multi-select for drag-out, delete, and path-copy. Open actions are `/open-on-click` and open-on-enter against the active row, not bulk-open of every selected file. `New file`, `New folder`, and `Rename` require a single concrete target context; `Delete` may operate on multi-select with recursive confirmation; `Copy full path` copies one absolute path for single-select or a newline-delimited list for multi-select. Create/rename rejects empty names, `.` / `..`, separators, and platform-reserved names before mutation; `/reveal` plus current-file `/highlight` is required when the file exists in-tree, and the GUI must disclose when filters or ignored settings hide it.
-- **Detach/snap:** Same detach and snap behavior as Chat panel; user can dock left or right. **Discoverability:** Provide a visible affordance (e.g. drag handle or "Pop out" in header) and optional first-time tooltip so users learn that the panel can be detached.
+- **Detach/snap:** Same detach and snap behavior as Chat panel; user can dock left or right. Amended 2026-10-09 (DL-180): the chat no longer detaches, snaps or docks (it moves only by Pop out, `Plans/FinalGUISpec.md#F3-637`), so this bullet no longer borrows the chat's behaviour; the File Manager is the left rail's Files side panel, placed and sized by the rail canon (`Plans/FinalGUISpec.md#F3-618`). **Discoverability:** Provide a visible affordance (e.g. drag handle or "Pop out" in header) and optional first-time tooltip so users learn that the panel can be detached.
 
 ### 1.1 Drag and drop (external ↔ File Manager)
 
@@ -253,6 +253,13 @@ The app includes an **IDE-style editor** so users can open, view, and edit proje
 
 ### 2.1 Placement and layout
 
+Superseded 2026-10-09 (DL-180): the editor is now the editor tab kind in any panel of the home centre
+(`Plans/FinalGUISpec.md#F3-635`, `#F3-639`). The File Editor strip, its collapse, dragging the editor out into its own
+window and back, and the one-floating-editor policy below are lineage; where a file opens is F-090 and
+`Plans/FinalGUISpec.md#F3-634`, tabs and their close and reorder are the panel tab strip's (`#F3-631`), and their
+persistence is the v2 Home layout record's (`Plans/storage-plan.md#SP-330`). The editing, saving and display rules of
+2.2 and 2.3 are unchanged.
+
 - **Location:** File Editor strip (center-left between File Manager and Dashboard), per Composergui5 §8 and feature-list layout. When the File Manager or Chat panel is the focus, "open file" actions open or focus the editor and show the file there. The strip is **collapsible** (per feature-list); when collapsed and the user triggers "open file" from chat or File Manager, the editor **focuses and expands** so the file is visible. **Collapsed state** is persisted **per-project** (in redb); restore on reopen and when snapping the editor back.
 - **Drag out / drag back:** The user can **drag the editor** (or an editor group) **out** of the main application into **its own window**, and **drag it back in** to re-dock. Same detach/snap pattern as File Manager and Chat: undock by drag or "Pop out" action; floating editor window shows the same tabs and content; snap zones (e.g. near main window edge) with visual cue when dragging back; close floating window to re-dock (collapsed or last dock position). Buffers and tabs stay in sync whether the editor is docked or floating. **Floating editor policy (MVP):** Exactly **one** floating editor window is supported; AutoDecision: when the user drags out again, re-dock the existing floating editor window and float the newly dragged group. **Discoverability:** Provide affordance (e.g. drag handle or "Pop out") and optional first-time tooltip so users learn that the editor can be detached.
 - **Tabs:** Multiple open files are shown as **tabs** (or equivalent list). User can switch between open files, close a tab (with unsaved prompt if dirty), and reorder tabs if the design supports it (keyboard-accessible move tab left/right when reorder is supported). Persist open tab list per project so reopening the app restores the same set of open files (§2.9).
@@ -296,6 +303,12 @@ Remote `/offline` and remote-degraded editor-state use explicit user-visible `/s
 - **Syntax highlighting:** **Basic syntax highlighting** by language (inferred from file extension or shebang). Extension → language map for common types (e.g. `.rs`, `.py`, `.md`, `.json`, `.toml`, `.html`, `.css`, `.js`); shebang in first line for scripts. Unknown extension or plain text: no highlighting. Palette respects app theme (Retro Light/Dark, Basic); token→color mapping is app-owned. **When LSP is available** for the file's language (§10.10), **semantic highlighting** from the language server can augment or replace basic highlighting; basic highlighting remains the fallback when LSP is unavailable or for unsupported file types.
 
 ### 2.4 Split panes and editor groups
+
+Amended 2026-10-09 (DL-180): editor groups are now home panels (`Plans/FinalGUISpec.md#F3-630`), and a path is one tab
+in the whole workspace, so the same file is never open in two panels. A file from the File Manager or the chat goes to
+the last-focused panel that holds documents (`#F3-634`), not to the focused group; "Open in other group" and "Open in
+new group" become Open to the side and Open in new panel (F-090). The one shared buffer per path below still serves
+the editor tab and every other surface that opens the path, such as the embedded document pane of 2.4.1.
 
 **Split editor panes** are in scope for MVP. The user can split the editor area into **multiple editor groups** (e.g. side-by-side or top/bottom). **Tab bar model (MVP):** Each group has **its own tab list** and active tab; the **buffer model is shared** -- one buffer per file path across all groups. Opening a file from File Manager or chat targets the **active (focused) editor group** by default; optional "Open in" (e.g. right-click) can offer "Open in other group" or "Open in new group." **Single buffer, multiple views:** When the same path is open in more than one editor group, all views show the **same buffer** and **same dirty state**; any edit in one group updates the other views immediately. Cursor/scroll position is per-view; only one "active" tab per group.
 
@@ -360,11 +373,24 @@ ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/stora
 
 ### 2.8 Keyboard shortcuts
 
+Amended 2026-10-09 (DL-180): there is no floating editor window any more (F-017); the editor is the editor tab kind in a
+home panel (`Plans/FinalGUISpec.md#F3-635`, `#F3-639`), and where an open-file action lands is F-090's and
+`Plans/FinalGUISpec.md#F3-634`'s. Closing a tab and moving between tabs use the panel keyboard map of
+`Plans/FinalGUISpec.md#F3-635`, which gives Ctrl+Tab and Ctrl+Shift+Tab to recent tabs; the next and previous tab keys
+below are lineage. Save, Go to line and Save As stay editor keys while focus is in an editor tab (F-029).
+
 
 - **Editor shortcuts (when focus in editor):** Save (Ctrl+S), Close tab (Ctrl+W, with unsaved prompt), Go to line (Ctrl+G), Next tab (Ctrl+Tab), Previous tab (Ctrl+Shift+Tab). Save As via menu or command palette.
 - **Focus rule:** When focus is in the editor (docked or floating), these shortcuts are handled by the editor; when focus is elsewhere, app/chat shortcuts apply. **Floating editor:** Editor shortcuts apply when **any editor window has OS focus** (docked or floating). So Ctrl+S in the floating editor window saves the current buffer. Open-file actions target the editor surface; when the editor is floating, focus the floating window and open the file there (§4, §5).
 
 ### 2.9 Persistence (open tabs)
+
+Amended 2026-10-09 (DL-180): open tab order, the active tab, pinned and preview state and the panel layout live in the
+v2 Home layout record, the only Home layout authority (`Plans/storage-plan.md#SP-330`). The redb `tabs.{project_id}`
+and `active_tab.{project_id}` keys below and the "editor layout (split groups, active group, collapse state of File
+Editor strip)" entry are superseded by it. Scroll and cursor view state, session view state, recent files, lazy
+load, the max-tabs and persisted-tab caps, the exit prompt and recover-unsaved stay as written here, and a tab they
+name is the panel's editor tab (`Plans/FinalGUISpec.md#F3-635`) (F-030).
 
 - **Stored per project:** Open tab list (ordered paths), active tab index, and **scroll/cursor position per tab** (default: **persist**). Key: `project_id`. Persisted in **redb** (SSOT: Plans/storage-plan.md §2.3). **Editor state schema (redb):** Store in redb `editor` namespace per SSOT: `tabs.{project_id}` → ordered list of paths; `active_tab.{project_id}` → index; `scroll_cursor.{project_id}.{path_hash}` → optional scroll/cursor; `max_tabs` (app-level); and session-scoped view state under `session.{project_id}.{session_id}` when session-scoped view is used (§10.7). Do not persist full buffer content; recovery/unsaved content is separate (redb or temp).
 - **Max tabs (GUI setting):** The app exposes a **Max editor tabs** (or **Max open tabs**) setting in the GUI (e.g. Settings → Editor). This caps how many tabs (buffers) are kept in memory; when exceeded, LRU eviction applies (§10.7). AutoDecision: default 25; user can increase or decrease. Stored with other app settings in redb.
@@ -414,7 +440,7 @@ FileManager is the canonical owner of the file-open and artifact-storage contrac
 - Keep Crosswalk limited to primitive boundary ownership and FileManager OpenFile narrow and path-based
 - Keep route_target small with subject_id or object_kind/object_id identity
 - Limit subject_id families to doc:/artifact:, keep inspector_target secondary, and override only necessary destination/context state
-- Keep `OpenFile { path, line?, range?, target_editor_panel_id?, target_editor_group_id?, target_group? }` as a file-system/editor realization only: `open-file`, `file-open`, `/navigation`, line `/range`, and the explicit compatibility alias `target_group` route workspace file paths, not every openable object.
+- Keep `OpenFile { path, line?, range?, target_editor_panel_id?, target_editor_group_id?, target_group? }` as a file-system/editor realization only: `open-file`, `file-open`, `/navigation`, line `/range`, and the explicit compatibility alias `target_group` route workspace file paths, not every openable object. Amended 2026-10-09 (DL-180): `target_editor_panel_id`, `target_editor_group_id` and `target_group` no longer select a home panel; the placement fields of `Plans/Contracts_V0.md#CV-360` travel beside OpenFile on the open route (F-036, F-090).
 - Use `OpenArtifact` for identity-native runtime-artifact opens: resolve `artifact_id` first, then follow envelope refs to `content_ref`, `linked_artifact_id`, `logical_artifact_id`, receipt-like refs, `attempt-level` evidence lineage, and Source Control, GitHub, Docker, or Kubernetes surfaces when relevant.
 - Runtime artifact envelopes are attempt-native and bridge-aware: they carry `run_id`, `node_id`, `thread_id`, `attempt_id`, and `artifact_id`; `task_id` remains legacy `/compatibility` display metadata, not the primary execution anchor.
 - Evidence artifacts such as `evidence`, `validation_test`, `failed_attempts`, and `before_after_snapshot` are attempt-native whenever produced by node worker or `/verifier/reviewer` flows.
@@ -443,6 +469,12 @@ Preview subjects preserve the source file or artifact identity before selecting 
 
 ## 7. Browser and terminal handoff boundaries
 
+Amended 2026-10-09 (DL-180, DL-181): FileManager keeps its browser and terminal entrypoints, but where the tab they open
+lands in the home panels is the one opening module's (`Plans/FinalGUISpec.md#F3-634`), and a terminal is one session per
+tab (`Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180`). "Open in Terminal" on a folder opens a new terminal tab
+in that folder, and on a file a new terminal tab in its folder (F-090). The word "placement" below now means the
+entrypoint, not the panel.
+
 Browser and terminal entrypoints are FileManager placement/launch affordances, not runtime ownership. Browser session classes, DevTools, click-to-context, capture, takeover, and permission defaults remain owned by the promoted browser specs and UI command catalog; terminal sessions remain owned by terminal/runtime owners. FileManager records the route, target, and reveal context.
 
 ## 8. Image viewer and HTML preview
@@ -458,6 +490,11 @@ The image viewer opens workspace or artifact images with provenance, zoom, copy 
 HTML preview uses source-backed preview subjects and may route to workspace or detached browser preview when browser capability is available. Browser-specific capture, mutation, DevTools, and permissions remain owned by the browser specs and command catalog.
 
 ## 9. Tabs: Editor, Terminal, Browser
+
+Amended 2026-10-09 (DL-180, DL-181): editor, terminal and browser are tab kinds of the home panels
+(`Plans/FinalGUISpec.md#F3-635`). A terminal is one session per tab with no panes: `terminal_tab_id` holds the panel tab
+id, `terminal_pane_id` retires, and `terminal_session_id` stays the session identity (F-040). Pinning and labels are the
+panel tab strip's (`#F3-631`).
 
 FileManager consumes terminal and browser tab ownership without collapsing them. Terminal tabs use `terminal_tab_id`, `terminal_pane_id`, and `terminal_session_id` from the terminal model; browser tabs use browser-session identity from the browser owner docs. Pinning, capability badges, and tab labels must keep terminal tab state separate from browser-tab state, so the source shorthand `/cap/browser-tab` is retired as an ambiguous combined concept rather than a live tab type.
 
@@ -991,16 +1028,18 @@ status: accepted
 owner_doc: Plans/FileManager.md
 canonical_text: >-
   The File Manager panel lists project files under root, opens selected files through the editor open-file contract, virtualizes large trees, restores expand/collapse state, exposes Hide ignored and row-cap settings, and shows explicit open/refresh/empty/permission error states.
+  Amended 2026-10-09 (DL-180): opening a selected file into the home panels follows F-090: a single click opens the target panel's preview tab, a double click or Enter keeps it, Alt+click opens a new panel, and a file already open anywhere is revealed where it is; the target panel is the opening module's (Plans/FinalGUISpec.md#F3-634).
 gui_related: true
 gui_classification_reason: This unit defines visible File Manager tree behavior, settings, and error states.
 split_recommended: true
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
 - The behavior is addressable through this fine-grained PlanUnit instead of broad F-001 coverage.
 - ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+- 'Amended 2026-10-09 (DL-180): a single click on a file row opens a preview tab and a double click a kept tab in the panel the opening module chooses (F-090).'
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -1029,7 +1068,8 @@ preserved_exact_tokens:
 negative_constraints:
 - Open failure must not leave the tree in an inconsistent state.
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Amended 2026-10-09 (DL-180): the editor open-file contract now names the panel and the preview or kept tab through F-090 and F3-634.'
 owner_boundary_notes: []
 owner_hints:
 - Plans/FileManager.md
@@ -1427,10 +1467,11 @@ status: accepted
 owner_doc: Plans/FileManager.md
 canonical_text: >-
   Editor placement uses the File Editor strip and supports docked visibility, detach/redock, four stable independently floating editor panels, tabs with active-buffer switching, close/unsaved prompts, reorder, and persistence.
+  Amended 2026-10-09 (DL-180): the editor is the editor tab kind in any home panel (Plans/FinalGUISpec.md#F3-635, #F3-639). The File Editor strip, detach and redock, and the four stable independently floating editor panels retire with the universal panels; where a file opens is F-090's and F3-634's; tabs, their reorder and the close prompt for unsaved changes are the panel tab strip's (F3-631, F3-635), and their persistence is the v2 Home layout record's (Plans/storage-plan.md#SP-330).
 gui_related: true
 gui_classification_reason: This unit defines editor placement, layout, detach, and tab UI behavior.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
@@ -1462,7 +1503,8 @@ preserved_exact_tokens:
 - persistence
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Amended 2026-10-09 (DL-180): the File Editor strip, detach and redock, and the four stable floating editor panels are retired; the editor is a tab kind in the universal panels.'
 owner_boundary_notes: []
 owner_hints:
 - Plans/FileManager.md
@@ -1748,10 +1790,11 @@ status: accepted
 owner_doc: Plans/FileManager.md
 canonical_text: >-
   Split editor panes are MVP scope with multiple editor groups, one tab list and active tab per group, one shared buffer per file path, focused group open targeting by default, optional Open in other group/new group actions, and per-view cursor and scroll state.
+  Amended 2026-10-09 (DL-180): editor groups are now home panels (Plans/FinalGUISpec.md#F3-630). The default open target is no longer the focused group but the last-focused panel that holds documents (F3-634); Open in other group and Open in new group become Open to the side and Open in new panel (F-090). One path is one tab in the whole workspace, so the same file is never shown in two panels; the one shared buffer per path still serves the editor tab and every other surface that opens the path, such as the embedded document pane (F-024), and cursor and scroll stay per view.
 gui_related: true
 gui_classification_reason: This unit defines visible split-pane editor group behavior.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
@@ -1782,7 +1825,8 @@ preserved_exact_tokens:
 - Cursor/scroll position is per-view
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Amended 2026-10-09 (DL-180): focused group open targeting by default becomes the last-focused document panel (F3-634), and a path is open in at most one panel.'
 owner_boundary_notes: []
 owner_hints:
 - Plans/FileManager.md
@@ -2061,10 +2105,11 @@ status: accepted
 owner_doc: Plans/FileManager.md
 canonical_text: >-
   Editor focus handles Save, Close tab, Go to line, Next/Previous tab, Save As, and app/chat shortcut routing; floating editor windows handle editor shortcuts when any editor window has OS focus and open-file actions target/focus the floating editor.
+  Amended 2026-10-09 (DL-180): floating editor windows retire with the File Editor strip (F-017), and the editor is the editor tab kind in a home panel (Plans/FinalGUISpec.md#F3-635, #F3-639); where an open-file action lands is F-090's and Plans/FinalGUISpec.md#F3-634's; the keys that close a tab and move between tabs, including next and previous tab, are the panel keyboard map of Plans/FinalGUISpec.md#F3-635, which gives Ctrl+Tab and Ctrl+Shift+Tab to recent tabs. Save, Go to line and Save As stay editor keys while focus is in an editor tab, and the dirty-tab prompt on close stays.
 gui_related: true
 gui_classification_reason: This unit covers user-visible keyboard shortcuts and floating-editor focus routing.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
@@ -2097,7 +2142,8 @@ preserved_exact_tokens:
 negative_constraints:
 - When focus is elsewhere, app/chat shortcuts apply instead of editor shortcuts.
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Amended 2026-10-09 (DL-180): floating editor windows and their focus routing retire; open-file actions follow F-090 and F3-634, and the tab navigation and close keys are F3-635''s panel keyboard map (Ctrl+Tab is recent tabs, not next tab).'
 owner_boundary_notes: []
 owner_hints:
 - Plans/FileManager.md
@@ -2112,10 +2158,11 @@ status: accepted
 owner_doc: Plans/FileManager.md
 canonical_text: >-
   Editor persistence stores open tab order, active tab index, scroll/cursor state, max tabs, session view state, layout/recent files, lazy-load restore behavior, persisted tab cap, dirty-buffer exit prompts, and recover-unsaved availability using redb-backed per-project/session keys without persisting full buffer content.
+  Amended 2026-10-09 (DL-180): open tab order, the active tab, pinned and preview state and the panel layout (split groups, the active group and collapse) live in the v2 Home layout record, the only Home layout authority (Plans/storage-plan.md#SP-330), and the redb `tabs.{project_id}` and `active_tab.{project_id}` keys and the editor layout entry are superseded by it; buffers, per-tab scroll and cursor view state, session view state, recent files, lazy-load restore, the max-tabs and persisted-tab caps, the dirty-buffer exit prompt and recover-unsaved stay this unit's, and a tab they name is the panel's editor tab (Plans/FinalGUISpec.md#F3-635).
 gui_related: true
 gui_classification_reason: This unit defines persisted editor tab, cursor, and layout state visible across sessions.
 split_recommended: true
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
@@ -2149,7 +2196,8 @@ preserved_exact_tokens:
 negative_constraints:
 - Do not persist full buffer content as ordinary editor state.
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Amended 2026-10-09 (DL-180): open tab order, the active tab, pinned and preview state and the editor layout move to the v2 Home layout record (SP-330); buffers, scroll and cursor view state, the tab caps, the exit prompt and recover-unsaved stay here.'
 owner_boundary_notes: []
 owner_hints:
 - Plans/FileManager.md
@@ -2274,10 +2322,11 @@ status: accepted
 owner_doc: Plans/FileManager.md
 canonical_text: >-
   File Manager, editor, and chat share one project context, @ mention uses the same file list as File Manager, and clicking a file path or code block in chat opens the file in the editor.
+  Amended 2026-10-09 (DL-180): a file path clicked in the chat opens by the same rules as the file tree (F-090): the panel's preview tab on a single click, revealed where it is when already open; what the chat opens is Plans/assistant-chat-design.md#ACD-500's and the rules are Plans/FinalGUISpec.md#F3-634's.
 gui_related: true
 gui_classification_reason: Although span_map inferred non-GUI, this unit governs visible click-to-open integration between chat and editor.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
@@ -2306,7 +2355,8 @@ preserved_exact_tokens:
 - §5
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Amended 2026-10-09 (DL-180): chat file opens follow the one opening module (F3-634, ACD-500).'
 owner_boundary_notes:
 - GUI-related classification corrects span_map inference because this span defines visible click-to-open behavior.
 owner_hints:
@@ -2325,12 +2375,13 @@ canonical_text: >-
   Contracts_V0 route/open semantics, opened files bind to the active worktree
   execution_unit_context, and chat file-edit cards open the worktree filesystem path resolved from
   working_directory + relative_path without a special rewrite layer.
+  Amended 2026-10-09 (DL-180): which home panel an opened file lands in is decided by the one opening module (Plans/FinalGUISpec.md#F3-634) from the placement fields of Plans/Contracts_V0.md#CV-360, never by an editor panel or group target; route_target resolution and worktree binding are unchanged.
 gui_related: true
 gui_classification_reason: >-
   This unit governs visible file/editor open behavior from GUI, CLI, chat cards, and internal
   routing.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -2360,7 +2411,8 @@ preserved_exact_tokens:
 - "worktree path"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Amended 2026-10-09 (DL-180): editor panel and editor group targets no longer route an open; placement is CV-360 and F3-634.'
 owner_boundary_notes:
 - "Contracts_V0 owns shared route/open semantics; FileManager realizes workspace file opens rather than raw route_target reads."
 owner_hints:
@@ -2430,12 +2482,15 @@ canonical_text: >-
   Route/open handling keeps Contracts_V0 as owner for canonical route_target and OpenSubject
   contracts, keeps Crosswalk limited to primitive boundary ownership, and keeps OpenFile narrow as
   a filesystem/editor realization for path, optional line/range, target_group, navigation, and
-  workspace file paths.
+  workspace file paths. Amended 2026-10-09 (DL-180): `target_editor_panel_id`, `target_editor_group_id` and
+  `target_group` no longer select a home panel; the placement fields `where`, `mode`, `by` and `background` travel
+  beside OpenFile on the open route, never inside its identity (Plans/Contracts_V0.md#CV-360), and OpenFile stays
+  the narrow file realization.
 gui_related: false
 gui_classification_reason: >-
   This unit defines routing and owner-boundary contracts rather than visual presentation.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -2469,7 +2524,8 @@ preserved_exact_tokens:
 negative_constraints:
 - "OpenFile must not become the owner for every openable object."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Amended 2026-10-09 (DL-180): the editor panel and group target fields of OpenFile are retired as home placement; CV-360 carries placement.'
 owner_boundary_notes:
 - "Contracts_V0 owns route_target and OpenSubject; Crosswalk owns primitive boundary ownership; FileManager owns narrow workspace-file realization."
 owner_hints:
@@ -2665,11 +2721,12 @@ canonical_text: >-
   use terminal_tab_id, terminal_pane_id, and terminal_session_id from the terminal model, browser
   tabs use browser-session identity from browser owner docs, and pinning, capability badges, and
   labels keep the state separate.
+  Amended 2026-10-09 (DL-180, DL-181): a terminal is one session per tab, with no panes (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180); terminal_tab_id holds the panel tab id (`terminal:<session>`, Plans/FinalGUISpec.md#F3-635), terminal_pane_id retires, and terminal_session_id stays the session identity. Terminal and browser tabs stay separate kinds.
 gui_related: true
 gui_classification_reason: >-
   This unit governs visible tabs, labels, pinning, and capability badges.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180, DL-181]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -2703,6 +2760,7 @@ negative_constraints: []
 compatibility_only_notes: []
 stale_retired_dispositions:
 - "The source shorthand /cap/browser-tab is retired as an ambiguous combined concept rather than a live tab type."
+- "Amended 2026-10-09 (DL-180, DL-181): terminal_pane_id is retired with panes; terminal_tab_id holds the panel tab id."
 owner_boundary_notes:
 - "Terminal and browser owner docs define their respective tab/session identity models."
 owner_hints:
@@ -4260,9 +4318,10 @@ canonical_text: >-
   FileManager owns file-surface placement for editor, terminal, browser tab, image viewing, HTML/browser preview, and hot-reload entrypoints.
   Missing Sections 5 through 8 and 13 through 14, plus the three-line Section 9 Tabs stub, must recover by consuming live browser,
   terminal, preview, persistence, and command-owner PlanUnits rather than inventing separate FileManager-only behavior.
+  Amended 2026-10-09 (DL-180): FileManager keeps these entrypoints, but where an editor, terminal, browser or preview tab lands in the home panels is the one opening module's (Plans/FinalGUISpec.md#F3-634), not FileManager's. Open in Terminal on a folder opens a new terminal tab in that folder, and on a file a new terminal tab in its folder (F-090).
 gui_related: true
 gui_classification_reason: This unit governs visible file manager tabs, previews, browser/terminal panes, image viewing, and hot-reload controls.
-depends_on: [F-002, F-009, F-010]
+depends_on: [F-002, F-009, F-010, DL-180]
 unblocks: [F3-387]
 acceptance_criteria:
   - Image viewing remains first-class where FileManager references Sections 8.1 and 14.
@@ -4283,6 +4342,8 @@ source_lineage:
   - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0050
   - source_ref:chat:next-gui-filemanager-cluster
 preserved_exact_tokens: ["§5", "§8.1", "§8.2", "§9", "§13", "§14", "§14.6", "Tabs: Editor, Terminal, Browser", "built-in browser", "browser/terminal tabs", "hot-reload controls", "image viewing"]
+stale_retired_dispositions:
+  - 'Amended 2026-10-09 (DL-180): FileManager no longer owns where editor, terminal, browser and preview tabs are placed; F3-634 does.'
 negative_constraints:
   - Do not make FileManager the browser behavior SSOT.
   - Do not leave the Tabs section as a three-line stub when compiling this recovery.
@@ -4530,7 +4591,7 @@ canonical_text: >-
   The rich file and editor viewer renderer reveals newly opened viewer content with a staggered content reveal, and reduced motion disables the stagger so content renders immediately in final position. Long documents expose a canvas-style minimap with a viewport thumb that tracks the visible region during ordinary scrolling; clicking the minimap navigates to the clicked region, and pointer drag-scrub on the minimap scrolls the document continuously while the thumb follows the pointer until release. The document scroll position remains the single scroll authority: minimap interactions issue scroll intents against the shared editor buffer view rather than owning a second scroll state.
 gui_related: true
 gui_classification_reason: This is visible editor viewer reveal motion, minimap rendering, and scroll interaction behavior.
-depends_on: [F-043]
+depends_on: [F-043, DL-180]
 unblocks: []
 acceptance_criteria:
   - Opening a rich file or editor viewer staggers content reveal, and reduced motion renders content immediately without stagger.
@@ -4556,6 +4617,8 @@ source_lineage:
   - Plans/FileManager.md:448-450
 source_atom_ids: []
 preserved_exact_tokens: ["staggered content reveal", "reduced motion", "minimap", "viewport thumb", "drag-scrub"]
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the minimap stays the only scrollbar of the editor tab's code pane and is polished there (Plans/FinalGUISpec.md#F3-639); this unit stays its file-side owner."
 negative_constraints:
   - Do not create a second scroll authority; minimap interactions issue scroll intents against the shared editor buffer view.
   - Do not block editing, input, or save authority while the staggered reveal runs.
@@ -4893,6 +4956,13 @@ owner_hints: [Plans/FileManager.md, Plans/FinalGUISpec.md, Plans/FileSafe.md]
 
 ## PMConcept7 Home Workspace reconciliation — 2026-08-04
 
+Superseded 2026-10-09 (DL-180): Home is one universal panel system (`Plans/FinalGUISpec.md#F3-630`). The four stable
+editor panel identities, the Open in Panel submenu with Panel 1 to Panel 4, `target_editor_panel_id` routing and the
+floating editor panels below are retired; the file tree opens files by F-090 through the opening module of
+`#F3-634`. F-080 is superseded by F-090. What survives: an open from the tree renders the file in the tab it opens or
+reveals, never a placeholder, and closing a panel or a tab never silently discards a shared buffer, its dirty state,
+undo history or save authority: a dirty editor tab asks first (`#F3-635`).
+
 Amended 2026-08-12 — `Open in Panel` must open the file, in every panel. A leaf routes
 through the canonical open path so the buffer is added to the panel's open-tab model, the
 tab strip re-renders, and the file body renders into that panel's own editor surface.
@@ -4940,13 +5010,16 @@ it is not a limit on the Home workspace implementation.
 ```yaml
 plan_unit_id: F-080
 unit_type: requirement
-status: accepted
+status: superseded
 owner_doc: Plans/FileManager.md
-canonical_text: File Manager and editor routing use four stable editor panel identities; a compact body-portaled Open in Panel submenu dispatches cmd.file.open to the requested panel and its active or explicit editor group, while Browser routing reuses one Browser session in any panel without an agent.
+superseded_by: F-090
+canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. The four stable editor panels and the Open in Panel submenu with Panel 1 to Panel 4 are retired: Home is one universal panel system, the file tree opens files through the one opening module, and its context menu offers Open, Open in new panel and Open to the side. The text below is retained verbatim for lineage and audit and must not be accepted or indexed as active current-product truth. Superseded by F-090 (DL-180).
+  File Manager and editor routing use four stable editor panel identities; a compact body-portaled Open in Panel submenu dispatches cmd.file.open to the requested panel and its active or explicit editor group, while Browser routing reuses one Browser session in any panel without an agent.
 gui_related: true
 gui_classification_reason: This unit owns the user-visible file/editor target routing and non-destructive close/reopen behavior.
 split_recommended: false
-depends_on: [F-079, F3-501, UCC-144, CV-323]
+depends_on: [F-079, F3-501, UCC-144, CV-323, DL-180]
 unblocks: []
 acceptance_criteria:
 - The File Manager context menu contains one Open in Panel submenu with exactly Panel 1 through Panel 4 leaf actions.
@@ -4974,6 +5047,7 @@ compatibility_only_notes:
 - target_group remains a migration alias of target_editor_group_id.
 stale_retired_dispositions:
 - The one-floating-editor limit is retired.
+- 'Superseded 2026-10-09 (DL-180): the four stable editor panel identities, the Open in Panel submenu and target_editor_panel_id routing retire; the file tree opens files by F-090 and the opening module of F3-634.'
 owner_hints: [Plans/FileManager.md, Plans/FinalGUISpec.md, Plans/Contracts_V0.md]
 ```
 
@@ -5238,3 +5312,110 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-043, ContractName:Plans/Jujutsu_Integration.md, ContractName:Plans/Source_Control_System.md
+
+## DL-180 to DL-185 — Opening Files From The File Tree Into Panels (2026-10-09)
+
+Jared's home redesign (`Plans/Decision_Log.md#DL-180`, decision D7) makes Home's centre one universal panel system and
+gives every file reference one set of opening rules. This addendum adds F-090: how the file tree opens files into the
+panels. The rules themselves are `Plans/FinalGUISpec.md#F3-634`'s (one opening module, kept single by
+`Plans/DRY_Rules.md#DR-071`), and the placement fields are `Plans/Contracts_V0.md#CV-360`'s; F-090 cites them and adds
+only what is the file tree's own. It supersedes F-080 (the four stable editor panels and the Open in Panel 1 to 4
+submenu) and the Home reconciliation of 2026-08-04 above it, and amends with dated notes F-009 (which panel a click
+lands in), F-017 (the File Editor strip and the floating editor panels), F-023 (the focused editor group as the open
+target), F-033 (file paths clicked in chat), F-034 and F-036 (the editor-panel target fields), F-040 (terminal tab
+identity), F-067 ("Open in Terminal" and placement), F-073 (the minimap scrollbar stays) and the prose of sections 1,
+2.1, 2.4, 4.1's route rules, 7 and 9. It creates no WorkNodes, NodeSeeds, executable queues, implementation files or
+production build tasks.
+
+### F-090 - Opening Files From The File Tree Into Panels
+
+```yaml
+plan_unit_id: F-090
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileManager.md
+canonical_text: >-
+  The file tree opens files into the home panels through the one opening module (DL-180, D7;
+  Plans/FinalGUISpec.md#F3-634, Plans/DRY_Rules.md#DR-071) and keeps no placement or dedupe rule of its own. A single
+  click on a file row opens the file in the target panel's preview tab, with an italic label, which the next single
+  click replaces, and leaves keyboard focus in the tree so the arrow keys keep walking it; a double click opens the
+  file kept and moves focus to its tab; an edit in the tab, or dragging the tab, keeps a preview tab. With the Preview
+  Tabs setting off (`general.interaction.preview-tabs`, Plans/Settings_System.md#SSYS-050), a single click opens the
+  file kept. Enter on a focused file row opens it as a double click does. The tree dispatches the existing `cmd.file.open` with the placement
+  fields of Plans/Contracts_V0.md#CV-360 beside the file's identity: `mode: preview` for a single click, `mode: keep`
+  for a double click or Enter, `where: panel` for Alt+click, and `background: true` for Ctrl+click (Cmd+click on
+  macOS), which opens the file without taking focus. A file already open anywhere is revealed where it is, as F3-634
+  says. Alt+click opens the file in a new panel by the fit rule (Plans/FinalGUISpec.md#F3-630). The target of an ordinary
+  click is the last-focused panel that holds documents, as F3-634 says; this unit does not restate that rule. The
+  file row's context menu starts with Open (kept, in that target), Open in new panel (`where: panel`) and Open to the
+  side (`where: right`, a new panel to the right of the target panel), then a separator and the existing file-tree
+  actions of section 11. The Open in Panel submenu with Panel 1 to Panel 4 and its `target_editor_panel_id` routing
+  retire. Open in Terminal on a folder opens a new terminal tab whose folder is that folder, and on a file a new
+  terminal tab in the file's folder; the terminal tab lands where F3-634 places a terminal. A folder row's single
+  click still expands or collapses it and opens nothing. Opening, revealing and keeping a file change only the Home
+  layout and the file's tab: the tree's selection, expansion, filter and multi-select state are its own (F-009,
+  F-011) and never written into the Home layout record. This supersedes F-080 and the editor-panel targets of F-017,
+  F-034 and F-036, and amends F-009, F-023, F-033, F-040 and F-067.
+gui_related: true
+gui_classification_reason: Defines what a person sees happen when they click, double-click, Alt+click or right-click a file or folder in the file tree.
+split_recommended: false
+depends_on: [DL-180, F3-634, CV-360]
+unblocks: [ATS-075, GRRC-040]
+acceptance_criteria:
+  - "A single click on a file row opens that file in the target panel's one italic preview tab, replacing the previous preview there, and focus stays in the tree; with Preview Tabs off it opens the file kept."
+  - "A double click, or Enter on a focused file row, opens the file kept and moves focus to its tab; an edit in a preview tab or a drag of it keeps it."
+  - "Each open dispatches exactly one `cmd.file.open` with CV-360's placement fields and no `target_editor_panel_id`, `target_editor_group_id` or `target_group`."
+  - "Clicking a file that is already open in any panel, including a collapsed panel or one hidden in \"+N\", reveals that tab and opens no second tab."
+  - "Alt+click opens the file in a new panel by the fit rule, and Ctrl+click (Cmd+click) opens it without taking focus."
+  - "The file row's context menu starts with Open, Open in new panel and Open to the side, and has no Open in Panel submenu."
+  - "Open in Terminal on a folder opens a new terminal tab in that folder, and on a file a new terminal tab in its folder."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: home_panels_terminal_redesign_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/FileManager.md
+  - Plans/FinalGUISpec.md
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-180"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D7, D8)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (sections 6 and 6.2; concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8 (section 3.4 and gap C5; audit lineage only)"
+  - "Concepts/home-redesign/src/panels/js/48-shims.js on concept/home-panels-20261009 (the tree's clicks and its context-menu rows; concept lineage only)"
+preserved_exact_tokens:
+  - "cmd.file.open"
+  - "mode: preview"
+  - "mode: keep"
+  - "where: panel"
+  - "where: right"
+  - "background: true"
+  - "Open in new panel"
+  - "Open to the side"
+  - "Open in Terminal"
+negative_constraints:
+  - "Do not give the file tree a placement or dedupe rule of its own."
+  - "Do not open a file that is already open a second time, or move its tab."
+  - "Do not route a tree open by `target_editor_panel_id`, `target_editor_group_id` or `target_group`, or offer Panel 1 to Panel 4."
+  - "Do not write the tree's selection, expansion or filter into the Home layout record."
+compatibility_only_notes:
+  - "The concept routes the tree through a compatibility shim over its old handlers; the shim and its names are concept lineage, not product names."
+stale_retired_dispositions:
+  - "Superseded 2026-10-09 (DL-180): F-080's Open in Panel submenu with Panel 1 to Panel 4, its four stable editor panel identities and its target_editor_panel_id routing."
+owner_boundary_notes:
+  - "F3-634 owns the opening rules and where a new tab lands, CV-360 the placement fields, F3-635 the tab kinds, and F3-639 the editor tab; this unit owns only the file tree's gestures and its context-menu open rows."
+owner_hints:
+  - Plans/FileManager.md
+  - Plans/FinalGUISpec.md
+  - Plans/Contracts_V0.md
+  - Plans/UI_Command_Catalog.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/FinalGUISpec.md#F3-634, ContractName:Plans/Contracts_V0.md#CV-360, ContractName:Plans/DRY_Rules.md#DR-071, ContractName:Plans/FileManager.md#F-080
