@@ -3527,7 +3527,12 @@ canonical_text: >-
   and Adjust NieR look is `ui.settings.nier_editor.open` (DL-153). Chat opens first and uses the existing Persona/Chat commands for Teacher selection, the
   supplied local question, a streamed same-conversation answer, and that same answer in simple words as one extra,
   simpler reply from Explain this reply simply (`cmd.chat.eli5.explain_reply`), the original reply unchanged (DL-126). Workspace practice routes
-  actual panel docking and widget actions through their existing owners. Planning receives at least half of meaningful
+  actual panel and widget actions through their existing owners. Amended 2026-10-09 (DL-180): the chat is a fixed
+  column that moves only by popping out, so the practice that asked the learner to move or dock the chat is retired;
+  the workspace chapter teaches opening a tab from the "+" menu (`cmd.panel_tab.open`), opening a file from the rail
+  into a panel (`cmd.file.open`), splitting by dragging a tab to a panel edge (`cmd.panel_tab.move` with a split; the
+  tab menu's Split right and Split down count too) and adding a widget to the dashboard tab (`cmd.widget.add` with its
+  `board_id`), each checkpoint observed from the panels' own committed results (PWIZ-035, WM-090). Planning receives at least half of meaningful
   actions and dwell, including a genuine answer edit and its affected consequence. Try it and Show Me share each exact
   mounted owner handler and observed success predicate; generic Next, narration, timers, or look-alike controls cannot
   fabricate a checkpoint. ELI5 stays beside Pause and Skip; that tour control, `ui.guided_tour.toggle_eli5`, changes
@@ -3535,7 +3540,10 @@ canonical_text: >-
   Teacher example answer. The same-answer ELI5 checkpoint depends on the admission of `cmd.chat.eli5.explain_reply`:
   until then its control renders disabled with `command_not_registered` (WM-064) and the checkpoint is never
   synthesized. Reduced Motion remains Settings-owned. Skip reverse-routes
-  restoration of the captured layout, Chat state, composer placeholder, and focus. While any restore runs, the
+  restoration of the captured layout, Chat state, composer placeholder, and focus. The captured layout is the v2 Home
+  layout record (`pm.home_workspace_layout.v2`, SP-330): the tour captures it when it starts and restores it through
+  `cmd.workspace_layout.*` and `cmd.panel_tab.*` commits, putting every panel, tab and size back; terminal sessions and
+  unsaved buffers of tabs the learner opened are never ended or dropped silently (amended 2026-10-09, DL-180). While any restore runs, the
   application's own notices about it (a widget removed, a persona applied from the next turn) stay quiet in every look,
   and the Tour's closing note says what was put back (F3-521, DL-153). Finish restores by default or keeps
   layout only after explicit selection through the existing finish action, removes practice content, and lands on the
@@ -3555,7 +3563,7 @@ canonical_text: >-
   PlanUnit records wiring obligations only and does not generate wiring JSON.
 gui_related: true
 gui_classification_reason: Defines owner-referenced Product Onboarding phase graphs and three-scene Guided Tour actions, transitions, reverse wiring, and owner-routed GUI behavior.
-depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, F3-520, ACD-484]
+depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, F3-520, ACD-484, DL-180, PWIZ-035, SP-330, WM-090]
 unblocks: []
 acceptance_criteria:
   - Main, connect-existing and Project Later consume the three exact PWIZ-021 stage-order definitions; wiring does not re-own their roster. Provider/Free Models phases require a real committed Project and never appear in connect-existing or Project Later as fake completed work.
@@ -3582,11 +3590,12 @@ acceptance_criteria:
   - The `ui.guided_tour.focus_route` action changes only the mounted application's visible route and focus; it cannot satisfy an owner-observed performed checkpoint.
   - Tour Next and Back follow valid story beats with exact scene-heading focus but cannot satisfy Teacher selection, composer send, same-answer ELI5 (the one extra, simpler reply from Explain this reply simply), panel/widget practice, Planning answer edit, or any other required observed checkpoint.
   - Every important practice action offers Try it and Show Me through the same mounted owner handler and success predicate; stale, unrelated, narrated, or timer-only observations never advance the story.
-  - Chat opens first; `cmd.persona.select`, `cmd.chat.send`, `cmd.chat.eli5.set` (the quick dot, later replies only), and `cmd.chat.eli5.explain_reply` retain their sole Persona/Chat owners and gain exact tour consumers. The guided conversation is locally isolated, retains its identity across docking, and shows the same answer for ELI5 only as one extra, simpler reply from Explain this reply simply; the original reply is never re-sent, regenerated or rewritten (DL-126).
-  - Workspace practice consumes existing panel, workspace-layout, and widget commands according to the chosen action. Planning retains at least half of meaningful actions and dwell, accepts a genuine edited answer, changes only the dependent consequence, and leaves unsure choices unresolved.
+  - Chat opens first; `cmd.persona.select`, `cmd.chat.send`, `cmd.chat.eli5.set` (the quick dot, later replies only), and `cmd.chat.eli5.explain_reply` retain their sole Persona/Chat owners and gain exact tour consumers. The guided conversation is locally isolated, retains its identity across the chat's Pop out and Dock back (the chat never moves inside the window, DL-180), and shows the same answer for ELI5 only as one extra, simpler reply from Explain this reply simply; the original reply is never re-sent, regenerated or rewritten (DL-126).
+  - Workspace practice consumes existing panel, workspace-layout, and widget commands according to the chosen action. Its four actions (amended 2026-10-09, DL-180) are opening a tab from the "+" menu, opening a file from the rail into a panel, splitting by dragging a tab to a panel edge (or the tab menu's Split right or Split down) and adding a widget to the dashboard tab; no step asks the learner to move or dock the chat. Planning retains at least half of meaningful actions and dwell, accepts a genuine edited answer, changes only the dependent consequence, and leaves unsure choices unresolved.
   - ELI5 is at the top beside Pause and Skip; `ui.guided_tour.toggle_eli5` changes the tour's narration only and never rewrites the Teacher example answer. The same-answer ELI5 checkpoint is never satisfied while `cmd.chat.eli5.explain_reply` is not admitted. Effective Reduced Motion is a Settings-owned projection/change route; Guided Tour has no Reduced Motion setting or action.
   - "While a Skip or Finish restore runs, the application's own notices about it stay quiet in every look, and the Tour's closing note says what was put back (F3-521, DL-153)."
   - "The Tour bar's Look menu and sound control are not `ui.guided_tour.*` actions: their writes compose `cmd.settings.transaction.preview` then `cmd.settings.transaction.apply`, Adjust NieR look is `ui.settings.nier_editor.open`, and the Tour's census stays its eleven actions (DL-153)."
+  - Skip and Finish restore the captured v2 Home layout record (`pm.home_workspace_layout.v2`) through `cmd.workspace_layout.*` and `cmd.panel_tab.*` commits, and the restore stays quiet (DL-153) (amended 2026-10-09, DL-180).
   - Skip restores captured layout, Chat state, placeholder, and focus through existing owners; Finish restores by default or keeps layout only on explicit selection through `ui.guided_tour.finish`, then removes practice content and focuses the real Planning Wizard with the committed Project and no auto-started work. No `ui.guided_tour.restore_layout`, `ui.guided_tour.keep_layout`, or generic owner mutation is introduced.
   - Close/reload revalidates the last safe checkpoint and original restoration references against current owners before resume; missing or stale state restores what still resolves and starts a fresh session with a notice, failed restoration exposes recovery, and neither reports completion or captures the temporary arrangement as the original.
   - Run Onboarding Again discards the tour checkpoint, snapshot ref, resume affordance, and any restoration-pending notice; Settings Resume Guided Tour (`settings.guided_tour.resume`) is disabled unless a checkpoint can resume.
@@ -3732,6 +3741,7 @@ stale_retired_dispositions:
   - "cmd.onboarding.free_models.retry is source-lineage-only; it is neither a production row nor a compatibility alias."
   - "cmd.onboarding.free_models.setup is source-lineage-only; it is neither a production row nor a compatibility alias."
   - "cmd.onboarding.back, cmd.onboarding.cancel, cmd.onboarding.continue, cmd.onboarding.defer, cmd.onboarding.finish, cmd.onboarding.open_details, cmd.onboarding.resume, and cmd.onboarding.skip are packet source-lineage candidates rejected as commands, aliases, and handlers."
+  - "Amended 2026-10-09 (DL-180): the move-or-dock-chat practice retires; the workspace chapter practises the \"+\" menu, opening a file from the rail, splitting by dragging a tab and adding a widget to the dashboard tab, and the tour captures and restores the v2 Home layout record."
 negative_constraints:
   - Do not generate wiring JSON, WorkNodes, NodeSeeds, executable queues, or runtime dispatch during this compile phase.
   - Do not register a `cmd.onboarding.*` semantic command, production row, compatibility alias, generic handler, or EventRecord.
@@ -3929,11 +3939,19 @@ Production wiring for the recovered PMConcept7 surfaces is command-owner-first a
 The machine-readable rows in `Plans/Wiring_Matrix.production.json` carry the same producer, handler,
 state selector, effect, cancellation, error, and evidence boundaries summarized here.
 
+Amended 2026-10-09 (DL-180): Home is one universal panel system and the chat a fixed column (WM-090). The Home row
+below now covers every panel and tab commit (`cmd.panel_tab.*` and `cmd.workspace_layout.*` on
+`pm.home_workspace_layout.v2`, SP-330); Collapse Bottom Terminal retires and any panel folds to its strip. The Chat row
+no longer re-seats the chat: show and hide stay `cmd.panel.switch`, the width is
+`cmd.workspace_layout.resize_surface` with `{ surface: chat, width }`, and Pop out and Dock back are `cmd.panel.undock`
+and `cmd.panel.redock` with `chat` (UCC-203). Dashboard widgets live in dashboard tabs, each board in its own
+`widget_layout:v1:dashboard:<board_id>` (WS-030).
+
 | Producer | Command/disposition | Handler/reducer and owner state | Persistence/effect | Consumer | Cancel/error path |
 |---|---|---|---|---|---|
-| Usage/Dashboard widget add/remove/configure | existing `cmd.widget.*` row | `handlers::widget::*`; Widget System owner | settled `widget_layout:v1:usage` or `widget_layout:v1:dashboard`; dispatch receipt; no persisted domain event | current widget host and saved layout projection | disabled/rejected/stale result leaves owner state unchanged |
+| Usage/Dashboard widget add/remove/configure | existing `cmd.widget.*` row, addressed by `board_id` in a dashboard tab (amended 2026-10-09) | `handlers::widget::*`; Widget System owner | settled `widget_layout:v1:usage` or `widget_layout:v1:dashboard` (per board `widget_layout:v1:dashboard:<board_id>` from 2026-10-09, WS-030); dispatch receipt; no persisted domain event | current widget host and saved layout projection | disabled/rejected/stale result leaves owner state unchanged |
 | Usage/Dashboard resize or reorder | `cmd.widget.resize` / `cmd.widget.move` on changed pointer release, keyboard reorder drop, or atomic keyboard-resize activation; preview is `view_only` | `handlers::widget::resize` / `handlers::widget::move`; surface-specific local draft: Usage pointer resize and pointer/keyboard reorder visibly repack affected peers, Dashboard resize peers remain frozen | one settled write and receipt; no pointer-preview event | Usage retains the accepted last-painted pointer-preview topology once; Dashboard reflows after commit | Escape, `pointercancel`, invalid/no-change release/drop/activation restores prior geometry/order and dispatches nothing |
-| Home move/resize/collapse/reset | existing `cmd.workspace_layout.*` rows | `handlers::workspace_layout::*`; `pm.home_workspace_layout.v1` owner | one revision-checked commit; existing `workspace.layout_changed` effect; no preview effect | Home hosts, saved dock/size/collapse projection | cancel/invalid/stale revision restores prior layout and emits no command/effect; error projects owner reason |
+| Home move/resize/collapse/reset (amended 2026-10-09: every panel and tab commit) | `cmd.workspace_layout.*` and `cmd.panel_tab.*` rows (WM-090) | `handlers::workspace_layout::*`, `handlers::panel_tab::*`; `pm.home_workspace_layout.v2` owner (`pm.home_workspace_layout.v1` is a read-only migration input) | one revision-checked commit; existing `workspace.layout_changed` effect with its v2 payload (CV-361); no preview effect | Home panels: split tree, tabs, sizes and folded panels | cancel/invalid/stale revision restores prior layout and emits no command/effect; error projects owner reason |
 | Home preset size | concept alias normalized to `cmd.workspace_layout.resize_surface` | preset resolver produces committed width/height/flex and optional `preset_id` | same resize commit as direct resize | Home surface layout | no primary `cmd.workspace_layout.size_surface` row or handler exists |
 | Usage Refresh | `cmd.usage.refresh` | `handlers::usage::refresh`; existing Usage projection owner | no-persist dispatch receipt; background refresh remains independent | Usage freshness/health projection | unavailable/stale failure remains visible and does not overwrite current projection |
 | PMConcept7 Ledger attempt drill-through | `cmd.nav.open_usage_subject`, with stable `attempt_id` and `usage_event_ref` | `handlers::nav::open_usage_subject`; route/open owner resolves `route_target.object_kind = usage_attempt` plus `object_id = attempt_id`; usage_event/provider/account/runtime refs are correlation | route/open receipt, no fabricated domain event, no `OpenSubject` | canonical Usage attempt inspector/route | missing/invalid attempt identity or unavailable target returns typed route/open failure without state mutation |
@@ -3942,7 +3960,7 @@ state selector, effect, cancellation, error, and evidence boundaries summarized 
 | Context ring popup/hover | `view_only` | shared Assistant local overlay projection | no command/receipt/event | compact context summary | dismissal emits nothing |
 | Context ring `Compact Now` | `cmd.chat.compact_context` | `handlers::chat::compact_context`; live Prompt Pipeline/context owner | explicit dispatch receipt and visible result/projection; no fabricated `context.compaction.*` event while unregistered | the same ring and Context Detail Pane | already-running/no-op/degraded/unavailable/retry/failed states remain visible and preserve thread identity |
 | Context ring `More Details` and pane focus/close | existing thread Context Detail Pane commands | `handlers::chat::*thread_context_details`; shared Assistant/thread state | no-persist receipt/layout state | one shared Context Detail Pane | unavailable/close returns focus deterministically; no second pane store |
-| Chat visibility/seat | `cmd.panel.switch` for visibility; re-seating itself is shell-local identity-preserving projection | shell panel reducer plus one shared Assistant node/store | no clone and no transcript/state fork | Home saved dock or right-side global dock | failed seat restores the prior host; node identity and thread state remain intact |
+| Chat visibility, width and pop-out (amended 2026-10-09; re-seating retired) | `cmd.panel.switch` for visibility; `cmd.workspace_layout.resize_surface` with `{ surface: chat, width }` for the width; `cmd.panel.undock` / `cmd.panel.redock` with `chat` for Pop out and Dock back (desktop app) | shell panel reducer plus one shared Assistant node/store | no clone and no transcript/state fork; visibility is a receipt, the width a `workspace.layout_changed` commit, Pop out and Dock back `panel.undocked` / `panel.redocked` | the fixed chat column on the right, from the title bar to the status bar, or its own window | a failed width commit restores the earlier width; a failed pop-out keeps the chat in its column; node identity and thread state remain intact |
 
 The production matrix does not register `cmd.workspace_layout.size_surface`, does not register
 `cmd.provider.usage.open_management`, and does not add an event for preview frames. A command receipt
@@ -3967,16 +3985,20 @@ canonical_text: >-
   cmd.workspace_layout.*; Usage refresh and stable-event
   drill-through reuse their existing rows while current PMConcept7 aggregate provider/account/panel details
   remain local inspectors; Context-ring actions reuse their existing rows; and the same
-  Assistant node/store is re-seated across Home and global docks without cloning. The concept-only size_surface
+  Assistant node/store is re-seated across Home and global docks without cloning. Amended 2026-10-09 (DL-180): the
+  chat no longer re-seats inside the window; it is a fixed column whose only move is Pop out into its own window and
+  Dock back, and the same node/store serves both without cloning. Home commits are every panel and tab commit of
+  WM-090 on pm.home_workspace_layout.v2. The concept-only size_surface
   token is normalized to resize_surface, rejected provider management stays unwired, and
   no pointer-preview event family is added.
 gui_related: true
 gui_classification_reason: The wiring contract connects the recovered visible controls, their disabled/error states, and the shared Assistant seating behavior.
 split_recommended: false
-depends_on: [WM-044, CS-068, UCC-147, WS-019, SP-249, SP-250]
+depends_on: [WM-044, CS-068, UCC-147, WS-019, SP-249, SP-250, DL-180, WM-090, UCC-203]
 unblocks: [UIW-012, DR-039, ACD-448]
 acceptance_criteria:
   - Prose and production JSON agree on producer, command/disposition, handler, selector/store, persistence/effect, receipt, consumer, cancel, and error behavior for every covered family; event-primary callers use usage_event/usage_event_ref, while a PMConcept7 Ledger attempt row dispatches cmd.nav.open_usage_subject as a usage_attempt/attempt_id object route without OpenSubject and retains usage_event_ref plus provider/account/runtime refs as correlation. Current aggregate cards remain local with no command, receipt, or event. The production matrix retains all 726 keys and this recovery enriches exactly 40 existing rows, comprising the 13 named catalog rows for Chat Context, Usage, panel switching, and widget commands plus the 27 existing home.* rows; cmd.artifacts.show_in_usage and cmd.artifacts.show_in_ledger retain their pre-recovery bytes and are not counted in that enrichment set.
+  - "Amended 2026-10-09 (DL-180): the counts in the criterion above are the 2026-08-27 recovery's. After DL-180 the Home rows are WM-090's tables: 51 fixed-zone home.* rows retired, five rebuilt on the v2 model, and the chat's rows are show and hide, width, Pop out and Dock back with no re-seat row."
   - Preview frames, popup/hover disclosure, and cancellation produce zero commands, receipts, persisted events, and storage writes.
   - Changed widget pointer releases, keyboard reorder drops, atomic keyboard-resize activations, and changed Home releases produce exactly one existing semantic command and settle only after owner acceptance.
   - The Context ring and shared Assistant rows preserve one node/store and use existing compact/details/panel authorities.
@@ -4006,14 +4028,18 @@ preserved_exact_tokens:
   - widget_layout:v1:usage
   - widget_layout:v1:dashboard
   - pm.home_workspace_layout.v1
+  - pm.home_workspace_layout.v2
   - workspace.layout_changed
   - pm:command-dispatch
 negative_constraints:
   - Do not treat a receipt as terminal domain success.
   - Do not emit a command, event, or persistence write from pointer-preview or cancel state.
   - Do not clone the Assistant or create a second pane/store while re-seating it.
+  - Do not move, dock or float the chat inside the window; Pop out is its only move (DL-180).
   - Do not create production rows for compatibility-only or rejected command tokens.
   - Do not route aggregate Usage cards, dispatch cmd.nav.open_usage_subject without the branch's stable selector, attach OpenSubject to either cmd.nav.open_usage_subject selector branch, or use correlation identity as the PMConcept7 Ledger object_id.
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the chat's in-window re-seat across Home and global docks retires (Pop out and Dock back remain), and Home commits move to the v2 record."
 owner_hints:
   - Plans/Wiring_Matrix.md
   - Plans/Wiring_Matrix.production.json
