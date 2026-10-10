@@ -45174,7 +45174,10 @@ canonical_text: >-
   changes between light and dark. A minimum-contrast floor applies per cell to the text colour against its cell
   background by moving OKLab lightness only, keeping hue and chroma: default 4.5:1, with the choices Off, 3:1, 4.5:1
   and 7:1; block elements, powerline and sextant glyphs are exempt, because they are shapes that meet their
-  neighbours, and a selection uses the scheme's selection text colour. Import reads iTerm2 `.itermcolors`, Windows
+  neighbours, and a selection uses the scheme's selection text colour. Phosphor schemes (PM Phosphor Green and PM Phosphor Amber)
+  map colours outside their 16 (the 256-colour cube and truecolor), and any colour a program sets (OSC 4, 10, 11 and
+  12), onto the phosphor by brightness, so a program's `38;5;196` never paints red on a green tube; the scheme's own
+  16 stay as authored. Import reads iTerm2 `.itermcolors`, Windows
   Terminal JSON (one scheme, or a settings file's list of schemes), kitty `.conf`, Ghostty themes, Alacritty TOML and
   its legacy YAML, base16 and base24 YAML, and Xresources; input is capped at 256 KB, nothing in a file is evaluated,
   and every error message is fixed and never echoes the file. The fields and their defaults: scheme (Follow look,
@@ -45212,6 +45215,7 @@ acceptance_criteria:
   - "Each look's Follow look scheme is the one listed for its light and dark variant, and Glass draws its scheme at 70 % and 74 % opacity with no backdrop blur of the terminal's own."
   - "Exactly the 34 schemes listed ship, each third-party scheme with its licence and source record, and the iTerm2-Color-Schemes collection and Modus are not bundled."
   - "The minimum-contrast floor defaults to 4.5:1, offers Off, 3:1, 4.5:1 and 7:1, changes only OKLab lightness, and leaves block, powerline and sextant glyphs alone."
+  - "Under PM Phosphor Green or Amber, a 256-colour or truecolor colour and a colour a program sets with OSC 4, 10, 11 or 12 draw on the phosphor by brightness, and the scheme's own 16 colours draw as authored."
   - "Import accepts the seven formats listed, refuses input over 256 KB, evaluates nothing and shows fixed errors that never echo the file."
   - "Every field changes the terminal at once, from the popover and from Settings, and no terminal appearance setting shows a restart badge."
   - "Cells are whole device pixels by the geometry rule, and no stripe shows between the last cell and the padding."
@@ -45259,6 +45263,7 @@ negative_constraints:
 compatibility_only_notes:
   - "The concept's field names and its settings keys under a terminal prefix are lineage only; the product ids are SSYS-051's rows."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R36, terminal SPEC e741dfbc6c): Phosphor schemes map colours outside their 16 and colours a program sets (OSC 4, 10, 11, 12) onto the phosphor by brightness, and the scheme's own 16 stay as authored."
   - "Amended 2026-10-10 (R36, terminal SPEC e741dfbc6c): Catalog editor syntax colours are authored to 4.5:1 for text and 3:1 for comments (7:1 on PM High Contrast), an imported scheme maps its ANSI 16 to editor colours by a fixed map, and the popover opened from the editor offers only scheme, font and size."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): States that each of the 34 shared schemes carries 17 editor syntax tokens."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for editor and terminal appearance defaults."
