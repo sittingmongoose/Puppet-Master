@@ -25368,7 +25368,7 @@ canonical_text: >-
   Plans/FinalGUISpec.md#F3-637's, and the centre's panels never take its room (F3-636), so the chat is never crushed.
 gui_related: true
 gui_classification_reason: History thread currentness, normal workflow proportion, and responsive split behavior.
-depends_on: [ACD-452, ACD-457, DL-180, F3-637]
+depends_on: [ACD-452, ACD-457, DL-180, F3-637, ACD-500]
 unblocks: []
 acceptance_criteria:
   - Every History thread has an inventoried disposition and before/after component mapping.
@@ -27434,7 +27434,7 @@ gui_related: true
 gui_classification_reason: Defines where everything the chat opens lands, the chat column as the chat reads it, the compact command card and how Teacher explains commands.
 split_recommended: false
 depends_on: [DL-180, DL-181, DL-185, F3-634, F3-635, F3-636, F3-637, F3-569, DR-071, CV-360, UCC-200, UCC-201, UCC-203, SP-330, SSYS-050, SMPFS-180, SMPFS-183, ACD-126, ACD-146]
-unblocks: [ACD-039, ACD-041, ACD-416, ACD-444, ACD-453, ACD-455, ACD-458, ACD-480, ACD-485, ACD-501, ACD-502, ATS-075]
+unblocks: [ACD-039, ACD-041, ACD-416, ACD-444, ACD-453, ACD-455, ACD-458, ACD-485, ACD-501, ATS-075]
 acceptance_criteria:
   - "Every file reference a person clicks in the chat (message and card paths, diff views, Changes rows, transcript file records, files-touched entries) opens the preview tab on a single click and a kept tab on a double click, reveals a file already open anywhere, and opens a new panel on Alt+click, all through F3-634."
   - "Plans, run views, transcripts, the thread's context, browsers, records, documents, artifacts and terminals the user opens from the chat open as their F3-635 tab kinds and take focus; nothing the chat opens is drawn in a pane of its own or as a centred modal."
