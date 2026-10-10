@@ -42499,6 +42499,8 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-153, ContractName:Plans/Final
 
 This addendum compiles the owner decision DL-162: on 2026-10-09 Jared chose concept D, "Polish", of the left-rail review copy `Concepts/LeftRailPMConcept7.html` for the left rail. Polish keeps the Cozy Shelves structure and its coloured shelf boxes (F3-472, F3-474, F3-497) and polishes them: tighter geometry where horizontal space is short, one readable type ladder, statuses as glyph and word instead of pills, text that fits by layout instead of by abbreviation, the chat's picker for every dropdown, and motion in each theme family's own voice. The units below own the rail's presentation only; behaviour, state vocabularies and commands stay with the panel owners (`Plans/FileManager.md`, `Plans/Source_Control_System.md`, `Plans/Jujutsu_Integration.md`, `Plans/WorktreeGitImprovement.md`, `Plans/GitHub_Integration.md`, `Plans/Containers_Registry_and_Unraid.md`, `Plans/Automated_Testing_System.md`, `Plans/Runtime_Artifacts_Panel.md`, and the Run & Debug and Agents units F3-482 to F3-496, F3-452 and F3-477), and `Plans/DRY_Rules.md#DR-057` keeps this grammar in one place. F3-480 (3) is amended in place for the rail. The concept is source lineage only (`Concepts/leftrail-redesign/src/concepts/d/` at commit c93e341606): its class names, its measured pixel values outside these units and its demo data are not canon. Settled later on 2026-10-09 under the same decision: the Jujutsu view of Source Control has its own five tabs (DL-163, F3-623 and F3-624); the remaining six panels and the bottom Debug tab take this grammar through amendments in their owner units, with no new command, action or wiring row; and the activity bar's More tray is F3-625. Published on 2026-10-09: `Concepts/PMConcept7.html` carries the Polish rail, built into it through the opus-5.5 build from the same concept sources the review copy uses, and the review copy `Concepts/LeftRailPMConcept7.html` keeps concepts A, B and C and "Original", the rail before Polish (still reached as `current`), for comparison. The NieR Mode kit reaches the rail through two hooks it now names, a cursor hook for rail rows and picker items and a brackets hook for chosen tabs whose box changes when chosen (F3-621); both are concept plumbing, not canon.
 
+Amended 2026-10-09 (DL-180): the bottom Debug tab named above is now a tab of the Debug Console tool kind (`debug_console`, F3-635) in whichever panel holds it, placed beside the terminals by F3-634; there is no bottom zone (F3-490 as amended). Nothing else in this addendum changes.
+
 ### F3-618 — The Left Rail's Geometry, Shelves And Type
 
 ```yaml
@@ -43130,12 +43132,18 @@ stood in August (`PMConcept7_Home_Workspace_Audit_Packet_v1`), and they are supe
 named in their own dated notes: the gesture transaction of F3-HOME-002 and F3-503 now moves panels and tabs, F3-505's
 contact-aware silhouette becomes the one tab silhouette, F3-HOME-004's write-then-read-back transaction and F3-HOME-005's
 Rust-owned model carry over to the split tree, and F3-504 keeps the web and native boundary for the chat's Pop out.
-Amended in place, each with a dated note: F3-HOME-001 to F3-HOME-005 and the block's superseded dispositions, F3-501
-to F3-505, the executive summary, sections 3.1, 3.2, 3.5, 3.6, 4.1, 4.4, 5, 7.2, 7.3, 7.20, 12.1, 12.3 and 15.1,
-Appendix B item 4, Appendix C, F3-027, F3-034, F3-035, F3-039, F3-041, F3-060, F3-061, F3-066 to F3-068, F3-070 to
-F3-072, F3-102, F3-151, F3-152, F3-195, F3-197, F3-217, F3-276, F3-279, F3-421 to F3-423, F3-445, F3-463, F3-464,
-F3-467, F3-469, F3-483, F3-484, F3-490, F3-491, F3-516, F3-517, F3-521, F3-565, F3-569 and the APR-036 to APR-038
-rows. The terminal tab's own chrome, features, appearance, effects, faces, images and agents are F3-640 to F3-646
+Superseded with a dated note: F3-501 (by F3-630), F3-070 (by F3-630), F3-197 (by F3-638) and F3-279 (by F3-638).
+Amended in place, each with a dated note: the 2026-08-04 block's heading paragraph, F3-HOME-001 to F3-HOME-005 and the
+block's superseded dispositions; F3-502 to F3-505; the executive summary; sections 3.1, 3.2, 3.5, 3.6, 4.1, 4.4, 5
+(5.1, the terminal section presentation rules, 5.2 to 5.4 and 5.6 to 5.8), 7.2, 7.3, 7.18, 7.20, 12.1, 12.3, 13.3, 15.1
+and 22 (the APR-036 to APR-038 rows); Appendix B item 4; Appendix C; F3-027, F3-034, F3-035, F3-039 to F3-041, F3-060,
+F3-061, F3-066 to F3-068, F3-071, F3-072, F3-102, F3-140, F3-143, F3-151 to F3-153, F3-195, F3-202, F3-206, F3-217,
+F3-271, F3-276, F3-421 to F3-423, F3-445, F3-463, F3-464, F3-466, F3-467, F3-469, F3-516, F3-517, F3-521, F3-540,
+F3-565 and F3-569; and, where their DL-162 notes or text name the bottom Debug tab or the bottom zone, the Run & Debug
+units F3-483, F3-484, F3-490 to F3-492, F3-495 and F3-496 and the DL-162 addendum's heading paragraph, which now point
+at the Debug Console tool kind. The left rail otherwise keeps its own canon (DL-162, DL-163, F3-618 to F3-625, DR-057):
+its side panels, their segmented strips, its More tray and its looks are not home panels and are not changed here. The
+terminal tab's own chrome, features, appearance, effects, faces, images and agents are F3-640 to F3-646
 (DL-181 to DL-183). Behaviour and records stay with their owners and are cited, never restated: the v2 Home layout
 record (`Plans/storage-plan.md#SP-330`, `Plans/home_workspace_layout_v2.schema.json`), the placement fields and the
 layout event (`Plans/Contracts_V0.md#CV-360`, `#CV-361`), the commands (`Plans/UI_Command_Catalog.md#UCC-200` to
@@ -43220,8 +43228,8 @@ canonical_text: >-
   emits nothing. This unit supersedes F3-501 and the composition of F3-HOME-001 (four fixed editor panels, the singleton
   dashboard, the chat as a movable surface, terminal sections docked at the bottom), the fixed bottom runtime zone of
   sections 3.1, 3.2, 5 and 7.20 (F3-034, F3-035, F3-060, F3-061, F3-066, F3-151), F3-502's Collapse Bottom Terminal row,
-  the host registries, host caps and per-kind fair-share minimums of F3-HOME-002 and F3-503, and section 5.8's 240 px
-  panel minimum.
+  the host registries, host caps and per-kind fair-share minimums of F3-HOME-002 and F3-503, and, for home panels,
+  section 5.8's 240 px panel minimum.
 gui_related: true
 gui_classification_reason: Defines the home centre's panel model, its layout tree, its named layouts and how panels move, split, collapse and persist.
 split_recommended: false
@@ -43444,8 +43452,8 @@ canonical_text: >-
   overlay root (DR-067) in the look's menu style (F3-647). An empty panel (the only panel in the centre, or a locked
   panel whose last tab closed) shows the same rows as a launcher: 32 px full-width list rows with the kind's icon, its
   label and its shortcut, no tiles and no pills, then the five most recent files, then a one-line hint. The menu and the
-  launcher read one row list, so a kind that joins one joins the other. This supersedes F3-HOME-003's Open Panel and
-  Open Browser in Panel flyouts and section 5.1's per-strip add button for terminals.
+  launcher read one row list, so a kind that joins one joins the other. This supersedes F3-HOME-003's and F3-502's Open
+  Panel and Open Browser in Panel rows with their Panel 1 to Panel 4 flyouts.
 gui_related: true
 gui_classification_reason: Defines the plus menu after the last tab and the empty-panel launcher.
 split_recommended: false
@@ -43610,7 +43618,7 @@ canonical_text: >-
   announcement says so (F3-636); a reveal needs no room and works at every width. The kinds and their ids are F3-635's,
   the placement fields CV-360's, the file tree's single and double click F-090's, and what the chat opens and how its
   narrow return works ACD-500's. This supersedes the per-caller open rules for Home: F3-HOME-003's Open Panel and Open
-  Browser in Panel targets, F3-421's per-pane opens, section 7.3's bottom_panel destination class, the "left editor tab
+  Browser in Panel targets, section 7.3's bottom_panel destination class, the "left editor tab
   bar" of APR-036 to APR-038, the "beside the chat" wording of F3-569, and, through F-090, F-080's four-panel routing.
 gui_related: true
 gui_classification_reason: Defines the one set of rules that decides where anything opened in the home centre lands and whether it takes focus.
