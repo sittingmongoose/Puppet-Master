@@ -29,11 +29,13 @@ src/terminal/
         31-kitty-diacritics.js  T.KITTY_DIACRITICS (row/column diacritics table)
         32-sixel.js       T.Sixel: decode (DCS q) and encode (for the simulated img2sixel)
         34-iterm.js       OSC 1337 File= (single and multipart) into the same store
-        38-saved.js       saved scrollback: text, marks and images to IndexedDB, restore into a new session (T.Saved)
+        37-scrub.js       secrets left out of saved scrollback (D36): well-known formats rewritten in place (T.Scrub)
+        38-saved.js       saved scrollback: text, marks and images to IndexedDB, restore into a new session (T.Saved);
+                          the 512 MiB total across terminals (D37, a 'meta' index store)
         40-schemes.js     scheme helpers (palette expansion, light/dark pairs, per-look defaults)
         41-schemes-data.js T.SCHEMES (generated from schemes/*.json; each scheme with its 17 editor colours)
         42-appearance.js  T.Appearance: layered model, resolution, contrast floor, settings registration, and the
-                          catalog the code editor reads (editorTokens, palette, retroPhosphor; D27)
+                          catalog the code editor reads (editorTokens, palette, retroPhosphor; D30)
         44-import.js      T.SchemeImport: iTerm2, Windows Terminal, kitty, Ghostty, Alacritty, base16/24, Xresources
         50-fx-gl.js       T.FXGL: WebGL post-process (scanlines, glow, curvature, burn-in, noise, flicker, degauss)
         52-fx.js          T.FX: effect policy (focused only, idle stop, Reduced Motion, no-GPU), trail, bell
@@ -51,7 +53,7 @@ src/terminal/
   css/  00-fonts.css 10-view.css 20-overlays.css 30-looks.css 40-nier.css 50-fx.css 80-card.css (sorted, inlined)
   fonts/    woff2 + licence texts + SOURCE.md (DL-161 format)
   schemes/  <family>.json (raw, with source and licence) + LICENSE-<family>.txt + SOURCES.md; editor-syntax.json
-            (the 17 editor syntax colours of every scheme, D27) + check_editor_syntax.py (its contrast gate)
+            (the 17 editor syntax colours of every scheme, D30) + check_editor_syntax.py (its contrast gate)
   harness/  build_harness.py, mock-host.js, mock-host.css, harness.template.html, demos.js, labs, notes/, fixtures/,
             checks/ (node checks; the repository ignores every folder named tests/)
 ```
@@ -241,10 +243,12 @@ computed by the terminal from its command log (`PMT.cardSpec(session, command)` 
 
 ## 8. Public API (`window.PMT`, 90-kind.js)
 
-`PMT.profiles()` -> `[{ id, label, detail, icon }]`; `PMT.open(spec)` (through `PM_HOME.open`); `PMT.card(spec)`;
+`PMT.profiles()` -> `[{ id, label, detail, icon, group }]` (`group: 'ssh'` for SSH hosts, D39);
+`PMT.notifications.{ muted(id), mute(id, on), available() }` (D38); the kind's `tabMenu(state)` gives the tab menu's
+rows (the notification mute); `PMT.open(spec)` (through `PM_HOME.open`); `PMT.card(spec)`;
 `PMT.sessions()`; `PMT.agent` (agent driving API used by demos and the chat); `PMT.version`.
 
-### The scheme catalog the editor shares (D27)
+### The scheme catalog the editor shares (D30)
 
 One catalog serves the terminal and the code editor. `schemes/*.json` and `schemes/editor-syntax.json` compile
 (`python3 harness/compile_schemes.py`; `--check` fails when the output is stale) into `js/41-schemes-data.js`, where

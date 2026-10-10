@@ -14,6 +14,8 @@ given and labelled "target". Section numbers are stable; later installments add 
 | Header row content | Left: folder (monospace, `~` for home), branch (when the folder is in a repository), the running command and its elapsed time `m:ss` (only while a command runs; the command is cut at 48 characters with an ellipsis, full text in the hover tag). Right: Find, Split, Maximize (Restore when maximized), More. |
 | Tab label | `<process> · <folder>`: the foreground program, else `ssh` inside an SSH session, else the shell name; folder is the last path component. A failed last command adds its exit code (host mark); an agent-driven terminal shows the agent's square mark; a running process sets `busy`. Hover tag: label, "(ended)" when the session ended, "· <agent> is driving". |
 | No bottom bar | Nothing below the screen. |
+| Notifications (D38) | A program's notification (OSC 9, OSC 777 `notify`, OSC 99) raises a system notification while Puppet Master is in the background; in the foreground it is announced and an unfocused tab gets its attention mark. At most one every 3 s per terminal; clicking it brings the terminal forward. Per-terminal mute, saved with the tab: "Mute notifications" in the More menu and in the tab's menu. The browser permission is asked only after a notification arrived, once, in an inline notice when the user is back: Allow, Mute this terminal, Not now |
+| "+" menu (D39) | Lists the installed shells inline and the SSH hosts in an "SSH hosts" submenu (`PMT.profiles()`: one flat list; a host carries `group: 'ssh'`, its label is the host name and its detail `user@host`). Agreed with the panels lead, 2026-10-10 |
 | No internal ids | Session ids, nonces and tab ids never appear as text. |
 | Session ended | An inline row: "Session ended" (with "with exit code N" when non-zero), Restart, Close tab. The screen dims to 72 % opacity. Enter in the ended terminal restarts it. |
 | Restored after reload | A restored tab (after a reload, or a closed tab reopened) gets its saved scrollback back above a new session and says so ("This terminal was restored with its scrollback. Its earlier session ended when the page reloaded; this is a new session."); section 7 has the saved-scrollback rules. Never a fake live PTY (F3-226, F3-228). |
@@ -117,7 +119,7 @@ own terminal port pinned to a commit (`schemes/SOURCES.md` has every URL and SHA
 Teletype / PM Phosphor Green (Amber is the sibling); Basic One Half Light / Dark; NieR PM YoRHa Parchment / Ink.
 "Switch with light and dark" (default on) swaps a chosen scheme for its family's other appearance.
 
-The code editor uses the same catalog (D27). Each scheme carries 17 editor syntax colours (`schemes/editor-syntax.json`,
+The code editor uses the same catalog (D30). Each scheme carries 17 editor syntax colours (`schemes/editor-syntax.json`,
 held to 4.5:1 for every token, comments included, against the scheme's background, 7:1 throughout on PM High
 Contrast: the editor's floor, so a scheme draws the same comments on both surfaces); an
 imported scheme takes its from its ANSI 16 by a fixed map. Both surfaces default to "Follow look", and the editor's Appearance popover offers only scheme, font
@@ -194,14 +196,16 @@ decodes or a file is read, later output waits, so text after an image always lan
 Saved scrollback (canon R18 from the Plans thread, 2026-10-09): images persist with the terminal's saved scrollback
 within the scrollback storage quota; when the quota evicts one, its cells show a short text placeholder naming the image;
 a restored terminal's scrollback looks as it did. Saved images follow the saved scrollback's own storage and backup
-rules: it stays on this machine and is excluded from backups, exports and sync. A product-wide cap across terminals is
-an open question for Jared (wave 1 has none).
+rules: it stays on this machine and is excluded from backups, exports and sync. Jared's answers of 2026-10-10 add a
+total cap across terminals (D37) and scrub well-known secret formats from the saved copy (D36).
 What the concept does (`js/38-saved.js`), with its numbers:
 
 | Rule | Value |
 |---|---|
 | What is saved | The main screen's retained lines (at most the 10,000-line scrollback plus the screen), their styles and links, command records with `by`, and every image placement anchored in them (kitty, sixel, iTerm2, relative placements, Unicode-placeholder images). Never saved: the alternate screen, the command line being typed, selections, find highlights (`transient_only`). |
 | Storage quota | 64 MiB stored per terminal, text and images together; images are stored as PNG, one record per frame, written once and reused by later saves |
+| Total cap (D37) | 512 MiB for every terminal's saved copy together. Past it the oldest saved scrollback gives way first: the saved copies of terminals not running now (closed tabs, other projects), least recently saved first, are deleted until a full per-terminal quota fits again; if that is still not enough, the terminal being saved keeps fewer of its images. A small index of bytes and save times per copy keeps the total without reading the copies |
+| Secrets (D36) | Before the copy is written, well-known secret formats are replaced in it: vendor API keys (`sk-...`, `AKIA...`, `ghp_...`, `github_pat_...`, `glpat-...`, `xox?-...`, `AIza...`, Stripe `sk_live_...`), bearer tokens and JWTs, `KEY=value` assignments whose name says key, secret, token or password, and the body of a private-key block. The live screen keeps the original. A secret's cells are rewritten in place, so the line keeps its width and every image anchor and mark stays put: `[API key · not saved]` (or token, secret, private key) followed by blank cells, or `•` when the secret is shorter than that label. A private key keeps its BEGIN and END lines; its first body line carries the label and the rest of the body is empty. Command lines and link targets in the copy are scrubbed the same way. The restore notice ends "N secrets were left out of the saved copy." A floor for the common formats, not a guarantee that no secret is ever saved (`js/37-scrub.js`) |
 | Eviction | Text is bounded by the scrollback limit and never gives way to images. Images that do not fit are dropped oldest first (highest in the scrollback); a frame that cannot be read back is treated the same |
 | Placeholder | A dashed hairline box in the image's cells with `[<name> <W>×<H> · not kept]`; the name is the file name (kitty file transfer, iTerm2 `name=`) or `kitty image` / `sixel image` / `inline image`. Unicode-placeholder runs show the label in their first cell. The accessible buffer reads the same label |
 | Restore | A tab with no live session (after a reload, or a closed tab reopened) loads its saved copy before its new session starts: the lines, marks and images as they were, then a dim rule `── Restored <time> · the earlier session ended ──`, then the new prompt. Notice: "This terminal was restored with its scrollback (N images were not kept). Its earlier session ended when the page reloaded; this is a new session." A command still running when the page went away comes back ended and indeterminate ("ended with the earlier session"), never as done |

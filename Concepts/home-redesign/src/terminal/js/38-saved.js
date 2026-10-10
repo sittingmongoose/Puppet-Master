@@ -6,7 +6,10 @@
    terminal (text, styles, links, command records, image placements) and one record per image frame, written once and
    reused by later saves. Saved images follow the saved scrollback's own rules (R18): it stays on this machine and is
    excluded from backups, exports and sync.
-   Quota: 64 MiB stored per terminal, text and images together. Text is bounded by the 10,000-line scrollback and never
+   Quota: 64 MiB stored per terminal, text and images together, and 512 MiB for all terminals together (D37). Past
+   the total, the oldest saved scrollback gives way first: closed and other not-running terminals' saved copies, least
+   recently saved first; if that is not enough, the terminal being saved keeps less of its images. A small index store
+   ('meta': bytes and time per saved copy) keeps the total without reading the copies. Text is bounded by the 10,000-line scrollback and never
    gives way to images; images that do not fit are dropped oldest first (highest in the scrollback), and their cells then
    show a short placeholder naming the image: "[logo.png 640×480 · not kept]". A frame that cannot be read back gets
    the same placeholder.
@@ -17,20 +20,34 @@
    at most 7 days. */
 (function () {
   var DB_NAME = 'pm.home.terminal:v1:saved';
-  var LIMITS = { quota: 64 * 1024 * 1024, settleMs: 1500, maxWaitMs: 5000, loadMs: 5000, closedMax: 20, closedDays: 7 };
+  var LIMITS = { quota: 64 * 1024 * 1024, total: 512 * 1024 * 1024, settleMs: 1500, maxWaitMs: 5000, loadMs: 5000, closedMax: 20, closedDays: 7 };
   var dbp = null;
   var closing = new Map();   /* key -> the last save of a tab that closed, so a reopen reads what it wrote */
+  var running = new Map();   /* key -> savers writing it now; their copies are never evicted for the total (D37) */
 
   function openDb() {
     if (dbp) return dbp;
     dbp = new Promise(function (resolve) {
       var req = null;
-      try { req = window.indexedDB ? window.indexedDB.open(DB_NAME, 1) : null; } catch (e) { req = null; }
+      try { req = window.indexedDB ? window.indexedDB.open(DB_NAME, 2) : null; } catch (e) { req = null; }
       if (!req) { resolve(null); return; }
-      req.onupgradeneeded = function () {
+      req.onupgradeneeded = function (ev) {
         var d = req.result;
         if (!d.objectStoreNames.contains('snap')) d.createObjectStore('snap');
         if (!d.objectStoreNames.contains('img')) d.createObjectStore('img');
+        if (!d.objectStoreNames.contains('meta')) {
+          var meta = d.createObjectStore('meta');
+          /* copies saved before the index existed are counted once, here */
+          if (ev.oldVersion >= 1) {
+            var cur = req.transaction.objectStore('snap').openCursor();
+            cur.onsuccess = function () {
+              var c = cur.result; if (!c) return;
+              var r = c.value;
+              if (r && !Array.isArray(r) && typeof r.bytes === 'number') meta.put({ bytes: r.bytes, at: r.savedAt || 0 }, c.key);
+              c.continue();
+            };
+          }
+        }
       };
       req.onsuccess = function () { resolve(req.result); };
       req.onerror = function () { resolve(null); };
@@ -141,11 +158,32 @@
         packs[i] = Object.assign({}, packs[i], { s: Uint32Array.from(runs) });   /* a copy: the line's cached pack stays as it is */
       });
     }
+    /* D36: well-known secret formats never reach the disk; the live lines keep them (37-scrub.js) */
+    var scrubbed = 0;
+    if (T.Scrub) {
+      var sc = T.Scrub.packs(packs), dimOf = new Map();
+      packs = sc.packs; scrubbed = sc.count;
+      /* the labels read as the terminal's voice, not the program's: dim and italic in the cell's own colours */
+      sc.masked.forEach(function (xs, row) {
+        var pk = packs[row], n = pk.n, st = new Uint32Array(n), x = 0, k;
+        for (k = 0; k < pk.s.length && x < n; k += 2) for (var e = Math.min(n, x + pk.s[k + 1]); x < e;) st[x++] = pk.s[k];
+        xs.forEach(function (c) {
+          if (c >= n) return;
+          var from = st[c], to = dimOf.get(from);
+          if (to === undefined) { to = styles.length; styles.push(Object.assign({}, styles[from] || styles[0], { flags: ((styles[from] || styles[0]).flags | T.ATTR.DIM | T.ATTR.ITALIC) })); dimOf.set(from, to); }
+          st[c] = to;
+        });
+        var runs = [];
+        for (x = 0; x < n;) { var id = st[x], s0 = x; while (x < n && st[x] === id) x++; runs.push(id, x - s0); }
+        packs[row] = Object.assign({}, pk, { s: Uint32Array.from(runs) });
+      });
+    }
+    function clean(str) { if (!T.Scrub || !str) return str; var r = T.Scrub.text(str); scrubbed += r.count; return r.text; }
     function ix(l) { var v = l ? index.get(l) : undefined; return v === undefined || v >= end ? -1 : v; }
     var cmds = [];
     term.commands.forEach(function (c) {
       var p = ix(c.promptLine); if (p < 0) return;
-      cmds.push({ cmdline: c.cmdline, cwd: c.cwd, by: c.by, exit: c.exit, start: c.start, end: c.end, state: c.state, empty: !!c.empty,
+      cmds.push({ cmdline: clean(c.cmdline), cwd: c.cwd, by: c.by, exit: c.exit, start: c.start, end: c.end, state: c.state, empty: !!c.empty,
         ind: !!c.indeterminate, p: p, i: ix(c.inputLine), ic: c.inputCol || 0, o: ix(c.outputLine), e: ix(c.endLine), ec: c.endCol || 0 });
     });
     var imgs = [], imgIdx = new Map(), pls = [], plIdx = new Map(), placed = new Set(B ? B.placements : []);
@@ -191,8 +229,8 @@
           im.frames.map(function (f) { return (f.canvas ? f.canvas._gen || 0 : 'g') + '/' + (f.gap || 0); }).join('.');
       }).join()].join('|');
     return { sig: sig, cols: buf.cols, rows: buf.rows, packs: packs, textBytes: textBytes, cmds: cmds, imgs: imgs, pls: pls,
-      styles: styles,
-      links: term.links.list.map(function (l) { return l ? { uri: l.uri, params: Object.assign({}, l.params) } : null; }) };
+      styles: styles, scrubbed: scrubbed,
+      links: term.links.list.map(function (l) { return l ? { uri: clean(l.uri), params: Object.assign({}, l.params) } : null; }) };
   }
 
   /* PNG per frame, encoded once per frame content */
@@ -223,6 +261,7 @@
     this.held = !!held;
     this.seq = 0; this.opened = 0;   /* saves numbered by capture; an older one never writes over a newer one */
     this.written = new Set();
+    running.set(this.key, (running.get(this.key) || 0) + 1);
     var self = this, term = session.term, soon = function () { self.soon(); };
     this.offs = [term.on('dirty', soon), term.on('command', soon), term.on('resize', soon)];
     this._vis = function () { if (document.visibilityState === 'hidden') self.hide(); };
@@ -280,11 +319,31 @@
     return p;
   };
   Saver.prototype.dispose = function () {
+    if (!this.dead) { var n = (running.get(this.key) || 1) - 1; if (n) running.set(this.key, n); else running.delete(this.key); }
     this.dead = true; clearTimeout(this.timer);
     this.offs.forEach(function (f) { f(); });
     document.removeEventListener('visibilitychange', this._vis);
     window.removeEventListener('pagehide', this._hide);
   };
+
+  /* D37: the room this terminal's copy has under the total. Copies of terminals not running now give way first, least
+     recently saved first, until the total has room for a full per-terminal quota again */
+  function room(key) {
+    return run(['snap', 'img', 'meta'], 'readwrite', function (s) {
+      var out = { room: LIMITS.total }, list = [], cur = s.meta.openCursor();
+      cur.onsuccess = function () {
+        var c = cur.result;
+        if (c) { if (c.key !== key) list.push({ key: c.key, bytes: (c.value && c.value.bytes) || 0, at: (c.value && c.value.at) || 0 }); c.continue(); return; }
+        var sum = list.reduce(function (a, e) { return a + e.bytes; }, 0);
+        list.filter(function (e) { return !running.has(e.key); }).sort(function (a, b) { return a.at - b.at; }).forEach(function (e) {
+          if (sum + LIMITS.quota <= LIMITS.total) return;
+          forgetKeys(s, [e.key]); sum -= e.bytes;
+        });
+        out.room = Math.max(0, LIMITS.total - sum);
+      };
+      return out;
+    }).then(function (o) { return o ? o.room : LIMITS.quota; }, function () { return LIMITS.quota; });
+  }
 
   function save(sv, force, quick) {
     var snap = capture(sv.session), budget = LIMITS.quota - snap.textBytes, used = 0, puts = [], have = [], seq = ++sv.seq;
@@ -306,13 +365,13 @@
           frames.forEach(function (f) { var k = sv.key + '|' + f.key; (sv.written.has(k) ? have : puts).push([k, f.blob]); });
         }, function () { e.kept = false; });
       });
-    }, Promise.resolve()).then(function () {
+    }, room(sv.key).then(function (rm) { budget = Math.min(LIMITS.quota, rm) - snap.textBytes; })).then(function () {
       /* a closing tab's saves still land; a newer save already writing wins over this older capture */
       if ((sv.dead && !sv.closing) || seq < sv.opened) return false;
       sv.opened = seq;
       sv.sig = snap.partial ? null : snap.sig;   /* a save that left an image out is not the last word */
       var rec = { v: 1, savedAt: Date.now(), cols: snap.cols, rows: snap.rows, lines: snap.packs, styles: snap.styles, links: snap.links,
-        cmds: snap.cmds, pls: snap.pls, bytes: snap.textBytes + used,
+        cmds: snap.cmds, pls: snap.pls, bytes: snap.textBytes + used, scrubbed: snap.scrubbed || 0,
         imgs: snap.imgs.map(function (e) {
           var im = e.im;
           return { kept: !!e.kept, frames: e.kept ? e.frames : [], w: im.w, h: im.h, name: im.name || '', source: im.source || 'kitty',
@@ -320,10 +379,11 @@
         }) };
       var live = new Set();
       rec.imgs.forEach(function (e) { e.frames.forEach(function (f) { live.add(sv.key + '|' + f.key); }); });
-      return run(['snap', 'img'], 'readwrite', function (s) {
+      return run(['snap', 'img', 'meta'], 'readwrite', function (s) {
         puts.forEach(function (p) { s.img.put(p[1], p[0]); });
         have.forEach(function (p) { var q = s.img.count(p[0]); q.onsuccess = function () { if (!q.result) s.img.put(p[1], p[0]); }; });
         s.snap.put(rec, sv.key);
+        s.meta.put({ bytes: rec.bytes, at: rec.savedAt }, sv.key);
         /* frames no longer referenced go */
         var cur = s.img.openKeyCursor(IDBKeyRange.bound(sv.key + '|', sv.key + '|\uffff'));
         cur.onsuccess = function () { var c = cur.result; if (!c) return; if (!live.has(c.key)) s.img.delete(c.key); c.continue(); };
@@ -473,23 +533,23 @@
     }
     if (store) { (B ? Array.from(B.images.values()) : []).forEach(function (im) { if (im.restored) store._startAnim(im); }); store.bump(); }
     term.emit('dirty');
-    return { lines: kept.length, commands: term.commands.length, images: shown, dropped: ghosts, keys: keys };
+    return { lines: kept.length, commands: term.commands.length, images: shown, dropped: ghosts, keys: keys, scrubbed: rec.scrubbed || 0 };
   }
 
   function forgetKeys(s, keys) {
-    keys.forEach(function (key) { s.snap.delete(key); s.img.delete(IDBKeyRange.bound(key + '|', key + '|\uffff')); });
+    keys.forEach(function (key) { s.snap.delete(key); s.img.delete(IDBKeyRange.bound(key + '|', key + '|\uffff')); if (s.meta) s.meta.delete(key); });
   }
   /* a tab closed a moment ago may still be writing its last save (another saver, so seq order cannot stop it): wait */
   function settled(id) { return closing.get(keyFor(id)) || Promise.resolve(); }
   function forget(id) {
     return settled(id).then(function () {
-      return run(['snap', 'img'], 'readwrite', function (s) { forgetKeys(s, [keyFor(id)]); });
+      return run(['snap', 'img', 'meta'], 'readwrite', function (s) { forgetKeys(s, [keyFor(id)]); });
     }).catch(function () { return null; });
   }
   /* closed terminals, newest last, in one small record per project: [{ id, at }]; past the reopen stack or 7 days they go */
   function editClosed(fn) {
     var ck = project() + '|#closed', out = {};
-    return run(['snap', 'img'], 'readwrite', function (s) {
+    return run(['snap', 'img', 'meta'], 'readwrite', function (s) {
       var r = s.snap.get(ck);
       r.onsuccess = function () {
         var list = Array.isArray(r.result) ? r.result : [], res = fn(list), cut = Date.now() - LIMITS.closedDays * 864e5;

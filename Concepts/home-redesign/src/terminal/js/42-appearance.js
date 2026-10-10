@@ -5,7 +5,7 @@
      4. this tab     (the tab's own overrides, saved with the tab).
    A field left unset falls through. Everything applies live: no field needs a restart. The Appearance popover
    writes layer 4 ("This terminal") or layer 2 ("All terminals").
-   The scheme catalog is shared with the code editor (D27): every scheme carries its 17 editor syntax colours
+   The scheme catalog is shared with the code editor (D30): every scheme carries its 17 editor syntax colours
    (editorTokens), and the Retro look's dark scheme choice is read by the editor through retroPhosphor(). */
 (function () {
   var C = T.color;
@@ -151,7 +151,7 @@
     return theme;
   }
 
-  /* ---- the editor's view of the catalog (D27) ---- */
+  /* ---- the editor's view of the catalog (D30) ---- */
   var EDITOR_TOKENS = ['kw', 'str', 'num', 'com', 'fn', 'ty', 'var', 'prop', 'op', 'pun', 'tag', 'attr', 'esc', 'mac', 'link', 'head', 'code'];
   /* a scheme without its own editor block (imported, user) takes one from its ANSI 16: n is the ANSI index, 'fg' the
      foreground. Fixed; the curated schemes carry their own from schemes/editor-syntax.json */
@@ -310,7 +310,7 @@
     };
   }
 
-  /* The Retro look's dark scheme, 'green' or 'amber' (D27). It is not stored anywhere of its own: it is what Retro dark
+  /* The Retro look's dark scheme, 'green' or 'amber' (D30). It is not stored anywhere of its own: it is what Retro dark
      resolves to at the All terminals layers (project over app, the 'scheme' and 'schemePair' fields), so choosing
      PM Phosphor Amber for All terminals is the choice. Follow look, or any scheme that is not Amber, reads 'green'. */
   function retroPhosphor() {
@@ -414,7 +414,7 @@
     get: field, layerOf: layerOf, set: set, reset: resetScope, preview: preview, endPreview: endPreview,
     refreshAll: refreshAll, addUserScheme: addUserScheme, imageUrl: imageUrl, lookKey: lookKey,
     setTabFont: function (view, o) { if (o.size) set('tab', 'fontSize', o.size, view); },
-    /* D27: the catalog as the editor reads it (window.PMT.Appearance, 90-kind.js) */
+    /* D30: the catalog as the editor reads it (window.PMT.Appearance, 90-kind.js) */
     EDITOR_TOKENS: EDITOR_TOKENS, EDITOR_FROM_ANSI: EDITOR_FROM_ANSI, editorFromAnsi: editorFromAnsi,
     catalog: catalog, editorTokens: editorTokens, palette: palette, retroPhosphor: retroPhosphor,
     on: function (name, fn) { return events.on(name, fn); }

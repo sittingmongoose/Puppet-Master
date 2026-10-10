@@ -1,4 +1,4 @@
-// The colour-scheme catalog the code editor shares (D27): editorTokens for a curated, an imported and an unknown id,
+// The colour-scheme catalog the code editor shares (D30): editorTokens for a curated, an imported and an unknown id,
 // palette, schemes(), retroPhosphor before and after Retro dark becomes Amber, and the event firing once.
 // Run: node harness/checks/catalog.test.mjs
 import fs from 'node:fs'; import path from 'node:path'; import url from 'node:url';
@@ -58,7 +58,7 @@ test('editorTokens: imported (derived from the ANSI 16)', () => {
   const e = A.editorTokens(importedId);
   assert.deepEqual(Object.keys(e), TOKENS);
   assert.deepEqual(e, want);
-  /* a user scheme saved before D27 has no editor block: it is derived on read */
+  /* a user scheme saved before D30 has no editor block: it is derived on read */
   const old = { id: 'user-old', name: 'Old', family: 'Imported', appearance: 'dark', licence: 'user', colors: c };
   store.set('pm.home.terminal:v1:schemes', JSON.stringify([old]));
   const T2 = loadT(['00-core.js', '41-schemes-data.js', '42-appearance.js'], { window: {} });

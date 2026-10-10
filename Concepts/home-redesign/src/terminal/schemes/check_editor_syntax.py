@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""check_editor_syntax.py - gates for schemes/editor-syntax.json (D27).
+"""check_editor_syntax.py - gates for schemes/editor-syntax.json (D30).
 
 Reads the scheme catalog (schemes/*.json family files) and checks every
 editor-syntax.json entry: 34 schemes, one of each catalog id, all 17 token

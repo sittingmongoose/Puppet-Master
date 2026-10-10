@@ -12,7 +12,8 @@
       { id: 'zsh', label: 'zsh', detail: 'Default', icon: 'terminal' },
       { id: 'bash', label: 'bash', detail: 'GNU bash 5.2', icon: 'terminal' },
       { id: 'pwsh', label: 'pwsh', detail: 'PowerShell 7.5', icon: 'terminal' },
-      { id: 'ssh-devbox', label: 'ssh devbox', detail: 'jared@devbox', icon: 'terminal' }
+      /* D39: SSH hosts carry group 'ssh'; the host's '+' menu lists them in an 'SSH hosts' submenu, shells inline */
+      { id: 'ssh-devbox', label: 'devbox', detail: 'jared@devbox', icon: 'terminal', group: 'ssh' }
     ];
   }
 
@@ -23,6 +24,9 @@
     var home = (T.Session.machine() && T.Session.machine().home) || '/home/jared';
     return cwd === '~' ? home : cwd.indexOf('~/') === 0 ? home + cwd.slice(1) : cwd;
   }
+
+  /* a terminal's record by session id or by the tab's saved alias */
+  function recordFor(id) { var r = records.get(id); if (!r) for (var x of records.values()) if (x.alias === id) r = x; return r || null; }
 
   function createSession(spec) {
     var s = new T.Session({ profile: spec.profile || 'zsh', cwd: expandCwd(spec.cwd), by: spec.by || 'user',
@@ -43,10 +47,55 @@
       setTimeout(function () { s.input(inv.command + '\r', by); }, 60);
     }
   }
+  /* ---- D38: a program's notification (OSC 9, 777, 99) raises a system notification while Puppet Master is in the
+     background, unless this terminal is muted. At most one every 3 s per terminal; clicking it brings the terminal
+     forward. The browser's permission is never asked out of the blue: the first time a notification arrives with no
+     answer yet, the terminal asks once in a notice when the user is back, offering Allow, Mute this terminal, Not now */
+  var NOTIFY_ASKED = 'pm.home.terminal:v1:notify-asked';
+  function inBackground() { return document.visibilityState === 'hidden' || (typeof document.hasFocus === 'function' && !document.hasFocus()); }
+  function canNotify() { return typeof window.Notification === 'function'; }
+  function setMuted(rec, on) {
+    rec.muted = !!on;
+    if (rec.api && rec.api.saveSoon) rec.api.saveSoon();
+    if (rec.view) rec.view.announce(on ? 'Notifications from this terminal are muted' : 'Notifications from this terminal are on');
+  }
+  function askPermission(rec) {
+    var v = rec.view; if (!v || !v.notice) return;
+    try { if (localStorage.getItem(NOTIFY_ASKED)) return; localStorage.setItem(NOTIFY_ASKED, '1'); } catch (e) { /* ask anyway */ }
+    v.notice({ id: 'notify-permission', tone: 'info',
+      text: 'A program here sent a notification while Puppet Master was in the background. Show these as system notifications?',
+      actions: [
+        { label: 'Allow', primary: true, run: function () { try { window.Notification.requestPermission(); } catch (e) { /* no permission API */ } v.focus(); } },
+        { label: 'Mute this terminal', run: function () { setMuted(rec, true); v.focus(); } },
+        { label: 'Not now', run: function () { v.focus(); } }] });
+  }
+  function wireNotify(rec) {
+    if (rec.notifyOff) rec.notifyOff();
+    var last = 0;
+    rec.notifyOff = rec.session.term.on('notify', function (n) {
+      if (rec.muted || !canNotify() || !inBackground()) return;
+      var now = Date.now(); if (now - last < 3000) return; last = now;
+      var perm = window.Notification.permission;
+      if (perm === 'default') { rec.askOnReturn = true; return; }
+      if (perm !== 'granted') return;
+      var id = rec.alias || rec.session.id, sh = rec.session.shell, cwd = sh ? sh.cwd : rec.session.cwd || '';
+      var where = rec.session.profile.label + (cwd ? ' \u00b7 ' + cwd.replace(/^.*\//, '') : '');
+      try {
+        var note = new window.Notification(n.title || where, { body: n.title ? where + ': ' + n.body : n.body, tag: 'pmt-' + id });
+        note.onclick = function () { try { window.focus(); } catch (e) {} if (window.PM_HOME) window.PM_HOME.open({ kind: 'terminal', session: id }); note.close(); };
+      } catch (e) { /* a page that may not notify (some embeds) shows nothing */ }
+    });
+  }
+  if (window.addEventListener) window.addEventListener('focus', function () {
+    records.forEach(function (rec) { if (rec.askOnReturn) { rec.askOnReturn = false; askPermission(rec); } });
+  });
+
   function mountView(host, api, rec, state) {
     var view = new T.View(host, api, rec.session, state);
     if (T.Find) T.Find.attach(view);
-    rec.view = view;
+    rec.view = view; rec.api = api;
+    if (state && state.mute) rec.muted = true;
+    wireNotify(rec);
     view.on('restart', function () { restart(rec, host, api, state); });
     /* a session waiting on its restore is not saved until the restore settles (resume releases the saver) */
     if (T.Saved) { if (rec.saver) rec.saver.dispose(); rec.saver = T.Saved.watch(rec.session, rec.alias || rec.session.id, !!rec.holdStart); }
@@ -76,7 +125,9 @@
       view.marksDirty = true; view.scrollTo(view.bottomAbs()); view.schedule(true);
       var why = wasClosed ? 'when the tab closed' : 'when the page reloaded';
       if (r) say('This terminal was ' + (wasClosed ? 'reopened' : 'restored') + ' with its scrollback' +
-        (r.dropped ? ' (' + r.dropped + (r.dropped === 1 ? ' image was' : ' images were') + ' not kept)' : '') + '. Its earlier session ended ' + why + '; this is a new session.');
+        (r.dropped ? ' (' + r.dropped + (r.dropped === 1 ? ' image was' : ' images were') + ' not kept)' : '') + '. Its earlier session ended ' + why + '; this is a new session.' +
+        /* D36: what the scrub left out of the saved copy is said once, where the restored lines are */
+        (r.scrubbed ? ' ' + r.scrubbed + (r.scrubbed === 1 ? ' secret was' : ' secrets were') + ' left out of the saved copy.' : ''));
       else if (o === 'timeout') say('This terminal was ' + (wasClosed ? 'reopened' : 'restored') + ' without its scrollback, which took too long to load. Its earlier session ended ' + why + '; this is a new session.');
       else if (back) say('This terminal was ' + (wasClosed ? 'reopened' : 'restored') + '. Its earlier session ended ' + why + '; this is a new session.');
       return r;
@@ -140,6 +191,13 @@
         sub: function () { return profiles(); },
         spec: function (subId) { return { kind: 'terminal', profile: subId || null }; }
       },
+      /* rows this kind adds to its tab's menu (asked of home-panels; D38): the notification mute */
+      tabMenu: function (state) {
+        var rec = recordFor(state && state.session);
+        if (!rec || !canNotify()) return [];
+        return [{ id: 'notify-mute', label: 'Mute notifications', detail: 'System notifications from this terminal', checked: !!rec.muted,
+          run: function () { setMuted(rec, !rec.muted); } }];
+      },
       mount: function (host, state, api) {
         state = state || {};
         var rec = records.get(state.session);
@@ -176,7 +234,9 @@
             /* a custom image held as a data URL (written before images were kept by reference) would push the state
                over the host's 16 KB cap, and then nothing of it saves: it is left out, the rest stays */
             if (typeof ap.bgImageData === 'string' && ap.bgImageData.indexOf('data:') === 0) { ap = Object.assign({}, ap); delete ap.bgImageData; }
-            return { v: 1, session: rec.alias || rec.session.id, profile: rec.session.profile.id, cwd: sh ? sh.cwd : rec.session.cwd, appearance: ap };
+            var out = { v: 1, session: rec.alias || rec.session.id, profile: rec.session.profile.id, cwd: sh ? sh.cwd : rec.session.cwd, appearance: ap };
+            if (rec.muted) out.mute = true;
+            return out;
           },
           /* while a divider drag is still moving the body (final === false) the reflow and PTY resize wait,
              at most every 120 ms; the final call lays out at once */
@@ -248,10 +308,16 @@
           state: s.state, foreground: s.foreground() };
       });
     },
+    /* D38: per-terminal mute of the system notifications its programs raise */
+    notifications: {
+      muted: function (id) { var r = recordFor(id); return !!(r && r.muted); },
+      mute: function (id, on) { var r = recordFor(id); if (r) setMuted(r, on === undefined ? !r.muted : on); },
+      available: canNotify
+    },
     session: function (id) { var r = records.get(id); if (!r) for (var x of records.values()) if (x.alias === id) r = x; return r ? r.session : null; },
     view: function (id) { var r = records.get(id); if (!r) for (var x of records.values()) if (x.alias === id) r = x; return r ? r.view : null; },
     keys: function () { return T.keys.list(); },
-    /* the colour-scheme catalog the code editor shares (D27). Unknown scheme ids give null */
+    /* the colour-scheme catalog the code editor shares (D30). Unknown scheme ids give null */
     Appearance: {
       schemes: function () { return T.Appearance.catalog(); },
       editorTokens: function (schemeId) { return T.Appearance.editorTokens(schemeId); },
