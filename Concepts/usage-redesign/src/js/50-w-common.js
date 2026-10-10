@@ -1360,7 +1360,7 @@
           '<span class="pmu-lname"><b>' + esc(r.name) + '</b>' + (two && r.sub ? '<span>' + esc(r.sub) + '</span>' : '') + '</span>' +
           (extra ? '<span class="pmu-lnote"' + (r.noteTone ? ' data-tone="' + r.noteTone + '"' : '') + '>' + esc(r.note || '') + '</span>' : '') +
           '<span class="pmu-lval">' + val + '</span></div>';
-      }).join('') + C.more(hidden, null, false, rows.filter(function (r) { return !r.day && shown.indexOf(r) < 0; }).map(function (r) { return r.name + ' ' + valText(r) + (r.sub ? ' · ' + r.sub : '') + (r.note ? ' · ' + r.note : ''); })) + '</div>' + (m.foot ? C.foot(m.foot, m.footGlyph) : '');
+      }).join('') + C.more(hidden, null, bw < 260, rows.filter(function (r) { return !r.day && shown.indexOf(r) < 0; }).map(function (r) { return r.name + ' ' + valText(r) + (r.sub ? ' · ' + r.sub : '') + (r.note ? ' · ' + r.note : ''); })) + '</div>' + (m.foot ? C.foot(m.foot, m.footGlyph) : '');
       if (shown.some(function (r) { return r.onClick; })) {
         body.querySelector('.pmu-list').addEventListener('click', function (event) {
           var row = event.target.closest('[data-pmu-row]'); if (!row) return;
