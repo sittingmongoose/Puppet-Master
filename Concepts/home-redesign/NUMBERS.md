@@ -119,7 +119,7 @@ header-row targets, 32 px document actions, nothing under 11 px) are in CONTRACT
 | Go to line box | min(320 px, body - 24 px). |
 | Focus band | code.editing.goto-highlight-ms (default 5,000 ms), then a 600 ms fade (instant under Reduced Motion). |
 | Motion | reveal 150 ms per row with an 8 ms stagger capped at 40 rows, first viewport only; caret blink 1.06 s; no thumb easing. |
-| Undo groups | by kind within 900 ms on one line; 400 steps deep. |
+| Undo | groups by kind within 900 ms on one line; 400 steps deep. |
 | Rendering | visible lines plus 24 above and below; far-jump guess when more than 300 lines past the tokenized prefix; background tokenizing 1,200 lines per 12 ms slice; brace scopes wait for full tokenizing above 3,000 lines. |
 | Saved state | serialize() = {path, line, top, mode[, diffLayout]}; buffers add {title, language, edit \| readOnly, text up to 12,000 chars}. A plain 'line' is a reveal target; 'top' restores the scroll position. |
 | Settings read | editor.font.family, editor.font.size, editor.lineHeight, editor.minimap, editor.stickyScroll, editor.stickyScroll.maxLines, editor.diff.layout, editor.diff.sideBySideMin, and code.editing.goto-highlight-ms when present. |
@@ -158,7 +158,7 @@ header-row targets, 32 px document actions, nothing under 11 px) are in CONTRACT
 | Note button | 'Show it here' and 'Open transcript': 32 px document actions (.pmw-act). |
 | Tab-body sizes | scroll padding 12/12/16 px, and 8/8/12 px below 420 px wide. Agents cards in a grid of minmax(240px, 1fr), one column below 420 px. The note drops its sub-line and icon below 200 px tall. The header row goes icon-only below 520 px and hides below 150 px (core). |
 | Type inside the tab | --fs-2xs is raised from 10 to 11 px, and the page's .pm7-dash-extra 9 px becomes 11 px. Chips are 11 px/16 px with 10 px glyphs. Lane dots are 8 px. The agent progress bar is 4 px tall with a 1 px radius. |
-| Card buttons | (.pm6-dash-btn) have an 8 px radius inside the tab (0 in Retro and NieR). The header Add widget has a 6 px radius (0 in Retro and NieR). |
+| Card buttons | `.pm6-dash-btn` has an 8 px radius inside the tab, the header Add widget 6 px (0 in Retro and NieR for both). |
 | Agents clock | 1 s tick while shown. Working progress gains 1 % every 9 s, capped at 96 %. The bar transition is --pmw-t-slow (260 ms), stepped in NieR and none under Reduced Motion. |
 | Reset | the starting widgets per board are captured from markup at load time. Home: orchestrator-progress 2x2, active-lanes 2x1, recent-results 2x1, custom-metrics 2x1. Metrics: quota_summary 2x1, budget_donuts 1x1, analytics_chart 1x1. Monitoring: lane_health 2x1, containers 2x1. Saved through PM7_DASH_WIDGETS.persist() 240 ms after the reset (key pm7:home-widgets:v3, unchanged). |
 | Engine hook | PMW.dashboard = { reveal(board), reset(board), holder(), boards() }. |
@@ -184,7 +184,7 @@ header-row targets, 32 px document actions, nothing under 11 px) are in CONTRACT
 | Checking delays | in the demo (Memory verify, Wonderer check, discovery recheck): 1100-1200 ms; 300 ms under Reduced Motion. |
 | serialize shapes | Plan: { plan, view: 'rich'\|'markdown', scrolls: { rich, markdown }, version? (only when an older version is shown), live? { status, done, waiting } }. Discovery: { scrollTop, run: { grillOn, created, preview, choices, asked } }. Documents: { scrollTop, view: { per-document UI state: preview, filter, note, pane, modes, open disclosures, raw … }, data: the document's model (rules / notes / revert state / debug phase / wonderer leads) }. All well under 16 KB. |
 | Tab labels | plan = the plan title; deep-discovery = 'Deep Plan · discovery'; teach 'Your rules'; memory 'Gist Review'; revert 'Revert · files'; debug 'Debug · r1'; lens-source 'Lens source'; lens-effective 'What it would read'; wonderer 'Wonderer’s ideas'; wonder-source 'Wonderer · source'; doc: = basename. Hover titles, e.g. 'Your rules · Query performance', 'Tenant-scoped analytics read path · Plan V5'. |
-| No settings keys | were added; all view state is per tab through serialize. |
+| Settings keys | none added; all view state is per tab through serialize. |
 | Class prefixes | pmw-plan-*, pmw-docu-*. NieR hook classes used: .pmw-cur (picker-like rows: memory notes, discovery options, the evidence row), .pmw-chosen (the chosen memory note). |
 | Demo ids | `plan:ap-index`, `plan:ap-cache`, `plan:ap-auth`, `plan:ap-flags`, `plan:ap-embeds`, `deep-discovery:b14-thorough-1`, `plan:ap-export (added only after Create this Plan in discovery)`, `teach:query`, `memory:query`, `revert:turn-1`, `debug:dbg-investigation-1`, `lens-source:query:m-12`, `lens-effective:query`, `wonderer:w-1`, `wonder-source:dashboard-query`, `doc:docs/query-performance.md` |
 
