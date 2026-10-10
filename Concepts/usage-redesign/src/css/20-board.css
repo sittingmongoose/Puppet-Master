@@ -195,6 +195,9 @@ html[data-theme^="retro"] #panel-usage .pmu-keysw { border-radius: 0; }
    level with the provider mark beside it, not on the first line's place above it */
 #panel-usage .pmu-card > .pmu-cardhead[data-title-lines] .pmu-cardtitle { -webkit-line-clamp: var(--pmu-title-lines, 2); overflow: hidden; height: var(--pmu-title-h, auto); }
 #panel-usage .pmu-card > .pmu-cardhead[data-title-lines] > .pmu-cardtitles { min-height: var(--pmu-titles-h, 0px); justify-content: center; }
+/* a title that yields to one line runs on that line to the room's edge and ends there in an ellipsis ("GitHub Cop...",
+   "Usage he..."): a one-line clamp breaks the line at a word first and showed "GitHub..." with room to spare */
+#panel-usage .pmu-card > .pmu-cardhead[data-title-lines="1"] .pmu-cardtitles .pmu-cardtitle { display: block; white-space: nowrap; text-overflow: ellipsis; overflow-wrap: normal; -webkit-line-clamp: none; }
 #panel-usage .pmu-board[data-op] .pmu-cardtitles { margin-right: 0; transition: none; }
 #panel-usage .pmu-board[data-op] .pmu-cardtools { opacity: 0 !important; pointer-events: none !important; }
 html[data-theme^="retro"] #panel-usage .pmu-cardtools, html[data-theme^="retro"] #panel-usage .pmu-cardtools .pmu-iconbtn { border-radius: 0; }

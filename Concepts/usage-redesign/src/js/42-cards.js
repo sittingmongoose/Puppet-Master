@@ -452,21 +452,32 @@
       head.style.setProperty('--pmu-title-h', (tb.height * k * lines / Math.max(1, tops.length)) + 'px');
       /* the resting height, read above: read here, under :hover the room is already taken and the title has wrapped */
       head.style.setProperty('--pmu-titles-h', titlesH + 'px');
-      head.setAttribute('data-title-lines', '');
+      head.setAttribute('data-title-lines', lines === 1 ? '1' : '');
     }
     card._pmuFitOn = true;
   }
-  /* the clamp of a yielding title goes once the title has its room back (its margin returns 300 after leaving: the
-     cluster fades 140, then the head tools slide back 160) */
+  /* the clamp of a yielding title goes only once the title has its room back. Its margin returns 300 after leaving (the
+     cluster fades 140, then the head tools slide back 160), and the clamp waits for the margin itself, read every frame
+     from then on, never for a timer of its own: a timer of 340 raced the transition, often fired first, and the title,
+     unclamped in the still narrowed box, wrapped to an extra line for a frame or more (head 20 > 30 px, body dropping).
+     The margin is read in a frame callback, before that frame's style and layout, so the frame that paints the margin
+     back also paints the title unclamped. A pointer that comes back first leaves the clamp to the next fit. */
   function unfitSoon(card) {
     if (!card || !card._pmuFitOn) return;
-    setTimeout(function () {
-      if (card.matches(':hover') || card.matches(':focus-visible')) return;
+    var token = card._pmuUnfit = (card._pmuUnfit || 0) + 1, frames = 0;
+    function back() {
+      if (card._pmuUnfit !== token || !card._pmuFitOn) return;
+      if (!card.isConnected || card.matches(':hover') || card.matches(':focus-visible')) return;
       var head = card.querySelector(':scope > .pmu-cardhead');
       if (head && head.hasAttribute('data-tools-on')) return;
+      var titles = head && head.querySelector(':scope > .pmu-cardtitles');
+      /* (a yielding title always took at least a pixel, so its room is back exactly when the margin reads 0; the cap only
+         guards a card whose margin is held by something else, so a clamp is never left on a resting head) */
+      if (titles && parseFloat(getComputedStyle(titles).marginRight) > 0 && ++frames < 120) { requestAnimationFrame(back); return; }
       if (head) head.removeAttribute('data-title-lines');
       card._pmuFitOn = false;
-    }, 340 * M.speed());
+    }
+    setTimeout(function () { requestAnimationFrame(back); }, 280 * M.speed());
   }
   /* a card whose head changes while it shows its tools (a resize from its own size menu, a live update) is fitted again */
   function refitSoon(card) {
