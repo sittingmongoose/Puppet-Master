@@ -5,11 +5,11 @@
    digest 05 section 9). Run-style documents use PMW.frames.run (kind mark, title, status, actions, main, aside),
    page-style ones PMW.frames.doc. The header row carries the kind word, one status fact and the tab-level actions;
    the document's own actions stay in the body. Inline confirms stay inline (never a modal). The Debug phase marks are
-   SVG, never a character. File references follow D7 (click previews, double click keeps, Alt+click a new panel).
+   SVG, never a character. File references are the shared PMW.fileRef (D7: click previews, double click keeps, Alt+click
+   a new panel). Saves go through api.saveSoon (ctx.save).
    When the chat port hands a body renderer to PM_HOME.openEditor(id, { render }), that renderer draws the body. */
 
 var D = document;
-var DBL_MS = 240;
 
 function h(tag, attrs, kids) {
   var el = D.createElement(tag);
@@ -56,7 +56,6 @@ function glyph(name, size) {
 }
 function base(path) { return String(path || '').split('/').pop(); }
 function reduced() { try { return PMW.reduced(); } catch (_) { return false; } }
-function saveSoon() { try { if (PMW.persist && PMW.persist.saveSoon) PMW.persist.saveSoon(); } catch (_) {} }
 function plural(n, one, many) { return n + ' ' + (n === 1 ? one : (many || one + 's')); }
 function clock() { var d = new Date(), hh = d.getHours(), mm = d.getMinutes(); return (hh % 12 || 12) + ':' + (mm < 10 ? '0' : '') + mm + (hh < 12 ? ' AM' : ' PM'); }
 function copyText(text, done) {
@@ -94,47 +93,29 @@ function tbtn(label, run, o) {
 function act(spec, key) {
   var b = PMW.frames.button(spec);
   if (key) b.setAttribute('data-k', key);
-  if (spec.pressed != null) b.setAttribute('aria-pressed', String(!!spec.pressed));
   return b;
 }
-/* D7 file references (the same rules as the file tree) */
+/* D7 file references: the shared PMW.fileRef, keyed for focus after a repaint */
 function fileRef(api, ref, o) {
   o = o || {};
-  var text = ref.path + (ref.line ? ':' + ref.line : '');
-  var b = h('button', { type: 'button', class: 'pmw-docu-file' + (o.cls ? ' ' + o.cls : ''), 'data-k': 'file:' + text + (o.key || ''),
-    'data-pm-hover-label': 'Open ' + base(ref.path), 'data-pm-hover-detail': 'Click to preview, double-click to keep, Alt+click for a new panel', 'data-pmh': 'icon' },
-  [o.noIcon ? null : PMW.icon('file', { size: 13 }), h('span', { text: o.label || text })]);
-  var timer = 0;
-  function go(e, mode) {
-    var spec = { kind: 'editor', path: ref.path, mode: mode };
-    if (ref.line) spec.line = ref.line;
-    if (e.altKey) spec.where = 'panel';
-    if (e.ctrlKey || e.metaKey) spec.background = true;
-    api.open(spec);
-  }
-  b.addEventListener('click', function (e) {
-    if (e.detail > 1) return;
-    if (e.detail === 0) { go(e, 'preview'); return; }
-    var snap = { altKey: e.altKey, ctrlKey: e.ctrlKey, metaKey: e.metaKey };
-    clearTimeout(timer);
-    timer = setTimeout(function () { go(snap, 'preview'); }, DBL_MS);
-  });
-  b.addEventListener('dblclick', function (e) { clearTimeout(timer); go(e, 'keep'); });
+  var b = PMW.fileRef(ref, { api: api, icon: o.noIcon ? false : undefined, cls: o.cls });
+  b.setAttribute('data-k', 'file:' + ref.path + (ref.line ? ':' + ref.line : '') + (o.key || ''));
   return b;
 }
 /* a disclosure whose open state survives a repaint and a reload */
 function disclosure(ctx, key, title, body) {
   var open = !!(ctx.view.open && ctx.view.open[key]);
-  var d = h('details', { class: 'pmw-docu-disc', open: open || null }, [h('summary', { class: 'pmw-docu-sum', 'data-k': 'disc:' + key }, [h('span', { text: title })])]);
+  var d = h('details', { class: 'pmw-docu-disc', open: open || null }, [h('summary', { class: 'pmw-docu-sum', 'data-k': 'disc:' + key, 'data-pmh': 'icon',
+    'data-pm-hover-visual-suppressed': 'true' }, [h('span', { text: title })])]);
   add(d, h('div', { class: 'pmw-docu-discbody' }, body));
-  d.addEventListener('toggle', function () { ctx.view.open = ctx.view.open || {}; ctx.view.open[key] = d.open; });
+  d.addEventListener('toggle', function () { ctx.view.open = ctx.view.open || {}; ctx.view.open[key] = d.open; ctx.save(); });
   return d;
 }
 function runFrame(ctx, spec) {
-  /* the kind word lives in the header row, so the body starts at the title */
-  var f = PMW.frames.run({ title: spec.title, status: spec.status, main: spec.main, aside: spec.aside, tabs: spec.tabs, cls: 'pmw-docu-run' + (spec.cls ? ' ' + spec.cls : '') });
-  if (spec.actions && spec.actions.length) f._head.appendChild(h('div', { class: 'pmw-run-acts pmw-docu-acts' }, spec.actions));
-  return f;
+  /* the kind word lives in the header row, so the body starts at the title; the actions are ready-made buttons the
+     frame adopts into its own action row */
+  return PMW.frames.run({ title: spec.title, status: spec.status, actions: spec.actions, main: spec.main, aside: spec.aside, tabs: spec.tabs,
+    cls: 'pmw-docu-run' + (spec.cls ? ' ' + spec.cls : '') });
 }
 function docFrame(spec) {
   return PMW.frames.doc({ title: spec.title, meta: spec.meta, body: spec.body, footer: spec.footer, cls: 'pmw-docu-doc' + (spec.cls ? ' ' + spec.cls : '') });
@@ -203,7 +184,8 @@ var teachDoc = {
 function focusSoon(ctx, key) { setTimeout(function () { var el = ctx.host.querySelector('[data-k="' + key + '"]'); if (el) try { el.focus(); } catch (_) {} }, 0); }
 function composer(ctx) {
   var v = ctx.view, data = ctx.data;
-  var ta = h('textarea', { class: 'pmw-docu-input', rows: '3', 'data-k': 'compose-text', 'aria-label': 'The rule', placeholder: 'Say it the way you would tell a colleague.' });
+  var ta = h('textarea', { class: 'pmw-docu-input', rows: '3', 'data-k': 'compose-text', 'aria-label': 'The rule', placeholder: 'Say it the way you would tell a colleague.',
+    'data-pm-hover-label': 'The rule', 'data-pm-hover-detail': 'Every message in its scope brings it' });
   ta.value = v.draft || '';
   ta.addEventListener('input', function () { v.draft = ta.value; });
   var scope = PMW.frames.seg(SCOPES.map(function (s) { return { value: s, label: s }; }), v.scope || 'This project', function (s) { v.scope = s; }, { label: 'Where it applies', cls: 'pmw-docu-seg' });
@@ -220,7 +202,7 @@ function composer(ctx) {
         data.seq += 1;
         data.rules.unshift({ id: 'r' + data.seq, scope: v.scope || 'This project', locked: false, on: true, versions: [{ v: 1, text: text, at: 'today, ' + clock() }], from: 'You taught it here today at ' + clock() + '.' });
         v.composing = false; v.draft = ''; v.composeError = null;
-        ctx.paint(); ctx.api.announce('Rule saved'); saveSoon();
+        ctx.paint(); ctx.api.announce('Rule saved'); ctx.save();
       } }, 'compose-save'),
       act({ label: 'Cancel', run: function () { v.composing = false; v.composeError = null; ctx.paint(); } }, 'compose-cancel')
     ])
@@ -236,7 +218,8 @@ function ruleRow(ctx, r) {
   sec.appendChild(h('span', { class: 'pmw-docu-rule-mark' + (r.on ? '' : ' is-off'), 'aria-hidden': 'true' }, [mark]));
   var body = h('div', { class: 'pmw-docu-rule-body' });
   if (st.editing) {
-    var ta = h('textarea', { class: 'pmw-docu-input', rows: '3', 'data-k': 'edit:' + r.id, 'aria-label': 'Change the wording' });
+    var ta = h('textarea', { class: 'pmw-docu-input', rows: '3', 'data-k': 'edit:' + r.id, 'aria-label': 'Change the wording',
+      'data-pm-hover-label': 'Change the wording', 'data-pm-hover-detail': 'Saved as a new version; the old one stays in history' });
     ta.value = st.draft != null ? st.draft : ruleText(r);
     ta.addEventListener('input', function () { v.rule[r.id].draft = ta.value; });
     body.appendChild(ta);
@@ -246,7 +229,7 @@ function ruleRow(ctx, r) {
         if (!t || t === ruleText(r)) { set('editing', false); return; }
         r.versions.push({ v: r.versions.length + 1, text: t, at: 'today, ' + clock() });
         v.rule[r.id] = {};
-        ctx.paint(); api.announce('Saved version ' + r.versions.length); saveSoon();
+        ctx.paint(); api.announce('Saved version ' + r.versions.length); ctx.save();
       } }, 'edit-save:' + r.id),
       act({ label: 'Cancel', run: function () { v.rule[r.id] = {}; ctx.paint(); } }, 'edit-cancel:' + r.id)
     ]));
@@ -256,14 +239,14 @@ function ruleRow(ctx, r) {
   body.appendChild(PMW.frames.meta(['Rule', r.scope, 'version ' + last.v, 'saved ' + last.at, r.locked ? 'locked' : null, r.on ? null : { text: 'turned off', state: 'warn' }]));
   if (st.confirmOff) {
     body.appendChild(confirmRow('Stop using this rule? It stays in history, and older versions don\u2019t come back.',
-      act({ label: 'Turn off', danger: true, run: function () { r.on = false; v.rule[r.id] = {}; ctx.paint(); api.announce('Rule turned off'); saveSoon(); } }, 'off-yes:' + r.id),
+      act({ label: 'Turn off', danger: true, run: function () { r.on = false; v.rule[r.id] = {}; ctx.paint(); api.announce('Rule turned off'); ctx.save(); } }, 'off-yes:' + r.id),
       act({ label: 'Keep it', run: function () { set('confirmOff', false); } }, 'off-no:' + r.id)));
   } else if (!st.editing) {
     body.appendChild(h('div', { class: 'pmw-docu-row is-quiet' }, [
       tbtn('Edit', function () { set('editing', true); focusSoon(ctx, 'edit:' + r.id); }, { key: 'edit-btn:' + r.id, detail: 'Change the wording; the old one stays in history' }),
-      tbtn(r.locked ? 'Unlock' : 'Lock', function () { r.locked = !r.locked; ctx.paint(); api.announce(r.locked ? 'Rule locked' : 'Rule unlocked'); saveSoon(); }, { key: 'lock:' + r.id, detail: r.locked ? 'Let suggestions change it' : 'Keep suggestions from changing it' }),
+      tbtn(r.locked ? 'Unlock' : 'Lock', function () { r.locked = !r.locked; ctx.paint(); api.announce(r.locked ? 'Rule locked' : 'Rule unlocked'); ctx.save(); }, { key: 'lock:' + r.id, detail: r.locked ? 'Let suggestions change it' : 'Keep suggestions from changing it' }),
       r.on ? tbtn('Turn off', function () { set('confirmOff', true); }, { key: 'off:' + r.id, detail: 'Stop using it' })
-        : tbtn('Turn on', function () { r.on = true; ctx.paint(); api.announce('Rule turned on'); saveSoon(); }, { key: 'on:' + r.id }),
+        : tbtn('Turn on', function () { r.on = true; ctx.paint(); api.announce('Rule turned on'); ctx.save(); }, { key: 'on:' + r.id }),
       tbtn('Where it came from', function () { set('from', !st.from); }, { key: 'from:' + r.id, pressed: !!st.from })
     ]));
     body.appendChild(fine('Edit: change the wording; the old one stays in history \u00b7 Unlock: let suggestions change it \u00b7 Turn off: stop using it'));
@@ -324,7 +307,8 @@ var memoryDoc = {
     main.push(bar);
     var list = h('div', { class: 'pmw-docu-mem-list', role: 'list', 'aria-label': 'Notes' });
     shown.forEach(function (n) {
-      var row = h('button', { type: 'button', role: 'listitem', class: 'pmw-docu-note pmw-cur' + (n.id === v.note ? ' pmw-chosen is-chosen' : ''), 'data-k': 'note:' + n.id, 'aria-current': n.id === v.note ? 'true' : null }, [
+      var row = h('button', { type: 'button', role: 'listitem', class: 'pmw-docu-note pmw-cur' + (n.id === v.note ? ' pmw-chosen is-chosen' : ''), 'data-k': 'note:' + n.id, 'data-pmh': 'row',
+        'data-pm-hover-visual-suppressed': 'true', 'aria-current': n.id === v.note ? 'true' : null }, [
         h('span', { class: 'pmw-docu-note-mark is-' + n.state, 'aria-hidden': 'true' }, [glyph(n.state === 'verified' ? 'checkCircle' : 'ring')]),
         h('span', { class: 'pmw-docu-note-copy' }, [h('b', { text: n.title }), h('span', { text: NOTE_WORD[n.state] + ' \u00b7 ' + (n.state === 'verified' ? 'Proven by a check' : 'Nothing proves this yet') + (n.pinned ? ' \u00b7 pinned' : '') })]),
         h('span', { class: 'pmw-docu-note-at', text: n.at })
@@ -345,12 +329,12 @@ var memoryDoc = {
       detail.appendChild(disclosure(ctx, 'story:' + note.id, 'Its story', [h('ol', { class: 'pmw-docu-plainlist' }, note.story.map(function (s) { return h('li', { text: s }); }))]));
       if (st.confirmDiscard === note.id) {
         detail.appendChild(confirmRow('Forget this note? It leaves memory and does not come back.',
-          act({ label: 'Discard', danger: true, run: function () { data.notes = notes.filter(function (x) { return x.id !== note.id; }); v.noteState = {}; v.pane = 'list'; ctx.paint(); api.announce('Note discarded'); saveSoon(); } }, 'discard-yes'),
+          act({ label: 'Discard', danger: true, run: function () { data.notes = notes.filter(function (x) { return x.id !== note.id; }); v.noteState = {}; v.pane = 'list'; ctx.paint(); api.announce('Note discarded'); ctx.save(); } }, 'discard-yes'),
           act({ label: 'Keep it', run: function () { v.noteState = {}; ctx.paint(); } }, 'discard-no')));
       } else {
         detail.appendChild(h('div', { class: 'pmw-docu-row' }, [
           act({ label: note.state === 'checking' ? 'Checking\u2026' : note.state === 'verified' ? 'Verify again' : 'Verify', primary: note.state === 'unverified', disabled: note.state === 'checking', run: function () { verify(ctx, note); } }, 'verify'),
-          act({ label: note.pinned ? 'Unpin' : 'Pin', pressed: !!note.pinned, run: function () { note.pinned = !note.pinned; ctx.paint(); api.announce(note.pinned ? 'Pinned: never cleaned up' : 'Unpinned'); saveSoon(); } }, 'pin'),
+          act({ label: note.pinned ? 'Unpin' : 'Pin', pressed: !!note.pinned, run: function () { note.pinned = !note.pinned; ctx.paint(); api.announce(note.pinned ? 'Pinned: never cleaned up' : 'Unpinned'); ctx.save(); } }, 'pin'),
           act({ label: 'Discard', run: function () { v.noteState = { confirmDiscard: note.id }; ctx.paint(); focusSoon(ctx, 'discard-no'); } }, 'discard')
         ]));
         detail.appendChild(fine('Verify: re-test whether this is still true \u00b7 Pin: never clean this up \u00b7 Discard: forget it'));
@@ -379,7 +363,7 @@ function verify(ctx, note) {
     note.story = note.story.concat(['Verified against the benchmark \u00b7 ' + clock()]);
     ctx.paint();
     ctx.api.announce('Verified: the benchmark proves it');
-    saveSoon();
+    ctx.save();
   }, reduced() ? 300 : 1200);
 }
 
@@ -460,7 +444,7 @@ var revertDoc = {
     ];
     if (v.confirm && !done) {
       main.push(confirmRow('Put back 3 files? Each one is checked first. If any changed after the assistant\u2019s edit, nothing is touched.',
-        act({ label: 'Revert 3 files', danger: true, run: function () { data.state = 'reverted'; data.at = clock(); v.confirm = false; v.modes = {}; ctx.paint(); api.announce('Reverted: 3 files put back'); saveSoon(); } }, 'revert-yes'),
+        act({ label: 'Revert 3 files', danger: true, run: function () { data.state = 'reverted'; data.at = clock(); v.confirm = false; v.modes = {}; ctx.paint(); api.announce('Reverted: 3 files put back'); ctx.save(); } }, 'revert-yes'),
         act({ label: 'Keep them', run: function () { v.confirm = false; ctx.paint(); } }, 'revert-no')));
     }
     var files = REVERT_FILES.map(function (f) {
@@ -475,9 +459,9 @@ var revertDoc = {
         if (!done) ops = [];
       }
       var c = counts(lineDiff(f.before, f.after));
-      var openDiff = h('button', { type: 'button', class: 'pmw-docu-link', 'data-k': 'diff:' + f.path, 'data-pm-hover-label': 'Open the diff', 'data-pm-hover-detail': base(f.path) + ' in the editor, in diff mode' }, ['Open the diff']);
+      var openDiff = h('button', { type: 'button', class: 'pmw-docu-link', 'data-k': 'diff:' + f.path, 'data-pmh': 'icon', 'data-pm-hover-label': 'Open the diff', 'data-pm-hover-detail': base(f.path) + ' in the editor, in diff mode' }, ['Open the diff']);
       openDiff.addEventListener('click', function (e) {
-        var spec = { kind: 'editor', path: f.path, mode: 'diff', diff: true };
+        var spec = { kind: 'editor', path: f.path, mode: 'diff' };
         if (e.altKey) spec.where = 'panel';
         api.open(spec);
       });
@@ -538,7 +522,7 @@ function debugAdvance(ctx) {
   if (d.phase >= 7) { d.phase = 7; d.status = 'resolved'; }
   ctx.paint();
   ctx.api.announce(PHASES[d.phase] + ' done' + (d.status === 'resolved' ? '. Repair verified, cleanup complete.' : ''));
-  saveSoon();
+  ctx.save();
 }
 function checksList(ev) {
   return h('ul', { class: 'pmw-docu-checks' }, ev.cases.map(function (c) {
@@ -579,8 +563,8 @@ var debugDoc = {
     }));
     var controls = [];
     if (d.status === 'running' && NEXT_STEP[phase] != null) controls.push(act({ label: NEXT_STEP[phase], primary: true, run: function () { debugAdvance(ctx); } }, 'next'));
-    if (d.status === 'running') controls.push(act({ label: 'Cancel', run: function () { d.status = 'cancelled'; ctx.paint(); api.announce('Investigation cancelled. Only its own collector was removed.'); saveSoon(); } }, 'cancel'));
-    if (d.status !== 'running') controls.push(act({ label: 'Start over', run: function () { d.phase = 0; d.status = 'running'; ctx.view.open = {}; ctx.paint(); api.announce('New investigation, bound to the same example'); saveSoon(); } }, 'restart'));
+    if (d.status === 'running') controls.push(act({ label: 'Cancel', run: function () { d.status = 'cancelled'; ctx.paint(); api.announce('Investigation cancelled. Only its own collector was removed.'); ctx.save(); } }, 'cancel'));
+    if (d.status !== 'running') controls.push(act({ label: 'Start over', run: function () { d.phase = 0; d.status = 'running'; ctx.view.open = {}; ctx.paint(); api.announce('New investigation, bound to the same example'); ctx.save(); } }, 'restart'));
     controls.push(act({ label: 'Export bundle', icon: 'document', run: function () {
       download('debug-investigation.json', JSON.stringify({ kind: 'local debug bundle', status: d.status, phase: PHASES[phase], source: repaired ? FIXED : BUGGY,
         verification: phase >= 6 ? evaluate(lineTotalFixed) : null, reproduction: phase >= 3 ? evaluate(lineTotalBuggy) : null }, null, 2));
@@ -688,7 +672,8 @@ var lensEffectiveDoc = {
         var m = e.msg ? MESSAGES[e.msg] : null;
         var text = m ? m.text : e.text;
         var src = e.msg || e.src;
-        var open = h('button', { type: 'button', class: 'pmw-docu-link', 'data-k': 'src:' + i, 'data-pm-hover-label': 'Open the full source message' }, ['Open the source']);
+        var open = h('button', { type: 'button', class: 'pmw-docu-link', 'data-k': 'src:' + i, 'data-pmh': 'icon', 'data-pm-hover-label': 'Open the full source message',
+          'data-pm-hover-detail': 'Read-only; Alt+click opens it in a new panel' }, ['Open the source']);
         open.addEventListener('click', function (ev) { var s = { id: 'lens-source:' + ctx.arg + ':' + src, kind: 'document', label: 'Lens source' }; if (ev.altKey) s.where = 'panel'; api.open(s); });
         return h('li', { class: 'pmw-docu-eff-item is-' + e.state.toLowerCase() }, [
           h('p', { class: 'pmw-docu-eff-head' }, [h('span', { class: 'pmw-docu-eff-no', text: String(i + 1) }), h('b', { class: 'pmw-docu-eff-state', text: e.state }),
@@ -734,7 +719,7 @@ var wondererDoc = {
   facts: function (ctx) { var n = wondererDoc.undecided(ctx); return [{ id: 'status', text: ctx.data.paused ? 'Paused' : n ? n + ' to decide' : 'all decided', dim: true }]; },
   actions: function (ctx) {
     var d = ctx.data;
-    return [{ id: 'pause', label: d.paused ? 'Resume' : 'Pause', icon: d.paused ? 'play' : 'pause', run: function () { d.paused = !d.paused; ctx.paint(); ctx.api.announce(d.paused ? 'Run paused' : 'Run resumed'); saveSoon(); } }];
+    return [{ id: 'pause', label: d.paused ? 'Resume' : 'Pause', icon: d.paused ? 'play' : 'pause', run: function () { d.paused = !d.paused; ctx.paint(); ctx.api.announce(d.paused ? 'Run paused' : 'Run resumed'); ctx.save(); } }];
   },
   render: function (ctx) {
     var d = ctx.data, api = ctx.api, running = !d.paused;
@@ -749,14 +734,14 @@ var wondererDoc = {
       sec.appendChild(h('p', { class: 'pmw-docu-lead-state' }, [h('b', { text: LEAD_WORD[l.decision ? (l.decision === 'aside' ? 'aside' : l.decision === 'mine' ? 'decided' : l.state) : l.state] }), ' \u00b7 ' + said]));
       if (l.decision) {
         sec.appendChild(h('p', { class: 'pmw-docu-lead-decided' }, [h('b', { text: l.decision === 'aside' ? 'Set aside' : 'In the plan' }), ' \u00b7 ' + l.reason,
-          ' ', tbtn('Change', function () { l.decision = null; ctx.paint(); saveSoon(); }, { key: 'change:' + l.id, cls: 'is-inline', disabled: !running, reason: 'The run is paused' })]));
+          ' ', tbtn('Change', function () { l.decision = null; ctx.paint(); ctx.save(); }, { key: 'change:' + l.id, cls: 'is-inline', disabled: !running, reason: 'The run is paused' })]));
         return sec;
       }
       var acts = [];
       if (def.source) {
         acts.push(tbtn(l.state === 'checking' ? 'Checking\u2026' : l.state === 'checked' ? 'Check it again' : 'Check it', function () {
           l.state = 'checking'; ctx.paint();
-          ctx.later(function () { l.state = 'checked'; ctx.paint(); api.announce('Checked: ' + def.claim.slice(0, 48)); saveSoon(); }, reduced() ? 300 : 1200);
+          ctx.later(function () { l.state = 'checked'; ctx.paint(); api.announce('Checked: ' + def.claim.slice(0, 48)); ctx.save(); }, reduced() ? 300 : 1200);
         }, { key: 'check:' + l.id, disabled: !running || l.state === 'checking', reason: running ? 'Checking now' : 'The run is paused' }));
         acts.push(tbtn('Open the source', function (e) {
           var s = { id: 'wonder-source:' + def.source, kind: 'document', label: 'Wonderer \u00b7 source' };
@@ -765,7 +750,8 @@ var wondererDoc = {
         }, { key: 'src:' + l.id }));
       }
       if (acts.length) sec.appendChild(h('div', { class: 'pmw-docu-row is-quiet' }, acts));
-      var ta = h('textarea', { class: 'pmw-docu-input', rows: '2', 'data-k': 'reason:' + l.id, 'aria-label': 'Why? This goes into the plan with your choice.', placeholder: 'Say why you use it or set it aside.' });
+      var ta = h('textarea', { class: 'pmw-docu-input', rows: '2', 'data-k': 'reason:' + l.id, 'aria-label': 'Why? This goes into the plan with your choice.', placeholder: 'Say why you use it or set it aside.',
+        'data-pm-hover-label': 'Why', 'data-pm-hover-detail': 'It goes into the plan with your choice' });
       ta.value = l.reason || '';
       ta.addEventListener('input', function () { l.reason = ta.value; });
       sec.appendChild(h('label', { class: 'pmw-docu-label', text: 'Why? This goes into the plan with your choice.' }));
@@ -777,7 +763,7 @@ var wondererDoc = {
         l.decision = kind; l.reason = l.reason.trim();
         ctx.paint();
         api.announce(kind === 'aside' ? 'Set aside' : 'In the plan');
-        saveSoon();
+        ctx.save();
       }
       var canUse = l.state === 'checked';
       sec.appendChild(h('div', { class: 'pmw-docu-row' }, [
@@ -795,7 +781,7 @@ var wondererDoc = {
     ];
     if (d.written) conv.push(h('p', { class: 'pmw-docu-p is-strong', role: 'status', text: 'Plan written. It is waiting in the chat for your review.' }));
     else {
-      conv.push(h('div', { class: 'pmw-docu-row' }, [act({ label: 'Write the plan', primary: true, disabled: !!reason, reason: reason, detail: reason || 'Bring the core round and your decisions together', run: function () { d.written = true; ctx.paint(); api.announce('Plan written'); saveSoon(); } }, 'write')]));
+      conv.push(h('div', { class: 'pmw-docu-row' }, [act({ label: 'Write the plan', primary: true, disabled: !!reason, reason: reason, detail: reason || 'Bring the core round and your decisions together', run: function () { d.written = true; ctx.paint(); api.announce('Plan written'); ctx.save(); } }, 'write')]));
       if (reason) conv.push(h('p', { class: 'pmw-docu-reason', text: reason }));
     }
     var main = [leads];
@@ -806,9 +792,9 @@ var wondererDoc = {
     }
     main.push(PMW.frames.section('Bring the work together', null, conv));
     var acts = [];
-    if (running && d.core === 'not_started') acts.push(act({ label: 'Play the core round', icon: 'play', run: function () { d.core = 'played'; ctx.paint(); api.announce('Core round played: two agree, one disagreement kept'); saveSoon(); } }, 'core'));
+    if (running && d.core === 'not_started') acts.push(act({ label: 'Play the core round', icon: 'play', run: function () { d.core = 'played'; ctx.paint(); api.announce('Core round played: two agree, one disagreement kept'); ctx.save(); } }, 'core'));
     acts.push(act({ label: 'See how they decided', pressed: !!d.showBallot, run: function () { d.showBallot = !d.showBallot; ctx.paint(); } }, 'ballot'));
-    acts.push(act({ label: d.paused ? 'Resume' : 'Pause', icon: d.paused ? 'play' : 'pause', run: function () { d.paused = !d.paused; ctx.paint(); saveSoon(); } }, 'pause'));
+    acts.push(act({ label: d.paused ? 'Resume' : 'Pause', icon: d.paused ? 'play' : 'pause', run: function () { d.paused = !d.paused; ctx.paint(); ctx.save(); } }, 'pause'));
     var aside = h('ul', { class: 'pmw-docu-aside' }, [
       h('li', null, [h('b', { text: '3 core helpers' }), ' and one Wonderer']),
       h('li', null, [h('b', { text: String(inPlan) }), ' in the plan \u00b7 ', h('b', { text: String(undecided) }), ' to decide']),
@@ -909,9 +895,10 @@ function mountDocument(host, state, api) {
   var mod = DOCS[r.type] || unknownDoc;
   var root = h('div', { class: 'pmw-docu pmw-docu-' + r.type.replace(/[A-Z]/g, function (c) { return '-' + c.toLowerCase(); }) });
   var stage = h('div', { class: 'pmw-docu-stage' });
-  var ctx = { api: api, arg: r.arg, host: host, view: Object.assign({}, state.view || {}), timers: [], gone: false };
+  var ctx = { api: api, arg: r.arg, host: host, view: Object.assign({}, state.view && typeof state.view === 'object' ? state.view : {}), timers: [], gone: false };
+  ctx.save = function () { api.saveSoon(); };
   ctx.later = function (fn, ms) { var t = setTimeout(function () { if (!ctx.gone) fn(); }, ms); ctx.timers.push(t); return t; };
-  var frame = null, restored = false, scrollKeep = state.scrollTop || 0;
+  var frame = null, restored = false, painted = false, scrollKeep = state.scrollTop || 0;
   ctx.paint = paint;
   if (mod.init) mod.init(ctx, state);
   var custom = chatRenderer(api.id);
@@ -950,6 +937,8 @@ function mountDocument(host, state, api) {
     frame = next;
     frame._scroll.scrollTop = keep;
     row.set({ left: left(), actions: actions() });
+    if (painted) ctx.save();   // a view change (a filter, a pane, a toggle) keeps across a reload
+    painted = true;
     if (key) {
       var el = key.indexOf('hrow:') === 0 ? row.action(key.slice(5)) : host.querySelector('[data-k="' + key.replace(/["\\]/g, '\\$&') + '"]');
       if (el) { try { el.focus({ preventScroll: true }); } catch (_) {} }
@@ -985,6 +974,14 @@ PM_HOME.catalog.add('document', [
   { id: 'doc:docs/query-performance.md', label: 'query-performance.md', sub: 'Query performance notes', keywords: 'doc notes markdown', spec: { id: 'doc:docs/query-performance.md', kind: 'document', label: 'query-performance.md' } }
 ]);
 
+/* the label of a document tab that is not mounted yet (restored, or opened behind) */
+function documentLabel(id) {
+  var r = route(id);
+  if (r.type === 'unknown') return null;
+  var mod = DOCS[r.type];
+  return mod && mod.label ? mod.label({ arg: r.arg }) : null;
+}
+
 PM_HOME.registerKind('document', {
   label: 'Document',
   group: 'Plans and documents',
@@ -993,5 +990,6 @@ PM_HOME.registerKind('document', {
   document: true,
   min: { w: 280, h: 160 },
   idFor: function (spec) { return spec.path ? 'doc:' + spec.path : null; },
+  labelFor: documentLabel,
   mount: mountDocument
 });

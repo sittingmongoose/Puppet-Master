@@ -37,7 +37,6 @@ function dec(s) { try { return decodeURIComponent(s); } catch (_) { return s; } 
 function enc(s) { return encodeURIComponent(s); }
 function pad2(n) { return (n < 10 ? '0' : '') + n; }
 function clockNow() { var d = new Date(); return pad2(d.getHours()) + ':' + pad2(d.getMinutes()); }
-function saveSoon() { try { if (PMW.persist && PMW.persist.saveSoon) PMW.persist.saveSoon(); } catch (_) {} }
 /* a status glyph drawn in SVG (never a character): error, warn, info, ok */
 var MARKS = {
   error: 'M8 2.2a5.8 5.8 0 1 0 0 11.6A5.8 5.8 0 0 0 8 2.2zM5.9 5.9l4.2 4.2M10.1 5.9l-4.2 4.2',
@@ -447,31 +446,21 @@ function startUrl(id, st) {
   if (st && st.url) return st.url;
   if (/^link:/.test(id || '')) {
     var l = parseLink(id);
-    var known = DOC_BY_TITLE[l.title];
+    var known = DOC_BY_TITLE[l.title || (st && st.title) || ''];
     if (known) return 'https://' + known;
     return 'https://' + (l.host || 'postgresql.org') + '/';
   }
   return TB + '/';
 }
-/* labels for tabs that are not mounted yet (a background open, a restored layout): the strip reads them at once */
-function labelFor(id, rec) {
-  var st = (rec && rec.state) || {};
-  if (/^link:/.test(id)) return parseLink(id).title || parseLink(id).host || 'Fetched page';
-  var p = resolvePage(startUrl(id, st), st.pageTitle);
+/* the page title a link: tab starts on: the title in its id, else the { title } the chat's open carried */
+function linkTitle(id, st) { return /^link:/.test(id || '') ? (parseLink(id).title || (st && st.title) || '') : ''; }
+/* the label of a tab that is not mounted yet (a background open, an agent's open, a restored layout); the core asks */
+function browserLabel(id, st) {
+  st = st || {};
+  if (/^link:/.test(id)) return linkTitle(id, st) || parseLink(id).host || 'Fetched page';
+  var p = resolvePage(startUrl(id, st), st.pageTitle || st.title);
   return p.label || p.title;
 }
-function fixLabels() {
-  var l = PMW.state && PMW.state.layout;
-  if (!l) return;
-  Object.keys(l.tabs).forEach(function (id) {
-    var rec = l.tabs[id];
-    if (!rec || rec.kind !== 'browser' || rec.label) return;
-    PM_HOME.update(id, { label: labelFor(id, rec) });
-  });
-}
-PM_HOME.on('open', function (e) { if (e && e.kind === 'browser') fixLabels(); });
-PM_HOME.on('layout', function () { fixLabels(); });
-setTimeout(fixLabels, 0);
 
 PM_HOME.catalog.add('browser', [
   { id: 'web:tastebook', label: 'Tastebook', sub: 'localhost:5173', icon: 'browser', keywords: 'tastebook localhost 5173 app', spec: { kind: 'browser', url: TB + '/' } },
@@ -492,6 +481,7 @@ PM_HOME.registerKind('browser', {
   min: { w: 360, h: 200 },
   dedicated: true,
   idFor: function (spec) { return spec && spec.id ? spec.id : nextBrowserId(); },
+  labelFor: browserLabel,
   plus: {
     order: 20,
     shortcut: 'Ctrl+Shift+B',
@@ -523,7 +513,7 @@ function mountBrowser(host, st, api) {
     ordinaryUrl: st.ordinaryUrl || null,
     captures: Array.isArray(st.captures) ? st.captures.slice(0, 24) : [],
     policy: st.policy && typeof st.policy === 'object' ? st.policy : {},
-    pageTitle: st.pageTitle || null
+    pageTitle: st.pageTitle || (/^link:/.test(api.id) ? null : st.title) || null
   };
   if (S.hIndex < 0 || S.hIndex >= S.history.length) S.hIndex = S.history.length - 1;
   var page = null;          // the resolved fixture
@@ -548,7 +538,9 @@ function mountBrowser(host, st, api) {
   var reloadBtn = navBtn('reload', 'Reload', 'reload', function () { reload(); });
   var nav = h('span', { class: 'pmw-br-navs' }, [backBtn, fwdBtn, reloadBtn]);
   var addrIcon = h('span', { class: 'pmw-br-aicon', 'aria-hidden': 'true' });
-  var addrIn = h('input', { type: 'text', class: 'pmw-br-addrin', spellcheck: 'false', autocomplete: 'off', 'aria-label': 'Address', 'data-pmh': 'off' });
+  /* the page's tag controller drops a tag naming a host or a file, so the field's tag says what it does */
+  var addrIn = h('input', { type: 'text', class: 'pmw-br-addrin', spellcheck: 'false', autocomplete: 'off', 'aria-label': 'Address', 'data-pmh': 'off',
+    'data-pm-hover-label': 'Address', 'data-pm-hover-detail': 'Type an address and press Enter; Esc puts the current one back' });
   var addr = h('span', { class: 'pmw-br-addr' }, [addrIcon, addrIn]);
   addrIn.addEventListener('keydown', function (e) {
     if (e.key === 'Enter') { e.preventDefault(); var u = toUrl(addrIn.value); if (u) navigate(u); viewport.focus({ preventScroll: true }); }
@@ -569,15 +561,13 @@ function mountBrowser(host, st, api) {
       { id: 'more', label: 'More', icon: 'more', menu: moreMenu }
     ];
   }
-  var row = api.headerRow({ label: 'Browser controls', left: [{ id: 'br-nav', el: nav }, { id: 'br-addr', el: addr }], actions: actionsSpec() });
+  /* labels show at 1100 px of body and up (the address needs the room); the session toggle keeps its word down to
+     620 px and the capture tools move into More under 480 px (both in the CSS: labelsAt has one threshold) */
+  var row = api.headerRow({ label: 'Browser controls', labelsAt: 1100,
+    left: [{ id: 'br-nav', el: nav }, { id: 'br-addr', el: addr, grow: true }], actions: actionsSpec() });
   root.appendChild(row.el);
-  /* re-render the actions; a header button that had focus keeps it (the row replaces its buttons) */
-  function refreshActions() {
-    var a = document.activeElement;
-    var had = a && a.closest && a.closest('.pmw-hrow-actions') && root.contains(a) ? a.getAttribute('data-id') : null;
-    row.set({ actions: actionsSpec() });
-    if (had && row.action(had)) row.action(had).focus({ preventScroll: true });
-  }
+  /* the row patches its buttons in place, so focus, hover and an open menu stay where they are */
+  function refreshActions() { row.set({ actions: actionsSpec() }); }
 
   function moreMenu() {
     var prot = S.session === 'protected';
@@ -592,7 +582,7 @@ function mountBrowser(host, st, api) {
       { id: 'copy', label: 'Copy address', icon: 'link', run: function () { copyText(S.url, 'Address copied'); } },
       { id: 'panel', label: 'Open in a new panel', icon: 'newPanel', disabled: prot, reason: 'The protected sign-in session stays in this tab',
         run: function () { api.open({ kind: 'browser', url: S.url, where: 'panel' }); } },
-      { id: 'clear', label: 'Clear captures', icon: 'close', disabled: !S.captures.length, reason: 'No captures yet', run: function () { S.captures = []; detailCap = null; renderDock(); saveSoon(); api.announce('Captures cleared'); } },
+      { id: 'clear', label: 'Clear captures', icon: 'close', disabled: !S.captures.length, reason: 'No captures yet', run: function () { S.captures = []; detailCap = null; renderDock(); api.saveSoon(); api.announce('Captures cleared'); } },
       '-',
       { id: 's-ord', label: 'Ordinary session', sub: 'Agents can see and use it', checked: !prot, run: function () { setSession('ordinary'); } },
       { id: 's-prot', label: 'Protected sign-in', sub: 'Only you; captures and DevTools are refused', checked: prot, run: function () { setSession('protected'); } }
@@ -630,7 +620,7 @@ function mountBrowser(host, st, api) {
     S.url = url;
     S.pageTitle = o.hintTitle || null;
     show({ busy: !o.quiet });
-    saveSoon();
+    api.saveSoon();
   }
   function go(d) {
     var i = S.hIndex + d;
@@ -649,7 +639,7 @@ function mountBrowser(host, st, api) {
     picked = null;
     pickBox.hidden = true;
     expanded = {};
-    var hint = /^link:/.test(api.id) && S.history.length === 1 ? parseLink(api.id).title : S.pageTitle;
+    var hint = /^link:/.test(api.id) && S.history.length === 1 ? linkTitle(api.id, st) : S.pageTitle;
     page = resolvePage(S.url, hint);
     viewport.textContent = '';
     viewport.appendChild(page.build());
@@ -658,10 +648,9 @@ function mountBrowser(host, st, api) {
     addrIn.value = S.url;
     addrIcon.textContent = '';
     addrIcon.appendChild(ico(S.session === 'protected' || /^https:/i.test(S.url) ? 'lock' : 'browser', 13));
-    addr.setAttribute('data-pm-hover-label', page.title);
     setAttr(backBtn, 'aria-disabled', S.hIndex <= 0 ? 'true' : null);
     setAttr(fwdBtn, 'aria-disabled', S.hIndex >= S.history.length - 1 ? 'true' : null);
-    var label = /^link:/.test(api.id) && S.history.length === 1 ? (parseLink(api.id).title || page.title) : (page.label || page.title);
+    var label = /^link:/.test(api.id) && S.history.length === 1 ? (linkTitle(api.id, st) || page.title) : (page.label || page.title);
     api.update({ label: label, title: page.title + ' · ' + shortUrl(S.url), busy: !!o.busy });
     if (o.busy) {
       view.classList.add('is-loading');
@@ -697,7 +686,7 @@ function mountBrowser(host, st, api) {
     root.setAttribute('data-devtools', S.devtools ? 'on' : 'off');
     refreshActions();
     renderDock();
-    saveSoon();
+    api.saveSoon();
     api.announce(S.devtools ? 'DevTools shown' : 'DevTools hidden');
   }
   function placeDock() {
@@ -728,7 +717,7 @@ function mountBrowser(host, st, api) {
     function up() {
       splitter.removeEventListener('pointermove', move); splitter.removeEventListener('pointerup', up); splitter.removeEventListener('pointercancel', up);
       splitter.classList.remove('is-active');
-      saveSoon();
+      api.saveSoon();
     }
     splitter.addEventListener('pointermove', move); splitter.addEventListener('pointerup', up); splitter.addEventListener('pointercancel', up);
   });
@@ -740,7 +729,7 @@ function mountBrowser(host, st, api) {
     e.preventDefault(); e.stopPropagation();
     if (dock === 'right') S.dockW = Math.max(240, S.dockW + dir * step);
     else S.dockH = Math.max(0.25, Math.min(0.7, S.dockH + dir * step / Math.max(200, main.clientHeight)));
-    placeDock(); saveSoon();
+    placeDock(); api.saveSoon();
   });
 
   function renderDock() {
@@ -752,7 +741,7 @@ function mountBrowser(host, st, api) {
     var n = S.captures.filter(function (c) { return c.kind !== 'refused'; }).length;
     var seg = PMW.frames.seg([
       { value: 'details', label: 'Details' }, { value: 'devtools', label: 'DevTools' }, { value: 'captures', label: 'Captures', count: n }
-    ], S.railTab, function (v) { S.railTab = v; renderDock(); saveSoon(); }, { label: 'DevTools sections', cls: 'pmw-br-dseg' });
+    ], S.railTab, function (v) { S.railTab = v; renderDock(); api.saveSoon(); }, { label: 'DevTools sections', cls: 'pmw-br-dseg' });
     var close = h('button', { type: 'button', class: 'pmw-hbtn pmw-br-dclose', 'aria-label': 'Hide DevTools', 'data-pm-hover-label': 'Hide DevTools', 'data-pmh': 'icon' }, [ico('close', 13)]);
     close.addEventListener('click', function () { setDevtools(false); });
     dockEl.appendChild(h('div', { class: 'pmw-br-dhead' }, [seg, close]));
@@ -776,18 +765,12 @@ function mountBrowser(host, st, api) {
     return dl;
   }
   function quiet(text) { return h('p', { class: 'pmw-br-quiet', text: text }); }
-  function fileKnown(path) {
-    try { return !!PMW.fileIndex && PMW.fileIndex(path, 40).indexOf(path) >= 0; } catch (_) { return false; }
-  }
+  /* a component's source: the shared D7 file reference when the project has that file, plain text otherwise */
   function sourceLink(src) {
     var m = /^(.*?):(\d+)(?::(\d+))?$/.exec(src || '');
     if (!m) return src;
-    if (!fileKnown(m[1])) return h('span', { class: 'pmw-br-mono', text: src });
-    var b = h('button', { type: 'button', class: 'pmw-br-srclink', text: src, 'data-pm-hover-label': 'Open the source', 'data-pm-hover-detail': 'Double click keeps the tab', 'data-pmh': 'off' });
-    /* D7: a single click opens the panel's preview tab, a double click keeps it, Alt+click opens a new panel */
-    b.addEventListener('click', function (e) { api.open({ kind: 'editor', path: m[1], line: +m[2], col: m[3] ? +m[3] : null, where: e.altKey ? 'panel' : 'auto' }); });
-    b.addEventListener('dblclick', function () { api.open({ kind: 'editor', path: m[1], line: +m[2], col: m[3] ? +m[3] : null, mode: 'keep' }); });
-    return b;
+    if (!PM_HOME.fileExists(m[1])) return h('span', { class: 'pmw-br-mono', text: src });
+    return PMW.fileRef({ path: m[1], line: +m[2], col: m[3] ? +m[3] : null }, { api: api, inline: true, icon: false, cls: 'pmw-br-src' });
   }
 
   function detailsSection() {
@@ -842,7 +825,7 @@ function mountBrowser(host, st, api) {
     var seg = PMW.frames.seg([
       { value: 'elements', label: 'Elements' }, { value: 'console', label: 'Console', count: cons.length },
       { value: 'network', label: 'Network', count: net.length }, { value: 'access', label: 'Agent access' }
-    ], S.toolTab, function (v) { S.toolTab = v; renderDock(); saveSoon(); }, { label: 'DevTools tools', cls: 'pmw-br-tseg' });
+    ], S.toolTab, function (v) { S.toolTab = v; renderDock(); api.saveSoon(); }, { label: 'DevTools tools', cls: 'pmw-br-tseg' });
     wrap.appendChild(seg);
     if (S.toolTab === 'console') wrap.appendChild(consoleList(cons));
     else if (S.toolTab === 'network') wrap.appendChild(networkList(net));
@@ -891,7 +874,7 @@ function mountBrowser(host, st, api) {
       b.addEventListener('click', function () {
         var nv = POLICY_NEXT[S.policy[p[0]] || p[2]];
         if (nv === p[2]) delete S.policy[p[0]]; else S.policy[p[0]] = nv;
-        renderDock(); saveSoon();
+        renderDock(); api.saveSoon();
         api.announce(p[1] + ': ' + POLICY_WORD[nv]);
         var again = dockEl.querySelectorAll('.pmw-br-prow')[POLICY.indexOf(p)];
         if (again) again.focus({ preventScroll: true });
@@ -1003,7 +986,7 @@ function mountBrowser(host, st, api) {
     S.captures.unshift(c);
     if (S.captures.length > 24) S.captures.length = 24;
     renderDock();
-    saveSoon();
+    api.saveSoon();
     try { PMW.bus.emit('browser:capture', { tabId: api.id, capture: c }); } catch (_) {}
   }
   function refuse(what) {
@@ -1137,7 +1120,7 @@ function mountBrowser(host, st, api) {
     }
     var x = h('button', { type: 'button', class: 'pmw-br-pbtn is-icon', 'aria-label': 'Close', 'data-pm-hover-label': 'Close', 'data-pm-hover-detail': 'Esc', 'data-pmh': 'icon' }, [ico('close', 12)]);
     x.addEventListener('click', closePrompt);
-    prompt.appendChild(h('span', { class: 'pmw-br-plab', text: d.compName ? '<' + d.compName + '>' : '<' + d.el + '>', title: d.src || '' }));
+    prompt.appendChild(h('span', { class: 'pmw-br-plab', text: d.compName ? '<' + d.compName + '>' : '<' + d.el + '>' }));
     prompt.appendChild(h('span', { class: 'pmw-br-pbtns' }, [
       pb('Send now', 'send', 'The instruction and this component, sent right away'),
       pb('Add to list', 'list', 'A numbered line in the chat draft, with this component attached'),
@@ -1205,7 +1188,7 @@ function mountBrowser(host, st, api) {
 
   /* first paint */
   root.setAttribute('data-devtools', S.devtools ? 'on' : 'off');
-  if (/^link:/.test(api.id) && st.url == null) S.pageTitle = parseLink(api.id).title;
+  if (/^link:/.test(api.id) && st.url == null) S.pageTitle = linkTitle(api.id, st) || null;
   placeDock();
   show({});
 
@@ -1214,7 +1197,8 @@ function mountBrowser(host, st, api) {
     onResize: function () { placeDock(); hl.hidden = true; if (picked) outline(pickBox, picked.el, null); positionPrompt(); },
     onHide: function () { disarm(); closePrompt(); },
     wantsKey: function (e) { return e.key === 'Escape' && (!!armed || !prompt.hidden); },
-    reveal: function (s) { if (s && s.url && s.url !== S.url) navigate(s.url); },
+    /* an open of this tab that carries an address (the chat, Ports, an agent) goes there; other keys are ignored */
+    reveal: function (s) { if (s && s.url && s.url !== S.url) navigate(s.url, { hintTitle: s.title || null }); },
     serialize: function () {
       return { url: S.url, session: S.session, devtools: S.devtools, railTab: S.railTab, toolTab: S.toolTab, dockW: S.dockW, dockH: Math.round(S.dockH * 100) / 100,
         history: S.history.slice(-20), hIndex: Math.max(0, S.hIndex - Math.max(0, S.history.length - 20)), ordinaryUrl: S.ordinaryUrl,

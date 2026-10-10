@@ -11,8 +11,13 @@
 
    Two grid tabs visible at once (two panels): the one holding the node shows it, the other a quiet note with
    "Show it here". A tab that hides hands the node to another visible grid tab; a tab that closes parks the node back
-   in #panel-dashboard (hidden by the shell CSS), never removes it. #pm6DashAddBtn itself moves into the holding tab's
-   header row (restyled as a header button: no pill, D22) and goes home when the node is parked.
+   in #panel-dashboard (hidden by the shell CSS), never removes it. #pm6DashAddBtn itself is adopted into the holding
+   tab's header row as its { id: 'add', el } action (restyled as a header button: no pill, D22); the other grid tabs
+   keep an Add widget button of their own, and the page's button goes home when the node is parked.
+
+   Columns (interim, until D10 step two): where the page's container rules give 3 columns (a 700-1060 px grid) and
+   every visible widget is an even width, the third column would stand empty, so the holding tab sets 4 columns (or 2
+   when a column would be under 200 px); see fitColumns below.
 
    Later (D10 step two) these tabs run on the Usage board engine; this file is the stand-in until then. */
 
@@ -57,7 +62,10 @@ function isGrid(board) { return !!(BOARDS[board] && BOARDS[board].grid); }
 
 /* ---- the page's node ---- */
 function node() { return byId('dashboardView'); }
-function addBtn() { return byId('pm6DashAddBtn'); }
+/* kept by reference: while a header row hands it over (the row that let go drops it before the holder adopts it) the
+   button is briefly out of the document, where getElementById cannot find it */
+var addEl = null;
+function addBtn() { var b = byId('pm6DashAddBtn'); if (b) addEl = b; return addEl; }
 function gridCards(grid) {
   if (!grid) return [];
   return Array.prototype.filter.call(grid.children, function (c) {
@@ -120,36 +128,29 @@ function selectBoard(board) {
   });
 }
 
-/* the page's Add widget button goes into the holding tab's header row, in place of that row's own Add widget */
-function seatAddButton(rec) {
+/* the page's Add widget button: dressed as a header button while a tab's header row holds it, adopted as that row's
+   { id: 'add', el } action; every other grid tab's row keeps its own Add widget button */
+function dressAddButton() {
   var btn = addBtn();
-  if (!btn || !rec || !rec.row) return;
-  var proxy = rec.row.action('add');
-  if (!proxy) return;
-  if (!stashed) {
-    stashed = { title: btn.getAttribute('title'), parent: btn.parentNode, next: btn.nextSibling };
-    btn.removeAttribute('title');
-    btn.classList.add('pmw-hbtn', 'pmw-dash-add');
-    btn.setAttribute('data-pm-hover-label', 'Add widget');
-    btn.setAttribute('data-pm-hover-detail', 'Pick one from the widget catalog');
-    btn.setAttribute('data-pmh', 'icon');
-    btn.setAttribute('aria-label', 'Add widget');
-    var spans = btn.querySelectorAll(':scope > span');
-    if (spans.length) spans[spans.length - 1].classList.add('pmw-hbtn-label');
-    if (!btn.querySelector('.pmw-dash-addico')) {
-      var ico = PMW.icon('plus', { size: 14, cls: 'pmw-dash-addico' });
-      btn.insertBefore(ico, btn.firstChild);
-    }
-  }
-  Object.keys(recs).forEach(function (id) { var p = recs[id].row && recs[id].row.action('add'); if (p) p.hidden = false; });
-  proxy.hidden = true;
-  proxy.parentNode.insertBefore(btn, proxy.nextSibling);
+  if (!btn || stashed) return btn;
+  stashed = { title: btn.getAttribute('title'), parent: btn.parentNode, next: btn.nextSibling };
+  btn.removeAttribute('title');
+  btn.classList.add('pmw-hbtn', 'pmw-dash-add');
+  btn.setAttribute('data-id', 'add');
+  btn.setAttribute('data-pm-hover-label', 'Add widget');
+  btn.setAttribute('data-pm-hover-detail', 'Pick one from the widget catalog');
+  btn.setAttribute('data-pmh', 'icon');
+  btn.setAttribute('aria-label', 'Add widget');
+  var spans = btn.querySelectorAll(':scope > span');
+  if (spans.length) spans[spans.length - 1].classList.add('pmw-hbtn-label');
+  if (!btn.querySelector('.pmw-dash-addico')) btn.insertBefore(PMW.icon('plus', { size: 14, cls: 'pmw-dash-addico' }), btn.firstChild);
+  return btn;
 }
 function homeAddButton() {
   var btn = addBtn();
   if (!btn || !stashed) return;
   btn.classList.remove('pmw-hbtn', 'pmw-dash-add');
-  ['data-pm-hover-label', 'data-pm-hover-detail', 'data-pmh', 'aria-label'].forEach(function (a) { btn.removeAttribute(a); });
+  ['data-id', 'data-pm-hover-label', 'data-pm-hover-detail', 'data-pmh', 'aria-label'].forEach(function (a) { btn.removeAttribute(a); });
   if (stashed.title) btn.setAttribute('title', stashed.title);
   var ico = btn.querySelector('.pmw-dash-addico');
   if (ico) ico.remove();
@@ -159,7 +160,12 @@ function homeAddButton() {
   var parent = actions || stashed.parent;
   if (parent) parent.insertBefore(btn, stashed.next && stashed.next.parentNode === parent ? stashed.next : null);
   stashed = null;
-  Object.keys(recs).forEach(function (id) { var p = recs[id].row && recs[id].row.action('add'); if (p) p.hidden = false; });
+}
+/* every grid tab's actions again: the tabs that let go first (their row drops the adopted button), the holder last */
+function syncRows() {
+  var list = Object.keys(recs).map(function (id) { return recs[id]; }).filter(function (r) { return !r.gone && r.row && isGrid(r.board); });
+  list.sort(function (a, b) { return (a === owner) - (b === owner); });
+  list.forEach(function (r) { r.row.set({ actions: rowActions(r) }); });
 }
 
 function claim(rec) {
@@ -168,20 +174,24 @@ function claim(rec) {
   var prev = owner;
   if (n.parentNode !== rec.stage) rec.stage.appendChild(n);
   owner = rec;
-  seatAddButton(rec);
+  if (rec.row) dressAddButton();
+  syncRows();
   selectBoard(rec.board);
   showNote(rec, false);
   if (prev && prev !== rec && visible(prev)) showNote(prev, true);
   refreshCounts();
+  watchColumns(rec);
 }
 function park() {
   var n = node(), page = byId('panel-dashboard');
+  owner = null;
+  watchColumns(null);
+  syncRows();
   homeAddButton();
   // close the catalog if it was open in the tab that let go
   var cat = byId('pm6DashCatalog');
   if (cat && !cat.hidden) cat.hidden = true;
   if (n && page && n.parentNode !== page) page.appendChild(n);
-  owner = null;
 }
 function release(rec) {
   if (owner !== rec) return;
@@ -253,6 +263,81 @@ function resetBoard(board) {
   PMW.announce(what);
   if (PMW.toast) PMW.toast(what);
   return true;
+}
+
+/* ---- columns (interim, D10 step two replaces it) ----
+   The page's container rules give the grid 2 columns under 700 px, 3 from 700 and 4 from 1060. Home and Monitoring
+   widgets are all two columns wide, so in the 3-column range (the Focus layout, a maximized panel) a third column stood
+   empty. While a tab holds the grid and the page would give 3: 3 stays only when some visible widget has an odd width
+   (Metrics: 2 + 1 + 1 tiles), else 4 when each column gets at least 200 px, else 2. Outside that range the page's rules
+   decide. The count goes on #pm6DashGrid as an !important inline style, plus data-pmw-dash-cols for the card spans
+   in 62-kind-dashboard.css; it is recomputed on the holder's resize, on claim, and when the visible board's widgets are
+   added, removed or resized (never mid-drag or mid-resize: the end of the gesture recomputes). */
+var COLS_MIN = 700, COLS_MAX = 1060, COL_MIN_W = 200;
+var colWatch = { mo: null, board: null, raf: 0 };
+function dashGrid() { return byId('pm6DashGrid'); }
+function wantColumns() {
+  var g = dashGrid();
+  if (!g || !owner || owner.gone || !isGrid(owner.board) || !owner.stage.contains(g)) return 0;
+  var w = g.getBoundingClientRect().width;
+  if (!w) return -1;   // not laid out (hidden): keep what it has
+  if (w < COLS_MIN || w >= COLS_MAX) return 0;
+  var cards = gridCards(byId(BOARDS[owner.board].grid));
+  if (cards.some(function (c) { return cardSize(c).w % 2 === 1; })) return 3;
+  var gap = parseFloat(getComputedStyle(g).columnGap) || 8;
+  return (w - 3 * gap) / 4 >= COL_MIN_W ? 4 : 2;
+}
+function busyGrid() {
+  var root = doc.documentElement.classList;
+  if (root.contains('pm7-dash-resizing') || root.contains('pm7-dash-moving')) return true;
+  var g = dashGrid();
+  return !!(g && g.querySelector('.pm6-is-resizing, .pm6-is-dragging'));
+}
+function setColumns(n) {
+  var g = dashGrid();
+  if (!g) return;
+  var now = g.getAttribute('data-pmw-dash-cols');
+  if (String(n || '') === (now || '')) return;
+  if (n) {
+    g.style.setProperty('grid-template-columns', 'repeat(' + n + ', minmax(0, 1fr))', 'important');
+    g.setAttribute('data-pmw-dash-cols', String(n));
+  } else {
+    g.style.removeProperty('grid-template-columns');
+    g.removeAttribute('data-pmw-dash-cols');
+  }
+}
+function fitColumns() {
+  colWatch.raf = 0;
+  if (busyGrid()) return;
+  var n = wantColumns();
+  if (n >= 0) setColumns(n);
+}
+function fitColumnsSoon() {
+  if (!colWatch.raf) colWatch.raf = requestAnimationFrame(fitColumns);
+}
+/* watch the visible board's cards (their own style and class only: the grid's style is this file's) */
+function watchColumns(rec) {
+  var board = rec && isGrid(rec.board) ? rec.board : null;
+  if (board !== colWatch.board) {
+    if (colWatch.mo) colWatch.mo.disconnect();
+    colWatch.board = board;
+    colWatch.mo = null;
+    var host = board && byId(BOARDS[board].grid);
+    if (host && typeof MutationObserver === 'function') {
+      var mo = colWatch.mo = new MutationObserver(function (list) {
+        var hit = false;
+        list.forEach(function (m) {
+          if (m.type === 'childList') { hit = true; m.addedNodes.forEach(function (c) { if (c.nodeType === 1) mo.observe(c, { attributes: true, attributeFilter: ['style', 'class'] }); }); }
+          else if (m.target.parentNode === host) hit = true;
+        });
+        if (hit) fitColumnsSoon();
+      });
+      mo.observe(host, { childList: true });
+      gridCards(host).forEach(function (c) { mo.observe(c, { attributes: true, attributeFilter: ['style', 'class'] }); });
+    }
+  }
+  if (!board) { if (colWatch.raf) { cancelAnimationFrame(colWatch.raf); colWatch.raf = 0; } setColumns(0); return; }
+  fitColumnsSoon();
 }
 
 /* ---- the agents board (drawn here) ---- */
@@ -343,7 +428,7 @@ function mountAgents(rec) {
     var open = h('button', { type: 'button', class: 'pmw-act pmw-dash-agent-open', 'data-pmh': 'icon',
       'data-pm-hover-label': 'Open transcript', 'data-pm-hover-detail': 'Alt+click opens it in a new panel' }, [PMW.icon('transcript', { size: 14 }), h('span', { text: 'Open transcript' })]);
     open.addEventListener('click', function (e) { openTranscript(rec, a, e.altKey); });
-    var card = h('article', { class: 'pmw-dash-agent', role: 'listitem', 'data-state': a.state, 'data-tone': st.tone, 'aria-label': a.name + ', ' + st.word }, [
+    var card = h('article', { class: 'pmw-dash-agent', role: 'listitem', 'data-pmh': 'card', 'data-state': a.state, 'data-tone': st.tone, 'aria-label': a.name + ', ' + st.word }, [
       h('header', { class: 'pmw-dash-agent-head' }, [
         h('span', { class: 'pmw-dash-st' }, [PMW.icon(st.icon, { size: 13, cls: 'pmw-dash-st-ico' }), h('span', { text: st.word })]),
         time
@@ -427,6 +512,7 @@ function setFilter(rec, f) {
   rec.filter = f;
   if (rec.filterAgents) rec.filterAgents();
   rec.paintLeft();
+  if (rec.api.saveSoon) rec.api.saveSoon();
   var lab = FILTERS.filter(function (x) { return x.id === f; })[0];
   rec.api.announce('Showing ' + (lab ? lab.label.toLowerCase() : 'all agents') + '.');
 }
@@ -440,10 +526,12 @@ function maxAction(rec) {
   return { label: on ? 'Restore' : 'Maximize', icon: on ? 'restore' : 'maximize', detail: 'Shift+Escape' };
 }
 
-function buildRow(rec) {
+function rowActions(rec) {
   var actions = [];
   if (isGrid(rec.board)) {
-    actions.push({ id: 'add', label: 'Add widget', icon: 'plus', detail: 'Pick one from the widget catalog', run: function () { openCatalog(rec); } });
+    var page = owner === rec && stashed ? addBtn() : null;
+    actions.push(page ? { id: 'add', el: page }
+      : { id: 'add', label: 'Add widget', icon: 'plus', detail: 'Pick one from the widget catalog', run: function () { openCatalog(rec); } });
     actions.push({ id: 'board', label: 'Board', icon: 'layout', detail: 'Boards, reset widgets', menu: function () { return boardMenu(rec); } });
   } else {
     actions.push({ id: 'board', label: 'Show', icon: 'eye', detail: 'Filter the agents, switch boards', menu: function () { return boardMenu(rec); } });
@@ -453,7 +541,10 @@ function buildRow(rec) {
     rec.api.toggleMaximize();
     rec.row.setAction('max', maxAction(rec));
   } });
-  rec.row = rec.api.headerRow({ label: BOARDS[rec.board].label + ' board controls', actions: actions });
+  return actions;
+}
+function buildRow(rec) {
+  rec.row = rec.api.headerRow({ label: BOARDS[rec.board].label + ' board controls', actions: rowActions(rec) });
   rec.paintLeft = function () {
     var left = [{ id: 'board', icon: 'dashboard', text: BOARDS[rec.board].label, strong: true }];
     if (isGrid(rec.board)) {
@@ -484,6 +575,7 @@ PM_HOME.registerKind('dashboard', {
   min: { w: 320, h: 120 },
   dedicated: true,
   idFor: function (spec) { return 'dashboard:' + (spec && BOARDS[spec.board] ? spec.board : 'home'); },
+  labelFor: function (id, st) { return BOARDS[boardOf(id, st)].label; },
   plus: {
     order: 40,
     label: 'Dashboard',
@@ -527,6 +619,7 @@ PM_HOME.registerKind('dashboard', {
       onResize: function () {
         var mx = maxAction(rec), el = rec.row.action('max');
         if (el && el.getAttribute('data-pm-hover-label') !== mx.label) rec.row.setAction('max', mx);
+        if (owner === rec) fitColumnsSoon();
       },
       unmount: function () {
         if (!isGrid(board) && rec.shown) clockStop();
@@ -555,7 +648,9 @@ PMW.dashboard = {
 function watchActivate() {
   PM_HOME.on('activate', function (e) {
     var r = e && recs[e.tabId];
-    if (!r || !isGrid(r.board) || owner === r) return;
+    // a grid tab opened just now is not mounted yet: it takes the node at its first show
+    if (!r) { if (e && typeof e.tabId === 'string' && e.tabId.indexOf('dashboard:') === 0 && isGrid(boardOf(e.tabId))) pending = e.tabId; return; }
+    if (!isGrid(r.board) || owner === r) return;
     pending = r.id;
     requestAnimationFrame(function () { if (pending === r.id && visible(r)) { pending = null; claim(r); } });
   });

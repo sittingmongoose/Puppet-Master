@@ -14,8 +14,9 @@
      - code that visibly scrolls under the header row's frosted plate (J2), sticky scroll, find and replace, go to
        line, a caret and a selection model, typing with undo, and diff mode (side by side from 900 px, inline below).
    Settings (one model): editor.font.size, editor.lineHeight, editor.minimap, editor.stickyScroll,
-   editor.stickyScroll.maxLines, editor.diff.layout. No emoji, no pills, no side stripes: diff lines are a tinted
-   row plus a sign glyph. */
+   editor.stickyScroll.maxLines, editor.diff.layout, editor.scheme (D27: 'follow' or a scheme id from the catalog the
+   terminal package publishes on window.PMT; see "Code colour schemes" below). No emoji, no pills, no side stripes:
+   diff lines are a tinted row plus a sign glyph. */
 
 var doc = document;
 var EDITORS = [];            // live instances (font loads and settings re-measure them)
@@ -56,8 +57,9 @@ function nowMs() { return Date.now(); }
 try {
   PM_HOME.settings.register('editor', {
     'stickyScroll.maxLines': { type: 'number', min: 1, max: 5, label: 'Sticky scroll lines' },
-    'diff.sideBySideMin': { type: 'number', min: 600, max: 1600, label: 'Side by side from (px)' }
-  }, { 'stickyScroll.maxLines': 3, 'diff.sideBySideMin': 900 });
+    'diff.sideBySideMin': { type: 'number', min: 600, max: 1600, label: 'Side by side from (px)' },
+    'scheme': { type: 'string', label: 'Code colours', detail: "'follow' keeps the look's colours (D21); otherwise a scheme id from the shared catalog (D27)" }
+  }, { 'stickyScroll.maxLines': 3, 'diff.sideBySideMin': 900, 'scheme': 'follow' });
 } catch (_) {}
 function setting(key, dflt) {
   try { var v = PM_HOME.settings.get(key); return v == null ? dflt : v; } catch (_) { return dflt; }
@@ -730,6 +732,10 @@ var SHADOW_CSS = [
   '.pmw-ed-hit.is-cur { background: var(--pmw-ed-hit-cur); outline: 1px var(--pmw-ed-ring-style, solid) var(--pmw-ed-hit-ring); outline-offset: 0; }',
   '.pmw-ed-caret { position: absolute; left: 0; top: 0; width: var(--pmw-ed-caret-w, 2px); height: var(--pmw-ed-lh); background: var(--pmw-ed-caret); border-radius: var(--pmw-ed-r1, 1px); }',
   '.pmw-ed-caret.is-blink { animation: pmw-ed-blink 1.06s steps(1, end) .5s infinite; }',
+  /* the IME field: the keyboard focus for typing, kept at the caret so a composition window opens there; invisible
+     until a composition shows its text in place */
+  '.pmw-ed-ime { position: absolute; left: 0; top: 0; z-index: 3; width: 1px; height: var(--pmw-ed-lh); margin: 0; padding: 0; border: 0; outline: none; resize: none; overflow: hidden; white-space: pre; opacity: 0; color: transparent; caret-color: transparent; background: transparent; font: inherit; line-height: var(--pmw-ed-lh); -webkit-user-select: text; user-select: text; pointer-events: none; }',
+  '.pmw-ed-ime.is-composing { opacity: 1; color: var(--pmw-ed-fg); background: var(--pmw-ed-gutbg); text-decoration: underline; text-underline-offset: 3px; box-shadow: 0 0 0 1px var(--pmw-ed-caret-mark); }',
   '@keyframes pmw-ed-blink { 50% { opacity: 0; } }',
   /* diff mode */
   '.pmw-ed-row.is-meta { color: var(--pmw-text-3); }',
@@ -760,8 +766,9 @@ var SHADOW_CSS = [
   '@media (prefers-reduced-motion: reduce) { .pmw-ed-row.is-reveal, .pmw-ed-caret.is-blink { animation: none; } .pmw-ed-focus { transition: none; } }'
 ].join('\n');
 var shadowSheet = null;
-function shadowFor(hostEl) {
-  var sr = hostEl.attachShadow({ mode: 'open' });
+function shadowFor(hostEl, delegates) {
+  // delegates: focusing the host focuses the IME field inside it, and the host still matches :focus
+  var sr = hostEl.attachShadow(delegates ? { mode: 'open', delegatesFocus: true } : { mode: 'open' });
   try {
     if (!shadowSheet) { shadowSheet = new CSSStyleSheet(); shadowSheet.replaceSync(SHADOW_CSS); }
     sr.adoptedStyleSheets = [shadowSheet];
@@ -771,9 +778,6 @@ function shadowFor(hostEl) {
   return sr;
 }
 
-function tabRecord(id) {
-  try { return PMW.state && PMW.state.layout ? PMW.state.layout.tabs[id] || null : null; } catch (_) { return null; }
-}
 function linesEqual(a, b) {
   if (a.length !== b.length) return false;
   for (var i = 0; i < a.length; i++) if (a[i] !== b[i]) return false;
@@ -807,20 +811,147 @@ function paintTokens(el, text, toks, words) {
   }
 }
 
+/* ======================================================================================================== */
+/* Code colour schemes (D27, CONTRACT 10.1): one catalog shared with the terminal, published by the terminal        */
+/* package on window.PMT. Everything here is feature-detected: in a build without src/terminal the editor keeps    */
+/* Follow look, Retro dark stays green and the Appearance row is absent.                                           */
+/* ======================================================================================================== */
+
+var SYN_KEYS = ['kw', 'str', 'num', 'com', 'fn', 'ty', 'var', 'prop', 'op', 'pun', 'tag', 'attr', 'esc', 'mac', 'link', 'head', 'code'];
+function edAppearance() {
+  try {
+    var A = window.PMT && window.PMT.Appearance;
+    return A && typeof A.editorTokens === 'function' && typeof A.palette === 'function' ? A : null;
+  } catch (_) { return null; }
+}
+function edPopover() {
+  try { var P = window.PMT && window.PMT.AppearancePopover; return P && typeof P.open === 'function' ? P : null; } catch (_) { return null; }
+}
+function retroPhosphor() {
+  try {
+    var A = window.PMT && window.PMT.Appearance;
+    return A && typeof A.retroPhosphor === 'function' && A.retroPhosphor() === 'amber' ? 'amber' : 'green';
+  } catch (_) { return 'green'; }
+}
+var pmtHooked = null;
+function hookPmt() {
+  // once per Appearance object: the terminal's phosphor pick (Retro dark) restyles every open editor live
+  var A = null;
+  try { A = window.PMT && window.PMT.Appearance; } catch (_) {}
+  if (!A || pmtHooked === A || typeof A.on !== 'function') return;
+  pmtHooked = A;
+  try { A.on('retro-phosphor', function () { EDITORS.forEach(function (v) { if (v.scheme) v.scheme(); }); }); } catch (_) {}
+}
+function schemeList() {
+  var A = edAppearance();
+  if (!A || typeof A.schemes !== 'function') return [];
+  try { var l = A.schemes(); return Array.isArray(l) ? l : []; } catch (_) { return []; }
+}
+function schemeName(id) {
+  if (!id || id === 'follow') return 'Follow look';
+  var l = schemeList();
+  for (var i = 0; i < l.length; i++) if (l[i] && l[i].id === id) return l[i].name || 'Scheme';
+  return 'Follow look';
+}
+/* colour arithmetic for the contrast floor (text keeps 4.5:1 on the scheme's own background) */
+function rgbOf(v) {
+  var m = /^#?([\da-f]{3}|[\da-f]{6})(?:[\da-f]{2})?$/i.exec(String(v || '').trim());
+  if (!m) return null;
+  var x = m[1].length === 3 ? m[1].replace(/./g, '$&$&') : m[1];
+  return [parseInt(x.slice(0, 2), 16), parseInt(x.slice(2, 4), 16), parseInt(x.slice(4, 6), 16)];
+}
+function hexOf(c) { return '#' + c.map(function (n) { return ('0' + Math.round(clamp(n, 0, 255)).toString(16)).slice(-2); }).join(''); }
+function mixRgb(a, b, t) { return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t]; }
+function lumOf(c) {
+  var v = c.map(function (n) { n /= 255; return n <= 0.03928 ? n / 12.92 : Math.pow((n + 0.055) / 1.055, 2.4); });
+  return 0.2126 * v[0] + 0.7152 * v[1] + 0.0722 * v[2];
+}
+function contrastOf(a, b) { var x = lumOf(a), y = lumOf(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); }
+function legible(c, bg, min) {
+  // move toward white or black (whichever the background allows) until the colour reads at min:1
+  if (!c) return null;
+  if (contrastOf(c, bg) >= min) return c;
+  var to = contrastOf([255, 255, 255], bg) >= contrastOf([0, 0, 0], bg) ? [255, 255, 255] : [0, 0, 0];
+  for (var t = 0.05; t <= 1.0001; t += 0.05) { var m = mixRgb(c, to, t); if (contrastOf(m, bg) >= min) return m; }
+  return to;
+}
+function alphaOf(c, a) { return 'rgba(' + Math.round(c[0]) + ', ' + Math.round(c[1]) + ', ' + Math.round(c[2]) + ', ' + a + ')'; }
+/* the custom properties a scheme writes on the code elements, or null for Follow look (or an unknown id) */
+function schemeVars(id) {
+  if (!id || id === 'follow') return null;
+  var A = edAppearance();
+  if (!A) return null;
+  var known = schemeList();
+  if (known.length && !known.some(function (x) { return x && x.id === id; })) return null;
+  var toks = null, pal = null;
+  try { toks = A.editorTokens(id); pal = A.palette(id); } catch (err) { try { console.warn('[pm-home] editor scheme ' + id + ' failed', err); } catch (_) {} return null; }
+  if (!toks || !pal) return null;
+  var bg = rgbOf(pal.background), fg0 = rgbOf(pal.foreground);
+  if (!bg || !fg0) return null;
+  var ansi = Array.isArray(pal.ansi) ? pal.ansi.map(rgbOf) : [];
+  function an(i, dflt) { return ansi[i] || ansi[i > 7 ? i - 8 : i + 8] || dflt; }
+  var fg = legible(fg0, bg, 4.5);
+  var red = legible(an(1, [224, 108, 117]), bg, 4.5), green = legible(an(2, [152, 195, 121]), bg, 4.5), yellow = legible(an(3, [229, 192, 123]), bg, 4.5);
+  var hitC = an(11, an(3, [229, 192, 123]));
+  var conf = legible(mixRgb(an(1, red), an(3, yellow), 0.5), bg, 4.5);
+  var blue = an(4, fg);
+  var cursor = rgbOf(pal.cursor) || fg, sel = rgbOf(pal.selection);
+  var dark = lumOf(bg) < 0.2;
+  var v = {
+    '--pmw-ed-bg': hexOf(bg), '--pmw-ed-gutbg': hexOf(bg), '--pmw-ed-fg': hexOf(fg),
+    '--pmw-ed-ln': hexOf(legible(mixRgb(fg, bg, 0.5), bg, 4.5)), '--pmw-ed-ln-cur': hexOf(fg),
+    '--pmw-ed-line': alphaOf(fg, dark ? 0.05 : 0.06),
+    '--pmw-ed-sel': sel ? hexOf(sel) : alphaOf(blue, 0.32), '--pmw-ed-sel-blur': hexOf(mixRgb(sel || mixRgb(bg, fg, 0.2), bg, 0.45)),
+    '--pmw-ed-sel-z': '-1', '--pmw-ed-sel-blend': 'normal',
+    '--pmw-ed-caret': hexOf(cursor), '--pmw-ed-caret-mark': alphaOf(fg, 0.55),
+    '--pmw-ed-hit': alphaOf(hitC, 0.26), '--pmw-ed-hit-cur': alphaOf(hitC, 0.5), '--pmw-ed-hit-ring': hexOf(legible(hitC, bg, 3)), '--pmw-ed-hit-mark': hexOf(hitC),
+    '--pmw-ed-focus-bg': alphaOf(blue, 0.16),
+    '--pmw-ed-mm-ink': hexOf(fg), '--pmw-ed-mm-alpha': dark ? '.28' : '.34',
+    '--pmw-ed-add-fg': hexOf(green), '--pmw-ed-mod-fg': hexOf(yellow), '--pmw-ed-del-fg': hexOf(red), '--pmw-ed-conf-fg': hexOf(conf),
+    '--pmw-ed-add-bg': alphaOf(green, dark ? 0.12 : 0.10), '--pmw-ed-mod-bg': alphaOf(yellow, dark ? 0.10 : 0.08),
+    '--pmw-ed-del-bg': alphaOf(red, dark ? 0.12 : 0.09), '--pmw-ed-conf-bg': alphaOf(conf, dark ? 0.15 : 0.12),
+    '--pmw-ed-wadd': alphaOf(green, dark ? 0.30 : 0.22), '--pmw-ed-wdel': alphaOf(red, dark ? 0.30 : 0.20),
+    '--pmw-ed-fold-hover-bg': alphaOf(fg, 0.10), '--pmw-ed-fold-hover-fg': hexOf(fg),
+    // the page tokens the code rows read (diff meta rows, folds, log marks): kept on the scheme's background
+    '--pmw-text': hexOf(fg), '--pmw-text-2': hexOf(legible(mixRgb(fg, bg, 0.25), bg, 4.5)), '--pmw-text-3': hexOf(legible(mixRgb(fg, bg, 0.42), bg, 4.5)),
+    '--pmw-hover': alphaOf(fg, 0.08), '--pmw-line': alphaOf(fg, 0.14),
+    '--pmw-ok': hexOf(green), '--pmw-warn': hexOf(yellow), '--pmw-bad': hexOf(red)
+  };
+  SYN_KEYS.forEach(function (k) { v['--pmw-ed-s-' + k] = hexOf(legible(rgbOf(toks[k]) || fg, bg, 4.5)); });
+  return v;
+}
+function openAppearance(anchor) {
+  var P = edPopover();
+  if (!P) return;
+  var KEYS = { scheme: 'editor.scheme', font: 'editor.font.family', size: 'editor.font.size' };
+  function full(k) { return KEYS[k] || (String(k).indexOf('editor.') === 0 ? k : null); }
+  function get(k) {
+    if (k == null) return { scheme: setting('editor.scheme', 'follow'), font: setting('editor.font.family', 'JetBrains Mono'), size: setting('editor.font.size', 13) };
+    var f = full(k);
+    return f ? PM_HOME.settings.get(f) : undefined;
+  }
+  function set(k, val) {
+    if (k && typeof k === 'object') { Object.keys(k).forEach(function (kk) { set(kk, k[kk]); }); return; }
+    var f = full(k);
+    if (f) PM_HOME.settings.set(f, val);
+  }
+  try { P.open(anchor, { surface: 'editor', get: get, set: set }); }
+  catch (err) { try { console.error('[pm-home] the Appearance popover failed', err); } catch (_) {} }
+}
+
 function mountEditor(host, st, api) {
   st = st || {};
   var tabId = api.id;
-  var rec0 = tabRecord(tabId);
   var path = st.path || (tabId.indexOf('file:') === 0 ? tabId.slice(5) : null);
   var d, untitled = false;
   if (path) d = docForPath(path);
   else {
-    var title = st.title || (rec0 && rec0.title) || null;
+    var title = st.title || null;           // PM_HOME.open passes spec.title as state.title
     untitled = st.text == null || (st.text === '' && (!title || title === 'Untitled'));
     d = newDoc({ lines: splitLines(st.text || ''), language: st.language || (untitled ? 'text' : null), title: title,
       readOnly: (untitled || st.edit) ? null : (typeof st.readOnly === 'string' ? st.readOnly : 'Read-only') });
     if (untitled) { untitledSeq += 1; d.title = 'Untitled ' + untitledSeq; }
-    if (!rec0 || !rec0.label) api.update({ label: d.title || 'Text', title: d.title || 'Text' });
+    if (untitled) api.update({ label: d.title, title: d.title });   // labelFor names it before mount; the number comes now
   }
   var lang = LANGS[d.lang] || LANGS.text;
   var name = path ? basename(path) : (d.title || 'Text');
@@ -853,7 +984,7 @@ function mountEditor(host, st, api) {
   var head = h('div', { class: 'pmw-ed-head' });
   var scroller = h('div', { class: 'pmw-ed-scroll', tabindex: '0', role: 'textbox', 'aria-multiline': 'true',
     'aria-readonly': d.readOnly || mode === 'diff' ? 'true' : 'false', 'aria-label': name + ' editor', 'data-pmh': 'off',
-    'data-pm-hover-visual-suppressed': 'true',
+    'data-pm-hover-visual-suppressed': 'true', 'data-pmw-host-keys': '',
     id: 'pmw-ed-' + Math.random().toString(36).slice(2, 9) });
   var sizer = h('div', { class: 'pmw-ed-sizer' });
   var bands = h('div', { class: 'pmw-ed-bands', 'aria-hidden': 'true' });
@@ -866,8 +997,14 @@ function mountEditor(host, st, api) {
   var caretLayer = h('div', { class: 'pmw-ed-carets', 'aria-hidden': 'true' });
   var caretEl = h('i', { class: 'pmw-ed-caret' });
   caretLayer.appendChild(caretEl);
+  /* typing goes through a hidden textarea inside the scroller's shadow root, so dead keys and IME composition
+     (Japanese, Chinese, accents) work; [data-pmw-host-keys] keeps every host key (CONTRACT section 9), and to the
+     page the focus is still the scroller */
+  var ime = h('textarea', { class: 'pmw-ed-ime', 'aria-label': name + ' editor', autocomplete: 'off', autocapitalize: 'off',
+    autocorrect: 'off', spellcheck: 'false', wrap: 'off', rows: '1', 'data-pm-hover-visual-suppressed': 'true', 'data-pmh': 'off' });
   sizer.appendChild(bands); sizer.appendChild(ov); sizer.appendChild(rowsEl); sizer.appendChild(selsEl); sizer.appendChild(caretLayer);
-  shadowFor(scroller).appendChild(sizer);
+  sizer.appendChild(ime);
+  shadowFor(scroller, true).appendChild(sizer);
   var sticky = h('div', { class: 'pmw-ed-sticky', 'aria-hidden': 'true', 'data-pmh': 'off', hidden: true });
   var stickyBox = h('div', { class: 'pmw-ed-sticky-box' });
   shadowFor(sticky).appendChild(stickyBox);
@@ -956,8 +1093,9 @@ function mountEditor(host, st, api) {
   function layoutMenu() {
     var pick = diffLayoutPick || setting('editor.diff.layout', 'auto');
     function row(v, label, sub) {
-      return { id: 'layout-' + v, label: label, sub: sub, checked: pick === v, run: function () { diffLayoutPick = v; resolveLayout(true); } };
+      return { id: 'layout-' + v, label: label, detail: sub, checked: pick === v, run: function () { diffLayoutPick = v; resolveLayout(true); } };
     }
+    // the header row maps CONTRACT section 4 items (detail, shortcut) the same way api.menu does
     return { id: 'ed-layout', title: 'Diff layout', width: 280, align: 'end', rows: [
       row('auto', 'Automatic', 'Side by side from ' + setting('editor.diff.sideBySideMin', SIDE_MIN_DEFAULT) + ' px wide'),
       row('side', 'Side by side', 'Old on the left, new on the right'),
@@ -967,14 +1105,17 @@ function mountEditor(host, st, api) {
   function moreMenu() {
     var rows = [];
     if (!special) {
-      rows.push({ id: 'goto', label: 'Go to line', icon: 'target', right: 'Ctrl+G', run: function () { openGoto(); } });
-      rows.push({ id: 'replace', label: 'Find and replace', icon: 'replace', right: 'Ctrl+H', run: function () { openFind(true); } });
+      rows.push({ id: 'goto', label: 'Go to line', icon: 'target', shortcut: 'Ctrl+G', run: function () { openGoto(); } });
+      rows.push({ id: 'replace', label: 'Find and replace', icon: 'replace', shortcut: 'Ctrl+H', run: function () { openFind(true); } });
       rows.push('-');
-      rows.push({ id: 'minimap', label: 'Minimap', sub: 'Line shapes in the scrollbar', checked: !!setting('editor.minimap', true), keepOpen: false,
+      rows.push({ id: 'minimap', label: 'Minimap', detail: 'Line shapes in the scrollbar', checked: !!setting('editor.minimap', true),
         run: function () { PM_HOME.settings.set('editor.minimap', !setting('editor.minimap', true)); } });
-      rows.push({ id: 'sticky', label: 'Sticky scroll', sub: 'Keep the enclosing lines in view', checked: !!setting('editor.stickyScroll', true),
+      rows.push({ id: 'sticky', label: 'Sticky scroll', detail: 'Keep the enclosing lines in view', checked: !!setting('editor.stickyScroll', true),
         run: function () { PM_HOME.settings.set('editor.stickyScroll', !setting('editor.stickyScroll', true)); } });
-      if (isEditable() && isDirty()) { rows.push('-'); rows.push({ id: 'save', label: 'Save', icon: 'check', right: 'Ctrl+S', run: function () { save(); } }); }
+      // D27: the one Appearance popover, shared with the terminal; absent when the terminal package is not in the build
+      if (edPopover()) rows.push({ id: 'appearance', label: 'Appearance...', icon: 'edPalette', detail: schemeName(setting('editor.scheme', 'follow')) + ' · font and size',
+        run: function () { setTimeout(function () { openAppearance(hrow.action('more') || head); }, 0); } });
+      if (isEditable() && isDirty()) { rows.push('-'); rows.push({ id: 'save', label: 'Save', icon: 'check', shortcut: 'Ctrl+S', run: function () { save(); } }); }
     }
     if (path) {
       if (rows.length) rows.push('-');
@@ -1008,6 +1149,23 @@ function mountEditor(host, st, api) {
       ])
     ]));
   }
+
+  /* ==== code colour scheme (D27): written on the code elements only, so the header row and popovers keep the look ==== */
+  var codeEls = [scroller, sticky, track, hbar];
+  var schemeOn = null;
+  function applyScheme() {
+    hookPmt();
+    if (retroPhosphor() === 'amber') root.setAttribute('data-phosphor', 'amber'); else root.removeAttribute('data-phosphor');
+    var id = setting('editor.scheme', 'follow');
+    var vars = special ? null : schemeVars(id);
+    var old = schemeOn || {};
+    Object.keys(old).forEach(function (n) { if (!vars || !(n in vars)) codeEls.forEach(function (el) { el.style.removeProperty(n); }); });
+    if (vars) Object.keys(vars).forEach(function (n) { if (old[n] !== vars[n]) codeEls.forEach(function (el) { el.style.setProperty(n, vars[n]); }); });
+    if (vars) root.setAttribute('data-scheme', id); else root.removeAttribute('data-scheme');
+    schemeOn = vars;
+    colorCache = null;
+  }
+  applyScheme();
 
   /* ==== metrics and layout ==== */
   var varCache = {};
@@ -1386,9 +1544,11 @@ function mountEditor(host, st, api) {
   function placeCaret() {
     if (lastCurRow !== caret.r) { lastCurRow = caret.r; markCurrentRow(); }
     var show = focused && !special && V && V.text(caret.r, side) != null;
-    caretEl.hidden = !show;
+    caretEl.hidden = !show || composing;
     if (!show) return;
     var tf = 'translate(' + Math.round(xOf(caret.c, side) - 1) + 'px,' + (padT + caret.r * lh) + 'px)';
+    if (ime._tf !== tf) { ime._tf = tf; ime.style.transform = tf; }
+    if (ime.readOnly === isEditable()) ime.readOnly = !isEditable();   // a read-only view takes no composition
     if (caretEl._tf !== tf) {
       caretEl._tf = tf;
       caretEl.style.transform = tf;
@@ -2159,6 +2319,35 @@ function mountEditor(host, st, api) {
     if (handled) { e.preventDefault(); e.stopPropagation(); }
   });
 
+  /* ==== IME and dead keys: text that keydown did not type arrives in the hidden field ==== */
+  var composing = false;
+  function imeFit() { ime.style.width = '1px'; ime.style.width = Math.max(1, ime.scrollWidth + 2) + 'px'; }
+  function imeClear() { ime.value = ''; ime.style.width = ''; }
+  function imeInsert(text) {
+    imeClear();
+    if (!text) return;
+    if (!isEditable()) { noteReadOnly(); return; }
+    replaceSel(String(text).replace(/\r\n?/g, '\n').replace(/\t/g, '    '), 'type');
+  }
+  ime.addEventListener('compositionstart', function () {
+    composing = true;
+    ime.classList.add('is-composing');
+    placeCaret();
+    imeFit();
+  });
+  ime.addEventListener('compositionupdate', function () { requestAnimationFrame(imeFit); });
+  ime.addEventListener('compositionend', function (e) {
+    composing = false;
+    ime.classList.remove('is-composing');
+    imeInsert(e.data != null && e.data !== '' ? e.data : ime.value);
+    renderOverlays();
+  });
+  ime.addEventListener('input', function (e) {
+    // AltGr and Option characters, a dead key followed by a letter, insertText: everything keydown left alone
+    if (composing || e.isComposing) return;
+    imeInsert(ime.value);
+  });
+
   /* ==== mouse: click places the caret, drag selects, double click a word, triple click a line, the gutter selects lines ==== */
   function posAt(cx, cy) {
     var sr = scroller.getBoundingClientRect();
@@ -2277,8 +2466,11 @@ function mountEditor(host, st, api) {
       return b;
     }
     var exp = btn('chevronRight', 'Show replace', keyLabel('Ctrl+H'), function () { setReplace(!find.replace); (find.replace ? rIn : fIn).focus(); }, 'pmw-ed-fexp');
-    fIn = h('input', { type: 'text', class: 'pmw-ed-fin', placeholder: 'Find', 'aria-label': 'Find', spellcheck: 'false', autocomplete: 'off' });
-    rIn = h('input', { type: 'text', class: 'pmw-ed-fin', placeholder: 'Replace', 'aria-label': 'Replace with', spellcheck: 'false', autocomplete: 'off' });
+    // a field names itself for the hover tags (otherwise the tag engine says "Change this setting.")
+    fIn = h('input', { type: 'text', class: 'pmw-ed-fin', placeholder: 'Find', 'aria-label': 'Find', spellcheck: 'false', autocomplete: 'off',
+      'data-pm-hover-label': 'Find in this file', 'data-pm-hover-detail': keyLabel('Enter') + ' next match, ' + keyLabel('Shift+Enter') + ' previous' });
+    rIn = h('input', { type: 'text', class: 'pmw-ed-fin', placeholder: 'Replace', 'aria-label': 'Replace with', spellcheck: 'false', autocomplete: 'off',
+      'data-pm-hover-label': 'Replace with', 'data-pm-hover-detail': keyLabel('Enter') + ' replaces this match, ' + keyLabel('Ctrl+Alt+Enter') + ' every match' });
     fCount = h('span', { class: 'pmw-ed-fcount', 'aria-live': 'polite' });
     fNote = h('p', { class: 'pmw-ed-fnote', hidden: true });
     var row1 = h('div', { class: 'pmw-ed-frow' }, [
@@ -2464,7 +2656,8 @@ function mountEditor(host, st, api) {
     if (gotoEl) { gotoEl.querySelector('input').focus(); return; }
     var startTop = geo.st, startCaret = { r: caret.r, c: caret.c }, startAnchor = anchor;
     var nLines = mode === 'diff' ? maxLineNo() : d.lines.length;
-    var input = h('input', { type: 'text', class: 'pmw-ed-gin', placeholder: 'Line or line:column', 'aria-label': 'Go to line', spellcheck: 'false', autocomplete: 'off', inputmode: 'numeric' });
+    var input = h('input', { type: 'text', class: 'pmw-ed-gin', placeholder: 'Line or line:column', 'aria-label': 'Go to line', spellcheck: 'false', autocomplete: 'off', inputmode: 'numeric',
+      'data-pm-hover-label': 'Go to line', 'data-pm-hover-detail': 'A line, or line:column. ' + keyLabel('Enter') + ' goes there' });
     var hint = h('p', { class: 'pmw-ed-ghint', text: '1–' + nLines + ' · now ' + (mode === 'diff' ? 'in the changes' : (caret.r + 1) + ':' + (caret.c + 1)) });
     gotoEl = h('div', { class: 'pmw-ed-goto', role: 'dialog', 'aria-label': 'Go to line' }, [h('span', { class: 'pmw-ed-gico' }, [ico('target', 14)]), input, hint]);
     root.appendChild(gotoEl);
@@ -2546,9 +2739,9 @@ function mountEditor(host, st, api) {
   }
 
   /* ==== first paint ====
-     The host mounts the tab body before it attaches it, so nothing can be measured here; the model is built now and
-     the first real paint (measure, layout, the restored top line or the opened line) waits for the first sized
-     onResize or onShow. */
+     The host attaches the tab body before mount (22-render.js), so a tab that shows paints right here; an eager
+     background tab is attached hidden (no size), and its first paint (measure, layout, the restored top line or the
+     opened line) waits for the first sized onResize or onShow. */
   buildView();
   var firstDone = false;
   function firstPaint() {
@@ -2583,10 +2776,11 @@ function mountEditor(host, st, api) {
   firstPaint();
 
   var offs = [];
-  offs.push(api.on('look', function () { colorCache = null; markReduced(); if (!firstDone) return; measure(); var hh = head.offsetHeight; if (hh !== headH) relayoutAll(); else { renderOverlays(); queueDraw(); } }));
+  offs.push(api.on('look', function () { applyScheme(); markReduced(); if (!firstDone) return; measure(); var hh = head.offsetHeight; if (hh !== headH) relayoutAll(); else { renderOverlays(); queueDraw(); } }));
   offs.push(api.on('settings', function (ev) {
     var key = ev && ev.key;
     if (!key || key.indexOf('editor.') !== 0 && key !== 'code.editing.goto-highlight-ms') return;
+    if (key === 'editor.scheme') { applyScheme(); if (firstDone) queueDraw(); return; }
     if (!firstDone) return;
     if (key === 'editor.diff.layout' || key === 'editor.diff.sideBySideMin') { resolveLayout(true); return; }
     if (key === 'editor.stickyScroll' || key === 'editor.stickyScroll.maxLines') { sticky._key = null; updateSticky(); return; }
@@ -2600,7 +2794,8 @@ function mountEditor(host, st, api) {
       if (usedGuess && (done || rendered.b < d.tokFrom)) { usedGuess = false; renderRows(true); renderOverlays(); }
       if (done) { sticky._key = null; updateSticky(); updateSymbol(); }
     },
-    relayout: relayoutAll
+    relayout: relayoutAll,
+    scheme: function () { if (!alive) return; applyScheme(); if (firstDone) queueDraw(); }
   };
   d.views.push(self);
   EDITORS.push(self);
@@ -2642,6 +2837,8 @@ function mountEditor(host, st, api) {
       var ctrl = e.ctrlKey || e.metaKey, alt = e.altKey, shift = e.shiftKey, k = e.key, code = e.code;
       var inField = e.target && e.target.tagName === 'INPUT';
       if (k === 'F6' || (shift && k === 'Escape' && !ctrl && !alt)) return false;
+      // a dead key (a Mac Option+` or Option+e accent, a European layout's ^) and an IME's Process key are typing
+      if (k === 'Dead' || k === 'Process' || e.keyCode === 229) return true;
       if (alt && !ctrl) {
         if (k === 'F5') return true;
         if (inField && (code === 'KeyC' || code === 'KeyR')) return true;
@@ -2661,14 +2858,12 @@ function mountEditor(host, st, api) {
         var done = false;
         function fin(v) { if (done) return; done = true; resolve(v); }
         var r = host.getBoundingClientRect();
-        PMW.menu.open(null, { id: 'ed-close', title: 'Save changes to ' + name + '?', width: 300,
-          at: { x: Math.round(r.left + Math.max(12, r.width / 2 - 150)), y: Math.round(r.top + Math.min(80, r.height / 3)) },
-          rows: [
-            { id: 'save', label: 'Save', icon: 'check', sub: 'Keep the changes, then close', run: function () { save(); fin(true); } },
-            { id: 'discard', label: 'Close without saving', icon: 'close', danger: true, sub: 'The changes are lost', run: function () { d.lines = d.savedLines.slice(); d.version++; d.toks = []; d.ends = []; d.tokFrom = 0; d.undo = []; d.redo = []; fin(true); } },
-            { id: 'cancel', label: 'Cancel', sub: 'Keep the tab open', run: function () { fin(false); } }
-          ],
-          onClose: function () { setTimeout(function () { fin(false); }, 0); } });
+        api.menu([
+          { id: 'save', label: 'Save', icon: 'check', detail: 'Keep the changes, then close', run: function () { save(); fin(true); } },
+          { id: 'discard', label: 'Close without saving', icon: 'close', danger: true, detail: 'The changes are lost', run: function () { d.lines = d.savedLines.slice(); d.version++; d.toks = []; d.ends = []; d.tokFrom = 0; d.undo = []; d.redo = []; fin(true); } },
+          { id: 'cancel', label: 'Cancel', detail: 'Keep the tab open', run: function () { fin(false); } }
+        ], { x: Math.round(r.left + Math.max(12, r.width / 2 - 150)), y: Math.round(r.top + Math.min(80, r.height / 3)) },
+        { title: 'Save changes to ' + name + '?', width: 300, onClose: function () { setTimeout(function () { fin(false); }, 0); } });
       });
     },
     _debug: function () { return { mode: mode, side: !!(V && V.side), caret: caret, anchor: anchor, n: V ? V.n : 0, lh: lh, cw: cw, headH: headH, padT: padT, trackW: trackW, gutW: gutW, stickyH: stickyH, find: { q: find.q, n: find.hits.length, cur: find.cur }, dirty: isDirty(), rendered: rowEls.size, lang: d.lang }; }
@@ -2788,6 +2983,8 @@ function setup() {
     FILES[f.p] = { lines: lines, base: base, conflicts: conflicts };
   });
   CHAT_CHANGES.forEach(function (c) { CHAT[c.path] = c; });
+  // the Appearance row's mark (D27): a painter's palette in the 16 px stroke grammar
+  try { PMW.registerIcon('edPalette', 'M8 2.2a5.8 5.8 0 1 0 0 11.6c1 0 1.4-.7 1.1-1.5-.3-.8.3-1.6 1.1-1.6h1.6a2.2 2.2 0 0 0 2.2-2.2C14 5 11.3 2.2 8 2.2zM5 8.3h.01M6.4 5.3h.01M9.7 5.1h.01', '*'); } catch (_) {}
 
   PM_HOME.registerKind('editor', {
     label: 'Editor',
@@ -2796,6 +2993,14 @@ function setup() {
     prefixes: ['file:', 'buffer:'],
     min: { w: 280, h: 120 },
     document: true,
+    // the label of a tab that is not mounted yet (background, agent-opened or restored); state is read-only
+    labelFor: function (id, s) {
+      s = s || {};
+      if (s.path) return basename(s.path);
+      if (String(id).indexOf('file:') === 0) return basename(String(id).slice(5));
+      if (s.title) return String(s.title);
+      return s.text == null || s.text === '' ? 'Untitled' : 'Text';
+    },
     idFor: function (spec) {
       if (spec.path) return 'file:' + spec.path;
       untitledIds += 1;

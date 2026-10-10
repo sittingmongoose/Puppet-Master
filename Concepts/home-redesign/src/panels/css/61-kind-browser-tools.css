@@ -10,9 +10,10 @@
 .pmw-br { position: absolute; inset: 0; display: flex; flex-direction: column; color: var(--pmw-text); font-family: var(--pm-font-ui); }
 .pmw-br .pmw-hrow { padding-left: 6px; }
 .pmw-br .pmw-hrow-left { gap: 6px; }
-.pmw-br .pmw-hfact[data-id="br-addr"] { flex: 1 1 auto; min-width: 96px; }
+/* the address is the header row's growing fact (grow: true); it keeps room for a few characters */
+.pmw-br .pmw-hfact.is-grow[data-id="br-addr"] { min-width: 96px; }
 .pmw-br-navs { display: inline-flex; align-items: center; gap: 2px; }
-.pmw-br .pmw-br-nbtn { width: 24px; padding: 0; }
+.pmw-br .pmw-hrow .pmw-hbtn.pmw-br-nbtn { width: 24px; padding: 0; }
 .pmw-br .pmw-br-nbtn[aria-disabled="true"] { opacity: .38; }
 .pmw-br-addr { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; gap: 6px; height: 24px; padding: 0 8px; box-sizing: border-box;
   border: 1px solid var(--pmw-line-2); border-radius: 6px; background: var(--pmw-surface-2); color: var(--pmw-text-2); cursor: text; }
@@ -21,16 +22,13 @@
 .pmw-br-aicon .pmw-ico { width: 13px; height: 13px; }
 .pmw-br-addrin { flex: 1 1 auto; min-width: 0; height: 22px; padding: 0; border: 0; outline: none; background: transparent; color: var(--pmw-text);
   font-family: var(--pm-font-code); font-size: 12px; text-transform: none; letter-spacing: 0; }
-/* the capture toolbar shows its words only when the address still has room; the session toggle keeps its word longer */
-@container pmw-body (max-width: 1099.98px) {
-  .pmw-br .pmw-hrow-actions .pmw-hbtn:not([data-id="session"]) { width: 24px; padding: 0; }
-  .pmw-br .pmw-hrow-actions .pmw-hbtn:not([data-id="session"]) .pmw-hbtn-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+/* the capture toolbar shows its words only when the address still has room: the row's labelsAt (1100 px, 20-browser.js)
+   puts .is-icons on it below that; the session toggle keeps its word down to 620 px */
+@container pmw-body (min-width: 620px) {
+  .pmw-br .pmw-hrow.is-icons .pmw-hbtn[data-id="session"] { width: auto; padding: 0 7px; }
+  .pmw-br .pmw-hrow.is-icons .pmw-hbtn[data-id="session"] .pmw-hbtn-label { position: static; width: auto; height: auto; overflow: visible; clip-path: none; }
 }
-@container pmw-body (max-width: 619.98px) {
-  .pmw-br .pmw-hbtn[data-id="session"] { width: 24px; padding: 0; }
-  .pmw-br .pmw-hbtn[data-id="session"] .pmw-hbtn-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-}
-.pmw-br .pmw-hbtn[data-id="more"] { width: 24px; padding: 0; }
+.pmw-br .pmw-hrow .pmw-hbtn[data-id="more"] { width: 24px; padding: 0; }
 @container pmw-body (max-width: 479.98px) {
   .pmw-br .pmw-hrow-actions .pmw-hbtn:is([data-id="full"], [data-id="region"], [data-id="select"]):not([aria-pressed="true"]) { display: none; }
   .pmw-br .pmw-br-nbtn[data-br="forward"] { display: none; }
@@ -70,10 +68,11 @@
 .pmw-br-dtitle { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
 .pmw-br-dtitle b { font-size: 13px; font-weight: 650; }
 .pmw-br-mono { font-family: var(--pm-font-code); font-size: 11.5px; }
-.pmw-br-back, .pmw-br-srclink { padding: 0; border: 0; background: transparent; color: var(--pmw-accent); font: inherit; font-size: 12px; cursor: pointer; text-align: left; text-decoration: underline; text-underline-offset: 2px; text-decoration-color: color-mix(in srgb, currentColor 40%, transparent); }
-.pmw-br-srclink { font-family: var(--pm-font-code); font-size: 11.5px; overflow-wrap: anywhere; }
-.pmw-br-back:hover, .pmw-br-srclink:hover { text-decoration-color: currentColor; }
-.pmw-br-back:focus-visible, .pmw-br-srclink:focus-visible { outline: 2px solid var(--pmw-focus); outline-offset: 2px; border-radius: 2px; }
+.pmw-br-back { padding: 0; border: 0; background: transparent; color: var(--pmw-accent); font: inherit; font-size: 12px; cursor: pointer; text-align: left; text-decoration: underline; text-underline-offset: 2px; text-decoration-color: color-mix(in srgb, currentColor 40%, transparent); }
+/* a component's source is the shared file reference (PMW.fileRef, inline); its text lines up with the other values */
+.pmw-br-kv .pmw-br-src { margin-left: -4px; }
+.pmw-br-back:hover { text-decoration-color: currentColor; }
+.pmw-br-back:focus-visible { outline: 2px solid var(--pmw-focus); outline-offset: 2px; border-radius: 2px; }
 .pmw-br-kv { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 6px 14px; margin: 0; }
 .pmw-br-kv dt { color: var(--pmw-text-3); font-size: 11.5px; line-height: 18px; }
 .pmw-br-kv dd { margin: 0; min-width: 0; overflow-wrap: anywhere; color: var(--pmw-text); }
@@ -430,6 +429,8 @@
 .pmw-tool-prompt { font-family: var(--pm-font-code); font-weight: 700; color: var(--pmw-accent); }
 .pmw-tool-in { flex: 1 1 auto; min-width: 0; height: 28px; padding: 0; border: 0; outline: none; background: transparent; color: var(--pmw-text); font-family: var(--pm-font-code); font-size: 12.5px; }
 .pmw-tool-in::placeholder { color: var(--pmw-text-3); }
+/* the row draws the one focus ring; the page's own field rules (Retro's input border and focus box) stay off these two fields */
+.pmw-tool-inrow .pmw-tool-in, .pmw-br-addr .pmw-br-addrin { border: 0; border-radius: 0; box-shadow: none; outline: none; }
 .pmw-tool-dbg[data-mode="ended"] .pmw-tool-inrow { opacity: .6; }
 
 /* ================================================================================================================== */

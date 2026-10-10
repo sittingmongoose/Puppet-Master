@@ -14,7 +14,7 @@
 .pmw-tx-statwrap { display: inline-flex; align-items: center; gap: 7px; flex: none; }
 .pmw-tx-status { display: inline-flex; align-items: center; gap: 5px; color: var(--pmw-text); }
 .pmw-tx-elapsed { color: var(--pmw-text-2); font-variant-numeric: tabular-nums; min-width: 6ch; }
-.pmw-tx-parent { height: 24px; padding: 0 4px; margin: 0 -4px; border: 0; border-radius: 6px; background: transparent; color: var(--pmw-text-2); font: inherit; font-size: 12px; text-transform: inherit; letter-spacing: inherit; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+.pmw-tx-parent { height: 24px; padding: 0 4px; margin: 0 -4px; border: 0; border-radius: 6px; background: transparent; color: var(--pmw-text-2); font: inherit; font-size: 12px; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: calc(100% + 8px); }
 .pmw-tx-parent span { text-decoration: underline; text-decoration-color: color-mix(in srgb, currentColor 40%, transparent); text-underline-offset: 2px; }
 .pmw-tx-parent:hover { color: var(--pmw-text); background: var(--pmw-hover); }
 .pmw-tx-parent:focus-visible { outline: 2px solid var(--pmw-focus); outline-offset: -2px; }
@@ -95,12 +95,8 @@
 .pmw-tx-sdetail { font-size: 12px; line-height: 18px; color: var(--pmw-text-2); overflow-wrap: anywhere; }
 .pmw-tx-now { color: var(--pmw-text-3); }
 .pmw-tx-srow .pmw-tx-time { padding-top: 2px; }
-.pmw-tx-file {
-  padding: 0; border: 0; background: transparent; color: var(--pmw-accent); font: inherit; font-family: var(--pm-font-code); font-size: .93em; cursor: pointer;
-  text-decoration: underline; text-decoration-color: color-mix(in srgb, currentColor 40%, transparent); text-underline-offset: 2px; overflow-wrap: anywhere; text-align: left;
-}
-.pmw-tx-file:hover { text-decoration-color: currentColor; }
-.pmw-tx-file:focus-visible { outline: 2px solid var(--pmw-focus); outline-offset: 1px; border-radius: 2px; }
+/* a file name in a record is the shared file reference (PMW.fileRef, inline 24 px); it sits in the line of text */
+.pmw-tx-srow .pmw-fileref.pmw-tx-file { margin: -3px -2px; padding: 0 2px; font-family: var(--pm-font-code); }
 
 /* other records: a plain line with a glyph */
 .pmw-tx-event { display: grid; grid-template-columns: 16px minmax(0, 1fr) auto; gap: 10px; align-items: start; font-size: 12.5px; line-height: 19px; }
@@ -138,7 +134,7 @@ html[data-theme$="-light"] .pmw-ctx { --pmw-ctx-c1: #2a78d6; --pmw-ctx-c2: #eb68
 .pmw-hrow .pmw-ctx-hseg { flex: none; min-height: 24px; gap: 12px; border-bottom: 0; overflow: visible; }
 .pmw-hrow .pmw-ctx-hseg .pmw-seg-opt { height: 24px; padding: 0 2px; font-size: 12px; }
 .pmw-hrow .pmw-ctx-hseg .pmw-seg-opt[aria-selected="true"]::after { bottom: 0; }
-.pmw-ctx .pmw-hfact[data-id="ctx-view"] { flex: none; }
+.pmw-ctx .pmw-hfact:is([data-id="ctx-view"], [data-id="ctx-used"]) { flex: none; }
 @container pmw-body (max-width: 379.98px) { .pmw-ctx .pmw-hfact[data-id="ctx-used"] { display: none; } }
 
 .pmw-ctx-hero { margin: 0; }
@@ -272,9 +268,9 @@ html[data-theme$="-light"] .pmw-ctx { --pmw-ctx-c1: #2a78d6; --pmw-ctx-c2: #eb68
 .pmw-rec-stage { position: relative; flex: 1 1 auto; min-height: 0; }
 .pmw-rec .pmw-frame-scroll { outline: none; }
 .pmw-rec-doc .pmw-doc-title { overflow-wrap: anywhere; }
-.pmw-rec-quiet { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--pmw-text-3) !important; }
+.pmw-rec-quiet { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--pmw-text-3); }
 .pmw-rec-quiet .pmw-ico { width: 13px; height: 13px; flex: none; }
-.pmw-rec .pmw-doc-body p.pmw-rec-lead, .pmw-rec .pmw-doc-body p.pmw-rec-sum, .pmw-rec .pmw-doc-body p.pmw-rec-note { color: var(--pmw-text); }
+.pmw-rec-lead, .pmw-rec-sum, .pmw-rec-note { color: var(--pmw-text); }
 .pmw-rec-lead { font-size: 13px; line-height: 20px; overflow-wrap: anywhere; }
 .pmw-rec-note { font-size: 13px; line-height: 21px; }
 .pmw-rec-sum { margin: 0 0 8px; font-size: 12.5px; }
@@ -282,9 +278,11 @@ html[data-theme$="-light"] .pmw-ctx { --pmw-ctx-c1: #2a78d6; --pmw-ctx-c2: #eb68
 .pmw-rec-ic { padding: 1px 4px; border: 1px solid var(--pmw-line); border-radius: 4px; background: var(--pmw-surface-2); font-family: var(--pm-font-code); font-size: .9em; color: var(--pmw-text); }
 
 .pmw-rec-results { display: flex; flex-direction: column; border-top: 1px solid var(--pmw-line); }
-.pmw-rec-result {
-  box-sizing: border-box; display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 10px; width: 100%; padding: 10px 8px; border: 0; border-bottom: 1px solid var(--pmw-line);
-  border-radius: 0; background: transparent; color: inherit; font: inherit; text-align: left; cursor: pointer;
+/* two classes: a file result is also the shared .pmw-fileref, and Friendly's page rule rounds every button */
+.pmw-rec .pmw-rec-result {
+  box-sizing: border-box; display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 10px; width: 100%; max-width: none; height: auto; margin: 0; padding: 10px 8px;
+  border: 0; border-bottom: 1px solid var(--pmw-line); border-radius: 0; background: transparent; color: inherit; font: inherit; line-height: normal;
+  text-align: left; vertical-align: top; cursor: pointer;
 }
 .pmw-rec-result:hover { background: var(--pmw-hover); }
 .pmw-rec-result:hover .pmw-rec-rtitle { text-decoration: underline; text-underline-offset: 2px; }
@@ -294,7 +292,7 @@ html[data-theme$="-light"] .pmw-ctx { --pmw-ctx-c1: #2a78d6; --pmw-ctx-c2: #eb68
 .pmw-rec-rtitle { font-size: 13px; font-weight: 600; color: var(--pmw-text); overflow-wrap: anywhere; }
 .pmw-rec-rwhere { font-family: var(--pm-font-code); font-size: 11.5px; color: var(--pmw-text-3); overflow-wrap: anywhere; }
 .pmw-rec-rsnip { font-size: 12.5px; line-height: 19px; color: var(--pmw-text-2); }
-.pmw-rec-hint { font-size: 12px; color: var(--pmw-text-3) !important; }
+.pmw-rec-hint { font-size: 12px; color: var(--pmw-text-3); }
 
 .pmw-rec-tablewrap { margin: 8px 0 0; overflow-x: auto; border: 1px solid var(--pmw-line); border-radius: var(--pmw-radius); scrollbar-width: thin; }
 .pmw-rec-tablewrap:focus-visible { outline: 2px solid var(--pmw-focus); outline-offset: 1px; }
@@ -305,11 +303,16 @@ html[data-theme$="-light"] .pmw-ctx { --pmw-ctx-c1: #2a78d6; --pmw-ctx-c2: #eb68
 .pmw-rec-table tbody th { font-family: var(--pm-font-code); font-size: 12px; font-weight: 500; color: var(--pmw-text); }
 .pmw-rec-table td { color: var(--pmw-text-2); font-variant-numeric: tabular-nums; }
 .pmw-rec-table td:last-child { white-space: normal; min-width: 160px; }
-.pmw-rec-source { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 18px !important; padding-top: 12px; border-top: 1px solid var(--pmw-line); font-size: 12px; color: var(--pmw-text-3) !important; }
+.pmw-rec-source { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 18px; padding-top: 12px; border-top: 1px solid var(--pmw-line); font-size: 12px; color: var(--pmw-text-3); }
 .pmw-rec-srcbtn { height: 32px; display: inline-flex; align-items: center; gap: 6px; padding: 0 12px; border: 1px solid var(--pmw-line-2); border-radius: var(--pmw-radius); background: transparent; color: var(--pmw-text); font: inherit; font-size: 12.5px; font-weight: 550; cursor: pointer; }
 .pmw-rec-srcbtn:hover { background: var(--pmw-hover); }
 .pmw-rec-srcbtn:focus-visible { outline: 2px solid var(--pmw-focus); outline-offset: 1px; }
-.pmw-rec .pmw-hfact[data-id="rec-tool"] .pmw-hfact-t { max-width: 30ch; }
+
+/* Friendly's page rule rounds every button at 14 px (a 32 px Jump to latest would read as a capsule): restated at
+   the same weight, and left to NieR's square part where it is on */
+:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button:is(.pmw-tx-shead, .pmw-ctx-dis) { border-radius: var(--pmw-row-radius); }
+:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button.pmw-tx-parent { border-radius: 6px; }
+:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button:is(.pmw-tx-jump, .pmw-rec-srcbtn) { border-radius: min(var(--pmw-radius), 8px); }
 
 /* ================= Retro: square, reverse video for selection and the cursor row ================= */
 html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-tx, .pmw-ctx, .pmw-rec) ::selection { background: var(--accent-lime); color: var(--surface); }
@@ -322,7 +325,6 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tx-status.is-working .p
 html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-tx-shead, .pmw-ctx-dis, .pmw-rec-result):is(:hover, :focus-visible) { background: var(--accent-lime); color: var(--surface); outline: none; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-tx-shead, .pmw-ctx-dis, .pmw-rec-result):is(:hover, :focus-visible) :is(.pmw-tx-verb, .pmw-tx-time, .pmw-tx-chev, .pmw-ctx-chev, .pmw-rec-rtitle, .pmw-rec-rwhere, .pmw-rec-rsnip, .pmw-rec-rico) { color: var(--surface); }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-tx-jump, .pmw-ctx-tip) { box-shadow: 3px 3px 0 rgba(0, 0, 0, .35); border-color: var(--accent-lime); }
-html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tx-file { color: var(--accent-lime); }
 
 /* ================= NieR Mode: ink and parchment, square corners, stepped motion, uppercase small headers ================= */
 html[data-o55-nier="on"] :is(.pmw-tx, .pmw-ctx, .pmw-rec) ::selection { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
@@ -330,7 +332,6 @@ html[data-o55-nier="on"] .pmw-tx-node.is-live { background: var(--o55-nier-ink);
 html[data-o55-nier="on"] .pmw-tx-item.is-live::before { border-color: var(--o55-nier-ink); animation: pmw-tx-blink 1.2s steps(1, end) infinite; }
 html[data-o55-nier="on"] .pmw-tx-node { color: var(--o55-nier-ink); }
 html[data-o55-nier="on"] .pmw-tx-status.is-working .pmw-tx-smark { animation: pmw-tx-spin 1.6s steps(8, end) infinite; }
-html[data-o55-nier="on"] .pmw-tx-file { color: var(--o55-nier-ink); }
 html[data-o55-nier="on"] :is(.pmw-tx-jump, .pmw-ctx-tip) { border-color: var(--o55-nier-ink); }
 html[data-o55-nier="on"] .pmw-ctx { --pmw-ctx-c1: rgba(var(--o55-nier-ink-rgb), .92); --pmw-ctx-c2: rgba(var(--o55-nier-ink-rgb), .72); --pmw-ctx-c3: rgba(var(--o55-nier-ink-rgb), .56);
   --pmw-ctx-c4: rgba(var(--o55-nier-ink-rgb), .42); --pmw-ctx-c5: rgba(var(--o55-nier-ink-rgb), .30); --pmw-ctx-c6: rgba(var(--o55-nier-ink-rgb), .20); }
@@ -351,6 +352,7 @@ html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-tx-item::before { b
 /* cursor part: the ink bar on the rows that take the cursor */
 html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] :is(.pmw-tx-shead, .pmw-ctx-dis, .pmw-rec-result):is(:hover, :focus-visible) { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); outline: none; }
 html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] :is(.pmw-tx-shead, .pmw-ctx-dis, .pmw-rec-result):is(:hover, :focus-visible) :is(.pmw-tx-verb, .pmw-tx-time, .pmw-tx-chev, .pmw-tx-node, .pmw-ctx-chev, .pmw-rec-rtitle, .pmw-rec-rwhere, .pmw-rec-rsnip, .pmw-rec-rico) { color: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] :is(.pmw-tx-shead):is(:hover, :focus-visible) .pmw-tx-node { background: transparent; box-shadow: 0 0 0 1px var(--o55-nier-on-ink); }
 /* headers part: small uppercase headers */
 html[data-o55-nier="on"][data-o55-nier-parts~="headers"] :is(.pmw-ctx-dis > span:first-child, .pmw-ctx-bsdhead h2, .pmw-rec .pmw-sec-head h2, .pmw-ctx-keepdrop h3) { text-transform: uppercase; letter-spacing: .12em; font-size: 12px; font-weight: 600; }
 

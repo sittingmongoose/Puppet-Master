@@ -15,15 +15,15 @@
 .pmw-art-hopt[aria-checked="true"] { color: var(--pmw-text); font-weight: 600; }
 .pmw-art-hopt[aria-checked="true"]::after { content: ""; position: absolute; left: 7px; right: 7px; bottom: 1px; height: 2px; background: var(--pmw-text); }
 .pmw-art-hopt:focus-visible { outline: 2px solid var(--pmw-focus); outline-offset: -2px; }
-@container pmw-body (max-width: 519.98px) { .pmw-hfact[data-id="path"] { display: none; } }
+@container pmw-body (max-width: 519.98px) { .pmw-art .pmw-hfact[data-id="path"] { display: none; } }
+.pmw-art .pmw-hfact[data-id="path"] { min-width: 0; }
 
 .pmw-art-eyebrow { margin: 0 0 6px; font-size: 11.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--pmw-text-3); }
 .pmw-art-lead { font-size: 13px; line-height: 20px; color: var(--pmw-text-2); max-width: 78ch; }
-.pmw-art-fine { font-size: 11.5px !important; line-height: 17px; color: var(--pmw-text-3) !important; }
+.pmw-art-fine { font-size: 11.5px; line-height: 17px; color: var(--pmw-text-3); }
 .pmw-art-dim { color: var(--pmw-text-3); }
 .pmw-art-acts { display: flex; flex-wrap: wrap; gap: 6px; }
-/* the shared frame zeroes paragraph margins; keep one rhythm between the body's blocks */
-.pmw-art-doc .pmw-doc-body > * + * { margin-top: 14px; }
+/* the frame's own 12 px rhythm runs between the body's blocks; a note under what it explains sits closer */
 .pmw-art-doc .pmw-doc-body > .pmw-art-lead + .pmw-art-fine, .pmw-art-doc .pmw-doc-body > .pmw-art-fig + .pmw-art-fine,
 .pmw-art-doc .pmw-doc-body > .pmw-art-chart + .pmw-art-fine, .pmw-art-doc .pmw-doc-body > .pmw-art-tablewrap + .pmw-art-fine { margin-top: 6px; }
 /* disclosures keep a drawn marker (their summary is a flex row, which drops the native one) */
@@ -38,11 +38,11 @@
 .pmw-art-notebody b { color: var(--pmw-text); font-weight: 600; font-size: 13px; }
 .pmw-art-noteacts { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
 .pmw-art-empty { padding: 22px 16px; border: 1px dashed var(--pmw-line-2); border-radius: var(--pmw-radius); text-align: center; }
-.pmw-art-empty p { margin: 0 auto; }
+.pmw-art-empty p { margin: 0 auto; color: var(--pmw-text-2); }
 
 /* loading: a determinate bar, never a spinner */
 .pmw-art-loading { padding: 18px 16px; border: 1px solid var(--pmw-line); border-radius: var(--pmw-radius); background: var(--pmw-surface-2); }
-.pmw-art-loadt { margin: 0 0 10px; font-size: 13px; color: var(--pmw-text-2) !important; }
+.pmw-art-loadt { margin: 0 0 10px; font-size: 13px; color: var(--pmw-text-2); }
 .pmw-art-loadt b { color: var(--pmw-text); font-weight: 600; }
 .pmw-art-progress { position: relative; height: 6px; border-radius: 3px; background: color-mix(in srgb, var(--pmw-accent) 18%, transparent); overflow: hidden; }
 .pmw-art-progbar { position: absolute; left: 0; top: 0; bottom: 0; background: var(--pmw-accent); border-radius: 3px; transition: width .12s linear; }
@@ -85,6 +85,8 @@
   .pmw-art-plot { margin-left: 40px; height: 170px; }
   .pmw-art-xl { margin-left: 40px; }
   .pmw-art-chart.is-line .pmw-art-xl span:nth-child(even) { visibility: hidden; }
+  /* the metric switch wraps instead of hiding its last options behind a scroll with no bar */
+  .pmw-seg.pmw-art-metric { flex-wrap: wrap; gap: 0 12px; overflow: visible; }
 }
 /* the forecast line: a stretched path with round dots in HTML so they stay round */
 .pmw-art-linesvg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
@@ -100,7 +102,7 @@
 .pmw-art-table { width: 100%; border-collapse: collapse; font-size: 12.5px; line-height: 18px; }
 .pmw-art-table th { position: sticky; top: 0; background: var(--pmw-surface-2); text-align: left; padding: 0; border-bottom: 1px solid var(--pmw-line-2); font-weight: 600; }
 .pmw-art-table th.is-num, .pmw-art-table td.is-num { text-align: right; }
-.pmw-art-sort { display: inline-flex; align-items: center; gap: 4px; width: 100%; min-height: 32px; padding: 0 10px; border: 0; background: transparent; color: var(--pmw-text-2); font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+.pmw-art-sort { text-transform: inherit; letter-spacing: inherit; display: inline-flex; align-items: center; gap: 4px; width: 100%; min-height: 32px; padding: 0 10px; border: 0; background: transparent; color: var(--pmw-text-2); font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap; }
 th.is-num .pmw-art-sort { justify-content: flex-end; }
 .pmw-art-sort:hover { color: var(--pmw-text); background: var(--pmw-hover); }
 .pmw-art-sort:focus-visible { outline: 2px solid var(--pmw-focus); outline-offset: -2px; }
@@ -152,10 +154,10 @@ th.is-num .pmw-art-sort { justify-content: flex-end; }
 .pmw-art-arrow { color: var(--pmw-text-3); }
 
 /* ---- quiz ---- */
-.pmw-art-score { font-size: 13px !important; color: var(--pmw-text) !important; font-weight: 600; }
+.pmw-art-score { font-size: 13px; color: var(--pmw-text); font-weight: 600; }
 .pmw-art-quiz { margin: 0; padding: 0; list-style: none; counter-reset: pmw-art-q; display: flex; flex-direction: column; gap: 18px; }
 .pmw-art-q { counter-increment: pmw-art-q; }
-.pmw-art-qtext { margin: 0 0 8px !important; font-size: 14px; font-weight: 600; color: var(--pmw-text) !important; }
+.pmw-art-qtext { margin: 0 0 8px; font-size: 14px; font-weight: 600; color: var(--pmw-text); }
 .pmw-art-qtext::before { content: counter(pmw-art-q) ". "; color: var(--pmw-text-3); }
 .pmw-art-choices { display: flex; flex-direction: column; gap: 6px; max-width: 600px; }
 .pmw-art-choice { display: flex; align-items: center; gap: 10px; min-height: 32px; padding: 5px 10px; border: 1px solid var(--pmw-line-2); border-radius: var(--pmw-radius); background: transparent; color: var(--pmw-text); font: inherit; font-size: 13px; text-align: left; cursor: pointer; }
@@ -166,7 +168,7 @@ th.is-num .pmw-art-sort { justify-content: flex-end; }
 .pmw-art-choice.is-chosen { border-color: var(--pmw-text-2); background: var(--pmw-press); }
 .pmw-art-choice.is-right { border-color: color-mix(in srgb, var(--pmw-ok) 60%, transparent); }
 .pmw-art-choice.is-wrong { border-color: color-mix(in srgb, var(--pmw-bad) 60%, transparent); }
-.pmw-art-why { margin: 8px 0 0 !important; font-size: 12.5px; }
+.pmw-art-why { margin: 8px 0 0; font-size: 12.5px; color: var(--pmw-text-2); }
 .pmw-art-why b { color: var(--pmw-text); }
 
 /* ---- capability cells ---- */
@@ -221,7 +223,7 @@ th.is-num .pmw-art-sort { justify-content: flex-end; }
 .pmw-art-tocl:focus-visible { outline: 2px solid var(--pmw-focus); outline-offset: 1px; }
 .pmw-art-docsec { scroll-margin-top: 12px; }
 .pmw-art-docsec h2 { margin: 22px 0 6px; font-size: 15px; line-height: 21px; font-weight: 620; color: var(--pmw-text); }
-.pmw-art-docsec p { font-size: 13px; line-height: 21px; color: var(--pmw-text) !important; }
+.pmw-art-docsec p { font-size: 13px; line-height: 21px; color: var(--pmw-text); }
 
 /* ---- code, numbered ---- */
 .pmw-art-codeln code { counter-reset: pmw-art-l; display: block; }
@@ -233,7 +235,8 @@ th.is-num .pmw-art-sort { justify-content: flex-end; }
 .pmw-art-tk-op { color: var(--pmw-text-3); }
 
 /* identity of a retained version */
-.pmw-art-ident { margin-top: 24px !important; font-size: 12.5px; }
+.pmw-art-doc .pmw-doc-body > .pmw-art-ident { margin-top: 24px; }
+.pmw-art-ident { font-size: 12.5px; }
 .pmw-art-ident summary { cursor: pointer; min-height: 28px; display: inline-flex; align-items: center; color: var(--pmw-text-2); font-weight: 600; }
 .pmw-art-ident dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4px 16px; margin: 8px 0 0; }
 .pmw-art-ident dt { color: var(--pmw-text-3); }
@@ -383,6 +386,12 @@ th.is-num .pmw-art-sort { justify-content: flex-end; }
 .pmw-run-partn { flex: none; width: 18px; color: var(--pmw-text-3); font-variant-numeric: tabular-nums; }
 .pmw-run-parthead .pmw-run-smark { margin-top: 3px; }
 .pmw-run-warnline { display: flex; gap: 6px; align-items: flex-start; }
+/* a proof or an evidence file: the D7 file reference (PMW.fileRef), or the path as text when the project has no copy */
+.pmw-run-proof .pmw-fileref { margin: -4px 0 -4px -4px; vertical-align: baseline; }
+/* the reference's code face also in Friendly, whose page rule gives every button the UI face (0,1,1) */
+:is(.pmw-art, .pmw-run-k) .pmw-fileref { font-family: var(--pm-font-code); }
+.pmw-run-path { display: inline-flex; align-items: center; gap: 4px; overflow-wrap: anywhere; }
+.pmw-run-path .pmw-ico { flex: none; width: 13px; height: 13px; color: var(--pmw-text-3); }
 .pmw-run-warnline .pmw-run-smark { margin-top: 3px; }
 
 /* the review report */
@@ -501,6 +510,13 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-run-seat:hover { backgr
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-run-trow:not([aria-disabled]):not(.is-static):hover :is(b, small, .pmw-run-tout, .pmw-run-tcost),
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-run-seat:hover :is(b, small, .pmw-run-pup) { color: var(--pmw-surface); }
 
+/* Friendly: its page rule [data-theme^="friendly"] button { border-radius: 14px } (0,1,1) would turn these 24-32 px
+   buttons into capsules (the pill ban); restated at that weight, Friendly only, so NieR's square part stays square */
+:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) :is(button.pmw-art-hopt, button.pmw-art-tocl, button.pmw-run-back, button.pmw-run-picker) { border-radius: 6px; }
+:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) :is(button.pmw-art-choice, button.pmw-run-seat, button.pmw-run-trow) { border-radius: min(var(--pmw-radius), 8px); }
+:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button.pmw-art-sort { border-radius: 0; }
+:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button.pmw-run-link { border-radius: 3px; }
+
 /* Glass: readable over the blur (solid enough fills for figures), no extra blur layers */
 html[data-theme^="glass"] :is(.pmw-art-fig, .pmw-art-loading, .pmw-run-castwrap, .pmw-run-part, .pmw-run-callout, .pmw-art-cell) { background: color-mix(in srgb, var(--pmw-surface-2) 86%, transparent); }
 html[data-theme^="glass"] .pmw-art-target span { background: color-mix(in srgb, var(--pmw-surface) 92%, transparent); }
@@ -518,8 +534,6 @@ html[data-o55-nier="on"] .pmw-art-choice.is-chosen, html[data-o55-nier="on"] .pm
 html[data-o55-nier="on"] .pmw-art-choice.is-chosen .pmw-art-choicek { background: transparent; color: var(--o55-nier-on-ink); }
 html[data-o55-nier="on"] .pmw-run-evl.is-hi { background: rgba(var(--o55-nier-ink-rgb), .12); }
 html[data-o55-nier="on"] .pmw-art-img .i-bg { fill: var(--o55-nier-paper); }
-
-html[data-o55-nier="on"] .pmw-art .pmw-hfact[data-id="path"] { text-transform: none; letter-spacing: 0; }
 
 /* Reduced Motion: nothing moves; bars and states arrive at once */
 html[data-motion="reduced"] :is(.pmw-art-progbar, .pmw-art-sortmark) { transition: none !important; }

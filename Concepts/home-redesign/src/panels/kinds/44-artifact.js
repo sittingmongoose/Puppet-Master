@@ -188,7 +188,7 @@ function parseRef(tabId) {
 function labelFor(tabId) {
   var ref = parseRef(tabId), art = ref.id && ART[ref.id];
   if (ref.revision && ref.version != null) return (art ? art.title : 'Unavailable artifact') + ' · V' + ref.version;
-  return art ? art.title : 'Artifact';
+  return art ? art.title : null;
 }
 function versionId(art, v) { return v === art.version ? art.id : 'artifact:' + art.id + '@v' + v; }
 
@@ -473,8 +473,9 @@ function mountArtifact(host, state, api) {
   var older = !!(art && ref.version && ref.version < art.version);
   var missing = !art || ref.broken || (ref.version != null && art && ref.version > art.version);
   var timers = [], visible = false, frame = null, disposed = false;
+  var hasFile = !!(art && PMW.fileRef && PM_HOME.fileExists && PM_HOME.fileExists(art.path));
 
-  api.update({ label: labelFor(api.id), title: art ? art.title + ' · ' + KIND_WORD[art.kind] + ' · Version ' + shownVersion : 'Artifact' });
+  api.update({ label: labelFor(api.id) || 'Artifact', title: art ? art.title + ' · ' + KIND_WORD[art.kind] + ' · Version ' + shownVersion : 'Artifact' });
 
   function status() {
     if (!art) return 'missing';
@@ -512,7 +513,7 @@ function mountArtifact(host, state, api) {
       b.classList.toggle('pmw-chosen', on);
     });
   }
-  function setView(v) { if (st.view === v) return; st.view = v; paintSeg(); render(); }
+  function setView(v) { if (st.view === v) return; st.view = v; paintSeg(); render(); api.saveSoon(); }
 
   function versionRows() {
     var rows = [];
@@ -552,7 +553,8 @@ function mountArtifact(host, state, api) {
       { id: 'export-png', label: 'Export as image', sub: fileBase() + '-v' + shownVersion + '.png', icon: 'camera', run: function () { PMW.toast('Exported ' + fileBase() + '-v' + shownVersion + '.png to Downloads'); } },
       { id: 'export-data', label: 'Export the data', sub: art.path.split('/').pop(), icon: 'output', run: function () { PMW.toast('Exported ' + art.path.split('/').pop() + ' to Downloads'); } },
       '-',
-      { id: 'open-file', label: 'Open the source file', sub: art.path, icon: 'file', run: function () { api.open({ kind: 'editor', path: art.path, mode: 'keep' }); } }
+      { id: 'open-file', label: 'Open the source file', sub: art.path, icon: 'file', disabled: !hasFile, reason: 'This demo project has no copy of it',
+        run: function () { api.open({ kind: 'editor', path: art.path, mode: 'keep' }); } }
     ];
     return rows;
   }
@@ -564,7 +566,9 @@ function mountArtifact(host, state, api) {
   actions.push({ id: 'more', label: 'More', icon: 'more', detail: 'Copy and export', menu: function () { return moreRows(); } });
   var left = [];
   if (art && !missing) left.push({ id: 'view', el: seg });
-  if (art) left.push({ id: 'path', icon: 'file', text: art.path, mono: true, dim: true, title: 'Source file' });
+  // the source file: a D7 file reference when the demo project has it (preview on click, kept on double click)
+  if (art && hasFile) left.push({ id: 'path', el: PMW.fileRef({ path: art.path }, { api: api, inline: true }), mono: true });
+  else if (art) left.push({ id: 'path', icon: 'file', text: art.path, mono: true, dim: true, title: 'Source file' });
   var row = api.headerRow({ left: left, actions: actions, label: 'Artifact controls' });
   var stage = h('div', { class: 'pmw-art-stage' });
   var frameRoot = h('div', { class: 'pmw-art' }, [row.el, stage]);
@@ -599,7 +603,7 @@ function mountArtifact(host, state, api) {
       out.push(PMW.frames.tiles(tiles));
       var opts = [{ value: 'p95', label: 'p95 read' }].concat(p.secondary.map(function (s, i) { return { value: 's' + i, label: s.label }; }));
       var chartHost = h('div');
-      var seg2 = PMW.frames.seg(opts, st.metric, function (v) { st.metric = v; chartHost.textContent = ''; chartHost.appendChild(dashChart()); }, { label: 'Metric', cls: 'pmw-art-metric' });
+      var seg2 = PMW.frames.seg(opts, st.metric, function (v) { st.metric = v; chartHost.textContent = ''; chartHost.appendChild(dashChart()); api.saveSoon(); }, { label: 'Metric', cls: 'pmw-art-metric' });
       out.push(PMW.frames.section('Comparison', 'before and after', [seg2, chartHost]));
       chartHost.appendChild(dashChart());
     } else {
@@ -633,7 +637,7 @@ function mountArtifact(host, state, api) {
     p.rows.forEach(function (r) { if (r[4] === 'hit') counts.hit++; else if (r[4] === 'miss') counts.miss++; });
     var tableHost = h('div', { class: 'pmw-art-tablewrap', 'data-pmh': 'off' });
     var filter = PMW.frames.seg([{ value: 'all', label: 'All', count: counts.all }, { value: 'hit', label: 'Cache hits', count: counts.hit }, { value: 'miss', label: 'Cache misses', count: counts.miss }],
-      st.filter, function (v) { st.filter = v; fillTable(); }, { label: 'Filter', cls: 'pmw-art-filter' });
+      st.filter, function (v) { st.filter = v; fillTable(); api.saveSoon(); }, { label: 'Filter', cls: 'pmw-art-filter' });
     function fillTable() {
       tableHost.textContent = '';
       var rows = p.rows.filter(function (r) { return st.filter === 'all' || r[4] === st.filter; });
@@ -658,6 +662,7 @@ function mountArtifact(host, state, api) {
         btn.addEventListener('click', function () {
           st.sort = sorted && st.sort.dir === 'asc' ? { col: ci, dir: 'desc' } : sorted && st.sort.dir === 'desc' ? null : { col: ci, dir: 'asc' };
           fillTable();
+          api.saveSoon();
           var again = tableHost.querySelectorAll('.pmw-art-sort')[ci];
           if (again) again.focus();
           api.announce(st.sort ? 'Sorted by ' + name.toLowerCase() + (st.sort.dir === 'asc' ? ', low to high' : ', high to low') : 'Original order');
@@ -706,13 +711,14 @@ function mountArtifact(host, state, api) {
       q.choices.forEach(function (c, ci) {
         var chosen = pick === ci, correct = c === q.a;
         var cls = 'pmw-art-choice pmw-cur' + (chosen ? ' pmw-chosen is-chosen' : '') + (pick != null && correct ? ' is-right' : '') + (chosen && !correct ? ' is-wrong' : '');
-        var b = h('button', { type: 'button', class: cls, role: 'radio', 'aria-checked': chosen ? 'true' : 'false', 'data-pmh': 'icon',
+        var b = h('button', { type: 'button', class: cls, role: 'radio', 'aria-checked': chosen ? 'true' : 'false', 'data-pmh': 'row',
           'data-pm-hover-label': 'Answer', 'data-pm-hover-detail': c }, [h('span', { class: 'pmw-art-choicek', text: String.fromCharCode(65 + ci) }), h('span', { text: c })]);
         if (pick != null && correct) b.appendChild(mark('pass', 'Right answer'));
         else if (chosen) b.appendChild(mark('fail', 'Not this one'));
         b.addEventListener('click', function () {
           st.answers[qi] = ci;
           render();
+          api.saveSoon();
           api.announce(correct ? 'Right. ' + q.why : 'Not quite. The answer is ' + q.a + '. ' + q.why);
         });
         group.appendChild(b);
@@ -723,7 +729,7 @@ function mountArtifact(host, state, api) {
     });
     var score = h('p', { class: 'pmw-art-score', role: 'status' }, [answered ? right + ' of ' + qs.length + ' right' + (answered < qs.length ? ', ' + (qs.length - answered) + ' to go' : '') : qs.length + ' questions. Pick an answer to see why.']);
     var out = [score, list];
-    if (answered) out.push(h('div', { class: 'pmw-art-acts' }, [PMW.frames.button({ label: 'Start over', icon: 'reload', run: function () { st.answers = {}; render(); } })]));
+    if (answered) out.push(h('div', { class: 'pmw-art-acts' }, [PMW.frames.button({ label: 'Start over', icon: 'reload', run: function () { st.answers = {}; render(); api.saveSoon(); } })]));
     return out;
   }
   function periodicBody() {
@@ -970,6 +976,11 @@ function mountArtifact(host, state, api) {
     },
     onHide: function () { visible = false; },
     onResize: function (sz) { if (sz.final) centreFigures(); },
+    /* a reopen that names a view (view: 'source') shows it; any other key is ignored */
+    reveal: function (s) {
+      var v = s && s.view;
+      if (typeof v === 'string' && !missing && viewOpts.some(function (o) { return o.value === v; })) setView(v);
+    },
     focus: function () { if (frame && frame._scroll) frame._scroll.focus({ preventScroll: true }); },
     unmount: function () {
       disposed = true;
@@ -987,6 +998,8 @@ PM_HOME.registerKind('artifact', {
   prefixes: ['artifact:', 'artifact-revision:'],
   min: { w: 280, h: 160 },
   document: true,
+  /* an artifact opened in the background or by an agent mounts lazily; its strip label comes from here until then */
+  labelFor: function (id) { return labelFor(id); },
   idFor: function (spec) {
     var a = spec.artifactId || spec.artifact;
     if (!a) return null;
@@ -1014,10 +1027,3 @@ PM_HOME.catalog.add('artifact', Object.keys(ART).map(function (id) {
 }).concat([{ id: 'artifact-revision:' + encodeURIComponent(JSON.stringify({ artifact_id: 'dashboard-query', artifact_version: 4, project_id: 'pm', thread_id: 'query' })),
   label: 'Query Benchmark Dashboard · V4', sub: 'dashboard · an older version, kept as written', icon: 'artifact', keywords: 'version revision retained',
   spec: { id: 'artifact-revision:' + encodeURIComponent(JSON.stringify({ artifact_id: 'dashboard-query', artifact_version: 4, project_id: 'pm', thread_id: 'query' })), kind: 'artifact', label: 'Query Benchmark Dashboard · V4' } }]));
-
-/* a tab opened in the background (or by an agent) is mounted lazily; name it now so its strip label is right */
-PM_HOME.on('open', function (e) {
-  if (!e || e.kind !== 'artifact' || !e.created) return;
-  var t = (PM_HOME.tabs() || []).filter(function (x) { return x.tabId === e.tabId; })[0];
-  if (t && (t.label === 'Artifact' || !t.label)) PM_HOME.update(e.tabId, { label: labelFor(e.tabId) });
-});

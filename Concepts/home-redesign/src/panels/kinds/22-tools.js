@@ -2,7 +2,9 @@
    replace PMConcept7's bottom-panel hosts (#bottomOutputHost, #bottomProblemsHost, #bottomPortsHost, #bottomDebugHost)
    and keep their demo story: the Tastebook import worker reads "1 1/2 cup" as 11.5, the build and the tests say so,
    Problems lists it, the debugger is paused on it.
-     output:<channel>   Build, Tests, Language server, Puppet Master; lines stream while the tab is visible
+     output             one Output tab, the channel switched inside it (D28): Build, Tests, Language server, Puppet Master;
+                        lines stream while the tab is visible
+     output:<channel>   a channel split off into its own tab from the picker, fixed to that channel
      problems           one per workspace; grouped by file; a click opens the editor at the line (D7)
      ports              one per workspace; Open in browser opens a Browser tab, Copy address copies it
      debug-console:<s>  a console for the paused program: seeded evaluations and an input line
@@ -35,7 +37,6 @@ function add(el, kids) {
 function ico(name, size) { return PMW.icon(name, { size: size || 14 }); }
 function pad2(n) { return (n < 10 ? '0' : '') + n; }
 function clock() { var d = new Date(); return pad2(d.getHours()) + ':' + pad2(d.getMinutes()) + ':' + pad2(d.getSeconds()); }
-function saveSoon() { try { if (PMW.persist && PMW.persist.saveSoon) PMW.persist.saveSoon(); } catch (_) {} }
 function plural(n, one, many) { return n + ' ' + (n === 1 ? one : many); }
 
 /* status glyphs in SVG, never characters: error (circled x), warn (triangle), info (circled i), ok (check) */
@@ -72,20 +73,13 @@ function linkify(api, text) {
   while ((m = PATH_RX.exec(text))) {
     if (m.index > last) frag.appendChild(document.createTextNode(text.slice(last, m.index)));
     var o = fileOpener(api, m[1], +m[2], m[3] ? +m[3] : null);
-    var a = h('button', { type: 'button', class: 'pmw-tool-flink', text: m[0], 'data-pm-hover-label': 'Open ' + m[1].split('/').pop() + ' at line ' + m[2], 'data-pm-hover-detail': 'Double click keeps the tab', 'data-pmh': 'off' });
+    var a = h('button', { type: 'button', class: 'pmw-tool-flink', text: m[0], 'data-pm-hover-label': 'Open at line ' + m[2], 'data-pm-hover-detail': 'Double click keeps the tab; Alt+click opens a new panel', 'data-pmh': 'off' });
     a.addEventListener('click', o.click); a.addEventListener('dblclick', o.dbl);
     frag.appendChild(a);
     last = m.index + m[0].length;
   }
   if (last < text.length) frag.appendChild(document.createTextNode(text.slice(last)));
   return frag;
-}
-/* row.set() replaces the header buttons; the one that had focus gets it back */
-function setRow(row, rootEl, spec) {
-  var a = document.activeElement;
-  var had = a && a.closest && a.closest('.pmw-hrow-actions') && rootEl.contains(a) ? a.getAttribute('data-id') : null;
-  row.set(spec);
-  if (had && row.action(had)) row.action(had).focus({ preventScroll: true });
 }
 function copyText(api, text, done) {
   var ok = function () { PMW.toast(done); api.announce(done); };
@@ -195,58 +189,91 @@ var SCRIPTS = {
 };
 var OUT_CAP = 600;
 
+/* D28: Output is one tab ('output') with the channel as view state, switched inside it by the header row's channel
+   picker, like VS Code. A picker row's trailing cell opens a split-off tab 'output:<channel>' fixed to that channel.
+   PM_HOME.open({ kind: 'output', channel }) focuses a split-off tab already showing the channel, otherwise it switches
+   the Output tab (idFor picks the id; the core hands { channel } to reveal on an open tab). A saved 'output:build'
+   from an older layout is simply a split-off tab. */
 function outputLabel(channel) { return 'Output · ' + channelOf(channel || 'build').label; }
+function fixedChannel(id) { var m = /^output:(.+)$/.exec(String(id || '')); return m ? m[1] : null; }
+function splitOffId(channel) { return 'output:' + channel; }
+function isOpenTab(id) { var l = PMW.state && PMW.state.layout; return !!(l && l.tabs[id]); }
+/* a split-off tab: a tab with a plus in its corner, drawn in the 16 px stroke grammar */
+PMW.registerIcon('outputNewTab', 'M2.5 13.5v-9h4.5l1 2h5.5v7zM10.5 8.5v3.5M8.75 10.25h3.5', '+');
 
 PM_HOME.registerKind('output', {
-  label: 'Output', group: 'Tools', icon: 'output', prefixes: ['output:'], min: { w: 280, h: 120 }, dedicated: true,
-  idFor: function (spec) { return 'output:' + ((spec && spec.channel) || 'build'); },
-  plus: { order: 70, group: 'tools', label: 'Output', spec: function () { return { kind: 'output', channel: 'build' }; } },
+  label: 'Output', group: 'Tools', icon: 'output', prefixes: ['output:', 'output'], min: { w: 280, h: 120 }, dedicated: true,
+  idFor: function (spec) {
+    var c = spec && spec.channel;
+    return c && isOpenTab(splitOffId(c)) ? splitOffId(c) : 'output';
+  },
+  labelFor: function (id) { var f = fixedChannel(id); return f ? outputLabel(f) : 'Output'; },
+  plus: { order: 70, group: 'tools', label: 'Output', spec: function () { return { kind: 'output' }; } },
   mount: function (host, st, api) {
-    var channel = (st && st.channel) || String(api.id).replace(/^output:/, '') || 'build';
-    var script = SCRIPTS[channel] || { seed: 0, lines: [] };
-    var follow = st && st.follow === false ? false : true;
-    var wrap = !!(st && st.wrap);
-    var at = 0, timer = 0, lines = 0;
-    var root = h('div', { class: 'pmw-tool pmw-tool-out' + (wrap ? ' is-wrap' : '') });
+    st = st || {};
+    var fixed = fixedChannel(api.id);
+    var channel = fixed || st.channel || 'build';
+    var follow = st.follow !== false;
+    var wrap = !!st.wrap;
+    var timer = 0, shown = false;
+    var chans = {};   // channel -> { frag, at, lines, started }: each channel keeps its own lines while another shows
+    var root = h('div', { class: 'pmw-tool pmw-tool-out' + (wrap ? ' is-wrap' : '') + (fixed ? ' is-fixed' : '') });
     host.appendChild(root);
 
-    var chanBtn = h('button', { type: 'button', class: 'pmw-tool-chan', 'aria-haspopup': 'menu', 'aria-label': 'Channel: ' + channelOf(channel).label,
-      'data-pm-hover-label': 'Channel', 'data-pm-hover-detail': 'Show another channel', 'data-pmh': 'icon' },
-      [h('span', { class: 'pmw-tool-chanl', text: channelOf(channel).label }), ico('chevronDown', 12)]);
-    chanBtn.addEventListener('click', function () {
-      PMW.menu.open(chanBtn, { id: 'out-chan:' + api.id, title: 'Show channel', width: 280, rows: CHANNELS.map(function (c) {
-        return { id: c.id, label: c.label, sub: c.sub, checked: c.id === channel,
-          run: function (info) { if (c.id !== channel) api.open({ kind: 'output', channel: c.id, where: info && info.alt ? 'panel' : 'tab' }); } };
-      }) });
-    });
+    var chanBtn = null, chanText = h('span', { class: 'pmw-tool-chanl' });
+    if (!fixed) {
+      chanBtn = h('button', { type: 'button', class: 'pmw-tool-chan', 'aria-haspopup': 'menu',
+        'data-pm-hover-label': 'Channel', 'data-pm-hover-detail': 'Show another channel here, or open one in its own tab', 'data-pmh': 'icon' },
+        [chanText, ico('chevronDown', 12)]);
+      chanBtn.addEventListener('click', function () {
+        PMW.menu.open(chanBtn, { id: 'out-chan:' + api.id, title: 'Show channel', width: 300, rows: CHANNELS.map(function (c) {
+          return { id: c.id, label: c.label, sub: c.sub, checked: c.id === channel,
+            run: function (info) { if (info && info.alt) openSplitOff(c.id, 'panel'); else setChannel(c.id, true); },
+            alt: { label: 'Open in new tab', icon: 'outputNewTab', run: function () { openSplitOff(c.id, 'tab'); } } };
+        }) });
+      });
+    }
     var countEl = h('span', { class: 'pmw-tool-count', text: '' });
+    function leftSpec() {
+      return fixed ? [{ id: 'chan', icon: 'output', text: channelOf(channel).label, strong: true }, { id: 'count', el: countEl, dim: true }]
+        : [{ id: 'chan', el: chanBtn }, { id: 'count', el: countEl, dim: true }];
+    }
+    function followDetail() { return follow ? 'New lines scroll into view' : 'Scroll to the end and follow new lines'; }
     function actions() {
       return [
-        { id: 'follow', label: 'Follow', icon: FOLLOW_ICON, pressed: follow, detail: follow ? 'New lines scroll into view' : 'Scroll to the end and follow new lines', run: function () { setFollow(!follow); } },
+        { id: 'follow', label: 'Follow', icon: FOLLOW_ICON, pressed: follow, detail: followDetail(), run: function () { setFollow(!follow); } },
         { id: 'clear', label: 'Clear', icon: CLEAR_ICON, detail: 'Clear this channel', run: clear },
         { id: 'more', label: 'More', icon: 'more', menu: function () {
-          return [
-            { id: 'wrap', label: 'Wrap long lines', checked: wrap, run: function () { wrap = !wrap; root.classList.toggle('is-wrap', wrap); saveSoon(); } },
+          var rows = [
+            { id: 'wrap', label: 'Wrap long lines', checked: wrap, run: function () { wrap = !wrap; root.classList.toggle('is-wrap', wrap); api.saveSoon(); } },
             { id: 'copy', label: 'Copy all', icon: 'link', run: function () { copyText(api, log.innerText, 'Output copied'); } },
             { id: 'doc', label: 'Open as a document', icon: 'file', sub: 'A read-only editor tab', run: function () {
               api.open({ kind: 'editor', text: log.innerText, language: 'text', title: outputLabel(channel), label: outputLabel(channel) });
             } }
           ];
+          if (fixed) rows.push('-', { id: 'main', label: 'Show in the Output tab', icon: 'output', sub: 'Switch the Output tab to ' + channelOf(channel).label,
+            run: function () { api.open({ kind: 'output', id: 'output', channel: channel }); } });
+          else rows.push('-', { id: 'split', label: 'Open ' + channelOf(channel).label + ' in new tab', icon: 'outputNewTab', run: function () { openSplitOff(channel, 'tab'); } });
+          return rows;
         } }
       ];
     }
-    var row = api.headerRow({ label: 'Output controls', left: [{ id: 'chan', el: chanBtn }, { id: 'count', el: countEl, dim: true }], actions: actions() });
+    var row = api.headerRow({ label: 'Output controls', left: leftSpec(), actions: actions() });
     root.appendChild(row.el);
-    var log = h('div', { class: 'pmw-tool-log', role: 'log', 'aria-live': 'off', 'aria-label': outputLabel(channel), tabindex: '0', 'data-pmh': 'off', 'data-pm-hover-exempt': 'true' });
+    var log = h('div', { class: 'pmw-tool-log', role: 'log', 'aria-live': 'off', tabindex: '0', 'data-pmh': 'off', 'data-pm-hover-exempt': 'true' });
     root.appendChild(log);
     var empty = h('p', { class: 'pmw-tool-empty', text: 'Nothing here yet. New lines appear while this tab is open.' });
 
+    function openSplitOff(c, where) { api.open({ kind: 'output', id: splitOffId(c), channel: c, where: where }); }
+    function cur() { return chans[channel]; }
+    function script() { return SCRIPTS[channel] || { seed: 0, lines: [] }; }
     function setFollow(on) {
       follow = on;
-      row.setAction('follow', { pressed: follow, detail: follow ? 'New lines scroll into view' : 'Scroll to the end and follow new lines' });
+      row.setAction('follow', { pressed: follow, detail: followDetail() });
       if (follow) log.scrollTop = log.scrollHeight;
-      saveSoon();
+      api.saveSoon();
     }
+    function count() { var c = cur(); countEl.textContent = c && c.lines ? plural(c.lines, 'line', 'lines') : ''; }
     function append(lv, text) {
       if (empty.parentNode) empty.remove();
       var line = h('div', { class: 'pmw-tool-line is-' + lv }, [
@@ -255,44 +282,84 @@ PM_HOME.registerKind('output', {
         h('span', { class: 'pmw-tool-text' }, [linkify(api, text)])
       ]);
       log.appendChild(line);
-      lines += 1;
-      while (log.childElementCount > OUT_CAP) { log.firstElementChild.remove(); lines -= 1; }
-      countEl.textContent = plural(lines, 'line', 'lines');
+      var c = cur();
+      c.lines += 1;
+      while (log.childElementCount > OUT_CAP) { log.firstElementChild.remove(); c.lines -= 1; }
+      count();
       if (follow) log.scrollTop = log.scrollHeight;
     }
     function clear() {
       log.textContent = '';
-      lines = 0;
-      countEl.textContent = '';
+      cur().lines = 0;
+      count();
       log.appendChild(empty);
       api.announce(outputLabel(channel) + ' cleared');
     }
     function step() {
       timer = 0;
-      if (!script.lines.length) return;
-      var ln = script.lines[at % script.lines.length];
-      at += 1;
+      var sc = script();
+      if (!sc.lines.length) return;
+      var c = cur();
+      var ln = sc.lines[c.at % sc.lines.length];
+      c.at += 1;
       if (ln[0] === 'pause') { timer = setTimeout(step, ln[1]); return; }
       append(ln[0], ln[1]);
       timer = setTimeout(step, 260 + Math.round(Math.random() * 420));
     }
-    function start() { if (!timer && script.lines.length) timer = setTimeout(step, 700); }
+    function start() { if (!timer && shown && script().lines.length) timer = setTimeout(step, 700); }
     function stop() { clearTimeout(timer); timer = 0; }
+    /* show `c` in the log: the channel on screen keeps its lines aside, the next one comes back as it was left */
+    function showChannel(c) {
+      if (chans[channel] && chans[channel] !== chans[c]) {
+        var frag = document.createDocumentFragment();
+        while (log.firstChild) frag.appendChild(log.firstChild);
+        chans[channel].frag = frag;
+      }
+      channel = c;
+      var rec = chans[c];
+      if (!rec) {
+        rec = chans[c] = { frag: null, at: 0, lines: 0 };
+        var sc = script();
+        log.textContent = '';
+        for (var i = 0; i < sc.seed && i < sc.lines.length; i++) { if (sc.lines[i][0] !== 'pause') append(sc.lines[i][0], sc.lines[i][1]); }
+        rec.at = sc.seed;
+        if (!sc.lines.length) log.appendChild(empty);
+      } else {
+        log.textContent = '';
+        if (rec.frag) log.appendChild(rec.frag);
+        rec.frag = null;
+        if (!log.firstChild) log.appendChild(empty);
+      }
+      count();
+      chanText.textContent = channelOf(c).label;
+      if (chanBtn) chanBtn.setAttribute('aria-label', 'Channel: ' + channelOf(c).label);
+      log.setAttribute('aria-label', outputLabel(c));
+      row.set({ left: leftSpec() });
+      api.update({ label: fixed ? outputLabel(c) : 'Output', title: 'Output: ' + channelOf(c).label });
+      if (follow) log.scrollTop = log.scrollHeight;
+    }
+    function setChannel(c, byUser) {
+      if (!c || c === channel) return;
+      stop();
+      showChannel(c);
+      start();
+      api.saveSoon();
+      if (byUser) api.announce('Output shows ' + channelOf(c).label);
+    }
     log.addEventListener('scroll', function () {
       var atEnd = log.scrollHeight - log.scrollTop - log.clientHeight < 24;
-      if (follow !== atEnd) { follow = atEnd; row.setAction('follow', { pressed: follow }); }
+      if (follow !== atEnd) { follow = atEnd; row.setAction('follow', { pressed: follow, detail: followDetail() }); }
     });
 
-    for (var i = 0; i < script.seed && i < script.lines.length; i++) { if (script.lines[i][0] !== 'pause') append(script.lines[i][0], script.lines[i][1]); }
-    at = script.seed;
-    if (!script.lines.length) log.appendChild(empty);
-    api.update({ label: outputLabel(channel), title: 'Output: ' + channelOf(channel).label });
+    showChannel(channel);
 
     return {
-      onShow: start,
-      onHide: stop,
+      onShow: function () { shown = true; start(); },
+      onHide: function () { shown = false; stop(); },
       onResize: function () { if (follow) log.scrollTop = log.scrollHeight; },
       focus: function () { log.focus({ preventScroll: true }); },
+      /* an open of this tab with a channel (from the chat, a run, the catalog): the Output tab switches to it */
+      reveal: function (s) { if (s && s.channel && !fixed) setChannel(String(s.channel), false); },
       serialize: function () { return { channel: channel, follow: follow, wrap: wrap }; },
       unmount: stop
     };
@@ -358,13 +425,13 @@ PM_HOME.registerKind('problems', {
         { id: 'filter', label: 'Filter', icon: 'search', detail: 'Show errors, warnings or notes', menu: function () {
           return { id: 'prob-filter', title: 'Show', width: 240, align: 'end', rows: ['error', 'warn', 'info'].map(function (s) {
             return { id: s, label: s === 'error' ? 'Errors' : s === 'warn' ? 'Warnings' : 'Notes', checked: !!show[s], keepOpen: true,
-              run: function () { show[s] = !show[s]; paint(); saveSoon(); } };
+              run: function () { show[s] = !show[s]; paint(); api.saveSoon(); } };
           }) };
         } },
         { id: 'fold', label: all ? 'Expand all' : 'Collapse all', icon: all ? 'chevronDown' : 'chevronRight', run: function () {
           var c = !allCollapsed();
           PROBLEMS.forEach(function (f) { collapsed[f.path] = c; });
-          paint(); saveSoon();
+          paint(); api.saveSoon();
         } },
         { id: 'recheck', label: 'Check again', icon: 'reload', detail: 'Run the checks again', run: function () {
           list.classList.add('is-checking');
@@ -394,7 +461,7 @@ PM_HOME.registerKind('problems', {
           h('span', { class: 'pmw-tool-fdir', text: dir }),
           h('span', { class: 'pmw-tool-fcount', text: String(items.length) })
         ]);
-        fb.addEventListener('click', function () { collapsed[f.path] = open; paint(); saveSoon(); });
+        fb.addEventListener('click', function () { collapsed[f.path] = open; paint(); api.saveSoon(); });
         list.appendChild(fb);
         if (!open) return;
         items.forEach(function (it, i) {
@@ -413,7 +480,7 @@ PM_HOME.registerKind('problems', {
         });
       });
       if (!any) list.appendChild(h('p', { class: 'pmw-tool-empty', text: 'Nothing to show with these filters.' }));
-      setRow(row, root, { left: [{ id: 'counts', el: countsEl() }], actions: actions() });
+      row.set({ left: [{ id: 'counts', el: countsEl() }], actions: actions() });
       api.update({ label: 'Problems', title: 'Problems: ' + problemsSummary() });
       if (focusKey) { var back = list.querySelector('[data-key="' + focusKey.replace(/"/g, '') + '"]'); if (back) back.focus({ preventScroll: true }); }
     }
@@ -428,7 +495,7 @@ PM_HOME.registerKind('problems', {
       else if (cur.classList.contains('pmw-tool-file') && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) {
         var want = e.key === 'ArrowLeft';
         var key = cur.getAttribute('data-key');
-        if (!!collapsed[key] !== want) { e.preventDefault(); collapsed[key] = want; paint(); saveSoon(); }
+        if (!!collapsed[key] !== want) { e.preventDefault(); collapsed[key] = want; paint(); api.saveSoon(); }
       }
     });
     paint();
@@ -471,7 +538,7 @@ PM_HOME.registerKind('ports', {
           var ri = removed.indexOf(n);
           if (ri >= 0 && PORTS.some(function (p) { return p.port === n; })) removed.splice(ri, 1);
           else extra.push({ port: n, name: '', proc: 'Nothing is listening yet', addr: 'localhost:' + n, url: 'http://localhost:' + n + '/', origin: 'Added by you', web: true });
-          paint(); saveSoon();
+          paint(); api.saveSoon();
           api.announce('Port ' + n + ' forwarded');
         } });
       } }
@@ -494,14 +561,14 @@ PM_HOME.registerKind('ports', {
       table.textContent = '';
       table.appendChild(h('div', { class: 'pmw-tool-tr is-head', role: 'row' }, ['Port', 'Address', 'Running', 'Origin', ''].map(function (c) { return h('span', { role: 'columnheader', text: c }); })));
       list.forEach(function (p) {
-        var open = btn('Open in browser', 'browser', 'Opens ' + p.addr + ' in a Browser tab', function (e) {
+        var open = btn('Open in browser', 'browser', 'Shows this address in a Browser tab; Alt+click opens a new panel', function (e) {
           api.open({ kind: 'browser', url: p.url, where: e.altKey ? 'panel' : 'auto' });
         }, { disabled: p.web ? null : 'Not a web page: nothing to show in a browser' });
-        var copy = btn('Copy address', 'link', p.addr, function () { copyText(api, p.web ? p.url : p.addr, 'Address copied'); }, { iconOnly: true });
-        var stop = btn('Stop forwarding', 'close', 'Port ' + p.port, function () {
+        var copy = btn('Copy address', 'link', 'Copies this address', function () { copyText(api, p.web ? p.url : p.addr, 'Address copied'); }, { iconOnly: true });
+        var stop = btn('Stop forwarding', 'close', 'Port ' + p.port + ' stops being reachable here', function () {
           removed.push(p.port);
           extra = extra.filter(function (x) { return x.port !== p.port; });
-          paint(); saveSoon();
+          paint(); api.saveSoon();
           api.announce('Stopped forwarding port ' + p.port);
         }, { iconOnly: true });
         table.appendChild(h('div', { class: 'pmw-tool-tr', role: 'row' }, [
@@ -528,6 +595,7 @@ PM_HOME.registerKind('ports', {
 /* ------------------------------------------------------------------------------------------------------------------ */
 
 var SESSIONS = { main: { name: 'tastebook-api', how: 'cargo run', at: 'src/services/import.rs:95' } };
+function debugLabel(sid) { return !sid || sid === 'main' ? 'Debug Console' : 'Debug Console · ' + ((SESSIONS[sid] || {}).name || sid); }
 var SEED = [
   ['dbg', 'Debugger attached to tastebook-api (process 88431)'],
   ['out', '    Finished `dev` profile [unoptimized + debuginfo] target(s) in 8.42s'],
@@ -614,6 +682,7 @@ function evaluate(src) {
 PM_HOME.registerKind('debug-console', {
   label: 'Debug Console', group: 'Tools', icon: 'console', prefixes: ['debug-console:'], min: { w: 280, h: 120 }, dedicated: true,
   idFor: function (spec) { return 'debug-console:' + ((spec && spec.session) || 'main'); },
+  labelFor: function (id, st) { return debugLabel((st && st.session) || String(id).replace(/^debug-console:/, '')); },
   plus: { order: 73, group: 'tools', label: 'Debug Console', spec: function () { return { kind: 'debug-console' }; } },
   mount: function (host, st, api) {
     st = st || {};
@@ -645,12 +714,13 @@ PM_HOME.registerKind('debug-console', {
     root.appendChild(row.el);
     var log = h('div', { class: 'pmw-tool-log pmw-tool-con', role: 'log', 'aria-live': 'polite', 'aria-label': 'Debug console', tabindex: '0', 'data-pmh': 'off', 'data-pm-hover-exempt': 'true' });
     root.appendChild(log);
-    var input = h('input', { type: 'text', class: 'pmw-tool-in', spellcheck: 'false', autocomplete: 'off', 'aria-label': 'Evaluate an expression', 'data-pmh': 'off' });
+    var input = h('input', { type: 'text', class: 'pmw-tool-in', spellcheck: 'false', autocomplete: 'off', 'aria-label': 'Evaluate an expression', 'data-pmh': 'off',
+      'data-pm-hover-label': 'Evaluate', 'data-pm-hover-detail': 'Type an expression and press Enter; Up and Down bring back earlier ones' });
     var inRow = h('label', { class: 'pmw-tool-inrow' }, [h('span', { class: 'pmw-tool-prompt', 'aria-hidden': 'true', text: '›' }), input]);
     root.appendChild(inRow);
 
     function refresh() {
-      setRow(row, root, { left: left(), actions: actions() });
+      row.set({ left: left(), actions: actions() });
       input.placeholder = mode === 'paused' ? 'Evaluate an expression in the paused frame' : mode === 'running' ? 'Pause the program to evaluate' : 'Start a session to evaluate';
       root.setAttribute('data-mode', mode);
       api.update({ busy: mode === 'running', title: 'Debug Console: ' + sess.name + ', ' + (mode === 'paused' ? 'paused' : mode) });
@@ -709,7 +779,7 @@ PM_HOME.registerKind('debug-console', {
         if (mode !== 'paused') { line('rerr', mode === 'running' ? 'The program is running. Pause it to evaluate expressions.' : 'No session. Start one to evaluate expressions.'); return; }
         var r = evaluate(src);
         if (r) line(r.ok ? 'res' : 'rerr', r.text);
-        saveSoon();
+        api.saveSoon();
       } else if (e.key === 'ArrowUp') {
         if (!hist.length) return;
         e.preventDefault(); hAt = Math.max(0, hAt - 1); input.value = hist[hAt] || '';
@@ -724,7 +794,7 @@ PM_HOME.registerKind('debug-console', {
 
     SEED.forEach(function (l) { line(l[0], l[1]); });
     refresh();
-    api.update({ label: sessId === 'main' ? 'Debug Console' : 'Debug Console · ' + sess.name });
+    api.update({ label: debugLabel(sessId) });
 
     return {
       focus: function () { input.focus({ preventScroll: true }); },
@@ -737,27 +807,8 @@ PM_HOME.registerKind('debug-console', {
 });
 
 /* ------------------------------------------------------------------------------------------------------------------ */
-/* Labels for tabs that are not mounted yet, and the catalog                                                           */
+/* The catalog (Ctrl+P, the "+" pickers, the stand-in chat): an Output channel opens the D28 way                       */
 /* ------------------------------------------------------------------------------------------------------------------ */
-
-function fixToolLabels() {
-  var l = PMW.state && PMW.state.layout;
-  if (!l) return;
-  Object.keys(l.tabs).forEach(function (id) {
-    var rec = l.tabs[id];
-    if (!rec || rec.userLabel) return;
-    if (rec.kind === 'output') {
-      var want = outputLabel((rec.state && rec.state.channel) || id.replace(/^output:/, ''));
-      if (rec.label !== want) PM_HOME.update(id, { label: want });
-    } else if (rec.kind === 'debug-console' && !rec.label) {
-      var sid = (rec.state && rec.state.session) || id.replace(/^debug-console:/, '');
-      PM_HOME.update(id, { label: sid === 'main' ? 'Debug Console' : 'Debug Console · ' + ((SESSIONS[sid] || {}).name || sid) });
-    }
-  });
-}
-PM_HOME.on('open', function (e) { if (e && (e.kind === 'output' || e.kind === 'debug-console')) fixToolLabels(); });
-PM_HOME.on('layout', fixToolLabels);
-setTimeout(fixToolLabels, 0);
 
 PM_HOME.catalog.add('output', CHANNELS.map(function (c) {
   return { id: 'output:' + c.id, label: outputLabel(c.id), sub: c.sub, icon: 'output', keywords: 'output log ' + c.label, spec: { kind: 'output', channel: c.id } };
