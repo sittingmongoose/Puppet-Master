@@ -127,7 +127,11 @@ body.pmw-dragging, body.pmw-dragging * { user-select: none !important; -webkit-u
 }
 .pmw-tab[hidden] { display: none; }
 .pmw-tab:hover:not([data-active]) { background: var(--pmw-tab-hover); color: var(--pmw-text); }
-.pmw-tab[data-active] { color: var(--pmw-text); z-index: 2; }
+.pmw-strip.is-dragging .pmw-tab:hover:not([data-active]) { background: var(--pmw-tab-idle-fill, transparent); }
+/* hover tags never open during a drag or a resize */
+body.pmw-dragging #pm-hover-tag-root, body.pm-resizing #pm-hover-tag-root { display: none !important; }
+.pmw-tab[data-active] { color: var(--pmw-tab-active, var(--pmw-text)); font-weight: var(--pmw-tab-weight, 600); z-index: 2; }
+.pmw-tab:not([data-active]) { background: var(--pmw-tab-idle-fill, transparent); }
 .pmw-tab:focus-visible { box-shadow: inset 0 0 0 2px var(--pmw-focus); }
 .pmw-tico { flex: none; width: 16px; height: 16px; display: grid; place-items: center; }
 .pmw-kico { position: relative; width: 16px; height: 16px; display: grid; place-items: center; flex: none; }
@@ -181,7 +185,8 @@ body.pmw-dragging, body.pmw-dragging * { user-select: none !important; -webkit-u
   pointer-events: none;
   background:
     linear-gradient(var(--pmw-plate-crown), var(--pmw-plate-crown)) 0 0 / 100% var(--pmw-plate-crown-h) no-repeat,
-    var(--pmw-surface);
+    var(--pmw-plate-fill, var(--pmw-surface));
+  filter: var(--pmw-plate-filter, none);
 }
 .pmw-plate[hidden] { display: none; }
 .pmw-strip.is-dragging .pmw-plate { z-index: 39; }

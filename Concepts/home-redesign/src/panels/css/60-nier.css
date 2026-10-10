@@ -1,0 +1,82 @@
+/* NieR Mode on the panels (D23; NIER-RULES-for-new-surfaces). The colour is not a part: it applies whenever NieR is on.
+   Part-gated touches use the existing keys (square, cursor, headers, brackets, ticks, slice, empty, ground). Colours
+   only from the NieR tokens; motion stepped; no glow, filter or blur. */
+
+html[data-o55-nier="on"] :is(#pm-home-centre, #pmw-overlay, #pmw-chat, .pmw-scope) {
+  --pmw-surface: var(--surface);
+  --pmw-surface-2: var(--o55-nier-raised);
+  --pmw-strip: var(--o55-nier-paper);
+  --pmw-gutter: var(--o55-nier-paper);
+  --pmw-text: var(--o55-nier-ink); --pmw-text-2: var(--text-secondary); --pmw-text-3: var(--text-muted);
+  --pmw-line: rgba(var(--o55-nier-ink-rgb), .22); --pmw-line-2: var(--o55-nier-line-strong);
+  --pmw-accent: var(--o55-nier-ink); --pmw-focus: var(--o55-nier-ink);
+  --pmw-ok: var(--o55-nier-ok); --pmw-warn: var(--o55-nier-warn); --pmw-bad: var(--o55-nier-error);
+  --pmw-pop: var(--o55-nier-overlay); --pmw-pop-line: var(--o55-nier-ink);
+  --pmw-pop-shadow: 3px 3px 0 rgba(var(--o55-nier-shadow-rgb), .16);
+  --pmw-hover: var(--o55-nier-hover); --pmw-press: var(--o55-nier-active);
+  --pm-font-ui: var(--body-font, inherit);
+  --pm-font-code: 'JetBrains Mono', 'PM NieR Mono', ui-monospace, monospace;
+  --pmw-tab-active: var(--o55-nier-on-ink); --pmw-tab-inactive: rgba(var(--o55-nier-ink-rgb), .65);
+  --pmw-tab-weight: 500;
+  --pmw-tab-hover: var(--o55-nier-hover);
+  --pmw-tab-idle-fill: transparent;
+  --pmw-plate-fill: var(--o55-nier-ink); --pmw-plate-crown: transparent; --pmw-plate-crown-h: 0px; --pmw-plate-filter: none;
+  --pmw-tab-crown: 9px; --pmw-tab-shoulder: 14px; --pmw-tab-flare: 22px; --pmw-tab-profile: arc;
+  --pmw-t-med: 200ms;
+}
+/* the square part: the silhouette becomes the YoRHa chamfer with a straight foot */
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] :is(#pm-home-centre, .pmw-scope) {
+  --pmw-tab-profile: chamfer; --pmw-tab-crown: 6px; --pmw-tab-shoulder: 0px; --pmw-tab-flare: 14px;
+}
+/* the fused foot drops straight into an ink rule under the strip */
+html[data-o55-nier="on"] .pmw-strip { box-shadow: inset 0 -1px 0 var(--o55-nier-ink); }
+/* the focused panel's active tab: full ink plus the square before the label; other panels: a 50 % ink block */
+html[data-o55-nier="on"] .pmw-panel:not([data-focused]) { --pmw-plate-fill: rgba(var(--o55-nier-ink-rgb), .5); }
+html[data-o55-nier="on"] .pmw-panel[data-focused] .pmw-tab[data-active] .pmw-tlabel::before {
+  content: ""; display: inline-block; width: 5px; height: 5px; margin: 0 6px 1px 0; background: currentColor; vertical-align: middle;
+}
+html[data-o55-nier="on"] .pmw-tab .pmw-tlabel { text-transform: uppercase; letter-spacing: .08em; font-size: 11px; }
+html[data-o55-nier="on"] .pmw-tdot { border-radius: 0; width: 6px; height: 6px; }
+html[data-o55-nier="on"] .pmw-tattn { border-color: currentColor; }
+html[data-o55-nier="on"]:not([data-motion="reduced"]) .pmw-tab[data-attention] .pmw-tattn { animation: pmw-nier-fill 400ms steps(1, end) 1 forwards; }
+@keyframes pmw-nier-fill { to { background: currentColor; } }
+html[data-o55-nier="on"] .pmw-more { font-variant: small-caps; letter-spacing: .08em; box-shadow: inset 1px 0 0 rgba(var(--o55-nier-ink-rgb), .45); border-radius: 0; }
+html[data-o55-nier="on"] .pmw-divider[data-dir="row"] .pmw-divider-line { background: repeating-linear-gradient(to bottom, var(--o55-nier-ink) 0 1px, transparent 1px 16px) 0 0 / 5px 100% no-repeat, linear-gradient(rgba(var(--o55-nier-ink-rgb), .35), rgba(var(--o55-nier-ink-rgb), .35)); }
+html[data-o55-nier="on"] .pmw-divider[data-dir="col"] .pmw-divider-line { background: repeating-linear-gradient(to right, var(--o55-nier-ink) 0 1px, transparent 1px 16px) 0 0 / 100% 5px no-repeat, linear-gradient(rgba(var(--o55-nier-ink-rgb), .35), rgba(var(--o55-nier-ink-rgb), .35)); }
+html[data-o55-nier="on"] .pmw-divider:hover .pmw-divider-line, html[data-o55-nier="on"] .pmw-divider.pmw-active .pmw-divider-line { background: var(--o55-nier-ink); }
+html[data-o55-nier="on"] .pmw-landing { border: 1px solid var(--o55-nier-ink); border-radius: 0; background: repeating-linear-gradient(45deg, rgba(var(--o55-nier-ink-rgb), .20) 0 1px, transparent 1px 6px); }
+html[data-o55-nier="on"] .pmw-landing-label { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); border-radius: 0; text-transform: uppercase; letter-spacing: .16em; font-size: 11px; }
+html[data-o55-nier="on"] .pmw-chip { border-radius: 0; box-shadow: 3px 3px 0 rgba(var(--o55-nier-shadow-rgb), .16), 0 0 0 1px var(--o55-nier-ink); }
+html[data-o55-nier="on"] .pmw-panel { border-radius: 0; }
+html[data-o55-nier="on"] .pmw-body { border-radius: 0; }
+
+/* headers part: the header row and menu titles take the YoRHa caption treatment */
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-hrow { text-transform: uppercase; letter-spacing: .07em; }
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-mhead { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); border-bottom: 0; margin: -6px -6px 6px; padding: 8px 12px; }
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-mhead strong { text-transform: uppercase; letter-spacing: .16em; font-size: 11px; }
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-mlist { counter-reset: pmw-sec; }
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-msec { counter-increment: pmw-sec; }
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-msec::before { content: counter(pmw-sec, decimal-leading-zero) "  "; }
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-empty-title, html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-empty-sec { text-transform: uppercase; letter-spacing: .16em; }
+/* cursor part: menu rows and launcher rows take the ink bar on hover and focus (the page's cursor lists carry .pmw-cur) */
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] :is(.pmw-mitem, .pmw-empty-btn, .pmw-mru-row, .pmw-mlink):is(:hover, :focus-visible, .is-current) {
+  background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important;
+}
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] :is(.pmw-mitem, .pmw-empty-btn):is(:hover, :focus-visible, .is-current) :is(.pmw-mcopy span, .pmw-mright, .pmw-empty-key, .pmw-empty-path, .pmw-mlead) { color: inherit; background: transparent; }
+/* ticks part: corner ticks on every panel (the old W-01 map ticks lived on the retired Home surfaces) */
+html[data-o55-nier="on"][data-o55-nier-parts~="ticks"] .pmw-panel::after {
+  content: ""; position: absolute; inset: 0; z-index: 6; pointer-events: none;
+  background:
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 3px 3px / 8px 1px no-repeat,
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 3px 3px / 1px 8px no-repeat,
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) calc(100% - 3px) calc(100% - 3px) / 8px 1px no-repeat,
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) calc(100% - 3px) calc(100% - 3px) / 1px 8px no-repeat;
+  opacity: .55;
+}
+/* slice part: menus unfold from a line (the page's own keyframes) */
+html[data-o55-nier="on"][data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) .pmw-menu[data-mstate="closed"] { transform: none; scale: 1 .006; }
+html[data-o55-nier="on"][data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) .pmw-menu[data-mstate="open"] { transform: none; transition: none; animation: o55np-slice 300ms linear backwards; }
+/* ground part: the grid shows between panels */
+html[data-o55-nier="on"][data-o55-nier-parts~="ground"] #pm-home-centre { --pmw-gutter: transparent; }
+html[data-o55-nier="on"] .pmw-mlead { background: transparent; color: var(--o55-nier-ink); }
+html[data-o55-nier="on"] .pmw-act.is-primary, html[data-o55-nier="on"] .pmw-btn-primary { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
