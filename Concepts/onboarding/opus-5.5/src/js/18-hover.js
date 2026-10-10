@@ -71,7 +71,7 @@
        stays off there (light and glow only); a plate is not a target while the board runs an operation on it. */
     var PMU_SKIP = '[data-head="band"],[data-pending],[data-leaving],[data-lifted],[data-resizing],[data-morphing]';
     var NOMAG = '.pmu-card,[data-pmh-mag="0"]';
-    var REST_BODY = ['pm-resizing', 'pm-ab-dragging', 'pmu-pointer-op', 'pm7u-pointer-op'];
+    var REST_BODY = ['pm-resizing', 'pm-ab-dragging', 'pmu-pointer-op', 'pm7u-pointer-op', 'pmw-dragging'];   /* pmw-dragging: home panels' tab or panel drag */
 
     var TOKENS = [
       /* magnet: max px, fraction of min(w,h), kind gain, spring, quantum (px, 0 = smooth), write cadence (Hz, 0 = every frame) */
