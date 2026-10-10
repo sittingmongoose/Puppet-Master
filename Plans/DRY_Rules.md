@@ -2350,7 +2350,7 @@ architecture layer merely because the concept contains self-contained fixture ad
 | Usage data semantics and view state | `Plans/usage-feature.md` | PM7-local Usage service, provider-management service, or second Usage store |
 | Usage/Ledger drill-through | `Plans/Contracts_V0.md` plus `Plans/usage-feature.md`; event-primary callers use `usage_event`/`usage_event_ref`, while a PMConcept7 Ledger attempt row uses `usage_attempt`/`attempt_id`, retains `usage_event_ref` as correlation, and carries no `OpenSubject` | correlation or presentation identity substituted for the selected object id, current PMConcept7 aggregate-card route command, or unregistered object kind |
 | Usage/Dashboard widget layout | `Plans/Widget_System.md` plus `Plans/storage-plan.md` namespaces | PM7-local widget store, `dashboard_layout:v1` peer writes, per-frame preview persistence |
-| Home shell surface layout | `Plans/home_workspace_layout_v2.schema.json` and `Plans/storage-plan.md` (SP-330); the v1 `Plans/home_workspace_layout.schema.json` is a read-only migration input | Dashboard widget layout inside the Home record (several dashboard tabs are allowed, each board's widget layout in its own `widget_layout:v1:dashboard:<board_id>` namespace, WS-030), concept-only size command/store |
+| Home shell surface layout | `Plans/home_workspace_layout_v2.schema.json` and `Plans/storage-plan.md` (SP-330); the v1 `Plans/home_workspace_layout.schema.json` is a read-only migration input | Dashboard widget layout inside the Home record (several dashboard tabs are allowed, each board's widget layout in its own per-project `widget_layout:v1:<project_id>:<board_id>` key, WS-030, amended 2026-10-10 by DL-186), concept-only size command/store |
 | Command language | `Plans/Commands_System.md` and `Plans/UI_Command_Catalog.md` | PM7 command family, popup/hover commands, duplicate `size_surface` primary command |
 | Production wiring | `Plans/Wiring_Matrix.md` and `Plans/Wiring_Matrix.production.json` | concept report or demo event log as production wiring authority |
 | Shared Assistant/context | `Plans/assistant-chat-design.md` | second Assistant node, controller, transcript store, context store, or page-local clone |
@@ -2368,7 +2368,8 @@ Several dashboard tabs are allowed, each showing one board whose widget layout l
 and its board reference.
 
 Amended 2026-10-10 (DL-186): a board's widget layout lives per project under
-`widget_layout:v1:<project_id>:<board_id>` (WS-030); the 2026-10-09 per-board key above was never written. The
+`widget_layout:v1:<project_id>:<board_id>` (WS-030), as the table's row now says; the 2026-10-09 per-board key
+above was never written. The
 person's saved board presets live in the one per-user family `widget_presets:v1`. Dashboards run the one Usage
 board engine, so they add no widget-layout authority, store or settlement of their own, and the Home record still
 holds only the dashboard tab and its board id.

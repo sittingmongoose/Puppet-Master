@@ -27517,7 +27517,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Defines where everything the chat opens lands, the chat column as the chat reads it, the compact command card and how Teacher explains commands.
 split_recommended: false
-depends_on: [DL-180, DL-181, DL-185, DL-187, F3-634, F3-635, F3-636, F3-637, F3-569, F3-641, DR-071, CV-360, UCC-200, UCC-201, UCC-203, SP-330, SSYS-050, SMPFS-180, SMPFS-183, ACD-126, ACD-146]
+depends_on: [DL-180, DL-181, DL-185, DL-187, DL-188, DL-157, F3-634, F3-635, F3-636, F3-637, F3-569, F3-641, DR-071, CV-360, UCC-200, UCC-201, UCC-203, SP-330, SSYS-050, SMPFS-180, SMPFS-183, ACD-126, ACD-146]
 unblocks: [ACD-039, ACD-041, ACD-416, ACD-444, ACD-453, ACD-455, ACD-458, ACD-485, ACD-501, ATS-075]
 acceptance_criteria:
   - "Every file reference a person clicks in the chat (message and card paths, diff views, Changes rows, transcript file records, files-touched entries) opens the preview tab on a single click and a kept tab on a double click, reveals a file already open anywhere, and opens a new panel on Alt+click, all through F3-634."
@@ -27567,6 +27567,8 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-187"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D32, D40)"
   - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+  - "Plans/Decision_Log.md#DL-188"
+  - "Plans/UI_Command_Catalog.md#UCC-176 (cited here rather than in depends_on, which would close the cycle ACD-500, UCC-176, F3-593, ACD-485; lead ruling L22)"
 preserved_exact_tokens:
   - "Open in Terminal"
   - "Rerun in Terminal"
@@ -27748,7 +27750,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Defines which terminal tab each chat card action opens or reveals, how agent-started terminals appear, and which terminal canon leaves the chat document.
 split_recommended: false
-depends_on: [DL-181, DL-180, SMPFS-180, SMPFS-182, SMPFS-183, F3-634, F3-640, F3-641, F3-646, UCC-200, UCC-201, UCC-203]
+depends_on: [DL-181, DL-180, DL-185, SMPFS-180, SMPFS-182, SMPFS-183, F3-634, F3-640, F3-641, F3-646, UCC-200, UCC-201, UCC-203]
 unblocks: [ACD-077, ACD-108, ACD-127, ACD-128, ACD-131, ACD-132, ACD-134, ACD-135, ACD-136, ACD-137, ACD-138, ACD-139, ACD-140, ACD-141, ACD-142, ACD-145, ACD-207, ACD-210, ACD-211, ACD-214, ATS-076]
 acceptance_criteria:
   - "Open in Terminal reveals the exact session's terminal tab wherever it is, or gives a tabless session its tab, and never starts a new shell."
