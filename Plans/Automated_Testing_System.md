@@ -6095,8 +6095,10 @@ canonical_text: >-
   default with Off, 3:1, 4.5:1 and 7:1, moving OKLab lightness only and leaving block, powerline and sextant glyphs
   alone; import of the seven formats with the 256 KB cap, no evaluation and fixed errors that never echo the file; and
   cells of whole device pixels with no stripe at the padding. Effects (F3-643): only the focused, visible terminal
-  animates; an idle terminal draws no ambient frames; battery saver turns motion off; where no GPU draws the
-  terminal only the static scanlines and glow are drawn and the popover names what it could not draw; Reduced Motion
+  animates; every effect stops within 10 s of the last output or keystroke, after which no effects frames run
+  until the next output or keystroke; an effects frame takes at most 2 ms of CPU at DPR 2 on P1000-class hardware;
+  battery saver turns motion off; where no GPU draws the terminal the effects layer stays off, zero effects frames
+  run, plain static scanlines and glow paint and the popover names what it could not draw; Reduced Motion
   stops every moving part and keeps the static looks; Retro dark shows scanlines and phosphor glow by default, and Full
   CRT and flicker are off by default in every look; flicker defaults to 0.02 and never exceeds 0.03 of relative
   luminance; degauss is a one-shot action; NieR's terminal touches follow their installed parts. Faces (F3-644): the
@@ -6173,6 +6175,7 @@ acceptance_criteria:
   - "Every terminal control has its UCC-201 command, UIW-042 census entry and WM-091 row."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
   - "Editor and terminal list the same code colour-scheme catalog and open the same Appearance popover component."
+  - "An effects frame takes at most 2 ms of CPU at DPR 2 on P1000-class hardware; every effect, including Full CRT ambient noise and flicker, stops within 10 s of the last output or keystroke; without a GPU the effects layer stays off with zero effects frames and plain fallbacks paint."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -6189,6 +6192,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-wave2-numbers-5e549d6961.md, SHA-256 f9d7756f94f26c5285b35400a380afed57fb27dfaee6d29683c3916604b4a15a (R34, adopted effects budgets; concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D27)"
   - "Plans/Decision_Log.md#DL-181"
   - "Plans/Decision_Log.md#DL-182"
@@ -6197,6 +6201,10 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b (sections 1-8; concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-terminal-audit.md, SHA-256 12f95fa6f79b1c0a1f9f34b1eee004cac9edacfd8e0a7f4e6495fe1af23aabe3 (the ATS rows and gap G16; audit lineage only)"
 preserved_exact_tokens:
+  - "10 s"
+  - "P1000-class"
+  - "DPR 2"
+  - "2 ms"
   - "EBADF:Failed to read image file"
   - "EFBIG"
   - "ETOODEEP"
@@ -6219,10 +6227,11 @@ negative_constraints:
 compatibility_only_notes:
   - "The terminal concept's harness hooks and its demo agents are concept lineage and are not product test names."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R34, DL-183): Adopts the effects CPU budget, idle deadline and no-GPU fallback rule."
   - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
   - "Amended 2026-10-09 (DL-182): ATS-047's 'images remain outside approval' is replaced; image protocols, their hardening and saved scrollback with images are certified here."
 owner_boundary_notes:
-  - "SMPFS-180 to SMPFS-183, F3-640 to F3-646, SP-331, SP-332, CV-362, UCC-201, UIW-042 and WM-091 own the behaviour; this unit only tests it. Effect parameters per look, GPU frame times and performance budgets arrive in a later terminal SPEC installment and join this matrix then."
+  - "SMPFS-180 to SMPFS-183, F3-640 to F3-646, SP-331, SP-332, CV-362, UCC-201, UIW-042 and WM-091 own the behaviour; this unit only tests it. Effect parameters per look and GPU frame measurements remain concept lineage; R34's adopted CPU budget, idle deadline and no-GPU rule are certified here."
 owner_hints:
   - Plans/Automated_Testing_System.md
   - Plans/Section15_MVP_Promoted_Features_Spec.md

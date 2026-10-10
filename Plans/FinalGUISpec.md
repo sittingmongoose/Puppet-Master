@@ -45013,8 +45013,9 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The terminal's effects are Puppet Master's own (DL-183) and follow one policy. They are event-driven: the effect
   pass runs only after the screen repainted or while something is still animating. Only the focused, visible
-  terminal animates; ambient motion stops when the terminal is idle; motion is off on battery saver; and where no GPU
-  draws the terminal (on the desktop, the Skia CPU raster of F3-582), only the static fallbacks remain (a static
+  terminal animates; every effect goes idle within 10 s of the last output or keystroke; motion is off on battery
+  saver; and where no GPU draws the terminal (on the desktop, the Skia CPU raster of F3-582), the effects layer
+  stays off, no effects frames run, and plain static fallbacks paint (a static
   scanline pattern and a static glow), curvature, burn-in and noise are not drawn, and the Appearance popover says
   what it could not draw. Under Reduced Motion every moving part is off (cursor blink, cursor trail, smooth
   scrolling, burn-in, noise, flicker, degauss, bell flashes, progress sweeps and image animation) and the static looks
@@ -45035,6 +45036,7 @@ canonical_text: >-
   stepped, with no glow, filter or blur, and loops only by transform or opacity; no surface larger than 340x256 px
   reverses its opacity more than once a second; and Reduced Motion and the Still and Colors only presets show end
   states at once. Motion voices belong to the theme family (DR-043).
+  An effects frame takes at most 2 ms of CPU at DPR 2 on P1000-class hardware (R34).
 gui_related: true
 gui_classification_reason: Defines the terminal's visible effects, their defaults and the policy that limits when they run.
 split_recommended: false
@@ -45042,13 +45044,14 @@ depends_on: [DL-183, F3-642, F3-431, F3-582, DR-043, DL-152, DR-056]
 unblocks: [ATS-076]
 acceptance_criteria:
   - "Only the focused, visible terminal animates; an idle terminal draws no ambient frames; battery saver turns motion off."
-  - "Where no GPU draws the terminal, only the static scanlines and glow are drawn, curvature, burn-in and noise are not, and the Appearance popover names what it could not draw."
+  - "Where no GPU draws the terminal, the effects layer stays off with zero effects frames, plain static scanlines and glow are drawn, curvature, burn-in and noise are not, and the Appearance popover names what it could not draw."
   - "Under Reduced Motion no part of the terminal moves, and the static looks stay."
   - "A fresh Retro dark terminal shows scanlines and phosphor glow; no other look shows them by default; Full CRT and flicker are off by default in every look."
   - "The flicker amount defaults to 0.02 and cannot exceed 0.03 of relative luminance."
   - "Degauss is a one-shot action in Retro, not a setting, and stops at its end."
   - "With NieR Mode on, the parchment shows only with the ground part and the focus brackets only with the brackets part, NieR's own terminal look has no glow, filter or blur, and no surface larger than 340x256 px reverses its opacity more than once a second."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+  - "An effects frame takes at most 2 ms of CPU at DPR 2 on P1000-class hardware; every effect, including Full CRT ambient noise and flicker, stops within 10 s of the last output or keystroke; without a GPU the effects layer stays off with zero effects frames and plain fallbacks paint."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -45062,12 +45065,17 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-wave2-numbers-5e549d6961.md, SHA-256 f9d7756f94f26c5285b35400a380afed57fb27dfaee6d29683c3916604b4a15a (R34, adopted effects budgets; concept lineage only)"
   - "Plans/Decision_Log.md#DL-183"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D16)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, section 6 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-ARCHITECTURE-542703c07c.md, SHA-256 b6daf31a8953b3d7b633dd0db0a7b8a0ecba41f4533e8d6db6df5fa0f08bf476, section 6 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/NIER-RULES-for-new-surfaces.md, SHA-256 4634aba3abe147493c0f71de49419e63ba667a6784ca4b36967b537abb231728"
 preserved_exact_tokens:
+  - "10 s"
+  - "P1000-class"
+  - "DPR 2"
+  - "2 ms"
   - "Full CRT"
   - "WCAG 2.3.1"
   - "0.02"
@@ -45080,8 +45088,9 @@ negative_constraints:
   - "Do not turn on Full CRT or flicker by default in any look, or let flicker exceed 0.03 of relative luminance."
   - "Do not add a NieR part, or give NieR's terminal look a glow, filter or blur."
 compatibility_only_notes:
-  - "The concept's per-look effect parameters, its GPU frame times, its battery-saver threshold and its performance measurements are lineage only until a later terminal installment settles them."
-stale_retired_dispositions: []
+  - "The concept's per-look effect parameters, its GPU frame times, its battery-saver threshold and its measured performance are lineage only; R34 adopts the 2 ms CPU budget at DPR 2 on P1000-class hardware and the 10 s idle deadline as canon."
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (R34, DL-183): Adopts the effects CPU budget, idle deadline and no-GPU fallback rule."
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
