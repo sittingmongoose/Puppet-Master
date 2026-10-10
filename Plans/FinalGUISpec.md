@@ -1843,7 +1843,7 @@ Rules:
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/rewrite-tie-in-memo.md
 ### Terminal section presentation rules
 
-Superseded 2026-10-09 (DL-181): this block is lineage. A terminal is one tab kind holding one session in any panel, with its chrome in F3-640 and its features in F3-641; there are no terminal sections, workgroups, sub-tabs, in-tab split grids or editor-hosted terminal stacks, and side-by-side terminals are panels (F3-630). F3-062 is superseded by F3-640; F3-063, F3-064 and F3-065 are amended to keep only their surviving rules (no second session for a second presentation, no split-parent fade, drag cleanup, Reduced Motion).
+Superseded 2026-10-09 (DL-180, DL-181, DL-184): this block is lineage. The bottom runtime zone, terminal sections, workgroups, sub-tabs, the split tree inside a workgroup and the editor terminal stack are retired. A terminal is one tab kind holding one session in any panel (F3-635, SMPFS-180), with its chrome in F3-640 and its features in F3-641; its splits are new panels, side-by-side terminals are panels, and four-up is the Terminals 2x2 layout of F3-630. The workgroup pill below is retired by DL-184 (F3-648). F3-062 is superseded by F3-640; F3-063, F3-064 and F3-065 are amended to keep only their surviving rules (no second session for a second presentation, no split-parent fade, drag cleanup, Reduced Motion).
 
 The bottom runtime zone uses a workgroup-first terminal information architecture.
 
