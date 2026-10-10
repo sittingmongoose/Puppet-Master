@@ -1774,8 +1774,8 @@ canonical_text: >-
   (all, working, needs, waiting, done) saved with its tab (P9, lead ruling F7); the dashboards a person makes are
   dash-<n>. A board's tab id is `dashboard:<board_id>`, and one board is at most one tab in the workspace: opening a
   board that is already open reveals its tab where it is (F3-634). The board id, never the tab id, is the domain
-  reference a dashboard tab keeps in the Home layout record (Plans/storage-plan.md#SP-330); the tab saves nothing else
-  but Agents' filter. No board takes the id usage (the Usage page's own board), the id dashboard or a Usage room id,
+  reference a dashboard tab keeps in the Home layout record (Plans/storage-plan.md#SP-330); the tab saves only that, and
+  Agents its Show filter too. No board takes the id usage (the Usage page's own board), the id dashboard or a Usage room id,
   so a board id in a widget command is never read as a Usage room. `dashboard:home` is the pinned Home dashboard of
   the default layout (F3-630). The "+" menu's Dashboard row body opens or reveals `dashboard:home`, and its sub-row
   lists Home, Metrics, Monitoring, Agents, this project's own dashboards by name and New dashboard, with no cap
@@ -1799,8 +1799,8 @@ canonical_text: >-
   `room_id` is the board id; the Usage page keeps its own `widget_layout:v1:usage`, untouched. A project switch
   writes the open boards to the old project's keys and loads them from the new project's. A board saved by the
   concept's first build of these boards under the unscoped `widget_layout:v1:<board_id>` is adopted once, by the
-  first project that shows that board while its own key is missing, and the old key is removed. storage-plan
-  registers both families and the adoption (Plans/storage-plan.md). The 2026-10-09 form
+  first project that shows that board while its own key is missing, and the old key is removed. Plans/storage-plan.md
+  registers both families and the adoption. The 2026-10-09 form
   `widget_layout:v1:dashboard:<board_id>`, with `host_id` `dashboard:<board_id>`, was never written, so nothing
   migrates from it. Today's single Dashboard layout `widget_layout:v1:dashboard` holds the old Home widgets, which
   leave Home (P1); it is converted into no board and stays only a read-only record and rollback backup, like
