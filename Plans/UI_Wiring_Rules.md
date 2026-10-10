@@ -2047,15 +2047,19 @@ canonical_text: >-
   other tabs, Close panel). The title bar's Home options menu (F3-502: the named and saved layouts, Show or Hide the
   chat, Pop out the chat or Dock the chat back, Keep the chat open in narrow windows, Save this layout..., Restore home
   layout, Run setup wizard) and Settings' Restore home layout row. The chat column: the activity bar's Chat toggle,
-  its inner edge (width), its header menu's Pop out, the popped-out window's Dock back, the History list's pin and the
-  32 px edge strip of a narrow window. The narrow switcher. The Home keys of the keyboard map in
+  its inner edge (width), its header menu's Pop out, the popped-out window's Dock back and the 32 px edge strip of a
+  narrow window. The narrow switcher. The Home keys of the keyboard map in
   `Plans/FinalGUISpec.md#F3-635` and `Plans/UI_Command_Catalog.md#UCC-200` (the rows of WM-090's Keys table) with the
   web-client mapping (Ctrl+T, Ctrl+W, Ctrl+Shift+T and Ctrl+Tab answered as Alt+T, Alt+W, Alt+Shift+T and Alt+` in a
   browser). Retired, with no row: the four editor panels' grab, close, pop-out, Open Browser and resizers; Open Panel and Open Browser in Panel
   with Panel 1 to Panel 4; File Manager's Open in Panel 1 to 4; the host drop targets, the dock track and the floating
   corner resizer; the dashboard's grab, pop-out and resizer; the chat's grab; the terminal sections (grab, bottom
   toggle, new section, split pane, move workgroup, resizer); and Collapse Bottom Terminal. A disabled control projects
-  its owner's reason (UCC-200) and dispatches nothing. The census reports unresolved_count=0. This census supersedes
+  its owner's reason (UCC-200) and dispatches nothing. One control is a pending exception, recorded 2026-10-09 and
+  left out of unresolved_count until its id is ruled: the chat's History list pin (Plans/assistant-chat-design.md#ACD-500
+  owns the control). Where its value lives is settled: the Home record's chat column holds History pinned
+  (Plans/storage-plan.md#SP-330); only its command or typed local action id is open. The census reports
+  unresolved_count=0. This census supersedes
   the fixed-zone rows that UIW-010's amendments and the 2026-08-04 Home rules list.
 gui_related: true
 gui_classification_reason: "The closed list of visible Home controls that the wiring must cover, one row each."
@@ -2064,6 +2068,7 @@ depends_on: [DL-180, UIW-010, UIW-012, UCC-200, UCC-203, F3-502, F3-630, F3-631,
 unblocks: [ATS-075]
 acceptance_criteria:
   - "Every control on the list maps to exactly one WM-090 row, and every home.* production entry maps to a control on the list: the census reports unresolved_count=0."
+  - "The History list pin is the one pending exception: it has no WM-090 row and is not counted in unresolved_count until its id is ruled; once ruled, it gets exactly one WM-090 row and the exception is removed."
   - "No row exists for a retired control on the list's retired part, and Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json records those rows as retired."
   - "A disabled control (for example Split right when the centre is too narrow to split, Reopen closed tab when no tab has been closed) shows its owner's reason and dispatches nothing."
   - "Every key label on the list shows the key that works where the app runs; a browser shows Alt+T, Alt+W, Alt+Shift+T and Alt+` for the four browser-owned chords."

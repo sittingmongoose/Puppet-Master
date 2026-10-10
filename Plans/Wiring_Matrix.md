@@ -5455,7 +5455,7 @@ ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-188, ContractName:Plan
 
 Jared's home redesign (`Plans/Decision_Log.md#DL-180` to `#DL-183`) replaces Home's four fixed editor panels, its singleton dashboard, its movable chat and its docked terminal sections with one universal panel system, and rebuilds the terminal as one session per tab. He called the wiring for it "hyper critical". This addendum gives every control the redesign adds one wiring row: a production entry in `Plans/Wiring_Matrix.production.json` when the control dispatches a command, or a typed local action or "dispatches nothing" when it does not; it retires every row whose control is gone, and it makes each row name the one event set its command emits. Command ids, arguments, availability and disabled reasons are `Plans/UI_Command_Catalog.md#UCC-200` to `#UCC-203` and `Plans/Commands_System.md#CS-100` and `#CS-101`; this addendum does not restate them. The census rules are `Plans/UI_Wiring_Rules.md#UIW-040` to `#UIW-042`.
 
-It adds WM-090 (Home panels), WM-091 (the terminal tab) and WM-092 (event sets corrected). It retires 51 `home.*` production entries (the `home.editor_panel_N.*`, `home.file_manager.open_panel_N`, `home.more_options.open_panel_N` and `open_browser_panel_N`, `home.drop_target.*`, `home.dashboard.*`, `home.chat.grab`, `home.terminal_section.*`, `home.more_options.collapse_bottom` and the fixed resizers) and 8 catalog entries whose commands retired or became aliases, and adds 94 `home.*` and 36 `terminal.*` entries; the five kept `home.*` entries are rebuilt on the v2 model, and the open routes carry the placement fields of `Plans/Contracts_V0.md#CV-360`. The retired entries are listed in `Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json` (`control_census.retired_rows_2026_10_09`), the file's own record of retired rows. It amends WM-021, WM-022, WM-041 and WM-045, the runtime-recovery terminal table and the PM7 settled interaction table with dated notes. It does not edit WM-065 to WM-075.
+It adds WM-090 (Home panels), WM-091 (the terminal tab) and WM-092 (event sets corrected). It retires 51 `home.*` production entries (the `home.editor_panel_N.*`, `home.file_manager.open_panel_N`, `home.more_options.open_panel_N` and `open_browser_panel_N`, `home.drop_target.*`, `home.dashboard.*`, `home.chat.grab`, `home.terminal_section.*`, `home.more_options.collapse_bottom` and the fixed resizers) and 8 catalog entries whose commands retired or became aliases, and adds 103 `home.*` and 36 `terminal.*` entries (108 `home.*` entries in all with the five kept ones); the five kept `home.*` entries are rebuilt on the v2 model, and the open routes carry the placement fields of `Plans/Contracts_V0.md#CV-360`. The retired entries are listed in `Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json` (`control_census.retired_rows_2026_10_09`), the file's own record of retired rows. It amends WM-021, WM-022, WM-041 and WM-045, the runtime-recovery terminal table and the PM7 settled interaction table with dated notes. It does not edit WM-065 to WM-075.
 
 ### Home controls and their wiring
 
@@ -5599,7 +5599,7 @@ Every control below commits through the gesture transaction of `Plans/UI_Wiring_
 | The popped-out chat window > Dock back (return) | `cmd.panel.redock` with `chat` | `home.chat.dock_back` | `panel.redocked` |
 | Home options menu > Dock the chat back | `cmd.panel.redock` with `chat` | `home.more_options.chat_dock_back` | `panel.redocked` |
 | Home options menu > Keep the chat open in narrow windows | `cmd.settings.transaction.preview` then `cmd.settings.transaction.apply` over its SSYS-050 row | none | the existing `catalog.settings_transaction_preview` and `catalog.settings_transaction_apply` rows; receipt, no event |
-| The History list's pin (5.6 Pro History flyout) | id pending: no command or local action is settled yet (W4's open question; ACD-500 owns the control) | none | no row until the id is settled |
+| The History list's pin (5.6 Pro History flyout) | id pending: no command or local action id is settled yet; its value is History pinned in the Home record's chat column (`Plans/storage-plan.md#SP-330`); ACD-500 owns the control | none | no row until the id is ruled (UIW-040's pending exception) |
 | The chat's 32 px edge strip in a narrow window: opening the chat from it | nothing: a narrow-ladder state, never saved (F3-636) | none | none |
 
 **The narrow switcher** (`Plans/FinalGUISpec.md#F3-636`)
@@ -5655,7 +5655,7 @@ canonical_text: >-
   panel.undocked and panel.redocked for the chat only. ui.panel_tab.activate, ui.workspace_layout.maximize and
   ui.workspace_layout.focus_panel are typed local actions with no entry. Fifty-one home.* entries of the fixed-zone
   model retire and are recorded in the reconciliation file; five are rebuilt on the v2 model. The History list's pin
-  has no row until its id is settled.
+  has no row until its id is ruled (UIW-040's pending exception).
 gui_related: true
 gui_classification_reason: "Binds every visible control of the universal panels, the chat column and the Home keys to exactly one command or typed local action."
 split_recommended: false
