@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="pmg-build" content="41bcfede94c9">
+<meta name="pmg-build" content="770156b24022">
 <title>Puppet Master glyphs: the neon set for every surface</title>
 <script>
 /* first paint: the look, mode and motion come from the URL (frames) or the last choice, before any CSS paints */
@@ -3144,7 +3144,10 @@ window.PMG_DATA = {"decisions":{"cards":[{"id":"GLY-0","title":"Make this the Pu
     /* a PMG family lists its new glyphs first, then the chat glyphs it maps (G.map), so a surface's whole set is in one place */
     var mine = records.filter(function (r) { return (r.families || [r.family]).indexOf(f.id) >= 0; });
     var chatRole = function (n) { var l = chat.filter(function (x) { return x.name === n; })[0] || N.list().filter(function (x) { return x.name === n; })[0]; return l || {}; };
-    return mine.filter(function (r) { return r.source === 'pmg'; }).concat(mine.filter(function (r) { return r.source !== 'pmg'; })).map(function (r) {
+    /* its own new glyphs first, then new glyphs it borrows from another family (the status marks), then chat glyphs */
+    var own = mine.filter(function (r) { return r.source === 'pmg' && r.family === f.id; });
+    var borrowed = mine.filter(function (r) { return r.source === 'pmg' && r.family !== f.id; });
+    return own.concat(borrowed, mine.filter(function (r) { return r.source !== 'pmg'; })).map(function (r) {
       var l = r.source === 'pmg' ? r : chatRole(r.name);
       return { name: r.name, role: l.role || 'concept', act: l.act, aliases: l.aliases || [], source: r.source, rec: r };
     });
