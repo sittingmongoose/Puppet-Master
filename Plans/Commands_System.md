@@ -4337,11 +4337,10 @@ split_recommended: false
 depends_on: [CS-013, CS-039, CS-050, DL-180]
 unblocks: []
 acceptance_criteria:
-  - The reserved-prefix registry enumerates all sixteen reserved families with Plans/UI_Command_Catalog.md as the sole minting authority.
+  - The reserved-prefix registry enumerates all eighteen reserved families (sixteen until 2026-10-09, when CS-100 added cmd.panel_tab. and cmd.workspace_layout.) with Plans/UI_Command_Catalog.md as the sole minting authority.
   - User Command creation whose name collides into any reserved prefix is rejected, consistent with the AC-CMD02/AC-CMD10 reserved-name boundaries.
   - cmd.actions. is absent from the reserved registry; no cmd.actions.* command can be minted, and GitHub Actions IDs reconcile under cmd.github.
   - No prototype command ID under a newly reserved prefix is treated as real until it has a UI_Command_Catalog row plus Wiring_Matrix reverse coverage, with fail-closed dispatch on mismatch.
-  - "From 2026-10-09 the registry also names cmd.panel_tab. and cmd.workspace_layout. (CS-100), eighteen families in all."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future catalog/wiring reverse-coverage checks for cmd.* references
@@ -4497,11 +4496,11 @@ owner_hints: [Plans/Commands_System.md, Plans/UI_Command_Catalog.md]
 
 ## Run & Debug Revival Addendum - 2026-07-27
 
-This addendum mints the `cmd.run_debug.*` dispatch family for the classical DAP debugger (§7.2), reaffirms the `cmd.debug.*` assistant-investigation boundary (CS-009, §7.1), and registers the `cmd.run.*` orchestrator run-control trio (§7.3) referenced by the `run_interrupted` CTA card (`Plans/FinalGUISpec.md`). Bottom-zone Debug tab and rail "Debug & Run" panel layout and state-machine canon lives in `Plans/FinalGUISpec.md` Run & Debug Revival Addendum (F3-482..F3-496) and is consumed here by unit id only, never restated. `Concepts/**` materials remain source-lineage-only. Row-level command registration remains owned by `Plans/UI_Command_Catalog.md`; this addendum states family semantics, availability and confirmation classes, and the closed disabled-reason set exactly once and does not mint catalog rows. It does not edit existing PlanUnits, retired bridges, `preserved_exact_tokens`, or canonical_text, and it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks.
+This addendum mints the `cmd.run_debug.*` dispatch family for the classical DAP debugger (§7.2), reaffirms the `cmd.debug.*` assistant-investigation boundary (CS-009, §7.1), and registers the `cmd.run.*` orchestrator run-control trio (§7.3) referenced by the `run_interrupted` CTA card (`Plans/FinalGUISpec.md`). Bottom-zone Debug tab (the Debug Console tab in the universal panels from 2026-10-09, DL-180) and rail "Debug & Run" panel layout and state-machine canon lives in `Plans/FinalGUISpec.md` Run & Debug Revival Addendum (F3-482..F3-496) and is consumed here by unit id only, never restated. `Concepts/**` materials remain source-lineage-only. Row-level command registration remains owned by `Plans/UI_Command_Catalog.md`; this addendum states family semantics, availability and confirmation classes, and the closed disabled-reason set exactly once and does not mint catalog rows. It does not edit existing PlanUnits, retired bridges, `preserved_exact_tokens`, or canonical_text, and it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks.
 
 ### 7.2 Run & Debug dispatch family (cmd.run_debug.*)
 
-Run & Debug actions use a dedicated canonical UICommand family, `cmd.run_debug.*`, for classical DAP debugger dispatch. These dispatch IDs are internal wiring identifiers for the classical debugger surfaces — the rail "Debug & Run" panel and the bottom-zone Debug tab per `Plans/FinalGUISpec.md` F3-482/F3-485/F3-490 (referenced) — not User Commands. They are distinct from the assistant-investigation `cmd.debug.*` family (§7.1) per the CS-009 boundary: `cmd.debug.*` remains scoped to assistant-thread investigation control, and classical debugger dispatch uses only `cmd.run_debug.*`.
+Run & Debug actions use a dedicated canonical UICommand family, `cmd.run_debug.*`, for classical DAP debugger dispatch. These dispatch IDs are internal wiring identifiers for the classical debugger surfaces — the rail "Debug & Run" panel and the Debug Console tab in the universal panels (amended 2026-10-09, DL-180: formerly the bottom-zone Debug tab; see the Run & Debug reveal rows in the DL-180 to DL-183 addendum) per `Plans/FinalGUISpec.md` F3-482/F3-485/F3-490 (referenced) — not User Commands. They are distinct from the assistant-investigation `cmd.debug.*` family (§7.1) per the CS-009 boundary: `cmd.debug.*` remains scoped to assistant-thread investigation control, and classical debugger dispatch uses only `cmd.run_debug.*`.
 
 | Command ID | Label | Description | Preconditions |
 |---|---|---|---|
