@@ -45,6 +45,9 @@
 .pmw-msearch:focus-within { border-color: color-mix(in srgb, var(--pmw-accent) 60%, transparent); }
 .pmw-msearchin { flex: 1 1 auto; min-width: 0; height: 30px; border: 0; outline: none; background: transparent; color: var(--pmw-text); font: inherit; font-size: 13px; }
 .pmw-msearchin::placeholder { color: var(--pmw-text-3); }
+/* one focus ring: the field's box. The page's input:focus-visible outline (and Glass's 3 px halo) would draw a second
+   ring inside it, so the input itself never shows one (the accessibility focus styles' !important rules still win) */
+.pmw-msearch .pmw-msearchin:is(:focus, :focus-visible) { outline: none; box-shadow: none; }
 .pmw-mlist { display: flex; flex-direction: column; min-height: 0; }
 .pmw-msec { padding: 8px 8px 4px; font-size: 11px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--pmw-text-3); font-family: var(--pm-font-code); }
 .pmw-mdiv { height: 1px; margin: 5px 3px; background: var(--pmw-pop-line); }
@@ -73,9 +76,11 @@
 .pmw-mitem.is-disabled { opacity: .55; cursor: default; }
 .pmw-mitem.is-danger b { color: var(--pmw-bad); }
 .pmw-mlead { flex: none; width: 24px; height: 24px; display: grid; place-items: center; border-radius: 7px; background: color-mix(in srgb, var(--pmw-text) 8%, transparent); color: var(--pmw-accent); }
-.pmw-mlead .pmw-kico, .pmw-mlead .pmw-ico { color: var(--pmw-accent); }
-.pmw-mcheck { background: transparent; color: transparent; }
-.pmw-mcheck.on { color: var(--pmw-accent); }
+/* the lead's drawing takes the lead's colour, so the looks' hover inversions (Retro, NieR cursor) reach it too */
+.pmw-mlead .pmw-kico, .pmw-mlead .pmw-ico { color: inherit; }
+/* a check slot: only a checked row shows its check (hidden, not transparent, so no hover colour can bring it back) */
+.pmw-mcheck { background: transparent; }
+.pmw-mcheck:not(.on) > * { visibility: hidden; }
 .pmw-mcopy { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; }
 .pmw-mcopy b { font-weight: 600; font-size: 13px; line-height: 18px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .pmw-mcopy span { font-size: 12px; line-height: 16px; color: var(--pmw-text-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -106,9 +111,18 @@
 .pmw-mfoot { margin: 6px 0 0; padding: 6px 8px 2px; border-top: 1px solid var(--pmw-pop-line); font-size: 12px; color: var(--pmw-text-3); }
 .pmw-mpromptrow { padding: 2px 2px 8px; }
 .pmw-mpromptin { width: 100%; box-sizing: border-box; height: 32px; padding: 0 9px; border: 1px solid var(--pmw-pop-line); border-radius: var(--pmw-row-radius); }
+.pmw-mpromptrow .pmw-mpromptin:is(:focus, :focus-visible) { outline: none; box-shadow: none; border-color: color-mix(in srgb, var(--pmw-accent) 60%, transparent); }
 .pmw-mpromptbtns { display: flex; justify-content: flex-end; gap: 6px; padding: 0 2px 2px; }
 .pmw-btn { height: 28px; padding: 0 12px; border: 1px solid var(--pmw-pop-line); border-radius: 7px; background: transparent; color: var(--pmw-text); font: inherit; font-size: 12px; cursor: pointer; }
 .pmw-btn:hover { background: var(--pmw-hover); }
 .pmw-btn-primary { background: var(--pmw-accent); border-color: transparent; color: var(--pmw-surface); font-weight: 600; }
 .pmw-btn-primary:hover { background: color-mix(in srgb, var(--pmw-accent) 88%, #fff); }
 .pmw-anchor-open { background: var(--pmw-hover); }
+/* Friendly's page rule [data-theme^="friendly"] button { border-radius: var(--radius-md) } (0,1,1, 14 px) outranks the
+   one-class rules here and turns 20-36 px controls into capsules (the pill ban); these restate the picker's radii at that
+   weight, in Friendly only, so kinds' own two-class rules still win and NieR's square part keeps its square corners */
+:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button.pmw-mitem { border-radius: var(--pmw-row-radius); }
+:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button.pmw-mcell { border-radius: 0 var(--pmw-row-radius) var(--pmw-row-radius) 0; }
+:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button.pmw-mback { border-radius: 7px; }
+:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button.pmw-mlink { border-radius: 5px; }
+:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button.pmw-btn { border-radius: 7px; }

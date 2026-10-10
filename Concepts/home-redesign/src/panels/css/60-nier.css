@@ -53,6 +53,10 @@ html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmw-panel[data-focused]
 html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-tab .pmw-tlabel { text-transform: uppercase; letter-spacing: .08em; font-size: 11px; }
 html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-more { font-variant: small-caps; letter-spacing: .08em; box-shadow: inset 1px 0 0 rgba(var(--o55-nier-ink-rgb), .45); border-radius: 0; }
 html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-hrow { text-transform: uppercase; letter-spacing: .07em; }
+/* buttons do not inherit text-transform: the row's actions (and a button inside a fact) take the caption with the facts;
+   paths and code stay exactly as written */
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-hrow :is(.pmw-hbtn, .pmw-hfact button) { text-transform: inherit; letter-spacing: inherit; }
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-hrow .pmw-hfact.is-mono { text-transform: none; letter-spacing: normal; }
 html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-mhead { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); border-bottom: 0; margin: -6px -6px 6px; padding: 8px 12px; }
 html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-mhead strong { text-transform: uppercase; letter-spacing: .16em; font-size: 11px; }
 html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-mlist { counter-reset: pmw-sec; }

@@ -8,7 +8,11 @@
      PMW.frames.section(title, meta, body) -> <section>
      PMW.frames.notice(text, { state, icon }) -> <p>
      PMW.frames.tiles([{ label, value, sub, state }]) -> el
-     PMW.frames.button({ label, icon, primary, run, menu }) -> <button> (32 px document action)
+     PMW.frames.button({ id, label, icon, primary, danger, pressed, disabled, reason, detail, run, menu }) -> <button>
+       (32 px document action; id becomes data-id, pressed becomes aria-pressed)
+   An action list (doc and run) takes button specs or ready-made elements; the frame returns the buttons it holds as
+   frame.actionEls ({ id: button }, by spec id or an element's data-id) and frame.actionsEl (the row), so a kind can set
+   aria-pressed on a toggle without rebuilding the frame.
    Every frame scrolls inside its own .pmw-frame-scroll; sizes key on @container pmw-body. */
 
 var frames = PMW.frames = {};
@@ -81,7 +85,8 @@ frames.tiles = function (items) {
 
 frames.button = function (b) {
   var el = h('button', { type: 'button', class: 'pmw-act' + (b.primary ? ' is-primary' : '') + (b.danger ? ' is-danger' : ''), 'data-pmh': 'icon',
-    'data-pm-hover-label': b.label, 'data-pm-hover-detail': b.detail || '' });
+    'data-pm-hover-label': b.label, 'data-pm-hover-detail': b.detail || '', 'data-id': b.id != null ? String(b.id) : null });
+  if (b.pressed != null) el.setAttribute('aria-pressed', b.pressed ? 'true' : 'false');
   if (b.icon) el.appendChild(icon(b.icon, { size: 14 }));
   el.appendChild(h('span', { text: b.label }));
   if (b.disabled) { el.setAttribute('aria-disabled', 'true'); if (b.reason) el.setAttribute('data-disabled-reason', b.reason); }
@@ -94,6 +99,19 @@ frames.button = function (b) {
   return el;
 };
 
+/* a frame's action row from button specs and ready-made elements: { el (null when empty), byId: { id: button } } */
+function actionRow(cls, list) {
+  var byId = {}, kids = [];
+  (list || []).forEach(function (b) {
+    if (!b) return;
+    var el = b.nodeType === 1 ? b : frames.button(b);
+    var id = b.nodeType === 1 ? el.getAttribute('data-id') : (b.id != null ? String(b.id) : null);
+    if (id != null && !byId[id]) byId[id] = el;
+    kids.push(el);
+  });
+  return { el: kids.length ? h('div', { class: cls }, kids) : null, byId: byId };
+}
+
 frames.doc = function (spec) {
   var scroll = h('div', { class: 'pmw-frame-scroll' });
   var col = h('article', { class: 'pmw-doc' + (spec.cls ? ' ' + spec.cls : '') });
@@ -102,7 +120,8 @@ frames.doc = function (spec) {
   if (spec.badge) titleRow.appendChild(h('span', { class: 'pmw-doc-badge', text: spec.badge }));
   head.appendChild(titleRow);
   if (spec.meta) head.appendChild(frames.meta(spec.meta));
-  if (spec.actions && spec.actions.length) head.appendChild(h('div', { class: 'pmw-doc-actions' }, spec.actions.map(frames.button)));
+  var acts = actionRow('pmw-doc-actions', spec.actions);
+  if (acts.el) head.appendChild(acts.el);
   col.appendChild(head);
   var body = h('div', { class: 'pmw-doc-body' });
   append(body, spec.body);
@@ -111,6 +130,7 @@ frames.doc = function (spec) {
   var wrap = h('div', { class: 'pmw-frame' }, [scroll]);
   if (spec.footer) wrap.appendChild(h('footer', { class: 'pmw-doc-footer' }, [spec.footer]));
   wrap._body = body; wrap._head = head; wrap._scroll = scroll;
+  wrap.actionEls = acts.byId; wrap.actionsEl = acts.el;
   return wrap;
 };
 
@@ -122,7 +142,8 @@ frames.run = function (spec) {
   if (spec.kind) left.appendChild(h('p', { class: 'pmw-run-kind' }, [spec.kind.icon ? kindIcon(spec.kind.icon) : null, h('span', { text: spec.kind.word || '' })]));
   if (spec.status) left.appendChild(frames.meta(spec.status));
   head.appendChild(left);
-  if (spec.actions && spec.actions.length) head.appendChild(h('div', { class: 'pmw-run-acts' }, spec.actions.map(frames.button)));
+  var acts = actionRow('pmw-run-acts', spec.actions);
+  if (acts.el) head.appendChild(acts.el);
   view.appendChild(head);
   if (spec.plate) view.appendChild(h('figure', { class: 'pmw-run-plate' }, [spec.plate]));
   var main = h('div', { class: 'pmw-run-main' });
@@ -138,6 +159,7 @@ frames.run = function (spec) {
   scroll.appendChild(view);
   var wrap = h('div', { class: 'pmw-frame' }, [scroll]);
   wrap._main = main; wrap._tabs = tabsEl; wrap._head = head; wrap._scroll = scroll;
+  wrap.actionEls = acts.byId; wrap.actionsEl = acts.el;
   return wrap;
 };
 

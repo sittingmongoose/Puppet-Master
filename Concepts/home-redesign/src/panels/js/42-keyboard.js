@@ -148,7 +148,9 @@ doc.addEventListener('keydown', function (e) {
   if (!inCentre && !inChat) return;
   var entry = focusedTabEntry();
   if (entry && entry.instance && entry.instance.wantsKey) { try { if (entry.instance.wantsKey(e)) return; } catch (_) {} }
-  var text = isTextTarget(t);
+  // a text target inside [data-pmw-host-keys] (a kind's hidden textarea for IME input, an editor or a terminal) is
+  // not a text field to the host: its tab's wantsKey above has already kept what it types, the rest are host keys
+  var text = isTextTarget(t) && !(t.closest && t.closest('[data-pmw-host-keys]'));
   // typing: on a Mac, Option+letter and Option+` type characters (a dagger, the grave dead key) in a text field, and a
   // dead key is the start of a character anywhere; the Alt stand-ins leave both alone (Windows and Linux Alt+T types
   // nothing, so it still works from a field there)

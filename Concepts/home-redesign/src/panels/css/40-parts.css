@@ -14,7 +14,8 @@
 }
 .pmw-hrow-left { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; gap: 12px; overflow: hidden; white-space: nowrap; }
 .pmw-hfact { display: inline-flex; align-items: center; gap: 5px; min-width: 0; color: var(--pmw-text-2); }
-.pmw-hfact-t { overflow: hidden; text-overflow: ellipsis; }
+.pmw-hfact-t { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.pmw-hfact.is-grow { flex: 1 1 auto; min-width: 0; }
 .pmw-hfact.is-mono { font-family: var(--pm-font-code); font-size: 11.5px; color: var(--pmw-text); }
 .pmw-hfact.is-strong { color: var(--pmw-text); }
 .pmw-hfact.is-dim { color: var(--pmw-text-3); }
@@ -37,6 +38,7 @@
   white-space: nowrap;
   cursor: pointer;
 }
+.pmw-hbtn[hidden] { display: none; }
 .pmw-hbtn:hover, .pmw-hbtn.pmw-anchor-open { background: var(--pmw-hover); color: var(--pmw-text); }
 .pmw-hbtn:focus-visible { outline: 2px solid var(--pmw-focus); outline-offset: -2px; }
 .pmw-hbtn[aria-pressed="true"] { background: var(--pmw-press); color: var(--pmw-text); }
@@ -44,6 +46,11 @@
 .pmw-hbtn.is-primary { color: var(--pmw-accent); }
 .pmw-hbtn.is-danger { color: var(--pmw-bad); }
 .pmw-hbtn .pmw-ico { width: 14px; height: 14px; }
+/* Friendly's page rule [data-theme^="friendly"] button { border-radius: var(--radius-md) } (0,1,1, 14 px) outranks the
+   one-class rules here and turns 20-36 px controls into capsules (the pill ban); these restate the header row's and the
+   launcher's radii at that weight, in Friendly only, so kinds' own two-class rules still win and NieR's square part keeps its square corners */
+:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button.pmw-hbtn { border-radius: 6px; }
+:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button:is(.pmw-empty-btn, .pmw-empty-cell) { border-radius: var(--pmw-row-radius); }
 @container pmw-body (max-width: 519px) {
   .pmw-hbtn { padding: 0; width: 24px; }
   .pmw-hbtn-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }

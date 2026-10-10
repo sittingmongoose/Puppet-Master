@@ -117,3 +117,31 @@ PMW.icon = icon;
 PMW.kindIcon = kindIcon;
 PM_HOME.icons = Object.keys(ICON_PATHS);
 PM_HOME.icon = function (name, opts) { return icon(name, opts); };
+
+/* PMW.registerIcon(name, path, retroGlyph): a kind adds a named icon (an SVG path in the same 16 px stroke grammar)
+   with its one-cell Retro glyph, so api.update({ icon: name }), the strip, the menus and the header row can all use it
+   (the run kind's per-type marks: review, room, brainstorm). The core set is never replaced; a name a kind registered
+   may be registered again. Returns true when the icon is in the set. */
+var KIND_ICONS = {};
+PMW.registerIcon = function (name, path, retroGlyph) {
+  if (typeof name !== 'string' || !/^[A-Za-z][\w-]*$/.test(name) || typeof path !== 'string' || !path.trim() || path.indexOf('<') >= 0) {
+    try { console.error('[pm-home] registerIcon needs a name and an SVG path'); } catch (_) {}
+    return false;
+  }
+  if (ICON_PATHS[name] && !KIND_ICONS[name]) {
+    if (ICON_PATHS[name] !== path) { try { console.warn('[pm-home] icon ' + name + ' is a core icon and was not replaced'); } catch (_) {} }
+    return true;
+  }
+  KIND_ICONS[name] = 1;
+  ICON_PATHS[name] = path;
+  var glyph = retroGlyph == null ? '' : String(retroGlyph).trim();
+  if (glyph) RETRO_GLYPH[name] = Array.from(glyph).slice(0, 2).join(''); else delete RETRO_GLYPH[name];
+  if (PM_HOME.icons.indexOf(name) < 0) PM_HOME.icons.push(name);
+  // a strip that already drew this name (with the fallback drawing) draws it again on the next paint
+  if (PMW.state && PMW.state.layout && PMW.render) {
+    qsa('.pmw-tico').forEach(function (el) { if (el._name === name) el._name = null; });
+    PMW.render.schedule({ animate: false });
+  }
+  return true;
+};
+PM_HOME.registerIcon = PMW.registerIcon;

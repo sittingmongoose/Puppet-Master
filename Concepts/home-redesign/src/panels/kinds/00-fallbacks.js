@@ -26,6 +26,13 @@ var FALLBACK = {
   'debug-console': { label: 'Debug Console', group: 'Tools', icon: 'console', prefixes: ['debug-console:'], plus: { order: 73, group: 'tools' } }
 };
 PMW.FALLBACK_KINDS = FALLBACK;
+/* one tab per terminal session: an open naming a session reveals its tab; without one a new session id is minted */
+var termSeq = 0;
+FALLBACK.terminal.idFor = function (spec) {
+  if (spec && spec.session != null && spec.session !== '') return 'terminal:' + spec.session;
+  termSeq += 1;
+  return 'terminal:s' + Date.now().toString(36) + termSeq;
+};
 
 PMW.bus.on('boot:kinds', function () {
   var have = PM_HOME.kinds();
