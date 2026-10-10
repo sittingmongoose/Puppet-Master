@@ -37437,6 +37437,7 @@ invariants.
   (e.g., full prompt breakdown, BSD sensitivity, catch-up configuration, and stage bindings) is
   placed behind intentional disclosure toggles. Back Seat Driver's section is three plain facts and
   three native disclosures with no metric-card grid (DL-122, F3-580).
+
 Amended 2026-10-10 (lead ruling L21): the ban on side stripes is now shell-wide (DR-069); the structural rails of working activities stay as its carve-out.
 
 - **Strict Elimination of Left-Edge Accent Stripes (APR-034):** Decorative left-edge vertical
