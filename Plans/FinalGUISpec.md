@@ -43368,12 +43368,12 @@ its side panels, their segmented strips, its More tray and its looks are not hom
 terminal tab's own chrome, features, appearance, effects, faces, images and agents are F3-640 to F3-646
 (DL-181 to DL-183). Behaviour and records stay with their owners and are cited, never restated: the v2 Home layout
 record (`Plans/storage-plan.md#SP-330`, `Plans/home_workspace_layout_v2.schema.json`), the placement fields and the
-layout event (`Plans/Contracts_V0.md#CV-360`, `#CV-361`), the commands (`Plans/UI_Command_Catalog.md#UCC-200` to
-`#UCC-203`, `Plans/Commands_System.md#CS-100`, `#CS-101`), wiring (`Plans/Wiring_Matrix.md#WM-090`,
-`Plans/UI_Wiring_Rules.md#UIW-040`, `#UIW-041`), settings (`Plans/Settings_System.md#SSYS-050`), the dashboard's
+layout event (`Plans/Contracts_V0.md#CV-360`, `Plans/Contracts_V0.md#CV-361`), the commands (`Plans/UI_Command_Catalog.md#UCC-200` to
+`Plans/UI_Command_Catalog.md#UCC-203`, `Plans/Commands_System.md#CS-100`, `Plans/Commands_System.md#CS-101`), wiring (`Plans/Wiring_Matrix.md#WM-090`,
+`Plans/UI_Wiring_Rules.md#UIW-040`, `Plans/UI_Wiring_Rules.md#UIW-041`), settings (`Plans/Settings_System.md#SSYS-050`), the dashboard's
 boards (`Plans/Widget_System.md#WS-030`), the file tree's opens (`Plans/FileManager.md#F-090`), the chat's opens and
-its port (`Plans/assistant-chat-design.md#ACD-500`, `#ACD-501`), the DRY rules (`Plans/DRY_Rules.md#DR-065` to
-`#DR-071`) and the words (`Plans/Glossary.md#G-030`: a panel is a tab group in the home centre, the left rail's panels
+its port (`Plans/assistant-chat-design.md#ACD-500`, `Plans/assistant-chat-design.md#ACD-501`), the DRY rules (`Plans/DRY_Rules.md#DR-065` to
+`Plans/DRY_Rules.md#DR-071`) and the words (`Plans/Glossary.md#G-030`: a panel is a tab group in the home centre, the left rail's panels
 are side panels, a workspace tab is still a project tab). The panels concept (its host contract, its numbers as built
 and the anatomy mock) is source lineage only: its class names, data attributes, scripts, storage keys, demo contents
 and harness hooks are not canon.
