@@ -2457,6 +2457,8 @@ impl FileGuard {
   - **Logging:** Blocked commands are logged to the FileSafe event log; accessible from Settings > Advanced (event log viewer or link).
 - **Terminal (FinalGUISpec §7.16):** When a command is blocked by FileSafe, terminal output uses **RED** with prefix **"[BLOCKED] Blocked by FileSafe"**.
 
+Amended 2026-10-09 (DL-181, DL-184): the blocked line is for a command an agent sent that FileSafe refused; it uses the active terminal scheme's red under the contrast floor (`Plans/FinalGUISpec.md#F3-642`) rather than a fixed RED, and the in-chat card above shows its state with a tinted surface and text label instead of an orange left border, which DL-184 bans (`Plans/DRY_Rules.md#DR-069`, `#F2-135`).
+
 **3. Dashboard / status (FinalGUISpec §7.2)**
 
 - **FileSafe status (optional):** Compact card showing guard count (e.g. "FileSafe: 3/3 guards active") with link to **Settings > Advanced > FileSafe**.
@@ -3291,16 +3293,19 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FileSafe.md
 canonical_text: >-
-  Projection trust and hostability become FileSafe guard-visible context when actions launch from
-  FinalGUISpec, Widget_System.md, or Orchestrator_Page.md, requiring trust-state coverage for
-  projection-backed tabs, widgets and panels, terminal widget identity, Dashboard and Progress
-  hostability, filters, focused-run scope, and widget-local display config.
+  Projection trust and hostability become FileSafe guard-visible context when actions launch from FinalGUISpec,
+  Widget_System.md, or Orchestrator_Page.md, requiring trust-state coverage for projection-backed tabs, widgets and
+  panels, terminal widget identity, Dashboard and Progress hostability, filters, focused-run scope, and widget-local
+  display config.
+  Amended 2026-10-09 (DL-181): terminal widget identity means the terminal tab's identity in the universal panels, its
+  panel tab id and its terminal_session_id (`Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180`).
 gui_related: true
 gui_classification_reason: >-
   This unit governs user-visible shell, projection, widget, tab, and hostability context needed
   for safe FileSafe actions.
 split_recommended: false
-depends_on: []
+depends_on:
+- DL-181
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -3335,8 +3340,10 @@ preserved_exact_tokens:
 - "focused-run"
 - "widget-local display config"
 negative_constraints: []
-compatibility_only_notes: []
-stale_retired_dispositions: []
+compatibility_only_notes:
+- "terminal widget identity is the lineage name for the terminal tab's identity since 2026-10-09 (DL-181)."
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): terminal widget identity reads as the terminal tab's panel tab id and terminal_session_id."
 owner_boundary_notes:
 - "FinalGUISpec, Widget_System.md, and Orchestrator_Page.md provide projection and hostability context that FileSafe consumes when relevant to guard decisions."
 owner_hints:
@@ -10456,15 +10463,22 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FileSafe.md
 canonical_text: >-
-  Assistant Chat shows a persistent warning chip when YOLO is enabled and FileSafe guards are
-  active, renders blocked commands as inline approval cards with orange border and actions to
-  approve once or approve and add to list, auto-dismisses after 60 seconds, logs blocked
-  commands, and shows terminal blocked output in red with the FileSafe prefix.
+  Assistant Chat shows a persistent warning chip when YOLO is enabled and FileSafe guards are active, renders blocked
+  commands as inline approval cards with orange border and actions to approve once or approve and add to list,
+  auto-dismisses after 60 seconds, logs blocked commands, and shows terminal blocked output in red with the FileSafe
+  prefix.
+  Amended 2026-10-09 (DL-181, DL-184): the terminal's blocked line is shown for a command an agent sent that FileSafe
+  refused, so it never reached the shell; it is drawn in the active terminal scheme's red under the contrast floor
+  (`Plans/FinalGUISpec.md#F3-642`), not a fixed RED, and keeps the prefix. The approval card's orange left border is a
+  coloured side border, which DL-184 bans (`Plans/DRY_Rules.md#DR-069`): the card shows its state with a tinted
+  surface and a text label instead.
 gui_related: true
 gui_classification_reason: >-
   This unit defines Assistant Chat and terminal user-visible blocked-command behavior.
 split_recommended: false
-depends_on: []
+depends_on:
+- DL-181
+- DL-184
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -10497,8 +10511,10 @@ preserved_exact_tokens:
 - "FinalGUISpec §7.16"
 - "FileSafe event log"
 negative_constraints: []
-compatibility_only_notes: []
-stale_retired_dispositions: []
+compatibility_only_notes:
+- "The tokens Orange left border and RED are retired lineage since 2026-10-09 (DL-184, DL-181); the exact strings of the card, its actions and the blocked prefix stand."
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181, DL-184): the terminal blocked line uses the scheme's red, and the approval card drops its orange side border for a tinted surface and text label."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FileSafe.md"
@@ -13816,17 +13832,32 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FileSafe.md
 canonical_text: >-
-  P1-SECURITY-CREDENTIAL-LOGGING (P1) is compiled as canonical Puppet Master intent for Credential and sensitive output redaction timing: Add RedactionSettlement stage before UI/render/persistence for tool/terminal/model outputs; keep secure raw vault only when required for replay with explicit policy. The preserved PM gap/delta is: Need a redaction-time ordering contract: raw tool output must not hit UI/transcript before redaction policy has a chance to apply, unless explicitly marked sensitive/raw local-only. The observed external-repo signal remains source-lineage evidence: Agent Zero security issue raises credential leakage concerns; Codex issue list has PostToolUse redaction-before-transcript-rendering problem; Cline PRs add credential lifecycle debug logging.
+  P1-SECURITY-CREDENTIAL-LOGGING (P1) is compiled as canonical Puppet Master intent for Credential and sensitive
+  output redaction timing: Add RedactionSettlement stage before UI/render/persistence for tool/terminal/model outputs;
+  keep secure raw vault only when required for replay with explicit policy. The preserved PM gap/delta is: Need a
+  redaction-time ordering contract: raw tool output must not hit UI/transcript before redaction policy has a chance to
+  apply, unless explicitly marked sensitive/raw local-only. The observed external-repo signal remains source-lineage
+  evidence: Agent Zero security issue raises credential leakage concerns; Codex issue list has PostToolUse
+  redaction-before-transcript-rendering problem; Cline PRs add credential lifecycle debug logging.
+  Amended 2026-10-09 (DL-181, DL-182): for the terminal, the RedactionSettlement stage applies to what leaves the live
+  screen: agent reads, chat previews and command cards, tool results, diagnostic bundles and logs. It never rewrites
+  the live terminal grid a person sees, which would break full-screen programs and cursor addressing. The saved
+  scrollback is this unit's raw local-only case: it keeps what the screen showed so a restored terminal looks as it
+  did (`Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-181`), and it qualifies only because it stays on this
+  machine and is excluded from backups, exports and sync (`Plans/storage-plan.md#SP-332`). Anything read out of it
+  (an agent read, a preview, a card, a bundle or a log) passes RedactionSettlement like the live screen.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
 - PDS-003
 - PNC-001
+- DL-181
 unblocks: []
 acceptance_criteria:
 - Secret fixture in tool output is redacted before GUI transcript render.
 - Privilege metadata logs actor/target/realm/transport without command secrets.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+- "Amended 2026-10-09 (DL-181): a secret fixture printed in a live terminal is redacted in agent reads, chat previews, tool results, diagnostic bundles and logs, while the live grid and the local saved scrollback show it as the program printed it."
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
@@ -13881,7 +13912,10 @@ preserved_exact_tokens:
 - agent0ai/agent-zero
 - cline/cline
 - openai/codex
-negative_constraints: []
+negative_constraints:
+- "Do not rewrite the live terminal grid before render (DL-181)."
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181, DL-182): terminal redaction applies to what leaves the live screen, not to the live grid or to the saved scrollback, which is this unit's raw local-only case because it never leaves this machine (SP-332)."
 observed_signal: Agent Zero security issue raises credential leakage concerns; Codex issue list has PostToolUse redaction-before-transcript-rendering problem; Cline PRs add credential lifecycle debug logging.
 pm_current_coverage: PM has FileSafe and privileged session metadata minimization.
 pm_gap_or_delta: 'Need a redaction-time ordering contract: raw tool output must not hit UI/transcript before redaction policy has a chance to apply, unless explicitly marked sensitive/raw local-only.'

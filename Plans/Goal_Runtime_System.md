@@ -4418,17 +4418,29 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  P1-AGENT-FOCUS-WATCHDOG (P1) is compiled as canonical Puppet Master intent for Agent focus/progress watchdog for GUI: Add AgentProgressHeartbeat event and Focus/Attention state for GoalRuns and terminal-bound agents. The preserved PM gap/delta is: Need GUI-visible per-agent watchdog: last action, last terminal snapshot, expected next check, stalled state, and user steering. The observed external-repo signal remains source-lineage evidence: Warp issue list includes agent loses focus/stops work; Codex goal docs recommend compact progress reports with current checkpoint/verified/remains/blocked; Cline has repeating tasks/stuck thinking reports.
+  P1-AGENT-FOCUS-WATCHDOG (P1) is compiled as canonical Puppet Master intent for Agent focus/progress watchdog for
+  GUI: Add AgentProgressHeartbeat event and Focus/Attention state for GoalRuns and terminal-bound agents. The
+  preserved PM gap/delta is: Need GUI-visible per-agent watchdog: last action, last terminal snapshot, expected next
+  check, stalled state, and user steering. The observed external-repo signal remains source-lineage evidence: Warp
+  issue list includes agent loses focus/stops work; Codex goal docs recommend compact progress reports with current
+  checkpoint/verified/remains/blocked; Cline has repeating tasks/stuck thinking reports.
+  Amended 2026-10-09 (DL-181): the next-check countdown, the manual snapshot trigger and the stalled state show on the
+  agent's chat or run surface, never as controls inside the terminal
+  (`Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180`); in the terminal tab the agent shows only its driving
+  row and mark (`Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-182`, `Plans/FinalGUISpec.md#F3-646`). The last
+  terminal snapshot is an agent read: rendered text with its read state, never raw bytes or images (SMPFS-182).
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
 - PDS-003
 - PNC-001
+- DL-181
 unblocks: []
 acceptance_criteria:
 - Long-running shell command exposes next-check countdown and manual snapshot trigger.
 - Agent stalled/no-heartbeat surfaces as attention_required without losing terminal session.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+- "Amended 2026-10-09 (DL-181): the countdown, snapshot trigger and stalled state render outside the terminal surface; a terminal snapshot is an SMPFS-182 agent read with a read state."
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
@@ -4480,7 +4492,10 @@ preserved_exact_tokens:
 - warpdotdev/warp
 - cline/cline
 - openai/codex
-negative_constraints: []
+negative_constraints:
+- "Do not put watchdog controls such as a countdown or a snapshot trigger inside the terminal surface (DL-181)."
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): watchdog controls live on the agent's chat or run surface, and terminal snapshots are SMPFS-182 agent reads."
 observed_signal: Warp issue list includes agent loses focus/stops work; Codex goal docs recommend compact progress reports with current checkpoint/verified/remains/blocked; Cline has repeating tasks/stuck thinking reports.
 pm_current_coverage: PM has Goal Runtime and closure registry concepts, but terminal/dev-loop progress integration can be stronger.
 pm_gap_or_delta: 'Need GUI-visible per-agent watchdog: last action, last terminal snapshot, expected next check, stalled state, and user steering.'
@@ -4575,13 +4590,29 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  P0-AGENT-CONTROL-PLANE-ENVELOPE (P0) is compiled as canonical Puppet Master intent for Agent control / autonomy / effort / resource envelope: Define AgentControlEnvelope with autonomy_mode, write_surface, provider/model/effort policy, tool/MCP permission ceiling, context/token budgets, loop budgets, wall-clock budgets, terminal/browser/device authority, child-spawn policy, cancellation/steering semantics, progress heartbeat, and receipt refs. The preserved PM gap/delta is: Controls are strong but scattered. PM needs one runtime envelope every main agent, subagent, delegated thread, background goal, terminal-bound task, browser/device session, and provider attempt must carry. The observed external-repo signal remains source-lineage evidence: Repeated failures cluster around agents/subagents inheriting wrong model or reasoning effort, running in circles, spending uncontrolled budget, or continuing after transport/tool failure. OpenCode and Codex show model/effort propagation confusion; Cline
-  and Agent Zero show loop/spend/resource failures; Warp/Codex show UI/runtime stall modes.
+  P0-AGENT-CONTROL-PLANE-ENVELOPE (P0) is compiled as canonical Puppet Master intent for Agent control / autonomy /
+  effort / resource envelope: Define AgentControlEnvelope with autonomy_mode, write_surface, provider/model/effort
+  policy, tool/MCP permission ceiling, context/token budgets, loop budgets, wall-clock budgets,
+  terminal/browser/device authority, child-spawn policy, cancellation/steering semantics, progress heartbeat, and
+  receipt refs. The preserved PM gap/delta is: Controls are strong but scattered. PM needs one runtime envelope every
+  main agent, subagent, delegated thread, background goal, terminal-bound task, browser/device session, and provider
+  attempt must carry. The observed external-repo signal remains source-lineage evidence: Repeated failures cluster
+  around agents/subagents inheriting wrong model or reasoning effort, running in circles, spending uncontrolled
+  budget, or continuing after transport/tool failure. OpenCode and Codex show model/effort propagation confusion;
+  Cline and Agent Zero show loop/spend/resource failures; Warp/Codex show UI/runtime stall modes.
+  Amended 2026-10-09 (DL-181): terminal authority in the envelope covers whether the agent may open its own terminals
+  (they open as background tabs), type into them, read terminals through SMPFS-182's agent reads, and ask a human for
+  a write grant on a terminal the human opened. It never carries a standing right to type into a human's terminal:
+  that grant is per terminal session, held in memory only and never stored
+  (`Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-182`), and a child never receives more terminal authority than
+  its parent. Exact field values are the envelope schema's; the write-grant and attribution fields are
+  `Plans/Contracts_V0.md#CV-362`'s.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
 - PDS-003
 - PNC-001
+- DL-181
 unblocks: []
 acceptance_criteria:
 - Every child run persists AgentControlEnvelope before first provider/tool call.
@@ -4589,6 +4620,7 @@ acceptance_criteria:
 - A child/subagent cannot exceed parent ceiling even if model/tool output requests it.
 - Completion receipts include envelope hash and final budget state.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+- "Amended 2026-10-09 (DL-181): no envelope, child or stored configuration carries a write grant to a human-opened terminal; terminal authority is checked before an agent opens, types into or reads a terminal."
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
@@ -4656,7 +4688,10 @@ preserved_exact_tokens:
 - Pi
 - Codex
 - Warp
-negative_constraints: []
+negative_constraints:
+- "Do not store an agent's terminal write grant in an AgentControlEnvelope or let a child inherit one (DL-181)."
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): terminal authority is defined against SMPFS-182 and never includes a stored write grant to a human's terminal."
 observed_signal: Repeated failures cluster around agents/subagents inheriting wrong model or reasoning effort, running in circles, spending uncontrolled budget, or continuing after transport/tool failure. OpenCode and Codex show model/effort propagation confusion; Cline and Agent Zero show loop/spend/resource failures; Warp/Codex show UI/runtime stall modes.
 pm_current_coverage: PM already has Goal Runtime role-policy, progress fingerprints, hard budgets, parent/child goals, verification repair loop, provider/model requested/effective identity, and approval boundaries.
 pm_gap_or_delta: Controls are strong but scattered. PM needs one runtime envelope every main agent, subagent, delegated thread, background goal, terminal-bound task, browser/device session, and provider attempt must carry.
