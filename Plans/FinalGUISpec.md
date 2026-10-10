@@ -2473,9 +2473,11 @@ Orchestrator consumes the named Progress catalog from FinalGUISpec Appendix C. T
 
 ### 7.2 Dashboard
 
-Dashboard is the first-pass operational summary surface. It uses a rearrangeable card grid with grid-based resizing and an Add Widget command, but only source-backed Dashboard widgets are live canon for MVP. The default Dashboard widget set is exactly `widget-orchestrator-progress`, `widget-active-lanes`, `widget-recent-results`, and `widget-custom-metrics`; broader `widget.*` catalog entries are compatibility, candidate, or widget-library material unless promoted by a specific owner PlanUnit.
+Amended 2026-10-09 (DL-180): a dashboard is a tab kind, not a singleton surface. Several dashboard tabs may be open, each a board with its own widget layout, and `dashboard:home` is the pinned Home dashboard (F3-638); a dashboard tab can show every Usage widget, with Orchestrator widgets after that page's redesign (`Plans/usage-feature.md#UF-062`, `Plans/Widget_System.md#WS-030`). The sentences below that said otherwise are amended in place.
 
-Dashboard layout state uses `widget_layout:v1:dashboard` as the live layout family. `dashboard_layout:v1` remains a read-only migration and backup key. Dashboard may deep-link into Orchestrator, Usage, History, Ledger, Evidence, Source Control, Actions & Pipelines, Docker Manager, and Runtime Artifacts, but it does not re-own those destination records or commands.
+Dashboard is the first-pass operational summary surface. It uses a rearrangeable card grid with grid-based resizing and an Add Widget command, but only source-backed Dashboard widgets are live canon for MVP. A dashboard tab can show every Usage widget (F3-638); the Home dashboard's default widgets and the catalogue are `Plans/Widget_System.md#WS-030`'s. Amended 2026-10-09 (DL-180): the earlier exact default set (`widget-orchestrator-progress`, `widget-active-lanes`, `widget-recent-results`, `widget-custom-metrics`) and the rule that broader `widget.*` entries wait for an owner's promotion are lineage; DL-180 is that promotion for Usage widgets.
+
+Each dashboard board keeps its own widget layout under `widget_layout:v1:dashboard:<board_id>`, never inside the Home layout record; today's `widget_layout:v1:dashboard` moves into the Home dashboard's board as WS-030 says (amended 2026-10-09, DL-180). `dashboard_layout:v1` remains a read-only migration and backup key. Dashboard may deep-link into Orchestrator, Usage, History, Ledger, Evidence, Source Control, Actions & Pipelines, Docker Manager, and Runtime Artifacts, but it does not re-own those destination records or commands.
 
 ### 7.3 Shared route and open behavior
 
@@ -2497,7 +2499,7 @@ Graph and evidence schemas add work-package `/seam/promotion/account/lane` ident
 
 Route payload passthroughs include `correlation_id` as a matrix-verifiable field when owner contracts require it, rather than relying on prose-only correlation.
 
-Route destination classes include `bottom_panel` for terminal, problems, output, ports, browser, and debug; `embedded_surface` covers embedded sub-surfaces such as `document_pane` and `agent_activity` without turning those panes into route-object taxonomy.
+A route whose destination is a terminal, problems, output, ports, browser or debug console opens a tab of that kind through the one opening module (F3-634), carrying the placement fields of `Plans/Contracts_V0.md#CV-360`; the `bottom_panel` destination class is retired (amended 2026-10-09, DL-180). `embedded_surface` covers embedded sub-surfaces such as `document_pane` and `agent_activity` without turning those panes into route-object taxonomy.
 
 Usage-event identity stays primary for Usage `/Ledger` navigation, while node `/attempt` identity stays primary for runtime and graph inspectors.
 
@@ -2974,7 +2976,9 @@ Required behavior:
 
 ### 7.20 Bottom runtime zone
 
-The bottom runtime zone is the canonical host for Terminal, Problems, Output, Debug Console, Ports, and linked runtime-adjacent panes.
+Superseded 2026-10-09 (DL-180): there is no bottom runtime zone. Terminal, Problems, Output, Debug Console and Ports are tab kinds (F3-635) that open in any panel by F3-634's affinity, the tool kinds beside the terminals, and the default Home layout keeps them in its full-width bottom row, an ordinary panel row (F3-630). The behaviour below stands for those tabs wherever they are. The heading stays for anchor stability.
+
+Terminal, Problems, Output, Debug Console, Ports, and linked runtime-adjacent panes are panel tabs (amended 2026-10-09, DL-180; formerly hosted by the bottom runtime zone).
 
 Required behavior summary:
 - tabbed runtime panes with stable identity and restore behavior
@@ -2983,7 +2987,7 @@ Required behavior summary:
 
 #### 7.20.1 Terminal and browser tab management
 
-Terminal sections, terminal tabs, browser tabs, and detached previews remain identity-stable across docking, focus changes, and restart recovery.
+Every tab, terminal and browser tabs included, and detached previews remain identity-stable across moves between panels, focus changes, and restart recovery (F3-635; amended 2026-10-09, DL-180: terminal sections are retired, DL-181).
 
 Rules:
 - runtime tabs persist selection, order, labels, and pin state
@@ -2992,13 +2996,13 @@ Rules:
 
 #### 7.20.2 Debug, Problems, Output, and Ports
 
-The runtime zone must provide:
+These tool kinds provide (amended 2026-10-09, DL-180: they are tabs, not runtime-zone panes):
 - **Problems:** aggregated diagnostics, file links, and source ownership disclosure
 - **Output:** task/build/dev output streams with source tags and search within stream
 - **Debug Console:** adapter and evaluation output for the active debug session
 - **Ports:** detected ports, local/remote accessibility, open-in-browser actions, and hot-reload controls
 
-`Run & Debug` side-panel actions reveal and focus these bottom-panel panes rather than creating duplicate runtime records.
+`Run & Debug` side-panel actions reveal and focus these tabs wherever they are, opening them by F3-634 when none is open, rather than creating duplicate runtime records (amended 2026-10-09, DL-180).
 
 ## 8. Widget Catalog
 
@@ -3275,11 +3279,13 @@ The GUI must never visually "jump" or "flicker" when background data updates arr
 
 ### 12.1 Breakpoints
 
+Amended 2026-10-09 (DL-180): on Home these window breakpoints yield to the centre-width ladder of F3-636, keyed on the window minus the rail and the chat column; there is no bottom panel to compact or collapse. The table still describes the shell around other pages.
+
 | Window Width | Layout Adaptation |
 |-------------|-------------------|
 | >= 1360px | **Full layout:** All panels visible at comfortable widths |
-| 1080-1359px | **Compact:** Side panel at minimum (240px); bottom panel compact |
-| 720-1079px | **Collapsed:** Side panel auto-collapses to 48px icon tab; bottom panel collapses to header row (24px) |
+| 1080-1359px | **Compact:** Side panel at minimum (240px) (the bottom panel clause is retired, DL-180) |
+| 720-1079px | **Collapsed:** Side panel auto-collapses to 48px icon tab (the bottom panel clause is retired, DL-180) |
 | < 720px | **Single-column:** Activity bar only; panels accessible as overlays/drawers from activity bar icons |
 
 At narrow widths where panels become `/overlays` or drawers, `AnnotationDrawer`, `AnnotationActionMenu`, and `ContextChipStrip` collapse into overlay/drawer patterns without hiding keyboard access or breaking `keyboard-shortcut` expectations.
@@ -3297,6 +3303,8 @@ At narrow widths where panels become `/overlays` or drawers, `AnnotationDrawer`,
 Since 2026-10-09 the left rail's panels do not abbreviate text at any width; they fit by layout (F3-620, DL-162).
 
 ### 12.3 Dashboard Grid Responsive
+
+Superseded 2026-10-09 (DL-180): a dashboard tab's columns follow the tab's own width, never the window (F3-638, F3-636); the board's column ladder is `Plans/Widget_System.md#WS-030`'s, with the Usage thread's presets tested at 400, 550 and 700 px still to come. The window-width table below is lineage.
 
 | Window Width | Grid Columns |
 |-------------|-------------|
@@ -3504,12 +3512,15 @@ Chat messages, file trees, log outputs, evidence lists, and other long lists use
 
 ### 15.1 redb Schema
 
+Amended 2026-10-09 (DL-180): the Home layout lives in the v2 Home layout record `home_workspace_layout.v2:{project_id}:{workspace_tab_id}` (`Plans/storage-plan.md#SP-330`), the only Home layout authority; `layout:v1` loses its Home part, which becomes a read-only migration input converted on first read and never reset, and each dashboard board keeps its own widget layout (WS-030).
+
 **Shell, layout, and editor state**
 
 | Key | Content | Write Frequency |
 |-----|---------|----------------|
-| `layout:v1` | Panel/editor layout geometry only: panel dock state per panel (docked side + width, or floating position/size), center splits, bottom runtime-panel height, detached-window geometry, and split ratios for terminal sections. It is not terminal topology or terminal session identity. Single JSON blob for atomic read/write. | On change (debounced 300ms) |
-| `widget_layout:v1:dashboard` | Canonical dashboard widget grid layout, positions, sizes, and widget IDs | On change (debounced 300ms) |
+| `layout:v1` | Side-panel and detached-window layout geometry only: side-panel dock state (docked side + width, or floating position/size) and the popped-out chat window's geometry. Amended 2026-10-09 (DL-180): its Home part (center splits, the bottom runtime-panel height, terminal section split ratios) is a read-only migration input to the v2 Home layout record (SP-330), converted on first read and never reset. It is not terminal topology or terminal session identity. Single JSON blob for atomic read/write. | On change (debounced 300ms) |
+| `home_workspace_layout.v2:{project_id}:{workspace_tab_id}` | The only Home layout authority, schema `pm.home_workspace_layout.v2`: the split tree, the tab records, the view state, the chat column, saved named layouts and the closed-tab stack; the fields are SP-330's (added 2026-10-09, DL-180) | On each committed change, written and read back before it commits (F3-HOME-004) |
+| `widget_layout:v1:dashboard` | Dashboard widget grid layout, positions, sizes, and widget IDs. Amended 2026-10-09 (DL-180): each dashboard board keeps `widget_layout:v1:dashboard:<board_id>` and this key moves into the Home dashboard's board as WS-030 says | On change (debounced 300ms) |
 | `activity_bar_order:v1` | Ordered list of activity bar item IDs + separator position | On change (debounced 300ms) |
 | `theme:v1` | Theme family + presentation mode (Light/Dark/Auto), with the resolved ThemeVariant enum value kept for readers | On change |
 | `glass_background_mode:v1` | Glass wallpaper background mode (mesh, depth, or minimal) for the Glass theme family | On change |
@@ -4257,7 +4268,7 @@ These decisions are final and must not be revisited during implementation:
 1. **Rust stable 1.96.1 verified 2026-07-02; Slint 1.17.1 selected/currentness decision 2026-07-07** -- no other native UI framework: Slint owns layout, input, focus, text editing, clipboard, drag and drop and windows, and replacing it needs a new owner decision (DL-139; a GPUI fork was considered and rejected on 2026-10-02); reverify official stable releases before coding/build work
 2. **winit + Skia only** -- Skia on the GPU by default, Skia's own CPU raster as the only fallback, extended by Puppet Master's Skia renderer extensions (F3-582); FemtoVG and Slint's separate software renderer are retired (DL-139); on a software GPU adapter the CPU raster is always used, even over an explicit GPU choice, with a warning that no GPU was detected
 3. **No React/Tauri product UI** -- native desktop is Rust + Slint `.slint` markup; the web GUI is a Rust Leptos client drawn with browser elements and CSS, with JavaScript limited to generated or minimal glue (DL-139, F3-583)
-4. **IDE shell layout** -- Activity Bar + Primary Content + Side Panel + Bottom Panel
+4. **IDE shell layout** -- Activity Bar + Side Panel (left) + Primary Content + chat column (right); Home's primary content is one universal panel system (amended 2026-10-09, DL-180: the Bottom Panel is no longer a zone; F3-630, F3-637)
 5. **Four theme families / eight built-in themes** -- Friendly Dark, Friendly Light, Glass Dark, Glass Light, Retro Dark, Retro Light, Basic Dark, Basic Light (built-in variants + custom themes via TOML). The untouched first-open/fresh-project factory default is Basic Dark; explicit saved project theme/layout customization survives, and a copied project receives a detached snapshot. This supersedes the Friendly Dark default and the earlier three-family lock while preserving both as historical lineage.
 6. **Settings and presentation ownership** -- `Plans/Settings_System.md` owns the Settings shell and ordinary-setting semantics; `Plans/newtools.md` N2-151 owns the Doctor registry/router/projection; auth/account owners retain Login; Final GUI owns their K3-shell presentation, chrome, theme, layout, and motion rather than a unified semantic Settings + Login + Doctor owner.
 7. **Event-driven updates** via `invoke_from_event_loop`, not polling
@@ -4276,6 +4287,8 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Sec
 
 This appendix extends the Dashboard (section 7.2) from a rearrangeable card grid to a full widget grid with grid-based resizing, and introduces the add-widget flow for the Dashboard.
 
+Amended 2026-10-09 (DL-180, DL-184): a dashboard is now a tab kind and several boards may be open (F3-638); a dashboard tab can show every Usage widget, Orchestrator widgets after that page's redesign, so C.4's four-entry named catalogue and C.4.1's limit no longer bind dashboard tabs (`Plans/usage-feature.md#UF-062`, `Plans/Widget_System.md#WS-030`); C.1's window-width columns yield to the tab's own width (F3-636, F3-638); and the call-to-action cards' accent-left-border is retired (F3-648). The sentences below that said otherwise are amended in place.
+
 ### C.1 Dashboard Upgrade: Card Grid to Widget Grid
 
 
@@ -4284,12 +4297,12 @@ The Dashboard (section 7.2) is upgraded from a simple rearrangeable card grid (d
 **What changes from section 7.2:**
 - Cards become **widgets** from the widget catalog (Plans/Widget_System.md section 2). Each widget has configurable `col_span` and `row_span`.
 - Drag-to-swap is upgraded to **drag-to-reorder** within the grid. Widgets can also be **resized** by dragging their edges (grid-snapping, per Plans/Widget_System.md section 3).
-- Grid system follows Plans/Widget_System.md section 3: responsive column counts (2 at <1200px, 3 at 1200-1600px, 4 at >1600px per section 12.3).
+- Grid system follows the Usage widget board inside the dashboard tab; its column count follows the tab's own width, never the window (amended 2026-10-09, DL-180; F3-638, WS-030; the window-width counts of section 12.3 are lineage).
 - Widget gutters: 8px (MD spacing token) between widgets.
 
 **What stays the same from section 7.2:**
 - All existing Dashboard card types remain as default widgets.
-- The card visual style is preserved: paper texture on retro themes, drag handle (4px crosshatch pattern in top-left corner), elevated surface for CtA cards with accent-left-border.
+- The card visual style is preserved: paper texture on retro themes, drag handle (4px crosshatch pattern in top-left corner), elevated surface for CtA cards (the accent-left-border is retired, amended 2026-10-09, DL-184; F3-648).
 - CtA (Calls to Action) behavior: HITL approval, run interrupted, rate limit, warning, and `wizard_attention_required` cards function identically (see §7.2 for full specs).
 - Persistence location changes from `dashboard_layout:v1` to `widget_layout:v1:dashboard` (see section C.5 for migration).
 
@@ -4324,7 +4337,7 @@ Widget_System consumes this named catalog directly; it does not invent new widge
 
 ### C.4.1 Larger Widget Library Compatibility Note
 
-Earlier Appendix C drafts listed a broader `widget.*` library, including Usage widgets (`widget.quota_summary`, `widget.budget_donuts`, `widget.analytics_chart`, `widget.tool_usage`, `widget.multi_account`, etc.) and Orchestrator Progress widgets (`widget.orchestrator_status`, `widget.current_task`, `widget.progress_bars`, etc.). That list is compatibility/candidate-library lineage only for Dashboard hosting. It is not the Dashboard named catalog, and it does not authorize Widget_System to invent IDs. A Dashboard widget outside the four named entries in C.4 must be promoted by its owning doc before it becomes selectable.
+Earlier Appendix C drafts listed a broader `widget.*` library, including Usage widgets (`widget.quota_summary`, `widget.budget_donuts`, `widget.analytics_chart`, `widget.tool_usage`, `widget.multi_account`, etc.) and Orchestrator Progress widgets (`widget.orchestrator_status`, `widget.current_task`, `widget.progress_bars`, etc.). That list is compatibility/candidate-library lineage only for Dashboard hosting. It is not the Dashboard named catalog, and it does not authorize Widget_System to invent IDs. A Dashboard widget outside the four named entries in C.4 must be promoted by its owning doc before it becomes selectable. Promoted 2026-10-09 (DL-180): every Usage widget is selectable in a dashboard tab (UF-062, F3-638, WS-030); Orchestrator widgets follow after that page's redesign.
 
 Dashboard customization still uses the explicit **"Add Widget"** control from C.3, including menu, floating action button, or toolbar entrypoints, but the selectable set is the named catalog unless an owner promotes a new dashboard widget.
 
@@ -11041,11 +11054,14 @@ canonical_text: >-
   Search results, palette actions, widgets, recovery links, and cross-surface pivots emit one
   shared route/deep-link payload; resume_url is only serialized transport, and widget actions plus
   cmd.nav wrappers use the shared command and wiring/gate stack.
+  Amended 2026-10-09 (DL-180): a route payload that opens something in the home centre carries the placement fields of
+  CV-360 (where, mode, by, background) and resolves through the one opening module of F3-634; a dashboard tab's widget
+  actions use this payload unchanged (F3-638).
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible routing, navigation, widget action, and command behavior.
 split_recommended: true
-depends_on: []
+depends_on: [DL-180, F3-634]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -11078,7 +11094,8 @@ negative_constraints:
 - "Catalog commands cannot bypass owner checks or force every consumer surface to restate route semantics."
 - "`resume_url` is the serialized transport form of that payload, not a second routing model."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): opens into the home centre add CV-360's placement fields and resolve through F3-634."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -13717,10 +13734,15 @@ canonical_text: >-
   The bottom runtime zone is the canonical host for Terminal, Problems, Output, Debug Console,
   Ports, and linked runtime-adjacent panes with stable tab identity, restore behavior,
   owner-pane reveal, dev-session state, badges, and recovery visibility.
+  Amended 2026-10-09 (DL-180): there is no bottom runtime zone. Terminal, Problems, Output, Debug Console and Ports are
+  tab kinds in any panel (F3-635), placed by F3-634 with the tool kinds beside the terminals, and the default Home
+  layout keeps them in its full-width bottom row, an ordinary panel row (F3-630). Stable tab identity, restore
+  behaviour, revealing the owning tab instead of opening a parallel console, dev-session state, badges and recovery
+  visibility stand for those tabs wherever they are.
 gui_related: true
 gui_classification_reason: The bottom runtime zone is a visible shell area despite the source span inference being false.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180, F3-635]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -13751,7 +13773,8 @@ preserved_exact_tokens:
 negative_constraints:
 - "Terminal/browser/editor integrations reveal the owning pane rather than minting parallel per-feature consoles."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): \"the bottom runtime zone is the canonical host\" is retired; the runtime panes are panel tabs."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -13768,10 +13791,14 @@ canonical_text: >-
   Terminal sections, terminal tabs, browser tabs, and detached previews remain identity-stable
   across docking, focus changes, and restart recovery, with persisted tab selection, order, labels,
   pin state, browser-session routing, and owning runtime/preview status.
+  Amended 2026-10-09 (DL-180, DL-181): this identity rule now holds for every tab kind (F3-635): a tab keeps its id, its
+  order, its label and its pinned state (F3-631) across moves between panels, focus changes and restart recovery, and
+  browser tabs route through browser-session identity and never migrate to the chat. Terminal sections are retired; a
+  terminal is one tab, one session (SMPFS-180).
 gui_related: true
 gui_classification_reason: This unit defines visible terminal/browser tabs, labels, pin state, and preview ownership.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180, F3-635]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -13802,7 +13829,8 @@ preserved_exact_tokens:
 negative_constraints:
 - "Browser and preview tabs never silently migrate ownership to chat."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): terminal sections and docking as the frame of tab identity are retired; the rule widens to every tab kind."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -13819,10 +13847,13 @@ canonical_text: >-
   The runtime zone provides Problems, Output, Debug Console, and Ports panes with diagnostics,
   file links, stream search, active debug output, detected port accessibility, browser actions,
   hot-reload controls, and Run & Debug reveal/focus behavior.
+  Amended 2026-10-09 (DL-180): Problems, Output, Debug Console and Ports are tool tab kinds in any panel, not panes of a
+  runtime zone (F3-635); Run & Debug reveals and focuses those tabs wherever they are, opening them by F3-634 when none
+  is open.
 gui_related: true
 gui_classification_reason: This unit defines visible runtime-zone panes and Run & Debug focus behavior.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -13853,7 +13884,8 @@ preserved_exact_tokens:
 negative_constraints:
 - "`Run & Debug` side-panel actions reveal and focus these bottom-panel panes rather than creating duplicate runtime records."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): \"bottom-panel panes\" and \"the runtime zone\" read as the tool tab kinds of F3-635."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -16026,11 +16058,13 @@ canonical_text: >-
   Window width breakpoints map to full, compact, collapsed, and single-column layouts, and
   narrow `/overlays` or drawers keep AnnotationDrawer, AnnotationActionMenu, and
   ContextChipStrip keyboard-accessible.
+  Amended 2026-10-09 (DL-180): on Home these window breakpoints yield to the centre-width ladder of F3-636, keyed on the
+  window minus the rail and the chat column; there is no bottom panel to compact or collapse.
 gui_related: true
 gui_classification_reason: >-
   This unit defines responsive breakpoints, collapsed panels, and overlay/drawer behavior.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180, F3-636]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -16063,7 +16097,8 @@ preserved_exact_tokens:
 - "keyboard-shortcut"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): window-width breakpoints no longer drive Home; the bottom panel clauses are retired."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -16128,9 +16163,14 @@ owner_hints:
 ```yaml
 plan_unit_id: F3-197
 unit_type: requirement
-status: accepted
+status: superseded
+superseded_by: F3-638
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. Window-width dashboard columns are retired:
+  a dashboard tab's columns follow the tab's own width, never the window, and the board's column ladder is WS-030's. The
+  text below is retained verbatim for lineage and audit and must not be accepted or indexed as active current-product
+  truth. Superseded by F3-638 (DL-180).
   Dashboard grid columns respond to width: two columns below 1200px, three columns from
   1200-1600px, and four columns above 1600px.
 gui_related: true
@@ -16138,7 +16178,7 @@ gui_classification_reason: >-
   This unit defines visible Dashboard grid column counts despite the source inference being
   false.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -16167,7 +16207,8 @@ preserved_exact_tokens:
 - "4 columns"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Superseded 2026-10-09 (DL-180): the 1200 px and 1600 px window breakpoints for dashboard columns are retired (F3-638, F3-636, WS-030)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -17216,12 +17257,17 @@ canonical_text: >-
   first-open/fresh-project snapshot receives Basic Dark and the factory layout, an existing
   Project's explicit saved theme/layout survives every open and Project switch, and Project
   copy materializes a detached destination snapshot with no continuing source inheritance.
+  Amended 2026-10-09 (DL-180): the Home layout persists in `home_workspace_layout.v2:{project_id}:{workspace_tab_id}`,
+  the only Home layout authority (SP-330); `layout:v1` loses its Home part (center splits, the bottom runtime-panel
+  height, terminal section split ratios), which becomes a read-only migration input converted on first read and never
+  reset, and keeps only side-panel and detached-window geometry; each dashboard board keeps
+  `widget_layout:v1:dashboard:<board_id>` (WS-030).
 gui_related: true
 gui_classification_reason: >-
   This unit defines GUI shell, layout, editor, search, project, GitHub Actions, and artifact
   persistence keys.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -17260,7 +17306,8 @@ negative_constraints:
 - "`layout:v1` is not terminal topology or terminal session identity."
 - "Do not reapply factory theme/layout over an existing Project or keep a copied Project live-linked to its source snapshot."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): `layout:v1` is no longer a Home layout authority; the v2 Home layout record is."
 owner_boundary_notes:
 - "Project state is a lightweight shell/UX projection cache, not a canonical state store."
 owner_hints:
@@ -20510,11 +20557,13 @@ canonical_text: >-
   style, retro paper texture, drag handle, elevated CTA surfaces, accent-left-border, and CTA
   behavior for HITL approval, run interrupted, rate limit, warning, and
   `wizard_attention_required` cards.
+  Amended 2026-10-09 (DL-184): the accent-left-border on call-to-action cards is retired; a call-to-action card keeps
+  its elevated surface and states its kind with a mark and a word (F3-648).
 gui_related: true
 gui_classification_reason: >-
   This unit preserves Dashboard widget visual continuity and CTA behavior.
 split_recommended: false
-depends_on: []
+depends_on: [DL-184]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -20549,7 +20598,8 @@ preserved_exact_tokens:
 - "wizard_attention_required"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-184): the CtA accent-left-border is retired as a coloured side border (F3-648)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -20685,9 +20735,15 @@ owner_hints:
 ```yaml
 plan_unit_id: F3-279
 unit_type: requirement
-status: accepted
+status: superseded
+superseded_by: F3-638
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. The exact four-widget Dashboard catalogue
+  is retired: a dashboard tab can show every Usage widget, Orchestrator widgets join after that page's redesign, and the
+  catalogue is WS-030's. DL-180 is the owner-doc promotion that the 2026-06-13 confirmation allowed for. The text below
+  is retained verbatim for lineage and audit and must not be accepted or indexed as active current-product truth.
+  Superseded by F3-638 (DL-180).
   The Dashboard named widget catalog is exactly `widget-orchestrator-progress`,
   `widget-active-lanes`, `widget-recent-results`, and `widget-custom-metrics`; Widget_System
   consumes this named catalog directly without inventing or synthesizing widget IDs.
@@ -20695,7 +20751,7 @@ gui_related: true
 gui_classification_reason: >-
   This unit preserves the Dashboard named-widget catalog.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -20747,6 +20803,7 @@ compatibility_only_notes:
 - "The broader widget.* catalog is future/candidate/library lineage unless promoted by an owner doc."
 stale_retired_dispositions:
 - "Duplicate Appendix C C.3/C.4 sections and the broader widget.* Dashboard list are not peer canon."
+- "Superseded 2026-10-09 (DL-180): the four-entry Dashboard named catalogue is retired by Jared's decision that a dashboard tab shows every Usage widget (F3-638, UF-062, WS-030)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
