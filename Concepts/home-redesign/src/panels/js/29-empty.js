@@ -18,11 +18,12 @@ PMW.renderEmpty = function (panelEl, p) {
     if (r.submenu) return;
     var row = h('div', { class: 'pmw-empty-row', role: 'listitem', 'data-pmh': 'row' });
     var b = h('button', { type: 'button', class: 'pmw-empty-btn pmw-cur' }, [kindIcon(r.kind || 'file'), h('b', { text: r.label }), r.right ? h('span', { class: 'pmw-empty-key', text: PMW.keyLabel(r.right) }) : null]);
-    b.addEventListener('click', function (e) { r.run({ alt: e.altKey, row: r }); });
+    // the row button is the anchor of a picker the row opens (Plan or document..., Artifact...), never the centre
+    b.addEventListener('click', function (e) { r.run({ alt: e.altKey, row: r, anchor: b }); });
     row.appendChild(b);
     if (r.alt) {
       var c = h('button', { type: 'button', class: 'pmw-empty-cell', 'aria-label': 'Open in new panel: ' + r.label, 'data-pm-hover-label': 'Open in new panel' }, [icon('newPanel', { size: 14 })]);
-      c.addEventListener('click', function () { r.alt.run({ row: r }); });
+      c.addEventListener('click', function () { r.alt.run({ row: r, anchor: c }); });
       row.appendChild(c);
     }
     list.appendChild(row);

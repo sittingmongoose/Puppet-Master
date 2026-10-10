@@ -18,28 +18,29 @@ function retroOn() { var lk = look(); return lk.family === 'retro' && !lk.nier; 
 
 tabDrag.begin = function (ev, tabEl, s) {
   var tid = tabEl._pmwId;
-  var l = state.layout, p = model.panel(l, s.panelId);
-  if (!p) return;
+  if (!model.panel(state.layout, s.panelId)) return;
   var host = s.list.closest('.pmw-strip');
-  var g0 = null;
   gesture.start(ev, {
-    el: tabEl,
+    // the pointer is captured on the strip, which never moves: the reorder re-slots the carried tab in the DOM, and an
+    // element that leaves the DOM loses capture (Chrome then fires lostpointercapture, which would cancel the drag)
+    el: host,
     cursor: 'grabbing',
     onStart: function (g) {
-      g0 = g;
+      var l = state.layout, p = model.panel(l, s.panelId);     // the layout as it is at the 4 px threshold
+      if (!p || p.tabs.indexOf(tid) < 0 || !tabEl.isConnected) return false;
       g.tid = tid; g.s = s; g.host = host; g.tab = tabEl;
       g.origin = { panelId: p.id, index: p.tabs.indexOf(tid), active: p.active, pinned: !!l.tabs[tid].pinned };
       g.rec = l.tabs[tid];
       g.kindMin = (kindDef(g.rec.kind) || {}).min || PANEL_MIN;
-      // freeze the fitter at the current widths (no reflow under the silhouette)
+      // freeze the fitter at the current widths and the current "+N" set (no reflow under the silhouette)
       var frozen = {};
-      Object.keys(s.tabEls).forEach(function (k) { frozen[k] = s.tabEls[k].offsetWidth; });
+      Object.keys(s.tabEls).forEach(function (k) { frozen[k] = s.tabEls[k].hidden ? -1 : s.tabEls[k].offsetWidth; });
       s.frozen = frozen;
       s.dragging = true;
+      s.dragOwner = g;
       host.classList.add('is-dragging');
       tabEl.classList.add('pmw-dragging');
-      // activate on grab (view state; restored on cancel)
-      if (p.active !== tid) { p.active = tid; strip.render(render.panelEl(p.id), p, l, {}); render.schedule({ animate: false }); }
+      grabActivate(g);
       g.mode = 'strip';
       cacheSlots(g);
       g.retro = retroOn() && !reducedMotion();
@@ -48,6 +49,9 @@ tabDrag.begin = function (ev, tabEl, s) {
       return true;
     },
     onFrame: function (g) {
+      // the carried tab closed or moved away under the drag (an agent, the chat): end it, nothing to put back
+      var at = model.panelOf(state.layout, g.tid);
+      if (!at || at.id !== g.origin.panelId || !g.tab.isConnected) { g.end('gone'); return; }
       var hr = host.getBoundingClientRect();
       var inBand = g.py >= hr.top - TEAR_BAND && g.py <= hr.bottom + TEAR_BAND && g.px >= hr.left - 40 && g.px <= hr.right + 40;
       if (g.mode === 'strip' && !inBand && canTear(g)) tearOff(g);
@@ -65,33 +69,58 @@ tabDrag.begin = function (ev, tabEl, s) {
 
 function canTear(g) { return true; }
 
+/* Activate on grab: the same view action as PMW.activateTab (the active tab, the attention mark cleared, the MRU, a
+   quiet save, the 'activate' event), minus expanding a collapsed panel, which would move the strip under the pointer.
+   The paint it schedules leaves the carried tab where the drag has it (32-strip.js placeTab). A cancel puts the
+   previous tab back the same way (restore). */
+function grabActivate(g) {
+  var l = state.layout, p = model.panel(l, g.origin.panelId), rec = l.tabs[g.tid];
+  if (!p || !rec) return;
+  g.activated = p.active !== g.tid;
+  if (!g.activated && !rec.attention) return;
+  viewAction(UI.activate, function (lay) {
+    var pp = model.panel(lay, p.id), r = lay.tabs[g.tid];
+    pp.active = g.tid;
+    lay.view.focus = pp.id;
+    if (r.attention) r.attention = false;
+    if (typeof touchMru === 'function') touchMru(lay, g.tid);
+  }, { animate: false });
+  strip.render(render.panelEl(p.id), p, l, {});      // the plate moves under the carried tab in this frame
+  bus.emit('activate', { tabId: g.tid, panelId: p.id, kind: rec.kind, reason: 'drag' });
+}
+
 /* ---- in-strip reorder ---- */
+/* transform-free left of a tab in viewport px: its layout offset inside its (never transformed) offset parent. A
+   neighbour in the middle of its FLIP, or the carried tab itself, is measured where it sits, not where it is drawn. */
+function layoutX(el) {
+  var op = el.offsetParent;
+  if (!op) return el.getBoundingClientRect().left;
+  return op.getBoundingClientRect().left + op.clientLeft + el.offsetLeft;
+}
 function cacheSlots(g) {
-  var tabs = g.s.list.querySelectorAll('.pmw-tab');
+  // the carried tab's own group only (its container: pinned tabs reorder among pinned tabs), visible tabs only
+  var kids = g.tab.parentNode ? g.tab.parentNode.children : [];
   g.mids = [];
-  for (var i = 0; i < tabs.length; i++) {
-    var t = tabs[i];
-    if (t === g.tab || t.hidden) continue;
-    if (!!t.getAttribute('data-pinned') !== g.origin.pinned) continue;   // pinned and unpinned tabs reorder in their own group
-    var r = t.getBoundingClientRect();
-    g.mids.push({ el: t, mid: r.left + r.width / 2 });
+  for (var i = 0; i < kids.length; i++) {
+    var t = kids[i];
+    if (t === g.tab || t.hidden || !t._pmwId) continue;
+    g.mids.push({ el: t, mid: layoutX(t) + t.offsetWidth / 2 });
   }
-  var r0 = g.tab.getBoundingClientRect();
-  var tx = g.lastTx || 0;
-  g.slotLeft = r0.left - tx;
-  g.slotW = r0.width;
-  if (g.grabX == null) g.grabX = g.sx - r0.left;
+  g.slotLeft = layoutX(g.tab);
+  g.slotW = g.tab.offsetWidth;
+  if (g.grabX == null) g.grabX = g.sx - g.tab.getBoundingClientRect().left;   // set once, at the grab (no transform yet)
+}
+function nextVisibleTab(el) {
+  var n = el.nextElementSibling;
+  while (n && (n.hidden || !n._pmwId)) n = n.nextElementSibling;
+  return n;
 }
 function followInStrip(g) {
   var hr = g.host.getBoundingClientRect();
   var center = g.px - g.grabX + g.slotW / 2;
   var before = null;
   for (var i = 0; i < g.mids.length; i++) if (center < g.mids[i].mid) { before = g.mids[i].el; break; }
-  var container = g.tab.parentNode;
-  var ref = before && before.parentNode === container ? before : (before ? null : null);
-  if (!before) ref = null;
-  var wantNext = ref;
-  if (g.tab.nextElementSibling !== wantNext && g.tab !== wantNext) reslot(g, wantNext, container);
+  if (nextVisibleTab(g.tab) !== before) reslot(g, before);
   var tx = g.px - g.grabX - g.slotLeft;
   var txMin = hr.left - g.slotLeft, txMax = hr.right - g.slotW - g.slotLeft;
   if (tx < txMin) tx = txMin + (tx - txMin) * 0.35;
@@ -101,17 +130,22 @@ function followInStrip(g) {
   g.tab.style.transform = 'translateX(' + tx.toFixed(1) + 'px)';
   shape.snap(g.host);
 }
-function reslot(g, ref, container) {
+/* move the carried tab's slot before `before` (null: right after the last visible tab of its group, so tabs behind
+   "+N" keep their places), and FLIP the neighbours from where they were drawn */
+function reslot(g, before) {
+  var container = g.tab.parentNode;
   var others = Array.prototype.filter.call(container.children, function (t) { return t !== g.tab && !t.hidden; });
-  var before = others.map(function (t) { return t.getBoundingClientRect().left; });
-  if (ref && ref.parentNode === container) container.insertBefore(g.tab, ref);
-  else container.appendChild(g.tab);
+  var was = others.map(function (t) { return t.getBoundingClientRect().left; });
+  if (before) container.insertBefore(g.tab, before);
+  else {
+    var lastVis = g.mids.length ? g.mids[g.mids.length - 1].el : null;
+    container.insertBefore(g.tab, lastVis ? lastVis.nextSibling : null);
+  }
   var motionOK = !reducedMotion();
   others.forEach(function (t, i) {
     t.style.transition = 'none';
     t.style.transform = '';
-    var now = t.getBoundingClientRect().left;
-    var dx = before[i] - now;
+    var dx = was[i] - t.getBoundingClientRect().left;
     if (motionOK && Math.abs(dx) >= 1) {
       t.style.transform = 'translateX(' + dx + 'px)';
       void t.offsetWidth;
@@ -119,8 +153,7 @@ function reslot(g, ref, container) {
       t.style.transform = '';
     }
   });
-  g.tab.style.transform = '';
-  cacheSlots(g);
+  cacheSlots(g);      // layout positions: the carried tab's new slot and the neighbours' resting midpoints
 }
 
 /* ---- torn off: a chip and drop zones ---- */
@@ -152,7 +185,7 @@ function rejoin(g) {
   g.tab.classList.remove('pmw-torn');
   g.zone = null;
   preview.hide();
-  cacheSlots(g);
+  cacheSlots(g);      // the slot it kept while torn; followInStrip then draws it under the pointer again
 }
 function followChip(g) {
   if (!g.chip) return;
@@ -285,32 +318,53 @@ function showZone(g, z) {
 }
 
 /* ---- release ---- */
+/* the model index the carried tab's DOM slot stands for: before the tab that follows it (hidden ones included, so
+   tabs behind "+N" keep their places), else at the end of its group; an index in the list without the tab, as
+   PMW.moveTab reads it */
+function dropIndex(g, p) {
+  var list = p.tabs.filter(function (t) { return t !== g.tid; });
+  var next = g.tab.nextElementSibling;
+  while (next && !next._pmwId) next = next.nextElementSibling;
+  var i = next ? list.indexOf(next._pmwId) : -1;
+  if (i >= 0) return i;
+  i = g.origin.pinned ? 0 : list.length;
+  for (var k = 0; k < list.length; k++) if (!!state.layout.tabs[list[k]].pinned === g.origin.pinned) i = k + 1;
+  return i;
+}
 function drop(g, z) {
   var s = g.s;
   if (g.mode === 'strip') {
-    // the order the DOM shows now is the order to commit
-    var p = model.panel(state.layout, s.panelId);
-    var container = g.tab.parentNode;
-    var siblings = Array.prototype.slice.call(container.children);
-    var newIndexInGroup = siblings.indexOf(g.tab);
-    var pinnedCount = p.tabs.filter(function (t) { return state.layout.tabs[t].pinned; }).length;
-    var index = g.origin.pinned ? newIndexInGroup : pinnedCount + newIndexInGroup;
+    // the order the DOM shows now is the order to commit, read against the model as it is when the settle ends
     settleInStrip(g, function () {
+      var p = model.panel(state.layout, s.panelId);
+      var cur = p ? p.tabs.indexOf(g.tid) : -1;
+      var index = cur >= 0 ? dropIndex(g, p) : cur;
       finishStrip(g);
-      if (index !== g.origin.index) PMW.moveTab(g.tid, s.panelId, index, { animate: false });
-      else render.schedule({ animate: false });
+      if (cur >= 0 && index !== cur) {
+        // a refused move puts the DOM back in model order (CONTRACT 8: a failed commit rolls back)
+        if (!PMW.moveTab(g.tid, s.panelId, index, { animate: false })) restore(g, { keepActive: true });
+      } else render.schedule({ animate: false });
     });
     return true;
   }
   if (!z) return false;
   var chipRect = g.chip ? g.chip.getBoundingClientRect() : null;
   finishStrip(g);
+  // the source panel goes back to the tab it showed before the grab; model.moveTab would otherwise show the carried
+  // tab's neighbour there
+  var src = model.panel(state.layout, g.origin.panelId);
+  if (g.activated && src && src.active === g.tid && src.tabs.indexOf(g.origin.active) >= 0) src.active = g.origin.active;
   var ok;
   if (z.type === 'strip') ok = PMW.moveTab(g.tid, z.panelId, z.index);
   else if (z.type === 'merge') ok = PMW.moveTab(g.tid, z.panelId, null);
   else if (z.type === 'split') ok = !!PMW.moveTabToSplit(g.tid, z.panelId, z.edge);
   else if (z.type === 'root') ok = !!PMW.moveTabToSplit(g.tid, '@root', z.edge, { ratio: 0.34 });
   if (!ok) { restore(g); if (g.chip) { g.chip.remove(); g.chip = null; } return true; }
+  // what listeners heard at the grab is no longer true: the source shows its previous tab, the carried tab is the
+  // active tab of the panel it landed in
+  var srcNow = model.panel(state.layout, g.origin.panelId), landedP = model.panelOf(state.layout, g.tid);
+  if (g.activated && srcNow && srcNow.active && srcNow !== landedP) bus.emit('activate', { tabId: srcNow.active, panelId: srcNow.id, kind: state.layout.tabs[srcNow.active].kind, reason: 'drag' });
+  if (landedP && landedP.id !== g.origin.panelId) bus.emit('activate', { tabId: g.tid, panelId: landedP.id, kind: g.rec.kind, reason: 'drag' });
   render.now({ animate: true });
   var landed = strip.tabEl(g.tid);
   if (landed && chipRect && !reducedMotion()) {
@@ -330,15 +384,16 @@ function rideShape(host, ms) {
 }
 function settleInStrip(g, done) {
   var tab = g.tab;
-  var tx = g.lastTx || 0;
+  // settle from where the tab is drawn now to its slot
+  var drawn = tab.getBoundingClientRect().left;
   tab.style.transform = '';
-  var fr = tab.getBoundingClientRect();
-  var delta = g.slotLeft + tx - fr.left;
+  var delta = drawn - tab.getBoundingClientRect().left;
   var finished = false;
   function finish(te) {
     if (te && te.propertyName && te.propertyName !== 'transform') return;
     if (finished) return;
     finished = true;
+    tab.removeEventListener('transitionend', finish);
     tab.style.transition = ''; tab.style.transform = '';
     done();
   }
@@ -356,23 +411,35 @@ function settleInStrip(g, done) {
 }
 function finishStrip(g) {
   var s = g.s;
+  if (s.dragOwner !== g) {
+    // a settle that ends after the next drag in this strip has begun cleans only its own tab, and only if the new
+    // drag is not carrying that same tab
+    if (!s.dragOwner || s.dragOwner.tab !== g.tab) { g.tab.classList.remove('pmw-dragging', 'pmw-torn', 'pmw-rfx-drag'); g.tab.style.transition = ''; g.tab.style.transform = ''; }
+    return;
+  }
+  s.dragOwner = null;
   s.dragging = false;
   s.frozen = null;
   g.host.classList.remove('is-dragging');
   g.tab.classList.remove('pmw-dragging', 'pmw-torn', 'pmw-rfx-drag');
   Array.prototype.forEach.call(s.list.querySelectorAll('.pmw-tab'), function (t) { t.style.transition = ''; t.style.transform = ''; });
 }
-function restore(g) {
-  // put the DOM back in model order and the active tab back
+function restore(g, o) {
+  // put the DOM back in model order and the active tab back (the grab's activation is undone as a view action too,
+  // so the save and the 'activate' listeners follow it)
   var l = state.layout, p = model.panel(l, g.origin.panelId);
   if (p) {
-    p.active = g.origin.active;
+    var back = g.origin.active;
+    if (g.activated && !(o && o.keepActive) && back && p.tabs.indexOf(back) >= 0) {
+      viewAction(UI.activate, function (lay) { model.panel(lay, p.id).active = back; }, { animate: false });
+      bus.emit('activate', { tabId: back, panelId: p.id, kind: l.tabs[back].kind, reason: 'drag-cancel' });
+    }
     var el = render.panelEl(p.id);
     var st = el && el.querySelector('.pmw-strip')._pmw;
     if (st) {
       p.tabs.forEach(function (t) {
         var te = st.tabEls[t];
-        var cont = l.tabs[t].pinned ? st.pins : st.tabsEl;
+        var cont = state.layout.tabs[t].pinned ? st.pins : st.tabsEl;
         if (te) cont.appendChild(te);
       });
     }
@@ -393,7 +460,7 @@ function cancel(g, how) {
     if (a) a.onfinish = function () { chip.remove(); }; else chip.remove();
     void cr;
   }
-  if (how !== 'drop') announce(tabLabel(g.rec) + ' is back where it was');
+  if (how !== 'drop' && how !== 'gone') announce(tabLabel(g.rec) + ' is back where it was');
 }
 
 /* ---- dragging a whole panel by its corner grip ---- */

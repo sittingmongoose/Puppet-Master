@@ -98,7 +98,7 @@ gesture.start = function (ev, spec) {
   function frame(force) {
     g.dx = g.px - g.sx; g.dy = g.py - g.sy;
     if (spec.onFrame) spec.onFrame(g);
-    if (!spec.probe) return;
+    if (g.done || !spec.probe) return;      // onFrame may end the gesture (its tab closed under it)
     var z = spec.probe(g);
     var same = (z && g.zone && z.key === g.zone.key) || (!z && !g.zone);
     if (same) { g.cand = null; return; }
@@ -143,7 +143,7 @@ gesture.start = function (ev, spec) {
 gesture.cancel = function () { if (gesture.active) gesture.active.end('cancel'); };
 
 /* ---- the landing preview: one kept element in the overlay that glides between targets ---- */
-var previewEl = null, previewLabel = null, previewRect = null, previewAnim = null;
+var previewEl = null, previewLabel = null, previewRect = null, previewAnim = null, previewFading = false;
 function ensurePreview() {
   if (previewEl) return previewEl;
   previewEl = h('div', { class: 'pmw-landing', 'aria-hidden': 'true', hidden: true }, [previewLabel = h('span', { class: 'pmw-landing-label' })]);
@@ -156,7 +156,14 @@ preview.show = function (rect, label, kind) {
   setText(previewLabel, label || '');
   setAttr(el, 'data-kind', kind || null);
   setAttr(previewLabel, 'hidden', !label);
-  var first = el.hidden;
+  // a show during the previous hide's fade takes over from the fade: a fresh fade-in at the new rect (gliding from a
+  // rect that is already gone would be wrong, and leaving the fade running would hide the new target)
+  var first = el.hidden || previewFading;
+  if (previewFading) {
+    try { previewAnim.cancel(); } catch (_) {}
+    previewAnim = null;
+    previewFading = false;
+  }
   var from = previewRect;
   if (previewAnim) {
     try {
@@ -182,10 +189,20 @@ preview.show = function (rect, label, kind) {
   if (previewAnim) motion.animate(previewLabel, [{ transform: 'scale(' + (1 / sx) + ',' + (1 / sy) + ')' }, { transform: 'none' }], { dur: 160, easing: motion.ease('out') });
 };
 preview.hide = function () {
-  if (!previewEl || previewEl.hidden) return;
+  if (!previewEl || previewEl.hidden || previewFading) return;
   var el = previewEl;
   if (previewAnim) { try { previewAnim.cancel(); } catch (_) {} previewAnim = null; }
   var a = motion.animate(el, [{ opacity: 1 }, { opacity: 0 }], { dur: 140, easing: motion.ease('out') });
   previewRect = null;
-  if (a) a.onfinish = function () { el.hidden = true; }; else el.hidden = true;
+  if (!a) { el.hidden = true; return; }
+  // the fade is the tracked animation, so a show() before it ends can cancel it; a cancelled fade never finishes,
+  // and the identity check keeps an old fade from hiding a later preview
+  previewAnim = a;
+  previewFading = true;
+  a.onfinish = function () {
+    if (previewAnim !== a) return;
+    previewAnim = null;
+    previewFading = false;
+    el.hidden = true;
+  };
 };

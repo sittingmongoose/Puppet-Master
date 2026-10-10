@@ -2,8 +2,10 @@
    search, and canon's command palette), so the panels use neither: tab N is Alt+1..9, panels are focused with
    Alt+arrows, and there are no Ctrl+K chords. In a browser four chords belong to the browser and cannot be taken by a
    page (Ctrl+T, Ctrl+W, Ctrl+Shift+T, Ctrl+Tab); the concept and the web client answer Alt+T, Alt+W, Alt+Shift+T and
-   Alt+` for them, and every label shows the key that works where the page runs. No bare letters or digits; Escape
-   stays scoped to the innermost open thing; text inputs keep their own keys. */
+   Alt+` for them, and every label shows the key that works where the page runs. Chrome also reserves Ctrl+PgDn/PgUp
+   (its own next/previous tab, like Ctrl+Tab), so next/previous tab in the panel is Alt+PgDn/PgUp in a browser. No bare
+   letters or digits; Escape stays scoped to the innermost open thing; text inputs keep their own keys (on a Mac,
+   Option+letter and Option+` type characters, so the Alt stand-ins never fire from a text field there). */
 
 var IN_BROWSER = PMW.inBrowser = true;   // the concept always runs in a browser; the native app maps the Ctrl chords
 var KEYS = PMW.KEYS = {
@@ -16,7 +18,7 @@ var KEYS = PMW.KEYS = {
   newBrowser: 'Ctrl+Shift+B',
   quickOpen: 'Ctrl+P',
   allTabs: 'Ctrl+Shift+A',
-  nextTab: 'Ctrl+PgDn', prevTab: 'Ctrl+PgUp',
+  nextTab: IN_BROWSER ? 'Alt+PgDn' : 'Ctrl+PgDn', prevTab: IN_BROWSER ? 'Alt+PgUp' : 'Ctrl+PgUp',
   moveTabLeft: 'Ctrl+Shift+PgUp', moveTabRight: 'Ctrl+Shift+PgDn',
   tabN: 'Alt+1..8, Alt+9 last',
   focusPanelDir: 'Alt+arrows', focusPanelN: 'Alt+Shift+1..9', cycleRegions: 'F6, Shift+F6',
@@ -41,9 +43,18 @@ function focusedTabEntry() {
 }
 function focusedPanelId() { return state.layout ? state.layout.view.focus : null; }
 
+/* The rects the keyboard steers by: the tree's own, even while a panel is maximized (the maximized rect is the whole
+   centre, so a neighbour or a split fit measured against it would be wrong). Prefers the engine's PMW.treeRects. */
+function keyRects() {
+  var r = render.rects();
+  if (!r || r.mode !== 'maximized') return r;
+  if (typeof PMW.treeRects === 'function') return PMW.treeRects();
+  return state.layout && state.centre ? geom.layout(state.layout, render.centreRect(), {}) : r;
+}
+
 /* a panel's neighbour in a direction, by rect centres */
 function panelInDirection(panelId, dir) {
-  var rects = render.rects();
+  var rects = keyRects();
   if (!rects) return null;
   var r = rects.panels[panelId];
   if (!r) return null;
@@ -83,7 +94,7 @@ function moveTabToward(dir) {
   var other = panelInDirection(p.id, dir);
   if (other) { PMW.moveTab(p.active, other, null); return; }
   var edge = { left: 'left', right: 'right', up: 'top', down: 'bottom' }[dir];
-  var rects = render.rects();
+  var rects = keyRects();
   if (p.tabs.length > 1 && rects && geom.splitFits(l, p.id, edge, rects)) PMW.moveTabToSplit(p.active, p.id, edge);
   else announce('There is no panel ' + (dir === 'up' ? 'above' : dir === 'down' ? 'below' : 'to the ' + dir));
 }
@@ -97,11 +108,15 @@ function focusTabN(n) {
   var t = n === 9 ? p.tabs[p.tabs.length - 1] : p.tabs[n - 1];
   if (t) PMW.activateTab(t, { focus: true });
 }
-var REGION_SEL = ['#activityBar', '#pm-home-centre', '#pmw-chat'];
+/* the rail is the whole left panel (activity bar and side panel, so the file tree counts), then the panels, then the
+   chat (#chatPanel; the offsetParent filter drops it while hidden) */
+var REGION_SEL = ['.left-panel', '#pm-home-centre', '#chatPanel'];
 function cycleRegion(back) {
   var regions = REGION_SEL.map(function (s) { return qs(s); }).filter(function (el) { return el && el.offsetParent !== null; });
+  if (!regions.length) return;
   var a = doc.activeElement;
   var i = regions.findIndex(function (r) { return r.contains(a); });
+  if (i < 0) i = Math.max(0, regions.indexOf(state.centre));   // from nowhere (the body, a bar): count from the panels
   var next = regions[(i + (back ? -1 : 1) + regions.length) % regions.length];
   if (!next) return;
   if (next.id === 'pm-home-centre') PMW.focusPanelDom(focusedPanelId());
@@ -110,31 +125,47 @@ function cycleRegion(back) {
 
 var dirOf = { ArrowLeft: 'left', ArrowRight: 'right', ArrowUp: 'up', ArrowDown: 'down' };
 
+var MODIFIER_KEYS = { Shift: 1, Control: 1, Alt: 1, Meta: 1, AltGraph: 1, CapsLock: 1 };
+
 doc.addEventListener('keydown', function (e) {
   if (!homeVisible() || !state.layout) return;
-  if (e.defaultPrevented) return;
-  if (PMW.menu.isOpen()) return;                 // the menu owns its keys
+  if (e.defaultPrevented || e.isComposing) return;
   var t = e.target;
+  if (PMW.menu.isOpen()) {
+    // the menu owns its keys while focus is inside it; a menu left open behind the focus (a click elsewhere that
+    // did not close it) never swallows the panel shortcuts: the first real key outside closes it and goes on
+    var cur = PMW.menu.current;
+    if (cur && cur.el && cur.el.contains(t)) return;
+    if (MODIFIER_KEYS[e.key]) return;
+    PMW.menu.close({ returnFocus: false });
+  }
+  var ctrl = e.ctrlKey || e.metaKey, alt = e.altKey, shift = e.shiftKey;
+  var k = e.key, code = e.code;
+  // F6 works from every region (the rail, the panels, the chat) and before a tab's wantsKey: a terminal gives it back
+  if (k === 'F6' && !ctrl && !alt) { cycleRegion(shift); e.preventDefault(); e.stopPropagation(); return; }
   var inCentre = state.centre.contains(t) || t === doc.body || t === doc.documentElement;
-  var inChat = !!(t.closest && t.closest('#pmw-chat'));
+  var inChat = !!(t.closest && t.closest('#chatPanel'));
   if (!inCentre && !inChat) return;
   var entry = focusedTabEntry();
   if (entry && entry.instance && entry.instance.wantsKey) { try { if (entry.instance.wantsKey(e)) return; } catch (_) {} }
   var text = isTextTarget(t);
-  var ctrl = e.ctrlKey || e.metaKey, alt = e.altKey, shift = e.shiftKey;
-  var k = e.key, code = e.code;
+  // typing: on a Mac, Option+letter and Option+` type characters (a dagger, the grave dead key) in a text field, and a
+  // dead key is the start of a character anywhere; the Alt stand-ins leave both alone (Windows and Linux Alt+T types
+  // nothing, so it still works from a field there)
+  var typing = alt && !ctrl && text && (IS_MAC || k === 'Dead');
   var handled = true;
   var pid = focusedPanelId();
-  if (ctrl && shift && (k === ' ' || code === 'Space')) PMW.menus.plus(pid, (strip.stateOf(pid) || {}).plus || state.centre);
+  if (ctrl && shift && (k === ' ' || code === 'Space')) { var plusBtn = (strip.stateOf(pid) || {}).plus; if (plusBtn && plusBtn.isConnected && plusBtn.offsetParent !== null) PMW.menus.plus(pid, plusBtn); else PMW.menus.plus(pid, null); }
   else if (ctrl && shift && code === 'Backquote') PM_HOME.open({ kind: 'terminal', where: 'auto' });
   else if (ctrl && shift && code === 'KeyB' && !alt) PM_HOME.open({ kind: 'browser' });
   else if (ctrl && shift && code === 'KeyA' && !alt && !text) PMW.menus.allTabs();
   else if (ctrl && !shift && !alt && code === 'KeyP' && !text) PMW.quickOpen && PMW.quickOpen(pid);
-  else if (((alt && !ctrl && !shift) || (ctrl && !alt && !shift)) && code === 'KeyT' && (alt || !IN_BROWSER)) PM_HOME.open(Object.assign({}, PMW.defaultSpecFor(pid), { where: pid }));
+  else if (((alt && !ctrl && !shift) || (ctrl && !alt && !shift)) && code === 'KeyT' && (alt || !IN_BROWSER) && !typing) PM_HOME.open(Object.assign({}, PMW.defaultSpecFor(pid), { where: pid }));
   else if (((alt && !ctrl && !shift) || (ctrl && !alt && !shift)) && code === 'KeyW' && (alt || !IN_BROWSER) && !text) { var p0 = model.panel(state.layout, pid); if (p0 && p0.active) PMW.closeTab(p0.active); }
-  else if (((alt && shift && !ctrl) || (ctrl && shift && !alt)) && code === 'KeyT' && (alt || !IN_BROWSER)) PMW.reopenClosed();
-  else if (((alt && !ctrl && code === 'Backquote') || (ctrl && !alt && k === 'Tab' && !IN_BROWSER))) { PMW.mru.start(shift ? -1 : 1, alt ? 'Alt' : 'Control'); }
-  else if (ctrl && !shift && !alt && (k === 'PageDown' || k === 'PageUp')) cycleTab(k === 'PageDown' ? 1 : -1);
+  else if (((alt && shift && !ctrl) || (ctrl && shift && !alt)) && code === 'KeyT' && (alt || !IN_BROWSER) && !typing) PMW.reopenClosed();
+  else if (((alt && !ctrl && code === 'Backquote' && !typing) || (ctrl && !alt && k === 'Tab' && !IN_BROWSER))) { if (!PMW.mru.el && e.repeat) handled = true; else PMW.mru.start(shift ? -1 : 1, alt ? 'Alt' : 'Control'); }
+  // next/previous tab: Alt+PgDn/PgUp in a browser (Chrome keeps Ctrl+PgDn/PgUp); Ctrl is still taken where it arrives
+  else if (!shift && (k === 'PageDown' || k === 'PageUp') && ((ctrl && !alt) || (alt && !ctrl && IN_BROWSER && !(IS_MAC && text)))) cycleTab(k === 'PageDown' ? 1 : -1);
   else if (ctrl && shift && !alt && (k === 'PageDown' || k === 'PageUp')) nudgeTab(k === 'PageDown' ? 1 : -1);
   else if (alt && !ctrl && !shift && /^Digit[1-9]$/.test(code) && !text) focusTabN(+code.slice(5));
   else if (alt && shift && !ctrl && /^Digit[1-9]$/.test(code) && !text) focusPanelN(+code.slice(5));
@@ -143,7 +174,6 @@ doc.addEventListener('keydown', function (e) {
   else if (ctrl && !alt && code === 'Backslash') PMW.splitPanel(pid, shift ? 'bottom' : 'right');
   else if (shift && !ctrl && !alt && k === 'Escape') PMW.toggleMaximize(pid);
   else if (!ctrl && !alt && !shift && k === 'Escape' && state.layout.view.maximized && t.closest && t.closest('.pmw-strip')) PMW.toggleMaximize(state.layout.view.maximized);
-  else if (k === 'F6' && !ctrl && !alt) cycleRegion(shift);
   else handled = false;
   if (handled) { e.preventDefault(); e.stopPropagation(); }
 }, true);

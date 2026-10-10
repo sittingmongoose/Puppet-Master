@@ -139,7 +139,7 @@ Everything is push: the kind tells the host when its label or marks change; the 
 | `api.split(direction, spec)` | open `spec` (section 6) in a new panel beside this tab's panel. `direction`: `'right'`, `'down'` or `'auto'` (right when both halves stay at least the larger minimum wide, else down, else the new tab opens in this panel). Returns the open result |
 | `api.toggleMaximize()`, `api.isMaximized()` | maximize is a flag outside the tree (D1); Esc in the strip or the same command restores |
 | `api.open(spec)` | same as `PM_HOME.open` with this tab as the opener (its panel counts as the source for routing) |
-| `api.menu(items, anchor)` | open a host menu (the picker look every PM menu uses) at an element; items `{ id, label, detail, icon, shortcut, disabled, checked, danger, sub, run }`, `'-'` for a hairline |
+| `api.menu(items, anchor, o?)` | open a host menu (the picker look every PM menu uses) at an element, or at a point (`{ x, y }` or a mouse event) for a context menu; items `{ id, label, detail, icon, shortcut, disabled, reason, checked, danger, sub, run }`, `'-'` for a hairline; `sub` is an item array or a function returning one; `o` may carry `title`, `search`, `width`, `align`, `onClose`; a second call on the same anchor closes it; a row whose `run` throws is logged and the menu stays usable |
 | `api.announce(text)` | polite live-region announcement |
 | `api.command(id, args)` | run a host command (section 8) |
 | `api.settings` | the settings model (section 12) |
@@ -274,7 +274,7 @@ Kinds join through `plus` (section 3). Built order:
 | 50 | Plan or document... | | |
 | 60 | Artifact... | | |
 | 70 | Output, Problems, Ports, Debug Console | | one row with a submenu |
-| hairline | Split right (Ctrl+\\), Split down (Ctrl+K Ctrl+\\), Reopen closed tab (Ctrl+Shift+T) | | |
+| hairline | Split right (Ctrl+\\), Split down (Ctrl+Shift+\\), Reopen closed tab (Ctrl+Shift+T; Alt+Shift+T in a browser) | | |
 
 A type-to-filter field heads the menu ("Open anything: kinds, files, URLs"). The empty-panel launcher shows the same
 rows as full-width list rows (no tiles, no pills), then Recent.
@@ -306,6 +306,7 @@ with the Plans thread on 2026-10-09; the concept keeps them in one table (`src/p
 | `cmd.workspace_layout.close_panel` | `panelId` | tabs close (with `canClose`) |
 | `cmd.workspace_layout.lock` | `panelId, locked` | |
 | `cmd.workspace_layout.apply_named` / `.save_named` / `.reset` | `name` | `reset` is "Restore home layout" (`general.startup.reset-home-layout`) |
+| `cmd.workspace_layout.restore` | `source` | a whole saved layout back in one command (the tour's snapshot, `source: 'guided_tour_restore'`); the id still needs the Plans thread's agreement |
 | `cmd.panel.undock` | `'chat'` | the chat's Pop out, its only way to move (D3) |
 
 `PM_HOME.command_log`, `PM_HOME.receipt_log` and `PM_HOME.event_log` hold the last 200 of each for checks and the tour.
@@ -313,13 +314,19 @@ with the Plans thread on 2026-10-09; the concept keeps them in one table (`src/p
 ## 9. Keyboard
 
 The page already owns Ctrl+1..9 (activity-bar pages) and Ctrl+K (Settings search; canon's command palette), so the
-panels use neither: there are no Ctrl+K chords and tab N is Alt+N. In a browser four chords belong to the browser and
-a page cannot take them (Ctrl+T, Ctrl+W, Ctrl+Shift+T, Ctrl+Tab); the concept, like the later web client, answers
-the Alt column for those, and every label shows the key that works where the page runs (`PMW.KEYS`, one table).
+panels use neither: there are no Ctrl+K chords and tab N is Alt+N. In a browser six chords belong to the browser and
+a page cannot take them (Ctrl+T, Ctrl+W, Ctrl+Shift+T, Ctrl+Tab, Ctrl+PgDn, Ctrl+PgUp); the concept, like the later
+web client, answers the Alt column for those, and every label shows the key that works where the page runs
+(`PMW.KEYS`, one table).
 
-The host owns these while focus is in the centre, unless the focused tab's `wantsKey(e)` returns `true` (a terminal
-keeps the shell's keys; it should still give back Alt+1..9, Alt+arrows, Alt+Shift+arrows, Ctrl+PgUp/PgDn, Ctrl+\\,
-Shift+Escape and F6). Text inputs keep their own keys.
+The host owns these while focus is in the centre or the chat, unless the focused tab's `wantsKey(e)` returns `true` (a
+terminal keeps the shell's keys; it should still give back Alt+1..9, Alt+arrows, Alt+Shift+arrows, Alt+PgUp/PgDn
+(Ctrl+PgUp/PgDn in the app), Ctrl+\\ and Shift+Escape). F6 is taken before `wantsKey` and from every region. Text
+inputs keep their own keys; on a Mac, Option+letter and Option+\` type characters in a text field, so the Alt
+stand-ins never fire from one there (on Windows and Linux Alt+T still works from a field). Keys during IME composition
+are ignored, and a held Alt+\` does not reopen the recent-tabs list. An open menu owns its keys while focus is inside
+it; a menu left open behind the focus closes on the first real key outside it, which then goes on as usual. Tab in a
+menu closes it.
 
 | Action | Native app | In a browser |
 |---|---|---|
@@ -331,13 +338,13 @@ Shift+Escape and F6). Text inputs keep their own keys.
 | New terminal / browser | Ctrl+Shift+\` / Ctrl+Shift+B | same |
 | Open a file | Ctrl+P | same |
 | Every tab, searchable | Ctrl+Shift+A | same |
-| Next / previous tab in the panel | Ctrl+PgDn / Ctrl+PgUp | same |
+| Next / previous tab in the panel | Ctrl+PgDn / Ctrl+PgUp | Alt+PgDn / Alt+PgUp |
 | Tab 1-8 / last tab in the panel | Alt+1..8 / Alt+9 | same |
 | Move tab left / right | Ctrl+Shift+PgUp / Ctrl+Shift+PgDn | same |
 | Focus the panel in a direction | Alt+arrows | same |
 | Focus panel N | Alt+Shift+1..9 | same |
 | Move the tab to the panel in a direction (splits that way when there is none and it fits) | Alt+Shift+arrows | same |
-| Cycle regions: rail, panels, chat | F6 / Shift+F6 | same |
+| Cycle regions: rail (the whole left panel), panels, chat | F6 / Shift+F6, from any region | same |
 | Split right / down | Ctrl+\\ / Ctrl+Shift+\\ | same |
 | Maximize / restore | Shift+Escape (Escape also restores while focus is in a strip) | same |
 | Resize | Tab to a divider, then arrows 8 px, Shift+arrows 48 px, Home/End, Enter evens | same |
@@ -420,3 +427,7 @@ root. A kind never appends its own overlay to `document.body`.
   browser-owned chords get Alt stand-ins). Additive: command names agreed with the Plans thread (activation and
   maximize are `ui.*` view-state actions, `cmd.panel_tab.rename`, one `workspace.layout_changed` event), `onResize` gains
   `final`. Hover section rewritten for the merged hover engine (data-pmh rows, visual-suppressed tags).
+- v1.1 (2026-10-10): after the engine review. Keyboard: next/previous tab is Alt+PgDn/PgUp in a browser (Chrome keeps
+  Ctrl+PgDn/PgUp), so six chords get stand-ins; Mac Option typing, IME and key repeat are left alone; F6 works from
+  every region and before `wantsKey`; menu key ownership written down. Commands: `cmd.workspace_layout.restore` added
+  (pending the Plans thread). `api.menu` gains point anchors, `reason`, function submenus and `o`.

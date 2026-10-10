@@ -21,6 +21,8 @@ var CMD = PMW.CMD = {
   applyNamed: 'cmd.workspace_layout.apply_named',
   saveNamed: 'cmd.workspace_layout.save_named',
   reset: 'cmd.workspace_layout.reset',
+  // a whole-layout restore (the tour's snapshot, a project switch); the id still needs the Plans thread's agreement
+  restore: 'cmd.workspace_layout.restore',
   chatPopOut: 'cmd.panel.undock',
   chatDockBack: 'cmd.panel.redock'
 };
@@ -79,13 +81,12 @@ function commit(id, args, mutate, opts) {
     return { ok: true, result: result, noChange: true };
   }
   // the page's command seam: a cancelled pm:command-dispatch rolls the change back (the Usage and Home rule)
-  var record = { command_id: id, command_instance_id: 'home-command-' + cmdSeq, issued_at: new Date().toISOString(), payload: args || {} };
+  var seq = cmdSeq;   // a dispatch listener may run another command; this one's receipts keep its own number
+  var record = { command_id: id, command_instance_id: 'home-command-' + seq, issued_at: new Date().toISOString(), payload: args || {} };
   var accepted = true;
   try { accepted = window.dispatchEvent(new CustomEvent('pm:command-dispatch', { detail: record, cancelable: true })); } catch (_) { accepted = true; }
   if (!accepted) {
-    var rej = { seq: cmdSeq, receipt_id: 'home-receipt-' + cmdSeq, command_instance_id: record.command_instance_id, command_id: id, outcome: 'rejected', status: 'rejected', reason: 'dispatch_cancelled' };
-    pushLog(receiptLog, rej);
-    dispatchReceipt(rej);
+    settle(seq, record, 'rejected', 'rejected', { reason: 'dispatch_cancelled' });
     return { ok: false, reason: 'dispatch_cancelled' };
   }
   draft.revision = (before.revision || 0) + 1;
@@ -94,20 +95,30 @@ function commit(id, args, mutate, opts) {
   if (!saved) {
     PMW.state.layout = before;
     PMW.render.schedule({ animate: false });
-    pushLog(receiptLog, { seq: cmdSeq, command_id: id, outcome: 'rolled_back', reason: 'write_failed' });
-    PMW.toast && PMW.toast('Your layout could not be saved, so the change was undone.');
+    // the dispatch was accepted, so the page seam is owed a receipt for this instance id
+    settle(seq, record, 'rolled_back', 'failed', { reason: 'write_failed' });
+    PMW.toast && PMW.toast(opts.source === 'guided_tour_restore' ? 'Your layout could not be saved.' : 'Your layout could not be saved, so the change was undone.');
     return { ok: false, reason: 'write_failed' };
   }
-  var receipt = { seq: cmdSeq, receipt_id: 'home-receipt-' + cmdSeq, command_instance_id: record.command_instance_id, command_id: id, outcome: 'applied', status: 'applied', revision: draft.revision, completed_at: new Date().toISOString() };
-  pushLog(receiptLog, receipt);
-  dispatchReceipt(receipt);
-  var ev = { event: LAYOUT_EVENT, command_id: id, revision: draft.revision, seq: cmdSeq };
+  settle(seq, record, 'applied', 'applied', { revision: draft.revision });
+  // normalize restores the panels when focus left the maximized panel; tell the strip menus and kind rows
+  if (before.view && before.view.maximized && !draft.view.maximized) bus.emit('maximize', { panelId: null });
+  var ev = { event: LAYOUT_EVENT, command_id: id, revision: draft.revision, seq: seq };
   pushLog(eventLog, ev);
   PMW.render.schedule({ animate: opts.animate !== false });
   bus.emit('layout', ev);
   return { ok: true, result: result };
 }
 PMW.commit = commit;
+/* Every command_instance_id that went out in pm:command-dispatch gets exactly one pm:dispatch-receipt, whatever
+   the exit (applied, dispatch_cancelled, write_failed), and receipt_log joins to command_log by it. */
+function settle(seq, record, outcome, status, extra) {
+  var receipt = Object.assign({ seq: seq, receipt_id: 'home-receipt-' + seq, command_instance_id: record.command_instance_id,
+    command_id: record.command_id, outcome: outcome, status: status }, extra || {}, { completed_at: new Date().toISOString() });
+  pushLog(receiptLog, receipt);
+  dispatchReceipt(receipt);
+  return receipt;
+}
 function dispatchReceipt(receipt) {
   try { window.dispatchEvent(new CustomEvent('pm:dispatch-receipt', { detail: receipt })); } catch (_) {}
 }

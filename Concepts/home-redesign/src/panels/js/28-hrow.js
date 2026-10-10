@@ -21,21 +21,34 @@ PMW.headerRow = function (entry, spec) {
       left.appendChild(el);
     });
   }
-  function actionEl(a) {
-    var b = h('button', { type: 'button', class: 'pmw-hbtn' + (a.primary ? ' is-primary' : '') + (a.danger ? ' is-danger' : ''), 'data-id': a.id,
-      'aria-label': a.label + (a.shortcut ? ' (' + PMW.keyLabel(a.shortcut) + ')' : ''), 'data-pm-hover-label': a.label,
-      'data-pm-hover-detail': a.detail || (a.shortcut ? PMW.keyLabel(a.shortcut) : ''), 'data-pmh': 'icon' });
+  /* everything a spec says about its button; setAction re-runs it on the same node, so the button keeps focus, its
+     place in the Tab order and any menu hanging from it (replacing the node dropped focus to <body>) */
+  function paint(b, a) {
+    // toggles, not className: the hover engine and an open menu put their own classes on the button
+    b.classList.add('pmw-hbtn');
+    b.classList.toggle('is-primary', !!a.primary);
+    b.classList.toggle('is-danger', !!a.danger);
+    b.setAttribute('aria-label', a.label + (a.shortcut ? ' (' + PMW.keyLabel(a.shortcut) + ')' : ''));
+    b.setAttribute('data-pm-hover-label', a.label);
+    b.setAttribute('data-pm-hover-detail', a.detail || (a.shortcut ? PMW.keyLabel(a.shortcut) : ''));
+    b.textContent = '';
     if (a.icon) b.appendChild(icon(a.icon, { size: 14 }));
     b.appendChild(h('span', { class: 'pmw-hbtn-label', text: a.label }));
-    if (a.pressed != null) b.setAttribute('aria-pressed', a.pressed ? 'true' : 'false');
-    if (a.disabled) b.setAttribute('aria-disabled', 'true');
-    if (a.menu) b.setAttribute('aria-haspopup', 'menu');
+    setAttr(b, 'aria-pressed', a.pressed != null ? (a.pressed ? 'true' : 'false') : null);
+    setAttr(b, 'aria-disabled', a.disabled ? 'true' : null);
+    setAttr(b, 'aria-haspopup', a.menu ? 'menu' : null);
+  }
+  function actionEl(a) {
+    var b = h('button', { type: 'button', class: 'pmw-hbtn', 'data-id': a.id, 'data-pmh': 'icon' });
+    var rec = { el: b, spec: a };
+    paint(b, a);
     b.addEventListener('click', function (e) {
+      var cur = rec.spec;   // read at click time: setAction patches the spec in place
       if (b.getAttribute('aria-disabled') === 'true') return;
-      if (a.menu) { PMW.menu.open(b, typeof a.menu === 'function' ? toSpec(a.menu()) : toSpec(a.menu)); return; }
-      if (a.run) a.run(e, b);
+      if (cur.menu) { PMW.menu.open(b, typeof cur.menu === 'function' ? toSpec(cur.menu()) : toSpec(cur.menu)); return; }
+      if (cur.run) cur.run(e, b);
     });
-    actionEls[a.id] = { el: b, spec: a };
+    actionEls[a.id] = rec;
     return b;
   }
   function toSpec(m) { return Array.isArray(m) ? { id: 'hrow-menu', rows: m, width: 260, align: 'end' } : m; }
@@ -52,9 +65,7 @@ PMW.headerRow = function (entry, spec) {
     setAction: function (id, patch) {
       var rec = actionEls[id];
       if (!rec) return;
-      var a = Object.assign(rec.spec, patch);
-      var fresh = actionEl(a);
-      rec.el.replaceWith(fresh);
+      paint(rec.el, Object.assign(rec.spec, patch));
     },
     action: function (id) { return actionEls[id] ? actionEls[id].el : null; }
   };

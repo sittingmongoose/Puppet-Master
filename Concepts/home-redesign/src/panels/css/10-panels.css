@@ -210,6 +210,9 @@ body.pmw-dragging #pm-hover-tag-root, body.pm-resizing #pm-hover-tag-root { disp
   cursor: pointer;
 }
 .pmw-more[hidden] { display: none; }
+/* "+N" and "+" stay clickable above a tab that cannot shrink further (a pinned tab plus the 120 px active floor in a
+   280 px panel can run a few px into them) */
+.pmw-more, .pmw-plus { position: relative; z-index: 2; }
 .pmw-more:hover, .pmw-more.pmw-anchor-open { background: var(--pmw-hover); }
 .pmw-sbtn {
   flex: none;

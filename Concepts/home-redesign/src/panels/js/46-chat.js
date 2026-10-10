@@ -43,8 +43,10 @@ chatCol.beginDrag = function (e, handle) {
   var c = chatPanel();
   if (!c) return;
   var startX = e.clientX, startW = c.getBoundingClientRect().width;
-  var maxByCentre = startW + Math.max(0, (state.centre ? state.centre.clientWidth : 0) - 600);   // never force one column
-  var hi = Math.min(LADDER.chatMax, Math.max(LADDER.chatMin, maxByCentre)), lo = LADDER.chatMin;
+  // one rule with the ladder: the chat widens only while the centre stays at or above the step where the ladder starts
+  // easing the chat (C 960); past it the ladder would ease the width straight back on release
+  var C = state.centre ? state.centre.clientWidth : 0;
+  var lo = LADDER.chatMin, hi = clamp(startW + Math.max(0, C - LADDER.chatEase), lo, LADDER.chatMax);
   var last = startW, moved = false;
   try { handle.setPointerCapture(e.pointerId); } catch (_) {}
   handle.classList.add('resizing');
@@ -74,8 +76,10 @@ chatCol.beginDrag = function (e, handle) {
     pushLog(receiptLog, { seq: cmdSeq, command_id: CMD.resize, outcome: 'applied' });
     try { window.dispatchEvent(new CustomEvent('pm:dispatch-receipt', { detail: { command_id: CMD.resize, status: 'applied', payload: { surface: 'chat', width: w } } })); } catch (_) {}
     PMW.settings.set('chat.width', w);
-    announce('Chat width ' + w + ' pixels');
-    narrow.schedule();
+    // say the width the ladder applies, never a width that is not on screen
+    narrow.update();
+    var applied = narrow.state.chat != null ? Math.round(narrow.state.chat) : w;
+    announce('Chat width ' + applied + ' pixels');
     render.flushResizes(true);
   }
   function up(ev) { end(ev, false); }

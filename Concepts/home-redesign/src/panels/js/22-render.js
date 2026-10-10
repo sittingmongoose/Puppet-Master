@@ -32,11 +32,40 @@ function centreRect() {
 render.centreRect = function () { return state.centre ? centreRect() : { x: 0, y: 0, w: 0, h: 0 }; };
 render.rects = function () { return lastRects; };
 
+/* A divider drag's preview (24-dividers.js) is painted over the live layout, never written into it: commits, kind
+   updates and saves made during the drag all land on the real layout, and the drag's own sizes reach the model once,
+   on release. state.sizePreview = { splitId, kids: [ids], sizes: [fractions], collapsed: { kidId: bool } }; it is
+   ignored once that split no longer has exactly those kids (the drag then cancels on its next move). The copy shares
+   every tab record and copies only the tree's nodes. */
+function copyTree(n) {
+  if (!n) return n;
+  var c = Object.assign({}, n);
+  if (n.t === 'split') { c.kids = n.kids.map(copyTree); c.sizes = n.sizes.slice(); }
+  return c;
+}
+function viewOf(l) {
+  var pv = state.sizePreview;
+  if (!pv || !l) return l;
+  var f = model.find(l, pv.splitId);
+  if (!f || f.node.t !== 'split' || f.node.kids.length !== pv.kids.length) return l;
+  for (var i = 0; i < pv.kids.length; i++) if (f.node.kids[i].id !== pv.kids[i]) return l;
+  var v = Object.assign({}, l, { root: copyTree(l.root) });
+  var s = model.find(v, pv.splitId).node;
+  s.sizes = pv.sizes.slice();
+  s.kids.forEach(function (k) { if (k.t === 'panel' && Object.prototype.hasOwnProperty.call(pv.collapsed, k.id)) k.collapsed = pv.collapsed[k.id]; });
+  return v;
+}
+render.view = function () { return viewOf(state.layout); };
+
 render.paint = function (opts) {
   opts = opts || {};
   var c = state.centre, l = state.layout;
   if (!c || !l) return;
+  // retire tab instances whose tabs are gone, even while Home is hidden: a tab closed from the chat or by an agent on
+  // another page must release its session and timers now (CONTRACT section 3), not when Home is next shown
+  for (var tid in instances) if (!l.tabs[tid]) unmountTab(tid);
   if (c.offsetParent === null && !c.getClientRects().length) return;   // Home not shown: paint when it is
+  l = viewOf(l);
   var narrow = PMW.narrow && PMW.narrow.singleColumn();
   var rects = geom.layout(l, centreRect(), {
     maximized: narrow ? null : l.view.maximized,
@@ -84,12 +113,9 @@ render.paint = function (opts) {
     el.setAttribute('aria-orientation', d.dir === 'row' ? 'vertical' : 'horizontal');
     el._pmwDivider = d;
     placeEl(el, d.rect, animate);
-    updateDividerAria(el, d);
+    updateDividerAria(el, d, l);
   });
   for (var k in dividerEls) if (!seen[k]) { dividerEls[k].remove(); delete dividerEls[k]; }
-
-  // retire tab instances whose tabs are gone
-  for (var tid in instances) if (!l.tabs[tid]) unmountTab(tid);
 
   if (animate) {
     state.moving = true;
@@ -97,12 +123,28 @@ render.paint = function (opts) {
     settleTimer = setTimeout(function () {
       state.moving = false;
       c.classList.remove('pmw-animating');
+      refitStrips();
       flushResizes(true);
     }, dur('med') + 40);
   }
   if (PMW.narrow) PMW.narrow.afterPaint(rects);
   bus.emit('paint', rects);
 };
+
+/* After a glide: refit any strip whose width is not the one it was fitted for (the fitter already fits against the
+   target rect; this is the backstop for anything else measured while the panel was still moving) */
+function refitStrips() {
+  var l = viewOf(state.layout);
+  if (!l) return;
+  var narrow = PMW.narrow && PMW.narrow.singleColumn();
+  model.panels(l).forEach(function (p) {
+    var el = panelEls[p.id];
+    if (!el || el.hidden) return;
+    var host = el.querySelector('.pmw-strip-host'), s = host && host._pmw;
+    if (!s || s.dragging || Math.abs(host.clientWidth - (s.fitW || 0)) <= 1) return;
+    PMW.strip.render(el, p, l, { narrow: narrow, rects: lastRects });
+  });
+}
 
 function collapsedAxis(l, p) {
   var parent = model.parentOf(l, p.id);
@@ -245,8 +287,15 @@ function makeApi(entry) {
     activate: function (o) { PMW.activateTab(entry.id, { focus: !!(o && o.focus) }); },
     close: function () { return PMW.closeTab(entry.id); },
     split: function (direction, spec) {
+      // a split beside this tab's panel is the split command (cmd.workspace_layout.split), not a plain open
       var p = model.panelOf(state.layout, entry.id);
-      return PM_HOME.open(Object.assign({}, spec || {}, { where: direction === 'auto' || !direction ? 'split-auto' : direction, source: p && p.id }));
+      if (!p) return null;
+      var edge = direction === 'down' ? 'bottom' : direction === 'right' || direction === 'left' || direction === 'top' || direction === 'bottom' ? direction : null;
+      if (!edge) {
+        var tr = PMW.treeRects ? PMW.treeRects() : render.rects();
+        edge = tr && geom.splitFits(state.layout, p.id, 'right', tr) ? 'right' : 'bottom';
+      }
+      return PMW.splitPanel(p.id, edge, spec);
     },
     toggleMaximize: function () { var p = model.panelOf(state.layout, entry.id); if (p) PMW.toggleMaximize(p.id); },
     isMaximized: function () { var p = model.panelOf(state.layout, entry.id); return !!p && state.layout.view.maximized === p.id; },
@@ -254,7 +303,7 @@ function makeApi(entry) {
       var p = model.panelOf(state.layout, entry.id);
       return PM_HOME.open(Object.assign({ source: p && p.id }, spec || {}));
     },
-    menu: function (items, anchor, o) { return PMW.menu.open(items, anchor, o); },
+    menu: function (items, anchor, o) { return kindMenu(entry, items, anchor, o); },
     announce: announce,
     command: function (id, args) { return PM_HOME.command(id, args); },
     settings: PMW.settings,
@@ -269,6 +318,53 @@ function makeApi(entry) {
   return api;
 }
 
+/* api.menu(items, anchor, o): CONTRACT section 4's item shape { id, label, detail, icon, shortcut, disabled, checked,
+   danger, sub, run } ('-' a hairline) mapped onto PMW.menu rows (detail -> sub, shortcut -> right, sub -> submenu),
+   opened with PMW.menu.open(anchor, spec). The anchor is an element, or a point ({ x, y } or a mouse event) for a
+   context menu. o may carry title, search, width, align and onClose. A second call on the same anchor closes it. */
+function kindRows(items, entry) {
+  return (items || []).map(function (it) {
+    if (!it || it === '-') return '-';
+    var r = { id: it.id, label: it.label == null ? '' : String(it.label), sub: it.detail || null, icon: it.icon || null,
+      right: it.shortcut || null, disabled: !!it.disabled, danger: !!it.danger, keywords: it.keywords || null };
+    if (it.checked != null) r.checked = !!it.checked;
+    if (it.disabled && it.reason) r.reason = it.reason;
+    if (it.sub) {
+      var sub = it.sub;
+      r.submenu = function () {
+        var v = typeof sub === 'function' ? sub() : sub;
+        return Array.isArray(v) ? { id: 'kind-sub:' + entry.id + ':' + (it.id || ''), title: r.label, rows: kindRows(v, entry) } : v;
+      };
+    } else if (typeof it.run === 'function') {
+      r.run = function (info) {
+        try { return it.run(info); } catch (err) { try { console.error('[pm-home] a ' + entry.kind + ' menu row failed', err); } catch (_) {} }
+      };
+    }
+    return r;
+  });
+}
+var kindMenuSeq = 0;
+function kindMenu(entry, items, anchor, o) {
+  o = o || {};
+  var at = null, el = anchor;
+  if (anchor && !(anchor.nodeType === 1)) {
+    var x = anchor.clientX != null ? anchor.clientX : anchor.x, y = anchor.clientY != null ? anchor.clientY : anchor.y;
+    if (x != null && y != null) at = { x: x, y: y };
+    el = null;
+  }
+  // an element-anchored menu toggles on its anchor; a point (context) menu always opens fresh where it was asked for
+  var spec = { id: 'kind-menu:' + entry.id + (el ? '' : ':' + (++kindMenuSeq)), rows: kindRows(items, entry) };
+  if (o.width) spec.width = o.width;
+  if (o.title) spec.title = o.title;
+  if (o.search) spec.search = o.search;
+  if (o.align) spec.align = o.align;
+  if (o.empty) spec.empty = o.empty;
+  if (typeof o.onClose === 'function') spec.onClose = o.onClose;
+  if (at) spec.at = at;
+  if (!el && !at) { var r = entry.host.getBoundingClientRect(); spec.at = { x: r.left + 12, y: r.top + 12 }; }
+  return PMW.menu.open(el, spec);
+}
+
 /* ---- dividers (behaviour in 24-dividers.js) ---- */
 function createDivider(d) {
   var el = h('div', { class: 'pmw-divider', role: 'separator', tabindex: '0', 'aria-valuemin': '0', 'aria-valuemax': '100' },
@@ -277,8 +373,8 @@ function createDivider(d) {
   if (PMW.dividers) PMW.dividers.bind(el);
   return el;
 }
-function updateDividerAria(el, d) {
-  var s = model.find(state.layout, d.split);
+function updateDividerAria(el, d, l) {
+  var s = model.find(l || state.layout, d.split);
   if (!s || s.node.t !== 'split') return;
   var before = 0;
   for (var i = 0; i <= d.index; i++) before += s.node.sizes[i];
@@ -305,6 +401,7 @@ function tabLabel(rec) {
   var s = rec.state || {};
   if (s.path) return String(s.path).split('/').pop();
   if (s.title) return s.title;
+  if (rec.title) return rec.title;
   var k = kindDef(rec.kind);
   return k ? k.label : 'Tab';
 }

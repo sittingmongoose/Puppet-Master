@@ -13,6 +13,9 @@ function normalizeSpec(spec) {
   if (!s.kind && s.path) s.kind = 'editor';
   if (!s.kind && s.id) s.kind = PM_HOME.kindOf(s.id);
   s.kind = KIND_ALIASES[s.kind] || s.kind;
+  // a file opened by its id only (the chat's openEditor('file:<path>'), CONTRACT 6.1) still has a path, so it opens
+  // as the D7 preview, gets its file name as its label and joins the recents; diff mode rides in the state, not the id
+  if (s.kind === 'editor' && !s.path && typeof s.id === 'string' && s.id.indexOf('file:') === 0) s.path = s.id.slice(5);
   s.by = s.by || 'user';
   s.agent = /^agent:/.test(s.by) ? s.by.slice(6) : null;
   return s;
@@ -123,15 +126,17 @@ function mruPanels(l) {
   model.panels(l).forEach(function (p) { if (!seen[p.id]) out.push(p); });
   return out;
 }
+/* Fit checks measure the tree (PMW.treeRects), never the maximized rects, where the one panel shown fills the centre. */
+function fitRects() { return PMW.treeRects ? PMW.treeRects() : render.rects(); }
 function fitEdge(l, panelId) {
-  var rects = render.rects();
+  var rects = fitRects();
   if (!rects || !rects.panels[panelId]) return 'right';
   if (geom.splitFits(l, panelId, 'right', rects)) return 'right';
   if (geom.splitFits(l, panelId, 'bottom', rects)) return 'bottom';
   return null;
 }
 function largestPanel(l) {
-  var rects = render.rects(), best = null, area = -1;
+  var rects = fitRects(), best = null, area = -1;
   model.panels(l).forEach(function (p) {
     var r = rects && rects.panels[p.id];
     var a = r ? r.w * r.h : 0;
@@ -145,7 +150,10 @@ function nextPanelInSwitcher(l, from) {
   return ps[(i + 1) % ps.length].id;
 }
 
-PM_HOME.open = function (spec) {
+PM_HOME.open = function (spec) { return openAs(spec, CMD.open, null); };
+/* openAs(spec, commandId, args): the one open path, committed under another command's id when the open is that
+   command (Split right / down commits cmd.workspace_layout.split, CONTRACT section 8). */
+function openAs(spec, commandId, cmdArgs) {
   var s = normalizeSpec(spec);
   if (!s.kind) return { ok: false, reason: 'unknown_kind' };
   var l = state.layout;
@@ -178,7 +186,7 @@ PM_HOME.open = function (spec) {
   if (background) rec.attention = true;
   if (s.render) registerRenderer(id, s);
   var newPanelId = null;
-  var res = commit(CMD.open, { kind: s.kind, id: id, where: s.where || 'auto', by: s.by }, function (d) {
+  var res = commit(commandId || CMD.open, cmdArgs || { kind: s.kind, id: id, where: s.where || 'auto', by: s.by }, function (d) {
     var pid;
     if (target.split) {
       var np = model.newPanel(d, []);
@@ -191,6 +199,8 @@ PM_HOME.open = function (spec) {
     if (!panel) return false;
     var activate = !background || !panel.tabs.length;
     model.addTab(d, pid, rec, { activate: activate, after: activate ? null : panel.active });
+    // the tab is open again, so its entries on the reopen stack are spent (VS Code drops them as an editor opens)
+    d.closed = (d.closed || []).filter(function (c) { return !c || !c.tab || c.tab.id !== id; });
     if (!background) { d.view.focus = pid; touchMru(d, id); }
     return { panelId: pid };
   });
@@ -211,7 +221,8 @@ PM_HOME.open = function (spec) {
     });
   }
   return { ok: true, tabId: id, panelId: pid2, created: true };
-};
+}
+PMW.openAs = openAs;
 
 PM_HOME.openFile = function (path, o) { return PM_HOME.open(Object.assign({ kind: 'editor', path: path }, o || {})); };
 PM_HOME.reveal = function (id) {
@@ -256,8 +267,14 @@ function registerRenderer(id, s) {
 PM_HOME.openEditor = function (id, o) {
   o = o || {};
   var label = typeof o.label === 'function' ? o.label(id) : o.label;
-  var res = PM_HOME.open({ id: id, kind: o.kind || PM_HOME.kindOf(id) || 'document', label: label || null, title: o.title || null,
-    icon: o.icon || null, render: o.render || null, by: o.by || 'user', where: o.where });
+  var spec = { id: id, kind: o.kind || PM_HOME.kindOf(id) || 'document', label: label || null, title: o.title || null,
+    icon: o.icon || null, render: o.render || null, by: o.by || 'user', where: o.where };
+  // placement and file fields pass through: a double click passes mode 'keep' (no mode is the D7 preview for a
+  // person's file open); 'diff' is the editor's view, carried in its state
+  if (o.mode === 'diff') spec.view = 'diff';
+  else if (o.mode) spec.mode = o.mode;
+  ['line', 'col', 'background', 'focus', 'source'].forEach(function (k) { if (o[k] !== undefined) spec[k] = o[k]; });
+  var res = PM_HOME.open(spec);
   return res.ok ? res.tabId : null;
 };
 PM_HOME.refresh = function (id) {

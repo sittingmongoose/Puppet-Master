@@ -5,14 +5,18 @@
 
    open(anchor, spec) -> handle { el, close(), update(spec) }
    spec: { id, title, meta, search: true | { placeholder }, sections: [{ label, rows }] | rows, width, align: 'start'|'end',
-           at: { x, y } (a context menu), foot, empty, onClose, className }
+           at: { x, y } (a context menu), foot, empty, onClose, className,
+           onItemClosed() (after a row's close lands; return false to close the menu) }
    row:  { id, label, sub, right, icon, kind (a kind icon), checked (true|false: a check slot), danger, disabled, reason,
            run(info) (info = { alt, row }), alt: { label, icon, run } (the trailing cell: "Open in new panel"),
            links: [{ label, title, run }] (an inline sub-row of plain links), submenu: spec | () => spec,
-           keywords, keepOpen, close: false (render a close cell instead of alt), onClose(row) }
+           keywords, keepOpen, close(row) (renders a close cell instead of alt; may return a Promise) }
    Keyboard: Up/Down (rows and links in reading order), Home/End, Enter/Space picks, Alt+Enter the trailing cell,
    Right opens a submenu, Left or Escape goes back, Escape closes and returns focus, Tab closes, printable keys go to
-   the search field (else type-ahead), Delete on a row with a close cell closes that item. */
+   the search field (else type-ahead), Delete on a row with a close cell closes that item.
+   Anchors: a real control (a button, a tab) or null with `at`. Never the whole centre: a click anywhere in the panels
+   would then count as inside, and the menu would never close; open() treats the centre as no anchor. `title` and
+   `sections` may be functions, re-read after a row's close cell closes its item. */
 
 var menu = PMW.menu = { current: null };
 var MENU_GAP = 6, MENU_EDGE = 8;
@@ -20,31 +24,52 @@ var MENU_GAP = 6, MENU_EDGE = 8;
 menu.close = function (opts) { if (menu.current) menu.current.close(opts); };
 menu.isOpen = function () { return !!menu.current; };
 
+/* a point near the top of the centre, for a menu that has no control to hang from */
+function centreTopPoint() {
+  var r = state.centre ? state.centre.getBoundingClientRect() : { left: 0, top: 0, width: 360 };
+  return { x: r.left + r.width / 2 - 180, y: r.top + 40 };
+}
+menu.centreTopPoint = centreTopPoint;
+function valueOf(x) { return typeof x === 'function' ? x() : x; }
+/* is el a connected control that can take focus now? (focus() on a plain div or a hidden node silently does nothing) */
+function canFocus(el) {
+  if (!el || !el.isConnected || typeof el.focus !== 'function' || el === doc.body) return false;
+  if (el.closest && el.closest('[hidden], [inert]')) return false;
+  return el.tabIndex >= 0 || el.hasAttribute('tabindex') || /^(BUTTON|INPUT|TEXTAREA|SELECT|A)$/.test(el.tagName);
+}
+
 menu.open = function (anchor, spec) {
+  if (anchor && anchor === state.centre) anchor = null;
+  if (!anchor && !spec.at) spec = Object.assign({}, spec, { at: centreTopPoint() });
+  var opener = doc.activeElement;   // focus goes back here when the anchor cannot take it
   if (menu.current) {
     var same = menu.current.anchor === anchor && menu.current.spec.id && spec.id === menu.current.spec.id;
     menu.current.close({ instant: true, keepFocus: true });
     if (same) return null;
   }
   var hnd = { anchor: anchor, spec: spec, stack: [], el: null, closed: false };
+  // aria-expanded and the open tint belong to a menu button, not to a context menu opened at a point
+  var marksAnchor = !!(anchor && anchor.setAttribute && !spec.at);
   /* hover: rows opt into the merged hover engine (data-pmh="row"); hover TAGS stay off the rows with
      data-pm-hover-visual-suppressed (data-pm-hover-exempt would also take the rows out of the hover engine) */
   var el = hnd.el = h('div', { class: 'pmw-menu pmw-pop' + (spec.className ? ' ' + spec.className : ''), role: 'menu', tabindex: '-1',
-    'data-pm-hover-visual-suppressed': 'true', 'data-pmh': 'off', 'data-mstate': 'measure', 'aria-label': spec.title || spec.label || 'Menu' });
+    'data-pm-hover-visual-suppressed': 'true', 'data-pmh': 'off', 'data-mstate': 'measure', 'aria-label': valueOf(spec.title) || spec.label || 'Menu' });
   overlay().appendChild(el);
   hnd.render = function (sp, keepQuery) {
     var q = keepQuery && hnd.search ? hnd.search.value : '';
     el.textContent = '';
     hnd.items = [];
     hnd.search = null;
-    if (sp.title || hnd.stack.length) {
+    hnd.titleEl = null;
+    var title = valueOf(sp.title);
+    if (title || hnd.stack.length) {
       var head = h('div', { class: 'pmw-mhead' });
       if (hnd.stack.length) {
         var back = h('button', { type: 'button', class: 'pmw-mback', 'aria-label': 'Back', tabindex: '-1' }, [icon('chevronLeft', { size: 14 })]);
         back.addEventListener('click', function () { goBack(); });
         head.appendChild(back);
       }
-      head.appendChild(h('strong', { text: sp.title || '' }));
+      head.appendChild(hnd.titleEl = h('strong', { text: title || '' }));
       if (sp.meta) head.appendChild(h('span', { class: 'pmw-mmeta', text: sp.meta }));
       el.appendChild(head);
     }
@@ -71,7 +96,7 @@ menu.open = function (anchor, spec) {
     var list = hnd.list;
     list.textContent = '';
     hnd.items = [];
-    var sections = sp.sections || [{ rows: sp.rows || [] }];
+    var sections = valueOf(sp.sections) || [{ rows: sp.rows || [] }];
     if (typeof sp.filter === 'function' && q) sections = sp.filter(q) || sections;
     var any = false;
     sections.forEach(function (sec, si) {
@@ -118,12 +143,12 @@ menu.open = function (anchor, spec) {
     if (r.alt) {
       var cell = h('button', { type: 'button', class: 'pmw-mcell', tabindex: '-1', 'aria-label': (r.alt.label || 'Open in new panel') + ': ' + r.label,
         'data-pm-hover-label': r.alt.label || 'Open in new panel', 'data-pm-hover-detail': PMW.keyLabel('Alt+Enter') }, [icon(r.alt.icon || 'newPanel', { size: 14 })]);
-      cell.addEventListener('click', function (e) { e.stopPropagation(); if (!r.disabled) { close({}); r.alt.run({ row: r }); } });
+      cell.addEventListener('click', function (e) { e.stopPropagation(); if (!r.disabled && !hnd.closed) { close({ returnFocus: false }); r.alt.run({ row: r }); restoreFocus(); } });
       cell._pmwAltOf = main;
       row.appendChild(cell);
     } else if (r.close) {
       var cl = h('button', { type: 'button', class: 'pmw-mcell pmw-mclose', tabindex: '-1', 'aria-label': 'Close ' + r.label, 'data-pm-hover-label': 'Close' }, [icon('close', { size: 12 })]);
-      cl.addEventListener('click', function (e) { e.stopPropagation(); r.close(r); refill(); });
+      cl.addEventListener('click', function (e) { e.stopPropagation(); closeItem(r); });
       row.appendChild(cl);
     }
     var wrapEl = row;
@@ -134,7 +159,7 @@ menu.open = function (anchor, spec) {
         if (i) lr.appendChild(h('span', { class: 'pmw-mlinksep', 'aria-hidden': 'true', text: '·' }));
         var a = h('button', { type: 'button', class: 'pmw-mlink pmw-cur', role: 'menuitem', tabindex: '-1', text: lk.label });
         if (lk.title) a.setAttribute('data-pm-hover-label', lk.title);
-        a.addEventListener('click', function (e) { close({}); lk.run({ alt: e.altKey }); });
+        a.addEventListener('click', function (e) { if (hnd.closed) return; close({ returnFocus: false }); lk.run({ alt: e.altKey }); restoreFocus(); });
         a._pmwLink = lk;
         lr.appendChild(a);
         hnd.items.push(a);
@@ -143,9 +168,45 @@ menu.open = function (anchor, spec) {
     }
     return wrapEl;
   }
-  function refill() { fill(hnd.spec, hnd.search ? hnd.search.value : ''); focusIndex(0); }
+  /* re-read the spec (sections and title may be functions) and keep focus near where it was */
+  function refill(at) {
+    var inSearch = hnd.search && doc.activeElement === hnd.search;
+    fill(hnd.spec, hnd.search ? hnd.search.value : '');
+    var title = valueOf(hnd.spec.title);
+    if (hnd.titleEl && title != null) hnd.titleEl.textContent = title;
+    if (title) el.setAttribute('aria-label', title);
+    if (inSearch) return;
+    if (!hnd.items.length && hnd.search) { hnd.search.focus({ preventScroll: true }); return; }
+    focusIndex(Math.min(at || 0, Math.max(0, hnd.items.length - 1)));
+  }
+  /* a row's close cell or Delete: the close may ask first (canClose) and lands a microtask later, so refresh after it */
+  function closeItem(r) {
+    var at = hnd.focusAt || 0;
+    Promise.resolve(r.close(r)).then(function () {
+      if (hnd.closed) return;
+      if (typeof hnd.spec.onItemClosed === 'function' && hnd.spec.onItemClosed() === false) { close({}); return; }
+      refill(at);
+    });
+  }
+  /* after a pick: an action that moved focus keeps it; otherwise focus goes back to the control the menu came from, so
+     a keyboard user is never dropped on <body> when the menu's buttons go away */
+  function restoreFocus() {
+    var a = doc.activeElement;
+    if (a && a !== doc.body && a !== doc.documentElement && !el.contains(a)) return;
+    returnFocus();
+  }
+  function returnFocus() {
+    var targets = [anchor, opener];
+    for (var i = 0; i < targets.length; i++) {
+      var t = targets[i];
+      if (!canFocus(t) || el.contains(t)) continue;
+      try { t.focus({ preventScroll: true }); } catch (_) {}
+      if (doc.activeElement === t) return;
+    }
+    if (state.layout && PMW.focusPanelDom) PMW.focusPanelDom(state.layout.view.focus);
+  }
   function pick(r, info) {
-    if (r.disabled) return;
+    if (r.disabled || hnd.closed) return;
     if (r.submenu) {
       var sub = typeof r.submenu === 'function' ? r.submenu() : r.submenu;
       hnd.stack.push(hnd.spec);
@@ -158,6 +219,7 @@ menu.open = function (anchor, spec) {
     if (!r.keepOpen) close({ returnFocus: false });
     if (r.run) r.run({ alt: !!(info && info.alt), row: r });
     if (r.keepOpen) { hnd.render(hnd.spec, true); focusFirst(); }
+    else restoreFocus();
   }
   function goBack() {
     if (!hnd.stack.length) { close({}); return; }
@@ -182,6 +244,7 @@ menu.open = function (anchor, spec) {
   }
   var typeBuf = '', typeTimer = 0;
   function onKey(e) {
+    if (hnd.closed) return;   // a closing menu is dead to keys (a second Enter would run the row again)
     var items = hnd.items;
     var i = items.indexOf(doc.activeElement);
     var inSearch = doc.activeElement === hnd.search;
@@ -190,23 +253,23 @@ menu.open = function (anchor, spec) {
     if (e.key === 'Home' && !inSearch) { e.preventDefault(); focusIndex(0); return; }
     if (e.key === 'End' && !inSearch) { e.preventDefault(); focusIndex(items.length - 1); return; }
     if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); if (hnd.stack.length) goBack(); else close({}); return; }
-    if (e.key === 'Tab') { close({ returnFocus: false }); return; }
+    // Tab: focus goes back to the menu button and the browser's own Tab moves on from there (WAI-ARIA menu button)
+    if (e.key === 'Tab') { close({}); return; }
     if (e.key === 'ArrowRight' && i >= 0 && items[i]._pmwRow && items[i]._pmwRow.submenu) { e.preventDefault(); pick(items[i]._pmwRow); return; }
     if (e.key === 'ArrowLeft' && hnd.stack.length && !inSearch) { e.preventDefault(); goBack(); return; }
     if (e.key === 'Enter' || (e.key === ' ' && !inSearch)) {
       var target = inSearch ? items[0] : items[i];
       if (!target) return;
       e.preventDefault();
-      if (target._pmwLink) { close({}); target._pmwLink.run({ alt: e.altKey }); return; }
+      if (target._pmwLink) { close({ returnFocus: false }); target._pmwLink.run({ alt: e.altKey }); restoreFocus(); return; }
       var r = target._pmwRow;
-      if (e.altKey && r.alt) { close({}); r.alt.run({ row: r }); return; }
+      if (e.altKey && r.alt) { if (r.disabled) return; close({ returnFocus: false }); r.alt.run({ row: r }); restoreFocus(); return; }
       pick(r, { alt: e.altKey });
       return;
     }
     if ((e.key === 'Delete') && i >= 0 && items[i]._pmwRow && items[i]._pmwRow.close) {
       e.preventDefault();
-      items[i]._pmwRow.close(items[i]._pmwRow);
-      refill();
+      closeItem(items[i]._pmwRow);
       return;
     }
     if (!inSearch && e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
@@ -228,7 +291,8 @@ menu.open = function (anchor, spec) {
     el.style.width = width + 'px';
     var natural = el.scrollHeight;
     var ar;
-    if (hnd.spec.at) ar = { left: hnd.spec.at.x, right: hnd.spec.at.x, top: hnd.spec.at.y, bottom: hnd.spec.at.y, width: 0 };
+    var at = hnd.spec.at || spec.at || (anchor && anchor.isConnected ? null : centreTopPoint());
+    if (at) ar = { left: at.x, right: at.x, top: at.y, bottom: at.y, width: 0 };
     else ar = anchor.getBoundingClientRect();
     var below = vh - ar.bottom - MENU_GAP - MENU_EDGE, above = ar.top - MENU_GAP - MENU_EDGE;
     var up = natural > below && above > below;
@@ -268,19 +332,21 @@ menu.open = function (anchor, spec) {
     if (menu.current === hnd) menu.current = null;
     doc.removeEventListener('pointerdown', onOutside, true);
     window.removeEventListener('resize', onResize);
-    if (anchor && anchor.setAttribute) { anchor.setAttribute('aria-expanded', 'false'); anchor.classList.remove('pmw-anchor-open'); }
-    if (opts.returnFocus !== false && anchor && anchor.focus && !opts.keepFocus) { try { anchor.focus({ preventScroll: true }); } catch (_) {} }
+    if (marksAnchor) { anchor.setAttribute('aria-expanded', 'false'); anchor.classList.remove('pmw-anchor-open'); }
+    if (opts.returnFocus !== false && !opts.keepFocus && el.contains(doc.activeElement)) returnFocus();
     if (hnd.spec.onClose) try { hnd.spec.onClose(); } catch (_) {}
     if (opts.instant || reducedMotion()) { el.remove(); return; }
+    // leaving: no keys, no clicks and no focus for the 200 ms the fade takes
+    try { el.inert = true; } catch (_) {}
     el.setAttribute('data-mstate', 'leaving');
     setTimeout(function () { el.remove(); }, 200 * motion.speed() + 20);
   }
   hnd.close = close;
   hnd.update = function (sp) { hnd.spec = sp; hnd.render(sp, true); morph(); };
-  hnd.render(spec);
-  place();
+  try { hnd.render(spec); place(); }
+  catch (err) { el.remove(); throw err; }   // a bad spec never leaves an invisible menu in the overlay
   lastH = el.offsetHeight;
-  if (anchor && anchor.setAttribute) { anchor.setAttribute('aria-expanded', 'true'); anchor.classList.add('pmw-anchor-open'); }
+  if (marksAnchor) { anchor.setAttribute('aria-expanded', 'true'); anchor.classList.add('pmw-anchor-open'); }
   el.setAttribute('data-mstate', 'closed');
   void el.offsetWidth;
   el.setAttribute('data-mstate', 'open');
