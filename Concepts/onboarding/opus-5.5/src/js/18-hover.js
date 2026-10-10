@@ -5,10 +5,11 @@
 
    Targets (the outermost match of SEL; a target inside another target resolves to the outer box)
      the PM8 set, every .pm-sheen, the Usage .pmu-card (not the band, nor while it is pending, leaving, lifted,
-     resized, morphing or flying), and any element with [data-pmh] (an opt-in for future panels; its value names the
-     kind: card | row | tile | icon, empty = card; data-pmh="off" takes an element out of the set). Tabs, text
-     surfaces (inputs, editors, terminals) and resize dividers are never targets, and nothing inside
-     [data-pm-hover-exempt] (the home redesign's terminal input and text surfaces) is a target or hovers one.
+     resized, settling after a drop, morphing or flying), and any element with [data-pmh] (an opt-in for future
+     panels; its value names the kind: card | row | tile | icon, empty = card; data-pmh="off" takes an element out of
+     the set). Tabs, text surfaces (inputs, editors, terminals) and resize dividers are never targets, and nothing
+     inside [data-pm-hover-exempt] (the home redesign's terminal input and text surfaces; on a Usage plate itself the
+     attribute is only its hover-tag opt-out) is a target or hovers one.
    Kinds: every target gets data-pmh-kind="card|row|tile|icon" once for its lifetime, ahead of time at idle (a few per
      idle callback, after load, after a look change and after a frame met a new target), so CSS and tokens can differ
      per kind and no hover frame writes it; a frame stamps only a target that appeared since.
@@ -74,10 +75,15 @@
     var SEL = '[data-pmh],.pm-sheen,' + KIND_ORDER.map(function (k) { return KINDS[k]; }).join(',');
     var BOUNDARY = '[role="tab"],.page-tab,[class*="resizer"],[class*="-divider"],.xterm,textarea,input,select,' +
       '[contenteditable=""],[contenteditable="true"]';
-    var EXEMPT = '[data-pm-hover-exempt]';
+    /* data-pm-hover-exempt is the app's hover-TAG opt-out, read here as "no hover chrome on or under this element" (the
+       home redesign's terminal input and text surfaces). A Usage plate carries it on itself only because its title holds
+       the panel's tag (Usage 42-cards.js), so on a plate it exempts nothing from PMH; an exempt element inside a plate,
+       or around the board (data-pm-hover-exempt="entering" during an arrival), still does. */
+    var EXEMPT = '[data-pm-hover-exempt]:not(.pmu-card)';
     /* Usage plates: the whole head is a move handle and seven resize zones sit 4 px outside the edge, so the magnet
-       stays off there (light and glow only); a plate is not a target while the board runs an operation on it. */
-    var PMU_SKIP = '[data-head="band"],[data-pending],[data-leaving],[data-lifted],[data-resizing],[data-morphing]';
+       stays off there (light and glow only); a plate is not a target while the board runs an operation on it, nor
+       while it settles into its slot after a drop (a transform animation: a rect read then is not where it lands). */
+    var PMU_SKIP = '[data-head="band"],[data-pending],[data-leaving],[data-lifted],[data-resizing],[data-settling],[data-morphing]';
     var NOMAG = '.pmu-card,[data-pmh-mag="0"]';
     var REST_BODY = ['pm-resizing', 'pm-ab-dragging', 'pmu-pointer-op', 'pm7u-pointer-op', 'pmw-dragging'];   /* pmw-dragging: home panels' tab or panel drag */
 

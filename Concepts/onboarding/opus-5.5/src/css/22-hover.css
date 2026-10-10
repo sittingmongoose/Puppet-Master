@@ -38,7 +38,8 @@
 
 /* PM8 parity: a hovered card, tile or row keeps its resting border and the elev-2 shadow instead of each page's own
    :hover ring and glow (bento lime border, catalog accent border, and so on), so the PMH layers are the only hover
-   light. Also under Reduced Motion, where PM8 let the old rings come back. Usage plates keep their own hover. */
+   light. Also under Reduced Motion, where PM8 let the old rings come back. Usage plates keep their own border and
+   shadow (they take the family light on ::before, Usage 20-board.css, because their ::after is the rim light). */
 :is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):is(.pmh-on, :hover):not(.pmu-card) {
   border-color: var(--border) !important;
   box-shadow: var(--elev-2) !important;
@@ -309,10 +310,11 @@ html[data-theme="retro-light"] {
 }
 /* hard cuts: the base gives cards and tiles a 70-140 ms cubic on box-shadow, border and background (and pages their
    own :hover lifts); only the transform transition stays, and hover never changes transform */
-html[data-theme^="retro"] :is([data-pmh-kind="card"], [data-pmh-kind="tile"]):not(.pmu-card) { transition-property: transform !important; }
-html[data-theme^="retro"] :is([data-pmh-kind="card"], [data-pmh-kind="tile"]):is(.pmh-on, .pmh-out, :hover):not(.pmu-card) { transform: none; }
-/* the plate: raised while hovered and through the one-tick drop (.pmh-out) */
-html[data-theme^="retro"] [data-pmh-kind="card"]:is(.pmh-on, .pmh-out):not(.pmu-card) {
+html[data-theme^="retro"] :is([data-pmh-kind="card"], [data-pmh-kind="tile"]) { transition-property: transform !important; }
+html[data-theme^="retro"] :is([data-pmh-kind="card"], [data-pmh-kind="tile"]):is(.pmh-on, .pmh-out, :hover) { transform: none; }
+/* the plate: raised while hovered and through the one-tick drop (.pmh-out); a Usage plate too (its cast and its resize
+   zones: Usage 20-board.css) */
+html[data-theme^="retro"] [data-pmh-kind="card"]:is(.pmh-on, .pmh-out) {
   translate: -2px -2px; box-shadow: 5px 5px 0 0 var(--pmh-r-cast) !important;
 }
 html[data-theme^="retro"] [data-pmh-kind="tile"]:is(.pmh-on, .pmh-out) {
@@ -326,7 +328,7 @@ html[data-theme^="retro"] :is(.pm6-orch-widget, .pm6-chat-card)[data-pmh-kind]:i
 html[data-theme="retro-light"] .pm6-dash-card[data-pmh-kind]:is(.pmh-on, .pmh-out, :hover) { border-color: var(--border-light) !important; }
 html[data-theme^="retro"] .pm6-orch-ctl-primary[data-pmh-kind]:is(.pmh-on, .pmh-out, :hover) { border-color: var(--accent-primary) !important; }
 /* the rule: double frame on the second beat; gone on the first beat out */
-html[data-theme^="retro"] [data-pmh-kind="card"].pmh-on:not(.pmu-card)::after {
+html[data-theme^="retro"] [data-pmh-kind="card"].pmh-on::after {
   content: ""; position: absolute; inset: 1px; z-index: 3; display: block; pointer-events: none;
   border: 1px solid var(--pmh-r-rule); border-radius: 0;
   background: none !important; box-shadow: none !important; -webkit-mask: none !important; mask: none !important;
@@ -352,7 +354,7 @@ html[data-motion="reduced"][data-theme^="retro"] :is([data-pmh-kind="card"], [da
 html[data-motion="reduced"][data-theme^="retro"] [data-pmh-kind]::after,
 html[data-motion="reduced"][data-theme^="retro"] [data-pmh-kind]::before { animation: none !important; }
 @media (prefers-reduced-motion: reduce) {
-  html[data-theme^="retro"] :is([data-pmh-kind="card"], [data-pmh-kind="tile"]):is(.pmh-on, .pmh-out):not(.pmu-card) { translate: none; }
+  html[data-theme^="retro"] :is([data-pmh-kind="card"], [data-pmh-kind="tile"]):is(.pmh-on, .pmh-out) { translate: none; }
   html[data-theme^="retro"] [data-pmh-kind]::after, html[data-theme^="retro"] [data-pmh-kind]::before { animation: none !important; }
 }
 /* software-rendered: every piece is a hard rect painted once per hover, so Retro keeps its whole form */
