@@ -676,7 +676,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: This unit owns concrete UI-to-command wiring completeness for the Home workspace.
 split_recommended: false
-depends_on: [UIW-009, F3-501, UCC-144, CV-323, DL-180, UIW-040]
+depends_on: [UIW-009, F3-501, UCC-144, CV-323]
 unblocks: []
 acceptance_criteria:
 - Disclosure-only menu/flyout actions are view_only; each selected leaf maps to exactly one command and exact result/event family.
@@ -703,7 +703,7 @@ negative_constraints:
 compatibility_only_notes: []
 stale_retired_dispositions:
 - The prior non-census Home reconciliation summary is superseded by the source-hashed control census.
-- "Amended 2026-10-09 (DL-180): the census contents are UIW-040's closed list; the fixed-zone rows, the terminal caps and Collapse Bottom Terminal leave it."
+- "Amended 2026-10-09 (DL-180): the census contents are UIW-040's closed list; the fixed-zone rows, the terminal caps and Collapse Bottom Terminal leave it. DL-180 is cited here and not in depends_on: DL-180 builds on DL-147, whose chain already reaches this unit, so the dependency would close a loop; UIW-040 depends on this unit instead."
 owner_hints: [Plans/UI_Wiring_Rules.md, Plans/Wiring_Matrix.production.json]
 ```
 
@@ -837,7 +837,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: The unit governs direct manipulation, cleanup, cross-page Assistant seating, and visible state continuity.
 split_recommended: false
-depends_on: [UIW-010, UIW-011, CS-068, UCC-147, WM-045, DL-180, UIW-041]
+depends_on: [UIW-010, UIW-011, CS-068, UCC-147, WM-045]
 unblocks: [DR-039, ACD-448]
 acceptance_criteria:
   - Pointer and keyboard preview state remains local; Usage pointer resize advances the target footprint and visibly repacks only obstructed peers, Usage reorder displaces affected peers, and Dashboard resize peers remain frozen. Every preview preserves mounted peer identity, paint, DOM order, and effect-spy silence; Usage move/resize acquisition preserves body magnetism, neutralizes translation continuously only around measured control zones, uses no synthetic pointerdown or second controller, requires rescued pointerdown top-hit ownership by the remembered card, lets an intervening overlay receive the event while clearing that stale lease, excludes unrelated interactive targets, rejects every concurrent operation before mutation, and clears the short pointer-specific acquisition lease on every direct/rescued activation and terminal path.
@@ -881,7 +881,7 @@ negative_constraints:
   - Do not move, dock or float the chat inside the window; Pop out is its only relocation (DL-180).
   - Do not route aggregate Usage cards, attach OpenSubject to either cmd.nav.open_usage_subject selector branch, or use usage_event_ref as the PMConcept7 Ledger attempt object_id.
 stale_retired_dispositions:
-  - "Amended 2026-10-09 (DL-180): the chat's saved Home dock and in-window re-seat retire; the transaction covers every panel and tab gesture."
+  - "Amended 2026-10-09 (DL-180): the chat's saved Home dock and in-window re-seat retire; the transaction covers every panel and tab gesture. DL-180 is cited here and not in depends_on: DL-180 builds on DL-147, whose chain already reaches this unit, so the dependency would close a loop; UIW-041 depends on this unit instead."
 owner_hints:
   - Plans/UI_Wiring_Rules.md
   - Plans/Wiring_Matrix.md
@@ -2058,7 +2058,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: "The closed list of visible Home controls that the wiring must cover, one row each."
 split_recommended: false
-depends_on: [DL-180, UIW-010, UIW-012, WM-090, UCC-200, UCC-203, F3-502, F3-630, F3-631, F3-632, F3-633, F3-636, F3-637]
+depends_on: [DL-180, UIW-010, UIW-012, UCC-200, UCC-203, F3-502, F3-630, F3-631, F3-632, F3-633, F3-636, F3-637]
 unblocks: [ATS-075]
 acceptance_criteria:
   - "Every control on the list maps to exactly one WM-090 row, and every home.* production entry maps to a control on the list: the census reports unresolved_count=0."
@@ -2221,7 +2221,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: "The closed list of visible controls inside a terminal tab that the wiring must cover, one row each."
 split_recommended: false
-depends_on: [DL-181, DL-182, DL-183, UIW-040, WM-091, UCC-201, F3-640, F3-641, F3-642, F3-645, F3-646, SMPFS-180, SMPFS-181, SMPFS-182]
+depends_on: [DL-181, DL-182, DL-183, UIW-040, UCC-201, F3-640, F3-641, F3-642, F3-645, F3-646, SMPFS-180, SMPFS-181, SMPFS-182]
 unblocks: [ATS-076]
 acceptance_criteria:
   - "Every control on the list maps to exactly one WM-091 row, and every terminal.* production entry maps to a control on the list."

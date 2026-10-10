@@ -1904,7 +1904,6 @@ depends_on:
 - PNC-001
 - WM-004
 - DL-181
-- WM-091
 unblocks: []
 acceptance_criteria:
 - WM-021 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
@@ -1989,7 +1988,6 @@ depends_on:
 - PNC-001
 - WM-021
 - DL-181
-- WM-090
 unblocks: []
 acceptance_criteria:
 - WM-022 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
@@ -3994,7 +3992,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: The wiring contract connects the recovered visible controls, their disabled/error states, and the shared Assistant seating behavior.
 split_recommended: false
-depends_on: [WM-044, CS-068, UCC-147, WS-019, SP-249, SP-250, DL-180, WM-090, UCC-203]
+depends_on: [WM-044, CS-068, UCC-147, WS-019, SP-249, SP-250]
 unblocks: [UIW-012, DR-039, ACD-448]
 acceptance_criteria:
   - Prose and production JSON agree on producer, command/disposition, handler, selector/store, persistence/effect, receipt, consumer, cancel, and error behavior for every covered family; event-primary callers use usage_event/usage_event_ref, while a PMConcept7 Ledger attempt row dispatches cmd.nav.open_usage_subject as a usage_attempt/attempt_id object route without OpenSubject and retains usage_event_ref plus provider/account/runtime refs as correlation. Current aggregate cards remain local with no command, receipt, or event. The production matrix retains all 726 keys and this recovery enriches exactly 40 existing rows, comprising the 13 named catalog rows for Chat Context, Usage, panel switching, and widget commands plus the 27 existing home.* rows; cmd.artifacts.show_in_usage and cmd.artifacts.show_in_ledger retain their pre-recovery bytes and are not counted in that enrichment set.
@@ -4039,7 +4037,7 @@ negative_constraints:
   - Do not create production rows for compatibility-only or rejected command tokens.
   - Do not route aggregate Usage cards, dispatch cmd.nav.open_usage_subject without the branch's stable selector, attach OpenSubject to either cmd.nav.open_usage_subject selector branch, or use correlation identity as the PMConcept7 Ledger object_id.
 stale_retired_dispositions:
-  - "Amended 2026-10-09 (DL-180): the chat's in-window re-seat across Home and global docks retires (Pop out and Dock back remain), and Home commits move to the v2 record."
+  - "Amended 2026-10-09 (DL-180): the chat's in-window re-seat across Home and global docks retires (Pop out and Dock back remain), and Home commits move to the v2 record. DL-180 is cited here and not in depends_on: DL-180 builds on DL-147, whose chain already reaches this unit, so the dependency would close a loop; WM-090 depends on this unit instead. Pop out's command is Plans/UI_Command_Catalog.md#UCC-203."
 owner_hints:
   - Plans/Wiring_Matrix.md
   - Plans/Wiring_Matrix.production.json
@@ -5647,7 +5645,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: "Binds every visible control of the universal panels, the chat column and the Home keys to exactly one command or typed local action."
 split_recommended: false
-depends_on: [DL-180, UCC-200, UCC-202, UCC-203, CS-100, CS-101, F3-630, F3-631, F3-632, F3-633, F3-634, F3-635, F3-636, F3-637, F3-502, CV-360, CV-361, SP-330, UIW-012, UIW-040, UIW-041]
+depends_on: [DL-180, UCC-200, UCC-202, UCC-203, CS-100, CS-101, F3-630, F3-631, F3-632, F3-633, F3-634, F3-635, F3-636, F3-637, F3-502, CV-360, CV-361, SP-330, UIW-012, UIW-040, UIW-041, WM-045]
 unblocks: [ATS-075]
 acceptance_criteria:
   - "Every control in the Home tables maps to exactly one production entry, typed local action or view-local disposition, and every home.* production entry appears in the tables."
