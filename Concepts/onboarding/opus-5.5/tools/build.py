@@ -496,6 +496,29 @@ PATCHES = [
      "    }\n",
      "    /* [data-theme^=\"glass\"] .pm-sheen:hover: removed, PMH owns hover */\n",
      'pmh: sheen hover off (glass)'),
+    # Hover tags swapped any label or detail that looked internal (a file name, a path, host:port, a dotted id) for
+    # generic copy ("Choose this option"), with no way out, so file refs and editor tabs in the home panels could not
+    # show their path. data-pmh-tag="literal" on the element or an ancestor keeps the tag's literal text (2026-10-10).
+    ("    if(looksInternal(label))label=actionCopy[0]||'Choose this option';\n",
+     "    var literalTag=!!(el.closest&&el.closest('[data-pmh-tag=\"literal\"]'));   /* O55: opt out of the internal-copy swap */\n"
+     "    if(!literalTag&&looksInternal(label))label=actionCopy[0]||'Choose this option';\n",
+     'pmh: literal hover tag label'),
+    ("    if(looksInternal(detail))detail=actionCopy[1]||'See what this control does.';\n",
+     "    if(!literalTag&&looksInternal(detail))detail=actionCopy[1]||'See what this control does.';\n",
+     'pmh: literal hover tag detail'),
+    # NieR intel tags (src/settings/styles.d/15-nier-world.css) open below their target and go above only when below
+    # has no room; the clamps that follow keep them in the viewport. The tag also carries data-literal while its target
+    # opted out of the copy swap, so the intel band shows a path in its own case instead of uppercase.
+    ("    var top=anchor.top-rect.height-GAP,placement='above';\n"
+     "    if(top<viewport.top+marginY){top=anchor.bottom+GAP;placement='below';}\n",
+     "    var top=anchor.top-rect.height-GAP,placement='above';\n"
+     "    if(top<viewport.top+marginY){top=anchor.bottom+GAP;placement='below';}\n"
+     "    if(document.documentElement.matches('[data-o55-nier-parts~=\"intel\"]')&&anchor.bottom+GAP+rect.height<=viewportBottom-marginY){top=anchor.bottom+GAP;placement='below';}   /* O55 NieR intel: below first */\n",
+     'pmh: nier intel tag below'),
+    ("    var rect=this.tag.getBoundingClientRect(),left=anchor.left+anchor.width/2-rect.width/2;\n",
+     "    this.tag.toggleAttribute('data-literal',!!(this.active.closest&&this.active.closest('[data-pmh-tag=\"literal\"]')));   /* O55: before the measure */\n"
+     "    var rect=this.tag.getBoundingClientRect(),left=anchor.left+anchor.width/2-rect.width/2;\n",
+     'pmh: literal hover tag mark'),
     # Setup and tour previews stop on the same events as the built-in tone preview. That player is frozen, so these
     # call the hook the notifications manager exposes (window.PM51_NOTIF_APP_PREVIEW_STOP), which calls
     # O55.sound.stopPreview(). The close line stays a prefix of SETTINGS_ANCHOR so the exposure splice still matches.

@@ -198,23 +198,32 @@ html[data-o55-nier-parts~="glyphs"][data-o55-nier-parts~="headers"] :is(.o55-gro
 
 /* ================================================================================ Intel tooltips [intel] */
 /* Hover and focus tags (the #pm-hover-tag-root layer that also replaces native titles) become intel cards: a square
-   frame, the title in an ink band behind a square bullet, the detail below, one corner notch. They unfold. */
+   frame, the title in an ink band behind a square bullet, the detail below, one corner notch. They unfold in stepped
+   frames away from their target. The unfold is a clip, not a scale: the tag controller measures the tag with
+   getBoundingClientRect() before and right after it opens, and a scaleY(.08) start read as a 4 px tag, so the tag was
+   placed as if it were 4 px tall and covered its target (2026-10-10 home-panels review). The PATCH "pmh: nier intel
+   tag below" in tools/build.py places it below the target, above only when below has no room. The insets reach 5 px
+   past the right and bottom edges so the clip keeps the offset shadow. Labels 12 px, details 12 px (were 10 and 11). */
 html[data-o55-nier-parts~="intel"] #pm-hover-tag-root .pm-hover-tag {
-  padding: 0 0 6px !important; min-width: 120px; border: 1px solid var(--o55-nier-ink) !important; border-radius: 0 !important;
+  padding: 0 0 7px !important; min-width: 140px; border: 1px solid var(--o55-nier-ink) !important; border-radius: 0 !important;
   background: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) right 2px bottom 2px / 5px 5px no-repeat, var(--o55-nier-overlay) !important;
   color: var(--o55-nier-ink) !important; box-shadow: 3px 3px 0 rgba(var(--o55-nier-shadow-rgb), .16) !important;
-  transform: scaleY(.08) !important; transform-origin: 50% 0 !important;
-  transition: opacity 90ms linear, transform 140ms cubic-bezier(.2, .85, .25, 1), visibility 0ms linear 140ms !important;
+  transform: none !important; clip-path: inset(0 -5px 100% 0);
+  transition: opacity 90ms steps(2, end), clip-path 160ms steps(4, end), visibility 0ms linear 160ms !important;
 }
-html[data-o55-nier-parts~="intel"] #pm-hover-tag-root .pm-hover-tag[data-open="true"] { transform: none !important; transition-delay: 0ms !important; }
+html[data-o55-nier-parts~="intel"] #pm-hover-tag-root .pm-hover-tag[data-placement$="above"] { clip-path: inset(100% -5px -5px 0); }
+html[data-o55-nier-parts~="intel"] #pm-hover-tag-root .pm-hover-tag[data-open="true"] { clip-path: inset(0 -5px -5px 0); transition-delay: 0ms !important; }
 html[data-o55-nier-parts~="intel"] #pm-hover-tag-root .pm-hover-tag[data-detail="false"] { padding-bottom: 0 !important; background: var(--o55-nier-ink) !important; }
 html[data-o55-nier-parts~="intel"] #pm-hover-tag-root .pm-hover-tag strong {
-  position: relative; padding: 4px 9px 3px 21px; background: var(--o55-nier-ink); color: var(--o55-nier-on-ink);
-  font: 600 10px/1.4 var(--mono-font); letter-spacing: .12em; text-transform: uppercase;
+  position: relative; padding: 5px 10px 4px 23px; background: var(--o55-nier-ink); color: var(--o55-nier-on-ink);
+  font: 600 12px/1.4 var(--mono-font); letter-spacing: .1em; text-transform: uppercase;
 }
+/* a tag whose target carries data-pmh-tag="literal" (a path, a file name) keeps the text in its own case */
+html[data-o55-nier-parts~="intel"] #pm-hover-tag-root .pm-hover-tag[data-literal] strong { letter-spacing: .02em; text-transform: none; }
 html[data-o55-nier-parts~="intel"] #pm-hover-tag-root .pm-hover-tag strong::before {
-  content: ""; position: absolute; left: 9px; top: 50%; width: 5px; height: 5px; margin-top: -3px; background: var(--o55-nier-on-ink); }
-html[data-o55-nier-parts~="intel"] #pm-hover-tag-root .pm-hover-tag p { margin: 5px 0 0; padding: 0 9px; color: var(--o55-nier-ink); opacity: .82; }
+  content: ""; position: absolute; left: 10px; top: 50%; width: 5px; height: 5px; margin-top: -3px; background: var(--o55-nier-on-ink); }
+html[data-o55-nier-parts~="intel"] #pm-hover-tag-root .pm-hover-tag p {
+  margin: 6px 0 0; padding: 0 10px; color: var(--o55-nier-ink); opacity: .86; font: 500 12px/1.45 var(--body-font); }
 html[data-motion="reduced"][data-o55-nier-parts~="intel"] #pm-hover-tag-root .pm-hover-tag { transform: none !important; transition: none !important; }
 
 /* ================================================================================ Square icon strokes [icons] */
