@@ -38940,6 +38940,11 @@ html[data-o55-nier-parts~="charts"] #panel-usage .pmu-hnow > b { border-radius: 
 html[data-o55-nier-parts~="charts"] #panel-usage .pmu-hrule { border-top-color: var(--o55-nier-warn); }
 html[data-o55-nier="on"] #panel-usage .pmu-hlab { font-family: "PM NieR Mono", var(--pmu-mono); letter-spacing: .10em; text-shadow: none; }
 html[data-o55-nier-parts~="charts"] #panel-usage .pmu-mark[data-mark="glow"] { stroke: var(--o55-nier-ink); filter: none; opacity: .12; }
+/* polish pass: F3-628, under NieR Mode the page draws no glow, filter or blur, whichever parts are installed (without
+   "Ink charts" the ring's head glow kept blur(2.5px) and a hero line's under-glow blur(2px), 30-charts.css). The head
+   glow becomes one plain 1 px ring around the head cap, the under-glow a flat square-cut band, as NieR draws elsewhere */
+html[data-o55-nier="on"] #panel-usage .pmu-ringglow { filter: none; fill: none; stroke: var(--c); stroke-width: 1; opacity: .6; }
+html[data-o55-nier="on"] #panel-usage .pmu-mark[data-mark="glow"] { filter: none; stroke-width: 6; opacity: .12; stroke-linecap: square; stroke-linejoin: miter; }
 html[data-o55-nier-parts~="charts"] #panel-usage .pmu-sweep-glint { display: none; }
 html[data-o55-nier="on"] #panel-usage .pmu-meterheat:is([data-step="0"], [data-step="1"]) { --c: var(--o55-nier-ink); }
 html[data-o55-nier="on"] #panel-usage .pmu-meterheat[data-step="2"] { --c: var(--o55-nier-warn); }
@@ -42571,6 +42576,13 @@ var PMU_SERIES = {
     setProviderMany: function (providerId, list, source) {
       var p = pm51(), api = p && p.providerPolicy;
       if (!api || typeof api.set !== 'function') return { ok: false, reason: 'Settings is not available' };
+      /* the switch level stays below the warn level (MA-073): the owner says what will be stored (a crossing level moves
+         to the nearest choice that keeps the order, the other level never moves) or refuses; the transaction names that */
+      if (typeof api.hold === 'function') {
+        var held = null; try { held = api.hold(providerId, list || []); } catch (error) { held = null; }
+        if (!held) return { ok: false, reason: 'The switch level has to stay below the warn level' };
+        list = held;
+      }
       var changes = (list || []).map(function (x) {
         var before = null; try { before = api.get(providerId, x.id); } catch (error) { before = null; }
         var inherit = x.value === null || x.value === undefined;
@@ -42586,7 +42598,8 @@ var PMU_SERIES = {
       var receipt = command('cmd.settings.transaction.apply', Object.assign({ preview_receipt_id: preview.receipt_id }, payload), { applied: true });
       if (receipt.dispatch_accepted === false) return { ok: false, reason: 'The change was cancelled', preview: preview, receipt: receipt };
       var ok = true;
-      changes.forEach(function (c) { try { if (api.set(providerId, c.setting_id, c.inherit ? null : c.value) === false) ok = false; } catch (error) { ok = false; } });
+      if (typeof api.setMany === 'function') { try { ok = api.setMany(providerId, changes.map(function (c) { return { id: c.setting_id, value: c.inherit ? null : c.value }; })) !== false; } catch (error) { ok = false; } }
+      else changes.forEach(function (c) { try { if (api.set(providerId, c.setting_id, c.inherit ? null : c.value) === false) ok = false; } catch (error) { ok = false; } });
       /* the roster's providers and accounts did not change (the policy is read live from the owner): the snapshot is kept,
          so the click task does not pay for another copy of the Settings state */
       changes.forEach(function (c) { emit('write:' + c.setting_id + '@' + providerId); });
@@ -42760,9 +42773,10 @@ var PMU_SERIES = {
   function resetPendingWord(w) {
     var dt = clockNow() - w.resetAt;
     var when = dt < DAY && new Date(w.resetAt).getDate() === new Date(clockNow()).getDate() ? PMU.fmt.clock(w.resetAt) : dt < 6 * DAY ? PMU.fmt.day(w.resetAt) + ' ' + PMU.fmt.clock(w.resetAt) : PMU.fmt.date(w.resetAt);
-    /* the time stays with "at" on one line where the words wrap in a narrow meter cell ("Reset at 22:59 ·" / "new reading
-       pending", never "Reset at" / "22:59 · new" / "reading" / "pending": Retro at 1920) */
-    return 'Reset at\u00a0' + String(when).replace(/ /g, '\u00a0') + ' · new reading pending';
+    /* "Reset at <time>" stays on one line where the words wrap in a narrow meter cell ("Reset at 22:59 ·" / "new reading
+       pending", never "Reset at" / "22:59 · new" / "reading" / "pending": Retro at 1920; polish pass: nor "Reset" / "at
+       06:03 ·"); the break may come after the time. The " · " stays a plain space so the fit code's ' · ' split holds */
+    return 'Reset\u00a0at\u00a0' + String(when).replace(/ /g, '\u00a0') + ' · new reading pending';
   }
   function vsWord(w) {
     if (w.vs === 'reset_pending' && w.resetAt !== null) return resetPendingWord(w);
@@ -51652,6 +51666,14 @@ var PMU_SERIES = {
       var noteW = 26 + Math.max.apply(null, String(h.note).split(/<\/(?:b|span)>/).map(function (x) { return twOf(x, 12.5, 600); }));
       if (textW - noteW - 14 < 240) h = Object.assign({}, h, { note: '' }); else textW -= noteW + 14;
     }
+    /* h.labels: shorter forms of the label, most complete first. The first that keeps the label and the whole sub line
+       within the two lines is used before the sub line gives way; the full label stays in the head's hover (polish pass:
+       the Windows timeline at 1440 read "... 100% used" with "used" alone on a line and lost "· 6 later") */
+    var fullLabel = h.label;
+    if (h.labels && h.sub && C.wrapLines(h.label || '', textW, 13.5, 560) + C.wrapLines(h.sub, textW, 12.5) > 2) {
+      var alt = h.labels.filter(function (l) { return C.wrapLines(l, textW, 13.5, 560) + C.wrapLines(h.sub, textW, 12.5) <= 2; })[0];
+      if (alt) h = Object.assign({}, h, { label: alt });
+    }
     if (h.sub && C.wrapLines(h.label || '', textW, 13.5, 560) + C.wrapLines(h.sub, textW, 12.5) > 2) {
       var segs = String(h.sub).split(' · ');
       while (segs.length > 1 && C.wrapLines(h.label || '', textW, 13.5, 560) + C.wrapLines(segs.join(' · '), textW, 12.5) > 2) segs.pop();
@@ -51665,7 +51687,7 @@ var PMU_SERIES = {
     var dropped = [];
     if (fullSub && h.sub !== fullSub) dropped.push(String(fullSub).replace(/<[^>]+>/g, ''));
     if (fullNote && !h.note) dropped.push(String(fullNote).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim());
-    return '<div class="pmu-herohead"' + (h.tone ? ' data-tone="' + h.tone + '"' : '') + (dropped.length ? C.hover(String(numText) + ' ' + (h.label || ''), dropped.join(' · ')) : '') + '>' + num + '<span class="pmu-herotext"><span class="pmu-herolabel">' + esc(h.label || '') + '</span>' +
+    return '<div class="pmu-herohead"' + (h.tone ? ' data-tone="' + h.tone + '"' : '') + (dropped.length || h.label !== fullLabel ? C.hover(String(numText) + ' ' + (fullLabel || ''), dropped.join(' · ')) : '') + '>' + num + '<span class="pmu-herotext"><span class="pmu-herolabel">' + esc(h.label || '') + '</span>' +
       (h.sub ? '<span class="pmu-herosub">' + h.sub + '</span>' : '') + '</span>' + (h.note ? '<span class="pmu-heronote"' + (h.noteTone ? ' data-tone="' + h.noteTone + '"' : '') + '>' + h.note + '</span>' : '') + '</div>';
   };
   /* room beats (WOW-SPEC 4, WOW-TASKS N-1): helpers for the one-shot signature beat each room file registers with
@@ -53354,7 +53376,10 @@ var PMU_SERIES = {
      never as body clutter): "provider reported · status line rate_limits · sampled 20s ago" */
   C.winSource = function (w, age) {
     var sampled = w.sampledAt !== null && w.sampledAt !== undefined ? C.sampledText(w.sampledAt) : age ? 'sampled ' + String(age).replace(/^cached /, '') : '';
-    return [w.truth && w.truth !== 'unknown' ? PMU.fmt.truth(w.truth) : '', w.source || '', sampled].filter(Boolean).join(' · ');
+    /* the truth word once: a reading whose source is its truth word (Qwen's windows: source "provider reported") says it
+       one time (polish pass: Plan Details read "provider reported · provider reported · sampled 1m ago") */
+    var truth = w.truth && w.truth !== 'unknown' ? PMU.fmt.truth(w.truth) : '', src = String(w.source || '');
+    return [truth, src && src.toLowerCase() !== truth.toLowerCase() ? src : '', sampled].filter(Boolean).join(' · ');
   };
   /* one meter spec for a WindowView (A1 6). The notch and the warn line are the window's own provider policy: lane d-switch
      (item 2) puts providerId, switchAt, warnAt (% used) and autoOn on every window from thresholds(providerId, accountId), so
@@ -54935,7 +54960,7 @@ var PMU_SERIES = {
     var g = PMU.roster.thresholds(), diff = polFams().filter(function (p) { var pol = polOf(p); return pol.auto !== g.auto || pol.switchLeft !== g.switchLeft; });
     /* the providers' own points are trailing " · " parts, so a narrow head drops them first (the towers' notches and their
        hover tags still say them) */
-    return (g.auto ? 'auto-switch at ' + (100 - g.switchLeft) + '%' + (diff.length ? '' : ' used') : 'auto-switch off') + diff.map(function (p) { var pol = polOf(p); return ' · ' + famShort(p) + ' ' + (pol.auto ? (100 - pol.switchLeft) + '%' : 'off'); }).join('');
+    return (g.auto ? 'auto-switch at ' + (100 - g.switchLeft) + '% used' : 'auto-switch off') + diff.map(function (p) { var pol = polOf(p); return ' · ' + famShort(p) + ' ' + (pol.auto ? (100 - pol.switchLeft) + '%' : 'off'); }).join('');
   };
   /* the providers whose own toggle, switch level or warn level differs from the shared setting (the Attention room's
      alert-rules card names them beside the shared levels; integration of lanes d-switch and d-plans) */
@@ -55599,7 +55624,10 @@ var PMU_SERIES = {
   });
   /* the shared setting's line opens its Settings row (UCC-147: Settings opens reuse cmd.settings.open) */
   C.act('pol-shared', function () {
-    var receipt = command('cmd.settings.open', { category: 'ai', setting_id: 'ai.accounts.hard-switch-level', provider_id: null, account_id: null }, { opened: true });
+    /* the typed route target (UF Accounts room: "Open in Settings dispatches cmd.settings.open with target_type=setting";
+       settings_route_request.target, as openSetup sends it) */
+    var receipt = command('cmd.settings.open', { route_id: 'settings-route:usage-switch-level', target: { target_type: 'setting', setting_id: 'ai.accounts.hard-switch-level', manager_id: null, detail_id: null },
+      origin_surface: 'usage', origin_route: 'usage/accounts', provider_id: null, account_id: null }, { opened: true });
     if (receipt.dispatch_accepted !== false) PMU.settings.open(null, 'ai.accounts.hard-switch-level');
   });
   C.act('acct-use', function (el) { PMU.accounts.askUse(el.getAttribute('data-value'), el); });
@@ -56195,7 +56223,12 @@ var PMU_SERIES = {
     });
     var all = Object.keys(byKey).map(function (k) { return byKey[k]; }).filter(function (x) { return x.w.resetAt > now && x.w.truth !== 'unknown'; }).sort(function (x, y) { return x.w.resetAt - y.w.resetAt; });
     var lb = body.querySelector('.pmu-herolabel'), next = all[0];
-    if (lb && next) { var t = 'next reset · ' + laneWho(next) + ' ' + next.w.short.toLowerCase() + ' · ' + C.fmt(next.w.pct, 'pct') + ' used'; if (lb.textContent !== t) lb.textContent = t; }
+    if (lb && next) {
+      /* the form the head's fit chose (C.heroHead h.labels) is kept: the short form has two " · " parts */
+      var forms = heroLabels(next), t = forms[lb.textContent.split(' · ').length <= 2 ? 1 : 0], hh = lb.parentNode && lb.parentNode.parentNode;
+      if (lb.textContent !== t) lb.textContent = t;
+      if (hh && hh.hasAttribute('data-pm-hover-label')) { var hl = F.clock(next.w.resetAt) + ' ' + forms[0]; if (hh.getAttribute('data-pm-hover-label') !== hl) hh.setAttribute('data-pm-hover-label', hl); }
+    }
     return true;
   }
   /* the lanes: every account of every provider with plan windows (70-rooms-a.js C.windowLanes); the active account of each
@@ -56212,6 +56245,9 @@ var PMU_SERIES = {
   }
   /* "Claude Personal" where the provider has two or more accounts, else the provider's name */
   function laneWho(x) { return x.p.accounts.length > 1 && !C.nickRepeats(x.a.nickname, x.p.name) ? x.p.name + ' ' + x.a.nickname : x.p.name; }
+  /* the hero's label, whole and short: "next reset · Claude Personal 5-hour · 100% used", then without the reading (the
+     marker's own words and its hover say it), so a narrow head keeps the label on one line and the whole sub line */
+  function heroLabels(x) { var who = 'next reset · ' + laneWho(x) + ' ' + x.w.short.toLowerCase(); return [who + ' · ' + C.fmt(x.w.pct, 'pct') + ' used', who]; }
   C.kind('windows', {
     live: function (body, ctx) { return windowsLive(body, ctx); },
     liveSig: function () {
@@ -56224,7 +56260,7 @@ var PMU_SERIES = {
       all.sort(function (x, y) { return x.at - y.at; });
       var bw = ctx.tier.bw, bh = ctx.tier.bh, heroOk = bh >= 200, next = all[0];
       var in7 = all.filter(function (x) { return x.at - now <= span; }).length;
-      var head = heroOk && next ? C.heroHead(ctx, { text: F.clock(next.at), label: 'next reset · ' + laneWho(next) + ' ' + next.w.short.toLowerCase() + ' · ' + C.fmt(next.w.pct, 'pct') + ' used',
+      var head = heroOk && next ? C.heroHead(ctx, { text: F.clock(next.at), label: heroLabels(next)[0], labels: heroLabels(next).slice(1),
         sub: b(in7) + (in7 === 1 ? ' reset' : ' resets') + ' in the next 7 days · ' + b(all.length - in7) + ' later' }) : '';
       /* lane d-plans: one lane per account, grouped by provider (the provider's mark on its first lane, a rule between
          providers); a lane reads the account's nickname where the provider has two or more accounts, else the provider */
@@ -56449,8 +56485,10 @@ var PMU_BOARDS = {"version":"pmu-b2-boards-2026-10-09-dplans","classes":{"S":12,
       var v = D.planView(id); if (!v) return null;
       var p = v.legacy, rp = v.provider, x = PLAN_EXTRA[v.legacyId] || null;
       var row = function (k, val) { return [k, esc(val == null || val === '' ? '-' : val)]; };
+      /* the truth word once: C.winSource leads with it ("provider reported · status line · sampled 20s ago"; polish pass:
+         the row read "provider reported · provider reported · ...") */
       var winRow = function (a, w) {
-        return row(w.label, (w.pct === null ? PMU.roster.vsWord(w) : C.fmt(w.pct, 'pct') + ' used · ' + C.fmt(Math.max(0, 100 - w.pct), 'pct') + ' left' + (w.amount ? ' · ' + w.amount : '') + ' · ' + F.reset(w).text + ' · ' + PMU.fmt.truth(w.truth) + (w.est ? ' · estimated' : '')) +
+        return row(w.label, (w.pct === null ? PMU.roster.vsWord(w) : C.fmt(w.pct, 'pct') + ' used · ' + C.fmt(Math.max(0, 100 - w.pct), 'pct') + ' left' + (w.amount ? ' · ' + w.amount : '') + ' · ' + F.reset(w).text + (w.est ? ' · estimated' : '')) +
           ' · ' + (C.winSource(w, a.ageText) || 'source not recorded'));
       };
       var sections = (rp ? rp.accounts : []).map(function (a) {
@@ -56588,8 +56626,11 @@ var PMU_BOARDS = {"version":"pmu-b2-boards-2026-10-09-dplans","classes":{"S":12,
   };
 
   /* the Overview hero (WOW-TASKS N-2): every window of the active accounts as a lit gauge, ordered by pressure */
-  /* d-switch (item 2): the shared switch point and each provider whose own differs (C.autoCaption, 54-w-accounts.js) */
-  def('ov-skyline', 'overview', { kind: 'skyline', meta: function () { var th = PMU.roster.thresholds(); return 'active account of each provider · ordered by pressure · ' + (C.autoCaption ? C.autoCaption() : th.auto ? 'auto-switch at ' + (100 - th.switchLeft) + '% used' : 'auto-switch off'); },
+  /* d-switch (item 2): the shared switch point and each provider whose own differs (C.autoCaption, 54-w-accounts.js).
+     They lead the caption: the card head's fit drops trailing " · " parts first (42-cards.js fitSub), so "ordered by
+     pressure" and "active account of each provider" give way before the switch points (polish pass: at 1440 and 1920
+     the shown caption never reached "Codex 85%"); the whole caption stays in the title's hover */
+  def('ov-skyline', 'overview', { kind: 'skyline', meta: function () { var th = PMU.roster.thresholds(); return (C.autoCaption ? C.autoCaption() : th.auto ? 'auto-switch at ' + (100 - th.switchLeft) + '% used' : 'auto-switch off') + ' · ordered by pressure · active account of each provider'; },
     inspect: function () {
       var m = C.skylineModel();
       return C.insp('Headroom skyline', m.cols.map(function (c) { return [c.p.name + ' · ' + c.w.label, C.fmt(c.w.pct, 'pct') + ' used · ' + C.fmt(Math.max(0, 100 - c.w.pct), 'pct') + ' left · ' + F.resetLine(c.w).text + ' · ' + c.a.nickname + ' · ' + PMU.fmt.truth(c.w.truth)]; }));
@@ -80570,6 +80611,55 @@ ensurePm51State = function () { o55EnsurePm51State(); try { o55PersonaCanon(); }
     const body = (rows.length ? `<div class="setting-list o55-bound-rows o55-policies">${rows.join('')}</div>` : PM51.note('No service has two accounts yet. Auto-switch starts once a second account is signed in.')) + quiet;
     return PM51.section({ title: 'Auto-switch policies', help: 'Each service with two or more accounts switches on its own terms. One without its own choice follows the shared setting below.', body, id: 'o55-auto-switch-policies' });
   }
+  /* The switch level always stays below the warn level (MA-073, Settings_System section 8), held here at the owner's
+     write point as well as in the choices, so a write that does not come from a choice (the Usage page's transaction, a
+     host write, a script) cannot cross them either (polish pass). The level being written moves to the nearest choice on
+     its own list that keeps the order, and the other level never moves: lowering a warn level to or below the switch
+     level stores the lowest warn choice above the switch level; raising a switch level to or past the warn level stores
+     the highest switch choice below it. A write that leaves no such choice (or a return to the shared value that would
+     cross) is refused and nothing changes. The shared levels are held against every service that follows them.
+     changes: [{ id, value }] for one service p (null: the shared values); -> the changes as they will be stored, or null */
+  const SW_ID = 'ai.accounts.hard-switch-level', WARN_ID = 'ai.accounts.soft-warning-level';
+  function holdOrder(p, changes) {
+    const next = {}; (changes || []).forEach(c => { next[c.id] = c.value; });
+    const has = id => Object.prototype.hasOwnProperty.call(next, id), blank = v => v === null || v === undefined || v === '';
+    if (!has(SW_ID) && !has(WARN_ID)) return changes;
+    const shared = id => pctLeft(!p && has(id) && !blank(next[id]) ? next[id] : PM51.value(id));
+    const follows = (q, id) => (q === p && p && has(id)) ? blank(next[id]) : ownPolicy(q, id) === undefined;
+    const eff = (q, id) => follows(q, id) ? shared(id) : pctLeft(q === p && p && has(id) ? next[id] : ownPolicy(q, id));
+    const below = lim => { const c = SWITCH_LEFT.filter(v => v < lim); return c.length ? c[c.length - 1] : null; };
+    const above = floor => { const c = WARN_LEFT.filter(v => v > floor); return c.length ? c[0] : null; };
+    const out = changes.map(c => Object.assign({}, c)), at = id => out.find(c => c.id === id);
+    if (p) {
+      const sw = eff(p, SW_ID), warn = eff(p, WARN_ID);
+      if (sw === null || warn === null || sw < warn) return out;
+      if (has(SW_ID) && !blank(next[SW_ID])) { const v = below(warn); if (v === null) return null; at(SW_ID).value = v; return out; }
+      if (has(WARN_ID) && !blank(next[WARN_ID])) { const v = above(sw); if (v === null) return null; at(WARN_ID).value = v; return out; }
+      return null;
+    }
+    /* the shared levels: the shared pair itself and every service whose level follows the one written */
+    const pairs = [{ sw: shared(SW_ID), warn: shared(WARN_ID), fSw: true, fWarn: true }]
+      .concat(all().filter(canSwitch).map(q => ({ sw: eff(q, SW_ID), warn: eff(q, WARN_ID), fSw: follows(q, SW_ID), fWarn: follows(q, WARN_ID) })));
+    if (has(WARN_ID) && !blank(next[WARN_ID])) {
+      const floor = Math.max.apply(null, pairs.filter(x => x.fWarn && x.sw !== null).map(x => x.sw));
+      if (shared(WARN_ID) <= floor) { const v = above(floor); if (v === null) return null; at(WARN_ID).value = v; pairs.forEach(x => { if (x.fWarn) x.warn = v; }); }
+    }
+    if (has(SW_ID) && !blank(next[SW_ID])) {
+      const lim = Math.min.apply(null, pairs.filter(x => x.fSw && x.warn !== null).map(x => x.warn));
+      if (shared(SW_ID) >= lim) { const v = below(lim); if (v === null) return null; at(SW_ID).value = v; }
+    }
+    return out;
+  }
+  /* the shared rows commit through the page's one Settings write (commitSettingValue: the Settings rows and the Usage
+     page's setSettingFromHost alike), held to the same order */
+  const o55PolicyCommit = commitSettingValue;
+  commitSettingValue = function (id, value) {
+    if (id !== SW_ID && id !== WARN_ID) return o55PolicyCommit.apply(this, arguments);
+    const held = holdOrder(null, [{ id, value }]);
+    if (!held) { showToast('Setting was not changed', 'The switch level has to stay below the warn level.', 'warning'); return false; }
+    const args = Array.prototype.slice.call(arguments); args[1] = held[0].value;
+    return o55PolicyCommit.apply(this, args);
+  };
   function setPolicy(p, id, value) {
     if (!p || !POLICY_IDS.includes(id)) return false;
     if (!p.props || typeof p.props !== 'object') p.props = {};
@@ -80605,12 +80695,21 @@ ensurePm51State = function () { o55EnsurePm51State(); try { o55PersonaCanon(); }
     /* the service's own values only: { id: value } */
     own: pid => { const p = find(pid), out = {}; if (p) POLICY_IDS.forEach(id => { const v = ownPolicy(p, id); if (v !== undefined) out[id] = v; }); return out; },
     multi: pid => multiAccount(find(pid)),
-    /* value null (or '') clears the service's own value: it follows the shared one again */
-    set: (pid, id, value) => {
-      const p = find(pid); if (!setPolicy(p, id, value)) return false;
+    /* value null (or '') clears the service's own value: it follows the shared one again. Held to the switch-below-warn
+       order (holdOrder): a crossing write stores the nearest choice that keeps it, or is refused (false) */
+    set: (pid, id, value) => PM51.providerPolicy.setMany(pid, [{ id, value }]),
+    /* the changes as they will be stored (pid null: the shared values), or null when they would cross; the Usage page
+       sends these in its transaction, so the preview names what is stored */
+    hold: (pid, changes) => { if (!pid) return holdOrder(null, changes); const p = find(pid); return p ? holdOrder(p, changes) : null; },
+    /* several values of one service at once, held as one change (clearing all four at once never trips on the step
+       between them) */
+    setMany: (pid, changes) => {
+      const p = find(pid); if (!p) return false;
+      const held = holdOrder(p, changes); if (!held) return false;
+      let ok = true; held.forEach(c => { if (!setPolicy(p, c.id, c.value)) ok = false; });
       savePolicySoon();
       if (settingsShown()) PM51.refresh(ID, { swap: false }); else redrawWhenShown();
-      return true;
+      return ok;
     }
   };
   POLICY_IDS.forEach(id => PM51.watch(id, () => PM51.refresh(ID, { swap: false })));
@@ -80802,7 +80901,7 @@ ensurePm51State = function () { o55EnsurePm51State(); try { o55PersonaCanon(); }
   PM51.scopedSetter(SVC, (id, value, el) => {
     const p = prov(el);
     if (id === 'ai.models.provider-enabled') { if (value) turnOn(p, true); else turnOff(p, true); return p.name; }
-    if (POLICY_IDS.includes(id)) { setPolicy(p, id, value); save(); return p.name; }
+    if (POLICY_IDS.includes(id)) { const held = holdOrder(p, [{ id, value }]); if (held) setPolicy(p, id, held[0].value); save(); return p.name; }
     p.props[id] = value; saveState(); return p.name;
   });
   /* OpenCode's own switch is an inventory row; the service's state follows it. */
