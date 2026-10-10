@@ -70,7 +70,7 @@
   var chat = N.list().filter(function (r) { return !r.status; });
 
   function famGlyphs(f) {
-    if (f.from === 'chat') return chat.filter(function (r) { return (f.match ? new RegExp(f.match).test(r.name) : true) && !(f.exclude && new RegExp(f.exclude).test(r.name)) && !records.some(function (x) { return x.name === r.name && x.source === 'pmg'; }); }).map(function (r) { return { name: r.name, role: r.role, act: r.act, aliases: r.aliases, source: 'c56', rec: G.record(r.name) }; });
+    if (f.from === 'chat') return chat.filter(function (r) { return (f.match ? new RegExp(f.match).test(r.name) : true) && !(f.exclude && new RegExp(f.exclude).test(r.name)) && !G.owns(r.name); }).map(function (r) { return { name: r.name, role: r.role, act: r.act, aliases: r.aliases, source: 'c56', rec: G.record(r.name) }; });
     return records.filter(function (r) { return r.family === f.id && r.source === 'pmg'; }).map(function (r) { return { name: r.name, role: r.role, act: r.act, aliases: r.aliases, source: 'pmg', rec: r }; });
   }
 
