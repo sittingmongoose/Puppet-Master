@@ -18,8 +18,9 @@ function fileOpenFromRow(ctx) {
   if (!path) return { ok: false };
   if (window.PM_PAGES && PM_PAGES.current && PM_PAGES.current !== 'dashboard') { try { PM_PAGES.go('dashboard'); } catch (_) {} }
   var dbl = !!(e && e.detail >= 2);
+  // a single click previews and leaves focus in the tree (arrows keep walking it); a double click keeps and moves focus
   var r = PM_HOME.open({ kind: 'editor', path: path, mode: dbl ? 'keep' : 'preview', where: e && e.altKey ? 'panel' : 'auto',
-    background: !!(e && (e.ctrlKey || e.metaKey)) });
+    background: !!(e && (e.ctrlKey || e.metaKey)), focus: dbl });
   var host = el && el.closest ? el.closest('#panel-files') : null;
   if (host && r.ok) {
     host.querySelectorAll('.fm-row.active-file').forEach(function (row) { row.classList.remove('active-file'); });
