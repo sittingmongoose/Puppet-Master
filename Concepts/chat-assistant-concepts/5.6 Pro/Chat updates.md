@@ -689,15 +689,17 @@ The concept implements it:
 - Sending while the agent is working **enqueues** the draft (FIFO, **max 2**).
   The queue is transient (not restored across reload). When the queue is full,
   the draft stays in the composer and Send refuses a third entry.
-- The queue sits **in flow with the activity bar**, immediately above the
-  composer and **below** an open Plan / questionnaire host. It is not a
-  full-width layout stripe. When the bar is hidden (no live domains on that
-  thread), the queued rows still occupy that same stack. Live order is
-  transcript → **decision (when open)** → activity bar + queue (in-flow
-  pill) → composer. `--chat-dock-h` is the composer height; `--decision-h` is
-  the open decision-host height used to lift scroll-to-bottom above that host.
-  The bar no longer overlays the thread, so the last message does not need extra
-  `--thread-float-h` padding to clear the chrome.
+- The queue sits **with the activity bar** in one stack that floats on the
+  transcript, just above the composer and **above** an open Plan /
+  questionnaire host, which lifts it (2026-10-09: this replaces the older
+  in-flow order, transcript → decision → bar → composer, which the float
+  superseded). It is not a full-width layout stripe. When the bar is hidden
+  (no live domains on that thread), the queued rows still occupy that same
+  stack. Bottom to top: composer → **decision (when open)** → activity bar +
+  queue → transcript. `--chat-dock-h` is the composer height; `--decision-h` is
+  the open decision-host height, which lifts the bar and queue and the
+  scroll-to-bottom control above that host. The transcript keeps
+  `--thread-float-h` of bottom padding so the last message clears the stack.
   Each row has an **Edit** pencil (returns the text to the composer and removes
   the entry) and a **Send now** arrow (steers: sends that entry immediately).
   Otherwise the next entry sends when the current run **completes** (not when

@@ -344,14 +344,23 @@ for (let v = 0; v < TAKE_COUNT; v++) {
     }, ROOTS[v]);
     must(owned, `the title is not inside .${ROOTS[v]}`);
   });
+  /* The Chat Activity Bar floats over the transcript (assistant-chat-design APR-004; activity-bar.css .chat-float is
+     lifted by --chat-dock-h + --decision-h), so an open decision host sits BETWEEN the bar and the composer: the bar
+     rides up above the host instead of sitting under it. This check once encoded the older in-flow order (bar below
+     the host), which every take failed after the float landed. What it guards is unchanged: the decision never
+     covers the bar, and the bar stays painted and clickable while a decision is open. */
   await t(`C${v}e. take ${v}: the decision pushes the transcript, it never covers the activity bar`, async () => {
     const ok = await page.evaluate(() => {
       const d = document.querySelector('.decision-host'), a = document.querySelector('.activity-wrap');
-      if (!d || !a) return null;
-      const dr = d.getBoundingClientRect(), ar = a.getBoundingClientRect();
-      return { bottom: Math.round(dr.bottom), top: Math.round(ar.top), ok: dr.bottom <= ar.top + 2 };
+      const bar = document.querySelector('.activity-bar');
+      if (!d || !a || !bar) return null;
+      const dr = d.getBoundingClientRect(), ar = a.getBoundingClientRect(), br = bar.getBoundingClientRect();
+      const hit = document.elementFromPoint(br.left + br.width / 2, br.top + br.height / 2);
+      return { barBottom: Math.round(ar.bottom), hostTop: Math.round(dr.top), barTop: Math.round(ar.top),
+        barPainted: !!hit && bar.contains(hit), ok: ar.bottom <= dr.top + 2 && ar.top >= 0 };
     });
-    must(ok && ok.ok, `host bottom ${ok && ok.bottom} vs activity top ${ok && ok.top}`);
+    must(ok && ok.ok, `activity bar bottom ${ok && ok.barBottom} vs decision top ${ok && ok.hostTop} (bar top ${ok && ok.barTop})`);
+    must(ok.barPainted, 'the activity bar is covered while the decision is open');
     const root = await paintedRect(rootSel(v));
     must(root && root.owns, `.${ROOTS[v]} is not painted`);
     return ok;

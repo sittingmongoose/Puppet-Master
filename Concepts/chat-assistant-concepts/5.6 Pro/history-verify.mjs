@@ -317,7 +317,10 @@ await sec('item3: row padding before/after', async()=>{
 });
 
 /* The floating flyout must actually WEAR the take, not collapse to take 0
-   (Wave 1A added the attribute; the CSS never followed). */
+   (Wave 1A added the attribute; the CSS never followed). Take 6's summary is ONE
+   clamped line: that is the pinned column's original rule (styles.css, history-panel
+   take 5), and the flyout followed it on 2026-09-02 (3e1842da40). The two-line value
+   this check used to want was the flyout's own earlier rule, not the take's. */
 await sec('item3: flyout wears take 6', async()=>{
   const r = await page.evaluate(()=>{
     const f=document.querySelector('.history-flyout');
@@ -326,7 +329,7 @@ await sec('item3: flyout wears take 6', async()=>{
     return f? {attr:f.dataset.historyVariant, clamp:sub?getComputedStyle(sub).webkitLineClamp:null,
                white:sub?getComputedStyle(sub).whiteSpace:null} : null;
   });
-  check(r && r.attr==='5' && r.clamp==='2' && r.white==='normal',
+  check(r && r.attr==='5' && r.clamp==='1' && r.white==='normal',
         'Floating flyout wears take 6 (not take 0)', r);
 });
 
@@ -361,7 +364,18 @@ await sec('item3: selection treatment', async()=>{
    drawer's own children must lay out by ROLE, not by count.  Before the flex
    fix, a fourth child collapsed the search row to 0px and dropped the scroll
    surface on top of it — measured at a 17px overlap. */
+/* The Goals card no longer sits in the drawer (Chat updates: no goal summary card in
+   the history drawer), so the "second module" this check needs is supplied by the
+   check itself: a probe card appended through the same historyChrome slot, removed
+   again afterwards. */
 await sec('item3: drawer rows do not overlap at any child count', async()=>{
+  await page.evaluate(()=>{
+    window.__hvProbe = function(ctx){ return ctx && ctx.flyout === false ? '' :
+      '<div class="hv-probe-module" style="padding:10px 12px;border-top:1px solid var(--border)">Probe module: a second historyChrome card</div>'; };
+    PM56_EXT.slot('historyChrome', window.__hvProbe);
+    PM56_EXT.ctx().renderApp();
+  });
+  await page.waitForTimeout(250);
   const r = await page.evaluate(()=>{
     const host=document.querySelector('.history-flyout')||document.querySelector('.history-panel');
     const se=host.querySelector('.history-search'), sr=host.querySelector('.history-scroll');
@@ -373,6 +387,11 @@ await sec('item3: drawer rows do not overlap at any child count', async()=>{
     return {children:boxes.length, worstOverlap:Math.round(worst),
             searchH:Math.round(se.getBoundingClientRect().height),
             scrollFits:Math.round(sr.getBoundingClientRect().bottom-hr.bottom)};
+  });
+  await page.evaluate(()=>{
+    const fns = PM56_EXT._slots.historyChrome, i = fns.indexOf(window.__hvProbe);
+    if(i >= 0) fns.splice(i, 1);
+    PM56_EXT.ctx().renderApp();
   });
   check(r.children>=4 && r.worstOverlap<=0 && r.searchH>10 && r.scrollFits<=1,
         'Drawer rows stack without overlap even with a second module in historyChrome', r);
@@ -756,7 +775,8 @@ await sec('item4: pinned thread animates into Pinned', async()=>{
   const target = await page.evaluate(()=>{
     const rows=[...document.querySelectorAll('.history-flyout .thread-row[data-id]')];
     const secs=[...document.querySelectorAll('.history-flyout .history-scroll section')];
-    const recent=secs.find(s=>/Recent/i.test(s.querySelector('.section-head span')?.textContent||''));
+    /* section heads lead with a text-less chevron span since they became collapsible; the name is .section-label */
+    const recent=secs.find(s=>/Recent/i.test(s.querySelector('.section-head .section-label')?.textContent||''));
     const row=recent?recent.querySelector('.thread-row[data-id]'):rows[rows.length-1];
     if(!row) return null;
     row.scrollIntoView({block:'center'});
@@ -764,6 +784,10 @@ await sec('item4: pinned thread animates into Pinned', async()=>{
     return {id:row.dataset.id, y:r.top};
   });
   await page.waitForTimeout(200);
+  /* At rest a row's title and summary use its full width; the options button gets room only while the row is
+     hovered (Chat updates: thread options appear on row hover only), so point at the row first, as a user does. */
+  await page.locator(`.history-flyout .thread-row[data-id="${target.id}"]`).hover();
+  await page.waitForTimeout(250);
   await page.locator(`.history-flyout .thread-row[data-id="${target.id}"] [data-action="thread-menu"]`).click();
   await page.waitForTimeout(300);
   // capture the animation the module starts, from inside the page
@@ -784,7 +808,7 @@ await sec('item4: pinned thread animates into Pinned', async()=>{
   flip.menuGone = await page.evaluate(()=>!document.querySelector('.overlay-menu:not(.pm56-menu-ghost)'));
   const after = await page.evaluate(id=>{
     const secs=[...document.querySelectorAll('.history-flyout .history-scroll section')];
-    const pin=secs.find(s=>/Pinned/i.test(s.querySelector('.section-head span')?.textContent||''));
+    const pin=secs.find(s=>/Pinned/i.test(s.querySelector('.section-head .section-label')?.textContent||''));
     const row=pin&&pin.querySelector(`.thread-row[data-id="${id}"]`);
     return {inPinned:!!row, y:row?row.getBoundingClientRect().top:null};
   }, target.id);
@@ -868,7 +892,13 @@ await sec('wave6: the pinned drawer resizes without breaking pin-in-place', asyn
   const start = await page.evaluate(()=>{const r=document.querySelector('.history-flyout').getBoundingClientRect();
     return {x:Math.round(r.right-3), y:Math.round(r.top+r.height/2), w0:r.width};});
   await page.evaluate(()=>{
-    window.__phRz={out:[],stop:false,mut:0};
+    window.__phRz={out:[],stop:false,mut:0,renders:[]};
+    /* "renders nothing" is counted on app.js's own render hook (afterRender fires on every app, scoped and overlay
+       render), not on raw mutations: since this check was written, width-responsive modules (the activity bar's
+       compaction, the composer's compact pass, the Turn Stage spine) answer a narrower chat with their own class
+       and SVG updates, exactly as they do on a window resize. Those mutations are still recorded, for the report. */
+    if(!window.__phRzHook){ window.__phRzHook=true;
+      PM56_EXT.slot('afterRender',(c,info)=>{ const T=window.__phRz; if(T&&!T.stop) T.renders.push(info&&info.phase); }); }
     const o=new MutationObserver(rs=>{window.__phRz.mut+=rs.length;});
     o.observe(document.getElementById('pmRoot'),{childList:true,subtree:true,attributes:true,characterData:true});
     o.observe(document.getElementById('pmOverlayRoot'),{childList:true,subtree:true,attributes:true,characterData:true});
@@ -895,6 +925,7 @@ await sec('wave6: the pinned drawer resizes without breaking pin-in-place', asyn
   await page.waitForTimeout(60);
   const flagDuring = await page.evaluate(()=>document.body.dataset.phResizing||null);
   const mutDuring  = await page.evaluate(()=>window.__phRz.mut);
+  const rendersDuring = await page.evaluate(()=>window.__phRz.renders.slice());
   await page.mouse.up();
   await page.waitForTimeout(350);
   const rz = await page.evaluate(()=>{window.__phRz.stop=true;window.__phRzStop();return window.__phRz.out;});
@@ -918,10 +949,10 @@ await sec('wave6: the pinned drawer resizes without breaking pin-in-place', asyn
   check(moving.length>4 && moving.every(s=>!s.v || Math.abs(s.w-parseFloat(s.v))<=1.5),
         'NO TRANSITION LAG: the painted width equals the published --ph-user-w on the same frame',
         {offenders:moving.filter(s=>s.v&&Math.abs(s.w-parseFloat(s.v))>1.5).slice(0,4)});
-  check(tickStopped && mutDuring===0,
-        tickStopped ? 'CHEAP PATH: the drag renders nothing — zero mutations in #pmRoot and #pmOverlayRoot'
+  check(tickStopped && rendersDuring.length===0,
+        tickStopped ? 'CHEAP PATH: the drag renders nothing — zero app, scoped or overlay renders while it moves'
                     : 'CHEAP PATH: NOT MEASURED — the work tick could not be stopped, so a render inside the drag window would be indistinguishable from the drag rendering',
-        {tickStopped, mutDuring});
+        {tickStopped, rendersDuring, mutationsFromResponsiveModules:mutDuring});
 
   /* keyboard: role="separator" + tabindex is only honest if the arrows move it */
   const kb0 = await page.evaluate(()=>{const h=document.querySelector('[data-ph-resize]');h.focus();
