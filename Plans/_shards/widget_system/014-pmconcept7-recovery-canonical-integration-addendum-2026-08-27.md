@@ -2,9 +2,9 @@
 
 Source: `Plans/Widget_System.md`
 
-Source lines: L1204-L1657
+Source lines: L1229-L1686
 
-Source SHA256: `c662bd5004ee1856b3c78260dfcd1919a2fe8ff8f1c0751a561ba1c0e853e755`
+Source SHA256: `ae1a346a95abc142404430e55e5bd909f9f0be7eeacc6831cfbb0a4c39092a5e`
 
 ---
 
@@ -409,12 +409,16 @@ canonical_text: >-
   or else to null with the geometry snapped by WS-018; a stored `preset_id` never brings back a retired preset. When
   the default boards or a kind's preset table change, `default_set_version` changes, and a saved Usage layout from an
   older set keeps its visibility and configuration and takes the new default geometry once.
+  Amended 2026-10-09 (DL-180): Dashboard writes one namespace per board, `widget_layout:v1:dashboard:<board_id>`
+  with `host_id` `dashboard:<board_id>`, Home shell surfaces live in `home_workspace_layout.v2`
+  (Plans/storage-plan.md#SP-330), and `widget_layout:v1:dashboard` and `home_workspace_layout.v1` are read only as
+  migration inputs (WS-030).
 gui_related: true
 gui_classification_reason: The record determines restored widget placement, semantic size, and cross-surface ownership.
 depends_on: [UF-060, WS-004, WS-009, WS-018, WS-019]
 unblocks: []
 acceptance_criteria:
-  - Usage and Dashboard restore from their own namespaces while Home surfaces restore only from home_workspace_layout.v1.
+  - Usage and Dashboard restore from their own namespaces while Home surfaces restore only from home_workspace_layout.v2 (amended 2026-10-09, DL-180: Plans/storage-plan.md#SP-330 reads home_workspace_layout.v1 only as a migration input).
   - "UsageWidgetLayoutRecord is the named public contract for a settled Usage widget layout and has exactly the required fields layout_schema_version, default_set_version, host_id, room_id, widget_id, visible, order_index, slot_id, geometry_id, semantic_tier_id, preset_id, configuration_refs, and committed_revision, including semantic size or preset identity in addition to supported geometry so adaptive content restores deterministically; every configuration_ref resolves to an existing stable, non-secret widget-configuration identity governed by WS-004 and UF-060, and filter payloads remain in the configuration record rather than becoming new UsageWidgetLayoutRecord fields."
   - "No preview rectangle, pointer or pointer coordinate, ghost, placeholder, animation state, draft, or per-frame draft appears in UsageWidgetLayoutRecord."
   - A widget mutation never writes Home surface placement and a Home surface mutation never writes Usage or Dashboard widget placement.

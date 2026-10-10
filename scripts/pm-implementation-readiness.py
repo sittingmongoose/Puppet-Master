@@ -762,17 +762,21 @@ STORAGE_VALUE_REGISTRY_SCHEMA_URI = (
 # later_gui_or_feature_projection family. Retention policies and critical/MVP memberships are unchanged.
 # Re-pinned 2026-09-30 for SP-323/DL-138: project_automation_pause adds one materialized
 # later_gui_or_feature_projection family. Retention policies and critical/MVP memberships are unchanged.
-STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 296
+# Re-pinned 2026-10-09 for SP-330/SP-332 (DL-180, DL-181): home_workspace_layout_v2 adds one materialized MVP family;
+# seven v1 Home and terminal families (the v1 Home record and the terminal section, workgroup and editor-terminal
+# records) move from later_gui_or_feature_projection to migration_only as read-only migration inputs. Retention
+# policies and critical memberships are unchanged.
+STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 297
 STORAGE_VALUE_REGISTRY_EXPECTED_RETENTION_POLICY_COUNT = 27
 STORAGE_VALUE_REGISTRY_EXPECTED_STATUS_COUNTS = {
-    "materialized": 276,
+    "materialized": 277,
     "deferred_not_build_blocking": 19,
     "compatibility_alias": 1,
 }
 STORAGE_VALUE_REGISTRY_EXPECTED_TIER_COUNTS = {
     "tier_0_launch_critical": 40,
-    "later_gui_or_feature_projection": 253,
-    "migration_only": 3,
+    "later_gui_or_feature_projection": 247,
+    "migration_only": 10,
 }
 STORAGE_VALUE_REQUIRED_LAUNCH_FAMILIES = [
     "approved_plan_pack",
@@ -797,6 +801,7 @@ STORAGE_VALUE_REQUIRED_MVP_FAMILIES = [
     "editor_buffer_recovery_state",
     "editor_workspace_state",
     "home_workspace_layout",
+    "home_workspace_layout_v2",
     "hotreload_state",
     "onboarding_state",
     "safe_point_record",

@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L1501-L1577
+Source lines: L1523-L1604
 
-Source SHA256: `59d06d10242be9b0c9e04467151e8d9b32ed951b9a3cec6a5fcee9de69e49c65`
+Source SHA256: `7305e454af529789b29d5c19b50a0321546bce0b4d090dbdcd8d0699110160c5`
 
 ---
 
@@ -27,6 +27,11 @@ handler dispatch invariants in accordance with APR-023 and APR-050.
   the owner's disabled reason when it is unavailable. The Settings Reset the layout row dispatches the
   same `cmd.workspace_layout.reset` as the Home menu after one confirmation. No Settings-specific command
   ID, handler or production wiring row is created for these routes (`Plans/Settings_System.md#SSYS-039`).
+  Amended 2026-10-09 (DL-180): the dashboard is a tab kind and several boards may be open, so Choose widgets
+  opens the widget picker of the Home dashboard tab (`dashboard:home`) wherever that tab is, revealed by the one
+  opening module, and each dashboard tab keeps its own widgets (`Plans/Widget_System.md#WS-030`,
+  `Plans/FinalGUISpec.md#F3-638`); the layout row is now labelled Restore home layout
+  (`general.startup.reset-home-layout`, `Plans/Settings_System.md#SSYS-050`) and keeps every open tab.
 - **Declared Action Chaining and Teardown Order (APR-050):** Application reset hooks, workspace
   reloads, and component unmount sequences enforce deterministic, declared action chaining where each
   subsystem owner is invoked exactly once:

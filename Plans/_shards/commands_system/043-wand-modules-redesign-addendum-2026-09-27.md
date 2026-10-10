@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L6959-L7479
+Source lines: L6973-L7496
 
-Source SHA256: `66b67be5f108e166ccde44690b9cb4ba4b6784ac3b0e7261322001bb32415aa5`
+Source SHA256: `cfdea69b67361f5f310f87e9aff085fcd3d9f3143c034918e27e4b4f73f175df`
 
 ---
 
@@ -119,10 +119,11 @@ canonical_text: >-
   Open command palette and Close current tab/panel. The clash predates the wand redesign and now also
   reaches every redesigned sheet's main text field. The redesign adds no binding and changes no
   default; which binding wins inside a text field is the Commands and Shortcuts owner's decision.
+  Amended 2026-10-09 (DL-180): Close current tab is now cmd.panel_tab.close for every panel tab, Ctrl+W in the native app and Alt+W in the web client (UCC-200); the text-field clash and its owner decision are unchanged.
 gui_related: true
 gui_classification_reason: "Keyboard behaviour inside visible composer and sheet text fields."
 split_recommended: false
-depends_on: [UCC-169]
+depends_on: [UCC-169, DL-180]
 unblocks: []
 acceptance_criteria:
   - "The clash is recorded for the Commands and Shortcuts owner and no document claims it resolved."
@@ -150,6 +151,8 @@ preserved_exact_tokens:
 negative_constraints:
   - "Do not change a text-editing-keys or shortcut default under this unit."
   - "Do not claim the clash was introduced or resolved by the wand redesign."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the close-tab chord dispatches cmd.panel_tab.close."
 owner_hints:
   - Plans/Commands_System.md
 ```

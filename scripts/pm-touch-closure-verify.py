@@ -1896,6 +1896,13 @@ def verify() -> tuple[list[str], dict[str, Any]]:
     # entry, assistant.redesign.cmd.chat_plan_open_version for cmd.chat.plan.open_version
     # (1155 -> 1156). Like cmd.chat.queue.send_now it has no Touch row; no row,
     # profile, alias, exclusion, native handler or proof is added.
+    # 2026-10-09 universal panels and terminal tab (DL-180, DL-181; WM-090, WM-091,
+    # UIW-040..042): +139 production-intent entries for the new Home and terminal
+    # controls (the "+" menu and launcher rows, panel and tab menus, keys, the terminal
+    # header, More, context and mark menus, the agent row) and -59 retired home.* and
+    # terminal section/workgroup/pane rows (1156 -> 1236). No Touch row, profile,
+    # alias, handler or proof is added; the catalog tokens the retired rows leave are
+    # listed in Plans/Wiring_Matrix.production.exclusions.json.
     exact_resolved_denominators = {
         "row_count": 682,
         # ATS-048 / RAP-056 split seven existing consumers out of capture's
@@ -1903,7 +1910,7 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         "profile_count": 135,
         "excluded_token_count": 58,
         "alias_binding_count": 65,
-        "production_wiring_entry_count": 1156,
+        "production_wiring_entry_count": 1236,
     }
     observed_resolved_denominators = {
         "row_count": len(rows),

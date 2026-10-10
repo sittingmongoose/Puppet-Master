@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L38949-L40159
+Source lines: L39610-L40825
 
-Source SHA256: `643904c4950b638495bc1a59e09b9d865935e2f1ad7298fb093789150d3f4b73`
+Source SHA256: `56f4e7c9c04ce33ec2bb91e300993b0f6adc3b18d185096ce77c18deba52b357`
 
 ---
 
@@ -324,13 +324,16 @@ canonical_text: >-
   The chat pane beside an open plan or document has a minimum width of 360 px (DL-138;
   Assistant_Plan_Runtime APR-014). The card's S tier measures its own content box after padding and
   remains available below 360 px; it does not lower the chat pane minimum.
+  Amended 2026-10-09 (DL-180): Open Panel opens the run view as a run tab placed by F3-634, "the active editor tab"
+  reads as the run tab being active in its panel, and the chat pane's width is F3-637's: the column never drops below
+  400 px inside the window, which meets the 360 px minimum beside an open plan or document.
 gui_related: true
 gui_classification_reason: "Fixes run card geometry, receipts and the run view hand-off."
 split_recommended: false
-depends_on: [F3-566, ACD-480, DL-111, DL-123, DL-149]
+depends_on: [F3-566, ACD-480, DL-111, DL-123, DL-149, DL-180]
 unblocks: []
 acceptance_criteria:
-  - "The editor/chat split preserves a 360 px minimum chat pane while card tiers continue to measure card content width."
+  - "The chat column keeps at least 400 px inside the window (F3-637), which meets the 360 px minimum beside an open plan or document, while card tiers continue to measure card content width (amended 2026-10-09, DL-180)."
   - "A collapsed or sub-520 px card reaches Open Panel, Message and More through Expand; a finished run's Message prints why it is disabled."
   - "The Coordinator's mark never paints the accent."
   - "No run card or run view shows Technical details (DL-149)."
@@ -370,6 +373,8 @@ negative_constraints:
   - "Do not grow a card on a tick."
   - "Do not treat the S tier as a minimum chat width."
   - "Do not render a run-changing control in both the card and the run view at once."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): \"beside the chat\" and the editor/chat split are retired as placement terms; F3-634 places run tabs and F3-637 owns the chat's width."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Collaborative_Workflows.md

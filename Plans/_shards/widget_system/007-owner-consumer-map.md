@@ -2,9 +2,9 @@
 
 Source: `Plans/Widget_System.md`
 
-Source lines: L126-L130
+Source lines: L130-L134
 
-Source SHA256: `c662bd5004ee1856b3c78260dfcd1919a2fe8ff8f1c0751a561ba1c0e853e755`
+Source SHA256: `ae1a346a95abc142404430e55e5bd909f9f0be7eeacc6831cfbb0a4c39092a5e`
 
 ---
 

@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L27075-L27147
+Source lines: L27324-L27400
 
-Source SHA256: `feebda270b973277d4b4a0cae68190f72e5f59f5cfdf0812801562b276d988c1`
+Source SHA256: `e39c301eb565d481a7743186b4534a8f640d6812cf4a076ac25ba4a827e89990`
 
 ---
 
@@ -36,10 +36,13 @@ canonical_text: >-
   expanded panel (work stream, thought stream, state, context and result). The document is drawn on a root of its
   own by the chat's one transcript renderer (DRY_Rules DR-052): the chat's turn spine, reply streaming, sound cues and
   follow-along never bind to it, and nothing arriving in it plays a chat cue.
+  Amended 2026-10-09 (DL-180): the document opens as a transcript tab in the home centre through ACD-500 and
+  Plans/FinalGUISpec.md#F3-634, one per child run, revealed rather than duplicated; in a narrow window it follows the
+  plan tab's amended rule (ACD-455).
 gui_related: true
 gui_classification_reason: Defines what opening a subagent does in the assistant chat.
 split_recommended: false
-depends_on: [DL-147, ACD-480, ACD-469, ACD-473, UCC-129]
+depends_on: [DL-147, ACD-480, ACD-469, ACD-473, UCC-129, DL-180, ACD-500]
 unblocks: [F3-593]
 acceptance_criteria:
   - "Opening a subagent twice focuses one document and never duplicates it."
@@ -74,7 +77,8 @@ negative_constraints:
   - "Do not invent a subagent-only status in the document."
   - "Do not register a chat-local command or alias for opening a subagent."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the child transcript is a transcript tab placed by F3-634 through ACD-500."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md

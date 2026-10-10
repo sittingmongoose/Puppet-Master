@@ -2,13 +2,29 @@
 
 Source: `Plans/GUI_Rebuild_Requirements_Checklist.md`
 
-Source lines: L1914-L2011
+Source lines: L1914-L2027
 
-Source SHA256: `9658f485cf5fc1cfebbe4bd0e24ff25bc1566fa5979ed8341198b6df080e231c`
+Source SHA256: `6ac65ed7c4e46451cfc734ca49c952019eb09ca55e7981de8533e69227790748`
 
 ---
 
 ## PMConcept7 Home Workspace checklist — 2026-08-04
+
+Superseded 2026-10-09 (DL-180, DL-181): Home is one universal panel system with a fixed chat column, and a terminal is
+one session per tab, so this checklist no longer decides whether the GUI rebuild is Home-complete; GRRC-040 and its
+rows GUI-PNL-001 to GUI-PNL-018 and GUI-TRM-001 to GUI-TRM-009 do. Retired with the model they check: the four stable
+editor panels and File Manager's Open in Panel 1 to 4 (now GUI-PNL-005 and GUI-PNL-006); the more-options popup with
+Open Panel, Open Browser in Panel and Collapse Bottom Terminal (the "+" menu, GUI-PNL-003, and collapse of any panel to
+its strip, GUI-PNL-001; Restore home layout stays, GUI-PNL-012); Dashboard, Chat and terminal-section movement through
+`home_main`, the edge docks, in-canvas floating and the host caps (panels and tabs move by the split tree, GUI-PNL-001,
+and the chat moves only by Pop out, GUI-PNL-009); the four terminal sections, four panes per section, workgroup
+movement, the section cap and Move Workgroup to New Section (one session per tab, GUI-TRM-001); the bottom-terminal
+collapse chevron and its Expand Bottom Terminal label; the surface kebab, grip and terminal empty-section guidance;
+the overflow chip of the editor panels (the "+N" list, GUI-PNL-004); and the exact 72-case visual matrix (ATS-075).
+What carries over: rendered-outcome evidence rather than dispatch counts, exact restoration on cancel, one command and
+one write per commit, the contact-aware silhouette and Retro's three effects (GUI-PNL-002), the minimap as the only
+code-pane scrollbar (GUI-PNL-018), dashboard widget gestures (GUI-PNL-010), every look, inline SVG only, no emoji, and
+zero page and console errors.
 
 The GUI rebuild is not Home-complete until the evidence set verifies:
 

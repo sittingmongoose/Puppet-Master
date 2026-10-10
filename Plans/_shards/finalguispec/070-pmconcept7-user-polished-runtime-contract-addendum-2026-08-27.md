@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L34863-L35307
+Source lines: L35471-L35927
 
-Source SHA256: `643904c4950b638495bc1a59e09b9d865935e2f1ad7298fb093789150d3f4b73`
+Source SHA256: `56f4e7c9c04ce33ec2bb91e300993b0f6adc3b18d185096ce77c18deba52b357`
 
 ---
 
@@ -214,7 +214,7 @@ acceptance_criteria:
   - "While a pointer or keyboard preview is active, command, result, receipt, persisted-event, and storage-write spies remain empty; Usage pointer resize advances the target footprint and visibly displaces only obstructed peers, with Usage board gravity applied only at settle as WS-019 sets out, while Dashboard resize peers remain frozen, and reorder peers visibly displace around the same stable two-dimensional candidate, including empty same-footprint cavities and lower rows, without peer-node remount, opacity loss, board blackout, child-list churn, or entrance-animation replay; Usage pointer targeting aligns the ghost's anchored top-left with one stable candidate origin under a geometric hysteresis margin so overlapping multi-span rectangles cannot steal the target, and keyboard pickup exposes truthful aria-grabbed plus a visible picked-card outline while traversing the same candidate set."
   - "A changed reorder release/drop commits the last painted intent without pointer-up re-hit-testing or retargeting; horizontal-only resize advances strictly along the requested supported curated axis at right/left/middle positions, minimizes companion-axis drift, admits an edge-limited one-step gesture, and commits an in-viewport last-painted maximum despite same-direction overshoot; it and every other changed final-coordinate release or semantic activation dispatch exactly one existing command and reconcile exactly one settled owner outcome without duplicate effects."
   - "Escape, pointercancel, lostpointercapture, blur, invalid target, stale revision, no-change release/drop, popup dismissal, and pre-dispatch validation failure restore the prior authoritative state with no command or receipt and clear capture, ghosts, placeholders, portals, classes, animation frames, and transient listeners; an owner-rejected or post-dispatch adapter-failed attempt retains exactly one command and one rejected/failed receipt but no settled event or successful owner-store write; changed pointer and keyboard reorder restore the exact pre-transaction inline board minimum height, leave scroll extent bounded to settled card geometry without a compounding blank tail, and exclude concurrent resize/reorder acquisition until the sole owner terminates."
-  - "The current workspace.layout_changed 1.1.0 payload is emitted only for an applicable changed committed layout, requires settled_only=true, preview_state_included=false, persisted=true, interaction/command/correlation identities, accepted result and receipt references, prior/new revisions, mutation, final target and settled-layout data, and the required nullable semantic_size_preset_id through its closed schema."
+  - "The current workspace.layout_changed 1.1.0 payload is emitted only for an applicable changed committed layout, requires settled_only=true, preview_state_included=false, persisted=true, interaction/command/correlation identities, accepted result and receipt references, prior/new revisions, mutation, final target and settled-layout data, and the required nullable semantic_size_preset_id through its closed schema. (amended 2026-10-09, DL-180: once Event Authority admits it, every committed structural change of the v2 Home record emits payload 2.0.0 instead, Plans/Contracts_V0.md#CV-361, and the 1.1.0 fields above describe the v1 record only)."
   - "No PM7-only command family, preview-frame event family, second layout store, or registered cmd.workspace_layout.size_surface command is introduced."
 validation_surfaces:
   - "python3 scripts/pm-plan-index.py validate"
@@ -267,14 +267,17 @@ canonical_text: >-
   no-op, and every other noncommitted outcome remain event-silent. No context.compaction.started or
   context.compaction.failed family is introduced.
   The full-width status bar participates in layout, never covers content, and contains no notification or bell item.
+  Amended 2026-10-09 (DL-180): Home seats the Assistant in the chat column fixed on the right, as every page does
+  (F3-637); there is no saved Home dock, and the only move is Pop out, which keeps the same Assistant identity and Dock
+  back returns to the column.
 gui_related: true
 gui_classification_reason: This unit governs the visible shared Assistant, Context ring/detail surfaces, and status bar continuity.
 split_recommended: false
-depends_on: [F3-513, ACD-448, WM-045, UIW-012]
+depends_on: [F3-513, ACD-448, WM-045, UIW-012, DL-180]
 unblocks: [F3-517, F3-518, ATS-037, ATS-038, ATS-040]
 acceptance_criteria:
   - "Exactly one Assistant node/controller/store identity exists and is re-seated across pages without transcript, draft, attachment, thread, or context loss."
-  - "A failed or stale re-seat restores the prior host and preserves the saved Home dock rather than creating a second Assistant or blank seat."
+  - "A failed or stale re-seat restores the Assistant in its column rather than creating a second Assistant or a blank seat (amended 2026-10-09, DL-180; the saved Home dock is retired)."
   - "The context ring and detail pane expose current-window percentage, effective context window, loaded tokens, cache hit, source composition, Curated/Raw details, routing/fallback, limits, and compaction history."
   - "Compact Now uses cmd.chat.compact_context result and receipt projection, with exactly one context.compaction.completed only after successful committed compaction under ACD-461 / SP-259 and no event for any noncommitted outcome; More Details reuses the existing Context Detail Pane commands."
   - "The status bar spans the application layout, does not cover content, and has no notifications or bell affordance."
@@ -305,6 +308,8 @@ negative_constraints:
   - "Do not create a second Assistant, transcript store, context store, or Context Detail Pane."
   - "Do not register context compaction lifecycle events merely to mirror a local working animation."
   - "Do not put notifications or a bell in the status bar."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): \"Home seats that identity in its saved dock\" is retired; the chat column is fixed on the right on Home as on every page (F3-637)."
 owner_hints: [Plans/FinalGUISpec.md, Plans/assistant-chat-design.md]
 ```
 
@@ -337,10 +342,15 @@ canonical_text: >-
   and must not rewrite global theme tokens, Settings, or the protected Chat design. The title-bar page-overflow
   picker remains above and hit-testable at narrow widths; its ancestor edge-fade mask is disabled only while the
   picker is opening, open, or closing, so clicks cannot fall through to page controls beneath it.
+  Amended 2026-10-09 (DL-180): Home and Dashboard no longer keep distinct tab models: a dashboard is a tab in a panel's
+  one strip (F3-631, F3-638), and the shared Usage grammar for move, options, resize and settled sizing is one gesture
+  kit (DR-066) that moves panels and tabs in the split tree and widgets only inside a dashboard tab. Home's narrow
+  composition is the centre-width ladder of F3-636 (one panel column with a switcher, never a sideways scroll), and
+  "Home editor and terminal surfaces" read as panel tabs (F3-635).
 gui_related: true
 gui_classification_reason: This unit governs visible compatibility across shell, Home, Dashboard, panels, themes, and motion.
 split_recommended: false
-depends_on: [F3-513, F3-514, F3-516]
+depends_on: [F3-513, F3-514, F3-516, DL-180]
 unblocks: [F3-518, ATS-037, ATS-038, ATS-039]
 acceptance_criteria:
   - "Basic, Friendly, Retro, and Glass dark/light variants preserve the recovered font, palette, tab, panel, and inactive-state behavior without changing functional inventory; component-scoped contrast repairs do not mutate global theme tokens, Settings, or protected Chat surfaces."
@@ -382,6 +392,8 @@ negative_constraints:
   - "Do not let the outer presentation grid directly own or mutate Dashboard cards, and do not give pointer and keyboard movement different commit semantics."
   - "Do not accept geometry-only checks as proof that pixels and motion are correct."
   - "Do not use this repair lane to change Settings or Chat GUI bytes or to rewrite global theme tokens."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): \"Home and Dashboard preserve their distinct tab models\" is retired; the acceptance wording on Panel 1, Home editor and terminal surfaces and Home's single-column collapse reads through F3-630, F3-635 and F3-636."
 owner_hints: [Plans/FinalGUISpec.md]
 ```
 

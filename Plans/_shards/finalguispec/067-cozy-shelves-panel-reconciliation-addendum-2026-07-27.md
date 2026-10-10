@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L32856-L33551
+Source lines: L33426-L34124
 
-Source SHA256: `643904c4950b638495bc1a59e09b9d865935e2f1ad7298fb093789150d3f4b73`
+Source SHA256: `56f4e7c9c04ce33ec2bb91e300993b0f6adc3b18d185096ce77c18deba52b357`
 
 ---
 
@@ -342,10 +342,12 @@ canonical_text: >-
   ui/<domain>/ path, both spellings denote one planned host surface, with the panels/
   spelling as the panel-occupant host. These paths are planned GUI host locations only;
   they create no implementation files and authorize no source tree.
+  Amended 2026-10-09 (DL-180): `panels/` here means the left rail's side panels; the home centre's panels, tab strips
+  and tab bodies are F3-206's as amended (F3-630, F3-635).
 gui_related: true
 gui_classification_reason: This unit names the planned Slint host files behind visible side-panel occupants.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The panels/ inventory lists host files for search, source control, Actions & Pipelines, testing, agents, and artifacts panels in addition to the existing file manager and docker manager entries."
@@ -378,6 +380,7 @@ compatibility_only_notes:
 - "Slint portability: host files are the planned mount points for opaque precomputed panel surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
 stale_retired_dispositions:
 - "The prior panels/ inventory state that named only chat and file manager panel host files is superseded by this fuller inventory; the FABLE Slint Host File Inventory table remains findable lineage for its ui/<domain>/ spellings."
+- "Amended 2026-10-09 (DL-180): `panels/` names side-panel hosts only; home panels are F3-206's."
 owner_boundary_notes:
 - "This unit amends the host-file inventory only; panel behavior stays with each panel's owner units and docs."
 owner_hints:
