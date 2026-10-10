@@ -33,7 +33,7 @@
     minContrast: { type: 'enum', values: [1, 3, 4.5, 7], default: 4.5, label: 'Minimum contrast' },
     font: { type: 'enum', values: Object.keys(FONTS).concat(['follow']), default: 'follow', label: 'Font' },
     fontSize: { type: 'number', min: 8, max: 32, step: 0.5, default: null, label: 'Size' },
-    fontWeight: { type: 'number', min: 300, max: 600, step: 100, default: 400, label: 'Weight' },
+    fontWeight: { type: 'number', min: 400, max: 600, step: 100, default: 400, label: 'Weight' },
     lineHeight: { type: 'number', min: 1, max: 2, step: 0.05, default: null, label: 'Line height' },
     letterSpacing: { type: 'number', min: -1, max: 3, step: 0.25, default: 0, label: 'Letter spacing' },
     ligatures: { type: 'bool', default: true, label: 'Ligatures' },
@@ -106,6 +106,8 @@
       searchMatch: hexOr(roles.searchMatch, C.mix(bg, yellow, dark ? 0.42 : 0.38)),
       searchCurrent: hexOr(roles.searchCurrent, C.mix(bg, bright, dark ? 0.75 : 0.62)),
       link: hexOr(roles.link, C.hex(ansi[dark ? 12 : 4])),
+      /* phosphor schemes: colours outside the 16 (256-cube, truecolor) are mapped onto the phosphor by brightness */
+      mono: roles.glow ? { lo: bg, hi: C.hex(roles.glow) } : null,
       roles: {
         markOk: roles.markOk || ansi[2], markFail: roles.markFail || ansi[1], link: roles.link || ansi[dark ? 12 : 4],
         searchMatch: roles.searchMatch || C.toHex(C.mix(bg, yellow, 0.7)), glow: roles.glow || c.foreground,
@@ -215,9 +217,12 @@
       glowColor: theme && theme.roles.glow
     };
     var bgShow = lk === 'glass' && bgKind === 'theme';
+    /* High Contrast schemes keep every cell at 7:1 unless the user chose a floor themselves */
+    var floor = f('minContrast');
+    if (s && /^pm-high-contrast/.test(s.id) && layerOf(view, 'minContrast') === 'look') floor = 7;
     return {
       look: look, lookKey: lk, scheme: s, theme: theme, font: font, background: bg, effects: effects, glassThrough: bgShow,
-      opts: { ligatures: f('ligatures'), minContrast: f('minContrast'), boldBright: f('boldBright'),
+      opts: { ligatures: f('ligatures'), minContrast: floor, boldBright: f('boldBright'),
         cursor: { shape: shape, blink: f('cursorBlink') && L.blink !== 'off' }, stickyHeader: f('stickyHeader'), copyOnSelect: f('copyOnSelect') },
       padding: { x: f('padding'), y: Math.max(2, Math.round(f('padding') * 0.6)) },
       sixtyfour: { scan: f('sixtyfourScan'), bleed: f('sixtyfourBleed') }

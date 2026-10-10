@@ -63,6 +63,8 @@
     return painted;
   };
 
+  /* phosphor schemes map colours outside the 16 onto the tube by brightness, so 38;5;196 never paints red on green */
+  function mono(rgb, th) { var L = Math.sqrt(C.lum(rgb)); return C.mix(th.mono.lo, th.mono.hi, 0.18 + 0.82 * L); }
   Renderer.prototype._fg = function (st, pal, th, term) {
     var c = st.fg, rgb;
     if (c === 0) rgb = term.dynamic.fg !== null ? term.dynamic.fg : th.fg;
@@ -70,14 +72,16 @@
       var idx = c - 0x100;
       if ((st.flags & A.BOLD) && idx < 8 && this.view.opts.boldBright) idx += 8;
       rgb = pal[idx];
-    } else rgb = c & 0xffffff;
+      if (th.mono && idx >= 16) rgb = mono(rgb, th);
+    } else { rgb = c & 0xffffff; if (th.mono) rgb = mono(rgb, th); }
     return rgb;
   };
   Renderer.prototype._bg = function (st, pal, th, term) {
-    var c = st.bg;
+    var c = st.bg, rgb;
     if (c === 0) return -1;
-    if (c < 0x200) return pal[c - 0x100];
-    return c & 0xffffff;
+    if (c < 0x200) { rgb = pal[c - 0x100]; if (th.mono && c - 0x100 >= 16) rgb = C.mix(th.mono.lo, th.mono.hi, 0.6 * Math.sqrt(C.lum(rgb))); return rgb; }
+    rgb = c & 0xffffff;
+    return th.mono ? C.mix(th.mono.lo, th.mono.hi, 0.6 * Math.sqrt(C.lum(rgb))) : rgb;
   };
 
   Renderer.prototype._row = function (ctx, y, abs, line, cols, m, th, pal, hasCursor) {
@@ -117,6 +121,12 @@
       if (bg !== runColor) { flush(x); runStart = x; runColor = bg; }
     }
     flush(cols);
+    if (finds) for (i = 0; i < finds.length; i++) if (finds[i].current) {
+      /* the current match also gets a 1 px outline in the text colour (fills alone can sit too close together) */
+      var lw = Math.max(1, Math.round(m.dpr));
+      ctx.strokeStyle = css(term.dynamic.fg !== null ? term.dynamic.fg : th.fg); ctx.lineWidth = lw;
+      ctx.strokeRect(finds[i].x0 * W + lw / 2, y0 + lw / 2, (finds[i].x1 - finds[i].x0) * W - lw, H - lw);
+    }
     if (images) images.drawRow(ctx, abs, y0, 'under-text', v);
     /* 3. text */
     var lig = v.opts.ligatures && !m.letterSpacing;

@@ -113,6 +113,22 @@
     profiles: profiles,
     open: function (spec) { spec = Object.assign({ kind: 'terminal' }, spec || {}); return window.PM_HOME ? window.PM_HOME.open(spec) : null; },
     card: function (spec) { return T.CommandCard ? T.CommandCard.create(spec) : null; },
+    /* a card spec for a command that ran in a terminal: Open in Terminal reveals that exact session and command */
+    cardSpec: function (sessionId, cmd) {
+      var r = records.get(sessionId); if (!r) for (var x of records.values()) if (x.alias === sessionId) r = x;
+      if (!r || !cmd) return null;
+      var term = r.session.term, out = term.commandOutput(cmd).split('\n');
+      var live = r.session.state === 'running';
+      return {
+        command: cmd.cmdline, cwd: cmd.cwd || (r.session.shell ? r.session.shell.cwd : ''), by: cmd.by,
+        status: cmd.state === 'running' ? 'running' : cmd.exit === 0 ? 'ok' : cmd.exit === 130 ? 'interrupted' : cmd.exit === null ? 'interrupted' : 'failed',
+        exitCode: cmd.exit, startedAt: cmd.start, elapsedMs: cmd.end ? cmd.end - cmd.start : 0,
+        lines: out, totalLines: out.length,
+        onOpen: live ? function () { if (window.PM_HOME) window.PM_HOME.open({ kind: 'terminal', session: r.alias || r.session.id }); if (r.view) r.view.revealCommand(cmd); } : null,
+        onRerun: function () { if (window.PM_HOME) window.PM_HOME.open({ kind: 'terminal', session: r.alias || r.session.id }); if (r.session.shell) r.session.shell.typeCommand(cmd.cmdline, 'user'); },
+        onViewOutput: live ? null : function () { if (window.PM_HOME) window.PM_HOME.open({ kind: 'editor', title: cmd.cmdline + ' output', text: out.join('\n'), language: 'text' }); }
+      };
+    },
     sessions: function () {
       return Array.from(records.values()).map(function (r) {
         var s = r.session;

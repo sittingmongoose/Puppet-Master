@@ -1,0 +1,42 @@
+{
+  "family": "GitHub",
+  "slug": "github",
+  "licence": "MIT",
+  "licenceFile": "LICENSE-github.txt",
+  "copyright": "Copyright (c) 2022 projekt0n̅",
+  "homepage": "https://github.com/projekt0n/github-nvim-theme",
+  "schemes": [
+    {
+      "id": "github-light",
+      "name": "GitHub Light",
+      "appearance": "light",
+      "source": "https://raw.githubusercontent.com/projekt0n/github-theme-contrib/a1c07099528be70b6273b13e2a19d5d2c3ce4661/themes/kitty/github_light.conf",
+      "sourceSha256": "4ba0474329141972e96ff39fff82a761644d9499cf3d2cd48b09ebf161ec42e5",
+      "colors": {
+        "background": "#ffffff",
+        "foreground": "#1f2328",
+        "cursor": "#1f2328",
+        "cursorText": "#ffffff",
+        "selectionBackground": null,
+        "selectionForeground": null,
+        "ansi": ["#24292f", "#cf222e", "#116329", "#4d2d00", "#0969da", "#8250df", "#1b7c83", "#6e7781", "#57606a", "#a40e26", "#1a7f37", "#633c01", "#218bff", "#a475f9", "#3192aa", "#8c959f"]
+      }
+    },
+    {
+      "id": "github-dark",
+      "name": "GitHub Dark",
+      "appearance": "dark",
+      "source": "https://raw.githubusercontent.com/projekt0n/github-theme-contrib/a1c07099528be70b6273b13e2a19d5d2c3ce4661/themes/kitty/github_dark.conf",
+      "sourceSha256": "d67e35592228cf0bc6b09cb8ed49ed3062147e955d93618081c7336a00231cbe",
+      "colors": {
+        "background": "#30363d",
+        "foreground": "#e6edf3",
+        "cursor": "#e6edf3",
+        "cursorText": "#30363d",
+        "selectionBackground": null,
+        "selectionForeground": null,
+        "ansi": ["#484f58", "#ff7b72", "#3fb950", "#d29922", "#58a6ff", "#bc8cff", "#39c5cf", "#b1bac4", "#6e7681", "#ffa198", "#56d364", "#e3b341", "#79c0ff", "#d2a8ff", "#56d4dd", "#ffffff"]
+      }
+    }
+  ]
+}

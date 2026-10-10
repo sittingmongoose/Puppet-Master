@@ -212,6 +212,23 @@
     this.schedule();
   };
   View.prototype.scrollBy = function (lines) { this.scrollTo(this.viewTop() + lines); };
+  /* wheel: animated line steps when smooth scrolling is on (eases over a few frames), instant otherwise */
+  View.prototype.wheelScroll = function (lines) {
+    var fx = this.appearance && this.appearance.effects;
+    if (!fx || !fx.smoothScroll || T.look().reduced) { this.scrollBy(lines); return; }
+    this._wheelTarget = (this._wheelAnim ? this._wheelTarget : this.viewTop()) + lines;
+    var self = this;
+    if (this._wheelAnim) return;
+    var step = function () {
+      var cur = self.viewTop(), d = self._wheelTarget - cur;
+      if (!d) { self._wheelAnim = 0; return; }
+      var mv = Math.sign(d) * Math.max(1, Math.round(Math.abs(d) * 0.35));
+      self.scrollTo(cur + mv);
+      if (self.viewTop() === cur) { self._wheelAnim = 0; return; }
+      self._wheelAnim = requestAnimationFrame(step);
+    };
+    this._wheelAnim = requestAnimationFrame(step);
+  };
   View.prototype.cellFromPoint = function (clientX, clientY) {
     var r = this.canvas.getBoundingClientRect(), m = this.metrics;
     var x = clientX - r.left, y = clientY - r.top;
@@ -640,7 +657,7 @@
         for (var j = 0; j < Math.min(Math.abs(lines), 5); j++) self.session.input(key, 'user');
         return;
       }
-      self.scrollBy(lines);
+      self.wheelScroll(lines);
     }, { passive: false });
     if (T.Select && T.Select.bind) T.Select.bind(this);
     else scr.addEventListener('mousedown', function () { self.focus(); });

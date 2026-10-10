@@ -1,0 +1,28 @@
+/* Terminal faces: the typefaces of the terminal tab. The editor's code view uses the same JetBrains Mono family, so the
+   panels thread should not declare a second face with these descriptors. Each @font-face below embeds one WOFF2 from
+   src/terminal/fonts/ through url("o55font:<file>"); the home layer inlines it as a data: URI, so nothing loads from the
+   network. The file names carry a pmt- prefix, so they do not collide with the faces in src/panels/fonts. Licence texts
+   and the verified metrics are in fonts/SOURCE.md.
+
+   Roles
+   - JetBrains Mono: the code face in every look (Friendly, Glass, Retro, Basic and NieR). The upright bytes are the PM
+     NieR Mono bytes under this general family name (a copy, not an alias, so the terminal does not depend on NieR's
+     face); the italic is from Google Fonts.
+   - VT323 and Sixtyfour: the Retro looks. Sixtyfour's BLED and SCAN axes are driven with font-variation-settings, which
+     gives the bleed and scanline look without motion. Neither face has a bold weight.
+   - Departure Mono: a Retro option.
+   - Atkinson Hyperlegible Mono: the accessibility face, selectable in every look (normal and italic).
+
+   PM Symbols rule: these families are terminal faces and are never mirrored into PM Symbols. src/css/03-symbols.css
+   attaches the PM Symbols faces to text faces for the page's 21 symbols, and that set includes the box-drawing lines
+   U+2500, U+2502 and U+2550; a mirror here would replace the terminal's own line glyphs. Box-drawing (U+2500 to U+257F),
+   block (U+2580 to U+259F), braille (U+2800 to U+28FF) and powerline (from U+E0B0) cells are drawn procedurally by the
+   terminal (js/22-glyphs.js), so the terminal never looks them up in a face. */
+
+@font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 400 800; font-display: swap; src: url("o55font:pmt-jetbrains-mono-latin-var.woff2") format("woff2"); }
+@font-face { font-family: 'JetBrains Mono'; font-style: italic; font-weight: 100 800; font-display: swap; src: url("o55font:pmt-jetbrains-mono-latin-var-italic.woff2") format("woff2"); }
+@font-face { font-family: 'VT323'; font-style: normal; font-weight: 400; font-display: swap; src: url("o55font:pmt-vt323-latin-400.woff2") format("woff2"); }
+@font-face { font-family: 'Sixtyfour'; font-style: normal; font-weight: 400; font-display: swap; src: url("o55font:pmt-sixtyfour-latin-var.woff2") format("woff2"); }
+@font-face { font-family: 'Atkinson Hyperlegible Mono'; font-style: normal; font-weight: 200 800; font-display: swap; src: url("o55font:pmt-atkinson-hyperlegible-mono-latin-var.woff2") format("woff2"); }
+@font-face { font-family: 'Atkinson Hyperlegible Mono'; font-style: italic; font-weight: 200 800; font-display: swap; src: url("o55font:pmt-atkinson-hyperlegible-mono-latin-var-italic.woff2") format("woff2"); }
+@font-face { font-family: 'Departure Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url("o55font:pmt-departure-mono-400.woff2") format("woff2"); }

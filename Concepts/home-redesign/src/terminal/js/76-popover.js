@@ -85,7 +85,7 @@
       html += '<section class="pmt-pop-sec" aria-label="Font"><h4>Font</h4>' +
         row('Face', select('font', val('font'), fonts)) +
         row('Size', stepper('fontSize', R.font.size, 8, 32, 0.5)) +
-        row('Weight', select('fontWeight', val('fontWeight') || 400, [[300, 'Light'], [400, 'Regular'], [500, 'Medium'], [600, 'Semibold']])) +
+        row('Weight', select('fontWeight', val('fontWeight') || 400, [[400, 'Regular'], [500, 'Medium'], [600, 'Semibold']])) +
         row('Line height', range('lineHeight', R.font.lineHeight, 1, 2, 0.05, R.font.lineHeight.toFixed(2))) +
         row('Letter spacing', range('letterSpacing', R.font.letterSpacing, -1, 3, 0.25, R.font.letterSpacing + ' px')) +
         row('Ligatures', check('ligatures', val('ligatures'), 'Join ligatures where the font has them')) +

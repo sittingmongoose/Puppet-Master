@@ -1,0 +1,39 @@
+# Solarized Dark for Alacritty (Ethan Schoonover, MIT)
+
+[general]
+live_config_reload = true
+import = [ "~/.config/alacritty/base.toml" ]
+
+[colors]
+selection = { text = '0x93a1a1', background = '0x073642' }  # inline table
+
+[colors.primary]
+background = '0x002b36'
+foreground = "0x839496"
+
+[colors.cursor]
+text = "#002b36"
+cursor = "#93a1a1"
+
+[colors.normal]
+black = "0x073642"
+red = "0xdc322f"
+green = "0x859900"
+yellow = "0xb58900"
+blue = "0x268bd2"
+magenta = "0xd33682"
+cyan = "0x2aa198"
+white = "0xeee8d5"
+
+[colors.bright]
+black = "0x002b36" # bright 0
+red = "0xcb4b16" # bright 1
+green = "0x586e75" # bright 2
+yellow = "0x657b83" # bright 3
+blue = "0x839496" # bright 4
+magenta = "0x6c71c4" # bright 5
+cyan = "0x93a1a1" # bright 6
+white = "0xfdf6e3" # bright 7
+
+[[hints.enabled]]
+regex = "[a-f0-9]{40}"

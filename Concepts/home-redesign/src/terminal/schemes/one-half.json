@@ -1,0 +1,42 @@
+{
+  "family": "One Half",
+  "slug": "one-half",
+  "licence": "MIT",
+  "licenceFile": "LICENSE-one-half.txt",
+  "copyright": "Copyright (c) 2019 Son A. Pham <sp@sonpham.me>",
+  "homepage": "https://github.com/sonph/onehalf",
+  "schemes": [
+    {
+      "id": "one-half-light",
+      "name": "One Half Light",
+      "appearance": "light",
+      "source": "https://raw.githubusercontent.com/sonph/onehalf/75eb2e97acd74660779fed8380989ee7891eec56/kitty/onehalf-light.conf",
+      "sourceSha256": "d651149612f4948d65a26a130e6f89404d2d6f6966891c5eba095b21b60b8088",
+      "colors": {
+        "background": "#fafafa",
+        "foreground": "#383a42",
+        "cursor": null,
+        "cursorText": null,
+        "selectionBackground": "#bfceff",
+        "selectionForeground": "#383a42",
+        "ansi": ["#383a42", "#e45649", "#40a14f", "#c18401", "#0184bc", "#a626a4", "#0997b3", "#fafafa", "#383a42", "#e45649", "#40a14f", "#c18401", "#0184bc", "#a626a4", "#0997b3", "#fafafa"]
+      }
+    },
+    {
+      "id": "one-half-dark",
+      "name": "One Half Dark",
+      "appearance": "dark",
+      "source": "https://raw.githubusercontent.com/sonph/onehalf/75eb2e97acd74660779fed8380989ee7891eec56/kitty/onehalf-dark.conf",
+      "sourceSha256": "54dfb10334e026761066168ecf9a714356e18f22cb8b54a8d8ef22f9ec216ac1",
+      "colors": {
+        "background": "#282c34",
+        "foreground": "#dcdfe4",
+        "cursor": null,
+        "cursorText": null,
+        "selectionBackground": "#fffacd",
+        "selectionForeground": "#000000",
+        "ansi": ["#282c34", "#e06c75", "#98c379", "#e5c07b", "#61afef", "#c678dd", "#56b6c2", "#dcdfe4", "#5d677a", "#e06c75", "#98c379", "#e5c07b", "#61afef", "#c678dd", "#56b6c2", "#dcdfe4"]
+      }
+    }
+  ]
+}
