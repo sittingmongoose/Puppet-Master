@@ -17,10 +17,7 @@
 }
 §R[data-o55-nier="on"] #activityBar > #abMoreBtn:is(.is-menu-open, .pm-ab-drop-hot) .symbol { background: var(--o55-nier-ink) !important; box-shadow: none !important; }
 §R[data-o55-nier="on"] #activityBar > #abMoreBtn:is(.is-menu-open, .pm-ab-drop-hot) { color: var(--o55-nier-on-ink) !important; }
-/* the menu: the bar's own icon drawings at the menu's icon size; its rows are buttons, which do not inherit the font,
-   so they take the theme's face from the plate (IBM Plex Mono in Retro, PM NieR Sans in NieR) like its heading */
-§R .pmr-menu[data-pmr-menu="d-ab-more"] .pmr-mi { font-family: inherit !important; }
+/* the menu: the bar's own icon drawings at the menu's icon size (its rows take the theme's face from src/css/10-menu.css) */
 §R .pmr-menu[data-pmr-menu="d-ab-more"] .pmr-mi-ico svg { width: 15px; height: 15px; }
 §R .pmr-menu[data-pmr-menu="d-ab-more"] .pmr-menu-empty { max-width: 220px; padding: 10px 10px; font-size: 12px; line-height: 1.45; color: var(--text-secondary); }
-/* its heading is a sentence, not a capitals micro label */
-§R .pmr-menu[data-pmr-menu="d-ab-more"] .pmr-menu-glabel { text-transform: none !important; letter-spacing: 0 !important; font: 500 12px/1.3 var(--body-font) !important; color: var(--text-muted) !important; }
+/* (its heading is the chat picker's group label, capitals like every PMR.menu group label) */

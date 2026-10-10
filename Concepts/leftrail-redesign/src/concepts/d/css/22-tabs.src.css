@@ -67,10 +67,12 @@
 § .pm-segtab-item svg, § .pm-segtab-item .pm-ico { width: 15px !important; height: 15px !important; flex: none; transform: none !important; transition-property: none !important; }
 § .pm-segtab-item.active svg { color: var(--d-tab-fg, var(--accent-primary)); }
 /* labels: shown for every tab when they all fit, for the chosen tab only when only that fits, never abbreviated; a
-   change shows or hides them in one step */
+   change shows or hides them in one step. The label clips its width (it hides by max-width), and its line box is the
+   item's 1.0 line height, so it keeps 3 px above and below inside the clip (taken back by the margins) for the
+   descenders and accents of Poppins and PM NieR Sans, which a 12 px box cut off */
 § .pm-segtab-item > span, § .pm-segtab-item > .eq-full {
   display: inline-block !important; overflow: hidden; white-space: nowrap; text-overflow: clip;
-  max-width: 120px; padding: 0 !important; margin-left: 5px; opacity: 1; transition-property: none !important;
+  max-width: 120px; padding: 3px 0 !important; margin-top: -3px; margin-bottom: -3px; margin-left: 5px; opacity: 1; transition-property: none !important;
 }
 § .pm-segtab-item > .eq-abbr { display: none !important; }
 § .pm-segtab[data-d-tabs="active"] .pm-segtab-item:not(.active) > :is(span, .eq-full),

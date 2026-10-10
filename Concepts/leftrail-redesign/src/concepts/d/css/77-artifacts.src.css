@@ -20,8 +20,6 @@
 §@artifacts .sh-sortrow .pm6-tb-menu-trigger > .pm-ico { width: 12px !important; height: 12px !important; color: var(--d-text-3); transition: transform var(--d-t2) var(--d-spring); }
 §@artifacts .sh-sortrow .pm6-tb-menu-trigger.is-menu-open > .pm-ico { transform: rotate(180deg); }
 §@artifacts .sh-sortrow .pm6-tb-menu-label { font: inherit !important; color: inherit !important; }
-/* the sort menu's items in the rail's face (see the same rule for the Actions menus in section 13) */
-§R .pmr-menu[data-pmr-menu="d-shArtSort"] .pmr-mi { font-family: inherit; }
 
 /* ---- the card: a shelf-like box ---- */
 §@artifacts .sh-card {
@@ -178,19 +176,7 @@
   grid-area: meta; white-space: normal !important; overflow: visible !important; text-overflow: clip !important; overflow-wrap: anywhere;
 }
 
-/* ---- state words take their state colour (glyph and word) ---- */
-§@artifacts .pm-chip[data-d-st="ok"], §@artifacts .pm-chip[data-d-st="live"] { color: var(--d-ok) !important; }
-§@artifacts .pm-chip[data-d-st="run"] { color: var(--d-run) !important; }
-§@artifacts .pm-chip:is([data-d-st="warn"], [data-d-st="stale"], [data-d-st="dirty"]) { color: var(--d-warn) !important; }
-§@artifacts .pm-chip:is([data-d-st="fail"], [data-d-st="blocked"]) { color: var(--d-fail) !important; }
-§@artifacts .pm-chip:is([data-d-st="pending"], [data-d-st="info"]) { color: var(--d-pend) !important; }
-§@artifacts .pm-chip:is([data-d-st="idle"], [data-d-st="unknown"]) { color: var(--d-idle) !important; }
 
 /* ---- families and modes ---- */
-§R[data-o55-nier="on"][data-o55-nier-parts~="headers"] #panel-artifacts :is(.sh-hlabel, .sh-title, .sh-sortlab) {
-  text-transform: uppercase !important; letter-spacing: .14em !important;
-}
-§R[data-motion="reduced"] #panel-artifacts *, §R[data-reduced-motion="1"] #panel-artifacts * { transition: none !important; animation: none !important; }
-@media (prefers-reduced-motion: reduce) {
-  §R #panel-artifacts * { transition: none !important; animation: none !important; }
-}
+/* NieR headers: the sort label takes the shared label capitals (90-themes covers shelf labels and the title) */
+§R[data-o55-nier-parts~="headers"] #panel-artifacts .sh-sortlab { text-transform: uppercase !important; letter-spacing: .07em !important; }

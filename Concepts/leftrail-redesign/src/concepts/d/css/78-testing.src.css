@@ -50,7 +50,7 @@
 §@testing :is([data-d-st="warn"], [data-d-st="stale"], [data-d-st="dirty"]), §@agents :is([data-d-st="warn"], [data-d-st="stale"], [data-d-st="dirty"]) { --lf-st: var(--d-warn); }
 §@testing :is([data-d-st="fail"], [data-d-st="blocked"]), §@agents :is([data-d-st="fail"], [data-d-st="blocked"]) { --lf-st: var(--d-fail); }
 §@testing :is([data-d-st="idle"], [data-d-st="unknown"]), §@agents :is([data-d-st="idle"], [data-d-st="unknown"]) { --lf-st: var(--d-idle); }
-§@testing [data-d-st="errored"], §@agents [data-d-st="errored"] { --lf-st: var(--accent-orange, var(--d-fail)); color: var(--lf-st) !important; }
+§@testing [data-d-st="errored"], §@agents [data-d-st="errored"] { --lf-st: var(--d-orange); color: var(--lf-st) !important; }
 §@testing .pm-chip[data-d-st], §@agents .pm-chip[data-d-st] { color: var(--lf-st) !important; }
 /* light modes (and NieR dark): the graph colours are made for marks, not for 12 px words on a tinted shelf (Running in
    Retro light measured 1.4:1). Status words take a deeper tone of their colour, mixed toward the text colour; glyphs
@@ -147,15 +147,3 @@
   mask-image: linear-gradient(180deg, transparent 0, transparent calc(var(--pm6-shrun-banner-h, 42px) - 6px), #000 calc(var(--pm6-shrun-banner-h, 42px) + 6px));
 }
 
-/* ---- NieR: headers in capitals -------------------------------------------------------------------------------------- */
-§R[data-o55-nier="on"][data-o55-nier-parts~="headers"] :is(#panel-testing, #panel-agents) :is(.sh-hlabel, .sh-title, .pm-sumcard-h) {
-  text-transform: uppercase !important; letter-spacing: .14em !important;
-}
-
-/* ---- reduced motion: nothing in these panels moves ------------------------------------------------------------------- */
-§R[data-motion="reduced"] :is(#panel-testing, #panel-agents) *, §R[data-reduced-motion="1"] :is(#panel-testing, #panel-agents) * {
-  transition: none !important; animation: none !important;
-}
-@media (prefers-reduced-motion: reduce) {
-  §R :is(#panel-testing, #panel-agents) * { transition: none !important; animation: none !important; }
-}

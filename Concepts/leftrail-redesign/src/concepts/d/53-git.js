@@ -10,9 +10,7 @@
      a ring, queued the turning ring) instead of the shell's colour-only dots, which applyDots reads as "live";
    - a disabled dispatch keeps its reason inline (FinalGUISpec disabled-control model);
    - ids and paths that do not fit keep both ends (RELEASE_…_PASSPHRASE, src/…/mixed_fractions.rs);
-   - a run whose facts would wrap beside its state word puts the state under them; a shelf head cut by under a pixel
-     stacks its summary too (the shared stackHeads tolerates 1 px);
-   - the automation plate under the header joins the panel's entrance cascade between the header and the tabs;
+   - a run whose facts would wrap beside its state word puts the state under them;
    - the provider view rises in when the service changes.
    Every DOM change goes through remember() / setAttr() / addClass() / inject() / setOwnText(), so "Current" is
    byte-identical after a switch. LANE_E is shared with 54-artifacts.js (the files share the wrapper scope). */
@@ -59,27 +57,6 @@ const LANE_E = (() => {
     r.selectNodeContents(el);
     return r.getBoundingClientRect().width > room + .05;
   }
-  /* a shelf head whose label is cut by less than the 1 px the shared stackHeads (20-fit.js) tolerates stacks too. It
-     carries the lane's own attribute, so the shared pass, which re-measures with its tolerance, never undoes it; the
-     inline offset restores the head's style attribute exactly on a concept switch */
-  function stackTight(root) {
-    root.querySelectorAll('.sh-shelf > .sh-head').forEach(h => {
-      const l = h.querySelector(':scope > .sh-hlabel'), c = h.querySelector(':scope > .sh-hcount');
-      if (!l || !c || !h.offsetWidth) return;
-      const key = h.offsetWidth + '|' + l.textContent + '|' + c.textContent + '|' + getComputedStyle(l).font + '|' + h.hasAttribute('data-d-stack');
-      if (h._dETight === key) return;
-      h._dETight = key;
-      h.removeAttribute('data-d-e-stack');
-      if (h.hasAttribute('data-d-stack') || !(inkOver(l) || h.scrollWidth > h.clientWidth)) return;
-      if (!h.hasAttribute('data-d-e-sx')) {
-        const had = h.getAttribute('style');
-        h.setAttribute('data-d-e-sx', '');
-        remember(() => { h.removeAttribute('data-d-e-stack'); h.removeAttribute('data-d-e-sx'); delete h._dETight; if (had == null) h.removeAttribute('style'); else h.setAttribute('style', had); });
-      }
-      h.setAttribute('data-d-e-stack', '');
-      h.style.setProperty('--d-e-stack-x', Math.max(0, l.offsetLeft - (parseFloat(getComputedStyle(h).paddingLeft) || 0)) + 'px');
-    });
-  }
   /* a lane glyph as a direct child of host (default: first), its state written on it so it takes the state colour */
   function mark(host, st, before) {
     let g = host.querySelector(':scope > .d-e-gl');
@@ -118,7 +95,7 @@ const LANE_E = (() => {
       el._dEFit = el.clientWidth + '|' + getComputedStyle(el).font + '|' + (el._dFull != null ? el._dFull : el.textContent);
     });
   }
-  function clearMid(root) { root.querySelectorAll('*').forEach(el => { delete el._dEFit; delete el._dETight; delete el._dEStack; }); }
+  function clearMid(root) { root.querySelectorAll('*').forEach(el => { delete el._dEFit; delete el._dEStack; }); }
   /* refit on rail width, theme, NieR and text size changes (the shared watcher refits only its own selectors) */
   function watch(panel, refit) {
     if (panel._dEWatch) return;
@@ -147,19 +124,7 @@ const LANE_E = (() => {
   }
   /* the panel's rows take the NieR cursor (ink bar + square cursor) like the shared rows do */
   function cursor(panel, sel) { panel.querySelectorAll(sel).forEach(el => addClass(el, 'pmr-cur')); }
-  /* the panel comes in: the shared entrance (30-motion.js enterPanel) cascades the header, Source's context plate and
-     the tabs; a lane panel's own plate under the header joins that cascade in its place, with the same timing, so the
-     middle of the panel never stands still before its title. The header keeps the animation enterPanel gave it (the
-     same frame); the plate takes the second step and the tabs, restarted by cascade(), the third. */
-  function chromeIn(panel, plateSel) {
-    const plate = panel.querySelector(':scope > ' + plateSel);
-    if (reduced() || !visible(plate)) return;
-    const head = panel.querySelector(':scope > .sh-banner');
-    const rest = [plate, panel.querySelector(':scope > .pm-segtab')].filter(visible);
-    const f = spec(), step = Math.round(f.step * .6);
-    cascade(rest, { dy: f.wipe ? 0 : Math.max(2, Math.round(f.dy / 2)), step, delay: visible(head) ? step : 0, durK: .8 });
-  }
-  return { words, mark, chipAs, capOwn, mid, clearMid, watch, headStates, cursor, inkOver, stackTight, chromeIn };
+  return { words, mark, chipAs, capOwn, mid, clearMid, watch, headStates, cursor, inkOver };
 })();
 
 (() => {
@@ -274,7 +239,7 @@ const LANE_E = (() => {
     });
   }
 
-  function fit(panel, force) { LANE_E.mid(panel, MID_GIT, force); LANE_E.stackTight(panel); stackRuns(panel, force); }
+  function fit(panel, force) { LANE_E.mid(panel, MID_GIT, force); stackRuns(panel, force); }
 
   function onClick(ev) {
     if (!D.on) return;
@@ -300,10 +265,7 @@ const LANE_E = (() => {
         remember(() => { delete panel._dEClick; });
       }
     },
-    show(panel, info) {
-      if (info && (info.reason === 'switch' || info.reason === 'concept')) LANE_E.chromeIn(panel, '.pm7-automation-context');
-      fit(panel, false);
-    },
+    show(panel) { fit(panel, false); },
     unmount(panel) { LANE_E.clearMid(panel); },
   });
 })();

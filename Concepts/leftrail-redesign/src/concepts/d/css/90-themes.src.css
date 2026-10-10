@@ -71,14 +71,15 @@
   background-repeat: no-repeat !important;
 }
 
-/* ---- 12. Reduced motion: nothing in the skin moves --------------------------------------------------------------- */
-§R[data-motion="reduced"] :is(#panel-files,#panel-source,#panel-docker) *, §R[data-reduced-motion="1"] :is(#panel-files,#panel-source,#panel-docker) *,
+/* ---- 12. Reduced motion: nothing in the skin moves --------------------------------------------------------------------
+   Every rail panel (#sidePanelSlot holds exactly the nine), the bottom Debug tab D also skins, and the activity bar. */
+§R[data-motion="reduced"] :is(#sidePanelSlot, #bottomDebugHost) *, §R[data-reduced-motion="1"] :is(#sidePanelSlot, #bottomDebugHost) *,
 §R[data-motion="reduced"] #activityBar *, §R[data-reduced-motion="1"] #activityBar * {
   transition: none !important; animation: none !important;
 }
 §R[data-motion="reduced"] .d-gl::after, §R[data-reduced-motion="1"] .d-gl::after { display: none !important; }
 @media (prefers-reduced-motion: reduce) {
-  §R :is(#panel-files,#panel-source,#panel-docker) *, §R #activityBar *, §R #activityBar .icon, §R #activityBar .icon .symbol { transition: none !important; animation: none !important; }
+  §R :is(#sidePanelSlot, #bottomDebugHost) *, §R #activityBar *, §R #activityBar .icon, §R #activityBar .icon .symbol { transition: none !important; animation: none !important; }
   §R .d-gl::after { display: none !important; }
   §R .d-gl .d-spin { animation: none !important; }
 }

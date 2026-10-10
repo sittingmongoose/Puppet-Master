@@ -50,6 +50,7 @@
   --d-pend: var(--accent-blue);
   --d-idle: var(--text-muted);
   --d-conflict: var(--accent-magenta, var(--graph-failed));
+  --d-orange: var(--accent-orange, var(--d-warn));   /* orphaned (Source), errored (Testing) */
   /* motion: Basic is crisp */
   --d-t1: 120ms;
   --d-t2: 200ms;
@@ -92,6 +93,9 @@
    take the surface colour at full strength: a row scrolled under the header or the tab strip does not show through */
 §R[data-theme="glass-dark"] { --d-chrome: rgb(37, 28, 57); }
 §R[data-theme="glass-light"] { --d-chrome: rgb(241, 242, 238); }
+/* Glass light's failure red (#C0566B) is 3.2:1 to 3.9:1 on its pale surfaces; darkened it reads 5.8:1 to 6.8:1, the
+   4.5:1 that 12 px words need, and stays the same hue */
+§R[data-theme="glass-light"]:not([data-o55-nier="on"]) { --d-fail: color-mix(in srgb, var(--graph-failed) 70%, #000); }
 /* NieR Mode paints over Basic: ink and paper, hairlines; motion is a hard ink wipe. Corners follow the "Square
    hairlines" part, as everywhere else in the app (with that part off NieR keeps Basic's radii). */
 §R[data-o55-nier="on"] {
@@ -102,7 +106,10 @@
   --d-ctl-bg: transparent;
   --d-ctl-line: rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .42);
   --d-on-accent: var(--o55-nier-on-ink, var(--surface));
+  /* states are ink, as everywhere else in NieR (the palette's gold running and olive warning tones read as a second
+     accent): the glyph's shape tells them apart; only a failure (and a conflict) keeps NieR's red */
   --d-ok: var(--o55-nier-ink); --d-live: var(--o55-nier-ink); --d-idle: rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .55);
+  --d-run: var(--o55-nier-ink); --d-warn: var(--o55-nier-ink); --d-orange: var(--o55-nier-ink);
   --d-ease: cubic-bezier(.7, 0, .2, 1);
   --d-spring: cubic-bezier(.7, 0, .2, 1);
 }

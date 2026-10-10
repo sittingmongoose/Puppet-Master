@@ -17,9 +17,6 @@
 }
 §@git .pm7-automation-select.d-hidden { display: none !important; }
 §@git .d-e-service { font-family: var(--body-font) !important; font-size: var(--d-fs-name) !important; font-weight: 600 !important; padding: 4px 8px !important; }
-/* the menus this panel opens (service, dispatch ref and inputs) set their items in the rail's face: the item is a
-   <button>, which takes the browser's default font unless told otherwise (the shared menu stylesheet does not yet) */
-§R .pmr-menu:is([data-pmr-menu="d-e-service"], [data-pmr-menu^="d-shDisp"]) .pmr-mi { font-family: inherit; }
 §@git .d-e-service > .d-select-v { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 §@git .pm7-automation-common { display: grid !important; grid-template-columns: max-content minmax(0, 1fr); gap: 1px 8px !important; align-items: baseline; padding: 0 1px; }
 §@git .pm7-automation-fact { display: contents !important; }
@@ -146,12 +143,6 @@
 §@git .sh-kv > .sh-v.sh-mono:not(.d-wrap) { white-space: nowrap !important; overflow: hidden !important; overflow-wrap: normal; }
 
 /* ---- settings: grouped facts, secret names with their state ---- */
-/* a head whose label the shared fit leaves cut by under a pixel stacks its summary the same way (lane attribute, JS) */
-§@git .sh-shelf > .sh-head[data-d-e-stack] { flex-wrap: wrap; row-gap: 1px; padding-top: 7px !important; padding-bottom: 8px !important; }
-§@git .sh-head[data-d-e-stack] > .sh-hcount {
-  order: 9; flex: 1 1 100%; margin-left: var(--d-e-stack-x, 24px) !important; white-space: normal; overflow-wrap: anywhere;
-  color: var(--d-text-2) !important; text-align: left;
-}
 §@git .sh-head > .sh-hcount[data-d-st] { display: inline-flex !important; align-items: center; gap: 4px; }
 §@git .sh-head > .sh-hcount[data-d-st="live"], §@git .sh-head > .sh-hcount[data-d-st="ok"] { color: var(--d-ok) !important; }
 §@git .sh-grp {
@@ -214,23 +205,11 @@
   white-space: normal !important; overflow: visible !important; text-overflow: clip !important;
 }
 
-/* ---- state words take their state colour (glyph and word) ---- */
-§@git :is(.pm-chip, .pm7-post-state)[data-d-st="ok"], §@git :is(.pm-chip, .pm7-post-state)[data-d-st="live"] { color: var(--d-ok) !important; }
-§@git :is(.pm-chip, .pm7-post-state)[data-d-st="run"] { color: var(--d-run) !important; }
-§@git :is(.pm-chip, .pm7-post-state):is([data-d-st="warn"], [data-d-st="stale"], [data-d-st="dirty"]) { color: var(--d-warn) !important; }
-§@git :is(.pm-chip, .pm7-post-state):is([data-d-st="fail"], [data-d-st="blocked"]) { color: var(--d-fail) !important; }
-§@git :is(.pm-chip, .pm7-post-state):is([data-d-st="pending"], [data-d-st="info"]) { color: var(--d-pend) !important; }
-§@git :is(.pm-chip, .pm7-post-state):is([data-d-st="idle"], [data-d-st="unknown"]) { color: var(--d-idle) !important; }
-§@git :is(.pm-chip, .pm7-post-state)[data-d-st="conflict"] { color: var(--d-conflict) !important; }
 
 /* ---- families and modes ---- */
 §{retro}@git .sh-log { box-shadow: 2px 2px 0 color-mix(in srgb, var(--d-fail) 30%, transparent); }
 §{nier}@git .sh-log { background: transparent !important; border-color: var(--d-line-2); }
 §{nier}@git .pm7-post-card { background: transparent !important; border-color: var(--d-line-2) !important; }
-§R[data-o55-nier="on"][data-o55-nier-parts~="headers"] #panel-git :is(.sh-hlabel, .sh-title, .pm7-post-card-title, .sh-dfk, .sh-grp) {
-  text-transform: uppercase !important; letter-spacing: .14em !important;
-}
-§R[data-motion="reduced"] #panel-git *, §R[data-reduced-motion="1"] #panel-git * { transition: none !important; animation: none !important; }
-@media (prefers-reduced-motion: reduce) {
-  §R #panel-git * { transition: none !important; animation: none !important; }
-}
+/* NieR headers: the panel's own group labels take the shared label capitals (90-themes covers shelf labels, card
+   titles and the title) */
+§R[data-o55-nier-parts~="headers"] #panel-git :is(.sh-dfk, .sh-grp) { text-transform: uppercase !important; letter-spacing: .07em !important; }

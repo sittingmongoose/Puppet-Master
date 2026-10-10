@@ -109,9 +109,6 @@
         remember(() => { delete panel._dEClick; tabIdx = -1; });
       }
     },
-    show(panel, info) {
-      stackCards(panel, false);
-      if (info && (info.reason === 'switch' || info.reason === 'concept')) dealCards(panel, { delay: Math.round(spec().step * 1.5) });
-    },
+    show(panel) { stackCards(panel, false); },
   });
 })();

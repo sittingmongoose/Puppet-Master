@@ -212,13 +212,6 @@ const LF_RUN = (() => {
     });
   }
 
-  /* the panel came in: its shelves and rows deal in behind the header (the shared entrance only knows tabbed panes) */
-  function enter(panel, info) {
-    if (!info || (info.reason !== 'switch' && info.reason !== 'concept')) return;
-    const sc = panel.querySelector(':scope > .sh-scroll');
-    if (!sc) return;
-    deal(dealList(sc), { delay: Math.round(spec().step * 1.5) });
-  }
 
   /* the shell fits its chips and counts to their room (PMPillFit writes data-fit), and does so again while D is on,
      where a chip in the facts line has room. Leaving D puts back the fit Current measured before D, not one measured in
@@ -231,7 +224,6 @@ const LF_RUN = (() => {
 
   return {
     apply(panel, animate) { fits(panel); rows(panel, animate); chips(panel, animate); texts(panel); stacks(panel); heads(panel); phrases(panel); },
-    enter,
   };
 })();
 
@@ -270,5 +262,4 @@ panelHook('panel-testing', {
     lfTestingBanner(panel);
     lfResults(panel);
   },
-  show(panel, info) { LF_RUN.enter(panel, info); },
 });
