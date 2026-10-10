@@ -27447,11 +27447,12 @@ canonical_text: >-
   of layout:v1, through the StorageMigrationCoordinator by the conversion table of this section: editor panels
   become panels holding their editor tabs, the dashboard a panel with dashboard:home, each terminal section a
   bottom-row panel whose workgroup panes become terminal tabs bound to their existing sessions, a docked or
-  floating chat returns to the fixed column (a popped-out chat stays popped out), floating surfaces dock, an editor
+  floating chat returns to the fixed column (a popped-out chat starts in its column after restart), floating surfaces dock, an editor
   panel's inactive browser session becomes a background browser tab there, and a hidden surface that holds anything
   becomes a collapsed panel. The
   source stays read-only and is never reset; an unreadable source yields the default Home layout, the old record
   kept and a notice. The concept's pm.home.panels keys are lineage only.
+  The chat column's popped_out is current-run state; after a restart the chat starts in its column (F3-504, F3-637).
 gui_related: true
 gui_classification_reason: The persisted record decides the visible panels, tabs, chat column and what survives an upgrade.
 split_recommended: false
@@ -27514,6 +27515,7 @@ negative_constraints:
 compatibility_only_notes:
   - "The v1 record, its compatibility colon keys and the Home part of layout:v1 are read-only conversion inputs and lineage."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (lead ruling L7): The chat popped_out field is current-run state and restart starts the chat in its column."
   - "Supersedes the v1 record as the selected Home layout (SP-245 amended 2026-10-09, DL-180)."
 owner_hints:
   - Plans/storage-plan.md

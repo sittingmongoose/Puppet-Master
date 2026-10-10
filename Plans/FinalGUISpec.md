@@ -44150,10 +44150,7 @@ canonical_text: >-
   it again; the setting "Keep the chat open in narrow windows" (SSYS-050) keeps it open instead. Pop out is the only way
   to move it (D3: the desktop app). In the desktop app Pop out opens the same chat, with its History and Activity
   Detail, in its own window that the user sizes and places (cmd.panel.undock with chat; panel.undocked, F3-527), and
-  Dock back returns it to its column (cmd.panel.redock; panel.redocked); exactly one chat exists at a time. In the web
-  client the chat never floats inside the page (F3-504), and whether the web client offers a Pop out is an open question
-  for the lead. The title bar's Home options menu carries Show the chat or Hide the
-  chat, Pop out the chat or Dock the chat back, and Keep the chat open in narrow windows (F3-502). The 5.6 Pro chat's
+  Dock back returns it to its column (cmd.panel.redock; panel.redocked); exactly one chat exists at a time. The web client offers no Pop out; the chat stays in its column. The title bar's Home options menu carries Show the chat or Hide the chat, and in the desktop app Pop out the chat or Dock the chat back, and Keep the chat open in narrow windows (F3-502). The 5.6 Pro chat's
   History list is a flyout over the chat by default; pinning it widens the chat by the list's own width instead of
   squeezing the messages. Activity Detail stays inside the chat as the 5.6 Pro chat designs it (APR-001), never a panel
   tab. One thread-history list survives, the 5.6 Pro one. The chat sizes itself by its own column, never by the window
@@ -44163,6 +44160,7 @@ canonical_text: >-
   minimums: F3-HOME-002's 260 px nominal minimum, F3-423's floating floor (it now holds only for the desktop app's
   popped-out chat window), F3-565's narrowest chat (its resilience rules now hold for a popped-out window narrower than 400 px),
   and the 360 px chat beside an open document of APR-038 and F3-569.
+  After a restart the chat starts in its column (F3-504); whether a popped-out chat reopens popped out is an open question for Jared.
 gui_related: true
 gui_classification_reason: Defines the chat's fixed column, its width, show and hide, Pop out, History flyout and Activity Detail.
 split_recommended: false
@@ -44218,7 +44216,9 @@ negative_constraints:
   - "Do not keep a second thread-history list."
 compatibility_only_notes:
   - "The concept floats the popped-out chat inside the page at 440 x min(720, window - 140) px with Dock back; that is the concept's browser stand-in, not a canon size."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (lead ruling L7): After restart the chat starts in its column; reopening popped out remains an open question for Jared."
+  - "Amended 2026-10-10 (lead ruling L6): Pop out is desktop only; the web chat stays in its column."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/assistant-chat-design.md
