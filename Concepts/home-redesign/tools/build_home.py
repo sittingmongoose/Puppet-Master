@@ -81,6 +81,12 @@ def report(text: str, notes: dict, target: Path) -> dict:
 
 def main() -> int:
     args = sys.argv[1:]
+    known = {'--check', '--out'}
+    stray = [a for i, a in enumerate(args) if a not in known and not (i > 0 and args[i - 1] == '--out')]
+    if stray:
+        # an unknown flag (--help included) never writes the tracked review copy
+        print('usage: build_home.py [--check] [--out PATH]', file=sys.stderr)
+        return 2
     check = '--check' in args
     target = TARGET
     if '--out' in args:
