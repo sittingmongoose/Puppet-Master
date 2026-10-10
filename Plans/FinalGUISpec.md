@@ -37437,6 +37437,8 @@ invariants.
   (e.g., full prompt breakdown, BSD sensitivity, catch-up configuration, and stage bindings) is
   placed behind intentional disclosure toggles. Back Seat Driver's section is three plain facts and
   three native disclosures with no metric-card grid (DL-122, F3-580).
+Amended 2026-10-10 (lead ruling L21): the ban on side stripes is now shell-wide (DR-069); the structural rails of working activities stay as its carve-out.
+
 - **Strict Elimination of Left-Edge Accent Stripes (APR-034):** Decorative left-edge vertical
   accent bars, colored side stripes, inset accent borders, and pseudo-element stripes are strictly
   prohibited across all Assistant and Settings surfaces (including gray or muted substitutes).
@@ -44500,14 +44502,14 @@ canonical_text: >-
   statements of the rule (APR-034, F3-534, Settings section 22, F3-618, F3-619, DR-057) stay, as instances of this one
   rule. Checks: F3-619's pill detector (an element whose corner radius is at least half its height and which has a fill
   or a border, key caps excepted) and a side-border detector (a coloured border, or an inset shadow standing in for one,
-  of 2 px or more on one side only) find nothing in any look, and no emoji appears in chrome text or icons.
+  of 2 px or more on one side only) find nothing in any look except the structural rails of working activities (APR-034, DR-069), and no emoji appears in chrome text or icons.
 gui_related: true
 gui_classification_reason: Owns how the shell-wide ban on side stripes, emoji and pills looks, and lists the retired defaults.
 split_recommended: false
 depends_on: [DL-184, DL-141, F3-585, F3-619]
 unblocks: [DR-069, ATS-075]
 acceptance_criteria:
-  - "The pill detector and the side-border detector find nothing on any surface in any look or NieR Mode, key caps excepted."
+  - "The pill detector and the side-border detector find nothing on any surface in any look or NieR Mode, key caps and the structural rails of working activities (APR-034, DR-069) excepted."
   - "No emoji appears in Puppet Master's chrome; a terminal program's own output is exempt."
   - "Every retired default listed here carries a dated note in its own unit or section."
   - "Selection everywhere is shown by the element's own surface, never by an edge stripe."
@@ -44535,11 +44537,12 @@ preserved_exact_tokens:
   - "pill"
   - "key caps"
 negative_constraints:
-  - "Do not draw a coloured border or stripe on one side of a box."
+  - "Do not draw a coloured border or stripe on one side of a box, except the structural rails of working activities (APR-034, DR-069)."
   - "Do not draw a pill-shaped tab, tag, badge, button or status chip."
   - "Do not put an emoji in Puppet Master's chrome."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (lead ruling L21): The side-border check exempts the structural rails of working activities (APR-034, DR-069)."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/DRY_Rules.md
