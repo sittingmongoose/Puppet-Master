@@ -10,6 +10,7 @@ html[data-o55-nier="on"] .pmt-pop, html[data-o55-nier="on"] .pmt-findbar, html[d
 }
 html[data-o55-nier="on"] .pmt-pop-head { border-bottom: 2px solid var(--o55-nier-ink); }
 html[data-o55-nier="on"] .pmt-pop-title, html[data-o55-nier="on"] .pmt-pop-sec h4, html[data-o55-nier="on"] .pmt-scheme-group { text-transform: uppercase; letter-spacing: .12em; }
+html[data-o55-nier="on"] .pmt-seg button { letter-spacing: .02em; padding: 0 8px; }
 html[data-o55-nier="on"] .pmt-seg, html[data-o55-nier="on"] .pmt-seg button, html[data-o55-nier="on"] .pmt-pop-ctl select,
 html[data-o55-nier="on"] .pmt-find-input, html[data-o55-nier="on"] .pmt-textbtn, html[data-o55-nier="on"] .pmt-scheme,
 html[data-o55-nier="on"] .pmt-swatch, html[data-o55-nier="on"] .pmt-step, html[data-o55-nier="on"] .pmt-mark { border-radius: 0; }
