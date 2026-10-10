@@ -4,7 +4,7 @@ Source: `Plans/Widget_System.md`
 
 Source lines: L1204-L1657
 
-Source SHA256: `73c6ac554268198107e493b64d61f0ec2e6ab522e5db4e3ce8575bc1672c9e53`
+Source SHA256: `c662bd5004ee1856b3c78260dfcd1919a2fe8ff8f1c0751a561ba1c0e853e755`
 
 ---
 
@@ -53,8 +53,8 @@ canonical_text: >-
   20 tracks from 880 px, 24 tracks from 1100 px, and 30 tracks from 1460 px of board width; a board keeps its
   class until its width falls 24 px below that class's threshold (a 20-track board holds down to 856 px), so a
   20-track board never runs under a pitch of about 43 px and widgets can be much narrower than before. Each kind
-  offers two or three presets (the board-wide hero kinds two, the group heading one), and each preset is one complete
-  content tier that adds a named content step over the kind's preset before it. A preset resolves to pixels: its
+  offers few presets (two or three for most kinds, four for trend and columns, one for the group heading), and each
+  preset is one complete content tier that adds a named content step over the kind's preset before it. A preset resolves to pixels: its
   width is authored in tracks at the nominal 47 px pitch, per board class where a class should offer a wider card,
   and the board resolves it at the live pitch to the same card width on every board, never more than 2 % narrower
   and never wider than the board, except that a board-wide preset takes the class's whole track count (12, 20, 24, or
