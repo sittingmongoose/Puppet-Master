@@ -1819,7 +1819,9 @@ plan_unit_id: UCC-013
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Wrapper commands may carry shared panel-context vocabulary for deep-link and cross-surface focus; tab_id is stable page-tab focus, and route-shaped payloads keep route_target, OpenSubject, and panel-context identity distinct from shell/view-state hints.
+canonical_text: >-
+  Wrapper commands may carry shared panel-context vocabulary for deep-link and cross-surface focus; tab_id is stable page-tab focus, and route-shaped payloads keep route_target, OpenSubject, and panel-context identity distinct from shell/view-state hints.
+  Amended 2026-10-09 (DL-180): a home panel tab is named panel_tab_id and a home panel panel_id; neither is route tab_id, panel-context vocabulary or the rail's cmd.panel.switch panel_id (UCC-200).
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -1828,6 +1830,7 @@ depends_on:
 - PDS-004
 - PDS-005
 - PNC-001
+- DL-180
 unblocks: []
 acceptance_criteria:
 - UCC-013 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
@@ -1863,7 +1866,8 @@ negative_constraints:
 - View-state and selected-subview hints must not be used as runtime-local mutation payloads.
 preserved_contractrefs: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): panel_tab_id and panel_id name home panel tabs and panels, kept apart from route tab_id and panel-context."
 owner_hints:
 - Plans/UI_Command_Catalog.md
 ```
@@ -2165,7 +2169,9 @@ plan_unit_id: UCC-019
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Later-model GUI readiness requires projection-trust, gating, MVP, GUI, IDs, promoted-feature, multi-project-tab, attention-center, runtime cmd.runtime.* ownership, and cross-doc command-family gaps to resolve to catalog rows or owner retirements.
+canonical_text: >-
+  Later-model GUI readiness requires projection-trust, gating, MVP, GUI, IDs, promoted-feature, multi-project-tab, attention-center, runtime cmd.runtime.* ownership, and cross-doc command-family gaps to resolve to catalog rows or owner retirements.
+  Amended 2026-10-09 (DL-180): the tab command family now resolves to catalog rows, cmd.panel_tab.* and the extended cmd.workspace_layout.* family (UCC-200); no panel tab pops out to a window, so the window family gains no tab rows.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -2174,6 +2180,7 @@ depends_on:
 - PDS-004
 - PDS-005
 - PNC-001
+- DL-180
 unblocks: []
 acceptance_criteria:
 - UCC-019 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
@@ -2212,6 +2219,7 @@ preserved_contractrefs: []
 compatibility_only_notes: []
 stale_retired_dispositions:
 - Cross-doc command ownership gaps are machine-breaking gaps, not editorial cleanup.
+- "Amended 2026-10-09 (DL-180): the tab family gap is closed by UCC-200."
 owner_hints:
 - Plans/UI_Command_Catalog.md
 ```
@@ -2510,7 +2518,9 @@ plan_unit_id: UCC-025
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Object routes use canonical domain IDs, compatibility widgets remain display-only, History deletion needs durable audit and disposition semantics, OpenFile preserves placement through target_editor_panel_id/target_editor_group_id with target_group as a compatibility alias, subject-open wrappers cover route/focus pivots, and resume_url is route transport.
+canonical_text: >-
+  Object routes use canonical domain IDs, compatibility widgets remain display-only, History deletion needs durable audit and disposition semantics, OpenFile preserves placement through target_editor_panel_id/target_editor_group_id with target_group as a compatibility alias, subject-open wrappers cover route/focus pivots, and resume_url is route transport.
+  Amended 2026-10-09 (DL-180): OpenFile's target_editor_panel_id, target_editor_group_id and target_group no longer select a home panel; placement is the where, mode, by and background fields of CV-360, resolved by the one opening module (UCC-200).
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -2519,6 +2529,7 @@ depends_on:
 - PDS-004
 - PDS-005
 - PNC-001
+- DL-180
 unblocks: []
 acceptance_criteria:
 - UCC-025 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
@@ -2561,7 +2572,8 @@ negative_constraints:
 preserved_contractrefs: []
 compatibility_only_notes:
 - Tiers-tab widgets are compatibility-only display widgets.
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): OpenFile's editor panel and group targets retire as home placement; CV-360's placement fields replace them."
 owner_hints:
 - Plans/UI_Command_Catalog.md
 ```
@@ -3133,7 +3145,9 @@ plan_unit_id: UCC-036
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Widget layout command rows define add, remove, resize, configure, move, and reset_layout commands with widget-hostability limited to Dashboard, Usage page, and actual Orchestrator widget-tab surfaces.
+canonical_text: >-
+  Widget layout command rows define add, remove, resize, configure, move, and reset_layout commands with widget-hostability limited to Dashboard, Usage page, and actual Orchestrator widget-tab surfaces.
+  Amended 2026-10-09 (DL-180): the Dashboard host is any dashboard tab in any panel, each addressed by board_id (WS-030), with page kept for the Usage page; cmd.dashboard.add_widget is an alias of cmd.widget.add (UCC-202); a widget-layout change is a change to that board and emits no workspace.layout_changed.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -3142,11 +3156,13 @@ depends_on:
 - PDS-004
 - PDS-005
 - PNC-001
+- DL-180
 unblocks: []
 acceptance_criteria:
 - UCC-036 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+- "Inside a dashboard tab every cmd.widget.* row is addressed by board_id and emits no workspace.layout_changed."
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -3176,7 +3192,8 @@ negative_constraints:
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/Widget_System.md#11, ContractName:Plans/Contracts_V0.md#7-uicommand'
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): widget rows inside dashboard tabs are addressed by board_id."
 owner_hints:
 - Plans/UI_Command_Catalog.md
 ```
@@ -4545,7 +4562,9 @@ plan_unit_id: UCC-060
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Chat context commands compact, open/focus/close thread context details, preserve hover summary as passive UI, dispatch Compact Now only after explicit choice, project started/completed/failed and visible failure/degraded state from the command result and receipt, consume exactly one context.compaction.completed only after successful committed compaction under ACD-461 / SP-259, and emit no compaction EventRecord for started, failed, soft-defer, no-op, or other noncommitted outcomes, return started, already_running, cancelled, no_op, degraded, unavailable, retry_scheduled, completed, or failed command results, and supersede thread Usage command IDs through route/open Usage normalization.
+canonical_text: >-
+  Chat context commands compact, open/focus/close thread context details, preserve hover summary as passive UI, dispatch Compact Now only after explicit choice, project started/completed/failed and visible failure/degraded state from the command result and receipt, consume exactly one context.compaction.completed only after successful committed compaction under ACD-461 / SP-259, and emit no compaction EventRecord for started, failed, soft-defer, no-op, or other noncommitted outcomes, return started, already_running, cancelled, no_op, degraded, unavailable, retry_scheduled, completed, or failed command results, and supersede thread Usage command IDs through route/open Usage normalization.
+  Amended 2026-10-09 (DL-180): the thread Context Detail Pane is the context tab kind; open adds or reveals the thread's context tab through the one opening module, focus reveals it and close closes it (UCC-200).
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -4554,6 +4573,7 @@ depends_on:
 - PDS-004
 - PDS-005
 - PNC-001
+- DL-180
 unblocks: []
 acceptance_criteria:
 - UCC-060 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
@@ -4603,6 +4623,7 @@ compatibility_only_notes:
 - Legacy callers that cite open/focus thread usage normalize to route/open Usage context and are not pure shell/layout toggles.
 stale_retired_dispositions:
 - The former blanket instruction to emit started/completed/failed lifecycle events remains retired. Current wiring preserves context.compaction.started and context.compaction.failed as non-emitting historical spellings and projects result, receipt, and compaction history; ACD-461 / SP-259 separately authorizes exactly one context.compaction.completed after successful committed compaction.
+- "Amended 2026-10-09 (DL-180): context detail is a context tab."
 owner_hints:
 - Plans/UI_Command_Catalog.md
 ```
@@ -4614,7 +4635,9 @@ plan_unit_id: UCC-061
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Browser, terminal, and dev-session commands share a shell/runtime interaction family while browser commands own browser-session behavior, terminal commands own section/tab/pane/session behavior, and dev commands own dev-workflow behavior.
+canonical_text: >-
+  Browser, terminal, and dev-session commands share a shell/runtime interaction family while browser commands own browser-session behavior, terminal commands own section/tab/pane/session behavior, and dev commands own dev-workflow behavior.
+  Amended 2026-10-09 (DL-181): panel and tab hosting belong to the universal panels (UCC-200); terminal commands own session behavior only, and their section, tab and pane ownership retires (UCC-201).
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -4623,6 +4646,7 @@ depends_on:
 - PDS-004
 - PDS-005
 - PNC-001
+- DL-181
 unblocks: []
 acceptance_criteria:
 - UCC-061 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
@@ -4653,7 +4677,8 @@ preserved_exact_tokens:
 negative_constraints: []
 preserved_contractrefs: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-181): terminal section, tab and pane ownership moves to the universal panels."
 owner_hints:
 - Plans/UI_Command_Catalog.md
 ```
@@ -4722,7 +4747,9 @@ plan_unit_id: UCC-063
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Browser open, focus, detach, DevTools, and DevTools dock command rows preserve workspace/detached preview session creation, browser session focus, detach, and layout/UI state behavior.
+canonical_text: >-
+  Browser open, focus, detach, DevTools, and DevTools dock command rows preserve workspace/detached preview session creation, browser session focus, detach, and layout/UI state behavior.
+  Amended 2026-10-09 (DL-180): cmd.browser.open_workspace_preview places its browser tab through CV-360's placement fields instead of target_editor_panel_id and target_editor_group_id; cmd.browser.focus_browser_tab reveals the tab that hosts the session; cmd.browser.open_devtools is canonical and takes UCC-156's preconditions, contract and handler (UCC-202); cmd.browser.detach_browser_tab has no producer on a panel tab, because no tab pops out (UCC-203).
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -4731,6 +4758,7 @@ depends_on:
 - PDS-004
 - PDS-005
 - PNC-001
+- DL-180
 unblocks: []
 acceptance_criteria:
 - UCC-063 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
@@ -4764,7 +4792,8 @@ preserved_exact_tokens:
 negative_constraints: []
 preserved_contractrefs: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): browser placement uses CV-360's fields; cmd.browser.devtools.open is an alias of cmd.browser.open_devtools."
 owner_hints:
 - Plans/UI_Command_Catalog.md
 ```
@@ -4896,7 +4925,9 @@ plan_unit_id: UCC-066
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Terminal promotion and handoff bind interactive or long-running work to stable terminal sessions while chat retains bounded preview and audit ownership; shell-like automation defaults to PTY terminal execution when user-inspectable or intervention-prone.
+canonical_text: >-
+  Terminal promotion and handoff bind interactive or long-running work to stable terminal sessions while chat retains bounded preview and audit ownership; shell-like automation defaults to PTY terminal execution when user-inspectable or intervention-prone.
+  Amended 2026-10-09 (DL-181): a promoted terminal session surfaces as a terminal tab in the universal panels, and one an agent opened lands as a background tab (UCC-201).
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -4905,6 +4936,7 @@ depends_on:
 - PDS-004
 - PDS-005
 - PNC-001
+- DL-181
 unblocks: []
 acceptance_criteria:
 - UCC-066 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
@@ -4944,7 +4976,8 @@ negative_constraints:
 - Agent-originated Output and inline summaries must not impersonate a pseudo-console.
 preserved_contractrefs: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-181): promoted sessions are terminal tabs."
 owner_hints:
 - Plans/UI_Command_Catalog.md
 ```
@@ -4956,7 +4989,9 @@ plan_unit_id: UCC-067
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Terminal command rows preserve open, show, rerun, detach, focus, split/move/close pane, restart/replace, stable terminal session/pane/tab identities, labels, payloads, events, and UI surfaces. Explicit same-session rerun creates a fresh invocation in the bound session; replacement creates a new session; attachment recovery and presentation reconciliation do not replay execution.
+canonical_text: >-
+  Terminal command rows preserve open, show, rerun, detach, focus, split/move/close pane, restart/replace, stable terminal session/pane/tab identities, labels, payloads, events, and UI surfaces. Explicit same-session rerun creates a fresh invocation in the bound session; replacement creates a new session; attachment recovery and presentation reconciliation do not replay execution.
+  Amended 2026-10-09 (DL-181): cmd.terminal.detach, cmd.terminal.split_pane, cmd.terminal.move_pane and cmd.terminal.close_pane retire with in-tab panes and sections (UCC-201); open, show, rerun, focus and restart_replace stay, and a terminal tab is moved and closed by cmd.panel_tab.*.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -4965,6 +5000,7 @@ depends_on:
 - PDS-004
 - PDS-005
 - PNC-001
+- DL-181
 unblocks: []
 acceptance_criteria:
 - UCC-067 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
@@ -5007,7 +5043,8 @@ preserved_exact_tokens:
 negative_constraints: []
 preserved_contractrefs: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-181): the detach and pane rows retire; replacements in UCC-201."
 owner_hints:
 - Plans/UI_Command_Catalog.md
 ```
@@ -5019,7 +5056,9 @@ plan_unit_id: UCC-068
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Terminal focus, reuse, moving, detaching, reattaching, follow-up actions, exited-session reveal, and same-session continuity preserve exact terminal_session_id or pane/session precedence and must not silently fall back to a fresh shell.
+canonical_text: >-
+  Terminal focus, reuse, moving, detaching, reattaching, follow-up actions, exited-session reveal, and same-session continuity preserve exact terminal_session_id or pane/session precedence and must not silently fall back to a fresh shell.
+  Amended 2026-10-09 (DL-181): with panes gone, reuse precedence is exact terminal_session_id, then the workflow-bound thread or tool or dev-session binding, then, for Show Terminal only, the most recently focused terminal tab; moving, collapsing, maximizing or hiding a terminal tab never touches its session (UCC-201).
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -5028,6 +5067,7 @@ depends_on:
 - PDS-004
 - PDS-005
 - PNC-001
+- DL-181
 unblocks: []
 acceptance_criteria:
 - UCC-068 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
@@ -5063,7 +5103,8 @@ negative_constraints:
 - Moving/detaching/reattaching terminal UI must preserve tab/pane/session identity unless explicitly asking for a new terminal.
 preserved_contractrefs: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-181): pane precedence is gone; the most recently focused terminal tab replaces the workspace-bound most-recent terminal context."
 owner_hints:
 - Plans/UI_Command_Catalog.md
 ```
@@ -8175,9 +8216,10 @@ canonical_text: >-
   and onboarding's look previews (ui.onboarding.start, ui.onboarding.choose_look) dispatch
   no cmd.theme.* and emit no settings.theme.updated: the pre-paint reads the stored theme
   of the Project the application opens on (F3-468, DL-153).
+  Amended 2026-10-09 (DL-180): from the home layout cmd.panel.undock and cmd.panel.redock are dispatched only with chat, into a window (UCC-203); cmd.dashboard.add_widget becomes an alias of cmd.widget.add (UCC-202).
 gui_related: true
 gui_classification_reason: Defines user-visible GUI command families, command payloads, responses, disabled states, and receipts.
-depends_on: [UCC-089, UCC-097]
+depends_on: [UCC-089, UCC-097, DL-180]
 unblocks: [WM-042, PG-061]
 acceptance_criteria:
   - All command families named by the FABLE GUI repair have stable `cmd.*` IDs or explicit compatibility dispositions.
@@ -8227,6 +8269,8 @@ negative_constraints:
   - Do not duplicate existing FileManager CRUD command rows.
   - Do not treat command-catalog or wiring rows as runtime certification evidence.
   - Do not emit fabricated `*.command_applied` events.
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): undock is the chat's Pop out only; cmd.dashboard.add_widget is an alias."
 owner_hints:
   - Plans/UI_Command_Catalog.md
   - Plans/Wiring_Matrix.md
@@ -8945,9 +8989,10 @@ canonical_text: >-
   spawning a duplicate shell. cmd.terminal.restart_replace remains the canonical restart row; the WM-021 token
   cmd.terminal.restart_session is owner-doc lineage for the same replace-with-new-runtime action and is not a
   second command.
+  Amended 2026-10-09 (DL-181): cmd.terminal.reveal reveals the session's tab wherever it is, never the bottom panel; cmd.terminal.reattach_section retires with detached sections; cmd.terminal.restart_session is a retired spelling, not lineage for an alias (UCC-201, UCC-202).
 gui_related: true
 gui_classification_reason: Registers user-visible terminal reveal, terminate, kill, and reattach commands.
-depends_on: [UCC-067, UCC-068]
+depends_on: [UCC-067, UCC-068, DL-181]
 unblocks: []
 acceptance_criteria:
   - Rule 4.2 terminal coverage (reveal, show, rerun, split, close, clear, restart, terminate, kill, detach, reattach, focus-session) resolves to cataloged commands with production wiring rows.
@@ -8980,6 +9025,8 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not mint cmd.terminal.reattach or other differently spelled duplicates of the WM-021 ids.
   - Do not collapse terminate and kill into one command or imply a killed session remains live.
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-181): reveal is panel-neutral; reattach_section retires."
 owner_hints:
   - Plans/UI_Command_Catalog.md
   - Plans/Wiring_Matrix.md
@@ -10429,9 +10476,10 @@ canonical_text: >-
   prefix with a dirty-state confirm. cmd.chat.open_thread is the cross-surface chat thread entry wrapper that
   cmd.chat.open_at retires into; it opens the chat panel when closed and does not duplicate the panel-local
   cmd.chat.switch_thread row. cmd.chat.add_file_reference keeps its existing row and signature lock unchanged.
+  Amended 2026-10-09 (DL-180): cmd.file.open places its tab through CV-360's placement fields and the one opening module, not Panel 1 to 4, and cmd.editor.close_tab is an alias of cmd.panel_tab.close (UCC-200).
 gui_related: true
 gui_classification_reason: Registers user-visible file open, refresh, reveal, row-cap, editor tab, and chat thread controls.
-depends_on: [UCC-108, UCC-014]
+depends_on: [UCC-108, UCC-014, DL-180]
 unblocks: []
 acceptance_criteria:
   - cmd.file.open resolves through the OpenFile route contract and does not duplicate any CRUD closure row.
@@ -10467,6 +10515,8 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not duplicate the ten CRUD closure rows or the cmd.file.open_with row.
   - Do not collapse cmd.chat.open_thread and cmd.chat.switch_thread into one row.
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): file placement and tab close move to UCC-200."
 owner_hints:
   - Plans/UI_Command_Catalog.md
   - Plans/FileManager.md
@@ -10616,9 +10666,10 @@ canonical_text: >-
   bare-focus context is recorded as an alias mapping for markup migration only; the cmd.terminal.open catalog
   row itself stays a live, distinct row and the two rows never collapse into one normalized target, per the
   existing non-collapse rule.
+  Amended 2026-10-09 (DL-180): the word panel in cmd.panel.* stays the rail's side panels and the chat; home panels are named panel_id in cmd.panel_tab.* and cmd.workspace_layout.* and never join this vocabulary, and undock and redock are the chat's Pop out and Dock back (UCC-203).
 gui_related: true
 gui_classification_reason: Fixes user-visible panel switching, undock naming, and terminal focus dispatch for the rail shell.
-depends_on: [UCC-014, UCC-108]
+depends_on: [UCC-014, UCC-108, DL-180]
 unblocks: []
 acceptance_criteria:
   - cmd.panel.switch rejects panel_id values outside the closed ten-id set.
@@ -10649,6 +10700,8 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not extend the panel_id vocabulary without a new catalog adjudication row.
   - Do not collapse cmd.terminal.open and cmd.terminal.show into one normalized target.
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): home panels never join the cmd.panel.switch vocabulary."
 owner_hints:
   - Plans/UI_Command_Catalog.md
   - Plans/FinalGUISpec.md
@@ -11405,9 +11458,11 @@ failed/rolled-back receipt and emits no success event.
 ```yaml
 plan_unit_id: UCC-144
 unit_type: requirement
-status: accepted
+status: superseded
 owner_doc: Plans/UI_Command_Catalog.md
+superseded_by: UCC-200
 canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. Home's four editor panels, Panel 1 to 4 routing, the singleton Dashboard, the chat grab and in-canvas float, the terminal workgroup move and Collapse Bottom Terminal are retired; the universal panels' tab and layout commands are UCC-200, the terminal's are UCC-201 and the chat column's are UCC-203, and this unit's leaf semantics (view-local disclosure, one command per leaf, revision, idempotency, typed no_change, disabled reasons) carry forward into UCC-200. The text below is retained verbatim for lineage and audit and must not be accepted or indexed as active current-product truth. Superseded by UCC-200 (DL-180).
   Home disclosure controls are view-local and every selected leaf maps one-to-one to the
   existing typed panel, Browser, file, terminal, theme, or bounded Home command family with
   projected disabled/no-change/failure semantics and no command overload. Amended
@@ -11468,7 +11523,8 @@ negative_constraints:
 - Do not mint near-duplicate Home commands.
 compatibility_only_notes:
 - target_group is only an alias of target_editor_group_id.
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Superseded 2026-10-09 (DL-180): replaced whole by UCC-200, UCC-201 and UCC-203."
 owner_hints: [Plans/UI_Command_Catalog.md, Plans/Contracts_V0.md, Plans/UI_Wiring_Rules.md]
 ```
 
@@ -11732,10 +11788,11 @@ canonical_text: >-
   state dispatch nothing. The concept-only semantic preset alias normalizes to
   cmd.workspace_layout.resize_surface; cmd.provider.usage.open_management
   remains rejected with no alias, and no PM7-only or duplicate primary command row is created.
+  Amended 2026-10-09 (DL-180): Home commits now use the cmd.panel_tab.* and extended cmd.workspace_layout.* families of UCC-200 on the pm.home_workspace_layout.v2 record (SP-330), and Dashboard widget rows run inside dashboard tabs addressed by board_id.
 gui_related: true
 gui_classification_reason: The catalog census binds visible PMConcept7 controls to canonical commands or explicit view-only behavior.
 split_recommended: false
-depends_on: [CS-068, UCC-060, UCC-144, UCC-146]
+depends_on: [CS-068, UCC-060, UCC-144, UCC-146, DL-180]
 unblocks: [WM-045, UIW-012, DR-039, ACD-448]
 acceptance_criteria:
   - Every listed PMConcept7 control maps to exactly one existing command or view_only disposition; Ledger attempt drill-through uses cmd.nav.open_usage_subject with route_target.object_kind usage_attempt, route_target.object_id attempt_id, top-level attempt_id, usage_event_ref correlation, and no OpenSubject, while provider, account, and presentation-panel aggregate details use stable local identities and dispatch no UICommand.
@@ -11774,6 +11831,8 @@ negative_constraints:
   - Do not attach OpenSubject to a Usage object route.
   - Do not create a PM7 command namespace or duplicate primary command row.
   - Do not revive or alias a rejected provider-management command.
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the Home rows of this census move to UCC-200."
 owner_hints:
   - Plans/UI_Command_Catalog.md
   - Plans/Commands_System.md
@@ -12645,9 +12704,10 @@ status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
   The approved Puppet Master Assistant redesign registers eighty-four exact command IDs across simplified Goal, Assistant Plan, To-Do, collaborative workflow, Back Seat Driver, scheduling, attachment, composer, Teach, Planning Wizard intake, and browser-capture families. Each row names exactly one owner document, one request contract, one result contract, and one sole future target handler. An alias census over all live Plans ran before registration and identified exactly three pre-existing IDs -- cmd.chat.goal.start, cmd.chat.goal.update, and cmd.bsd.set -- which are reconciled in place to their revised contracts and receive no duplicate row, peer control, or second handler. Every row remains handler_unavailable and its GUI controls remain disabled with command_not_registered until the central command contract layer, Event Authority, storage registration, and production wiring close for that row.
+  Amended 2026-10-09 (DL-180): cmd.browser.devtools.open is an alias of cmd.browser.open_devtools (UCC-202).
 gui_related: true
 gui_classification_reason: These rows are the reverse-consumer identity for every new Assistant mode menu, wand item, Plan card control, Activity control, workflow modal, BSD surface, scheduling modal, attachment control, and browser capture control.
-depends_on: [UCC-155, CS-077]
+depends_on: [UCC-155, CS-077, DL-180]
 unblocks: []
 acceptance_criteria:
   - All eighty-four IDs appear exactly once with label, description, preconditions, command_kind, owner, request/result contracts, and a single named future target handler.
@@ -12688,6 +12748,8 @@ negative_constraints:
   - Do not create a second catalog row, peer control, or alternate handler for a pre-existing command ID.
   - Do not claim a native dispatcher, handler, rendered control, receipt, or runtime from static catalog registration.
   - Do not let a page-local action ID, alias, or toast stand in for an unregistered command.
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): cmd.browser.devtools.open becomes an alias."
 owner_hints:
   - Plans/UI_Command_Catalog.md
   - Plans/Commands_System.md
@@ -12780,10 +12842,12 @@ plan_unit_id: UCC-158
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Three Working Notebook command rows are registered with truthful candidate dispositions (cmd.chat.open_working_notebook, cmd.chat.request_fresh_context, cmd.orchestrator.open_notebook). No production wiring row, handler, or persisted event family exists for them; dispatch before wiring fails closed (command_not_registered/unknown_command), and every row names payload, availability, owner refs, and error vocabulary within the existing strict overlay.
+canonical_text: >-
+  Three Working Notebook command rows are registered with truthful candidate dispositions (cmd.chat.open_working_notebook, cmd.chat.request_fresh_context, cmd.orchestrator.open_notebook). No production wiring row, handler, or persisted event family exists for them; dispatch before wiring fails closed (command_not_registered/unknown_command), and every row names payload, availability, owner refs, and error vocabulary within the existing strict overlay.
+  Amended 2026-10-09 (DL-180): when admitted, cmd.chat.open_working_notebook opens a document tab through the one opening module with CV-360's placement fields (UCC-200); its candidate disposition is unchanged.
 gui_related: true
 gui_classification_reason: Command catalog rows define user-visible command contracts.
-depends_on: [UCC-157, WN-019]
+depends_on: [UCC-157, WN-019, DL-180]
 unblocks: []
 acceptance_criteria:
   - Every proposed visible action has availability, payload, owner, errors, and registration disposition.
@@ -12803,6 +12867,8 @@ preserved_exact_tokens: ["cmd.chat.open_working_notebook", "cmd.chat.request_fre
 negative_constraints:
   - Do not add production wiring rows for unwired candidate commands.
   - Do not claim handlers or emitted events from schema/catalog rows.
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the Working Notebook opens as a document tab when admitted."
 owner_hints: [Plans/UI_Command_Catalog.md, Plans/UI_Wiring_Rules.md]
 ```
 
