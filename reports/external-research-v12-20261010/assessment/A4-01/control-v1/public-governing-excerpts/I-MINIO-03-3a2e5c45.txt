@@ -1,18 +1,104 @@
-URL: https://github.com/minio/minio/releases/tag/RELEASE.2024-05-10T01-41-38Z
-Original locator: ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-MINIO-03.txt
-Original SHA256: 3a2e5c45ef11bd92a84d500711e024682fcc7389e2ad8035af1cac67120293bf
-Original numbered lines; gaps omitted. Not full response.
-
-125: 678 commits
-126: to master
-127: since this release
-128: RELEASE.2024-05-10T01-41-38Z
-129: This tag was signed with the committer’s verified signature.
-130: minio-trusted
-131: GPG key ID: 12C74390F9AAC728
-132: Verified
-133: Learn about vigilant mode.
-134: b598402
-135: What's Changed
-136: fix: unexpected credentials missing while passing (05/09/24)
-150: Accept multipart checksums with part count (#19680) (05/08/24)
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://github.com/minio/minio/releases/tag/RELEASE.2024-05-10T01-41-38Z"
+  ],
+  "original_public_path": "assessment/A4-01/control-v1/public-governing-excerpts/I-MINIO-03-3a2e5c45.txt",
+  "original_public_sha256": "8bb0620bffb8c26d7f12e88921430662ba6a69bc666a08fdb06539619a7d1ff8",
+  "original_public_bytes": 726,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A4-01/control-v1/public-governing-excerpts/I-MINIO-03-3a2e5c45.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-MINIO-03.txt",
+      "original_sha256": "3a2e5c45ef11bd92a84d500711e024682fcc7389e2ad8035af1cac67120293bf",
+      "original_bytes": 4636,
+      "original_line_numbers": [
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        150
+      ],
+      "original_locators": [
+        {
+          "locator": "Release tag/commit local lines 125–136 and included #19680 change; API body."
+        },
+        {
+          "saved_text_lines": [
+            134
+          ]
+        },
+        {
+          "anchor": "b598402",
+          "matched_original_line": 134
+        },
+        {
+          "saved_text_lines": [
+            150
+          ]
+        },
+        {
+          "anchor": "19680",
+          "matched_original_line": 150
+        },
+        {
+          "locator": "Release tag/commit local lines 125–136 and included #19680 change; API body."
+        },
+        {
+          "saved_text_lines": [
+            134
+          ]
+        },
+        {
+          "anchor": "b598402",
+          "matched_original_line": 134
+        },
+        {
+          "saved_text_lines": [
+            150
+          ]
+        },
+        {
+          "anchor": "19680",
+          "matched_original_line": 150
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A4-01/control-v1/source-map.json",
+      "source_id": "I-MINIO-03",
+      "title": "MinIO RELEASE.2024-05-10T01-41-38Z",
+      "retrieved_at_utc": "2026-10-10T04:25:11.017726+00:00",
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "b598402",
+          "saved_text_lines": [
+            134
+          ]
+        },
+        {
+          "anchor": "19680",
+          "saved_text_lines": [
+            150
+          ]
+        }
+      ]
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

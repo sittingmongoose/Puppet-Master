@@ -1,31 +1,68 @@
-URL: https://gtfs.org/resources/mobilitydata-recommendations/gtfs-schedule-vs-gtfs-realtime/
-Original locator: ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E06.txt
-Original SHA256: 9b32a7671b658a57c5e4b5f12c47fbe20fcb7fcf59236e60763934f826b0e264
-Original numbered lines; gaps omitted. Not full response.
-
-207: When to Use GTFS Schedule vs Realtime¶
-208: Introduction¶
-209: Currently, GTFS producers have options for conveying information about transit service changes or disruptions: GTFS Schedule, GTFS Realtime, or a combination of both. However, there is limited guidance on when to use each format and how they should work together. This lack of clarity can result in inconsistent implementations and confusion among GTFS consumers, ultimately affecting the quality of information available to transit riders.
-210: This document provides guidance for using GTFS Schedule and GTFS Realtime effectively to communicate special services and/or service changes or adjustments. It aims to clarify the intended use cases for each feed, outline their complementary roles, and support the effective use of each standard in practice. By aligning GTFS producers and consumers on these practices, we hope to reduce interpretation ambiguity, simplify integration, and improve the quality and accuracy of information delivered to transit users.
-211: Overview of GTFS Schedule and GTFS Realtime¶
-212: GTFS Schedule data serves as the foundation of any GTFS implementation. As the name implies, this dataset contains all scheduled services as they are planned to operate during the time period covered by the feed.
-213: In contrast, GTFS Realtime provides dynamic updates to scheduled GTFS data through several types of feeds. The Trip Updates feed expresses delays, cancellations, and other schedule changes. The Vehicle Positions feed provides the real-time locations of vehicles in service while the Service Alerts feed communicates notices about disruptions, detours, or other important situations that should be conveyed to users. Finally, the experimental Trip Modifications feed enables agencies to adjust trips beyond the static schedule to reflect service changes.
-214: These two components of GTFS are designed to coexist and complement each other, working together to give riders the most accurate and up-to-date view of a transit service, as it’s planned and as it’s actually operating.
-215: As a general rule of thumb, agencies should default to using GTFS Schedule as the primary and authoritative source of service information. GTFS Realtime, while highly useful, is not intended to replace scheduled data, except in cases where actual service deviates from the plan.
-216: Beyond reporting vehicle positions, GTFS Realtime should be used selectively and strategically: to report delays, cancellations, reroutes, or emergencies that occur too late to be reflected in the static feed. Its role is to update or enhance the scheduled data rather than override it. Over-reliance on Realtime data without maintaining an accurate and up-to-date schedule can create inconsistencies for consumers and lead to rider confusion.
-217: In the following sections, we’ll explore how this general principle applies in specific scenarios, and provide more detailed guidance on when and how to use each data source effectively.
-218: Important Considerations¶
-219: Prioritize GTFS Schedule over GTFS Realtime¶
-220: Above all, when publishing service information using GTFS, the priority should be to plan and release updates through the GTFS Schedule feed ensuring that GTFS consumers have sufficient time to process, validate, and distribute the updated information across their platforms.
-221: When unexpected or short-notice changes occur, GTFS Realtime should be used to communicate disruptions, delays, or temporary service modifications. It serves as a dynamic supplement to the static schedule, ensuring riders receive timely updates when plans change unexpectedly.
-222: From the official GTFS Schedule Reference:
-223: “At any time, the published GTFS [Schedule] dataset should be valid for at least the next 7 days… If a service modification will go into effect in 7 days or fewer, this service change should be expressed through a GTFS Realtime feed (service advisories or trip updates) rather than static GTFS dataset.”
-224: It's also important to recognize that many transit agencies may lack the technical capacity or infrastructure to consistently produce high-quality GTFS Realtime feeds. This is another reason why GTFS Schedule should be prioritized whenever possible for both consumers and producers.
-225: Ensure a Smooth Data Handover¶
-226: Any service change or disruption, even minor ones, can affect riders, especially in high-frequency or large-scale transit systems. Thus, the handover of GTFS data from producers to consumers is a critical step in ensuring that accurate information reaches end-users. Predictability, transparency, and regular maintenance are key to achieving this.
-227: While producers and consumers should be able to communicate easily when issues arise, reliance on ad-hoc communication should be minimized by establishing a consistent update cadence and predictable behaviors. This helps consumers anticipate changes and maintain data accuracy.
-228: Producers should also make use of existing GTFS features that support clear and transparent communication about the feed, such as feed_info.txt. Beyond that, maintaining a public changelog or issue tracker is recommended when possible, as this can help consumers track changes across releases and adapt their ingestion processes more efficiently.
-229: Allow Time for Data Propagation¶
-230: When updating feeds, GTFS producers should consider that once new feed versions are released, GTFS consumers need time to ingest and process the new data. Depending on the size and complexity of the system, this can take anywhere from a few hours to a few days.
-231: It is recommended that GTFS producers publish updated Schedule feeds well in advance of service changes taking effect, giving consumers ample time to perform quality checks and identify potential issues. This buffer period also allows consumers to contact the producer to report problems or implement workarounds if unexpected issues are detected, before the new service plan goes live.
-232: Allowing time for data propagation requires producers and consumers working together to complete the release and ingestion process to ensure updated information is available to end-users at least five (5) days before the new service plan takes effect. With sufficient time, travellers benefit from the most accurate information.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://gtfs.org/resources/mobilitydata-recommendations/gtfs-schedule-vs-gtfs-realtime/"
+  ],
+  "original_public_path": "assessment/A6-01/control-v1/public-governing-excerpts/E06-9b32a767.txt",
+  "original_public_sha256": "5682f086cff1ccef5924b6bfdf19e53c74af5e6eb6de210ac52fd51851bddd98",
+  "original_public_bytes": 6680,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A6-01/control-v1/public-governing-excerpts/E06-9b32a767.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E06.txt",
+      "original_sha256": "9b32a7671b658a57c5e4b5f12c47fbe20fcb7fcf59236e60763934f826b0e264",
+      "original_bytes": 41529,
+      "original_line_numbers": [
+        207,
+        208,
+        209,
+        210,
+        211,
+        212,
+        213,
+        214,
+        215,
+        216,
+        217,
+        218,
+        219,
+        220,
+        221,
+        222,
+        223,
+        224,
+        225,
+        226,
+        227,
+        228,
+        229,
+        230,
+        231,
+        232
+      ],
+      "original_locators": [
+        {
+          "locator": "E06.txt lines 207-232; 272-276; 325-329"
+        },
+        {
+          "locator": "E06.txt lines 207-232; 272-276; 325-329"
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A6-01/control-v1/source-map.json",
+      "source_id": "E06",
+      "access_utc": "2026-10-10T04:39:00.112109+00:00",
+      "version_observed": "Living primary page/repository observed 2026-10-10; see precise scope in linked claim records",
+      "locator": "E06.txt lines 207-232; 272-276; 325-329",
+      "independent_observation": "Independent publisher/consumer handoff and New/Replacement caveats; alignment is not a mandate for the local fail-closed UI."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

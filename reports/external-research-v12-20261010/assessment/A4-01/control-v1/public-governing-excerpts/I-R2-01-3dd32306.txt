@@ -1,39 +1,177 @@
-URL: https://developers.cloudflare.com/r2/objects/upload-objects/
-Original locator: ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-R2-01.txt
-Original SHA256: 3dd323060db8e6c328c331a4ded7ca8f10bc8fbdf502b0cbae8b7ee4ace3d5fa
-Original numbered lines; gaps omitted. Not full response.
-
-112: OverviewChoose an upload methodUpload via dashboard Create a folderUpload via Workers API Single upload Multipart upload Presigned URLs (Workers)Upload via S3 API Single upload Multipart upload Presigned URLs (S3 API)Upload via CLI Rclone WranglerMultipart upload details Part size limits Incomplete upload lifecycles ETagsRelated resources
-114: Choose an upload method
-115: |
-116: | Single upload (PUT)
-117: | Multipart upload
-118: | Best for
-119: | Small to medium files (under ~100 MB)
-120: | Large files, or when you need parallelism and resumability
-121: | Maximum object size
-122: | 5 GiB
-123: | 5 TiB (up to 10,000 parts)
-124: | Part size
-125: | N/A
-126: | 5 MiB – 5 GiB per part
-127: | Resumable
-128: | No — must restart the entire upload
-129: | Yes — only failed parts need to be retried
-130: | Parallel upload
-131: | No
-830: Multipart upload details
-831: Part size limits
-832: Minimum part size: 5 MiB (except for the last part)
-833: Maximum part size: 5 GiB
-834: Maximum number of parts: 10,000
-835: All parts except the last must be the same size
-836: Incomplete upload lifecycles
-837: Incomplete multipart uploads are automatically aborted after 7 days by default. You can change this by configuring a custom lifecycle policy.
-838: ETags
-839: ETags for objects uploaded via multipart differ from those uploaded with a single PUT. The ETag of each part is the MD5 hash of that part's contents. The ETag of the completed multipart object is the hash of the concatenated binary MD5 sums of all parts, followed by a hyphen and the number of parts.
-840: For example, if a two-part upload has part ETags bce6bf66aeb76c7040fdd5f4eccb78e6 and 8165449fc15bbf43d3b674595cbcc406, the completed object's ETag will be f77dc0eecdebcd774a2a22cb393ad2ff-2.
-841: Related resources
-842: Workers API reference
-843: Full reference for the R2 Workers API including put(), createMultipartUpload(), and more.
-856: Choose an upload method
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://developers.cloudflare.com/r2/objects/upload-objects/"
+  ],
+  "original_public_path": "assessment/A4-01/control-v1/public-governing-excerpts/I-R2-01-3dd32306.txt",
+  "original_public_sha256": "495a204447f0ba1a34c5fcba744364c65fec150f9558f6b95db2707470dfeaa9",
+  "original_public_bytes": 2226,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A4-01/control-v1/public-governing-excerpts/I-R2-01-3dd32306.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-R2-01.txt",
+      "original_sha256": "3dd323060db8e6c328c331a4ded7ca8f10bc8fbdf502b0cbae8b7ee4ace3d5fa",
+      "original_bytes": 27794,
+      "original_line_numbers": [
+        112,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        830,
+        831,
+        832,
+        833,
+        834,
+        835,
+        836,
+        837,
+        838,
+        839,
+        840,
+        841,
+        842,
+        843,
+        856
+      ],
+      "original_locators": [
+        {
+          "locator": "Choose an upload method local lines 114–131; Multipart details lines 830–843."
+        },
+        {
+          "locator": "Choose an upload method local lines 114–131; Multipart details lines 830–843."
+        },
+        {
+          "saved_text_lines": [
+            112,
+            114,
+            856
+          ]
+        },
+        {
+          "anchor": "Choose an upload method",
+          "matched_original_line": 112
+        },
+        {
+          "anchor": "Choose an upload method",
+          "matched_original_line": 114
+        },
+        {
+          "anchor": "Choose an upload method",
+          "matched_original_line": 856
+        },
+        {
+          "saved_text_lines": [
+            835
+          ]
+        },
+        {
+          "anchor": "All parts except",
+          "matched_original_line": 835
+        },
+        {
+          "saved_text_lines": [
+            837
+          ]
+        },
+        {
+          "anchor": "7 days",
+          "matched_original_line": 837
+        },
+        {
+          "locator": "Choose an upload method local lines 114–131; Multipart details lines 830–843."
+        },
+        {
+          "locator": "Choose an upload method local lines 114–131; Multipart details lines 830–843."
+        },
+        {
+          "saved_text_lines": [
+            112,
+            114,
+            856
+          ]
+        },
+        {
+          "anchor": "Choose an upload method",
+          "matched_original_line": 112
+        },
+        {
+          "anchor": "Choose an upload method",
+          "matched_original_line": 114
+        },
+        {
+          "anchor": "Choose an upload method",
+          "matched_original_line": 856
+        },
+        {
+          "saved_text_lines": [
+            835
+          ]
+        },
+        {
+          "anchor": "All parts except",
+          "matched_original_line": 835
+        },
+        {
+          "saved_text_lines": [
+            837
+          ]
+        },
+        {
+          "anchor": "7 days",
+          "matched_original_line": 837
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A4-01/control-v1/source-map.json",
+      "source_id": "I-R2-01",
+      "title": "Upload objects — Cloudflare R2",
+      "retrieved_at_utc": "2026-10-10T04:25:10.594400+00:00",
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "Choose an upload method",
+          "saved_text_lines": [
+            112,
+            114,
+            856
+          ]
+        },
+        {
+          "anchor": "All parts except",
+          "saved_text_lines": [
+            835
+          ]
+        },
+        {
+          "anchor": "7 days",
+          "saved_text_lines": [
+            837
+          ]
+        }
+      ]
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

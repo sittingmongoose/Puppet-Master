@@ -1,24 +1,61 @@
-URL: https://gtfs.org/documentation/realtime/feed-entities/service-alerts/
-Original locator: ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E04.txt
-Original SHA256: 848485518a8e3121eebdfa15e5853e92a49968203725dd7043621a5e79e152bc
-Original numbered lines; gaps omitted. Not full response.
-
-175: Service Alerts¶
-176: Service alerts allow you to provide updates whenever there is disruption on the network. Delays and cancellations of individual trips should usually be communicated using Trip updates.
-177: You have the option to provide the following:
-178: URL - link to your site explaining more about the alert
-179: Header text - a summary of the alert
-180: Description - a full description of the alert, which will always be shown alongside the header (so should not repeat this information).
-181: TimeRange¶
-182: The alert will be displayed where appropriate within the given time range. This range should cover the entire time that the alert is useful for the passenger to see.
-183: If no time is given, we will display the alert for as long as it is in the feed. If multiple ranges are given, we will display during all of them.
-184: EntitySelector¶
-185: Entity selector allows you specify exactly which parts of the network this alert affects, so that we can display only the most appropriate alerts to the user. You may include multiple entity selectors for alerts which affect multiple entities.
-186: Entities are selected using their GTFS identifiers, and you can select any of the following:
-187: Agency - affects the whole network
-188: Route - affects the whole route
-189: Route type - affects any route of this type. e.g. all subways.
-190: Trip - affects a particular trip
-191: Stop - affects a particular stop
-192: You may include more than one of the fields listed above in one informed_entity. When multiple fields are included in one informed_entity, they should be interpreted as being joined by the AND logical operator. In other words, the alert should only be applied in a context that meets all of the fields provided in an informed_entity. For example, if route_id: "1" and stop_id: "5" are both included in one informed_entity, then the alert should apply only to route 1 at stop 5. It should NOT be applied to any other stop on route 1, and it should NOT be applied to any other route at stop 5.
-193: If you would like to represent an alert that affects more than one entity (e.g. an alert for both route 1 and stop 5) , you should add multiple informed_entity to your alert, with each of them applying to the affected entity (e.g. one informed_entity that includes route 1 and another informed_entity that includes stop 5).
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://gtfs.org/documentation/realtime/feed-entities/service-alerts/"
+  ],
+  "original_public_path": "assessment/A6-01/control-v1/public-governing-excerpts/E04-84848551.txt",
+  "original_public_sha256": "222a91d7d9ae8916ae24a757a79d646650a0a7322684a4f9b460f519c8a14bf4",
+  "original_public_bytes": 2655,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A6-01/control-v1/public-governing-excerpts/E04-84848551.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E04.txt",
+      "original_sha256": "848485518a8e3121eebdfa15e5853e92a49968203725dd7043621a5e79e152bc",
+      "original_bytes": 6331,
+      "original_line_numbers": [
+        175,
+        176,
+        177,
+        178,
+        179,
+        180,
+        181,
+        182,
+        183,
+        184,
+        185,
+        186,
+        187,
+        188,
+        189,
+        190,
+        191,
+        192,
+        193
+      ],
+      "original_locators": [
+        {
+          "locator": "E04.txt lines 175-193 and 209-221"
+        },
+        {
+          "locator": "E04.txt lines 175-193 and 209-221"
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A6-01/control-v1/source-map.json",
+      "source_id": "E04",
+      "access_utc": "2026-10-10T04:39:00.109327+00:00",
+      "version_observed": "Living primary page/repository observed 2026-10-10; see precise scope in linked claim records",
+      "locator": "E04.txt lines 175-193 and 209-221",
+      "independent_observation": "Independent alert ranges and EntitySelector conjunctions; supports separate alert surface."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

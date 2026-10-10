@@ -1,7 +1,79 @@
-URL: UNKNOWN in captured record
-Original locator: ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E02.txt
-Original SHA256: 1f81c8593485ecc3bd7f6abaae6aa7cd2eb966456b6e147e4d88b7ab42d026a1
-Original numbered lines; gaps omitted. Not full response.
-
-138: Two attributes are required. One provides the unique identity of the form, the other provides the current version number.
-205: <orx:instanceID/>
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://docs.getodk.org/openrosa-metadata/"
+  ],
+  "original_public_path": "assessment/A2-01/control-v1/public-governing-excerpts/E02-1f81c859.txt",
+  "original_public_sha256": "2196470d11dbc038456f581f46aa3a0340510ec426fdfed7bf891d24d3e7c0b4",
+  "original_public_bytes": 399,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A2-01/control-v1/public-governing-excerpts/E02-1f81c859.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E02.txt",
+      "original_sha256": "1f81c8593485ecc3bd7f6abaae6aa7cd2eb966456b6e147e4d88b7ab42d026a1",
+      "original_bytes": 7876,
+      "original_line_numbers": [
+        138,
+        205
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            138,
+            205
+          ]
+        },
+        {
+          "lines": [
+            138,
+            205
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E02.txt",
+      "original_sha256": "1f81c8593485ecc3bd7f6abaae6aa7cd2eb966456b6e147e4d88b7ab42d026a1",
+      "original_bytes": 7876,
+      "original_line_numbers": [
+        138,
+        205
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            138,
+            205
+          ]
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A2-01/control-v1/source-map.json",
+      "source_id": "E02",
+      "access_started_utc": "2026-10-10T04:55:52.835332+00:00",
+      "access_finished_utc": "2026-10-10T04:55:53.292669+00:00",
+      "title": "OpenRosa metadata identity and client time",
+      "version": "Living protocol documentation; no product build pinned",
+      "locators": [
+        {
+          "path": "evidence/E02.txt",
+          "lines": [
+            138,
+            205
+          ],
+          "section": "Form Identity; Version; Completed Form Metadata; ID constraints"
+        }
+      ],
+      "subject_operation": "XForm identity/version and submission metadata",
+      "conditions": "Form version is a string. instanceID is required and universally unique; timeStart/timeEnd are optional ISO 8601 form-entry timestamps. deprecatedID identifies the preceding submission; consolidation is server behavior. IDs use scheme:value."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

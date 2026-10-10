@@ -1,7 +1,123 @@
-URL: UNKNOWN in captured record
-Original locator: ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E08.txt
-Original SHA256: a3b3c952ee9e0afb5371428ffe78df58ff5bcd07a7d197926ad1c945593310a1
-Original numbered lines; gaps omitted. Not full response.
-
-185: Callum Stott @seadowg (ODK)
-199: Hélène Martin @lognaturel (ODK)
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://github.com/getodk/collect/releases/tag/v2021.2.0"
+  ],
+  "original_public_path": "assessment/A2-01/control-v1/public-governing-excerpts/E08-a3b3c952.txt",
+  "original_public_sha256": "153652a86ae77ab8cfaba7aacf3b0d1f62e77b8a0657a3185a50bd48ac63ef38",
+  "original_public_bytes": 321,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A2-01/control-v1/public-governing-excerpts/E08-a3b3c952.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E08.txt",
+      "original_sha256": "a3b3c952ee9e0afb5371428ffe78df58ff5bcd07a7d197926ad1c945593310a1",
+      "original_bytes": 6889,
+      "original_line_numbers": [
+        108,
+        136,
+        185,
+        199
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            108,
+            136
+          ]
+        },
+        {
+          "lines": [
+            185,
+            199
+          ]
+        },
+        {
+          "lines": [
+            108,
+            136
+          ]
+        },
+        {
+          "lines": [
+            185,
+            199
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E08.txt",
+      "original_sha256": "a3b3c952ee9e0afb5371428ffe78df58ff5bcd07a7d197926ad1c945593310a1",
+      "original_bytes": 6889,
+      "original_line_numbers": [
+        108,
+        136
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            108,
+            136
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E08.txt",
+      "original_sha256": "a3b3c952ee9e0afb5371428ffe78df58ff5bcd07a7d197926ad1c945593310a1",
+      "original_bytes": 6889,
+      "original_line_numbers": [
+        185,
+        199
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            185,
+            199
+          ]
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A2-01/control-v1/source-map.json",
+      "source_id": "E08",
+      "access_started_utc": "2026-10-10T04:55:53.307754+00:00",
+      "access_finished_utc": "2026-10-10T04:55:54.110634+00:00",
+      "title": "Collect v2021.2.0 release",
+      "version": "v2021.2.0; raw release datetime 2021-07-27T20:59:18Z",
+      "locators": [
+        {
+          "path": "evidence/E08.txt",
+          "lines": [
+            108,
+            136
+          ],
+          "section": "Release tag"
+        },
+        {
+          "path": "evidence/E08.txt",
+          "lines": [
+            185,
+            199
+          ],
+          "section": "#4655 entry"
+        },
+        {
+          "path": "evidence/E08.html",
+          "selector": "relative-time[datetime='2021-07-27T20:59:18Z']",
+          "section": "Release publication timestamp"
+        }
+      ],
+      "subject_operation": "Released fix milestone",
+      "conditions": "Tagged release lists #4655 Prevent editing of submissions that failed to send."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

@@ -1,29 +1,81 @@
-URL: https://help.prusa3d.com/article/supported-file-formats_1772?product=cw1
-Original locator: ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I07.txt
-Original SHA256: 6a89930fa0ef6cbf7bd84d0e5cdb03a2d193f54555451ce3b1f7504a9405a65e
-Original numbered lines; gaps omitted. Not full response.
-
-227: 3MF
-228: The preferred file format also used to save Project files.
-229: STL
-230: Both binary an ASCII format is supported.
-231: STEP
-232: The STEP file is triangulated during import.
-233: OBJ
-234: Information such as material and texture is ignored during import.
-235: AMF
-236: Even though AMF is supported, we suggest using 3MF instead. We described the reasons why we prefer 3MF in this article.
-237: Was this article helpful?
-238: This action is available only to registered users. Please log-in.
-239: 2 comments
-240: Log in to post a comment
-241: Same Old Shane
-242: •
-243: Hello, For suggestions like this, I would suggest going to the Prusa Slicer github page and submit a request for the feature as the software developers monitor that page.https://github.com/prusa3d/PrusaSlicer/pulls
-244: Reply
-245: Fred
-246: •
-247: This was helpful but.. it would be great if you could add Anycubic .pwma. file format for prusa slicer to use resin printer with your software as many have this modle of resin printer.
-248: Reply
-249: Topics
-250: PrusaSlicer 2.9 (Legacy)
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://help.prusa3d.com/article/supported-file-formats_1772?product=cw1"
+  ],
+  "original_public_path": "assessment/A7-01/control-v1/public-governing-excerpts/I07-6a89930f.txt",
+  "original_public_sha256": "2bbe8cb4a532e6532126c933070782d76f61b78632d2fc8978befedf2011b5f7",
+  "original_public_bytes": 1369,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A7-01/control-v1/public-governing-excerpts/I07-6a89930f.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I07.txt",
+      "original_sha256": "6a89930fa0ef6cbf7bd84d0e5cdb03a2d193f54555451ce3b1f7504a9405a65e",
+      "original_bytes": 9757,
+      "original_line_numbers": [
+        227,
+        228,
+        229,
+        230,
+        231,
+        232,
+        233,
+        234,
+        235,
+        236,
+        237,
+        238,
+        239,
+        240,
+        241,
+        242,
+        243,
+        244,
+        245,
+        246,
+        247,
+        248,
+        249,
+        250
+      ],
+      "original_locators": [
+        {
+          "locator": "Supported file formats: 3MF, STL, STEP, AMF; Topics PrusaSlicer 2.9 (Legacy); text lines 227–250."
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A7-01/control-v1/source-map.json",
+      "source_id": "I07",
+      "title": "Supported file formats (PrusaSlicer 2.9 documentation)",
+      "locator": "Supported file formats: 3MF, STL, STEP, AMF; Topics PrusaSlicer 2.9 (Legacy); text lines 227–250.",
+      "governing_conditions": [
+        {
+          "claim_id": "Q11",
+          "subject": "Fusion STEP exchange and PrusaSlicer STEP import",
+          "operation": "Exchange CAD geometry then triangulate at slicer boundary",
+          "version": "Fusion live docs; PrusaSlicer 2.9 (Legacy) documentation, point build unpinned",
+          "conditions_defaults_types_domains_exceptions": "Export loses source associativity; no universal assembly/material/feature-history retention. Direct Prusa import triangulates. Exact protocol/build choices remain open.",
+          "judgment": "SUPPORTED"
+        },
+        {
+          "claim_id": "Q15",
+          "subject": "AMF and historical Prusa format choice",
+          "operation": "Offer a bounded alternate interchange route",
+          "version": "ISO/ASTM52915-20 AMF 1.2 active public abstract; Prusa 2.0 announcement 2019; 2.9 docs",
+          "conditions_defaults_types_domains_exceptions": "XML schema conformance, public abstract only; no detailed full-standard claim. Historic 3MF preference/AMF support is not a current all-tool census.",
+          "judgment": "SUPPORTED"
+        }
+      ],
+      "applicability": "Independent source meaning for a research proposal; actual selected CAD/slicer/file behavior remains NOT_RUN.",
+      "version_note": "Live docs are not build-pinned unless explicitly stated in linked claim."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

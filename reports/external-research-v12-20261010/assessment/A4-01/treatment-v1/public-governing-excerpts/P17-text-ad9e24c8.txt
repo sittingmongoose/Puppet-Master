@@ -1,19 +1,239 @@
-URL: https://github.com/minio/minio/issues/20455
-Original locator: ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P17-text.txt
-Original SHA256: ad9e24c8f8a3fc8563a626ab3e0e09b7a0f133936fc15393ead9bbaf02d94ac3
-Original numbered lines; gaps omitted. Not full response.
-
-1: Checksum not retrievable when provided as a trailing checksum via the AWS S3 SDK · Issue #20455 · minio/minio · GitHub
-109: Checksum not retrievable when provided as a trailing checksum via the AWS S3 SDK #20455
-115: Checksum not retrievable when provided as a trailing checksum via the AWS S3 SDK#20455
-126: When putting an object via PutObject using the AWS S3 .NET SDK and requesting a trailing checksum by setting ChecksumAlgorithm (X-Amz-Sdk-Checksum-Algorithm) to "SHA256", I expect to be able to retrieve the checksum at a later point from either:
-129: The ChecksumAlgorithm should also be included in the ListObjectsV2 result but it too is missing.
-130: Note: when providing a precalculated checksum to PutObject, the checksum value is able to be retrieved later via GetObject and GetObjectAttributes, however ChecksumAlgoritm is still missing from the ListObjectsV2 result.
-132: When I upload a file via PutObject using a trailing checksum, I can see the X-Amz-Trailer request header correctly provided and I also see the trailing checksum correctly appended to the end of the upload request.  The PutObject response includes the X-Amz-Checksum-Sha256 response header as expected.
-133: However, subsequent calls to ListObjectsV2, GetObjectAttributes and GetObject fail to include the checksum value (or the checksum algorithm in the case of ListObjectsV2) in their respective responses.
-135: ListObjectsV2 includes 'ChecksumAlgorithm' in its xml response body
-139: Version: RELEASE.2024-09-13T20-26-02Z (go1.22.7 linux/amd64)
-159: ListObjectsV2 must have been added recently. Do not see it in API docs. Do you have an example of this working?
-162: Fix PutObject Trailing checksum
-203: ListObjectsV2 must have been added recently. Do not see it in API docs. Do you have an example of this working?
-230: @klauspost No, just a regular listing, looking at the AWS docs and in their SDK for ListObjectsV2 (and ListObjects for that matter) this header isn't an option.  From my testing, ChecksumAlgorithm will be included in the response whenever there is an additional checksum for the object.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://github.com/minio/minio/issues/20455"
+  ],
+  "original_public_path": "assessment/A4-01/treatment-v1/public-governing-excerpts/P17-text-ad9e24c8.txt",
+  "original_public_sha256": "f2569194b519b5c3e34785e9552a0cf6778ec618db472b50f0c4653efa7975c1",
+  "original_public_bytes": 2378,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A4-01/treatment-v1/public-governing-excerpts/P17-text-ad9e24c8.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P17-text.txt",
+      "original_sha256": "ad9e24c8f8a3fc8563a626ab3e0e09b7a0f133936fc15393ead9bbaf02d94ac3",
+      "original_bytes": 9263,
+      "original_line_numbers": [
+        1,
+        109,
+        115,
+        126,
+        129,
+        130,
+        132,
+        133,
+        135,
+        139,
+        159,
+        162,
+        203,
+        230
+      ],
+      "original_locators": [
+        {
+          "text_lines": [
+            139
+          ]
+        },
+        {
+          "anchor": "RELEASE.2024-09-13",
+          "matched_original_line": 139
+        },
+        {
+          "text_lines": [
+            129,
+            130,
+            133,
+            135,
+            159,
+            203
+          ]
+        },
+        {
+          "anchor": "ListObjectsV2",
+          "matched_original_line": 129
+        },
+        {
+          "anchor": "ListObjectsV2",
+          "matched_original_line": 130
+        },
+        {
+          "anchor": "ListObjectsV2",
+          "matched_original_line": 133
+        },
+        {
+          "anchor": "ListObjectsV2",
+          "matched_original_line": 135
+        },
+        {
+          "anchor": "ListObjectsV2",
+          "matched_original_line": 159
+        },
+        {
+          "anchor": "ListObjectsV2",
+          "matched_original_line": 203
+        },
+        {
+          "anchor": "ListObjectsV2",
+          "matched_original_line": 230
+        },
+        {
+          "text_lines": [
+            1,
+            109,
+            115,
+            126,
+            132,
+            162
+          ]
+        },
+        {
+          "anchor": "trailing checksum",
+          "matched_original_line": 1
+        },
+        {
+          "anchor": "trailing checksum",
+          "matched_original_line": 109
+        },
+        {
+          "anchor": "trailing checksum",
+          "matched_original_line": 115
+        },
+        {
+          "anchor": "trailing checksum",
+          "matched_original_line": 126
+        },
+        {
+          "anchor": "trailing checksum",
+          "matched_original_line": 132
+        },
+        {
+          "text_lines": [
+            139
+          ]
+        },
+        {
+          "anchor": "RELEASE.2024-09-13",
+          "matched_original_line": 139
+        },
+        {
+          "text_lines": [
+            129,
+            130,
+            133,
+            135,
+            159,
+            203
+          ]
+        },
+        {
+          "anchor": "ListObjectsV2",
+          "matched_original_line": 129
+        },
+        {
+          "anchor": "ListObjectsV2",
+          "matched_original_line": 130
+        },
+        {
+          "anchor": "ListObjectsV2",
+          "matched_original_line": 133
+        },
+        {
+          "anchor": "ListObjectsV2",
+          "matched_original_line": 135
+        },
+        {
+          "anchor": "ListObjectsV2",
+          "matched_original_line": 159
+        },
+        {
+          "anchor": "ListObjectsV2",
+          "matched_original_line": 203
+        },
+        {
+          "anchor": "ListObjectsV2",
+          "matched_original_line": 230
+        },
+        {
+          "text_lines": [
+            1,
+            109,
+            115,
+            126,
+            132,
+            162
+          ]
+        },
+        {
+          "anchor": "trailing checksum",
+          "matched_original_line": 1
+        },
+        {
+          "anchor": "trailing checksum",
+          "matched_original_line": 109
+        },
+        {
+          "anchor": "trailing checksum",
+          "matched_original_line": 115
+        },
+        {
+          "anchor": "trailing checksum",
+          "matched_original_line": 126
+        },
+        {
+          "anchor": "trailing checksum",
+          "matched_original_line": 132
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A4-01/treatment-v1/source-map.json",
+      "source_id": "P17",
+      "accessed_utc": "2026-10-10T04:41:54.563766+00:00",
+      "version_or_commit_observed": "MinIO issue #20455; reported server RELEASE.2024-09-13T20-26-02Z",
+      "locator": "Expected/current behavior and environment",
+      "locators": [
+        {
+          "anchor": "RELEASE.2024-09-13",
+          "text_lines": [
+            139
+          ],
+          "primary_heading_or_json_field": "Expected/current behavior and environment"
+        },
+        {
+          "anchor": "ListObjectsV2",
+          "text_lines": [
+            129,
+            130,
+            133,
+            135,
+            159,
+            203
+          ],
+          "primary_heading_or_json_field": "Expected/current behavior and environment"
+        },
+        {
+          "anchor": "trailing checksum",
+          "text_lines": [
+            1,
+            109,
+            115,
+            126,
+            132,
+            162
+          ],
+          "primary_heading_or_json_field": "Expected/current behavior and environment"
+        }
+      ],
+      "conditions_defaults_units_types_exceptions": "GET/attributes lack value, ListObjectsV2 lacks algorithm. Precomputed checksum retrieval is a different case. Public report is not a reviewer reproduction. See P27 clean issue JSON.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

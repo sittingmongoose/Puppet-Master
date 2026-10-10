@@ -1,1 +1,58 @@
-{"url":"https://api.github.com/repos/Ultimaker/Cura/issues/19456","repository_url":"https://api.github.com/repos/Ultimaker/Cura","labels_url":"https://api.github.com/repos/Ultimaker/Cura/issues/19456/labels{/name}","comments_url":"https://api.github.com/repos/Ultimaker/Cura/issues/19456/comments","events_url":"https://api.github.com/repos/Ultimaker/Cura/issues/19456/events","html_url":"https://github.com/Ultimaker/Cura/issues/19456","id":2439599313,"node_id":"I_kwDOAT6tLs6RaVTR","number":19456,"title":"3mf export with multiple objects doesn't work well","user":{"login":"rondlh","id":77279634,"node_id":"MDQ6VXNlcjc3Mjc5NjM0","avatar_url":"https://avatars.githubusercontent.com/u/77279634?v=4","gravatar_id":"","url":"https://api.github.com/users/rondlh","html_url":"https://github.com/rondlh","followers_url":"https://api.github.com/users/rondlh/followers","following_url":"https://api.github.com/users/rondlh/following{/other_user}","gists_url":"https://api.github.com/users/rondlh/gists{/gist_id}","starred_url":"https://api.github.com/users/rondlh/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/rondlh/subscriptions","organizations_url":"https://api.github.com/users/rondlh/orgs","repos_url":"https://api.github.com/users/rondlh/repos","events_url":"https://api.github.com/users/rondlh/events{/privacy}","received_events_url":"https://api.github.com/users/rondlh/received_events","type":"User","user_view_type":"public","site_admin":false},"labels":[{"id":107282820,"node_id":"MDU6TGFiZWwxMDcyODI4MjA=","url":"https://api.github.com/repos/Ultimaker/Cura/labels/Type:%20Bug","name":"Type: Bug","color":"f03e3f","default":false,"description":"The code does not produce the intended behavior.","archived_at":null,"archived_by":null},{"id":107282821,"node_id":"MDU6TGFiZWwxMDcyODI4MjE=","url":"https://api.github.com/repos/Ultimaker/Cura/labels/Status:%20Duplicate","name":"Status: Duplicate","color":"e9ecef","default":false,"description":"Duplicate of another issue.","archived_at":null,"archived_by":null},{"id":4173435505,"node_id":"LA_kwDOAT6tLs74wZJx","url":"https://api.github.com/repos/Ultimaker/Cura/labels/Status:%20Under%20Investigation","name":"Status: Under Investigation","color":"A774C7","default":false,"description":"The issue has been confirmed or is assumed to be likely to be a real issue. It's pending discussion.","archived_at":null,"archived_by":null}],"state":"closed","locked":false,"assignees":[],"milestone":null,"comments":11,"created_at":"2024-07-31T09:39:28Z","updated_at":"2025-03-26T06:35:31Z","closed_at":"2025-03-26T06:35:30Z","assignee":null,"author_association":"NONE","issue_field_values":[],"type":null,"active_lock_reason":null,"sub_issues_summary":{"total":0,"completed":0,"percent_completed":0},"issue_dependencies_summary":{"blocked_by":0,"total_blocked_by":0,"blocking":0,"total_blocking":0},"body":"### Cura Version\n\n5.7.2\n\n### Operating System\n\nWindows 10\n\n### Printer\n\nCustom\n\n### Reproduction steps\n\n1. Add the attached \"Original.stl\" to Cura\r\n2. With the \"Mesh Tools\", \"Split models into parts\" (Mesh Tools from Marketplace, then right click the model).\r\n3. Export the object to 3mf format\r\n4. Close Cura\r\n5. Import the 3mf file\r\n\r\nThe picture below shows the original stl file and the imported 3mf file.\r\n\r\n<img width=\"528\" alt=\"Original and Exported\" src=\"https://github.com/user-attachments/assets/467fe06e-192e-4505-a61a-8af022dbeecd\">\r\n\n\n### Actual results\n\nSee picture above, parts seem to have moved and rotated.\n\n### Expected results\n\nParts position stays the same after exporting to 3mf\r\n\n\n### Add your .zip and screenshots here ⬇️\n\n<img width=\"528\" alt=\"Original and Exported\" src=\"https://github.com/user-attachments/assets/768312c9-867d-4950-b003-87ac89919449\">\r\n\r\nThe original STL file (left in picture above) and the exported 3mf file:\r\n[Original - Split Mesh, Exported to 3mf.zip](https://github.com/user-attachments/files/16439451/Original.-.Split.Mesh.Exported.to.3mf.zip)\r\n","closed_by":{"login":"rondlh","id":77279634,"node_id":"MDQ6VXNlcjc3Mjc5NjM0","avatar_url":"https://avatars.githubusercontent.com/u/77279634?v=4","gravatar_id":"","url":"https://api.github.com/users/rondlh","html_url":"https://github.com/rondlh","followers_url":"https://api.github.com/users/rondlh/followers","following_url":"https://api.github.com/users/rondlh/following{/other_user}","gists_url":"https://api.github.com/users/rondlh/gists{/gist_id}","starred_url":"https://api.github.com/users/rondlh/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/rondlh/subscriptions","organizations_url":"https://api.github.com/users/rondlh/orgs","repos_url":"https://api.github.com/users/rondlh/repos","events_url":"https://api.github.com/users/rondlh/events{/privacy}","received_events_url":"https://api.github.com/users/rondlh/received_events","type":"User","user_view_type":"public","site_admin":false},"reactions":{"url":"https://api.github.com/repos/Ultimaker/Cura/issues/19456/reactions","total_count":0,"+1":0,"-1":0,"laugh":0,"hooray":0,"confused":0,"heart":0,"rocket":0,"eyes":0},"timeline_url":"https://api.github.com/repos/Ultimaker/Cura/issues/19456/timeline","performed_via_github_app":null,"state_reason":"completed","pinned_comment":null}
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "provenance and bounded governing evidence; not original response",
+  "source_urls": [
+    "https://api.github.com/repos/Ultimaker/Cura/issues/19456",
+    "https://github.com/Ultimaker/Cura/issues/19456"
+  ],
+  "original_public_path": "assessment/A7-01/treatment-v1/evidence/P16-cura-position.json",
+  "original_public_sha256": "1e5a92a7429e23faf0ef0037650c9c035afe732df0fae5bf711d22b8dc67bf77",
+  "original_public_bytes": 5319,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A7-01/treatment-v1/evidence/P16-cura-position.json",
+  "classification_basis": "fetched GitHub API response / converted API response",
+  "original_selectors": [
+    {
+      "source_id": "P16",
+      "field": "locator",
+      "selector": "Comments 2260860726, 2268913792, 2492018540, 2753377279; issue closed_at/state_reason"
+    }
+  ],
+  "governing_summaries_from_existing_authored_source_records": [
+    {
+      "title": "Cura position issue #19456 and complete comments",
+      "version_or_commit": "Original 5.7.2; later 5.8/5.9 reports; sample success in 5.10.0 on 2025-03-26",
+      "locator": "Comments 2260860726, 2268913792, 2492018540, 2753377279; issue closed_at/state_reason",
+      "accessed_at_utc": [
+        "2026-10-10T04:55:24.218432+00:00",
+        "2026-10-10T04:55:24.288474+00:00"
+      ],
+      "governing_conditions_and_applicability": "Confirms C01 chronology correction and mode sensitivity. A comment explicitly links Cura PR #19375 as a possible fix. Thus the final absolute no-linked-PR statement is inaccurate, although the exact cause of the sample success remains unproven.",
+      "authored_source_map": "assessment/A7-01/treatment-v1/source-map.json",
+      "source_id": "P16"
+    },
+    {
+      "accessed_at_utc": "2026-10-10T04:55:24.218432+00:00",
+      "authored_source_map": "assessment/A7-01/treatment-v1/evidence/retrieval-record.json",
+      "source_id": "P16-cura-position"
+    }
+  ],
+  "selected_api_metadata": [
+    {
+      "url": "https://api.github.com/repos/Ultimaker/Cura/issues/19456",
+      "html_url": "https://github.com/Ultimaker/Cura/issues/19456",
+      "id": 2439599313,
+      "number": 19456,
+      "title": "3mf export with multiple objects doesn't work well",
+      "created_at": "2024-07-31T09:39:28Z",
+      "updated_at": "2025-03-26T06:35:31Z",
+      "closed_at": "2025-03-26T06:35:30Z",
+      "state": "closed",
+      "state_reason": "completed",
+      "original_json_locator": "$"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY_AND_METADATA; full body coverage UNKNOWN",
+  "omission": "Full fetched body, API ancillary fields and unmechanically summarizable body details are archived privately. Original source URL and selectors govern; unsupported/missing semantic coverage is UNKNOWN. No candidate finding or independent judgment is repaired.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

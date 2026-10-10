@@ -1,1 +1,60 @@
-[{"url":"https://api.github.com/repos/MediaArea/BWFMetaEdit/issues/comments/622575695","html_url":"https://github.com/MediaArea/BWFMetaEdit/issues/125#issuecomment-622575695","issue_url":"https://api.github.com/repos/MediaArea/BWFMetaEdit/issues/125","id":622575695,"node_id":"MDEyOklzc3VlQ29tbWVudDYyMjU3NTY5NQ==","user":{"login":"JeromeMartinez","id":1641638,"node_id":"MDQ6VXNlcjE2NDE2Mzg=","avatar_url":"https://avatars.githubusercontent.com/u/1641638?v=4","gravatar_id":"","url":"https://api.github.com/users/JeromeMartinez","html_url":"https://github.com/JeromeMartinez","followers_url":"https://api.github.com/users/JeromeMartinez/followers","following_url":"https://api.github.com/users/JeromeMartinez/following{/other_user}","gists_url":"https://api.github.com/users/JeromeMartinez/gists{/gist_id}","starred_url":"https://api.github.com/users/JeromeMartinez/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/JeromeMartinez/subscriptions","organizations_url":"https://api.github.com/users/JeromeMartinez/orgs","repos_url":"https://api.github.com/users/JeromeMartinez/repos","events_url":"https://api.github.com/users/JeromeMartinez/events{/privacy}","received_events_url":"https://api.github.com/users/JeromeMartinez/received_events","type":"User","user_view_type":"public","site_admin":false},"created_at":"2020-05-01T21:27:50Z","updated_at":"2020-05-01T21:27:50Z","body":"We have [TinyXml](http://www.grinninglizard.com/tinyxml/) in Mediainfo, pretty small and it rejects invalid files. But it is a \"yes/no\" info, not indicating where is the issue.","author_association":"MEMBER","pin":null,"reactions":{"url":"https://api.github.com/repos/MediaArea/BWFMetaEdit/issues/comments/622575695/reactions","total_count":0,"+1":0,"-1":0,"laugh":0,"hooray":0,"confused":0,"heart":0,"rocket":0,"eyes":0},"performed_via_github_app":null,"minimized":null},{"url":"https://api.github.com/repos/MediaArea/BWFMetaEdit/issues/comments/622587856","html_url":"https://github.com/MediaArea/BWFMetaEdit/issues/125#issuecomment-622587856","issue_url":"https://api.github.com/repos/MediaArea/BWFMetaEdit/issues/125","id":622587856,"node_id":"MDEyOklzc3VlQ29tbWVudDYyMjU4Nzg1Ng==","user":{"login":"ablwr","id":3260492,"node_id":"MDQ6VXNlcjMyNjA0OTI=","avatar_url":"https://avatars.githubusercontent.com/u/3260492?v=4","gravatar_id":"","url":"https://api.github.com/users/ablwr","html_url":"https://github.com/ablwr","followers_url":"https://api.github.com/users/ablwr/followers","following_url":"https://api.github.com/users/ablwr/following{/other_user}","gists_url":"https://api.github.com/users/ablwr/gists{/gist_id}","starred_url":"https://api.github.com/users/ablwr/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/ablwr/subscriptions","organizations_url":"https://api.github.com/users/ablwr/orgs","repos_url":"https://api.github.com/users/ablwr/repos","events_url":"https://api.github.com/users/ablwr/events{/privacy}","received_events_url":"https://api.github.com/users/ablwr/received_events","type":"User","user_view_type":"public","site_admin":false},"created_at":"2020-05-01T22:10:13Z","updated_at":"2020-05-01T22:10:13Z","body":"Right now in Tech view, if you add a random word into one of these fields, it'll change to \"yes\". Maybe we can keep it as \"No\" and turn it orange to let users know it's a problem?","author_association":"MEMBER","pin":null,"reactions":{"url":"https://api.github.com/repos/MediaArea/BWFMetaEdit/issues/comments/622587856/reactions","total_count":0,"+1":0,"-1":0,"laugh":0,"hooray":0,"confused":0,"heart":0,"rocket":0,"eyes":0},"performed_via_github_app":null,"minimized":null}]
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "provenance and bounded governing evidence; not original response",
+  "source_urls": [
+    "https://api.github.com/repos/MediaArea/BWFMetaEdit/issues/125/comments",
+    "https://api.github.com/repos/MediaArea/BWFMetaEdit/issues/comments/622575695",
+    "https://api.github.com/repos/MediaArea/BWFMetaEdit/issues/comments/622587856",
+    "https://github.com/MediaArea/BWFMetaEdit/issues/125#issuecomment-622575695",
+    "https://github.com/MediaArea/BWFMetaEdit/issues/125#issuecomment-622587856"
+  ],
+  "original_public_path": "assessment/A5-01/treatment-v1/evidence/issue-125-comments.json",
+  "original_public_sha256": "61b5e232e0f66ef196d96b9f1c3f8a8d2feadecd94a95c8fbd64489a79640518",
+  "original_public_bytes": 3656,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A5-01/treatment-v1/evidence/issue-125-comments.json",
+  "classification_basis": "fetched GitHub API response / converted API response",
+  "original_selectors": [
+    {
+      "source_id": "issue-125-comments.json",
+      "field": "locator",
+      "selector": "v26.08 tag mapping; issue 125 body and comments; tree paths and root SHA as applicable"
+    }
+  ],
+  "governing_summaries_from_existing_authored_source_records": [
+    {
+      "retrieved_at_utc": "2026-10-10T04:48:56.433949+00:00",
+      "version_or_commit": "Public repository API snapshot at recorded access",
+      "locator": "v26.08 tag mapping; issue 125 body and comments; tree paths and root SHA as applicable",
+      "applicability": "Supporting provenance/context; tag names, closure and hashes alone do not prove implementation behavior.",
+      "authored_source_map": "assessment/A5-01/treatment-v1/source-map.json",
+      "source_id": "issue-125-comments.json"
+    },
+    {
+      "retrieved_at_utc": "2026-10-10T04:48:56.433949+00:00",
+      "authored_source_map": "assessment/A5-01/treatment-v1/evidence/supplemental-retrieval-manifest.json",
+      "source_id": "issue-125-comments.json"
+    }
+  ],
+  "selected_api_metadata": [
+    {
+      "url": "https://api.github.com/repos/MediaArea/BWFMetaEdit/issues/comments/622575695",
+      "html_url": "https://github.com/MediaArea/BWFMetaEdit/issues/125#issuecomment-622575695",
+      "id": 622575695,
+      "created_at": "2020-05-01T21:27:50Z",
+      "updated_at": "2020-05-01T21:27:50Z",
+      "original_json_locator": "$[0]"
+    },
+    {
+      "url": "https://api.github.com/repos/MediaArea/BWFMetaEdit/issues/comments/622587856",
+      "html_url": "https://github.com/MediaArea/BWFMetaEdit/issues/125#issuecomment-622587856",
+      "id": 622587856,
+      "created_at": "2020-05-01T22:10:13Z",
+      "updated_at": "2020-05-01T22:10:13Z",
+      "original_json_locator": "$[1]"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY_AND_METADATA; full body coverage UNKNOWN",
+  "omission": "Full fetched body, API ancillary fields and unmechanically summarizable body details are archived privately. Original source URL and selectors govern; unsupported/missing semantic coverage is UNKNOWN. No candidate finding or independent judgment is repaired.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

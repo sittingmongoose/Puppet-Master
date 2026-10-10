@@ -1,20 +1,109 @@
-URL: https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail.md#L21-L35
-Original locator: ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/fail.md
-Original SHA256: 1c6ea656161a83257ad346aab0bb6e38d476e7a2785656aa3a24df501fcd0966
-Original numbered lines; gaps omitted. Not full response.
-
-21: Fail with error code 22 and with no response body output at all for HTTP
-22: transfers returning HTTP response codes at 400 or greater.
-23: 
-24: In normal cases when an HTTP server fails to deliver a document, it returns a
-25: body of text stating so (which often also describes why and more) and a 4xx
-26: HTTP response code. This command line option prevents curl from outputting
-27: that data and instead returns error 22 early. By default, curl does not
-28: consider HTTP response codes to indicate failure.
-29: 
-30: To get both the error code and also save the content, use --fail-with-body
-31: instead.
-32: 
-33: This method is not fail-safe and there are occasions where non-successful
-34: response codes slip through, especially when authentication is involved
-35: (response codes 401 and 407).
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail.md#L21-L35",
+    "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/docs/cmdline-opts/fail.md"
+  ],
+  "original_public_path": "assessment/B-FINAL-M-01/control-v1/public-governing-excerpts/fail-1c6ea656.txt",
+  "original_public_sha256": "2c246f9ce40dd996170aac832c586dce09f5c688c8d9a7ae55fd251b9c9effd1",
+  "original_public_bytes": 1123,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/B-FINAL-M-01/control-v1/public-governing-excerpts/fail-1c6ea656.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/fail.md",
+      "original_sha256": "1c6ea656161a83257ad346aab0bb6e38d476e7a2785656aa3a24df501fcd0966",
+      "original_bytes": 1082,
+      "original_line_numbers": [
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35
+      ],
+      "original_locators": [
+        {
+          "start_line": 21,
+          "end_line": 35
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail.md#L21-L35"
+        },
+        {
+          "start_line": 21,
+          "end_line": 35
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail.md#L21-L35"
+        },
+        {
+          "start_line": 21,
+          "end_line": 35
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail.md#L21-L35"
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/fail.md",
+      "original_sha256": "1c6ea656161a83257ad346aab0bb6e38d476e7a2785656aa3a24df501fcd0966",
+      "original_bytes": 1082,
+      "original_line_numbers": [
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35
+      ],
+      "original_locators": [
+        {
+          "start_line": 21,
+          "end_line": 35
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail.md#L21-L35"
+        },
+        {
+          "start_line": 21,
+          "end_line": 35
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail.md#L21-L35"
+        },
+        {
+          "start_line": 21,
+          "end_line": 35
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail.md#L21-L35"
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [],
+  "evidence_coverage": "UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

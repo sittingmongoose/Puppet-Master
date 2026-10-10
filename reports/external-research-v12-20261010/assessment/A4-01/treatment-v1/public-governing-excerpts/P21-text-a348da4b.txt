@@ -1,11 +1,168 @@
-URL: https://raw.githubusercontent.com/tus/tusd/v2.10.1/docs/_storage-backends/aws-s3.md
-Original locator: ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P21-text.txt
-Original SHA256: a348da4b3d52b7c721d8ee9ac452107ef8e94fa5fc363fbe5845614b7c8e680f
-Original numbered lines; gaps omitted. Not full response.
-
-67: ## Storage format
-96: When receiving a `PATCH` request, parts of its body will be temporarily stored on disk before they can be transferred to S3. This is necessary to meet the minimum part size for an S3 multipart upload enforced by S3 and to allow the AWS SDK to calculate a checksum. Once the part has been uploaded to S3, the temporary file will be removed immediately. Therefore, please ensure that the server running this storage backend has enough disk space available to hold these temporary files.
-98: ### Consistency requirements
-101: When a chunk smaller than the minimum part size arrives, tusd stores it in a
-148: In addition, you must configure part sizes. Tusd uploads files as a series of smaller parts using S3 multipart uploads. R2 has a special requirement that [all parts (except the last one) must have the same size](https://developers.cloudflare.com/r2/objects/multipart-objects/#limitations). Since this requirement doesn't exist for AWS S3 and most other S3-compatible services, tusd does not adhere to it by default. To ensure that parts have the same size, set the minimum part size (`-s3-min-part-size`) to the same value as the optimal part size (`-s3-part-size`). Don't be afraid! Data below this limit won't be discarded, but stored in a temporary object next to the multipart upload for later reuse.
-150: Combining the above, the following configuration is required, keeping the current default optimal part size of 50 MiB:
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://raw.githubusercontent.com/tus/tusd/v2.10.1/docs/_storage-backends/aws-s3.md"
+  ],
+  "original_public_path": "assessment/A4-01/treatment-v1/public-governing-excerpts/P21-text-a348da4b.txt",
+  "original_public_sha256": "4ea55ae841103821a5598fb35760d938128905b327c63726e5c3f4c6b407af0b",
+  "original_public_bytes": 1773,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A4-01/treatment-v1/public-governing-excerpts/P21-text-a348da4b.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P21-text.txt",
+      "original_sha256": "a348da4b3d52b7c721d8ee9ac452107ef8e94fa5fc363fbe5845614b7c8e680f",
+      "original_bytes": 10755,
+      "original_line_numbers": [
+        67,
+        96,
+        98,
+        101,
+        148,
+        150
+      ],
+      "original_locators": [
+        {
+          "text_lines": [
+            67
+          ]
+        },
+        {
+          "anchor": "## Storage format",
+          "matched_original_line": 67
+        },
+        {
+          "text_lines": [
+            98
+          ]
+        },
+        {
+          "anchor": "### Consistency",
+          "matched_original_line": 98
+        },
+        {
+          "text_lines": [
+            96,
+            101,
+            148
+          ]
+        },
+        {
+          "anchor": "minimum part size",
+          "matched_original_line": 96
+        },
+        {
+          "anchor": "minimum part size",
+          "matched_original_line": 101
+        },
+        {
+          "anchor": "minimum part size",
+          "matched_original_line": 148
+        },
+        {
+          "text_lines": [
+            150
+          ]
+        },
+        {
+          "anchor": "50 MiB",
+          "matched_original_line": 150
+        },
+        {
+          "text_lines": [
+            67
+          ]
+        },
+        {
+          "anchor": "## Storage format",
+          "matched_original_line": 67
+        },
+        {
+          "text_lines": [
+            98
+          ]
+        },
+        {
+          "anchor": "### Consistency",
+          "matched_original_line": 98
+        },
+        {
+          "text_lines": [
+            96,
+            101,
+            148
+          ]
+        },
+        {
+          "anchor": "minimum part size",
+          "matched_original_line": 96
+        },
+        {
+          "anchor": "minimum part size",
+          "matched_original_line": 101
+        },
+        {
+          "anchor": "minimum part size",
+          "matched_original_line": 148
+        },
+        {
+          "text_lines": [
+            150
+          ]
+        },
+        {
+          "anchor": "50 MiB",
+          "matched_original_line": 150
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A4-01/treatment-v1/source-map.json",
+      "source_id": "P21",
+      "accessed_utc": "2026-10-10T04:41:54.757743+00:00",
+      "version_or_commit_observed": "tusd v2.10.1 raw tagged backend document",
+      "locator": "Storage format / Considerations / consistency / R2 configuration",
+      "locators": [
+        {
+          "anchor": "## Storage format",
+          "text_lines": [
+            67
+          ],
+          "primary_heading_or_json_field": "Storage format / Considerations / consistency / R2 configuration"
+        },
+        {
+          "anchor": "### Consistency",
+          "text_lines": [
+            98
+          ],
+          "primary_heading_or_json_field": "Storage format / Considerations / consistency / R2 configuration"
+        },
+        {
+          "anchor": "minimum part size",
+          "text_lines": [
+            96,
+            101,
+            148
+          ],
+          "primary_heading_or_json_field": "Storage format / Considerations / consistency / R2 configuration"
+        },
+        {
+          "anchor": "50 MiB",
+          "text_lines": [
+            150
+          ],
+          "primary_heading_or_json_field": "Storage format / Considerations / consistency / R2 configuration"
+        }
+      ],
+      "conditions_defaults_units_types_exceptions": "Distributed locks are for multiple instances sharing the bucket. R2 needs equal minimum and optimal part sizes; shown value retains global default optimal 50 MiB, not an independent measured tuning winner.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

@@ -1,7 +1,79 @@
-URL: UNKNOWN in captured record
-Original locator: ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E19.txt
-Original SHA256: 9cef1699d5be487056ff132b9759b0e49bfa4ed3ed5a195bd27d272750377938
-Original numbered lines; gaps omitted. Not full response.
-
-180: </xform>
-231: <message nature="error">A submission already exists with this ID, but with different XML. Resubmissions to attach additional multimedia must resubmit an identical xml_submission_file.</message>
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://docs.getodk.org/central-api-openrosa-endpoints/"
+  ],
+  "original_public_path": "assessment/A2-01/control-v1/public-governing-excerpts/E19-9cef1699.txt",
+  "original_public_sha256": "70edb88fa807bb6f951f72630072c066debdf6bbf8ea7633ef657b89dab7bc2b",
+  "original_public_bytes": 462,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A2-01/control-v1/public-governing-excerpts/E19-9cef1699.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E19.txt",
+      "original_sha256": "9cef1699d5be487056ff132b9759b0e49bfa4ed3ed5a195bd27d272750377938",
+      "original_bytes": 21084,
+      "original_line_numbers": [
+        180,
+        231
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            180,
+            231
+          ]
+        },
+        {
+          "lines": [
+            180,
+            231
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E19.txt",
+      "original_sha256": "9cef1699d5be487056ff132b9759b0e49bfa4ed3ed5a195bd27d272750377938",
+      "original_bytes": 21084,
+      "original_line_numbers": [
+        180,
+        231
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            180,
+            231
+          ]
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A2-01/control-v1/source-map.json",
+      "source_id": "E19",
+      "access_started_utc": "2026-10-10T04:55:54.315280+00:00",
+      "access_finished_utc": "2026-10-10T04:55:54.646680+00:00",
+      "title": "Central OpenRosa submission endpoint governing Collect retries",
+      "version": "Living Central OpenRosa API; submission endpoint since 0.1",
+      "locators": [
+        {
+          "path": "evidence/E19.txt",
+          "lines": [
+            180,
+            231
+          ],
+          "section": "Form Submission API and updates"
+        }
+      ],
+      "subject_operation": "Multipart OpenRosa POST, including repeated attachment requests and explicit updates",
+      "conditions": "Same-ID XML must stay identical across multipart/retry requests; changed XML or deleted submission returns 409. Explicit updates use deprecatedID, replace XML entirely, reject a stale predecessor, and carry media by filename reference."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

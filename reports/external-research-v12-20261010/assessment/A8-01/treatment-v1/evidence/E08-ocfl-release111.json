@@ -1,1 +1,62 @@
-{"url":"https://api.github.com/repos/OCFL/spec/releases/186922010","assets_url":"https://api.github.com/repos/OCFL/spec/releases/186922010/assets","upload_url":"https://uploads.github.com/repos/OCFL/spec/releases/186922010/assets{?name,label}","html_url":"https://github.com/OCFL/spec/releases/tag/1.1.1","id":186922010,"author":{"login":"zimeon","id":658600,"node_id":"MDQ6VXNlcjY1ODYwMA==","avatar_url":"https://avatars.githubusercontent.com/u/658600?v=4","gravatar_id":"","url":"https://api.github.com/users/zimeon","html_url":"https://github.com/zimeon","followers_url":"https://api.github.com/users/zimeon/followers","following_url":"https://api.github.com/users/zimeon/following{/other_user}","gists_url":"https://api.github.com/users/zimeon/gists{/gist_id}","starred_url":"https://api.github.com/users/zimeon/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/zimeon/subscriptions","organizations_url":"https://api.github.com/users/zimeon/orgs","repos_url":"https://api.github.com/users/zimeon/repos","events_url":"https://api.github.com/users/zimeon/events{/privacy}","received_events_url":"https://api.github.com/users/zimeon/received_events","type":"User","user_view_type":"public","site_admin":false},"node_id":"RE_kwDOB1cfFc4LJDQa","tag_name":"1.1.1","target_commitish":"main","name":"OCFL Version 1.1.1","draft":false,"immutable":false,"prerelease":false,"created_at":"2024-11-21T20:27:12Z","updated_at":"2024-11-22T14:17:46Z","published_at":"2024-11-22T14:17:46Z","assets":[],"tarball_url":"https://api.github.com/repos/OCFL/spec/tarball/1.1.1","zipball_url":"https://api.github.com/repos/OCFL/spec/zipball/1.1.1","body":"## What new information is available?\r\n\r\nThe [OCFL Specification v1.1](https://ocfl.io/1.1/spec/) and [OCFL Implementation Notes v1.1](https://ocfl.io/1.1/implementation-notes/) have both been updated. The accompanying [Change Log](https://ocfl.io/1.1/spec/change-log.html) details the changes both from version 1.0 to version 1.1.0 and also to version 1.1.1. It is designed to assist implementers with updates to their implementations. We welcome your feedback, questions, use cases, and especially details of any implementations or experimentation with OCFL.\r\n\r\nThe previous OCFL version 1.1 documents, now designated version 1.1.0, remain available: [OCFL Specification v1.1.0](https://ocfl.io/1.1.0/spec/), [OCFL Implementation Notes v1.1.0](https://ocfl.io/1.1.0/implementation-notes/), and [Change Log for v1.1.0](https://ocfl.io/1.1.0/spec/change-log.html).\r\n\r\n## The OCFL Editors\r\n\r\nNeil Jefferies (Bodleian Libraries, University of Oxford)\r\nRosalyn Metz (Emory University)\r\nJulian Morley (Stanford University)\r\nSimeon Warner (Cornell University)\r\nAndrew Woods (Harvard University)"}
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "provenance and bounded governing evidence; not original response",
+  "source_urls": [
+    "https://api.github.com/repos/OCFL/spec/releases/186922010",
+    "https://api.github.com/repos/OCFL/spec/releases/latest",
+    "https://api.github.com/repos/OCFL/spec/releases/tags/1.1.1",
+    "https://github.com/OCFL/spec/releases/tag/1.1.1"
+  ],
+  "original_public_path": "assessment/A8-01/treatment-v1/evidence/E08-ocfl-release111.json",
+  "original_public_sha256": "cdb3bea7a287a3102380e6f74bce0f9d7b23862b00fa7921b18c7c7c2a6a6ba4",
+  "original_public_bytes": 2774,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A8-01/treatment-v1/evidence/E08-ocfl-release111.json",
+  "classification_basis": "fetched GitHub API response / converted API response",
+  "original_selectors": [],
+  "governing_summaries_from_existing_authored_source_records": [
+    {
+      "access_start_utc": "2026-10-10T04:41:13.519304+00:00",
+      "access_finish_utc": "2026-10-10T04:41:13.687338+00:00",
+      "authored_source_map": "assessment/A8-01/treatment-v1/source-map.json",
+      "source_id": "E08-ocfl-release111"
+    },
+    {
+      "access_start_utc": "2026-10-10T04:43:52.293683+00:00",
+      "access_finish_utc": "2026-10-10T04:43:52.457466+00:00",
+      "authored_source_map": "assessment/A8-01/treatment-v1/source-map.json",
+      "source_id": "E15-ocfl-latest-release"
+    },
+    {
+      "access_start_utc": "2026-10-10T04:41:13.519304+00:00",
+      "access_finish_utc": "2026-10-10T04:41:13.687338+00:00",
+      "authored_source_map": "assessment/A8-01/treatment-v1/evidence/retrieval-index.json",
+      "source_id": "E08-ocfl-release111"
+    },
+    {
+      "access_start_utc": "2026-10-10T04:43:52.293683+00:00",
+      "access_finish_utc": "2026-10-10T04:43:52.457466+00:00",
+      "authored_source_map": "assessment/A8-01/treatment-v1/evidence/retrieval-index.json",
+      "source_id": "E15-ocfl-latest-release"
+    }
+  ],
+  "selected_api_metadata": [
+    {
+      "url": "https://api.github.com/repos/OCFL/spec/releases/186922010",
+      "html_url": "https://github.com/OCFL/spec/releases/tag/1.1.1",
+      "id": 186922010,
+      "tag_name": "1.1.1",
+      "target_commitish": "main",
+      "name": "OCFL Version 1.1.1",
+      "created_at": "2024-11-21T20:27:12Z",
+      "updated_at": "2024-11-22T14:17:46Z",
+      "published_at": "2024-11-22T14:17:46Z",
+      "draft": false,
+      "prerelease": false,
+      "original_json_locator": "$"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY_AND_METADATA; full body coverage UNKNOWN",
+  "omission": "Full fetched body, API ancillary fields and unmechanically summarizable body details are archived privately. Original source URL and selectors govern; unsupported/missing semantic coverage is UNKNOWN. No candidate finding or independent judgment is repaired.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

@@ -1,12 +1,133 @@
-URL: https://docs.aws.amazon.com/cli/latest/topic/s3-faq.html
-Original locator: ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P15-text.txt
-Original SHA256: ffa67ab12a09379e0bc5c25e05d01a25062c1945939123c2c73008b4344add8e
-Original numbered lines; gaps omitted. Not full response.
-
-43: By default, the Cyclic Redundancy Check 64 (CRC64NVME) algorithm
-44: is used to calculate checksums, but an alternative algorithm can be specified by using the
-45: --checksum-algorithm argument on high-level aws s3 commands. The checksum algorithms
-46: supported by the AWS CLI v2 are:
-47: CRC64NVME (Recommended)
-57: does not match the checksum provided, the object will not be stored and an error message
-69: The AWS CLI will attempt to verify the checksum of downloads when possible. If a non-MD5 checksum is returned
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://docs.aws.amazon.com/cli/latest/topic/s3-faq.html"
+  ],
+  "original_public_path": "assessment/A4-01/treatment-v1/public-governing-excerpts/P15-text-ffa67ab1.txt",
+  "original_public_sha256": "b81f3636a6c05140c8b4d65cc8545224328676b3111fbee609cfe4ac6baaa2b8",
+  "original_public_bytes": 811,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A4-01/treatment-v1/public-governing-excerpts/P15-text-ffa67ab1.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P15-text.txt",
+      "original_sha256": "ffa67ab12a09379e0bc5c25e05d01a25062c1945939123c2c73008b4344add8e",
+      "original_bytes": 3456,
+      "original_line_numbers": [
+        43,
+        44,
+        45,
+        46,
+        47,
+        57,
+        69
+      ],
+      "original_locators": [
+        {
+          "text_lines": [
+            43,
+            47
+          ]
+        },
+        {
+          "anchor": "CRC64NVME",
+          "matched_original_line": 43
+        },
+        {
+          "anchor": "CRC64NVME",
+          "matched_original_line": 47
+        },
+        {
+          "text_lines": [
+            57
+          ]
+        },
+        {
+          "anchor": "does not match",
+          "matched_original_line": 57
+        },
+        {
+          "text_lines": [
+            69
+          ]
+        },
+        {
+          "anchor": "when possible",
+          "matched_original_line": 69
+        },
+        {
+          "text_lines": [
+            43,
+            47
+          ]
+        },
+        {
+          "anchor": "CRC64NVME",
+          "matched_original_line": 43
+        },
+        {
+          "anchor": "CRC64NVME",
+          "matched_original_line": 47
+        },
+        {
+          "text_lines": [
+            57
+          ]
+        },
+        {
+          "anchor": "does not match",
+          "matched_original_line": 57
+        },
+        {
+          "text_lines": [
+            69
+          ]
+        },
+        {
+          "anchor": "when possible",
+          "matched_original_line": 69
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A4-01/treatment-v1/source-map.json",
+      "source_id": "P15",
+      "accessed_utc": "2026-10-10T04:41:54.467117+00:00",
+      "version_or_commit_observed": "Direct current page AWS CLI 2.37.12; cached web title 2.37.5",
+      "locator": "Upload checksum FAQ",
+      "locators": [
+        {
+          "anchor": "CRC64NVME",
+          "text_lines": [
+            43,
+            47
+          ],
+          "primary_heading_or_json_field": "Upload checksum FAQ"
+        },
+        {
+          "anchor": "does not match",
+          "text_lines": [
+            57
+          ],
+          "primary_heading_or_json_field": "Upload checksum FAQ"
+        },
+        {
+          "anchor": "when possible",
+          "text_lines": [
+            69
+          ],
+          "primary_heading_or_json_field": "Upload checksum FAQ"
+        }
+      ],
+      "conditions_defaults_units_types_exceptions": "Download validation is conditional on returned checksum and command; none proves this unknown endpoint. Preserve mixed/latest-version uncertainty.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

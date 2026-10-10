@@ -1,7 +1,45 @@
-URL: https://mediaarea.net/BWFMetaEdit/xml_chunks
-Original locator: ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/xml.txt
-Original SHA256: 2191373272e65398dbe409cd397950de00d818d3c241a69157c8ad2ce5a3fe6c
-Original numbered lines; gaps omitted. Not full response.
-
-54: Warning
-55: The current version BWF MetaEdit does not provide any verification that data entered into these chunks represents a valid XML document or valid instances of 'aXML', 'iXML', or 'XMP'. There is also no 'undo' option for data edited or written into these chunks. Use this editing function at your own risk.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://mediaarea.net/BWFMetaEdit/xml_chunks"
+  ],
+  "original_public_path": "assessment/A5-01/treatment-v1/public-governing-excerpts/xml-21913732.txt",
+  "original_public_sha256": "8326fc7ec54744e097a2b8ad6cdb0f5f479872fcbbb4cacf89d3560b6581899b",
+  "original_public_bytes": 589,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A5-01/treatment-v1/public-governing-excerpts/xml-21913732.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/xml.txt",
+      "original_sha256": "2191373272e65398dbe409cd397950de00d818d3c241a69157c8ad2ce5a3fe6c",
+      "original_bytes": 3063,
+      "original_line_numbers": [
+        54,
+        55
+      ],
+      "original_locators": [
+        {
+          "locator": "XML Chunks, Warning; independent text lines 54–55"
+        },
+        {
+          "locator": "XML Chunks, Warning; independent text lines 54–55"
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A5-01/treatment-v1/source-map.json",
+      "source_id": "IND-XML",
+      "retrieved_at_utc": "2026-10-10T04:48:10Z to 04:48:12Z",
+      "version_or_commit": "Rolling help with no binary/version linkage",
+      "locator": "XML Chunks, Warning; independent text lines 54–55",
+      "governing_meaning": "The published warning says entered XML receives no document/instance verification and edits have no undo. This is an accurate account of that help text. Its broad absence-of-verification warning conflicts with the later release history and inspected v26.08 code. The final carries it as a tool condition without reconciling that conflict.",
+      "applicability": "M1: documentation provenance alone does not settle released operational applicability. Schema conformance and syntax warnings must be separated."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

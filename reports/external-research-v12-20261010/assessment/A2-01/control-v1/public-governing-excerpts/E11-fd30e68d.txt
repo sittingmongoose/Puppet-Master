@@ -1,7 +1,118 @@
-URL: UNKNOWN in captured record
-Original locator: ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E11.txt
-Original SHA256: fd30e68d8148fe233cfabdd244aca94548185c8e22198408ba221efb05c05938
-Original numbered lines; gaps omitted. Not full response.
-
-29: Edit an individual response
-68: Surveys published in the Survey123 web designer earlier than Survey123 version 2.6 are not supported.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://doc.arcgis.com/en/survey123/capture/web-app/editexistingdata.htm"
+  ],
+  "original_public_path": "assessment/A2-01/control-v1/public-governing-excerpts/E11-fd30e68d.txt",
+  "original_public_sha256": "32010381c78199ab4971d51fa7c0e3f344a7aa219289d46d2bd5cab0ce9d3d2d",
+  "original_public_bytes": 387,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A2-01/control-v1/public-governing-excerpts/E11-fd30e68d.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E11.txt",
+      "original_sha256": "fd30e68d8148fe233cfabdd244aca94548185c8e22198408ba221efb05c05938",
+      "original_bytes": 5010,
+      "original_line_numbers": [
+        9,
+        19,
+        29,
+        68
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            9,
+            19
+          ]
+        },
+        {
+          "lines": [
+            29,
+            68
+          ]
+        },
+        {
+          "lines": [
+            9,
+            19
+          ]
+        },
+        {
+          "lines": [
+            29,
+            68
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E11.txt",
+      "original_sha256": "fd30e68d8148fe233cfabdd244aca94548185c8e22198408ba221efb05c05938",
+      "original_bytes": 5010,
+      "original_line_numbers": [
+        9,
+        19
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            9,
+            19
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E11.txt",
+      "original_sha256": "fd30e68d8148fe233cfabdd244aca94548185c8e22198408ba221efb05c05938",
+      "original_bytes": 5010,
+      "original_line_numbers": [
+        29,
+        68
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            29,
+            68
+          ]
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A2-01/control-v1/source-map.json",
+      "source_id": "E11",
+      "access_started_utc": "2026-10-10T04:55:53.846728+00:00",
+      "access_finished_utc": "2026-10-10T04:55:54.339005+00:00",
+      "title": "Survey123 correction paths and limits",
+      "version": "Global-ID URL editing from 3.9; older Enterprise attachment edit limit before 10.8.1",
+      "locators": [
+        {
+          "path": "evidence/E11.txt",
+          "lines": [
+            9,
+            19
+          ],
+          "section": "Table edits"
+        },
+        {
+          "path": "evidence/E11.txt",
+          "lines": [
+            29,
+            68
+          ],
+          "section": "Individual/web edits and limitations"
+        }
+      ],
+      "subject_operation": "Editing an individual response versus directly editing table cells",
+      "conditions": "Individual response: submitter AND viewer plus add/update privileges. URL edit: submitter OR owner with add/update. Attachments editable in individual/web form paths; not in table cells. Nested repeats unsupported; older Enterprise attachment surveys unsupported. Table edits bypass constraints/calculations and cannot be undone."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

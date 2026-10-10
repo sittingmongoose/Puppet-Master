@@ -1,27 +1,62 @@
-URL: https://help.prusa3d.com/article/first-print-with-prusaslicer-2-9_1753
-Original locator: ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I09.txt
-Original SHA256: acbaa88ce42919f239aa5c2e31e6146825d784477ae3d047c11daf1dfe9eb413
-Original numbered lines; gaps omitted. Not full response.
-
-234: Model import
-235: First, you have to import your model. You can either drag and drop it directly to the PrusaSlicer window, use the Add button in the top toolbar, or choose File - Import.
-236: Supported 3D formats are STL, STEP, 3MF, OBJ, and AMF.
-237: Model orientation
-238: Your model may be oriented incorrectly after import. If that’s the case you can use the Rotate tool R to manually adjust to the object’s orientation. When you pick a rotation axis, you can use the short guidelines to rotate by 5-degree increments or the long guidelines, which snap to 45-degree increments.
-239: Alternatively, you can use the Place on Face tool. When you select it, several white planes will appear on your model. Clicking on the white plane will align it with the virtual print bed.
-240: Selecting printer
-241: If you only selected one printer and nozzle size in the Configuration Wizard, you already have the correct printer selected. If you choose to import multiple printer profiles, select the one you wish to use from the drop-down menu in the right panel.
-242: Selecting material
-243: Different materials require different print temperatures, print speed, cooling, and a variety of other settings. Luckily, PrusaSlicer comes with presets for many different materials, so you just have to select one from the drop-down menu in the right panel.
-244: Selecting a print profile/layer height
-245: By adjusting the height of the individual printed layers you can balance the print quality and the print time. PrusaSlicer has various print profiles to select from. To start we suggest using 0.15 or 0.2 mm layers as they offer very good print quality at reasonable print times.
-246: Supports
-247: Because each layer rests on top of the previous one, it may be necessary to print a support structure underneath parts, that would otherwise be printed in mid-air. Additionally, it’s difficult for the printer to reproduce very steep overhangs. PrusaSlicer can detect where to place supports and generate them automatically. To turn supports on pick either Supports: Everywhere or Supports: On build plate only from the drop-down menu in the right panel.
-248: A model that needs supports (left), a model with generated supports (right)
-249: Infill
-250: Objects are typically not printed solid, but not hollow either. A sparse infill pattern is used to fill the inside of the model. The main purpose of the infill is to provide an internal support structure for top layers, as well as to improve the mechanical properties of the print. On the other hand, we usually want to get away with as little infill as possible to reduce both print times and material consumption.
-251: The amount of infill can be adjusted in the right panel. Generally, values around 15% work well.
-252: brim
-253: A brim is used to increase adhesion to the print bed and decrease the possibility of warping. This is done by printing extra outlines of the first layer and it’s especially useful when the footprint of the first layer is very small. You can turn it on with a checkbox in the right panel. When the print is finished, it’s usually very easy to remove the brim by hand.
-254: Previewing G-code before print
-255: It’s a good practice to always preview the G-code before printing it. When you click the "Slice now" button, you’ll be automatically switched to the preview mode. Alternatively, you can use the switch between 3D view and preview mode in the lower-left corner or press the TAB key. Using the slider on the right, you can adjust the preview and inspect individual layers. Check the overall shape of the model and make sure it matches the 3D object. Watch out for parts, that would start printing in mid-air, if you notice any, it’s necessary to turn on support generation. If everything looks alright, you can proceed and select Export G-code.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://help.prusa3d.com/article/first-print-with-prusaslicer-2-9_1753"
+  ],
+  "original_public_path": "assessment/A7-01/control-v1/public-governing-excerpts/I09-acbaa88c.txt",
+  "original_public_sha256": "e584fdf7bc17f06999a52f747f118f0c4255fa7c027aad162064431fc117b429",
+  "original_public_bytes": 4139,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A7-01/control-v1/public-governing-excerpts/I09-acbaa88c.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I09.txt",
+      "original_sha256": "acbaa88ce42919f239aa5c2e31e6146825d784477ae3d047c11daf1dfe9eb413",
+      "original_bytes": 15805,
+      "original_line_numbers": [
+        234,
+        235,
+        236,
+        237,
+        238,
+        239,
+        240,
+        241,
+        242,
+        243,
+        244,
+        245,
+        246,
+        247,
+        248,
+        249,
+        250,
+        251,
+        252,
+        253,
+        254,
+        255
+      ],
+      "original_locators": [
+        {
+          "locator": "Model import, Selecting printer/material and Previewing G-code; text lines 234–255."
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A7-01/control-v1/source-map.json",
+      "source_id": "I09",
+      "title": "First print with PrusaSlicer 2.9",
+      "locator": "Model import, Selecting printer/material and Previewing G-code; text lines 234–255.",
+      "governing_conditions": [],
+      "applicability": "Independent source meaning for a research proposal; actual selected CAD/slicer/file behavior remains NOT_RUN.",
+      "version_note": "Live docs are not build-pinned unless explicitly stated in linked claim."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

@@ -1,1 +1,53 @@
-[{"sha":"d4d42dd75ca07da40284dc87e3204b2993d2f862","node_id":"MDY6Q29tbWl0MTQ0ODgyMDA1OmQ0ZDQyZGQ3NWNhMDdkYTQwMjg0ZGM4N2UzMjA0YjI5OTNkMmY4NjI=","commit":{"author":{"name":"Jordi Gonzalez","email":"AUTHORIZED_PROVIDER_INSTANCE","date":"2019-09-26T15:17:54Z"},"committer":{"name":"Martin Weismann","email":"AUTHORIZED_PROVIDER_INSTANCE","date":"2019-09-27T09:34:22Z"},"message":"Publish 1.2.1 version","tree":{"sha":"ed8dbc5573a773e4d4e02eb296806fa2dbd2f20e","url":"https://api.github.com/repos/3MFConsortium/spec_materials/git/trees/ed8dbc5573a773e4d4e02eb296806fa2dbd2f20e"},"url":"https://api.github.com/repos/3MFConsortium/spec_materials/git/commits/d4d42dd75ca07da40284dc87e3204b2993d2f862","comment_count":0,"verification":{"verified":false,"reason":"unsigned","signature":null,"payload":null,"verified_at":null}},"url":"https://api.github.com/repos/3MFConsortium/spec_materials/commits/d4d42dd75ca07da40284dc87e3204b2993d2f862","html_url":"https://github.com/3MFConsortium/spec_materials/commit/d4d42dd75ca07da40284dc87e3204b2993d2f862","comments_url":"https://api.github.com/repos/3MFConsortium/spec_materials/commits/d4d42dd75ca07da40284dc87e3204b2993d2f862/comments","author":{"login":"jordig100","id":28712944,"node_id":"MDQ6VXNlcjI4NzEyOTQ0","avatar_url":"https://avatars.githubusercontent.com/u/28712944?v=4","gravatar_id":"","url":"https://api.github.com/users/jordig100","html_url":"https://github.com/jordig100","followers_url":"https://api.github.com/users/jordig100/followers","following_url":"https://api.github.com/users/jordig100/following{/other_user}","gists_url":"https://api.github.com/users/jordig100/gists{/gist_id}","starred_url":"https://api.github.com/users/jordig100/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/jordig100/subscriptions","organizations_url":"https://api.github.com/users/jordig100/orgs","repos_url":"https://api.github.com/users/jordig100/repos","events_url":"https://api.github.com/users/jordig100/events{/privacy}","received_events_url":"https://api.github.com/users/jordig100/received_events","type":"User","user_view_type":"public","site_admin":false},"committer":{"login":"martinweismann","id":30837766,"node_id":"MDQ6VXNlcjMwODM3NzY2","avatar_url":"https://avatars.githubusercontent.com/u/30837766?v=4","gravatar_id":"","url":"https://api.github.com/users/martinweismann","html_url":"https://github.com/martinweismann","followers_url":"https://api.github.com/users/martinweismann/followers","following_url":"https://api.github.com/users/martinweismann/following{/other_user}","gists_url":"https://api.github.com/users/martinweismann/gists{/gist_id}","starred_url":"https://api.github.com/users/martinweismann/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/martinweismann/subscriptions","organizations_url":"https://api.github.com/users/martinweismann/orgs","repos_url":"https://api.github.com/users/martinweismann/repos","events_url":"https://api.github.com/users/martinweismann/events{/privacy}","received_events_url":"https://api.github.com/users/martinweismann/received_events","type":"User","user_view_type":"public","site_admin":false},"parents":[{"sha":"374bf30bc836d5163f20910f9e97b19bbe4a58d2","url":"https://api.github.com/repos/3MFConsortium/spec_materials/commits/374bf30bc836d5163f20910f9e97b19bbe4a58d2","html_url":"https://github.com/3MFConsortium/spec_materials/commit/374bf30bc836d5163f20910f9e97b19bbe4a58d2"}]}]
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "provenance and bounded governing evidence; not original response",
+  "source_urls": [
+    "https://api.github.com/repos/3MFConsortium/spec_materials/commits/d4d42dd75ca07da40284dc87e3204b2993d2f862",
+    "https://api.github.com/repos/3MFConsortium/spec_materials/commits?path=3MF%20Materials%20Extension.md&per_page=1",
+    "https://github.com/3MFConsortium/spec_materials/blob/d4d42dd75ca07da40284dc87e3204b2993d2f862/3MF%20Materials%20Extension.md",
+    "https://github.com/3MFConsortium/spec_materials/commit/d4d42dd75ca07da40284dc87e3204b2993d2f862"
+  ],
+  "original_public_path": "assessment/A7-01/treatment-v1/evidence/P19-materials-commit.json",
+  "original_public_sha256": "60137a08691a2318d1ae86052743e254d551f58ea08bb96cda052c0e185b0d36",
+  "original_public_bytes": 3436,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A7-01/treatment-v1/evidence/P19-materials-commit.json",
+  "classification_basis": "fetched GitHub API response / converted API response",
+  "original_selectors": [
+    {
+      "source_id": "P02",
+      "field": "locator",
+      "selector": "Preface; raw lines 5–7, 64–96"
+    }
+  ],
+  "governing_summaries_from_existing_authored_source_records": [
+    {
+      "title": "3MF Materials and Properties extension",
+      "version_or_commit": "M&P 1.2.1; file revision d4d42dd75ca07da40284dc87e3204b2993d2f862",
+      "locator": "Preface; raw lines 5–7, 64–96",
+      "accessed_at_utc": [
+        "2026-10-10T04:55:23.634272+00:00",
+        "2026-10-10T04:55:24.391268+00:00"
+      ],
+      "governing_conditions_and_applicability": "The extension preface restricts use to Core 1.2. The final identifies this exact condition and declines to infer Core 1.4 compatibility. Its optional exclusion from the baseline leaves Core labels and the authorized preview/note intact.",
+      "authored_source_map": "assessment/A7-01/treatment-v1/source-map.json",
+      "source_id": "P02"
+    },
+    {
+      "accessed_at_utc": "2026-10-10T04:55:24.391268+00:00",
+      "authored_source_map": "assessment/A7-01/treatment-v1/evidence/retrieval-record.json",
+      "source_id": "P19-materials-commit"
+    }
+  ],
+  "selected_api_metadata": [
+    {
+      "url": "https://api.github.com/repos/3MFConsortium/spec_materials/commits/d4d42dd75ca07da40284dc87e3204b2993d2f862",
+      "html_url": "https://github.com/3MFConsortium/spec_materials/commit/d4d42dd75ca07da40284dc87e3204b2993d2f862",
+      "sha": "d4d42dd75ca07da40284dc87e3204b2993d2f862",
+      "original_json_locator": "$[0]"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY_AND_METADATA; full body coverage UNKNOWN",
+  "omission": "Full fetched body, API ancillary fields and unmechanically summarizable body details are archived privately. Original source URL and selectors govern; unsupported/missing semantic coverage is UNKNOWN. No candidate finding or independent judgment is repaired.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

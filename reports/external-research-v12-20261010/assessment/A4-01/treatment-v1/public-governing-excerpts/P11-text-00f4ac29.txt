@@ -1,18 +1,252 @@
-URL: https://docs.aws.amazon.com/AmazonS3/latest/userguide/conditional-writes.html
-Original locator: ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P11-text.txt
-Original SHA256: 00f4ac295ea1631c8e6e03b0b2e4f6c1d7aae9ede6bc9962c06889d764a42b2e
-Original numbered lines; gaps omitted. Not full response.
-
-114: operation fails, resulting in a 412 Precondition Failed
-119: with a 412 Precondition Failed response.
-122: 412 Precondition Failed response.
-123: You can also receive a 409 Conflict response in the case of
-127: 409 Conflict error. When using
-129: re-initiated with CreateMultipartUpload to upload the object
-130: again after receiving a 409 Conflict error.
-136: 412 Precondition Failed response.
-137: You can also receive a 409 Conflict response in the case of
-151: Conditional writes do not consider any in-progress multipart uploads requests since
-157: This scenario will result in a 412 Precondition Failed response for both If-None-Match and If-Match headers.
-163: returns a 409 Conflict or 404 Not Found response for the
-168: This scenario will result in a 409 Conflict response for an
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://docs.aws.amazon.com/AmazonS3/latest/userguide/conditional-writes.html"
+  ],
+  "original_public_path": "assessment/A4-01/treatment-v1/public-governing-excerpts/P11-text-00f4ac29.txt",
+  "original_public_sha256": "e699010dc0f1cbcfc9f5a97b9a85c47e38f17a00bf85b7e8fb363c3b32f0dede",
+  "original_public_bytes": 1103,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A4-01/treatment-v1/public-governing-excerpts/P11-text-00f4ac29.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P11-text.txt",
+      "original_sha256": "00f4ac295ea1631c8e6e03b0b2e4f6c1d7aae9ede6bc9962c06889d764a42b2e",
+      "original_bytes": 12001,
+      "original_line_numbers": [
+        114,
+        119,
+        122,
+        123,
+        127,
+        129,
+        130,
+        136,
+        137,
+        151,
+        157,
+        163,
+        168
+      ],
+      "original_locators": [
+        {
+          "text_lines": [
+            151
+          ]
+        },
+        {
+          "anchor": "in-progress",
+          "matched_original_line": 151
+        },
+        {
+          "text_lines": [
+            114,
+            119,
+            122,
+            136,
+            157
+          ]
+        },
+        {
+          "anchor": "412",
+          "matched_original_line": 114
+        },
+        {
+          "anchor": "412",
+          "matched_original_line": 119
+        },
+        {
+          "anchor": "412",
+          "matched_original_line": 122
+        },
+        {
+          "anchor": "412",
+          "matched_original_line": 136
+        },
+        {
+          "anchor": "412",
+          "matched_original_line": 157
+        },
+        {
+          "text_lines": [
+            123,
+            127,
+            130,
+            137,
+            163,
+            168
+          ]
+        },
+        {
+          "anchor": "409",
+          "matched_original_line": 123
+        },
+        {
+          "anchor": "409",
+          "matched_original_line": 127
+        },
+        {
+          "anchor": "409",
+          "matched_original_line": 130
+        },
+        {
+          "anchor": "409",
+          "matched_original_line": 137
+        },
+        {
+          "anchor": "409",
+          "matched_original_line": 163
+        },
+        {
+          "anchor": "409",
+          "matched_original_line": 168
+        },
+        {
+          "text_lines": [
+            129
+          ]
+        },
+        {
+          "anchor": "re-initiated",
+          "matched_original_line": 129
+        },
+        {
+          "text_lines": [
+            151
+          ]
+        },
+        {
+          "anchor": "in-progress",
+          "matched_original_line": 151
+        },
+        {
+          "text_lines": [
+            114,
+            119,
+            122,
+            136,
+            157
+          ]
+        },
+        {
+          "anchor": "412",
+          "matched_original_line": 114
+        },
+        {
+          "anchor": "412",
+          "matched_original_line": 119
+        },
+        {
+          "anchor": "412",
+          "matched_original_line": 122
+        },
+        {
+          "anchor": "412",
+          "matched_original_line": 136
+        },
+        {
+          "anchor": "412",
+          "matched_original_line": 157
+        },
+        {
+          "text_lines": [
+            123,
+            127,
+            130,
+            137,
+            163,
+            168
+          ]
+        },
+        {
+          "anchor": "409",
+          "matched_original_line": 123
+        },
+        {
+          "anchor": "409",
+          "matched_original_line": 127
+        },
+        {
+          "anchor": "409",
+          "matched_original_line": 130
+        },
+        {
+          "anchor": "409",
+          "matched_original_line": 137
+        },
+        {
+          "anchor": "409",
+          "matched_original_line": 163
+        },
+        {
+          "anchor": "409",
+          "matched_original_line": 168
+        },
+        {
+          "text_lines": [
+            129
+          ]
+        },
+        {
+          "anchor": "re-initiated",
+          "matched_original_line": 129
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A4-01/treatment-v1/source-map.json",
+      "source_id": "P11",
+      "accessed_utc": "2026-10-10T04:41:54.292890+00:00",
+      "version_or_commit_observed": "AWS S3 live User Guide, release not stated",
+      "locator": "Conditional writes / multipart races",
+      "locators": [
+        {
+          "anchor": "in-progress",
+          "text_lines": [
+            151
+          ],
+          "primary_heading_or_json_field": "Conditional writes / multipart races"
+        },
+        {
+          "anchor": "412",
+          "text_lines": [
+            114,
+            119,
+            122,
+            136,
+            157
+          ],
+          "primary_heading_or_json_field": "Conditional writes / multipart races"
+        },
+        {
+          "anchor": "409",
+          "text_lines": [
+            123,
+            127,
+            130,
+            137,
+            163,
+            168
+          ],
+          "primary_heading_or_json_field": "Conditional writes / multipart races"
+        },
+        {
+          "anchor": "re-initiated",
+          "text_lines": [
+            129
+          ],
+          "primary_heading_or_json_field": "Conditional writes / multipart races"
+        }
+      ],
+      "conditions_defaults_units_types_exceptions": "If-None-Match/If-Match outcomes depend on object/version/delete state. A 409 on completion can require a new MPU; do not generalize support to initiation/parts or compatible stores.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

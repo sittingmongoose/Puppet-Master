@@ -1,11 +1,48 @@
-URL: https://github.com/opentripplanner/OpenTripPlanner/blob/v2.10.0/application/src/main/java/org/opentripplanner/framework/application/OTPFeature.java
-Original locator: ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E16.txt
-Original SHA256: ffeb4a3a6835041c8fb773368b9d030bfa3451d7d42fe5559b087d4ccab021fa
-Original numbered lines; gaps omitted. Not full response.
-
-11: DEVELOPER WORKFLOWS
-12: ActionsAutomate any workflow
-13: CodespacesInstant dev environments
-14: IssuesPlan and track work
-15: Code ReviewManage code changes
-16: Code QualityEnforce quality at merge
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://github.com/opentripplanner/OpenTripPlanner/blob/v2.10.0/application/src/main/java/org/opentripplanner/framework/application/OTPFeature.java"
+  ],
+  "original_public_path": "assessment/A6-01/control-v1/public-governing-excerpts/E16-ffeb4a3a.txt",
+  "original_public_sha256": "0010a170842448004b6ab19e69afdd092d099e14be7848d204fc20f9852b5c01",
+  "original_public_bytes": 572,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A6-01/control-v1/public-governing-excerpts/E16-ffeb4a3a.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E16.txt",
+      "original_sha256": "ffeb4a3a6835041c8fb773368b9d030bfa3451d7d42fe5559b087d4ccab021fa",
+      "original_bytes": 14090,
+      "original_line_numbers": [
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "original_locators": [
+        {
+          "locator": "Exact v2.10.0 OTPFeature source; raw E20 lines 11-16, 125-130 and enum constructors"
+        },
+        {
+          "locator": "Exact v2.10.0 OTPFeature source; raw E20 lines 11-16, 125-130 and enum constructors"
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A6-01/control-v1/source-map.json",
+      "source_id": "E16",
+      "access_utc": "2026-10-10T04:39:00.730965+00:00",
+      "version_observed": "OTP exact tag v2.10.0",
+      "locator": "Exact v2.10.0 OTPFeature source; raw E20 lines 11-16, 125-130 and enum constructors",
+      "independent_observation": "Exact released code retrieved; raw counterpart independently inspected for true default and override mechanism."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

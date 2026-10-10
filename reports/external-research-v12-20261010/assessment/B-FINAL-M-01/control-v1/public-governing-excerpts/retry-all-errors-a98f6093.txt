@@ -1,28 +1,475 @@
-URL: https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L34-L40
-Original locator: ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/retry-all-errors.md
-Original SHA256: a98f60938760f9d35232b3da2f7b45da4aa239411a142a52e5e8dccf6a5fb916
-Original numbered lines; gaps omitted. Not full response.
-
-17: Retry on any error. This option is used together with --retry.
-18: 
-19: This option is the "sledgehammer" of retrying. Do not use this option by
-20: default (for example in your **curlrc**), there may be unintended consequences
-21: such as sending or receiving duplicate data. Do not use with redirected input
-22: or output. You might be better off handling your unique problems in a shell
-23: script. Please read the example below.
-24: 
-25: **WARNING**: For server compatibility curl attempts to retry failed flaky
-26: transfers as close as possible to how they were started, but this is not
-27: possible with redirected input or output. For example, before retrying it
-28: removes output data from a failed partial transfer that was written to an
-29: output file. However this is not true of data redirected to a | pipe or \>
-30: file, which are not reset. We strongly suggest you do not parse or record
-31: output via redirect in combination with this option, since you may receive
-32: duplicate data.
-34: By default curl does not return error for transfers with an HTTP response code
-35: that indicates an HTTP error, if the transfer was successful. For example, if
-36: a server replies 404 Not Found and the reply is fully received then that is
-37: not an error. When --retry is used then curl retries on some HTTP response
-38: codes that indicate transient HTTP errors, but that does not include most 4xx
-39: response codes such as 404. If you want to retry on all response codes that
-40: indicate HTTP errors (4xx and 5xx) then combine with --fail.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L17-L23",
+    "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L17-L32",
+    "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L34-L40",
+    "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md"
+  ],
+  "original_public_path": "assessment/B-FINAL-M-01/control-v1/public-governing-excerpts/retry-all-errors-a98f6093.txt",
+  "original_public_sha256": "d173b3d52b6f528de45df09c88d65fee3b048f2eb28d17125d2783fb1fa5593c",
+  "original_public_bytes": 1901,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/B-FINAL-M-01/control-v1/public-governing-excerpts/retry-all-errors-a98f6093.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/retry-all-errors.md",
+      "original_sha256": "a98f60938760f9d35232b3da2f7b45da4aa239411a142a52e5e8dccf6a5fb916",
+      "original_bytes": 1763,
+      "original_line_numbers": [
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40
+      ],
+      "original_locators": [
+        {
+          "start_line": 17,
+          "end_line": 23
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L17-L23"
+        },
+        {
+          "start_line": 25,
+          "end_line": 32
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L25-L32"
+        },
+        {
+          "start_line": 34,
+          "end_line": 40
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L34-L40"
+        },
+        {
+          "start_line": 17,
+          "end_line": 23
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L17-L23"
+        },
+        {
+          "start_line": 25,
+          "end_line": 32
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L25-L32"
+        },
+        {
+          "start_line": 34,
+          "end_line": 40
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L34-L40"
+        },
+        {
+          "start_line": 34,
+          "end_line": 40
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L34-L40"
+        },
+        {
+          "start_line": 17,
+          "end_line": 32
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L17-L32"
+        },
+        {
+          "start_line": 17,
+          "end_line": 23
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L17-L23"
+        },
+        {
+          "start_line": 34,
+          "end_line": 40
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L34-L40"
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/retry-all-errors.md",
+      "original_sha256": "a98f60938760f9d35232b3da2f7b45da4aa239411a142a52e5e8dccf6a5fb916",
+      "original_bytes": 1763,
+      "original_line_numbers": [
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40
+      ],
+      "original_locators": [
+        {
+          "start_line": 34,
+          "end_line": 40
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L34-L40"
+        },
+        {
+          "start_line": 17,
+          "end_line": 23
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L17-L23"
+        },
+        {
+          "start_line": 25,
+          "end_line": 32
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L25-L32"
+        },
+        {
+          "start_line": 34,
+          "end_line": 40
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L34-L40"
+        },
+        {
+          "start_line": 34,
+          "end_line": 40
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L34-L40"
+        },
+        {
+          "start_line": 17,
+          "end_line": 32
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L17-L32"
+        },
+        {
+          "start_line": 17,
+          "end_line": 23
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L17-L23"
+        },
+        {
+          "start_line": 34,
+          "end_line": 40
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L34-L40"
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/retry-all-errors.md",
+      "original_sha256": "a98f60938760f9d35232b3da2f7b45da4aa239411a142a52e5e8dccf6a5fb916",
+      "original_bytes": 1763,
+      "original_line_numbers": [
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40
+      ],
+      "original_locators": [
+        {
+          "start_line": 17,
+          "end_line": 32
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L17-L32"
+        },
+        {
+          "start_line": 17,
+          "end_line": 23
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L17-L23"
+        },
+        {
+          "start_line": 25,
+          "end_line": 32
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L25-L32"
+        },
+        {
+          "start_line": 34,
+          "end_line": 40
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L34-L40"
+        },
+        {
+          "start_line": 34,
+          "end_line": 40
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L34-L40"
+        },
+        {
+          "start_line": 17,
+          "end_line": 32
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L17-L32"
+        },
+        {
+          "start_line": 17,
+          "end_line": 23
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L17-L23"
+        },
+        {
+          "start_line": 34,
+          "end_line": 40
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L34-L40"
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/retry-all-errors.md",
+      "original_sha256": "a98f60938760f9d35232b3da2f7b45da4aa239411a142a52e5e8dccf6a5fb916",
+      "original_bytes": 1763,
+      "original_line_numbers": [
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40
+      ],
+      "original_locators": [
+        {
+          "start_line": 17,
+          "end_line": 23
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L17-L23"
+        },
+        {
+          "start_line": 17,
+          "end_line": 23
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L17-L23"
+        },
+        {
+          "start_line": 25,
+          "end_line": 32
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L25-L32"
+        },
+        {
+          "start_line": 34,
+          "end_line": 40
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L34-L40"
+        },
+        {
+          "start_line": 34,
+          "end_line": 40
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L34-L40"
+        },
+        {
+          "start_line": 17,
+          "end_line": 32
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L17-L32"
+        },
+        {
+          "start_line": 17,
+          "end_line": 23
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L17-L23"
+        },
+        {
+          "start_line": 34,
+          "end_line": 40
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L34-L40"
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/retry-all-errors.md",
+      "original_sha256": "a98f60938760f9d35232b3da2f7b45da4aa239411a142a52e5e8dccf6a5fb916",
+      "original_bytes": 1763,
+      "original_line_numbers": [
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40
+      ],
+      "original_locators": [
+        {
+          "start_line": 34,
+          "end_line": 40
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L34-L40"
+        },
+        {
+          "start_line": 17,
+          "end_line": 23
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L17-L23"
+        },
+        {
+          "start_line": 25,
+          "end_line": 32
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L25-L32"
+        },
+        {
+          "start_line": 34,
+          "end_line": 40
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L34-L40"
+        },
+        {
+          "start_line": 34,
+          "end_line": 40
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L34-L40"
+        },
+        {
+          "start_line": 17,
+          "end_line": 32
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L17-L32"
+        },
+        {
+          "start_line": 17,
+          "end_line": 23
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L17-L23"
+        },
+        {
+          "start_line": 34,
+          "end_line": 40
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L34-L40"
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [],
+  "evidence_coverage": "UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

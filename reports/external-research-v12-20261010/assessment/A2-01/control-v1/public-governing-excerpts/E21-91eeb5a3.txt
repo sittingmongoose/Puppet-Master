@@ -1,7 +1,116 @@
-URL: UNKNOWN in captured record
-Original locator: ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E21.txt
-Original SHA256: 91eeb5a3380e4cc49fdf4b07d2e1eda4e0409b5983b220cb39330e87c21da9c8
-Original numbered lines; gaps omitted. Not full response.
-
-1: From 0bc6cdefe1b49256218726e3fb0059498e450378 Mon Sep 17 00:00:00 2001
-218: 
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://github.com/getodk/collect/commit/0bc6cde.patch"
+  ],
+  "original_public_path": "assessment/A2-01/control-v1/public-governing-excerpts/E21-91eeb5a3.txt",
+  "original_public_sha256": "86b9d97f1aeb4208a0eee5df181528fee56ee621ce8d2751f59ff78a5bf689d2",
+  "original_public_bytes": 329,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A2-01/control-v1/public-governing-excerpts/E21-91eeb5a3.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E21.txt",
+      "original_sha256": "91eeb5a3380e4cc49fdf4b07d2e1eda4e0409b5983b220cb39330e87c21da9c8",
+      "original_bytes": 10101,
+      "original_line_numbers": [
+        1,
+        218
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            1,
+            218
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E21.txt",
+      "original_sha256": "91eeb5a3380e4cc49fdf4b07d2e1eda4e0409b5983b220cb39330e87c21da9c8",
+      "original_bytes": 10101,
+      "original_line_numbers": [
+        1,
+        218
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            1,
+            218
+          ]
+        },
+        {
+          "lines": [
+            1,
+            218
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E21.txt",
+      "original_sha256": "91eeb5a3380e4cc49fdf4b07d2e1eda4e0409b5983b220cb39330e87c21da9c8",
+      "original_bytes": 10101,
+      "original_line_numbers": [
+        1,
+        218
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            1,
+            218
+          ]
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A2-01/control-v1/source-map.json",
+      "source_id": "E07",
+      "access_started_utc": "2026-10-10T04:55:53.243400+00:00",
+      "access_finished_utc": "2026-10-10T04:55:53.848625+00:00",
+      "title": "Collect commit 0bc6cde page",
+      "version": "Full SHA independently recovered from E21: 0bc6cdefe1b49256218726e3fb0059498e450378; dated 2021-06-29",
+      "locators": [
+        {
+          "path": "evidence/E21.txt",
+          "lines": [
+            1,
+            218
+          ],
+          "section": "Complete commit patch, test and CursorLoaderFactory filter"
+        }
+      ],
+      "subject_operation": "Historical source change linked from issue #4589",
+      "conditions": "Patch adds FormResubmissionTest and excludes STATUS_SUBMISSION_FAILED in the single-argument unsent query. It is an intermediate commit, not by itself the full released change."
+    },
+    {
+      "authored_source_map": "assessment/A2-01/control-v1/source-map.json",
+      "source_id": "E21",
+      "access_started_utc": "2026-10-10T04:55:54.348331+00:00",
+      "access_finished_utc": "2026-10-10T04:55:54.646410+00:00",
+      "title": "Complete raw patch for 0bc6cde",
+      "version": "0bc6cdefe1b49256218726e3fb0059498e450378",
+      "locators": [
+        {
+          "path": "evidence/E21.txt",
+          "lines": [
+            1,
+            218
+          ],
+          "section": "Entire patch"
+        }
+      ],
+      "subject_operation": "Read-only source-code witness for E07",
+      "conditions": "Full patch read; UI test uses StubOpenRosaServer, simulated unavailable response, failed-item edit exclusion and later resend. Single-argument loader filter excludes failed status."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

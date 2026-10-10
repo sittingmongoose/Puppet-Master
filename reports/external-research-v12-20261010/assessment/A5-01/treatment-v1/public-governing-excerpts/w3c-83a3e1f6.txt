@@ -1,11 +1,49 @@
-URL: https://www.w3.org/WAI/media/av/
-Original locator: ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/w3c.txt
-Original SHA256: 83a3e1f67bf6ec7d54a994fb97f1b8ca5de15e19bb41faf27e352784098376e8
-Original numbered lines; gaps omitted. Not full response.
-
-102: Transcripts:
-103: Provide a transcript, that is, a text version of the speech and non-speech audio information. Ideally, make it a descriptive transcript that also includes text description of the visual information. Descriptive transcripts are required to provide video content to people who are both Deaf and blind. (descriptive transcript excerpt example)
-104: Sign Languages:
-105: Provide sign language when your audience needs it, so that Deaf people whose native language is sign get the content in their native language.
-106: Media Players:
-107: Use a media player that supports accessibility.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://www.w3.org/WAI/media/av/"
+  ],
+  "original_public_path": "assessment/A5-01/treatment-v1/public-governing-excerpts/w3c-83a3e1f6.txt",
+  "original_public_sha256": "36a94d6f6a4d30d44d4e121ac7437067033f714149f8355ce6d653199274c668",
+  "original_public_bytes": 863,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A5-01/treatment-v1/public-governing-excerpts/w3c-83a3e1f6.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/w3c.txt",
+      "original_sha256": "83a3e1f67bf6ec7d54a994fb97f1b8ca5de15e19bb41faf27e352784098376e8",
+      "original_bytes": 5156,
+      "original_line_numbers": [
+        102,
+        103,
+        104,
+        105,
+        106,
+        107
+      ],
+      "original_locators": [
+        {
+          "locator": "Transcripts and Media Players; independent text lines 102–107"
+        },
+        {
+          "locator": "Transcripts and Media Players; independent text lines 102–107"
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A5-01/treatment-v1/source-map.json",
+      "source_id": "IND-W3C",
+      "retrieved_at_utc": "2026-10-10T04:48:10Z to 04:48:12Z",
+      "version_or_commit": "Live WAI guidance; not a player conformance certificate",
+      "locator": "Transcripts and Media Players; independent text lines 102–107",
+      "governing_meaning": "WAI recommends text for speech and relevant non-speech audio and a player with accessibility support. Actual needed features depend on media and users.",
+      "applicability": "Supports the optional accessible experience, while leaving product validation proposed."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

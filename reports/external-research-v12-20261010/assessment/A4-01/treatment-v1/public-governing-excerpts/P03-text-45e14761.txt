@@ -1,12 +1,180 @@
-URL: https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html
-Original locator: ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P03-text.txt
-Original SHA256: 45e147610791e831a80b1f6e29a0ff4035e240abea93e4617a9f3cd93bb94e9e
-Original numbered lines; gaps omitted. Not full response.
-
-57: need to be in a consecutive sequence (for example, it can be 1, 5, and 14). Be aware that if
-58: you upload a new part using the same part number as a previously uploaded part, the
-59: previously uploaded part gets overwritten.
-112: Do not use the result of
-136: (in the multipart upload) must use consecutive part numbers and begin with 1. When using Checksums,
-137: if you try to complete a multipart upload request with nonconsecutive part numbers, Amazon S3 generates an
-169: After you initiate a multipart upload, Amazon S3 retains all the parts until you either
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html"
+  ],
+  "original_public_path": "assessment/A4-01/treatment-v1/public-governing-excerpts/P03-text-45e14761.txt",
+  "original_public_sha256": "49b49228a81182225beef6c911839b869b41ffe04ce6f2a9845cfbcf6f8feb3e",
+  "original_public_bytes": 872,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A4-01/treatment-v1/public-governing-excerpts/P03-text-45e14761.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P03-text.txt",
+      "original_sha256": "45e147610791e831a80b1f6e29a0ff4035e240abea93e4617a9f3cd93bb94e9e",
+      "original_bytes": 24024,
+      "original_line_numbers": [
+        57,
+        58,
+        59,
+        112,
+        136,
+        137,
+        169
+      ],
+      "original_locators": [
+        {
+          "text_lines": [
+            58,
+            59
+          ]
+        },
+        {
+          "anchor": "previously uploaded part",
+          "matched_original_line": 58
+        },
+        {
+          "anchor": "previously uploaded part",
+          "matched_original_line": 59
+        },
+        {
+          "text_lines": [
+            112
+          ]
+        },
+        {
+          "anchor": "Do not use",
+          "matched_original_line": 112
+        },
+        {
+          "text_lines": [
+            57,
+            136,
+            137
+          ]
+        },
+        {
+          "anchor": "consecutive",
+          "matched_original_line": 57
+        },
+        {
+          "anchor": "consecutive",
+          "matched_original_line": 136
+        },
+        {
+          "anchor": "consecutive",
+          "matched_original_line": 137
+        },
+        {
+          "text_lines": [
+            169
+          ]
+        },
+        {
+          "anchor": "retains all",
+          "matched_original_line": 169
+        },
+        {
+          "text_lines": [
+            58,
+            59
+          ]
+        },
+        {
+          "anchor": "previously uploaded part",
+          "matched_original_line": 58
+        },
+        {
+          "anchor": "previously uploaded part",
+          "matched_original_line": 59
+        },
+        {
+          "text_lines": [
+            112
+          ]
+        },
+        {
+          "anchor": "Do not use",
+          "matched_original_line": 112
+        },
+        {
+          "text_lines": [
+            57,
+            136,
+            137
+          ]
+        },
+        {
+          "anchor": "consecutive",
+          "matched_original_line": 57
+        },
+        {
+          "anchor": "consecutive",
+          "matched_original_line": 136
+        },
+        {
+          "anchor": "consecutive",
+          "matched_original_line": 137
+        },
+        {
+          "text_lines": [
+            169
+          ]
+        },
+        {
+          "anchor": "retains all",
+          "matched_original_line": 169
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A4-01/treatment-v1/source-map.json",
+      "source_id": "P03",
+      "accessed_utc": "2026-10-10T04:41:54.000433+00:00",
+      "version_or_commit_observed": "AWS S3 live User Guide, release not stated",
+      "locator": "Multipart creation/part replacement/completion/listings/pricing",
+      "locators": [
+        {
+          "anchor": "previously uploaded part",
+          "text_lines": [
+            58,
+            59
+          ],
+          "primary_heading_or_json_field": "Multipart creation/part replacement/completion/listings/pricing"
+        },
+        {
+          "anchor": "Do not use",
+          "text_lines": [
+            112
+          ],
+          "primary_heading_or_json_field": "Multipart creation/part replacement/completion/listings/pricing"
+        },
+        {
+          "anchor": "consecutive",
+          "text_lines": [
+            57,
+            136,
+            137
+          ],
+          "primary_heading_or_json_field": "Multipart creation/part replacement/completion/listings/pricing"
+        },
+        {
+          "anchor": "retains all",
+          "text_lines": [
+            169
+          ],
+          "primary_heading_or_json_field": "Multipart creation/part replacement/completion/listings/pricing"
+        }
+      ],
+      "conditions_defaults_units_types_exceptions": "Ascending completion order; checksum-specific consecutive condition; in-flight work can outlive abort; parts retained/billed until termination. Storage-class pricing exceptions do not supply an archive cost estimate.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

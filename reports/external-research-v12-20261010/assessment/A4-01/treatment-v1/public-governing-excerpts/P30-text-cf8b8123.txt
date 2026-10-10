@@ -1,8 +1,118 @@
-URL: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CompletedPart.html
-Original locator: ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P30-text.txt
-Original SHA256: cf8b81236e0806507ef9e6fdff4d0996ee903ad7bc9b51c644a372da33a5d9da
-Original numbered lines; gaps omitted. Not full response.
-
-86: General purpose buckets - In
-92: InvalidPartOrder error code.
-93: Directory buckets - In
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://docs.aws.amazon.com/AmazonS3/latest/API/API_CompletedPart.html"
+  ],
+  "original_public_path": "assessment/A4-01/treatment-v1/public-governing-excerpts/P30-text-cf8b8123.txt",
+  "original_public_sha256": "adc55f3bc465c0f5ac6f99d3ad2b8cb2b0774de34a4841819fa11cd4cd17fdb3",
+  "original_public_bytes": 393,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A4-01/treatment-v1/public-governing-excerpts/P30-text-cf8b8123.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P30-text.txt",
+      "original_sha256": "cf8b81236e0806507ef9e6fdff4d0996ee903ad7bc9b51c644a372da33a5d9da",
+      "original_bytes": 4553,
+      "original_line_numbers": [
+        86,
+        92,
+        93
+      ],
+      "original_locators": [
+        {
+          "text_lines": [
+            86
+          ]
+        },
+        {
+          "anchor": "General purpose buckets",
+          "matched_original_line": 86
+        },
+        {
+          "text_lines": [
+            93
+          ]
+        },
+        {
+          "anchor": "Directory buckets",
+          "matched_original_line": 93
+        },
+        {
+          "text_lines": [
+            92
+          ]
+        },
+        {
+          "anchor": "InvalidPartOrder",
+          "matched_original_line": 92
+        },
+        {
+          "text_lines": [
+            86
+          ]
+        },
+        {
+          "anchor": "General purpose buckets",
+          "matched_original_line": 86
+        },
+        {
+          "text_lines": [
+            93
+          ]
+        },
+        {
+          "anchor": "Directory buckets",
+          "matched_original_line": 93
+        },
+        {
+          "text_lines": [
+            92
+          ]
+        },
+        {
+          "anchor": "InvalidPartOrder",
+          "matched_original_line": 92
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A4-01/treatment-v1/source-map.json",
+      "source_id": "P30",
+      "accessed_utc": "2026-10-10T04:45:10.541434+00:00",
+      "version_or_commit_observed": "AWS S3 live CompletedPart API reference",
+      "locator": "PartNumber Note, general-purpose and directory buckets",
+      "locators": [
+        {
+          "anchor": "General purpose buckets",
+          "text_lines": [
+            86
+          ],
+          "primary_heading_or_json_field": "PartNumber Note, general-purpose and directory buckets"
+        },
+        {
+          "anchor": "Directory buckets",
+          "text_lines": [
+            93
+          ],
+          "primary_heading_or_json_field": "PartNumber Note, general-purpose and directory buckets"
+        },
+        {
+          "anchor": "InvalidPartOrder",
+          "text_lines": [
+            92
+          ],
+          "primary_heading_or_json_field": "PartNumber Note, general-purpose and directory buckets"
+        }
+      ],
+      "conditions_defaults_units_types_exceptions": "Per-part additional checksum use can coexist with full-object type. Do not infer full-object gaps are universally allowed or that guide HTTP500 is the only failure form.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

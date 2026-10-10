@@ -1,8 +1,118 @@
-URL: https://raw.githubusercontent.com/tus/tusd/v2.10.1/pkg/s3store/s3store.go
-Original locator: ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P28-text.txt
-Original SHA256: 7b3a7df5fb82f8d575f57d1f7970c6e14586fb2bf62836c273f4983f3d24db12
-Original numbered lines; gaps omitted. Not full response.
-
-634: func (upload *s3Upload) getInternalInfo(ctx context.Context) (info handler.FileInfo, parts []*s3Part, incompletePartSize int64, err error) {
-850: func (upload s3Upload) FinishUpload(ctx context.Context) error {
-881: 		case partsSize+incompletePartSize == info.Size:
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://raw.githubusercontent.com/tus/tusd/v2.10.1/pkg/s3store/s3store.go"
+  ],
+  "original_public_path": "assessment/A4-01/treatment-v1/public-governing-excerpts/P28-text-7b3a7df5.txt",
+  "original_public_sha256": "11884366724ce63ec1881d03647f505275f6cb01b3903235216f8c687058f7c1",
+  "original_public_bytes": 574,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A4-01/treatment-v1/public-governing-excerpts/P28-text-7b3a7df5.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P28-text.txt",
+      "original_sha256": "7b3a7df5fb82f8d575f57d1f7970c6e14586fb2bf62836c273f4983f3d24db12",
+      "original_bytes": 46082,
+      "original_line_numbers": [
+        634,
+        850,
+        881
+      ],
+      "original_locators": [
+        {
+          "text_lines": [
+            850
+          ]
+        },
+        {
+          "anchor": "func (upload s3Upload) FinishUpload",
+          "matched_original_line": 850
+        },
+        {
+          "text_lines": [
+            881
+          ]
+        },
+        {
+          "anchor": "partsSize+incompletePartSize",
+          "matched_original_line": 881
+        },
+        {
+          "text_lines": [
+            634
+          ]
+        },
+        {
+          "anchor": "func (upload *s3Upload) getInternalInfo",
+          "matched_original_line": 634
+        },
+        {
+          "text_lines": [
+            850
+          ]
+        },
+        {
+          "anchor": "func (upload s3Upload) FinishUpload",
+          "matched_original_line": 850
+        },
+        {
+          "text_lines": [
+            881
+          ]
+        },
+        {
+          "anchor": "partsSize+incompletePartSize",
+          "matched_original_line": 881
+        },
+        {
+          "text_lines": [
+            634
+          ]
+        },
+        {
+          "anchor": "func (upload *s3Upload) getInternalInfo",
+          "matched_original_line": 634
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A4-01/treatment-v1/source-map.json",
+      "source_id": "P28",
+      "accessed_utc": "2026-10-10T04:41:55.238765+00:00",
+      "version_or_commit_observed": "tusd v2.10.1 tagged s3store.go",
+      "locator": "FinishUpload lines 850 onward; WriteChunk and cached incomplete state",
+      "locators": [
+        {
+          "anchor": "func (upload s3Upload) FinishUpload",
+          "text_lines": [
+            850
+          ],
+          "primary_heading_or_json_field": "FinishUpload lines 850 onward; WriteChunk and cached incomplete state"
+        },
+        {
+          "anchor": "partsSize+incompletePartSize",
+          "text_lines": [
+            881
+          ],
+          "primary_heading_or_json_field": "FinishUpload lines 850 onward; WriteChunk and cached incomplete state"
+        },
+        {
+          "anchor": "func (upload *s3Upload) getInternalInfo",
+          "text_lines": [
+            634
+          ],
+          "primary_heading_or_json_field": "FinishUpload lines 850 onward; WriteChunk and cached incomplete state"
+        }
+      ],
+      "conditions_defaults_units_types_exceptions": "Downloaded Go was inspected, not executed. getInternalInfo/fetchInfo retrieve declared state and part sizes; normal no-tail and concatenation paths are distinct.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

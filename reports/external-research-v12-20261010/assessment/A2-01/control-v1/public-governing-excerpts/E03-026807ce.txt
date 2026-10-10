@@ -1,7 +1,118 @@
-URL: UNKNOWN in captured record
-Original locator: ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E03.txt
-Original SHA256: 026807ce97c97e14e2cb6de802a8492a0d6fd652e8f322cfbc27b28b3b26761b
-Original numbered lines; gaps omitted. Not full response.
-
-189: Updating Forms to a New Version¶
-212: If you have published multiple version of a Form, you can see each of them under the Versions tab.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://docs.getodk.org/central-forms/"
+  ],
+  "original_public_path": "assessment/A2-01/control-v1/public-governing-excerpts/E03-026807ce.txt",
+  "original_public_sha256": "7118dbc6287d33b1820aaa47f818ce7afd55fbbaa923de019e065b764b544d79",
+  "original_public_bytes": 392,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A2-01/control-v1/public-governing-excerpts/E03-026807ce.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E03.txt",
+      "original_sha256": "026807ce97c97e14e2cb6de802a8492a0d6fd652e8f322cfbc27b28b3b26761b",
+      "original_bytes": 21245,
+      "original_line_numbers": [
+        121,
+        150,
+        189,
+        212
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            121,
+            150
+          ]
+        },
+        {
+          "lines": [
+            189,
+            212
+          ]
+        },
+        {
+          "lines": [
+            121,
+            150
+          ]
+        },
+        {
+          "lines": [
+            189,
+            212
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E03.txt",
+      "original_sha256": "026807ce97c97e14e2cb6de802a8492a0d6fd652e8f322cfbc27b28b3b26761b",
+      "original_bytes": 21245,
+      "original_line_numbers": [
+        121,
+        150
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            121,
+            150
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E03.txt",
+      "original_sha256": "026807ce97c97e14e2cb6de802a8492a0d6fd652e8f322cfbc27b28b3b26761b",
+      "original_bytes": 21245,
+      "original_line_numbers": [
+        189,
+        212
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            189,
+            212
+          ]
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A2-01/control-v1/source-map.json",
+      "source_id": "E03",
+      "access_started_utc": "2026-10-10T04:55:52.838646+00:00",
+      "access_finished_utc": "2026-10-10T04:55:52.951369+00:00",
+      "title": "Central form versions, access, and export schema",
+      "version": "Living docs; drafting/version updates since Central 0.8",
+      "locators": [
+        {
+          "path": "evidence/E03.txt",
+          "lines": [
+            121,
+            150
+          ],
+          "section": "Forms; Drafts; App User access"
+        },
+        {
+          "path": "evidence/E03.txt",
+          "lines": [
+            189,
+            212
+          ],
+          "section": "Updating Forms; Older Versions"
+        }
+      ],
+      "subject_operation": "Publishing a new form version and exporting old submissions",
+      "conditions": "Explicit App User access is required. Prior submissions remain unchanged after republishing; default export uses current fields, with an option for previously removed fields. Reused fields retain their datatype, except conversion to text."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

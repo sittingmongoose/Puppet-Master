@@ -1,7 +1,196 @@
-URL: UNKNOWN in captured record
-Original locator: ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E05.txt
-Original SHA256: 63fccc42365d45b14b87881f53d6e8239b03ab804742381d211b7763ac025d9e
-Original numbered lines; gaps omitted. Not full response.
-
-2010: Uploading an Attachment¶
-2080: So if you submit a submission with <orx:instanceID>one</orx:instanceID> and then update it, deprecating one for version two, then the full route for version one is /v1/projects/…/forms/…/submissions/one/versions/one, and for two it is /v1/projects/…/forms/…/submissions/one/versions/two.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://docs.getodk.org/central-api-submission-management/"
+  ],
+  "original_public_path": "assessment/A2-01/control-v1/public-governing-excerpts/E05-63fccc42.txt",
+  "original_public_sha256": "0fc217e44afa172b65056e8f5310ec69356c31a34950db8265d3343389f187c8",
+  "original_public_bytes": 583,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A2-01/control-v1/public-governing-excerpts/E05-63fccc42.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E05.txt",
+      "original_sha256": "63fccc42365d45b14b87881f53d6e8239b03ab804742381d211b7763ac025d9e",
+      "original_bytes": 102177,
+      "original_line_numbers": [
+        119,
+        126,
+        210,
+        220,
+        397,
+        405,
+        2010,
+        2080
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            119,
+            126
+          ]
+        },
+        {
+          "lines": [
+            210,
+            220
+          ]
+        },
+        {
+          "lines": [
+            397,
+            405
+          ]
+        },
+        {
+          "lines": [
+            2010,
+            2080
+          ]
+        },
+        {
+          "lines": [
+            119,
+            126
+          ]
+        },
+        {
+          "lines": [
+            210,
+            220
+          ]
+        },
+        {
+          "lines": [
+            397,
+            405
+          ]
+        },
+        {
+          "lines": [
+            2010,
+            2080
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E05.txt",
+      "original_sha256": "63fccc42365d45b14b87881f53d6e8239b03ab804742381d211b7763ac025d9e",
+      "original_bytes": 102177,
+      "original_line_numbers": [
+        119,
+        126
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            119,
+            126
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E05.txt",
+      "original_sha256": "63fccc42365d45b14b87881f53d6e8239b03ab804742381d211b7763ac025d9e",
+      "original_bytes": 102177,
+      "original_line_numbers": [
+        210,
+        220
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            210,
+            220
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E05.txt",
+      "original_sha256": "63fccc42365d45b14b87881f53d6e8239b03ab804742381d211b7763ac025d9e",
+      "original_bytes": 102177,
+      "original_line_numbers": [
+        397,
+        405
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            397,
+            405
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E05.txt",
+      "original_sha256": "63fccc42365d45b14b87881f53d6e8239b03ab804742381d211b7763ac025d9e",
+      "original_bytes": 102177,
+      "original_line_numbers": [
+        2010,
+        2080
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            2010,
+            2080
+          ]
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A2-01/control-v1/source-map.json",
+      "source_id": "E05",
+      "access_started_utc": "2026-10-10T04:55:52.844027+00:00",
+      "access_finished_utc": "2026-10-10T04:55:53.420514+00:00",
+      "title": "Central REST submission management",
+      "version": "Living API; attachment upload since 0.4, versions since 1.2, device metadata since 1.4",
+      "locators": [
+        {
+          "path": "evidence/E05.txt",
+          "lines": [
+            119,
+            126
+          ],
+          "section": "Logical submission versus version identity"
+        },
+        {
+          "path": "evidence/E05.txt",
+          "lines": [
+            210,
+            220
+          ],
+          "section": "createdAt schema"
+        },
+        {
+          "path": "evidence/E05.txt",
+          "lines": [
+            397,
+            405
+          ],
+          "section": "Creating a Submission"
+        },
+        {
+          "path": "evidence/E05.txt",
+          "lines": [
+            2010,
+            2080
+          ],
+          "section": "Attachment upload; Submission Versions"
+        }
+      ],
+      "subject_operation": "REST POST /v1/projects/{projectId}/forms/{xmlFormId}/submissions; expected attachment uploads; version retrieval",
+      "conditions": "POST requires XML Content-Type and creates from submission XML; attachments are separate expected slots. Existing instanceId returns 409. createdAt is ISO string server receive time, distinct from currentVersion.createdAt. Initial instanceId stays the logical submission ID; each version has its own ID."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

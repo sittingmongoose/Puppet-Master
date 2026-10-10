@@ -1,1 +1,58 @@
-{"url":"https://api.github.com/repos/OneBusAway/onebusaway-application-modules/releases/284114836","assets_url":"https://api.github.com/repos/OneBusAway/onebusaway-application-modules/releases/284114836/assets","upload_url":"https://uploads.github.com/repos/OneBusAway/onebusaway-application-modules/releases/284114836/assets{?name,label}","html_url":"https://github.com/OneBusAway/onebusaway-application-modules/releases/tag/v2.7.1","id":284114836,"author":{"login":"aaronbrethorst","id":2254,"node_id":"MDQ6VXNlcjIyNTQ=","avatar_url":"https://avatars.githubusercontent.com/u/2254?v=4","gravatar_id":"","url":"https://api.github.com/users/aaronbrethorst","html_url":"https://github.com/aaronbrethorst","followers_url":"https://api.github.com/users/aaronbrethorst/followers","following_url":"https://api.github.com/users/aaronbrethorst/following{/other_user}","gists_url":"https://api.github.com/users/aaronbrethorst/gists{/gist_id}","starred_url":"https://api.github.com/users/aaronbrethorst/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/aaronbrethorst/subscriptions","organizations_url":"https://api.github.com/users/aaronbrethorst/orgs","repos_url":"https://api.github.com/users/aaronbrethorst/repos","events_url":"https://api.github.com/users/aaronbrethorst/events{/privacy}","received_events_url":"https://api.github.com/users/aaronbrethorst/received_events","type":"User","user_view_type":"public","site_admin":false},"node_id":"RE_kwDOADRAYc4Q7z-U","tag_name":"v2.7.1","target_commitish":"main","name":"v2.7.1","draft":false,"immutable":false,"prerelease":false,"created_at":"2026-02-08T05:30:40Z","updated_at":"2026-02-08T05:32:08Z","published_at":"2026-02-08T05:32:08Z","assets":[],"tarball_url":"https://api.github.com/repos/OneBusAway/onebusaway-application-modules/tarball/v2.7.1","zipball_url":"https://api.github.com/repos/OneBusAway/onebusaway-application-modules/zipball/v2.7.1","body":"## What's Changed\r\n* Fix CLI-created API keys returning 401 permission denied by @aaronbrethorst in https://github.com/OneBusAway/onebusaway-application-modules/pull/456\r\n* Bump version from 2.7.0 to 2.7.1 across all modules by @aaronbrethorst in https://github.com/OneBusAway/onebusaway-application-modules/pull/457\r\n* Adds a handful of missed 2.7.1 version changes by @aaronbrethorst in https://github.com/OneBusAway/onebusaway-application-modules/pull/459\r\n\r\n\r\n**Full Changelog**: https://github.com/OneBusAway/onebusaway-application-modules/compare/v2.7.0...v2.7.1","mentions_count":1}
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "provenance and bounded governing evidence; not original response",
+  "source_urls": [
+    "https://api.github.com/repos/OneBusAway/onebusaway-application-modules/releases/284114836",
+    "https://api.github.com/repos/OneBusAway/onebusaway-application-modules/releases/latest",
+    "https://github.com/OneBusAway/onebusaway-application-modules/releases/tag/v2.7.1"
+  ],
+  "original_public_path": "assessment/A6-01/treatment-v1/evidence/E12.json",
+  "original_public_sha256": "9dfccec3b4840cf89b4c76cd0ad3f84dac05aeb7bd73612d9a2ca3667acc6dff",
+  "original_public_bytes": 2532,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A6-01/treatment-v1/evidence/E12.json",
+  "classification_basis": "fetched GitHub API response / converted API response",
+  "original_selectors": [
+    {
+      "source_id": "E12",
+      "field": "governing_locator",
+      "selector": "tag_name; published_at; body"
+    }
+  ],
+  "governing_summaries_from_existing_authored_source_records": [
+    {
+      "access_started_utc": "2026-10-10T04:31:52.226822+00:00",
+      "access_finished_utc": "2026-10-10T04:31:52.431654+00:00",
+      "version_or_commit": "OBA v2.7.1 latest release, published 2026-02-08",
+      "governing_locator": "tag_name; published_at; body",
+      "independent_semantic_observation": "Release label verified independently; not a release pin for moving README semantics.",
+      "authored_source_map": "assessment/A6-01/treatment-v1/source-map.json",
+      "source_id": "E12"
+    },
+    {
+      "access_started_utc": "2026-10-10T04:31:52.226822+00:00",
+      "access_finished_utc": "2026-10-10T04:31:52.431654+00:00",
+      "authored_source_map": "assessment/A6-01/treatment-v1/evidence/retrieval-manifest.json",
+      "source_id": "E12"
+    }
+  ],
+  "selected_api_metadata": [
+    {
+      "url": "https://api.github.com/repos/OneBusAway/onebusaway-application-modules/releases/284114836",
+      "html_url": "https://github.com/OneBusAway/onebusaway-application-modules/releases/tag/v2.7.1",
+      "id": 284114836,
+      "tag_name": "v2.7.1",
+      "target_commitish": "main",
+      "name": "v2.7.1",
+      "created_at": "2026-02-08T05:30:40Z",
+      "updated_at": "2026-02-08T05:32:08Z",
+      "published_at": "2026-02-08T05:32:08Z",
+      "draft": false,
+      "prerelease": false,
+      "original_json_locator": "$"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY_AND_METADATA; full body coverage UNKNOWN",
+  "omission": "Full fetched body, API ancillary fields and unmechanically summarizable body details are archived privately. Original source URL and selectors govern; unsupported/missing semantic coverage is UNKNOWN. No candidate finding or independent judgment is repaired.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

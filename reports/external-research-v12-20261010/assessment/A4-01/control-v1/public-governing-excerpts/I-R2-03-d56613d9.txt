@@ -1,17 +1,202 @@
-URL: https://developers.cloudflare.com/r2/buckets/cors/
-Original locator: ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-R2-03.txt
-Original SHA256: d56613d9431d6b664b293ee005482e46c344940c08ee31e1965cd087fbc25d2a
-Original numbered lines; gaps omitted. Not full response.
-
-48: Presigned URLs
-112: OverviewPrerequisitesUse CORS with a public bucketUse CORS with a presigned URLUse CORS with a custom domainAdd CORS policies from the dashboardAdd CORS policies via Wrangler CLIResponse headersExampleCommon Issues
-117: Presigned URLs: Allows anyone with access to the unique URL to perform specific actions on your bucket.
-122: (Optional) Access keys. An access key is only required when creating a presigned URL.
-126: Use CORS with a presigned URL
-127: Presigned URLs allow temporary access to perform specific actions on your bucket without exposing your credentials. While presigned URLs handle authentication, you still need to configure CORS when making requests from a browser.
-128: When a browser makes a request to a presigned URL on a different origin, the browser enforces CORS. Without a CORS policy, browser-based uploads and downloads using presigned URLs will fail, even though the presigned URL itself is valid.
-129: Expired presigned URLs return a 403 ExpiredRequest response. R2 does not include CORS response headers on expired presigned URL responses, so browser JavaScript cannot read the error body. Refresh presigned URLs before they expire, or route requests through your application server if the browser needs to handle expiration errors directly.
-130: To enable browser-based access with presigned URLs:
-132: Set AllowedMethods to match the operations your presigned URLs perform, use GET, PUT, HEAD, and/or DELETE.
-133: Set AllowedHeaders to include any headers the client will send when using the presigned URL, such as headers for content type, checksums, caching, or custom metadata.
-230: Use CORS with a presigned URL
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://developers.cloudflare.com/r2/buckets/cors/"
+  ],
+  "original_public_path": "assessment/A4-01/control-v1/public-governing-excerpts/I-R2-03-d56613d9.txt",
+  "original_public_sha256": "d6008b4ebd7d74ddb6dd5f316d5d9ed82a6ff1356b833e446f06363cdc47c583",
+  "original_public_bytes": 1951,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A4-01/control-v1/public-governing-excerpts/I-R2-03-d56613d9.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-R2-03.txt",
+      "original_sha256": "d56613d9431d6b664b293ee005482e46c344940c08ee31e1965cd087fbc25d2a",
+      "original_bytes": 12160,
+      "original_line_numbers": [
+        48,
+        112,
+        117,
+        122,
+        126,
+        127,
+        128,
+        129,
+        130,
+        132,
+        133,
+        230
+      ],
+      "original_locators": [
+        {
+          "saved_text_lines": [
+            48,
+            112,
+            117,
+            122,
+            126,
+            127,
+            128,
+            129,
+            130,
+            132,
+            133,
+            230
+          ]
+        },
+        {
+          "anchor": "presigned URL",
+          "matched_original_line": 112
+        },
+        {
+          "anchor": "presigned URL",
+          "matched_original_line": 122
+        },
+        {
+          "anchor": "presigned URL",
+          "matched_original_line": 126
+        },
+        {
+          "anchor": "presigned URL",
+          "matched_original_line": 127
+        },
+        {
+          "anchor": "presigned URL",
+          "matched_original_line": 128
+        },
+        {
+          "anchor": "presigned URL",
+          "matched_original_line": 129
+        },
+        {
+          "anchor": "presigned URL",
+          "matched_original_line": 130
+        },
+        {
+          "anchor": "presigned URL",
+          "matched_original_line": 132
+        },
+        {
+          "anchor": "presigned URL",
+          "matched_original_line": 133
+        },
+        {
+          "anchor": "presigned URL",
+          "matched_original_line": 230
+        },
+        {
+          "saved_text_lines": [
+            129
+          ]
+        },
+        {
+          "anchor": "ExpiredRequest",
+          "matched_original_line": 129
+        },
+        {
+          "saved_text_lines": [
+            48,
+            112,
+            117,
+            122,
+            126,
+            127,
+            128,
+            129,
+            130,
+            132,
+            133,
+            230
+          ]
+        },
+        {
+          "anchor": "presigned URL",
+          "matched_original_line": 112
+        },
+        {
+          "anchor": "presigned URL",
+          "matched_original_line": 122
+        },
+        {
+          "anchor": "presigned URL",
+          "matched_original_line": 126
+        },
+        {
+          "anchor": "presigned URL",
+          "matched_original_line": 127
+        },
+        {
+          "anchor": "presigned URL",
+          "matched_original_line": 128
+        },
+        {
+          "anchor": "presigned URL",
+          "matched_original_line": 129
+        },
+        {
+          "anchor": "presigned URL",
+          "matched_original_line": 130
+        },
+        {
+          "anchor": "presigned URL",
+          "matched_original_line": 132
+        },
+        {
+          "anchor": "presigned URL",
+          "matched_original_line": 133
+        },
+        {
+          "anchor": "presigned URL",
+          "matched_original_line": 230
+        },
+        {
+          "saved_text_lines": [
+            129
+          ]
+        },
+        {
+          "anchor": "ExpiredRequest",
+          "matched_original_line": 129
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A4-01/control-v1/source-map.json",
+      "source_id": "I-R2-03",
+      "title": "Configure CORS — Cloudflare R2",
+      "retrieved_at_utc": "2026-10-10T04:25:10.626090+00:00",
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "presigned URL",
+          "saved_text_lines": [
+            48,
+            112,
+            117,
+            122,
+            126,
+            127,
+            128,
+            129,
+            130,
+            132,
+            133,
+            230
+          ]
+        },
+        {
+          "anchor": "ExpiredRequest",
+          "saved_text_lines": [
+            129
+          ]
+        }
+      ]
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

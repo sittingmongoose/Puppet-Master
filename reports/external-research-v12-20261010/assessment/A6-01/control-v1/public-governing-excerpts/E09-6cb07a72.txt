@@ -1,50 +1,87 @@
-URL: https://docs.opentripplanner.org/en/latest/GTFS-RT-Config/
-Original locator: ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E09.txt
-Original SHA256: 6cb07a72d1ea69c49f21bf237539fbc90ff3fc4ed62fb2203a6e6be3228c7420
-Original numbered lines; gaps omitted. Not full response.
-
-129: Alerts
-130: Alerts are text messages attached to GTFS objects, informing riders of disruptions and changes. The
-131: information is downloaded in a single HTTP request and polled regularly.
-132: | Config Parameter
-133: | Type
-134: | Summary
-135: | Req./Opt.
-136: | Default Value
-137: | Since
-138: | type = "real-time-alerts"
-139: | enum
-140: | The type of the updater.
-141: | Required
-142: |
-143: | 1.5
-144: | earlyStartSec
-145: | integer
-146: | How long before the posted start of an event it should be displayed to users
-147: | Optional
-148: | 0
-149: | 1.5
-150: | feedId
-151: | string
-152: | The id of the feed to apply the alerts to.
-153: | Required
-154: |
-155: | 1.5
-156: | frequency
-157: | duration
-158: | How often the URL should be fetched.
-159: | Optional
-160: | "PT1M"
-161: | 1.5
-162: | fuzzyTripMatching
-163: | boolean
-164: | Whether to match trips fuzzily.
-165: | Optional
-166: | false
-167: | 1.5
-168: | url
-169: | string
-170: | URL to fetch the GTFS-RT feed from.
-171: | Required
-172: |
-173: | 1.5
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://docs.opentripplanner.org/en/latest/GTFS-RT-Config/"
+  ],
+  "original_public_path": "assessment/A6-01/control-v1/public-governing-excerpts/E09-6cb07a72.txt",
+  "original_public_sha256": "68a11ea003f38a5273fecf2c3b42fc6e14ce919fffb1bd03d1c9aee6c6733367",
+  "original_public_bytes": 1296,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A6-01/control-v1/public-governing-excerpts/E09-6cb07a72.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E09.txt",
+      "original_sha256": "6cb07a72d1ea69c49f21bf237539fbc90ff3fc4ed62fb2203a6e6be3228c7420",
+      "original_bytes": 12598,
+      "original_line_numbers": [
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173
+      ],
+      "original_locators": [
+        {
+          "locator": "E09.txt lines 129-173; 210-251"
+        },
+        {
+          "locator": "E09.txt lines 129-173; 210-251"
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A6-01/control-v1/source-map.json",
+      "source_id": "E09",
+      "access_utc": "2026-10-10T04:39:00.442274+00:00",
+      "version_observed": "Living primary page/repository observed 2026-10-10; see precise scope in linked claim records",
+      "locator": "E09.txt lines 129-173; 210-251",
+      "independent_observation": "Independent poller field tables including type/default/presence and duration units."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

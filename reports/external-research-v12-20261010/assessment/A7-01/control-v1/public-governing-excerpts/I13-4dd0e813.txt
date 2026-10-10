@@ -1,38 +1,82 @@
-URL: https://store.astm.org/f2915-20.html
-Original locator: ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I13.txt
-Original SHA256: 4dd0e813fe2fd04669a4db657927dcde4fc000b7f9a30822bfd9d0af9aa5e2d3
-Original numbered lines; gaps omitted. Not full response.
-
-149: Standard
-150: Active
-151: Last Updated: Aug 14, 2020
-152: Track Document
-153: Sign in to use Tracker.
-154: ×
-155: To use Tracker, please sign in to your account.
-156: Not registered?Create an Account
-157: Cancel
-158: Sign In
-159: ASTM ISO/ASTM52915-20
-160: Specification for additive manufacturing file format (AMF) Version 1.2
-161: Specification for additive manufacturing file format (AMF) Version 1.2
-162: F2915-20
-163: ASTM|F2915-20|en-US
-164: Specification for additive manufacturing file format (AMF) Version 1.2
-165: Standard
-166: ISO/ASTM52915 Specification for additive manufacturing file format (AMF) Version 1.2>
-167: new
-168: BOS Vol. 10.04 Committee F42
-169: $
-170: 96.00
-171: In stock
-172: Abstract
-173: This specification provides a framework for an interchange format to address the current and future needs of the additive manufacturing technology. The additive manufacturing file (AMF) may be prepared, displayed, and transmitted on paper or electronically, provided the requirements presented in this specification are met. When prepared in a structured electronic format, strict adherence to an extensible markup language (XML) schema is required to support standards-compliant interoperability.
-174: Scope
-175: 1.1 This document provides the specification for the Additive Manufacturing File Format (AMF), an interchange format to address the current and future needs of additive manufacturing technology.
-176: 1.2 This document specifies the requirements for the preparation, display and transmission for the AMF. When prepared in a structured electronic format, strict adherence to an extensible markup language (XML)(1)2 schema supports standards-compliant interoperability.
-177: Note 1: A W3C XML schema definition (XSD) for the AMF is available from ISO from http://standards.iso.org/iso/52915 and from ASTM from www.astm.org/MEETINGS/images/amf.xsd. An implementation guide for such an XML schema is provided in Annex A1.
-178: 1.3 It is recognized that there is additional information relevant to the final part that is not covered by the current version of this document. Suggested future features are listed in Annex A2.
-179: 1.4 This document does not specify any explicit mechanisms for ensuring data integrity, electronic signatures and encryptions.
-180: Version
-181: F2915-20 Active
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://store.astm.org/f2915-20.html"
+  ],
+  "original_public_path": "assessment/A7-01/control-v1/public-governing-excerpts/I13-4dd0e813.txt",
+  "original_public_sha256": "b88236c7d3e204ad5dc2616dafe88cb067e5dc64925ae83e17327c0b16b16706",
+  "original_public_bytes": 2581,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A7-01/control-v1/public-governing-excerpts/I13-4dd0e813.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I13.txt",
+      "original_sha256": "4dd0e813fe2fd04669a4db657927dcde4fc000b7f9a30822bfd9d0af9aa5e2d3",
+      "original_bytes": 9185,
+      "original_line_numbers": [
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179,
+        180,
+        181
+      ],
+      "original_locators": [
+        {
+          "locator": "Public abstract and Scope §§1.1–1.4, text lines 149–181; full standard unavailable/not purchased."
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A7-01/control-v1/source-map.json",
+      "source_id": "I13",
+      "title": "ISO/ASTM 52915-20 AMF 1.2",
+      "locator": "Public abstract and Scope §§1.1–1.4, text lines 149–181; full standard unavailable/not purchased.",
+      "governing_conditions": [
+        {
+          "claim_id": "Q15",
+          "subject": "AMF and historical Prusa format choice",
+          "operation": "Offer a bounded alternate interchange route",
+          "version": "ISO/ASTM52915-20 AMF 1.2 active public abstract; Prusa 2.0 announcement 2019; 2.9 docs",
+          "conditions_defaults_types_domains_exceptions": "XML schema conformance, public abstract only; no detailed full-standard claim. Historic 3MF preference/AMF support is not a current all-tool census.",
+          "judgment": "SUPPORTED"
+        }
+      ],
+      "applicability": "Independent source meaning for a research proposal; actual selected CAD/slicer/file behavior remains NOT_RUN.",
+      "version_note": "Live docs are not build-pinned unless explicitly stated in linked claim."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

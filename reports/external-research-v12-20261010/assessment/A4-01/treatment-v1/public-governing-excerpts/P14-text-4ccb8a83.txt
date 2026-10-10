@@ -1,29 +1,245 @@
-URL: https://docs.aws.amazon.com/cli/latest/topic/s3-config.html
-Original locator: ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P14-text.txt
-Original SHA256: 4ccb8a83377fadecd7dd92ec7448604f429a58da49afc83f929e29a9cd019abf
-Original numbered lines; gaps omitted. Not full response.
-
-31: preferred_transfer_client
-174: Default - 8MB
-175: When uploading, downloading, or copying a file, the S3 commands
-176: will switch to multipart operations if the file reaches a given
-177: size threshold.  The multipart_threshold controls this value.
-178: You can specify this value in one of two ways:
-179: The file size in bytes.  For example, 1048576.
-180: The file size with a size suffix.  You can use KB, MB, GB,
-181: TB.  For example: 10MB, 1GB.  Note that S3 imposes
-182: constraints on valid values that can be used for multipart
-183: operations.
-184: multipart_chunksize¶
-185: Default - 8MB
-186: Minimum For Uploads - 5MB
-286: preferred_transfer_client¶
-315: the CRT S3 transfer client, set the preferred_transfer_client configuration
-319: set the preferred_transfer_client configuration variable to the
-347: This configuration option is only supported when the preferred_transfer_client
-355: When the preferred_transfer_client configuration value is set to
-359: When the preferred_transfer_client configuration value resolves to
-383: This configuration option is only supported when the preferred_transfer_client
-391: This configuration option is only supported when the preferred_transfer_client
-401: This configuration option is only supported when the preferred_transfer_client
-422: When the preferred_transfer_client configuration value is set to or
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://docs.aws.amazon.com/cli/latest/topic/s3-config.html"
+  ],
+  "original_public_path": "assessment/A4-01/treatment-v1/public-governing-excerpts/P14-text-4ccb8a83.txt",
+  "original_public_sha256": "bc110d33de06b62b50819ced8984c250011e0bcab4d3dd43080432d36acc2571",
+  "original_public_bytes": 1659,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A4-01/treatment-v1/public-governing-excerpts/P14-text-4ccb8a83.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P14-text.txt",
+      "original_sha256": "4ccb8a83377fadecd7dd92ec7448604f429a58da49afc83f929e29a9cd019abf",
+      "original_bytes": 23789,
+      "original_line_numbers": [
+        31,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179,
+        180,
+        181,
+        182,
+        183,
+        184,
+        185,
+        186,
+        286,
+        315,
+        319,
+        347,
+        355,
+        359,
+        383,
+        391,
+        401,
+        422
+      ],
+      "original_locators": [
+        {
+          "text_lines": [
+            174,
+            185
+          ]
+        },
+        {
+          "anchor": "Default - 8MB",
+          "matched_original_line": 174
+        },
+        {
+          "anchor": "Default - 8MB",
+          "matched_original_line": 185
+        },
+        {
+          "text_lines": [
+            186
+          ]
+        },
+        {
+          "anchor": "Minimum For Uploads",
+          "matched_original_line": 186
+        },
+        {
+          "text_lines": [
+            31,
+            286,
+            315,
+            319,
+            347,
+            355
+          ]
+        },
+        {
+          "anchor": "preferred_transfer_client",
+          "matched_original_line": 31
+        },
+        {
+          "anchor": "preferred_transfer_client",
+          "matched_original_line": 286
+        },
+        {
+          "anchor": "preferred_transfer_client",
+          "matched_original_line": 315
+        },
+        {
+          "anchor": "preferred_transfer_client",
+          "matched_original_line": 319
+        },
+        {
+          "anchor": "preferred_transfer_client",
+          "matched_original_line": 347
+        },
+        {
+          "anchor": "preferred_transfer_client",
+          "matched_original_line": 355
+        },
+        {
+          "anchor": "preferred_transfer_client",
+          "matched_original_line": 359
+        },
+        {
+          "anchor": "preferred_transfer_client",
+          "matched_original_line": 383
+        },
+        {
+          "anchor": "preferred_transfer_client",
+          "matched_original_line": 391
+        },
+        {
+          "anchor": "preferred_transfer_client",
+          "matched_original_line": 401
+        },
+        {
+          "anchor": "preferred_transfer_client",
+          "matched_original_line": 422
+        },
+        {
+          "text_lines": [
+            174,
+            185
+          ]
+        },
+        {
+          "anchor": "Default - 8MB",
+          "matched_original_line": 174
+        },
+        {
+          "anchor": "Default - 8MB",
+          "matched_original_line": 185
+        },
+        {
+          "text_lines": [
+            186
+          ]
+        },
+        {
+          "anchor": "Minimum For Uploads",
+          "matched_original_line": 186
+        },
+        {
+          "text_lines": [
+            31,
+            286,
+            315,
+            319,
+            347,
+            355
+          ]
+        },
+        {
+          "anchor": "preferred_transfer_client",
+          "matched_original_line": 31
+        },
+        {
+          "anchor": "preferred_transfer_client",
+          "matched_original_line": 286
+        },
+        {
+          "anchor": "preferred_transfer_client",
+          "matched_original_line": 315
+        },
+        {
+          "anchor": "preferred_transfer_client",
+          "matched_original_line": 319
+        },
+        {
+          "anchor": "preferred_transfer_client",
+          "matched_original_line": 347
+        },
+        {
+          "anchor": "preferred_transfer_client",
+          "matched_original_line": 355
+        },
+        {
+          "anchor": "preferred_transfer_client",
+          "matched_original_line": 359
+        },
+        {
+          "anchor": "preferred_transfer_client",
+          "matched_original_line": 383
+        },
+        {
+          "anchor": "preferred_transfer_client",
+          "matched_original_line": 391
+        },
+        {
+          "anchor": "preferred_transfer_client",
+          "matched_original_line": 401
+        },
+        {
+          "anchor": "preferred_transfer_client",
+          "matched_original_line": 422
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A4-01/treatment-v1/source-map.json",
+      "source_id": "P14",
+      "accessed_utc": "2026-10-10T04:41:54.407283+00:00",
+      "version_or_commit_observed": "Direct current page AWS CLI 2.37.12; cached web title 2.37.6",
+      "locator": "multipart_threshold / multipart_chunksize / transfer-client selection",
+      "locators": [
+        {
+          "anchor": "Default - 8MB",
+          "text_lines": [
+            174,
+            185
+          ],
+          "primary_heading_or_json_field": "multipart_threshold / multipart_chunksize / transfer-client selection"
+        },
+        {
+          "anchor": "Minimum For Uploads",
+          "text_lines": [
+            186
+          ],
+          "primary_heading_or_json_field": "multipart_threshold / multipart_chunksize / transfer-client selection"
+        },
+        {
+          "anchor": "preferred_transfer_client",
+          "text_lines": [
+            31,
+            286,
+            315,
+            319,
+            347,
+            355
+          ],
+          "primary_heading_or_json_field": "multipart_threshold / multipart_chunksize / transfer-client selection"
+        }
+      ],
+      "conditions_defaults_units_types_exceptions": "CLI configuration is not provider quota. MB syntax is binary in pinned code P32/P33; transfer-engine, source replayability and exact release affect other behavior.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

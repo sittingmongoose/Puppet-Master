@@ -1,1 +1,53 @@
-[{"sha":"a3eb43ca32d76dbfc2839ba88e76acfeaeccf6dc","filename":"plugins/3MFWriter/ThreeMFWriter.py","status":"modified","additions":9,"deletions":7,"changes":16,"blob_url":"https://github.com/Ultimaker/Cura/blob/be4d4d404f67c202808b04880ae61dc6ba170d3d/plugins%2F3MFWriter%2FThreeMFWriter.py","raw_url":"https://github.com/Ultimaker/Cura/raw/be4d4d404f67c202808b04880ae61dc6ba170d3d/plugins%2F3MFWriter%2FThreeMFWriter.py","contents_url":"https://api.github.com/repos/Ultimaker/Cura/contents/plugins%2F3MFWriter%2FThreeMFWriter.py?ref=be4d4d404f67c202808b04880ae61dc6ba170d3d","patch":"@@ -114,22 +114,24 @@ def _convertUMNodeToSavitarNode(um_node,\n \n         mesh_data = um_node.getMeshData()\n \n+        node_matrix = um_node.getLocalTransformation()\n+        node_matrix.preMultiply(transformation)\n+        \n         if center_mesh:\n-            node_matrix = Matrix()\n+            center_matrix = Matrix()\n             # compensate for original center position, if object(s) is/are not around its zero position\n             if mesh_data is not None:\n                 extents = mesh_data.getExtents()\n                 if extents is not None:\n                     # We use a different coordinate space while writing, so flip Z and Y\n-                    center_vector = Vector(extents.center.x, extents.center.y, extents.center.z)\n-                    node_matrix.setByTranslation(center_vector)\n-            node_matrix.multiply(um_node.getLocalTransformation())\n-        else:\n-            node_matrix = um_node.getLocalTransformation()\n+                    center_vector = Vector(-extents.center.x, -extents.center.y, -extents.center.z)\n+                    center_matrix.setByTranslation(center_vector)\n+            node_matrix.preMultiply(center_matrix)\n \n-        matrix_string = ThreeMFWriter._convertMatrixToString(node_matrix.preMultiply(transformation))\n+        matrix_string = ThreeMFWriter._convertMatrixToString(node_matrix)\n \n         savitar_node.setTransformation(matrix_string)\n+\n         if mesh_data is not None:\n             savitar_node.getMeshData().setVerticesFromBytes(mesh_data.getVerticesAsByteArray())\n             indices_array = mesh_data.getIndicesAsByteArray()"}]
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "provenance and bounded governing evidence; not original response",
+  "source_urls": [
+    "https://github.com/Ultimaker/Cura/pull/19375",
+    "https://github.com/Ultimaker/Cura/raw/be4d4d404f67c202808b04880ae61dc6ba170d3d/plugins%2F3MFWriter%2FThreeMFWriter.py"
+  ],
+  "original_public_path": "assessment/A7-01/treatment-v1/evidence/P23-cura-pr19375-files.json",
+  "original_public_sha256": "10ab81c97abf92140c8347ef4e855dc41c459be889ec6612914d4bdb6d6c8355",
+  "original_public_bytes": 2227,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A7-01/treatment-v1/evidence/P23-cura-pr19375-files.json",
+  "classification_basis": "fetched GitHub API response / converted API response",
+  "original_selectors": [
+    {
+      "source_id": "P23",
+      "field": "locator",
+      "selector": "PR body; files patch plugins/3MFWriter/ThreeMFWriter.py around line 114"
+    }
+  ],
+  "governing_summaries_from_existing_authored_source_records": [
+    {
+      "title": "Cura transformation-writer fix PR #19375",
+      "version_or_commit": "Merged 2024-08-05; merge 4a5aecc1e4e62e3cf4cd8e0b6002c503881d3078",
+      "locator": "PR body; files patch plugins/3MFWriter/ThreeMFWriter.py around line 114",
+      "accessed_at_utc": [
+        "2026-10-10T04:57:03.965579+00:00",
+        "2026-10-10T04:57:04.290407+00:00"
+      ],
+      "governing_conditions_and_applicability": "The linked implementation fix changes center compensation and matrix multiplication. It is a real lead omitted by the candidate, but the issue continues reporting failures after the merge and the final sample result does not attribute its cause. It cannot be promoted to a proven #19456 repair.",
+      "authored_source_map": "assessment/A7-01/treatment-v1/source-map.json",
+      "source_id": "P23"
+    },
+    {
+      "accessed_at_utc": "2026-10-10T04:57:04.290407+00:00",
+      "authored_source_map": "assessment/A7-01/treatment-v1/evidence/retrieval-record.json",
+      "source_id": "P23-cura-pr19375-files"
+    }
+  ],
+  "selected_api_metadata": [
+    {
+      "sha": "a3eb43ca32d76dbfc2839ba88e76acfeaeccf6dc",
+      "filename": "plugins/3MFWriter/ThreeMFWriter.py",
+      "status": "modified",
+      "raw_url": "https://github.com/Ultimaker/Cura/raw/be4d4d404f67c202808b04880ae61dc6ba170d3d/plugins%2F3MFWriter%2FThreeMFWriter.py",
+      "blob_url": "https://github.com/Ultimaker/Cura/blob/be4d4d404f67c202808b04880ae61dc6ba170d3d/plugins%2F3MFWriter%2FThreeMFWriter.py",
+      "original_json_locator": "$[0]"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY_AND_METADATA; full body coverage UNKNOWN",
+  "omission": "Full fetched body, API ancillary fields and unmechanically summarizable body details are archived privately. Original source URL and selectors govern; unsupported/missing semantic coverage is UNKNOWN. No candidate finding or independent judgment is repaired.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

@@ -1,7 +1,127 @@
-URL: https://gtfs.org/documentation/realtime/reference/#enum-schedulerelationship-1
-Original locator: ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E02.txt
-Original SHA256: bf41723bbd0fdab269e255a4bf70ae3569bf6e78a2f41eb98553c22e6ae95c05
-Original numbered lines; gaps omitted. Not full response.
-
-1039: | REPLACEMENT
-1044: | An extra trip unrelated to any existing trips, for example, to respond to sudden passenger load. The complete journey of the new trip, including all stops and times, must be specified via StopTimeUpdates. Existing producers and consumers that were using the ADDED enumeration to represent new trips unrelated to the static GTFS must follow the migration guide to transition to the NEW enumeration.Caution: this field is still experimental, and subject to change. It may be formally adopted in the future.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://gtfs.org/documentation/realtime/reference/",
+    "https://gtfs.org/documentation/realtime/reference/#enum-schedulerelationship-1",
+    "https://gtfs.org/documentation/realtime/reference/#message-tripdescriptor"
+  ],
+  "original_public_path": "assessment/A6-01/control-v1/public-governing-excerpts/E02-bf41723b.txt",
+  "original_public_sha256": "cce3e2c17e03b42e16375ab1a132abe9c3eef223b7e91ad76a4b92bef2cf186e",
+  "original_public_bytes": 834,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A6-01/control-v1/public-governing-excerpts/E02-bf41723b.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E02.txt",
+      "original_sha256": "bf41723bbd0fdab269e255a4bf70ae3569bf6e78a2f41eb98553c22e6ae95c05",
+      "original_bytes": 77915,
+      "original_line_numbers": [
+        347,
+        348,
+        349,
+        350,
+        351,
+        352,
+        353,
+        354,
+        355,
+        356,
+        357,
+        358,
+        359,
+        360,
+        361,
+        362,
+        363,
+        364,
+        365,
+        366,
+        367,
+        368,
+        369,
+        370,
+        371,
+        372,
+        373,
+        374,
+        375,
+        376,
+        377,
+        378
+      ],
+      "original_locators": [
+        {
+          "locator": "E02.txt lines 347-378; 431-475; 488-571; 795-821; 974-1046; 1116-1154"
+        },
+        {
+          "locator": "E02.txt lines 347-378; 431-475; 488-571; 795-821; 974-1046; 1116-1154"
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E02.txt",
+      "original_sha256": "bf41723bbd0fdab269e255a4bf70ae3569bf6e78a2f41eb98553c22e6ae95c05",
+      "original_bytes": 77915,
+      "original_line_numbers": [
+        974,
+        984
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            974,
+            984
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E02.txt",
+      "original_sha256": "bf41723bbd0fdab269e255a4bf70ae3569bf6e78a2f41eb98553c22e6ae95c05",
+      "original_bytes": 77915,
+      "original_line_numbers": [
+        991,
+        1000
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            991,
+            1000
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E02.txt",
+      "original_sha256": "bf41723bbd0fdab269e255a4bf70ae3569bf6e78a2f41eb98553c22e6ae95c05",
+      "original_bytes": 77915,
+      "original_line_numbers": [
+        1039,
+        1044
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            1039,
+            1044
+          ]
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A6-01/control-v1/source-map.json",
+      "source_id": "E02",
+      "access_utc": "2026-10-10T04:39:00.103849+00:00",
+      "version_observed": "GTFS RT current reference, protocol 2.0; fields/history through June 2026; observed 2026-10-10",
+      "locator": "E02.txt lines 347-378; 431-475; 488-571; 795-821; 974-1046; 1116-1154",
+      "independent_observation": "Primary current RT field context independently read including the NEW identity exception and full journey requirements; this directly supports F-01."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

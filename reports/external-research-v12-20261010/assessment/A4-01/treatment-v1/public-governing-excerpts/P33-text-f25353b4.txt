@@ -1,10 +1,153 @@
-URL: https://raw.githubusercontent.com/aws/aws-cli/2.37.6/awscli/customizations/s3/utils.py
-Original locator: ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P33-text.txt
-Original SHA256: f25353b4241749e56c1f76c6138f5d942eeea614baf1c606332e8e24cb360233
-Original numbered lines; gaps omitted. Not full response.
-
-34: SIZE_SUFFIX = {
-101: def human_readable_to_int(value):
-116:     has_size_identifier = len(value) >= 2 and suffix in SIZE_SUFFIX
-123:         multiplier = SIZE_SUFFIX[suffix]
-124:         return int(value[: -len(suffix)]) * multiplier
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://raw.githubusercontent.com/aws/aws-cli/2.37.6/awscli/customizations/s3/utils.py"
+  ],
+  "original_public_path": "assessment/A4-01/treatment-v1/public-governing-excerpts/P33-text-f25353b4.txt",
+  "original_public_sha256": "911eeec9b8ce564bb2bd67e8efecc9228d486373fa0c8a8e455eb7207c2fa1d5",
+  "original_public_bytes": 554,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A4-01/treatment-v1/public-governing-excerpts/P33-text-f25353b4.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P33-text.txt",
+      "original_sha256": "f25353b4241749e56c1f76c6138f5d942eeea614baf1c606332e8e24cb360233",
+      "original_bytes": 31543,
+      "original_line_numbers": [
+        34,
+        101,
+        116,
+        123,
+        124
+      ],
+      "original_locators": [
+        {
+          "text_lines": [
+            34,
+            116,
+            123
+          ]
+        },
+        {
+          "anchor": "SIZE_SUFFIX",
+          "matched_original_line": 34
+        },
+        {
+          "anchor": "SIZE_SUFFIX",
+          "matched_original_line": 116
+        },
+        {
+          "anchor": "SIZE_SUFFIX",
+          "matched_original_line": 123
+        },
+        {
+          "text_lines": [
+            101
+          ]
+        },
+        {
+          "anchor": "def human_readable_to_int",
+          "matched_original_line": 101
+        },
+        {
+          "text_lines": [
+            123,
+            124
+          ]
+        },
+        {
+          "anchor": "multiplier",
+          "matched_original_line": 123
+        },
+        {
+          "anchor": "multiplier",
+          "matched_original_line": 124
+        },
+        {
+          "text_lines": [
+            34,
+            116,
+            123
+          ]
+        },
+        {
+          "anchor": "SIZE_SUFFIX",
+          "matched_original_line": 34
+        },
+        {
+          "anchor": "SIZE_SUFFIX",
+          "matched_original_line": 116
+        },
+        {
+          "anchor": "SIZE_SUFFIX",
+          "matched_original_line": 123
+        },
+        {
+          "text_lines": [
+            101
+          ]
+        },
+        {
+          "anchor": "def human_readable_to_int",
+          "matched_original_line": 101
+        },
+        {
+          "text_lines": [
+            123,
+            124
+          ]
+        },
+        {
+          "anchor": "multiplier",
+          "matched_original_line": 123
+        },
+        {
+          "anchor": "multiplier",
+          "matched_original_line": 124
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A4-01/treatment-v1/source-map.json",
+      "source_id": "P33",
+      "accessed_utc": "2026-10-10T04:45:11.121384+00:00",
+      "version_or_commit_observed": "Released AWS CLI tag 2.37.6, commit not resolved",
+      "locator": "utils.py SIZE_SUFFIX and human_readable_to_int",
+      "locators": [
+        {
+          "anchor": "SIZE_SUFFIX",
+          "text_lines": [
+            34,
+            116,
+            123
+          ],
+          "primary_heading_or_json_field": "utils.py SIZE_SUFFIX and human_readable_to_int"
+        },
+        {
+          "anchor": "def human_readable_to_int",
+          "text_lines": [
+            101
+          ],
+          "primary_heading_or_json_field": "utils.py SIZE_SUFFIX and human_readable_to_int"
+        },
+        {
+          "anchor": "multiplier",
+          "text_lines": [
+            123,
+            124
+          ],
+          "primary_heading_or_json_field": "utils.py SIZE_SUFFIX and human_readable_to_int"
+        }
+      ],
+      "conditions_defaults_units_types_exceptions": "This definition/caller resolves docs notation, not provider quota or live transfer performance. Source read without executing.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

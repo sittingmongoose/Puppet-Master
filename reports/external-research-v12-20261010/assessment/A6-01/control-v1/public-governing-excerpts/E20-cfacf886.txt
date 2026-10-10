@@ -1,11 +1,48 @@
-URL: https://raw.githubusercontent.com/opentripplanner/OpenTripPlanner/v2.10.0/application/src/main/java/org/opentripplanner/framework/application/OTPFeature.java
-Original locator: ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E20.txt
-Original SHA256: cfacf886bf1fac2428d4c8a1a9b5d0eb63ed8def0cf9516983893e2cfd4053b7
-Original numbered lines; gaps omitted. Not full response.
-
-11: /**
-12:  * The purpose of this class is to be able to turn features on and off.
-13:  * <p>
-14:  * This configuration is optional and found under "feature" in the top level 'otp-config.json'
-15:  * file.
-16:  */
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://raw.githubusercontent.com/opentripplanner/OpenTripPlanner/v2.10.0/application/src/main/java/org/opentripplanner/framework/application/OTPFeature.java"
+  ],
+  "original_public_path": "assessment/A6-01/control-v1/public-governing-excerpts/E20-cfacf886.txt",
+  "original_public_sha256": "353912a91f5f7b9ce171353eb6aba4ea11bfa54bd4502e750ad84b077255102d",
+  "original_public_bytes": 595,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A6-01/control-v1/public-governing-excerpts/E20-cfacf886.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E20.txt",
+      "original_sha256": "cfacf886bf1fac2428d4c8a1a9b5d0eb63ed8def0cf9516983893e2cfd4053b7",
+      "original_bytes": 10849,
+      "original_line_numbers": [
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "original_locators": [
+        {
+          "locator": "E20.txt lines 11-16, 125-130, constructors/default assignment and 197-199"
+        },
+        {
+          "locator": "E20.txt lines 11-16, 125-130, constructors/default assignment and 197-199"
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A6-01/control-v1/source-map.json",
+      "source_id": "E20",
+      "access_utc": "2026-10-10T04:39:01.203408+00:00",
+      "version_observed": "OTP exact tag v2.10.0",
+      "locator": "E20.txt lines 11-16, 125-130, constructors/default assignment and 197-199",
+      "independent_observation": "Exact v2.10.0 source independently read for default-enabled wait and configurable initialization."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

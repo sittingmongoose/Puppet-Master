@@ -1,7 +1,118 @@
-URL: UNKNOWN in captured record
-Original locator: ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E04.txt
-Original SHA256: 8a7a3b51122fde273f4400119d34abc85f5844308f7d46065fa2793e8cd5b7ec
-Original numbered lines; gaps omitted. Not full response.
-
-218: Submission Review States¶
-269: Copy the link that you were redirected to and share it with your data collector(s). They will need to log in to first access the form and when they submit.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://docs.getodk.org/central-submissions/"
+  ],
+  "original_public_path": "assessment/A2-01/control-v1/public-governing-excerpts/E04-8a7a3b51.txt",
+  "original_public_sha256": "e44fb74e0a8f29d52a398ac55f3292baf4d4d9c967108ecbe31e7a4c2d8e470d",
+  "original_public_bytes": 442,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A2-01/control-v1/public-governing-excerpts/E04-8a7a3b51.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E04.txt",
+      "original_sha256": "8a7a3b51122fde273f4400119d34abc85f5844308f7d46065fa2793e8cd5b7ec",
+      "original_bytes": 28258,
+      "original_line_numbers": [
+        172,
+        186,
+        218,
+        269
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            172,
+            186
+          ]
+        },
+        {
+          "lines": [
+            218,
+            269
+          ]
+        },
+        {
+          "lines": [
+            172,
+            186
+          ]
+        },
+        {
+          "lines": [
+            218,
+            269
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E04.txt",
+      "original_sha256": "8a7a3b51122fde273f4400119d34abc85f5844308f7d46065fa2793e8cd5b7ec",
+      "original_bytes": 28258,
+      "original_line_numbers": [
+        172,
+        186
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            172,
+            186
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E04.txt",
+      "original_sha256": "8a7a3b51122fde273f4400119d34abc85f5844308f7d46065fa2793e8cd5b7ec",
+      "original_bytes": 28258,
+      "original_line_numbers": [
+        218,
+        269
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            218,
+            269
+          ]
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A2-01/control-v1/source-map.json",
+      "source_id": "E04",
+      "access_started_utc": "2026-10-10T04:55:52.841741+00:00",
+      "access_finished_utc": "2026-10-10T04:55:53.293224+00:00",
+      "title": "Central exports, review states, versions, and browser offline exception",
+      "version": "Living docs; review states since Central 1.2; diff display since 1.3",
+      "locators": [
+        {
+          "path": "evidence/E04.txt",
+          "lines": [
+            172,
+            186
+          ],
+          "section": "Downloading Submissions as CSVs"
+        },
+        {
+          "path": "evidence/E04.txt",
+          "lines": [
+            218,
+            269
+          ],
+          "section": "Review States; Editing; Offline Web Forms"
+        }
+      ],
+      "subject_operation": "CSV ZIP download and submission review/version workflow",
+      "conditions": "ZIP includes root/repeat join CSVs and files/submission-instanceId directories. Filters affect exports. Edits create versions and Edited state. ODK Web Forms need connectivity to submit; Enketo offline queue auto-send needs the form open."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

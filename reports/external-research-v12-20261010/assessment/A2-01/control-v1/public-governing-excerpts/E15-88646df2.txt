@@ -1,7 +1,79 @@
-URL: UNKNOWN in captured record
-Original locator: ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E15.txt
-Original SHA256: 88646df23993227f158315e84c40805ca64d7879413636c378d984b0496a8954
-Original numbered lines; gaps omitted. Not full response.
-
-16: Collecting data using KoboCollect¶
-78: Note: If your project is set to automatically send finalized forms, the Ready to send page will not appear in the main menu, and you can skip these steps. For more information on project settings in KoboCollect, see Customizing KoboCollect settings.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://support.kobotoolbox.org/data_collection_kobocollect.html"
+  ],
+  "original_public_path": "assessment/A2-01/control-v1/public-governing-excerpts/E15-88646df2.txt",
+  "original_public_sha256": "216aac1b78baaf6d5ea9b590ba09a2d074b174dc7e77cad467629b1ed7d7b67a",
+  "original_public_bytes": 543,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A2-01/control-v1/public-governing-excerpts/E15-88646df2.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E15.txt",
+      "original_sha256": "88646df23993227f158315e84c40805ca64d7879413636c378d984b0496a8954",
+      "original_bytes": 15668,
+      "original_line_numbers": [
+        16,
+        78
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            16,
+            78
+          ]
+        },
+        {
+          "lines": [
+            16,
+            78
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E15.txt",
+      "original_sha256": "88646df23993227f158315e84c40805ca64d7879413636c378d984b0496a8954",
+      "original_bytes": 15668,
+      "original_line_numbers": [
+        16,
+        78
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            16,
+            78
+          ]
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A2-01/control-v1/source-map.json",
+      "source_id": "E15",
+      "access_started_utc": "2026-10-10T04:55:54.113615+00:00",
+      "access_finished_utc": "2026-10-10T04:55:54.284378+00:00",
+      "title": "KoboCollect offline Android alternative",
+      "version": "Support page last updated 2026-07-17; app build not pinned",
+      "locators": [
+        {
+          "path": "evidence/E15.txt",
+          "lines": [
+            16,
+            78
+          ],
+          "section": "Download; collect; ready-to-send; upload"
+        }
+      ],
+      "subject_operation": "Download forms online, collect offline, submit later",
+      "conditions": "Initial deployed/shared form and configured project needed. Updates need connectivity. Drafts editable; finalize/send conditions follow settings. Originals remain locally by default; optional Delete after send changes that."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

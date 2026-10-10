@@ -1,7 +1,196 @@
-URL: UNKNOWN in captured record
-Original locator: ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E18.txt
-Original SHA256: 16069a5b68f9a6f3020eec6cca2b874a5677c2e055c5d7a29e6e7035ad44a4ea
-Original numbered lines; gaps omitted. Not full response.
-
-937: Example four: append a CSV to a table, upsert by matching global ID, skip inserts
-950: upsert=true&skipInserts=true&updateGeometry=false&appendUploadId=i3ae29394-68f0-43b7-a30a-53fdfe2b4acd&appendUploadFormat=csv&rollbackOnFailure=true&f=json&useGlobalIds=true&appendSourceInfo={}
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://developers.arcgis.com/rest/services-reference/enterprise/append-feature-service-layer/"
+  ],
+  "original_public_path": "assessment/A2-01/control-v1/public-governing-excerpts/E18-16069a5b.txt",
+  "original_public_sha256": "59c0fadd5ce9a0964f496b9e764b179f3297d7591174aefafc3a7aa5bcf034cb",
+  "original_public_bytes": 535,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A2-01/control-v1/public-governing-excerpts/E18-16069a5b.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E18.txt",
+      "original_sha256": "16069a5b68f9a6f3020eec6cca2b874a5677c2e055c5d7a29e6e7035ad44a4ea",
+      "original_bytes": 37709,
+      "original_line_numbers": [
+        142,
+        242,
+        511,
+        519,
+        769,
+        770,
+        937,
+        950
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            142,
+            242
+          ]
+        },
+        {
+          "lines": [
+            511,
+            519
+          ]
+        },
+        {
+          "lines": [
+            769,
+            770
+          ]
+        },
+        {
+          "lines": [
+            937,
+            950
+          ]
+        },
+        {
+          "lines": [
+            142,
+            242
+          ]
+        },
+        {
+          "lines": [
+            511,
+            519
+          ]
+        },
+        {
+          "lines": [
+            769,
+            770
+          ]
+        },
+        {
+          "lines": [
+            937,
+            950
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E18.txt",
+      "original_sha256": "16069a5b68f9a6f3020eec6cca2b874a5677c2e055c5d7a29e6e7035ad44a4ea",
+      "original_bytes": 37709,
+      "original_line_numbers": [
+        142,
+        242
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            142,
+            242
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E18.txt",
+      "original_sha256": "16069a5b68f9a6f3020eec6cca2b874a5677c2e055c5d7a29e6e7035ad44a4ea",
+      "original_bytes": 37709,
+      "original_line_numbers": [
+        511,
+        519
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            511,
+            519
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E18.txt",
+      "original_sha256": "16069a5b68f9a6f3020eec6cca2b874a5677c2e055c5d7a29e6e7035ad44a4ea",
+      "original_bytes": 37709,
+      "original_line_numbers": [
+        769,
+        770
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            769,
+            770
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E18.txt",
+      "original_sha256": "16069a5b68f9a6f3020eec6cca2b874a5677c2e055c5d7a29e6e7035ad44a4ea",
+      "original_bytes": 37709,
+      "original_line_numbers": [
+        937,
+        950
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            937,
+            950
+          ]
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A2-01/control-v1/source-map.json",
+      "source_id": "E18",
+      "access_started_utc": "2026-10-10T04:55:54.297674+00:00",
+      "access_finished_utc": "2026-10-10T04:55:54.534800+00:00",
+      "title": "ArcGIS feature-service Append route and photo exclusion",
+      "version": "Living Enterprise REST docs; capability gate 11.1; imageCollection 11.5; portal item 10.9+",
+      "locators": [
+        {
+          "path": "evidence/E18.txt",
+          "lines": [
+            142,
+            242
+          ],
+          "section": "Upsert; capability; supportsAppend; formats; sync; images"
+        },
+        {
+          "path": "evidence/E18.txt",
+          "lines": [
+            511,
+            519
+          ],
+          "section": "appendSourceInfo"
+        },
+        {
+          "path": "evidence/E18.txt",
+          "lines": [
+            769,
+            770
+          ],
+          "section": "Image collection default"
+        },
+        {
+          "path": "evidence/E18.txt",
+          "lines": [
+            937,
+            950
+          ],
+          "section": "CSV to nonspatial table example"
+        }
+      ],
+      "subject_operation": "Conditional CSV loading into a supported feature-service layer/table, separate from Survey123-native import",
+      "conditions": "Target must advertise supportsAppend and CSV in supportedAppendFormats. Owners/admins bypass needing Append capability; other callers need it. Upsert updates matching records and is blocked with sync/changeTracking. Non-upsert allocates new ObjectID/GlobalID. imageCollection creates geometry from EXIF; absent-location images skipped by default."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

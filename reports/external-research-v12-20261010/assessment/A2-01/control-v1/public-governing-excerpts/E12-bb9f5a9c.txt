@@ -1,7 +1,79 @@
-URL: UNKNOWN in captured record
-Original locator: ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E12.txt
-Original SHA256: bb9f5a9c9b464738d6a23d02df41d7840c11176f26b8c1f9726a24545b9386fe
-Original numbered lines; gaps omitted. Not full response.
-
-42: View all data
-66: Surveys created from ArcGIS Server feature layers cannot be downloaded. To learn more about the differences between hosted and ArcGIS Server feature layers, see Feature layer functionality.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://doc.arcgis.com/en/survey123/analyze/viewresults.htm"
+  ],
+  "original_public_path": "assessment/A2-01/control-v1/public-governing-excerpts/E12-bb9f5a9c.txt",
+  "original_public_sha256": "f78581865c5a9e5fd961016d1b5bd7214979e02d3649c6647d86095227eb11ab",
+  "original_public_bytes": 461,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A2-01/control-v1/public-governing-excerpts/E12-bb9f5a9c.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E12.txt",
+      "original_sha256": "bb9f5a9c9b464738d6a23d02df41d7840c11176f26b8c1f9726a24545b9386fe",
+      "original_bytes": 6661,
+      "original_line_numbers": [
+        42,
+        66
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            42,
+            66
+          ]
+        },
+        {
+          "lines": [
+            42,
+            66
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E12.txt",
+      "original_sha256": "bb9f5a9c9b464738d6a23d02df41d7840c11176f26b8c1f9726a24545b9386fe",
+      "original_bytes": 6661,
+      "original_line_numbers": [
+        42,
+        66
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            42,
+            66
+          ]
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A2-01/control-v1/source-map.json",
+      "source_id": "E12",
+      "access_started_utc": "2026-10-10T04:55:53.850942+00:00",
+      "access_finished_utc": "2026-10-10T04:55:54.345338+00:00",
+      "title": "Survey123 export and attachment associations",
+      "version": "Living docs; no specific deployment pinned",
+      "locators": [
+        {
+          "path": "evidence/E12.txt",
+          "lines": [
+            42,
+            66
+          ],
+          "section": "View data; Download results"
+        }
+      ],
+      "subject_operation": "Survey123 website download of eligible survey results",
+      "conditions": "CSV, Excel, KML, shapefile, file geodatabase; choices use names rather than labels. FGDB removes attachment KEYWORD. ArcGIS Server feature-layer surveys cannot be downloaded in this website route; unmatched attachment keywords prevent website editing."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

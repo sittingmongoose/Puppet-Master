@@ -1,7 +1,157 @@
-URL: UNKNOWN in captured record
-Original locator: ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E14.txt
-Original SHA256: 6b07138458a2f3654f98bf6f1f1a74615d263f7a1d7f7163adb07a3bda1edb56
-Original numbered lines; gaps omitted. Not full response.
-
-416: Actually performing the merge is an application-specific function. It depends
-438: an extra field or attachment in v2a which says which fields were changed from
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://docs.couchdb.org/en/3.5.1/replication/conflicts.html"
+  ],
+  "original_public_path": "assessment/A2-01/control-v1/public-governing-excerpts/E14-6b071384.txt",
+  "original_public_sha256": "590370cd9afb4b803688672bb674fef961d48c66ce51f18dbd957e14a28171db",
+  "original_public_bytes": 415,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A2-01/control-v1/public-governing-excerpts/E14-6b071384.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E14.txt",
+      "original_sha256": "6b07138458a2f3654f98bf6f1f1a74615d263f7a1d7f7163adb07a3bda1edb56",
+      "original_bytes": 30289,
+      "original_line_numbers": [
+        63,
+        136,
+        153,
+        223,
+        416,
+        438
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            63,
+            136
+          ]
+        },
+        {
+          "lines": [
+            153,
+            223
+          ]
+        },
+        {
+          "lines": [
+            416,
+            438
+          ]
+        },
+        {
+          "lines": [
+            63,
+            136
+          ]
+        },
+        {
+          "lines": [
+            153,
+            223
+          ]
+        },
+        {
+          "lines": [
+            416,
+            438
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E14.txt",
+      "original_sha256": "6b07138458a2f3654f98bf6f1f1a74615d263f7a1d7f7163adb07a3bda1edb56",
+      "original_bytes": 30289,
+      "original_line_numbers": [
+        63,
+        136
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            63,
+            136
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E14.txt",
+      "original_sha256": "6b07138458a2f3654f98bf6f1f1a74615d263f7a1d7f7163adb07a3bda1edb56",
+      "original_bytes": 30289,
+      "original_line_numbers": [
+        153,
+        223
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            153,
+            223
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E14.txt",
+      "original_sha256": "6b07138458a2f3654f98bf6f1f1a74615d263f7a1d7f7163adb07a3bda1edb56",
+      "original_bytes": 30289,
+      "original_line_numbers": [
+        416,
+        438
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            416,
+            438
+          ]
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A2-01/control-v1/source-map.json",
+      "source_id": "E14",
+      "access_started_utc": "2026-10-10T04:55:54.015821+00:00",
+      "access_finished_utc": "2026-10-10T04:55:54.163671+00:00",
+      "title": "CouchDB conflict leaves and winner visibility",
+      "version": "Apache CouchDB 3.5.1 documentation",
+      "locators": [
+        {
+          "path": "evidence/E14.txt",
+          "lines": [
+            63,
+            136
+          ],
+          "section": "Replication conflicts and default winner"
+        },
+        {
+          "path": "evidence/E14.txt",
+          "lines": [
+            153,
+            223
+          ],
+          "section": "Revision tree; compaction; conflict reads"
+        },
+        {
+          "path": "evidence/E14.txt",
+          "lines": [
+            416,
+            438
+          ],
+          "section": "Old-body/diff limitation"
+        }
+      ],
+      "subject_operation": "Concurrent leaf revisions, ordinary reads, and explicit application conflict resolution",
+      "conditions": "Default reads/views expose only a deterministic winner; conflicts can be retrieved. Non-leaf bodies are discarded by compaction; revision pruning exists. Revision trees are not an unlimited immutable audit log."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

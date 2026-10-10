@@ -1,39 +1,86 @@
-URL: https://github.com/prusa3d/PrusaSlicer/issues/8401
-Original locator: ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I11.txt
-Original SHA256: 1b7fed7b9a6cc721a48c8a7db7e2307edfd2b5cdee10b6a5539322fd5006a9ba
-Original numbered lines; gaps omitted. Not full response.
-
-119: FreeCAD has recently added 3MF export in version 0.20. When attempting to open a 3MF file exported from FreeCAD in PrusaSlicer 2.4.2, the import appears to fail silently. There are no error messages, and no object shows on the build area (or anywhere in space when zoomed out).
-120: It is quite possible the 3MF file isn't in the format that PrusaSlicer is looking for (Fusion 360 also has issues with it) but Fusion 360 does at least display an error. Oddly, Blender 3.2 (with a community add-in) can open the file successfully.
-121: I've opened a thread in the FreeCAD forum: https://forum.freecadweb.org/viewtopic.php?p=601749#p601749
-122: but also wanted to open a ticket here, as a) someone familiar with the 3MF import might readily spot an error, and b) if the file IS in error, PrusaSlicer would ideally display an error message.
-123: Project file & How to reproduce
-124: I've attached a zip file with the following:
-125: Narrow Hose Adapter-3MF-Test.3mf - the import file that fails
-126: Narrow Hose Adapter-AMF-Test.amf - an AMF import that succeeds but places model at 0,0 not centered on bed
-127: Narrow Hose Adapter-STL-Test.stl - an STL import that works as expected
-128: Narrow Hose Adapter-PS-Exported-3MF.3mf - a 3MF file saved AFTER importing as STL and saving as 3MF from PrusaSlicer
-129: TestProjectSaved.3mf - a 3MF file saved from PrusaSlicer after attempting to import the 3MF (and seeing no indication of success or failure)
-130: Narrow Hose Adapter.FCStd - the FreeCAD design file in case you wish to load FreeCAD and test exporting it yourself
-131: Test by attempting to import the Narrow Hose Adapter-3MF-Test.3mf file. Others are added as additional supporting info.
-132: ImportTests.zip
-133: Checklist of files included above
-134: Project file
-135: Screenshot
-136: Version of PrusaSlicer
-137: Version 2.4.2+arm64
-138: Operating system
-139: macOS 12.4 Monterey
-149: Provided 3MF file (generated from non-stable FreeCAD version) has an incorrect format, please report the issue to FreeCAD developers.
-150: This is the content of the 3MF file, the slash shouldn't be there.
-151: We will add some error message for such cases. Closing.
-152: rtyrclosed this as completedon Jun 14, 2022
-153: enricoturri1966added a commit that references this issue on Jun 14, 2022
-154: #8401 - Show error message when trying to import invalid 3mf
-155: 040a846
-156: JohnOCFII commented on Jun 14, 2022
-157: JohnOCFII
-158: on Jun 14, 2022
-159: Author
-160: More actions
-161: Thanks for the analysis and adding an error message. This issue was opened with FreeCAD yesterday, and they've now submitted the fix regarding the leading \ as indicated above.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://github.com/prusa3d/PrusaSlicer/issues/8401"
+  ],
+  "original_public_path": "assessment/A7-01/control-v1/public-governing-excerpts/I11-1b7fed7b.txt",
+  "original_public_sha256": "90ea4a13f8f3da10d624cb832e33542155c4a644188d1b1b32b679c3c1b4d992",
+  "original_public_bytes": 2934,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A7-01/control-v1/public-governing-excerpts/I11-1b7fed7b.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I11.txt",
+      "original_sha256": "1b7fed7b9a6cc721a48c8a7db7e2307edfd2b5cdee10b6a5539322fd5006a9ba",
+      "original_bytes": 5675,
+      "original_line_numbers": [
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161
+      ],
+      "original_locators": [
+        {
+          "locator": "Issue report lines 119–139; maintainer/follow-up lines 149–161; distinction between submitted fix and released fix."
+        },
+        {
+          "locator": "Issue report lines 119–139; maintainer/follow-up lines 149–161; distinction between submitted fix and released fix."
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A7-01/control-v1/source-map.json",
+      "source_id": "I11",
+      "title": "3MF import from FreeCAD fails, issue 8401",
+      "locator": "Issue report lines 119–139; maintainer/follow-up lines 149–161; distinction between submitted fix and released fix.",
+      "governing_conditions": [
+        {
+          "claim_id": "Q14",
+          "subject": "Prusa issue 8401 and linked importer commit",
+          "operation": "Report old silent import and improve error outcome",
+          "version": "2022-06-13 report; PrusaSlicer 2.4.2+arm64/macOS 12.4; non-stable FreeCAD 0.20 family; 040a8467bd0809bed7dad64cdf79ca6e5c340c20 dated 2022-06-14",
+          "conditions_defaults_types_domains_exceptions": "Reporter/maintainer account, not reproduction. AMF 0,0 and STL success are case-specific; leading-backslash fix submitted. Code returns nonempty model objects OR nonempty config. Attachments and first stable fixed versions remain unknown.",
+          "judgment": "SUPPORTED_WITH_HISTORICAL_LIMITS"
+        }
+      ],
+      "applicability": "Independent source meaning for a research proposal; actual selected CAD/slicer/file behavior remains NOT_RUN.",
+      "version_note": "Live docs are not build-pinned unless explicitly stated in linked claim."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

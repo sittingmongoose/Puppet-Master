@@ -1,1 +1,56 @@
-{"url":"https://api.github.com/repos/opentripplanner/OpenTripPlanner/issues/4058","repository_url":"https://api.github.com/repos/opentripplanner/OpenTripPlanner","labels_url":"https://api.github.com/repos/opentripplanner/OpenTripPlanner/issues/4058/labels{/name}","comments_url":"https://api.github.com/repos/opentripplanner/OpenTripPlanner/issues/4058/comments","events_url":"https://api.github.com/repos/opentripplanner/OpenTripPlanner/issues/4058/events","html_url":"https://github.com/opentripplanner/OpenTripPlanner/issues/4058","id":1190053783,"node_id":"I_kwDOAB-LNc5G7seX","number":4058,"title":"GTFS-RT VehiclePositions without `start_date` are not processed by OTP","user":{"login":"miles-grant-ibigroup","id":86619099,"node_id":"MDQ6VXNlcjg2NjE5MDk5","avatar_url":"https://avatars.githubusercontent.com/u/86619099?v=4","gravatar_id":"","url":"https://api.github.com/users/miles-grant-ibigroup","html_url":"https://github.com/miles-grant-ibigroup","followers_url":"https://api.github.com/users/miles-grant-ibigroup/followers","following_url":"https://api.github.com/users/miles-grant-ibigroup/following{/other_user}","gists_url":"https://api.github.com/users/miles-grant-ibigroup/gists{/gist_id}","starred_url":"https://api.github.com/users/miles-grant-ibigroup/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/miles-grant-ibigroup/subscriptions","organizations_url":"https://api.github.com/users/miles-grant-ibigroup/orgs","repos_url":"https://api.github.com/users/miles-grant-ibigroup/repos","events_url":"https://api.github.com/users/miles-grant-ibigroup/events{/privacy}","received_events_url":"https://api.github.com/users/miles-grant-ibigroup/received_events","type":"User","user_view_type":"public","site_admin":false},"labels":[{"id":3508275598,"node_id":"LA_kwDOAB-LNc7RHAmO","url":"https://api.github.com/repos/opentripplanner/OpenTripPlanner/labels/IBI","name":"IBI","color":"000000","default":false,"description":"Developed by or important for IBI Group","archived_at":null,"archived_by":null}],"state":"closed","locked":false,"assignees":[],"milestone":null,"comments":8,"created_at":"2022-04-01T16:55:33Z","updated_at":"2022-04-22T08:51:44Z","closed_at":"2022-04-22T08:51:44Z","assignee":null,"author_association":"CONTRIBUTOR","issue_field_values":[],"type":null,"active_lock_reason":null,"sub_issues_summary":{"total":0,"completed":0,"percent_completed":0},"issue_dependencies_summary":{"blocked_by":0,"total_blocked_by":0,"blocking":0,"total_blocking":0},"body":"## Expected behavior\r\n\r\nA GTFS-RT vehicle position feed without `start_date` should still be processed, assuming that the vehicle is moving in the current moment, at the current date.\r\n\r\nThere is a bit of wiggle room as to how this should be handled. `ServiceDate` has a constructor to use the current server date, but it is deprecated as the feed time may not match the server time. This makes sense (although when using the deprecated method locally I get correct report times). However, there are many GTFS-RT feeds which do not report `start_date`, and these feeds should still be processable by OTP!\r\n\r\n## Observed behavior\r\n\r\nhttps://github.com/opentripplanner/OpenTripPlanner/blob/b2c0e9a317d7c098d86f614a28ad2f476eb1be29/src/main/java/org/opentripplanner/updater/vehicle_positions/VehiclePositionPatternMatcher.java#L122-L124\r\n\r\nAn error is thrown and the vehicle position report is not processed.\r\n\r\n## Version of OTP used (exact commit hash or JAR name)\r\n\r\n`b0c9829e3bfe10daddae72485a09a7f48b0be8ff` (latest dev)\r\n\r\n## Data sets in use (links to GTFS and OSM PBF files)\r\n\r\nGTFS: https://www.rtd-denver.com/files/gtfs/google_transit.zip\r\nGTFS-RT vehicle positions: https://www.rtd-denver.com/files/gtfs-rt/VehiclePosition.pb\r\n\r\n## Router config and graph build config JSON\r\n```\r\nupdaters: [\r\n    {\r\n      \"type\": \"vehicle-positions\",\r\n      \"sourceType\": \"gtfs-http\",\r\n      \"url\": \"https://www.rtd-denver.com/files/gtfs-rt/VehiclePosition.pb\",\r\n      \"feedId\": \"1\",\r\n      \"frequencySec\": 60\r\n    },\r\n]\r\n}\r\n```\r\n\r\n## Steps to reproduce the problem\r\nRun OTP with this realtime feed and observe the many failures logged (claiming that \"start_data\" is missing). Also note that the GraphQL api does not report any realtime vehicles present for any routes, although there are realtime trip updates with valid trip IDs.\r\n\r\nRef: #3981\r\n","closed_by":{"login":"leonardehrenfried","id":151346,"node_id":"MDQ6VXNlcjE1MTM0Ng==","avatar_url":"https://avatars.githubusercontent.com/u/151346?v=4","gravatar_id":"","url":"https://api.github.com/users/leonardehrenfried","html_url":"https://github.com/leonardehrenfried","followers_url":"https://api.github.com/users/leonardehrenfried/followers","following_url":"https://api.github.com/users/leonardehrenfried/following{/other_user}","gists_url":"https://api.github.com/users/leonardehrenfried/gists{/gist_id}","starred_url":"https://api.github.com/users/leonardehrenfried/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/leonardehrenfried/subscriptions","organizations_url":"https://api.github.com/users/leonardehrenfried/orgs","repos_url":"https://api.github.com/users/leonardehrenfried/repos","events_url":"https://api.github.com/users/leonardehrenfried/events{/privacy}","received_events_url":"https://api.github.com/users/leonardehrenfried/received_events","type":"User","user_view_type":"public","site_admin":false},"reactions":{"url":"https://api.github.com/repos/opentripplanner/OpenTripPlanner/issues/4058/reactions","total_count":0,"+1":0,"-1":0,"laugh":0,"hooray":0,"confused":0,"heart":0,"rocket":0,"eyes":0},"timeline_url":"https://api.github.com/repos/opentripplanner/OpenTripPlanner/issues/4058/timeline","performed_via_github_app":null,"state_reason":"completed","pinned_comment":null}
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "provenance and bounded governing evidence; not original response",
+  "source_urls": [
+    "https://api.github.com/repos/opentripplanner/OpenTripPlanner/issues/4058",
+    "https://github.com/opentripplanner/OpenTripPlanner/issues/4058"
+  ],
+  "original_public_path": "assessment/A6-01/treatment-v1/evidence/E23.json",
+  "original_public_sha256": "32b4109be0632eca52ee2408ee13995377759110fd3a1ec1da40b7b4fb402ec4",
+  "original_public_bytes": 5883,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A6-01/treatment-v1/evidence/E23.json",
+  "classification_basis": "fetched GitHub API response / converted API response",
+  "original_selectors": [
+    {
+      "source_id": "E23",
+      "field": "governing_locator",
+      "selector": "Observed behavior; reported version/config; closed_at"
+    }
+  ],
+  "governing_summaries_from_existing_authored_source_records": [
+    {
+      "access_started_utc": "2026-10-10T04:31:52.717444+00:00",
+      "access_finished_utc": "2026-10-10T04:31:52.888363+00:00",
+      "version_or_commit": "OTP issue #4058, reported against b0c9829e3bfe10daddae72485a09a7f48b0be8ff",
+      "governing_locator": "Observed behavior; reported version/config; closed_at",
+      "independent_semantic_observation": "Missing-start_date VehiclePositions failure is verified historical reporter evidence.",
+      "authored_source_map": "assessment/A6-01/treatment-v1/source-map.json",
+      "source_id": "E23"
+    },
+    {
+      "access_started_utc": "2026-10-10T04:31:52.717444+00:00",
+      "access_finished_utc": "2026-10-10T04:31:52.888363+00:00",
+      "authored_source_map": "assessment/A6-01/treatment-v1/evidence/retrieval-manifest.json",
+      "source_id": "E23"
+    }
+  ],
+  "selected_api_metadata": [
+    {
+      "url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/issues/4058",
+      "html_url": "https://github.com/opentripplanner/OpenTripPlanner/issues/4058",
+      "id": 1190053783,
+      "number": 4058,
+      "title": "GTFS-RT VehiclePositions without `start_date` are not processed by OTP",
+      "created_at": "2022-04-01T16:55:33Z",
+      "updated_at": "2022-04-22T08:51:44Z",
+      "closed_at": "2022-04-22T08:51:44Z",
+      "state": "closed",
+      "state_reason": "completed",
+      "original_json_locator": "$"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY_AND_METADATA; full body coverage UNKNOWN",
+  "omission": "Full fetched body, API ancillary fields and unmechanically summarizable body details are archived privately. Original source URL and selectors govern; unsupported/missing semantic coverage is UNKNOWN. No candidate finding or independent judgment is repaired.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

@@ -1,18 +1,232 @@
-URL: https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpu-abort-incomplete-mpu-lifecycle-config.html
-Original locator: ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-AWS-06.txt
-Original SHA256: 4ffe151e71f166ec4a8408a726ac9e5766b5356ddb22e84b2d000bb4ea3e47d1
-Original numbered lines; gaps omitted. Not full response.
-
-10: uploads that aren't completed within a specified number of days after being initiated. When
-11: a multipart upload isn't completed within the specified time frame, it becomes eligible for
-22: <DaysAfterInitiation>7</DaysAfterInitiation>
-26: In the example, the rule doesn't specify a value for the Prefix element (the
-30: completed within seven days become eligible for an abort operation. The abort action has no
-31: effect on completed multipart uploads.
-34: If the multipart upload is completed within the number of days specified in the rule,
-36: is, Amazon S3 doesn't take any action). Also, this action doesn't apply to objects. No
-43: add a lifecycle rule to delete incomplete multipart uploads after 7 days. For more
-45: To add a lifecycle rule to abort incomplete multipart uploads that are more than 7 days old
-72: example, 7 days).
-83: configuration to abort incomplete multipart uploads that are more than 7 days
-103: "DaysAfterInitiation": 7
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpu-abort-incomplete-mpu-lifecycle-config.html"
+  ],
+  "original_public_path": "assessment/A4-01/control-v1/public-governing-excerpts/I-AWS-06-4ffe151e.txt",
+  "original_public_sha256": "f2b7f01f90ed5d9fb0f13dbc282cced45fc00f7d8bdb5c43b8ae9285d4ca50b1",
+  "original_public_bytes": 1287,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A4-01/control-v1/public-governing-excerpts/I-AWS-06-4ffe151e.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-AWS-06.txt",
+      "original_sha256": "4ffe151e71f166ec4a8408a726ac9e5766b5356ddb22e84b2d000bb4ea3e47d1",
+      "original_bytes": 6626,
+      "original_line_numbers": [
+        10,
+        11,
+        22,
+        26,
+        30,
+        31,
+        34,
+        36,
+        43,
+        45,
+        72,
+        83,
+        103
+      ],
+      "original_locators": [
+        {
+          "saved_text_lines": [
+            26,
+            36
+          ]
+        },
+        {
+          "anchor": "doesn",
+          "matched_original_line": 26
+        },
+        {
+          "anchor": "doesn",
+          "matched_original_line": 36
+        },
+        {
+          "saved_text_lines": [
+            10,
+            11,
+            30,
+            31,
+            34
+          ]
+        },
+        {
+          "anchor": "completed",
+          "matched_original_line": 10
+        },
+        {
+          "anchor": "completed",
+          "matched_original_line": 11
+        },
+        {
+          "anchor": "completed",
+          "matched_original_line": 30
+        },
+        {
+          "anchor": "completed",
+          "matched_original_line": 31
+        },
+        {
+          "anchor": "completed",
+          "matched_original_line": 34
+        },
+        {
+          "saved_text_lines": [
+            22,
+            43,
+            45,
+            72,
+            83,
+            103
+          ]
+        },
+        {
+          "anchor": "7",
+          "matched_original_line": 22
+        },
+        {
+          "anchor": "7",
+          "matched_original_line": 43
+        },
+        {
+          "anchor": "7",
+          "matched_original_line": 45
+        },
+        {
+          "anchor": "7",
+          "matched_original_line": 72
+        },
+        {
+          "anchor": "7",
+          "matched_original_line": 83
+        },
+        {
+          "anchor": "7",
+          "matched_original_line": 103
+        },
+        {
+          "saved_text_lines": [
+            26,
+            36
+          ]
+        },
+        {
+          "anchor": "doesn",
+          "matched_original_line": 26
+        },
+        {
+          "anchor": "doesn",
+          "matched_original_line": 36
+        },
+        {
+          "saved_text_lines": [
+            10,
+            11,
+            30,
+            31,
+            34
+          ]
+        },
+        {
+          "anchor": "completed",
+          "matched_original_line": 10
+        },
+        {
+          "anchor": "completed",
+          "matched_original_line": 11
+        },
+        {
+          "anchor": "completed",
+          "matched_original_line": 30
+        },
+        {
+          "anchor": "completed",
+          "matched_original_line": 31
+        },
+        {
+          "anchor": "completed",
+          "matched_original_line": 34
+        },
+        {
+          "saved_text_lines": [
+            22,
+            43,
+            45,
+            72,
+            83,
+            103
+          ]
+        },
+        {
+          "anchor": "7",
+          "matched_original_line": 22
+        },
+        {
+          "anchor": "7",
+          "matched_original_line": 43
+        },
+        {
+          "anchor": "7",
+          "matched_original_line": 45
+        },
+        {
+          "anchor": "7",
+          "matched_original_line": 72
+        },
+        {
+          "anchor": "7",
+          "matched_original_line": 83
+        },
+        {
+          "anchor": "7",
+          "matched_original_line": 103
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A4-01/control-v1/source-map.json",
+      "source_id": "I-AWS-06",
+      "title": "Configuring lifecycle to delete incomplete multipart uploads",
+      "retrieved_at_utc": "2026-10-10T04:25:10.412523+00:00",
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "doesn",
+          "saved_text_lines": [
+            26,
+            36
+          ]
+        },
+        {
+          "anchor": "completed",
+          "saved_text_lines": [
+            10,
+            11,
+            30,
+            31,
+            34
+          ]
+        },
+        {
+          "anchor": "7",
+          "saved_text_lines": [
+            22,
+            43,
+            45,
+            72,
+            83,
+            103
+          ]
+        }
+      ]
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

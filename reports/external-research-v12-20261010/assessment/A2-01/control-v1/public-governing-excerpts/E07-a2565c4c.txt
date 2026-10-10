@@ -1,7 +1,62 @@
-URL: https://github.com/getodk/collect/commit/0bc6cde
-Original locator: ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E07.txt
-Original SHA256: a2565c4c9b68ae3b4b0c57c035b7c35002f0138f51ac4d2aa621c4d7094b1873
-Original numbered lines; gaps omitted. Not full response.
-
-1: CursorLoaderFactory etc for #4589 · getodk/collect@0bc6cde · GitHub
-218: @NonNull List<File> fileList,
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://github.com/getodk/collect/commit/0bc6cde"
+  ],
+  "original_public_path": "assessment/A2-01/control-v1/public-governing-excerpts/E07-a2565c4c.txt",
+  "original_public_sha256": "6a6ce9331e29d2d2a931fbc92dd2f4c74adf98548399f987cce722b0ff07e00e",
+  "original_public_bytes": 379,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A2-01/control-v1/public-governing-excerpts/E07-a2565c4c.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E07.txt",
+      "original_sha256": "a2565c4c9b68ae3b4b0c57c035b7c35002f0138f51ac4d2aa621c4d7094b1873",
+      "original_bytes": 11285,
+      "original_line_numbers": [
+        1,
+        218
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            1,
+            218
+          ]
+        },
+        {
+          "lines": [
+            1,
+            218
+          ]
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A2-01/control-v1/source-map.json",
+      "source_id": "E07",
+      "access_started_utc": "2026-10-10T04:55:53.243400+00:00",
+      "access_finished_utc": "2026-10-10T04:55:53.848625+00:00",
+      "title": "Collect commit 0bc6cde page",
+      "version": "Full SHA independently recovered from E21: 0bc6cdefe1b49256218726e3fb0059498e450378; dated 2021-06-29",
+      "locators": [
+        {
+          "path": "evidence/E21.txt",
+          "lines": [
+            1,
+            218
+          ],
+          "section": "Complete commit patch, test and CursorLoaderFactory filter"
+        }
+      ],
+      "subject_operation": "Historical source change linked from issue #4589",
+      "conditions": "Patch adds FormResubmissionTest and excludes STATUS_SUBMISSION_FAILED in the single-argument unsent query. It is an intermediate commit, not by itself the full released change."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

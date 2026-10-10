@@ -1,1 +1,58 @@
-{"url":"https://api.github.com/repos/prusa3d/PrusaSlicer/issues/8998","repository_url":"https://api.github.com/repos/prusa3d/PrusaSlicer","labels_url":"https://api.github.com/repos/prusa3d/PrusaSlicer/issues/8998/labels{/name}","comments_url":"https://api.github.com/repos/prusa3d/PrusaSlicer/issues/8998/comments","events_url":"https://api.github.com/repos/prusa3d/PrusaSlicer/issues/8998/events","html_url":"https://github.com/prusa3d/PrusaSlicer/issues/8998","id":1395393232,"node_id":"I_kwDOAybtDc5TLALQ","number":8998,"title":"STEP import excludes big chunk of part. STL import of same part slices as intended.","user":{"login":"henriksundeodegard","id":30589433,"node_id":"MDQ6VXNlcjMwNTg5NDMz","avatar_url":"https://avatars.githubusercontent.com/u/30589433?v=4","gravatar_id":"","url":"https://api.github.com/users/henriksundeodegard","html_url":"https://github.com/henriksundeodegard","followers_url":"https://api.github.com/users/henriksundeodegard/followers","following_url":"https://api.github.com/users/henriksundeodegard/following{/other_user}","gists_url":"https://api.github.com/users/henriksundeodegard/gists{/gist_id}","starred_url":"https://api.github.com/users/henriksundeodegard/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/henriksundeodegard/subscriptions","organizations_url":"https://api.github.com/users/henriksundeodegard/orgs","repos_url":"https://api.github.com/users/henriksundeodegard/repos","events_url":"https://api.github.com/users/henriksundeodegard/events{/privacy}","received_events_url":"https://api.github.com/users/henriksundeodegard/received_events","type":"User","user_view_type":"public","site_admin":false},"labels":[{"id":575324274,"node_id":"MDU6TGFiZWw1NzUzMjQyNzQ=","url":"https://api.github.com/repos/prusa3d/PrusaSlicer/labels/Import","name":"Import","color":"f9d0c4","default":false,"description":"","archived_at":null,"archived_by":null},{"id":12036925503,"node_id":"LA_kwDOAybtDc8AAAACzXToPw","url":"https://api.github.com/repos/prusa3d/PrusaSlicer/labels/legacy-issue","name":"legacy-issue","color":"ededed","default":false,"description":null,"archived_at":null,"archived_by":null}],"state":"open","locked":false,"assignees":[],"milestone":null,"comments":16,"created_at":"2022-10-03T22:07:18Z","updated_at":"2026-09-18T14:28:02Z","closed_at":null,"assignee":null,"author_association":"NONE","issue_field_values":[],"type":null,"active_lock_reason":null,"sub_issues_summary":{"total":0,"completed":0,"percent_completed":0},"issue_dependencies_summary":{"blocked_by":0,"total_blocked_by":0,"blocking":0,"total_blocking":0},"body":"### Description of the bug\n\nI've tried lately to use the new STEP import feature because it made the arrangement of this WIP print-in-place model a lot easier. However, the slicer seems to be struggling on this hinge.\r\n\r\nUnsliced, PrusaSlicer warns that the STEP-file model has 127 open edges, while the same part imported as STL does not have any such warning. Also, when trying the option \"Fix through the Netfabb\" on the faulty part, it seems to fix the issue. But upon further inspection the hinge is not sliced correctly and would not work as a hinge..\r\n\r\nAlso asked this on Reddit: https://www.reddit.com/r/prusa3d/comments/xusdyq/prusaslicer_25_step_import_excludes_big_chunk_of/\n\n### Project file & How to reproduce\n\n[Relevant project files.zip (includes faulty STEP file and working STL file)](https://github.com/prusa3d/PrusaSlicer/files/9701317/Bug.report.STEP.import.not.behaving.zip)\r\n\r\n---\r\n\r\n### Screenshots\r\n\r\n**1. Unsliced - PS 2.5 warns that the STEP file has 127 open edges:**\r\n![image](https://user-images.githubusercontent.com/30589433/193694089-247aa02c-07d5-4c8f-897d-911a084b9a3d.png)\r\n\r\n---\r\n\r\n**2. Slicing as is makes this huge horizontal gap in this one part:**\r\n![image](https://user-images.githubusercontent.com/30589433/193694213-8badcf44-d442-4057-a28e-aa27478aa721.png)\r\n\r\n---\r\n\r\n**3. Tried the option \"Fix through the Netfabb\", but then the model is missing an indentation-feature on the hinge:**\r\n![image](https://user-images.githubusercontent.com/30589433/193694268-e8c10fe0-a088-4703-9501-16d9b6756706.png)\r\n\n\n### Checklist of files included above\n\n- [X] Project file\n- [X] Screenshot\n\n### Version of PrusaSlicer\n\n2.5.0\n\n### Operating system\n\nWindows 11\n\n### Printer model\n\nPrusa i3 MK3S","closed_by":null,"reactions":{"url":"https://api.github.com/repos/prusa3d/PrusaSlicer/issues/8998/reactions","total_count":0,"+1":0,"-1":0,"laugh":0,"hooray":0,"confused":0,"heart":0,"rocket":0,"eyes":0},"timeline_url":"https://api.github.com/repos/prusa3d/PrusaSlicer/issues/8998/timeline","performed_via_github_app":null,"state_reason":null,"pinned_comment":null}
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "provenance and bounded governing evidence; not original response",
+  "source_urls": [
+    "https://api.github.com/repos/prusa3d/PrusaSlicer/issues/8998",
+    "https://github.com/prusa3d/PrusaSlicer/issues/8998"
+  ],
+  "original_public_path": "assessment/A7-01/treatment-v1/evidence/P13-step-issue.json",
+  "original_public_sha256": "4eb67d81bcb241066cd0042ca3e0c71c047e2c34abe966f62965df2442175542",
+  "original_public_bytes": 4772,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A7-01/treatment-v1/evidence/P13-step-issue.json",
+  "classification_basis": "fetched GitHub API response / converted API response",
+  "original_selectors": [
+    {
+      "source_id": "P13",
+      "field": "locator",
+      "selector": "Issue description; comments 1267796232, 1267802168, 1268566562, 1359148435, 1368024449, 5731454045"
+    }
+  ],
+  "governing_summaries_from_existing_authored_source_records": [
+    {
+      "title": "Prusa STEP issue #8998 and complete comments",
+      "version_or_commit": "Original 2.5.0 report; September 2026 Flathub beta exact build UNKNOWN",
+      "locator": "Issue description; comments 1267796232, 1267802168, 1268566562, 1359148435, 1368024449, 5731454045",
+      "accessed_at_utc": [
+        "2026-10-10T04:55:23.947657+00:00",
+        "2026-10-10T04:55:23.953750+00:00"
+      ],
+      "governing_conditions_and_applicability": "Supports missing STEP detail/open-edge history, maintainer OpenCASCADE attribution and the later unpinned Owl report. The Owl follow-up is a different named example in the same thread, not proof the original hinge defect persists. The final keeps both reports bounded and proposes actual selected-build shape checks.",
+      "authored_source_map": "assessment/A7-01/treatment-v1/source-map.json",
+      "source_id": "P13"
+    },
+    {
+      "accessed_at_utc": "2026-10-10T04:55:23.947657+00:00",
+      "authored_source_map": "assessment/A7-01/treatment-v1/evidence/retrieval-record.json",
+      "source_id": "P13-step-issue"
+    }
+  ],
+  "selected_api_metadata": [
+    {
+      "url": "https://api.github.com/repos/prusa3d/PrusaSlicer/issues/8998",
+      "html_url": "https://github.com/prusa3d/PrusaSlicer/issues/8998",
+      "id": 1395393232,
+      "number": 8998,
+      "title": "UNKNOWN; long source title retained only in private original",
+      "created_at": "2022-10-03T22:07:18Z",
+      "updated_at": "2026-09-18T14:28:02Z",
+      "closed_at": null,
+      "state": "open",
+      "state_reason": null,
+      "original_json_locator": "$"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY_AND_METADATA; full body coverage UNKNOWN",
+  "omission": "Full fetched body, API ancillary fields and unmechanically summarizable body details are archived privately. Original source URL and selectors govern; unsupported/missing semantic coverage is UNKNOWN. No candidate finding or independent judgment is repaired.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

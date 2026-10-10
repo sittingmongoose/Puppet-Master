@@ -1,44 +1,174 @@
-URL: https://github.com/tus/tusd/releases/tag/v2.5.0
-Original locator: ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-TUSD-01.txt
-Original SHA256: 8b731c92270c2cb189694b88b5d3dd3960d7ea3fb0e317243422222318e21826
-Original numbered lines; gaps omitted. Not full response.
-
-1: Release v2.5.0 · tus/tusd · GitHub
-109: v2.5.0
-110: v2.5.0
-111: Compare
-112: Choose a tag to compare
-113: Sorry, something went wrong.
-114: Filter
-115: Loading
-116: Sorry, something went wrong.
-117: Uh oh!
-118: There was an error while loading. Please reload this page.
-119: No results found
-120: View all tags
-121: Acconut
-122: released this
-123: 10 Sep 08:21
-124: ·
-125: 148 commits
-126: to main
-127: since this release
-128: v2.5.0
-129: c5d5b0a
-130: This commit was signed with the committer’s verified signature.
-131: Acconut
-132: Marius Kleidl
-133: GPG key ID: 2F8AC5B12D755265
-134: Verified
-135: Learn about vigilant mode.
-136: What's Changed
-137: Features
-138: s3store: Allow + in object IDs by @OwynWang in #1123
-139: filestore: Allow customising the storage path by @Acconut in #1083
-140: filestore: Expose .info path to hooks by @Acconut in #1162
-141: Bug fixes
-142: cli: Adjust logging format from plugin hooks to CLI's format by @amiremohamadi in #1108
-143: filestore: Fix graceful termination when deleting upload by @blmhemu in #1120
-144: gcsstore: Fix error creating new uploads by @emilaleksanteri in #1131
-145: filelocker: Emit 404 if directory for lock does not exist by @Acconut in #1149
-153: Full Changelog: v2.4.0...v2.5.0
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://github.com/tus/tusd/releases/tag/v2.5.0"
+  ],
+  "original_public_path": "assessment/A4-01/control-v1/public-governing-excerpts/I-TUSD-01-8b731c92.txt",
+  "original_public_sha256": "7f538e50549c902cfc7ad6bb4ff5a4de634f0dd189125afb9f2cdfe0072bbb3d",
+  "original_public_bytes": 1527,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A4-01/control-v1/public-governing-excerpts/I-TUSD-01-8b731c92.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-TUSD-01.txt",
+      "original_sha256": "8b731c92270c2cb189694b88b5d3dd3960d7ea3fb0e317243422222318e21826",
+      "original_bytes": 3904,
+      "original_line_numbers": [
+        1,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        153
+      ],
+      "original_locators": [
+        {
+          "locator": "Release tag/commit local lines 110–145; independent release API published_at/created_at."
+        },
+        {
+          "saved_text_lines": [
+            1,
+            109,
+            110,
+            128,
+            153
+          ]
+        },
+        {
+          "anchor": "v2.5.0",
+          "matched_original_line": 1
+        },
+        {
+          "anchor": "v2.5.0",
+          "matched_original_line": 109
+        },
+        {
+          "anchor": "v2.5.0",
+          "matched_original_line": 110
+        },
+        {
+          "anchor": "v2.5.0",
+          "matched_original_line": 128
+        },
+        {
+          "anchor": "v2.5.0",
+          "matched_original_line": 153
+        },
+        {
+          "saved_text_lines": [
+            129
+          ]
+        },
+        {
+          "anchor": "c5d5b0a",
+          "matched_original_line": 129
+        },
+        {
+          "locator": "Release tag/commit local lines 110–145; independent release API published_at/created_at."
+        },
+        {
+          "saved_text_lines": [
+            1,
+            109,
+            110,
+            128,
+            153
+          ]
+        },
+        {
+          "anchor": "v2.5.0",
+          "matched_original_line": 1
+        },
+        {
+          "anchor": "v2.5.0",
+          "matched_original_line": 109
+        },
+        {
+          "anchor": "v2.5.0",
+          "matched_original_line": 110
+        },
+        {
+          "anchor": "v2.5.0",
+          "matched_original_line": 128
+        },
+        {
+          "anchor": "v2.5.0",
+          "matched_original_line": 153
+        },
+        {
+          "saved_text_lines": [
+            129
+          ]
+        },
+        {
+          "anchor": "c5d5b0a",
+          "matched_original_line": 129
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A4-01/control-v1/source-map.json",
+      "source_id": "I-TUSD-01",
+      "title": "tusd v2.5.0 release",
+      "retrieved_at_utc": "2026-10-10T04:25:10.661809+00:00",
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "v2.5.0",
+          "saved_text_lines": [
+            1,
+            109,
+            110,
+            128,
+            153
+          ]
+        },
+        {
+          "anchor": "c5d5b0a",
+          "saved_text_lines": [
+            129
+          ]
+        }
+      ]
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

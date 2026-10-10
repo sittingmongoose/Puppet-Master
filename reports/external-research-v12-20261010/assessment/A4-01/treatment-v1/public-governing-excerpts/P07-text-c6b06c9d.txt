@@ -1,26 +1,336 @@
-URL: https://uppy.io/docs/aws-s3/
-Original locator: ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P07-text.txt
-Original SHA256: c6b06c9dbeeec754407021898b520eeff276cb8c16f8e1e4eb7eeec4302de7b5
-Original numbered lines; gaps omitted. Not full response.
-
-37: signRequestyour own codean endpoint returning a presigned URL per operation
-57: requests themselves. For a file of a couple of kilobytes with 100 ms
-59: default shouldUseMultipart, which uses multipart only for large files.
-61: signRequest keeps your credentials on your server and
-96: async signRequest({ method, key, uploadId, partNumber }) {
-109: bucket, and object key. See signRequest for the
-173: shouldUseMultipart(file)​
-176: (boolean | function, default: files larger than 100 MiB).
-179: shouldUseMultipart(file) {
-180: return file.size > 100 * 2 ** 20;
-204: return Math.max(5 * 2 ** 20, file.size / 1000);
-214: The key generated here is a proposal. With signRequest,
-218: signRequest(request)​
-238: in your bucket’s CORS AllowedHeaders (see
-248: If shouldUseMultipart is false for every file,
-269: use signRequest or
-300: you use signRequest or
-314: signRequest there is nothing to configure, as your
-347: "AllowedHeaders": ["content-type"],
-365: AllowedHeaders has to list every header Uppy sets on the request. That is
-366: content-type, plus any header your signRequest
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://uppy.io/docs/aws-s3/"
+  ],
+  "original_public_path": "assessment/A4-01/treatment-v1/public-governing-excerpts/P07-text-c6b06c9d.txt",
+  "original_public_sha256": "1499ddcfb9b7235f232165cb849c09369d734c1458b7ab6c2afaf9343ca8717a",
+  "original_public_bytes": 1353,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A4-01/treatment-v1/public-governing-excerpts/P07-text-c6b06c9d.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P07-text.txt",
+      "original_sha256": "c6b06c9dbeeec754407021898b520eeff276cb8c16f8e1e4eb7eeec4302de7b5",
+      "original_bytes": 17534,
+      "original_line_numbers": [
+        37,
+        57,
+        59,
+        61,
+        96,
+        109,
+        173,
+        176,
+        179,
+        180,
+        204,
+        214,
+        218,
+        238,
+        248,
+        269,
+        300,
+        314,
+        347,
+        365,
+        366
+      ],
+      "original_locators": [
+        {
+          "text_lines": [
+            57,
+            176,
+            180,
+            204
+          ]
+        },
+        {
+          "anchor": "100",
+          "matched_original_line": 57
+        },
+        {
+          "anchor": "100",
+          "matched_original_line": 176
+        },
+        {
+          "anchor": "100",
+          "matched_original_line": 180
+        },
+        {
+          "anchor": "100",
+          "matched_original_line": 204
+        },
+        {
+          "text_lines": [
+            59,
+            173,
+            179,
+            248
+          ]
+        },
+        {
+          "anchor": "shouldUseMultipart",
+          "matched_original_line": 59
+        },
+        {
+          "anchor": "shouldUseMultipart",
+          "matched_original_line": 173
+        },
+        {
+          "anchor": "shouldUseMultipart",
+          "matched_original_line": 179
+        },
+        {
+          "anchor": "shouldUseMultipart",
+          "matched_original_line": 248
+        },
+        {
+          "text_lines": [
+            37,
+            61,
+            96,
+            109,
+            214,
+            218
+          ]
+        },
+        {
+          "anchor": "signRequest",
+          "matched_original_line": 37
+        },
+        {
+          "anchor": "signRequest",
+          "matched_original_line": 61
+        },
+        {
+          "anchor": "signRequest",
+          "matched_original_line": 96
+        },
+        {
+          "anchor": "signRequest",
+          "matched_original_line": 109
+        },
+        {
+          "anchor": "signRequest",
+          "matched_original_line": 214
+        },
+        {
+          "anchor": "signRequest",
+          "matched_original_line": 218
+        },
+        {
+          "anchor": "signRequest",
+          "matched_original_line": 269
+        },
+        {
+          "anchor": "signRequest",
+          "matched_original_line": 300
+        },
+        {
+          "anchor": "signRequest",
+          "matched_original_line": 314
+        },
+        {
+          "anchor": "signRequest",
+          "matched_original_line": 366
+        },
+        {
+          "text_lines": [
+            238,
+            347,
+            365
+          ]
+        },
+        {
+          "anchor": "AllowedHeaders",
+          "matched_original_line": 238
+        },
+        {
+          "anchor": "AllowedHeaders",
+          "matched_original_line": 347
+        },
+        {
+          "anchor": "AllowedHeaders",
+          "matched_original_line": 365
+        },
+        {
+          "text_lines": [
+            57,
+            176,
+            180,
+            204
+          ]
+        },
+        {
+          "anchor": "100",
+          "matched_original_line": 57
+        },
+        {
+          "anchor": "100",
+          "matched_original_line": 176
+        },
+        {
+          "anchor": "100",
+          "matched_original_line": 180
+        },
+        {
+          "anchor": "100",
+          "matched_original_line": 204
+        },
+        {
+          "text_lines": [
+            59,
+            173,
+            179,
+            248
+          ]
+        },
+        {
+          "anchor": "shouldUseMultipart",
+          "matched_original_line": 59
+        },
+        {
+          "anchor": "shouldUseMultipart",
+          "matched_original_line": 173
+        },
+        {
+          "anchor": "shouldUseMultipart",
+          "matched_original_line": 179
+        },
+        {
+          "anchor": "shouldUseMultipart",
+          "matched_original_line": 248
+        },
+        {
+          "text_lines": [
+            37,
+            61,
+            96,
+            109,
+            214,
+            218
+          ]
+        },
+        {
+          "anchor": "signRequest",
+          "matched_original_line": 37
+        },
+        {
+          "anchor": "signRequest",
+          "matched_original_line": 61
+        },
+        {
+          "anchor": "signRequest",
+          "matched_original_line": 96
+        },
+        {
+          "anchor": "signRequest",
+          "matched_original_line": 109
+        },
+        {
+          "anchor": "signRequest",
+          "matched_original_line": 214
+        },
+        {
+          "anchor": "signRequest",
+          "matched_original_line": 218
+        },
+        {
+          "anchor": "signRequest",
+          "matched_original_line": 269
+        },
+        {
+          "anchor": "signRequest",
+          "matched_original_line": 300
+        },
+        {
+          "anchor": "signRequest",
+          "matched_original_line": 314
+        },
+        {
+          "anchor": "signRequest",
+          "matched_original_line": 366
+        },
+        {
+          "text_lines": [
+            238,
+            347,
+            365
+          ]
+        },
+        {
+          "anchor": "AllowedHeaders",
+          "matched_original_line": 238
+        },
+        {
+          "anchor": "AllowedHeaders",
+          "matched_original_line": 347
+        },
+        {
+          "anchor": "AllowedHeaders",
+          "matched_original_line": 365
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A4-01/treatment-v1/source-map.json",
+      "source_id": "P07",
+      "accessed_utc": "2026-10-10T04:41:54.143885+00:00",
+      "version_or_commit_observed": "Live unversioned Uppy AWS S3 docs; CDN example v5.2.1 is not a page-version pin",
+      "locator": "Signing/CORS / shouldUseMultipart / getChunkSize",
+      "locators": [
+        {
+          "anchor": "100",
+          "text_lines": [
+            57,
+            176,
+            180,
+            204
+          ],
+          "primary_heading_or_json_field": "Signing/CORS / shouldUseMultipart / getChunkSize"
+        },
+        {
+          "anchor": "shouldUseMultipart",
+          "text_lines": [
+            59,
+            173,
+            179,
+            248
+          ],
+          "primary_heading_or_json_field": "Signing/CORS / shouldUseMultipart / getChunkSize"
+        },
+        {
+          "anchor": "signRequest",
+          "text_lines": [
+            37,
+            61,
+            96,
+            109,
+            214,
+            218
+          ],
+          "primary_heading_or_json_field": "Signing/CORS / shouldUseMultipart / getChunkSize"
+        },
+        {
+          "anchor": "AllowedHeaders",
+          "text_lines": [
+            238,
+            347,
+            365
+          ],
+          "primary_heading_or_json_field": "Signing/CORS / shouldUseMultipart / getChunkSize"
+        }
+      ],
+      "conditions_defaults_units_types_exceptions": "Use exactly one signing mode; browser-forbidden headers cannot be signed for JavaScript setting; CORS/exposed ETag and client release must match. Empty files use single request; final pilot starts at 20 MB.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

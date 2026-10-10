@@ -21,5 +21,5 @@
   "malformed_original_json_diagnostics": [
     "runs/A3-02/control/stages/reviser/native-goal-active-confirmation.json"
   ],
-  "scope": "All final public file contents, including receipts/prompts/nested source JSON strings, manifests/checksums; Explicit actual source JSON exceptions are preserved in validation/JSON_PARSE_EXCEPTIONS.json, including the zero-byte GLM diagnostic and the extra-data native confirmation diagnostic."
+  "scope": "Exact all-public content scan after source-body repair v1, including provenance, inventories and generated checks; original documented JSON diagnostics preserved."
 }

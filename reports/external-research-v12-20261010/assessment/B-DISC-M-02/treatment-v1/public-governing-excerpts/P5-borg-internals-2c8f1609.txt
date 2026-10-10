@@ -1,25 +1,109 @@
-URL: https://borgbackup.readthedocs.io/en/stable/internals.html
-Original locator: ER12_RUNTIME/assessment/B-DISC-M-02/treatment-v1/primary-evidence/P5-borg-internals.txt
-Original SHA256: 2c8f16098f82d26892c31949ac79978afa0027c3295b6dcd1e6f98eef2a472f4
-Original numbered lines; gaps omitted. Not full response.
-
-31: 0031: Borg uses a low-level, key-value store, the Repository, and
-32: 0032: implements a more complex data structure on top of it, which is made
-33: 0033: up of the manifest, archives,
-34: 0034: items and data Chunks.
-35: 0035: Each repository can hold multiple archives, which
-36: 0036: represent individual backups that contain a full archive of the files
-37: 0037: specified when the backup was performed.
-38: 0038: Deduplication is performed globally across all data in the repository
-39: 0039: (multiple backups and even multiple hosts), both on data and file
-40: 0040: metadata, using Chunks created by the chunker using the
-41: 0041: Buzhash algorithm (“buzhash” chunker) or a simpler fixed block size
-42: 0042: algorithm (“fixed” chunker).
-43: 0043: To actually perform the repository-wide deduplication, a hash of each
-44: 0044: chunk is checked against the chunks cache, which is a
-45: 0045: hash table of all chunks that already exist.
-46: 0046: Layers in Borg. On the very top commands are implemented, using
-47: 0047: a data access layer provided by the Archive and Item classes.
-48: 0048: The “key” object provides both compression and authenticated
-49: 0049: encryption used by the data access layer. The “key” object represents
-50: 0050: the sole trust boundary in Borg.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://borgbackup.readthedocs.io/en/stable/internals.html"
+  ],
+  "original_public_path": "assessment/B-DISC-M-02/treatment-v1/public-governing-excerpts/P5-borg-internals-2c8f1609.txt",
+  "original_public_sha256": "535fe08cf187845fffe7748f09b0a1f44303e40b6b377833612e5917d041b1cb",
+  "original_public_bytes": 1618,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/B-DISC-M-02/treatment-v1/public-governing-excerpts/P5-borg-internals-2c8f1609.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/B-DISC-M-02/treatment-v1/primary-evidence/P5-borg-internals.txt",
+      "original_sha256": "2c8f16098f82d26892c31949ac79978afa0027c3295b6dcd1e6f98eef2a472f4",
+      "original_bytes": 3522,
+      "original_line_numbers": [
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50
+      ],
+      "original_locators": [
+        {
+          "text_lines": [
+            31,
+            50
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/B-DISC-M-02/treatment-v1/primary-evidence/P5-borg-internals.txt",
+      "original_sha256": "2c8f16098f82d26892c31949ac79978afa0027c3295b6dcd1e6f98eef2a472f4",
+      "original_bytes": 3522,
+      "original_line_numbers": [
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50
+      ],
+      "original_locators": [
+        {
+          "text_lines": [
+            31,
+            50
+          ]
+        },
+        {
+          "text_lines": [
+            31,
+            50
+          ]
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/B-DISC-M-02/treatment-v1/source-map.json",
+      "source_id": "P5-borg-internals",
+      "version": "BorgBackup 1.4.5 stable documentation",
+      "locators": [
+        {
+          "section": "Repository-wide deduplication, Buzhash/fixed, chunks cache",
+          "text_lines": [
+            31,
+            50
+          ]
+        }
+      ]
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

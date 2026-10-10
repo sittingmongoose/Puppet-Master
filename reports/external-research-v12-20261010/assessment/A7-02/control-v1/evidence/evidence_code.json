@@ -1,4 +1,133 @@
 {
-  "method": "Independent web.run retrieval; public primary sources; tool-returned extract retained.",
-  "result": " (https://raw.githubusercontent.com/JabRef/jabref/d687c08/jablib/src/main/java/org/jabref/logic/layout/format/FirstPage.java)\nciteturn6view0 [wordlim: 200] Crawled: today; Content type: text/plain; Source: open({\"ref_id\":\"https://raw.githubusercontent.com/JabRef/jabref/d687c08/jablib/src/main/java/org/jabref/logic/layout/format/FirstPage.java\",\"lineno\":null}); Total lines: 22\nL0: package org.jabref.logic.layout.format;\nL1: \nL2: import org.jabref.logic.layout.LayoutFormatter;\nL3: \nL4: /// Formatter that returns the first page from the \"pages\" field, if set.\nL5: ///\nL6: /// For instance, if the pages field is set to \"345-360\" or \"345--360\",\nL7: /// this formatter will return \"345\".\nL8: public class FirstPage implements LayoutFormatter {\nL9:     @Override\nL10:     public String format(String s) {\nL11:         if (s == null) {\nL12:             return \"\";\nL13:         }\nL14:         String[] pageParts = s.split(\"[ \\\\-\\u2013\\u2014]+\");\nL15:         if (pageParts.length == 2) {\nL16:             return pageParts[0];\nL17:         } else {\nL18:             return s;\nL19:         }\nL20:     }\nL21: }\n--------------------------------------------------------------------------------\n (https://raw.githubusercontent.com/JabRef/jabref/d687c08/jablib/src/main/java/org/jabref/logic/layout/format/LastPage.java)\nciteturn6view1 [wordlim: 200] Crawled: today; Content type: text/plain; Source: open({\"ref_id\":\"https://raw.githubusercontent.com/JabRef/jabref/d687c08/jablib/src/main/java/org/jabref/logic/layout/format/LastPage.java\",\"lineno\":null}); Total lines: 24\nL0: package org.jabref.logic.layout.format;\nL1: \nL2: import org.jabref.logic.layout.LayoutFormatter;\nL3: \nL4: /// Formatter that returns the last page from the \"pages\" field, if set.\nL5: ///\nL6: /// For instance, if the pages field is set to \"345-360\" or \"345--360\",\nL7: /// this formatter will return \"360\".\nL8: public class LastPage implements LayoutFormatter {\nL9:     @Override\nL10:     public String format(String s) {\nL11:         if (s == null) {\nL12:             return \"\";\nL13:         }\nL14:         String[] pageParts = s.split(\"[ \\\\-\\u2013\\u2014]+\");\nL15:         if (pageParts.length == 2) {\nL16:             return pageParts[1];\nL17:         } else if (pageParts.length >= 1) {\nL18:             return pageParts[0];\nL19:         } else {\nL20:             return \"\";\nL21:         }\nL22:     }\nL23: }\n--------------------------------------------------------------------------------\n (https://raw.githubusercontent.com/JabRef/jabref/d687c08/jablib/src/test/java/org/jabref/logic/layout/format/FirstPageTest.java)\nciteturn6view2 [wordlim: 200] Crawled: today; Content type: text/plain; Source: open({\"ref_id\":\"https://raw.githubusercontent.com/JabRef/jabref/d687c08/jablib/src/test/java/org/jabref/logic/layout/format/FirstPageTest.java\",\"lineno\":null}); Total lines: 33\nL0: package org.jabref.logic.layout.format;\nL1: \nL2: import java.util.stream.Stream;\nL3: \nL4: import org.jabref.logic.layout.LayoutFormatter;\nL5: \nL6: import org.junit.jupiter.params.ParameterizedTest;\nL7: import org.junit.jupiter.params.provider.Arguments;\nL8: import org.junit.jupiter.params.provider.MethodSource;\nL9: \nL10: import static org.junit.jupiter.api.Assertions.assertEquals;\nL11: \nL12: class FirstPageTest {\nL13: \nL14:     private LayoutFormatter firstPageLayoutFormatter = new FirstPage();\nL15:     @ParameterizedTest\nL16:     @MethodSource(\"providePages\")\nL17:     void formatPages(String formattedFirstPage, String originalPages) {\nL18:         assertEquals(formattedFirstPage, firstPageLayoutFormatter.format(originalPages));\nL19:     }\nL20:     private static Stream<Arguments> providePages() {\nL21:         return Stream.of(\nL22:                 Arguments.of(\"\", \"\"),\nL23:                 Arguments.of(\"\", null),\nL24:                 Arguments.of(\"345\", \"345\"),\nL25:                 Arguments.of(\"345\", \"345-350\"),\nL26:                 Arguments.of(\"345\", \"345--350\"),\nL27:                 Arguments.of(\"13905\", \"13905\\u201313911\"),\nL28:                 Arguments.of(\"13905\", \"13905\\u201413911\"),\nL29:                 Arguments.of(\"13905\", \"13905 \\u2013 13911\")\nL30:         );\nL31:     }\nL32: }\n--------------------------------------------------------------------------------\n (https://raw.githubusercontent.com/JabRef/jabref/d687c08/jablib/src/test/java/org/jabref/logic/layout/format/LastPageTest.java)\nciteturn6view3 [wordlim: 200] Crawled: today; Content type: text/plain; Source: open({\"ref_id\":\"https://raw.githubusercontent.com/JabRef/jabref/d687c08/jablib/src/test/java/org/jabref/logic/layout/format/LastPageTest.java\",\"lineno\":null}); Total lines: 34\nL0: package org.jabref.logic.layout.format;\nL1: \nL2: import java.util.stream.Stream;\nL3: \nL4: import org.jabref.logic.layout.LayoutFormatter;\nL5: \nL6: import org.junit.jupiter.params.ParameterizedTest;\nL7: import org.junit.jupiter.params.provider.Arguments;\nL8: import org.junit.jupiter.params.provider.MethodSource;\nL9: \nL10: import static org.junit.jupiter.api.Assertions.assertEquals;\nL11: \nL12: class LastPageTest {\nL13: \nL14:     private LayoutFormatter lastPageLayoutFormatter = new LastPage();\nL15:     @ParameterizedTest\nL16:     @MethodSource(\"provideArguments\")\nL17:     void formatLastPage(String formattedText, String originalText) {\nL18:         assertEquals(formattedText, lastPageLayoutFormatter.format(originalText));\nL19:     }\nL20:     private static Stream<Arguments> provideArguments() {\nL21:         return Stream.of(\nL22:                 Arguments.of(\"\", \"\"),\nL23:                 Arguments.of(\"\", null),\nL24:                 Arguments.of(\"345\", \"345\"),\nL25:                 Arguments.of(\"350\", \"345-350\"),\nL26:                 Arguments.of(\"350\", \"345--350\"),\nL27:                 Arguments.of(\"\", \"--\"),\nL28:                 Arguments.of(\"13911\", \"13905\\u201313911\"),\nL29:                 Arguments.of(\"13911\", \"13905\\u201413911\"),\nL30:                 Arguments.of(\"13911\", \"13905 \\u2013 13911\")\nL31:         );\nL32:     }\nL33: }\n"
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "provenance and bounded governing evidence; not original response",
+  "source_urls": [
+    "https://raw.githubusercontent.com/JabRef/jabref/d687c08/jablib/src/main/java/org/jabref/logic/layout/format/FirstPage.java",
+    "https://raw.githubusercontent.com/JabRef/jabref/d687c08/jablib/src/main/java/org/jabref/logic/layout/format/LastPage.java",
+    "https://raw.githubusercontent.com/JabRef/jabref/d687c08/jablib/src/test/java/org/jabref/logic/layout/format/FirstPageTest.java",
+    "https://raw.githubusercontent.com/JabRef/jabref/d687c08/jablib/src/test/java/org/jabref/logic/layout/format/LastPageTest.java"
+  ],
+  "original_public_path": "assessment/A7-02/control-v1/evidence/evidence_code.json",
+  "original_public_sha256": "6745c88dc0249f003476e63e2eb340127ba216bd73d5b9fab1d499aa8bc290a6",
+  "original_public_bytes": 6394,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A7-02/control-v1/evidence/evidence_code.json",
+  "classification_basis": "converted web retrieval tool response containing third-party source bodies",
+  "original_selectors": [
+    {
+      "source_id": "S21",
+      "field": "lines",
+      "selector": 20
+    },
+    {
+      "source_id": "S21-1",
+      "field": "lines",
+      "selector": 22
+    },
+    {
+      "source_id": "S21-2",
+      "field": "lines",
+      "selector": 27
+    },
+    {
+      "source_id": "S21-3",
+      "field": "lines",
+      "selector": 28
+    },
+    {
+      "source_id": "R21",
+      "field": "independent_locator",
+      "selector": "FirstPage/LastPage format methods and FirstPageTest/LastPageTest provide arguments; all four captures complete"
+    },
+    {
+      "source_id": "S21",
+      "field": "lines",
+      "selector": 20
+    },
+    {
+      "source_id": "S21-1",
+      "field": "lines",
+      "selector": 22
+    },
+    {
+      "source_id": "S21-2",
+      "field": "lines",
+      "selector": 27
+    },
+    {
+      "source_id": "S21-3",
+      "field": "lines",
+      "selector": 28
+    }
+  ],
+  "governing_summaries_from_existing_authored_source_records": [
+    {
+      "retrieved_at_utc": "2026-10-10T05:14:11.029471+00:00",
+      "lines": 20,
+      "authored_source_map": "assessment/A7-02/control-v1/retrieval-manifest.json",
+      "source_id": "S21"
+    },
+    {
+      "retrieved_at_utc": "2026-10-10T05:14:11.135830+00:00",
+      "lines": 22,
+      "authored_source_map": "assessment/A7-02/control-v1/retrieval-manifest.json",
+      "source_id": "S21-1"
+    },
+    {
+      "retrieved_at_utc": "2026-10-10T05:14:11.235791+00:00",
+      "lines": 27,
+      "authored_source_map": "assessment/A7-02/control-v1/retrieval-manifest.json",
+      "source_id": "S21-2"
+    },
+    {
+      "retrieved_at_utc": "2026-10-10T05:14:11.377474+00:00",
+      "lines": 28,
+      "authored_source_map": "assessment/A7-02/control-v1/retrieval-manifest.json",
+      "source_id": "S21-3"
+    },
+    {
+      "title": "JabRef formatter source/test domain",
+      "version_or_commit": "Raw text at merge commit d687c08",
+      "independent_locator": "FirstPage/LastPage format methods and FirstPageTest/LastPageTest provide arguments; all four captures complete",
+      "retrieved_at_utc": "2026-10-10T05:14:11.029471+00:00",
+      "governing_conditions_defaults_types_units_exceptions": "Regex splits spaces, ASCII hyphen and U+2013/U+2014. FirstPage takes first only for exactly two parts, otherwise input; LastPage takes last for two, first for other nonempty parts, empty for null/no parts. Tests cover 345 ASCII single/double ranges and 13905 Unicode ranges including spaced en dash.",
+      "applicability_judgment": "Final accurately limits tests to helpers and names full RIS normalization/export as unrun. It does not generalize to discontinuous ranges or every page field.",
+      "authored_source_map": "assessment/A7-02/control-v1/source-map.json",
+      "source_id": "R21"
+    },
+    {
+      "retrieved_at_utc": "2026-10-10T05:14:11.029471+00:00",
+      "lines": 20,
+      "authored_source_map": "assessment/A7-02/control-v1/source-map.json",
+      "source_id": "S21"
+    },
+    {
+      "retrieved_at_utc": "2026-10-10T05:14:11.135830+00:00",
+      "lines": 22,
+      "authored_source_map": "assessment/A7-02/control-v1/source-map.json",
+      "source_id": "S21-1"
+    },
+    {
+      "retrieved_at_utc": "2026-10-10T05:14:11.235791+00:00",
+      "lines": 27,
+      "authored_source_map": "assessment/A7-02/control-v1/source-map.json",
+      "source_id": "S21-2"
+    },
+    {
+      "retrieved_at_utc": "2026-10-10T05:14:11.377474+00:00",
+      "lines": 28,
+      "authored_source_map": "assessment/A7-02/control-v1/source-map.json",
+      "source_id": "S21-3"
+    }
+  ],
+  "selected_api_metadata": [],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY_AND_METADATA; full body coverage UNKNOWN",
+  "omission": "Full fetched body, API ancillary fields and unmechanically summarizable body details are archived privately. Original source URL and selectors govern; unsupported/missing semantic coverage is UNKNOWN. No candidate finding or independent judgment is repaired.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false,
+  "original_tool_source_urls": [
+    "https://raw.githubusercontent.com/JabRef/jabref/d687c08/jablib/src/main/java/org/jabref/logic/layout/format/FirstPage.java",
+    "https://raw.githubusercontent.com/JabRef/jabref/d687c08/jablib/src/main/java/org/jabref/logic/layout/format/LastPage.java",
+    "https://raw.githubusercontent.com/JabRef/jabref/d687c08/jablib/src/test/java/org/jabref/logic/layout/format/FirstPageTest.java",
+    "https://raw.githubusercontent.com/JabRef/jabref/d687c08/jablib/src/test/java/org/jabref/logic/layout/format/LastPageTest.java"
+  ]
 }

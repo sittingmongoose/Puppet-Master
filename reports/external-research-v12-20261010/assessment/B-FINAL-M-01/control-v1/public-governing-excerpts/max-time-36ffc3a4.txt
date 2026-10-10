@@ -1,12 +1,151 @@
-URL: https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/max-time.md#L21-L27
-Original locator: ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/max-time.md
-Original SHA256: 36ffc3a4f0b6615359c480f9bc1bb5e5f22d5a59cfbcd6439e0a363d4b8b948b
-Original numbered lines; gaps omitted. Not full response.
-
-21: Set maximum time in seconds that you allow each transfer to take. Prevents
-22: your batch jobs from hanging for hours due to slow networks or links going
-23: down. This option accepts decimal values (added in 7.32.0).
-24: 
-25: If you enable retrying the transfer (--retry) then the maximum time counter is
-26: reset each time the transfer is retried. You can use --retry-max-time to limit
-27: the retry time.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/max-time.md#L21-L27",
+    "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/docs/cmdline-opts/max-time.md"
+  ],
+  "original_public_path": "assessment/B-FINAL-M-01/control-v1/public-governing-excerpts/max-time-36ffc3a4.txt",
+  "original_public_sha256": "68821c5e28fb34dfbdad4b5b0f2a36ffffa5809046a111860fd973f637b9d1e6",
+  "original_public_bytes": 738,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/B-FINAL-M-01/control-v1/public-governing-excerpts/max-time-36ffc3a4.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/max-time.md",
+      "original_sha256": "36ffc3a4f0b6615359c480f9bc1bb5e5f22d5a59cfbcd6439e0a363d4b8b948b",
+      "original_bytes": 884,
+      "original_line_numbers": [
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27
+      ],
+      "original_locators": [
+        {
+          "start_line": 21,
+          "end_line": 27
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/max-time.md#L21-L27"
+        },
+        {
+          "start_line": 21,
+          "end_line": 27
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/max-time.md#L21-L27"
+        },
+        {
+          "start_line": 21,
+          "end_line": 27
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/max-time.md#L21-L27"
+        },
+        {
+          "start_line": 21,
+          "end_line": 27
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/max-time.md#L21-L27"
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/max-time.md",
+      "original_sha256": "36ffc3a4f0b6615359c480f9bc1bb5e5f22d5a59cfbcd6439e0a363d4b8b948b",
+      "original_bytes": 884,
+      "original_line_numbers": [
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27
+      ],
+      "original_locators": [
+        {
+          "start_line": 21,
+          "end_line": 27
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/max-time.md#L21-L27"
+        },
+        {
+          "start_line": 21,
+          "end_line": 27
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/max-time.md#L21-L27"
+        },
+        {
+          "start_line": 21,
+          "end_line": 27
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/max-time.md#L21-L27"
+        },
+        {
+          "start_line": 21,
+          "end_line": 27
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/max-time.md#L21-L27"
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/max-time.md",
+      "original_sha256": "36ffc3a4f0b6615359c480f9bc1bb5e5f22d5a59cfbcd6439e0a363d4b8b948b",
+      "original_bytes": 884,
+      "original_line_numbers": [
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27
+      ],
+      "original_locators": [
+        {
+          "start_line": 21,
+          "end_line": 27
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/max-time.md#L21-L27"
+        },
+        {
+          "start_line": 21,
+          "end_line": 27
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/max-time.md#L21-L27"
+        },
+        {
+          "start_line": 21,
+          "end_line": 27
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/max-time.md#L21-L27"
+        },
+        {
+          "start_line": 21,
+          "end_line": 27
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/max-time.md#L21-L27"
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [],
+  "evidence_coverage": "UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

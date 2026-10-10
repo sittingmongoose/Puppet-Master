@@ -1,1 +1,96 @@
-[{"sha":"398e7e263b517c65fcdf0ed8f14892de55101bcc","filename":"application/src/main/java/org/opentripplanner/apis/gtfs/datafetchers/FeedImpl.java","status":"modified","additions":6,"deletions":0,"changes":6,"blob_url":"https://github.com/opentripplanner/OpenTripPlanner/blob/23dfb2646afffc67d7c4e3d71b50bc930df4672f/application%2Fsrc%2Fmain%2Fjava%2Forg%2Fopentripplanner%2Fapis%2Fgtfs%2Fdatafetchers%2FFeedImpl.java","raw_url":"https://github.com/opentripplanner/OpenTripPlanner/raw/23dfb2646afffc67d7c4e3d71b50bc930df4672f/application%2Fsrc%2Fmain%2Fjava%2Forg%2Fopentripplanner%2Fapis%2Fgtfs%2Fdatafetchers%2FFeedImpl.java","contents_url":"https://api.github.com/repos/opentripplanner/OpenTripPlanner/contents/application%2Fsrc%2Fmain%2Fjava%2Forg%2Fopentripplanner%2Fapis%2Fgtfs%2Fdatafetchers%2FFeedImpl.java?ref=23dfb2646afffc67d7c4e3d71b50bc930df4672f","patch":"@@ -66,6 +66,12 @@ public DataFetcher<String> feedId() {\n     return this::getSource;\n   }\n \n+  @Override\n+  public DataFetcher<String> version() {\n+    return environment ->\n+      getTransitService(environment).getFeedInfo(getSource(environment)).getVersion();\n+  }\n+\n   @Override\n   public DataFetcher<FeedPublisher> publisher() {\n     return environment -> {"},{"sha":"099caf5ef6aa09ae6aae27528a0fd8fcd81e66a3","filename":"application/src/main/java/org/opentripplanner/apis/gtfs/generated/GraphQLDataFetchers.java","status":"modified","additions":2,"deletions":0,"changes":2,"blob_url":"https://github.com/opentripplanner/OpenTripPlanner/blob/23dfb2646afffc67d7c4e3d71b50bc930df4672f/application%2Fsrc%2Fmain%2Fjava%2Forg%2Fopentripplanner%2Fapis%2Fgtfs%2Fgenerated%2FGraphQLDataFetchers.java","raw_url":"https://github.com/opentripplanner/OpenTripPlanner/raw/23dfb2646afffc67d7c4e3d71b50bc930df4672f/application%2Fsrc%2Fmain%2Fjava%2Forg%2Fopentripplanner%2Fapis%2Fgtfs%2Fgenerated%2FGraphQLDataFetchers.java","contents_url":"https://api.github.com/repos/opentripplanner/OpenTripPlanner/contents/application%2Fsrc%2Fmain%2Fjava%2Forg%2Fopentripplanner%2Fapis%2Fgtfs%2Fgenerated%2FGraphQLDataFetchers.java?ref=23dfb2646afffc67d7c4e3d71b50bc930df4672f","patch":"@@ -383,6 +383,8 @@ public interface GraphQLFeed {\n     public DataFetcher<Iterable<Agency>> agencies();\n     public DataFetcher<Iterable<TransitAlert>> alerts();\n     public DataFetcher<String> feedId();\n+\n+    public DataFetcher<String> version();\n     public DataFetcher<FeedPublisher> publisher();\n   }\n "},{"sha":"13586f8333c63d0b4ab68ca229e146f1d3b54f3f","filename":"application/src/main/resources/org/opentripplanner/apis/gtfs/schema.graphqls","status":"modified","additions":2,"deletions":0,"changes":2,"blob_url":"https://github.com/opentripplanner/OpenTripPlanner/blob/23dfb2646afffc67d7c4e3d71b50bc930df4672f/application%2Fsrc%2Fmain%2Fresources%2Forg%2Fopentripplanner%2Fapis%2Fgtfs%2Fschema.graphqls","raw_url":"https://github.com/opentripplanner/OpenTripPlanner/raw/23dfb2646afffc67d7c4e3d71b50bc930df4672f/application%2Fsrc%2Fmain%2Fresources%2Forg%2Fopentripplanner%2Fapis%2Fgtfs%2Fschema.graphqls","contents_url":"https://api.github.com/repos/opentripplanner/OpenTripPlanner/contents/application%2Fsrc%2Fmain%2Fresources%2Forg%2Fopentripplanner%2Fapis%2Fgtfs%2Fschema.graphqls?ref=23dfb2646afffc67d7c4e3d71b50bc930df4672f","patch":"@@ -654,6 +654,8 @@ type Feed {\n   feedId: String!\n   \"The publisher of the input transit data.\"\n   publisher: FeedPublisher\n+  \"The version of the dataset.\"\n+  version: String\n }\n \n \"Feed publisher information\""},{"sha":"2081790e7e0d6a2dc3e0c532ebe331e1973ef8f5","filename":"application/src/test-fixtures/java/org/opentripplanner/model/FeedInfoTestFactory.java","status":"modified","additions":1,"deletions":1,"changes":2,"blob_url":"https://github.com/opentripplanner/OpenTripPlanner/blob/23dfb2646afffc67d7c4e3d71b50bc930df4672f/application%2Fsrc%2Ftest-fixtures%2Fjava%2Forg%2Fopentripplanner%2Fmodel%2FFeedInfoTestFactory.java","raw_url":"https://github.com/opentripplanner/OpenTripPlanner/raw/23dfb2646afffc67d7c4e3d71b50bc930df4672f/application%2Fsrc%2Ftest-fixtures%2Fjava%2Forg%2Fopentripplanner%2Fmodel%2FFeedInfoTestFactory.java","contents_url":"https://api.github.com/repos/opentripplanner/OpenTripPlanner/contents/application%2Fsrc%2Ftest-fixtures%2Fjava%2Forg%2Fopentripplanner%2Fmodel%2FFeedInfoTestFactory.java?ref=23dfb2646afffc67d7c4e3d71b50bc930df4672f","patch":"@@ -3,6 +3,6 @@\n public class FeedInfoTestFactory {\n \n   public static FeedInfo dummyForTest(String id) {\n-    return new FeedInfo(id, \"publisher\", \"www.z.org\", \"en\", null, null, null);\n+    return new FeedInfo(id, \"publisher\", \"www.z.org\", \"en\", null, null, \"12345\");\n   }\n }"},{"sha":"ae1c8c7a5a95334c4c99ab26b49d5c3ea03ca35e","filename":"application/src/test/resources/org/opentripplanner/apis/gtfs/expectations/feedinfo.json","status":"modified","additions":2,"deletions":1,"changes":3,"blob_url":"https://github.com/opentripplanner/OpenTripPlanner/blob/23dfb2646afffc67d7c4e3d71b50bc930df4672f/application%2Fsrc%2Ftest%2Fresources%2Forg%2Fopentripplanner%2Fapis%2Fgtfs%2Fexpectations%2Ffeedinfo.json","raw_url":"https://github.com/opentripplanner/OpenTripPlanner/raw/23dfb2646afffc67d7c4e3d71b50bc930df4672f/application%2Fsrc%2Ftest%2Fresources%2Forg%2Fopentripplanner%2Fapis%2Fgtfs%2Fexpectations%2Ffeedinfo.json","contents_url":"https://api.github.com/repos/opentripplanner/OpenTripPlanner/contents/application%2Fsrc%2Ftest%2Fresources%2Forg%2Fopentripplanner%2Fapis%2Fgtfs%2Fexpectations%2Ffeedinfo.json?ref=23dfb2646afffc67d7c4e3d71b50bc930df4672f","patch":"@@ -11,7 +11,8 @@\n         \"publisher\": {\n           \"name\": \"publisher\",\n           \"url\": \"www.z.org\"\n-        }\n+        },\n+        \"version\": \"12345\"\n       }\n     ]\n   }"},{"sha":"aa89ed03ee9e192462bcc4b3568cb67f2e284404","filename":"application/src/test/resources/org/opentripplanner/apis/gtfs/queries/feedinfo.graphql","status":"modified","additions":1,"deletions":0,"changes":1,"blob_url":"https://github.com/opentripplanner/OpenTripPlanner/blob/23dfb2646afffc67d7c4e3d71b50bc930df4672f/application%2Fsrc%2Ftest%2Fresources%2Forg%2Fopentripplanner%2Fapis%2Fgtfs%2Fqueries%2Ffeedinfo.graphql","raw_url":"https://github.com/opentripplanner/OpenTripPlanner/raw/23dfb2646afffc67d7c4e3d71b50bc930df4672f/application%2Fsrc%2Ftest%2Fresources%2Forg%2Fopentripplanner%2Fapis%2Fgtfs%2Fqueries%2Ffeedinfo.graphql","contents_url":"https://api.github.com/repos/opentripplanner/OpenTripPlanner/contents/application%2Fsrc%2Ftest%2Fresources%2Forg%2Fopentripplanner%2Fapis%2Fgtfs%2Fqueries%2Ffeedinfo.graphql?ref=23dfb2646afffc67d7c4e3d71b50bc930df4672f","patch":"@@ -8,5 +8,6 @@\n       name\n       url\n     }\n+    version\n   }\n }"}]
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "provenance and bounded governing evidence; not original response",
+  "source_urls": [
+    "https://api.github.com/repos/opentripplanner/OpenTripPlanner/pulls/7445/files?per_page=100",
+    "https://github.com/opentripplanner/OpenTripPlanner/raw/23dfb2646afffc67d7c4e3d71b50bc930df4672f/application%2Fsrc%2Fmain%2Fjava%2Forg%2Fopentripplanner%2Fapis%2Fgtfs%2Fdatafetchers%2FFeedImpl.java",
+    "https://github.com/opentripplanner/OpenTripPlanner/raw/23dfb2646afffc67d7c4e3d71b50bc930df4672f/application%2Fsrc%2Fmain%2Fjava%2Forg%2Fopentripplanner%2Fapis%2Fgtfs%2Fgenerated%2FGraphQLDataFetchers.java",
+    "https://github.com/opentripplanner/OpenTripPlanner/raw/23dfb2646afffc67d7c4e3d71b50bc930df4672f/application%2Fsrc%2Fmain%2Fresources%2Forg%2Fopentripplanner%2Fapis%2Fgtfs%2Fschema.graphqls",
+    "https://github.com/opentripplanner/OpenTripPlanner/raw/23dfb2646afffc67d7c4e3d71b50bc930df4672f/application%2Fsrc%2Ftest%2Fresources%2Forg%2Fopentripplanner%2Fapis%2Fgtfs%2Fexpectations%2Ffeedinfo.json",
+    "https://github.com/opentripplanner/OpenTripPlanner/raw/23dfb2646afffc67d7c4e3d71b50bc930df4672f/application%2Fsrc%2Ftest%2Fresources%2Forg%2Fopentripplanner%2Fapis%2Fgtfs%2Fqueries%2Ffeedinfo.graphql",
+    "https://github.com/opentripplanner/OpenTripPlanner/raw/23dfb2646afffc67d7c4e3d71b50bc930df4672f/application%2Fsrc%2Ftest-fixtures%2Fjava%2Forg%2Fopentripplanner%2Fmodel%2FFeedInfoTestFactory.java"
+  ],
+  "original_public_path": "assessment/A6-01/treatment-v1/evidence/E22.json",
+  "original_public_sha256": "6591ff1926fd6973d2e0692e06e81b38f5fa43b5969cfd1d3b912191722638c3",
+  "original_public_bytes": 6743,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A6-01/treatment-v1/evidence/E22.json",
+  "classification_basis": "fetched GitHub API response / converted API response",
+  "original_selectors": [
+    {
+      "source_id": "E22",
+      "field": "governing_locator",
+      "selector": "FeedImpl.version; schema Feed.version; integration expectations"
+    }
+  ],
+  "governing_summaries_from_existing_authored_source_records": [
+    {
+      "access_started_utc": "2026-10-10T04:31:52.585633+00:00",
+      "access_finished_utc": "2026-10-10T04:31:52.989900+00:00",
+      "version_or_commit": "PR #7445 changed files at head 23dfb2646afffc67d7c4e3d71b50bc930df4672f",
+      "governing_locator": "FeedImpl.version; schema Feed.version; integration expectations",
+      "independent_semantic_observation": "Actual added GraphQL field is version, not feedVersion; the exposure capability is supported.",
+      "authored_source_map": "assessment/A6-01/treatment-v1/source-map.json",
+      "source_id": "E22"
+    },
+    {
+      "access_started_utc": "2026-10-10T04:31:52.585633+00:00",
+      "access_finished_utc": "2026-10-10T04:31:52.989900+00:00",
+      "authored_source_map": "assessment/A6-01/treatment-v1/evidence/retrieval-manifest.json",
+      "source_id": "E22"
+    }
+  ],
+  "selected_api_metadata": [
+    {
+      "sha": "398e7e263b517c65fcdf0ed8f14892de55101bcc",
+      "filename": "application/src/main/java/org/opentripplanner/apis/gtfs/datafetchers/FeedImpl.java",
+      "status": "modified",
+      "raw_url": "https://github.com/opentripplanner/OpenTripPlanner/raw/23dfb2646afffc67d7c4e3d71b50bc930df4672f/application%2Fsrc%2Fmain%2Fjava%2Forg%2Fopentripplanner%2Fapis%2Fgtfs%2Fdatafetchers%2FFeedImpl.java",
+      "blob_url": "https://github.com/opentripplanner/OpenTripPlanner/blob/23dfb2646afffc67d7c4e3d71b50bc930df4672f/application%2Fsrc%2Fmain%2Fjava%2Forg%2Fopentripplanner%2Fapis%2Fgtfs%2Fdatafetchers%2FFeedImpl.java",
+      "original_json_locator": "$[0]"
+    },
+    {
+      "sha": "099caf5ef6aa09ae6aae27528a0fd8fcd81e66a3",
+      "filename": "application/src/main/java/org/opentripplanner/apis/gtfs/generated/GraphQLDataFetchers.java",
+      "status": "modified",
+      "raw_url": "https://github.com/opentripplanner/OpenTripPlanner/raw/23dfb2646afffc67d7c4e3d71b50bc930df4672f/application%2Fsrc%2Fmain%2Fjava%2Forg%2Fopentripplanner%2Fapis%2Fgtfs%2Fgenerated%2FGraphQLDataFetchers.java",
+      "blob_url": "https://github.com/opentripplanner/OpenTripPlanner/blob/23dfb2646afffc67d7c4e3d71b50bc930df4672f/application%2Fsrc%2Fmain%2Fjava%2Forg%2Fopentripplanner%2Fapis%2Fgtfs%2Fgenerated%2FGraphQLDataFetchers.java",
+      "original_json_locator": "$[1]"
+    },
+    {
+      "sha": "13586f8333c63d0b4ab68ca229e146f1d3b54f3f",
+      "filename": "application/src/main/resources/org/opentripplanner/apis/gtfs/schema.graphqls",
+      "status": "modified",
+      "raw_url": "https://github.com/opentripplanner/OpenTripPlanner/raw/23dfb2646afffc67d7c4e3d71b50bc930df4672f/application%2Fsrc%2Fmain%2Fresources%2Forg%2Fopentripplanner%2Fapis%2Fgtfs%2Fschema.graphqls",
+      "blob_url": "https://github.com/opentripplanner/OpenTripPlanner/blob/23dfb2646afffc67d7c4e3d71b50bc930df4672f/application%2Fsrc%2Fmain%2Fresources%2Forg%2Fopentripplanner%2Fapis%2Fgtfs%2Fschema.graphqls",
+      "original_json_locator": "$[2]"
+    },
+    {
+      "sha": "2081790e7e0d6a2dc3e0c532ebe331e1973ef8f5",
+      "filename": "application/src/test-fixtures/java/org/opentripplanner/model/FeedInfoTestFactory.java",
+      "status": "modified",
+      "raw_url": "https://github.com/opentripplanner/OpenTripPlanner/raw/23dfb2646afffc67d7c4e3d71b50bc930df4672f/application%2Fsrc%2Ftest-fixtures%2Fjava%2Forg%2Fopentripplanner%2Fmodel%2FFeedInfoTestFactory.java",
+      "blob_url": "https://github.com/opentripplanner/OpenTripPlanner/blob/23dfb2646afffc67d7c4e3d71b50bc930df4672f/application%2Fsrc%2Ftest-fixtures%2Fjava%2Forg%2Fopentripplanner%2Fmodel%2FFeedInfoTestFactory.java",
+      "original_json_locator": "$[3]"
+    },
+    {
+      "sha": "ae1c8c7a5a95334c4c99ab26b49d5c3ea03ca35e",
+      "filename": "application/src/test/resources/org/opentripplanner/apis/gtfs/expectations/feedinfo.json",
+      "status": "modified",
+      "raw_url": "https://github.com/opentripplanner/OpenTripPlanner/raw/23dfb2646afffc67d7c4e3d71b50bc930df4672f/application%2Fsrc%2Ftest%2Fresources%2Forg%2Fopentripplanner%2Fapis%2Fgtfs%2Fexpectations%2Ffeedinfo.json",
+      "blob_url": "https://github.com/opentripplanner/OpenTripPlanner/blob/23dfb2646afffc67d7c4e3d71b50bc930df4672f/application%2Fsrc%2Ftest%2Fresources%2Forg%2Fopentripplanner%2Fapis%2Fgtfs%2Fexpectations%2Ffeedinfo.json",
+      "original_json_locator": "$[4]"
+    },
+    {
+      "sha": "aa89ed03ee9e192462bcc4b3568cb67f2e284404",
+      "filename": "application/src/test/resources/org/opentripplanner/apis/gtfs/queries/feedinfo.graphql",
+      "status": "modified",
+      "raw_url": "https://github.com/opentripplanner/OpenTripPlanner/raw/23dfb2646afffc67d7c4e3d71b50bc930df4672f/application%2Fsrc%2Ftest%2Fresources%2Forg%2Fopentripplanner%2Fapis%2Fgtfs%2Fqueries%2Ffeedinfo.graphql",
+      "blob_url": "https://github.com/opentripplanner/OpenTripPlanner/blob/23dfb2646afffc67d7c4e3d71b50bc930df4672f/application%2Fsrc%2Ftest%2Fresources%2Forg%2Fopentripplanner%2Fapis%2Fgtfs%2Fqueries%2Ffeedinfo.graphql",
+      "original_json_locator": "$[5]"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY_AND_METADATA; full body coverage UNKNOWN",
+  "omission": "Full fetched body, API ancillary fields and unmechanically summarizable body details are archived privately. Original source URL and selectors govern; unsupported/missing semantic coverage is UNKNOWN. No candidate finding or independent judgment is repaired.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

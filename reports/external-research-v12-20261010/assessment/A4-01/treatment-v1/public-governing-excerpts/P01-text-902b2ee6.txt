@@ -1,13 +1,145 @@
-URL: https://docs.aws.amazon.com/AmazonS3/latest/userguide/upload-objects.html
-Original locator: ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P01-text.txt
-Original SHA256: 902b2ee6b84a09d4ab1b1da623de15bd19ca074513363ae36ff41e2c6c9a029b
-Original numbered lines; gaps omitted. Not full response.
-
-20: REST API, or AWS CLI – With a single PUT operation, you can
-21: upload a single object up to 5 GB in size.
-22: Upload a single object by using the Amazon S3 console – With the Amazon S3 console, you can upload a single object up
-26: operation, you can upload a single large object, up to 50 TB in size.
-27: The multipart upload API operation is designed to improve the upload experience for
-28: larger objects. You can upload an object in parts. These object parts can be uploaded
-29: independently, in any order, and in parallel. You can use a multipart upload for objects
-30: from 5 MB to 50 TB in size. For more information, see Uploading and copying objects using multipart upload in Amazon S3.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://docs.aws.amazon.com/AmazonS3/latest/userguide/upload-objects.html"
+  ],
+  "original_public_path": "assessment/A4-01/treatment-v1/public-governing-excerpts/P01-text-902b2ee6.txt",
+  "original_public_sha256": "8e32a11bbc420f37750c19e49d766bd26db444a25f9ecb3c3c5b4db725fd50ff",
+  "original_public_bytes": 1010,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A4-01/treatment-v1/public-governing-excerpts/P01-text-902b2ee6.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P01-text.txt",
+      "original_sha256": "902b2ee6b84a09d4ab1b1da623de15bd19ca074513363ae36ff41e2c6c9a029b",
+      "original_bytes": 13749,
+      "original_line_numbers": [
+        20,
+        21,
+        22,
+        26,
+        27,
+        28,
+        29,
+        30
+      ],
+      "original_locators": [
+        {
+          "text_lines": [
+            20
+          ]
+        },
+        {
+          "anchor": "single PUT",
+          "matched_original_line": 20
+        },
+        {
+          "text_lines": [
+            21,
+            22
+          ]
+        },
+        {
+          "anchor": "single object up",
+          "matched_original_line": 21
+        },
+        {
+          "anchor": "single object up",
+          "matched_original_line": 22
+        },
+        {
+          "text_lines": [
+            26,
+            30
+          ]
+        },
+        {
+          "anchor": "50 TB",
+          "matched_original_line": 26
+        },
+        {
+          "anchor": "50 TB",
+          "matched_original_line": 30
+        },
+        {
+          "text_lines": [
+            20
+          ]
+        },
+        {
+          "anchor": "single PUT",
+          "matched_original_line": 20
+        },
+        {
+          "text_lines": [
+            21,
+            22
+          ]
+        },
+        {
+          "anchor": "single object up",
+          "matched_original_line": 21
+        },
+        {
+          "anchor": "single object up",
+          "matched_original_line": 22
+        },
+        {
+          "text_lines": [
+            26,
+            30
+          ]
+        },
+        {
+          "anchor": "50 TB",
+          "matched_original_line": 26
+        },
+        {
+          "anchor": "50 TB",
+          "matched_original_line": 30
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A4-01/treatment-v1/source-map.json",
+      "source_id": "P01",
+      "accessed_utc": "2026-10-10T04:41:53.995377+00:00",
+      "version_or_commit_observed": "AWS S3 live User Guide, release not stated",
+      "locator": "Upload options / PutObject, console, multipart",
+      "locators": [
+        {
+          "anchor": "single PUT",
+          "text_lines": [
+            20
+          ],
+          "primary_heading_or_json_field": "Upload options / PutObject, console, multipart"
+        },
+        {
+          "anchor": "single object up",
+          "text_lines": [
+            21,
+            22
+          ],
+          "primary_heading_or_json_field": "Upload options / PutObject, console, multipart"
+        },
+        {
+          "anchor": "50 TB",
+          "text_lines": [
+            26,
+            30
+          ],
+          "primary_heading_or_json_field": "Upload options / PutObject, console, multipart"
+        }
+      ],
+      "conditions_defaults_units_types_exceptions": "Different operations and units; >5 TB client guidance is outside this 40 GB pilot. Unknown compatible provider inherits no limit.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

@@ -1,169 +1,1133 @@
-URL: https://tus.io/protocols/resumable-upload
-Original locator: ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-TUS-01.txt
-Original SHA256: 10d85535f1bbcd3170f00690abd44a17705966538c4c9b485e23c2ff90cfa386
-Original numbered lines; gaps omitted. Not full response.
-
-25: Core Protocol
-29: Expiration
-30: Checksum
-88: This protocol is authored and owned by the tus community. We welcome patches and
-90: authors and collaborators will be listed as such in the protocol header.
-101: Core Protocol
-102: The core protocol describes how to resume an interrupted upload. It assumes that
-105: All Clients and Servers MUST implement the core protocol.
-112: A HEAD request is used to determine the offset at which the upload should be
-117: HEAD /files/24e533e02ec3bc40c387f1a0e460e216 HTTP/1.1
-124: Given the offset, the Client uses the PATCH method to resume the upload:
-126: PATCH /files/24e533e02ec3bc40c387f1a0e460e216 HTTP/1.1
-137: Headers
-139: The Upload-Offset request and response header indicates a byte offset within a
-142: The Upload-Length request and response header indicates the size of the entire
-145: The Tus-Version response header MUST be a comma-separated list of protocol
-149: The Tus-Resumable header MUST be included in every request and response except
-154: Tus-Version header into the response. In addition, the Server MUST NOT process
-157: The Tus-Extension response header MUST be a comma-separated list of the
-159: Tus-Extension header MUST be omitted.
-161: The Tus-Max-Size response header MUST be a non-negative integer indicating the
-163: header if there is a known hard limit.
-165: The X-HTTP-Method-Override request header MUST be a string which MUST be
-166: interpreted as the request’s method by the Server, if the header is presented.
-168: header if its environment does not support the PATCH or DELETE methods.
-170: HEAD
-171: The Server MUST always include the Upload-Offset header in the response for a
-172: HEAD request, even if the offset is 0, or the upload is already considered
-174: Upload-Length header in the response. If the resource is not found, the Server
-176: without the Upload-Offset header.
-177: The Server SHOULD acknowledge successful HEAD requests with a 200 OK or
-180: adding the Cache-Control: no-store header to the response.
-181: PATCH
-182: The Server SHOULD accept PATCH requests against any upload URL and apply the
-184: Upload-Offset header. All PATCH requests MUST use
-187: The Upload-Offset header’s value MUST be equal to the current offset of the
-192: The Client SHOULD send all the remaining bytes of an upload in a single PATCH
-195: Checksum extension is used.
-196: The Server MUST acknowledge successful PATCH requests with the
-197: 204 No Content status. It MUST include the Upload-Offset header containing
-198: the new offset. The new offset MUST be the sum of the offset before the PATCH
-200: current PATCH request.
-201: If the server receives a PATCH request against a non-existent resource it
-212: or 200 OK status MUST contain the Tus-Version header. It MAY include the
-213: Tus-Extension and Tus-Max-Size headers.
-214: The Client SHOULD NOT include the Tus-Resumable header in the request and the
-215: Server MUST ignore the header.
-220: extensions for Creation and Expiration are enabled.
-229: Tus-Extension: creation,expiration
-233: OPTIONS request and the Server responding with the Tus-Extension header.
-237: header.
-240: Upload-Length header indicates the size of the entire upload in bytes.
-253: core protocol for performing the actual upload.
-254: Headers
-256: The Upload-Defer-Length request and response header indicates that the size of
-258: be 1. If the length of an upload is not deferred, this header MUST be omitted.
-260: The Upload-Metadata request and response header MUST consist of one or more
-267: validate metadata values or sanitize them before using them as header values to
-268: avoid header smuggling.
-273: headers:
-276: Upload-Defer-Length header contains any other value than 1 the server should
-279: the Upload-Length header in the next PATCH request, once the length is
-282: responses to HEAD requests.
-284: the Tus-Extension header.
-285: The Upload-Length header MAY be set to 0, indicating that the Client wants to
-287: without transferring data using PATCH requests.
-288: The Client MAY supply the Upload-Metadata header to add additional metadata to
-291: contains additional metadata, responses to HEAD requests MUST include the
-292: Upload-Metadata header and its value as specified by the Client during the
-295: the Tus-Max-Size header, the Server MUST respond with the
-298: status. The Server MUST set the Location header to the URL of the created
-300: The Client MUST perform the actual upload using the core protocol.
-305: creation-with-upload in the Tus-Extension header. Furthermore, this
-310: body of the POST request. In this case, similar rules as for the PATCH
-312: Content-Type: application/offset+octet-stream header. The Server SHOULD accept
-313: as many bytes as possible and MUST include the Upload-Offset header in the
-318: Client SHOULD include the Expect: 100-continue header in the request to
-323: Upload-Offset header in the response indicates how much data has been
-338: Expiration
-340: this behavior to the Client, the Server MUST add expiration to the
-341: Tus-Extension header.
-346: PATCH /files/24e533e02ec3bc40c387f1a0e460e216 HTTP/1.1
-358: Headers
-360: The Upload-Expires response header indicates the time after which the
-361: unfinished upload expires. A Server MAY wish to remove incomplete uploads after
-362: a given period of time to prevent abandoned uploads from taking up extra
-363: storage. The Client SHOULD use this header to determine if an upload is still
-364: valid before attempting to resume the upload.
-365: This header MUST be included in every PATCH response if the upload is going to
-366: expire. If the expiration is known at the creation, the Upload-Expires header
-367: MUST be included in the response to the initial POST request. Its value MAY
-368: change over time.
-369: If a Client does attempt to resume an upload which has since been removed by the
-370: Server, the Server SHOULD respond with the 404 Not Found or 410 Gone status.
-371: The latter one SHOULD be used if the Server is keeping track of expired uploads.
-372: In both cases the Client SHOULD start a new upload.
-373: The value of the Upload-Expires header MUST be in
-374: RFC 9110
-375: datetime format.
-376: Checksum
-377: The Client and the Server MAY implement and use this extension to verify data
-378: integrity of each PATCH request. If supported, the Server MUST add checksum
-379: to the Tus-Extension header.
-380: A Client MAY include the Upload-Checksum header in a PATCH request. Once the
-381: entire request has been received, the Server MUST verify the uploaded chunk
-382: against the provided checksum using the specified algorithm. Depending on the
-383: result the Server MAY respond with one of the following status code:
-384: 400 Bad Request if the checksum algorithm is not supported by the server,
-385: 460 Checksum Mismatch if the checksums mismatch or
-386: 204 No Content if the checksums match and the processing of the data
-387: succeeded. In the first two cases the uploaded chunk MUST be discarded, and
-388: the upload and its offset MUST NOT be updated.
-389: The Server MUST support at least the SHA1 checksum algorithm identified by
-390: sha1. The names of the checksum algorithms MUST only consist of ASCII
-391: characters with the modification that uppercase characters are excluded.
-392: The Tus-Checksum-Algorithm header MUST be included in the response to an
-393: OPTIONS request.
-394: If the hash cannot be calculated at the beginning of the upload, it MAY be
-395: included as a trailer. If the Server can handle trailers, this behavior MUST be
-396: announced by adding checksum-trailer to the Tus-Extension header. Trailers,
-397: also known as trailing headers, are headers which are sent after the request’s
-398: body has been transmitted already.
-399: Headers
-400: Tus-Checksum-Algorithm
-401: The Tus-Checksum-Algorithm response header MUST be a comma-separated list of
-402: the checksum algorithms supported by the server.
-403: Upload-Checksum
-404: The Upload-Checksum request header contains information about the checksum of
-405: the current body payload. The header MUST consist of the name of the used
-406: checksum algorithm and the Base64 encoded checksum separated by a space.
-407: Example
-408: Request:
-409: OPTIONS /files HTTP/1.1
-410: Host: tus.example.org
-415: Tus-Extension: checksum
-416: Tus-Checksum-Algorithm: md5,sha1,crc32
-418: PATCH /files/17f44dbe1c4bace0e18ab850cf2b3a83 HTTP/1.1
-422: Upload-Checksum: sha1 Kq5sNclPz7QV2+lfQIuc6R7oRu0=
-432: termination to the Tus-Extension header.
-452: the Tus-Extension header.
-454: the Upload-Concat: partial header while creating a new upload using the
-460: header to the upload creation request. The value MUST be final followed by a
-465: Upload-Length header in the final upload creation.
-468: adding concatenation-unfinished to the Tus-Extension header.
-471: concatenation request using the Upload-Metadata header.
-474: be present multiple times in the Upload-Concat header in one upload creation
-476: The Server MUST respond with the 403 Forbidden status to PATCH requests
-478: The response to a HEAD request for a final upload SHOULD NOT contain the
-479: Upload-Offset header unless the concatenation has been successfully finished.
-481: set and their values MUST be equal. The value of the Upload-Offset header
-483: The response to a HEAD request for a partial upload MUST contain the
-484: Upload-Offset header.
-485: The Upload-Length header MUST be included if the length of the final resource
-486: can be calculated at the time of the request. Response to HEAD request against
-487: partial or final upload MUST include the Upload-Concat header and its value as
-489: Headers
-491: The Upload-Concat request and response header MUST be set in both partial and
-493: partial or final upload. If the upload is a partial one, the header value MUST
-500: In the following example, the Host and Tus-Resumable headers are omitted for
-513: You are now able to upload data to the two partial resources using PATCH
-515: PATCH /files/a HTTP/1.1
-520: PATCH /files/b HTTP/1.1
-528: generated partial uploads. In the following request, no Upload-Length header
-536: HEAD /files/ab HTTP/1.1
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://tus.io/protocols/resumable-upload"
+  ],
+  "original_public_path": "assessment/A4-01/control-v1/public-governing-excerpts/I-TUS-01-10d85535.txt",
+  "original_public_sha256": "d2807ad75552e4f8814f3760c28eea3bab8992191bac7a5922e67cb9a515f49a",
+  "original_public_bytes": 10394,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A4-01/control-v1/public-governing-excerpts/I-TUS-01-10d85535.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-TUS-01.txt",
+      "original_sha256": "10d85535f1bbcd3170f00690abd44a17705966538c4c9b485e23c2ff90cfa386",
+      "original_bytes": 23740,
+      "original_line_numbers": [
+        25,
+        29,
+        30,
+        88,
+        90,
+        101,
+        102,
+        105,
+        112,
+        117,
+        124,
+        126,
+        137,
+        139,
+        142,
+        145,
+        149,
+        154,
+        157,
+        159,
+        161,
+        163,
+        165,
+        166,
+        168,
+        170,
+        171,
+        172,
+        174,
+        176,
+        177,
+        180,
+        181,
+        182,
+        184,
+        187,
+        192,
+        195,
+        196,
+        197,
+        198,
+        200,
+        201,
+        212,
+        213,
+        214,
+        215,
+        220,
+        229,
+        233,
+        237,
+        240,
+        253,
+        254,
+        256,
+        258,
+        260,
+        267,
+        268,
+        273,
+        276,
+        279,
+        282,
+        284,
+        285,
+        287,
+        288,
+        291,
+        292,
+        295,
+        298,
+        300,
+        305,
+        310,
+        312,
+        313,
+        318,
+        323,
+        338,
+        340,
+        341,
+        346,
+        358,
+        360,
+        361,
+        362,
+        363,
+        364,
+        365,
+        366,
+        367,
+        368,
+        369,
+        370,
+        371,
+        372,
+        373,
+        374,
+        375,
+        376,
+        377,
+        378,
+        379,
+        380,
+        381,
+        382,
+        383,
+        384,
+        385,
+        386,
+        387,
+        388,
+        389,
+        390,
+        391,
+        392,
+        393,
+        394,
+        395,
+        396,
+        397,
+        398,
+        399,
+        400,
+        401,
+        402,
+        403,
+        404,
+        405,
+        406,
+        407,
+        408,
+        409,
+        410,
+        415,
+        416,
+        418,
+        422,
+        432,
+        452,
+        454,
+        460,
+        465,
+        468,
+        471,
+        474,
+        476,
+        478,
+        479,
+        481,
+        483,
+        484,
+        485,
+        486,
+        487,
+        489,
+        491,
+        493,
+        500,
+        513,
+        515,
+        520,
+        528,
+        536
+      ],
+      "original_locators": [
+        {
+          "locator": "Core HEAD/PATCH and offsets; Expiration; Checksum extension, local lines 360–410."
+        },
+        {
+          "saved_text_lines": [
+            25,
+            101,
+            102,
+            105,
+            253,
+            300
+          ]
+        },
+        {
+          "anchor": "Core Protocol",
+          "matched_original_line": 25
+        },
+        {
+          "anchor": "Core Protocol",
+          "matched_original_line": 101
+        },
+        {
+          "saved_text_lines": [
+            90,
+            112,
+            117,
+            137,
+            139,
+            142,
+            145,
+            149,
+            154,
+            157,
+            159,
+            161,
+            163,
+            165,
+            166,
+            168,
+            170,
+            171,
+            172,
+            174,
+            176,
+            177,
+            180,
+            184,
+            187,
+            197,
+            212,
+            213,
+            214,
+            215,
+            233,
+            237,
+            240,
+            254,
+            256,
+            258,
+            260,
+            267,
+            268,
+            273,
+            276,
+            279,
+            282,
+            284,
+            285,
+            288,
+            291,
+            292,
+            295,
+            298,
+            305,
+            312,
+            313,
+            318,
+            323,
+            341,
+            358,
+            360,
+            363,
+            365,
+            366,
+            373,
+            379,
+            380,
+            392,
+            396,
+            397,
+            399,
+            401,
+            404,
+            405,
+            432,
+            452,
+            454,
+            460,
+            465,
+            468,
+            471,
+            474,
+            478,
+            479,
+            481,
+            483,
+            484,
+            485,
+            486,
+            487,
+            489,
+            491,
+            493,
+            500,
+            528,
+            536
+          ]
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 112
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 117
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 170
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 172
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 177
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 282
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 291
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 478
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 483
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 486
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 536
+        },
+        {
+          "saved_text_lines": [
+            88,
+            124,
+            126,
+            168,
+            181,
+            182,
+            184,
+            192,
+            196,
+            198,
+            200,
+            201,
+            279,
+            287,
+            310,
+            346,
+            365,
+            378,
+            380,
+            418,
+            476,
+            513,
+            515,
+            520
+          ]
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 124
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 126
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 168
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 181
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 182
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 184
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 192
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 196
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 198
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 200
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 201
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 279
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 287
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 310
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 346
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 365
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 378
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 380
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 418
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 476
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 513
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 515
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 520
+        },
+        {
+          "saved_text_lines": [
+            30,
+            195,
+            376,
+            378,
+            380,
+            382,
+            384,
+            385,
+            386,
+            389,
+            390,
+            392,
+            396,
+            400,
+            401,
+            402,
+            403,
+            404,
+            406,
+            415,
+            416,
+            422
+          ]
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 30
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 195
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 376
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 380
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 385
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 392
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 400
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 401
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 403
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 404
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 416
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 422
+        },
+        {
+          "saved_text_lines": [
+            29,
+            220,
+            229,
+            338,
+            340,
+            366
+          ]
+        },
+        {
+          "anchor": "Expiration",
+          "matched_original_line": 29
+        },
+        {
+          "anchor": "Expiration",
+          "matched_original_line": 220
+        },
+        {
+          "anchor": "Expiration",
+          "matched_original_line": 338
+        },
+        {
+          "locator": "Core HEAD/PATCH and offsets; Expiration; Checksum extension, local lines 360–410."
+        },
+        {
+          "saved_text_lines": [
+            25,
+            101,
+            102,
+            105,
+            253,
+            300
+          ]
+        },
+        {
+          "anchor": "Core Protocol",
+          "matched_original_line": 25
+        },
+        {
+          "anchor": "Core Protocol",
+          "matched_original_line": 101
+        },
+        {
+          "saved_text_lines": [
+            90,
+            112,
+            117,
+            137,
+            139,
+            142,
+            145,
+            149,
+            154,
+            157,
+            159,
+            161,
+            163,
+            165,
+            166,
+            168,
+            170,
+            171,
+            172,
+            174,
+            176,
+            177,
+            180,
+            184,
+            187,
+            197,
+            212,
+            213,
+            214,
+            215,
+            233,
+            237,
+            240,
+            254,
+            256,
+            258,
+            260,
+            267,
+            268,
+            273,
+            276,
+            279,
+            282,
+            284,
+            285,
+            288,
+            291,
+            292,
+            295,
+            298,
+            305,
+            312,
+            313,
+            318,
+            323,
+            341,
+            358,
+            360,
+            363,
+            365,
+            366,
+            373,
+            379,
+            380,
+            392,
+            396,
+            397,
+            399,
+            401,
+            404,
+            405,
+            432,
+            452,
+            454,
+            460,
+            465,
+            468,
+            471,
+            474,
+            478,
+            479,
+            481,
+            483,
+            484,
+            485,
+            486,
+            487,
+            489,
+            491,
+            493,
+            500,
+            528,
+            536
+          ]
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 112
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 117
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 170
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 172
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 177
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 282
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 291
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 478
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 483
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 486
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 536
+        },
+        {
+          "saved_text_lines": [
+            88,
+            124,
+            126,
+            168,
+            181,
+            182,
+            184,
+            192,
+            196,
+            198,
+            200,
+            201,
+            279,
+            287,
+            310,
+            346,
+            365,
+            378,
+            380,
+            418,
+            476,
+            513,
+            515,
+            520
+          ]
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 124
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 126
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 168
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 181
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 182
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 184
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 192
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 196
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 198
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 200
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 201
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 279
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 287
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 310
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 346
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 365
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 378
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 380
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 418
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 476
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 513
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 515
+        },
+        {
+          "anchor": "PATCH",
+          "matched_original_line": 520
+        },
+        {
+          "saved_text_lines": [
+            30,
+            195,
+            376,
+            378,
+            380,
+            382,
+            384,
+            385,
+            386,
+            389,
+            390,
+            392,
+            396,
+            400,
+            401,
+            402,
+            403,
+            404,
+            406,
+            415,
+            416,
+            422
+          ]
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 30
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 195
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 376
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 380
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 385
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 392
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 400
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 401
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 403
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 404
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 416
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 422
+        },
+        {
+          "saved_text_lines": [
+            29,
+            220,
+            229,
+            338,
+            340,
+            366
+          ]
+        },
+        {
+          "anchor": "Expiration",
+          "matched_original_line": 29
+        },
+        {
+          "anchor": "Expiration",
+          "matched_original_line": 220
+        },
+        {
+          "anchor": "Expiration",
+          "matched_original_line": 338
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A4-01/control-v1/source-map.json",
+      "source_id": "I-TUS-01",
+      "title": "Resumable Upload Protocol 1.0.x",
+      "retrieved_at_utc": "2026-10-10T04:25:10.660419+00:00",
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "Core Protocol",
+          "saved_text_lines": [
+            25,
+            101,
+            102,
+            105,
+            253,
+            300
+          ]
+        },
+        {
+          "anchor": "HEAD",
+          "saved_text_lines": [
+            90,
+            112,
+            117,
+            137,
+            139,
+            142,
+            145,
+            149,
+            154,
+            157,
+            159,
+            161,
+            163,
+            165,
+            166,
+            168,
+            170,
+            171,
+            172,
+            174,
+            176,
+            177,
+            180,
+            184,
+            187,
+            197,
+            212,
+            213,
+            214,
+            215,
+            233,
+            237,
+            240,
+            254,
+            256,
+            258,
+            260,
+            267,
+            268,
+            273,
+            276,
+            279,
+            282,
+            284,
+            285,
+            288,
+            291,
+            292,
+            295,
+            298,
+            305,
+            312,
+            313,
+            318,
+            323,
+            341,
+            358,
+            360,
+            363,
+            365,
+            366,
+            373,
+            379,
+            380,
+            392,
+            396,
+            397,
+            399,
+            401,
+            404,
+            405,
+            432,
+            452,
+            454,
+            460,
+            465,
+            468,
+            471,
+            474,
+            478,
+            479,
+            481,
+            483,
+            484,
+            485,
+            486,
+            487,
+            489,
+            491,
+            493,
+            500,
+            528,
+            536
+          ]
+        },
+        {
+          "anchor": "PATCH",
+          "saved_text_lines": [
+            88,
+            124,
+            126,
+            168,
+            181,
+            182,
+            184,
+            192,
+            196,
+            198,
+            200,
+            201,
+            279,
+            287,
+            310,
+            346,
+            365,
+            378,
+            380,
+            418,
+            476,
+            513,
+            515,
+            520
+          ]
+        },
+        {
+          "anchor": "Checksum",
+          "saved_text_lines": [
+            30,
+            195,
+            376,
+            378,
+            380,
+            382,
+            384,
+            385,
+            386,
+            389,
+            390,
+            392,
+            396,
+            400,
+            401,
+            402,
+            403,
+            404,
+            406,
+            415,
+            416,
+            422
+          ]
+        },
+        {
+          "anchor": "Expiration",
+          "saved_text_lines": [
+            29,
+            220,
+            229,
+            338,
+            340,
+            366
+          ]
+        }
+      ]
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

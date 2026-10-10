@@ -1,1 +1,49 @@
-{"url":"https://api.github.com/repos/OCFL/spec/releases/79261329","assets_url":"https://api.github.com/repos/OCFL/spec/releases/79261329/assets","upload_url":"https://uploads.github.com/repos/OCFL/spec/releases/79261329/assets{?name,label}","html_url":"https://github.com/OCFL/spec/releases/tag/1.1","id":79261329,"author":{"login":"zimeon","id":658600,"node_id":"MDQ6VXNlcjY1ODYwMA==","avatar_url":"https://avatars.githubusercontent.com/u/658600?v=4","gravatar_id":"","url":"https://api.github.com/users/zimeon","html_url":"https://github.com/zimeon","followers_url":"https://api.github.com/users/zimeon/followers","following_url":"https://api.github.com/users/zimeon/following{/other_user}","gists_url":"https://api.github.com/users/zimeon/gists{/gist_id}","starred_url":"https://api.github.com/users/zimeon/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/zimeon/subscriptions","organizations_url":"https://api.github.com/users/zimeon/orgs","repos_url":"https://api.github.com/users/zimeon/repos","events_url":"https://api.github.com/users/zimeon/events{/privacy}","received_events_url":"https://api.github.com/users/zimeon/received_events","type":"User","user_view_type":"public","site_admin":false},"node_id":"RE_kwDOB1cfFc4EuW6R","tag_name":"1.1","target_commitish":"main","name":"OCFL Version 1.1","draft":false,"immutable":false,"prerelease":false,"created_at":"2022-10-06T15:40:21Z","updated_at":"2022-10-07T11:46:37Z","published_at":"2022-10-07T11:46:37Z","assets":[],"tarball_url":"https://api.github.com/repos/OCFL/spec/tarball/1.1","zipball_url":"https://api.github.com/repos/OCFL/spec/zipball/1.1","body":"The OCFL Editors are pleased to announce version 1.1 of the Oxford Common File Layout. The focus of this revision is correction and clarification based on implementation experience and community feedback. Version 1.1 is backwards compatible with version 1.0.\r\n\r\n### What new information is available?\r\n\r\nThe OCFL website at https://ocfl.io/, includes the most up to date version of the specification and the implementation notes as well as the latest editors draft.\r\n\r\nThe [OCFL Specification v1.1](https://ocfl.io/1.1/spec/) defines both OCFL Objects, a simple structure for content and a JSON document (inventory.json) which provides a straightforward but comprehensive register for the object and versions of its content, and an OCFL Storage Root, an arrangement for how OCFL Objects are laid out on physical storage. It also contains examples illustrating the use of the OCFL, and explanations that ground decisions in prior experience.\r\n\r\nThe companion [OCFL Implementation Notes v1.1](https://ocfl.io/1.1/implementation-notes/) contains advice for implementing the specification including recommendations for digital preservation, storage handling, client behaviors, and best practices for dealing with OCFL Objects in motion.\r\n\r\nThe OCFL Editors are also releasing updated [validation rules](https://ocfl.io/1.1/spec/validation-codes.html) and additional [fixture objects](https://github.com/OCFL/fixtures) for testing OCFL implementations against the specification.\r\n\r\nThere is an accompanying [Change Log](https://ocfl.io/1.1/spec/change-log.html) that details the changes from version 1.0 to version 1.1. It is designed to assist implementers with updates to their implementations. We welcome your feedback, questions, use cases, and especially details of any implementations or experimentation with OCFL.\r\n\r\n### The OCFL Editors\r\n* Neil Jefferies (Bodleian Libraries, University of Oxford)\r\n* Rosalyn Metz (Emory University)\r\n* Julian Morley (Stanford University)\r\n* Simeon Warner (Cornell University)\r\n* Andrew Woods (Harvard University)","reactions":{"url":"https://api.github.com/repos/OCFL/spec/releases/79261329/reactions","total_count":1,"+1":1,"-1":0,"laugh":0,"hooray":0,"confused":0,"heart":0,"rocket":0,"eyes":0}}
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "provenance and bounded governing evidence; not original response",
+  "source_urls": [
+    "https://api.github.com/repos/OCFL/spec/releases/79261329",
+    "https://api.github.com/repos/OCFL/spec/releases/tags/1.1",
+    "https://github.com/OCFL/spec/releases/tag/1.1"
+  ],
+  "original_public_path": "assessment/A8-01/treatment-v1/evidence/E07-ocfl-release11.json",
+  "original_public_sha256": "70d8c1e908d11621a4fe42268c9345b99ec5b210d222f826b0d66b6880f187ff",
+  "original_public_bytes": 3917,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A8-01/treatment-v1/evidence/E07-ocfl-release11.json",
+  "classification_basis": "fetched GitHub API response / converted API response",
+  "original_selectors": [],
+  "governing_summaries_from_existing_authored_source_records": [
+    {
+      "access_start_utc": "2026-10-10T04:41:13.517185+00:00",
+      "access_finish_utc": "2026-10-10T04:41:13.687692+00:00",
+      "authored_source_map": "assessment/A8-01/treatment-v1/source-map.json",
+      "source_id": "E07-ocfl-release11"
+    },
+    {
+      "access_start_utc": "2026-10-10T04:41:13.517185+00:00",
+      "access_finish_utc": "2026-10-10T04:41:13.687692+00:00",
+      "authored_source_map": "assessment/A8-01/treatment-v1/evidence/retrieval-index.json",
+      "source_id": "E07-ocfl-release11"
+    }
+  ],
+  "selected_api_metadata": [
+    {
+      "url": "https://api.github.com/repos/OCFL/spec/releases/79261329",
+      "html_url": "https://github.com/OCFL/spec/releases/tag/1.1",
+      "id": 79261329,
+      "tag_name": "1.1",
+      "target_commitish": "main",
+      "name": "OCFL Version 1.1",
+      "created_at": "2022-10-06T15:40:21Z",
+      "updated_at": "2022-10-07T11:46:37Z",
+      "published_at": "2022-10-07T11:46:37Z",
+      "draft": false,
+      "prerelease": false,
+      "original_json_locator": "$"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY_AND_METADATA; full body coverage UNKNOWN",
+  "omission": "Full fetched body, API ancillary fields and unmechanically summarizable body details are archived privately. Original source URL and selectors govern; unsupported/missing semantic coverage is UNKNOWN. No candidate finding or independent judgment is repaired.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

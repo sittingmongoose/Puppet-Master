@@ -1,20 +1,141 @@
-URL: https://docs.aws.amazon.com/AmazonS3/latest/userguide/lifecycle-configuration-examples.html
-Original locator: ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P04-text.txt
-Original SHA256: 61080337dbbda438268a86fee2e460da7be21017ae857b40132bc836b1e1d1b9
-Original numbered lines; gaps omitted. Not full response.
-
-392: rule cannot specify a tag-based filter.
-393: Lifecycle configuration to abort multipart uploads
-394: You can use the Amazon S3 multipart upload REST API operations to upload large objects in
-395: parts. For more information about multipart uploads, see Uploading and copying objects using multipart upload in Amazon S3.
-396: By using an S3 Lifecycle configuration, you can direct Amazon S3 to stop incomplete
-397: multipart uploads (identified by the key name prefix specified in the rule) if they
-398: aren't completed within a specified number of days after initiation. When Amazon S3 aborts a
-399: multipart upload, it deletes all the parts associated with the multipart upload. This
-400: process helps control your storage costs by ensuring that you don't have incomplete
-401: multipart uploads with parts that are stored in Amazon S3.
-402: Note
-403: When you use the AbortIncompleteMultipartUpload S3 Lifecycle action,
-404: the rule cannot specify a tag-based filter.
-407: incomplete multipart uploads seven days after initiation.
-416: <DaysAfterInitiation>7</DaysAfterInitiation>
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://docs.aws.amazon.com/AmazonS3/latest/userguide/lifecycle-configuration-examples.html"
+  ],
+  "original_public_path": "assessment/A4-01/treatment-v1/public-governing-excerpts/P04-text-61080337.txt",
+  "original_public_sha256": "b2743dfacf57350de9202bfffd2d23035836abe602ae23c679c38db8b4bfbf8c",
+  "original_public_bytes": 1412,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A4-01/treatment-v1/public-governing-excerpts/P04-text-61080337.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P04-text.txt",
+      "original_sha256": "61080337dbbda438268a86fee2e460da7be21017ae857b40132bc836b1e1d1b9",
+      "original_bytes": 23520,
+      "original_line_numbers": [
+        392,
+        393,
+        394,
+        395,
+        396,
+        397,
+        398,
+        399,
+        400,
+        401,
+        402,
+        403,
+        404,
+        407,
+        416
+      ],
+      "original_locators": [
+        {
+          "text_lines": [
+            407
+          ]
+        },
+        {
+          "anchor": "seven days",
+          "matched_original_line": 407
+        },
+        {
+          "text_lines": [
+            416
+          ]
+        },
+        {
+          "anchor": "DaysAfterInitiation",
+          "matched_original_line": 416
+        },
+        {
+          "text_lines": [
+            392,
+            404
+          ]
+        },
+        {
+          "anchor": "tag-based",
+          "matched_original_line": 392
+        },
+        {
+          "anchor": "tag-based",
+          "matched_original_line": 404
+        },
+        {
+          "text_lines": [
+            407
+          ]
+        },
+        {
+          "anchor": "seven days",
+          "matched_original_line": 407
+        },
+        {
+          "text_lines": [
+            416
+          ]
+        },
+        {
+          "anchor": "DaysAfterInitiation",
+          "matched_original_line": 416
+        },
+        {
+          "text_lines": [
+            392,
+            404
+          ]
+        },
+        {
+          "anchor": "tag-based",
+          "matched_original_line": 392
+        },
+        {
+          "anchor": "tag-based",
+          "matched_original_line": 404
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A4-01/treatment-v1/source-map.json",
+      "source_id": "P04",
+      "accessed_utc": "2026-10-10T04:41:54.004476+00:00",
+      "version_or_commit_observed": "AWS S3 live User Guide, release not stated",
+      "locator": "AbortIncompleteMultipartUpload lifecycle example",
+      "locators": [
+        {
+          "anchor": "seven days",
+          "text_lines": [
+            407
+          ],
+          "primary_heading_or_json_field": "AbortIncompleteMultipartUpload lifecycle example"
+        },
+        {
+          "anchor": "DaysAfterInitiation",
+          "text_lines": [
+            416
+          ],
+          "primary_heading_or_json_field": "AbortIncompleteMultipartUpload lifecycle example"
+        },
+        {
+          "anchor": "tag-based",
+          "text_lines": [
+            392,
+            404
+          ],
+          "primary_heading_or_json_field": "AbortIncompleteMultipartUpload lifecycle example"
+        }
+      ],
+      "conditions_defaults_units_types_exceptions": "Seven days is an example, not a default. This action has no tag-based filter. Provider support and owner policy remain external.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

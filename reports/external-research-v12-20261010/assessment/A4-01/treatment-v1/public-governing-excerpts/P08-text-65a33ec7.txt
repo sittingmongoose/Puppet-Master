@@ -1,14 +1,192 @@
-URL: https://uppy.io/docs/golden-retriever/
-Original locator: ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P08-text.txt
-Original SHA256: 65a33ec7ef7580a28b838ca4636dde2550515973938de1274301e62e4ce4fdc0
-Original numbered lines; gaps omitted. Not full response.
-
-36: Service Worker (optional) for all files because, unlike IndexedDB,
-37: Service Worker can keep references to large files. Service Worker storage is
-39: restarts. It works well, however, for accidental refreshes or closed tabs.
-82: LocalStorage, but local files require the optional Service Worker storage to be
-84: Enabling Service Worker​
-85: With the Service Worker storage, Golden Retriever will be able to temporary
-87: Bundle your own service worker sw.js file with Uppy GoldenRetriever’s
-135: Whether to enable Service Worker storage (boolean, default: false).
-144: Enabling Service Worker
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://uppy.io/docs/golden-retriever/"
+  ],
+  "original_public_path": "assessment/A4-01/treatment-v1/public-governing-excerpts/P08-text-65a33ec7.txt",
+  "original_public_sha256": "c8451d7119b0c4e5faea259f1b09e81c3fe28329e5e9d62053120b9b33d5c8d4",
+  "original_public_bytes": 872,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A4-01/treatment-v1/public-governing-excerpts/P08-text-65a33ec7.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P08-text.txt",
+      "original_sha256": "65a33ec7ef7580a28b838ca4636dde2550515973938de1274301e62e4ce4fdc0",
+      "original_bytes": 5445,
+      "original_line_numbers": [
+        36,
+        37,
+        39,
+        82,
+        84,
+        85,
+        87,
+        135,
+        144
+      ],
+      "original_locators": [
+        {
+          "text_lines": [
+            39
+          ]
+        },
+        {
+          "anchor": "restarts",
+          "matched_original_line": 39
+        },
+        {
+          "text_lines": [
+            36,
+            37,
+            82,
+            84,
+            85,
+            87
+          ]
+        },
+        {
+          "anchor": "Service Worker",
+          "matched_original_line": 36
+        },
+        {
+          "anchor": "Service Worker",
+          "matched_original_line": 37
+        },
+        {
+          "anchor": "Service Worker",
+          "matched_original_line": 82
+        },
+        {
+          "anchor": "Service Worker",
+          "matched_original_line": 84
+        },
+        {
+          "anchor": "Service Worker",
+          "matched_original_line": 85
+        },
+        {
+          "anchor": "Service Worker",
+          "matched_original_line": 135
+        },
+        {
+          "anchor": "Service Worker",
+          "matched_original_line": 144
+        },
+        {
+          "text_lines": [
+            135
+          ]
+        },
+        {
+          "anchor": "false",
+          "matched_original_line": 135
+        },
+        {
+          "text_lines": [
+            39
+          ]
+        },
+        {
+          "anchor": "restarts",
+          "matched_original_line": 39
+        },
+        {
+          "text_lines": [
+            36,
+            37,
+            82,
+            84,
+            85,
+            87
+          ]
+        },
+        {
+          "anchor": "Service Worker",
+          "matched_original_line": 36
+        },
+        {
+          "anchor": "Service Worker",
+          "matched_original_line": 37
+        },
+        {
+          "anchor": "Service Worker",
+          "matched_original_line": 82
+        },
+        {
+          "anchor": "Service Worker",
+          "matched_original_line": 84
+        },
+        {
+          "anchor": "Service Worker",
+          "matched_original_line": 85
+        },
+        {
+          "anchor": "Service Worker",
+          "matched_original_line": 135
+        },
+        {
+          "anchor": "Service Worker",
+          "matched_original_line": 144
+        },
+        {
+          "text_lines": [
+            135
+          ]
+        },
+        {
+          "anchor": "false",
+          "matched_original_line": 135
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A4-01/treatment-v1/source-map.json",
+      "source_id": "P08",
+      "accessed_utc": "2026-10-10T04:41:54.211132+00:00",
+      "version_or_commit_observed": "Live unversioned Uppy Golden Retriever docs",
+      "locator": "Storage/recovery defaults",
+      "locators": [
+        {
+          "anchor": "10 MiB",
+          "text_lines": [],
+          "primary_heading_or_json_field": "Storage/recovery defaults"
+        },
+        {
+          "anchor": "restarts",
+          "text_lines": [
+            39
+          ],
+          "primary_heading_or_json_field": "Storage/recovery defaults"
+        },
+        {
+          "anchor": "Service Worker",
+          "text_lines": [
+            36,
+            37,
+            82,
+            84,
+            85,
+            87
+          ],
+          "primary_heading_or_json_field": "Storage/recovery defaults"
+        },
+        {
+          "anchor": "false",
+          "text_lines": [
+            135
+          ],
+          "primary_heading_or_json_field": "Storage/recovery defaults"
+        }
+      ],
+      "conditions_defaults_units_types_exceptions": "Service-worker storage defaults false and temporary references do not survive browser crash/restart; recovery may require reselection. This is not a storage-service part limit.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

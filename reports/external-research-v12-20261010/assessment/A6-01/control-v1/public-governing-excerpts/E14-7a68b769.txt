@@ -1,43 +1,80 @@
-URL: https://docs.opentripplanner.org/en/latest/Netex-Tutorial/
-Original locator: ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E14.txt
-Original SHA256: 7a68b7695c12430f07c9225762c2e1c31474a31496bd0f67e44a2d38e0bba1b4
-Original numbered lines; gaps omitted. Not full response.
-
-121: Configuring the build
-122: Create a working directory and place the OTP jar file in it and call it otp.jar.
-123: Since we download the OSM data from a free source, we don't want to put undue stress on the server.
-124: Therefore we download it before building the graph, not during.
-125: curl https://download.geofabrik.de/europe/norway-latest.osm.pbf -o norway.osm.pbf
-126: Now create a file called build-config.json in the same folder and fill it with the following
-127: content:
-128: // build-config.json
-129: {
-130: "transitFeeds" : [
-131: {
-132: "type" : "netex",
-133: "feedId" : "NO",
-134: "source" : "https://storage.googleapis.com/marduk-production/outbound/netex/rb_norway-aggregated-netex.zip",
-135: "sharedFilePattern" : "_stops.xml",
-136: "sharedGroupFilePattern" : "_(\\w{3})(_flexible)?_shared_data.xml",
-137: "groupFilePattern" : "(\\w{3})_.*\\.xml"
-138: }
-139: ],
-140: "osm" : [
-141: {
-142: "source" : "norway.osm.pbf",
-143: "osmTagMapping" : "norway",
-144: "timeZone" : "Europe/Oslo"
-145: }
-146: ],
-147: "osmCacheDataInMem" : true
-148: }
-149: Note the special section specifying how to find NeTEx XML files within the single ZIP archive that
-150: OTP downloads.
-151: Now you can instruct OTP to build a graph from this configuration file:
-152: java -Xmx16G -jar otp.jar --build --save .
-153: This should produce a file graph.obj in the same directory as your build-config.json.
-154: Building the Norway graph requires downloading about 250MB of input data so stay patient at the
-155: beginning particularly on a slow internet connection. The actual build takes approximately 10
-156: minutes (without elevation data, as is configured above), and can be done within 16GB of heap memory
-157: (JVM switch -Xmx16G). The Graph file it produces is about 1.1 GB. The server will take about 30
-158: seconds to load this graph and start up, and will consume about 6GB of heap memory under light use.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://docs.opentripplanner.org/en/latest/Netex-Tutorial/"
+  ],
+  "original_public_path": "assessment/A6-01/control-v1/public-governing-excerpts/E14-7a68b769.txt",
+  "original_public_sha256": "f297acfbd72be4875b525721d527bf64f6a2a96f89eb8c711372b96deadbfb2d",
+  "original_public_bytes": 2192,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A6-01/control-v1/public-governing-excerpts/E14-7a68b769.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E14.txt",
+      "original_sha256": "7a68b7695c12430f07c9225762c2e1c31474a31496bd0f67e44a2d38e0bba1b4",
+      "original_bytes": 6065,
+      "original_line_numbers": [
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158
+      ],
+      "original_locators": [
+        {
+          "locator": "E14.txt lines 121-158; 165-200"
+        },
+        {
+          "locator": "E14.txt lines 121-158; 165-200"
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A6-01/control-v1/source-map.json",
+      "source_id": "E14",
+      "access_utc": "2026-10-10T04:39:00.687196+00:00",
+      "version_observed": "Living primary page/repository observed 2026-10-10; see precise scope in linked claim records",
+      "locator": "E14.txt lines 121-158; 165-200",
+      "independent_observation": "Independent tutorial context for Norway, NeTEx graph and separate SIRI services; no deployment executed."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

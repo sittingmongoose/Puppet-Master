@@ -1,1 +1,85 @@
-[{"url":"https://api.github.com/repos/Ultimaker/Cura/issues/comments/1780578846","html_url":"https://github.com/Ultimaker/Cura/issues/17110#issuecomment-1780578846","issue_url":"https://api.github.com/repos/Ultimaker/Cura/issues/17110","id":1780578846,"node_id":"IC_kwDOAT6tLs5qIXoe","user":{"login":"MariMakes","id":40423138,"node_id":"MDQ6VXNlcjQwNDIzMTM4","avatar_url":"https://avatars.githubusercontent.com/u/40423138?v=4","gravatar_id":"","url":"https://api.github.com/users/MariMakes","html_url":"https://github.com/MariMakes","followers_url":"https://api.github.com/users/MariMakes/followers","following_url":"https://api.github.com/users/MariMakes/following{/other_user}","gists_url":"https://api.github.com/users/MariMakes/gists{/gist_id}","starred_url":"https://api.github.com/users/MariMakes/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/MariMakes/subscriptions","organizations_url":"https://api.github.com/users/MariMakes/orgs","repos_url":"https://api.github.com/users/MariMakes/repos","events_url":"https://api.github.com/users/MariMakes/events{/privacy}","received_events_url":"https://api.github.com/users/MariMakes/received_events","type":"User","user_view_type":"public","site_admin":false},"created_at":"2023-10-26T07:40:57Z","updated_at":"2023-10-26T07:40:57Z","body":"Hey @ansonl,\r\n\r\nThanks for your report 👍\r\nI've never worked with 3mf files in that way, so I wasn't aware that this is how people use them. \r\nBut your request makes sense if you do. \r\n\r\nI'll bring it up to the team to see what they can do to improve it.\r\nBut I expect that if it's not a quick fix it will not get a high priority to implement. \r\nFingers crossed 🤞 ","author_association":"CONTRIBUTOR","pin":null,"reactions":{"url":"https://api.github.com/repos/Ultimaker/Cura/issues/comments/1780578846/reactions","total_count":1,"+1":1,"-1":0,"laugh":0,"hooray":0,"confused":0,"heart":0,"rocket":0,"eyes":0},"performed_via_github_app":null,"minimized":null},{"url":"https://api.github.com/repos/Ultimaker/Cura/issues/comments/1826125504","html_url":"https://github.com/Ultimaker/Cura/issues/17110#issuecomment-1826125504","issue_url":"https://api.github.com/repos/Ultimaker/Cura/issues/17110","id":1826125504,"node_id":"IC_kwDOAT6tLs5s2HbA","user":{"login":"pietchaki","id":6844712,"node_id":"MDQ6VXNlcjY4NDQ3MTI=","avatar_url":"https://avatars.githubusercontent.com/u/6844712?v=4","gravatar_id":"","url":"https://api.github.com/users/pietchaki","html_url":"https://github.com/pietchaki","followers_url":"https://api.github.com/users/pietchaki/followers","following_url":"https://api.github.com/users/pietchaki/following{/other_user}","gists_url":"https://api.github.com/users/pietchaki/gists{/gist_id}","starred_url":"https://api.github.com/users/pietchaki/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/pietchaki/subscriptions","organizations_url":"https://api.github.com/users/pietchaki/orgs","repos_url":"https://api.github.com/users/pietchaki/repos","events_url":"https://api.github.com/users/pietchaki/events{/privacy}","received_events_url":"https://api.github.com/users/pietchaki/received_events","type":"User","user_view_type":"public","site_admin":false},"created_at":"2023-11-24T22:57:06Z","updated_at":"2023-11-24T22:59:31Z","body":"I believe that this improvement I made solves the same request from @ansonl for using the objects name from 3mf files.\r\nhttps://github.com/Ultimaker/Uranium/pull/898#event-10832695750","author_association":"CONTRIBUTOR","pin":null,"reactions":{"url":"https://api.github.com/repos/Ultimaker/Cura/issues/comments/1826125504/reactions","total_count":0,"+1":0,"-1":0,"laugh":0,"hooray":0,"confused":0,"heart":0,"rocket":0,"eyes":0},"performed_via_github_app":null,"minimized":null},{"url":"https://api.github.com/repos/Ultimaker/Cura/issues/comments/1832857900","html_url":"https://github.com/Ultimaker/Cura/issues/17110#issuecomment-1832857900","issue_url":"https://api.github.com/repos/Ultimaker/Cura/issues/17110","id":1832857900,"node_id":"IC_kwDOAT6tLs5tPzEs","user":{"login":"ansonl","id":546458,"node_id":"MDQ6VXNlcjU0NjQ1OA==","avatar_url":"https://avatars.githubusercontent.com/u/546458?v=4","gravatar_id":"","url":"https://api.github.com/users/ansonl","html_url":"https://github.com/ansonl","followers_url":"https://api.github.com/users/ansonl/followers","following_url":"https://api.github.com/users/ansonl/following{/other_user}","gists_url":"https://api.github.com/users/ansonl/gists{/gist_id}","starred_url":"https://api.github.com/users/ansonl/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/ansonl/subscriptions","organizations_url":"https://api.github.com/users/ansonl/orgs","repos_url":"https://api.github.com/users/ansonl/repos","events_url":"https://api.github.com/users/ansonl/events{/privacy}","received_events_url":"https://api.github.com/users/ansonl/received_events","type":"User","user_view_type":"public","site_admin":false},"created_at":"2023-11-29T23:24:35Z","updated_at":"2023-11-29T23:24:35Z","body":"@pietchaki Do you know if your improvement is in the latest Cura 5.5 so I can try? I'm still using 5.4 due to a [custom printer profile](https://github.com/Ultimaker/Cura/pull/16001) that has not been merged. ","author_association":"CONTRIBUTOR","pin":null,"reactions":{"url":"https://api.github.com/repos/Ultimaker/Cura/issues/comments/1832857900/reactions","total_count":0,"+1":0,"-1":0,"laugh":0,"hooray":0,"confused":0,"heart":0,"rocket":0,"eyes":0},"performed_via_github_app":null,"minimized":null},{"url":"https://api.github.com/repos/Ultimaker/Cura/issues/comments/1835054338","html_url":"https://github.com/Ultimaker/Cura/issues/17110#issuecomment-1835054338","issue_url":"https://api.github.com/repos/Ultimaker/Cura/issues/17110","id":1835054338,"node_id":"IC_kwDOAT6tLs5tYLUC","user":{"login":"pietchaki","id":6844712,"node_id":"MDQ6VXNlcjY4NDQ3MTI=","avatar_url":"https://avatars.githubusercontent.com/u/6844712?v=4","gravatar_id":"","url":"https://api.github.com/users/pietchaki","html_url":"https://github.com/pietchaki","followers_url":"https://api.github.com/users/pietchaki/followers","following_url":"https://api.github.com/users/pietchaki/following{/other_user}","gists_url":"https://api.github.com/users/pietchaki/gists{/gist_id}","starred_url":"https://api.github.com/users/pietchaki/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/pietchaki/subscriptions","organizations_url":"https://api.github.com/users/pietchaki/orgs","repos_url":"https://api.github.com/users/pietchaki/repos","events_url":"https://api.github.com/users/pietchaki/events{/privacy}","received_events_url":"https://api.github.com/users/pietchaki/received_events","type":"User","user_view_type":"public","site_admin":false},"created_at":"2023-12-01T00:21:11Z","updated_at":"2023-12-01T00:21:11Z","body":"@ansonl saddly no... not even in Cura 5.6\r\nFor now it's available only if you build Cura from source code, from the main branch.\r\n","author_association":"CONTRIBUTOR","pin":null,"reactions":{"url":"https://api.github.com/repos/Ultimaker/Cura/issues/comments/1835054338/reactions","total_count":0,"+1":0,"-1":0,"laugh":0,"hooray":0,"confused":0,"heart":0,"rocket":0,"eyes":0},"performed_via_github_app":null,"minimized":null}]
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "provenance and bounded governing evidence; not original response",
+  "source_urls": [
+    "https://api.github.com/repos/Ultimaker/Cura/issues/17110/comments?per_page=100",
+    "https://api.github.com/repos/Ultimaker/Cura/issues/comments/1780578846",
+    "https://api.github.com/repos/Ultimaker/Cura/issues/comments/1826125504",
+    "https://api.github.com/repos/Ultimaker/Cura/issues/comments/1832857900",
+    "https://api.github.com/repos/Ultimaker/Cura/issues/comments/1835054338",
+    "https://github.com/Ultimaker/Cura/issues/17110",
+    "https://github.com/Ultimaker/Cura/issues/17110#issuecomment-1780578846",
+    "https://github.com/Ultimaker/Cura/issues/17110#issuecomment-1826125504",
+    "https://github.com/Ultimaker/Cura/issues/17110#issuecomment-1832857900",
+    "https://github.com/Ultimaker/Cura/issues/17110#issuecomment-1835054338"
+  ],
+  "original_public_path": "assessment/A7-01/treatment-v1/evidence/P17-cura-names-comments.json",
+  "original_public_sha256": "796f369aabd8b8ea606628ef4085ac7d8876e63635e3c01f8af3f096821b46de",
+  "original_public_bytes": 7314,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A7-01/treatment-v1/evidence/P17-cura-names-comments.json",
+  "classification_basis": "fetched GitHub API response / converted API response",
+  "original_selectors": [
+    {
+      "source_id": "P17",
+      "field": "locator",
+      "selector": "Description; comments 1826125504, 1832857900, 1835054338"
+    }
+  ],
+  "governing_summaries_from_existing_authored_source_records": [
+    {
+      "title": "Cura object-name issue #17110 and complete comments",
+      "version_or_commit": "2023 issue; author later says using Cura 5.4; no separately formalized tested-build block",
+      "locator": "Description; comments 1826125504, 1832857900, 1835054338",
+      "accessed_at_utc": [
+        "2026-10-10T04:55:24.291717+00:00",
+        "2026-10-10T04:55:24.325553+00:00"
+      ],
+      "governing_conditions_and_applicability": "The final safely presents an older report, but its no-exact-release-stated wording overlooks the author’s 5.4 context. The thread links Uranium #898; the 5.7.0 release and 5.13.0 reader source provide later name-handling context. They do not guarantee every round trip.",
+      "authored_source_map": "assessment/A7-01/treatment-v1/source-map.json",
+      "source_id": "P17"
+    },
+    {
+      "accessed_at_utc": "2026-10-10T04:55:24.325553+00:00",
+      "authored_source_map": "assessment/A7-01/treatment-v1/evidence/retrieval-record.json",
+      "source_id": "P17-cura-names-comments"
+    }
+  ],
+  "selected_api_metadata": [
+    {
+      "url": "https://api.github.com/repos/Ultimaker/Cura/issues/comments/1780578846",
+      "html_url": "https://github.com/Ultimaker/Cura/issues/17110#issuecomment-1780578846",
+      "id": 1780578846,
+      "created_at": "2023-10-26T07:40:57Z",
+      "updated_at": "2023-10-26T07:40:57Z",
+      "original_json_locator": "$[0]"
+    },
+    {
+      "url": "https://api.github.com/repos/Ultimaker/Cura/issues/comments/1826125504",
+      "html_url": "https://github.com/Ultimaker/Cura/issues/17110#issuecomment-1826125504",
+      "id": 1826125504,
+      "created_at": "2023-11-24T22:57:06Z",
+      "updated_at": "2023-11-24T22:59:31Z",
+      "original_json_locator": "$[1]"
+    },
+    {
+      "url": "https://api.github.com/repos/Ultimaker/Cura/issues/comments/1832857900",
+      "html_url": "https://github.com/Ultimaker/Cura/issues/17110#issuecomment-1832857900",
+      "id": 1832857900,
+      "created_at": "2023-11-29T23:24:35Z",
+      "updated_at": "2023-11-29T23:24:35Z",
+      "original_json_locator": "$[2]"
+    },
+    {
+      "url": "https://api.github.com/repos/Ultimaker/Cura/issues/comments/1835054338",
+      "html_url": "https://github.com/Ultimaker/Cura/issues/17110#issuecomment-1835054338",
+      "id": 1835054338,
+      "created_at": "2023-12-01T00:21:11Z",
+      "updated_at": "2023-12-01T00:21:11Z",
+      "original_json_locator": "$[3]"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY_AND_METADATA; full body coverage UNKNOWN",
+  "omission": "Full fetched body, API ancillary fields and unmechanically summarizable body details are archived privately. Original source URL and selectors govern; unsupported/missing semantic coverage is UNKNOWN. No candidate finding or independent judgment is repaired.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

@@ -1,103 +1,340 @@
-URL: https://www.tarsnap.com/deduplication-explanation.html
-Original locator: ER12_RUNTIME/assessment/B-DISC-M-02/treatment-v1/primary-evidence/P4-tarsnap-dedup.txt
-Original SHA256: eb2413bbf2ecb1dd890e18561380e260012c9e45ccbf594c0075407b056af053
-Original numbered lines; gaps omitted. Not full response.
-
-3: 0003: How does deduplication work?
-4: 0004: Tarsnap deduplicates your data by:
-5: 0005: Splitting it into chunks ("chunkification").
-6: 0006: Only uploading chunks that haven't been uploaded before.
-7: 0007: Each archive is expressed as a list of chunks, which grants us a great
-8: 0008: deal of
-9: 0009: flexibility
-10: 0010: and
-11: 0011: efficiency.
-100: 0100: Delete archive A
-101: 0101: - words 1 3
-102: 0102: - archive A
-103: 0103: 2: small
-104: 0104: 4: fuzzy
-105: 0105: 5: bunnies
-106: 0106: B: 4 2 5
-107: 0107: C: 2 4 5
-108: 0108: New archive D:
-109: 0109: small fuzzy kittens
-110: 0110: + word 6
-111: 0111: + archive D
-112: 0112: 2: small
-113: 0113: 4: fuzzy
-114: 0114: 5: bunnies
-115: 0115: 6: kittens
-116: 0116: B: 4 2 5
-117: 0117: C: 2 4 5
-118: 0118: D: 2 4 6
-119: 0119: When we added archive
-120: 0120: C,
-121: 0121: we didn't need to upload any new words at all.  Clear win for our
-122: 0122: wordification-based deduplication!
-123: 0123: Deleting archive
-124: 0124: A
-125: 0125: prompted the server to remove any words that we no longer needed.  That
-126: 0126: reduced our storage costs, however...
-127: 0127: ... when we added
-128: 0128: D,
-129: 0129: we incurred an "extra" transfer: Re-uploading the word
-130: 0130: "kittens"
-131: 0131: (now called word
-132: 0132: 6
-133: 0133: instead of word
-134: 0134: 3).  We could have avoided that transfer
-135: 0135: by creating archive
-136: 0136: D
-137: 0137: before deleting archive
-138: 0138: A.
-187: 0187: Encrypted metadata:
-188: 0188: However, encrypted data isn't enough.  If an attacker saw that
-189: 0189: pets.txt had archive
-190: 0190: B:
-191: 0191: 4 2 5 and archive
-192: 0192: D:
-193: 0193: 2 4 6, they could still figure out that
-194: 0194: kittens were not our only choice for
-195: 0195: pets!  To fix this, we need to encrypt the labels of words, as well
-196: 0196: as the archive lists.  So we should replace:
-197: 0197: 2:
-198: 0198: bzFxlArO5is=
-199: 0199: →
-200: 0200: 3l2jG1Wwu1k=:
-201: 0201: bzFxlArO5is=
-202: 0202: Naturally, the archive metadata should also be encrypted:
-203: 0203: D:
-204: 0204: 2 4 6
-205: 0205: →
-206: 0206: fnoMOFFK6Mk=:
-207: 0207: UB2vxoD8qbg=
-208: 0208: Note that even the number of words in
-209: 0209: D is hidden —instead of storing
-210: 0210: the three word numbers as
-211: 0211: (2 4 6 →
-212: 0212: 3l2jG1Wwu1k= 22iBrXTZfNU=
-213: 0213: 6WsyTW1UI5k=),
-214: 0214: we encrypt the entire list to reduce the amount of information that
-215: 0215: an attacker could gather.
-216: 0216: Non-text files:
-217: 0217: Most of our data is not in easily-handled text files, of course!
-218: 0218: How can we handle binary data?
-219: 0219: First, let's remind ourselves of two benefits of "wordification":
-220: 0220: Variable-sized chunks:
-221: 0221: Words have different numbers of characters, so splitting data
-222: 0222: into fixed-size chunks (say, every 4 characters) would not be
-223: 0223: ideal.
-224: 0224: Context-dependent splitting:
-225: 0225: We don't try to guess where we should split our data before
-226: 0226: we've looked at the data.  Words are split in spaces —
-227: 0227: in other words, the location of each split depends on the context
-228: 0228: (data).
-229: 0229: Retaining those benefits when dealing with binary data requires some
-230: 0230: complicated processing.  Tarsnap's method of doing this is outlined
-231: 0231: in section 2.1 of the presentation
-232: 0232: From bsdtar to tarsnap: Building
-233: 0233: an online backup service.
-234: 0234: The exact method is in the client
-235: 0235: source code,
-236: 0236: tar/multitape/chunkify.c.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://www.tarsnap.com/deduplication-explanation.html"
+  ],
+  "original_public_path": "assessment/B-DISC-M-02/treatment-v1/public-governing-excerpts/P4-tarsnap-dedup-eb2413bb.txt",
+  "original_public_sha256": "c44b7d9763dfa97ab0bf312542c12cb0de34dc7ace156019467310e3366cc3d0",
+  "original_public_bytes": 3881,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/B-DISC-M-02/treatment-v1/public-governing-excerpts/P4-tarsnap-dedup-eb2413bb.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/B-DISC-M-02/treatment-v1/primary-evidence/P4-tarsnap-dedup.txt",
+      "original_sha256": "eb2413bbf2ecb1dd890e18561380e260012c9e45ccbf594c0075407b056af053",
+      "original_bytes": 7810,
+      "original_line_numbers": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        187,
+        188,
+        189,
+        190,
+        191,
+        192,
+        193,
+        194,
+        195,
+        196,
+        197,
+        198,
+        199,
+        200,
+        201,
+        202,
+        203,
+        204,
+        205,
+        206,
+        207,
+        208,
+        209,
+        210,
+        211,
+        212,
+        213,
+        214,
+        215,
+        216,
+        217,
+        218,
+        219,
+        220,
+        221,
+        222,
+        223,
+        224,
+        225,
+        226,
+        227,
+        228,
+        229,
+        230,
+        231,
+        232,
+        233,
+        234,
+        235,
+        236
+      ],
+      "original_locators": [
+        {
+          "text_lines": [
+            3,
+            11
+          ]
+        },
+        {
+          "text_lines": [
+            100,
+            138
+          ]
+        },
+        {
+          "text_lines": [
+            187,
+            215
+          ]
+        },
+        {
+          "text_lines": [
+            216,
+            236
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/B-DISC-M-02/treatment-v1/primary-evidence/P4-tarsnap-dedup.txt",
+      "original_sha256": "eb2413bbf2ecb1dd890e18561380e260012c9e45ccbf594c0075407b056af053",
+      "original_bytes": 7810,
+      "original_line_numbers": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        187,
+        188,
+        189,
+        190,
+        191,
+        192,
+        193,
+        194,
+        195,
+        196,
+        197,
+        198,
+        199,
+        200,
+        201,
+        202,
+        203,
+        204,
+        205,
+        206,
+        207,
+        208,
+        209,
+        210,
+        211,
+        212,
+        213,
+        214,
+        215,
+        216,
+        217,
+        218,
+        219,
+        220,
+        221,
+        222,
+        223,
+        224,
+        225,
+        226,
+        227,
+        228,
+        229,
+        230,
+        231,
+        232,
+        233,
+        234,
+        235,
+        236
+      ],
+      "original_locators": [
+        {
+          "text_lines": [
+            3,
+            11
+          ]
+        },
+        {
+          "text_lines": [
+            100,
+            138
+          ]
+        },
+        {
+          "text_lines": [
+            187,
+            215
+          ]
+        },
+        {
+          "text_lines": [
+            216,
+            236
+          ]
+        },
+        {
+          "text_lines": [
+            3,
+            11
+          ]
+        },
+        {
+          "text_lines": [
+            100,
+            138
+          ]
+        },
+        {
+          "text_lines": [
+            187,
+            215
+          ]
+        },
+        {
+          "text_lines": [
+            216,
+            236
+          ]
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/B-DISC-M-02/treatment-v1/source-map.json",
+      "source_id": "P4-tarsnap-dedup",
+      "version": "unversioned Tarsnap site as served at retrieval time",
+      "locators": [
+        {
+          "section": "Chunkification and archives as lists",
+          "text_lines": [
+            3,
+            11
+          ]
+        },
+        {
+          "section": "Delete before re-add example",
+          "text_lines": [
+            100,
+            138
+          ]
+        },
+        {
+          "section": "Encrypted metadata",
+          "text_lines": [
+            187,
+            215
+          ]
+        },
+        {
+          "section": "Binary chunking / exact implementation pointer",
+          "text_lines": [
+            216,
+            236
+          ]
+        }
+      ]
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

@@ -1,22 +1,212 @@
-URL: https://raw.githubusercontent.com/aws/aws-cli/2.37.6/awscli/customizations/s3/transferconfig.py
-Original locator: ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P32-text.txt
-Original SHA256: c65e00699914ec652f9fb8e731b413f0ff8de6be6e4f5ae4dcfca5af89b23a04
-Original numbered lines; gaps omitted. Not full response.
-
-26: DEFAULTS = {
-27:     'multipart_threshold': 8 * (1024**2),
-71:         'multipart_threshold',
-81:         'multipart_threshold',
-104:     def defaults():
-105:         return DEFAULTS.copy()
-114:         :param kwargs:  Any key in the ``DEFAULTS`` dict.
-120:         runtime_config = DEFAULTS.copy()
-123:         self._convert_human_readable_sizes(runtime_config)
-124:         self._convert_human_readable_rates(runtime_config)
-125:         self._convert_booleans(runtime_config)
-126:         self._resolve_choice_aliases(runtime_config)
-127:         self._validate_config(runtime_config)
-128:         return ResolvedRuntimeConfig(runtime_config, explicit_keys)
-129: 
-130:     def _convert_human_readable_sizes(self, runtime_config):
-254:         'multipart_threshold': 'multipart_threshold',
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://raw.githubusercontent.com/aws/aws-cli/2.37.6/awscli/customizations/s3/transferconfig.py"
+  ],
+  "original_public_path": "assessment/A4-01/treatment-v1/public-governing-excerpts/P32-text-c65e0069.txt",
+  "original_public_sha256": "2c657a1f54322640462c55f6a2b2bc582df705ce410c0c21b640ae97d87408c3",
+  "original_public_bytes": 1121,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A4-01/treatment-v1/public-governing-excerpts/P32-text-c65e0069.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P32-text.txt",
+      "original_sha256": "c65e00699914ec652f9fb8e731b413f0ff8de6be6e4f5ae4dcfca5af89b23a04",
+      "original_bytes": 9770,
+      "original_line_numbers": [
+        26,
+        27,
+        71,
+        81,
+        104,
+        105,
+        114,
+        120,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        254
+      ],
+      "original_locators": [
+        {
+          "text_lines": [
+            26,
+            104,
+            105,
+            114,
+            120
+          ]
+        },
+        {
+          "anchor": "DEFAULTS",
+          "matched_original_line": 26
+        },
+        {
+          "anchor": "DEFAULTS",
+          "matched_original_line": 105
+        },
+        {
+          "anchor": "DEFAULTS",
+          "matched_original_line": 114
+        },
+        {
+          "anchor": "DEFAULTS",
+          "matched_original_line": 120
+        },
+        {
+          "text_lines": [
+            27,
+            71,
+            81,
+            254
+          ]
+        },
+        {
+          "anchor": "multipart_threshold",
+          "matched_original_line": 27
+        },
+        {
+          "anchor": "multipart_threshold",
+          "matched_original_line": 71
+        },
+        {
+          "anchor": "multipart_threshold",
+          "matched_original_line": 81
+        },
+        {
+          "anchor": "multipart_threshold",
+          "matched_original_line": 254
+        },
+        {
+          "text_lines": [
+            123,
+            130
+          ]
+        },
+        {
+          "anchor": "_convert_human_readable_sizes",
+          "matched_original_line": 123
+        },
+        {
+          "anchor": "_convert_human_readable_sizes",
+          "matched_original_line": 130
+        },
+        {
+          "text_lines": [
+            26,
+            104,
+            105,
+            114,
+            120
+          ]
+        },
+        {
+          "anchor": "DEFAULTS",
+          "matched_original_line": 26
+        },
+        {
+          "anchor": "DEFAULTS",
+          "matched_original_line": 105
+        },
+        {
+          "anchor": "DEFAULTS",
+          "matched_original_line": 114
+        },
+        {
+          "anchor": "DEFAULTS",
+          "matched_original_line": 120
+        },
+        {
+          "text_lines": [
+            27,
+            71,
+            81,
+            254
+          ]
+        },
+        {
+          "anchor": "multipart_threshold",
+          "matched_original_line": 27
+        },
+        {
+          "anchor": "multipart_threshold",
+          "matched_original_line": 71
+        },
+        {
+          "anchor": "multipart_threshold",
+          "matched_original_line": 81
+        },
+        {
+          "anchor": "multipart_threshold",
+          "matched_original_line": 254
+        },
+        {
+          "text_lines": [
+            123,
+            130
+          ]
+        },
+        {
+          "anchor": "_convert_human_readable_sizes",
+          "matched_original_line": 123
+        },
+        {
+          "anchor": "_convert_human_readable_sizes",
+          "matched_original_line": 130
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A4-01/treatment-v1/source-map.json",
+      "source_id": "P32",
+      "accessed_utc": "2026-10-10T04:45:10.985180+00:00",
+      "version_or_commit_observed": "Released AWS CLI tag 2.37.6, commit not resolved",
+      "locator": "transferconfig.py DEFAULTS and conversion caller",
+      "locators": [
+        {
+          "anchor": "DEFAULTS",
+          "text_lines": [
+            26,
+            104,
+            105,
+            114,
+            120
+          ],
+          "primary_heading_or_json_field": "transferconfig.py DEFAULTS and conversion caller"
+        },
+        {
+          "anchor": "multipart_threshold",
+          "text_lines": [
+            27,
+            71,
+            81,
+            254
+          ],
+          "primary_heading_or_json_field": "transferconfig.py DEFAULTS and conversion caller"
+        },
+        {
+          "anchor": "_convert_human_readable_sizes",
+          "text_lines": [
+            123,
+            130
+          ],
+          "primary_heading_or_json_field": "transferconfig.py DEFAULTS and conversion caller"
+        }
+      ],
+      "conditions_defaults_units_types_exceptions": "This is Python transfer configuration; pin transfer engine before extrapolating whole-client runtime behavior. Source was read, never imported or executed.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

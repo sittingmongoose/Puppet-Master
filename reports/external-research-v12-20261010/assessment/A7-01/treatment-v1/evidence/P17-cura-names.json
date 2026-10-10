@@ -1,1 +1,58 @@
-{"url":"https://api.github.com/repos/Ultimaker/Cura/issues/17110","repository_url":"https://api.github.com/repos/Ultimaker/Cura","labels_url":"https://api.github.com/repos/Ultimaker/Cura/issues/17110/labels{/name}","comments_url":"https://api.github.com/repos/Ultimaker/Cura/issues/17110/comments","events_url":"https://api.github.com/repos/Ultimaker/Cura/issues/17110/events","html_url":"https://github.com/Ultimaker/Cura/issues/17110","id":1962619413,"node_id":"I_kwDOAT6tLs50-zIV","number":17110,"title":"Support 3MF Core spec for object.name on import and renaming objects","user":{"login":"ansonl","id":546458,"node_id":"MDQ6VXNlcjU0NjQ1OA==","avatar_url":"https://avatars.githubusercontent.com/u/546458?v=4","gravatar_id":"","url":"https://api.github.com/users/ansonl","html_url":"https://github.com/ansonl","followers_url":"https://api.github.com/users/ansonl/followers","following_url":"https://api.github.com/users/ansonl/following{/other_user}","gists_url":"https://api.github.com/users/ansonl/gists{/gist_id}","starred_url":"https://api.github.com/users/ansonl/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/ansonl/subscriptions","organizations_url":"https://api.github.com/users/ansonl/orgs","repos_url":"https://api.github.com/users/ansonl/repos","events_url":"https://api.github.com/users/ansonl/events{/privacy}","received_events_url":"https://api.github.com/users/ansonl/received_events","type":"User","user_view_type":"public","site_admin":false},"labels":[{"id":848935756,"node_id":"MDU6TGFiZWw4NDg5MzU3NTY=","url":"https://api.github.com/repos/Ultimaker/Cura/labels/Type:%20New%20Feature","name":"Type: New Feature","color":"38d9a9","default":false,"description":"Adding some entirely new functionality.","archived_at":null,"archived_by":null},{"id":4173435505,"node_id":"LA_kwDOAT6tLs74wZJx","url":"https://api.github.com/repos/Ultimaker/Cura/labels/Status:%20Under%20Investigation","name":"Status: Under Investigation","color":"A774C7","default":false,"description":"The issue has been confirmed or is assumed to be likely to be a real issue. It's pending discussion.","archived_at":null,"archived_by":null}],"state":"open","locked":false,"assignees":[],"milestone":null,"comments":4,"created_at":"2023-10-26T03:11:04Z","updated_at":"2023-12-01T00:21:11Z","closed_at":null,"assignee":null,"author_association":"CONTRIBUTOR","issue_field_values":[],"type":null,"active_lock_reason":null,"sub_issues_summary":{"total":0,"completed":0,"percent_completed":0},"issue_dependencies_summary":{"blocked_by":0,"total_blocked_by":0,"blocking":0,"total_blocking":0},"body":"### Is your feature request related to a problem?\r\n\r\nYes, Cura overwrites existing object.name in 3MF files. \r\n\r\nCura adds [object.name](https://github.com/3MFConsortium/spec_core/blob/master/3MF%20Core%20Specification.md#chapter-4-object-resources) for each object when exporting in 3MF. The name that Cura sets is the original imported filename incremented with a number for each additional object in the file like Filename, Filename (1), Filename (2), etc. However, Cura ignores object.name attribute in imported 3MF files and overwrites them with the generic filename on export.\r\n\r\n![image](https://github.com/Ultimaker/Cura/assets/546458/b0f6c680-47bf-47a7-bcb4-fbffdeeff108)\r\n\r\n\r\nSince the object.name attribute is used to name individual objects, it would be useful if Cura named imported objects according to the existing object.name if already set as well as allowed renaming objects so that exported 3MF files would have contextual object names that users set. \r\n\r\n\r\n\r\n### Describe the solution you'd like\r\n\r\nCura could have a right click option or editable textbox on objects in the object list for users to set object names.\r\n\r\nCura should use the existing or user specified object name for object.name in saved 3MF files.\r\n\r\n\r\n### Describe alternatives you've considered\r\n\r\nObject naming through object.name is already supported in Prusaslicer and Blender (through the [blender 3MF addon](https://github.com/Ghostkeeper/Blender3mfFormat))\r\n\r\nAs seen in the Prusaslicer screenshot below for a [test multiobject print](https://www.printables.com/model/228038-ninja-pot-01), individual objects in the model 3MF file have descriptive names that give the users context what an object is. \r\n\r\n![image](https://github.com/Ultimaker/Cura/assets/546458/1857a8f8-898e-4898-9ff1-ae24fb34f09f)\r\n\r\n\r\n### Affected users and/or printers\r\n\r\nAll users using 3MF files. All users with dual or multi extrusion. \r\n\r\n### Additional information & file uploads\r\n\r\nTest 3MF file with two objects with different names [DC-linear-dual-v2.zip](https://github.com/Ultimaker/Cura/files/13172565/DC-linear-dual-v2.zip)\r\n\r\nAnother test 3MF file with multiple named objects and colors specified: https://www.printables.com/model/228038-ninja-pot-01","closed_by":null,"reactions":{"url":"https://api.github.com/repos/Ultimaker/Cura/issues/17110/reactions","total_count":0,"+1":0,"-1":0,"laugh":0,"hooray":0,"confused":0,"heart":0,"rocket":0,"eyes":0},"timeline_url":"https://api.github.com/repos/Ultimaker/Cura/issues/17110/timeline","performed_via_github_app":null,"state_reason":null,"pinned_comment":null}
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "provenance and bounded governing evidence; not original response",
+  "source_urls": [
+    "https://api.github.com/repos/Ultimaker/Cura/issues/17110",
+    "https://github.com/Ultimaker/Cura/issues/17110"
+  ],
+  "original_public_path": "assessment/A7-01/treatment-v1/evidence/P17-cura-names.json",
+  "original_public_sha256": "429d48bc42ed774a4203e43b225073dcf344c246de756efe4dd0441f36dac7b6",
+  "original_public_bytes": 5272,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A7-01/treatment-v1/evidence/P17-cura-names.json",
+  "classification_basis": "fetched GitHub API response / converted API response",
+  "original_selectors": [
+    {
+      "source_id": "P17",
+      "field": "locator",
+      "selector": "Description; comments 1826125504, 1832857900, 1835054338"
+    }
+  ],
+  "governing_summaries_from_existing_authored_source_records": [
+    {
+      "title": "Cura object-name issue #17110 and complete comments",
+      "version_or_commit": "2023 issue; author later says using Cura 5.4; no separately formalized tested-build block",
+      "locator": "Description; comments 1826125504, 1832857900, 1835054338",
+      "accessed_at_utc": [
+        "2026-10-10T04:55:24.291717+00:00",
+        "2026-10-10T04:55:24.325553+00:00"
+      ],
+      "governing_conditions_and_applicability": "The final safely presents an older report, but its no-exact-release-stated wording overlooks the author’s 5.4 context. The thread links Uranium #898; the 5.7.0 release and 5.13.0 reader source provide later name-handling context. They do not guarantee every round trip.",
+      "authored_source_map": "assessment/A7-01/treatment-v1/source-map.json",
+      "source_id": "P17"
+    },
+    {
+      "accessed_at_utc": "2026-10-10T04:55:24.291717+00:00",
+      "authored_source_map": "assessment/A7-01/treatment-v1/evidence/retrieval-record.json",
+      "source_id": "P17-cura-names"
+    }
+  ],
+  "selected_api_metadata": [
+    {
+      "url": "https://api.github.com/repos/Ultimaker/Cura/issues/17110",
+      "html_url": "https://github.com/Ultimaker/Cura/issues/17110",
+      "id": 1962619413,
+      "number": 17110,
+      "title": "Support 3MF Core spec for object.name on import and renaming objects",
+      "created_at": "2023-10-26T03:11:04Z",
+      "updated_at": "2023-12-01T00:21:11Z",
+      "closed_at": null,
+      "state": "open",
+      "state_reason": null,
+      "original_json_locator": "$"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY_AND_METADATA; full body coverage UNKNOWN",
+  "omission": "Full fetched body, API ancillary fields and unmechanically summarizable body details are archived privately. Original source URL and selectors govern; unsupported/missing semantic coverage is UNKNOWN. No candidate finding or independent judgment is repaired.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

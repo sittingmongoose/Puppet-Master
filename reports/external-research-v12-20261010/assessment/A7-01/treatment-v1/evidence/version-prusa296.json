@@ -1,1 +1,98 @@
-{"sha":"b028299c770b8380ee81c921a2867d522f288123","node_id":"C_kwDOAybtDdoAKGIwMjgyOTljNzcwYjgzODBlZTgxYzkyMWEyODY3ZDUyMmYyODgxMjM","commit":{"author":{"name":"Lukas Matena","email":"AUTHORIZED_PROVIDER_INSTANCE","date":"2026-06-25T15:30:20Z"},"committer":{"name":"Lukas Matena","email":"AUTHORIZED_PROVIDER_INSTANCE","date":"2026-06-25T15:30:20Z"},"message":"Bumped up version to 2.9.6","tree":{"sha":"3f4b56ecb3b67013f93d4eaa8435aa9cdd39d066","url":"https://api.github.com/repos/prusa3d/PrusaSlicer/git/trees/3f4b56ecb3b67013f93d4eaa8435aa9cdd39d066"},"url":"https://api.github.com/repos/prusa3d/PrusaSlicer/git/commits/b028299c770b8380ee81c921a2867d522f288123","comment_count":0,"verification":{"verified":false,"reason":"unsigned","signature":null,"payload":null,"verified_at":null}},"url":"https://api.github.com/repos/prusa3d/PrusaSlicer/commits/b028299c770b8380ee81c921a2867d522f288123","html_url":"https://github.com/prusa3d/PrusaSlicer/commit/b028299c770b8380ee81c921a2867d522f288123","comments_url":"https://api.github.com/repos/prusa3d/PrusaSlicer/commits/b028299c770b8380ee81c921a2867d522f288123/comments","author":{"login":"lukasmatena","id":33929324,"node_id":"MDQ6VXNlcjMzOTI5MzI0","avatar_url":"https://avatars.githubusercontent.com/u/33929324?v=4","gravatar_id":"","url":"https://api.github.com/users/lukasmatena","html_url":"https://github.com/lukasmatena","followers_url":"https://api.github.com/users/lukasmatena/followers","following_url":"https://api.github.com/users/lukasmatena/following{/other_user}","gists_url":"https://api.github.com/users/lukasmatena/gists{/gist_id}","starred_url":"https://api.github.com/users/lukasmatena/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/lukasmatena/subscriptions","organizations_url":"https://api.github.com/users/lukasmatena/orgs","repos_url":"https://api.github.com/users/lukasmatena/repos","events_url":"https://api.github.com/users/lukasmatena/events{/privacy}","received_events_url":"https://api.github.com/users/lukasmatena/received_events","type":"User","user_view_type":"public","site_admin":false},"committer":{"login":"lukasmatena","id":33929324,"node_id":"MDQ6VXNlcjMzOTI5MzI0","avatar_url":"https://avatars.githubusercontent.com/u/33929324?v=4","gravatar_id":"","url":"https://api.github.com/users/lukasmatena","html_url":"https://github.com/lukasmatena","followers_url":"https://api.github.com/users/lukasmatena/followers","following_url":"https://api.github.com/users/lukasmatena/following{/other_user}","gists_url":"https://api.github.com/users/lukasmatena/gists{/gist_id}","starred_url":"https://api.github.com/users/lukasmatena/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/lukasmatena/subscriptions","organizations_url":"https://api.github.com/users/lukasmatena/orgs","repos_url":"https://api.github.com/users/lukasmatena/repos","events_url":"https://api.github.com/users/lukasmatena/events{/privacy}","received_events_url":"https://api.github.com/users/lukasmatena/received_events","type":"User","user_view_type":"public","site_admin":false},"parents":[{"sha":"2b7fd5f86258e093cccbf3dd776c9cdc460672f7","url":"https://api.github.com/repos/prusa3d/PrusaSlicer/commits/2b7fd5f86258e093cccbf3dd776c9cdc460672f7","html_url":"https://github.com/prusa3d/PrusaSlicer/commit/2b7fd5f86258e093cccbf3dd776c9cdc460672f7"}],"stats":{"total":2,"additions":1,"deletions":1},"files":[{"sha":"0b33ba6dfa478cea5871cda435ea169045725be0","filename":"version.inc","status":"modified","additions":1,"deletions":1,"changes":2,"blob_url":"https://github.com/prusa3d/PrusaSlicer/blob/b028299c770b8380ee81c921a2867d522f288123/version.inc","raw_url":"https://github.com/prusa3d/PrusaSlicer/raw/b028299c770b8380ee81c921a2867d522f288123/version.inc","contents_url":"https://api.github.com/repos/prusa3d/PrusaSlicer/contents/version.inc?ref=b028299c770b8380ee81c921a2867d522f288123","patch":"@@ -3,7 +3,7 @@\n \n set(SLIC3R_APP_NAME \"PrusaSlicer\")\n set(SLIC3R_APP_KEY \"PrusaSlicer\")\n-set(SLIC3R_VERSION \"2.9.6-rc1\")\n+set(SLIC3R_VERSION \"2.9.6\")\n set(SLIC3R_BUILD_ID \"PrusaSlicer-${SLIC3R_VERSION}+UNKNOWN\")\n set(SLIC3R_RC_VERSION \"2,9,6,0\")\n set(SLIC3R_RC_VERSION_DOTS \"2.9.6.0\")"}]}
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "provenance and bounded governing evidence; not original response",
+  "source_urls": [
+    "https://api.github.com/repos/prusa3d/PrusaSlicer/commits/b028299c770b8380ee81c921a2867d522f288123",
+    "https://github.com/prusa3d/PrusaSlicer/blob/version_2.9.6/src/libslic3r/Format/3mf.cpp",
+    "https://github.com/prusa3d/PrusaSlicer/blob/version_2.9.6/src/libslic3r/Format/STEP.cpp",
+    "https://github.com/prusa3d/PrusaSlicer/commit/b028299c770b8380ee81c921a2867d522f288123",
+    "https://github.com/prusa3d/PrusaSlicer/releases"
+  ],
+  "original_public_path": "assessment/A7-01/treatment-v1/evidence/version-prusa296.json",
+  "original_public_sha256": "ec6b8588cabd07854108bbee97d158e9c9ca0035b8ba9ad291d59a9432bdd66a",
+  "original_public_bytes": 4210,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A7-01/treatment-v1/evidence/version-prusa296.json",
+  "classification_basis": "fetched GitHub API response / converted API response",
+  "original_selectors": [
+    {
+      "source_id": "P12",
+      "field": "locator",
+      "selector": "First three release objects and prerelease/published_at fields; independent web index"
+    },
+    {
+      "source_id": "P20",
+      "field": "locator",
+      "selector": "get_unit_factor lines 301–317; model handler 1959–1962; vertex handler 2103–2111; component handler 2183–2201; item handler 2224–2239"
+    },
+    {
+      "source_id": "P21",
+      "field": "locator",
+      "selector": "get_load_step_fn and load_step, lines 36–123"
+    }
+  ],
+  "governing_summaries_from_existing_authored_source_records": [
+    {
+      "title": "PrusaSlicer release inventory",
+      "version_or_commit": "At review: stable 2.9.6; 3.0.0-alpha11/alpha12 prereleases",
+      "locator": "First three release objects and prerelease/published_at fields; independent web index",
+      "accessed_at_utc": [
+        "2026-10-10T04:55:23.938149+00:00"
+      ],
+      "governing_conditions_and_applicability": "Supports separation of stable 2.9.6 from alpha-specific name reports and the unknown Flathub beta build.",
+      "independently_resolved_release_commit": {
+        "tag": "version_2.9.6",
+        "sha": "b028299c770b8380ee81c921a2867d522f288123",
+        "primary_metadata_url": "https://api.github.com/repos/prusa3d/PrusaSlicer/commits/version_2.9.6",
+        "accessed_at_utc": "2026-10-10T05:03:56.886466+00:00"
+      },
+      "authored_source_map": "assessment/A7-01/treatment-v1/source-map.json",
+      "source_id": "P12"
+    },
+    {
+      "title": "PrusaSlicer released 3MF importer source",
+      "version_or_commit": "Source at released version_2.9.6 tag",
+      "locator": "get_unit_factor lines 301–317; model handler 1959–1962; vertex handler 2103–2111; component handler 2183–2201; item handler 2224–2239",
+      "accessed_at_utc": [
+        "2026-10-10T04:55:24.409715+00:00"
+      ],
+      "governing_conditions_and_applicability": "Static source inspection corroborates the reported asymmetry: vertex factors are applied, while the inspected component/item handlers pass parsed transforms through. This is implementation evidence, not a locally executed witness or a guarantee about all binaries/platforms.",
+      "independently_resolved_release_commit": {
+        "tag": "version_2.9.6",
+        "sha": "b028299c770b8380ee81c921a2867d522f288123",
+        "primary_metadata_url": "https://api.github.com/repos/prusa3d/PrusaSlicer/commits/version_2.9.6",
+        "accessed_at_utc": "2026-10-10T05:03:56.886466+00:00"
+      },
+      "authored_source_map": "assessment/A7-01/treatment-v1/source-map.json",
+      "source_id": "P20"
+    },
+    {
+      "title": "PrusaSlicer released STEP import source",
+      "version_or_commit": "Source at released version_2.9.6 tag",
+      "locator": "get_load_step_fn and load_step, lines 36–123",
+      "accessed_at_utc": [
+        "2026-10-10T04:55:24.472784+00:00"
+      ],
+      "governing_conditions_and_applicability": "Confirms the OCCT-wrapper path and creation of TriangleMesh facets. The candidate’s STEP triangulation/kernel boundary is supported; source reading does not independently reproduce either issue example.",
+      "independently_resolved_release_commit": {
+        "tag": "version_2.9.6",
+        "sha": "b028299c770b8380ee81c921a2867d522f288123",
+        "primary_metadata_url": "https://api.github.com/repos/prusa3d/PrusaSlicer/commits/version_2.9.6",
+        "accessed_at_utc": "2026-10-10T05:03:56.886466+00:00"
+      },
+      "authored_source_map": "assessment/A7-01/treatment-v1/source-map.json",
+      "source_id": "P21"
+    }
+  ],
+  "selected_api_metadata": [
+    {
+      "url": "https://api.github.com/repos/prusa3d/PrusaSlicer/commits/b028299c770b8380ee81c921a2867d522f288123",
+      "html_url": "https://github.com/prusa3d/PrusaSlicer/commit/b028299c770b8380ee81c921a2867d522f288123",
+      "sha": "b028299c770b8380ee81c921a2867d522f288123",
+      "original_json_locator": "$"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY_AND_METADATA; full body coverage UNKNOWN",
+  "omission": "Full fetched body, API ancillary fields and unmechanically summarizable body details are archived privately. Original source URL and selectors govern; unsupported/missing semantic coverage is UNKNOWN. No candidate finding or independent judgment is repaired.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

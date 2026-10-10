@@ -1,7 +1,51 @@
-URL: https://blog.prusa3d.com/prusaslicer-2-release_30008/
-Original locator: ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I14.txt
-Original SHA256: b3437f2d493610f92039a0f43ae39e356e5fe9d60385c515b552338cfdb4225e
-Original numbered lines; gaps omitted. Not full response.
-
-86: Project file
-87: File – Save Project now saves a 3MF file containing all objects, settings, modifiers and their parameters. It’s essentially a complete snapshot of PrusaSlicer. When you open a project file on a different computer, it should still produce the same G-code. We chose 3MF over AMF, because it’s a modern format supported by Microsoft 3D Builder and Cura, but we still support AMF import. And yes, this feature was already present since Slic3r PE 1.40, but it was buried in the export menu as “Export plater as 3MF/AMF”.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://blog.prusa3d.com/prusaslicer-2-release_30008/"
+  ],
+  "original_public_path": "assessment/A7-01/control-v1/public-governing-excerpts/I14-b3437f2d.txt",
+  "original_public_sha256": "73972bd1e985c31084698164c1bd70734f5e8979590034ef786f78417bde6ae7",
+  "original_public_bytes": 823,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A7-01/control-v1/public-governing-excerpts/I14-b3437f2d.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I14.txt",
+      "original_sha256": "b3437f2d493610f92039a0f43ae39e356e5fe9d60385c515b552338cfdb4225e",
+      "original_bytes": 29481,
+      "original_line_numbers": [
+        86,
+        87
+      ],
+      "original_locators": [
+        {
+          "locator": "2019 Project file section, text lines 86–87."
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A7-01/control-v1/source-map.json",
+      "source_id": "I14",
+      "title": "PrusaSlicer 2.0 release notes",
+      "locator": "2019 Project file section, text lines 86–87.",
+      "governing_conditions": [
+        {
+          "claim_id": "Q15",
+          "subject": "AMF and historical Prusa format choice",
+          "operation": "Offer a bounded alternate interchange route",
+          "version": "ISO/ASTM52915-20 AMF 1.2 active public abstract; Prusa 2.0 announcement 2019; 2.9 docs",
+          "conditions_defaults_types_domains_exceptions": "XML schema conformance, public abstract only; no detailed full-standard claim. Historic 3MF preference/AMF support is not a current all-tool census.",
+          "judgment": "SUPPORTED"
+        }
+      ],
+      "applicability": "Independent source meaning for a research proposal; actual selected CAD/slicer/file behavior remains NOT_RUN.",
+      "version_note": "Live docs are not build-pinned unless explicitly stated in linked claim."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

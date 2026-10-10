@@ -1,7 +1,118 @@
-URL: UNKNOWN in captured record
-Original locator: ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E16.txt
-Original SHA256: 1d9f25bba043a6735f4f49d5be5bfa079a0491fc830391f0d93541bec4d2bb47
-Original numbered lines; gaps omitted. Not full response.
-
-61: Deleting your data¶
-94: To check whether a submission has been edited, you can usually compare the _uuid field with the rootUuid field in the data table or exported data. The rootUuid value stays the same for the original submission, while the _uuid value changes each time the submission is edited. If the values are different, the submission has likely been edited.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://support.kobotoolbox.org/editing_deleting_data.html"
+  ],
+  "original_public_path": "assessment/A2-01/control-v1/public-governing-excerpts/E16-1d9f25bb.txt",
+  "original_public_sha256": "123ecb8eabe3a22fee8d6f544d7801a4bb132f6b88b3d60ee1d4915610c789b9",
+  "original_public_bytes": 622,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A2-01/control-v1/public-governing-excerpts/E16-1d9f25bb.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E16.txt",
+      "original_sha256": "1d9f25bba043a6735f4f49d5be5bfa079a0491fc830391f0d93541bec4d2bb47",
+      "original_bytes": 14508,
+      "original_line_numbers": [
+        16,
+        45,
+        61,
+        94
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            16,
+            45
+          ]
+        },
+        {
+          "lines": [
+            61,
+            94
+          ]
+        },
+        {
+          "lines": [
+            16,
+            45
+          ]
+        },
+        {
+          "lines": [
+            61,
+            94
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E16.txt",
+      "original_sha256": "1d9f25bba043a6735f4f49d5be5bfa079a0491fc830391f0d93541bec4d2bb47",
+      "original_bytes": 14508,
+      "original_line_numbers": [
+        16,
+        45
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            16,
+            45
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E16.txt",
+      "original_sha256": "1d9f25bba043a6735f4f49d5be5bfa079a0491fc830391f0d93541bec4d2bb47",
+      "original_bytes": 14508,
+      "original_line_numbers": [
+        61,
+        94
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            61,
+            94
+          ]
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A2-01/control-v1/source-map.json",
+      "source_id": "E16",
+      "access_started_utc": "2026-10-10T04:55:54.165535+00:00",
+      "access_finished_utc": "2026-10-10T04:55:54.312484+00:00",
+      "title": "Kobo correction identity and history conditions",
+      "version": "Support page last updated 2026-05-06; app build not pinned",
+      "locators": [
+        {
+          "path": "evidence/E16.txt",
+          "lines": [
+            16,
+            45
+          ],
+          "section": "Post-submit edits; metadata; raw/web methods"
+        },
+        {
+          "path": "evidence/E16.txt",
+          "lines": [
+            61,
+            94
+          ],
+          "section": "History note and version/export troubleshooting"
+        }
+      ],
+      "subject_operation": "Server-side edits to submitted KoboCollect data",
+      "conditions": "No post-submit edit/delete in KoboCollect. Saved edits update _uuid; rootUuid stays stable. Web edits use latest form and can remove old fields. Raw edits cannot be undone; external log/comments recommended. Project history logs can track edit/deletion events."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

@@ -1,14 +1,71 @@
-URL: https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L31-L39
-Original locator: ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/retry-all-errors.md
-Original SHA256: a98f60938760f9d35232b3da2f7b45da4aa239411a142a52e5e8dccf6a5fb916
-Original numbered lines; gaps omitted. Not full response.
-
-31: output via redirect in combination with this option, since you may receive
-32: duplicate data.
-33: 
-34: By default curl does not return error for transfers with an HTTP response code
-35: that indicates an HTTP error, if the transfer was successful. For example, if
-36: a server replies 404 Not Found and the reply is fully received then that is
-37: not an error. When --retry is used then curl retries on some HTTP response
-38: codes that indicate transient HTTP errors, but that does not include most 4xx
-39: response codes such as 404. If you want to retry on all response codes that
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L31-L39",
+    "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md"
+  ],
+  "original_public_path": "assessment/B-FINAL-M-01/treatment-v1/public-governing-excerpts/retry-all-errors-a98f6093.txt",
+  "original_public_sha256": "6ad1ebd500364d1dd575a1233e9cdd151ab81aa9974b0aaba436111e9918f3b2",
+  "original_public_bytes": 924,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/B-FINAL-M-01/treatment-v1/public-governing-excerpts/retry-all-errors-a98f6093.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/retry-all-errors.md",
+      "original_sha256": "a98f60938760f9d35232b3da2f7b45da4aa239411a142a52e5e8dccf6a5fb916",
+      "original_bytes": 1763,
+      "original_line_numbers": [
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39
+      ],
+      "original_locators": [
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L31-L39"
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/retry-all-errors.md",
+      "original_sha256": "a98f60938760f9d35232b3da2f7b45da4aa239411a142a52e5e8dccf6a5fb916",
+      "original_bytes": 1763,
+      "original_line_numbers": [
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39
+      ],
+      "original_locators": [
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L31-L39"
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L31-L39"
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/B-FINAL-M-01/treatment-v1/source-map.json",
+      "source_id": "P2",
+      "retrieved_at_utc": "2026-10-10T04:26:09.602285+00:00",
+      "version": "curl-8_10_1 tag"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

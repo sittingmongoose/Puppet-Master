@@ -1,48 +1,103 @@
-URL: https://help.autodesk.com/cloudhelp/ENU/Fusion-Assemble/files/ASM-COMPONENTS.htm
-Original locator: ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I19.txt
-Original SHA256: 82329d8506caf0a689ae4e51e766e5a6bf4a39a23edc42563831d244cca6ee5e
-Original numbered lines; gaps omitted. Not full response.
-
-1: Components
-2: Components
-3: In Fusion, you can create all of the components of your design in context, and define the mechanical relationships and motion between them, all within a single environment.
-4: A Component is a container for design elements like sketches, construction geometry, bodies, joints, origins, and even other components.
-5: A component can be:
-6: A single part design that can only contain one component.
-7: An sub-assembly that is a child component in another assembly.
-8: Each component is capable of motion and has its own unique:
-9: Origin
-10: Coordinate system
-11: Timeline
-12: Name, number, and description that will display in a parts list
-13: All components can contain the following elements:
-14: Origin
-15: Construction geometry
-16: Sketches
-17: Bodies
-18: Joint origins
-19: Other components
-37: External Components
-38: An External Component, or xref, is a component that is contained in a separate design and referenced into the assembly in the current design.
-39: External components make it easier to:
-40: Reuse components
-41: Collaborate concurrently with team members on complex assemblies
-42: Replace components
-43: When you create a new external component, Fusion automatically saves it in the same location as its parent.
-44: If the parent component is not selected, the default location matches the active project and folder in the Data Panel.
-45: If the parent component has not been saved yet, the default location matches the active project and folder in the Data Panel.
-46: When you edit an external component, the changes display in any assembly where it is referenced.
-47: You can use Edit In Place to edit external components in context and establish relationships between the external component and other components in the assembly.
-48: You can use Replace Component to replace one or all instances of an external component in an assembly. In Parametric Modeling mode, if you select a component that is an instance in a pattern, all instances in the pattern will be replaced.
-49: Resolve components
-50: There are several causes of unresolved external components, including:
-51: Archived projects
-52: Changes to permission
-53: Deleted source designs
-54: Upload or translation failures
-55: You can open designs with unresolved external components and resolve, replace, or remove the references.
-56: In the Browser, the Unresolved Component status displays next to each unresolved external component. The status also displays next to all of its parent components, to make nested unresolved components easier to find. When you hover over the Unresolved Component status, a tooltip lists the reason and any action you can take.
-57: Note: If a design is unresolved because you are not a member of the project where it is saved, a notification displays, giving you the option to Join Project.
-58: You can also open designs with unresolved derived design features and resolve them when:
-59: The source design for the derive feature is missing
-60: The source design for the derive feature contains missing external reference
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://help.autodesk.com/cloudhelp/ENU/Fusion-Assemble/files/ASM-COMPONENTS.htm"
+  ],
+  "original_public_path": "assessment/A7-01/control-v1/public-governing-excerpts/I19-82329d85.txt",
+  "original_public_sha256": "ca38e97759d8e8bb2c4916b374ceeaadc1001baf944b0f3dc9bc93c2f0475bb5",
+  "original_public_bytes": 3369,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A7-01/control-v1/public-governing-excerpts/I19-82329d85.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I19.txt",
+      "original_sha256": "82329d8506caf0a689ae4e51e766e5a6bf4a39a23edc42563831d244cca6ee5e",
+      "original_bytes": 4936,
+      "original_line_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60
+      ],
+      "original_locators": [
+        {
+          "locator": "Component definition lines 1–19 and External/Resolve components lines 37–60."
+        },
+        {
+          "locator": "Component definition lines 1–19 and External/Resolve components lines 37–60."
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A7-01/control-v1/source-map.json",
+      "source_id": "I19",
+      "title": "Fusion component and assembly organization",
+      "locator": "Component definition lines 1–19 and External/Resolve components lines 37–60.",
+      "governing_conditions": [
+        {
+          "claim_id": "Q04",
+          "subject": "3MF components and manufacturing devices",
+          "operation": "Represent object references/transforms and preserve relative positions during manufacturing",
+          "version": "Core 1.4.0 §4.2",
+          "conditions_defaults_types_domains_exceptions": "Device-specific MUST, not blanket viewer/slicer guarantee; overlapping components unite with ordered properties. No native CAD joints/history guarantee.",
+          "judgment": "SUPPORTED_WITH_MINOR_DOMAIN_WORDING"
+        },
+        {
+          "claim_id": "Q17",
+          "subject": "Fusion native assembly components",
+          "operation": "Describe nested part intent and external references",
+          "version": "Live Autodesk assembly documentation, build unpinned",
+          "conditions_defaults_types_domains_exceptions": "Components can have own origins/coordinate systems/timeline; external references may fail from permissions, source deletion/archive or translation. Does not establish portable export retention.",
+          "judgment": "SUPPORTED"
+        }
+      ],
+      "applicability": "Independent source meaning for a research proposal; actual selected CAD/slicer/file behavior remains NOT_RUN.",
+      "version_note": "Live docs are not build-pinned unless explicitly stated in linked claim."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

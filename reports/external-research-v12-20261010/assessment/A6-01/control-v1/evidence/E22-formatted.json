@@ -1,96 +1,66 @@
 {
-  "url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/issues/6252",
-  "repository_url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner",
-  "labels_url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/issues/6252/labels{/name}",
-  "comments_url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/issues/6252/comments",
-  "events_url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/issues/6252/events",
-  "html_url": "https://github.com/opentripplanner/OpenTripPlanner/issues/6252",
-  "id": 2658431494,
-  "node_id": "I_kwDOAB-LNc6edHIG",
-  "number": 6252,
-  "title": "Real time update is lagging behind when the server is under load",
-  "user": {
-    "login": "miklcct",
-    "id": 2827264,
-    "node_id": "MDQ6VXNlcjI4MjcyNjQ=",
-    "avatar_url": "https://avatars.githubusercontent.com/u/2827264?v=4",
-    "gravatar_id": "",
-    "url": "https://api.github.com/users/miklcct",
-    "html_url": "https://github.com/miklcct",
-    "followers_url": "https://api.github.com/users/miklcct/followers",
-    "following_url": "https://api.github.com/users/miklcct/following{/other_user}",
-    "gists_url": "https://api.github.com/users/miklcct/gists{/gist_id}",
-    "starred_url": "https://api.github.com/users/miklcct/starred{/owner}{/repo}",
-    "subscriptions_url": "https://api.github.com/users/miklcct/subscriptions",
-    "organizations_url": "https://api.github.com/users/miklcct/orgs",
-    "repos_url": "https://api.github.com/users/miklcct/repos",
-    "events_url": "https://api.github.com/users/miklcct/events{/privacy}",
-    "received_events_url": "https://api.github.com/users/miklcct/received_events",
-    "type": "User",
-    "user_view_type": "public",
-    "site_admin": false
-  },
-  "labels": [],
-  "state": "closed",
-  "locked": false,
-  "assignees": [],
-  "milestone": null,
-  "comments": 0,
-  "created_at": "2024-11-14T10:52:45Z",
-  "updated_at": "2025-01-09T15:20:46Z",
-  "closed_at": "2025-01-09T15:20:46Z",
-  "assignee": null,
-  "author_association": "CONTRIBUTOR",
-  "issue_field_values": [],
-  "type": null,
-  "active_lock_reason": null,
-  "sub_issues_summary": {
-    "total": 0,
-    "completed": 0,
-    "percent_completed": 0
-  },
-  "issue_dependencies_summary": {
-    "blocked_by": 0,
-    "total_blocked_by": 0,
-    "blocking": 0,
-    "total_blocking": 0
-  },
-  "body": "**NOTE:** this issue system is intended for reporting bugs and tracking progress in software\r\ndevelopment. For all other usage and software development questions or discussion, please post a\r\nquestion in our chat room: https://gitter.im/opentripplanner/OpenTripPlanner.\r\n\r\n\r\n## Expected behavior\r\nThe server always process the latest real time update, even if the update takes longer than the polling interval (in such case some polling should be skipped)\r\n\r\n## Observed behavior\r\nThe real-time information is lagging behind, sometimes by even 20 minutes or more.\r\n\r\n## Version of OTP used (exact commit hash or JAR name)\r\n2.7.0-SNAPSHOT\r\n\r\n## Data sets in use (links to GTFS and OSM PBF files)\r\nNational Rail GTFS with GTFS-RT real-time update\r\n\r\n## Router config and graph build config JSON\r\nrouter-config-json\r\n```json\r\n{\r\n  \"routingDefaults\": { \r\n    \"drivingDirection\": \"left\",\r\n    \"locale\": \"en_GB\",\r\n    \"numItineraries\": 10,\r\n    \"searchWindow\": \"PT6H\",\r\n    \"transferSlack\": \"PT30S\",\r\n    \"waitReluctance\": 1.76,\r\n    \"accessEgress\": {\r\n      \"maxDuration\": \"PT2H\"\r\n    },\r\n    \"walk\": {\r\n      \"boardCost\": 300,\r\n      \"reluctance\": 1.68\r\n    },\r\n    \"wheelchairAccessibility\": {\r\n      \"trip\": {\r\n        \"onlyConsiderAccessible\": false,\r\n        \"unknownCost\": 600,\r\n        \"inaccessibleCost\": 3600\r\n      },\r\n      \"stop\": {\r\n        \"onlyConsiderAccessible\": false,\r\n        \"unknownCost\": 600,\r\n        \"inaccessibleCost\": 3600\r\n      },\r\n      \"elevator\": {\r\n        \"onlyConsiderAccessible\": false\r\n      },\r\n      \"inaccessibleStreetReluctance\": 25,\r\n      \"maxSlope\": 0.08333,\r\n      \"slopeExceededReluctance\": 50,\r\n      \"stairsReluctance\": 25\r\n    }\r\n  },\r\n  \"timetableUpdates\": {\r\n    \"maxSnapshotFrequency\": \"PT12S\" \r\n  },\r\n  \"transit\": {\r\n    \"searchThreadPoolSize\": 4,\r\n    \"transferCacheRequests\": [\r\n      {\r\n        \"modes\" : \"WALK\",\r\n        \"walk\" : {\r\n          \"boardCost\" : 300,\r\n          \"reluctance\" : 1.68\r\n        }\r\n      },\r\n      {\r\n        \"modes\" : \"WALK\",\r\n        \"walk\" : {\r\n          \"boardCost\" : 0,\r\n          \"reluctance\" : 1.0\r\n        }\r\n      }\r\n    ]\r\n  },\r\n  \"updaters\": [\r\n    {\r\n      \"type\": \"real-time-alerts\",\r\n      \"url\": \"${NR_GTFSRT_URL}\",\r\n      \"feedId\" : \"GB\",\r\n      \"frequency\": \"PT1M\"\r\n    },\r\n    {\r\n      \"type\": \"stop-time-updater\",\r\n      \"url\": \"${NR_GTFSRT_URL}\",\r\n      \"feedId\" : \"GB\",\r\n      \"frequency\": \"PT27S\"\r\n    },\r\n    {\r\n      \"type\" : \"vehicle-positions\",\r\n      \"url\" : \"${NR_GTFSRT_URL}\",\r\n      \"feedId\" : \"GB\",\r\n      \"frequency\" : \"PT34S\",\r\n      \"fuzzyTripMatching\" : false,\r\n      \"features\" : [\r\n        \"position\",\r\n        \"stop-position\",\r\n        \"occupancy\"\r\n      ]\r\n    },\r\n    {\r\n      \"type\" : \"vehicle-positions\",\r\n      \"url\" : \"https://internal-proxy.servology.co.uk/dft/bus-data/gtfsrt/\",\r\n      \"feedId\" : \"GB\",\r\n      \"frequency\" : \"PT35S\",\r\n      \"fuzzyTripMatching\" : false,\r\n      \"features\" : [\r\n        \"position\",\r\n        \"stop-position\",\r\n        \"occupancy\"\r\n      ]\r\n    }\r\n  ]\r\n}\r\n```\r\n\r\n## Steps to reproduce the problem\r\nRun OpenTripPlanner with a large dataset on a slow server with a polling interval short enough.\r\n\r\n## Additional information\r\nThe final statement of the updater is `saveResultOnGraph.execute(runnable);` which is a future. As a result the updater finishes immediately while the `GraphUpdateManager` is still doing work.\r\n\r\n```java\r\n  @Override\r\n  public Future<?> execute(GraphWriterRunnable runnable) {\r\n    return scheduler.submit(() -> {\r\n      try {\r\n        runnable.run(realtimeUpdateContext);\r\n      } catch (Exception e) {\r\n        LOG.error(\"Error while running graph writer {}:\", runnable.getClass().getName(), e);\r\n      }\r\n    });\r\n  }\r\n```\r\n\r\nAs processing GTFS-RT entities is fast, but updating the graph is slow, the updater finishes right after processing the entities and start another polling after the specified time delay, and the scheduler is accumulated with tasks to update the graph from the previous process results of previous GTFS-RT data.\r\n\r\nTherefore, the expected behaviour of waiting after finishing update before the polling the next does not happen. \r\n\r\nThe same problem applies to all updaters.",
-  "closed_by": {
-    "login": "t2gran",
-    "id": 5525340,
-    "node_id": "MDQ6VXNlcjU1MjUzNDA=",
-    "avatar_url": "https://avatars.githubusercontent.com/u/5525340?v=4",
-    "gravatar_id": "",
-    "url": "https://api.github.com/users/t2gran",
-    "html_url": "https://github.com/t2gran",
-    "followers_url": "https://api.github.com/users/t2gran/followers",
-    "following_url": "https://api.github.com/users/t2gran/following{/other_user}",
-    "gists_url": "https://api.github.com/users/t2gran/gists{/gist_id}",
-    "starred_url": "https://api.github.com/users/t2gran/starred{/owner}{/repo}",
-    "subscriptions_url": "https://api.github.com/users/t2gran/subscriptions",
-    "organizations_url": "https://api.github.com/users/t2gran/orgs",
-    "repos_url": "https://api.github.com/users/t2gran/repos",
-    "events_url": "https://api.github.com/users/t2gran/events{/privacy}",
-    "received_events_url": "https://api.github.com/users/t2gran/received_events",
-    "type": "User",
-    "user_view_type": "public",
-    "site_admin": false
-  },
-  "reactions": {
-    "url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/issues/6252/reactions",
-    "total_count": 0,
-    "+1": 0,
-    "-1": 0,
-    "laugh": 0,
-    "hooray": 0,
-    "confused": 0,
-    "heart": 0,
-    "rocket": 0,
-    "eyes": 0
-  },
-  "timeline_url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/issues/6252/timeline",
-  "performed_via_github_app": null,
-  "state_reason": "completed",
-  "pinned_comment": null
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "provenance and bounded governing evidence; not original response",
+  "source_urls": [
+    "https://api.github.com/repos/opentripplanner/OpenTripPlanner/issues/6252",
+    "https://github.com/opentripplanner/OpenTripPlanner/issues/6252"
+  ],
+  "original_public_path": "assessment/A6-01/control-v1/evidence/E22-formatted.json",
+  "original_public_sha256": "a9f4427a84606096a948436bacd47ddd391bc29212125cc11355b62efea7a0f9",
+  "original_public_bytes": 8506,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A6-01/control-v1/evidence/E22-formatted.json",
+  "classification_basis": "fetched GitHub API response / converted API response",
+  "original_selectors": [
+    {
+      "source_id": "E22",
+      "field": "lines",
+      "selector": 1
+    },
+    {
+      "source_id": "E22",
+      "field": "locator",
+      "selector": "E22 JSON /body and /created_at; navigable E22-body.md"
+    },
+    {
+      "source_id": "E22",
+      "field": "lines",
+      "selector": 1
+    }
+  ],
+  "governing_summaries_from_existing_authored_source_records": [
+    {
+      "access_utc": "2026-10-10T04:39:01.322155+00:00",
+      "lines": 1,
+      "version_observed": "OTP issue #6252, opened 2024-11-14; reported 2.7.0-SNAPSHOT",
+      "locator": "E22 JSON /body and /created_at; navigable E22-body.md",
+      "independent_observation": "Independent issue API response, complete body retained and read.",
+      "authored_source_map": "assessment/A6-01/control-v1/source-map.json",
+      "source_id": "E22"
+    },
+    {
+      "access_utc": "2026-10-10T04:39:01.322155+00:00",
+      "lines": 1,
+      "authored_source_map": "assessment/A6-01/control-v1/evidence/retrieval-manifest.json",
+      "source_id": "E22"
+    }
+  ],
+  "selected_api_metadata": [
+    {
+      "url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/issues/6252",
+      "html_url": "https://github.com/opentripplanner/OpenTripPlanner/issues/6252",
+      "id": 2658431494,
+      "number": 6252,
+      "title": "Real time update is lagging behind when the server is under load",
+      "created_at": "2024-11-14T10:52:45Z",
+      "updated_at": "2025-01-09T15:20:46Z",
+      "closed_at": "2025-01-09T15:20:46Z",
+      "state": "closed",
+      "state_reason": "completed",
+      "original_json_locator": "$"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY_AND_METADATA; full body coverage UNKNOWN",
+  "omission": "Full fetched body, API ancillary fields and unmechanically summarizable body details are archived privately. Original source URL and selectors govern; unsupported/missing semantic coverage is UNKNOWN. No candidate finding or independent judgment is repaired.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
 }

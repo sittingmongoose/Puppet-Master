@@ -1,45 +1,155 @@
-URL: https://uppy.io/docs/aws-s3/
-Original locator: ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-UPPY-01.txt
-Original SHA256: b6b0ab02fc91c3db92c6ec39a80f4fb31ee81b7cf9c3d39cd01e40ed576776d5
-Original numbered lines; gaps omitted. Not full response.
-
-28: AWS S3
-29: The @uppy/aws-s3 plugin uploads files from the browser directly to an S3
-30: bucket, or to any S3-compatible service such as Cloudflare R2, MinIO, or
-31: DigitalOcean Spaces.
-32: Small files are sent in a single request (a presigned PUT in the direct modes,
-33: a POST form upload through Companion), large files as a multipart upload.
-34: Every request to S3 has to be signed, and you choose how that happens:
-35: | Option | Who signs | What you run
-36: | getCredentials | the browser, with SigV4 | an endpoint handing out temporary credentials
-37: | signRequest | your own code | an endpoint returning a presigned URL per operation
-38: | companionEndpoint | Companion | Companion
-39: The three modes are mutually exclusive. Pass exactly one: the plugin throws if
-40: you pass none.
-41: note
-42: Upgrading from Uppy 5.x? All signing options changed names and shapes. See the
-43: migration guide.
-44: When should I use it?​
-45: tip
-46: Not sure which uploader is best for you? Read
-47: “Choosing the uploader you need”.
-48: Use this plugin when you prefer a client-to-storage over a
-49: client-to-server-to-storage (such as Transloadit or
-50: Tus) setup. This may in some cases be preferable, for instance, to
-51: reduce costs or the complexity of running a server and load balancer with
-52: Tus.
-53: Multipart uploads become valuable for larger files, as the object is uploaded as
-54: a set of parts. Only failed parts have to be retried, and an interrupted upload
-55: can resume where it stopped instead of starting over. The downside is request
-56: overhead: creation, signing, and completion requests on top of the upload
-57: requests themselves. For a file of a couple of kilobytes with 100 ms
-58: roundtrip latency, that overhead is most of the upload. We recommend keeping the
-59: default shouldUseMultipart, which uses multipart only for large files.
-60: Which signing mode to pick:
-61: signRequest keeps your credentials on your server and
-62: is the safest default.
-63: getCredentials removes one round trip per S3 operation,
-64: because the browser signs locally. In exchange, the browser holds credentials
-218: signRequest(request)​
-241: | Request | S3 operation
-361: ExposeHeaders has to include ETag, or multipart uploads cannot be completed:
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://uppy.io/docs/aws-s3/"
+  ],
+  "original_public_path": "assessment/A4-01/control-v1/public-governing-excerpts/I-UPPY-01-b6b0ab02.txt",
+  "original_public_sha256": "985adbe8b2d1ff1ca6ce6c8566aa29d2b19ed268ef66f0c2468b5598402a356f",
+  "original_public_bytes": 2537,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A4-01/control-v1/public-governing-excerpts/I-UPPY-01-b6b0ab02.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-UPPY-01.txt",
+      "original_sha256": "b6b0ab02fc91c3db92c6ec39a80f4fb31ee81b7cf9c3d39cd01e40ed576776d5",
+      "original_bytes": 17597,
+      "original_line_numbers": [
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        218,
+        241,
+        361
+      ],
+      "original_locators": [
+        {
+          "locator": "Direct upload/signing modes local lines 28–64; signRequest operation mapping; Bucket and CORS setup 330–375."
+        },
+        {
+          "saved_text_lines": [
+            218
+          ]
+        },
+        {
+          "anchor": "signRequest(request)",
+          "matched_original_line": 218
+        },
+        {
+          "saved_text_lines": [
+            361
+          ]
+        },
+        {
+          "anchor": "ExposeHeaders has to",
+          "matched_original_line": 361
+        },
+        {
+          "saved_text_lines": [
+            241
+          ]
+        },
+        {
+          "anchor": "Request | S3 operation",
+          "matched_original_line": 241
+        },
+        {
+          "locator": "Direct upload/signing modes local lines 28–64; signRequest operation mapping; Bucket and CORS setup 330–375."
+        },
+        {
+          "saved_text_lines": [
+            218
+          ]
+        },
+        {
+          "anchor": "signRequest(request)",
+          "matched_original_line": 218
+        },
+        {
+          "saved_text_lines": [
+            361
+          ]
+        },
+        {
+          "anchor": "ExposeHeaders has to",
+          "matched_original_line": 361
+        },
+        {
+          "saved_text_lines": [
+            241
+          ]
+        },
+        {
+          "anchor": "Request | S3 operation",
+          "matched_original_line": 241
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A4-01/control-v1/source-map.json",
+      "source_id": "I-UPPY-01",
+      "title": "AWS S3 uploader — Uppy documentation",
+      "retrieved_at_utc": "2026-10-10T04:25:10.659448+00:00",
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "signRequest(request)",
+          "saved_text_lines": [
+            218
+          ]
+        },
+        {
+          "anchor": "ExposeHeaders has to",
+          "saved_text_lines": [
+            361
+          ]
+        },
+        {
+          "anchor": "Request | S3 operation",
+          "saved_text_lines": [
+            241
+          ]
+        }
+      ]
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

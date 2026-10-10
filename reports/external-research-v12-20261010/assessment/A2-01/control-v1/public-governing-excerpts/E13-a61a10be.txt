@@ -1,7 +1,79 @@
-URL: UNKNOWN in captured record
-Original locator: ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E13.txt
-Original SHA256: a61a10becbe07893375a6b1081a91ad9be6037b120bc825488d9f49cfc8241b2
-Original numbered lines; gaps omitted. Not full response.
-
-82: replication document before it becomes a replication job.
-109: B already exists in A and will wait for further changes.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://docs.couchdb.org/en/3.5.1/replication/intro.html"
+  ],
+  "original_public_path": "assessment/A2-01/control-v1/public-governing-excerpts/E13-a61a10be.txt",
+  "original_public_sha256": "25690b3c385de03a8a781772f2fe55bb03acb54c8545291ff0bd32c3a76d264e",
+  "original_public_bytes": 373,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A2-01/control-v1/public-governing-excerpts/E13-a61a10be.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E13.txt",
+      "original_sha256": "a61a10becbe07893375a6b1081a91ad9be6037b120bc825488d9f49cfc8241b2",
+      "original_bytes": 6941,
+      "original_line_numbers": [
+        82,
+        109
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            82,
+            109
+          ]
+        },
+        {
+          "lines": [
+            82,
+            109
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E13.txt",
+      "original_sha256": "a61a10becbe07893375a6b1081a91ad9be6037b120bc825488d9f49cfc8241b2",
+      "original_bytes": 6941,
+      "original_line_numbers": [
+        82,
+        109
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            82,
+            109
+          ]
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A2-01/control-v1/source-map.json",
+      "source_id": "E13",
+      "access_started_utc": "2026-10-10T04:55:54.011855+00:00",
+      "access_finished_utc": "2026-10-10T04:55:54.188441+00:00",
+      "title": "CouchDB replication checkpoints",
+      "version": "Apache CouchDB 3.5.1 documentation",
+      "locators": [
+        {
+          "path": "evidence/E13.txt",
+          "lines": [
+            82,
+            109
+          ],
+          "section": "Replication Procedure; Master-Master Replication"
+        }
+      ],
+      "subject_operation": "One-way document replication and restart recovery",
+      "conditions": "Changes-feed batches compare existing revisions; checkpoints allow restarted tasks to resume. Persistent versus transient task lifecycle differs; two directions require two tasks."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

@@ -1,35 +1,72 @@
-URL: https://docs.opentripplanner.org/en/latest/apis/GTFS-GraphQL-API/
-Original locator: ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E08.txt
-Original SHA256: c98d666a6812ba6644396fac4d1dc42ff3735deee752093b9628ff4825be4ed4
-Original numbered lines; gaps omitted. Not full response.
-
-112: GTFS GraphQL API
-113: The GTFS GraphQL API is a general purpose API which was created for the Digitransit project and is
-114: used heavily by digitransit-ui.
-115: otp-react-redux has also migrated to this API
-116: in 2023.
-117: There is also a Java client available which
-118: makes it easy to use this API in a Java application.
-119: URLs
-120: GraphQL endpoint: http://localhost:8080/otp/gtfs/v1
-121: HTML schema documentation:
-122: https://docs.opentripplanner.org/api/dev-2.x/graphql-gtfs/
-123: Built-in visual GraphQL client: http://localhost:8080/graphiql
-124: (note the additional i!)
-125: Built-in API client
-126: A browser based GraphQL API client is available at
-127: http://localhost:8080/graphiql
-128: curl example
-129: A complete example that fetches the list of all stops from OTP is:
-130: curl --request POST \
-131: --url http://localhost:8080/otp/gtfs/v1 \
-132: --header 'Content-Type: application/json' \
-133: --header 'OTPTimeout: 180000' \
-134: --data '{"query":"query stops {\n stops {\n gtfsId\n name\n }\n}\n","operationName":"stops"}'
-135: Configuration
-136: The API is enabled by default.
-137: If you want to disable it, do it in otp-config.json:
-138: // otp-config.json
-139: {
-140: "otpFeatures": {
-141: "GtfsGraphQlApi": false
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://docs.opentripplanner.org/en/latest/apis/GTFS-GraphQL-API/"
+  ],
+  "original_public_path": "assessment/A6-01/control-v1/public-governing-excerpts/E08-c98d666a.txt",
+  "original_public_sha256": "7000b04b7a7aa98da00285ed542e656b5c766e0a21fe674e6da37e7574ec8dea",
+  "original_public_bytes": 1545,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A6-01/control-v1/public-governing-excerpts/E08-c98d666a.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E08.txt",
+      "original_sha256": "c98d666a6812ba6644396fac4d1dc42ff3735deee752093b9628ff4825be4ed4",
+      "original_bytes": 2833,
+      "original_line_numbers": [
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141
+      ],
+      "original_locators": [
+        {
+          "locator": "E08.txt lines 112-141"
+        },
+        {
+          "locator": "E08.txt lines 112-141"
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A6-01/control-v1/source-map.json",
+      "source_id": "E08",
+      "access_utc": "2026-10-10T04:39:00.418248+00:00",
+      "version_observed": "Living primary page/repository observed 2026-10-10; see precise scope in linked claim records",
+      "locator": "E08.txt lines 112-141",
+      "independent_observation": "Independent GraphQL endpoint/general-purpose/API configuration documentation."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

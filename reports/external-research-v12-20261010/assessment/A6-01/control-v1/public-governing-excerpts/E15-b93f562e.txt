@@ -1,20 +1,57 @@
-URL: https://github.com/TransmodelEcosystem/SIRI
-Original locator: ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E15.txt
-Original SHA256: b93f562e3a89d91f180f12c61730dc809a38c150418e4d72cb52cc83495083b4
-Original numbered lines; gaps omitted. Not full response.
-
-48: EXPLORE BY TOPIC
-49: AI
-50: Software Development
-51: DevOps
-52: Security
-53: View all topics
-54: EXPLORE BY TYPE
-55: Customer stories
-56: Events & webinars
-57: Ebooks & reports
-58: Business insights
-59: GitHub Skills
-60: SUPPORT & SERVICES
-61: Documentation
-62: Customer support
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://github.com/TransmodelEcosystem/SIRI"
+  ],
+  "original_public_path": "assessment/A6-01/control-v1/public-governing-excerpts/E15-b93f562e.txt",
+  "original_public_sha256": "50c83429f80ecd85760424dec69409ed6f497cc7ecc40d851ddcd1cbb7e2cd77",
+  "original_public_bytes": 549,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A6-01/control-v1/public-governing-excerpts/E15-b93f562e.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E15.txt",
+      "original_sha256": "b93f562e3a89d91f180f12c61730dc809a38c150418e4d72cb52cc83495083b4",
+      "original_bytes": 12245,
+      "original_line_numbers": [
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62
+      ],
+      "original_locators": [
+        {
+          "locator": "Repository README Branches, Important notes and Releases; raw README E26 lines 48-62 and 139-150"
+        },
+        {
+          "locator": "Repository README Branches, Important notes and Releases; raw README E26 lines 48-62 and 139-150"
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A6-01/control-v1/source-map.json",
+      "source_id": "E15",
+      "access_utc": "2026-10-10T04:39:00.714148+00:00",
+      "version_observed": "Living primary page/repository observed 2026-10-10; see precise scope in linked claim records",
+      "locator": "Repository README Branches, Important notes and Releases; raw README E26 lines 48-62 and 139-150",
+      "independent_observation": "Independent repository branch/release conditions; raw README provides a readable corroborating capture."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

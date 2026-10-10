@@ -1,7 +1,79 @@
-URL: UNKNOWN in captured record
-Original locator: ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E01.txt
-Original SHA256: e16ae7d185dd70a2ca3d18ef7fceb69d98b4767eec85b3692e8b52e7824d8323
-Original numbered lines; gaps omitted. Not full response.
-
-133: Finalizing drafts¶
-166: version
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://docs.getodk.org/collect-forms/"
+  ],
+  "original_public_path": "assessment/A2-01/control-v1/public-governing-excerpts/E01-e16ae7d1.txt",
+  "original_public_sha256": "b6ed27ea871085765d82c95e747ce3376158cd8552eaa36cb1488332b2741c5e",
+  "original_public_bytes": 287,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A2-01/control-v1/public-governing-excerpts/E01-e16ae7d1.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E01.txt",
+      "original_sha256": "e16ae7d185dd70a2ca3d18ef7fceb69d98b4767eec85b3692e8b52e7824d8323",
+      "original_bytes": 13747,
+      "original_line_numbers": [
+        133,
+        166
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            133,
+            166
+          ]
+        },
+        {
+          "lines": [
+            133,
+            166
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E01.txt",
+      "original_sha256": "e16ae7d185dd70a2ca3d18ef7fceb69d98b4767eec85b3692e8b52e7824d8323",
+      "original_bytes": 13747,
+      "original_line_numbers": [
+        133,
+        166
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            133,
+            166
+          ]
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A2-01/control-v1/source-map.json",
+      "source_id": "E01",
+      "access_started_utc": "2026-10-10T04:55:52.834275+00:00",
+      "access_finished_utc": "2026-10-10T04:55:53.158392+00:00",
+      "title": "ODK Collect form lifecycle and client edits",
+      "version": "Living docs; explicit Collect v2025.2.0 / Central v2025.1.4 feature gate",
+      "locators": [
+        {
+          "path": "evidence/E01.txt",
+          "lines": [
+            133,
+            166
+          ],
+          "section": "Finalizing drafts; Sending finalized forms; Editing finalized or sent forms"
+        }
+      ],
+      "subject_operation": "Collect device-local Draft/Ready to send/Sent; opt-in edits of retained finalized/sent submissions",
+      "conditions": "Off by default; settings.client_editable=true. Edits use the original form definition, are tracked in Central, and manually queued edits must be sent in order. A Central-side edit makes that submission no longer editable from Collect. Entities are not updated by these edits."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

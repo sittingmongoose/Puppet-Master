@@ -1,1 +1,42 @@
-[{"sha":"8740f455be90274d3575340ae0075b4d0162413b","filename":"draft/spec/index.html","status":"modified","additions":7,"deletions":7,"changes":14,"blob_url":"https://github.com/OCFL/spec/blob/c6457f7d7285a0402541d35d404dec8f5fd39e7d/draft%2Fspec%2Findex.html","raw_url":"https://github.com/OCFL/spec/raw/c6457f7d7285a0402541d35d404dec8f5fd39e7d/draft%2Fspec%2Findex.html","contents_url":"https://api.github.com/repos/OCFL/spec/contents/draft%2Fspec%2Findex.html?ref=c6457f7d7285a0402541d35d404dec8f5fd39e7d","patch":"@@ -493,10 +493,10 @@ <h2>Content Directory</h2>\n           </p>\n           <p>\n               Every file within a version's content directory <span id=\"E023\">MUST</span> be referenced in the\n-              <a href=\"#manifest\">manifest</a> section of the inventory. There <span id=\"E024\">MUST NOT</span> be empty\n-              directories within a version's content directory. A directory that would otherwise be empty MAY be\n-              maintained by creating a file within it named according to local conventions, for example by making an\n-              empty <code>.keep</code> file.\n+              <a href=\"#manifest\">manifest</a> section of that version's inventory. There\n+              <span id=\"E024\">MUST NOT</span> be empty directories within a version's content directory. A directory\n+              that would otherwise be empty MAY be maintained by creating a file within it named according to local\n+              conventions, for example by making an empty <code>.keep</code> file.\n           </p>\n         </section>\n     </section>\n@@ -663,9 +663,9 @@ <h2>Basic Structure</h2>\n             <h2>Manifest</h2>\n             <p>\n                 The value of the <code>manifest</code> key is a JSON object, with keys corresponding to the digests\n-                of every content file in all versions of the <a>OCFL Object</a>. The value for each key\n-                <span id=\"E092\">MUST</span> be an array containing the <a>content path</a>s of files in the OCFL\n-                Object that have content with the given digest. As JSON keys are case sensitive, while digests may\n+                of every content file in the current and previous versions of the <a>OCFL Object</a>. The value for\n+                each key <span id=\"E092\">MUST</span> be an array containing the <a>content path</a>s of files in the\n+                OCFL Object that have content with the given digest. As JSON keys are case sensitive, while digests may\n                 not be, there is an additional requirement that each digest value <span id=\"E096\">MUST</span> occur\n                 only once in the manifest regardless of case. Content paths within a manifest block\n                 <span id=\"E042\">MUST</span> be relative to the <a>OCFL Object Root</a>. The following restrictions"}]
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "provenance and bounded governing evidence; not original response",
+  "source_urls": [
+    "https://api.github.com/repos/OCFL/spec/pulls/547/files",
+    "https://github.com/OCFL/spec/raw/c6457f7d7285a0402541d35d404dec8f5fd39e7d/draft%2Fspec%2Findex.html"
+  ],
+  "original_public_path": "assessment/A8-01/treatment-v1/evidence/E06-ocfl-pr547-files.json",
+  "original_public_sha256": "2530c9e0a89a8b29e14d90d1d9077331f90d54485316e4fd0a268a7e3406ad20",
+  "original_public_bytes": 2853,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A8-01/treatment-v1/evidence/E06-ocfl-pr547-files.json",
+  "classification_basis": "fetched GitHub API response / converted API response",
+  "original_selectors": [],
+  "governing_summaries_from_existing_authored_source_records": [
+    {
+      "access_start_utc": "2026-10-10T04:41:13.515104+00:00",
+      "access_finish_utc": "2026-10-10T04:41:13.821996+00:00",
+      "authored_source_map": "assessment/A8-01/treatment-v1/source-map.json",
+      "source_id": "E06-ocfl-pr547-files"
+    },
+    {
+      "access_start_utc": "2026-10-10T04:41:13.515104+00:00",
+      "access_finish_utc": "2026-10-10T04:41:13.821996+00:00",
+      "authored_source_map": "assessment/A8-01/treatment-v1/evidence/retrieval-index.json",
+      "source_id": "E06-ocfl-pr547-files"
+    }
+  ],
+  "selected_api_metadata": [
+    {
+      "sha": "8740f455be90274d3575340ae0075b4d0162413b",
+      "filename": "draft/spec/index.html",
+      "status": "modified",
+      "raw_url": "https://github.com/OCFL/spec/raw/c6457f7d7285a0402541d35d404dec8f5fd39e7d/draft%2Fspec%2Findex.html",
+      "blob_url": "https://github.com/OCFL/spec/blob/c6457f7d7285a0402541d35d404dec8f5fd39e7d/draft%2Fspec%2Findex.html",
+      "original_json_locator": "$[0]"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY_AND_METADATA; full body coverage UNKNOWN",
+  "omission": "Full fetched body, API ancillary fields and unmechanically summarizable body details are archived privately. Original source URL and selectors govern; unsupported/missing semantic coverage is UNKNOWN. No candidate finding or independent judgment is repaired.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

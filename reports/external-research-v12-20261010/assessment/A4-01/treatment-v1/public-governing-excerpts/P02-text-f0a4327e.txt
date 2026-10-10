@@ -1,16 +1,148 @@
-URL: https://docs.aws.amazon.com/AmazonS3/latest/userguide/qfacts.html
-Original locator: ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P02-text.txt
-Original SHA256: f0a4327e411756df798913c974c7be20f5d5c407df68e9d88c76a6a7efa4ce1f
-Original numbered lines; gaps omitted. Not full response.
-
-13: limit on the last part of your multipart upload.
-14: Item
-15: Specification
-16: Maximum object size
-17: 48.8 TiB
-18: Maximum number of parts per upload
-19: 10,000
-20: Part numbers
-21: 1 to 10,000 (inclusive)
-22: Part size
-23: 5 MiB to 5 GiB. There is no minimum size limit on the last part of your multipart
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://docs.aws.amazon.com/AmazonS3/latest/userguide/qfacts.html"
+  ],
+  "original_public_path": "assessment/A4-01/treatment-v1/public-governing-excerpts/P02-text-f0a4327e.txt",
+  "original_public_sha256": "5e5e0125fb24b5d3d06dc3e4fd380cb5184bbb684f302668f08e95611ddfcba1",
+  "original_public_bytes": 607,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A4-01/treatment-v1/public-governing-excerpts/P02-text-f0a4327e.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P02-text.txt",
+      "original_sha256": "f0a4327e411756df798913c974c7be20f5d5c407df68e9d88c76a6a7efa4ce1f",
+      "original_bytes": 2027,
+      "original_line_numbers": [
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+      ],
+      "original_locators": [
+        {
+          "text_lines": [
+            17
+          ]
+        },
+        {
+          "anchor": "48.8 TiB",
+          "matched_original_line": 17
+        },
+        {
+          "text_lines": [
+            19,
+            21
+          ]
+        },
+        {
+          "anchor": "10,000",
+          "matched_original_line": 19
+        },
+        {
+          "anchor": "10,000",
+          "matched_original_line": 21
+        },
+        {
+          "text_lines": [
+            13,
+            23
+          ]
+        },
+        {
+          "anchor": "last part",
+          "matched_original_line": 13
+        },
+        {
+          "anchor": "last part",
+          "matched_original_line": 23
+        },
+        {
+          "text_lines": [
+            17
+          ]
+        },
+        {
+          "anchor": "48.8 TiB",
+          "matched_original_line": 17
+        },
+        {
+          "text_lines": [
+            19,
+            21
+          ]
+        },
+        {
+          "anchor": "10,000",
+          "matched_original_line": 19
+        },
+        {
+          "anchor": "10,000",
+          "matched_original_line": 21
+        },
+        {
+          "text_lines": [
+            13,
+            23
+          ]
+        },
+        {
+          "anchor": "last part",
+          "matched_original_line": 13
+        },
+        {
+          "anchor": "last part",
+          "matched_original_line": 23
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A4-01/treatment-v1/source-map.json",
+      "source_id": "P02",
+      "accessed_utc": "2026-10-10T04:41:53.996523+00:00",
+      "version_or_commit_observed": "AWS S3 live User Guide, release not stated",
+      "locator": "Multipart core specifications",
+      "locators": [
+        {
+          "anchor": "48.8 TiB",
+          "text_lines": [
+            17
+          ],
+          "primary_heading_or_json_field": "Multipart core specifications"
+        },
+        {
+          "anchor": "10,000",
+          "text_lines": [
+            19,
+            21
+          ],
+          "primary_heading_or_json_field": "Multipart core specifications"
+        },
+        {
+          "anchor": "last part",
+          "text_lines": [
+            13,
+            23
+          ],
+          "primary_heading_or_json_field": "Multipart core specifications"
+        }
+      ],
+      "conditions_defaults_units_types_exceptions": "Last part has no minimum; ListParts and upload listings have 1,000-response limits. 40 GB counts must use exact bytes.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

@@ -1,4 +1,224 @@
 {
-  "method": "Independent web.run retrieval; public primary sources; tool-returned extract retained.",
-  "result": "Discovering relationships between preprints and journal articles - Crossref (https://www.crossref.org/blog/discovering-relationships-between-preprints-and-journal-articles/)\nciteturn7view0 [wordlim: 200] Crawled: today; Content type: text/html; Source: open({\"ref_id\":\"turn3view4\",\"lineno\":145}); Total lines: 264\nL136: Doing so would allow us to infer missing relationships on a large scale, similar to how we automatically match bibliographic references to DOIs.\nL137: This preprint matching task can be defined in two directions:\nL138: \nL139:   * We start with a journal article and we want to find all its preprints.\nL140:   * We start with a preprint and we want to find a subsequently published journal article.\nL141: On the one hand, matching from journal articles to preprints would allow us to enrich the database continually with new relationships, either periodically or every time new content is added. Since journal articles tend to appear in the database later than their preprints, it makes sense for a new journal article to trigger the matching and not the other way round. This way we can expect the potential matches to be already in the database at the time of matching.\nL142: On the other hand, matching from preprints to journal articles can be useful in a situation where we want to add relationships in an existing database retrospectively. In our case, the database contains many more journal articles than preprints, so for performance reasons it is better to start with preprints.\nL143: \nL144: In both cases we are dealing with structured matching, meaning that we match a metadata record of a work (preprint or journal article), rather than unstructured text.\nL145: As a result of matching a single preprint or a single journal article, we should expect zero or more matched journal articles/preprints. Multiple matches occur when:\nL146: \nL147:   * there are multiple versions of the matched preprint and/or\nL148:   * matched works have duplicates.\nL149: \nL150: The image shows the result of matching a journal article to two versions of a preprint:\nL151: \nL152: cite69†Image: Preprint matching L153: ## Matching strategy\nL154: \nL155: Our matching strategy uses the following workflow:\nL156: \nL157:   1. Gathering a short list of candidates using the Crossref REST API.\nL158:   2. Scoring the similarity between the input item and each candidate.\nL159:   3. A final decision about which candidates, if any, should be returned as matches.\nL160: Gathering candidates is done using the Crossref REST API’s query.bibliographic parameter. The query is a concatenation of the title and authors’ last names of the input item. We filter the candidates based on their type, to leave only preprints or only journal articles, depending on the direction of the matching. In the future, instead of getting the candidates from the REST API, we will be using a dedicated search engine, optimised for preprint matching.\nL161: Scoring candidates is heuristic-based. Similarities between titles, authors, and years are scored independently, and the final score is their average. Titles are compared in a fuzzy way using the cite70†rapidfuzz library†pypi.org . Authors are compared pairwise using the ORCID ID, or first/last names if ORCID ID is not available.\nL162: The similarity score between issued years is 1 if the article was published no earlier than one year before the preprint and no later than three years after the preprint, or 0 otherwise.\nL163: The final decision is made based on two parameters: minimum score and maximum score difference, both chosen based on a validation dataset. The following diagram depicts the results of applying these two parameters in all possible scenarios. First, any candidate scoring below the minimum score is rejected (grey area in the diagram). Second, the scores of the remaining candidates are compared with the score of the top candidate.\nL164: If the score of a candidate is close enough to the score of the top candidate, it is returned as a match (blue area).\nL165: cite71†Image: Preprint matching scenarios L166: \nL167: This process can result in the following scenarios:\nL168:   * Scenario A: there is no candidate above the minimum score. This means nothing matches sufficiently, so nothing is returned.\nL169:   * Scenario B: there is only one candidate above the minimum score. This means it is the best match and we don’t have much of a choice, so it is returned.\nL170:   * Scenario C: there are multiple candidates above the minimum score, and they all have similar scores. This means they all are similarly good matches, so all are returned.\nL171:   * Scenario D: there are multiple candidates above the minimum score, but their scores differ a lot. In this case, we don’t want to return all of them, but only those that are close to the top match. Intuitively, we don’t want to return less-than-great matches if we have really great ones. This is when the maximum score difference comes into play: we return the candidates with the “score distance” to the top candidate lower than the maximum score difference.\nL172: We evaluated this strategy on a test set sampled from the Crossref metadata records. The test set contains 3,000 pairs (journal article, set of corresponding preprints). Half of the journal articles have known preprints and the other half don’t. The test set can be accessed cite72†here†gitlab.com .\nL173: \nL174: We used precision, recall, and F0.5 as evaluation metrics:\n--------------------------------------------------------------------------------\nRelationships - Crossref (https://www.crossref.org/documentation/schema-library/markup-guide-metadata-segments/relationships/)\nciteturn7view1 [wordlim: 200] Crawled: today; Content type: text/html; Source: open({\"ref_id\":\"turn2view3\",\"lineno\":235}); Total lines: 526\nL192: cite66†Image L193: \nL194:     `<journal_article publication_type=\"full_text\">\nL195:       <titles>\nL196:          <title>Um artigo na língua original, que passa a ser o inglês</title>\nL197:          <original_language_title language=\"en\">An article in its original language which happens to be English</original_language_title>\nL198:        </titles>\nL199:        <contributors>\nL200:          <person_name sequence=\"first\" contributor_role=\"author\">\nL201:            <given_name>Daniel</given_name>\nL202:            <surname>Stepputtis</surname>\nL203:            <ORCID authenticated=\"true\">http://orcid.org/0000-0003-4824-1631</ORCID>\nL204:          </person_name>\nL205:       </contributors>\nL206:       <publication_date media_type=\"online\">\nL207:          <month>02</month>\nL208:          <day>28</day>\nL209:          <year>2013</year>\nL210:       </publication_date>\nL211:       <program xmlns=\"http://www.crossref.org/relations.xsd\">\nL212:          <related_item>\nL213:            <description>Portuguese translation of an article</description>\nL214:            <intra_work_relation relationship-type=\"isTranslationOf\" identifier-type=\"doi\">10.5555/original_language</intra_work_relation>\nL215:          </related_item>\nL216:       </program>\nL217:       <doi_data>\nL218:          <doi>10.5555/translation</doi>\nL219:          <resource>https://www.crossref.org/</resource>\nL220:       </doi_data>\nL221:     </journal_article>\nL222:     `\nL223: ### Example: book review\nL224: \nL225: This example has a book review published as an article in the journal The Holocene. The article’s title, taken from the publisher’s site is “Book Review: Understanding the Earth system: compartments, processes and interactions” where this book has the DOI cite67†https://doi.org/10.1007/978-3-642-56843-5†doi.org .\nL226: #### A: The current metadata for the review article gives no indication of the actual book being reviewed:\nL227: \nL228:     `<journal>\nL229:         <journal_metadata language=\"en\">\nL230:             <full_title>The Holocene</full_title>\nL231:             <abbrev_title>The Holocene</abbrev_title>\nL232:             <issn media_type=\"print\">0959-6836</issn>\nL233:             <issn media_type=\"electronic\">1477-0911</issn>\nL234:         </journal_metadata>\nL235:         <journal_issue>\nL236:             <publication_date media_type=\"online\">\nL237:                 <month>07</month>\nL238:                 <day>27</day>\nL239:                 <year>2016</year>\nL240:             </publication_date>\nL241:             <publication_date media_type=\"print\">\nL242:                 <month>05</month>\nL243:                 <year>2002</year>\nL244:             </publication_date>\nL245:             <journal_volume>\nL246:                 <volume>12</volume>\nL247:             </journal_volume>\nL248:             <issue>4</issue>\nL249:         </journal_issue>\nL250:         <journal_article publication_type=\"full_text\">\nL251:             <titles>\nL252:                 <title>Book Review: Understanding the Earth system: compartments, processes and interactions</title>\nL253:             </titles>\nL254:             <contributors>\nL255:                 <person_name sequence=\"first\" contributor_role=\"author\">\nL256:                     <given_name>Ian</given_name>\nL257:                     <surname>Fairchild</surname>\nL258:                     <affiliation>Keele University</affiliation>\nL259:                 </person_name>\nL260:             </contributors>\nL261:             <publication_date media_type=\"online\">\nL262:                 <month>07</month>\nL263:                 <day>27</day>\nL264:                 <year>2016</year>\nL265:             </publication_date>\nL266:             <publication_date media_type=\"print\">\nL267:                 <month>05</month>\nL268:                 <year>2002</year>\nL269:             </publication_date>\nL270:             <pages>\nL271:                 <first_page>505</first_page>\nL272:                 <last_page>505</last_page>\nL273:             </pages>\nL274:             <publisher_item>\nL275:                 <identifier id_type=\"doi\">10.1191/0959683602hl565xx</identifier>\nL276:             </publisher_item>\nL277:             <ai:program xmlns:ai=\"http://www.crossref.org/AccessIndicators.xsd\" name=\"AccessIndicators\">\nL278:                 <ai:license_ref applies_to=\"tdm\">http://journals.sagepub.com/page/policies/text-and-data-mining-license</ai:license_ref>\nL279:             </ai:program>\nL280:             <doi_data>\nL281:                 <doi>10.1191/0959683602hl565xx</doi>\nL282:     `\nL283: #### B: Modifications to the review’s metadata show how it would include a relationship to the book\nL284: \nL285: Here is a screenshot of the relevant section in the code. Please refer to the code snippet below to see it in context.\nL286: \nL287: cite68†Image [Button: Show image]\nL288: cite68†Image L289: \nL290:     `<journal>\nL291:         <journal_metadata language=\"en\">\nL292:             <full_title>The Holocene</full_title>\nL293:             <abbrev_title>The Holocene</abbrev_title>\nL294:             <issn media_type=\"print\">0959-6836</issn>\nL295:             <issn media_type=\"electronic\">1477-0911</issn>\nL296:         </journal_metadata>\nL297:         <journal_issue>\nL298:             <publication_date media_type=\"online\">\nL299:                 <month>07</month>\nL300:                 <day>27</day>\nL301:                 <year>2016</year>\nL302:             </publication_date>\nL303:             <publication_date media_type=\"print\">\nL304:                 <month>05</month>\nL305:                 <year>2002</year>\nL306:             </publication_date>\nL307:             <journal_volume>\nL308:                 <volume>12</volume>\nL309:             </journal_volume>\nL310:             <issue>4</issue>\nL311:         </journal_issue>\nL312:         <journal_article publication_type=\"full_text\">\nL313:             <titles>\n--------------------------------------------------------------------------------\nTips and tricks - Crossref (https://www.crossref.org/documentation/retrieve-metadata/rest-api/tips-for-using-the-crossref-rest-api/)\nciteturn7view2 [wordlim: 200] Crawled: today; Content type: text/html; Source: open({\"ref_id\":\"turn2view2\",\"lineno\":155}); Total lines: 218\nL147: You can make more efficient use of the API and get results more quickly by thinking in advance about how many results you need. The default number of rows returned is 20 and you can increase it up to 1000. If you have a query where you only need to know the total number of results, you can use `rows=0`. For requests with a query parameter, 2–5 rows might be enough (see more on that below), whereas to look at a few examples of records with a certain property, maybe 10 records is enough.\nL148: Each endpoint has a limit on the number of items returned in a single request. Paginating through multiple pages of results is possible through the cursor parameter.\nL149: \nL150: To retrieve multiple pages, add `cursor=*` to your first request (and a value for `rows` that is greater than 0). The response will include a `next-cursor` value. Use this in your next request to obtain the following page of results. Stop sending requests when the number of items in the response is less than the number of rows requested.\nL151: Note that our REST API does not return a cursor if there are no further results. To stop your script at the correct point, you can also check the number of results returned—you have reached the last page when it is less than the requested rows.\nL152: Example: `https://api.crossref.org/funders/501100009187/works?cursor=*&rows=600&select=DOI,title,container-title,is-referenced-by-count` (Note: in this example, at the time of this writing, there are ~1025 results for this query, so you are requesting 600 rows; the first page of results will include 600 results, while the second will include ~425, thus you know that you have retrieved all results once you see the second page, since 425 < 600).\nL153: ### Large numbers of queries and very large results sets\nL154: \nL155: If you are planning to get hundreds of thousands or even millions of records from our API, read this section before you get started!\nL156: First, determine whether you really need to use the REST API. We have an cite71†annual public data file that contains all of our data. If you are a cite22†Metadata Plus subscriber, you have access to a monthly snapshot. Using these and setting up a local database means that you can run more custom queries than with the API and get results more quickly.\nL157: Second, cache your results. Try to avoid making the same requests repeatedly. Our metadata does change over time, but the majority of records change infrequently, if at all.\nL158: Third, if you do need to make a query with a very large result set, we recommend splitting it into a series of smaller queries. In a small number of cases, items can be reindexed during your search and be added or removed from the results set. Reducing the overall time for which you are retrieving works reduces the chance of this happening.\nL159: You can use cursors to page through results, but if you’re running to thousands of pages, the chance of running into a problem becomes much higher. If you break down a request into days or weeks and one of them fails, it will be much easier to go back and pick up the missing data. Also pay attention to the http status code and back off if you start seeing 429 statuses, which means you are being rate limited.\nL160: Finally, if you are making requests for multiple pages using the `from-index-date` parameter, we strongly recommend using `until-index-date` as well, otherwise the size of the result set will change between each request.\nL161: ## How to keep your local data synced with the REST API\nL162: \nL163: You might have a request that you want to make repeatedly and keep local results cached. You may even want to have a complete copy of the Crossref database and keep it up-to-date (in this case consider whether cite22†Metadata Plus might be a good option for you, since the monthly snapshots provided as part of the service would best enable this). Here are a few suggestions and tips for how to keep in sync.\nL164: Choose your date filter. There are three types of date filters that can help you pick up new and updated items.\nL165: \nL166:   * The created date will return any new records (`from-created-date`, `until-created-date`).\nL167: \nL168:   * Using updated date will give you both new records and those with any changes deposited by the member (`from-update-date`, `until-update-date`).\nL169:   * The indexed date retrieves all records updated or created by the stewarding member, as well as those that were modified by Crossref or other third parties, for example to update the Cited-by count or add a relationship deposited by a different member (`from-index-date`, `until-index-date`).\nL170: As you can see, the third of these options gives you the most results, but it can return a very large number of records. Which option you choose will depend on how you want to use the metadata. For this use case, we don’t recommend using published date, as this can change over time and might be different from when the record was created, meaning that you are likely to miss results.\nL171: \nL172: Here are some other considerations.\nL173:   * Choose your frequency. How often do you want to get new records? All of these filters offer the option to retrieve updates once per second, but you might decide that once an hour, once a day, or once a month is ok. Note that the timestamps are inclusive, so to get everything created between 12:00 and 13:00 on 1 January 2025, you can use: `filter=from-created-date:2025-02-02T12,until-created-date:2025-01-12`.\n--------------------------------------------------------------------------------\nRIS export SP/EP fields when pages contain Unicode en-dash or em-dash by faneeshh · Pull Request #15315 · JabRef/jabref · GitHub (https://github.com/JabRef/jabref/pull/15315)\nciteturn7view3 [wordlim: 200] Crawled: today; Content type: text/html; Source: find({\"ref_id\":\"turn3view1\",\"pattern\":\"d687c08\"}); Total lines: 2569\nL1144: * * *\nL1145: \nL1146:     ⓘ The new review experience is currently in Beta. cite106†Learn more†docs.qodo.ai L1147: \nL1148: [Input][Input]\nL1149: \nL1150: Sorry, something went wrong.\nL1151: ### Uh oh!\nL1152: \nL1153: There was an error while loading. Please reload this page.\nL1154: \nL1155: ###\nL1156: \nL1157: cite70†calixtus commented cite143†Mar 12, 2026 L1158: \nL1159: Copy link\nL1160: \nL1161: Copy Markdown\nL1162: \nL1163: Can you please comment on this one or address the report?\nL1164: cite144†#15315 (comment) Then its good to go i think.\nL1165: Thanks.\nL1166: \nL1167: [Input][Input]\nL1168: \nL1169: Sorry, something went wrong.\nL1170: ### Uh oh!\nL1171: \nL1172: There was an error while loading. Please reload this page.\nL1173: \nL1174: cite70†calixtus approved these changes cite145†Mar 13, 2026 L1175: \nL1176: cite146†View reviewed changes L1177: \nL1178: cite70†calixtus enabled auto-merge cite147†March 13, 2026 06:32 L1179: \nL1180: ` cite148†Merge branch 'main' into fix-15106 `\nL1181: \nL1182: [Input] [Input] [Input]\nL1183: \nL1184: ` cite148†9739180 `\nL1185: \nL1186: ###\nL1187: \nL1188: cite149†testlens-app Bot commented cite150†Mar 13, 2026 •\nL1189: \nL1190: edited\nL1191: \nL1192: Loading\nL1193: \nL1194: ### Uh oh!\nL1195: \nL1196: There was an error while loading. Please reload this page.\nL1197: \nL1198: Copy link\nL1199: \nL1200: Copy Markdown\nL1201: ## ✅ All tests passed ✅\nL1202: \nL1203: 🏷️ Commit: cite151†`9739180` L1204: ▶️ Tests: 10135 executed\nL1205: ⚪️ Checks: 50/50 completed\nL1206: \nL1207: * * *\nL1208: \nL1209: Learn more about TestLens at cite152†testlens.app†testlens.app .\nL1210: \nL1211: [Input][Input]\nL1212: \nL1213: Sorry, something went wrong.\nL1214: ### Uh oh!\nL1215: \nL1216: There was an error while loading. Please reload this page.\nL1217: \nL1218: cite107†github-actions Bot added cite115†status: no-bot-comments and removed cite123†status: changes-required Pull requests that are not yet complete labels cite153†Mar 13, 2026 L1219: \nL1220: cite70†calixtus added this pull request to the cite154†merge queue cite155†Mar 13, 2026 L1221: \nL1222: cite107†github-actions Bot added the cite156†status: to-be-merged PRs which are accepted and should go into the merge-queue. label cite157†Mar 13, 2026 L1223: \nL1224: Hide details View details\nL1225: Merged via the queue into JabRef:main with commit cite158†`d687c08` cite159†Mar 13, 2026 L1226: \nL1227: 49 of 50 checks passed\nL1228: ### Uh oh!\nL1229: \nL1230: There was an error while loading. Please reload this page.\nL1231: \nL1232: cite160†Syimyk43 pushed a commit to Syimyk43/jabref that referenced this pull request cite161†Mar 15, 2026 L1233: \nL1234: ` cite162†RIS export SP/EP fields when pages contain Unicode en-dash or em-dash ( cite73†… ` [Button: …]\nL1235: ` cite162†d968e81 `\nL1236: \nL1237:     cite73†…JabRef#15315 )\nL1238: \nL1239:     * Extend the split regex to match en-dash and em-dash\nL1240: \nL1241:     * Added tests\nL1242: \nL1243:     ---------\nL1244: \nL1245:     Co-authored-by: Carl Christian Snethlage <AUTHORIZED_PROVIDER_INSTANCE>\nL1246: \nL1247: cite163†github-merge-queue Bot pushed a commit that referenced this pull request cite164†Mar 15, 2026 L1248: \nL1249: ` cite165†Fix/citation relations doi case insensitive ( cite166†#15341 cite165†) ` [Button: …]\nL1250: \nL1251: [Input] [Input] [Input]\nL1252: ` cite165†0feabcd `\nL1253: \nL1254:     * Close entry editor when last library is closed\nL1255: \nL1256:     When no library tab is active, the entry editor remained visible.\nL1257:     Added close() call in the activeTabProperty listener's else branch\nL1258:     to handle the zero-libraries-open case.\nL1259: \nL1260:     Fixes cite167†#13125 L1261: \nL1262:     * Update CHANGELOG for cite167†#13125 L1263: \nL1264:     * Fix case-insensitive DOI comparison in duplicate detection (cite168†#12967 )\nL1265:     * Chore(deps): Bump org.gradlex:java-module-dependencies in /build-logic (cite169†#15328 )\nL1266: \nL1267:     Bumps [org.gradlex:java-module-dependencies](cite170†https://github.com/gradlex-org/java-module-dependencies ) from 1.12 to 1.12.1.\nL1268:     - [Release notes](cite171†https://github.com/gradlex-org/java-module-dependencies/releases )\nL1269:     - [Changelog](cite172†https://github.com/gradlex-org/java-module-dependencies/blob/main/CHANGELOG.md )\nL1270:     - [Commits](cite173†gradlex-org/java-module-dependencies@`v1.12...v1.12.1` )\nL1271:     ---\nL1272:     updated-dependencies:\nL1273:     - dependency-name: org.gradlex:java-module-dependencies\nL1274:       dependency-version: 1.12.1\nL1275:       dependency-type: direct:production\nL1276:       update-type: version-update:semver-patch\nL1277:     ...\nL1278: \nL1279:     Signed-off-by: dependabot[bot] <AUTHORIZED_PROVIDER_INSTANCE>\nL1280:     Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>\nL1281: \nL1282:     * Chore(deps): Bump org.openrewrite.rewrite from 7.26.0 to 7.28.1 (cite174†#15326 )\nL1283:     Bumps org.openrewrite.rewrite from 7.26.0 to 7.28.1.\nL1284: \nL1285:     ---\nL1286:     updated-dependencies:\nL1287:     - dependency-name: org.openrewrite.rewrite\nL1288:       dependency-version: 7.28.1\nL1289:       dependency-type: direct:production\nL1290:       update-type: version-update:semver-minor\nL1291:     ...\nL1292: \nL1293:     Signed-off-by: dependabot[bot] <AUTHORIZED_PROVIDER_INSTANCE>\nL1294:     Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>\nL1295: \nL1296:     * Chore(deps): Bump org.mockito:mockito-core in /versions (cite175†#15330 )\nL1297:     Bumps [org.mockito:mockito-core](cite176†https://github.com/mockito/mockito ) from 5.22.0 to 5.23.0.\nL1298:     - [Release notes](cite177†https://github.com/mockito/mockito/releases )\nL1299:     - [Commits](cite178†mockito/mockito@`v5.22.0...v5.23.0` )\nL1300: \nL1301:     ---\nL1302:     updated-dependencies:\nL1303:     - dependency-name: org.mockito:mockito-core\nL1304:       dependency-version: 5.23.0\nL1305:       dependency-type: direct:production\nL1306:       update-type: version-update:semver-minor\nL1307:     ...\nL1308: \nL1309:     Signed-off-by: dependabot[bot] <AUTHORIZED_PROVIDER_INSTANCE>\nL1310:     Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>\nL1311: \nL1312:     * Chore(deps): Bump org.cyclonedx.bom from 3.2.0 to 3.2.1 (cite179†#15327 )\nL1313: \nL1314:     Bumps org.cyclonedx.bom from 3.2.0 to 3.2.1.\n--------------------------------------------------------------------------------\nRelationships - Crossref (https://www.crossref.org/documentation/schema-library/markup-guide-metadata-segments/relationships/)\nciteturn7view4 [wordlim: 200] Crawled: today; Content type: text/html; Source: find({\"ref_id\":\"turn2view3\",\"pattern\":\"bidirectional\"}); Total lines: 526\nL158: Reply  | `isReplyTo, hasReply`\nL159: Requirement  | `requires, isRequiredBy`\nL160: Software compilation  | `isCompiledBy, compiles`\nL161: Supplement, such as a dataset generated as part of research results  | `isSupplementTo, isSupplementedBy`\nL162: ### General typed relations\nL163: This service allows for the creation of a cite65†typed relationship†data.crossref.org between an item with a Crossref DOI and another content item. The other item may be represented by another Crossref DOI, a DOI from some other Registration Agency, or an item not identified with a DOI. When DOIs are used, the deposit process will fail if the DOI does not exist. Non-DOI identifiers are not verified.\nL164: \nL165:     `<xsd:attributeGroup name=\"relations_type.atts\">\nL166:       <xsd:attribute name=\"identifier-type\" use=\"required\">\nL167:         <xsd:simpleType>\nL168:           <xsd:restriction base=\"xsd:string\">\nL169:             <xsd:enumeration value=\"doi\"/>\nL170:             <xsd:enumeration value=\"issn\"/>\nL171:             <xsd:enumeration value=\"isbn\"/>\nL172:             <xsd:enumeration value=\"uri\"/>\nL173:             <xsd:enumeration value=\"pmid\"/>\nL174:             <xsd:enumeration value=\"pmcid\"/>\nL175:             <xsd:enumeration value=\"purl\"/>\nL176:             <xsd:enumeration value=\"arxiv\"/>\nL177:             <xsd:enumeration value=\"ark\"/>\nL178:             <xsd:enumeration value=\"handle\"/>\nL179:             <xsd:enumeration value=\"uuid\"/>\nL180:             <xsd:enumeration value=\"ecli\"/>\nL181:             <xsd:enumeration value=\"accession\"/>\nL182:             <xsd:enumeration value=\"other\"/>\nL183:           </xsd:restriction>\nL184:         </xsd:simpleType>\nL185:       </xsd:attribute>\nL186:     `\nL187: When DOIs are used, a bidirectional relation is automatically created by us when a relation is created in the deposit of one item in a pair. The DOI with metadata creating the relation is said to be the claimant, the other item does not need to have its metadata directly contain the relationship.\nL188: ### Example: translated article\nL189: \nL190: A single journal article is published in two languages with each being assigned its own DOI. In this example, both are published in the same journal. The original language instance has metadata that contains no indication of the translation instance. The alternative language instance includes in its metadata a relation to the original language instance. Here is a screenshot of the relevant section in the code. Please refer to the code snippet below to see it in context.\nL191: cite66†Image [Button: Show image]\nL192: cite66†Image L193: \nL194:     `<journal_article publication_type=\"full_text\">\nL195:       <titles>\nL196:          <title>Um artigo na língua original, que passa a ser o inglês</title>\nL197:          <original_language_title language=\"en\">An article in its original language which happens to be English</original_language_title>\nL198:        </titles>\nL199:        <contributors>\nL200:          <person_name sequence=\"first\" contributor_role=\"author\">\nL201:            <given_name>Daniel</given_name>\nL202:            <surname>Stepputtis</surname>\nL203:            <ORCID authenticated=\"true\">http://orcid.org/0000-0003-4824-1631</ORCID>\nL204:          </person_name>\nL205:       </contributors>\nL206:       <publication_date media_type=\"online\">\nL207:          <month>02</month>\nL208:          <day>28</day>\nL209:          <year>2013</year>\nL210:       </publication_date>\nL211:       <program xmlns=\"http://www.crossref.org/relations.xsd\">\nL212:          <related_item>\nL213:            <description>Portuguese translation of an article</description>\nL214:            <intra_work_relation relationship-type=\"isTranslationOf\" identifier-type=\"doi\">10.5555/original_language</intra_work_relation>\nL215:          </related_item>\nL216:       </program>\nL217:       <doi_data>\nL218:          <doi>10.5555/translation</doi>\nL219:          <resource>https://www.crossref.org/</resource>\nL220:       </doi_data>\nL221:     </journal_article>\nL222:     `\nL223: ### Example: book review\nL224: \nL225: This example has a book review published as an article in the journal The Holocene. The article’s title, taken from the publisher’s site is “Book Review: Understanding the Earth system: compartments, processes and interactions” where this book has the DOI cite67†https://doi.org/10.1007/978-3-642-56843-5†doi.org .\nL226: #### A: The current metadata for the review article gives no indication of the actual book being reviewed:\nL227: \nL228:     `<journal>\nL229:         <journal_metadata language=\"en\">\nL230:             <full_title>The Holocene</full_title>\nL231:             <abbrev_title>The Holocene</abbrev_title>\nL232:             <issn media_type=\"print\">0959-6836</issn>\nL233:             <issn media_type=\"electronic\">1477-0911</issn>\nL234:         </journal_metadata>\nL235:         <journal_issue>\nL236:             <publication_date media_type=\"online\">\nL237:                 <month>07</month>\nL238:                 <day>27</day>\nL239:                 <year>2016</year>\nL240:             </publication_date>\nL241:             <publication_date media_type=\"print\">\nL242:                 <month>05</month>\nL243:                 <year>2002</year>\nL244:             </publication_date>\nL245:             <journal_volume>\nL246:                 <volume>12</volume>\nL247:             </journal_volume>\nL248:             <issue>4</issue>\nL249:         </journal_issue>\nL250:         <journal_article publication_type=\"full_text\">\nL251:             <titles>\n"
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "provenance and bounded governing evidence; not original response",
+  "source_urls": [
+    "https://github.com/JabRef/jabref/pull/15315",
+    "https://www.crossref.org/blog/discovering-relationships-between-preprints-and-journal-articles/",
+    "https://www.crossref.org/documentation/retrieve-metadata/rest-api/",
+    "https://www.crossref.org/documentation/retrieve-metadata/rest-api/tips-for-using-the-crossref-rest-api/",
+    "https://www.crossref.org/documentation/schema-library/markup-guide-metadata-segments/relationships/"
+  ],
+  "original_public_path": "assessment/A7-02/control-v1/evidence/evidence_context.json",
+  "original_public_sha256": "b599fa1b5069bbc4b08ea629a434b02821429dfada23d3d23e0d22c68bc06035",
+  "original_public_bytes": 31862,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A7-02/control-v1/evidence/evidence_context.json",
+  "classification_basis": "converted web retrieval tool response containing third-party source bodies",
+  "original_selectors": [
+    {
+      "source_id": "S12",
+      "field": "lines",
+      "selector": 1855
+    },
+    {
+      "source_id": "S13",
+      "field": "lines",
+      "selector": 377
+    },
+    {
+      "source_id": "S15",
+      "field": "lines",
+      "selector": 381
+    },
+    {
+      "source_id": "S16",
+      "field": "lines",
+      "selector": 703
+    },
+    {
+      "source_id": "S19",
+      "field": "lines",
+      "selector": 264
+    },
+    {
+      "source_id": "R12",
+      "field": "independent_locator",
+      "selector": "PR description/test instructions and merge queue; numbered capture 134–140 and 894–896"
+    },
+    {
+      "source_id": "S12",
+      "field": "lines",
+      "selector": 1855
+    },
+    {
+      "source_id": "R13",
+      "field": "independent_locator",
+      "selector": "REST API description and endpoints; numbered capture 300–324"
+    },
+    {
+      "source_id": "S13",
+      "field": "lines",
+      "selector": 377
+    },
+    {
+      "source_id": "R15",
+      "field": "independent_locator",
+      "selector": "Rows/cursors and bulk-query cautions; numbered capture 329–339"
+    },
+    {
+      "source_id": "S15",
+      "field": "lines",
+      "selector": 381
+    },
+    {
+      "source_id": "R16",
+      "field": "independent_locator",
+      "selector": "Vocabulary / General typed relations; numbered capture 322–340 and 372–394"
+    },
+    {
+      "source_id": "S16",
+      "field": "lines",
+      "selector": 703
+    },
+    {
+      "source_id": "R19",
+      "field": "independent_locator",
+      "selector": "Introduction vs Matching strategy vs dataset; numbered capture 88–101, 119–139"
+    },
+    {
+      "source_id": "S19",
+      "field": "lines",
+      "selector": 264
+    }
+  ],
+  "governing_summaries_from_existing_authored_source_records": [
+    {
+      "retrieved_at_utc": "2026-10-10T05:14:10.285591+00:00",
+      "lines": 1855,
+      "authored_source_map": "assessment/A7-02/control-v1/retrieval-manifest.json",
+      "source_id": "S12"
+    },
+    {
+      "retrieved_at_utc": "2026-10-10T05:14:10.290170+00:00",
+      "lines": 377,
+      "authored_source_map": "assessment/A7-02/control-v1/retrieval-manifest.json",
+      "source_id": "S13"
+    },
+    {
+      "retrieved_at_utc": "2026-10-10T05:14:10.497439+00:00",
+      "lines": 381,
+      "authored_source_map": "assessment/A7-02/control-v1/retrieval-manifest.json",
+      "source_id": "S15"
+    },
+    {
+      "retrieved_at_utc": "2026-10-10T05:14:10.612475+00:00",
+      "lines": 703,
+      "authored_source_map": "assessment/A7-02/control-v1/retrieval-manifest.json",
+      "source_id": "S16"
+    },
+    {
+      "retrieved_at_utc": "2026-10-10T05:14:10.932107+00:00",
+      "lines": 264,
+      "authored_source_map": "assessment/A7-02/control-v1/retrieval-manifest.json",
+      "source_id": "S19"
+    },
+    {
+      "title": "JabRef PR #15315",
+      "version_or_commit": "Merged to main 2026-03-13 at d687c08",
+      "independent_locator": "PR description/test instructions and merge queue; numbered capture 134–140 and 894–896",
+      "retrieved_at_utc": "2026-10-10T05:14:10.285591+00:00",
+      "governing_conditions_defaults_types_units_exceptions": "Old helpers only split ASCII; change adds en/em dash. PR links #15106 and gives SP=13905/EP=13911 test instructions. Merge queue says d687c08 and 49/50 checks passed.",
+      "applicability_judgment": "Externally reported tests/check counts are not local semantic validation. Normalization between BibTeX and RIS matters; final explicitly preserves that check.",
+      "authored_source_map": "assessment/A7-02/control-v1/source-map.json",
+      "source_id": "R12"
+    },
+    {
+      "retrieved_at_utc": "2026-10-10T05:14:10.285591+00:00",
+      "lines": 1855,
+      "authored_source_map": "assessment/A7-02/control-v1/source-map.json",
+      "source_id": "S12"
+    },
+    {
+      "title": "Crossref public API coverage/query",
+      "version_or_commit": "Living documentation; no API schema version or service deployment pinned",
+      "independent_locator": "REST API description and endpoints; numbered capture 300–324",
+      "retrieved_at_utc": "2026-10-10T05:14:10.290170+00:00",
+      "governing_conditions_defaults_types_units_exceptions": "JSON metadata comes from members/trusted sources; no signup needed; /works search and /works/{doi} record retrieval concern Crossref records, not all DOI agencies or scholarly objects.",
+      "applicability_judgment": "A no-match is correctly treated as provider non-return, never invalidity/nonexistence. Broad bibliographic search is a realistic DOI-less candidate path.",
+      "authored_source_map": "assessment/A7-02/control-v1/source-map.json",
+      "source_id": "R13"
+    },
+    {
+      "retrieved_at_utc": "2026-10-10T05:14:10.290170+00:00",
+      "lines": 377,
+      "authored_source_map": "assessment/A7-02/control-v1/source-map.json",
+      "source_id": "S13"
+    },
+    {
+      "title": "Crossref efficient API use",
+      "version_or_commit": "Living documentation, retrieved 2026-10-10",
+      "independent_locator": "Rows/cursors and bulk-query cautions; numbered capture 329–339",
+      "retrieved_at_utc": "2026-10-10T05:14:10.497439+00:00",
+      "governing_conditions_defaults_types_units_exceptions": "Choose small useful result sets; cache; large queries can change due to reindexing; 429 requires backoff. These bulk conditions are not a claim that small pilot lookup always succeeds.",
+      "applicability_judgment": "The final's smallest-request/caching advice is bounded and not reported as an API check.",
+      "authored_source_map": "assessment/A7-02/control-v1/source-map.json",
+      "source_id": "R15"
+    },
+    {
+      "retrieved_at_utc": "2026-10-10T05:14:10.497439+00:00",
+      "lines": 381,
+      "authored_source_map": "assessment/A7-02/control-v1/source-map.json",
+      "source_id": "S15"
+    },
+    {
+      "title": "Crossref typed relations and identifiers",
+      "version_or_commit": "Living relation-schema guide; schema release not pinned",
+      "independent_locator": "Vocabulary / General typed relations; numbered capture 322–340 and 372–394",
+      "retrieved_at_utc": "2026-10-10T05:14:10.612475+00:00",
+      "governing_conditions_defaults_types_units_exceptions": "Intra-work relation names include isPreprintOf/hasPreprint, isVersionOf/hasVersion, variant and manifestation. A typed relation can target another agency's DOI or non-DOI identifier. Missing DOI causes deposit failure; non-DOI identifiers are unverified. DOI deposits create reciprocal relations; the second item's own metadata need not assert it.",
+      "applicability_judgment": "Final uses an analogy and source-conditioned asserted links, not universal deduplication or consumer truth. Related manifestations remain separate.",
+      "authored_source_map": "assessment/A7-02/control-v1/source-map.json",
+      "source_id": "R16"
+    },
+    {
+      "retrieved_at_utc": "2026-10-10T05:14:10.612475+00:00",
+      "lines": 703,
+      "authored_source_map": "assessment/A7-02/control-v1/source-map.json",
+      "source_id": "S16"
+    },
+    {
+      "title": "Crossref historical matching strategy/dataset",
+      "version_or_commit": "Official post 2023-12-07; dataset records through 2023-08-31",
+      "independent_locator": "Introduction vs Matching strategy vs dataset; numbered capture 88–101, 119–139",
+      "retrieved_at_utc": "2026-10-10T05:14:10.932107+00:00",
+      "governing_conditions_defaults_types_units_exceptions": "The historical notification method uses exact title/first author. The same post introduces a newer bibliographic-query/fuzzy-title/author/year heuristic, explicit candidate thresholds, and an experimental journal-DOI-to-preprint API. Dataset filtering is posted-content subtype preprint and journal-article with both sides present by August 2023.",
+      "applicability_judgment": "Final's review-cue/incomplete-coverage conclusion is supported. It does not claim dataset performance or the new method as current production behavior; it leaves useful newer mechanism detail unexplored.",
+      "authored_source_map": "assessment/A7-02/control-v1/source-map.json",
+      "source_id": "R19"
+    },
+    {
+      "retrieved_at_utc": "2026-10-10T05:14:10.932107+00:00",
+      "lines": 264,
+      "authored_source_map": "assessment/A7-02/control-v1/source-map.json",
+      "source_id": "S19"
+    }
+  ],
+  "selected_api_metadata": [],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY_AND_METADATA; full body coverage UNKNOWN",
+  "omission": "Full fetched body, API ancillary fields and unmechanically summarizable body details are archived privately. Original source URL and selectors govern; unsupported/missing semantic coverage is UNKNOWN. No candidate finding or independent judgment is repaired.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false,
+  "original_tool_source_urls": [
+    "https://api.crossref.org/funders/501100009187/works?cursor=*&rows=600&select=DOI,title,container-title,is-referenced-by-count`",
+    "https://doi.org/10.1007/978-3-642-56843-5†doi.org",
+    "https://github.com/JabRef/jabref/pull/15315",
+    "https://github.com/gradlex-org/java-module-dependencies/blob/main/CHANGELOG.md",
+    "https://github.com/gradlex-org/java-module-dependencies/releases",
+    "https://github.com/gradlex-org/java-module-dependencies",
+    "https://github.com/mockito/mockito/releases",
+    "https://github.com/mockito/mockito",
+    "https://www.crossref.org/",
+    "https://www.crossref.org/blog/discovering-relationships-between-preprints-and-journal-articles/",
+    "https://www.crossref.org/documentation/retrieve-metadata/rest-api/tips-for-using-the-crossref-rest-api/",
+    "https://www.crossref.org/documentation/schema-library/markup-guide-metadata-segments/relationships/"
+  ]
 }

@@ -1,16 +1,75 @@
-URL: https://github.com/curl/curl/blob/curl-8_10_1/docs/libcurl/opts/CURLINFO_RETRY_AFTER.md#L27-L37
-Original locator: ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/CURLINFO_RETRY_AFTER.md
-Original SHA256: 9bbdcddb7a55af12d2d2d49e97201ab2e08ef0a9546d7ac437d24f9f8647e363
-Original numbered lines; gaps omitted. Not full response.
-
-27: ~~~
-28: 
-29: # DESCRIPTION
-30: 
-31: Pass a pointer to a curl_off_t variable to receive the number of seconds the
-32: HTTP server suggests the client should wait until the next request is
-33: issued. The information from the "Retry-After:" header.
-34: 
-35: While the HTTP header might contain a fixed date string, the
-36: CURLINFO_RETRY_AFTER(3) always returns the number of seconds to wait -
-37: or zero if there was no header or the header could not be parsed.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://github.com/curl/curl/blob/curl-8_10_1/docs/libcurl/opts/CURLINFO_RETRY_AFTER.md#L27-L37",
+    "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/docs/libcurl/opts/CURLINFO_RETRY_AFTER.md"
+  ],
+  "original_public_path": "assessment/B-FINAL-M-01/treatment-v1/public-governing-excerpts/CURLINFO_RETRY_AFTER-9bbdcddb.txt",
+  "original_public_sha256": "2bf97e58f73a3c320a143f33842686fffbb74595e6c5ddca5f632a810b726e0b",
+  "original_public_bytes": 808,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/B-FINAL-M-01/treatment-v1/public-governing-excerpts/CURLINFO_RETRY_AFTER-9bbdcddb.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/CURLINFO_RETRY_AFTER.md",
+      "original_sha256": "9bbdcddb7a55af12d2d2d49e97201ab2e08ef0a9546d7ac437d24f9f8647e363",
+      "original_bytes": 1529,
+      "original_line_numbers": [
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37
+      ],
+      "original_locators": [
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/libcurl/opts/CURLINFO_RETRY_AFTER.md#L27-L37"
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/CURLINFO_RETRY_AFTER.md",
+      "original_sha256": "9bbdcddb7a55af12d2d2d49e97201ab2e08ef0a9546d7ac437d24f9f8647e363",
+      "original_bytes": 1529,
+      "original_line_numbers": [
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37
+      ],
+      "original_locators": [
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/libcurl/opts/CURLINFO_RETRY_AFTER.md#L27-L37"
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/libcurl/opts/CURLINFO_RETRY_AFTER.md#L27-L37"
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/B-FINAL-M-01/treatment-v1/source-map.json",
+      "source_id": "P8",
+      "retrieved_at_utc": "2026-10-10T04:26:09.701666+00:00",
+      "version": "curl-8_10_1 tag"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

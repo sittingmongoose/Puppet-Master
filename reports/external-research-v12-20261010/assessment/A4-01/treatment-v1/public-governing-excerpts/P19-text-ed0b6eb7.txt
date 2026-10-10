@@ -1,8 +1,118 @@
-URL: https://github.com/tus/tusd/releases/tag/v2.10.1
-Original locator: ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P19-text.txt
-Original SHA256: ed0b6eb7c29101b17ab4fdaf5cbf0137b6d99149a7964b9a0e8fac3bebe53860
-Original numbered lines; gaps omitted. Not full response.
-
-125: 16 Sep 17:42
-131: 388a27c
-139: s3store: Fix silent truncation of deferred-length uploads by @abh in #1385
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://github.com/tus/tusd/releases/tag/v2.10.1"
+  ],
+  "original_public_path": "assessment/A4-01/treatment-v1/public-governing-excerpts/P19-text-ed0b6eb7.txt",
+  "original_public_sha256": "c5506e3cf74705f3b497208e695951e201f9dfb534f39a6a8bc7725a5afb5f10",
+  "original_public_bytes": 389,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A4-01/treatment-v1/public-governing-excerpts/P19-text-ed0b6eb7.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P19-text.txt",
+      "original_sha256": "ed0b6eb7c29101b17ab4fdaf5cbf0137b6d99149a7964b9a0e8fac3bebe53860",
+      "original_bytes": 3292,
+      "original_line_numbers": [
+        125,
+        131,
+        139
+      ],
+      "original_locators": [
+        {
+          "text_lines": [
+            139
+          ]
+        },
+        {
+          "anchor": "1385",
+          "matched_original_line": 139
+        },
+        {
+          "text_lines": [
+            131
+          ]
+        },
+        {
+          "anchor": "388a27c",
+          "matched_original_line": 131
+        },
+        {
+          "text_lines": [
+            125
+          ]
+        },
+        {
+          "anchor": "16 Sep",
+          "matched_original_line": 125
+        },
+        {
+          "text_lines": [
+            139
+          ]
+        },
+        {
+          "anchor": "1385",
+          "matched_original_line": 139
+        },
+        {
+          "text_lines": [
+            131
+          ]
+        },
+        {
+          "anchor": "388a27c",
+          "matched_original_line": 131
+        },
+        {
+          "text_lines": [
+            125
+          ]
+        },
+        {
+          "anchor": "16 Sep",
+          "matched_original_line": 125
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A4-01/treatment-v1/source-map.json",
+      "source_id": "P19",
+      "accessed_utc": "2026-10-10T04:41:54.646434+00:00",
+      "version_or_commit_observed": "tusd v2.10.1 release, 2026-09-16; tag resolves 388a27cb81c33b2349e0308b5e97e23797e86fd9",
+      "locator": "Release changes / PR #1385",
+      "locators": [
+        {
+          "anchor": "1385",
+          "text_lines": [
+            139
+          ],
+          "primary_heading_or_json_field": "Release changes / PR #1385"
+        },
+        {
+          "anchor": "388a27c",
+          "text_lines": [
+            131
+          ],
+          "primary_heading_or_json_field": "Release changes / PR #1385"
+        },
+        {
+          "anchor": "16 Sep",
+          "text_lines": [
+            125
+          ],
+          "primary_heading_or_json_field": "Release changes / PR #1385"
+        }
+      ],
+      "conditions_defaults_units_types_exceptions": "Does not prove archive deployment or all-mode impact. Release API, PR and tagged implementation provide separate corroborating context.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

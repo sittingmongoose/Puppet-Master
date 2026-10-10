@@ -1,4 +1,235 @@
 {
-  "method": "Independent web.run retrieval; public primary sources; tool-returned extract retained.",
-  "result": " (https://docs.jabref.org/finding-sorting-and-cleaning-entries/findduplicates)\nciteturn1view0 [wordlim: 200] Crawled: today; Content type: text/plain; Source: open({\"ref_id\":\"https://docs.jabref.org/finding-sorting-and-cleaning-entries/findduplicates\",\"lineno\":null}); Total lines: 35\nL0: > For the complete documentation index, see [llms.txt](https://docs.jabref.org/llms.txt). Markdown versions of documentation pages are available by appending `.md` to page URLs; this page is available as [Markdown](https://docs.jabref.org/finding-sorting-and-cleaning-entries/findduplicates.md).\nL1: # Find duplicates\nL2: \nL3: JabRef can look for duplicated entries inside a library.\nL4: \nL5: This feature is accessible directly through **Quality → Find duplicates**. It is also used when [importing new entries](/collect/import/importinspectiondialog.md) from a supported reference format or directly from the Internet.\nL6: \nL7: Detection of potential duplicates is done by an edit distance algorithm. Extra weighting is put on the fields *author*, *editor*, *title.* and *journal*.\nL8: <figure><img src=\"https://2944476579-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2F-Lr3JU9j9iSUW8RYz1hD-2910905616%2Fuploads%2Fgit-blob-5a9a096dab5914566c9bcaed616e34ecb1ac74c5%2Fduplicate-resolver-dialog.png?alt=media\" alt=\"Screenshot of the duplicate resolver dialog in light mode\"><figcaption><p>Screenshot of the duplicate resolver dialog in light mode</p></figcaption></figure>\nL9: The differences between the two entries can be configured through the toolbox located at the top of the window. From the toolbox, you can choose to show or hide differences, choose how to display differences *(Unified or Split)* and you can also choose how to compare entries *(by words or characters)*.\nL10: ## Show or Hide Differences\nL11: \nL12: * **Plain Text —** This option hides the differences.\nL13: * **Show Differences —** This option shows the differences.\nL14: \nL15: ## Choose Differences Display Mode\nL16: \nL17: * **Unified View —** In this mode, differences are shown on the right side.\nL18: * **Split View —** In this mode, differences are shown on both sides, with <mark style=\"color:red;\">deletions</mark> on the left side and <mark style=\"color:green;\">additions</mark> and <mark style=\"color:blue;\">updates</mark> on the right side.\nL19: ## Choose Entries Comparison Method\nL20: \nL21: * **Highlight words —** This option compares entries values in terms of words.\nL22: * **Highlight characters —** This option compares entries values in terms of characters. It divides both entry values into characters before comparing each character individually. This is perfect for comparing values with small differences *(1 or 2 different characters)*.\nL23: From the toolbox's top-left corner, you also can choose to select all the left entry values by clicking `Left` or selecting all the right entry values by clicking `Right`. Be aware that selecting all entry values will select a value even when it is empty.\nL24: ## Selecting which entry to keep\nL25: \nL26: <figure><img src=\"https://2944476579-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2F-Lr3JU9j9iSUW8RYz1hD-2910905616%2Fuploads%2Fgit-blob-2a71d790fa4d722d07d656b16f34cce2855dd195%2Fbutton%20bar.PNG?alt=media\" alt=\"Screenshot of the buttons to choose which entry to keep\"><figcaption><p>Screenshot of the buttons to choose which entry to keep</p></figcaption></figure>\nL27: \nL28: You are offered to:\nL29: * **Automatically remove exact duplicates**. This button shows up if there are exact duplicates. Click it to stop showing other exact duplicates and have them removed automatically.\nL30: * **Keep left —** Keeps the left entry and removes the right entry.\nL31: * **Keep right —** Keeps the right entry and removes the left entry.\nL32: * **Keep both** **—** Keeps both entries. This usually means that you don't consider the entries to be duplicates.\nL33: * **Keep merged —** Keeps the merged entry only and removes the previous entries.\nL34: * **Cancel —** Closes the dialog and stops showing other duplicates.\n--------------------------------------------------------------------------------\n (https://docs.jabref.org/finding-sorting-and-cleaning-entries/mergeentries)\nciteturn1view1 [wordlim: 200] Crawled: today; Content type: text/plain; Source: open({\"ref_id\":\"https://docs.jabref.org/finding-sorting-and-cleaning-entries/mergeentries\",\"lineno\":null}); Total lines: 43\nL0: > For the complete documentation index, see [llms.txt](https://docs.jabref.org/llms.txt). Markdown versions of documentation pages are available by appending `.md` to page URLs; this page is available as [Markdown](https://docs.jabref.org/finding-sorting-and-cleaning-entries/mergeentries.md).\nL1: # Merge entries\nL2: \nL3: JabRef can help you to merge entries of your library.\nL4: \nL5: First, select the two entries to be merged. Then select the menu **Quality → Merge entries**. Alternatively, select the right-click menu **Merge entries**.\nL6: \nL7: The **Merge entries** window will pop up:\nL8: ![](https://2944476579-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2F-Lr3JU9j9iSUW8RYz1hD-2910905616%2Fuploads%2Fgit-blob-1a97a4faea06bf20cda7a93121b7b2326ed86f1c%2Fmerge-entries-1.png?alt=media\\&token=c5833400-e96a-49ba-b5a2-9bc60c007795)\nL9: ## Diff Highlighting\nL10: \nL11: The differences between the two entries can be configured through the toolbox located at the top of the window. From the toolbox, you can choose to show or hide differences, choose how to display differences *(Unified or Split)* and you can also choose how to compare entries *(by words or characters)*.\nL12: \nL13: ### Show or Hide Differences\nL14: \nL15: * **Plain Text —** This option hides the differences.\nL16: * **Show Differences —** This option shows the differences.\nL17: ### Choose Differences Display Mode\nL18: \nL19: * **Unified View —** In this mode, differences are shown on the right side.\nL20: * **Split View —** In this mode, differences are shown on both sides, with deletions on the left side and additions and updates on the right side.\nL21: ### Choose Entries Comparison Method\nL22: \nL23: * **Highlight words —** This option compares entries values in terms of words.\nL24: * **Highlight characters —** This option compares entries values in terms of characters. It divides both entry values into characters before comparing each character individually. This is perfect for comparing values with small differences *(1 or 2 different characters)*.\nL25: From the toolbox's top-left corner, you also can choose to select all the left entry values by clicking `Left` or selecting all the right entry values by clicking `Right`. Be aware that selecting all entry values will select a value even when it is empty.\nL26: ### Select Both Field Values (AKA Merge Fields)\nL27: When merging entries, sometimes you want to select both values for a certain field. A common use case for this would be wanting the merged entry to have both the left and right entry groups. Now, you can simply click the merge button next to the groups label and we’ll take care of the rest. We’ll merge the left and right entry groups, keeping only one copy of any common group. And this works for more than just groups - you can also merge keywords, comments and files.\nL28: So go ahead and give it a try - it’ll make your life a lot easier.\nL29: ![](https://2944476579-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2F-Lr3JU9j9iSUW8RYz1hD-2910905616%2Fuploads%2Fgit-blob-59a6a04f71f10147c78df17d38e9c21fdb99d594%2Fthree-way-merge-groups-keywords.png?alt=media\\&token=10d0291e-7360-485c-9520-3b8485d0aa88)\nL30: ### Open DOIs and URLs from The Merge Dialog\nL31: \nL32: There are two buttons at the end of each field cell: one for copying the content of the field cell, and the other for opening links; at the moment, only URLs and DOIs can be opened.\nL33: \nL34: ![](https://2944476579-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2F-Lr3JU9j9iSUW8RYz1hD-2910905616%2Fuploads%2Fgit-blob-3cc5ebc5c082f98e35f5d53eea1dab325003bd99%2Fthree-way-merge-open-doi-copy.png?alt=media\\&token=8990a8f5-bb4c-4381-8d75-03b102097c29)\nL35: ### Select or Edit Merged Entry Manually\nL36: \nL37: For each field, you can select whether to choose the left entry value or the right one. You can do that by clicking on the given field cell. Once you did that, the merged entry will update its content to reflect the new change.\nL38: \nL39: You can also edit the merged entry values manually. Doing so, will update the selected field cell if the left or right cell equals that value you typed.\nL40: Finally, after selecting which fields to keep, you can decide to **Merge entries**. Alternatively, you can press **Cancel**.\nL41: \nL42: **See also:** [Find duplicates](/finding-sorting-and-cleaning-entries/findduplicates.md)\n--------------------------------------------------------------------------------\n (https://docs.jabref.org/finding-sorting-and-cleaning-entries/getbibtexdatafromdoi)\nciteturn1view2 [wordlim: 200] Crawled: today; Content type: text/plain; Source: open({\"ref_id\":\"https://docs.jabref.org/finding-sorting-and-cleaning-entries/getbibtexdatafromdoi\",\"lineno\":null}); Total lines: 22\nL0: > For the complete documentation index, see [llms.txt](https://docs.jabref.org/llms.txt). Markdown versions of documentation pages are available by appending `.md` to page URLs; this page is available as [Markdown](https://docs.jabref.org/finding-sorting-and-cleaning-entries/getbibtexdatafromdoi.md).\nL1: # Complete information using online catalogs\nL2: \nL3: JabRef can fetch automatically additional information about your entries. It can even get the publication file!​\nL4: * To *find identifiers* (arxiv, DOI)\\_: select the entries and go to the menu **Lookup → search document identifier online**.​\nL5: * To *find the DOI*: open the [entry editor](/advanced/entryeditor.md), and in the Identifiers section of the Main tab, click on the button **Lookup DOI**.\nL6: * To *find the document* related to an entry: select the entry and to the menu [**Lookup → search full text documents online**](/collect/add-pdfs-to-an-entry.md).​\nL7: Be aware: The options above require your entry or entries to be filled with enough and correct bibliographic information. If the entry holds incomplete or inaccurate data, fetching the identifier or text document my fail.\nL8: ## Completing information based on DOI or ISBN\nL9: \nL10: JabRef can help you complement your entries with bibliographic data, which is associated with their registered DOI or ISBN. This is a very reliable way of obtaining correct bibliographic information and is very much recommended.\nL11: \nL12: *The following features require your entry to have a DOI or ISBN and are disabled / greyed out otherwise.*\nL13: * Option A) In the entry table, right-click on the entry to complement, and select the menu **Get bibliographic data from DOI/ISBN/...**\nL14: * Option B) Open the [entry editor](/advanced/entryeditor.md), and in the Identifiers section of the Main tab, click on the button **Get bibliographic data from DOI**\nL15: ![](https://2944476579-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2F-Lr3JU9j9iSUW8RYz1hD-2910905616%2Fuploads%2Fgit-blob-5292b0e062752618d2aadbc60a900d5e5cc8d56b%2Fgetdoi-entryeditor-jabref5.2%20\\(1\\)%20\\(2\\)%20\\(2\\)%20\\(2\\).png?alt=media\\&token=7840e8d4-0f82-4ac6-8bf7-0e96a4322757)\nL16: \nL17: Using any of the options opens the window *Merge entries*:\nL18: There it is possible to choose what is kept for each field: the **left side**, the **right side**, or the **merged entry**. By default, the original entry (left) is kept, and any fields not present in the original entry are obtained from the information collected from the DOI.\nL19: \nL20: Finally, after selecting which fields to keep, you can decide to **Merge entries**. Alternatively, you can press **Cancel**.\nL21: **See also:** [Find duplicates](/finding-sorting-and-cleaning-entries/findduplicates.md), [Merge entries](/finding-sorting-and-cleaning-entries/mergeentries.md)\n--------------------------------------------------------------------------------\n (https://docs.jabref.org/advanced/commandline)\nciteturn1view3 [wordlim: 200] Crawled: today; Content type: text/plain; Source: open({\"ref_id\":\"https://docs.jabref.org/advanced/commandline\",\"lineno\":null}); Total lines: 213\nL0: > For the complete documentation index, see [llms.txt](https://docs.jabref.org/llms.txt). Markdown versions of documentation pages are available by appending `.md` to page URLs; this page is available as [Markdown](https://docs.jabref.org/advanced/commandline.md).\nL1: \nL2: # Command line use and options\nL3: \nL4: Although JabRef is primarily a GUI based application, it offers several command line options that may be useful. JabRef can even perform file conversion operations without opening the graphical interface.\nL5: ## Basics\nL6: \nL7: {% hint style=\"info\" %}\nL8: This description applies since JabRef 5.0, because JabRef comes with a pre-bundled Java-Runtime Environment\nL9: {% endhint %}\nL10: \nL11: **Windows:**\nL12: \nL13: Locate `JabRef.bat`, for example: `JabRef-5.0-portable_windows\\JabRef\\runtime\\bin\\JabRef.bat`\nL14: \nL15: \\\nL16: **Linux:**\nL17: \nL18: `JabRef-5.0-portable_linux/JabRef/lib/runtime/bin/JabRef`.\nL19: \nL20: \\\nL21: **macOS:**\nL22: \nL23: `/Applications/JabRef.app/Contents/MacOS/JabRef`\\\\\nL24: \nL25: **Do not use `JabRef\\JabRef.exe` or `bin/JabRef`**\nL26: The following documentation is for Windows, but works equally well on Linux and macOS:\nL27: \nL28: ```cmd\nL29: C:\\portable-apps\\JabRef-5.0-portable_windows\\JabRef\\runtime\\bin\\JabRef.bat [OPTIONS] [BIBTEX_FILE]\nL30: ```\nL31: \nL32: In some cases, you have to specify `--console` to ensure that output is written to the console.\nL33: You can always specify one or more Bib(la)TeX files to load by simply listing their filenames.\\\nL34: Take care to specify all options before your list of file names.\\\nL35: Ensure that the first file name is not misunderstood as being an argument for an option; this simply means that if a boolean option like `-n` or `-l` immediately precedes a file name, add the word `true` as an argument.\\\nL36: For instance, the command line will correctly load the file `original.bib`, export it in [docbook format](https://docbook.org/whatis) to `filetoexport.xml`, and suppress the GUI:\nL37: ```cmd\nL38: C:\\portable-apps\\JabRef-5.0-portable_windows\\JabRef\\runtime\\bin\\JabRef.bat -o filetoexport.xml,docbook5 -n true original.bib\nL39: ```\nL40: \nL41: The word *true* prevents the file name from being interpreted as an argument to the `-n` option.\nL42: ## Options\nL43: * [Help: `-h`](#help--h)\nL44: * [No-GUI mode: `-n`](#no-gui-mode--n)\nL45: * [Import file: `-i filename[,import format]`](#import-file--i-filenameimport-format)\nL46: * [Export file: `-o filename[,export format]`](#export-file--o-filenameexport-format)\nL47: * [Import BibTeX: `-importBibtex`](#import-bibtex--importbibtex)\nL48: * [Export matching entries: `-m [field]searchTerm,outputFile:file[,exportFormat]`](#export-matching-entries--m-fieldsearchtermoutputfilefileexportformat)\nL49: * Write BibTexEntry as XMP metadata to PDF: `-w CITEKEY1[,CITEKEY2][,CITEKEYn] | PDF1[,PDF2][,PDFn] | all`\nL50: * [Fetch entries from Web: `-f=FetcherName:QueryString`](#fetch-entries-from-web--ffetchernamequerystring)\nL51: * [Subdatabase from .aux file: `-a infile[.aux],outfile[.bib] base-BibTeX-file`](#subdatabase-from-aux-file--a-infileauxoutfilebib-base-bibtex-file)\nL52: * [Set file links: `-asfl`](#set-file-links--asfl)\nL53: * [Regenerate keys: `-g`](#regenerate-keys--g)\nL54: * [Export preferences: `-x filename`](#export-preferences--x-filename)\nL55: * [Import preferences: `-p filename`](#import-preferences--p-filename)\nL56: * [Reset preferences: `-d key`](#reset-preferences--d-key)\nL57: * [No files at startup: `-b`](#no-files-at-startup--b)\nL58: * [Version: `-v`](#version--v)\nL59: * [Debug mode: `--debug`](#debug-mode---debug)\nL60: * [Display output in the console: `--console`](#display-output-in-the-console---console)\nL61: ### Help: `-h`\nL62: \nL63: (or `--help`)\nL64: \nL65: Displays a summary of the command line options, including the list of available import and export formats.\nL66: \nL67: ### No-GUI mode: `-n`\nL68: \nL69: (or `--nogui`)\nL70: \nL71: Suppresses the JabRef window (i.e. no GUI - Graphic User Interface - is displayed).\nL72: \nL73: It causes the program to exit immediately once the command line options have been processed. This option is useful for performing file conversion operations from the command line or a script.\nL74: ### Import file: `-i filename[,import format]`\nL75: \nL76: (or `--import filename[,import format]` or `--importToOpen filename[,import format]`)\nL77: \nL78: Import or load the file `filename`.\nL79: If only the filename is specified (or if the filename is followed by a comma and a `*` character), JabRef will attempt to detect the file format automatically. This works for BibTeX files, and also for all files in a supported import format. If the filename is followed by a comma and the name of an import format, the given import filter will be used.\nL80: \nL81: Use the `-h` option to get the list of available import formats.\nL82: If an export option is also specified, the import will always be processed first, and the imported or loaded file will be used by the export filter. If the GUI is not suppressed (using the `-n` option), any imported or loaded file will show up in the main window.\nL83: \nL84: If `--importToOpen` is used, the content of the file will be imported into the opened tab.\nL85: \nL86: *Note:* The `-i` option can be specified only once, and for one file only.\nL87: ### Export file: `-o filename[,export format]`\nL88: \nL89: (or `--output filename[,export format]`)\nL90: \nL91: Export or save a file imported or loaded by the same command line.\nL92: \nL93: If a file is imported using the `-i` option, that file will be exported. If no `-i` option is used, the *last* file specified (and successfully loaded) will be exported.\nL94: \nL95: If only filename is specified, it will be exported in BibTeX format. If the filename is followed by a comma and an export format, the given export filter will be used.\nL96: A custom export filter can be used, and will be preferred if the export name matches both a custom and a standard export filter.\nL97: \nL98: If the GUI is not suppressed (using the `-n` option), any export operation will be performed before the JabRef window is opened, and the imported database will show up in the window.\nL99: \nL100: *Note:* The `-o` option can be specified only once, and for one file only.\nL101: #### Xmp export option\nL102: \nL103: [XMP](https://en.wikipedia.org/wiki/Extensible_Metadata_Platform) is an ISO standard for the creation, processing and interchange of standardized and custom metadata for digital documents and data sets.\nL104: \nL105: The first option is to export all entries, which are included in the `entries.bib` file to the specified `export.xmp` file. The second argument, separated by comma, is the type of exporter used by JabRef.\nL106: \nL107: ```cmd\nL108: JabRef.bat -o path\\export.xmp,xmp  path\\entries.bib -n\nL109: ```\nL110: The second option is to export every entry in the entries.bib in a single .xmp file. Therefore, the file name is replaced by the keyword `split` without a file ending! JabRef generates individual .xmp files at the `path` location. The file name is a combination of the identifier provided by JabRef and the cite key of the entry.\nL111: \nL112: ```cmd\nL113: JabRef.bat -o path\\split,xmp  path\\entries.bib -n\nL114: ```\nL115: ### Import BibTeX: `-importBibtex`\nL116: Import or load code directly from the BibTeX file. This only works for BibTeX files, and does not support files of other import formats. If it detects this command line option, the JabRef CLI will take in its following argument as a BibTeX string that represents the BibTeX article file being read in for import (usually a filename). JabRef then passes on this information to a helper function that will parse the BibTex string into entries and return the resulting BibTex entries to the JabRef CLI.\nL117: If the GUI is not suppressed (using the `-n` option), any imported or loaded BibTeX file will show up in the main window.\nL118: \nL119: *Note:* The `-importBibtex` option can be specified only once, and for one file only.\nL120: ### Export matching entries: `-m [field]searchTerm,outputFile:file[,exportFormat]`\nL121: \nL122: (or `--exportMatches [field]searchTerm,outputFile:file[,exportFormat]`)\nL123: \nL124: Save to a new file all the database entries matching the given search term.\nL125: \nL126: If the filename is followed by a comma and an export format, the given export filter will be used. Otherwise, the default format *html-table* (with *Abstract* and *BibTeX*, provided by *tablerefsabsbib*) is used.\nL127: Information about to the search function is given in ['advanced search' documentation](/finding-sorting-and-cleaning-entries/search.md).\nL128: \nL129: *Note:* In addition it is also possible to search for entries within a time frame such as `Year=1989-2005` (instead of only searching for entries of a certain year as in `Year=2005`).\nL130: \nL131: *Note:* Search terms containing blanks need to be bracketed by quotation marks, as in `(author=bock or title|keywords=\"computer methods\")and not(author=sager)`\nL132: ### Write BibTexEntry as metadata to PDF: `-w CITEKEY1[,CITEKEY2][,CITEKEYn] | PDF1[,PDF2][,PDFn] | all`\nL133: \nL134: (or `-writeMetadatatoPdf -w CITEKEY1[,CITEKEY2][,CITEKEYn] | PDF1[,PDF2][,PDFn] | all`)\nL135: Exports information stored in the database as Metadata to linked files. The metadata is stored as XMP metadata and as an embedded bib file. The entries can be selected by citekey. Individual pdfs can be selectec by the path to the pdf (either as given in the database or as an absolute or relative path to the pdf file itself). The keyword `all` may be specified to write metadata on all pdfs in the database.\nL136: ### Write BibTexEntry as XMP metadata to PDF: `-writeXMPtoPdf CITEKEY1[,CITEKEY2][,CITEKEYn] | PDF1[,PDF2][,PDFn] | all`\nL137: \nL138: As -writeMetadatatoPdf, but only write XMP metadata.\nL139: \nL140: ### Write BibTexEntry as XMP metadata to PDF: `-embeddMetadataInPdf CITEKEY1[,CITEKEY2][,CITEKEYn] | PDF1[,PDF2][,PDFn] | all`\nL141: \nL142: As -writeMetadatatoPdf, but only embedd a bib file.\nL143: ### Fetch entries from Web: `-f=FetcherName:QueryString`\nL144: \nL145: (or `--fetch=FetcherName:QueryString`)\nL146: \nL147: Query a Web fetcher and import the entries.\nL148: \nL149: Pass both the name of a fetcher and your search term or paper id (e.g. `--fetch=Medline:cancer`), and the given fetcher will be run. Some fetchers will still display a GUI window if they need feedback from you.\nL150: \nL151: The fetchers listed in the Web search panel can be run from the command line. To get the list of available fetchers, run `--fetch` without parameters.\nL152: ### Subdatabase from .aux file: `-a infile[.aux],outfile[.bib] base-BibTeX-file`\nL153: \nL154: (or `--aux infile[.aux],outfile[.bib] base-BibTeX-file`)\nL155: \nL156: Extract a subdatabase from a .aux file:\nL157: When you compile a LaTeX document (e.g. `infile.tex`), an .aux file is created (`infile.aux`). Among other things, it contains the list of entries used in your document. JabRef can extract the references used from the `base-BibTeX-file` to a new .bib file (`outfile.bib`). This way, you will have a subdatabase containing only the entries used in the .tex file.\nL158: ### Set file links: `-asfl`\nL159: \nL160: (or `--automaticallySetFileLinks`)\nL161: \nL162: Automatically set file links.\nL163: \nL164: ### Regenerate keys: `-g`\nL165: \nL166: (or `--generateCitationKeys`)\nL167: \nL168: Regenerate all keys for the entries of a Bib(la)TeX file.\nL169: \nL170: ### Export preferences: `-x filename`\nL171: \nL172: (or `--prexp filename`)\nL173: \nL174: Export user preferences to an XML file. After exporting, JabRef will start normally.\nL175: ### Import preferences: `-p filename`\nL176: \nL177: (or `--primp filename`)\nL178: \nL179: Import user preferences from an XML file (exported using the `-x` option, or through the GUI). After importing, JabRef will start normally.\nL180: \nL181: ### Reset preferences: `-d key`\nL182: \nL183: (or `--prdef key`)\nL184: \nL185: Reset preferences (key1, key2,..., or `all`).\nL186: \nL187: ### No files at startup: `-b`\nL188: \nL189: (or `--blank`)\nL190: \nL191: Do not open any files at startup\nL192: \nL193: ### Version: `-v`\nL194: \nL195: (or `--version`)\nL196: \nL197: Display the version number of JabRef.\nL198: ### Debug mode: `--debug`\nL199: \nL200: Show debug level messages. The log files are stored in an internal file. See FAQs for [Windows](https://docs.jabref.org/faq/windows#q-where-can-i-find-jabrefs-log-files), [Linux](https://docs.jabref.org/faq/linux#where-can-i-find-jabrefs-log-files), [macOS](https://docs.jabref.org/faq/osx#q-where-can-i-find-jabrefs-log-files) depending on your OS where to find it.\nL201: \nL202: ### Display output in the console: `--console`\nL203: \nL204: Show info and error messages in the console.\nL205: ## Development\nL206: \nL207: As developer, you pass arguments to the app using gradle's `--app` switch. Enclose the arguments in quotes. For instance `--args=\"--debug\"` turns on debug mode.\nL208: \nL209: <figure><img src=\"https://2944476579-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2F-Lr3JU9j9iSUW8RYz1hD-2910905616%2Fuploads%2Fgit-blob-a05b5c017d23507b03c6181e982329873887c5cd%2Fdev-debug.png?alt=media\" alt=\"\"><figcaption></figcaption></figure>\nL210: \nL211: You can then view the event log in JabRef as follows:\nL212: <figure><img src=\"https://2944476579-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2F-Lr3JU9j9iSUW8RYz1hD-2910905616%2Fuploads%2Fgit-blob-d54f8cea69420cc35b54f0bb3f9192a29a0252d7%2Fimage.png?alt=media\" alt=\"\"><figcaption></figcaption></figure>\n--------------------------------------------------------------------------------\nRelease v6.0-beta.1 · JabRef/jabref · GitHub (https://github.com/JabRef/jabref/releases/tag/v6.0-beta.1)\nciteturn1view4 [wordlim: 200] Crawled: today; Content type: text/html; Source: open({\"ref_id\":\"https://github.com/JabRef/jabref/releases/tag/v6.0-beta.1\",\"lineno\":null}); Total lines: 471\nL0: cite0†Skip to content L1: ## Navigation Menu\nL2: \nL3: cite1†Sign in L4: \nL5: Appearance settings\nL6: \nL7:   * Platform\nL8: \nL9:     * AI CODE CREATION\nL10:       * cite2†GitHub CopilotWrite better code with AI L11:       * cite3†GitHub Copilot appDirect agents from issue to merge L12:       * cite4†MCP RegistryIntegrate external tools L13: \nL14:     * DEVELOPER WORKFLOWS\nL15:       * cite5†ActionsAutomate any workflow L16:       * cite6†CodespacesInstant dev environments L17:       * cite7†IssuesPlan and track work L18:       * cite8†Code ReviewManage code changes L19:       * cite9†Code QualityEnforce quality at merge L20:     * APPLICATION SECURITY\nL21:       * cite10†GitHub Advanced SecurityFind and fix vulnerabilities L22:       * cite11†Code securitySecure your code as you build L23:       * cite12†Secret protectionStop leaks before they start L24: \nL25:     * EXPLORE\nL26:       * cite13†Why GitHub L27:       * cite14†Documentation†docs.github.com L28:       * cite15†Blog†github.blog L29:       * cite16†Changelog†github.blog L30:       * cite17†Marketplace L31: \nL32: cite18†View all features L33: \nL34:   * Solutions\nL35:     * BY COMPANY SIZE\nL36:       * cite19†Enterprises L37:       * cite20†Small and medium teams L38:       * cite21†Startups L39:       * cite22†Nonprofits L40: \nL41:     * BY USE CASE\nL42:       * cite23†App Modernization L43:       * cite24†DevSecOps L44:       * cite25†DevOps L45:       * cite26†CI/CD L46:       * cite27†View all use cases L47: \nL48:     * BY INDUSTRY\nL49:       * cite28†Healthcare L50:       * cite29†Financial services L51:       * cite30†Manufacturing L52:       * cite31†Government L53:       * cite32†View all industries L54: \nL55: cite33†View all solutions L56: \nL57:   * Resources\n"
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "provenance and bounded governing evidence; not original response",
+  "source_urls": [
+    "https://docs.jabref.org/advanced/commandline",
+    "https://docs.jabref.org/finding-sorting-and-cleaning-entries/findduplicates",
+    "https://docs.jabref.org/finding-sorting-and-cleaning-entries/getbibtexdatafromdoi",
+    "https://docs.jabref.org/finding-sorting-and-cleaning-entries/mergeentries",
+    "https://github.com/JabRef/jabref/releases/tag/v6.0-beta.1"
+  ],
+  "original_public_path": "assessment/A7-02/control-v1/evidence/evidence_jabref_docs.json",
+  "original_public_sha256": "303b4801685fd301154d35e4c602d49b2ad85bb462086c0468f2a8b78eed7bc0",
+  "original_public_bytes": 29173,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A7-02/control-v1/evidence/evidence_jabref_docs.json",
+  "classification_basis": "converted web retrieval tool response containing third-party source bodies",
+  "original_selectors": [
+    {
+      "source_id": "S06",
+      "field": "lines",
+      "selector": 76
+    },
+    {
+      "source_id": "S07",
+      "field": "lines",
+      "selector": 79
+    },
+    {
+      "source_id": "S08",
+      "field": "lines",
+      "selector": 62
+    },
+    {
+      "source_id": "S09",
+      "field": "lines",
+      "selector": 200
+    },
+    {
+      "source_id": "S10",
+      "field": "lines",
+      "selector": 458
+    },
+    {
+      "source_id": "R06",
+      "field": "independent_locator",
+      "selector": "Detection / Selecting which entry to keep; numbered capture 43–67"
+    },
+    {
+      "source_id": "S06",
+      "field": "lines",
+      "selector": 76
+    },
+    {
+      "source_id": "R07",
+      "field": "independent_locator",
+      "selector": "Selecting two records / field controls; numbered capture 43–66"
+    },
+    {
+      "source_id": "S07",
+      "field": "lines",
+      "selector": 79
+    },
+    {
+      "source_id": "R08",
+      "field": "independent_locator",
+      "selector": "Identifier discovery and DOI/ISBN completion; numbered capture 44–56"
+    },
+    {
+      "source_id": "S08",
+      "field": "lines",
+      "selector": 62
+    },
+    {
+      "source_id": "R09",
+      "field": "independent_locator",
+      "selector": "Basics and Import/Export options; numbered capture 49 and 95–109"
+    },
+    {
+      "source_id": "S09",
+      "field": "lines",
+      "selector": 200
+    },
+    {
+      "source_id": "R10",
+      "field": "independent_locator",
+      "selector": "Release heading/commit and compatibility change; numbered capture 111–131 and 161; HTML relative-time"
+    },
+    {
+      "source_id": "S10",
+      "field": "lines",
+      "selector": 458
+    }
+  ],
+  "governing_summaries_from_existing_authored_source_records": [
+    {
+      "retrieved_at_utc": "2026-10-10T05:14:09.887652+00:00",
+      "lines": 76,
+      "authored_source_map": "assessment/A7-02/control-v1/retrieval-manifest.json",
+      "source_id": "S06"
+    },
+    {
+      "retrieved_at_utc": "2026-10-10T05:14:09.914739+00:00",
+      "lines": 79,
+      "authored_source_map": "assessment/A7-02/control-v1/retrieval-manifest.json",
+      "source_id": "S07"
+    },
+    {
+      "retrieved_at_utc": "2026-10-10T05:14:09.935449+00:00",
+      "lines": 62,
+      "authored_source_map": "assessment/A7-02/control-v1/retrieval-manifest.json",
+      "source_id": "S08"
+    },
+    {
+      "retrieved_at_utc": "2026-10-10T05:14:09.961127+00:00",
+      "lines": 200,
+      "authored_source_map": "assessment/A7-02/control-v1/retrieval-manifest.json",
+      "source_id": "S09"
+    },
+    {
+      "retrieved_at_utc": "2026-10-10T05:14:10.171383+00:00",
+      "lines": 458,
+      "authored_source_map": "assessment/A7-02/control-v1/retrieval-manifest.json",
+      "source_id": "S10"
+    },
+    {
+      "title": "JabRef duplicate candidates",
+      "version_or_commit": "Living documentation, retrieved 2026-10-10; not pinned to beta",
+      "independent_locator": "Detection / Selecting which entry to keep; numbered capture 43–67",
+      "retrieved_at_utc": "2026-10-10T05:14:09.887652+00:00",
+      "governing_conditions_defaults_types_units_exceptions": "Edit distance gives additional weight to author/editor/title/journal. Choices include left/right/both/merged. Exact duplicate automatic removal is an offered action; keep-merged removes prior entries.",
+      "applicability_judgment": "Final does not convert offered exact removal to a mandated automatic policy; preserved source text is a separate local design.",
+      "authored_source_map": "assessment/A7-02/control-v1/source-map.json",
+      "source_id": "R06"
+    },
+    {
+      "retrieved_at_utc": "2026-10-10T05:14:09.887652+00:00",
+      "lines": 76,
+      "authored_source_map": "assessment/A7-02/control-v1/source-map.json",
+      "source_id": "S06"
+    },
+    {
+      "title": "JabRef field merge",
+      "version_or_commit": "Living documentation; no current app release pinned",
+      "independent_locator": "Selecting two records / field controls; numbered capture 43–66",
+      "retrieved_at_utc": "2026-10-10T05:14:09.914739+00:00",
+      "governing_conditions_defaults_types_units_exceptions": "User selects two entries; compares/chooses values or manually edits; selected fields can combine groups/keywords/comments/files; Merge or Cancel remains explicit.",
+      "applicability_judgment": "A manager merge is not an immutable audit log. The final correctly supplies a retained submission/provenance model as a local choice.",
+      "authored_source_map": "assessment/A7-02/control-v1/source-map.json",
+      "source_id": "R07"
+    },
+    {
+      "retrieved_at_utc": "2026-10-10T05:14:09.914739+00:00",
+      "lines": 79,
+      "authored_source_map": "assessment/A7-02/control-v1/source-map.json",
+      "source_id": "S07"
+    },
+    {
+      "title": "JabRef identifier enrichment defaults",
+      "version_or_commit": "Living documentation; illustrative image mentions 5.2, not a version pin",
+      "independent_locator": "Identifier discovery and DOI/ISBN completion; numbered capture 44–56",
+      "retrieved_at_utc": "2026-10-10T05:14:09.935449+00:00",
+      "governing_conditions_defaults_types_units_exceptions": "Identifier discovery needs sufficient accurate input and can fail. DOI/ISBN completion is disabled without an identifier. Original left fields are default; missing fields obtain DOI values in a merge view; final Merge/Cancel is explicit. Full-text search is a separate route.",
+      "applicability_judgment": "Final keeps lookup and editor approval distinct and does not misapply the identifier-completion prerequisite to separate DOI-less bibliographic search.",
+      "authored_source_map": "assessment/A7-02/control-v1/source-map.json",
+      "source_id": "R08"
+    },
+    {
+      "retrieved_at_utc": "2026-10-10T05:14:09.935449+00:00",
+      "lines": 62,
+      "authored_source_map": "assessment/A7-02/control-v1/source-map.json",
+      "source_id": "S08"
+    },
+    {
+      "title": "JabRef CLI import/export",
+      "version_or_commit": "Served docs say since 5.0; installed build not chosen",
+      "independent_locator": "Basics and Import/Export options; numbered capture 49 and 95–109",
+      "retrieved_at_utc": "2026-10-10T05:14:09.961127+00:00",
+      "governing_conditions_defaults_types_units_exceptions": "File conversion can run without GUI. -o defaults to BibTeX unless a filter is named. Import precedes export; without -i, last successfully loaded file is exported. One -i/-o file; a same-name custom filter takes precedence.",
+      "applicability_judgment": "Final recommends a version-pinned conversion option, not a command run or beta CLI guarantee. No field/default/unit is overgeneralized.",
+      "authored_source_map": "assessment/A7-02/control-v1/source-map.json",
+      "source_id": "R09"
+    },
+    {
+      "retrieved_at_utc": "2026-10-10T05:14:09.961127+00:00",
+      "lines": 200,
+      "authored_source_map": "assessment/A7-02/control-v1/source-map.json",
+      "source_id": "S09"
+    },
+    {
+      "title": "JabRef beta release and CSL opportunity",
+      "version_or_commit": "v6.0-beta.1, 3992b12; 2026-09-21T20:19:44Z; prerelease",
+      "independent_locator": "Release heading/commit and compatibility change; numbered capture 111–131 and 161; HTML relative-time",
+      "retrieved_at_utc": "2026-10-10T05:14:10.171383+00:00",
+      "governing_conditions_defaults_types_units_exceptions": "Release is beta/prerelease. Zotero Compatibility Mode is a preference for CSL citations emitted/read through LibreOffice, not general RIS fidelity.",
+      "applicability_judgment": "Conditional first testing and the alternative are reasonable. Chronology alone does not prove all alpha fixes survived; the final retains chosen-build validation.",
+      "authored_source_map": "assessment/A7-02/control-v1/source-map.json",
+      "source_id": "R10"
+    },
+    {
+      "retrieved_at_utc": "2026-10-10T05:14:10.171383+00:00",
+      "lines": 458,
+      "authored_source_map": "assessment/A7-02/control-v1/source-map.json",
+      "source_id": "S10"
+    }
+  ],
+  "selected_api_metadata": [],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY_AND_METADATA; full body coverage UNKNOWN",
+  "omission": "Full fetched body, API ancillary fields and unmechanically summarizable body details are archived privately. Original source URL and selectors govern; unsupported/missing semantic coverage is UNKNOWN. No candidate finding or independent judgment is repaired.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false,
+  "original_tool_source_urls": [
+    "https://2944476579-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2F-Lr3JU9j9iSUW8RYz1hD-2910905616%2Fuploads%2Fgit-blob-1a97a4faea06bf20cda7a93121b7b2326ed86f1c%2Fmerge-entries-1.png?alt=media\\&token=c5833400-e96a-49ba-b5a2-9bc60c007795",
+    "https://2944476579-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2F-Lr3JU9j9iSUW8RYz1hD-2910905616%2Fuploads%2Fgit-blob-2a71d790fa4d722d07d656b16f34cce2855dd195%2Fbutton%20bar.PNG?alt=media",
+    "https://2944476579-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2F-Lr3JU9j9iSUW8RYz1hD-2910905616%2Fuploads%2Fgit-blob-3cc5ebc5c082f98e35f5d53eea1dab325003bd99%2Fthree-way-merge-open-doi-copy.png?alt=media\\&token=8990a8f5-bb4c-4381-8d75-03b102097c29",
+    "https://2944476579-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2F-Lr3JU9j9iSUW8RYz1hD-2910905616%2Fuploads%2Fgit-blob-5292b0e062752618d2aadbc60a900d5e5cc8d56b%2Fgetdoi-entryeditor-jabref5.2%20\\(1\\",
+    "https://2944476579-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2F-Lr3JU9j9iSUW8RYz1hD-2910905616%2Fuploads%2Fgit-blob-59a6a04f71f10147c78df17d38e9c21fdb99d594%2Fthree-way-merge-groups-keywords.png?alt=media\\&token=10d0291e-7360-485c-9520-3b8485d0aa88",
+    "https://2944476579-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2F-Lr3JU9j9iSUW8RYz1hD-2910905616%2Fuploads%2Fgit-blob-5a9a096dab5914566c9bcaed616e34ecb1ac74c5%2Fduplicate-resolver-dialog.png?alt=media",
+    "https://2944476579-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2F-Lr3JU9j9iSUW8RYz1hD-2910905616%2Fuploads%2Fgit-blob-a05b5c017d23507b03c6181e982329873887c5cd%2Fdev-debug.png?alt=media",
+    "https://2944476579-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2F-Lr3JU9j9iSUW8RYz1hD-2910905616%2Fuploads%2Fgit-blob-d54f8cea69420cc35b54f0bb3f9192a29a0252d7%2Fimage.png?alt=media",
+    "https://docbook.org/whatis",
+    "https://docs.jabref.org/advanced/commandline",
+    "https://docs.jabref.org/advanced/commandline.md",
+    "https://docs.jabref.org/faq/linux#where-can-i-find-jabrefs-log-files",
+    "https://docs.jabref.org/faq/osx#q-where-can-i-find-jabrefs-log-files",
+    "https://docs.jabref.org/faq/windows#q-where-can-i-find-jabrefs-log-files",
+    "https://docs.jabref.org/finding-sorting-and-cleaning-entries/findduplicates",
+    "https://docs.jabref.org/finding-sorting-and-cleaning-entries/findduplicates.md",
+    "https://docs.jabref.org/finding-sorting-and-cleaning-entries/getbibtexdatafromdoi",
+    "https://docs.jabref.org/finding-sorting-and-cleaning-entries/getbibtexdatafromdoi.md",
+    "https://docs.jabref.org/finding-sorting-and-cleaning-entries/mergeentries",
+    "https://docs.jabref.org/finding-sorting-and-cleaning-entries/mergeentries.md",
+    "https://docs.jabref.org/llms.txt",
+    "https://en.wikipedia.org/wiki/Extensible_Metadata_Platform",
+    "https://github.com/JabRef/jabref/releases/tag/v6.0-beta.1"
+  ]
 }

@@ -1,7 +1,118 @@
-URL: UNKNOWN in captured record
-Original locator: ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E06.txt
-Original SHA256: 1286aef0bfff0e44076f66255924a31ef05d12fa724b41d811e1bd0a16612fc1
-Original numbered lines; gaps omitted. Not full response.
-
-197: dimwight commented on Jun 16, 2021
-284: closed this as completedon Jul 7, 2021
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://github.com/getodk/collect/issues/4589"
+  ],
+  "original_public_path": "assessment/A2-01/control-v1/public-governing-excerpts/E06-1286aef0.txt",
+  "original_public_sha256": "cb0e2d3edad7a756ed434341e0b43fa7ca078c598e655fc38513dfa1b0c2faea",
+  "original_public_bytes": 333,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A2-01/control-v1/public-governing-excerpts/E06-1286aef0.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E06.txt",
+      "original_sha256": "1286aef0bfff0e44076f66255924a31ef05d12fa724b41d811e1bd0a16612fc1",
+      "original_bytes": 15105,
+      "original_line_numbers": [
+        119,
+        172,
+        197,
+        284
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            119,
+            172
+          ]
+        },
+        {
+          "lines": [
+            197,
+            284
+          ]
+        },
+        {
+          "lines": [
+            119,
+            172
+          ]
+        },
+        {
+          "lines": [
+            197,
+            284
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E06.txt",
+      "original_sha256": "1286aef0bfff0e44076f66255924a31ef05d12fa724b41d811e1bd0a16612fc1",
+      "original_bytes": 15105,
+      "original_line_numbers": [
+        119,
+        172
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            119,
+            172
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E06.txt",
+      "original_sha256": "1286aef0bfff0e44076f66255924a31ef05d12fa724b41d811e1bd0a16612fc1",
+      "original_bytes": 15105,
+      "original_line_numbers": [
+        197,
+        284
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            197,
+            284
+          ]
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A2-01/control-v1/source-map.json",
+      "source_id": "E06",
+      "access_started_utc": "2026-10-10T04:55:52.953883+00:00",
+      "access_finished_utc": "2026-10-10T04:55:54.009289+00:00",
+      "title": "Collect issue #4589 original report and discussion",
+      "version": "Opened 2021-06-02; closed 2021-07-07 by #4655",
+      "locators": [
+        {
+          "path": "evidence/E06.txt",
+          "lines": [
+            119,
+            172
+          ],
+          "section": "Report and maintainer implementation lead"
+        },
+        {
+          "path": "evidence/E06.txt",
+          "lines": [
+            197,
+            284
+          ],
+          "section": "Ambiguous response; failed status; closure"
+        }
+      ],
+      "subject_operation": "Lost server response followed by editing failed local XML and retrying the same instance ID",
+      "conditions": "A changed end timestamp can cause changed XML and server rejection. Maintainer analysis chooses failed-status edit exclusion rather than a blanket finalization lock. Discussion includes uncertainty and cancellation as another lead."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

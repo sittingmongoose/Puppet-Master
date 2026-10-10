@@ -1,142 +1,55 @@
-**NOTE:** this issue system is intended for reporting bugs and tracking progress in software
-development. For all other usage and software development questions or discussion, please post a
-question in our chat room: https://gitter.im/opentripplanner/OpenTripPlanner.
+# Archived fetched source: bounded publication capsule
 
-
-## Expected behavior
-The server always process the latest real time update, even if the update takes longer than the polling interval (in such case some polling should be skipped)
-
-## Observed behavior
-The real-time information is lagging behind, sometimes by even 20 minutes or more.
-
-## Version of OTP used (exact commit hash or JAR name)
-2.7.0-SNAPSHOT
-
-## Data sets in use (links to GTFS and OSM PBF files)
-National Rail GTFS with GTFS-RT real-time update
-
-## Router config and graph build config JSON
-router-config-json
 ```json
 {
-  "routingDefaults": { 
-    "drivingDirection": "left",
-    "locale": "en_GB",
-    "numItineraries": 10,
-    "searchWindow": "PT6H",
-    "transferSlack": "PT30S",
-    "waitReluctance": 1.76,
-    "accessEgress": {
-      "maxDuration": "PT2H"
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "provenance and bounded governing evidence; not original response",
+  "source_urls": [
+    "https://api.github.com/repos/opentripplanner/OpenTripPlanner/issues/6252"
+  ],
+  "original_public_path": "assessment/A6-01/control-v1/evidence/E22-body.md",
+  "original_public_sha256": "ec7db4885cd133715935dd9fad40cd624cd91a1e8b5dc4fcfeeefd9ce8dc362e",
+  "original_public_bytes": 4175,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A6-01/control-v1/evidence/E22-body.md",
+  "classification_basis": "fetched/converted Markdown source body confirmed by capture metadata and content",
+  "original_selectors": [
+    {
+      "source_id": "E22",
+      "field": "lines",
+      "selector": 1
     },
-    "walk": {
-      "boardCost": 300,
-      "reluctance": 1.68
+    {
+      "source_id": "E22",
+      "field": "locator",
+      "selector": "E22 JSON /body and /created_at; navigable E22-body.md"
     },
-    "wheelchairAccessibility": {
-      "trip": {
-        "onlyConsiderAccessible": false,
-        "unknownCost": 600,
-        "inaccessibleCost": 3600
-      },
-      "stop": {
-        "onlyConsiderAccessible": false,
-        "unknownCost": 600,
-        "inaccessibleCost": 3600
-      },
-      "elevator": {
-        "onlyConsiderAccessible": false
-      },
-      "inaccessibleStreetReluctance": 25,
-      "maxSlope": 0.08333,
-      "slopeExceededReluctance": 50,
-      "stairsReluctance": 25
+    {
+      "source_id": "E22",
+      "field": "lines",
+      "selector": 1
     }
-  },
-  "timetableUpdates": {
-    "maxSnapshotFrequency": "PT12S" 
-  },
-  "transit": {
-    "searchThreadPoolSize": 4,
-    "transferCacheRequests": [
-      {
-        "modes" : "WALK",
-        "walk" : {
-          "boardCost" : 300,
-          "reluctance" : 1.68
-        }
-      },
-      {
-        "modes" : "WALK",
-        "walk" : {
-          "boardCost" : 0,
-          "reluctance" : 1.0
-        }
-      }
-    ]
-  },
-  "updaters": [
+  ],
+  "governing_summaries_from_existing_authored_source_records": [
     {
-      "type": "real-time-alerts",
-      "url": "${NR_GTFSRT_URL}",
-      "feedId" : "GB",
-      "frequency": "PT1M"
+      "access_utc": "2026-10-10T04:39:01.322155+00:00",
+      "lines": 1,
+      "version_observed": "OTP issue #6252, opened 2024-11-14; reported 2.7.0-SNAPSHOT",
+      "locator": "E22 JSON /body and /created_at; navigable E22-body.md",
+      "independent_observation": "Independent issue API response, complete body retained and read.",
+      "authored_source_map": "assessment/A6-01/control-v1/source-map.json",
+      "source_id": "E22"
     },
     {
-      "type": "stop-time-updater",
-      "url": "${NR_GTFSRT_URL}",
-      "feedId" : "GB",
-      "frequency": "PT27S"
-    },
-    {
-      "type" : "vehicle-positions",
-      "url" : "${NR_GTFSRT_URL}",
-      "feedId" : "GB",
-      "frequency" : "PT34S",
-      "fuzzyTripMatching" : false,
-      "features" : [
-        "position",
-        "stop-position",
-        "occupancy"
-      ]
-    },
-    {
-      "type" : "vehicle-positions",
-      "url" : "https://internal-proxy.servology.co.uk/dft/bus-data/gtfsrt/",
-      "feedId" : "GB",
-      "frequency" : "PT35S",
-      "fuzzyTripMatching" : false,
-      "features" : [
-        "position",
-        "stop-position",
-        "occupancy"
-      ]
+      "access_utc": "2026-10-10T04:39:01.322155+00:00",
+      "lines": 1,
+      "authored_source_map": "assessment/A6-01/control-v1/evidence/retrieval-manifest.json",
+      "source_id": "E22"
     }
-  ]
+  ],
+  "selected_api_metadata": [],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY_AND_METADATA; full body coverage UNKNOWN",
+  "omission": "Full fetched body, API ancillary fields and unmechanically summarizable body details are archived privately. Original source URL and selectors govern; unsupported/missing semantic coverage is UNKNOWN. No candidate finding or independent judgment is repaired.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
 }
 ```
-
-## Steps to reproduce the problem
-Run OpenTripPlanner with a large dataset on a slow server with a polling interval short enough.
-
-## Additional information
-The final statement of the updater is `saveResultOnGraph.execute(runnable);` which is a future. As a result the updater finishes immediately while the `GraphUpdateManager` is still doing work.
-
-```java
-  @Override
-  public Future<?> execute(GraphWriterRunnable runnable) {
-    return scheduler.submit(() -> {
-      try {
-        runnable.run(realtimeUpdateContext);
-      } catch (Exception e) {
-        LOG.error("Error while running graph writer {}:", runnable.getClass().getName(), e);
-      }
-    });
-  }
-```
-
-As processing GTFS-RT entities is fast, but updating the graph is slow, the updater finishes right after processing the entities and start another polling after the specified time delay, and the scheduler is accumulated with tasks to update the graph from the previous process results of previous GTFS-RT data.
-
-Therefore, the expected behaviour of waiting after finishing update before the polling the next does not happen. 
-
-The same problem applies to all updaters.

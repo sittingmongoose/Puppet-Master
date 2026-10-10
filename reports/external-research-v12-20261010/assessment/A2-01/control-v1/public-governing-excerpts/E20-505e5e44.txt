@@ -1,7 +1,79 @@
-URL: UNKNOWN in captured record
-Original locator: ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E20.txt
-Original SHA256: 505e5e44f9ae1ed4a06551bcbb74c2dbd48e0e34f1b71530d5665625a2967e6e
-Original numbered lines; gaps omitted. Not full response.
-
-108: #4655
-163: Sorry, something went wrong.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://github.com/getodk/collect/pull/4655"
+  ],
+  "original_public_path": "assessment/A2-01/control-v1/public-governing-excerpts/E20-505e5e44.txt",
+  "original_public_sha256": "9445a9a5ae27f69ec1acaf41b3efc78567fffca962d9516cacc8469759eb42f9",
+  "original_public_bytes": 294,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A2-01/control-v1/public-governing-excerpts/E20-505e5e44.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E20.txt",
+      "original_sha256": "505e5e44f9ae1ed4a06551bcbb74c2dbd48e0e34f1b71530d5665625a2967e6e",
+      "original_bytes": 16080,
+      "original_line_numbers": [
+        108,
+        163
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            108,
+            163
+          ]
+        },
+        {
+          "lines": [
+            108,
+            163
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E20.txt",
+      "original_sha256": "505e5e44f9ae1ed4a06551bcbb74c2dbd48e0e34f1b71530d5665625a2967e6e",
+      "original_bytes": 16080,
+      "original_line_numbers": [
+        108,
+        163
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            108,
+            163
+          ]
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A2-01/control-v1/source-map.json",
+      "source_id": "E20",
+      "access_started_utc": "2026-10-10T04:55:54.342500+00:00",
+      "access_finished_utc": "2026-10-10T04:55:55.469291+00:00",
+      "title": "Merged Collect PR #4655",
+      "version": "Merged 2021-07-07; six commits",
+      "locators": [
+        {
+          "path": "evidence/E20.txt",
+          "lines": [
+            108,
+            163
+          ],
+          "section": "Merge record and verification/design notes"
+        }
+      ],
+      "subject_operation": "Final historical change and testing account",
+      "conditions": "Closes #4589; source author describes stub-based FormResubmissionTest and manual intervention. Combined with E08 establishes shipped milestone."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

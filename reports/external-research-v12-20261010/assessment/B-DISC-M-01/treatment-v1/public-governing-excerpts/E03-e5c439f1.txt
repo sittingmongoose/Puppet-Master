@@ -1,161 +1,255 @@
-URL: https://www.rfc-editor.org/rfc/rfc5854.html
-Original locator: ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E03.txt
-Original SHA256: e5c439f17d61b4bb5999ae88bf177a46ed10de4d7ed4c3bf9980c95277bde82e
-Original numbered lines; gaps omitted. Not full response.
-
-117: Knowledge about availability of a download on mirror servers can be
-118: acquired and maintained by the operators of the origin server or by a
-119: third party.  This knowledge, together with cryptographic hashes,
-120: digital signatures, and more, can be stored in a machine-readable
-121: Metalink file.  The Metalink file can transfer this knowledge to the
-122: user agent, which can peruse it in automatic ways or present the
-123: information to a human user.  User agents can fall back to alternate
-124: mirrors if the current one has an issue.  Thereby, clients are
-125: enabled to work their way to a successful download under adverse
-126: circumstances.  All this can be done transparently to the human user
-127: and the download is much more reliable and efficient.  In contrast, a
-128: Bryan, et al.                Standards Track                    [Page 3]
-129: RFC 5854          Metalink Download Description Format         June 2010
-130: traditional HTTP redirect to one mirror conveys only comparatively
-131: minimal information -- a referral to a single server, and there is no
-132: provision in the HTTP protocol to handle failures.
-133: Other features that some clients provide include multi-source
-134: downloads, where chunks of a file are downloaded from multiple
-135: mirrors (and optionally, Peer-to-Peer) simultaneously, which
-136: frequently results in a faster download.  Metalinks can leverage
-137: HTTP, FTP, and Peer-to-Peer protocols together, because regardless of
-138: the protocol over which the Metalink was obtained, it can make a
-139: resource accessible through other protocols.  If the Metalink was
-140: obtained from a trusted source, included verification metadata can
-141: solve trust issues when downloading files from replica servers
-142: operated by third parties.  Metalinks also provide structured
-143: information about downloads that can be indexed by search engines.
-407: o  metalink:file elements MAY contain one or more metalink:language
-408: elements.
-409: Bryan, et al.                Standards Track                   [Page 10]
-410: RFC 5854          Metalink Download Description Format         June 2010
-411: o  metalink:file elements MAY contain exactly one metalink:logo
-412: element and MUST NOT contain more than one such element.
-413: o  metalink:file elements MAY contain one or more metalink:os
-414: element.
-415: o  metalink:file elements MUST contain at least one metalink:url
-416: element or at least one metalink:metaurl element.  Typically,
-417: metalink:file elements contain more than one metalink:url element
-418: to provide multiple download sources.
-419: o  metalink:file elements MAY contain one or more metalink:pieces
-420: elements.
-421: o  metalink:file elements MAY contain exactly one metalink:publisher
-422: element and MUST NOT contain more than one such element.
-423: o  metalink:file elements MAY contain one or more metalink:signature
-424: elements.
-425: o  metalink:file elements SHOULD contain exactly one metalink:size
-426: element and MUST NOT contain more than one such element.
-427: o  metalink:file elements MAY contain exactly one metalink:version
-445: 4.1.3.  The "metalink:pieces" Element
-446: The "metalink:pieces" element acts as a container for a list of
-447: cryptographic hashes of contiguous, non-overlapping pieces of the
-448: file.  The cryptographic hashes MUST be listed in the same order as
-449: the corresponding pieces appear in the file, starting at the
-450: beginning of the file.  Metalink Documents MAY contain one or
-451: multiple metalink:pieces container elements, if each "type" attribute
-452: of metalink:pieces has a unique value.
-453: metalinkPieces =
-454: element metalink:pieces {
-455: attribute length { xsd:positiveInteger },
-456: attribute type { text },
-457: metalinkHash+
-458: }
-459: 4.1.3.1.  The "type" Attribute
-460: metalink:pieces elements MUST have a "type" attribute.
-461: The Internet Assigned Numbers Authority (IANA) registry named "Hash
-462: Function Textual Names" defines values for hash types.  See
-463: Section 7.4 for security implications.
-464: 4.1.3.2.  The "length" Attribute
-465: metalink:pieces elements MUST have a "length" attribute, which is a
-466: positive integer that describes the length of the pieces of the file
-467: in octets.  The whole file is divided into non-overlapping pieces of
-468: this length, starting from the beginning of the file.  That is, every
-469: piece MUST be the same size, apart from the last piece, which is the
-470: remainder.  The last piece extends to the end of the file, and it
-471: therefore MAY be shorter than the other pieces.
-522: 4.2.4.  The "metalink:hash" Element
-523: The "metalink:hash" element is a Text construct that conveys a
-524: cryptographic hash for a file.  All hashes are encoded in lowercase
-525: hexadecimal format.  Hashes are used to verify the integrity of a
-526: complete file or portion of a file to determine if the file has been
-527: transferred without any errors.
-528: metalinkHash =
-529: element metalink:hash {
-530: attribute type { text }?,
-531: text
-532: }
-533: Metalink Documents MAY contain one or multiples hashes of a complete
-534: file. metalink:hash elements with a "type" attribute MUST contain a
-535: hash of the complete file.  In this example, both SHA-1 and SHA-256
-536: hashes of the complete file are included.
-537: ...
-538: <hash type="sha-1">a97fcf6ba9358f8a6f62beee4421863d3e52b080</hash>
-539: <hash type="sha-256">fc87941af7fd7f03e53b34af393f4c14923d74...</hash>
-540: ...
-541: Metalink Documents MAY also contain hashes for individual pieces of a
-542: file. metalink:hash elements that are inside a metalink:pieces
-543: container element have a hash for that specific piece or chunk of the
-544: file, and are of the same hash type as the metalink:pieces element in
-545: which they are contained.  Metalink Documents MAY contain one or
-546: multiple metalink:pieces container elements, if each "type" attribute
-547: of metalink:pieces has a unique value.
-548: metalink:hash elements without a "type" attribute MUST contain a hash
-549: for that specific piece or chunk of the file and MUST be listed in
-550: the same order as the corresponding pieces appear in the file,
-551: starting at the beginning of the file.  The size of the piece is
-552: equal to the value of the "length" attribute of the metalink:pieces
-553: element, apart from the last piece, which is the remainder.  See
-554: Section 4.1.3.2 for more information on the size of pieces.
-555: Bryan, et al.                Standards Track                   [Page 14]
-556: RFC 5854          Metalink Download Description Format         June 2010
-557: In this example, SHA-1 and SHA-256 hashes of the complete file are
-558: included, along with four SHA-1 piece hashes.
-559: ...
-560: <hash type="sha-1">a97fcf6ba9358f8a6f62beee4421863d3e52b080</hash>
-561: <hash type="sha-256">fc87941af7fd7f03e53b34af393f4c14923d74...</hash>
-562: <pieces length="1048576" type="sha-1">
-563: <hash>d96b9a4b92a899c2099b7b31bddb5ca423bb9b30</hash>
-564: <hash>10d68f4b1119014c123da2a0a6baf5c8a6d5ba1e</hash>
-565: <hash>3e84219096435c34e092b17b70a011771c52d87a</hash>
-566: <hash>67183e4c3ab892d3ebe8326b7d79eb62d077f487</hash>
-567: </pieces>
-568: ...
-569: 4.2.4.1.  The "type" Attribute
-570: metalink:hash elements MUST have a "type" attribute, if and only if
-571: it contains a hash of the complete file.  The IANA registry named
-572: "Hash Function Textual Names" defines values for hash types.
-573: metalink:hash elements MUST NOT have a "type" attribute, if they are
-574: inside a metalink:pieces container element.  See Section 7.4 for
-575: security implications.
-753: 4.2.14.  The "metalink:size" Element
-754: The "metalink:size" element indicates the length of the linked
-755: content in octets.  This is the content length of the representation
-756: returned when the IRI is mapped to a URI and dereferenced.  Note that
-757: the "metalink:size" element MUST override the actual content length
-758: of the representation as reported by the underlying protocol, and
-759: those that do not match MUST be discarded by Metalink Processors.
-760: This value MUST be a non-negative integer.
-922: 7.  Security Considerations
-923: Because Metalink is an XML-based format, existing XML security
-924: mechanisms can be used to secure its content.
-925: Bryan, et al.                Standards Track                   [Page 24]
-926: RFC 5854          Metalink Download Description Format         June 2010
-927: Publishers of Metalink Documents may have sound reasons for signing
-928: otherwise-unprotected content.  For example, a merchant might
-929: digitally sign a Metalink that lists a file download to verify its
-930: origin.  Other merchants may wish to sign and encrypt Metalink
-931: Documents that list digital songs that have been purchased.  Many
-932: other examples are conceivable.
-933: Publishers are encouraged to offer Metalink documents via
-934: authenticated HTTP under Transport Layer Security (TLS) as specified
-935: in [RFC2818].  The choice of a secure content layer rests entirely
-936: with the content providers.
-937: Publishers are also encouraged to include digital signatures of the
-938: files within the Metalink Documents, if they are available, as
-939: described in Section 4.2.13.
-940: Normally, a publisher is in the best position to know how strong the
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://www.rfc-editor.org/rfc/rfc5854.html"
+  ],
+  "original_public_path": "assessment/B-DISC-M-01/treatment-v1/public-governing-excerpts/E03-e5c439f1.txt",
+  "original_public_sha256": "4e8a18472ad1bf149c3f7e7f5a0288cdc050761cf53a56c3638437e7fb5fb893",
+  "original_public_bytes": 9634,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/B-DISC-M-01/treatment-v1/public-governing-excerpts/E03-e5c439f1.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E03.txt",
+      "original_sha256": "e5c439f17d61b4bb5999ae88bf177a46ed10de4d7ed4c3bf9980c95277bde82e",
+      "original_bytes": 64952,
+      "original_line_numbers": [
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        407,
+        408,
+        409,
+        410,
+        411,
+        412,
+        413,
+        414,
+        415,
+        416,
+        417,
+        418,
+        419,
+        420,
+        421,
+        422,
+        423,
+        424,
+        425,
+        426,
+        427,
+        445,
+        446,
+        447,
+        448,
+        449,
+        450,
+        451,
+        452,
+        453,
+        454,
+        455,
+        456,
+        457,
+        458,
+        459,
+        460,
+        461,
+        462,
+        463,
+        464,
+        465,
+        466,
+        467,
+        468,
+        469,
+        470,
+        471,
+        522,
+        523,
+        524,
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549,
+        550,
+        551,
+        552,
+        553,
+        554,
+        555,
+        556,
+        557,
+        558,
+        559,
+        560,
+        561,
+        562,
+        563,
+        564,
+        565,
+        566,
+        567,
+        568,
+        569,
+        570,
+        571,
+        572,
+        573,
+        574,
+        575,
+        753,
+        754,
+        755,
+        756,
+        757,
+        758,
+        759,
+        760,
+        922,
+        923,
+        924,
+        925,
+        926,
+        927,
+        928,
+        929,
+        930,
+        931,
+        932,
+        933,
+        934,
+        935,
+        936,
+        937,
+        938,
+        939,
+        940
+      ],
+      "original_locators": [
+        {
+          "text_lines": [
+            117,
+            143
+          ]
+        },
+        {
+          "text_lines": [
+            407,
+            427
+          ]
+        },
+        {
+          "text_lines": [
+            445,
+            471
+          ]
+        },
+        {
+          "text_lines": [
+            522,
+            575
+          ]
+        },
+        {
+          "text_lines": [
+            753,
+            760
+          ]
+        },
+        {
+          "text_lines": [
+            922,
+            940
+          ]
+        },
+        {
+          "text_lines": [
+            117,
+            143
+          ]
+        },
+        {
+          "text_lines": [
+            407,
+            427
+          ]
+        },
+        {
+          "text_lines": [
+            445,
+            471
+          ]
+        },
+        {
+          "text_lines": [
+            522,
+            575
+          ]
+        },
+        {
+          "text_lines": [
+            753,
+            760
+          ]
+        },
+        {
+          "text_lines": [
+            922,
+            940
+          ]
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [],
+  "evidence_coverage": "UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

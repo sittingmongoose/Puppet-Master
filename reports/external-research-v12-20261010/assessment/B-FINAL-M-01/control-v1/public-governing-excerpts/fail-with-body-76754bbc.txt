@@ -1,13 +1,227 @@
-URL: https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail-with-body.md#L20-L27
-Original locator: ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/fail-with-body.md
-Original SHA256: 76754bbc3cf336c31e5826642bb18f8cba261f6878378a1c72e33b4172d09488
-Original numbered lines; gaps omitted. Not full response.
-
-20: Return an error on server errors where the HTTP response code is 400 or
-21: greater). In normal cases when an HTTP server fails to deliver a document, it
-22: returns an HTML document stating so (which often also describes why and more).
-23: This option allows curl to output and save that content but also to return
-24: error 22.
-25: 
-26: This is an alternative option to --fail which makes curl fail for the same
-27: circumstances but without saving the content.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail-with-body.md#L20-L27",
+    "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/docs/cmdline-opts/fail-with-body.md"
+  ],
+  "original_public_path": "assessment/B-FINAL-M-01/control-v1/public-governing-excerpts/fail-with-body-76754bbc.txt",
+  "original_public_sha256": "fe1ab122f7ad676c68d148c284c307297b23f98b9fb5962f8273b80abe8d1650",
+  "original_public_bytes": 805,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/B-FINAL-M-01/control-v1/public-governing-excerpts/fail-with-body-76754bbc.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/fail-with-body.md",
+      "original_sha256": "76754bbc3cf336c31e5826642bb18f8cba261f6878378a1c72e33b4172d09488",
+      "original_bytes": 771,
+      "original_line_numbers": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27
+      ],
+      "original_locators": [
+        {
+          "start_line": 20,
+          "end_line": 27
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail-with-body.md#L20-L27"
+        },
+        {
+          "start_line": 20,
+          "end_line": 27
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail-with-body.md#L20-L27"
+        },
+        {
+          "start_line": 20,
+          "end_line": 27
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail-with-body.md#L20-L27"
+        },
+        {
+          "start_line": 20,
+          "end_line": 27
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail-with-body.md#L20-L27"
+        },
+        {
+          "start_line": 20,
+          "end_line": 27
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail-with-body.md#L20-L27"
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/fail-with-body.md",
+      "original_sha256": "76754bbc3cf336c31e5826642bb18f8cba261f6878378a1c72e33b4172d09488",
+      "original_bytes": 771,
+      "original_line_numbers": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27
+      ],
+      "original_locators": [
+        {
+          "start_line": 20,
+          "end_line": 27
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail-with-body.md#L20-L27"
+        },
+        {
+          "start_line": 20,
+          "end_line": 27
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail-with-body.md#L20-L27"
+        },
+        {
+          "start_line": 20,
+          "end_line": 27
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail-with-body.md#L20-L27"
+        },
+        {
+          "start_line": 20,
+          "end_line": 27
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail-with-body.md#L20-L27"
+        },
+        {
+          "start_line": 20,
+          "end_line": 27
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail-with-body.md#L20-L27"
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/fail-with-body.md",
+      "original_sha256": "76754bbc3cf336c31e5826642bb18f8cba261f6878378a1c72e33b4172d09488",
+      "original_bytes": 771,
+      "original_line_numbers": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27
+      ],
+      "original_locators": [
+        {
+          "start_line": 20,
+          "end_line": 27
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail-with-body.md#L20-L27"
+        },
+        {
+          "start_line": 20,
+          "end_line": 27
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail-with-body.md#L20-L27"
+        },
+        {
+          "start_line": 20,
+          "end_line": 27
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail-with-body.md#L20-L27"
+        },
+        {
+          "start_line": 20,
+          "end_line": 27
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail-with-body.md#L20-L27"
+        },
+        {
+          "start_line": 20,
+          "end_line": 27
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail-with-body.md#L20-L27"
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/fail-with-body.md",
+      "original_sha256": "76754bbc3cf336c31e5826642bb18f8cba261f6878378a1c72e33b4172d09488",
+      "original_bytes": 771,
+      "original_line_numbers": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27
+      ],
+      "original_locators": [
+        {
+          "start_line": 20,
+          "end_line": 27
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail-with-body.md#L20-L27"
+        },
+        {
+          "start_line": 20,
+          "end_line": 27
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail-with-body.md#L20-L27"
+        },
+        {
+          "start_line": 20,
+          "end_line": 27
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail-with-body.md#L20-L27"
+        },
+        {
+          "start_line": 20,
+          "end_line": 27
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail-with-body.md#L20-L27"
+        },
+        {
+          "start_line": 20,
+          "end_line": 27
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail-with-body.md#L20-L27"
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [],
+  "evidence_coverage": "UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

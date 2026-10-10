@@ -1,8 +1,38 @@
 {
-  "html_url": "https://github.com/JabRef/jabref/pull/15315",
-  "created_at": "2026-03-11T03:22:35Z",
-  "closed_at": "2026-03-13T07:12:10Z",
-  "merged_at": "2026-03-13T07:12:10Z",
-  "merge_commit_sha": "d687c0881840489f6147465da8d34a5fa9386826",
-  "body": "### Related issues and pull requests\r\n\r\nCloses #15106 \r\n\r\n### PR Description\r\n\r\nSince the split regex only matched ASCII hyphens, both SP and EP ended up with the full page range instead of being split correctly. Extended the regex in FirstPage.java and LastPage.java to also match en-dash and em-dash characters.\r\n\r\n### Steps to test\r\n\r\n1. Create a library entry with pages = {13905--13911}\r\n2. Export as RIS\r\n3. Verify the exported file contains SP - 13905 and EP - 13911 (previously both contained the full range)\r\n\r\nhttps://github.com/user-attachments/assets/34c71a12-2eb7-44fc-b870-16c6de25462f\r\n\r\n### Checklist\r\n\r\n- [x] I own the copyright of the code submitted and I license it under the [MIT license](https://github.com/JabRef/jabref/blob/main/LICENSE)\r\n- [x] I manually tested my changes in running JabRef (always required)\r\n- [x] I added JUnit tests for changes (if applicable)\r\n- [x] I added screenshots in the PR description (if change is visible to the user)\r\n- [/] I added a screenshot in the PR description showing a library with a single entry with me as author and as title the issue number\r\n- [x] I described the change in `CHANGELOG.md` in a way that can be understood by the average user (if change is visible to the user)\r\n- [x] I checked the [user documentation](https://docs.jabref.org/) for up to dateness and submitted a pull request to our [user documentation repository](https://github.com/JabRef/user-documentation/tree/main/en)\r\n"
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "provenance and bounded governing evidence; not original response",
+  "source_urls": [
+    "https://api.github.com/repos/JabRef/jabref/pulls/15315",
+    "https://github.com/JabRef/jabref/pull/15315"
+  ],
+  "original_public_path": "assessment/A7-02/treatment-v1/evidence/R29-selected.json",
+  "original_public_sha256": "a5f363fd6c88e21263756974869207161be804141f1b1341e94ea01f16abcecd",
+  "original_public_bytes": 1770,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A7-02/treatment-v1/evidence/R29-selected.json",
+  "classification_basis": "selected API response with unbounded third-party body",
+  "original_selectors": [],
+  "governing_summaries_from_existing_authored_source_records": [
+    {
+      "authored_source_map": "assessment/A7-02/treatment-v1/source-map.json",
+      "source_id": "R29"
+    },
+    {
+      "authored_source_map": "assessment/A7-02/treatment-v1/evidence/additional-retrievals.json",
+      "source_id": "R29"
+    }
+  ],
+  "selected_api_metadata": [
+    {
+      "html_url": "https://github.com/JabRef/jabref/pull/15315",
+      "created_at": "2026-03-11T03:22:35Z",
+      "closed_at": "2026-03-13T07:12:10Z",
+      "merged_at": "2026-03-13T07:12:10Z",
+      "merge_commit_sha": "d687c0881840489f6147465da8d34a5fa9386826",
+      "original_json_locator": "$"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY_AND_METADATA; full body coverage UNKNOWN",
+  "omission": "Full fetched body, API ancillary fields and unmechanically summarizable body details are archived privately. Original source URL and selectors govern; unsupported/missing semantic coverage is UNKNOWN. No candidate finding or independent judgment is repaired.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
 }

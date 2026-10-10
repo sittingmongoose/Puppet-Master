@@ -1,4 +1,218 @@
 {
-  "method": "Independent web.run retrieval; public primary sources; tool-returned extract retained.",
-  "result": "Correctly export RIS fields SP and EP if double dash \"--\" is used for range in bibtex pages · Issue #15106 · JabRef/jabref · GitHub (https://github.com/JabRef/jabref/issues/15106)\nciteturn3view0 [wordlim: 200] Crawled: today; Content type: text/html; Source: open({\"ref_id\":\"https://github.com/JabRef/jabref/issues/15106\",\"lineno\":null}); Total lines: 486\nL0: cite0†Skip to content L1: ## Navigation Menu\nL2: \nL3: cite1†Sign in L4: \nL5: Appearance settings\nL6: \nL7:   * Platform\nL8: \nL9:     * AI CODE CREATION\nL10:       * cite2†GitHub CopilotWrite better code with AI L11:       * cite3†GitHub Copilot appDirect agents from issue to merge L12:       * cite4†MCP RegistryIntegrate external tools L13: \nL14:     * DEVELOPER WORKFLOWS\nL15:       * cite5†ActionsAutomate any workflow L16:       * cite6†CodespacesInstant dev environments L17:       * cite7†IssuesPlan and track work L18:       * cite8†Code ReviewManage code changes L19:       * cite9†Code QualityEnforce quality at merge L20:     * APPLICATION SECURITY\nL21:       * cite10†GitHub Advanced SecurityFind and fix vulnerabilities L22:       * cite11†Code securitySecure your code as you build L23:       * cite12†Secret protectionStop leaks before they start L24: \nL25:     * EXPLORE\nL26:       * cite13†Why GitHub L27:       * cite14†Documentation†docs.github.com L28:       * cite15†Blog†github.blog L29:       * cite16†Changelog†github.blog L30:       * cite17†Marketplace L31: \nL32: cite18†View all features L33: \nL34:   * Solutions\nL35:     * BY COMPANY SIZE\nL36:       * cite19†Enterprises L37:       * cite20†Small and medium teams L38:       * cite21†Startups L39:       * cite22†Nonprofits L40: \nL41:     * BY USE CASE\nL42:       * cite23†App Modernization L43:       * cite24†DevSecOps L44:       * cite25†DevOps L45:       * cite26†CI/CD L46:       * cite27†View all use cases L47: \nL48:     * BY INDUSTRY\nL49:       * cite28†Healthcare L50:       * cite29†Financial services L51:       * cite30†Manufacturing L52:       * cite31†Government L53:       * cite32†View all industries L54: \nL55: cite33†View all solutions L56: \nL57:   * Resources\nL58:     * EXPLORE BY TOPIC\nL59:       * cite34†AI L60:       * cite35†Software Development L61:       * cite36†DevOps L62:       * cite37†Security L63:       * cite38†View all topics L64: \nL65:     * EXPLORE BY TYPE\nL66:       * cite39†Customer stories L67:       * cite40†Events & webinars L68:       * cite41†Ebooks & reports L69:       * cite42†Business insights L70:       * cite43†GitHub Skills†skills.github.com L71:     * SUPPORT & SERVICES\nL72:       * cite14†Documentation†docs.github.com L73:       * cite44†Customer support†support.github.com L74:       * cite45†Community forum L75:       * cite46†Trust center L76:       * cite47†Partners L77: \nL78: cite48†View all resources L79: \nL80:   * Open Source\nL81: \nL82:     * COMMUNITY\nL83:       * cite49†GitHub SponsorsFund open source developers L84:     * PROGRAMS\nL85:       * cite50†Security Lab†securitylab.github.com L86:       * cite51†Maintainer Community†maintainers.github.com L87:       * cite52†GitHub Stars†stars.github.com L88:       * cite53†Archive Program†archiveprogram.github.com L89: \nL90:     * REPOSITORIES\nL91:       * cite54†Topics L92:       * cite55†Trending L93:       * cite56†Collections L94: \nL95:   * Enterprise\nL96: \nL97:     * ENTERPRISE SOLUTIONS\nL98:       * cite19†Enterprise platformAI-powered developer platform L99:     * AVAILABLE ADD-ONS\nL100:       * cite10†GitHub Advanced SecurityEnterprise-grade security features L101:       * cite57†Copilot for BusinessEnterprise-grade AI features L102:       * cite58†Premium SupportEnterprise-grade 24/7 support L103: \nL104:   * cite59†Pricing L105: \nL106: Search`/`\nL107: \nL108: cite1†Sign in L109: \nL110: cite60†Sign up L111: \nL112: Appearance settings\nL113: You signed in with another tab or window. Reload to refresh your session. You signed out in another tab or window. Reload to refresh your session. You switched accounts on another tab or window. Reload to refresh your session. Dismiss alert\nL114: \nL115:   1. cite61†JabRef L116:   2. cite62†jabref L117: ## Repository navigation\nL118: \nL119:   *   * cite62†Code L120:   * cite63†Issues448 (448) L121:   * cite64†Pull requests72 (72) L122:   * cite65†Actions L123:   * cite66†Projects L124:   * cite67†Wiki L125:   * cite68†Security and quality2 (2) L126:   * cite69†Insights L127: \nL128: More items\nL129: # Correctly export RIS fields SP and EP if double dash \"--\" is used for range in bibtex pages #15106\nL130: \nL131: New issue\nL132: \nL133: Copy link\nL134: \nL135: New issue\nL136: \nL137: Copy link\nL138: \nL139: Closed\nL140: \nL141: cite70†bug L142: \nL143: cite71†#15315 L144: \nL145: Closed\nL146: \nL147: cite72†Correctly export RIS fields SP and EP if double dash \"--\" is used for range in bibtex pages #15106\nL148: \nL149: bug\nL150: \nL151: cite71†#15315 L152: \nL153: Copy link\nL154: \nL155: Assignees\nL156: \nL157: Labels\nL158: cite73†component: export-or-save cite74†good first issueAn issue intended for project-newcomers. Varies in difficulty. An issue intended for project-newcomers. Varies in difficulty.cite75†📌 Pinned L159: ## Description\nL160: \nL161: cite76†groenoord L162: \nL163: opened cite77†on Feb 13, 2026 L164: \nL165: Issue body actions\nL166: \nL167: ### JabRef version\nL168: \nL169: 5.15 (latest release)\nL170: \nL171: ### Operating system\nL172: \nL173: GNU / Linux\nL174: \nL175: ### Details on version and operating system\nL176: \nL177: Ubuntu 24.04.4 LTS\nL178: \nL179: ### Checked with the cite78†latest development build†builds.jabref.org (copy version output from About dialog)\nL180: \nL181:   * [Input] I made a backup of my libraries before testing the latest development version.\nL182:   * [Input] I have tested the latest development version and the problem persists\nL183: ### Steps to reproduce the behaviour\nL184: \nL185:   1. Use double dash \"--\" in a page range in bibtex \"pages\" field. E.g. \"pages = {13905--13911}\"\nL186:   2. Export as RIS\nL187:   3. Fields SP and EP contain the whole range: \"SP - 13905–13911\" and \"EP - 13905–13911\"\nL188:   4. The correct behavior can only be achieved if a single dash \"-\" is used in the bibtex \"pages\" field.\nL189: \nL190: ### Appendix\nL191: \nL192: ...\nL193: \nL194: Log File\nL195: \nL196:     `Paste an excerpt of your log file here\nL197:     `\nL198: \nL199: Reactions are currently unavailable\nL200: ## Activity\nL201: \nL202: cite79†Next L203: \nL204:   1. cite76†groenoord L205: \nL206: added the\nL207: \nL208: cite70†bug L209: \nL210: issue type cite80†on Feb 13, 2026 L211: \nL212:   2. cite81†Siedlerchr L213: \nL214: added\nL215: \nL216: cite73†component: export-or-save L217: \nL218: cite82†on Feb 13, 2026 L219: \nL220:   3. cite81†Siedlerchr L221: \nL222: added this to cite83†Prioritization and cite84†Good First Issues cite85†on Feb 13, 2026 L223: \nL224:   4. cite86†github-project-automation L225: \nL226: moved this to Normal priority in cite83†Prioritization cite87†on Feb 13, 2026 L227: \nL228:   5. cite86†github-project-automation L229: \nL230: moved this to Free to take in cite84†Good First Issues cite87†on Feb 13, 2026 L231:   6. cite81†Siedlerchr L232: \nL233: added\nL234: \nL235: cite74†good first issueAn issue intended for project-newcomers. Varies in difficulty. An issue intended for project-newcomers. Varies in difficulty.\nL236: \nL237: cite88†on Feb 13, 2026 L238: \nL239:   7. ### statxc commented on Feb 13, 2026\nL240: \nL241: cite89†statxc L242: \nL243: cite90†on Feb 13, 2026 L244: \nL245: Contributor\nL246: \nL247: More actions\nL248: \nL249: Hi cite81†@Siedlerchr . I'd like work on this issue. Please assign this to me\nL250: \nL251:   8. ### jabref-machine commented on Feb 13, 2026\nL252: \nL253: cite91†jabref-machine L254: \nL255: cite92†on Feb 13, 2026 L256: \nL257: Collaborator\nL258: \nL259: More actions\nL260: 👋 Hey @intelliking, looks like you’re eager to work on this issue — great! 🎉 It also looks like you don't know how to assign issues to yourself. Please read our cite93†CONTRIBUTING.md to find out how. It will also guide you in other aspects of contributing to JabRef.\nL261: \nL262:   9. ### statxc commented on Feb 13, 2026\nL263: \nL264: cite89†statxc L265: \nL266: cite94†on Feb 13, 2026 L267: \nL268: Last edited by statxc\nL269: \nL270: Contributor\nL271: \nL272: More actions\nL273: \nL274: /assign-me\nL275: \nL276:   10. cite91†jabref-machine L277: \nL278: assigned\nL279: \nL280: cite89†statxc L281: \nL282: cite95†on Feb 13, 2026 L283: \nL284:   11. cite91†jabref-machine L285: added\nL286: \nL287: cite96†📍 AssignedAssigned by assign-issue-action (or manually assigned) Assigned by assign-issue-action (or manually assigned)\nL288: \nL289: cite97†on Feb 13, 2026 L290: \nL291:   12. ### jabref-machine commented on Feb 13, 2026\nL292: \nL293: cite91†jabref-machine L294: \nL295: cite98†on Feb 13, 2026 L296: \nL297: Collaborator\nL298: \nL299: More actions\nL300: \nL301: 👋 Hey @intelliking, thank you for your interest in this issue! 🎉\nL302: We're excited to have you on board. Start by exploring our cite93†Contributing guidelines , and set up your local development workspace by following the steps in our cite99†workspace setup guidelines†devdocs.jabref.org to get started smoothly.\nL303: \nL304: For questions on JabRef functionality, you can consult the cite100†JabRef Guru†gurubase.io . For questions related to the codebase, please start using cite101†DeepWiki†deepwiki.com .\nL305: In case you encounter failing tests during development, please check our cite102†developer FAQs†devdocs.jabref.org !\nL306: \nL307: Still facing issues or having more questions? Feel free to ask here on GitHub or on cite103†JabRef's Gitter chat†gitter.im . Please don't hesitate to open a (draft) pull request early on to show the direction you are heading towards if unsure.\nL308: \nL309: Happy coding! 🚀\nL310: \nL311:   13. cite104†koppor L312: \nL313: moved this from Free to take to Assigned in cite84†Good First Issues cite87†on Feb 13, 2026 L314:   14. ### jabref-machine commented on Feb 13, 2026\nL315: \nL316: cite91†jabref-machine L317: \nL318: cite105†on Feb 13, 2026 L319: \nL320: Collaborator\nL321: \nL322: More actions\nL323: \nL324: 👋 Hey @intelliking, thank you for your interest in this issue! 🎉\nL325: \nL326: We're excited to have you on board. Start by exploring our cite93†Contributing guidelines , and set up your local development workspace by following the steps in our cite99†workspace setup guidelines†devdocs.jabref.org to get started smoothly.\nL327: For questions on JabRef functionality, you can consult the cite100†JabRef Guru†gurubase.io . For questions related to the codebase, please start using cite101†DeepWiki†deepwiki.com .\nL328: \nL329: In case you encounter failing tests during development, please check our cite102†developer FAQs†devdocs.jabref.org !\nL330: Still facing issues or having more questions? Feel free to ask here on GitHub or on cite103†JabRef's Gitter chat†gitter.im . Please don't hesitate to open a (draft) pull request early on to show the direction you are heading towards if unsure.\nL331: \nL332: Happy coding! 🚀\nL333: \nL334:   15. ### 24 remaining items\nL335: \nL336: Load more\nL337: \nL338:   16. cite91†jabref-machine L339: \nL340: unassigned\nL341: \nL342: cite106†hrittijab L343: \nL344: cite107†on Mar 11, 2026 L345: \nL346:   17. cite91†jabref-machine L347: \nL348: removed\nL349: cite96†📍 AssignedAssigned by assign-issue-action (or manually assigned) Assigned by assign-issue-action (or manually assigned)\nL350: \nL351: cite75†📌 Pinned L352: \nL353: cite108†🔔 reminder-sent L354: \nL355: cite109†on Mar 11, 2026 L356: \nL357:   18. cite104†koppor L358: \nL359: moved this from In Progress to Free to take in cite84†Good First Issues cite87†on Mar 11, 2026 L360: \nL361:   19. cite110†github-actions L362: \nL363: unassigned\nL364: \nL365: cite111†faneeshh L366: \nL367: cite112†on Mar 11, 2026 L368: \nL369:   20. ### subhramit commented on Mar 11, 2026\nL370: \nL371: cite113†subhramit L372: \nL373: cite114†on Mar 11, 2026 L374: \nL375: Member\nL376: \nL377: More actions\nL378: cite111†@faneeshh Thanks for pointing this out, we will review your contribution to this but please try to tackle bigger issues, now that you have solved many good first issues. We keep them for newcomers.\nL379: \nL380:   21. ### faneeshh commented on Mar 11, 2026\nL381: \nL382: cite111†faneeshh L383: \nL384: cite115†on Mar 11, 2026 L385: \nL386: Collaborator\nL387: \nL388: More actions\nL389: > cite111†@faneeshh Thanks for pointing this out, we will review your contribution to this but please try to tackle bigger issues, now that you have solved many good first issues. We keep them for newcomers.\nL390: Noted. I previously worked on a few and I believe they're more of a refactor and I would be really grateful if I could get some feedback or it would just go to waste if I keep building up on an incorrect foundation. I know you guys get flooded with a lot of PRs but I appreciate the reviews really. I haven't seen such good maintenance in any other open source project that I've worked on!!!!! cite116†#15249 and cite117†#15215 are the PR links.\nL391: \nL392:   22. cite104†koppor L393: moved this from Free to take to In Progress in cite84†Good First Issues cite87†on Mar 11, 2026 L394: \nL395:   23. cite110†github-actions L396: \nL397: added\nL398: \nL399: cite75†📌 Pinned L400: \nL401: cite118†on Mar 11, 2026 L402: \nL403:   24. cite110†github-actions L404: \nL405: assigned\nL406: \nL407: cite111†faneeshh L408: \nL409: cite119†on Mar 11, 2026 L410: \nL411:   25. cite120†calixtus L412: \nL413: closed this as cite121†completed in cite71†#15315 cite122†on Mar 13, 2026 L414: \nL415:   26. cite86†github-project-automation L416: \nL417: moved this from Normal priority to Done in cite83†Prioritization cite87†on Mar 13, 2026 L418: \nL419:   27. cite86†github-project-automation L420: moved this from In Progress to Done in cite84†Good First Issues cite87†on Mar 13, 2026 L421: \nL422:   28. ### github-actions commented on Mar 13, 2026\nL423: \nL424: cite110†github-actions bot\nL425: \nL426: cite123†on Mar 13, 2026 – with cite124†GitHub Actions†help.github.com L427: \nL428: Contributor\nL429: \nL430: More actions\nL431: \nL432: We think that this issue was fixed. Please head to cite125†https://builds.jabref.org/main†builds.jabref.org to download a development build and try it out.\nL433: \nL434: For any feedback, add a comment to the pull request at cite71†#15315 .\nL435: to join this conversation on GitHub. Already have an account? cite126†Sign in to comment L436: ## Metadata\nL437: \nL438: ## Metadata\nL439: \nL440: ### Assignees\nL441: \nL442:   * cite111†faneeshh L443: \nL444: ### Labels\nL445: \nL446: cite73†component: export-or-save cite74†good first issueAn issue intended for project-newcomers. Varies in difficulty. An issue intended for project-newcomers. Varies in difficulty.cite75†📌 Pinned L447: \nL448: ### Type\nL449: \nL450: cite70†bug L451: \nL452: ### Projects\nL453: \nL454:   * cite84†Good First Issues L455: \nL456: Status\nL457: \nL458: Done\nL459: \nL460: Show more project fields\nL461: \nL462:   * cite83†Prioritization L463: \nL464: Status\nL465: \nL466: Done\nL467: \nL468: Show more project fields\nL469: \nL470: ### Milestone\nL471: \nL472: No milestone\nL473: \nL474: ### Relationships\nL475: \nL476: None yet\nL477: ### Development\nL478: \nL479: No branches or pull requests\nL480: \nL481: ## Issue actions\nL482: \nL483:   * cite127†Image†github.githubassets.com Open in GitHub Copilot app\nL484: \nL485: You can’t perform that action at this time.\n--------------------------------------------------------------------------------\nRIS export SP/EP fields when pages contain Unicode en-dash or em-dash by faneeshh · Pull Request #15315 · JabRef/jabref · GitHub (https://github.com/JabRef/jabref/pull/15315)\nciteturn3view1 [wordlim: 200] Crawled: today; Content type: text/html; Source: open({\"ref_id\":\"https://github.com/JabRef/jabref/pull/15315\",\"lineno\":null}); Total lines: 2569\nL0: cite0†Skip to content L1: ## Navigation Menu\nL2: \nL3: cite1†Sign in L4: \nL5: Appearance settings\nL6: \nL7:   * Platform\nL8: \nL9:     * AI CODE CREATION\nL10:       * cite2†GitHub CopilotWrite better code with AI L11:       * cite3†GitHub Copilot appDirect agents from issue to merge L12:       * cite4†MCP RegistryIntegrate external tools L13: \nL14:     * DEVELOPER WORKFLOWS\nL15:       * cite5†ActionsAutomate any workflow L16:       * cite6†CodespacesInstant dev environments L17:       * cite7†IssuesPlan and track work L18:       * cite8†Code ReviewManage code changes L19:       * cite9†Code QualityEnforce quality at merge L20:     * APPLICATION SECURITY\nL21:       * cite10†GitHub Advanced SecurityFind and fix vulnerabilities L22:       * cite11†Code securitySecure your code as you build L23:       * cite12†Secret protectionStop leaks before they start L24: \nL25:     * EXPLORE\nL26:       * cite13†Why GitHub L27:       * cite14†Documentation†docs.github.com L28:       * cite15†Blog†github.blog L29:       * cite16†Changelog†github.blog L30:       * cite17†Marketplace L31: \nL32: cite18†View all features L33: \nL34:   * Solutions\nL35:     * BY COMPANY SIZE\nL36:       * cite19†Enterprises L37:       * cite20†Small and medium teams L38:       * cite21†Startups L39:       * cite22†Nonprofits L40: \nL41:     * BY USE CASE\nL42:       * cite23†App Modernization L43:       * cite24†DevSecOps L44:       * cite25†DevOps L45:       * cite26†CI/CD L46:       * cite27†View all use cases L47: \nL48:     * BY INDUSTRY\nL49:       * cite28†Healthcare L50:       * cite29†Financial services L51:       * cite30†Manufacturing L52:       * cite31†Government L53:       * cite32†View all industries L54: \nL55: cite33†View all solutions L56: \nL57:   * Resources\nL58:     * EXPLORE BY TOPIC\nL59:       * cite34†AI L60:       * cite35†Software Development L61:       * cite36†DevOps L62:       * cite37†Security L63:       * cite38†View all topics L64: \nL65:     * EXPLORE BY TYPE\nL66:       * cite39†Customer stories L67:       * cite40†Events & webinars L68:       * cite41†Ebooks & reports L69:       * cite42†Business insights L70:       * cite43†GitHub Skills†skills.github.com L71:     * SUPPORT & SERVICES\nL72:       * cite14†Documentation†docs.github.com L73:       * cite44†Customer support†support.github.com L74:       * cite45†Community forum L75:       * cite46†Trust center L76:       * cite47†Partners L77: \nL78: cite48†View all resources L79: \nL80:   * Open Source\nL81: \nL82:     * COMMUNITY\nL83:       * cite49†GitHub SponsorsFund open source developers L84:     * PROGRAMS\nL85:       * cite50†Security Lab†securitylab.github.com L86:       * cite51†Maintainer Community†maintainers.github.com L87:       * cite52†GitHub Stars†stars.github.com L88:       * cite53†Archive Program†archiveprogram.github.com L89: \nL90:     * REPOSITORIES\nL91:       * cite54†Topics L92:       * cite55†Trending L93:       * cite56†Collections L94: \nL95:   * Enterprise\nL96: \nL97:     * ENTERPRISE SOLUTIONS\nL98:       * cite19†Enterprise platformAI-powered developer platform L99:     * AVAILABLE ADD-ONS\nL100:       * cite10†GitHub Advanced SecurityEnterprise-grade security features L101:       * cite57†Copilot for BusinessEnterprise-grade AI features L102:       * cite58†Premium SupportEnterprise-grade 24/7 support L103: \nL104:   * cite59†Pricing L105: \nL106: Search`/`\nL107: \nL108: cite1†Sign in L109: \nL110: cite60†Sign up L111: \nL112: Appearance settings\nL113: You signed in with another tab or window. Reload to refresh your session. You signed out in another tab or window. Reload to refresh your session. You switched accounts on another tab or window. Reload to refresh your session. Dismiss alert\nL114: \nL115:   1. cite61†JabRef L116:   2. cite62†jabref L117: ## Repository navigation\nL118: \nL119:   *   * cite62†Code L120:   * cite63†Issues448 (448) L121:   * cite64†Pull requests72 (72) L122:   * cite65†Actions L123:   * cite66†Projects L124:   * cite67†Wiki L125:   * cite68†Security and quality2 (2) L126:   * cite69†Insights L127: \nL128: More items\nL129: \nL130: # RIS export SP/EP fields when pages contain Unicode en-dash or em-dash - #15315\nL131: #15315\nL132: \nL133: Merged\nL134: \nL135: cite70†calixtus merged 4 commits into\nL136: \nL137: cite71†JabRef:main JabRef/jabref:main from\nL138: \nL139: cite72†faneeshh:fix-15106 faneeshh/jabref:fix-15106 Copy head branch name to clipboard\nL140: \nL141: Mar 13, 2026\nL142: \nL143: cite73†Conversation cite74†Commits4 (4) cite75†Checks cite76†Files changed L144: \nL145: Merged\nL146: ##\nL147: \nL148: cite77†RIS export SP/EP fields when pages contain Unicode en-dash or em-dash #15315\nL149: \nL150: cite70†calixtus merged 4 commits into\nL151: \nL152: cite71†JabRef:main JabRef/jabref:main from\nL153: \nL154: cite72†faneeshh:fix-15106 faneeshh/jabref:fix-15106 Copy head branch name to clipboard\nL155: \nL156: ## Conversation\nL157: \nL158: ###\nL159: \nL160: cite78†Image: @faneeshh†avatars.githubusercontent.com cite79†faneeshh commented cite80†Mar 11, 2026 •\nL161: \nL162: edited\nL163: \nL164: Loading\nL165: \nL166: ### Uh oh!\nL167: \nL168: There was an error while loading. Please reload this page.\nL169: \nL170: Copy link\nL171: \nL172: Copy Markdown\nL173: ### Related issues and pull requests\nL174: \nL175: Closes cite81†#15106 L176: \nL177: ### PR Description\nL178: \nL179: Since the split regex only matched ASCII hyphens, both SP and EP ended up with the full page range instead of being split correctly. Extended the regex in FirstPage.java and LastPage.java to also match en-dash and em-dash characters.\nL180: ### Steps to test\nL181: \nL182:   1. Create a library entry with pages = {13905--13911}\nL183:   2. Export as RIS\nL184:   3. Verify the exported file contains SP - 13905 and EP - 13911 (previously both contained the full range)\nL185: 2026-03-10.20-17-26.mp4\nL186: ### Checklist\nL187:   * [Input] I own the copyright of the code submitted and I license it under the cite82†MIT license L188:   * [Input] I manually tested my changes in running JabRef (always required)\nL189:   * [Input] I added JUnit tests for changes (if applicable)\nL190:   * [Input] I added screenshots in the PR description (if change is visible to the user)\nL191:   * [/] I added a screenshot in the PR description showing a library with a single entry with me as author and as title the issue number\nL192:   * [Input] I described the change in `CHANGELOG.md` in a way that can be understood by the average user (if change is visible to the user)\nL193:   * [Input] I checked the cite83†user documentation†docs.jabref.org for up to dateness and submitted a pull request to our cite84†user documentation repository L194: [Input][Input]\nL195: \nL196: Sorry, something went wrong.\nL197: ### Uh oh!\nL198: \nL199: There was an error while loading. Please reload this page.\nL200: \nL201: ` cite85†Extend the split regex to match en-dash and em-dash `\nL202: \nL203: [Input] [Input] [Input]\nL204: \nL205: ` cite85†5104127 `\nL206: \nL207: ###\nL208: \nL209: cite86†qodo-free-for-open-source-projects Bot commented cite87†Mar 11, 2026 L210: \nL211: Copy link\nL212: \nL213: Copy Markdown\nL214: \nL215: ### Review Summary by Qodo\nL216: \nL217: Fix RIS export page range splitting for Unicode dashes `🐞 Bug fix`\nL218: ### Walkthroughs\nL219: \nL220: Description\nL221: \nL222:     • Fixed RIS export splitting page ranges with en-dash and em-dash characters\nL223:     • Extended regex patterns in FirstPage and LastPage formatters\nL224:     • Now correctly exports SP and EP fields for Unicode dash characters\nL225: \nL226: \nL227: Diagram\n--------------------------------------------------------------------------------\nRelease v6.0-alpha.6 · JabRef/jabref · GitHub (https://github.com/JabRef/jabref/releases/tag/v6.0-alpha.6)\nciteturn3view2 [wordlim: 200] Crawled: today; Content type: text/html; Source: open({\"ref_id\":\"https://github.com/JabRef/jabref/releases/tag/v6.0-alpha.6\",\"lineno\":null}); Total lines: 280\n--------------------------------------------------------------------------------\nIntroduction to posted content (includes preprints) - Crossref (https://www.crossref.org/documentation/research-nexus/posted-content-includes-preprints/)\nciteturn3view3 [wordlim: 200] Crawled: today; Content type: text/html; Source: open({\"ref_id\":\"https://www.crossref.org/documentation/research-nexus/posted-content-includes-preprints/\",\"lineno\":null}); Total lines: 193\n--------------------------------------------------------------------------------\nDiscovering relationships between preprints and journal articles - Crossref (https://www.crossref.org/blog/discovering-relationships-between-preprints-and-journal-articles/)\nciteturn3view4 [wordlim: 200] Crawled: today; Content type: text/html; Source: open({\"ref_id\":\"https://www.crossref.org/blog/discovering-relationships-between-preprints-and-journal-articles/\",\"lineno\":null}); Total lines: 264\n"
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "provenance and bounded governing evidence; not original response",
+  "source_urls": [
+    "https://github.com/JabRef/jabref/issues/15106",
+    "https://github.com/JabRef/jabref/pull/15315",
+    "https://github.com/JabRef/jabref/releases/tag/v6.0-alpha.6",
+    "https://www.crossref.org/blog/discovering-relationships-between-preprints-and-journal-articles/",
+    "https://www.crossref.org/documentation/research-nexus/posted-content-includes-preprints/"
+  ],
+  "original_public_path": "assessment/A7-02/control-v1/evidence/evidence_history.json",
+  "original_public_sha256": "f1f32da270ed8494e077e7a8d45155e0739714e80aa9fd049ebdb1e3a59925ba",
+  "original_public_bytes": 28731,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A7-02/control-v1/evidence/evidence_history.json",
+  "classification_basis": "converted web retrieval tool response containing third-party source bodies",
+  "original_selectors": [
+    {
+      "source_id": "S11",
+      "field": "lines",
+      "selector": 310
+    },
+    {
+      "source_id": "S12",
+      "field": "lines",
+      "selector": 1855
+    },
+    {
+      "source_id": "S18",
+      "field": "lines",
+      "selector": 360
+    },
+    {
+      "source_id": "S19",
+      "field": "lines",
+      "selector": 264
+    },
+    {
+      "source_id": "S20",
+      "field": "lines",
+      "selector": 260
+    },
+    {
+      "source_id": "R11",
+      "field": "independent_locator",
+      "selector": "Issue description and closure; numbered capture 126–141 and 260"
+    },
+    {
+      "source_id": "S11",
+      "field": "lines",
+      "selector": 310
+    },
+    {
+      "source_id": "R12",
+      "field": "independent_locator",
+      "selector": "PR description/test instructions and merge queue; numbered capture 134–140 and 894–896"
+    },
+    {
+      "source_id": "S12",
+      "field": "lines",
+      "selector": 1855
+    },
+    {
+      "source_id": "R18",
+      "field": "independent_locator",
+      "selector": "Obligations / Associating preprints; numbered capture 303–333"
+    },
+    {
+      "source_id": "S18",
+      "field": "lines",
+      "selector": 360
+    },
+    {
+      "source_id": "R19",
+      "field": "independent_locator",
+      "selector": "Introduction vs Matching strategy vs dataset; numbered capture 88–101, 119–139"
+    },
+    {
+      "source_id": "S19",
+      "field": "lines",
+      "selector": 264
+    },
+    {
+      "source_id": "R20",
+      "field": "independent_locator",
+      "selector": "Release header/commit and Fixed #15106; numbered capture 111–131 and 193"
+    },
+    {
+      "source_id": "S20",
+      "field": "lines",
+      "selector": 260
+    }
+  ],
+  "governing_summaries_from_existing_authored_source_records": [
+    {
+      "retrieved_at_utc": "2026-10-10T05:14:10.210447+00:00",
+      "lines": 310,
+      "authored_source_map": "assessment/A7-02/control-v1/retrieval-manifest.json",
+      "source_id": "S11"
+    },
+    {
+      "retrieved_at_utc": "2026-10-10T05:14:10.285591+00:00",
+      "lines": 1855,
+      "authored_source_map": "assessment/A7-02/control-v1/retrieval-manifest.json",
+      "source_id": "S12"
+    },
+    {
+      "retrieved_at_utc": "2026-10-10T05:14:10.886555+00:00",
+      "lines": 360,
+      "authored_source_map": "assessment/A7-02/control-v1/retrieval-manifest.json",
+      "source_id": "S18"
+    },
+    {
+      "retrieved_at_utc": "2026-10-10T05:14:10.932107+00:00",
+      "lines": 264,
+      "authored_source_map": "assessment/A7-02/control-v1/retrieval-manifest.json",
+      "source_id": "S19"
+    },
+    {
+      "retrieved_at_utc": "2026-10-10T05:14:10.988382+00:00",
+      "lines": 260,
+      "authored_source_map": "assessment/A7-02/control-v1/retrieval-manifest.json",
+      "source_id": "S20"
+    },
+    {
+      "title": "JabRef issue #15106",
+      "version_or_commit": "Reported 2026-02-13 on 5.15, GNU/Linux, Ubuntu 24.04.4 LTS",
+      "independent_locator": "Issue description and closure; numbered capture 126–141 and 260",
+      "retrieved_at_utc": "2026-10-10T05:14:10.210447+00:00",
+      "governing_conditions_defaults_types_units_exceptions": "BibTeX pages 13905--13911 exported the complete normalized range into both RIS SP and EP; reporter says single '-' behaved correctly. Closed through #15315 on 2026-03-13.",
+      "applicability_judgment": "The final names the affected operation, fields, input and reported version. It does not claim all releases/fields/records fail.",
+      "authored_source_map": "assessment/A7-02/control-v1/source-map.json",
+      "source_id": "R11"
+    },
+    {
+      "retrieved_at_utc": "2026-10-10T05:14:10.210447+00:00",
+      "lines": 310,
+      "authored_source_map": "assessment/A7-02/control-v1/source-map.json",
+      "source_id": "S11"
+    },
+    {
+      "title": "JabRef PR #15315",
+      "version_or_commit": "Merged to main 2026-03-13 at d687c08",
+      "independent_locator": "PR description/test instructions and merge queue; numbered capture 134–140 and 894–896",
+      "retrieved_at_utc": "2026-10-10T05:14:10.285591+00:00",
+      "governing_conditions_defaults_types_units_exceptions": "Old helpers only split ASCII; change adds en/em dash. PR links #15106 and gives SP=13905/EP=13911 test instructions. Merge queue says d687c08 and 49/50 checks passed.",
+      "applicability_judgment": "Externally reported tests/check counts are not local semantic validation. Normalization between BibTeX and RIS matters; final explicitly preserves that check.",
+      "authored_source_map": "assessment/A7-02/control-v1/source-map.json",
+      "source_id": "R12"
+    },
+    {
+      "retrieved_at_utc": "2026-10-10T05:14:10.285591+00:00",
+      "lines": 1855,
+      "authored_source_map": "assessment/A7-02/control-v1/source-map.json",
+      "source_id": "S12"
+    },
+    {
+      "title": "Crossref preprint obligations/notification",
+      "version_or_commit": "Living documentation, page 2024-04-01",
+      "independent_locator": "Obligations / Associating preprints; numbered capture 303–333",
+      "retrieved_at_utc": "2026-10-10T05:14:10.886555+00:00",
+      "governing_conditions_defaults_types_units_exceptions": "Accepted manuscripts are not posted content. Crossref's preprint-provider rules use separate version DOIs/isVersionOf, above-fold label/link, and relationship updates after notification. Title/first-author matches are emailed review suggestions to the depositor.",
+      "applicability_judgment": "The final does not impose member deposit duties on the volunteer group or declare a universal DOI rule. Absent relations remain inconclusive.",
+      "authored_source_map": "assessment/A7-02/control-v1/source-map.json",
+      "source_id": "R18"
+    },
+    {
+      "retrieved_at_utc": "2026-10-10T05:14:10.886555+00:00",
+      "lines": 360,
+      "authored_source_map": "assessment/A7-02/control-v1/source-map.json",
+      "source_id": "S18"
+    },
+    {
+      "title": "Crossref historical matching strategy/dataset",
+      "version_or_commit": "Official post 2023-12-07; dataset records through 2023-08-31",
+      "independent_locator": "Introduction vs Matching strategy vs dataset; numbered capture 88–101, 119–139",
+      "retrieved_at_utc": "2026-10-10T05:14:10.932107+00:00",
+      "governing_conditions_defaults_types_units_exceptions": "The historical notification method uses exact title/first author. The same post introduces a newer bibliographic-query/fuzzy-title/author/year heuristic, explicit candidate thresholds, and an experimental journal-DOI-to-preprint API. Dataset filtering is posted-content subtype preprint and journal-article with both sides present by August 2023.",
+      "applicability_judgment": "Final's review-cue/incomplete-coverage conclusion is supported. It does not claim dataset performance or the new method as current production behavior; it leaves useful newer mechanism detail unexplored.",
+      "authored_source_map": "assessment/A7-02/control-v1/source-map.json",
+      "source_id": "R19"
+    },
+    {
+      "retrieved_at_utc": "2026-10-10T05:14:10.932107+00:00",
+      "lines": 264,
+      "authored_source_map": "assessment/A7-02/control-v1/source-map.json",
+      "source_id": "S19"
+    },
+    {
+      "title": "JabRef alpha.6 fix release",
+      "version_or_commit": "v6.0-alpha.6, 6d24100; 2026-05-14T19:46:35Z; prerelease",
+      "independent_locator": "Release header/commit and Fixed #15106; numbered capture 111–131 and 193",
+      "retrieved_at_utc": "2026-10-10T05:14:10.988382+00:00",
+      "governing_conditions_defaults_types_units_exceptions": "Official prerelease note identifies the RIS full-range duplication into start/end fields as fixed and links #15106.",
+      "applicability_judgment": "Evidence of released fix intent/history, not this proposal's exporter run and not proof of arbitrary record correctness.",
+      "authored_source_map": "assessment/A7-02/control-v1/source-map.json",
+      "source_id": "R20"
+    },
+    {
+      "retrieved_at_utc": "2026-10-10T05:14:10.988382+00:00",
+      "lines": 260,
+      "authored_source_map": "assessment/A7-02/control-v1/source-map.json",
+      "source_id": "S20"
+    }
+  ],
+  "selected_api_metadata": [],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY_AND_METADATA; full body coverage UNKNOWN",
+  "omission": "Full fetched body, API ancillary fields and unmechanically summarizable body details are archived privately. Original source URL and selectors govern; unsupported/missing semantic coverage is UNKNOWN. No candidate finding or independent judgment is repaired.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false,
+  "original_tool_source_urls": [
+    "https://builds.jabref.org/main†builds.jabref.org",
+    "https://github.com/JabRef/jabref/issues/15106",
+    "https://github.com/JabRef/jabref/pull/15315",
+    "https://github.com/JabRef/jabref/releases/tag/v6.0-alpha.6",
+    "https://www.crossref.org/blog/discovering-relationships-between-preprints-and-journal-articles/",
+    "https://www.crossref.org/documentation/research-nexus/posted-content-includes-preprints/"
+  ]
 }

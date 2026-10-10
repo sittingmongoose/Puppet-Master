@@ -1,19 +1,81 @@
-URL: https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry.md#L18-L31
-Original locator: ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/retry.md
-Original SHA256: d164104079fbac52eefc1147bfb1eb152bfbb1d883e6c0f963df25a4e7a505e2
-Original numbered lines; gaps omitted. Not full response.
-
-18: If a transient error is returned when curl tries to perform a transfer, it
-19: retries this number of times before giving up. Setting the number to 0
-20: makes curl do no retries (which is the default). Transient error means either:
-21: a timeout, an FTP 4xx response code or an HTTP 408, 429, 500, 502, 503 or 504
-22: response code.
-23: 
-24: When curl is about to retry a transfer, it first waits one second and then for
-25: all forthcoming retries it doubles the waiting time until it reaches 10
-26: minutes which then remains delay between the rest of the retries. By using
-27: --retry-delay you disable this exponential backoff algorithm. See also
-28: --retry-max-time to limit the total time allowed for retries.
-29: 
-30: curl complies with the Retry-After: response header if one was present to know
-31: when to issue the next retry (added in 7.66.0).
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry.md#L18-L31",
+    "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/docs/cmdline-opts/retry.md"
+  ],
+  "original_public_path": "assessment/B-FINAL-M-01/treatment-v1/public-governing-excerpts/retry-d1641040.txt",
+  "original_public_sha256": "34704e572426c0ade0a93715c8e67b9035d0099c0b01e0d5f63937c0e90eeeb7",
+  "original_public_bytes": 1174,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/B-FINAL-M-01/treatment-v1/public-governing-excerpts/retry-d1641040.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/retry.md",
+      "original_sha256": "d164104079fbac52eefc1147bfb1eb152bfbb1d883e6c0f963df25a4e7a505e2",
+      "original_bytes": 1088,
+      "original_line_numbers": [
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31
+      ],
+      "original_locators": [
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry.md#L18-L31"
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/retry.md",
+      "original_sha256": "d164104079fbac52eefc1147bfb1eb152bfbb1d883e6c0f963df25a4e7a505e2",
+      "original_bytes": 1088,
+      "original_line_numbers": [
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31
+      ],
+      "original_locators": [
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry.md#L18-L31"
+        },
+        {
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry.md#L18-L31"
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/B-FINAL-M-01/treatment-v1/source-map.json",
+      "source_id": "P1",
+      "retrieved_at_utc": "2026-10-10T04:26:09.600241+00:00",
+      "version": "curl-8_10_1 tag"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

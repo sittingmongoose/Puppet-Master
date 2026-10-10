@@ -1,101 +1,60 @@
 {
-  "sha": "69ac4854678bb964715d4b7d143e457cc6b77dda",
-  "node_id": "C_kwDOAB-LNdoAKDY5YWM0ODU0Njc4YmI5NjQ3MTVkNGI3ZDE0M2U0NTdjYzZiNzdkZGE",
-  "commit": {
-    "author": {
-      "name": "Michael Tsang",
-      "email": "AUTHORIZED_PROVIDER_INSTANCE",
-      "date": "2024-12-12T12:50:17Z"
-    },
-    "committer": {
-      "name": "Michael Tsang",
-      "email": "AUTHORIZED_PROVIDER_INSTANCE",
-      "date": "2024-12-12T12:55:53Z"
-    },
-    "message": "add test for desired feature flag",
-    "tree": {
-      "sha": "e37bba5aa856685458cf3eff532de404a65a8145",
-      "url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/git/trees/e37bba5aa856685458cf3eff532de404a65a8145"
-    },
-    "url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/git/commits/69ac4854678bb964715d4b7d143e457cc6b77dda",
-    "comment_count": 0,
-    "verification": {
-      "verified": true,
-      "reason": "valid",
-      "signature": "-----BEGIN PGP SIGNATURE-----\n\niHUEABYKAB0WIQR5/2w2px1Fgwc5rNdK9Ei8jb6LTgUCZ1rdWQAKCRBK9Ei8jb6L\nTokvAP4qvs2/4vX3wjJC25wLG0Sp+4vyPkdW8nYkRU24xmmTtQD+J0d55A6iKJVq\nYKeGIigEZOR3Svx9DjFV+kVtFPveyAA=\n=lP8X\n-----END PGP SIGNATURE-----",
-      "payload": "tree e37bba5aa856685458cf3eff532de404a65a8145\nparent d8a34ddcfe80dabfba1c08a47f95adaa900d643d\nauthor Michael Tsang <AUTHORIZED_PROVIDER_INSTANCE> 1734007817 +0000\ncommitter Michael Tsang <AUTHORIZED_PROVIDER_INSTANCE> 1734008153 +0000\n\nadd test for desired feature flag\n",
-      "verified_at": "2024-12-12T13:03:44Z"
-    }
-  },
-  "url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/commits/69ac4854678bb964715d4b7d143e457cc6b77dda",
-  "html_url": "https://github.com/opentripplanner/OpenTripPlanner/commit/69ac4854678bb964715d4b7d143e457cc6b77dda",
-  "comments_url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/commits/69ac4854678bb964715d4b7d143e457cc6b77dda/comments",
-  "author": {
-    "login": "miklcct",
-    "id": 2827264,
-    "node_id": "MDQ6VXNlcjI4MjcyNjQ=",
-    "avatar_url": "https://avatars.githubusercontent.com/u/2827264?v=4",
-    "gravatar_id": "",
-    "url": "https://api.github.com/users/miklcct",
-    "html_url": "https://github.com/miklcct",
-    "followers_url": "https://api.github.com/users/miklcct/followers",
-    "following_url": "https://api.github.com/users/miklcct/following{/other_user}",
-    "gists_url": "https://api.github.com/users/miklcct/gists{/gist_id}",
-    "starred_url": "https://api.github.com/users/miklcct/starred{/owner}{/repo}",
-    "subscriptions_url": "https://api.github.com/users/miklcct/subscriptions",
-    "organizations_url": "https://api.github.com/users/miklcct/orgs",
-    "repos_url": "https://api.github.com/users/miklcct/repos",
-    "events_url": "https://api.github.com/users/miklcct/events{/privacy}",
-    "received_events_url": "https://api.github.com/users/miklcct/received_events",
-    "type": "User",
-    "user_view_type": "public",
-    "site_admin": false
-  },
-  "committer": {
-    "login": "miklcct",
-    "id": 2827264,
-    "node_id": "MDQ6VXNlcjI4MjcyNjQ=",
-    "avatar_url": "https://avatars.githubusercontent.com/u/2827264?v=4",
-    "gravatar_id": "",
-    "url": "https://api.github.com/users/miklcct",
-    "html_url": "https://github.com/miklcct",
-    "followers_url": "https://api.github.com/users/miklcct/followers",
-    "following_url": "https://api.github.com/users/miklcct/following{/other_user}",
-    "gists_url": "https://api.github.com/users/miklcct/gists{/gist_id}",
-    "starred_url": "https://api.github.com/users/miklcct/starred{/owner}{/repo}",
-    "subscriptions_url": "https://api.github.com/users/miklcct/subscriptions",
-    "organizations_url": "https://api.github.com/users/miklcct/orgs",
-    "repos_url": "https://api.github.com/users/miklcct/repos",
-    "events_url": "https://api.github.com/users/miklcct/events{/privacy}",
-    "received_events_url": "https://api.github.com/users/miklcct/received_events",
-    "type": "User",
-    "user_view_type": "public",
-    "site_admin": false
-  },
-  "parents": [
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "provenance and bounded governing evidence; not original response",
+  "source_urls": [
+    "https://api.github.com/repos/opentripplanner/OpenTripPlanner/commits/69ac485",
+    "https://api.github.com/repos/opentripplanner/OpenTripPlanner/commits/69ac4854678bb964715d4b7d143e457cc6b77dda",
+    "https://github.com/opentripplanner/OpenTripPlanner/commit/69ac4854678bb964715d4b7d143e457cc6b77dda"
+  ],
+  "original_public_path": "assessment/A6-01/control-v1/evidence/E24-formatted.json",
+  "original_public_sha256": "8ea0964faeccccfac80e79be6c6bc3e74c81222d3f7dee44a094a274dadb7822",
+  "original_public_bytes": 7577,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A6-01/control-v1/evidence/E24-formatted.json",
+  "classification_basis": "fetched GitHub API response / converted API response",
+  "original_selectors": [
     {
-      "sha": "d8a34ddcfe80dabfba1c08a47f95adaa900d643d",
-      "url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/commits/d8a34ddcfe80dabfba1c08a47f95adaa900d643d",
-      "html_url": "https://github.com/opentripplanner/OpenTripPlanner/commit/d8a34ddcfe80dabfba1c08a47f95adaa900d643d"
+      "source_id": "E24",
+      "field": "lines",
+      "selector": 1
+    },
+    {
+      "source_id": "E24",
+      "field": "locator",
+      "selector": "E24 JSON /sha, /commit/message, /files/0/patch; complete E24-test.patch"
+    },
+    {
+      "source_id": "E24",
+      "field": "lines",
+      "selector": 1
     }
   ],
-  "stats": {
-    "total": 78,
-    "additions": 78,
-    "deletions": 0
-  },
-  "files": [
+  "governing_summaries_from_existing_authored_source_records": [
     {
-      "sha": "6132988d92bb7afd739f81174b0b29ca758888c6",
-      "filename": "application/src/test/java/org/opentripplanner/updater/spi/PollingGraphUpdaterTest.java",
-      "status": "added",
-      "additions": 78,
-      "deletions": 0,
-      "changes": 78,
-      "blob_url": "https://github.com/opentripplanner/OpenTripPlanner/blob/69ac4854678bb964715d4b7d143e457cc6b77dda/application%2Fsrc%2Ftest%2Fjava%2Forg%2Fopentripplanner%2Fupdater%2Fspi%2FPollingGraphUpdaterTest.java",
-      "raw_url": "https://github.com/opentripplanner/OpenTripPlanner/raw/69ac4854678bb964715d4b7d143e457cc6b77dda/application%2Fsrc%2Ftest%2Fjava%2Forg%2Fopentripplanner%2Fupdater%2Fspi%2FPollingGraphUpdaterTest.java",
-      "contents_url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/contents/application%2Fsrc%2Ftest%2Fjava%2Forg%2Fopentripplanner%2Fupdater%2Fspi%2FPollingGraphUpdaterTest.java?ref=69ac4854678bb964715d4b7d143e457cc6b77dda",
-      "patch": "@@ -0,0 +1,78 @@\n+package org.opentripplanner.updater.spi;\n+\n+import static org.junit.jupiter.api.Assertions.assertFalse;\n+import static org.junit.jupiter.api.Assertions.assertTrue;\n+\n+import java.time.Duration;\n+import java.util.concurrent.CompletableFuture;\n+import java.util.concurrent.ExecutionException;\n+import org.junit.jupiter.api.BeforeAll;\n+import org.junit.jupiter.api.BeforeEach;\n+import org.junit.jupiter.api.Test;\n+import org.opentripplanner.framework.application.OTPFeature;\n+import org.opentripplanner.updater.GraphWriterRunnable;\n+\n+public class PollingGraphUpdaterTest {\n+\n+  private static final PollingGraphUpdaterParameters config = new PollingGraphUpdaterParameters() {\n+    @Override\n+    public Duration frequency() {\n+      return Duration.ZERO;\n+    }\n+\n+    @Override\n+    public String configRef() {\n+      return \"\";\n+    }\n+  };\n+\n+  private static final PollingGraphUpdater subject = new PollingGraphUpdater(config) {\n+    @Override\n+    protected void runPolling() {}\n+  };\n+\n+  private boolean updateCompleted;\n+\n+  @BeforeAll\n+  static void beforeAll() {\n+    subject.setup(runnable -> CompletableFuture.runAsync(() -> runnable.run(null)));\n+  }\n+\n+  @BeforeEach\n+  void setUp() {\n+    updateCompleted = false;\n+  }\n+\n+  private final GraphWriterRunnable graphWriterRunnable = context -> {\n+    try {\n+      Thread.sleep(100);\n+      updateCompleted = true;\n+    } catch (InterruptedException e) {\n+      throw new RuntimeException(e);\n+    }\n+  };\n+\n+  @Test\n+  void testUpdateGraphWithWaitFeatureOn() {\n+    OTPFeature.WaitForGraphUpdateInPollingUpdaters.testOn(() -> {\n+      callUpdater();\n+      assertTrue(updateCompleted);\n+    });\n+  }\n+\n+  @Test\n+  void testProcessGraphUpdaterResultWithWaitFeatureOff() {\n+    OTPFeature.WaitForGraphUpdateInPollingUpdaters.testOff(() -> {\n+      callUpdater();\n+      assertFalse(updateCompleted);\n+    });\n+  }\n+\n+  private void callUpdater() {\n+    try {\n+      subject.updateGraph(graphWriterRunnable);\n+    } catch (ExecutionException | InterruptedException e) {\n+      throw new RuntimeException(e);\n+    }\n+  }\n+}"
+      "access_utc": "2026-10-10T04:39:01.460235+00:00",
+      "lines": 1,
+      "version_observed": "OTP commit 69ac4854678bb964715d4b7d143e457cc6b77dda",
+      "locator": "E24 JSON /sha, /commit/message, /files/0/patch; complete E24-test.patch",
+      "independent_observation": "Independent commit API response and complete two-method test patch read; no downloaded code run.",
+      "authored_source_map": "assessment/A6-01/control-v1/source-map.json",
+      "source_id": "E24"
+    },
+    {
+      "access_utc": "2026-10-10T04:39:01.460235+00:00",
+      "lines": 1,
+      "authored_source_map": "assessment/A6-01/control-v1/evidence/retrieval-manifest.json",
+      "source_id": "E24"
     }
-  ]
+  ],
+  "selected_api_metadata": [
+    {
+      "url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/commits/69ac4854678bb964715d4b7d143e457cc6b77dda",
+      "html_url": "https://github.com/opentripplanner/OpenTripPlanner/commit/69ac4854678bb964715d4b7d143e457cc6b77dda",
+      "sha": "69ac4854678bb964715d4b7d143e457cc6b77dda",
+      "original_json_locator": "$"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY_AND_METADATA; full body coverage UNKNOWN",
+  "omission": "Full fetched body, API ancillary fields and unmechanically summarizable body details are archived privately. Original source URL and selectors govern; unsupported/missing semantic coverage is UNKNOWN. No candidate finding or independent judgment is repaired.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
 }

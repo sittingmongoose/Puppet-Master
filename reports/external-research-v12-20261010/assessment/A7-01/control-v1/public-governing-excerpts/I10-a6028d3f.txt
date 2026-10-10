@@ -1,15 +1,62 @@
-URL: https://blog.prusa3d.com/prusaslicer-3-0-preview-built-for-the-future-of-3d-printing_137672/
-Original locator: ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I10.txt
-Original SHA256: a6028d3fb248ffcdcaba52955d92c42254c60b49d0a30adfa2782a40264f5c30
-Original numbered lines; gaps omitted. Not full response.
-
-91: Compatibility
-92: 3MF from PrusaSlicer 2.x: loads with both geometry and settings. Your modified values stay flagged as modified.
-93: 3MF from PrusaSlicer 3.x in 2.x: geometry loads, settings are discarded. PrusaSlicer 2.9.1+ will notify you about this.
-94: Third-party 3MF (Bambu Studio, OrcaSlicer): imported as geometry.
-95: STL, OBJ, STEP: work as expected.
-96: Side-by-side installation: PrusaSlicer 3.x saves profiles into a separate directory. It runs alongside 2.x with zero conflicts.
-97: What’s not ready yet
-98: This is an early preview, and not the kind of polished, nearly-ready alpha that we have shipped in the past. Some of the issues we know about, others we don’t. What you are seeing is not a production build, this is an unfinished alpha which aims to present the general direction we are taking.
-99: It is also worth noting that the preview build is not feature complete (when compared to 2.9.6). We are still working on porting various things from PrusaSlicer 2.x and sadly, some of them have to wait for 3.1.0 to be fully reimplemented. While we understand that this is a nuisance, a large part of the application was rewritten from scratch and reimplementing everything takes time and effort – PrusaSlicer has surprisingly many features.
-100: You can find the list of unfinished features at the end of this change log.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://blog.prusa3d.com/prusaslicer-3-0-preview-built-for-the-future-of-3d-printing_137672/"
+  ],
+  "original_public_path": "assessment/A7-01/control-v1/public-governing-excerpts/I10-a6028d3f.txt",
+  "original_public_sha256": "411037bc940acaccbc125702b291bc683d9bb6bf484534c6f063b955fd2debb7",
+  "original_public_bytes": 1668,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A7-01/control-v1/public-governing-excerpts/I10-a6028d3f.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A7-01/control-v1/evidence/I10.txt",
+      "original_sha256": "a6028d3fb248ffcdcaba52955d92c42254c60b49d0a30adfa2782a40264f5c30",
+      "original_bytes": 37954,
+      "original_line_numbers": [
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100
+      ],
+      "original_locators": [
+        {
+          "locator": "Announcement header/date; Compatibility lines 91–96; What is not ready lines 97–100. Reader comments are not treated as vendor authority."
+        },
+        {
+          "locator": "Announcement header/date; Compatibility lines 91–96; What is not ready lines 97–100. Reader comments are not treated as vendor authority."
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A7-01/control-v1/source-map.json",
+      "source_id": "I10",
+      "title": "PrusaSlicer 3.0 Preview compatibility notes",
+      "locator": "Announcement header/date; Compatibility lines 91–96; What is not ready lines 97–100. Reader comments are not treated as vendor authority.",
+      "governing_conditions": [
+        {
+          "claim_id": "Q12",
+          "subject": "Prusa saved project and 3.0 preview importer",
+          "operation": "Retain or discard application settings according to tool/version",
+          "version": "Prusa live Save Project docs; 3.0 unfinished alpha announcement 2026-09-01; 2.9.6 stable release",
+          "conditions_defaults_types_domains_exceptions": "Snapshot includes objects/settings/modifiers; cross-version and third-party settings behavior is scoped to preview. Bambu/Orca third-party geometry-only observation is not an all-slicer rule.",
+          "judgment": "SUPPORTED"
+        }
+      ],
+      "applicability": "Independent source meaning for a research proposal; actual selected CAD/slicer/file behavior remains NOT_RUN.",
+      "version_note": "Live docs are not build-pinned unless explicitly stated in linked claim."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

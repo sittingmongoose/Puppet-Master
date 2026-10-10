@@ -1,38 +1,75 @@
-URL: https://docs.opentripplanner.org/en/latest/Changelog/
-Original locator: ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E10.txt
-Original SHA256: 7e81044b8f973a16aebce4e9bd126a72141660c231217bb3a72026984a5e97cb
-Original numbered lines; gaps omitted. Not full response.
-
-6: GitHub
-7: OpenTripPlanner 2
-8: GitHub
-9: Home
-10: About
-11: About
-12: Product Overview
-13: Governance
-14: History
-15: Presentations
-16: Roadmap
-17: Deployments
-18: Changelog
-19: Changelog
-20: Table of contents
-21: 2.10.0 (2026-09-09)
-22: Notable changes
-23: Detailed changes by Pull Request
-24: 2.9.0 (2026-03-18)
-25: Notable changes
-26: Detailed changes by Pull Request
-27: 2.8.1 (2025-09-22)
-28: Notable Changes
-29: Detailed changes by Pull Request
-30: 2.8.0 (2025-09-10)
-31: Notable Changes
-32: Detailed changes by Pull Request
-33: 2.7.0 (2025-03-12)
-34: Notable Changes
-35: Detailed changes by Pull Request
-36: 2.6.0 (2024-09-18)
-37: Notable Changes
-38: Detailed changes by Pull Request
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://docs.opentripplanner.org/en/latest/Changelog/"
+  ],
+  "original_public_path": "assessment/A6-01/control-v1/public-governing-excerpts/E10-7e81044b.txt",
+  "original_public_sha256": "96d7270c3a6206d65f864613d0880daa1cd439ba6b3df93bdcd3380c7fe95f93",
+  "original_public_bytes": 970,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A6-01/control-v1/public-governing-excerpts/E10-7e81044b.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E10.txt",
+      "original_sha256": "7e81044b8f973a16aebce4e9bd126a72141660c231217bb3a72026984a5e97cb",
+      "original_bytes": 76502,
+      "original_line_numbers": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38
+      ],
+      "original_locators": [
+        {
+          "locator": "2.10.0 changelog section; exact release source E21 lines 6-38"
+        },
+        {
+          "locator": "2.10.0 changelog section; exact release source E21 lines 6-38"
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A6-01/control-v1/source-map.json",
+      "source_id": "E10",
+      "access_utc": "2026-10-10T04:39:00.492239+00:00",
+      "version_observed": "Living primary page/repository observed 2026-10-10; see precise scope in linked claim records",
+      "locator": "2.10.0 changelog section; exact release source E21 lines 6-38",
+      "independent_observation": "Current changelog retrieved; exact release supplement independently pins consequential release claims."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

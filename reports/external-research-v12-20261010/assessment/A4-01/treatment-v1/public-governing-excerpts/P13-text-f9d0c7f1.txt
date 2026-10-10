@@ -1,25 +1,146 @@
-URL: https://developers.cloudflare.com/r2/platform/limits/
-Original locator: ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P13-text.txt
-Original SHA256: f9d0c7f1aa8d1a1d1b18daaf0f56e5d09963e61a0312904f95d7c1e2177207e9
-Original numbered lines; gaps omitted. Not full response.
-
-132: 5 GiB (single-part) / 4.995 TiB (multi-part) 4
-133: Maximum upload parts
-134: 10,000
-135: Maximum concurrent writes to the same object name (key)
-136: 1 per second 5
-137: Limits specified in MiB (mebibyte), GiB (gibibyte), or TiB (tebibyte) are storage units of measurement based on base-2. 1 GiB (gibibyte) is equivalent to 230 bytes (or 10243 bytes). This is distinct from 1 GB (gigabyte), which is 109 bytes (or 10003 bytes).
-138: Need a higher limit?
-139: To request an adjustment to a limit, complete the Limit Increase Request Form ↗︎. If the limit can be increased, Cloudflare will contact you with next steps.
-140: Rate limiting on managed public buckets through r2.dev
-141: Managed public bucket access through an r2.dev subdomain is not intended for production usage and has a variable rate limit applied to it. The r2.dev endpoint for your bucket is designed to enable testing.
-142: If you exceed the rate limit (hundreds of requests/second), requests to your r2.dev endpoint will be temporarily throttled and you will receive a 429 Too Many Requests response.
-143: Bandwidth (throughput) may also be throttled when using the r2.dev endpoint.
-144: For production use cases, connect a custom domain to your bucket. Custom domains allow you to serve content from a domain you control (for example, assets.example.com), configure fine-grained caching, set up redirect and rewrite rules, mutate content via Cloudflare Workers, and get detailed URL-level analytics for content served from your R2 bucket.
-145: Cloudflare REST API
-146: The Cloudflare REST API is rate limited to 1,200 requests per five minutes across all R2 REST API operations on your account.
-147: For high-throughput object operations, use the S3-compatible API or Workers API instead. The Cloudflare REST API is best suited for lower-volume management and configuration operations.
-148: Footnotes
-149: Bucket management operations include creating, deleting, listing, and configuring buckets. This limit does not apply to reading or writing objects to a bucket. ↩
-150: The object size limit is 5 GiB less than 5 TiB, so 4.995 TiB. ↩
-152: The max upload size is 5 MiB less than 5 GiB, so 4.995 GiB. ↩
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://developers.cloudflare.com/r2/platform/limits/"
+  ],
+  "original_public_path": "assessment/A4-01/treatment-v1/public-governing-excerpts/P13-text-f9d0c7f1.txt",
+  "original_public_sha256": "1a3500682738fdc1664aa97c9fcd3b22b2a5b91547609d93c3b656088f2625e9",
+  "original_public_bytes": 2474,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A4-01/treatment-v1/public-governing-excerpts/P13-text-f9d0c7f1.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P13-text.txt",
+      "original_sha256": "f9d0c7f1aa8d1a1d1b18daaf0f56e5d09963e61a0312904f95d7c1e2177207e9",
+      "original_bytes": 5843,
+      "original_line_numbers": [
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149,
+        150,
+        152
+      ],
+      "original_locators": [
+        {
+          "text_lines": [
+            132,
+            150
+          ]
+        },
+        {
+          "anchor": "4.995 TiB",
+          "matched_original_line": 132
+        },
+        {
+          "anchor": "4.995 TiB",
+          "matched_original_line": 150
+        },
+        {
+          "text_lines": [
+            150
+          ]
+        },
+        {
+          "anchor": "5 GiB less",
+          "matched_original_line": 150
+        },
+        {
+          "text_lines": [
+            152
+          ]
+        },
+        {
+          "anchor": "5 MiB less",
+          "matched_original_line": 152
+        },
+        {
+          "text_lines": [
+            132,
+            150
+          ]
+        },
+        {
+          "anchor": "4.995 TiB",
+          "matched_original_line": 132
+        },
+        {
+          "anchor": "4.995 TiB",
+          "matched_original_line": 150
+        },
+        {
+          "text_lines": [
+            150
+          ]
+        },
+        {
+          "anchor": "5 GiB less",
+          "matched_original_line": 150
+        },
+        {
+          "text_lines": [
+            152
+          ]
+        },
+        {
+          "anchor": "5 MiB less",
+          "matched_original_line": 152
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A4-01/treatment-v1/source-map.json",
+      "source_id": "P13",
+      "accessed_utc": "2026-10-10T04:41:54.376726+00:00",
+      "version_or_commit_observed": "Live Cloudflare R2 limits documentation",
+      "locator": "Maximum upload size and numbered footnotes",
+      "locators": [
+        {
+          "anchor": "4.995 TiB",
+          "text_lines": [
+            132,
+            150
+          ],
+          "primary_heading_or_json_field": "Maximum upload size and numbered footnotes"
+        },
+        {
+          "anchor": "5 GiB less",
+          "text_lines": [
+            150
+          ],
+          "primary_heading_or_json_field": "Maximum upload size and numbered footnotes"
+        },
+        {
+          "anchor": "5 MiB less",
+          "text_lines": [
+            152
+          ],
+          "primary_heading_or_json_field": "Maximum upload size and numbered footnotes"
+        }
+      ],
+      "conditions_defaults_units_types_exceptions": "Footnotes explain 5 GiB less than 5 TiB, plus precise 5 MiB-less single/part request boundary. These matter near boundaries, not this unselected 40 GB illustration.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

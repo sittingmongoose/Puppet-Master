@@ -1,9 +1,47 @@
-URL: https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/master/History_GUI.txt
-Original locator: ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/history.txt
-Original SHA256: 88faeb6b107187959435d46c55a36f8538995bddea23953b62cc0b9b1a762b15
-Original numbered lines; gaps omitted. Not full response.
-
-12: Version 25.04, 2025-04-30
-13: -------------
-14: + Apply imported core to already opened files
-15: + Add ISO8859-1 as fallback encoding when reading core file
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/master/History_GUI.txt"
+  ],
+  "original_public_path": "assessment/A5-01/treatment-v1/public-governing-excerpts/history-88faeb6b.txt",
+  "original_public_sha256": "69f077fb30eea61e0fac53b8152b9b2544065613e0576906a5751a1934312026",
+  "original_public_bytes": 469,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A5-01/treatment-v1/public-governing-excerpts/history-88faeb6b.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A5-01/treatment-v1/evidence/history.txt",
+      "original_sha256": "88faeb6b107187959435d46c55a36f8538995bddea23953b62cc0b9b1a762b15",
+      "original_bytes": 15486,
+      "original_line_numbers": [
+        12,
+        13,
+        14,
+        15
+      ],
+      "original_locators": [
+        {
+          "locator": "Version entries 0.2.2, 20.08, 21.07, 23.04 and 25.04; captured history lines 12–15, 47–50, 61–87, 99–104 and 293–301"
+        },
+        {
+          "locator": "Version entries 0.2.2, 20.08, 21.07, 23.04 and 25.04; captured history lines 12–15, 47–50, 61–87, 99–104 and 293–301"
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A5-01/treatment-v1/source-map.json",
+      "source_id": "IND-HISTORY",
+      "retrieved_at_utc": "2026-10-10T04:48:11.533000+00:00",
+      "version_or_commit": "Mutable master capture; also independently pinned to v26.08 commit 318d800d92c4a3cc8a814f6fdceba0ed8b3416ec",
+      "locator": "Version entries 0.2.2, 20.08, 21.07, 23.04 and 25.04; captured history lines 12–15, 47–50, 61–87, 99–104 and 293–301",
+      "governing_meaning": "The cited CR/escaping/full-file-write, UNICODE=1 import, code-page/CSET and CORE fallback changes are present for the named releases. They justify version/path-specific prospective checks, not present universal compatibility. The same history records XML checks in 20.08 and an invalid-XML data-entry warning in 21.07. Those relevant entries were omitted from the proposal’s XML applicability discussion. The immutable v26.08 file has the same inspected history bytes; this is supporting provenance, not semantic proof.",
+      "applicability": "Supports the bounded historical example and independently exposes the unresolved source conflict in M1."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

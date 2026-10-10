@@ -1,7 +1,118 @@
-URL: UNKNOWN in captured record
-Original locator: ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E17.txt
-Original SHA256: 1da5f9b7aeffbfab214b2be268183afc57b4bcb0593761da044d04886f850d31
-Original numbered lines; gaps omitted. Not full response.
-
-463: Retrieve a value from a .csv file
-480: It is recommended that you encode the .csv file using UTF-8 character encoding. If you're using Microsoft Excel to create your .csv file, save it as CSV UTF-8.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://doc.arcgis.com/en/survey123/create/main/xlsformformulas.htm"
+  ],
+  "original_public_path": "assessment/A2-01/control-v1/public-governing-excerpts/E17-1da5f9b7.txt",
+  "original_public_sha256": "5358fea1306201e3a290f3ce5e953adaead6954f0ab5d9da96ac2d93b00c99dd",
+  "original_public_bytes": 453,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A2-01/control-v1/public-governing-excerpts/E17-1da5f9b7.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E17.txt",
+      "original_sha256": "1da5f9b7aeffbfab214b2be268183afc57b4bcb0593761da044d04886f850d31",
+      "original_bytes": 38857,
+      "original_line_numbers": [
+        203,
+        208,
+        463,
+        480
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            203,
+            208
+          ]
+        },
+        {
+          "lines": [
+            463,
+            480
+          ]
+        },
+        {
+          "lines": [
+            203,
+            208
+          ]
+        },
+        {
+          "lines": [
+            463,
+            480
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E17.txt",
+      "original_sha256": "1da5f9b7aeffbfab214b2be268183afc57b4bcb0593761da044d04886f850d31",
+      "original_bytes": 38857,
+      "original_line_numbers": [
+        203,
+        208
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            203,
+            208
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E17.txt",
+      "original_sha256": "1da5f9b7aeffbfab214b2be268183afc57b4bcb0593761da044d04886f850d31",
+      "original_bytes": 38857,
+      "original_line_numbers": [
+        463,
+        480
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            463,
+            480
+          ]
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A2-01/control-v1/source-map.json",
+      "source_id": "E17",
+      "access_started_utc": "2026-10-10T04:55:54.190789+00:00",
+      "access_finished_utc": "2026-10-10T04:55:54.927697+00:00",
+      "title": "Survey123 CSV lookup versus submission import",
+      "version": "Living docs; Connect/field-app capability, not Studio/Mobile",
+      "locators": [
+        {
+          "path": "evidence/E17.txt",
+          "lines": [
+            203,
+            208
+          ],
+          "section": "pulldata function"
+        },
+        {
+          "path": "evidence/E17.txt",
+          "lines": [
+            463,
+            480
+          ],
+          "section": "Retrieve a value from .csv"
+        }
+      ],
+      "subject_operation": "pulldata retrieves values into a form",
+      "conditions": "Four-argument CSV lookup; not bulk creation of legacy survey responses. Specific lookup limits include field lengths, keys, and select_multiple."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

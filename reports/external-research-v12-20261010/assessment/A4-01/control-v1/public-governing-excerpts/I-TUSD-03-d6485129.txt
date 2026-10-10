@@ -1,9 +1,137 @@
-URL: https://github.com/tus/tusd/blob/v2.5.0/pkg/s3store/s3store.go
-Original locator: ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-TUSD-03.txt
-Original SHA256: d6485129f1b1a8bb18cd9297758c6fcc191f04b32255f8c13d10ef110ef0f721
-Original numbered lines; gaps omitted. Not full response.
-
-1362: PreferredPartSize: 50 * 1024 * 1024,
-1364: MaxObjectSize: 5 * 1024 * 1024 * 1024 * 1024,
-1365: MaxBufferedParts: 20,
-1372: store.SetConcurrentPartUploads(10)
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://github.com/tus/tusd/blob/v2.5.0/pkg/s3store/s3store.go"
+  ],
+  "original_public_path": "assessment/A4-01/control-v1/public-governing-excerpts/I-TUSD-03-d6485129.txt",
+  "original_public_sha256": "78a6ca76f9f30dec9a9aed8d504c9a75c1efde42fb6a8307c835dc50829cbdc9",
+  "original_public_bytes": 455,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A4-01/control-v1/public-governing-excerpts/I-TUSD-03-d6485129.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-TUSD-03.txt",
+      "original_sha256": "d6485129f1b1a8bb18cd9297758c6fcc191f04b32255f8c13d10ef110ef0f721",
+      "original_bytes": 39602,
+      "original_line_numbers": [
+        1362,
+        1364,
+        1365,
+        1372
+      ],
+      "original_locators": [
+        {
+          "saved_text_lines": [
+            1362
+          ]
+        },
+        {
+          "anchor": "PreferredPartSize:",
+          "matched_original_line": 1362
+        },
+        {
+          "saved_text_lines": [
+            1364
+          ]
+        },
+        {
+          "anchor": "MaxObjectSize:",
+          "matched_original_line": 1364
+        },
+        {
+          "saved_text_lines": [
+            1365
+          ]
+        },
+        {
+          "anchor": "MaxBufferedParts:",
+          "matched_original_line": 1365
+        },
+        {
+          "saved_text_lines": [
+            1372
+          ]
+        },
+        {
+          "anchor": "SetConcurrentPartUploads(10)",
+          "matched_original_line": 1372
+        },
+        {
+          "saved_text_lines": [
+            1362
+          ]
+        },
+        {
+          "anchor": "PreferredPartSize:",
+          "matched_original_line": 1362
+        },
+        {
+          "saved_text_lines": [
+            1364
+          ]
+        },
+        {
+          "anchor": "MaxObjectSize:",
+          "matched_original_line": 1364
+        },
+        {
+          "saved_text_lines": [
+            1365
+          ]
+        },
+        {
+          "anchor": "MaxBufferedParts:",
+          "matched_original_line": 1365
+        },
+        {
+          "saved_text_lines": [
+            1372
+          ]
+        },
+        {
+          "anchor": "SetConcurrentPartUploads(10)",
+          "matched_original_line": 1372
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A4-01/control-v1/source-map.json",
+      "source_id": "I-TUSD-03",
+      "title": "tusd S3Store source",
+      "retrieved_at_utc": "2026-10-10T04:25:10.896890+00:00",
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "PreferredPartSize:",
+          "saved_text_lines": [
+            1362
+          ]
+        },
+        {
+          "anchor": "MaxObjectSize:",
+          "saved_text_lines": [
+            1364
+          ]
+        },
+        {
+          "anchor": "MaxBufferedParts:",
+          "saved_text_lines": [
+            1365
+          ]
+        },
+        {
+          "anchor": "SetConcurrentPartUploads(10)",
+          "saved_text_lines": [
+            1372
+          ]
+        }
+      ]
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

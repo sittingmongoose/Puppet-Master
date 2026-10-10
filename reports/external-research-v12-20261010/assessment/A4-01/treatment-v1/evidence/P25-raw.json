@@ -1,1 +1,113 @@
-{"sha":"f246ee7f9ba1c3a133206e5726bfbb9d3bd86bf7","node_id":"C_kwDOAb5-odoAKGYyNDZlZTdmOWJhMWMzYTEzMzIwNmU1NzI2YmZiYjlkM2JkODZiZjc","commit":{"author":{"name":"Klaus Post","email":"AUTHORIZED_PROVIDER_INSTANCE","date":"2024-09-19T09:46:50Z"},"committer":{"name":"Klaus Post","email":"AUTHORIZED_PROVIDER_INSTANCE","date":"2024-09-19T09:50:27Z"},"message":"Fix PutObject Trailing checksum\n\nPutObject would verify trailing checksums, but not store them.\n\nFixes #20455","tree":{"sha":"5ec05f988acd58ad4aa3f4c1d4bfce8e6c5883e3","url":"https://api.github.com/repos/minio/minio/git/trees/5ec05f988acd58ad4aa3f4c1d4bfce8e6c5883e3"},"url":"https://api.github.com/repos/minio/minio/git/commits/f246ee7f9ba1c3a133206e5726bfbb9d3bd86bf7","comment_count":0,"verification":{"verified":true,"reason":"valid","signature":"-----BEGIN PGP SIGNATURE-----\n\niQEzBAABCAAdFiEE2hB6Xqp1GLFk66TDuqIJa+C4oHUFAmbr8+MACgkQuqIJa+C4\noHUJpwf9HAmoH5+GoCYz0rfte+W+MDXbL7VyNEineW+RT9O4oaPytb++k/Os+3GZ\nCbkrxyDnIK8vqQEX2NTSEkd9iL/SsOmqx22cEjzwveEOrB6v0cL+XxbT4n9XWS7k\nE/LXS4UmUNxSp/E8/lVkzV+sEM2o3UiWzX6n9WWVEVvx+XZ8cH7NwXCyeKjIp4l2\nvity8rSWT7XZjQDwJiaiaug//KPOegBpNaGn/nCPS2d9lOkoTOwyBRUbXUzHJM58\n8v5ajFP75zTj+O4aajX+Il1kxkhMD7oGl9y3G/0WmAPAZ76esi3VOjkqspW4Nw+2\nxA3QY4KaUQ0vuV0MFvZr4disqh1SWw==\n=ukAM\n-----END PGP SIGNATURE-----","payload":"tree 5ec05f988acd58ad4aa3f4c1d4bfce8e6c5883e3\nparent e1c2344591814e08c2f6cd702ebe2eae416adbe7\nauthor Klaus Post <AUTHORIZED_PROVIDER_INSTANCE> 1726739210 +0200\ncommitter Klaus Post <AUTHORIZED_PROVIDER_INSTANCE> 1726739427 +0200\n\nFix PutObject Trailing checksum\n\nPutObject would verify trailing checksums, but not store them.\n\nFixes #20455\n","verified_at":"2024-11-06T03:13:08Z"}},"url":"https://api.github.com/repos/minio/minio/commits/f246ee7f9ba1c3a133206e5726bfbb9d3bd86bf7","html_url":"https://github.com/minio/minio/commit/f246ee7f9ba1c3a133206e5726bfbb9d3bd86bf7","comments_url":"https://api.github.com/repos/minio/minio/commits/f246ee7f9ba1c3a133206e5726bfbb9d3bd86bf7/comments","author":{"login":"klauspost","id":5663952,"node_id":"MDQ6VXNlcjU2NjM5NTI=","avatar_url":"https://avatars.githubusercontent.com/u/5663952?v=4","gravatar_id":"","url":"https://api.github.com/users/klauspost","html_url":"https://github.com/klauspost","followers_url":"https://api.github.com/users/klauspost/followers","following_url":"https://api.github.com/users/klauspost/following{/other_user}","gists_url":"https://api.github.com/users/klauspost/gists{/gist_id}","starred_url":"https://api.github.com/users/klauspost/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/klauspost/subscriptions","organizations_url":"https://api.github.com/users/klauspost/orgs","repos_url":"https://api.github.com/users/klauspost/repos","events_url":"https://api.github.com/users/klauspost/events{/privacy}","received_events_url":"https://api.github.com/users/klauspost/received_events","type":"User","user_view_type":"public","site_admin":false},"committer":{"login":"klauspost","id":5663952,"node_id":"MDQ6VXNlcjU2NjM5NTI=","avatar_url":"https://avatars.githubusercontent.com/u/5663952?v=4","gravatar_id":"","url":"https://api.github.com/users/klauspost","html_url":"https://github.com/klauspost","followers_url":"https://api.github.com/users/klauspost/followers","following_url":"https://api.github.com/users/klauspost/following{/other_user}","gists_url":"https://api.github.com/users/klauspost/gists{/gist_id}","starred_url":"https://api.github.com/users/klauspost/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/klauspost/subscriptions","organizations_url":"https://api.github.com/users/klauspost/orgs","repos_url":"https://api.github.com/users/klauspost/repos","events_url":"https://api.github.com/users/klauspost/events{/privacy}","received_events_url":"https://api.github.com/users/klauspost/received_events","type":"User","user_view_type":"public","site_admin":false},"parents":[{"sha":"e1c2344591814e08c2f6cd702ebe2eae416adbe7","url":"https://api.github.com/repos/minio/minio/commits/e1c2344591814e08c2f6cd702ebe2eae416adbe7","html_url":"https://github.com/minio/minio/commit/e1c2344591814e08c2f6cd702ebe2eae416adbe7"}],"stats":{"total":26,"additions":21,"deletions":5},"files":[{"sha":"6c84c96eb046769ddfe2423839b6e0996cb3de14","filename":"cmd/erasure-object.go","status":"modified","additions":8,"deletions":5,"changes":13,"blob_url":"https://github.com/minio/minio/blob/f246ee7f9ba1c3a133206e5726bfbb9d3bd86bf7/cmd%2Ferasure-object.go","raw_url":"https://github.com/minio/minio/raw/f246ee7f9ba1c3a133206e5726bfbb9d3bd86bf7/cmd%2Ferasure-object.go","contents_url":"https://api.github.com/repos/minio/minio/contents/cmd%2Ferasure-object.go?ref=f246ee7f9ba1c3a133206e5726bfbb9d3bd86bf7","patch":"@@ -1329,10 +1329,6 @@ func (er erasureObjects) putObject(ctx context.Context, bucket string, object st\n \t}\n \n \tfi.DataDir = mustGetUUID()\n-\tfi.Checksum = opts.WantChecksum.AppendTo(nil, nil)\n-\tif opts.EncryptFn != nil {\n-\t\tfi.Checksum = opts.EncryptFn(\"object-checksum\", fi.Checksum)\n-\t}\n \tif ckSum := userDefined[ReplicationSsecChecksumHeader]; ckSum != \"\" {\n \t\tif v, err := base64.StdEncoding.DecodeString(ckSum); err == nil {\n \t\t\tfi.Checksum = v\n@@ -1460,7 +1456,13 @@ func (er erasureObjects) putObject(ctx context.Context, bucket string, object st\n \t\t\tactualSize = n\n \t\t}\n \t}\n-\n+\tif fi.Checksum == nil {\n+\t\t// Trailing headers checksums should now be filled.\n+\t\tfi.Checksum = opts.WantChecksum.AppendTo(nil, nil)\n+\t\tif opts.EncryptFn != nil {\n+\t\t\tfi.Checksum = opts.EncryptFn(\"object-checksum\", fi.Checksum)\n+\t\t}\n+\t}\n \tfor i, w := range writers {\n \t\tif w == nil {\n \t\t\tonlineDisks[i] = nil\n@@ -1474,6 +1476,7 @@ func (er erasureObjects) putObject(ctx context.Context, bucket string, object st\n \t\t// No need to add checksum to part. We already have it on the object.\n \t\tpartsMetadata[i].AddObjectPart(1, \"\", n, actualSize, modTime, compIndex, nil)\n \t\tpartsMetadata[i].Versioned = opts.Versioned || opts.VersionSuspended\n+\t\tpartsMetadata[i].Checksum = fi.Checksum\n \t}\n \n \tuserDefined[\"etag\"] = r.MD5CurrentHexString()"},{"sha":"3443ecd41a13c20cf34575fe7f5b96433c9e113e","filename":"cmd/object-handlers.go","status":"modified","additions":1,"deletions":0,"changes":1,"blob_url":"https://github.com/minio/minio/blob/f246ee7f9ba1c3a133206e5726bfbb9d3bd86bf7/cmd%2Fobject-handlers.go","raw_url":"https://github.com/minio/minio/raw/f246ee7f9ba1c3a133206e5726bfbb9d3bd86bf7/cmd%2Fobject-handlers.go","contents_url":"https://api.github.com/repos/minio/minio/contents/cmd%2Fobject-handlers.go?ref=f246ee7f9ba1c3a133206e5726bfbb9d3bd86bf7","patch":"@@ -1960,6 +1960,7 @@ func (api objectAPIHandlers) PutObjectHandler(w http.ResponseWriter, r *http.Req\n \t\treturn\n \t}\n \topts.IndexCB = idxCb\n+\topts.WantChecksum = hashReader.Checksum()\n \n \tif opts.PreserveETag != \"\" ||\n \t\tr.Header.Get(xhttp.IfMatch) != \"\" ||"},{"sha":"a169e5acf36c5e119d543556c0dbc1ba47432414","filename":"internal/hash/checksum.go","status":"modified","additions":4,"deletions":0,"changes":4,"blob_url":"https://github.com/minio/minio/blob/f246ee7f9ba1c3a133206e5726bfbb9d3bd86bf7/internal%2Fhash%2Fchecksum.go","raw_url":"https://github.com/minio/minio/raw/f246ee7f9ba1c3a133206e5726bfbb9d3bd86bf7/internal%2Fhash%2Fchecksum.go","contents_url":"https://api.github.com/repos/minio/minio/contents/internal%2Fhash%2Fchecksum.go?ref=f246ee7f9ba1c3a133206e5726bfbb9d3bd86bf7","patch":"@@ -335,6 +335,10 @@ func (c *Checksum) AppendTo(b []byte, parts []byte) []byte {\n \tvar tmp [binary.MaxVarintLen32]byte\n \tn := binary.PutUvarint(tmp[:], uint64(c.Type))\n \tcrc := c.Raw\n+\tif c.Type.Trailing() {\n+\t\t// When we serialize we don't care if it was trailing.\n+\t\tc.Type ^= ChecksumTrailing\n+\t}\n \tif len(crc) != c.Type.RawByteLen() {\n \t\treturn b\n \t}"},{"sha":"272452f06a23b188117c8cbfefb0844692c08480","filename":"internal/hash/reader.go","status":"modified","additions":8,"deletions":0,"changes":8,"blob_url":"https://github.com/minio/minio/blob/f246ee7f9ba1c3a133206e5726bfbb9d3bd86bf7/internal%2Fhash%2Freader.go","raw_url":"https://github.com/minio/minio/raw/f246ee7f9ba1c3a133206e5726bfbb9d3bd86bf7/internal%2Fhash%2Freader.go","contents_url":"https://api.github.com/repos/minio/minio/contents/internal%2Fhash%2Freader.go?ref=f246ee7f9ba1c3a133206e5726bfbb9d3bd86bf7","patch":"@@ -366,6 +366,14 @@ func (r *Reader) ContentCRC() map[string]string {\n \treturn map[string]string{r.contentHash.Type.String(): r.contentHash.Encoded}\n }\n \n+// Checksum returns the content checksum if set.\n+func (r *Reader) Checksum() *Checksum {\n+\tif !r.contentHash.Type.IsSet() || !r.contentHash.Valid() {\n+\t\treturn nil\n+\t}\n+\treturn &r.contentHash\n+}\n+\n var _ io.Closer = (*Reader)(nil) // compiler check\n \n // Close and release resources."}]}
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "provenance and bounded governing evidence; not original response",
+  "source_urls": [
+    "https://api.github.com/repos/minio/minio/commits/f246ee7",
+    "https://api.github.com/repos/minio/minio/commits/f246ee7f9ba1c3a133206e5726bfbb9d3bd86bf7",
+    "https://github.com/minio/minio/commit/f246ee7f9ba1c3a133206e5726bfbb9d3bd86bf7"
+  ],
+  "original_public_path": "assessment/A4-01/treatment-v1/evidence/P25-raw.json",
+  "original_public_sha256": "7aad2d736f9880c2d28e4b03f31fd568b5e5f26396bee7ada826ac6869bdebf9",
+  "original_public_bytes": 8882,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A4-01/treatment-v1/evidence/P25-raw.json",
+  "classification_basis": "fetched GitHub API response / converted API response",
+  "original_selectors": [
+    {
+      "source_id": "P25",
+      "field": "lines",
+      "selector": 1
+    },
+    {
+      "source_id": "P25",
+      "field": "locator",
+      "selector": "commit and files[].patch caller/definition"
+    },
+    {
+      "source_id": "P25",
+      "field": "locators",
+      "selector": [
+        {
+          "anchor": "WantChecksum",
+          "text_lines": [
+            1
+          ],
+          "primary_heading_or_json_field": "commit and files[].patch caller/definition"
+        },
+        {
+          "anchor": "Trailing headers",
+          "text_lines": [
+            1
+          ],
+          "primary_heading_or_json_field": "commit and files[].patch caller/definition"
+        },
+        {
+          "anchor": "ChecksumTrailing",
+          "text_lines": [
+            1
+          ],
+          "primary_heading_or_json_field": "commit and files[].patch caller/definition"
+        }
+      ]
+    },
+    {
+      "source_id": "P25",
+      "field": "lines",
+      "selector": 1
+    }
+  ],
+  "governing_summaries_from_existing_authored_source_records": [
+    {
+      "accessed_utc": "2026-10-10T04:41:55.120536+00:00",
+      "lines": 1,
+      "version_or_commit_observed": "MinIO commit f246ee7f9ba1c3a133206e5726bfbb9d3bd86bf7 primary API",
+      "locator": "commit and files[].patch caller/definition",
+      "locators": [
+        {
+          "anchor": "WantChecksum",
+          "text_lines": [
+            1
+          ],
+          "primary_heading_or_json_field": "commit and files[].patch caller/definition"
+        },
+        {
+          "anchor": "Trailing headers",
+          "text_lines": [
+            1
+          ],
+          "primary_heading_or_json_field": "commit and files[].patch caller/definition"
+        },
+        {
+          "anchor": "ChecksumTrailing",
+          "text_lines": [
+            1
+          ],
+          "primary_heading_or_json_field": "commit and files[].patch caller/definition"
+        }
+      ],
+      "independent_semantic_reading": "PutObjectHandler attaches hashReader.Checksum; Reader.Checksum returns checksum pointer; erasure put serializes after trailing fields fill and persists part metadata.",
+      "conditions_defaults_units_types_exceptions": "Checksum serialization removes trailing marker. Commit code review supports persistence change, not a complete compatibility certification or known packaged release.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION",
+      "authored_source_map": "assessment/A4-01/treatment-v1/source-map.json",
+      "source_id": "P25"
+    },
+    {
+      "accessed_utc": "2026-10-10T04:41:55.120536+00:00",
+      "lines": 1,
+      "authored_source_map": "assessment/A4-01/treatment-v1/evidence/retrieval-manifest.json",
+      "source_id": "P25"
+    }
+  ],
+  "selected_api_metadata": [
+    {
+      "url": "https://api.github.com/repos/minio/minio/commits/f246ee7f9ba1c3a133206e5726bfbb9d3bd86bf7",
+      "html_url": "https://github.com/minio/minio/commit/f246ee7f9ba1c3a133206e5726bfbb9d3bd86bf7",
+      "sha": "f246ee7f9ba1c3a133206e5726bfbb9d3bd86bf7",
+      "original_json_locator": "$"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY_AND_METADATA; full body coverage UNKNOWN",
+  "omission": "Full fetched body, API ancillary fields and unmechanically summarizable body details are archived privately. Original source URL and selectors govern; unsupported/missing semantic coverage is UNKNOWN. No candidate finding or independent judgment is repaired.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

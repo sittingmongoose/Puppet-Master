@@ -1,18 +1,55 @@
-URL: https://gtfs.org/documentation/realtime/change-history/revision-history/
-Original locator: ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E07.txt
-Original SHA256: b02de14fa99a9b0e85f94e9548accdc877667b93d60d5b3b3a6d79ee087df34b
-Original numbered lines; gaps omitted. Not full response.
-
-239: June 2026¶
-240: Added two new fields into Service Alerts: communication_period and impact_period to better define active_period. See discussion
-241: Added new SPECIAL_EVENT Cause to Cause list in Service Alerts. See discussion
-242: April 2026¶
-243: Fixed typos in gtfs-realtime.proto. See discussion.
-244: February 2026¶
-245: Corrected trip_ids requirement and cardinality for selectedTrips. See discussion.
-246: Added missing spaces. See discussion.
-247: May 2025¶
-248: Deprecates schedule_relationship ADDED in favour of NEW and adds REPLACEMENT. See discussion.
-249: Further clarifications to trip modifications. See discussion.
-250: December 2024¶
-251: Added new string field that matches feed_info.feed_version from the GTFS Schedule feed that the realtime data is based on. See discussion.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://gtfs.org/documentation/realtime/change-history/revision-history/"
+  ],
+  "original_public_path": "assessment/A6-01/control-v1/public-governing-excerpts/E07-b02de14f.txt",
+  "original_public_sha256": "d94b2186ccae57048b9b933d9d16baab0a8e5083e4061f559fafa200ecd9032f",
+  "original_public_bytes": 1101,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A6-01/control-v1/public-governing-excerpts/E07-b02de14f.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A6-01/control-v1/evidence/E07.txt",
+      "original_sha256": "b02de14fa99a9b0e85f94e9548accdc877667b93d60d5b3b3a6d79ee087df34b",
+      "original_bytes": 7617,
+      "original_line_numbers": [
+        239,
+        240,
+        241,
+        242,
+        243,
+        244,
+        245,
+        246,
+        247,
+        248,
+        249,
+        250,
+        251
+      ],
+      "original_locators": [
+        {
+          "locator": "E07.txt lines 239-251; 273-276"
+        },
+        {
+          "locator": "E07.txt lines 239-251; 273-276"
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A6-01/control-v1/source-map.json",
+      "source_id": "E07",
+      "access_utc": "2026-10-10T04:39:00.348614+00:00",
+      "version_observed": "Living primary page/repository observed 2026-10-10; see precise scope in linked claim records",
+      "locator": "E07.txt lines 239-251; 273-276",
+      "independent_observation": "Independent dated additions; DUPLICATED precedes 2025; supplies L-02 and protocol-history context."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

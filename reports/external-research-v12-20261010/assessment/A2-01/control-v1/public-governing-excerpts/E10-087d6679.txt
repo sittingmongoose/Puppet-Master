@@ -1,7 +1,118 @@
-URL: UNKNOWN in captured record
-Original locator: ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E10.txt
-Original SHA256: 087d6679dda0265517b7ea8a995cb5fab31a79a7df4a3f171d63aac1b4d91760
-Original numbered lines; gaps omitted. Not full response.
-
-60: Sent folder
-67: For this reason, it is recommended that you do not enable the Sent folder and Inbox for the same survey if your intention is for multiple users to continually edit and update existing responses.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://doc.arcgis.com/en/survey123/create/connect/publishsurvey.htm"
+  ],
+  "original_public_path": "assessment/A2-01/control-v1/public-governing-excerpts/E10-087d6679.txt",
+  "original_public_sha256": "a1f57c16e738be8c4ecfc95aeb872919b8713806635029ce7a7b56f201b476fc",
+  "original_public_bytes": 464,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A2-01/control-v1/public-governing-excerpts/E10-087d6679.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E10.txt",
+      "original_sha256": "087d6679dda0265517b7ea8a995cb5fab31a79a7df4a3f171d63aac1b4d91760",
+      "original_bytes": 9540,
+      "original_line_numbers": [
+        41,
+        51,
+        60,
+        67
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            41,
+            51
+          ]
+        },
+        {
+          "lines": [
+            60,
+            67
+          ]
+        },
+        {
+          "lines": [
+            41,
+            51
+          ]
+        },
+        {
+          "lines": [
+            60,
+            67
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E10.txt",
+      "original_sha256": "087d6679dda0265517b7ea8a995cb5fab31a79a7df4a3f171d63aac1b4d91760",
+      "original_bytes": 9540,
+      "original_line_numbers": [
+        41,
+        51
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            41,
+            51
+          ]
+        }
+      ]
+    },
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A2-01/control-v1/evidence/E10.txt",
+      "original_sha256": "087d6679dda0265517b7ea8a995cb5fab31a79a7df4a3f171d63aac1b4d91760",
+      "original_bytes": 9540,
+      "original_line_numbers": [
+        60,
+        67
+      ],
+      "original_locators": [
+        {
+          "lines": [
+            60,
+            67
+          ]
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A2-01/control-v1/source-map.json",
+      "source_id": "E10",
+      "access_started_utc": "2026-10-10T04:55:53.422264+00:00",
+      "access_finished_utc": "2026-10-10T04:55:54.009005+00:00",
+      "title": "Survey123 Connect publish and Sent options",
+      "version": "Living docs; defaults apply to described publish workflow",
+      "locators": [
+        {
+          "path": "evidence/E10.txt",
+          "lines": [
+            41,
+            51
+          ],
+          "section": "Publish options"
+        },
+        {
+          "path": "evidence/E10.txt",
+          "lines": [
+            60,
+            67
+          ],
+          "section": "Sent folder"
+        }
+      ],
+      "subject_operation": "Publish-time layer sync and field-app Sent editing",
+      "conditions": "Enable sync is off when publishing new feature layers; offline map areas need it. Only applicable publish options are shown for existing layers. Sent editing is off by default; Sent+Inbox can retain stale records changed elsewhere."
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

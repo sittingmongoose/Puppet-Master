@@ -1,1 +1,53 @@
-[{"sha":"ca68ab1442daf55f67cdc9080f26626e24aeff3c","filename":"UM/Scene/Scene.py","status":"modified","additions":47,"deletions":23,"changes":70,"blob_url":"https://github.com/Ultimaker/Uranium/blob/506d731c5ea6a54efa8c8223f8a787ed59385eca/UM%2FScene%2FScene.py","raw_url":"https://github.com/Ultimaker/Uranium/raw/506d731c5ea6a54efa8c8223f8a787ed59385eca/UM%2FScene%2FScene.py","contents_url":"https://api.github.com/repos/Ultimaker/Uranium/contents/UM%2FScene%2FScene.py?ref=506d731c5ea6a54efa8c8223f8a787ed59385eca","patch":"@@ -188,6 +188,7 @@ def _onFileChanged(self, file_path: str) -> None:\n \n         if modified_nodes:\n             # Hide the message if it was already visible\n+            # Todo: keep one message for each modified file, when multiple had been updated at same time\n             if self._reload_message is not None:\n                 self._reload_message.hide()\n \n@@ -197,11 +198,11 @@ def _onFileChanged(self, file_path: str) -> None:\n             self._reload_message.addAction(\"reload\", i18n_catalog.i18nc(\"@action:button\", \"Reload\"),\n                                            icon = \"\",\n                                            description = i18n_catalog.i18nc(\"@action:description\", \"This will trigger the modified files to reload from disk.\"))\n-            self._reload_callback = functools.partial(self._reloadNodes, modified_nodes)\n+            self._reload_callback = functools.partial(self._reloadNodes, modified_nodes, file_path)\n             self._reload_message.actionTriggered.connect(self._reload_callback)\n             self._reload_message.show()\n \n-    def _reloadNodes(self, nodes: List[\"SceneNode\"], message: str, action: str) -> None:\n+    def _reloadNodes(self, nodes: List[\"SceneNode\"], file_path: str, message: str, action: str) -> None:\n         \"\"\"Reloads a list of nodes after the user pressed the \"Reload\" button.\n \n         :param nodes: The list of nodes that needs to be reloaded.\n@@ -213,31 +214,54 @@ def _reloadNodes(self, nodes: List[\"SceneNode\"], message: str, action: str) -> N\n             return\n         if self._reload_message is not None:\n             self._reload_message.hide()\n-        for node in nodes:\n-            meshdata = node.getMeshData()\n-            if meshdata:\n-                filename = meshdata.getFileName()\n-                if not filename or not os.path.isfile(filename):  # File doesn't exist any more.\n-                    continue\n-                job = ReadMeshJob(filename)\n-                reload_finished_callback = functools.partial(self._reloadJobFinished, node)\n-\n-                # Store it so it won't get garbage collected. This is a memory leak, but just one partial per reload so\n-                # it's not much.\n-                self._callbacks.add(reload_finished_callback)\n-\n-                job.finished.connect(reload_finished_callback)\n-                job.start()\n-\n-    def _reloadJobFinished(self, replaced_node: SceneNode, job: ReadMeshJob) -> None:\n+\n+        if not file_path or not os.path.isfile(file_path):  # File doesn't exist anymore.\n+            return\n+\n+        job = ReadMeshJob(file_path)\n+        reload_finished_callback = functools.partial(self._reloadJobFinished, nodes)\n+\n+        # Store it so it won't get garbage collected. This is a memory leak, but just one partial per reload so\n+        # it's not much.\n+        self._callbacks.add(reload_finished_callback)\n+\n+        job.finished.connect(reload_finished_callback)\n+        job.start()\n+\n+    def _reloadJobFinished(self, replaced_nodes: [SceneNode], job: ReadMeshJob) -> None:\n         \"\"\"Triggered when reloading has finished.\n \n-        This then puts the resulting mesh data in the node.\n+        This then puts the resulting mesh data in the nodes.\n+        Objects in the scene that are not in the reloaded file will be kept. (same as in the ReloadAll action)\n         \"\"\"\n+        renamed_nodes = {}  # type: Dict[str, int]\n \n         for node in job.getResult():\n             mesh_data = node.getMeshData()\n-            if mesh_data:\n-                replaced_node.setMeshData(mesh_data)\n-            else:\n+            if not mesh_data:\n                 Logger.log(\"w\", \"Could not find a mesh in reloaded node.\")\n+                continue\n+\n+            # Solves issues with object naming\n+            node_name = node.getName()\n+            if not node_name:\n+                node_name = os.path.basename(mesh_data.getFileName())\n+            if node_name in renamed_nodes:  # objects may get renamed by Cura.UI.ObjectsModel._renameNodes() when loaded\n+                renamed_nodes[node_name] += 1\n+                node_name = \"{0}({1})\".format(node.getName(), renamed_nodes[node.getName()])\n+            else:\n+                renamed_nodes[node.getName()] = 0\n+\n+            # Find the matching scene node to replace\n+            scene_node = None\n+            for replaced_node in replaced_nodes:\n+                if replaced_node.getName() == node_name:\n+                    scene_node = replaced_node\n+                    break\n+\n+            if scene_node:\n+                scene_node.setMeshData(mesh_data)\n+            else:\n+                # Current node is a new one in the file, or it's name has changed\n+                # TODO: Load this mesh into the scene. Also alter the \"ReloadAll\" action in CuraApplication.\n+                Logger.log(\"w\", \"Could not find matching node for object '{0}' in the scene.\", node_name)"}]
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "provenance and bounded governing evidence; not original response",
+  "source_urls": [
+    "https://github.com/Ultimaker/Uranium/pull/898",
+    "https://github.com/Ultimaker/Uranium/raw/506d731c5ea6a54efa8c8223f8a787ed59385eca/UM%2FScene%2FScene.py"
+  ],
+  "original_public_path": "assessment/A7-01/treatment-v1/evidence/P24-uranium-pr898-files.json",
+  "original_public_sha256": "d0879f7eeed35d28818e49482f117b10bfc62533be7bd574f64d9971ef5a1c2d",
+  "original_public_bytes": 5581,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A7-01/treatment-v1/evidence/P24-uranium-pr898-files.json",
+  "classification_basis": "fetched GitHub API response / converted API response",
+  "original_selectors": [
+    {
+      "source_id": "P24",
+      "field": "locator",
+      "selector": "Body test record; UM/Scene/Scene.py patch; dependency on Cura PR #16610"
+    }
+  ],
+  "governing_summaries_from_existing_authored_source_records": [
+    {
+      "title": "Uranium object reload/name change PR #898",
+      "version_or_commit": "Merged 2023-11-01; merge d6a63ca2837bf934fa01aa0d41f235323e8ebc9e",
+      "locator": "Body test record; UM/Scene/Scene.py patch; dependency on Cura PR #16610",
+      "accessed_at_utc": [
+        "2026-10-10T04:58:26.128173+00:00",
+        "2026-10-10T04:58:26.438474+00:00"
+      ],
+      "governing_conditions_and_applicability": "Useful implementation/history lead linked by the names issue. Its author reports multi-model name and reload checks, with explicit limitations for added/removed models. These are external executed checks, not candidate or reviewer validation.",
+      "authored_source_map": "assessment/A7-01/treatment-v1/source-map.json",
+      "source_id": "P24"
+    },
+    {
+      "accessed_at_utc": "2026-10-10T04:58:26.438474+00:00",
+      "authored_source_map": "assessment/A7-01/treatment-v1/evidence/retrieval-record.json",
+      "source_id": "P24-uranium-pr898-files"
+    }
+  ],
+  "selected_api_metadata": [
+    {
+      "sha": "ca68ab1442daf55f67cdc9080f26626e24aeff3c",
+      "filename": "UM/Scene/Scene.py",
+      "status": "modified",
+      "raw_url": "https://github.com/Ultimaker/Uranium/raw/506d731c5ea6a54efa8c8223f8a787ed59385eca/UM%2FScene%2FScene.py",
+      "blob_url": "https://github.com/Ultimaker/Uranium/blob/506d731c5ea6a54efa8c8223f8a787ed59385eca/UM%2FScene%2FScene.py",
+      "original_json_locator": "$[0]"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY_AND_METADATA; full body coverage UNKNOWN",
+  "omission": "Full fetched body, API ancillary fields and unmechanically summarizable body details are archived privately. Original source URL and selectors govern; unsupported/missing semantic coverage is UNKNOWN. No candidate finding or independent judgment is repaired.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

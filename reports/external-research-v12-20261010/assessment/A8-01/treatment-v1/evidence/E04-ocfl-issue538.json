@@ -1,1 +1,47 @@
-{"url":"https://api.github.com/repos/OCFL/spec/issues/538","repository_url":"https://api.github.com/repos/OCFL/spec","labels_url":"https://api.github.com/repos/OCFL/spec/issues/538/labels{/name}","comments_url":"https://api.github.com/repos/OCFL/spec/issues/538/comments","events_url":"https://api.github.com/repos/OCFL/spec/issues/538/events","html_url":"https://github.com/OCFL/spec/issues/538","id":849205046,"node_id":"MDU6SXNzdWU4NDkyMDUwNDY=","number":538,"title":"clarity on manifest requirements in historic inventories","user":{"login":"pwinckles","id":1196698,"node_id":"MDQ6VXNlcjExOTY2OTg=","avatar_url":"https://avatars.githubusercontent.com/u/1196698?v=4","gravatar_id":"","url":"https://api.github.com/users/pwinckles","html_url":"https://github.com/pwinckles","followers_url":"https://api.github.com/users/pwinckles/followers","following_url":"https://api.github.com/users/pwinckles/following{/other_user}","gists_url":"https://api.github.com/users/pwinckles/gists{/gist_id}","starred_url":"https://api.github.com/users/pwinckles/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/pwinckles/subscriptions","organizations_url":"https://api.github.com/users/pwinckles/orgs","repos_url":"https://api.github.com/users/pwinckles/repos","events_url":"https://api.github.com/users/pwinckles/events{/privacy}","received_events_url":"https://api.github.com/users/pwinckles/received_events","type":"User","user_view_type":"public","site_admin":false},"labels":[{"id":927905090,"node_id":"MDU6TGFiZWw5Mjc5MDUwOTA=","url":"https://api.github.com/repos/OCFL/spec/labels/Ready%20for%20Review","name":"Ready for Review","color":"0e8a16","default":false,"description":"Ready for review by editorial group","archived_at":null,"archived_by":null},{"id":997740461,"node_id":"MDU6TGFiZWw5OTc3NDA0NjE=","url":"https://api.github.com/repos/OCFL/spec/labels/OCFL%20Object","name":"OCFL Object","color":"c2e0c6","default":false,"description":"","archived_at":null,"archived_by":null}],"state":"closed","locked":false,"assignees":[],"milestone":{"url":"https://api.github.com/repos/OCFL/spec/milestones/5","html_url":"https://github.com/OCFL/spec/milestone/5","labels_url":"https://api.github.com/repos/OCFL/spec/milestones/5/labels","id":6684077,"node_id":"MDk6TWlsZXN0b25lNjY4NDA3Nw==","number":5,"title":"1.1","description":"Minor changes to the 1.0 specification, primarily to clarify validation criteria. Any suggestions that would involve more significant changes will be deferred to 2.0 for consideration.","creator":{"login":"zimeon","id":658600,"node_id":"MDQ6VXNlcjY1ODYwMA==","avatar_url":"https://avatars.githubusercontent.com/u/658600?v=4","gravatar_id":"","url":"https://api.github.com/users/zimeon","html_url":"https://github.com/zimeon","followers_url":"https://api.github.com/users/zimeon/followers","following_url":"https://api.github.com/users/zimeon/following{/other_user}","gists_url":"https://api.github.com/users/zimeon/gists{/gist_id}","starred_url":"https://api.github.com/users/zimeon/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/zimeon/subscriptions","organizations_url":"https://api.github.com/users/zimeon/orgs","repos_url":"https://api.github.com/users/zimeon/repos","events_url":"https://api.github.com/users/zimeon/events{/privacy}","received_events_url":"https://api.github.com/users/zimeon/received_events","type":"User","user_view_type":"public","site_admin":false},"open_issues":0,"closed_issues":35,"state":"closed","created_at":"2021-04-21T12:37:48Z","updated_at":"2023-03-02T16:26:05Z","due_on":"2022-11-01T00:00:00Z","closed_at":"2023-03-02T16:26:05Z"},"comments":0,"created_at":"2021-04-02T13:01:30Z","updated_at":"2021-06-10T19:35:30Z","closed_at":"2021-06-10T19:35:30Z","assignee":null,"author_association":"NONE","issue_field_values":[],"type":null,"active_lock_reason":null,"sub_issues_summary":{"total":0,"completed":0,"percent_completed":0},"issue_dependencies_summary":{"blocked_by":0,"total_blocked_by":0,"blocking":0,"total_blocking":0},"body":"My understanding is that the spec requires that the manifest entry of every inventory version contains references to all of the content files in its version and all prior versions. If this is the case, I think the language in the spec could be more clear.\r\n\r\nHere are the relevant texts:\r\n\r\n> Every file within a version's content directory MUST be referenced in the manifest section of the inventory.\r\n\r\nAnd:\r\n\r\n> The value of the manifest key is a JSON object, with keys corresponding to the digests of every content file in all versions of the OCFL Object.\r\n\r\nThe second quote could be clarified by appending something along the lines of \"at the time it was written\" as it clearly cannot mean _all versions_. However, a change like that would still leave the door open for a later version to write a file to a prior version's content directory. Doing so would not violate the requirement for either inventory to reference all of the content files that existed at the time they were created.\r\n\r\nThe first quote seems to make the stronger requirement that a version's inventory must reference all of the files within its own content directory, but is left slightly ambiguous because it is not clear which inventory \"the inventory\" is referring to.","closed_by":{"login":"neilsjefferies","id":37909475,"node_id":"MDQ6VXNlcjM3OTA5NDc1","avatar_url":"https://avatars.githubusercontent.com/u/37909475?v=4","gravatar_id":"","url":"https://api.github.com/users/neilsjefferies","html_url":"https://github.com/neilsjefferies","followers_url":"https://api.github.com/users/neilsjefferies/followers","following_url":"https://api.github.com/users/neilsjefferies/following{/other_user}","gists_url":"https://api.github.com/users/neilsjefferies/gists{/gist_id}","starred_url":"https://api.github.com/users/neilsjefferies/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/neilsjefferies/subscriptions","organizations_url":"https://api.github.com/users/neilsjefferies/orgs","repos_url":"https://api.github.com/users/neilsjefferies/repos","events_url":"https://api.github.com/users/neilsjefferies/events{/privacy}","received_events_url":"https://api.github.com/users/neilsjefferies/received_events","type":"User","user_view_type":"public","site_admin":false},"reactions":{"url":"https://api.github.com/repos/OCFL/spec/issues/538/reactions","total_count":0,"+1":0,"-1":0,"laugh":0,"hooray":0,"confused":0,"heart":0,"rocket":0,"eyes":0},"timeline_url":"https://api.github.com/repos/OCFL/spec/issues/538/timeline","performed_via_github_app":null,"state_reason":"completed","pinned_comment":null}
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "provenance and bounded governing evidence; not original response",
+  "source_urls": [
+    "https://api.github.com/repos/OCFL/spec/issues/538",
+    "https://github.com/OCFL/spec/issues/538"
+  ],
+  "original_public_path": "assessment/A8-01/treatment-v1/evidence/E04-ocfl-issue538.json",
+  "original_public_sha256": "38dac1c6e3d97928f1a8ae817caa0316d62122f3ca33b50caec0f530392f900a",
+  "original_public_bytes": 6667,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A8-01/treatment-v1/evidence/E04-ocfl-issue538.json",
+  "classification_basis": "fetched GitHub API response / converted API response",
+  "original_selectors": [],
+  "governing_summaries_from_existing_authored_source_records": [
+    {
+      "access_start_utc": "2026-10-10T04:41:13.508557+00:00",
+      "access_finish_utc": "2026-10-10T04:41:13.726016+00:00",
+      "authored_source_map": "assessment/A8-01/treatment-v1/source-map.json",
+      "source_id": "E04-ocfl-issue538"
+    },
+    {
+      "access_start_utc": "2026-10-10T04:41:13.508557+00:00",
+      "access_finish_utc": "2026-10-10T04:41:13.726016+00:00",
+      "authored_source_map": "assessment/A8-01/treatment-v1/evidence/retrieval-index.json",
+      "source_id": "E04-ocfl-issue538"
+    }
+  ],
+  "selected_api_metadata": [
+    {
+      "url": "https://api.github.com/repos/OCFL/spec/issues/538",
+      "html_url": "https://github.com/OCFL/spec/issues/538",
+      "id": 849205046,
+      "number": 538,
+      "title": "clarity on manifest requirements in historic inventories",
+      "created_at": "2021-04-02T13:01:30Z",
+      "updated_at": "2021-06-10T19:35:30Z",
+      "closed_at": "2021-06-10T19:35:30Z",
+      "state": "closed",
+      "state_reason": "completed",
+      "original_json_locator": "$"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY_AND_METADATA; full body coverage UNKNOWN",
+  "omission": "Full fetched body, API ancillary fields and unmechanically summarizable body details are archived privately. Original source URL and selectors govern; unsupported/missing semantic coverage is UNKNOWN. No candidate finding or independent judgment is repaired.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

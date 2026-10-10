@@ -1,1 +1,56 @@
-[{"sha":"c9c17374113865849f9d0a7906f4c168525dffdb","filename":"bagit.py","status":"modified","additions":0,"deletions":2,"changes":2,"blob_url":"https://github.com/LibraryOfCongress/bagit-python/blob/68907823bf91ee46dd04a3848cef85634337c1de/bagit.py","raw_url":"https://github.com/LibraryOfCongress/bagit-python/raw/68907823bf91ee46dd04a3848cef85634337c1de/bagit.py","contents_url":"https://api.github.com/repos/LibraryOfCongress/bagit-python/contents/bagit.py?ref=68907823bf91ee46dd04a3848cef85634337c1de","patch":"@@ -932,8 +932,6 @@ def _path_is_dangerous(self, path):\n             return True\n         if os.path.expanduser(path) != path:\n             return True\n-        if os.path.expandvars(path) != path:\n-            return True\n         real_path = os.path.realpath(os.path.join(self.path, path))\n         real_path = os.path.normpath(real_path)\n         bag_path = os.path.realpath(self.path)"}]
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "provenance and bounded governing evidence; not original response",
+  "source_urls": [
+    "https://api.github.com/repos/LibraryOfCongress/bagit-python/pulls/184/files?per_page=100",
+    "https://github.com/LibraryOfCongress/bagit-python/pull/184",
+    "https://github.com/LibraryOfCongress/bagit-python/raw/68907823bf91ee46dd04a3848cef85634337c1de/bagit.py"
+  ],
+  "original_public_path": "assessment/A8-01/control-v1/evidence/E08-pr184-files.json",
+  "original_public_sha256": "3d6e3c8b852dbe56c8abc04a7c9df99a99aaf227fd6c656203665bf34988fe78",
+  "original_public_bytes": 915,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A8-01/control-v1/evidence/E08-pr184-files.json",
+  "classification_basis": "fetched GitHub API response / converted API response",
+  "original_selectors": [
+    {
+      "source_id": "E08",
+      "field": "locator",
+      "selector": "body, merged_at, merge_commit_sha; files[0].patch at _path_is_dangerous"
+    }
+  ],
+  "governing_summaries_from_existing_authored_source_records": [
+    {
+      "title": "bagit-python PR #184 and exact diff",
+      "released_version_or_commit": "Merged 2025-06-13T16:26:17Z, merge 753679c9b342660d038f65a8dc4f755ab95d679b",
+      "locator": "body, merged_at, merge_commit_sha; files[0].patch at _path_is_dangerous",
+      "governing_subject_operation_default_unit_type_domain_exceptions": "Two-line deletion removes environment-variable expansion/rejection from _path_is_dangerous. Other unsafe-path checks remain. This changes implementation checking, not BagIt manifest rules.",
+      "applicability_assessment": "Supports exact scope behind E07. No broader validator safety conclusion.",
+      "authored_source_map": "assessment/A8-01/control-v1/source-map.json",
+      "source_id": "E08"
+    },
+    {
+      "access_utc": "2026-10-10T04:44:28.281613+00:00",
+      "authored_source_map": "assessment/A8-01/control-v1/source-map.json",
+      "source_id": null
+    },
+    {
+      "access_utc": "2026-10-10T04:44:28.281613+00:00",
+      "authored_source_map": "assessment/A8-01/control-v1/evidence/retrieval-records.json",
+      "source_id": null
+    }
+  ],
+  "selected_api_metadata": [
+    {
+      "sha": "c9c17374113865849f9d0a7906f4c168525dffdb",
+      "filename": "bagit.py",
+      "status": "modified",
+      "raw_url": "https://github.com/LibraryOfCongress/bagit-python/raw/68907823bf91ee46dd04a3848cef85634337c1de/bagit.py",
+      "blob_url": "https://github.com/LibraryOfCongress/bagit-python/blob/68907823bf91ee46dd04a3848cef85634337c1de/bagit.py",
+      "original_json_locator": "$[0]"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY_AND_METADATA; full body coverage UNKNOWN",
+  "omission": "Full fetched body, API ancillary fields and unmechanically summarizable body details are archived privately. Original source URL and selectors govern; unsupported/missing semantic coverage is UNKNOWN. No candidate finding or independent judgment is repaired.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

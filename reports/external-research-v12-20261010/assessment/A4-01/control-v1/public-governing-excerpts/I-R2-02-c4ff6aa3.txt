@@ -1,29 +1,339 @@
-URL: https://developers.cloudflare.com/r2/api/s3/api/
-Original locator: ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-R2-02.txt
-Original SHA256: c4ff6aa372e3b10cd0db523c2927de68b42196f2c8b34d13d788a60ffaf26099
-Original numbered lines; gaps omitted. Not full response.
-
-191: ❌ x-amz-checksum-algorithm
-197: ❌ x-amz-checksum-algorithm
-288: ❌ x-amz-checksum-algorithm
-300: ❌ x-amz-checksum-algorithm
-310: ❌ x-amz-checksum-algorithm
-324: ❌ x-amz-checksum-algorithm
-331: ❌ x-amz-checksum-algorithm
-342: ❌ x-amz-checksum-algorithm
-361: ❌ x-amz-checksum-algorithm
-370: ❌ x-amz-checksum-algorithm
-377: ❌ x-amz-checksum-algorithm
-384: ❌ x-amz-checksum-algorithm
-393: ❌ x-amz-checksum-algorithm
-414: ❌ x-amz-checksum-algorithm
-422: UploadPart: Uploading to the same part number replaces the previous part. If a subsequent upload to the same part fails, the original part is lost and must be re-uploaded.
-596: | ✅ CompleteMultipartUpload ↗︎
-597: | ❌ Bucket Owner:
-598: ❌ x-amz-expected-bucket-owner
-599: ❌ Request Payer:
-600: ❌ x-amz-request-payer
-604: | ✅ CopyObject ↗︎
-657: ❌ x-amz-checksum-algorithm
-658: | ✅ UploadPart ↗︎
-671: | ✅ UploadPartCopy ↗︎
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://developers.cloudflare.com/r2/api/s3/api/"
+  ],
+  "original_public_path": "assessment/A4-01/control-v1/public-governing-excerpts/I-R2-02-c4ff6aa3.txt",
+  "original_public_sha256": "693d718f910bde53ea474876ca2c18287380aee58d445d994c2293ae266be927",
+  "original_public_bytes": 1210,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A4-01/control-v1/public-governing-excerpts/I-R2-02-c4ff6aa3.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-R2-02.txt",
+      "original_sha256": "c4ff6aa372e3b10cd0db523c2927de68b42196f2c8b34d13d788a60ffaf26099",
+      "original_bytes": 20514,
+      "original_line_numbers": [
+        191,
+        197,
+        288,
+        300,
+        310,
+        324,
+        331,
+        342,
+        361,
+        370,
+        377,
+        384,
+        393,
+        414,
+        422,
+        596,
+        597,
+        598,
+        599,
+        600,
+        604,
+        657,
+        658,
+        671
+      ],
+      "original_locators": [
+        {
+          "locator": "CompleteMultipartUpload local lines 596–600; CopyObject 604–657; UploadPart begins 658. Raw HTML preserves actual table-row structure."
+        },
+        {
+          "saved_text_lines": [
+            596
+          ]
+        },
+        {
+          "anchor": "CompleteMultipartUpload",
+          "matched_original_line": 596
+        },
+        {
+          "saved_text_lines": [
+            604
+          ]
+        },
+        {
+          "anchor": "CopyObject",
+          "matched_original_line": 604
+        },
+        {
+          "saved_text_lines": [
+            191,
+            197,
+            288,
+            300,
+            310,
+            324,
+            331,
+            342,
+            361,
+            370,
+            377,
+            384,
+            393,
+            414,
+            657
+          ]
+        },
+        {
+          "anchor": "x-amz-checksum-algorithm",
+          "matched_original_line": 191
+        },
+        {
+          "anchor": "x-amz-checksum-algorithm",
+          "matched_original_line": 197
+        },
+        {
+          "anchor": "x-amz-checksum-algorithm",
+          "matched_original_line": 288
+        },
+        {
+          "anchor": "x-amz-checksum-algorithm",
+          "matched_original_line": 300
+        },
+        {
+          "anchor": "x-amz-checksum-algorithm",
+          "matched_original_line": 310
+        },
+        {
+          "anchor": "x-amz-checksum-algorithm",
+          "matched_original_line": 324
+        },
+        {
+          "anchor": "x-amz-checksum-algorithm",
+          "matched_original_line": 331
+        },
+        {
+          "anchor": "x-amz-checksum-algorithm",
+          "matched_original_line": 342
+        },
+        {
+          "anchor": "x-amz-checksum-algorithm",
+          "matched_original_line": 361
+        },
+        {
+          "anchor": "x-amz-checksum-algorithm",
+          "matched_original_line": 370
+        },
+        {
+          "anchor": "x-amz-checksum-algorithm",
+          "matched_original_line": 377
+        },
+        {
+          "anchor": "x-amz-checksum-algorithm",
+          "matched_original_line": 384
+        },
+        {
+          "anchor": "x-amz-checksum-algorithm",
+          "matched_original_line": 393
+        },
+        {
+          "anchor": "x-amz-checksum-algorithm",
+          "matched_original_line": 414
+        },
+        {
+          "anchor": "x-amz-checksum-algorithm",
+          "matched_original_line": 657
+        },
+        {
+          "saved_text_lines": [
+            422,
+            658,
+            671
+          ]
+        },
+        {
+          "anchor": "UploadPart",
+          "matched_original_line": 422
+        },
+        {
+          "anchor": "UploadPart",
+          "matched_original_line": 658
+        },
+        {
+          "anchor": "UploadPart",
+          "matched_original_line": 671
+        },
+        {
+          "locator": "CompleteMultipartUpload local lines 596–600; CopyObject 604–657; UploadPart begins 658. Raw HTML preserves actual table-row structure."
+        },
+        {
+          "saved_text_lines": [
+            596
+          ]
+        },
+        {
+          "anchor": "CompleteMultipartUpload",
+          "matched_original_line": 596
+        },
+        {
+          "saved_text_lines": [
+            604
+          ]
+        },
+        {
+          "anchor": "CopyObject",
+          "matched_original_line": 604
+        },
+        {
+          "saved_text_lines": [
+            191,
+            197,
+            288,
+            300,
+            310,
+            324,
+            331,
+            342,
+            361,
+            370,
+            377,
+            384,
+            393,
+            414,
+            657
+          ]
+        },
+        {
+          "anchor": "x-amz-checksum-algorithm",
+          "matched_original_line": 191
+        },
+        {
+          "anchor": "x-amz-checksum-algorithm",
+          "matched_original_line": 197
+        },
+        {
+          "anchor": "x-amz-checksum-algorithm",
+          "matched_original_line": 288
+        },
+        {
+          "anchor": "x-amz-checksum-algorithm",
+          "matched_original_line": 300
+        },
+        {
+          "anchor": "x-amz-checksum-algorithm",
+          "matched_original_line": 310
+        },
+        {
+          "anchor": "x-amz-checksum-algorithm",
+          "matched_original_line": 324
+        },
+        {
+          "anchor": "x-amz-checksum-algorithm",
+          "matched_original_line": 331
+        },
+        {
+          "anchor": "x-amz-checksum-algorithm",
+          "matched_original_line": 342
+        },
+        {
+          "anchor": "x-amz-checksum-algorithm",
+          "matched_original_line": 361
+        },
+        {
+          "anchor": "x-amz-checksum-algorithm",
+          "matched_original_line": 370
+        },
+        {
+          "anchor": "x-amz-checksum-algorithm",
+          "matched_original_line": 377
+        },
+        {
+          "anchor": "x-amz-checksum-algorithm",
+          "matched_original_line": 384
+        },
+        {
+          "anchor": "x-amz-checksum-algorithm",
+          "matched_original_line": 393
+        },
+        {
+          "anchor": "x-amz-checksum-algorithm",
+          "matched_original_line": 414
+        },
+        {
+          "anchor": "x-amz-checksum-algorithm",
+          "matched_original_line": 657
+        },
+        {
+          "saved_text_lines": [
+            422,
+            658,
+            671
+          ]
+        },
+        {
+          "anchor": "UploadPart",
+          "matched_original_line": 422
+        },
+        {
+          "anchor": "UploadPart",
+          "matched_original_line": 658
+        },
+        {
+          "anchor": "UploadPart",
+          "matched_original_line": 671
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A4-01/control-v1/source-map.json",
+      "source_id": "I-R2-02",
+      "title": "S3 API compatibility — Cloudflare R2",
+      "retrieved_at_utc": "2026-10-10T04:25:10.595088+00:00",
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "CompleteMultipartUpload",
+          "saved_text_lines": [
+            596
+          ]
+        },
+        {
+          "anchor": "CopyObject",
+          "saved_text_lines": [
+            604
+          ]
+        },
+        {
+          "anchor": "x-amz-checksum-algorithm",
+          "saved_text_lines": [
+            191,
+            197,
+            288,
+            300,
+            310,
+            324,
+            331,
+            342,
+            361,
+            370,
+            377,
+            384,
+            393,
+            414,
+            657
+          ]
+        },
+        {
+          "anchor": "UploadPart",
+          "saved_text_lines": [
+            422,
+            658,
+            671
+          ]
+        }
+      ]
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}

@@ -1,38 +1,393 @@
-URL: https://tus.io/protocols/resumable-upload
-Original locator: ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P09-text.txt
-Original SHA256: b1261162c4ec94b4122124d912dbdf7a9d60195aa9479f45d56a78728106f505
-Original numbered lines; gaps omitted. Not full response.
-
-30: Checksum
-36: Version: 1.0.0 (SemVer)
-90: authors and collaborators will be listed as such in the protocol header.
-112: A HEAD request is used to determine the offset at which the upload should be
-117: HEAD /files/24e533e02ec3bc40c387f1a0e460e216 HTTP/1.1
-137: Headers
-139: The Upload-Offset request and response header indicates a byte offset within a
-142: The Upload-Length request and response header indicates the size of the entire
-170: HEAD
-172: HEAD request, even if the offset is 0, or the upload is already considered
-177: The Server SHOULD acknowledge successful HEAD requests with a 200 OK or
-190: match, the Server MUST respond with the 409 Conflict status without modifying
-195: Checksum extension is used.
-227: Tus-Version: 1.0.0,0.2.2,0.2.1
-282: responses to HEAD requests.
-291: contains additional metadata, responses to HEAD requests MUST include the
-376: Checksum
-378: integrity of each PATCH request. If supported, the Server MUST add checksum
-380: A Client MAY include the Upload-Checksum header in a PATCH request. Once the
-382: against the provided checksum using the specified algorithm. Depending on the
-385: 460 Checksum Mismatch if the checksums mismatch or
-392: The Tus-Checksum-Algorithm header MUST be included in the response to an
-400: Tus-Checksum-Algorithm
-401: The Tus-Checksum-Algorithm response header MUST be a comma-separated list of
-403: Upload-Checksum
-404: The Upload-Checksum request header contains information about the checksum of
-414: Tus-Version: 1.0.0
-416: Tus-Checksum-Algorithm: md5,sha1,crc32
-422: Upload-Checksum: sha1 Kq5sNclPz7QV2+lfQIuc6R7oRu0=
-478: The response to a HEAD request for a final upload SHOULD NOT contain the
-483: The response to a HEAD request for a partial upload MUST contain the
-486: can be calculated at the time of the request. Response to HEAD request against
-536: HEAD /files/ab HTTP/1.1
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "bounded provenance/summary replacing generated fetched excerpt",
+  "source_urls": [
+    "https://tus.io/protocols/resumable-upload"
+  ],
+  "original_public_path": "assessment/A4-01/treatment-v1/public-governing-excerpts/P09-text-b1261162.txt",
+  "original_public_sha256": "7d1c845fcd417164e3341746c64244eafbfb77861adf8b147da98a424715f035",
+  "original_public_bytes": 2139,
+  "private_archive_lineage": "publication-source-body-repair-v1/private/originals/assessment/A4-01/treatment-v1/public-governing-excerpts/P09-text-b1261162.txt",
+  "original_capture_selectors": [
+    {
+      "source_locator": "ER12_RUNTIME/assessment/A4-01/treatment-v1/evidence/P09-text.txt",
+      "original_sha256": "b1261162c4ec94b4122124d912dbdf7a9d60195aa9479f45d56a78728106f505",
+      "original_bytes": 23741,
+      "original_line_numbers": [
+        30,
+        36,
+        90,
+        112,
+        117,
+        137,
+        139,
+        142,
+        170,
+        172,
+        177,
+        190,
+        195,
+        227,
+        282,
+        291,
+        376,
+        378,
+        380,
+        382,
+        385,
+        392,
+        400,
+        401,
+        403,
+        404,
+        414,
+        416,
+        422,
+        478,
+        483,
+        486,
+        536
+      ],
+      "original_locators": [
+        {
+          "text_lines": [
+            36,
+            227,
+            414
+          ]
+        },
+        {
+          "anchor": "Version: 1.0.0",
+          "matched_original_line": 36
+        },
+        {
+          "anchor": "Version: 1.0.0",
+          "matched_original_line": 227
+        },
+        {
+          "anchor": "Version: 1.0.0",
+          "matched_original_line": 414
+        },
+        {
+          "text_lines": [
+            90,
+            112,
+            117,
+            137,
+            139,
+            142
+          ]
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 112
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 117
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 170
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 172
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 177
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 282
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 291
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 478
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 483
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 486
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 536
+        },
+        {
+          "text_lines": [
+            190
+          ]
+        },
+        {
+          "anchor": "409 Conflict",
+          "matched_original_line": 190
+        },
+        {
+          "text_lines": [
+            30,
+            195,
+            376,
+            378,
+            380,
+            382
+          ]
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 30
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 195
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 376
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 380
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 385
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 392
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 400
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 401
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 403
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 404
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 416
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 422
+        },
+        {
+          "text_lines": [
+            36,
+            227,
+            414
+          ]
+        },
+        {
+          "anchor": "Version: 1.0.0",
+          "matched_original_line": 36
+        },
+        {
+          "anchor": "Version: 1.0.0",
+          "matched_original_line": 227
+        },
+        {
+          "anchor": "Version: 1.0.0",
+          "matched_original_line": 414
+        },
+        {
+          "text_lines": [
+            90,
+            112,
+            117,
+            137,
+            139,
+            142
+          ]
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 112
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 117
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 170
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 172
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 177
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 282
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 291
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 478
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 483
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 486
+        },
+        {
+          "anchor": "HEAD",
+          "matched_original_line": 536
+        },
+        {
+          "text_lines": [
+            190
+          ]
+        },
+        {
+          "anchor": "409 Conflict",
+          "matched_original_line": 190
+        },
+        {
+          "text_lines": [
+            30,
+            195,
+            376,
+            378,
+            380,
+            382
+          ]
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 30
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 195
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 376
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 380
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 385
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 392
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 400
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 401
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 403
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 404
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 416
+        },
+        {
+          "anchor": "Checksum",
+          "matched_original_line": 422
+        }
+      ]
+    }
+  ],
+  "existing_authored_governing_summaries": [
+    {
+      "authored_source_map": "assessment/A4-01/treatment-v1/source-map.json",
+      "source_id": "P09",
+      "accessed_utc": "2026-10-10T04:41:54.230608+00:00",
+      "version_or_commit_observed": "tus protocol 1.0.0, dated 2016-03-25",
+      "locator": "Core HEAD/PATCH/offset and optional extensions",
+      "locators": [
+        {
+          "anchor": "Version: 1.0.0",
+          "text_lines": [
+            36,
+            227,
+            414
+          ],
+          "primary_heading_or_json_field": "Core HEAD/PATCH/offset and optional extensions"
+        },
+        {
+          "anchor": "HEAD",
+          "text_lines": [
+            90,
+            112,
+            117,
+            137,
+            139,
+            142
+          ],
+          "primary_heading_or_json_field": "Core HEAD/PATCH/offset and optional extensions"
+        },
+        {
+          "anchor": "409 Conflict",
+          "text_lines": [
+            190
+          ],
+          "primary_heading_or_json_field": "Core HEAD/PATCH/offset and optional extensions"
+        },
+        {
+          "anchor": "Checksum",
+          "text_lines": [
+            30,
+            195,
+            376,
+            378,
+            380,
+            382
+          ],
+          "primary_heading_or_json_field": "Core HEAD/PATCH/offset and optional extensions"
+        }
+      ],
+      "conditions_defaults_units_types_exceptions": "Offset mismatch yields 409 without modification; version/header requirements apply; checksum/expiry/termination are advertised optional extensions, not inherent whole-file verification. Authentication is server-owned.",
+      "applicability": "Governs the named external product/operation only; does not establish archive service behavior.",
+      "reviewer_observation": "READ_ONLY_RETRIEVAL_AND_SOURCE_INSPECTION; NOT_PRODUCT_VALIDATION"
+    }
+  ],
+  "evidence_coverage": "BOUNDED_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "omission": "Generated verbatim source extract removed. Only the preserved authored source-map summary is asserted here. Any consequential detail not retained in that summary has UNKNOWN coverage; consult original URL and original locators. No scientific judgment changed.",
+  "quoted_body_words": 0,
+  "byte_exact_replay": false
+}
