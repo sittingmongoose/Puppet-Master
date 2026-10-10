@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="pmg-build" content="641943255242">
+<meta name="pmg-build" content="d5a38cfc4f08">
 <title>Puppet Master glyphs: the neon set for every surface</title>
 <script>
 /* first paint: the look, mode and motion come from the URL (frames) or the last choice, before any CSS paints */
@@ -2060,13 +2060,13 @@ window.PMG_DATA = {"decisions":{"cards":[{"id":"GLY-1","title":"Does the triangl
     meaning: 'Grid view.', act: 'seq', aliases: ['grid-view', 'tiles'],
     replaces: ['T-usage-svg grid', 'T-usage-base grid', 'T-bridge compose'],
     parts: ['<rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/>', '<rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/>', '<rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/>',
-      { els: '<rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/>', move: { ao: .3, b: 1 } }]
+      { els: '<rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/>', move: { ax: 3, ay: -3, b: 1 } }]
   });
   def('list', {
     meaning: 'List view.', act: 'seq', aliases: ['list-view', 'rows'],
     replaces: ['T-usage-base list'],
     parts: ['<circle cx="5" cy="6" r="1.1" class="nx-f"/>', '<circle cx="5" cy="12" r="1.1" class="nx-f"/>', '<circle cx="5" cy="18" r="1.1" class="nx-f"/>',
-      { els: '<path d="M9 6h11"/>', move: { ax: -2.4, ao: .4 } }, { els: '<path d="M9 12h11"/>', move: { ax: -2.4, ao: .4, ad: 90 } }, { els: '<path d="M9 18h11"/>', move: { ax: -2.4, ao: .4, ad: 180 } }]
+      { els: '<path d="M9 6h11"/>', move: { ax: -3, ao: .4 } }, { els: '<path d="M9 12h11"/>', move: { ax: -3, ao: .4, ad: 90 } }, { els: '<path d="M9 18h11"/>', move: { ax: -3, ao: .4, ad: 180 } }]
   });
   def('resize', {
     meaning: 'Resize handle: drag to change the size.', act: 'none', aliases: ['dash-resize', 'usage-resize', 'size'],
@@ -2077,7 +2077,7 @@ window.PMG_DATA = {"decisions":{"cards":[{"id":"GLY-1","title":"Does the triangl
     meaning: 'Move: drag in any direction.', act: 'swap', aliases: ['dash-move'],
     replaces: ['T-single dash-move'],
     parts: ['<path d="M12 4v16M4 12h16"/>',
-      { els: '<path d="m9 6.5 3-3 3 3M9 17.5l3 3 3-3"/>', move: { ao: .35, b: 1 } },
+      { els: '<path d="m9 6.5 3-3 3 3M9 17.5l3 3 3-3"/>', move: { ay: 0, ao: .35, b: 1 } },
       { els: '<path d="m6.5 9-3 3 3 3M17.5 9l3 3-3 3"/>', move: { ao: .35, ad: 140, b: 1 } }]
   });
 })();
@@ -2236,21 +2236,21 @@ window.PMG_DATA = {"decisions":{"cards":[{"id":"GLY-1","title":"Does the triangl
     meaning: 'A database or data store.', act: 'strike', aliases: ['data', 'store'],
     replaces: ['T-term database', 'T-engine database'], note: 'The lid lifts.',
     parts: ['<path d="M5 6v12c0 1.55 3.13 2.8 7 2.8s7-1.25 7-2.8V6"/>', '<path d="M5 12c0 1.55 3.13 2.8 7 2.8s7-1.25 7-2.8"/>',
-      { els: '<ellipse cx="12" cy="6" rx="7" ry="2.8"/>', move: { ay: -2.2, b: 1 } }]
+      { els: '<ellipse cx="12" cy="6" rx="7" ry="2.8"/>', move: { ay: -3, b: 1 } }]
   });
   def('cpu', {
     meaning: 'A processor: compute, the local machine\'s load.', act: 'seq', aliases: ['processor', 'compute', 'system'],
-    replaces: ['T-term cpu', 'T-engine system'], note: 'The core lights.',
+    replaces: ['T-term cpu', 'T-engine system'], note: 'The core draws out from its centre.',
     parts: ['<rect x="6" y="6" width="12" height="12" rx="2"/>', '<path d="M9.5 3v3M14.5 3v3M9.5 18v3M14.5 18v3M3 9.5h3M3 14.5h3M18 9.5h3M18 14.5h3"/>',
-      { els: '<rect x="9.5" y="9.5" width="5" height="5" rx="1"/>', move: { ao: .25, b: 1 } }]
+      { els: '<rect x="9.5" y="9.5" width="5" height="5" rx="1"/>', move: { ac: '12 12 12 12', ae: '0 0 0 0' } }]
   });
   def('signal', {
     meaning: 'A network connection and its strength.', act: 'seq', aliases: ['wifi', 'radio', 'network'],
-    replaces: ['T-term wifi', 'T-term radio', 'T-engine network'], note: 'The arcs light outward in turn.',
+    replaces: ['T-term wifi', 'T-term radio', 'T-engine network'], note: 'The arcs rise out of the dot in turn.',
     parts: ['<circle cx="12" cy="18.6" r="1.1" class="nx-f"/>',
-      { els: '<path d="M9.9 15.6a3 3 0 0 1 4.2 0"/>', move: { ao: .2 } },
-      { els: '<path d="M7.4 12.9a6.6 6.6 0 0 1 9.2 0"/>', move: { ao: .2, ad: 110 } },
-      { els: '<path d="M4.8 10.1a10.3 10.3 0 0 1 14.4 0"/>', move: { ao: .2, ad: 220 } }]
+      { els: '<path d="M9.9 15.6a3 3 0 0 1 4.2 0"/>', move: { ay: 3, ao: .4 } },
+      { els: '<path d="M7.4 12.9a6.6 6.6 0 0 1 9.2 0"/>', move: { ay: 3, ao: .4, ad: 110 } },
+      { els: '<path d="M4.8 10.1a10.3 10.3 0 0 1 14.4 0"/>', move: { ay: 3, ao: .4, ad: 220 } }]
   });
   def('hammer', {
     meaning: 'Build: compile, make, assemble.', act: 'strike', aliases: ['build', 'make'],
@@ -2260,26 +2260,26 @@ window.PMG_DATA = {"decisions":{"cards":[{"id":"GLY-1","title":"Does the triangl
   def('scissors', {
     meaning: 'Cut.', act: 'strike', aliases: ['cut'],
     replaces: ['T-bridge scissors'], note: 'The blades snip.',
-    parts: [{ els: ['<circle cx="6.5" cy="6.5" r="2.6"/>', '<path d="M8.7 7.9 20 17.5"/>'], move: { ar: -8, o: [12.6, 11.4], b: 1 } },
-      { els: ['<circle cx="6.5" cy="17.5" r="2.6"/>', '<path d="M8.7 16.1 20 6.5"/>'], move: { ar: 8, o: [12.6, 12.6], b: 1 } }]
+    parts: [{ els: ['<circle cx="6.5" cy="6.5" r="2.6"/>', '<path d="M8.7 7.9 20 17.5"/>'], move: { ar: -16, o: [12.6, 11.4], b: 1 } },
+      { els: ['<circle cx="6.5" cy="17.5" r="2.6"/>', '<path d="M8.7 16.1 20 6.5"/>'], move: { ar: 16, o: [12.6, 12.6], b: 1 } }]
   });
   def('save', {
     meaning: 'Save.', act: 'strike', aliases: [],
     replaces: ['T-engine save'], note: 'The shutter slides shut.',
     parts: ['<path d="M5.5 3.5h10.7l3.3 3.3v11.7a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2v-13a2 2 0 0 1 2-2z"/>', '<path d="M7.5 20.5v-6h9v6"/>',
-      { els: '<path d="M8 3.5v4h6.5v-4"/>', move: { ax: 1.6, b: 1 } }]
+      { els: '<path d="M8 3.5v4h6.5v-4"/>', move: { ax: 3, b: 1 } }]
   });
   def('mic', {
     meaning: 'A microphone: voice input.', act: 'strike', aliases: ['microphone', 'voice'],
     replaces: ['T-engine mic'], note: 'The capsule lifts as it listens.',
     parts: ['<path d="M5.5 11.5a6.5 6.5 0 0 0 13 0"/>', '<path d="M12 18v3"/>',
-      { els: '<rect x="9" y="3" width="6" height="11" rx="3"/>', move: { ay: -1.6, b: 1 } }]
+      { els: '<rect x="9" y="3" width="6" height="11" rx="3"/>', move: { ay: -3, b: 1 } }]
   });
   def('browser', {
     meaning: 'A web page or browser window.', act: 'seq', aliases: ['webpage', 'window'],
     replaces: ['T-engine browser'], note: 'The page loads a line. globe (the chat) stays for the web at large.',
     parts: ['<rect x="3" y="4" width="18" height="16" rx="2"/>', '<path d="M3 9h18"/>', '<circle cx="6" cy="6.5" r=".75" class="nx-f"/>', '<circle cx="8.6" cy="6.5" r=".75" class="nx-f"/>',
-      { els: '<path d="M7 13.5h7M7 16.5h4"/>', move: { ao: .2, ax: -1.6 } }]
+      { els: '<path d="M7 13.5h7M7 16.5h4"/>', move: { ao: .3, ax: -3 } }]
   });
   def('route', {
     meaning: 'A route: the path work takes from one place to another (model routing, a fallback route).', act: 'seq', aliases: [],
@@ -2291,7 +2291,7 @@ window.PMG_DATA = {"decisions":{"cards":[{"id":"GLY-1","title":"Does the triangl
     meaning: 'Help: how something works. question (the chat) stays for a question asked of you.', act: 'hop', aliases: ['helpcircle'],
     replaces: ['T-obfall helpCircle'], note: 'The question mark hops once.',
     parts: ['<circle cx="12" cy="12" r="9"/>',
-      { els: ['<path d="M9.5 9.4a2.6 2.6 0 0 1 5 .9c0 1.7-2.5 2.2-2.5 3.7"/>', '<path d="M12 17.1v.1"/>'], move: { ay: -2, b: 1 } }]
+      { els: ['<path d="M9.5 9.4a2.6 2.6 0 0 1 5 .9c0 1.7-2.5 2.2-2.5 3.7"/>', '<path d="M12 17.1v.1"/>'], move: { ay: -3, b: 1 } }]
   });
 
   /* people, agents and safekeeping */
