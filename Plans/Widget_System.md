@@ -1514,7 +1514,11 @@ owner_doc: Plans/Widget_System.md
 canonical_text: >-
   Widget layout has one schema family with separate canonical namespaces per host. Usage writes
   `widget_layout:v1:usage`; Dashboard writes `widget_layout:v1:dashboard`; Home shell surfaces remain under
-  `home_workspace_layout.v1`. The named public Usage contract is `UsageWidgetLayoutRecord`. Its required closed
+  `home_workspace_layout.v1` (amended 2026-10-09, DL-180: Dashboard writes one namespace per board,
+  `widget_layout:v1:dashboard:<board_id>` with `host_id` `dashboard:<board_id>`, and Home shell surfaces live in
+  `home_workspace_layout.v2` (Plans/storage-plan.md#SP-330); `widget_layout:v1:dashboard` and
+  `home_workspace_layout.v1` are read-only migration inputs, WS-030). The named public Usage contract is
+  `UsageWidgetLayoutRecord`. Its required closed
   fields are `layout_schema_version`, `default_set_version`, `host_id`, `room_id`, `widget_id`, `visible`,
   `order_index`, `slot_id`, `geometry_id`, `semantic_tier_id`, `preset_id`, `configuration_refs`, and
   `committed_revision`, with the exact types and nullability defined immediately above this unit. Each
@@ -1525,10 +1529,10 @@ canonical_text: >-
   the Home surface record, and a Home surface operation cannot write a widget-layout record.
 gui_related: true
 gui_classification_reason: The record determines restored widget placement, semantic size, and cross-surface ownership.
-depends_on: [UF-060, WS-004, WS-009, WS-018, WS-019]
+depends_on: [UF-060, WS-004, WS-009, WS-018, WS-019, DL-180]
 unblocks: []
 acceptance_criteria:
-  - Usage and Dashboard restore from their own namespaces while Home surfaces restore only from home_workspace_layout.v1.
+  - "Usage and Dashboard restore from their own namespaces while Home surfaces restore only from home_workspace_layout.v1. Amended 2026-10-09 (DL-180): each dashboard board restores from its own widget_layout:v1:dashboard:<board_id> and Home surfaces restore only from home_workspace_layout.v2, with widget_layout:v1:dashboard and home_workspace_layout.v1 read only as migration inputs (WS-030, SP-330)."
   - "UsageWidgetLayoutRecord is the named public contract for a settled Usage widget layout and has exactly the required fields layout_schema_version, default_set_version, host_id, room_id, widget_id, visible, order_index, slot_id, geometry_id, semantic_tier_id, preset_id, configuration_refs, and committed_revision, including semantic size or preset identity in addition to supported geometry so adaptive content restores deterministically; every configuration_ref resolves to an existing stable, non-secret widget-configuration identity governed by WS-004 and UF-060, and filter payloads remain in the configuration record rather than becoming new UsageWidgetLayoutRecord fields."
   - "No preview rectangle, pointer or pointer coordinate, ghost, placeholder, animation state, draft, or per-frame draft appears in UsageWidgetLayoutRecord."
   - A widget mutation never writes Home surface placement and a Home surface mutation never writes Usage or Dashboard widget placement.
