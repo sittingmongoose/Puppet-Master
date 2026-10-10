@@ -124,6 +124,24 @@ finds them there, so the repository keeps one copy of the bytes. Licence check, 
 (https://github.com/JetBrains/JetBrainsMono)" and names no Reserved Font Name, so a subset may keep the original family
 name (OFL 1.1 condition 3 applies only to reserved names). 5.6 Pro embeds the same six files in `styles.css`.
 
+Its italic (added 2026-10-10 at the home redesign's request, so italic code text is drawn, not slanted by the browser)
+is JetBrains Mono's own italic variable font, wght 100-800, at the same version as the upright (2.211, gstatic v24),
+with the same slices, in this folder. `jetbrains-mono-latin-100-800-italic.woff2` is byte for byte the home redesign
+terminal thread's `pmt-jetbrains-mono-latin-var-italic.woff2` (SHA-256 `a8afa085e9ca5e53...`, 42,964 bytes, per
+`Concepts/home-redesign/src/terminal/fonts/SOURCE.md` on `concept/home-terminal-20261009`), so both ship the same bytes.
+5.6 Pro does not embed the italic: its chat sets no italic text (J-1, no italic face embedded there).
+The upright Latin file (NieR's) carries a wght axis of 400-800 although the faces declare 100 800, so upright weights
+under 400 draw at 400 in Latin; the upright slices and the italic run the full 100-800.
+
+| File | Source | SHA-256 (first 16) |
+|---|---|---|
+| `jetbrains-mono-cyrillic-ext-100-800-italic.woff2` | Google Fonts css2 `JetBrains Mono:ital,wght@1,100..800`, cyrillic-ext (JetBrains Mono 2.211, gstatic v24: https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbX2o-flEEny0FZhsfKu5WU4xD-Cw6nSHrV.woff2) | `1b53536573e8f2e8` |
+| `jetbrains-mono-cyrillic-100-800-italic.woff2` | Google Fonts css2 `JetBrains Mono:ital,wght@1,100..800`, cyrillic (JetBrains Mono 2.211, gstatic v24: https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbX2o-flEEny0FZhsfKu5WU4xD-CwenSHrV.woff2) | `8df3ca627bd8e1cb` |
+| `jetbrains-mono-greek-100-800-italic.woff2` | Google Fonts css2 `JetBrains Mono:ital,wght@1,100..800`, greek (JetBrains Mono 2.211, gstatic v24: https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbX2o-flEEny0FZhsfKu5WU4xD-CwCnSHrV.woff2) | `9e1c1dd086c8aac0` |
+| `jetbrains-mono-vietnamese-100-800-italic.woff2` | Google Fonts css2 `JetBrains Mono:ital,wght@1,100..800`, vietnamese (JetBrains Mono 2.211, gstatic v24: https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbX2o-flEEny0FZhsfKu5WU4xD-CwynSHrV.woff2) | `b156cfa6a1ae7f2a` |
+| `jetbrains-mono-latin-ext-100-800-italic.woff2` | Google Fonts css2 `JetBrains Mono:ital,wght@1,100..800`, latin-ext (JetBrains Mono 2.211, gstatic v24: https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbX2o-flEEny0FZhsfKu5WU4xD-Cw2nSHrV.woff2) | `60652c78382d7e50` |
+| `jetbrains-mono-latin-100-800-italic.woff2` | Google Fonts css2 `JetBrains Mono:ital,wght@1,100..800`, latin (JetBrains Mono 2.211, gstatic v24: https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbX2o-flEEny0FZhsfKu5WU4xD-CwOnSA.woff2) | `a8afa085e9ca5e53` |
+
 ## PM Symbols (`pm-symbols-sans.woff2`, `pm-symbols-mono.woff2`)
 
 The 21 symbol characters the page uses that no text face above carries (arrows, check and cross marks, triangles,
