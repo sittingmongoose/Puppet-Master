@@ -518,7 +518,10 @@
        its short words (the column wins over the full "Use this account · override"), and where the column costs no
        account, comfortable row or foot line (plan() below); otherwise they fold: under the action word, or beside the
        binding meter on a narrow plate. One form for every row of a plate. */
-    var SWCOL = swOn ? Math.ceil(Math.max(SWB, Math.max(tw(t('accounts.acc_sw_own'), 12, 500), tw(famShort(p), 12, 500)) * 1.06 + 9)) : 0;
+    /* the caps' measure (mono 11 px and its tracking, wider in NieR) */
+    var capW = function (s) { var ls = PMU.theme.look().nier ? 0.10 : 0.05; return (PMU.charts && PMU.charts.textW ? PMU.charts.textW(s, 11, true, 400) : s.length * 6.4) + s.length * 11 * ls; };
+    /* the column keeps its value, the word under it and its caption on one line each (NieR's tracking wrapped "SWITCH AT") */
+    var SWCOL = swOn ? Math.ceil(Math.max(SWB, Math.max(tw(t('accounts.acc_sw_own'), 12, 500), tw(famShort(p), 12, 500)) * 1.06 + 9, capW('SWITCH AT') * 1.06 + 2)) : 0;
     var nCol = mode === 'full' ? n : 1, actStack = actW, fullActStack = fullAct;
     var colOk = swOn && (mode === 'full' || mode === 'binding') && bw >= (mode === 'full' ? IDENT : IDENT_B) + nCol * 128 + SWCOL + actShort + GAP * (nCol + 2);
     /* foot copy (R-ACCT-10), most room, Codex: auto-switch state and the last two switch events */
@@ -554,7 +557,6 @@
       /* the column head takes a second line where a window's name does not fit its column ("PREMIUM / REQUESTS": 40 px, not
          26; item 2: the fit pass folded Copilot's second account behind a free band). Measured in the caps' face (mono 11 px,
          its tracking) */
-      var capW = function (s) { var ls = PMU.theme.look().nier ? 0.10 : 0.05; return (PMU.charts && PMU.charts.textW ? PMU.charts.textW(s, 11, true, 400) : s.length * 6.4) + s.length * 11 * ls; };
       var capFits = function (s) { return capW(s) * 1.08 <= winW - 8; };   /* the grid's column runs a little narrower than winW */
       var capLines = mode === 'full' ? (p.windows.every(function (w) { return capFits(w.label.replace(/ window$/i, '').toUpperCase()); }) ? 1 : 2) : mode === 'binding' ? (capFits('BINDING WINDOW') ? 1 : 2) : 1;
       var bandH = (band ? 27 + 13 * (capLines - 1) : 0) + (polB ? polB.h : 0);
