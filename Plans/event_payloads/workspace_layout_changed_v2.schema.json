@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/2.0.0",
   "title": "workspace.layout_changed settled event payload, version 2",
-  "description": "One event for every committed structural change of the v2 Home layout (Plans/Contracts_V0.md#CV-361, DL-180). change names what happened; the id lists name what it touched. An open that only reveals an existing tab, view-state writes (activate, focus, maximize, recent order, the chat's shown and History pinned), the chat's pop-out and return (which append panel.undocked or panel.redocked), menus, hover and drags emit nothing; a reveal that expands its tab's collapsed panel is one panel_expanded under the open's command id. Events written at 1.1.0 stay readable through $defs/workspace_layout_changed_v1_compatibility_reader.",
+  "description": "One event for every committed structural change of the v2 Home layout (Plans/Contracts_V0.md#CV-361, DL-180). change names what happened; the id lists name what it touched. An open that only reveals an existing tab, view-state writes (activate, focus, maximize, recent order, the chat's shown and History pinned), the chat's pop-out and return (which append panel.undocked or panel.redocked), menus, hover and drags emit nothing; a reveal that expands its tab's collapsed panel is one panel_expanded, and an open with mode keep of a panel's preview tab one tab_kept, each under the open's command id. Events written at 1.1.0 stay readable through $defs/workspace_layout_changed_v1_compatibility_reader.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -155,7 +155,7 @@
       "items": {
         "$ref": "#/$defs/non_empty_string"
       },
-      "description": "Tabs whose record or placement changed."
+      "description": "Tabs whose record or placement changed. A preview open that replaces its panel's preview tab names the new tab and the replaced one (Plans/Contracts_V0.md#CV-360)."
     },
     "affected_panel_ids": {
       "type": "array",
@@ -338,7 +338,12 @@
         "properties": {
           "command_id": {
             "enum": [
-              "cmd.panel_tab.keep"
+              "cmd.panel_tab.keep",
+              "cmd.panel_tab.open",
+              "cmd.file.open",
+              "cmd.nav.open_subject",
+              "cmd.browser.open_workspace_preview",
+              "cmd.terminal.open"
             ]
           }
         }

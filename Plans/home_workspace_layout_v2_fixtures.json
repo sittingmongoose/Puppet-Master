@@ -2551,5 +2551,111 @@
       ],
       "why": "A dashboard's widget layout lives under widget_layout:v1:dashboard:<board_id>, never in the Home record."
     }
-  ]
+  ],
+  "event_payload_examples": {
+    "schema_ref": "Plans/event_payloads/workspace_layout_changed_v2.schema.json#",
+    "owner_refs": [
+      "Plans/Contracts_V0.md#CV-360",
+      "Plans/Contracts_V0.md#CV-361"
+    ],
+    "notes": "Payload examples for workspace.layout_changed 2.0.0. Each valid payload validates against the payload schema. Each invalid case applies its JSON Patch ops (RFC 6902) to the named valid payload and is rejected by the schema. Ids and refs are illustrative.",
+    "valid": [
+      {
+        "name": "tab_kept_by_double_click_open",
+        "description": "A double click (cmd.file.open with mode keep) on src/routes/recipes.rs, which is the docs panel's preview tab: the tab is kept in place, one tab_kept under the open's own command id (CV-360).",
+        "payload": {
+          "schema_id": "pm.event.workspace_layout_changed.v2",
+          "schema_version": "2.0.0",
+          "project_id": "proj-tastebook",
+          "workspace_tab_id": "wt-main",
+          "change": "tab_kept",
+          "command_id": "cmd.file.open",
+          "actor": "user",
+          "interaction_transaction_id": "txn-ex-keep",
+          "origin": "home_workspace",
+          "correlation_id": "corr-txn-ex-keep",
+          "command_result_ref": "result-txn-ex-keep",
+          "receipt_refs": [
+            "receipt-txn-ex-keep"
+          ],
+          "prior_layout_revision": 4,
+          "new_layout_revision": 5,
+          "affected_tab_ids": [
+            "file:src/routes/recipes.rs"
+          ],
+          "affected_panel_ids": [
+            "panel-docs"
+          ],
+          "affected_split_ids": [],
+          "created_panel_ids": [],
+          "removed_panel_ids": [],
+          "named_layout_id": null,
+          "chat_column_fields": [],
+          "commit_origin": "pointer_release",
+          "migration_source_schema_id": null,
+          "settled_layout_ref": "home_layout_settlement:txn-ex-keep",
+          "settled_at_utc": "2026-10-09T12:05:00Z",
+          "settled_only": true,
+          "preview_state_included": false,
+          "persisted": true
+        }
+      },
+      {
+        "name": "tab_opened_replacing_preview",
+        "description": "A single click on src/lib.rs opens a preview in the docs panel, whose preview tab src/routes/recipes.rs is replaced in place: one tab_opened naming both tabs; the replaced preview is not put on the closed-tab stack (CV-360).",
+        "payload": {
+          "schema_id": "pm.event.workspace_layout_changed.v2",
+          "schema_version": "2.0.0",
+          "project_id": "proj-tastebook",
+          "workspace_tab_id": "wt-main",
+          "change": "tab_opened",
+          "command_id": "cmd.file.open",
+          "actor": "user",
+          "interaction_transaction_id": "txn-ex-preview",
+          "origin": "home_workspace",
+          "correlation_id": "corr-txn-ex-preview",
+          "command_result_ref": "result-txn-ex-preview",
+          "receipt_refs": [
+            "receipt-txn-ex-preview"
+          ],
+          "prior_layout_revision": 5,
+          "new_layout_revision": 6,
+          "affected_tab_ids": [
+            "file:src/lib.rs",
+            "file:src/routes/recipes.rs"
+          ],
+          "affected_panel_ids": [
+            "panel-docs"
+          ],
+          "affected_split_ids": [],
+          "created_panel_ids": [],
+          "removed_panel_ids": [],
+          "named_layout_id": null,
+          "chat_column_fields": [],
+          "commit_origin": "pointer_release",
+          "migration_source_schema_id": null,
+          "settled_layout_ref": "home_layout_settlement:txn-ex-preview",
+          "settled_at_utc": "2026-10-09T12:05:00Z",
+          "settled_only": true,
+          "preview_state_included": false,
+          "persisted": true
+        }
+      }
+    ],
+    "invalid": [
+      {
+        "name": "tab_kept_under_close_command",
+        "base_valid": "tab_kept_by_double_click_open",
+        "rejected_by": "schema",
+        "ops": [
+          {
+            "op": "replace",
+            "path": "/command_id",
+            "value": "cmd.panel_tab.close"
+          }
+        ],
+        "why": "tab_kept is bound to cmd.panel_tab.keep and the open routes of CV-360; a close command never keeps a tab."
+      }
+    ]
+  }
 }

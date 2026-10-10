@@ -23594,7 +23594,7 @@ One placement field set travels beside the identity fields of every route that c
 
 An open returns `{ ok, tab_id, panel_id, created, reason }`. `tab_id` is the panel tab id (the record key of SP-330, the argument UCC-200 calls `panel_tab_id`); it is not section 7.3's `tab_id` focus field. `panel_id` is the panel that holds the tab. `created` is `true` when the open added a tab and `false` when it revealed one. `reason` is null when `ok` is `true`; otherwise it is the refusal: `unknown_kind` for an id or kind no tab kind claims, `not_ready` while the layout has not loaded, or a refusal from the route's own error set.
 
-One id is one tab in the whole workspace. When the id's tab is already open, the open reveals it where it is and never moves it, whatever `where` says: the result has `created: false` and the receipt is `no_change` with no event. Activating the tab and pulling it out of "+N" are view state. When the tab's panel is collapsed, the reveal expands it (`Plans/FinalGUISpec.md#F3-634`), and that expand is one committed `panel_expanded` change under the open's command id (CV-361), because the collapsed flag is part of the stored tree. The one exception is an open with `mode: keep` of an id whose tab is its panel's preview tab: the tab is kept in place, which is one `tab_kept` change (CV-361). An open that adds a tab commits once and appends one `workspace.layout_changed` with `change: tab_opened`. In the narrow centre (`Plans/FinalGUISpec.md#F3-636`), `panel`, `right` and `down` open in the next panel of the switcher instead of creating a panel. Focus and the announcement for `by` and `background` are F3-634's rules.
+One id is one tab in the whole workspace. When the id's tab is already open, the open reveals it where it is and never moves it, whatever `where` says: the result has `created: false` and the receipt is `no_change` with no event. Activating the tab and pulling it out of "+N" are view state. When the tab's panel is collapsed, the reveal expands it (`Plans/FinalGUISpec.md#F3-634`), and that expand is one committed `panel_expanded` change under the open's command id (CV-361), because the collapsed flag is part of the stored tree. The one exception is an open with `mode: keep` of an id whose tab is its panel's preview tab: the tab is kept in place, which is one `tab_kept` change (CV-361). An open that adds a tab commits once and appends one `workspace.layout_changed` with `change: tab_opened`. A preview open into a panel that already has a preview tab replaces that tab in place (`Plans/FinalGUISpec.md#F3-635`): it is still one `tab_opened`, whose `affected_tab_ids` name the new tab and the replaced one, and the replaced preview is dropped, never put on the closed-tab stack, because it was never kept. In the narrow centre (`Plans/FinalGUISpec.md#F3-636`), `panel`, `right` and `down` open in the next panel of the switcher instead of creating a panel. Focus and the announcement for `by` and `background` are F3-634's rules.
 
 ### The layout event (CV-361)
 
@@ -23602,9 +23602,9 @@ One id is one tab in the whole workspace. When the id's tab is already open, the
 
 | `change` | Commands |
 |---|---|
-| `tab_opened` | `cmd.panel_tab.open`, `cmd.panel_tab.reopen_closed`, and the open routes of CV-360 when they add a tab |
+| `tab_opened` | `cmd.panel_tab.open`, `cmd.panel_tab.reopen_closed`, and the open routes of CV-360 when they add a tab, a preview open that replaces the panel's preview tab included |
 | `tab_closed` | `cmd.panel_tab.close` and its alias `cmd.editor.close_tab` |
-| `tab_moved`, `tab_kept`, `tab_pinned`, `tab_unpinned`, `tab_renamed` | `cmd.panel_tab.move`, `.keep`, `.pin`, `.unpin`, `.rename` |
+| `tab_moved`, `tab_kept`, `tab_pinned`, `tab_unpinned`, `tab_renamed` | `cmd.panel_tab.move`, `.keep`, `.pin`, `.unpin`, `.rename`; `tab_kept` also under an open route of CV-360 with `mode: keep` on its panel's preview tab |
 | `panel_split`, `panel_moved`, `panel_resized`, `panel_closed` | `cmd.workspace_layout.split`, `.move_surface`, `.resize_surface`, `.close_panel` |
 | `panel_collapsed`, `panel_expanded` | `cmd.workspace_layout.set_collapsed`; `panel_expanded` also under an open route of CV-360 whose reveal expands the tab's collapsed panel |
 | `panel_locked`, `panel_unlocked` | `cmd.workspace_layout.lock` |
@@ -23612,9 +23612,9 @@ One id is one tab in the whole workspace. When the id's tab is already open, the
 | `chat_column_changed` | `cmd.workspace_layout.resize_surface` with the chat (a width drag) |
 | `migrated_from_v1` | The v1-to-v2 conversion of SP-330, with no command |
 
-Beside `change`, the payload records what the change touched (`affected_tab_ids`, `affected_panel_ids`, `affected_split_ids`, `created_panel_ids`, `removed_panel_ids`, `named_layout_id`, `chat_column_fields`), the revision before and after (`prior_layout_revision`, `new_layout_revision`), the actor (`actor`: `user`, `agent:<name>` from CV-360's `by`, or `system` for the conversion), the command as its caller named it (`command_id`, null only for the conversion), `commit_origin`, the result and receipt references, `persisted=true`, `settled_only=true` and `preview_state_included=false`. A conversion also names its source in `migration_source_schema_id` (`pm.home_workspace_layout.v1` or `layout:v1`). An open that only reveals a tab, view state (`ui.panel_tab.activate`, `ui.workspace_layout.focus_panel`, `ui.workspace_layout.maximize`, the recent-tab order, History pinned, and the chat's show and hide through `cmd.panel.switch`, which writes the column's `shown`), menus, hover, drags and a release that changes nothing append nothing. A reveal that has to expand the tab's collapsed panel appends one `panel_expanded` under the open's command id (CV-360). A failed write appends nothing and its receipt is `failed` with `rolled_back=true`.
+Beside `change`, the payload records what the change touched (`affected_tab_ids`, `affected_panel_ids`, `affected_split_ids`, `created_panel_ids`, `removed_panel_ids`, `named_layout_id`, `chat_column_fields`), the revision before and after (`prior_layout_revision`, `new_layout_revision`), the actor (`actor`: `user`, `agent:<name>` from CV-360's `by`, or `system` for the conversion), the command as its caller named it (`command_id`, null only for the conversion), `commit_origin`, the result and receipt references, `persisted=true`, `settled_only=true` and `preview_state_included=false`. A conversion also names its source in `migration_source_schema_id` (`pm.home_workspace_layout.v1` or `layout:v1`). An open that only reveals a tab, view state (`ui.panel_tab.activate`, `ui.workspace_layout.focus_panel`, `ui.workspace_layout.maximize`, the recent-tab order, History pinned, and the chat's show and hide through `cmd.panel.switch`, which writes the column's `shown`), menus, hover, drags and a release that changes nothing append nothing. A reveal that has to expand the tab's collapsed panel appends one `panel_expanded` under the open's command id (CV-360), and an open with `mode: keep` of a panel's preview tab appends one `tab_kept` under the open's command id. A preview open that replaces a panel's preview tab appends one `tab_opened` whose `affected_tab_ids` name both tabs; the replaced preview does not go onto the closed-tab stack. A failed write appends nothing and its receipt is `failed` with `rolled_back=true`.
 
-Events written at 1.1.0 stay readable through the payload's `$defs/workspace_layout_changed_v1_compatibility_reader`; no 1.1.0 event is rewritten. `terminal.workgroup_moved` is withdrawn under SMPFS-170's own rule (`Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-170`), with one session per tab owned by `#SMPFS-180`: no producer writes it, events already written stay readable at 1.0.0 under their existing retention, and moving a terminal tab is a `tab_moved` that keeps its session (DL-070's rule, carried by SMPFS-180). `panel.undocked` and `panel.redocked` stay, for the chat's pop-out only (`Plans/UI_Command_Catalog.md#UCC-203`): a pop-out or return appends its own `panel.undocked` or `panel.redocked` and nothing else. The column's `popped_out` field is written with the record like view state, with no revision advance and no `workspace.layout_changed`. No new event family is added.
+Events written at 1.1.0 stay readable through the payload's `$defs/workspace_layout_changed_v1_compatibility_reader`; no 1.1.0 event is rewritten. A stored event's own `payload_schema_id` picks the schema it is validated against (`Plans/storage-plan.md#SP-273`): an event that names `.../workspace_layout_changed/1.1.0` is read and replayed by `Plans/event_payloads/workspace_layout_changed.schema.json`, which stays in place as that reader, while the family's registry row names 2.0.0 alone, so every new append carries 2.0.0. `terminal.workgroup_moved` is withdrawn under SMPFS-170's own rule (`Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-170`), with one session per tab owned by `#SMPFS-180`: no producer writes it, events already written stay readable at 1.0.0 under their existing retention, and moving a terminal tab is a `tab_moved` that keeps its session (DL-070's rule, carried by SMPFS-180). The withdrawal keeps SMPFS-170's unresolved original obligations: a move still pending or uncertain at upgrade is settled under SMPFS-170 and `Plans/storage-plan.md#SP-319` (a retry returns the same original result and event, and uncertainty fences without reminting) before SP-330's conversion reads the v1 terminal records, and no `terminal.workgroup_moved` is minted after it. The event family registry has no field that marks a family withdrawn, so its row stays as it was, citing this unit. `panel.undocked` and `panel.redocked` stay, for the chat's pop-out only (`Plans/UI_Command_Catalog.md#UCC-203`): a pop-out or return appends its own `panel.undocked` or `panel.redocked` and nothing else. The column's `popped_out` field is written with the record like view state, with no revision advance and no `workspace.layout_changed`. No new event family is added.
 
 ### The terminal's agent fields (CV-362)
 
@@ -23643,7 +23643,7 @@ canonical_text: >-
   id, created is false when an open tab was revealed, and reason is null on success, else unknown_kind, not_ready or
   the route's own refusal. One id is one tab in the whole workspace: an open of an open id reveals it where it is,
   never moves it, returns no_change and appends no event, except that mode keep on a preview tab keeps it (one
-  tab_kept) and a reveal into a collapsed panel expands it (one panel_expanded); an open that adds a tab appends one workspace.layout_changed with change tab_opened (CV-361). These
+  tab_kept) and a reveal into a collapsed panel expands it (one panel_expanded); an open that adds a tab appends one workspace.layout_changed with change tab_opened (CV-361), and a preview open that replaces its panel's preview tab is that one tab_opened, naming both tabs, with the replaced preview dropped rather than put on the closed-tab stack. These
   fields replace OpenFile's target_editor_panel_id, target_editor_group_id and target_group as home placement.
 gui_related: true
 gui_classification_reason: Decides which panel every opened file, document, terminal, browser and tool tab lands in, and whether it takes focus.
@@ -23655,6 +23655,7 @@ acceptance_criteria:
   - "No placement field is part of route_target identity, OpenSubject or OpenFile identity."
   - "An open of an id that is already open returns created false, reveals the tab in its own panel, writes nothing and appends no event; mode keep on that panel's preview tab keeps it with one tab_kept change, and a tab in a collapsed panel is revealed by expanding the panel with one panel_expanded change."
   - "An open that adds a tab returns created true with its tab_id and panel_id and appends exactly one workspace.layout_changed with change tab_opened."
+  - "A preview open into a panel that has a preview tab replaces it with one tab_opened whose affected_tab_ids name both tabs, and the replaced preview is not on the closed-tab stack afterwards."
   - "An open by agent:<name> is a background open whatever background says, and opens files kept."
   - "A refused open returns ok false with reason unknown_kind, not_ready or the route's own refusal, and changes nothing."
   - "target_editor_panel_id, target_editor_group_id and target_group never select a home panel."
@@ -23724,11 +23725,15 @@ canonical_text: >-
   agent:<name> or system), the command id as its caller named it (null only for the conversion), commit_origin,
   result and receipt references and persisted=true. chat_column_changed is bound only to a chat width drag
   (cmd.workspace_layout.resize_surface with the chat); the chat's show and hide (cmd.panel.switch, the column's
-  shown) are view state. A reveal that expands its tab's collapsed panel is one panel_expanded under the open's
-  command id. A reveal-only open, view state, menus, hover, drags, an unchanged release and a failed write append
+  shown) are view state. A reveal that expands its tab's collapsed panel is one panel_expanded, and an open with
+  mode keep of a preview tab one tab_kept, each under the open's command id; a preview open that replaces a
+  panel's preview tab is one tab_opened naming both tabs, the replaced preview not stacked. A reveal-only open, view state, menus, hover, drags, an unchanged release and a failed write append
   nothing. 1.1.0 events stay readable through the payload's v1
-  compatibility reader. terminal.workgroup_moved is withdrawn under SMPFS-170's rule: no producer, recorded events
-  readable at 1.0.0, a terminal tab's move is a tab_moved that keeps its session. panel.undocked and panel.redocked
+  compatibility reader; a stored event's own payload_schema_id dispatches its validation, so a 1.1.0 event is read
+  by the 1.1.0 schema and every new append carries 2.0.0. terminal.workgroup_moved is withdrawn under SMPFS-170's
+  rule: no producer, recorded events readable at 1.0.0, a terminal tab's move is a tab_moved that keeps its
+  session, and a move unresolved at upgrade is settled under SMPFS-170 and SP-319 before SP-330's conversion reads
+  the v1 terminal records, never reminted. panel.undocked and panel.redocked
   stay for the chat's pop-out only (UCC-203) and are its only events: popped_out is written like view state, with
   no revision advance and no workspace.layout_changed. No new event family.
 gui_related: true
@@ -23740,8 +23745,9 @@ acceptance_criteria:
   - "Plans/event_family_registry.json points workspace.layout_changed at family revision 2.0.0 and the v2 payload schema."
   - "Every committed structural change appends exactly one workspace.layout_changed whose change and command_id agree with the table of this addendum; a reveal-only open, a view-state write and a failed or unchanged commit append none."
   - "The payload names the ids the change touched, both revisions, the actor and persisted=true, and is appended only after the v2 record has been read back."
-  - "A 1.1.0 event validates against the compatibility reader and is never rewritten."
-  - "No producer writes terminal.workgroup_moved; recorded events stay readable at 1.0.0."
+  - "A 1.1.0 event validates against the compatibility reader and is never rewritten; a stored event is validated by the schema its own payload_schema_id names, and a new append that is not 2.0.0 is refused."
+  - "An open with mode keep of a preview tab appends one tab_kept under the open's command id, and a preview open that replaces a panel's preview tab appends one tab_opened whose affected_tab_ids name both tabs."
+  - "No producer writes terminal.workgroup_moved; recorded events stay readable at 1.0.0; a move pending or uncertain at upgrade is settled under SMPFS-170 before SP-330's conversion reads the v1 terminal records and is never reminted."
   - "panel.undocked and panel.redocked are produced only for the chat's pop-out and return, and neither appends a workspace.layout_changed; showing or hiding the chat appends nothing."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:
@@ -23749,6 +23755,7 @@ validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - Plans/event_payloads/workspace_layout_changed_v2.schema.json
   - Plans/event_family_registry.json
+  - Plans/home_workspace_layout_v2_fixtures.json
 risk_class: home_panels_terminal_redesign_drift
 reasoning_tier: high
 context_scope: home_panels_terminal
