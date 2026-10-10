@@ -320,14 +320,14 @@ html[data-o55-nier="on"] #panel-usage .pmu-accpol { border-top-style: dashed; }
    It sits in its own SWITCH AT column ("own level" or the provider under it), under the action word, or beside the
    binding meter on a narrow plate. No fill at rest, no pill (a 6 px corner on a 22 px button; square in Retro and NieR);
    the hover is an ink wash a step above the row's own hover. */
-#panel-usage .pmu-accsw { position: relative; display: inline-flex; align-items: center; gap: 3px; flex: none; height: 22px; padding: 0 5px; border: 1px solid transparent; border-radius: 6px;
+#panel-usage .pmu-accsw { position: relative; display: inline-flex; align-items: center; gap: 3px; flex: none; height: 22px; padding: 0 4px; border: 1px solid transparent; border-radius: 6px;
   background: transparent; color: var(--pmu-ink-2); font: inherit; font-size: 12.5px; line-height: 1; font-weight: 540; font-variant-numeric: tabular-nums; white-space: nowrap; cursor: pointer;
   transition: background-color calc(140ms * var(--pmu-speed, 1)), border-color calc(140ms * var(--pmu-speed, 1)), color calc(140ms * var(--pmu-speed, 1)); }
 #panel-usage .pmu-accsw[data-own] { color: var(--pmu-ink); font-weight: 650; border-color: var(--pmu-rule-strong); }
-#panel-usage .pmu-accswi { display: inline-grid; place-items: center; flex: none; width: 11px; height: 14px; }
+#panel-usage .pmu-accswi { display: inline-grid; place-items: center; flex: none; width: 10px; height: 14px; }
 #panel-usage .pmu-accswi > i { grid-area: 1 / 1; display: grid; place-items: center; font-style: normal; }
 #panel-usage .pmu-accswi .is-link { color: var(--pmu-ink-3); }
-#panel-usage .pmu-accswi .is-link svg { width: 11px; height: 11px; }
+#panel-usage .pmu-accswi .is-link svg { width: 10px; height: 10px; }
 #panel-usage .pmu-accswi .is-own { color: var(--pmu-ink); }
 #panel-usage .pmu-accswi .is-own svg { width: 6px; height: 14px; }
 #panel-usage .pmu-accsw:not([data-own]) .is-own, #panel-usage .pmu-accsw[data-own] .is-link { display: none; }
@@ -342,10 +342,10 @@ html[data-o55-nier="on"] #panel-usage .pmu-accpol { border-top-style: dashed; }
 #panel-usage .pmu-accsw[disabled] { opacity: .5; cursor: default; }
 /* its own column: the value, and under it what it is (the word starts at the glyph's left edge) */
 #panel-usage .pmu-accswcell { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 2px; min-width: 0; }
-#panel-usage .pmu-accsww { padding-left: 6px; font-size: 12px; line-height: 14px; color: var(--pmu-ink-3); white-space: nowrap; }
+#panel-usage .pmu-accsww { padding-left: 5px; font-size: 12px; line-height: 14px; color: var(--pmu-ink-3); white-space: nowrap; }
 #panel-usage .pmu-accswcap { white-space: nowrap; }
-/* under the action word: the cell stacks, right-aligned (the button may lean up to 8 px into the gap on its left); a
-   compact row whose action is a button is 50 px with a 24 px button */
+/* under the action word: the cell stacks, right-aligned; a compact row whose action is a button is 50 px with a 24 px
+   button */
 #panel-usage .pmu-accactcell.is-stack { flex-direction: column; align-items: flex-end; justify-content: center; gap: 2px; }
 #panel-usage .pmu-accactcell.is-stack > .pmu-accactw { display: flex; justify-content: flex-end; min-width: 0; max-width: 100%; }
 #panel-usage .pmu-accactcell.is-stack > .pmu-accsw { height: 20px; }

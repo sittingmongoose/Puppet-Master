@@ -214,10 +214,10 @@
       ' aria-label="' + esc(a.nickname + ' switches at ' + at + '% used, ' + (own ? 'its own level' : 'following ' + p.name)) + '"' + C.hover('Switch level · ' + a.nickname, ok ? accSwDetail(a, p) : 'Settings is not available') + '>' +
       '<span class="pmu-accswi" aria-hidden="true"><i class="is-link">' + SVG.link + '</i><i class="is-own">' + SVG.notch + '</i></span><span class="pmu-accswv">' + at + '%</span></button>';
   }
-  /* the button's width with the wider glyph (the link, an 11 px box) and the widest value, in the theme's face at its
-     weight, 3 px between them and 5 px each side, so the column that holds it never re-lays when the account takes its own
-     level or follows again */
-  function accSwW() { return Math.ceil(11 + 3 + tw('95%', 12.5, 650) * 1.08 + 10 + 2); }
+  /* the button's width with its glyph box (10 px) and the widest value in the theme's face at its weight, 3 px between
+     them and 4 px each side, so the column that holds it never re-lays when the account takes its own level or follows
+     again */
+  function accSwW() { return Math.ceil(10 + 3 + tw('95%', 12.5, 650) * 1.06 + 8 + 2); }
   /* what the buttons of a plate show, as one string (a plate whose accounts' levels changed is patched, never left stale) */
   function accSwSig(p) { return switchable(p) ? p.accounts.map(function (a) { return a.key + ':' + accSwAt(a, p) + (accSwOwn(a) ? 'o' : '') + ((a.policy || polOf(p)).auto ? '' : 'x'); }).join(',') : ''; }
   /* every switch-level button under root takes its account's state in place: the value rolls (odometer 220; NieR decodes),
@@ -499,9 +499,10 @@
        own column below, so the action column is at least as wide as the button */
     var swOn = switchable(p), SWB = swOn ? accSwW() : 0, actShort = actW;
     if (fullAct) actW = fullActW;
-    /* the folded button may lean 8 px into the 16 px gap beside it, so a plate whose action column holds only "Active"
-       or "Use" keeps its width (a wider column wrapped Codex's rows a line taller at 1920) */
-    if (swOn) actW = Math.max(actW, SWB - 8);
+    /* the folded button fits its column whole (a button leaning into the gap met the merged "Quota not exposed" of
+       Codex's API key row on a 400 px board); it is drawn tight (4 px a side), so an "Active" or "Use" column grows by a
+       few px at most (14 px more wrapped Codex's rows a line taller at 1920) */
+    if (swOn) actW = Math.max(actW, SWB);
     /* a window column keeps "78% used" and "resets in 1h 41m" on one line each from about 104 px */
     var IDENT = Math.max(112, NAMECOL), WIN = 104, IDENT_B = Math.max(100, NAMECOL);
     /* with two or more windows the identity column may go to 100 px, so a plate whose action column reserves its widest
@@ -562,12 +563,12 @@
     /* a comfortable row: the name, the state or plan, the host and age, and a credits line (or a merged "not exposed"
        cell with its spend); a narrow plate puts the binding meter under the identity. Each line's height comes from
        its own wrapped text (a fixed 66 px row let a wrapped meta line run under the plate's foot) */
-    /* D43: a stacked action cell is the action word (a 28 px button, 24 in a compact row; "Active" 16 px a line) over the
-       20 px switch-level button, 2 px apart; a compact row whose action is a button is 50 px (2 px above and below) */
-    var stackHOf = function (a, compact) {
+    /* D43: a stacked action cell is the action word over the 20 px switch-level button, 2 px apart: a button (28 px; 24 in
+       a compact row, which keeps 2 px above and below) makes it 50 px, "Active" 16 px a line, no word only the button */
+    var stackHOf = function (a) {
       if (swForm !== 'stack') return 0;
       var x = actText(a, fullAct);
-      return x.btn ? (compact ? 50 : 50) : (x.t ? 16 * Math.min(2, C.wrapLines(x.t, actW, 12.5, 640)) + 2 : 0) + 20;
+      return x.btn ? 50 : (x.t ? 16 * Math.min(2, C.wrapLines(x.t, actW, 12.5, 640)) + 2 : 0) + 20;
     };
     var comfyHOf = function (a) {
       var mt = metaOf(a);
@@ -580,7 +581,7 @@
         mh = Math.max(mh, 22 + 12 + (rt ? 16 * C.wrapLines(rt, winW, 12) : 0));
       });
       if (!n || allHidden(a)) mh = 22 * Math.min(3, a.amounts.length + 1);
-      var h = mode === 'narrow' ? ih + 6 + mh : Math.max(ih, mh, stackHOf(a, false));
+      var h = mode === 'narrow' ? ih + 6 + mh : Math.max(ih, mh, stackHOf(a));
       /* measured on the GPU in all nine looks (item 2 calibration): a comfortable row lays out 2-6 px taller than its
          lines (line boxes, the meter's caption); counted, so a row the budget admits is never folded behind free room */
       return Math.max(66, Math.ceil(h + 20)) + (polB ? 6 : 0);
@@ -590,7 +591,7 @@
     var compactHOf = function (a) {
       var act = actText(a, false), stateIn = act.t && !act.btn;
       var lines = Math.min(3, C.wrapLines(stateIn ? a.plan || '' : a.stateWord || '', textW, 12, stateIn ? 400 : 600) || 1);
-      return Math.max((mode === 'narrow' ? 92 : 44) + 16 * (lines - 1), stackHOf(a, true));
+      return Math.max((mode === 'narrow' ? 92 : 44) + 16 * (lines - 1), stackHOf(a));
     };
     var sumRows = function (f, k) { var s = 0; p.accounts.slice(0, k).forEach(function (a) { s += f(a); }); return s; };
     /* priority: every account in comfortable rows; then fewer foot lines; then the LAST accounts in compact rows while the
