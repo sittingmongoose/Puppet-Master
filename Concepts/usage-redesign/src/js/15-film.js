@@ -26,7 +26,8 @@
   /* the no-GPU motion profile (PERF-3): html[data-pmu-soft], set by 90-api.js when Usage first shows on a software-
      rendered machine, forced on by ?pmu-soft=1 (a GPU film of what the VM plays) and off by ?pmu-soft=0 */
   function soft() { return root.hasAttribute('data-pmu-soft'); }
-  function inView(card) { return !card || !PMU.board || !PMU.board.inView ? true : PMU.board.inView(card); }
+  /* the card's own board says whether it is in view (D10 3.6; PMU.boards is made by 40-board.js, after this file) */
+  function inView(card) { var b = card && PMU.boards ? PMU.boards.of(card) : null; return !card || !b ? true : b.inView(card); }
   /* the cards that keep their inner entrance in a moment: on the no-GPU profile only the hero (WOW-SPEC-3 3.3: light
      and rolls belong to the hero; supporting plates arrive final); on any profile never a card outside the viewport */
   function innerOn(card) { return !!card && inView(card) && (!soft() || card.hasAttribute('data-hero')); }
@@ -1955,6 +1956,8 @@
       if (list.length) requestAnimationFrame(step);
     }
     step();
+    /* the beat patched the Usage board; a hosted board refreshes in slices, or on its next show (D10 3.1 touch) */
+    if (PMU.boards && PMU.boards.touch) PMU.boards.touch('live');
     return rec;
   }
   function cssq(v) { return window.CSS && CSS.escape ? CSS.escape(v) : String(v).replace(/"/g, '\\"'); }
