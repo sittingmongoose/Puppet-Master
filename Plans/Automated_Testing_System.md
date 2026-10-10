@@ -5897,3 +5897,137 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-139, ContractName:Plans/FinalGUISpec.md#F3-033, ContractName:Plans/FinalGUISpec.md#F3-583, ContractName:Plans/Automated_Testing_System.md#ATS-023
+
+## DL-180 to DL-185 — Home Panels And Terminal Tab Certification (2026-10-09)
+
+Jared's home redesign (`Plans/Decision_Log.md#DL-180` to `#DL-184`) replaces Home's four fixed editor panels, its
+singleton dashboard, its movable chat and its docked terminal sections with one universal panel system, and rebuilds
+the terminal as one session per tab with images, a layered appearance model, effects, faces and safe agent use. This
+addendum adds ATS-075, the certification of the home panels, and ATS-076, the certification of the terminal tab. It
+supersedes ATS-029 (the four-panel matrix and its exact 72-case visual matrix) and amends ATS-047 (images are approved
+by DL-182, and input protection follows a session across tab moves), each with a dated note. Both units consume the
+owner units they cite and restate none of their rules. They are required future fixtures and evidence, not executed
+passes: a missing runner or an unrun native client stays `not_run` with its reason, never an inferred pass. They create
+no WorkNodes, NodeSeeds, executable queues, implementation files or production build tasks.
+
+### ATS-075 - Home Panels Certification
+
+```yaml
+plan_unit_id: ATS-075
+unit_type: validation_criterion
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  The home panels (DL-180) are certified by one matrix that replaces ATS-029's four-panel matrix. Every case drives
+  the visible production control, by pointer and by keyboard where both exist, and asserts the visible outcome: the
+  rendered geometry, the tab and its rendered body, the mark shown, never only a dispatch count or a global marker.
+  Each case records the layout before and after, every command, receipt, event and saved write, and the console and
+  page errors from listeners installed before navigation; a case passes only with zero errors. The cases cover: the
+  split tree and its invariants after every structural change (every leaf a panel, a split with two or more children
+  and never its parent's direction, sizes above 0.02, each tab in exactly one panel, pinned tabs first, one preview tab
+  per panel), the fit rule, the insertion and removal shares, the 0.34 share of a panel docked at the centre's edge, the
+  6 px gaps, the 8 px divider hit target and the divider keys, collapse below half a panel's minimum to its 35 px strip
+  with its state kept, maximize and restore, locked panels, and closing the last tab
+  (Plans/FinalGUISpec.md#F3-630); the tab strip's heights, gaps, widths and shrink order, the active tab's 120 px
+  minimum, pinned tabs, close targets and every mark, with the fused silhouette as the only active-tab marker in every
+  look (F3-631); the "+" menu's rows in their order, the row body, the trailing cell, Alt+click and Alt+Enter, Ctrl+T,
+  and the empty-panel launcher (F3-632); the "+N" list, its search, its grouping by kind and its use as a drop target
+  (F3-633); the opening rules from every caller, the file tree (Plans/FileManager.md#F-090), chat file references, diff
+  views and Changes rows, transcript file records, search results and everything else the chat opens
+  (Plans/assistant-chat-design.md#ACD-500), Ctrl+P, the "+" menu, agents, the terminal's links and the artifact viewer
+  (Plans/Runtime_Artifacts_Panel.md#RAP-065): one id one tab with reveal, preview and keep, placement of document,
+  dedicated and tool kinds including the tools fallback (the last-focused panel holding that tool kind, then the
+  last-focused panel holding a terminal, then the last-focused document panel, then a new panel by the fit rule), locked
+  panels skipped, Alt+click, and an agent's open landing in the background with the hollow square and an announcement
+  without taking focus (F3-634); the narrow ladder at the panels concept's seven measured window widths, 1920, 1680,
+  1470, 1440, 1280, 1024 and 900 px, each matching F3-636's rail, chat and centre widths with the default rail and chat,
+  its 48 px hysteresis, and none of its states ever saved (F3-636); the chat column's default width, its drag range, the
+  600 px centre floor, Pop out and its return, and its height from the title bar to the status bar (F3-637); dashboard
+  tabs and their boards (Plans/Widget_System.md#WS-030, F3-638); the four named layouts' exact trees and proportions,
+  applying one keeping every tab with no terminal ended and no unsaved buffer dropped, Restore home layout, and saved
+  layouts (F3-630); the keyboard map in the desktop app and the web-client mapping, with every label, menu shortcut and
+  hover tag showing the key that works where the app runs (F3-635); the migration from `home_workspace_layout.v1` and
+  the Home part of `layout:v1` into the v2 record, converted on first read and never reset, including corrupt and
+  unknown inputs (Plans/storage-plan.md#SP-330); every look, Friendly, Glass, Retro and Basic in light and dark, NieR
+  Mode with each part installed and absent, and Reduced Motion (F3-647); the bans, enforced by a lint that fails the
+  build on a pill (a fully rounded capsule used as a tab, tag, badge, button or status chip), on a coloured side
+  border or inset side shadow of 2 px or wider, and on an emoji in Puppet Master's chrome (Plans/DRY_Rules.md#DR-069,
+  F3-648); and no internal id, tab, panel, session or nonce, appearing as text anywhere. Command and event truth: a
+  changed release or a structural action dispatches exactly one command of Plans/UI_Command_Catalog.md#UCC-200 and
+  appends exactly one `workspace.layout_changed` naming the change (Plans/Contracts_V0.md#CV-361); a reveal, a `ui.*`
+  view action, opening a menu, hovering and dragging dispatch nothing and append nothing; a cancelled, invalid or
+  unchanged gesture restores the model exactly and dispatches and saves nothing; a rejected commit rolls back. The
+  control census is the closed lists of Plans/UI_Wiring_Rules.md#UIW-040 and #UIW-041 and the wiring is
+  Plans/Wiring_Matrix.md#WM-090's rows: a control with no row fails. Identity fixtures prove that no case duplicates a
+  buffer, browser session, chat identity, terminal session or PTY. The visual matrix is the full cross product of the
+  eight look variants and NieR Mode, the four named layouts and the seven measured widths, each capture from a fresh
+  context with seeded storage, look and motion, and a screenshot counts only beside its harness result and error log.
+  Checks run against the panels concept and its harness are concept evidence only: they never certify the native
+  desktop or web client, which needs its own run's receipts naming the revision, platform, toolkit and renderer
+  (ATS-067). This supersedes ATS-029.
+gui_related: true
+gui_classification_reason: The certification exercises and captures every visible behaviour of the home panels across looks, widths, layouts, motion and failures.
+split_recommended: false
+depends_on: [DL-180, DL-184, F3-630, F3-631, F3-632, F3-633, F3-634, F3-635, F3-636, F3-637, F3-638, F3-647, F3-648, WS-030, F-090, RAP-065, SP-330, CV-361, UCC-200, UIW-040, UIW-041, WM-090, DR-069]
+unblocks: [GRRC-040]
+acceptance_criteria:
+  - "After every structural command the split tree satisfies each invariant listed, and the fit rule, the shares, the gaps, the divider target and keys, collapse, maximize, locking and last-tab closing each have a passing case that asserts rendered geometry."
+  - "The strip, \"+\" menu, empty-panel launcher and \"+N\" list each have cases for every size, mark, row and key their owner units give, in every look."
+  - "Every caller listed opens through the one opening module, and cases cover reveal, preview, keep, each kind's placement including the tools fallback, locked panels, Alt+click and agent background opens without focus change."
+  - "At each of the seven measured widths the rail, chat and centre widths match F3-636, each ladder step undoes only 48 px past its threshold, and no ladder state is saved."
+  - "Each named layout applies with its exact tree and proportions and keeps every tab, terminal session and unsaved buffer."
+  - "Every key of the desktop map does its action, and in the web client the four browser-owned chords are answered as Alt+T, Alt+W, Alt+Shift+T and Alt+` with labels showing those keys."
+  - "A v1 Home layout and the Home part of `layout:v1` convert into the v2 record on first read with every tab kept and nothing reset; corrupt and unknown inputs follow SP-330."
+  - "The bans lint fails the build on a pill, a coloured side border or inset side shadow of 2 px or wider, or an emoji in chrome, and a census finds no internal id shown as text."
+  - "Each structural commit appends exactly one `workspace.layout_changed`; reveals, `ui.*` actions, menus, hover and drags append none; a cancelled, invalid or unchanged gesture restores the model exactly with zero dispatches and zero writes; a rejected commit rolls back."
+  - "Every control in UIW-040's and UIW-041's lists has a WM-090 row, and the control census finds no control without one."
+  - "The visual matrix holds every combination of the eight look variants and NieR Mode, the four named layouts and the seven widths, each with zero console and page errors."
+  - "No result from the panels concept or its harness is reported as native certification."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+  - "Future home panels live matrix and visual matrix receipts; native and visual execution remain not_run"
+risk_class: home_panels_terminal_redesign_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/Automated_Testing_System.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: home_executable_matrix
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-180"
+  - "Plans/Decision_Log.md#DL-184"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D1-D10, D22, D23)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (sections 9, 13 and 14; concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (the measured widths and the named layouts; concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8 (section 3.7 and gap C19; audit lineage only)"
+preserved_exact_tokens:
+  - "workspace.layout_changed"
+  - "ui.*"
+  - "home_workspace_layout.v1"
+  - "layout:v1"
+  - "not_run"
+  - "zero console and page errors"
+negative_constraints:
+  - "Do not certify Home with a dispatch count, a global marker or a screenshot alone."
+  - "Do not substitute an internal API for a missing visible production control."
+  - "Do not report a concept or harness result as native certification."
+  - "Do not keep ATS-029's four-panel targets, terminal section limits, terminal-max layout or 72-case matrix as certification."
+compatibility_only_notes:
+  - "The panels concept's harness hooks and storage keys are concept lineage and are not product test names."
+stale_retired_dispositions:
+  - "Superseded 2026-10-09 (DL-180): ATS-029's four-panel live matrix and its exact 72-case visual matrix."
+owner_boundary_notes:
+  - "This unit tests the owner units it cites and adds no rule of its own; F3-630 to F3-638, F3-647 and F3-648, WS-030, F-090, RAP-065, SP-330, CV-361, UCC-200, UIW-040, UIW-041 and WM-090 own the behaviour."
+owner_hints:
+  - Plans/Automated_Testing_System.md
+  - Plans/FinalGUISpec.md
+  - Plans/UI_Wiring_Rules.md
+  - Plans/Wiring_Matrix.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/FinalGUISpec.md#F3-630, ContractName:Plans/FinalGUISpec.md#F3-634, ContractName:Plans/Contracts_V0.md#CV-361, ContractName:Plans/UI_Command_Catalog.md#UCC-200, ContractName:Plans/Automated_Testing_System.md#ATS-029
