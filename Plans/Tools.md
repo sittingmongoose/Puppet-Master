@@ -3470,7 +3470,6 @@ split_recommended: false
 depends_on:
 - T-007
 - T-017
-- DL-181
 unblocks: []
 acceptance_criteria:
 - Parameters `command`, `mode`, `initial_wait`, `shellId`, and `detach` remain preserved.
@@ -3490,6 +3489,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0021
+- Plans/Decision_Log.md#DL-181
 preserved_exact_tokens:
 - sync
 - async
