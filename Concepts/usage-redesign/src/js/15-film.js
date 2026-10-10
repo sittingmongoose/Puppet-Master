@@ -613,9 +613,11 @@
     var p = PMU.board && PMU.board.px ? PMU.board.px(r) : null;
     return p || { l: 0, t: 0, w: 300, h: 200 };
   }
-  /* the ghost's fade starts when the new chrome is in (frames(), or the fallback timer) and its removal waits for it */
+  /* the ghost's fade starts when the new chrome is in (frames(), or the fallback timer) and its removal waits for it. A ghost
+     that is gone (its element emptied into the spare board, which the next room change makes the live board) is never
+     touched again */
   function fadeGhost(m) {
-    var G = m && m.ghost; if (!G || G.fade) return;
+    var G = m && m.ghost; if (!G || G.fade || G.gone) return;
     G.fade = true;
     var a = G.el.isConnected ? anim(G.el, [{ opacity: 1 }, { opacity: 0 }], { dur: G.fadeMs, easing: E.exit, fill: 'forwards' }) : null;
     G.fade = a || true;
@@ -714,7 +716,10 @@
     m.anims.forEach(function (a) { try { if (a.finish && a.playState !== 'finished' && a.playState !== 'idle') a.finish(); } catch (error) {} });
     /* the old room's ghost: a fade not started yet (the new chrome never came) ends now too, so no still, blurred old room
        stays over the next one */
-    if (m.ghost) { try { fadeGhost(m); if (m.ghost.fade && m.ghost.fade.finish && m.ghost.fade.playState !== 'finished') m.ghost.fade.finish(); } catch (error) {} }
+    /* only a fade that is still playing is finished: a ghost that is gone had its fade cancelled, and finish() on that
+       cancelled fade re-applied opacity 0 to its element, which 40-board.js had just made the new live board (a click 0.9-
+       2.3 s after the previous one left the whole new room invisible until the next room change) */
+    if (m.ghost && !m.ghost.gone) { try { fadeGhost(m); var fa = m.ghost.fade; if (fa && fa.finish && (fa.playState === 'running' || fa.playState === 'paused')) fa.finish(); } catch (error) {} }
     releaseBeatHold();
     var board = document.getElementById('pmuBoard');
     if (board) Array.prototype.forEach.call(board.querySelectorAll(':scope > .pmu-card[data-body-wait]'), function (c) { if (c.querySelector(':scope > .pmu-cardbody > *')) c.removeAttribute('data-body-wait'); });
@@ -958,9 +963,11 @@
     gAnims.push(a);
     var done = function () {
       if (done.ran) return; done.ran = true;
+      if (mg) mg.gone = true;
       drop(Array.prototype.slice.call(g.querySelectorAll(':scope > .pmu-card')));
-      /* the old board element empties into the hidden spare (40-board.js), never leaves the scroll pane */
-      if (o.ghost) { gAnims.concat(mg && mg.fade && mg.fade.cancel ? [mg.fade] : []).forEach(function (x) { if (x) { try { x.cancel(); } catch (error) {} } }); g.textContent = ''; g.hidden = true; g.className = 'pmu-board'; g.removeAttribute('style'); ['data-film', 'data-op', 'data-held', 'data-hold-bodies'].forEach(function (a) { g.removeAttribute(a); }); }
+      /* the old board element empties into the hidden spare (40-board.js), never leaves the scroll pane, and carries no
+         animation into its next life as the live board (every one still on the element is cancelled) */
+      if (o.ghost) { gAnims.concat(mg && mg.fade && mg.fade.cancel ? [mg.fade] : [], g.getAnimations ? g.getAnimations() : []).forEach(function (x) { if (x) { try { x.cancel(); } catch (error) {} } }); g.textContent = ''; g.hidden = true; g.className = 'pmu-board'; g.removeAttribute('style'); ['data-film', 'data-op', 'data-held', 'data-hold-bodies'].forEach(function (a) { g.removeAttribute(a); }); }
       else g.remove();
     };
     var mg = moment && moment.ghost && moment.ghost.el === g ? moment.ghost : null;
