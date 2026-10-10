@@ -361,6 +361,29 @@
   };
   Store.prototype._anchorCol = function (pl) { return pl.parent ? this._anchorCol(pl.parent) + pl.H : pl.col; };
 
+  /* NieR Mode: images are shown as an ink-and-parchment duotone (brightness kept, hue dropped), computed once per
+     frame and palette and cached, so nothing on the screen leaves NieR's ink and parchment */
+  Store.prototype._frameCanvas = function (frame, view) {
+    var d = view && view.theme && view.theme.duotone;
+    if (!d) return frame.canvas;
+    var key = d.ink + '/' + d.paper;
+    if (frame._duo && frame._duoKey === key && frame._duoGen === frame.canvas._gen) return frame._duo;
+    var src = frame.canvas, w = src.width, h = src.height, out = canvas(w, h), g = out.getContext('2d');
+    g.drawImage(src, 0, 0);
+    try {
+      var id = g.getImageData(0, 0, w, h), px = id.data;
+      var lo = C.lum(d.ink) < C.lum(d.paper) ? d.ink : d.paper, hi = lo === d.ink ? d.paper : d.ink;
+      var lr = C.r(lo), lg = C.g(lo), lb = C.b(lo), hr = C.r(hi), hg = C.g(hi), hb = C.b(hi);
+      for (var i = 0; i < px.length; i += 4) {
+        var L = (0.2126 * px[i] + 0.7152 * px[i + 1] + 0.0722 * px[i + 2]) / 255;
+        px[i] = lr + (hr - lr) * L; px[i + 1] = lg + (hg - lg) * L; px[i + 2] = lb + (hb - lb) * L;
+      }
+      g.putImageData(id, 0, 0);
+    } catch (e) { return src; }
+    frame._duo = out; frame._duoKey = key; frame._duoGen = src._gen;
+    return out;
+  };
+
   /* ---- drawing (called by the renderer per row; ctx is clipped to the row) ---- */
   Store.prototype.drawRow = function (ctx, abs, y0, layer, view) {
     var term = this.term, buf = term.buf, B = this.cur();
@@ -383,7 +406,7 @@
       } else { dw = pl.sw * (W / (m.cellW * dpr)) * dpr; dh = pl.sh * (H / (m.cellH * dpr)) * dpr; }
       var frame = pl.image.frames[pl.image.current] || pl.image.frames[0];
       if (!frame || !frame.canvas) continue;
-      ctx.drawImage(frame.canvas, pl.sx, pl.sy, pl.sw, pl.sh, x, y, dw, dh);
+      ctx.drawImage(this._frameCanvas(frame, view), pl.sx, pl.sy, pl.sw, pl.sh, x, y, dw, dh);
       /* text written over sixel and iTerm2 images cuts the image out of those cells (foot) */
       if (pl.masks && pl.masks.size) {
         var row = abs - a, self = this;
@@ -465,7 +488,7 @@
     var frame = im.frames[im.current] || im.frames[0];
     var clipX0 = Math.max(0, sx0), clipY0 = Math.max(0, sy0), clipX1 = Math.min(im.w, sx0 + sw), clipY1 = Math.min(im.h, sy0 + sh);
     if (clipX1 <= clipX0 || clipY1 <= clipY0) return;
-    ctx.drawImage(frame.canvas, clipX0, clipY0, clipX1 - clipX0, clipY1 - clipY0,
+    ctx.drawImage(this._frameCanvas(frame, view), clipX0, clipY0, clipX1 - clipX0, clipY1 - clipY0,
       px + (clipX0 - sx0) * sc, py + (clipY0 - sy0) * sc, (clipX1 - clipX0) * sc, (clipY1 - clipY0) * sc);
     im.lastUsed = Date.now();
     this._startAnim(im);
@@ -541,6 +564,7 @@
     var tg = target.canvas.getContext('2d');
     if (ctl.X === 1 || ctl.C === 1) tg.clearRect(x, y, img.w, img.h);
     tg.drawImage(img.canvas, x, y);
+    target.canvas._gen = (target.canvas._gen || 0) + 1;
     if (ctl.z > 0) target.gap = Math.max(LIMITS.minGapMs, ctl.z); else if (ctl.z < 0) target.gap = 0;
     if (isNew) { im.frames.push(target); B.frameBytes += im.w * im.h * 4; }
     ctl._frame = isNew ? im.frames.length : ctl.r;
@@ -568,6 +592,7 @@
     var g = dst.canvas.getContext('2d');
     if (ctl.C === 1) g.clearRect(dx, dy, w, h);
     g.drawImage(src.canvas, sx, sy, w, h, dx, dy, w, h);
+    dst.canvas._gen = (dst.canvas._gen || 0) + 1;
     im.gen++; this._reply(ctl, 'OK'); this.bump();
   };
   /* frames advance only while the terminal is visible and Reduced Motion is off (content motion still moves) */

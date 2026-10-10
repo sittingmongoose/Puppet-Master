@@ -372,8 +372,8 @@
     var t = now();
     if (t - st.fpsT >= 1000) { st.fps = st.frames; st.frames = 0; st.fpsT = t; $('#roLoop').textContent = st.fps ? st.fps + ' renders/s' : 'idle (0 renders/s)'; }
     var g = gpu();
-    var trailMoving = trail.active ? trail.frame(t) : false;
-    var trailChanged = trailMoving || st.trailWas; st.trailWas = trailMoving;
+    var trailMoving = trail.frame(t);
+    var trailChanged = trail.changed;
     if (st.gridDirty) drawGrid(g);
     if (st.probeDirty) drawProbe();
     if (!g) { if (st.gridDirty || trailChanged || st.probeDirty) st.frames++; st.gridDirty = false; st.probeDirty = false; $('#roAnim').textContent = 'CSS path (static)'; return; }
@@ -624,7 +624,7 @@
 
   /* ---------- automation hooks (Playwright) ---------- */
   function setManual(on) { st.manual = on; }
-  function frameAt(t, changedGrid) { drawGrid(gpu()); drawProbe(); var tr = trail.frame(t); return renderNow(t, changedGrid !== false, tr, false); }
+  function frameAt(t, changedGrid) { drawGrid(gpu()); drawProbe(); trail.frame(t); var ok = renderNow(t, changedGrid !== false, trail.changed, st.probeDirty); st.probeDirty = false; return ok; }
   window.fxLab = {
     info: function () { return { path: gpu() ? 'gl' : 'css', created: !!fx, webgl2: fx ? fx.info.webgl2 : null, renderer: fx ? fx.info.renderer : null,
       vendor: fx ? fx.info.vendor : null, dpr: dpr, css: [st.cssW, st.cssH], device: [fxc.width, fxc.height], cols: M.cols, rows: M.rows, cell: [M.cellW, M.cellH] }; },
@@ -634,6 +634,18 @@
     forceCss: function (on) { st.forceCss = !!on; $('#forceCss').checked = st.forceCss; changed(); },
     reduced: function (on) { st.reduced = !!on; $('#reduced').checked = st.reduced; trail.clear(); syncControls(); changed(); },
     probe: function (on) { st.probe = !!on; st.probeDirty = true; },
+    /* animating() right after the clean frame, with nothing ambient on: true means the loop would never idle */
+    idleAfter: function () {
+      setManual(true); trail.clear(); var p0 = JSON.parse(JSON.stringify(params));
+      fxLab.set({ noise: { on: false }, flicker: { on: false }, burnIn: { on: true, persistMs: 450 } });
+      var out = {}, T1 = 500000;
+      params.degauss = { startMs: T1 }; frameAt(T1, true); out.degaussAt300 = fx.animating(eff(), T1 + 300);
+      frameAt(T1 + 300, false); frameAt(T1 + 600, false); out.degaussAfterClean = fx.animating(eff(), T1 + 601);
+      params.degauss = null; var T2 = 600000; frameAt(T2, true); out.burnAt200 = fx.animating(eff(), T2 + 200);
+      frameAt(T2 + 200, false); frameAt(T2 + 450, false); out.burnAfterClean = fx.animating(eff(), T2 + 451);
+      params = p0; syncControls(); changed(); st.manual = false;
+      return out;
+    },
     pointer: function (x, y) { var r = screen.getBoundingClientRect(); screen.dispatchEvent(new PointerEvent('pointermove', { clientX: r.left + x, clientY: r.top + y, bubbles: true })); return st.pointer; },
     manual: setManual,
     session: function () { st.lines = SESSION.map(parseLine); st.curAuto = true; placeCursorAtEnd(); st.gridDirty = true; },

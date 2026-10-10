@@ -92,6 +92,33 @@
     for (var i = 0; i < l.length; i++) if (l[i].family === s.family && l[i].appearance === mode && l[i].id !== s.id) return l[i];
     return s;
   }
+  /* NieR rule (NIER-RULES-for-new-surfaces.md): the YoRHa schemes are built from the NieR tokens at runtime, so they
+     follow NieR Mode's palette (and its editor) exactly; the JSON values are only the fallback when the tokens are
+     absent. Every slot is a token or a mix of ink and parchment, so nothing leaves the ink-parchment line. */
+  function nierTokens() {
+    var cs = getComputedStyle(document.documentElement), g = function (n) { return cs.getPropertyValue(n).trim(); };
+    var ink = g('--o55-nier-ink'), paper = g('--o55-nier-paper');
+    if (!ink || !paper) return null;
+    return { ink: ink, paper: paper, onInk: g('--o55-nier-on-ink'), termBg: g('--terminal-bg') || paper, termFg: g('--terminal-fg') || ink,
+      cursor: g('--o55-nier-term-cursor') || ink, sel: g('--o55-nier-term-selection'), err: g('--o55-nier-error-text') || g('--o55-nier-error'),
+      errB: g('--o55-nier-error'), ok: g('--o55-nier-ok-text') || g('--o55-nier-ok'), okB: g('--o55-nier-ok'), warn: g('--o55-nier-warn-text') || g('--o55-nier-warn'),
+      warnB: g('--o55-nier-warn') };
+  }
+  function nierScheme(base, dark) {
+    var t = nierTokens(); if (!t) return base;
+    var H = function (v) { return C.toHex(C.hex(v)); };
+    var bg = C.hex(t.termBg), fg = C.hex(t.termFg);
+    var m = function (k) { return C.toHex(C.mix(fg, bg, k)); }; /* k: share of the background */
+    var colors = {
+      background: H(t.termBg), foreground: H(t.termFg), cursor: H(t.cursor), cursorText: H(t.termBg),
+      selectionBackground: H(t.termFg), selectionForeground: H(t.termBg),
+      ansi: [dark ? m(0.78) : H(t.termFg), H(t.err), H(t.ok), H(t.warn), m(0.10), m(0.22), m(0.30), m(0.36),
+        m(0.48), H(t.err), H(t.okB), H(t.warnB), H(t.termFg), m(0.16), m(0.26), m(0.06)]
+    };
+    var roles = { link: H(t.termFg), searchMatch: H(t.sel || m(0.75)), searchCurrent: H(t.warnB), markOk: H(t.ok), markFail: H(t.err),
+      markNeutral: m(0.36), progress: H(t.termFg), attention: H(t.warn) };
+    return Object.assign({}, base, { colors: colors, roles: roles, nierBuilt: true });
+  }
   function toTheme(s, opacity) {
     var c = s.colors, ansi = c.ansi;
     var bg = C.hex(c.background), fg = C.hex(c.foreground);
@@ -100,15 +127,17 @@
     var yellow = C.hex(ansi[3]), bright = C.hex(ansi[11]);
     var dark = C.lum(bg) < 0.2;
     var theme = {
-      id: s.id + '@' + (opacity || 1), name: s.name, appearance: s.appearance || (dark ? 'dark' : 'light'),
+      id: s.id + '@' + (opacity || 1) + (s.nierBuilt ? ':' + c.background + c.foreground + c.ansi.join('') : ''), name: s.name, appearance: s.appearance || (dark ? 'dark' : 'light'),
       bg: bg, fg: fg, cursor: hexOr(c.cursor, fg), cursorText: c.cursorText ? C.hex(c.cursorText) : -1,
       selBg: hexOr(c.selectionBackground, C.mix(bg, fg, 0.25)), selFg: c.selectionForeground ? C.hex(c.selectionForeground) : -1,
       palette: C.palette256(ansi), bgAlpha: opacity === undefined ? 1 : opacity,
       searchMatch: hexOr(roles.searchMatch, C.mix(bg, yellow, dark ? 0.42 : 0.38)),
       searchCurrent: hexOr(roles.searchCurrent, C.mix(bg, bright, dark ? 0.75 : 0.62)),
       link: hexOr(roles.link, C.hex(ansi[dark ? 12 : 4])),
-      /* phosphor schemes: colours outside the 16 (256-cube, truecolor) are mapped onto the phosphor by brightness */
-      mono: roles.glow ? { lo: bg, hi: C.hex(roles.glow) } : null,
+      /* phosphor and YoRHa schemes: colours outside the 16 (256-cube, truecolor) are mapped onto the phosphor or onto
+         ink and parchment by brightness, so a program's 38;5;196 never paints red on a green tube or on parchment */
+      mono: roles.glow ? { lo: bg, hi: C.hex(roles.glow), light: false } : s.nierBuilt || /^pm-yorha/.test(s.id) ? { lo: bg, hi: fg, light: C.lum(bg) > 0.2 } : null,
+      duotone: s.nierBuilt || /^pm-yorha/.test(s.id) ? { ink: fg, paper: bg } : null,
       roles: {
         markOk: roles.markOk || ansi[2], markFail: roles.markFail || ansi[1], link: roles.link || ansi[dark ? 12 : 4],
         searchMatch: roles.searchMatch || C.toHex(C.mix(bg, yellow, 0.7)), glow: roles.glow || c.foreground,
@@ -167,6 +196,7 @@
     if (sid === 'follow' || !scheme(sid)) s = scheme(L[mode]) || scheme(mode === 'light' ? 'one-half-light' : 'one-half-dark');
     else { s = scheme(sid); if (f('schemePair')) s = pairOf(s, mode); }
     if (!s) s = (T.SCHEMES || [])[0];
+    if (s && /^pm-yorha/.test(s.id) && look.nier) s = nierScheme(s, s.appearance === 'dark');
     var bgKind = f('background'); if (bgKind === 'follow') bgKind = L.background === 'soft' || L.background === 'paper' ? 'theme' : L.background;
     var opacity = f('opacity');
     if (opacity === null || opacity === undefined) opacity = lk === 'glass' ? (mode === 'light' ? L.opacityLight || L.opacity : L.opacity) : 1;

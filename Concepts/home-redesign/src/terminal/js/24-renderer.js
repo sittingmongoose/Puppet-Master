@@ -64,7 +64,11 @@
   };
 
   /* phosphor schemes map colours outside the 16 onto the tube by brightness, so 38;5;196 never paints red on green */
-  function mono(rgb, th) { var L = Math.sqrt(C.lum(rgb)); return C.mix(th.mono.lo, th.mono.hi, 0.18 + 0.82 * L); }
+  function mono(rgb, th) {
+    var L = Math.sqrt(C.lum(rgb));
+    /* light grounds (parchment): darker colours become stronger ink; dark grounds: brighter colours become brighter */
+    return C.mix(th.mono.lo, th.mono.hi, th.mono.light ? 0.35 + 0.65 * (1 - L) : 0.18 + 0.82 * L);
+  }
   Renderer.prototype._fg = function (st, pal, th, term) {
     var c = st.fg, rgb;
     if (c === 0) rgb = term.dynamic.fg !== null ? term.dynamic.fg : th.fg;
@@ -79,9 +83,10 @@
   Renderer.prototype._bg = function (st, pal, th, term) {
     var c = st.bg, rgb;
     if (c === 0) return -1;
-    if (c < 0x200) { rgb = pal[c - 0x100]; if (th.mono && c - 0x100 >= 16) rgb = C.mix(th.mono.lo, th.mono.hi, 0.6 * Math.sqrt(C.lum(rgb))); return rgb; }
+    var bgMono = function (v) { var L = Math.sqrt(C.lum(v)); return C.mix(th.mono.lo, th.mono.hi, th.mono.light ? 0.6 * (1 - L) : 0.6 * L); };
+    if (c < 0x200) { rgb = pal[c - 0x100]; if (th.mono && c - 0x100 >= 16) rgb = bgMono(rgb); return rgb; }
     rgb = c & 0xffffff;
-    return th.mono ? C.mix(th.mono.lo, th.mono.hi, 0.6 * Math.sqrt(C.lum(rgb))) : rgb;
+    return th.mono ? bgMono(rgb) : rgb;
   };
 
   Renderer.prototype._row = function (ctx, y, abs, line, cols, m, th, pal, hasCursor) {

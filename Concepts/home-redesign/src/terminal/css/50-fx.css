@@ -1,0 +1,80 @@
+/* Terminal effects, CSS side (D16). The WebGL post-process is js/50-fx-gl.js; this file holds what the screen element
+   (.pmt-screen) shows on the no-GPU path, plus the static texture hooks every path uses. Classes go on .pmt-screen:
+     .pmt-fx-gl     the WebGL path is live: .pmt-fxcanvas shows the processed screen, .pmt-grid stays its (invisible) source
+     .pmt-fx-scan   static scanlines (the CPU stand-in for the shader's): 3 device px period, one dark row in three
+     .pmt-fx-glow   phosphor glow as a drop-shadow on the grid canvas (--pmt-glow-color, --pmt-glow-radius)
+     .pmt-fx-paper  NieR parchment: static grain and mottling, no motion, no glow
+     .pmt-fx-glass  Glass: the screen lets the panel's own blur through, with a static sheen
+   Inputs (custom properties, all optional): --pmt-glow-color (the view sets it from the scheme's glow role),
+   --pmt-glow-radius (CSS px, the same number as the shader's radius; default 2.5px), --pmt-glow-strength (0..1.5,
+   default .45), --pmt-scan-strength (default .3), --pmt-scan-period (device px, default 3), --pmt-dpr (the view may set
+   devicePixelRatio; otherwise resolution queries approximate it), --pmt-paper-strength (default 1).
+   Nothing here animates. Under html[data-motion="reduced"] nothing in the terminal moves. No capsule shapes, no side stripes,
+   no viewport-width media queries (resolution queries only). */
+
+/* zero specificity, so the view's own positioning of the screen wins */
+:where(.pmt-fx-scan, .pmt-fx-paper, .pmt-fx-glass) { position: relative; }
+/* the texture overlays sit at z 1; keep the screen's interactive overlays above them */
+:is(.pmt-fx-scan, .pmt-fx-paper, .pmt-fx-glass) > :is(.pmt-overlays, .pmt-sticky, .pmt-input, .pmt-preedit) { z-index: 2; }
+
+/* ---- WebGL path ---- */
+.pmt-fx-gl > .pmt-grid { opacity: 0; }
+
+/* ---- static scanlines (CPU path) ---- */
+.pmt-fx-scan {
+  --pmt-fx-scan-px: calc(1px * var(--pmt-scan-period, 3) / var(--pmt-dpr, var(--pmt-fx-dpr, 1)));
+  --pmt-fx-scan-a: var(--pmt-scan-strength, 0.3);
+}
+@media (min-resolution: 1.25dppx) { .pmt-fx-scan { --pmt-fx-dpr: 1.25; } }
+@media (min-resolution: 1.5dppx) { .pmt-fx-scan { --pmt-fx-dpr: 1.5; } }
+@media (min-resolution: 2dppx) { .pmt-fx-scan { --pmt-fx-dpr: 2; } }
+@media (min-resolution: 3dppx) { .pmt-fx-scan { --pmt-fx-dpr: 3; } }
+.pmt-fx-scan::after {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  /* the shader's profile per device row, as black at alpha: strength x (0.25, 1, 0.25) */
+  background: repeating-linear-gradient(to bottom,
+    rgb(0 0 0 / calc(var(--pmt-fx-scan-a) * 0.25)) 0 calc(var(--pmt-fx-scan-px) / 3),
+    rgb(0 0 0 / var(--pmt-fx-scan-a)) calc(var(--pmt-fx-scan-px) / 3) calc(var(--pmt-fx-scan-px) * 2 / 3),
+    rgb(0 0 0 / calc(var(--pmt-fx-scan-a) * 0.25)) calc(var(--pmt-fx-scan-px) * 2 / 3) var(--pmt-fx-scan-px));
+}
+
+/* ---- phosphor glow (CPU path). The grid canvas must paint default-background cells transparent (the body behind it
+   already paints --pmt-bg), otherwise the shadow only shows at the canvas edge. Cells with their own background glow at
+   their edges; at this strength that reads as phosphor bleed. The blur length is twice the radius (sigma = blur / 2). */
+.pmt-fx-glow > .pmt-grid {
+  filter: drop-shadow(0 0 calc(var(--pmt-glow-radius, 2.5px) * 2)
+    color-mix(in srgb, var(--pmt-glow-color, currentColor) calc(var(--pmt-glow-strength, 0.45) * 100%), transparent));
+}
+
+/* ---- NieR parchment (every path): fine grain plus large soft mottling, static SVG noise tiles ---- */
+.pmt-fx-paper::before {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.2 0 0 0 0 0.17 0 0 0 0 0.12 0 0 0 1.7 -0.66'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url%28%23n%29'/%3E%3C/svg%3E"), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='480' height='480'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.009' numOctaves='3' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.4 0 0 0 0 0.33 0 0 0 0 0.21 0 0 0 0.75 -0.34'/%3E%3C/filter%3E%3Crect width='480' height='480' filter='url%28%23n%29'/%3E%3C/svg%3E");
+  background-size: 160px 160px, 480px 480px;
+  mix-blend-mode: multiply; opacity: calc(0.85 * var(--pmt-paper-strength, 1));
+}
+[data-pmt-scheme="dark"] .pmt-fx-paper::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.86 0 0 0 0 0.84 0 0 0 0 0.76 0 0 0 1.7 -0.66'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url%28%23n%29'/%3E%3C/svg%3E"), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='480' height='480'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.009' numOctaves='3' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.8 0 0 0 0 0.78 0 0 0 0 0.7 0 0 0 0.75 -0.34'/%3E%3C/filter%3E%3Crect width='480' height='480' filter='url%28%23n%29'/%3E%3C/svg%3E");
+  mix-blend-mode: screen; opacity: calc(0.45 * var(--pmt-paper-strength, 1));
+}
+
+/* ---- Glass: the renderer paints the scheme background at the look's alpha (theme.bgAlpha, carried by --pmt-bg) and
+   the WebGL path keeps that alpha, so the panel's blur shows through. The terminal adds no backdrop-filter of its own
+   (the closed blur budget). A static sheen gives the glass its surface. ---- */
+.pmt-fx-glass::before {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(to bottom, rgb(255 255 255 / 0.05), rgb(255 255 255 / 0) 42%);
+}
+[data-pmt-scheme="light"] .pmt-fx-glass::before { background: linear-gradient(to bottom, rgb(255 255 255 / 0.22), rgb(255 255 255 / 0) 42%); }
+
+/* ---- cursor trail overlay on the CPU path: light styles add in dark schemes ---- */
+[data-pmt-scheme="dark"] .pmt-trail:is([data-pmt-trail="glow"], [data-pmt-trail="phosphor"]) { mix-blend-mode: screen; }
+
+/* ---- Reduced Motion: the trail never shows, and nothing in these hooks may move ---- */
+html[data-motion="reduced"] .pmt-trail { display: none !important; }
+html[data-motion="reduced"] :is(.pmt-fx-gl, .pmt-fx-scan, .pmt-fx-glow, .pmt-fx-paper, .pmt-fx-glass),
+html[data-motion="reduced"] :is(.pmt-fx-gl, .pmt-fx-scan, .pmt-fx-glow, .pmt-fx-paper, .pmt-fx-glass) *,
+html[data-motion="reduced"] :is(.pmt-fx-scan, .pmt-fx-paper, .pmt-fx-glass)::before,
+html[data-motion="reduced"] :is(.pmt-fx-scan, .pmt-fx-paper, .pmt-fx-glass)::after {
+  animation: none !important; transition: none !important;
+}
