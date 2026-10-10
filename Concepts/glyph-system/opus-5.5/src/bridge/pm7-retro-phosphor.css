@@ -1,10 +1,12 @@
 /* pm7-retro-phosphor.css: Retro lights a neon glyph like phosphor on a CRT, on PMConcept7's 33 ms Retro clock.
  * OWNER: pm7-glyphs-designer2 (2026-10-10; NEON-GRAMMAR.md section 9, accepted by pm7-glyphs; timing agreed with pm7-hover
  * against PMH's Retro "Raise", Concepts/onboarding/opus-5.5/src/css/22-hover.css on main 605ce4857c).
- * Loads after pm7-bridge.css and before neon-icons.css. The Retro scope sits inside :where(), so each rule weighs only
- * what it names: svg.nx (0,1,1) beats the generic hover rule (0,0,1), svg.nx .nx-h and .nx-p (0,2,1) beat the generic
- * halo and part rules (0,1,1), and every bespoke rule stays above or level and later (the wand's sparkle 0,3,1, the
- * filled chips 0,2,1, the Fast bolt 0,2,1 in neon-icons.css), so those keep their own timing in Retro too.
+ * Order-proof: it works before or after neon-icons.css (build_catalog.py loads it after). The Retro scope sits inside
+ * :where(), so each rule weighs only what it names: svg.nx (0,1,1) beats the generic hover rule (0,0,1), and svg.nx .nx-h
+ * and .nx-p (0,2,1) beat the generic halo and part rules (0,1,1). Bespoke rules keep their own timing: the wand's sparkle
+ * (0,3,1) and the filled chips' --nx-fl (0,2,1, which this file never sets on a chip's own selector) outrank or miss it,
+ * and the Fast bolt (0,2,1, the one tie) is excluded by name ([data-nx="lightning"]) along with every part that sits out
+ * the loops (.nx-pn, its strike overlays), so it strikes on its own clock in Retro too.
  *
  * WHAT CHANGES IN RETRO (the other looks are untouched)
  * - Ignite, on the rule's tick. PMH raises a hovered plate on the hover-start frame and draws its phosphor rule one tick
@@ -33,39 +35,39 @@ html[data-theme="retro-dark"]:not([data-o55-nier]) body {
 }
 
 /* ---- 2. at rest: how a glyph leaves its hover (the decay), written on the rest state so it applies on the way out */
-:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > svg.nx:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self)),
-:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > :where(:not(button, summary, [role="button"], [data-action])) > svg.nx:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self)) {
+:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > svg.nx:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self, [data-nx="lightning"])),
+:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > :where(:not(button, summary, [role="button"], [data-action])) > svg.nx:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self, [data-nx="lightning"])) {
   /* the tube returns to its rest ink on the second tick, with the plate */
   transition: stroke 0s linear 33ms;
 }
-:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > svg.nx:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self)) .nx-h,
-:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > :where(:not(button, summary, [role="button"], [data-action])) > svg.nx:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self)) .nx-h {
+:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > svg.nx:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self, [data-nx="lightning"])) .nx-h,
+:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > :where(:not(button, summary, [role="button"], [data-action])) > svg.nx:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self, [data-nx="lightning"])) .nx-h {
   /* half on the leave frame, out one tick later */
   transition: stroke-opacity 66ms steps(2, start), visibility 0s linear 33ms;
 }
-:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > svg.nx:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self)) .nx-f,
-:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > :where(:not(button, summary, [role="button"], [data-action])) > svg.nx:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self)) .nx-f {
+:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > svg.nx:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self, [data-nx="lightning"])) .nx-f,
+:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > :where(:not(button, summary, [role="button"], [data-action])) > svg.nx:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self, [data-nx="lightning"])) .nx-f {
   transition: fill 0s linear 33ms;
 }
 
 /* ---- 3. hovered or focused: the strike on the rule's tick */
-:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > svg.nx:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self)),
-:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > :where(:not(button, summary, [role="button"], [data-action])) > svg.nx:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self)) {
+:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > svg.nx:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self, [data-nx="lightning"])),
+:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > :where(:not(button, summary, [role="button"], [data-action])) > svg.nx:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self, [data-nx="lightning"])) {
   /* the halo powers on at +33 ms, one tick at half and then full, instead of neon's 300 ms flicker (section 8's slot) */
   --nx-fl: pmg-phos-on 33ms steps(1, end) 33ms backwards;
 }
-:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > svg.nx:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self)) .nx-h,
-:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > :where(:not(button, summary, [role="button"], [data-action])) > svg.nx:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self)) .nx-h {
+:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > svg.nx:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self, [data-nx="lightning"])) .nx-h,
+:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > :where(:not(button, summary, [role="button"], [data-action])) > svg.nx:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self, [data-nx="lightning"])) .nx-h {
   transition: stroke-opacity 0s linear 33ms, visibility 0s linear 33ms;
 }
 /* A concept glyph's halo has no flicker slot in neon-icons.css (only a control's has), so its power-on is named here. */
-:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > svg.nx-r-concept:where(:not(.nx-self)) .nx-h,
-:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > :where(:not(button, summary, [role="button"], [data-action])) > svg.nx-r-concept:where(:not(.nx-self)) .nx-h {
+:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > svg.nx-r-concept:where(:not(.nx-self, [data-nx="lightning"])) .nx-h,
+:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > :where(:not(button, summary, [role="button"], [data-action])) > svg.nx-r-concept:where(:not(.nx-self, [data-nx="lightning"])) .nx-h {
   animation: pmg-phos-on 33ms steps(1, end) 33ms backwards;
 }
 /* the act starts on the same tick */
-:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > svg.nx:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self)) .nx-p,
-:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > :where(:not(button, summary, [role="button"], [data-action])) > svg.nx:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self)) .nx-p {
+:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > svg.nx:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self, [data-nx="lightning"])) .nx-p:where(:not(.nx-pn)),
+:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > :where(:not(button, summary, [role="button"], [data-action])) > svg.nx:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self, [data-nx="lightning"])) .nx-p:where(:not(.nx-pn)) {
   animation-delay: calc(var(--ad, 0) * 1ms + 33ms);
 }
 @keyframes pmg-phos-on { from { opacity: .5; } to { opacity: 1; } }
