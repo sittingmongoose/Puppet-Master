@@ -12553,8 +12553,7 @@ canonical_text: >-
   were placed on: they scroll with it, follow it when the grid reflows, clip to the tab, and go when the screen is
   cleared or their lines leave scrollback. Text written over a sixel or iTerm2 image cuts the image out of those
   cells. While an image decodes or a file is read, later output waits, so text after an image always lands after
-  it. Under tmux, kitty images pass through as Unicode placeholders, which tmux carries as text. Reduced Motion and
-  a hidden terminal pause animation. How images draw in a tab is `Plans/FinalGUISpec.md#F3-645`; the Leptos web
+  it. Under tmux, kitty images pass through as Unicode placeholders, which tmux carries as text. Under Reduced Motion an animated image holds its first frame; while the terminal is hidden it pauses. How images draw in a tab is `Plans/FinalGUISpec.md#F3-645`; the Leptos web
   client (DL-139) receives images as a separate image-store update beside its row updates and keeps SMPFS-072's
   fixed-row rule. Saved scrollback (the planning thread's rule of 2026-10-09, which replaces the concept SPEC's
   "never enter saved scrollback" sentence): images persist with the terminal's saved scrollback within its storage
@@ -12594,7 +12593,7 @@ acceptance_criteria:
 - "Every error reply is one of the fixed strings and never echoes program data."
 - "Output after an image waits for it; images anchor, scroll, reflow and clip with their cells; text written over sixel and iTerm2 images cuts them out; tmux passthrough works through Unicode placeholders."
 - "Saved scrollback keeps images within the SP-332 quota; text never gives way to images; an evicted image leaves its placeholder label; a restored placeholder id never resolves to an image of the new session; saved images are never backed up, exported or synced."
-- "The accessible buffer and agent reads use [image W×H px], [image] and the placeholder label and never return image bytes; animation pauses under Reduced Motion and while the terminal is hidden."
+- "The accessible buffer and agent reads use [image W×H px], [image] and the placeholder label and never return image bytes; under Reduced Motion an animated image holds its first frame; while the terminal is hidden it pauses."
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -12652,6 +12651,7 @@ compatibility_only_notes:
 - "The concept SPEC's section 7 sentence that images never enter saved scrollback does not hold for canon; the planning thread's rule of 2026-10-09 replaces it."
 - "The concept caps one transmission at 64 MiB of decoded payload; the native cap comes with the next SPEC installment."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (lead ruling L15): Under Reduced Motion an animated image holds its first frame; while the terminal is hidden it pauses."
 - "Replaces 2026-10-09 (DL-182): the image sentence of the DL-035 addendum's P3 row and SMPFS-158's negative constraint that image protocols are not approved."
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md

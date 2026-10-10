@@ -45152,8 +45152,7 @@ canonical_text: >-
   that cell, follows it when the grid reflows, clips to the tab, and goes when the screen is cleared or its lines
   leave the scrollback. Text written over a sixel or iTerm2 image cuts the image out of those cells. While an image
   decodes or a file is read, later output waits, so text after an image always lands after it. Animation plays no
-  faster than SMPFS-181's fastest frame; it pauses while the terminal is hidden and under Reduced Motion, where an
-  animated image holds its first frame. The desktop draws the tiers through Skia (F3-582) and the web client draws
+  faster than SMPFS-181's fastest frame; under Reduced Motion an animated image holds its first frame; while the terminal is hidden it pauses. The desktop draws the tiers through Skia (F3-582) and the web client draws
   the same tiers over its text rows, positioned by row, so images scroll and clip with the rows (F3-583). Images
   persist with the terminal's saved scrollback inside its storage quota (SP-332), the separate terminal scrollback
   cap F3-416 asks for, so a restored terminal's
@@ -45178,7 +45177,7 @@ acceptance_criteria:
   - "Images draw in the paint order above, and Unicode-placeholder images draw in their cells under the text."
   - "An image scrolls, reflows and clips with its anchor cell, and text written over a sixel or iTerm2 image cuts it out of those cells."
   - "Output after an image never paints before the image is decoded."
-  - "An animated image pauses while its terminal is hidden and holds its first frame under Reduced Motion."
+  - "Under Reduced Motion an animated image holds its first frame; while the terminal is hidden it pauses."
   - "A restored terminal shows its saved images where they were; an image the quota dropped shows the dashed placeholder with its name and size, and the restore notice counts it."
   - "The accessible buffer and agent reads show `[image W×H px]`, `[image]` or the placeholder label, and never image data."
   - "A refused image is not drawn, and the program's error reply is one of SMPFS-181's fixed strings."
@@ -45216,6 +45215,7 @@ negative_constraints:
 compatibility_only_notes:
   - "The concept's image store, renderer layers and demo images are lineage only."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (lead ruling L15): Under Reduced Motion an animated image holds its first frame; while the terminal is hidden it pauses."
   - "Replaces F3-544's sentence that no image protocol is approved (DL-182)."
 owner_hints:
   - Plans/FinalGUISpec.md
