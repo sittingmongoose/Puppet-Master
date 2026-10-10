@@ -7,7 +7,12 @@
    the layout store (widget_layout:v1:usage records, v12 migrated once, default_set_version); the held build, the room
    transition and the reading-order entrance; the tier pass. */
 (function () {
-  var CLASSES = [{ name: 'S', tracks: 12, min: 0 }, { name: 'M', tracks: 20, min: 820 }, { name: 'L', tracks: 24, min: 1100 }, { name: 'XL', tracks: 30, min: 1460 }];
+  /* (lane c-presets, agent 5) M from 900 px, not 820: at 820 a 20-track board's pitch was 41.4 px and the M default
+     boards, authored at the 46.9 px pitch of the 929 px board (1920 with a 480 px chat), clipped and wrapped names letter
+     by letter; a 1920 window with a 600 px chat (809 px board) also came out S or M depending on the width it came from
+     (hysteresis). From 900 px M never runs under 44.3 px (with the hysteresis); 820 to 900 px boards are S at 69 to
+     76 px tracks, close to the 767 px panel the S boards were designed for (BOARDS.md). */
+  var CLASSES = [{ name: 'S', tracks: 12, min: 0 }, { name: 'M', tracks: 20, min: 900 }, { name: 'L', tracks: 24, min: 1100 }, { name: 'XL', tracks: 30, min: 1460 }];
   var GAP = 8, ROW = 30, HYST = 24, MOVE_THRESHOLD = 4, TARGET_HYST = 0.75, SCROLL_BAND = 48;
   var STORE_KEY = 'widget_layout:v1:usage';
   /* the default set follows the generated boards (tools/boards.py writes PMU_BOARDS.version): a saved layout from an
