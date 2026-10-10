@@ -489,6 +489,19 @@ APP_PATCHES = [
      '      }\n'
      '      function metrics0(el) {\n        /* getBoundingClientRect so nested Usage',
      'A7 Usage rail ink measures once per target during a Usage moment'),
+    # A8 (integrator, 2026-10-10; panels cross-look review): the demo's usage alerts reached the title-bar notices with
+    # internal ids ('Usage threshold crossed — q-claude-5h at 80%', 'suggested: switch effective account',
+    # 'rate_limit_pressure'). The three notice texts now say it in user words with the window's own label; the events,
+    # their ids and the receipts behind them are unchanged. Acts on every page (these notices are not tied to Usage showing).
+    ("      if (a.kind === 'threshold') addNote('Usage threshold crossed — ' + (a.quota || 'quota') + ' at ' + (a.pct || 80) + '%.', 'Usage · suggested: switch effective account', 'usage', null, true);\n",
+     "      if (a.kind === 'threshold') addNote((function (id) { var u = window.PM_DEMO && window.PM_DEMO.state && window.PM_DEMO.state.usage, q = ((u && u.quotas) || []).filter(function (x) { return x.id === id; })[0]; return ((q && q.label) || 'A usage window').replace(/\\b5h\\b/, '5-hour').replace(/\\b7d\\b/, 'weekly'); })(a.quota) + ' is at ' + Math.round(a.pct || 80) + '% used.', 'Usage · another signed-in account can take the work', 'usage', null, true); /* usage layer A8: user words */\n",
+     'A8 usage alert notices in user words (threshold)'),
+    ("      else if (a.kind === 'account_switch') addNote('Effective account switched — reason: rate_limit_pressure.', 'Usage · requested account unchanged', 'usage', null, true);\n",
+     "      else if (a.kind === 'account_switch') addNote('Work moved to another account because of rate limits.', 'Usage · the account you chose stays your choice', 'usage', null, true); /* usage layer A8 */\n",
+     'A8 usage alert notices in user words (account switch)'),
+    ("      if (!silent) say('Effective account switched (rate_limit_pressure) — requested account unchanged');\n",
+     "      if (!silent) say('Work moved to another account because of rate limits'); /* usage layer A8 */\n",
+     'A8 usage alert notices in user words (switch toast)'),
 ]
 
 
