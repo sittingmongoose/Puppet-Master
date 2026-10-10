@@ -1158,6 +1158,34 @@ await t('L12. NieR: an option description on the menu cursor reads in paper, lik
   must(c.L === c.D, `description ${c.D} vs label ${c.L} on ${c.bg}`);
   return c;
 });
+/* The lab takes (#1 to #8) share the host's cap, not the Ask Card's. A `min-height:min-content` on every open take
+   beat that cap, so long answers grew each take past the host and its actions were clipped (Anchored Sheet's sat
+   400px+ below the host's edge); at 900x700 Evidence Split's narrow floors overran the cap on stock answers too. */
+await t('L13. every lab take keeps its actions inside the host and clickable with long answers (1440x900, 900x700)', async () => {
+  const miss = [];
+  for (const [w, h] of [[1440, 900], [900, 700]]) {
+    await page.setViewportSize({ width: w, height: h });
+    for (let v = 0; v < 8; v++) for (const idx of [0, 3]) {
+      await openLong(idx);
+      await page.evaluate(v => PM56_DEMO.setVariant(6, v), v);
+      await page.waitForTimeout(SETTLE);
+      const r = await page.evaluate(() => {
+        const host = document.querySelector('.decision-host'), q = host && host.querySelector('.qs');
+        if (!q) return 'no take';
+        const hr = host.getBoundingClientRect(), out = [];
+        if (q.getBoundingClientRect().bottom > hr.bottom + 1) out.push('take overruns the host by ' + Math.round(q.getBoundingClientRect().bottom - hr.bottom));
+        host.querySelectorAll('.qs-actions button:not(:disabled)').forEach(b => {
+          const br = b.getBoundingClientRect(), hit = document.elementFromPoint(br.left + br.width / 2, br.top + br.height / 2);
+          if (!(br.bottom <= hr.bottom + 0.5 && hit && (hit === b || b.contains(hit)))) out.push(b.textContent.trim() + ' -> ' + (hit ? hit.className : 'nothing'));
+        });
+        return out.join('; ');
+      });
+      if (r) miss.push(`${w}x${h} take ${v} q${idx + 1}: ${r}`);
+    }
+  }
+  await page.setViewportSize({ width: 1440, height: 900 });
+  must(!miss.length, miss.slice(0, 4).join(' | '));
+});
 
 /* ======================================================================= E */
 await t('E1. the surface survives two full work ticks without remounting (stable data-k)', async () => {

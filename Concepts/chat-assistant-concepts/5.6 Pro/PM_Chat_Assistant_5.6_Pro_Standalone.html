@@ -7675,7 +7675,10 @@ body.pm56-reduced .wa-track, html[data-motion="reduced"] .wa-track { scroll-beha
   max-height:calc(min(46vh,460px) - 18px);
   margin:8px auto;
 }
-.decision-host:not(.empty) .qs{ min-height:min-content; }
+/* No `min-height:min-content` on an open take (3e1842da40 had one): min-height
+   beats max-height, so every lab take grew to its full content and the host
+   clipped its footer — Anchored Sheet's actions sat 400px+ below the host's
+   edge with long answers. The cap above has to win so .qs-scroll scrolls. */
 .qs-scroll{ overflow:auto; overscroll-behavior:contain; min-height:0; }
 
 /* Shared vocabulary ------------------------------------------------------- */
@@ -8906,10 +8909,14 @@ button.qs-spine-slot.is-current::after{
      short scrollable peek so it cannot starve the question the way
      flex:0 0 auto did (D2/D3). */
   .qs-split-body{ flex-direction:column; min-height:0; flex:1 1 auto; }
-  .qs-split-main{ flex:1 1 auto; min-height:180px; padding-bottom:0; }
-  .qs-split-main > .qs-split-main-scroll{ flex:1 1 auto; min-height:100px; }
+  /* No 180px + 100px floors: at a 244px host the actions wrap to three rows
+     (117px), and 98 head + 180 main + 72 aside overran the 305px cap at
+     900x700, so Next fell under the composer. The scroll keeps two lines and
+     the evidence peek gives way first (flex-shrink 99). */
+  .qs-split-main{ flex:1 1 auto; min-height:0; padding-bottom:0; }
+  .qs-split-main > .qs-split-main-scroll{ flex:1 1 auto; min-height:44px; }
   .qs-split-aside{
-    flex:0 0 auto; max-height:72px; min-height:0; overflow:auto;
+    flex:0 99 auto; max-height:72px; min-height:0; overflow:auto;
     border-left:0; border-top:1px solid var(--border);
   }
   .qs-inspector{ width:100%; }
