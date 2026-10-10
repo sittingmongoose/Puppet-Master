@@ -512,8 +512,9 @@
     /* the wave on the whole new layout (grid rows and columns from the rects; no element needed yet) */
     var proxies = plans.map(function (pl) { return { plan: pl, dataset: { x: pl.rect.x, y: pl.rect.y } }; });
     var fresh = proxies.filter(function (q) { return !q.plan.card; });
-    /* the structure wave of a room change (WOW-SPEC-3 6.2): 90 + 28 x rowRank + 16 x colRank, cap 200 */
-    if (PMU.film && PMU.film.wave) PMU.film.wave(fresh, { row: PMU.motion.family() === 'retro' ? 60 : 28, col: 16, cap: 200 });
+    /* the structure wave of a room change (WOW-SPEC-3 6.2): 90 + row x rowRank + col x colRank in the voice's cadence
+       (MOTION-4 4.2: cam asks PMU.film for it; Glass ranks from the hero outward) */
+    if (PMU.film && PMU.film.wave) PMU.film.wave(fresh, { row: PMU.motion.family() === 'retro' ? 60 : 28, col: 16, cap: 200, cam: true, heroes: [].concat(o.hero || []) });
     else readingOrder(fresh).forEach(function (q, i) { q._pmuEnterDelay = Math.min(480, 32 * i); });
     proxies.forEach(function (q) { q.plan.at = q.plan.card ? 0 : (q._pmuEnterDelay || 0) + o.base; });
     /* build order: the hero first (it reveals at 200), then the bodies that hold flight targets, then reading order; the

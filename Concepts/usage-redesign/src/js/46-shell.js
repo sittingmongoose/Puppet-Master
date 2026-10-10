@@ -132,10 +132,18 @@
         { dur: 320, easing: ff === 'retro' || ff === 'nier' ? 'steps(3,jump-start)' : 'cubic-bezier(.34,1.45,.64,1)' });
     }
     if (animTitle) {
-      var f = PMU.motion.family(), stepped = f === 'retro';
+      /* the title in the voice of the camera (MOTION-4 4.2): Basic rises 10 px (260 OUT); Friendly hops 8 px on the hop
+         curve with a small tilt; Glass comes out of depth and a 4 px blur into focus (the chat's tx-depth; ends at blur 0,
+         no filter after its end); Retro steps. The animations join the room's moment (adopt), so a rapid switch ends them. */
+      var f = PMU.motion.family(), stepped = f === 'retro', soft0 = document.documentElement.hasAttribute('data-pmu-soft');
+      titleAnims = [];
       [title, desc].forEach(function (el, i) {
-        if (el) PMU.motion.animate(el, [{ opacity: 0, transform: 'translateY(' + (10 * titleDir) + 'px)' }, { opacity: 1, transform: 'none' }],
-          { dur: 260, delay: 60 + i * 40, easing: stepped ? 'steps(3,jump-start)' : 'cubic-bezier(.22,.8,.28,1)', fill: 'backwards' });
+        if (!el) return;
+        var kf, ease = stepped ? 'steps(3,jump-start)' : 'cubic-bezier(.22,.8,.28,1)', dur = 260;
+        if (f === 'friendly' && !soft0) { kf = [{ opacity: 0, transform: 'translateY(' + (8 * titleDir) + 'px) rotate(' + (-1.2 * titleDir) + 'deg)', transformOrigin: '0 100%' }, { opacity: 1, transform: 'none', transformOrigin: '0 100%' }]; ease = 'cubic-bezier(.34,1.56,.64,1)'; dur = 340; }
+        else if (f === 'glass' && !soft0) { kf = [{ opacity: 0, transform: 'translateY(' + (6 * titleDir) + 'px) scale(.97)', transformOrigin: '0 50%', filter: 'blur(4px)' }, { opacity: 1, transform: 'none', transformOrigin: '0 50%', filter: 'blur(0px)' }]; ease = 'cubic-bezier(.05,.7,.1,1)'; dur = 420; }
+        else kf = [{ opacity: 0, transform: 'translateY(' + (10 * titleDir) + 'px)' }, { opacity: 1, transform: 'none' }];
+        titleAnims.push(PMU.motion.animate(el, kf, { dur: dur, delay: 60 + i * 40, easing: ease, fill: 'backwards' }));
       });
     }
     lastRoom = room;
@@ -224,11 +232,15 @@
   if (PMU.theme && PMU.theme.onChange) PMU.theme.onChange(function () { faces = null; requestAnimationFrame(fitDesc); });
   /* an embedded face that landed after a measure (30-charts-core.js faceReady): measure again in it */
   if (PMU.charts && PMU.charts.onFaces) PMU.charts.onFaces(function () { faces = null; faceKey = null; fitDesc(); });
+  var titleAnims = [];
   function setView(patch, source) {
     var changed = Object.keys(patch).filter(function (k) { return patch[k] !== undefined && st[k] !== patch[k]; });
     if (!changed.length) return false;
     var roomChange = changed.indexOf('room') >= 0, prevRoom = st.room;
     if (roomChange) titleDir = ROOM_ORDER.indexOf(patch.room) < ROOM_ORDER.indexOf(prevRoom) ? -1 : 1;
+    /* the camera of the room change travels the rail (MOTION-4 RC1): its direction and how many rooms it passes set the pan */
+    if (roomChange && PMU.film && PMU.film.camera) PMU.film.camera({ dir: titleDir, dist: Math.abs(ROOM_ORDER.indexOf(patch.room) - ROOM_ORDER.indexOf(prevRoom)) || 1 });
+    titleAnims = [];
     /* the shared-element flight reads the old room's shares in one batch before anything is written (WOW-SPEC-3 6.2) */
     if (roomChange && PMU.film && PMU.film.snapShares) { try { PMU.film.snapShares(patch.room); } catch (error) { console.error('[pm-usage] flight read', error); } }
     if (PMU.menu) PMU.menu.close();
@@ -243,7 +255,11 @@
       /* a room change re-reads the Settings roster first (Settings may have changed it since the last read) */
       /* (the Settings roster is re-read when the page is entered and after every write: a room click never pays for a
          fresh copy of the Settings state, 10 ms on the CPU-only VM) */
-      if (roomChange) PMU.board.mount(st.room, { dir: ROOM_ORDER.indexOf(st.room) < ROOM_ORDER.indexOf(prevRoom) ? -1 : 1, transition: true });
+      if (roomChange) {
+        PMU.board.mount(st.room, { dir: ROOM_ORDER.indexOf(st.room) < ROOM_ORDER.indexOf(prevRoom) ? -1 : 1, transition: true });
+        if (titleAnims.length && PMU.film && PMU.film.adopt) PMU.film.adopt(titleAnims);
+        titleAnims = [];
+      }
       else if (changed.indexOf('detail') >= 0) PMU.board.relevel();
       else PMU.board.refresh(changed[0]);
       PMU.board.persist();

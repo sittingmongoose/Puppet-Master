@@ -22,7 +22,7 @@
   --pmu-plate-hover: inset 0 1px 0 rgba(255,255,255,.10), 0 18px 40px -12px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.05);
   --pmu-plate-lift: inset 0 1px 0 rgba(255,255,255,.12), 0 28px 60px -18px rgba(0,0,0,.6), 0 0 0 1px color-mix(in srgb, var(--pmu-accent) 40%, transparent);
   --pmu-sheen: rgba(255,255,255,.06);
-  --pmu-lift-y: -4px; --pmu-lift-s: 1.01;
+  --pmu-lift-y: -4px;
 }
 html[data-theme$="-light"] #panel-usage .pmu-shell {
   --pmu-plate-rest: inset 0 1px 0 rgba(255,255,255,.7), 0 10px 26px -14px rgba(21,32,43,.14);
@@ -40,9 +40,9 @@ html[data-theme="glass-light"] #panel-usage .pmu-shell {
   --pmu-plate-rest: inset 0 1px 0 rgba(255,255,255,.85), 0 12px 28px -14px rgba(23,34,42,.16);
   --pmu-plate-hover: inset 0 1px 0 rgba(255,255,255,.9), 0 16px 34px -12px rgba(23,34,42,.2), 0 0 0 1px rgba(255,255,255,.5); }
 html[data-theme^="retro"] #panel-usage .pmu-shell {
-  --pmu-plate-rest: var(--pmu-shadow-1); --pmu-plate-hover: 4px 4px 0 rgba(0,0,0,.38); --pmu-plate-lift: 7px 7px 0 rgba(0,0,0,.35); --pmu-lift-y: 0px; --pmu-lift-s: 1; }
+  --pmu-plate-rest: var(--pmu-shadow-1); --pmu-plate-hover: 4px 4px 0 rgba(0,0,0,.38); --pmu-plate-lift: 7px 7px 0 rgba(0,0,0,.35); --pmu-lift-y: 0px; }
 html[data-theme="retro-light"] #panel-usage .pmu-shell { --pmu-plate-hover: 4px 4px 0 rgba(23,26,20,.22); --pmu-plate-lift: 7px 7px 0 rgba(23,26,20,.2); }
-html[data-o55-nier="on"] #panel-usage .pmu-shell { --pmu-plate-rest: none; --pmu-plate-hover: 3px 3px 0 rgba(var(--o55-nier-ink-rgb), .18); --pmu-lift-y: 0px; --pmu-lift-s: 1; --pmu-sheen: transparent; }
+html[data-o55-nier="on"] #panel-usage .pmu-shell { --pmu-plate-rest: none; --pmu-plate-hover: 3px 3px 0 rgba(var(--o55-nier-ink-rgb), .18); --pmu-lift-y: 0px; --pmu-sheen: transparent; }
 
 #panel-usage .pmu-card { position: relative; display: flex; flex-direction: column; min-width: 0; min-height: 0; border: var(--pmu-bw) solid var(--pmu-rule);
   border-radius: var(--pmu-r-card); background: var(--pmu-card); box-shadow: var(--pmu-plate-rest); outline: none;
@@ -51,15 +51,21 @@ html[data-o55-nier="on"] #panel-usage .pmu-shell { --pmu-plate-rest: none; --pmu
 #panel-usage .pmu-card::before { content: ""; position: absolute; inset: calc(-1 * var(--pmu-bw)); border-radius: inherit; pointer-events: none;
   box-shadow: var(--pmu-plate-hover); opacity: 0; transition: opacity calc(260ms * var(--pmu-speed, 1)) var(--pmu-ease-settle); }
 #panel-usage .pmu-card[data-head="band"]::before { display: none; }
-/* hover depth (WOW-SPEC 3.17): lift 4 px and scale 1.01 on the spring (tiles 5 px), shadow layer in 220; unhover 260 SETTLE.
-   The hovered plate gets its own layer for the moment (will-change) and sits above its neighbours. */
-#panel-usage .pmu-card:not([data-head="band"]):hover { z-index: 3; will-change: transform; transform: translateY(var(--pmu-lift-y)) scale(var(--pmu-lift-s));
+/* hover depth (WOW-SPEC 3.17): lift 4 px on the spring (tiles 5 px), shadow layer in 220; unhover 260 SETTLE. The hovered
+   plate sits above its neighbours.
+   Sharp text (Jared's note 5, 2026-10-09): the lift is a whole-pixel translate with no scale, and the plate carries no
+   will-change. The transition gives it a compositor layer only while it moves; at rest (lifted or not) it paints at a
+   whole-pixel offset at its own raster scale. The old scale(1.01) under will-change: transform drew the hovered plate's
+   text from a layer resampled at 1.01 for the whole hover (GPU probe: title Laplacian sharpness 0.45-0.70 of rest in
+   Basic, Friendly and Glass, back to 1.0 only after the 260 ms settle). The depth comes from the pre-painted shadow. */
+#panel-usage .pmu-card:not([data-head="band"]):hover { z-index: 3; transform: translateY(var(--pmu-lift-y));
   transition: transform calc(220ms * var(--pmu-speed, 1)) var(--pmu-ease-spring); }
 /* a tile lifts 5 px: written as the transform itself, never as a custom property set on hover (an inherited custom
    property changed on the card restyles its whole subtree on every hover, PERF-3) */
-#panel-usage .pmu-card[data-head="tile"]:not([data-head="band"]):hover { transform: translateY(-5px) scale(var(--pmu-lift-s)); }
+#panel-usage .pmu-card[data-head="tile"]:not([data-head="band"]):hover { transform: translateY(-5px); }
 #panel-usage .pmu-card:not([data-head="band"]):hover::before { opacity: 1; transition: opacity calc(220ms * var(--pmu-speed, 1)) var(--pmu-ease-out); }
-html[data-theme^="retro"] #panel-usage .pmu-card[data-head="tile"]:hover, html[data-o55-nier="on"] #panel-usage .pmu-card[data-head="tile"]:hover { transform: translateY(0px) scale(var(--pmu-lift-s)); }
+/* Retro and NieR do not lift: no transform at all (an identity translateY(0) would still run a transition and take a layer) */
+html[data-theme^="retro"] #panel-usage .pmu-card:not([data-head="band"]):hover, html[data-o55-nier="on"] #panel-usage .pmu-card:not([data-head="band"]):hover { transform: none; }
 /* Retro: the hard 4 px offset shadow appears in two steps, no lift */
 html[data-theme^="retro"] #panel-usage .pmu-card:hover::before { transition-timing-function: steps(2, jump-start); transition-duration: calc(120ms * var(--pmu-speed, 1)); }
 #panel-usage .pmu-card:focus-visible { box-shadow: 0 0 0 2px var(--pmu-accent), var(--pmu-plate-rest); }
@@ -141,25 +147,49 @@ html[data-theme^="retro"] #panel-usage .pmu-keysw { border-radius: 0; }
 #panel-usage .pmu-headtools { display: flex; align-items: center; gap: 12px; flex: none; min-width: 0; transition: opacity calc(140ms * var(--pmu-speed, 1)); }
 #panel-usage .pmu-headtools:empty { display: none; }
 #panel-usage .pmu-card[data-head="plate"] .pmu-headtools { margin-top: 1px; }
-/* the tools cluster: grip, size, gear, menu at the top right; fades in on hover / focus and covers the head tools */
+/* the tools cluster: grip, size, gear, menu at the top right; fades in on hover / focus. It never covers the title or the
+   head tools and always fits in the head (Jared's note 6b, 2026-10-09; 42-cards.js fitTools): entering a card picks
+   the widest form that leaves the whole title in place (data-fold: all four, "pair" = grip and menu, "menu" = the menu
+   alone, which holds every action), slides the head tools exactly clear of it (--pmu-head-slide) and, where even the
+   menu alone does not fit beside the title, lets the title yield the room (--pmu-head-room) on the lines it has at rest */
 #panel-usage .pmu-cardtools { position: absolute; z-index: 4; top: 5px; right: 6px; display: flex; gap: 1px; padding: 2px; border-radius: 9px; opacity: 0; pointer-events: none;
   background: var(--pmu-menu-bg, var(--pmu-card)); transition: opacity calc(140ms * var(--pmu-speed, 1)) var(--pmu-ease-out); }
 #panel-usage .pmu-card[data-head="plate"] .pmu-cardtools { top: 9px; right: 9px; }
 #panel-usage .pmu-cardtools .pmu-iconbtn { width: 24px; height: 24px; border-radius: 7px; }
 #panel-usage .pmu-cardtools .pmu-iconbtn svg { width: 14px; height: 14px; }
+/* a tile head is 30 px: its cluster (22 px tools) sits inside it, from 4 to 30 */
+#panel-usage .pmu-card[data-head="tile"] .pmu-cardtools { top: 4px; }
+#panel-usage .pmu-card[data-head="tile"] .pmu-cardtools .pmu-iconbtn { width: 22px; height: 22px; border-radius: 6px; }
 #panel-usage .pmu-cardtools .pmu-grip { cursor: grab; }
+#panel-usage .pmu-cardtools[data-fold="pair"] > :is(.pmu-cardsize, .pmu-cardgear), #panel-usage .pmu-cardtools[data-fold="menu"] > :not(.pmu-cardmenu) { display: none; }
+/* before a card has been fitted (keyboard focus that moved in without a focus event) an extra-small card shows grip and menu */
+#panel-usage .pmu-card[data-tw="xs"] .pmu-cardtools:not([data-fold]) :is(.pmu-cardsize, .pmu-cardgear) { display: none; }
 /* shown on hover, on keyboard focus of the card, and while a tool inside has focus (a pointer-down focuses the card
    article, so :focus-within on the card would keep them over a narrow title after a drag) */
 #panel-usage .pmu-card:hover .pmu-cardtools, #panel-usage .pmu-card:focus-visible .pmu-cardtools, #panel-usage .pmu-cardtools:focus-within { opacity: 1; pointer-events: auto; }
 #panel-usage .pmu-cardtools .pmu-menu-anchor-open { color: var(--pmu-ink); background: var(--pmu-row-hover); }
-/* the meta (text only) gives way to the tools; the head tools (switches, legends) never vanish: they are placed in the
-   head only when the title, the head tools and the tools cluster all fit (C.headTools), and slide left of the cluster */
+/* the meta (text only) gives way to the tools; the head tools (switches, legends, the folded count) never vanish: they
+   slide left exactly clear of the cluster */
 #panel-usage .pmu-card:hover .pmu-cardmeta, #panel-usage .pmu-card:focus-visible .pmu-cardmeta { opacity: 0; }
-#panel-usage .pmu-headtools { transition: transform calc(220ms * var(--pmu-speed, 1)) var(--pmu-ease-out); }
-#panel-usage .pmu-card:hover .pmu-headtools, #panel-usage .pmu-card:focus-visible .pmu-headtools { transform: translateX(-108px); }
-#panel-usage .pmu-card[data-tw="xs"]:hover .pmu-headtools { transform: translateX(-58px); }
+/* one after the other, so the two never cross: entering, the head tools slide aside (160) and the cluster fades in once
+   they have cleared its place; leaving, the cluster fades out (140) and only then do the head tools slide back */
+#panel-usage .pmu-headtools { transition: transform calc(160ms * var(--pmu-speed, 1)) var(--pmu-ease-out) calc(140ms * var(--pmu-speed, 1)); }
+#panel-usage .pmu-card:hover .pmu-headtools, #panel-usage .pmu-card:focus-visible .pmu-headtools, #panel-usage .pmu-cardhead[data-tools-on] > .pmu-headtools { transform: translateX(var(--pmu-head-slide, -108px)); transition-delay: 0s; }
+#panel-usage .pmu-card[data-tw="xs"]:hover .pmu-headtools { transform: translateX(var(--pmu-head-slide, -58px)); }
+/* (keyed on the head tools being there, not on a measurement: entering a card reads its head (42-cards.js fitTools), and
+   that read already starts the cluster's fade, so its delay has to be in place before anything is measured) */
+#panel-usage .pmu-card:hover > .pmu-cardhead > .pmu-headtools:not(:empty) ~ .pmu-cardtools, #panel-usage .pmu-card:focus-visible > .pmu-cardhead > .pmu-headtools:not(:empty) ~ .pmu-cardtools,
+#panel-usage .pmu-cardhead[data-tools-on] > .pmu-headtools:not(:empty) ~ .pmu-cardtools { transition-delay: calc(160ms * var(--pmu-speed, 1)); }
 #panel-usage .pmu-board[data-op] .pmu-headtools { transform: none; }
-#panel-usage .pmu-card[data-tw="xs"] .pmu-cardtools .pmu-cardsize, #panel-usage .pmu-card[data-tw="xs"] .pmu-cardtools .pmu-cardgear { display: none; }
+/* the title yields its room to the cluster at once and takes it back once the cluster has faded and the head tools are
+   back (140 + 160); a yielding title
+   keeps the number of lines it has at rest (data-title-lines: line, tile and wrapped plate titles are clamped to it, a
+   one-line plate title ends in an ellipsis), so its head never grows and the body never moves */
+#panel-usage .pmu-cardtitles { transition: margin-right 0s linear calc(300ms * var(--pmu-speed, 1)); }
+#panel-usage .pmu-card:hover > .pmu-cardhead > .pmu-cardtitles, #panel-usage .pmu-card:focus-visible > .pmu-cardhead > .pmu-cardtitles,
+#panel-usage .pmu-cardhead[data-tools-on] > .pmu-cardtitles { margin-right: var(--pmu-head-room, 0px); transition-delay: 0s; }
+#panel-usage .pmu-cardhead[data-title-lines] .pmu-cardtitle { -webkit-line-clamp: var(--pmu-title-lines, 2); overflow: hidden; }
+#panel-usage .pmu-board[data-op] .pmu-cardtitles { margin-right: 0; transition: none; }
 #panel-usage .pmu-board[data-op] .pmu-cardtools { opacity: 0 !important; pointer-events: none !important; }
 html[data-theme^="retro"] #panel-usage .pmu-cardtools, html[data-theme^="retro"] #panel-usage .pmu-cardtools .pmu-iconbtn { border-radius: 0; }
 
@@ -275,5 +305,8 @@ html[data-o55-nier="on"] #panel-usage .pmu-rim { box-shadow: 0 0 0 1px var(--o55
 /* Reduce Motion (WOW-SPEC 9): no lift; the shadow layer keeps a 120 ms opacity change */
 html[data-motion="reduced"] #panel-usage .pmu-card, html[data-motion="reduced"] #panel-usage .pmu-card:hover, html[data-motion="reduced"] #panel-usage .pmu-card[data-head="tile"]:hover { transition: none; transform: none; }
 html[data-motion="reduced"] #panel-usage .pmu-card::before, html[data-motion="reduced"] #panel-usage .pmu-card:hover::before { transition: opacity calc(120ms * var(--pmu-speed, 1)) linear; }
+/* the head's reveal is instant: the head tools, the cluster and the title's room change in the same frame */
+html[data-motion="reduced"] #panel-usage :is(.pmu-headtools, .pmu-cardtools, .pmu-cardtitles, .pmu-cardmeta) { transition: none !important; }
+@media (prefers-reduced-motion: reduce) { #panel-usage :is(.pmu-headtools, .pmu-cardtools, .pmu-cardtitles, .pmu-cardmeta) { transition: none !important; } }
 @media (prefers-reduced-motion: reduce) { #panel-usage .pmu-card, #panel-usage .pmu-card:hover, #panel-usage .pmu-card[data-head="tile"]:not([data-head="band"]):hover { transition: none; transform: none; }
   #panel-usage .pmu-card::before, #panel-usage .pmu-card:hover::before { transition: opacity calc(120ms * var(--pmu-speed, 1)) linear; } }
