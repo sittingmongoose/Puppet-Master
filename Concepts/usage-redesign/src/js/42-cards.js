@@ -413,7 +413,7 @@
     var hb = head.getBoundingClientRect(), k = hb.width ? hw / hb.width : 1;   /* a card still entering may be scaled */
     var tcs = getComputedStyle(tools), btn = parseFloat(getComputedStyle(tools.lastElementChild).width) || 24;
     var right = hw - (parseFloat(tcs.right) || 6), pad = (parseFloat(tcs.paddingLeft) || 2) * 2;
-    var tl = titles.offsetLeft, tr = tl + titles.offsetWidth, tb = title.getBoundingClientRect();
+    var tl = titles.offsetLeft, tr = tl + titles.offsetWidth, tb = title.getBoundingClientRect(), titlesH = titles.getBoundingClientRect().height * k;
     var rg = document.createRange(); rg.selectNodeContents(title);
     var textR = tl, tops = [];
     Array.prototype.forEach.call(rg.getClientRects(), function (r) {
@@ -432,23 +432,54 @@
     }
     var yieldTitle = textR > pick.limit + 0.5;
     var room = Math.max(0, Math.ceil(tr - pick.limit));
+    /* a title that fits keeps a whole pixel clear of its last glyph: the room never narrows its box to the text's own
+       width, where the line breaker (1/64 px) and the measured glyphs disagree and the title wrapped ("Kimi / Code",
+       "Claud / e") and the head grew */
+    if (!yieldTitle) room = Math.min(room, Math.max(0, Math.floor(tr - textR - 1)));
+    /* a yielding title keeps the room it has at rest (the titles block's height is held, so the head never grows or
+       shrinks and the body never moves) and the lines it has at rest, the last ending in an ellipsis; where a word of a wrapped title would
+       not fit the narrower box whole (it would break inside the word, "Gemin / i API"), the title shows one line ending
+       in an ellipsis instead. The words are measured here, as the title rests, before the room is written. */
+    var lines = Math.max(1, tops.length);
+    if (yieldTitle && lines > 1) {
+      var wide = 0, wr = document.createRange(), walk = document.createTreeWalker(title, NodeFilter.SHOW_TEXT), tn, re = /\S+/g, mm;
+      while ((tn = walk.nextNode())) { re.lastIndex = 0; while ((mm = re.exec(tn.data))) { wr.setStart(tn, mm.index); wr.setEnd(tn, mm.index + mm[0].length); wide = Math.max(wide, wr.getBoundingClientRect().width * k); } }
+      if (wide > tr - room - (tb.left - hb.left) * k - 2) lines = 1;
+    }
     head.style.setProperty('--pmu-head-room', room + 'px');
     head.style.setProperty('--pmu-head-slide', (pick.slide ? -Math.ceil(pick.slide) : 0) + 'px');
     if (tools.getAttribute('data-fold') !== pick.fold) tools.setAttribute('data-fold', pick.fold);
-    if (yieldTitle) { head.style.setProperty('--pmu-title-lines', String(Math.max(1, tops.length))); head.setAttribute('data-title-lines', ''); }
+    if (yieldTitle) {
+      head.style.setProperty('--pmu-title-lines', String(lines));
+      head.style.setProperty('--pmu-title-h', (tb.height * k * lines / Math.max(1, tops.length)) + 'px');
+      /* the resting height, read above: read here, under :hover the room is already taken and the title has wrapped */
+      head.style.setProperty('--pmu-titles-h', titlesH + 'px');
+      head.setAttribute('data-title-lines', lines === 1 ? '1' : '');
+    }
     card._pmuFitOn = true;
   }
-  /* the clamp of a yielding title goes once the title has its room back (its margin returns 300 after leaving: the
-     cluster fades 140, then the head tools slide back 160) */
+  /* the clamp of a yielding title goes only once the title has its room back. Its margin returns 300 after leaving (the
+     cluster fades 140, then the head tools slide back 160), and the clamp waits for the margin itself, read every frame
+     from then on, never for a timer of its own: a timer of 340 raced the transition, often fired first, and the title,
+     unclamped in the still narrowed box, wrapped to an extra line for a frame or more (head 20 > 30 px, body dropping).
+     The margin is read in a frame callback, before that frame's style and layout, so the frame that paints the margin
+     back also paints the title unclamped. A pointer that comes back first leaves the clamp to the next fit. */
   function unfitSoon(card) {
     if (!card || !card._pmuFitOn) return;
-    setTimeout(function () {
-      if (card.matches(':hover') || card.matches(':focus-visible')) return;
+    var token = card._pmuUnfit = (card._pmuUnfit || 0) + 1, frames = 0;
+    function back() {
+      if (card._pmuUnfit !== token || !card._pmuFitOn) return;
+      if (!card.isConnected || card.matches(':hover') || card.matches(':focus-visible')) return;
       var head = card.querySelector(':scope > .pmu-cardhead');
       if (head && head.hasAttribute('data-tools-on')) return;
+      var titles = head && head.querySelector(':scope > .pmu-cardtitles');
+      /* (a yielding title always took at least a pixel, so its room is back exactly when the margin reads 0; the cap only
+         guards a card whose margin is held by something else, so a clamp is never left on a resting head) */
+      if (titles && parseFloat(getComputedStyle(titles).marginRight) > 0 && ++frames < 120) { requestAnimationFrame(back); return; }
       if (head) head.removeAttribute('data-title-lines');
       card._pmuFitOn = false;
-    }, 340 * M.speed());
+    }
+    setTimeout(function () { requestAnimationFrame(back); }, 280 * M.speed());
   }
   /* a card whose head changes while it shows its tools (a resize from its own size menu, a live update) is fitted again */
   function refitSoon(card) {

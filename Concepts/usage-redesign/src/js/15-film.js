@@ -33,7 +33,36 @@
   function fam() { return M.family(); }
   function anim(el, frames, o) {
     o = o || {};
-    return M.animate(el, frames, { dur: o.dur == null ? 300 : o.dur, delay: o.delay || 0, easing: o.easing || E.out, fill: o.fill || 'backwards' });
+    var a = M.animate(el, frames, { dur: o.dur == null ? 300 : o.dur, delay: o.delay || 0, easing: o.easing || E.out, fill: o.fill || 'backwards' });
+    if (a && el.classList && el.classList.contains('pmu-card')) plateLayer(el, a);
+    return a;
+  }
+  /* Sharp plates (Jared's note 5, 2026-10-09): a plate keeps its film layer (05-film.css: will-change under the board's
+     data-film) only while its own entrance runs, not for the whole moment. Chrome keeps the raster scale a will-change
+     layer took during a scaled entrance (Glass scale(1.02), a Friendly hop with scale), so a plate at rest drew its text
+     from a resampled layer until the board's film window closed, about 1 s after it had landed (GPU probe at 1920: title
+     sharpness 0.44-0.58 of rest in Glass, back to 1.0 the moment the window closed). Each plate animation made here
+     counts on the card; when the card's last one ends (finished, finished early by a rapid switch, or cancelled) the card
+     takes data-film-rest, written for every card that ended in the same 60 ms in one batch, and drops its layer. A new
+     entrance takes the attribute off before it starts. Not on the no-GPU profile: its entrances are opacity only (no
+     raster scale to keep) and a dropped layer would re-raster the plate on the CPU inside the moment (PERF-3). */
+  var restQ = [], restT = 0;
+  function flushRest() {
+    restT = 0;
+    var list = restQ; restQ = [];
+    list.forEach(function (c) { if (!c._pmuPlateRuns && c.isConnected) c.setAttribute('data-film-rest', ''); });
+  }
+  function plateLayer(card, a) {
+    if (soft()) return;
+    if (card.hasAttribute('data-film-rest')) card.removeAttribute('data-film-rest');
+    card._pmuPlateRuns = (card._pmuPlateRuns || 0) + 1;
+    var end = function () {
+      card._pmuPlateRuns = Math.max(0, (card._pmuPlateRuns || 1) - 1);
+      if (card._pmuPlateRuns) return;
+      restQ.push(card);
+      if (!restT) restT = setTimeout(flushRest, reduced() ? 0 : 60);
+    };
+    a.finished.then(end, end);
   }
   /* cleanup is batched: a finished film layer stays (invisible: every film animation ends at opacity 0 or on its final
      frame with fill both) until the burst of finishes is over, then every finished layer goes and every finished odometer
