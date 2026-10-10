@@ -227,17 +227,27 @@
      WAAPI marks that ride it */
   var MORPH_EASE = 'cubic-bezier(.33,1,.68,1)';
   /* a live change of an HTML mark layer (end dots, halos): the markup is patched in place and every mark slides from where
-     it was (translate, the morph's ease); returns the number of animations */
-  function slideMarks(layer, html, lo) {
-    var olds = $$(':scope > *', layer).map(function (el) { return [parseFloat(el.style.left), parseFloat(el.style.top)]; }), n = 0;
+     it was. slideJobs patches and returns the marks' offsets; rideOrSlide hangs them on the path's own tween (charts.ride:
+     the same frame and the same k as the line they mark, item 3), or, with no path tween, slides them by translate on the
+     morph's ease; both return the number of marks that move */
+  function slideJobs(layer, html) {
+    var olds = $$(':scope > *', layer).map(function (el) { return [parseFloat(el.style.left), parseFloat(el.style.top)]; }), jobs = [];
     charts.patchHtml(layer, html);
     $$(':scope > *', layer).forEach(function (el, i) {
       var o = olds[i]; if (!o) return;
       var dx = o[0] - parseFloat(el.style.left), dy = o[1] - parseFloat(el.style.top);
-      if (finite(dx) && finite(dy) && (Math.abs(dx) > 0.3 || Math.abs(dy) > 0.3) && Mo.anim(el, [{ translate: r1(dx) + 'px ' + r1(dy) + 'px' }, { translate: '0px 0px' }], 420, (lo && lo.delay) || 0, MORPH_EASE, 'backwards')) n++;
+      if (finite(dx) && finite(dy) && (Math.abs(dx) > 0.3 || Math.abs(dy) > 0.3)) jobs.push({ el: el, dx: dx, dy: dy });
     });
+    return jobs;
+  }
+  function rideOrSlide(tw, jobs, dur, delay) {
+    jobs = (jobs || []).filter(function (j) { return finite(j.dx) && finite(j.dy) && (Math.abs(j.dx) > 0.3 || Math.abs(j.dy) > 0.3); });
+    if (!jobs.length) return 0;
+    var n = charts.ride(tw, jobs); if (n) return n;
+    jobs.forEach(function (j) { if (Mo.anim(j.el, [{ translate: r1(j.dx) + 'px ' + r1(j.dy) + 'px' }, { translate: '0px 0px' }], dur || 420, delay || 0, MORPH_EASE, 'backwards')) n++; });
     return n;
   }
+  function slideMarks(layer, html, lo, tw) { return rideOrSlide(tw, slideJobs(layer, html), 420, (lo && lo.delay) || 0); }
   function morphTween(dur, step, done) {
     return PMU.motion.tween({ from: 0, to: 1, dur: dur, ease: 'linear', step: function (v, t) { var x = t == null ? v : t; step(1 - Math.pow(1 - x, 3)); }, done: done });
   }
@@ -514,17 +524,11 @@
     if (slide) {
       /* live: the dots keep their elements and slide from where they were (translate, the morph's ease); the lead's NOW
          halo swells once */
-      var olds = $$(':scope > i', P.endL).map(function (el) { return [parseFloat(el.style.left), parseFloat(el.style.top)]; });
-      if (charts.patchHtml && (charts.patchHtml(P.endL, html), true)) {
-        var lo = c._live || {};
-        $$(':scope > i', P.endL).forEach(function (el, i) {
-          var o = olds[i]; if (!o) return;
-          var dx = o[0] - parseFloat(el.style.left), dy = o[1] - parseFloat(el.style.top);
-          if ((Math.abs(dx) > 0.3 || Math.abs(dy) > 0.3) && Mo.anim(el, [{ translate: r1(dx) + 'px ' + r1(dy) + 'px' }, { translate: '0px 0px' }], 420, lo.delay || 0, MORPH_EASE, 'backwards')) c._liveAnims++;
-        });
-        var halo = P.endL.querySelector('.pmu-hhalo');
-        if (halo && lo.lead && charts.swellHalo(halo, (lo.delay || 0) + 120)) c._liveAnims++;
-      }
+      var lo = c._live || {};
+      /* they ride the area's own morph tween (charts.ride), so the NOW dot is on the line's last point in every frame */
+      c._liveAnims += slideMarks(P.endL, html, lo, c._tw);
+      var halo = P.endL.querySelector('.pmu-hhalo');
+      if (halo && lo.lead && charts.swellHalo(halo, (lo.delay || 0) + 120)) c._liveAnims++;
       return;
     }
     P.endL.innerHTML = html;
@@ -539,12 +543,14 @@
     var pend = (c.spec.cost && c.spec.cost.pending) || [], nPend = 0;
     cost.forEach(function (v, i) { if (!finite(v) && pend[i] > 0) nPend++; });
     if (real.length !== pts.length || els.length - real.length !== nPend) { paintCostMarks(c, geo, cost, mids, YB); return true; }
-    var lo = c._live || {};
+    var lo = c._live || {}, jobs = [];
     real.forEach(function (el, j) {
       var p = pts[j], ox = parseFloat(el.style.left), oy = parseFloat(el.style.top);
       el.style.left = r1(p.x) + 'px'; el.style.top = r1(p.y) + 'px'; el.setAttribute('data-ci', String(p.i));
-      if (!still && (Math.abs(ox - p.x) > 0.3 || Math.abs(oy - p.y) > 0.3) && Mo.anim(el, [{ translate: r1(ox - p.x) + 'px ' + r1(oy - p.y) + 'px' }, { translate: '0px 0px' }], 420, lo.delay || 0, MORPH_EASE, 'backwards')) c._liveAnims++;
+      if (!still) jobs.push({ el: el, dx: ox - p.x, dy: oy - p.y });
     });
+    /* the cost dots ride the cost line's morph (the area's tween, charts.ride) */
+    if (jobs.length) c._liveAnims += rideOrSlide(c._tw, jobs, 420, lo.delay || 0);
     if (still && c.P && c.P.cost) c.P.cost.setAttribute('d', pts.length > 1 ? charts.monoD(pts.map(function (q) { return [q.x, q.y]; })) : '');
     return true;
   }
@@ -559,14 +565,16 @@
       if (a) a.onfinish = function () { el.remove(); }; else el.remove();
     });
     var els = paintCostMarks(c, geo, cost, mids, YB) || [];
-    var N = geo.N, span = Math.max(1, geo.x1 - geo.x0);
+    var N = geo.N, span = Math.max(1, geo.x1 - geo.x0), jobs = [];
     els.forEach(function (el) {
       var x = parseFloat(el.style.left), y = parseFloat(el.style.top);
       var sIdx = clamp(Math.round((x - geo.x0) / span * (N - 1)), 0, N - 1);
       var ox = from.x0 + (from.x1 - from.x0) * (N > 1 ? sIdx / (N - 1) : 0), oy = from.cs && finite(from.cs[sIdx]) && el.getAttribute('data-cost-dot') === '1' ? from.cs[sIdx] : y;
-      Mo.anim(el, [{ translate: r1(ox - x) + 'px ' + r1(oy - y) + 'px' }, { translate: '0px 0px' }], 520, 0, MORPH_EASE, 'backwards');
+      jobs.push({ el: el, dx: ox - x, dy: oy - y });
       Mo.anim(el, [{ scale: '0' }, { scale: '1' }], 200, 320, Mo.EASE.out, 'backwards');
     });
+    /* they ride the morphing cost line (the area's tween, charts.ride), never a slide on its own clock */
+    rideOrSlide(c._tw, jobs, 520, 0);
   }
   function peakLabel(c, geo, spec, m, totals, Y, mids, dom, tw, live) {
     var f = c.f;
@@ -875,6 +883,7 @@
       prev = { sig: sig, W: W, H: Hh, pad: pad, ph: ph, pts: prev.pts.map(function (row) { return row.map(function (v) { return finite(v) ? pad.t + (v - prev.pad.t) * ky : v; }); }) };
     }
     var morph = (mode === 'morph' || live) && prev && prev.sig === sig && prev.W === W && prev.H === Hh && !Mo.reduced();
+    var slid = null;
     function paint(cur) {
       var s = '';
       if (bandPts && bandPts.top.length > 1) s += '<path class="pmu-mark" data-mark="band" data-series-role="forecast" data-series-index="' + (series[0] && series[0].idx != null ? series[0].idx : 0) + '" data-key="fc" d="' +
@@ -915,7 +924,7 @@
           '<div class="pmu-callout" data-tone="' + esc(co.tone || 'warn') + '" data-side="' + (left ? 'l' : 'r') + '" style="' + (left ? 'right:' + r1(W - cx + 16) : 'left:' + r1(cx + 16)) + 'px;top:' + r1(top) + 'px;--stem-y:' + r1(cy - top) + 'px">' +
           '<b>' + esc(co.title || '') + '</b>' + (co.sub ? '<span>' + esc(co.sub) + '</span>' : '') + '</div>';
       }
-      if (live && morph) c._liveAnims += slideMarks(f.hl, h, c._live); else charts.patchHtml(f.hl, h);
+      if (live && morph) slid = slideJobs(f.hl, h); else charts.patchHtml(f.hl, h);
     }
     if (c._tw) { c._tw.cancel(); c._tw = null; }
     dots();
@@ -924,6 +933,8 @@
       if (live) c._liveAnims++;
       c._tw = morphTween(live ? 420 : 520, function (k) { paint(pts.map(function (row, j) { return row.map(function (v, i) { return mix(from[j] ? from[j][i] : v, v, k); }); })); },
         function () { c._tw = null; paint(pts); paintIso(c); if (!live) rescan(c); });
+      /* a live beat's end dots ride the lines' own tween (charts.ride, item 3) */
+      if (slid) c._liveAnims += rideOrSlide(c._tw, slid, 420, (c._live && c._live.delay) || 0);
       if (!live) Mo.anim(f.hl, [{ opacity: 0 }, { opacity: 0, offset: 0.7 }, { opacity: 1 }], 640, 0, Mo.EASE.out, 'none');
     } else {
       paint(pts);
@@ -1270,7 +1281,8 @@
       var li = lastFinite(pts.map(function (p) { return p ? 1 : null; })), d0 = li >= 0 && prev[li] ? prev[li][1] - pts[li][1] : 0;
       dot(pts);
       var de = f.hl.firstChild;
-      if (de && d0) Mo.anim(de, [{ translate: '0px ' + r1(d0) + 'px' }, { translate: '0px 0px' }], md, ld, MORPH_EASE, 'backwards');
+      /* the end dot rides the line's own tween (charts.ride, item 3) */
+      if (de && d0) rideOrSlide(c._tw, [{ el: de, dx: 0, dy: d0 }], md, ld);
     } else { paint(pts); dot(pts); }
     c._sp = pts;
   }
@@ -1428,9 +1440,12 @@
     }
     if (live) {
       var lo0 = c._live || {};
-      if (f._pS !== s && charts.livePatchSvg(f.plot, s, 420, lo0.delay)) c._liveAnims++;
-      if (f._pO !== fs && charts.livePatchSvg(f.over, fs, 420, lo0.delay)) c._liveAnims++;
-      if (f._pH !== hl) c._liveAnims += slideMarks(f.hl, hl, lo0);
+      var twP = f._pS !== s ? charts.livePatchSvg(f.plot, s, 420, lo0.delay) : null, twO = f._pO !== fs ? charts.livePatchSvg(f.over, fs, 420, lo0.delay) : null;
+      if (twP) c._liveAnims++;
+      if (twO) c._liveAnims++;
+      /* the today dot and the projection's hollow marker ride the paths' tween (both tweens share duration, delay and first
+         frame; charts.ride, item 3) */
+      if (f._pH !== hl) c._liveAnims += slideMarks(f.hl, hl, lo0, twP || twO);
     } else { charts.patchSvg(f.plot, s); charts.patchSvg(f.over, fs); charts.patchHtml(f.hl, hl); }
     f._pS = s; f._pO = fs; f._pH = hl;
     if (!compact) {

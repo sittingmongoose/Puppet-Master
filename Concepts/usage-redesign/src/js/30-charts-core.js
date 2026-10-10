@@ -856,6 +856,27 @@
       },
       done: function () { jobs.forEach(function (j) { j.el.setAttribute('d', j.d1); }); } });
   };
+  /* marks that ride a morphing path (Jared 2026-10-09, item 3: a dot "doesn't follow its line"). A path morphs by a JS
+     tween (the area and line morphs, livePatchSvg, the spark), stepping k = ease-out cubic of its linear t on the rAF
+     clock. A dot that slid beside it by its own WAAPI animation ran on another clock (the compositor, started a frame
+     apart, ahead of a busy main thread) and another curve (the bezier that approximates the cubic), so mid-beat it sat up
+     to 1.6 px off the line it marks. charts.ride hangs the marks on the path's own tween instead: each frame that writes
+     the path writes the marks' `translate` from the same k, so a mark is on its path's point in every frame, and a
+     cancelled or finished tween leaves no offset behind. jobs: [{ el, dx, dy }], the offset at k = 0 from the mark's final
+     left/top. Returns the number of marks that ride (0: no live tween, the caller slides them itself). */
+  charts.ride = function (tw, jobs) {
+    jobs = (jobs || []).filter(function (j) { return j && j.el && finite(j.dx) && finite(j.dy) && (Math.abs(j.dx) > 0.3 || Math.abs(j.dy) > 0.3); });
+    if (!jobs.length || !tw || tw.cancelled || typeof tw.step !== 'function') return 0;
+    var put = function (k) {
+      jobs.forEach(function (j) { j.el.style.translate = k >= 1 ? '' : (j.dx * (1 - k)).toFixed(2) + 'px ' + (j.dy * (1 - k)).toFixed(2) + 'px'; });
+    };
+    var step = tw.step, done = tw.done, cancel = tw.cancel;
+    tw.step = function (v, t) { step(v, t); var x = t == null ? v : t; put(1 - Math.pow(1 - x, 3)); };
+    tw.done = function () { if (done) done(); put(1); };
+    tw.cancel = function () { cancel(); put(1); };
+    put(0);
+    return jobs.length;
+  };
   /* round 3 (PERF-3 open item "crosshair first move"): the first move into a plot no longer flushes style twice. The
      state classes sit on the few elements that change (line, band, dots, card), never on the plot box (a class on the
      box restyled its whole subtree: axes, marks, layers); the dots are built when the chart binds its hover (never a
