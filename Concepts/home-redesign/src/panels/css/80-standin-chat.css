@@ -192,6 +192,12 @@ html:not([data-o55-tour]) #chatPanel[data-pmw-sc="on"] > :not(#pmw-chat) { visib
 .pmw-sc-att-d { font-size: 11px; line-height: 15px; color: var(--pmw-text-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .pmw-sc-att-x { flex: none; align-self: center; width: 24px; height: 24px; margin-right: 4px; display: inline-flex; align-items: center; justify-content: center; padding: 0; border: 0; background: transparent; color: var(--pmw-text-3); cursor: pointer; }
 .pmw-sc-att-x:hover { background: var(--pmw-hover); color: var(--pmw-text); }
+/* Friendly's page rule [data-theme^="friendly"] button { border-radius: 14px } (0,1,1) outranks the one-class rules
+   above: the 24 px remove button went round on hover and the card's body took 14 px corners inside its 8 px card.
+   Restated at that weight in Friendly only (as 40-parts.css does), so a two-class rule still wins and NieR's square
+   part keeps its square corners */
+:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button.pmw-sc-att-body { border-radius: inherit; }
+:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button.pmw-sc-att-x { border-radius: 6px; }
 .pmw-sc-att-x svg, .pmw-sc-att-thumb.is-comp svg { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 /* the drawn thumbnail: the page's own three colours (its bar, an accent block, its ground), like the browser's list */
 .pmw-sc-att-thumb { flex: none; position: relative; width: 40px; height: 28px; box-sizing: border-box; overflow: hidden; border: 1px solid var(--pmw-line-2); border-radius: 3px; background: var(--t3, #ddd); }
@@ -242,7 +248,7 @@ html[data-theme^="glass"] .pmw-sc[data-pmw-sc-pinned] .pmw-sc-hist { background:
 /* Retro: square, Plex Mono for code (D17a: code matches the interface), reverse video for selection and the primary */
 html[data-theme^="retro"] .pmw-sc { --pmw-sc-code: var(--mono-font, 'IBM Plex Mono', monospace); }
 html[data-theme^="retro"] #pmw-chat.pmw-sc :is(.pmw-sc-fref, .pmw-sc-titlelink) { border-radius: 0 !important; }
-html[data-theme^="retro"] .pmw-sc :is(.pmw-sc-ib, .pmw-sc-btn, .pmw-sc-row, .pmw-sc-hrow, .pmw-sc-card, .pmw-sc-bubble, .pmw-sc-box, .pmw-sc-card-ico, .pmw-sc-cmd-out, .pmw-sc-bars, .pmw-sc-bar, .pmw-sc-hfind, .pmw-sc-event, .pmw-sc-code, .pmw-sc-fref, .pmw-sc-att, .pmw-sc-att-thumb, [data-pmw-sc-found]) { border-radius: 0; }
+html[data-theme^="retro"] .pmw-sc :is(.pmw-sc-ib, .pmw-sc-btn, .pmw-sc-row, .pmw-sc-hrow, .pmw-sc-card, .pmw-sc-bubble, .pmw-sc-box, .pmw-sc-card-ico, .pmw-sc-cmd-out, .pmw-sc-bars, .pmw-sc-bar, .pmw-sc-hfind, .pmw-sc-event, .pmw-sc-code, .pmw-sc-fref, .pmw-sc-att, .pmw-sc-att-body, .pmw-sc-att-x, .pmw-sc-att-thumb, [data-pmw-sc-found]) { border-radius: 0; }
 html[data-theme^="retro"] .pmw-sc [data-pmw-sc-found] { outline-style: dashed; outline-color: var(--pmw-text); animation: none; }
 html[data-theme^="retro"] .pmw-sc-btn.is-primary, html[data-theme^="retro"] .pmw-sc-send { background: var(--pmw-text); color: var(--pmw-surface); }
 html[data-theme^="retro"] .pmw-sc-hrow[aria-current="true"], html[data-theme^="retro"] .pmw-sc-row:hover, html[data-theme^="retro"] .pmw-sc-hrow:hover { background: var(--pmw-text); color: var(--pmw-surface); }
@@ -260,7 +266,7 @@ html[data-o55-nier="on"] .pmw-sc-bar { background: rgba(var(--o55-nier-ink-rgb),
 html[data-o55-nier="on"] .pmw-sc-hist { box-shadow: 3px 3px 0 rgba(var(--o55-nier-shadow-rgb), .16); }
 html[data-o55-nier="on"][data-o55-nier-parts~="square"] #pmw-chat.pmw-sc { --pmw-radius: 0px; --pmw-row-radius: 0px; }
 html[data-o55-nier="on"][data-o55-nier-parts~="square"] #pmw-chat.pmw-sc :is(.pmw-sc-fref, .pmw-sc-titlelink) { border-radius: 0 !important; }
-html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-sc :is(.pmw-sc-ib, .pmw-sc-btn, .pmw-sc-row, .pmw-sc-hrow, .pmw-sc-card, .pmw-sc-bubble, .pmw-sc-box, .pmw-sc-card-ico, .pmw-sc-cmd-out, .pmw-sc-bars, .pmw-sc-bar, .pmw-sc-hfind, .pmw-sc-event, .pmw-sc-code, .pmw-sc-fref, .pmw-sc-att, .pmw-sc-att-thumb, [data-pmw-sc-found]) { border-radius: 0; }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-sc :is(.pmw-sc-ib, .pmw-sc-btn, .pmw-sc-row, .pmw-sc-hrow, .pmw-sc-card, .pmw-sc-bubble, .pmw-sc-box, .pmw-sc-card-ico, .pmw-sc-cmd-out, .pmw-sc-bars, .pmw-sc-bar, .pmw-sc-hfind, .pmw-sc-event, .pmw-sc-code, .pmw-sc-fref, .pmw-sc-att, .pmw-sc-att-body, .pmw-sc-att-x, .pmw-sc-att-thumb, [data-pmw-sc-found]) { border-radius: 0; }
 html[data-o55-nier="on"] .pmw-sc [data-pmw-sc-found] { outline-color: var(--o55-nier-ink); background-color: rgba(var(--o55-nier-ink-rgb), .08); animation: none; }
 html[data-o55-nier="on"] .pmw-sc-att-thumb.is-comp { color: var(--o55-nier-ink); }
 html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-sc :is(.pmw-sc-kicker, .pmw-sc-hsec, .pmw-sc-sub, .pmw-sc-htitle, .pmw-sc-work-head, .pmw-sc-when) { text-transform: uppercase; letter-spacing: .08em; font-size: 11px; }

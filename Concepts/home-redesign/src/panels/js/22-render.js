@@ -464,6 +464,26 @@ function tabTitle(rec) {
 }
 PMW.tabTitle = tabTitle;
 
+/* ---- icons ----
+   Order: the icon the kind pushed (api.update), the kind's iconFor(id, state) (the icon counterpart of labelFor, so a
+   tab that is not mounted yet shows its real icon in the strip and the tab lists), the kind's icon, the file mark. */
+var iconForFailed = {};
+function tabIcon(rec) {
+  if (!rec) return 'file';
+  if (rec.icon) return rec.icon;
+  var k = kindDef(rec.kind);
+  if (k && typeof k.iconFor === 'function') {
+    try {
+      var v = k.iconFor(rec.id, rec.state || {});
+      if (v != null && v !== '') return String(v);
+    } catch (err) {
+      if (!iconForFailed[k.id]) { iconForFailed[k.id] = 1; try { console.error('[pm-home] iconFor failed for the ' + k.id + ' kind', err); } catch (_) {} }
+    }
+  }
+  return (k && k.icon) || 'file';
+}
+PMW.tabIcon = tabIcon;
+
 /* CONTRACT section 3: every mounted instance hears a look change once, at the next frame after it (the core's look
    watcher already defers past the attribute write) */
 bus.on('look', function (lk) {

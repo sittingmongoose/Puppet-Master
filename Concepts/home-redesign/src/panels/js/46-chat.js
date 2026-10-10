@@ -195,7 +195,7 @@ chatCol.installStrip = function () {
    without one, or while it is not shown (switched off, or the Guided Tour teaching the page's own chat), compose
    writes into the page's own composer and reveal only shows the chat.
    PM_HOME.chat.compose(text): shows the chat, puts text in its composer and focuses it with the caret at the end (a
-     draft already there is kept and the text follows it on a new line).
+     draft already there is kept and the text follows it on a new line; empty or whitespace-only text changes nothing).
    PM_HOME.chat.reveal({ thread, messageId }): shows the chat, switches to the thread (an id such as 'query' or its
      title) when the chat knows it, scrolls the message into view and marks it briefly; a message it does not know
      shows the thread and announces "That message is not in this demo". Returns { ok, found, thread }.
@@ -215,9 +215,13 @@ function composePage(text) {
   if (!el) { announce('The chat has no message box here'); return { ok: false, reason: 'no_composer' }; }
   var isField = 'value' in el;
   var cur = isField ? el.value : el.textContent;
-  var next = !cur || !cur.trim() ? text : (cur.replace(/\s+$/, '').slice(-text.trim().length) === text.trim() ? cur : cur.replace(/\s+$/, '') + '\n' + text);
-  if (isField) el.value = next; else el.textContent = next;
-  try { el.dispatchEvent(new Event('input', { bubbles: true })); } catch (_) {}
+  // empty or whitespace-only text adds nothing (a draft never gains a lone newline): the composer is only focused
+  var tt = text.trim();
+  var next = !tt ? cur : !cur || !cur.trim() ? text : (cur.replace(/\s+$/, '').slice(-tt.length) === tt ? cur : cur.replace(/\s+$/, '') + '\n' + text);
+  if (next !== cur) {
+    if (isField) el.value = next; else el.textContent = next;
+    try { el.dispatchEvent(new Event('input', { bubbles: true })); } catch (_) {}
+  }
   try { el.focus({ preventScroll: true }); } catch (_) {}
   try {
     if (isField) el.setSelectionRange(next.length, next.length);

@@ -4,7 +4,9 @@
    own spec.labelsAt); the row hides while the body is under 150 px tall (CSS container queries on pmw-body).
 
      api.headerRow({ label, left: [fact], actions: [action], labelsAt }) -> { el, set(spec), setAction(id, patch), action(id) }
-     fact:   { id, text | el, icon, title, mono, strong, dim, grow (takes the free width: .pmw-hfact.is-grow) }
+     fact:   { id, text | el, icon, title, detail, mono, strong, dim, grow (takes the free width: .pmw-hfact.is-grow) }
+             title and detail are the fact's hover tag (data-pm-hover-label from title, or from text when only a detail
+             is given; data-pm-hover-detail from detail); an el is drawn in place of text either way
      action: { id, label, icon, shortcut, detail, primary, danger, pressed, disabled, run(e, button), menu }
              or { id, el }: a ready-made element adopted into the actions area as it is (never cloned or restyled)
      labelsAt: px of the tab body's width below which the buttons go icon-only (the row carries .is-icons, and
@@ -60,7 +62,9 @@ PMW.headerRow = function (entry, spec) {
     el.classList.toggle('is-dim', !!it.dim);
     el.classList.toggle('is-grow', !!it.grow);
     setAttr(el, 'data-id', it.id != null ? String(it.id) : null);
-    setAttr(el, 'data-pm-hover-label', it.title || null);
+    var tagLabel = it.title != null && it.title !== '' ? String(it.title) : it.detail && it.text != null && it.text !== '' ? String(it.text) : null;
+    setAttr(el, 'data-pm-hover-label', tagLabel);
+    setAttr(el, 'data-pm-hover-detail', it.detail != null && it.detail !== '' ? String(it.detail) : null);
     setIcon(el, it.icon, 13);
     var node;
     if (it.el && it.el.nodeType === 1) node = it.el;
@@ -213,21 +217,3 @@ PMW.headerRow = function (entry, spec) {
     action: function (id) { return actionEls[id] ? actionEls[id].el : null; }
   };
 };
-
-/* Stop-gap CSS (core-api, 2026-10-10): rules for the classes this engine now writes, injected once into <head> until the
-   core CSS carries them (the header row's in 40-parts.css, the file reference's in 45-frames.css; then delete these
-   blocks). Same specificity as a stylesheet rule, later in the cascade. */
-function addStopGapCss(id, css) {
-  if (doc.getElementById(id)) return;
-  var el = doc.createElement('style');
-  el.id = id;
-  el.textContent = css;
-  (doc.head || doc.documentElement).appendChild(el);
-}
-/* spec.labelsAt: the row's own threshold replaces the 520 px container rule both ways (a kind's own rules still win) */
-addStopGapCss('pmw-stopgap-hrow', [
-  '.pmw-hrow.is-icons .pmw-hbtn { padding: 0; width: 24px; }',
-  '.pmw-hrow.is-icons .pmw-hbtn-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }',
-  '.pmw-hrow.is-labels .pmw-hbtn { padding: 0 7px; width: auto; }',
-  '.pmw-hrow.is-labels .pmw-hbtn-label { position: static; width: auto; height: auto; overflow: visible; clip-path: none; }'
-].join('\n'));

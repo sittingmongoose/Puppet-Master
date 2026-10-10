@@ -12,7 +12,7 @@
 
 var LADDER = PMW.LADDER = { railEase: 960, railFold: 760, chatEase: 960, oneColumn: 600, chatStrip: 480, hyst: 48, railEased: 240, chatMin: 400, chatMax: 760, chatStripW: 32,
   chatHistoryW: 240, chatHistoryWNarrow: 200, chatHistoryAt: 540 };
-var narrow = PMW.narrow = { state: { rail: 'open', chat: null, chatStrip: false, oneColumn: false, C: 0, step: 0, hist: 0 }, frozen: false };
+var narrow = PMW.narrow = { state: { rail: 'open', chat: null, chatStrip: false, oneColumn: false, C: 0, step: 0, hist: 0, histDropped: false }, frozen: false };
 
 function mainArea() { return qs('.main-area'); }
 function slotEl() { return qs('#sidePanelSlot'); }
@@ -39,20 +39,29 @@ function railUserWidth() {
 function on(prev, value, threshold) { return prev ? value < threshold + LADDER.hyst : value < threshold; }
 
 /* pure: base = C + rail panel + chat (what the three share); chatW is the whole column the user wants (the message
-   area plus hist, the pinned History's width); the chat eases down to chatMin + hist; returns the applied state */
+   area plus hist, the pinned History's width); the chat eases down to chatMin + hist. Before the strip step, pinned
+   History gives its width back (histDropped: the column falls back to the flyout, --pmw-chat-hist-w 0px) when C would
+   otherwise fall under the strip threshold, with the same hysteresis on C measured with the History, so the two never
+   chase each other; only when that is not enough does the chat fold to its strip (which keeps the History dropped).
+   Nothing here is saved. Returns the applied state */
+function easeChat(base, s, c, hist) {
+  return base - s - c < LADDER.chatEase ? Math.max(LADDER.chatMin + hist, Math.min(c, c - (LADDER.chatEase - (base - s - c)))) : c;
+}
 narrow.solve = function (base, railUser, chatW, chatShown, pinned, prev, hist) {
   prev = prev || {};
   hist = hist || 0;
-  var s = railUser, c = chatShown ? chatW : 0, rail = 'open', strip = false;
+  var s = railUser, c = chatShown ? chatW : 0, rail = 'open', strip = false, dropped = false;
   var eased = s > LADDER.railEased && on(prev.rail === 'ease' || prev.rail === 'fold', base - s - c, LADDER.railEase);
   if (eased) { s = LADDER.railEased; rail = 'ease'; }
   if (railUser > 0 && on(prev.rail === 'fold', base - s - c, LADDER.railFold)) { s = 0; rail = 'fold'; }
-  if (chatShown && base - s - c < LADDER.chatEase) c = Math.max(LADDER.chatMin + hist, Math.min(c, c - (LADDER.chatEase - (base - s - c))));
-  if (chatShown && !pinned && on(prev.chatStrip, base - s - c, LADDER.chatStrip)) { c = LADDER.chatStripW; strip = true; }
+  if (chatShown) c = easeChat(base, s, c, hist);
+  if (chatShown && hist > 0 && on(prev.histDropped, base - s - c, LADDER.chatStrip)) { dropped = true; c = easeChat(base, s, chatW - hist, 0); }
+  if (chatShown && !pinned && on(prev.chatStrip, base - s - c, LADDER.chatStrip)) { c = LADDER.chatStripW; strip = true; dropped = hist > 0; }
   var C = base - s - c;
   var one = on(prev.oneColumn, C, LADDER.oneColumn);
   var step = strip ? 4 : one ? 3 : rail === 'fold' ? 2 : (rail === 'ease' || (chatShown && c < chatW)) ? 1 : 0;
-  return { rail: rail, railWidth: s, chat: chatShown ? c : null, chatStrip: strip, oneColumn: one, C: C, step: step, hist: hist };
+  return { rail: rail, railWidth: s, chat: chatShown ? c : null, chatStrip: strip, oneColumn: one, C: C, step: step,
+    hist: dropped ? 0 : hist, histDropped: dropped };
 };
 
 /* does el take room in the row? An overlay (the rail peek, the chat peek, the popped-out chat) is absolute or fixed and
@@ -119,13 +128,13 @@ narrow.apply = function (next, prev) {
     var hpx = Math.round(next.hist || 0) + 'px';
     if (chat.style.getPropertyValue('--pmw-chat-hist-w') !== hpx) chat.style.setProperty('--pmw-chat-hist-w', hpx);
   }
-  var changed = next.oneColumn !== prev.oneColumn || next.step !== prev.step || (next.hist || 0) !== (prev.hist || 0);
+  var changed = next.oneColumn !== prev.oneColumn || next.step !== prev.step || (next.hist || 0) !== (prev.hist || 0) || !!next.histDropped !== !!prev.histDropped;
   narrow.state = next;
   if (next.oneColumn !== prev.oneColumn) {
     render.schedule({ animate: true });
     announce(next.oneColumn ? 'The window is narrow: one panel at a time. Use the panel switcher in the tab strip.' : 'Panels side by side again');
   }
-  if (changed) bus.emit('narrow', { step: next.step, C: next.C, oneColumn: next.oneColumn, rail: next.rail, chatStrip: next.chatStrip });
+  if (changed) bus.emit('narrow', { step: next.step, C: next.C, oneColumn: next.oneColumn, rail: next.rail, chatStrip: next.chatStrip, histDropped: !!next.histDropped });
 };
 narrow.singleColumn = function () { return !!narrow.state.oneColumn; };
 narrow.afterPaint = function () {};

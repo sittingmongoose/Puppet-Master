@@ -75,6 +75,15 @@
 .pmw-act:focus-visible { outline: 2px solid var(--pmw-focus); outline-offset: 1px; }
 .pmw-act.is-primary { background: var(--pmw-accent); border-color: transparent; color: var(--pmw-surface); }
 .pmw-act.is-primary:hover { background: color-mix(in srgb, var(--pmw-accent) 88%, #fff); }
+/* the ink on the accent fill is black or white by the fill's WCAG luminance Y (linear-light sRGB channels): at
+   Y 0.1791 both give 4.58:1, so either side reads at least that on any fill, in every look and with any Settings accent
+   (var(--pmw-surface) was translucent in Glass light, 1.75:1, and too light on Friendly light's accent, 2.97:1). The
+   hover moves the fill away from that point (lighter under black ink, darker under white), so its contrast only grows.
+   Where relative colours are missing the look's own ink stays. NieR keeps its ink (60-nier.css) */
+@supports (color: color(from red srgb-linear r g b)) {
+  .pmw-act.is-primary { color: color(from var(--pmw-accent) srgb-linear clamp(0, (0.1791 - (0.2126 * r + 0.7152 * g + 0.0722 * b)) * infinity, 1) clamp(0, (0.1791 - (0.2126 * r + 0.7152 * g + 0.0722 * b)) * infinity, 1) clamp(0, (0.1791 - (0.2126 * r + 0.7152 * g + 0.0722 * b)) * infinity, 1)); }
+  .pmw-act.is-primary:hover { background: color(from var(--pmw-accent) srgb-linear calc(r + (1 - r) * 0.16 * clamp(0, ((0.2126 * r + 0.7152 * g + 0.0722 * b) - 0.1791) * infinity, 1) - r * 0.16 * (1 - clamp(0, ((0.2126 * r + 0.7152 * g + 0.0722 * b) - 0.1791) * infinity, 1))) calc(g + (1 - g) * 0.16 * clamp(0, ((0.2126 * r + 0.7152 * g + 0.0722 * b) - 0.1791) * infinity, 1) - g * 0.16 * (1 - clamp(0, ((0.2126 * r + 0.7152 * g + 0.0722 * b) - 0.1791) * infinity, 1))) calc(b + (1 - b) * 0.16 * clamp(0, ((0.2126 * r + 0.7152 * g + 0.0722 * b) - 0.1791) * infinity, 1) - b * 0.16 * (1 - clamp(0, ((0.2126 * r + 0.7152 * g + 0.0722 * b) - 0.1791) * infinity, 1)))); }
+}
 .pmw-act.is-danger { color: var(--pmw-bad); }
 .pmw-act[aria-disabled="true"] { opacity: .5; cursor: default; }
 .pmw-act .pmw-ico { width: 14px; height: 14px; }
@@ -96,5 +105,29 @@
 .pmw-run-grid > .pmw-run-main:only-child { grid-column: 1 / -1; }
 .pmw-run-aside { font-size: 12px; color: var(--pmw-text-2); }
 .pmw-run-aside h3 { margin: 0 0 6px; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--pmw-text-3); font-weight: 600; }
+
+/* D7 file references (PMW.fileRef, 41-fileref.js): a file mark and the path in the code face, underlined, 32 px tall in
+   a document row and 24 px inline; never a capsule. One class of weight (states and variants in :where), so a kind's
+   own one- or two-class rules win. Friendly's page rule [data-theme^="friendly"] button (0,1,1) sets a 14 px radius and
+   the body face on every button: both are restated at that weight (html plus the class), so a kind's two-class rule
+   still wins; the radius is skipped under NieR's square part. Square in Retro and in NieR's square part. */
+.pmw-fileref {
+  display: inline-flex; align-items: center; gap: 6px; height: 32px; max-width: 100%; min-width: 0; padding: 0 6px; margin: 0;
+  border: 0; border-radius: 6px; background: transparent; color: var(--pmw-text-2);
+  font: inherit; font-family: var(--pm-font-code); font-size: 12px; line-height: 1; cursor: pointer; vertical-align: middle;
+}
+.pmw-fileref:where(.is-inline) { height: 24px; padding: 0 4px; border-radius: 4px; font-size: 11.5px; }
+.pmw-fileref-t { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-decoration: underline; text-decoration-color: var(--pmw-line-2); text-underline-offset: 3px; }
+:where(.pmw-fileref) .pmw-ico { flex: none; width: 13px; height: 13px; color: var(--pmw-text-3); }
+.pmw-fileref:where(:hover) { color: var(--pmw-text); background: var(--pmw-hover); }
+:where(.pmw-fileref:hover) .pmw-fileref-t { text-decoration-color: currentColor; }
+.pmw-fileref:where(:focus-visible) { outline: 2px solid var(--pmw-focus); outline-offset: -2px; }
+.pmw-fileref:where([aria-disabled="true"]) { opacity: .5; cursor: default; }
+html:where([data-theme^="friendly"]) .pmw-fileref { font-family: var(--pm-font-code); }
+html:where([data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) .pmw-fileref { border-radius: 6px; }
+html:where([data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) .pmw-fileref:where(.is-inline) { border-radius: 4px; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-fileref, html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-fileref { border-radius: 0; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-fileref:hover { background: var(--accent-lime); color: var(--surface); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-fileref:hover :is(.pmw-fileref-t, .pmw-ico) { color: var(--surface); text-decoration: none; }
 
 .pmw-code { margin: 12px 0; padding: 12px 14px; border: 1px solid var(--pmw-line); border-radius: var(--pmw-radius); background: var(--pmw-surface-2); font-family: var(--pm-font-code); font-size: 12.5px; line-height: 1.6; color: var(--pmw-text); overflow: auto; white-space: pre; }

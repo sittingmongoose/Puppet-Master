@@ -133,7 +133,7 @@ menus.overflow = function (panelId, anchor, o) {
       return { label: def ? def.group : k, rows: groups[k].map(function (t) {
         var r = lay.tabs[t];
         return {
-          id: t, label: tabLabel(r), sub: r.state && r.state.path ? r.state.path : (r.title || ''), kind: (def && def.icon) || 'file',
+          id: t, label: tabLabel(r), sub: r.state && r.state.path ? r.state.path : (r.title || ''), kind: tabIcon(r),
           right: r.dirty ? 'unsaved' : (r.pinned ? 'pinned' : ''), current: pp && pp.active === t,
           run: function () { PMW.activateTab(t, { focus: true }); },
           // returns the close's promise: the menu refreshes once the tab is really gone (or its canClose said no)
@@ -156,8 +156,8 @@ menus.allTabs = function (anchor) {
     var l = state.layout;
     return model.panels(l).map(function (p, i) {
       return { label: 'Panel ' + (i + 1) + ': ' + model.describe(l, p.id), rows: p.tabs.map(function (t) {
-        var r = l.tabs[t], def = kindDef(r.kind);
-        return { id: t, label: tabLabel(r), sub: r.state && r.state.path ? r.state.path : '', kind: (def && def.icon) || 'file', current: p.active === t,
+        var r = l.tabs[t];
+        return { id: t, label: tabLabel(r), sub: r.state && r.state.path ? r.state.path : '', kind: tabIcon(r), current: p.active === t,
           run: function () { PMW.activateTab(t, { focus: true }); }, close: function () { return PMW.closeTab(t, { refocus: false }); } };
       }) };
     });

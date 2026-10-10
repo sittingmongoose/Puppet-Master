@@ -18,6 +18,9 @@ PM_HOME.registerKind = function (id, def) {
   // labelFor(id, state) -> string | null: the label of a tab that is not mounted yet (a background, agent-opened or
   // restored tab mounts lazily); tabLabel asks it after the user's and the kind's pushed label (22-render.js)
   if (typeof k.labelFor !== 'function') k.labelFor = null;
+  // iconFor(id, state) -> icon name | null: its icon counterpart; tabIcon asks it after an icon the kind pushed
+  // (api.update) and before the kind's own icon (22-render.js)
+  if (typeof k.iconFor !== 'function') k.iconFor = null;
   for (var i = 0; i < k.prefixes.length; i++) {
     var pre = k.prefixes[i];
     for (var j = 0; j < PREFIXES.length; j++) {
@@ -39,7 +42,8 @@ PM_HOME.kindOf = function (tabId) {
   if (!tabId) return null;
   if (PMW.state && PMW.state.layout && PMW.state.layout.tabs[tabId]) return PMW.state.layout.tabs[tabId].kind;
   for (var i = 0; i < PREFIXES.length; i++) if (tabId.indexOf(PREFIXES[i].prefix) === 0) return PREFIXES[i].kind;
-  if (tabId === 'problems' || tabId === 'ports') return tabId;
+  // the one-per-workspace ids, before (or without) their kind's registration: the Output tab is 'output' (D28)
+  if (tabId === 'problems' || tabId === 'ports' || tabId === 'output') return tabId;
   return null;
 };
 PM_HOME.kinds = function () { return Object.keys(KINDS); };

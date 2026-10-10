@@ -257,10 +257,10 @@ function updateTab(el, rec, p, l) {
   if (inst) el.setAttribute('aria-controls', inst.host.id); else el.removeAttribute('aria-controls');
   var lab = el.querySelector('.pmw-tlabel');
   setText(lab, label);
-  // icon (kind icon, or the tab's own)
+  // icon: the pushed one, the kind's iconFor, the kind's own (tabIcon, 22-render.js)
   var ico = el.querySelector('.pmw-tico');
   var k = kindDef(rec.kind);
-  var iconName = rec.icon || (k && k.icon) || 'file';
+  var iconName = tabIcon(rec);
   if (ico._name !== iconName) { ico.textContent = ''; ico.appendChild(kindIcon(iconName)); ico._name = iconName; }
   // marks: failed command's exit code (D12), agent mark
   var mark = el.querySelector('.pmw-tmark');

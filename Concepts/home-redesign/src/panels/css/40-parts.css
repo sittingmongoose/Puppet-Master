@@ -58,6 +58,14 @@
 @container pmw-body (max-height: 149px) {
   .pmw-hrow { display: none; }
 }
+/* spec.labelsAt (28-hrow.js): the row's own threshold replaces the 520 px container rule both ways, through the
+   .is-icons / .is-labels class the row carries. One class of weight (the rest in :where), later than the container
+   rule, so a kind's own one- or two-class rules still win; only the row's own action buttons, never a .pmw-hbtn a kind
+   put inside a left fact */
+:where(.pmw-hrow.is-icons > .pmw-hrow-actions) > .pmw-hbtn { padding: 0; width: 24px; }
+:where(.pmw-hrow.is-icons > .pmw-hrow-actions > .pmw-hbtn) .pmw-hbtn-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+:where(.pmw-hrow.is-labels > .pmw-hrow-actions) > .pmw-hbtn { padding: 0 7px; width: auto; }
+:where(.pmw-hrow.is-labels > .pmw-hrow-actions > .pmw-hbtn) .pmw-hbtn-label { position: static; width: auto; height: auto; overflow: visible; clip-path: none; }
 
 /* the empty panel's launcher: list rows, no tiles, no pills */
 .pmw-empty {

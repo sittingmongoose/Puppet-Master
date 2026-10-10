@@ -41,9 +41,9 @@ function idForSpec(s) {
     bufferSeq += 1;
     return 'buffer:' + Date.now().toString(36) + bufferSeq;
   }
-  if (s.kind === 'problems' || s.kind === 'ports') return s.kind;
+  // the Output kind's idFor picks 'output' or a split-off 'output:<channel>' (D28); without the kind it is the one tab
+  if (s.kind === 'problems' || s.kind === 'ports' || s.kind === 'output') return s.kind;
   if (s.kind === 'dashboard') return 'dashboard:' + (s.board || ('board-' + Date.now().toString(36)));
-  if (s.kind === 'output') return 'output:' + (s.channel || 'main');
   if (s.kind === 'debug-console') return 'debug-console:' + (s.session || 'main');
   if (s.kind === 'browser') { bufferSeq += 1; return 'browser:' + Date.now().toString(36) + bufferSeq; }
   bufferSeq += 1;

@@ -620,6 +620,11 @@ function moreMenu(anchor) {
     { id: 'clear', label: 'Clear what you sent', sub: 'In this thread', icon: 'reopen', disabled: !(S.sent[S.thread] || []).length, run: function () { resetThread(); } }
   ] });
 }
+/* History is drawn pinned while the setting says so and the narrow ladder has not given its width back (44-narrow.js:
+   below the strip threshold the column falls back to the flyout before the chat folds to its strip; never saved) */
+function histPinned() {
+  return PM_HOME.settings.get('chat.history') === 'pinned' && !(PMW.narrow && PMW.narrow.state && PMW.narrow.state.histDropped);
+}
 function setPinned(on) {
   PM_HOME.settings.set('chat.history', on ? 'pinned' : 'flyout');
   paintHistoryMode();
@@ -627,13 +632,13 @@ function setPinned(on) {
 }
 function paintHistoryMode() {
   if (!S.layer) return;
-  var pinned = PM_HOME.settings.get('chat.history') === 'pinned';
+  var setting = PM_HOME.settings.get('chat.history') === 'pinned', pinned = histPinned();
   S.layer.toggleAttribute('data-pmw-sc-pinned', pinned);
-  if (pinned) { S.hist.hidden = false; S.histOpen = false; S.histBtn.setAttribute('aria-expanded', 'true'); }
+  if (pinned) { S.hist.hidden = false; S.histOpen = false; S.layer.removeAttribute('data-pmw-sc-hist'); S.histBtn.setAttribute('aria-expanded', 'true'); }
   else if (!S.histOpen) { S.hist.hidden = true; S.histBtn.setAttribute('aria-expanded', 'false'); }
   if (S.pinBtn) {
-    S.pinBtn.setAttribute('aria-pressed', pinned ? 'true' : 'false');
-    var lbl = pinned ? 'Unpin History' : 'Pin History';
+    S.pinBtn.setAttribute('aria-pressed', setting ? 'true' : 'false');
+    var lbl = setting ? 'Unpin History' : 'Pin History';
     S.pinBtn.setAttribute('aria-label', lbl); S.pinBtn.setAttribute('data-pm-hover-label', lbl);
   }
 }
@@ -652,7 +657,7 @@ function history() {
         var cur = t[0] === S.thread;
         var r = h('button', { type: 'button', role: 'listitem', class: 'pmw-sc-hrow pmw-cur' + (cur ? ' pmw-chosen' : ''), 'data-pmh': 'row', 'aria-current': cur ? 'true' : null,
           'data-pm-hover-visual-suppressed': 'true' }, [h('span', { class: 'pmw-sc-hrow-t', text: t[0] }), h('span', { class: 'pmw-sc-hrow-p', text: t[1] })]);
-        r.addEventListener('click', function () { showThread(t[0], t[1]); if (PM_HOME.settings.get('chat.history') !== 'pinned') closeHistory(true); fill(search.value); });
+        r.addEventListener('click', function () { showThread(t[0], t[1]); if (!histPinned()) closeHistory(true); fill(search.value); });
         list.appendChild(r);
       });
     });
@@ -672,7 +677,7 @@ function history() {
   return panel;
 }
 function toggleHistory(b) {
-  if (PM_HOME.settings.get('chat.history') === 'pinned') { setPinned(false); return; }
+  if (histPinned()) { setPinned(false); return; }
   if (S.histOpen) closeHistory(true); else openHistory();
 }
 function openHistory() {
@@ -687,7 +692,7 @@ function closeHistory(returnFocus) {
   if (!S.histOpen) return;
   S.histOpen = false;
   S.layer.removeAttribute('data-pmw-sc-hist');
-  if (PM_HOME.settings.get('chat.history') !== 'pinned') { S.hist.hidden = true; S.histBtn.setAttribute('aria-expanded', 'false'); }
+  if (!histPinned()) { S.hist.hidden = true; S.histBtn.setAttribute('aria-expanded', 'false'); }
   if (returnFocus) try { S.histBtn.focus({ preventScroll: true }); } catch (_) {}
 }
 function composer() {
@@ -1039,6 +1044,7 @@ function install() {
   PM_HOME.on('chat', function (e) { if (!e || e.type == null) syncPop(); });
   PM_HOME.settings.on(SC_KEY, apply);
   PM_HOME.settings.on('chat.history', paintHistoryMode);
+  PM_HOME.on('narrow', paintHistoryMode);   // the ladder gives pinned History's width back, or takes it again
   PMW.bus.on('browser:capture', onCapture);
   PMW.bus.on('browser:send', onSend);
   /* the chat column asks the surface on screen whether it draws pinned History and routes PM_HOME.chat to it */

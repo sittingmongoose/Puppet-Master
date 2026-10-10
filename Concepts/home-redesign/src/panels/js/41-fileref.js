@@ -34,8 +34,12 @@ PMW.fileRef = function (ref, o) {
   var label = ref.label != null && ref.label !== '' ? String(ref.label) : o.label != null && o.label !== '' ? String(o.label) : (o.short ? name : path) + at;
   var target = { path: path, line: line, col: col, view: ref.view || null };
 
-  var b = h('button', { type: 'button', class: 'pmw-fileref' + (o.inline ? ' is-inline' : '') + (o.cls ? ' ' + o.cls : ''),
-    'data-pmh': 'icon', 'data-pm-hover-label': path + at, 'data-pm-hover-detail': 'Double-click to keep it open' });
+  /* the hover tag says what the button does in words: the page's tag controller (PMConcept7.html, descriptor and
+     looksInternal) swaps any label or detail that looks like a path, a file name or host:port for generic copy and has
+     no opt-out for literal text, so the path stays in the button's own text */
+  var b = h('button', { type: 'button', class: 'pmw-fileref' + (o.inline ? ' is-inline' : '') + (o.cls ? ' ' + o.cls : ''), 'data-pmh': 'icon',
+    'data-pm-hover-label': path ? 'Open file' : 'No file to open',
+    'data-pm-hover-detail': path ? 'Click previews it. Double-click keeps it open.' : 'This reference names no file.' });
   if (o.icon !== false && !o.noIcon) b.appendChild(icon('file', { size: 13 }));
   b.appendChild(h('span', { class: 'pmw-fileref-t', text: label }));
   if (!path) b.setAttribute('aria-disabled', 'true');
@@ -55,7 +59,8 @@ PMW.fileRef = function (ref, o) {
     var mods = { altKey: e.altKey, ctrlKey: e.ctrlKey, metaKey: e.metaKey };
     if (e.detail === 0) { open('preview', mods); return; }          // Space or a script: no second click is coming
     clearTimeout(timer);
-    timer = setTimeout(function () { open('preview', mods); }, FILEREF_DBL_MS);
+    // the reference may leave the page while the second click is awaited (its document re-rendered): then nothing opens
+    timer = setTimeout(function () { timer = 0; if (b.isConnected) open('preview', mods); }, FILEREF_DBL_MS);
   });
   b.addEventListener('dblclick', function (e) { open('keep', e); });
   b.addEventListener('keydown', function (e) {
@@ -77,23 +82,3 @@ PM_HOME.fileExists = function (path) {
     return Array.isArray(all) && all.indexOf(p) >= 0;
   } catch (_) { return false; }
 };
-
-/* the file reference's look (stop-gap until 45-frames.css carries it; see addStopGapCss in 28-hrow.js): a file mark and
-   the path in the code face, underlined, 32 px tall in a document row and 24 px inline; never a capsule (Friendly's
-   page rule gives every button its 14 px radius, restated here at that weight), square in Retro and NieR's square part */
-addStopGapCss('pmw-stopgap-fileref', [
-  '.pmw-fileref { display: inline-flex; align-items: center; gap: 6px; height: 32px; max-width: 100%; min-width: 0; padding: 0 6px; margin: 0; border: 0; border-radius: 6px;',
-  '  background: transparent; color: var(--pmw-text-2); font: inherit; font-family: var(--pm-font-code); font-size: 12px; line-height: 1; cursor: pointer; vertical-align: middle; }',
-  '.pmw-fileref.is-inline { height: 24px; padding: 0 4px; border-radius: 4px; font-size: 11.5px; }',
-  '.pmw-fileref-t { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-decoration: underline; text-decoration-color: var(--pmw-line-2); text-underline-offset: 3px; }',
-  '.pmw-fileref .pmw-ico { flex: none; width: 13px; height: 13px; color: var(--pmw-text-3); }',
-  '.pmw-fileref:hover { color: var(--pmw-text); background: var(--pmw-hover); }',
-  '.pmw-fileref:hover .pmw-fileref-t { text-decoration-color: currentColor; }',
-  '.pmw-fileref:focus-visible { outline: 2px solid var(--pmw-focus); outline-offset: -2px; }',
-  '.pmw-fileref[aria-disabled="true"] { opacity: .5; cursor: default; }',
-  ':where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button.pmw-fileref { border-radius: 6px; }',
-  ':where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button.pmw-fileref.is-inline { border-radius: 4px; }',
-  'html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-fileref, html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-fileref { border-radius: 0; }',
-  'html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-fileref:hover { background: var(--accent-lime); color: var(--surface); }',
-  'html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-fileref:hover :is(.pmw-fileref-t, .pmw-ico) { color: var(--surface); text-decoration: none; }'
-].join('\n'));

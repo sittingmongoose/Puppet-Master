@@ -35,6 +35,8 @@ function isTextTarget(el) {
   if (tag === 'INPUT') return !/^(button|checkbox|radio|range|submit|reset|color|file)$/i.test(el.type || '');
   return false;
 }
+var HOST_KEYS_SEL = '[data-pmw-keys="host"], [data-pmw-host-keys]';
+function hostKeysTarget(el) { return !!(el && el.closest && el.closest(HOST_KEYS_SEL)); }
 function homeVisible() { return !!(state.centre && state.centre.offsetParent !== null && state.centre.getClientRects().length); }
 function focusedTabEntry() {
   var a = doc.activeElement;
@@ -148,13 +150,16 @@ doc.addEventListener('keydown', function (e) {
   if (!inCentre && !inChat) return;
   var entry = focusedTabEntry();
   if (entry && entry.instance && entry.instance.wantsKey) { try { if (entry.instance.wantsKey(e)) return; } catch (_) {} }
-  // a text target inside [data-pmw-host-keys] (a kind's hidden textarea for IME input, an editor or a terminal) is
-  // not a text field to the host: its tab's wantsKey above has already kept what it types, the rest are host keys
-  var text = isTextTarget(t) && !(t.closest && t.closest('[data-pmw-host-keys]'));
+  // the host-keys opt-out (CONTRACT section 9): a text target marked data-pmw-keys="host", on itself or an ancestor (a
+  // terminal's input textarea, an editor's IME textarea; [data-pmw-host-keys] is the older spelling, kept as an alias)
+  // is not a text field for the host's navigation keys: its tab's wantsKey above has already kept what it types
+  var rawText = isTextTarget(t);
+  var text = rawText && !hostKeysTarget(t);
   // typing: on a Mac, Option+letter and Option+` type characters (a dagger, the grave dead key) in a text field, and a
-  // dead key is the start of a character anywhere; the Alt stand-ins leave both alone (Windows and Linux Alt+T types
-  // nothing, so it still works from a field there)
-  var typing = alt && !ctrl && text && (IS_MAC || k === 'Dead');
+  // dead key is the start of a character anywhere; the Alt letter stand-ins (Alt+T, Alt+Shift+T, Alt+`, Alt+W) leave
+  // both alone, from a marked field too, so this reads the raw text-ness (Windows and Linux Alt+T types nothing, so it
+  // still works from a field there)
+  var typing = alt && !ctrl && rawText && (IS_MAC || k === 'Dead');
   var handled = true;
   var pid = focusedPanelId();
   if (ctrl && shift && (k === ' ' || code === 'Space')) { var plusBtn = (strip.stateOf(pid) || {}).plus; if (plusBtn && plusBtn.isConnected && plusBtn.offsetParent !== null) PMW.menus.plus(pid, plusBtn); else PMW.menus.plus(pid, null); }
@@ -163,7 +168,7 @@ doc.addEventListener('keydown', function (e) {
   else if (ctrl && shift && code === 'KeyA' && !alt && !text) PMW.menus.allTabs();
   else if (ctrl && !shift && !alt && code === 'KeyP' && !text) PMW.quickOpen && PMW.quickOpen(pid);
   else if (((alt && !ctrl && !shift) || (ctrl && !alt && !shift)) && code === 'KeyT' && (alt || !IN_BROWSER) && !typing) PM_HOME.open(Object.assign({}, PMW.defaultSpecFor(pid), { where: pid }));
-  else if (((alt && !ctrl && !shift) || (ctrl && !alt && !shift)) && code === 'KeyW' && (alt || !IN_BROWSER) && !text) { var p0 = model.panel(state.layout, pid); if (p0 && p0.active) PMW.closeTab(p0.active); }
+  else if (((alt && !ctrl && !shift) || (ctrl && !alt && !shift)) && code === 'KeyW' && (alt || !IN_BROWSER) && !text && !typing) { var p0 = model.panel(state.layout, pid); if (p0 && p0.active) PMW.closeTab(p0.active); }
   else if (((alt && shift && !ctrl) || (ctrl && shift && !alt)) && code === 'KeyT' && (alt || !IN_BROWSER) && !typing) PMW.reopenClosed();
   else if (((alt && !ctrl && code === 'Backquote' && !typing) || (ctrl && !alt && k === 'Tab' && !IN_BROWSER))) { if (!PMW.mru.el && e.repeat) handled = true; else PMW.mru.start(shift ? -1 : 1, alt ? 'Alt' : 'Control'); }
   // next/previous tab: Alt+PgDn/PgUp in a browser (Chrome keeps Ctrl+PgDn/PgUp); Ctrl is still taken where it arrives
@@ -204,9 +209,9 @@ mru.paint = function () {
   var l = state.layout;
   mru.el.textContent = '';
   mru.list.slice(0, 12).forEach(function (t, i) {
-    var r = l.tabs[t], def = kindDef(r.kind);
+    var r = l.tabs[t];
     var row = h('div', { class: 'pmw-mru-row pmw-cur' + (i === mru.i ? ' is-current' : ''), role: 'option', 'aria-selected': i === mru.i ? 'true' : 'false', 'data-pmh': 'row' }, [
-      kindIcon((def && def.icon) || 'file'), h('b', { text: tabLabel(r) }), h('span', { text: model.describe(l, model.panelOf(l, t).id) })]);
+      kindIcon(tabIcon(r)), h('b', { text: tabLabel(r) }), h('span', { text: model.describe(l, model.panelOf(l, t).id) })]);
     mru.el.appendChild(row);
   });
   announce(tabLabel(l.tabs[mru.list[mru.i]]));
