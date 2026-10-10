@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L3330-L3395
+Source lines: L3330-L3396
 
-Source SHA256: `dbdf7e35e022eeec8877a0bb64fbf7fd541113817b17dead9eb010fe0ae1d531`
+Source SHA256: `29915056fec4d67bf53aa7e747291f68da1732374e739f166d3d0a2576fb7c66`
 
 ---
 
@@ -20,7 +20,7 @@ unit_type: wiring_contract
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
 canonical_text: >-
-  Production wiring for Usage route/open commands consumes UI_Command_Catalog alias metadata. `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, and `cmd.chat.close_thread_usage` are retired compatibility aliases and must not appear as canonical production UICommand rows. Typed selector proof is caller-aware: the pre-existing `cmd.artifacts.show_in_usage` and `cmd.artifacts.show_in_ledger` rows remain event-primary with usage_event/usage_event_ref and retain their artifact route/open OpenSubject bridge; event-primary `cmd.nav.open_usage_subject` uses the same event selector without OpenSubject; and a PMConcept7 Ledger attempt row uses `cmd.nav.open_usage_subject` with usage_attempt/attempt_id, retains usage_event_ref as correlation, and carries no OpenSubject. Wiring evidence must prove route_open effect_kind, the command-appropriate selector/OpenSubject disposition, and correlation passthrough for UsageRecord/provider/runtime fields. Current PMConcept7 aggregate provider/account/panel cards are local inspectors with no command, receipt, or event.
+  Production wiring for Usage route/open commands consumes UI_Command_Catalog alias metadata. `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, and `cmd.chat.close_thread_usage` are retired compatibility aliases and must not appear as canonical production UICommand rows. Typed selector proof is caller-aware: the pre-existing `cmd.artifacts.show_in_usage` and `cmd.artifacts.show_in_ledger` rows remain event-primary with usage_event/usage_event_ref and retain their artifact route/open OpenSubject bridge; event-primary `cmd.nav.open_usage_subject` uses the same event selector without OpenSubject; and a PMConcept7 Ledger attempt row uses `cmd.nav.open_usage_subject` with usage_attempt/attempt_id, retains usage_event_ref as correlation, and carries no OpenSubject. Wiring evidence must prove route_open effect_kind, the command-appropriate selector/OpenSubject disposition, and correlation passthrough for UsageRecord/provider/runtime fields. Current PMConcept7 aggregate provider/account/panel cards are local inspectors with no command, receipt, or event. On the redesigned Usage Accounts room (2026-10-09) the account card body and Details stay local inspectors; the card's Use this account and each provider plate's Auto-switch toggle and switch level are owner-routed actions, not route/open commands, wired through the existing `catalog.account_select_profile`, `catalog.settings_transaction_preview` and `catalog.settings_transaction_apply` rows, whose `ui_location` names the Usage Accounts room (UCC-147, `Plans/Settings_System.md#SSYS-044`), so they never satisfy or weaken this unit's route/open selector proof.
 gui_related: true
 gui_classification_reason: Wiring determines whether visible Usage navigation controls dispatch canonical commands.
 depends_on: [WM-034, WM-042, UCC-109, CV-316]
@@ -29,6 +29,7 @@ acceptance_criteria:
   - validate-wiring-matrix fails if production wiring registers `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, or `cmd.chat.close_thread_usage` as canonical command rows instead of compatibility aliases or exclusions.
   - Usage route/open wiring entries declare effect_kind route_open or mixed with route_open detail, not generic receipt-only success; event-primary dispatch proves usage_event/usage_event_ref, while a PMConcept7 Ledger attempt dispatch proves usage_attempt/attempt_id plus usage_event_ref correlation. The two cmd.nav.open_usage_subject selector branches carry no OpenSubject; the two pre-existing artifact rows retain their artifact OpenSubject bridge and remain event-primary; all preserve applicable provider/account/runtime refs.
   - Wiring fixtures prove Usage correlation refs survive dispatch and route restoration without being replaced by timestamp/run/thread/tier filters, while current PMConcept7 aggregate provider/account/panel cards remain local inspectors with no command, receipt, event, route object id, or invented route kind.
+  - The Usage Accounts room's Use this account and each provider's Auto-switch toggle and switch level appear only on their existing account-select and Settings-transaction rows, with Usage Accounts locations, and never as route/open rows; the account card body and Details still dispatch nothing.
   - Wiring evidence distinguishes thread Context Detail Pane commands from app-wide Usage route/open commands.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix

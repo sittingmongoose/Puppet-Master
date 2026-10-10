@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-10-10T00:19:00Z",
+  "generated_at_utc": "2026-10-10T05:31:48Z",
   "index_path": "Plans/_shards/ui_wiring_rules/00-index.md",
-  "index_sha256": "31a5d42ab7fc5437171426ac8fa1935abb4bd158ed058f9d483f54156fa7b51e",
+  "index_sha256": "703d8044b6a850724b62ecb30ba027231a2c373adf49c482fefdac9ea635f547",
   "manifest_path": "Plans/_shards/ui_wiring_rules/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/ui_wiring_rules/001-preamble.md",
-      "sha256": "6d4fce5d8aa51f7712e49f31c1fe4d3770a7bd5ec134a78424cb9d6517fb0c98",
+      "sha256": "33c7752f45aba3fae56aa983589fe6bf01520b5d160c5decfb2ae7b19d4493d8",
       "shard_id": "001",
       "source_line_end": 15,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "0. Scope",
       "path": "Plans/_shards/ui_wiring_rules/002-0.-scope.md",
-      "sha256": "dd4f933836b88d324e7b4f172a60b887b3cad1afa04deb6fad203ed77bb7d5c5",
+      "sha256": "95e7e072bcd0d55d7979efe7353a947d182e27cd476cdfec4ad5e3fd97c97fc6",
       "shard_id": "002",
       "source_line_end": 62,
       "source_line_start": 16,
@@ -26,7 +26,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/ui_wiring_rules/003-owner-consumer-map.md",
-      "sha256": "8f63c8071db5cea79a15a8ab71d9cdf0cd765bf07f020ef9a32b801654fca414",
+      "sha256": "1ff661d10fafbceff3ae7f7ee5cebaefb8c4b7498f8a480278700d984219bd3f",
       "shard_id": "003",
       "source_line_end": 70,
       "source_line_start": 64,
@@ -35,7 +35,7 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/ui_wiring_rules/004-planunits.md",
-      "sha256": "e5c956178d68fdda9a0e5fd4d9be58cf2a52f441f8dd33726cd7cd089d245bfb",
+      "sha256": "95d1f08359074b1c0e2f2fe0d76e8c14d61f978ffc29f4070e4d594fa8e5efe9",
       "shard_id": "004",
       "source_line_end": 450,
       "source_line_start": 72,
@@ -44,7 +44,7 @@
     {
       "heading": "1. Rule 1 \u2014 UI Command Dispatch Only",
       "path": "Plans/_shards/ui_wiring_rules/005-1.-rule-1-ui-command-dispatch-only.md",
-      "sha256": "a0629ff0787c8457e8140b3b2ea8782de5bcb92a28ae9a402cb0bb768483a7c8",
+      "sha256": "d1b2e61075793823d4712205a66872966cac9bd119121ae4de0da0be06f90eae",
       "shard_id": "005",
       "source_line_end": 464,
       "source_line_start": 451,
@@ -53,7 +53,7 @@
     {
       "heading": "2. Rule 2 \u2014 One Element, One Command",
       "path": "Plans/_shards/ui_wiring_rules/006-2.-rule-2-one-element-one-command.md",
-      "sha256": "b19d95c70b4cf04304d538331036e36ee5e89a87b0c4defeca96779206666a9b",
+      "sha256": "0471c76eb82be3e6263de102b5fd046037fbd00b5b4892a1dbf886a625b1d52f",
       "shard_id": "006",
       "source_line_end": 479,
       "source_line_start": 465,
@@ -62,7 +62,7 @@
     {
       "heading": "3. UI Command Dispatcher Boundary",
       "path": "Plans/_shards/ui_wiring_rules/007-3.-ui-command-dispatcher-boundary.md",
-      "sha256": "8a216bbaf918d5be82c9aacc1669f4623bf941f782972d04c9261d5d5ed87d5e",
+      "sha256": "11b2e9ab4be6b66c39002e268ace2458824e1f946094b75a3d4a7952140bfa68",
       "shard_id": "007",
       "source_line_end": 515,
       "source_line_start": 480,
@@ -71,7 +71,7 @@
     {
       "heading": "4. Wiring Matrix Concept",
       "path": "Plans/_shards/ui_wiring_rules/008-4.-wiring-matrix-concept.md",
-      "sha256": "f72c0198bd2706ea81c9d3b4b7214bfb53944d0009ad261e0afd8a71ca9cc80b",
+      "sha256": "2500b8e2e21feddbdfae2bcce1f34f229643a10dce60dede4f5743b5c17ab448",
       "shard_id": "008",
       "source_line_end": 553,
       "source_line_start": 516,
@@ -80,7 +80,7 @@
     {
       "heading": "5. Autonomous Verification Strategy",
       "path": "Plans/_shards/ui_wiring_rules/009-5.-autonomous-verification-strategy.md",
-      "sha256": "c7529e76ec841edb4dbdefb848d2b044daed0167942c672a301230ddceecfa33",
+      "sha256": "3f7996f537cee41445d3a9ff7c68c1cd5d0c16f88ebeab0f52b6f96c7e36ddb6",
       "shard_id": "009",
       "source_line_end": 581,
       "source_line_start": 554,
@@ -89,7 +89,7 @@
     {
       "heading": "6. References",
       "path": "Plans/_shards/ui_wiring_rules/010-6.-references.md",
-      "sha256": "d0b919061bfeb151b4c85d27ba652824c110ce6716eccda64e89a09e401567ac",
+      "sha256": "28b01395ffe0d2ddb2fd7ab5857f7f8196d93f4432e0d22dc86eba32cddfd797",
       "shard_id": "010",
       "source_line_end": 594,
       "source_line_start": 582,
@@ -98,7 +98,7 @@
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/ui_wiring_rules/011-migration-coverage.md",
-      "sha256": "9030a61bc93f9d1f3f6ecb61d21620099bc9b7b48c6b2d6728a712ca0d813695",
+      "sha256": "d869bd0c942e489fed9a0ceb7fd5c2d20345e486254ddaba66ba7d932a5f051d",
       "shard_id": "011",
       "source_line_end": 617,
       "source_line_start": 596,
@@ -107,7 +107,7 @@
     {
       "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
       "path": "Plans/_shards/ui_wiring_rules/012-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
-      "sha256": "35cb19b9896b311ed307147a3af1df36968fa14299c5ed46a2952571b344c8ab",
+      "sha256": "c4618f8b3a05c8c6a182bf2dbfce27086464451b63010e2b58ad685bc686ea9b",
       "shard_id": "012",
       "source_line_end": 623,
       "source_line_start": 619,
@@ -116,7 +116,7 @@
     {
       "heading": "PMConcept7 Home Workspace wiring rules \u2014 2026-08-04",
       "path": "Plans/_shards/ui_wiring_rules/013-pmconcept7-home-workspace-wiring-rules-2026-08-04.md",
-      "sha256": "a438a768b08d7a0016e4fa97b73dbea46eafb4ecdfc22934786a840f99005138",
+      "sha256": "1031c6f70fe3c48ecf5f4da9979cdb2bd185f9cacf1d11b21314cd1835af3e2c",
       "shard_id": "013",
       "source_line_end": 701,
       "source_line_start": 625,
@@ -125,7 +125,7 @@
     {
       "heading": "PMConcept7 Cozy Shelves Integration Addendum - 2026-07-28",
       "path": "Plans/_shards/ui_wiring_rules/014-pmconcept7-cozy-shelves-integration-addendum-2026-07-28.md",
-      "sha256": "6f72bdc2013d9967c331ce3e9d3cb646874faacdfd6c3c2e8adf7feae65b1d0d",
+      "sha256": "1e5571b26caf1b324a20324706e01b64bc6e0121101219b2c5d3c09bd7dc46d2",
       "shard_id": "014",
       "source_line_end": 707,
       "source_line_start": 703,
@@ -134,7 +134,7 @@
     {
       "heading": "Shared Runtime receipt/projection wiring addendum - 2026-08-13",
       "path": "Plans/_shards/ui_wiring_rules/015-shared-runtime-receipt-projection-wiring-addendum-2026-08-13.md",
-      "sha256": "3d2d86d81992a6928968a80b0032558199255d3897135f2fed8f86297cf6a9c4",
+      "sha256": "8bbd603b481ee8454bd33c1304d7f81d6d55e426389c78963f4cae4493a4d7c4",
       "shard_id": "015",
       "source_line_end": 760,
       "source_line_start": 709,
@@ -143,151 +143,151 @@
     {
       "heading": "PMConcept7 transactional interaction and shared-seat wiring addendum - 2026-08-27",
       "path": "Plans/_shards/ui_wiring_rules/016-pmconcept7-transactional-interaction-and-shared-seat-wiring-adde.md",
-      "sha256": "603630bd32dca0ce32ff4522a645807aea9465f7fb2624a996c0fd9e6be6be5a",
+      "sha256": "66bfc09d95c6f24befd805edd6c579a8c33fc100bce597d37d9478dc979fcc5f",
       "shard_id": "016",
-      "source_line_end": 870,
+      "source_line_end": 878,
       "source_line_start": 762,
       "split_rule": "heading-##"
     },
     {
       "heading": "Typed controls, exact owner routes, and shared hover-overlay addendum - 2026-08-31",
       "path": "Plans/_shards/ui_wiring_rules/017-typed-controls-exact-owner-routes-and-shared-hover-overlay-adden.md",
-      "sha256": "846174640745af6e602472808e8b48196f6f880f7fc73ac8e10e169587335484",
+      "sha256": "8d32e7064fbc52373f1ceb7a050974ff6a25bc28e5f4ac0914df9f7d7bd72e0c",
       "shard_id": "017",
-      "source_line_end": 919,
-      "source_line_start": 872,
+      "source_line_end": 927,
+      "source_line_start": 880,
       "split_rule": "heading-##"
     },
     {
       "heading": "Settings command and route-only action wiring addendum - 2026-08-31",
       "path": "Plans/_shards/ui_wiring_rules/018-settings-command-and-route-only-action-wiring-addendum-2026-08-3.md",
-      "sha256": "74b94d0f9ec29e72e797740e4b6ac4ff0817b4d6b6a4eca6d651aee167571518",
+      "sha256": "af899c82176ed6467a5bdbd422b5c54baf7ac467875c563c3545185278cf6d50",
       "shard_id": "018",
-      "source_line_end": 989,
-      "source_line_start": 921,
+      "source_line_end": 997,
+      "source_line_start": 929,
       "split_rule": "heading-##"
     },
     {
       "heading": "Product Onboarding typed-local action wiring addendum - 2026-09-01",
       "path": "Plans/_shards/ui_wiring_rules/019-product-onboarding-typed-local-action-wiring-addendum-2026-09-01.md",
-      "sha256": "a8bb1517a5f20cfc33407b813f4eef64b6cf16a61a2d8b8dfca0f26b3e03920b",
+      "sha256": "9b3acb1b5f929f27c312508c7c58eb4f9099664d6b90485ea8d96a479fb12edd",
       "shard_id": "019",
-      "source_line_end": 1107,
-      "source_line_start": 991,
+      "source_line_end": 1115,
+      "source_line_start": 999,
       "split_rule": "heading-##"
     },
     {
       "heading": "Server/Egolite Alias, Local-Action, And Handler-Truth Rules - 2026-09-01",
       "path": "Plans/_shards/ui_wiring_rules/020-server-egolite-alias-local-action-and-handler-truth-rules-2026-0.md",
-      "sha256": "ac4c3255add776b1c14a9762b9024d3d796f2832c35526d8bc7b1e4a1b5977f8",
+      "sha256": "fd62fc7c42a7bf9c7a04356fca96e82929b92d05d92d25e67d9ff5572ba1f19a",
       "shard_id": "020",
-      "source_line_end": 1146,
-      "source_line_start": 1108,
+      "source_line_end": 1154,
+      "source_line_start": 1116,
       "split_rule": "heading-##"
     },
     {
       "heading": "Central Touch Command/GUI Closure Rule Addendum - 2026-09-01",
       "path": "Plans/_shards/ui_wiring_rules/021-central-touch-command-gui-closure-rule-addendum-2026-09-01.md",
-      "sha256": "90d8c0702e954b848c8fc0e7ddbc7f4781b5289bb60634afe15ee3d6caf3ee3e",
+      "sha256": "b9cd8990e0e64e0b08f1ed70b2a9849e145895d0492d3df29bc1bf72ba20a455",
       "shard_id": "021",
-      "source_line_end": 1179,
-      "source_line_start": 1148,
+      "source_line_end": 1187,
+      "source_line_start": 1156,
       "split_rule": "heading-##"
     },
     {
       "heading": "Puppet Master Assistant Redesign Wiring Rules - 2026-09-03",
       "path": "Plans/_shards/ui_wiring_rules/022-puppet-master-assistant-redesign-wiring-rules-2026-09-03.md",
-      "sha256": "3c26655ba1c8255993a5ccd9a59218698f4c18e15e8adf6308dc16e656af50b4",
+      "sha256": "8a135a6e1a10b463351b4bfef8a4cfd78f5f53dc4837bbfb44024dc055afa56a",
       "shard_id": "022",
-      "source_line_end": 1246,
-      "source_line_start": 1181,
+      "source_line_end": 1256,
+      "source_line_start": 1189,
       "split_rule": "heading-##"
     },
     {
       "heading": "Assistant redesign: what belongs in the production wiring matrix (2026-09-03)",
       "path": "Plans/_shards/ui_wiring_rules/023-assistant-redesign-what-belongs-in-the-production-wiring-matrix-.md",
-      "sha256": "0d3039907015a2cd7639643d8ed81f7adbb47ff0d73723b0daa8aa4778a11967",
+      "sha256": "3d3dd4ca1deef722606aa2bb6cc498827adfc28ad36f88d9f8bb2e9ee3d3d2fc",
       "shard_id": "023",
-      "source_line_end": 1335,
-      "source_line_start": 1248,
+      "source_line_end": 1345,
+      "source_line_start": 1258,
       "split_rule": "heading-##"
     },
     {
       "heading": "Additive Correction v4: wiring coverage and the internal-producer register (2026-09-03)",
       "path": "Plans/_shards/ui_wiring_rules/024-additive-correction-v4-wiring-coverage-and-the-internal-producer.md",
-      "sha256": "7a85153444bc9ec3a1938ee225d445fdc7e6ad10ec351ac4a4b8d8500a88fa66",
+      "sha256": "4baa1c9cf3196904cd5098946194e7b7e8930c92da33ece247fffbe7b593132c",
       "shard_id": "024",
-      "source_line_end": 1454,
-      "source_line_start": 1337,
+      "source_line_end": 1464,
+      "source_line_start": 1347,
       "split_rule": "heading-##"
     },
     {
       "heading": "Working Notebook Wiring Disposition Addendum (2026-09-05)",
       "path": "Plans/_shards/ui_wiring_rules/025-working-notebook-wiring-disposition-addendum-2026-09-05.md",
-      "sha256": "aa1134a98becbf95d0cfdfd3eae7a5ff75c9e1378a8305cc1b96b9c52e3f67e7",
+      "sha256": "7570ea2dcba900c1efaab559882430a899ef0d4bea444c70df1e5b40ec16f8d2",
       "shard_id": "025",
-      "source_line_end": 1489,
-      "source_line_start": 1456,
+      "source_line_end": 1499,
+      "source_line_start": 1466,
       "split_rule": "heading-##"
     },
     {
       "heading": "Cumulative v3 Production Wiring and Action Chaining Specification (2026-09-07)",
       "path": "Plans/_shards/ui_wiring_rules/026-cumulative-v3-production-wiring-and-action-chaining-specificatio.md",
-      "sha256": "a122b1b950a03621a5279ec85ee2128ef61c01e73f2a036de03264ee96139e16",
+      "sha256": "1b34009a9a9dc48ae6ee7d2da7fa73f960434a39848fa9fd9740a73f9c812530",
       "shard_id": "026",
-      "source_line_end": 1567,
-      "source_line_start": 1491,
+      "source_line_end": 1577,
+      "source_line_start": 1501,
       "split_rule": "heading-##"
     },
     {
       "heading": "Terminal Research Dispatch Rules \u2014 DL-035 (2026-09-09)",
       "path": "Plans/_shards/ui_wiring_rules/027-terminal-research-dispatch-rules-dl-035-2026-09-09.md",
-      "sha256": "285aea1c0ffd29cb5e01dc21eb09f6e48a23738cf4637448994183a7279ee630",
+      "sha256": "d7ceba34fcaefdd7e3fc164e4cc6e0b82057b458acbe3b8a0b06303660412b3c",
       "shard_id": "027",
-      "source_line_end": 1645,
-      "source_line_start": 1570,
+      "source_line_end": 1655,
+      "source_line_start": 1580,
       "split_rule": "heading-##"
     },
     {
       "heading": "Research Decision Review Dispatch and Resume \u2014 DL-036 (2026-09-09)",
       "path": "Plans/_shards/ui_wiring_rules/028-research-decision-review-dispatch-and-resume-dl-036-2026-09-09.md",
-      "sha256": "d13bf7e5bcd957537903f35a24473137f7190bb468ed32e2ae2f4e765f60d969",
+      "sha256": "5a40a34c891957943aaeea9401c6e43cf711cff6e1105bfae41c3525f2d6a357",
       "shard_id": "028",
-      "source_line_end": 1754,
-      "source_line_start": 1647,
+      "source_line_end": 1764,
+      "source_line_start": 1657,
       "split_rule": "heading-##"
     },
     {
       "heading": "Chat presentation teardown \u2014 2026-09-27",
       "path": "Plans/_shards/ui_wiring_rules/029-chat-presentation-teardown-2026-09-27.md",
-      "sha256": "5729cef2151cc5d62bc133577ab71f73795da0973c4d3ab9399cd9d710ef86ff",
+      "sha256": "d88413f334e2fa7f640b43634ef464c1ded00ba236d7f96c5ec36e6a66358527",
       "shard_id": "029",
-      "source_line_end": 1803,
-      "source_line_start": 1756,
+      "source_line_end": 1813,
+      "source_line_start": 1766,
       "split_rule": "heading-##"
     },
     {
       "heading": "Wand module sheet wiring \u2014 2026-09-27",
       "path": "Plans/_shards/ui_wiring_rules/030-wand-module-sheet-wiring-2026-09-27.md",
-      "sha256": "0a41a40ebb11761569b3b0022d1d3cde7c4d68d2175da836a9ab528f5c3dae75",
+      "sha256": "263ef90fba68c5dd43dce5ad7f90f4d00003d8fd08e67e089e0de0c7a9169bfc",
       "shard_id": "030",
-      "source_line_end": 1879,
-      "source_line_start": 1805,
+      "source_line_end": 1889,
+      "source_line_start": 1815,
       "split_rule": "heading-##"
     },
     {
       "heading": "5.6 Pro chat round wiring \u2014 2026-10-09",
       "path": "Plans/_shards/ui_wiring_rules/031-5.6-pro-chat-round-wiring-2026-10-09.md",
-      "sha256": "c7bf128685d366ae7b953e14daab6044bcf9f5baf9cabbf82152642dd20acfd1",
+      "sha256": "5c268968512e167c57612134c750f8cc7eab47d536bd661332a9b394820b9c38",
       "shard_id": "031",
-      "source_line_end": 1997,
-      "source_line_start": 1881,
+      "source_line_end": 2007,
+      "source_line_start": 1891,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 1997,
+    "line_count": 2007,
     "path": "Plans/UI_Wiring_Rules.md",
-    "sha256": "d0c067843836b388581c8d4bd645a3c74ad1b47039b6f57c6d25840f51b1d7fc"
+    "sha256": "650015bd81bcdfefcca2453e684c6c908616df32b49cb3071c5cc48c8bde499f"
   }
 }

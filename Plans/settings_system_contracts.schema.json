@@ -3625,11 +3625,183 @@
             },
             "intent": {
               "$ref": "#/$defs/non_empty_string"
+            },
+            "scope": {
+              "$ref": "#/$defs/settings_write_scope"
+            },
+            "provider_id": {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            "changes": {
+              "description": "Optional per-setting scope binding (SSYS-044). Each item names one setting id from exact_setting_ids, at most once; a non-inherit item's value equals proposed_values_by_setting_id for that id, and an inherit item clears the scoped value so the setting follows the next scope out again. Previews without changes keep their existing meaning.",
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/$defs/settings_transaction_change"
+              }
+            },
+            "source": {
+              "description": "Optional dotted name of the surface that raised the preview, for example usage.accounts for a Settings control hosted on the Usage page (SSYS-044). It is attribution only and grants no authority.",
+              "type": "string",
+              "maxLength": 128,
+              "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)*$"
             }
-          }
+          },
+          "allOf": [
+            {
+              "if": {
+                "required": [
+                  "scope"
+                ],
+                "properties": {
+                  "scope": {
+                    "enum": [
+                      "provider",
+                      "account"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "provider_id"
+                ]
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "scope"
+                ],
+                "properties": {
+                  "scope": {
+                    "const": "global"
+                  }
+                }
+              },
+              "then": {
+                "not": {
+                  "required": [
+                    "provider_id"
+                  ]
+                }
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "changes"
+                ]
+              },
+              "then": {
+                "required": [
+                  "scope"
+                ]
+              }
+            }
+          ]
         }
       ],
       "unevaluatedProperties": false
+    },
+    "settings_write_scope": {
+      "description": "The scope a Settings preview writes at (SSYS-044). global is the shared value; provider is one provider's own value and needs provider_id; account is one account's own value inside that provider. Absent scope keeps the request's existing Project-scope meaning, so older requests stay valid. The apply request never restates scope or provider: both are bound by the preview it names.",
+      "enum": [
+        "global",
+        "provider",
+        "account"
+      ]
+    },
+    "settings_transaction_change": {
+      "description": "One scoped change in a Settings transaction preview request (SSYS-044). previous and previous_effective record what the caller showed before the change, its own value at that scope and the effective value, for rollback display and stale detection only; expected_destination_revision stays the authority.",
+      "type": "object",
+      "required": [
+        "setting_id",
+        "scope"
+      ],
+      "properties": {
+        "setting_id": {
+          "$ref": "#/$defs/setting_id"
+        },
+        "scope": {
+          "$ref": "#/$defs/settings_write_scope"
+        },
+        "scope_id": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "value": {
+          "$ref": "#/$defs/setting_value"
+        },
+        "inherit": {
+          "type": "boolean"
+        },
+        "previous": {
+          "$ref": "#/$defs/setting_value"
+        },
+        "previous_effective": {
+          "$ref": "#/$defs/setting_value"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "global"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "scope_id": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "enum": [
+                  "provider",
+                  "account"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "scope_id"
+            ],
+            "properties": {
+              "scope_id": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "inherit"
+            ],
+            "properties": {
+              "inherit": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
     },
     "settings_transaction_preview_existing_project": {
       "type": "object",

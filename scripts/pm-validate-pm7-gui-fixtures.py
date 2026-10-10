@@ -240,7 +240,7 @@ def validate() -> dict[str, Any]:
     required_room_must = {
         "provider_setup_required_exact_state",
         "provider_setup_preserves_operation_and_continuation_identity",
-        "provider_setup_cta:cmd.settings.bloom.open:ai:ai.accounts.provider-connections",
+        "provider_setup_cta:cmd.settings.open:typed_settings_target",
         "scope_filters_timestamped_identity_bound_records",
         "range_filters_timestamped_identity_bound_records",
     }
@@ -296,7 +296,7 @@ def validate() -> dict[str, Any]:
             })
     if presentation.get("theme_width_matrix.json", {}).get("desktop_widths_css_px") != EXPECTED_DESKTOP_WIDTHS:
         failures.append({"error": "desktop_width_matrix", "expected": EXPECTED_DESKTOP_WIDTHS})
-    if presentation.get("persistence_migration_matrix.json", {}).get("state_families") != ["room", "detail", "range", "scope", "more", "hidden", "layout", "order"]:
+    if presentation.get("persistence_migration_matrix.json", {}).get("state_families") != ["room", "detail", "range", "scope", "more", "hidden", "layout", "order", "live"]:
         failures.append({"error": "usage_state_families"})
     persistence_contract = presentation.get("persistence_migration_matrix.json", {})
     if persistence_contract.get("usage_widget_layout_record_required_fields") != EXPECTED_USAGE_LAYOUT_FIELDS:
