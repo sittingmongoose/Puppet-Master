@@ -27561,7 +27561,7 @@ canonical_text: >-
   asset is deleted. Images an app or project layer references are backed up with Settings; an image only a tab
   override references follows the Home record, is not backed up, and when missing the tab falls through to the next
   layer. This replaces SP-122's terminal_font.v1:global and terminal_color.v1:global.
-  The editor's scheme choice is stored as SSYS-050's Editor scheme row beside the terminal's scheme row, in the
+  The editor's scheme choice is stored as SSYS-050's code.editing.color-scheme row beside the terminal's scheme row, in the
   same Project settings snapshot through Settings transactions. The code colour-scheme catalog is built in and
   never stored; each surface stores only its own choice.
 gui_related: true

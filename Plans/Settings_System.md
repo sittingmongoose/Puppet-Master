@@ -3105,8 +3105,8 @@ canonical_text: >-
   code.terminal.auto-second-pane, code.editing.editor-strip-collapsed, code.terminal.explanations (D19, the
   Teacher persona explains commands in the chat) and code.terminal.tab-role (shell profiles and the tab label). The chat width, revealing an already open file, an empty panel's
   fate, what "+" does and the close button's side are not rows. With SSYS-051's thirty-six rows, the inventory
-  holds 963 rows (916 plus 47 added), of which 7 are retired, leaving 956 live rows.
-  Settings > Editor requires a scheme row bound to F3-642's shared code colour-scheme catalog, defaulting to
+  holds 964 rows (916 plus 48 added), of which 7 are retired, leaving 957 live rows.
+  Settings > Editor has code.editing.color-scheme (Editor Colors), a scheme row bound to F3-642's shared code colour-scheme catalog, defaulting to
   "Follow look" and applying live through the same Settings transaction as the other editor rows.
 gui_related: true
 gui_classification_reason: Each row is a visible Settings control for the home panels, tabs, editor or chat column, and the retirements remove visible rows.
@@ -3114,8 +3114,8 @@ split_recommended: false
 depends_on: [DL-180, DL-181, DL-183, SSYS-002, SSYS-004, SSYS-009, SSYS-040, SSYS-042, F3-630, F3-636, F3-637, F3-639]
 unblocks: []
 acceptance_criteria:
-  - "A census of Plans/settings_inventory.json finds 963 unique ids in 12 categories; the 7 rows retired here end their descriptions with (Superseded by ...) and render on no page, in no manager and in no search result, leaving 956 live rows."
-  - "The eleven added rows exist once each with their listed type, choices and default, scope global, and a valid category.subgroup.key id."
+  - "A census of Plans/settings_inventory.json finds 964 unique ids in 12 categories; the 7 rows retired here end their descriptions with (Superseded by ...) and render on no page, in no manager and in no search result, leaving 957 live rows."
+  - "The twelve added rows exist once each with their listed type, choices and default, scope global, and a valid category.subgroup.key id."
   - "Changing any added or amended row applies at once with no restart badge, and no Settings change opens, closes, moves or rearranges a panel or tab that is already open."
   - "No row writes the Home layout record: dragging the chat's width, pinning History and popping the chat out change only the layout record, and Chat History List decides only how a workspace with no saved choice starts."
   - "Restore home layout reads the same in Settings and the title bar's Home menu, asks one plain question, dispatches cmd.workspace_layout.reset and keeps every open tab."
@@ -3138,6 +3138,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "hpt-plans-lead pm-mail 1010084328-3f4b (2026-10-10): code.editing.color-scheme, Editor Colors, Follow look; existing editing subgroup and neighbouring select-row shape."
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D27)"
   - "Plans/Decision_Log.md#DL-180"
   - "Plans/Decision_Log.md#DL-181"
@@ -3147,11 +3148,14 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (section 12, the settings model; concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8 (section 6.4)"
 preserved_exact_tokens:
+  - "code.editing.color-scheme"
+  - "Editor Colors"
+  - "Follow look"
   - "Restore home layout"
   - "Keep the chat open in narrow windows"
   - "(Superseded by ...)"
-  - "963"
-  - "956"
+  - "964"
+  - "957"
   - "cmd.workspace_layout.reset"
 negative_constraints:
   - Do not write the Home layout record from Settings, or keep the chat's width, History pin or pop-out as a Settings value.
