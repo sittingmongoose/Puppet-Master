@@ -5947,7 +5947,7 @@ canonical_text: >-
   without taking focus (F3-634); the narrow ladder at the panels concept's seven measured window widths, 1920, 1680,
   1470, 1440, 1280, 1024 and 900 px, each matching F3-636's rail, chat and centre widths with the default rail and chat,
   its 48 px hysteresis, and none of its states ever saved (F3-636); the chat column's default width, its drag range, the
-  600 px centre floor, Pop out and its return, and its height from the title bar to the status bar (F3-637); dashboard
+  960 px centre floor, Pop out and its return, and its height from the title bar to the status bar (F3-637); dashboard
   tabs and their boards (Plans/Widget_System.md#WS-030, F3-638); the four named layouts' exact trees and proportions,
   applying one keeping every tab with no terminal ended and no unsaved buffer dropped, Restore home layout, and saved
   layouts (F3-630); the keyboard map in the desktop app and the web-client mapping, with every label, menu shortcut and
@@ -6047,6 +6047,7 @@ negative_constraints:
 compatibility_only_notes:
   - "The panels concept's harness hooks and storage keys are concept lineage and are not product test names."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Matches the 960 px chat-drag centre floor in the wrapped certification prose."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Certifies the per-kind document content minima adopted from NUMBERS."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Certifies both text/state contrast and primary-button ink across looks and NieR."
   - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
