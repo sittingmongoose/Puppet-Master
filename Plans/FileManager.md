@@ -379,6 +379,13 @@ ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/stora
 
 ### 2.9 Persistence (open tabs)
 
+Amended 2026-10-09 (DL-180): open tab order, the active tab, pinned and preview state and the panel layout live in the
+v2 Home layout record, the only Home layout authority (`Plans/storage-plan.md#SP-330`). The redb `tabs.{project_id}`
+and `active_tab.{project_id}` keys below and the "editor layout (split groups, active group, collapse state of File
+Editor strip)" entry are superseded by it. Scroll and cursor view state, session view state, recent files, lazy
+load, the max-tabs and persisted-tab caps, the exit prompt and recover-unsaved stay as written here, and a tab they
+name is the panel's editor tab (`Plans/FinalGUISpec.md#F3-635`) (F-030).
+
 - **Stored per project:** Open tab list (ordered paths), active tab index, and **scroll/cursor position per tab** (default: **persist**). Key: `project_id`. Persisted in **redb** (SSOT: Plans/storage-plan.md §2.3). **Editor state schema (redb):** Store in redb `editor` namespace per SSOT: `tabs.{project_id}` → ordered list of paths; `active_tab.{project_id}` → index; `scroll_cursor.{project_id}.{path_hash}` → optional scroll/cursor; `max_tabs` (app-level); and session-scoped view state under `session.{project_id}.{session_id}` when session-scoped view is used (§10.7). Do not persist full buffer content; recovery/unsaved content is separate (redb or temp).
 - **Max tabs (GUI setting):** The app exposes a **Max editor tabs** (or **Max open tabs**) setting in the GUI (e.g. Settings → Editor). This caps how many tabs (buffers) are kept in memory; when exceeded, LRU eviction applies (§10.7). AutoDecision: default 25; user can increase or decrease. Stored with other app settings in redb.
 - **Other editor-related state in redb:** Consider storing **editor layout** (split groups, active group, collapse state of File Editor strip) and **recent files** list (for quick open / @ mention) in the same redb schema (settings/sessions) so they persist per project and survive restart.
@@ -2143,10 +2150,11 @@ status: accepted
 owner_doc: Plans/FileManager.md
 canonical_text: >-
   Editor persistence stores open tab order, active tab index, scroll/cursor state, max tabs, session view state, layout/recent files, lazy-load restore behavior, persisted tab cap, dirty-buffer exit prompts, and recover-unsaved availability using redb-backed per-project/session keys without persisting full buffer content.
+  Amended 2026-10-09 (DL-180): open tab order, the active tab, pinned and preview state and the panel layout (split groups, the active group and collapse) live in the v2 Home layout record, the only Home layout authority (Plans/storage-plan.md#SP-330), and the redb `tabs.{project_id}` and `active_tab.{project_id}` keys and the editor layout entry are superseded by it; buffers, per-tab scroll and cursor view state, session view state, recent files, lazy-load restore, the max-tabs and persisted-tab caps, the dirty-buffer exit prompt and recover-unsaved stay this unit's, and a tab they name is the panel's editor tab (Plans/FinalGUISpec.md#F3-635).
 gui_related: true
 gui_classification_reason: This unit defines persisted editor tab, cursor, and layout state visible across sessions.
 split_recommended: true
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
@@ -2180,7 +2188,8 @@ preserved_exact_tokens:
 negative_constraints:
 - Do not persist full buffer content as ordinary editor state.
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Amended 2026-10-09 (DL-180): open tab order, the active tab, pinned and preview state and the editor layout move to the v2 Home layout record (SP-330); buffers, scroll and cursor view state, the tab caps, the exit prompt and recover-unsaved stay here.'
 owner_boundary_notes: []
 owner_hints:
 - Plans/FileManager.md
