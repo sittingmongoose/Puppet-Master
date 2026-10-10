@@ -214,10 +214,10 @@ records why.
   reference (32 px, 24 px inline): a click previews after 240 ms unless a double click arrives (a link inside a
   document opens its preview in the same panel, which would hide the link before the second click), a double click
   keeps, Alt opens in a new panel, Ctrl or Cmd in the background, Enter opens kept. `view: 'diff'` rides in the
-  editor's state and stays a preview. Its hover tag says what it does in words ("Open file" / "Click previews it.
-  Double-click keeps it open."; "No file to open" without a path) and the path stays in the button's text: the page's
-  tag controller replaces any tag text that looks like a path, a file name or host:port with generic copy and has no
-  opt-out for literal text. `PM_HOME.fileExists(path)` says whether the demo project has the file.
+  editor's state and stays a preview. Its hover tag names the file as written (`path:line`, detail "Click previews it.
+  Double-click keeps it open.") and carries `data-pmh-tag="literal"`, the hover thread's opt-out: without it the
+  page's tag controller swaps any text that looks like a path, a file name or host:port for generic copy. Tabs carry it
+  too, and any element whose tag must show such text should. `PM_HOME.fileExists(path)` says whether the demo project has the file.
 - `PM_HOME.catalog.add(kind, items)` / `.list()` / `.find()` / `.open(id, o)` and `PMW.catalogPicker(anchor, { kind |
   kinds, title, placeholder, panelId, newPanel, sectionLabels })`: every openable thing a kind knows, and the one
   picker over them (`sectionLabels` names each kind's section).
