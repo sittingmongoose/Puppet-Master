@@ -1,6 +1,7 @@
 /* The stand-in chat (95-standin-chat.js): one layer inside the page's #chatPanel, above the page's own chat content.
-   Sizes key on the layer itself (container pmw-sc, inline-size), never the window: the column runs 400-760 px (440
-   floating); folded to its 32 px strip the shell hides every child of #chatPanel. No pills (status words are plain
+   Sizes key on the chat's own boxes, never the window: the message area (container pmw-scm) runs 400-760 px (440
+   floating), pinned History adds its own width to the column (--pmw-sc-hist-w, set from PMW.LADDER by the script) and
+   the header keys on the whole layer (container pmw-sc); folded to its 32 px strip the shell hides every child of #chatPanel. No pills (status words are plain
    text), no coloured side borders (the page's .msg-body 2 px left border is not copied), no emoji (marks are SVG).
    Looks follow the --pmw-* tokens; per-look rules only where a look needs its own treatment. */
 
@@ -51,19 +52,23 @@ html:not([data-o55-tour]) #chatPanel[data-pmw-sc="on"] > :not(#pmw-chat) { visib
 
 /* ---- body: history (flyout or pinned column) and the message column ---- */
 .pmw-sc-body { position: relative; flex: 1 1 auto; min-height: 0; display: flex; }
-.pmw-sc-main { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; }
+/* the message area is its own container (pmw-scm): with History pinned beside it the layer is wider than the messages,
+   so the message rules key on this, and only the header keys on the whole layer */
+.pmw-sc-main { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; container: pmw-scm / inline-size; }
 .pmw-sc-scroll { flex: 1 1 auto; min-height: 0; overflow: auto; overscroll-behavior: contain; scrollbar-width: thin; padding: 16px var(--pmw-sc-pad) 20px; }
 .pmw-sc-list { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
 
 .pmw-sc-hist { position: absolute; z-index: 5; left: 0; top: 0; bottom: 0; width: min(300px, 82cqw); box-sizing: border-box; display: flex; flex-direction: column; background: var(--pmw-pop); border-right: 1px solid var(--pmw-pop-line); box-shadow: var(--pmw-pop-shadow); }
-.pmw-sc[data-pmw-sc-pinned] .pmw-sc-hist { position: relative; z-index: 0; flex: none; width: 240px; background: var(--pmw-surface); border-right: 1px solid var(--pmw-line); box-shadow: none; }
-@container pmw-sc (max-width: 539.98px) { .pmw-sc[data-pmw-sc-pinned] .pmw-sc-hist { width: 200px; } }
+.pmw-sc[data-pmw-sc-pinned] .pmw-sc-hist { position: relative; z-index: 0; flex: none; width: var(--pmw-sc-hist-w, 240px); background: var(--pmw-surface); border-right: 1px solid var(--pmw-line); box-shadow: none; }
 .pmw-sc-hhead { flex: none; display: flex; align-items: center; gap: 6px; padding: 8px 8px 4px 12px; }
 .pmw-sc-htitle { flex: 1 1 auto; font-size: 12px; font-weight: 650; color: var(--pmw-text-2); }
 .pmw-sc-hfind { flex: none; display: flex; align-items: center; gap: 6px; margin: 4px 8px 6px; padding: 0 8px; height: 30px; border: 1px solid var(--pmw-line-2); border-radius: calc(var(--pmw-radius) * .7); color: var(--pmw-text-3); }
 .pmw-sc-hfind svg { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; }
 .pmw-sc-hsearch { flex: 1 1 auto; min-width: 0; border: 0; outline: 0; background: transparent; color: var(--pmw-text); font: inherit; font-size: 12.5px; }
 .pmw-sc-hsearch::-webkit-search-cancel-button { display: none; }
+/* the find box shows focus on its own frame, not as a second ring inside it */
+.pmw-sc .pmw-sc-hsearch:focus-visible { outline: 0; }
+.pmw-sc-hfind:focus-within { border-color: var(--pmw-focus); box-shadow: 0 0 0 1px var(--pmw-focus); }
 .pmw-sc-hlist { flex: 1 1 auto; min-height: 0; overflow: auto; overscroll-behavior: contain; scrollbar-width: thin; padding: 0 6px 10px; }
 .pmw-sc-hsec { margin: 10px 6px 4px; font-size: 11px; font-weight: 650; letter-spacing: .06em; text-transform: uppercase; color: var(--pmw-text-3); }
 .pmw-sc-hrow { display: flex; flex-direction: column; align-items: stretch; width: 100%; min-height: 40px; box-sizing: border-box; padding: 5px 8px; border: 0; border-radius: var(--pmw-row-radius); background: transparent; text-align: left; cursor: pointer; }
@@ -173,16 +178,49 @@ html:not([data-o55-tour]) #chatPanel[data-pmw-sc="on"] > :not(#pmw-chat) { visib
 .pmw-sc-send { width: 32px; height: 32px; background: var(--pmw-accent); color: var(--pmw-surface); }
 .pmw-sc-send:hover { background: color-mix(in srgb, var(--pmw-accent) 86%, var(--pmw-text)); color: var(--pmw-surface); }
 
-/* ---- the column's own width (400-760; 440 floating) ---- */
+/* attachments: the browser's captures and picked parts as small cards (a 1 px box with the look's corner; never a
+   capsule), in the composer (removable) and under a sent message */
+.pmw-sc-atts { display: flex; flex-wrap: wrap; gap: 6px; padding: 8px 8px 0; }
+.pmw-sc-msg-atts { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; max-width: 85%; }
+.pmw-sc-att { display: inline-flex; align-items: stretch; min-width: 0; max-width: 100%; box-sizing: border-box; border: 1px solid var(--pmw-line-2); border-radius: calc(var(--pmw-radius) * .6); background: var(--pmw-surface); }
+.pmw-sc-atts .pmw-sc-att { max-width: min(100%, 300px); }
+.pmw-sc-att-body { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; gap: 8px; min-height: 40px; box-sizing: border-box; padding: 4px 8px 4px 5px; border: 0; background: transparent; text-align: left; cursor: pointer; border-radius: inherit; }
+.pmw-sc-att-body:hover { background: var(--pmw-hover); }
+.pmw-sc-att-t { min-width: 0; display: flex; flex-direction: column; }
+.pmw-sc-att-l { font-size: 12px; line-height: 16px; font-weight: 600; color: var(--pmw-text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pmw-sc-att.is-comp .pmw-sc-att-l { font-family: var(--pmw-sc-code); font-weight: 500; }
+.pmw-sc-att-d { font-size: 11px; line-height: 15px; color: var(--pmw-text-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pmw-sc-att-x { flex: none; align-self: center; width: 24px; height: 24px; margin-right: 4px; display: inline-flex; align-items: center; justify-content: center; padding: 0; border: 0; background: transparent; color: var(--pmw-text-3); cursor: pointer; }
+.pmw-sc-att-x:hover { background: var(--pmw-hover); color: var(--pmw-text); }
+.pmw-sc-att-x svg, .pmw-sc-att-thumb.is-comp svg { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+/* the drawn thumbnail: the page's own three colours (its bar, an accent block, its ground), like the browser's list */
+.pmw-sc-att-thumb { flex: none; position: relative; width: 40px; height: 28px; box-sizing: border-box; overflow: hidden; border: 1px solid var(--pmw-line-2); border-radius: 3px; background: var(--t3, #ddd); }
+.pmw-sc-att-thumb i { position: absolute; display: block; }
+.pmw-sc-att-thumb i:nth-child(1) { left: 0; right: 0; top: 0; height: 6px; background: var(--t1, #888); }
+.pmw-sc-att-thumb i:nth-child(2) { left: 4px; top: 10px; width: 16px; height: 9px; background: var(--t2, #aaa); }
+.pmw-sc-att-thumb i:nth-child(3) { left: 23px; top: 10px; right: 4px; height: 3px; background: color-mix(in srgb, var(--t1, #888) 45%, transparent); box-shadow: 0 6px 0 color-mix(in srgb, var(--t1, #888) 30%, transparent); }
+.pmw-sc-att-thumb.is-crop { outline: 1px dashed var(--pmw-text-3); outline-offset: -4px; }
+.pmw-sc-att-thumb.is-comp { display: inline-flex; align-items: center; justify-content: center; background: var(--pmw-surface-2); color: var(--pmw-accent); }
+
+/* a message PM_HOME.chat.reveal found: a ring round it (never a side stripe) that fades out */
+.pmw-sc [data-pmw-sc-found] { outline: 2px solid color-mix(in srgb, var(--pmw-accent) 75%, transparent); outline-offset: 3px; border-radius: var(--pmw-radius); background-color: color-mix(in srgb, var(--pmw-accent) 9%, transparent); animation: pmw-sc-found 2.4s ease-out forwards; }
+@keyframes pmw-sc-found {
+  0%, 60% { outline-color: color-mix(in srgb, var(--pmw-accent) 75%, transparent); background-color: color-mix(in srgb, var(--pmw-accent) 9%, transparent); }
+  100% { outline-color: transparent; background-color: transparent; }
+}
+
+/* ---- the message area's own width (400-760; 440 floating), and the whole layer's for the header ---- */
 @container pmw-sc (max-width: 479.98px) {
-  .pmw-sc { --pmw-sc-pad: 12px; }
   .pmw-sc-status > span { display: none; }
+}
+@container pmw-scm (max-width: 479.98px) {
+  .pmw-sc-scroll, .pmw-sc-comp { --pmw-sc-pad: 12px; }
   .pmw-sc-card { padding: 10px; }
   .pmw-sc-card-ico { display: none; }
   .pmw-sc-bubble { max-width: 92%; }
 }
-@container pmw-sc (min-width: 640px) {
-  .pmw-sc { --pmw-sc-pad: 24px; }
+@container pmw-scm (min-width: 640px) {
+  .pmw-sc-scroll, .pmw-sc-comp { --pmw-sc-pad: 24px; }
 }
 
 /* the page's Friendly and Glass button rules round every button into a capsule; ours keep the look's corner (no pills) */
@@ -194,15 +232,18 @@ html:not([data-o55-tour]) #chatPanel[data-pmw-sc="on"] > :not(#pmw-chat) { visib
 /* Glass: legible over the wallpaper; opaque reading surface, no blur layer of our own */
 html[data-theme^="glass"] #pmw-chat.pmw-sc { background: var(--rg-reading, var(--pmw-surface)); }
 html[data-theme^="glass"] .pmw-sc-head { background: transparent; }
-/* the flyout sits over our own messages, so it needs a solid ground under Glass's translucent menu tint */
-html[data-theme="glass-light"] .pmw-sc-hist { background: color-mix(in srgb, var(--rg-menu, var(--pmw-pop)) 35%, #f3f5f9); }
-html[data-theme="glass-dark"] .pmw-sc-hist { background: color-mix(in srgb, var(--rg-menu, var(--pmw-pop)) 35%, #1b1924); }
+/* the flyout sits over our own messages, so it needs a solid ground under Glass's translucent menu tint: the tint is
+   layered over an opaque colour (a colour-mix with a translucent tint stays translucent, and the messages showed
+   through) */
+html[data-theme="glass-light"] .pmw-sc-hist { background: linear-gradient(var(--rg-menu, var(--pmw-pop)), var(--rg-menu, var(--pmw-pop))), #f3f5f9; }
+html[data-theme="glass-dark"] .pmw-sc-hist { background: linear-gradient(var(--rg-menu, var(--pmw-pop)), var(--rg-menu, var(--pmw-pop))), #1b1924; }
 html[data-theme^="glass"] .pmw-sc[data-pmw-sc-pinned] .pmw-sc-hist { background: transparent; }
 
 /* Retro: square, Plex Mono for code (D17a: code matches the interface), reverse video for selection and the primary */
 html[data-theme^="retro"] .pmw-sc { --pmw-sc-code: var(--mono-font, 'IBM Plex Mono', monospace); }
 html[data-theme^="retro"] #pmw-chat.pmw-sc :is(.pmw-sc-fref, .pmw-sc-titlelink) { border-radius: 0 !important; }
-html[data-theme^="retro"] .pmw-sc :is(.pmw-sc-ib, .pmw-sc-btn, .pmw-sc-row, .pmw-sc-hrow, .pmw-sc-card, .pmw-sc-bubble, .pmw-sc-box, .pmw-sc-card-ico, .pmw-sc-cmd-out, .pmw-sc-bars, .pmw-sc-bar, .pmw-sc-hfind, .pmw-sc-event, .pmw-sc-code, .pmw-sc-fref) { border-radius: 0; }
+html[data-theme^="retro"] .pmw-sc :is(.pmw-sc-ib, .pmw-sc-btn, .pmw-sc-row, .pmw-sc-hrow, .pmw-sc-card, .pmw-sc-bubble, .pmw-sc-box, .pmw-sc-card-ico, .pmw-sc-cmd-out, .pmw-sc-bars, .pmw-sc-bar, .pmw-sc-hfind, .pmw-sc-event, .pmw-sc-code, .pmw-sc-fref, .pmw-sc-att, .pmw-sc-att-thumb, [data-pmw-sc-found]) { border-radius: 0; }
+html[data-theme^="retro"] .pmw-sc [data-pmw-sc-found] { outline-style: dashed; outline-color: var(--pmw-text); animation: none; }
 html[data-theme^="retro"] .pmw-sc-btn.is-primary, html[data-theme^="retro"] .pmw-sc-send { background: var(--pmw-text); color: var(--pmw-surface); }
 html[data-theme^="retro"] .pmw-sc-hrow[aria-current="true"], html[data-theme^="retro"] .pmw-sc-row:hover, html[data-theme^="retro"] .pmw-sc-hrow:hover { background: var(--pmw-text); color: var(--pmw-surface); }
 html[data-theme^="retro"] .pmw-sc-hrow[aria-current="true"] .pmw-sc-hrow-p, html[data-theme^="retro"] .pmw-sc-hrow:hover .pmw-sc-hrow-p,
@@ -219,7 +260,9 @@ html[data-o55-nier="on"] .pmw-sc-bar { background: rgba(var(--o55-nier-ink-rgb),
 html[data-o55-nier="on"] .pmw-sc-hist { box-shadow: 3px 3px 0 rgba(var(--o55-nier-shadow-rgb), .16); }
 html[data-o55-nier="on"][data-o55-nier-parts~="square"] #pmw-chat.pmw-sc { --pmw-radius: 0px; --pmw-row-radius: 0px; }
 html[data-o55-nier="on"][data-o55-nier-parts~="square"] #pmw-chat.pmw-sc :is(.pmw-sc-fref, .pmw-sc-titlelink) { border-radius: 0 !important; }
-html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-sc :is(.pmw-sc-ib, .pmw-sc-btn, .pmw-sc-row, .pmw-sc-hrow, .pmw-sc-card, .pmw-sc-bubble, .pmw-sc-box, .pmw-sc-card-ico, .pmw-sc-cmd-out, .pmw-sc-bars, .pmw-sc-bar, .pmw-sc-hfind, .pmw-sc-event, .pmw-sc-code, .pmw-sc-fref) { border-radius: 0; }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-sc :is(.pmw-sc-ib, .pmw-sc-btn, .pmw-sc-row, .pmw-sc-hrow, .pmw-sc-card, .pmw-sc-bubble, .pmw-sc-box, .pmw-sc-card-ico, .pmw-sc-cmd-out, .pmw-sc-bars, .pmw-sc-bar, .pmw-sc-hfind, .pmw-sc-event, .pmw-sc-code, .pmw-sc-fref, .pmw-sc-att, .pmw-sc-att-thumb, [data-pmw-sc-found]) { border-radius: 0; }
+html[data-o55-nier="on"] .pmw-sc [data-pmw-sc-found] { outline-color: var(--o55-nier-ink); background-color: rgba(var(--o55-nier-ink-rgb), .08); animation: none; }
+html[data-o55-nier="on"] .pmw-sc-att-thumb.is-comp { color: var(--o55-nier-ink); }
 html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-sc :is(.pmw-sc-kicker, .pmw-sc-hsec, .pmw-sc-sub, .pmw-sc-htitle, .pmw-sc-work-head, .pmw-sc-when) { text-transform: uppercase; letter-spacing: .08em; font-size: 11px; }
 html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-sc-head { box-shadow: inset 0 -1px 0 var(--o55-nier-ink); }
 html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmw-sc-hrow:is(:hover, [aria-current="true"]),
@@ -227,6 +270,7 @@ html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmw-sc-row:hover { back
 html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmw-sc-hrow:is(:hover, [aria-current="true"]) .pmw-sc-hrow-p,
 html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmw-sc-row:hover :is(.pmw-sc-row-ico, .pmw-sc-row-m, .pmw-sc-path-t, .pmw-sc-path-s, .pmw-sc-dim, strong) { color: inherit; }
 
-/* Reduced Motion: nothing here animates; smooth scrolling is chosen in script and is off under it */
+/* Reduced Motion: nothing here animates (the found ring holds still, then goes); smooth scrolling is chosen in script
+   and is off under it */
 html[data-motion="reduced"] .pmw-sc * { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
 @media (prefers-reduced-motion: reduce) { .pmw-sc * { transition: none !important; animation: none !important; scroll-behavior: auto !important; } }

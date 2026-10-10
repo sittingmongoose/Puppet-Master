@@ -11,15 +11,30 @@
 .pmw-doc-title, .pmw-run-title { margin: 0; font-size: 22px; line-height: 1.25; font-weight: 650; letter-spacing: -.015em; flex: 1 1 auto; min-width: 0; }
 @container pmw-body (max-width: 419.98px) { .pmw-doc-title, .pmw-run-title { font-size: 18px; } }
 .pmw-doc-badge { flex: none; font-size: 12px; color: var(--pmw-text-2); font-variant-numeric: tabular-nums; }
-.pmw-doc-meta { margin: 8px 0 0; display: flex; flex-wrap: wrap; align-items: center; gap: 2px 6px; font-size: 12px; line-height: 18px; color: var(--pmw-text-2); }
+/* frames.meta writes item, .pmw-doc-sep, item. The separator span is not drawn: the item after it draws the dot as its
+   own ::before, hung into the 16 px gap on its left, so a dot always travels with the item it introduces and never ends
+   a line alone. On a wrapped line that hung dot falls left of the row and the row clips it (3 px of slack on the left
+   keeps a focus ring whole). Nothing moves the row itself, so a kind's own margin on .pmw-doc-meta stays safe. */
+.pmw-doc-meta {
+  --pmw-sep-w: 16px;
+  margin: 8px 0 0; display: flex; flex-wrap: wrap; align-items: center; gap: 2px var(--pmw-sep-w);
+  font-size: 12px; line-height: 18px; color: var(--pmw-text-2);
+  clip-path: inset(-8px -8px -8px -3px);
+}
+.pmw-doc-meta > .pmw-doc-sep { display: none; }
+.pmw-doc-meta > .pmw-doc-sep + *::before {
+  content: "\00b7"; display: inline-block; width: var(--pmw-sep-w); margin-left: calc(-1 * var(--pmw-sep-w));
+  text-align: center; color: var(--pmw-text-3); font-family: var(--pm-font-ui); font-size: 12px; font-weight: 400;
+  font-style: normal; letter-spacing: 0; text-transform: none; text-decoration: none;
+}
 .pmw-doc-meta .is-ok { color: var(--pmw-ok); }
 .pmw-doc-meta .is-warn { color: var(--pmw-warn); }
 .pmw-doc-meta .is-bad { color: var(--pmw-bad); }
 .pmw-doc-meta .is-mono { font-family: var(--pm-font-code); font-size: 11.5px; }
-.pmw-doc-sep { color: var(--pmw-text-3); }
 .pmw-doc-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
 .pmw-doc-body > * + * { margin-top: 12px; }
-.pmw-doc-body p { max-width: 78ch; color: var(--pmw-text-2); margin: 0; }
+/* zero specificity: the rhythm above and every kind's own paragraph rules win; the colour is the kind's */
+:where(.pmw-doc-body p) { max-width: 78ch; margin: 0; }
 .pmw-doc-footer { flex: none; border-top: 1px solid var(--pmw-line); background: var(--pmw-surface); padding: 8px 16px; display: flex; gap: 6px; align-items: center; }
 
 .pmw-sec { margin-top: 24px; }
@@ -53,7 +68,9 @@
 .pmw-tile.is-warn .pmw-tile-value { color: var(--pmw-warn); }
 .pmw-tile.is-bad .pmw-tile-value { color: var(--pmw-bad); }
 
-.pmw-act { height: 32px; display: inline-flex; align-items: center; gap: 6px; padding: 0 12px; border: 1px solid var(--pmw-line-2); border-radius: var(--pmw-radius); background: transparent; color: var(--pmw-text); font: inherit; font-size: 12.5px; font-weight: 550; cursor: pointer; }
+/* controls never take the look's full radius: 14 px on a 32 px button reads as a capsule (the pill ban); 0 where the
+   look is square (Retro's token, NieR's square part) */
+.pmw-act { height: 32px; display: inline-flex; align-items: center; gap: 6px; padding: 0 12px; border: 1px solid var(--pmw-line-2); border-radius: min(var(--pmw-radius), 8px); background: transparent; color: var(--pmw-text); font: inherit; font-size: 12.5px; font-weight: 550; cursor: pointer; }
 .pmw-act:hover { background: var(--pmw-hover); }
 .pmw-act:focus-visible { outline: 2px solid var(--pmw-focus); outline-offset: 1px; }
 .pmw-act.is-primary { background: var(--pmw-accent); border-color: transparent; color: var(--pmw-surface); }
@@ -61,6 +78,11 @@
 .pmw-act.is-danger { color: var(--pmw-bad); }
 .pmw-act[aria-disabled="true"] { opacity: .5; cursor: default; }
 .pmw-act .pmw-ico { width: 14px; height: 14px; }
+/* Friendly's page rule [data-theme^="friendly"] button { border-radius: var(--radius-md) } (0,1,1, 14 px) outranks the
+   one-class rules here and turns 20-36 px controls into capsules (the pill ban); these restate the frames' radii at that
+   weight, in Friendly only, so kinds' own two-class rules still win and NieR's square part keeps its square corners */
+:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button.pmw-act { border-radius: min(var(--pmw-radius), 8px); }
+:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button.pmw-seg-opt { border-radius: 0; }
 
 .pmw-run-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 16px; align-items: start; }
 .pmw-run-kind { margin: 6px 0 0; display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--pmw-text-2); }
@@ -70,6 +92,8 @@
 .pmw-run-tabs { margin-top: 18px; }
 .pmw-run-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; margin-top: 16px; }
 @container pmw-body (min-width: 900px) { .pmw-run-grid { grid-template-columns: minmax(0, 1fr) 220px; gap: 32px; } }
+/* no aside: the main column takes the whole row (spans the aside track and the gap) */
+.pmw-run-grid > .pmw-run-main:only-child { grid-column: 1 / -1; }
 .pmw-run-aside { font-size: 12px; color: var(--pmw-text-2); }
 .pmw-run-aside h3 { margin: 0 0 6px; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--pmw-text-3); font-weight: 600; }
 

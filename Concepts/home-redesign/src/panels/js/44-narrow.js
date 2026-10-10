@@ -3,10 +3,16 @@
    below 760 (it then opens as an overlay), then the chat eases toward its minimum (400); one panel column below 600
    (the tree is untouched: it is a render mode); below 480 the chat folds to an edge strip unless the user pinned it.
    Each step has 48 px of hysteresis. It measures what is applied now, so theme paddings, resizers and the activity bar
-   need no constants. The only file allowed to read the window size (the chat's default width scales with it). */
+   need no constants. The only file allowed to read the window size (the chat's default width scales with it).
+   Pinned History (D3, settings 'chat.history' = 'pinned'): the column grows by the History width instead of squeezing
+   the messages. chatMin, chatMax and the saved chat.width are the message area; the History adds chatHistoryW on top
+   (the chat draws it at chatHistoryWNarrow while its whole column is under chatHistoryAt, which only a squeezed or
+   capped column reaches). The widening is part of the chat width the ladder solves, so it counts in the centre budget
+   and eases like the rest of the column; it is never saved. */
 
-var LADDER = PMW.LADDER = { railEase: 960, railFold: 760, chatEase: 960, oneColumn: 600, chatStrip: 480, hyst: 48, railEased: 240, chatMin: 400, chatMax: 760, chatStripW: 32 };
-var narrow = PMW.narrow = { state: { rail: 'open', chat: null, chatStrip: false, oneColumn: false, C: 0, step: 0 }, frozen: false };
+var LADDER = PMW.LADDER = { railEase: 960, railFold: 760, chatEase: 960, oneColumn: 600, chatStrip: 480, hyst: 48, railEased: 240, chatMin: 400, chatMax: 760, chatStripW: 32,
+  chatHistoryW: 240, chatHistoryWNarrow: 200, chatHistoryAt: 540 };
+var narrow = PMW.narrow = { state: { rail: 'open', chat: null, chatStrip: false, oneColumn: false, C: 0, step: 0, hist: 0 }, frozen: false };
 
 function mainArea() { return qs('.main-area'); }
 function slotEl() { return qs('#sidePanelSlot'); }
@@ -15,6 +21,9 @@ function chatDefault() { return Math.round(clamp(window.innerWidth * 0.26667 + 8
 narrow.chatDefault = chatDefault;
 function chatUser() { var w = PMW.settings.get('chat.width'); return w ? clamp(w, LADDER.chatMin, LADDER.chatMax) : chatDefault(); }
 narrow.chatUser = chatUser;
+/* the width pinned History adds to the column now (0 unless it is pinned and the chat on screen draws it) */
+function historyW() { return PMW.chatCol && PMW.chatCol.historyShown && PMW.chatCol.historyShown() ? LADDER.chatHistoryW : 0; }
+narrow.historyW = historyW;
 
 function railUserWidth() {
   var s = slotEl();
@@ -29,19 +38,21 @@ function railUserWidth() {
 }
 function on(prev, value, threshold) { return prev ? value < threshold + LADDER.hyst : value < threshold; }
 
-/* pure: base = C + rail panel + chat (what the three share); returns the applied state */
-narrow.solve = function (base, railUser, chatW, chatShown, pinned, prev) {
+/* pure: base = C + rail panel + chat (what the three share); chatW is the whole column the user wants (the message
+   area plus hist, the pinned History's width); the chat eases down to chatMin + hist; returns the applied state */
+narrow.solve = function (base, railUser, chatW, chatShown, pinned, prev, hist) {
   prev = prev || {};
+  hist = hist || 0;
   var s = railUser, c = chatShown ? chatW : 0, rail = 'open', strip = false;
   var eased = s > LADDER.railEased && on(prev.rail === 'ease' || prev.rail === 'fold', base - s - c, LADDER.railEase);
   if (eased) { s = LADDER.railEased; rail = 'ease'; }
   if (railUser > 0 && on(prev.rail === 'fold', base - s - c, LADDER.railFold)) { s = 0; rail = 'fold'; }
-  if (chatShown && base - s - c < LADDER.chatEase) c = Math.max(LADDER.chatMin, Math.min(c, c - (LADDER.chatEase - (base - s - c))));
+  if (chatShown && base - s - c < LADDER.chatEase) c = Math.max(LADDER.chatMin + hist, Math.min(c, c - (LADDER.chatEase - (base - s - c))));
   if (chatShown && !pinned && on(prev.chatStrip, base - s - c, LADDER.chatStrip)) { c = LADDER.chatStripW; strip = true; }
   var C = base - s - c;
   var one = on(prev.oneColumn, C, LADDER.oneColumn);
   var step = strip ? 4 : one ? 3 : rail === 'fold' ? 2 : (rail === 'ease' || (chatShown && c < chatW)) ? 1 : 0;
-  return { rail: rail, railWidth: s, chat: chatShown ? c : null, chatStrip: strip, oneColumn: one, C: C, step: step };
+  return { rail: rail, railWidth: s, chat: chatShown ? c : null, chatStrip: strip, oneColumn: one, C: C, step: step, hist: hist };
 };
 
 /* does el take room in the row? An overlay (the rail peek, the chat peek, the popped-out chat) is absolute or fixed and
@@ -62,7 +73,9 @@ narrow.measure = function () {
   // during the chat peek the chat is absolute and the centre already holds the strip's room, so it adds nothing
   var chatApplied = chatShown && inFlow(chat) ? chat.getBoundingClientRect().width : 0;
   var base = centre.clientWidth + railApplied + chatApplied;
-  return { base: base, railUser: railUserWidth(), chatW: chatUser(), chatShown: chatShown };
+  // pinned History is measured even for a popped-out chat: the floating window grows by it too (20-shell.css)
+  var hist = chat && !chat.classList.contains('hidden') ? historyW() : 0;
+  return { base: base, railUser: railUserWidth(), chatW: chatUser() + hist, chatShown: chatShown, hist: hist };
 };
 
 narrow.update = function () {
@@ -70,7 +83,7 @@ narrow.update = function () {
   var m = narrow.measure();
   if (!m) return;
   var prev = narrow.state;
-  var next = narrow.solve(m.base, m.railUser, m.chatW, m.chatShown, !!PMW.settings.get('chat.pinOpen'), prev);
+  var next = narrow.solve(m.base, m.railUser, m.chatW, m.chatShown, !!PMW.settings.get('chat.pinOpen'), prev, m.hist);
   narrow.apply(next, prev);
 };
 /* the hook agreed with the left rail lead: data-pm-rail-fold on #sidePanelSlot (never on <html>) and the document event
@@ -101,7 +114,12 @@ narrow.apply = function (next, prev) {
     var px = Math.round(next.chat) + 'px';
     if (chat.style.getPropertyValue('--pmw-chat-w') !== px) chat.style.setProperty('--pmw-chat-w', px);
   }
-  var changed = next.oneColumn !== prev.oneColumn || next.step !== prev.step;
+  // the History's share of the column, for the widths CSS sets on its own (the narrow peek, the popped-out chat)
+  if (chat) {
+    var hpx = Math.round(next.hist || 0) + 'px';
+    if (chat.style.getPropertyValue('--pmw-chat-hist-w') !== hpx) chat.style.setProperty('--pmw-chat-hist-w', hpx);
+  }
+  var changed = next.oneColumn !== prev.oneColumn || next.step !== prev.step || (next.hist || 0) !== (prev.hist || 0);
   narrow.state = next;
   if (next.oneColumn !== prev.oneColumn) {
     render.schedule({ animate: true });
@@ -156,6 +174,7 @@ narrow.install = function () {
   if (ab) new MutationObserver(narrow.schedule).observe(ab, { attributes: true, attributeFilter: ['class'] });
   PMW.settings.on('chat.width', narrow.schedule);
   PMW.settings.on('chat.pinOpen', narrow.schedule);
+  PMW.settings.on('chat.history', narrow.schedule);
   narrow.installRailPeek();
   narrow.update();
 };
