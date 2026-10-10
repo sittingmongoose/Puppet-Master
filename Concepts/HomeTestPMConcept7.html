@@ -138723,6 +138723,9 @@ function mountEditor(host, st, api) {
       if (alt && !ctrl) {
         if (k === 'F5') return true;
         if (inField && (code === 'KeyC' || code === 'KeyR')) return true;
+        // on a Mac, Option+letter and Option+` type characters (a dagger, an accent), so the editor keeps them as
+        // typing there and the host's Alt stand-ins fire from outside it (CONTRACT section 9's Mac typing rule)
+        if (PMW.isMac && (/^Key[A-Z]$/.test(code) || code === 'Backquote')) return true;
         return false;                         // Alt+1..9, Alt+arrows, Alt+T/W, Alt+` stay the host's
       }
       if (ctrl && !alt) {
