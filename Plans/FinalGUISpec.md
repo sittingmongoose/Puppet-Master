@@ -42886,8 +42886,10 @@ canonical_text: >-
   `ui.terminal.mark.copy_command`, `ui.terminal.mark.copy_output`, `ui.terminal.mark.rerun` (which dispatches the
   catalogue's rerun command), `ui.terminal.mark.insert` and `ui.terminal.mark.open_output` (which dispatches
   `cmd.panel_tab.open` with an editor buffer); the agent controls are F3-646's; New terminal, Select all, Clear, Send
-  signal and Restart session map to the ids UCC-201 records. The header row's buttons are the hover engine's icon
-  kind, a static tint only, and the screen is never a hover target (DR-059, F3-465).
+  signal and Restart session map to the ids UCC-201 records. Restart and Restart session start a new session in the
+  same tab by the explicit replacement of F3-548, Copy and Paste follow F3-238's clipboard rules, and the screen is
+  the terminal core's own grid (F3-193, F3-216). The header row's buttons are the hover engine's icon kind, a static
+  tint only, and the screen is never a hover target (DR-059, F3-465).
 gui_related: true
 gui_classification_reason: Defines the terminal tab's label, header row, notices, gutter, scrollbar, sticky header, menus and keys in the universal panels.
 split_recommended: false
@@ -42995,7 +42997,7 @@ canonical_text: >-
   and the scrollback as plain text for screen readers; Ctrl+Up and Ctrl+Down move between commands and Esc returns
   to the screen; images read as their text descriptions (F3-645). There is no AI feature in the terminal: no explain,
   fix, suggest or ask action and no inline completion; explaining commands is the Teacher persona's job in the chat
-  (D19, SMPFS-180).
+  (D19, SMPFS-180), and the terminal stays a user shell and agent surface, not Puppet Master's control plane (F3-413).
 gui_related: true
 gui_classification_reason: Defines the visible command marks, links, find, copy mode, quick select, progress, bell and accessible buffer of the terminal tab.
 split_recommended: false
@@ -43274,7 +43276,8 @@ canonical_text: >-
   are never mirrored into PM Symbols. Licence rule: only permissively licensed faces are built in, under the SIL Open
   Font License, Apache or MIT, each with its licence text and its source and SHA-256 record; every terminal face is
   OFL-1.1. The files go through DL-161's embedding pipeline as one set of files shared with the rest of the page
-  (DR-050). A face change applies live in the terminal (F3-642). General code text across the chat and PMConcept7
+  (DR-050). A face change applies live in the terminal (F3-642). Terminal text keeps its own fidelity fixtures,
+  separate from rendered GUI text (F3-414). General code text across the chat and PMConcept7
   (JetBrains Mono in Basic, Glass and Friendly, IBM Plex Mono in Retro, PM NieR Mono in NieR) is not this unit's: it
   belongs to DL-161, F3-426 and F3-430 as the 5.6 Pro fonts work amends them under D17a, and Retro's interface and
   its code text outside the editor and the terminal stay IBM Plex Mono.
@@ -43353,7 +43356,8 @@ canonical_text: >-
   faster than SMPFS-181's fastest frame; it pauses while the terminal is hidden and under Reduced Motion, where an
   animated image holds its first frame. The desktop draws the tiers through Skia (F3-582) and the web client draws
   the same tiers over its text rows, positioned by row, so images scroll and clip with the rows (F3-583). Images
-  persist with the terminal's saved scrollback inside its storage quota (SP-332), so a restored terminal's
+  persist with the terminal's saved scrollback inside its storage quota (SP-332), the separate terminal scrollback
+  cap F3-416 asks for, so a restored terminal's
   scrollback looks as it did; placeholder cells on restored lines resolve only to restored images, so a program in
   the new session that reuses an image id never paints into the old scrollback. When the quota drops an image
   (oldest first, text never giving way to images, and a frame that cannot be read back counting the same), its
