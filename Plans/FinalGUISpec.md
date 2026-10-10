@@ -44531,8 +44531,9 @@ canonical_text: >-
   Selecting a catalog scheme writes all 17 syntax colours and the editor's background, gutter, text, caret,
   selection, line numbers, current line, find hits, minimap ink and diff tints. Under a scheme, syntax
   tokens, text, secondary and dim text, line numbers and diff signs keep at least 4.5:1 contrast, and the
-  find-hit ring keeps 3:1. These floors are the editor's own and still apply when it draws, over the colours a
-  catalog or imported scheme authors (F3-642). The ⋮ menu's Appearance... row shows the scheme name or Follow look together with
+  find-hit ring keeps 3:1. Catalog schemes meet these floors as
+  authored (F3-642), so the editor draws their values as they are; the floor and the catalog's values are one rule. The floors still apply when the editor
+  draws an imported scheme's colours. The ⋮ menu's Appearance... row shows the scheme name or Follow look together with
   the font and size.
   Editor measurements: line height is round(font size × line-height multiplier), 20 px at 13 px × 1.55;
   character width is measured, 7.8 px for JetBrains Mono at 13 px. The line-number gutter is max(3 digits,
@@ -44623,7 +44624,7 @@ compatibility_only_notes:
   - "The width at which the diff turns inline was a concept number still to come (wave 2); retired 2026-10-10 (R35, panels NUMBERS 6026fa8432): the canonical text now gives side by side at 900 px and inline below 852 px."
   - "The concept saves an untitled buffer's text, up to 12,000 characters, in its tab state (panels NUMBERS 6026fa8432, editor saved state); that is concept lineage only: lead ruling L25 (2026-10-10) keeps buffer text out of the Home record (SP-330)."
 stale_retired_dispositions:
-  - "Amended 2026-10-10 (R36, terminal SPEC e741dfbc6c): The editor's Appearance popover offers only scheme, font and size, and the editor's 4.5:1 syntax-token floor still applies when it draws over a scheme's authored colours."
+  - "Amended 2026-10-10 (R36, terminal SPEC e741dfbc6c): The editor's Appearance popover offers only scheme, font and size, and catalog schemes meet the editor's 4.5:1 syntax-token floor as authored, so the editor draws their values as they are; the floor and the catalog's values are one rule."
   - "Amended 2026-10-10 (R35 review, SP-330): A buffer's tab state keeps title, language and edit or read-only state only; its text stays out of the Home record and the concept's 12,000-character text state is lineage (lead ruling L25: SP-330 does not admit buffer text)."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds editor metrics, minimap, sticky scroll, diff, find, rendering, undo, state and scheme tint numbers."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Specifies scheme-painted editor surfaces, contrast floors and Appearance row detail."
@@ -45162,8 +45163,8 @@ canonical_text: >-
   iTerm2-Color-Schemes collection (no single licence) and Modus (GPL-3.0) are not bundled, and import covers them.
   These schemes are one code colour-scheme catalog that serves the editor and the terminal (Addendum 2 D27, amending
   D15 and D21): each of the 34 schemes carries the terminal palette and the editor's 17 syntax tokens. Each catalog scheme's 17
-  editor syntax colours are authored to 4.5:1 for text and 3:1 for comments against the scheme's background (7:1
-  throughout on PM High Contrast Light and Dark), and an imported scheme takes its editor syntax colours from its
+  editor syntax colours are authored to 4.5:1 for every syntax token, comments included, against the scheme's background (7:1
+  throughout on PM High Contrast Light and Dark), and the editor and the terminal both draw the catalog values as they are; an imported scheme takes its editor syntax colours from its
   ANSI 16 by a fixed map. Each surface's
   scheme choice defaults to "Follow look" — the terminal's "Follow look" per-look scheme above, the editor's
   per-look syntax colours (F3-426, F3-639) — and each surface keeps its own scheme choice. The Appearance popover is
@@ -45223,7 +45224,7 @@ acceptance_criteria:
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
   - "The editor and terminal list the same catalog, each curated scheme carries terminal and syntax colours, both scheme choices default to Follow look and remain separate, and both menus open the same Appearance popover component."
   - "Retro editor syntax remains monochrome in dark and keeps the black and red ribbon in light; Phosphor Green or Amber follows the one terminal Retro scheme choice, Amber turns the editor amber, and the editor stores no copy."
-  - "Every catalog scheme's 17 editor syntax colours meet 4.5:1 for text and 3:1 for comments against its background (7:1 throughout on PM High Contrast Light and Dark), an imported scheme's editor syntax colours come from its ANSI 16 by the fixed map, and the popover opened from the editor offers only scheme, font and size."
+  - "Every catalog scheme's 17 editor syntax colours meet 4.5:1 for every syntax token, comments included, against its background (7:1 throughout on PM High Contrast Light and Dark), an imported scheme's editor syntax colours come from its ANSI 16 by the fixed map, and the popover opened from the editor offers only scheme, font and size."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -45264,7 +45265,7 @@ compatibility_only_notes:
   - "The concept's field names and its settings keys under a terminal prefix are lineage only; the product ids are SSYS-051's rows."
 stale_retired_dispositions:
   - "Amended 2026-10-10 (R36, terminal SPEC e741dfbc6c): Phosphor schemes map colours outside their 16 and colours a program sets (OSC 4, 10, 11, 12) onto the phosphor by brightness, and the scheme's own 16 stay as authored."
-  - "Amended 2026-10-10 (R36, terminal SPEC e741dfbc6c): Catalog editor syntax colours are authored to 4.5:1 for text and 3:1 for comments (7:1 on PM High Contrast), an imported scheme maps its ANSI 16 to editor colours by a fixed map, and the popover opened from the editor offers only scheme, font and size."
+  - "Amended 2026-10-10 (R36, terminal SPEC e741dfbc6c): Catalog editor syntax colours are authored to 4.5:1 for every syntax token, comments included (7:1 on PM High Contrast), and both surfaces draw them as they are, an imported scheme maps its ANSI 16 to editor colours by a fixed map, and the popover opened from the editor offers only scheme, font and size."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): States that each of the 34 shared schemes carries 17 editor syntax tokens."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for editor and terminal appearance defaults."
   - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Retro editor syntax reads the terminal Retro scheme choice once and keeps no copy."
@@ -45648,9 +45649,9 @@ negative_constraints:
   - "Do not let a terminal an agent opened take keyboard focus."
   - "Do not label the grant Always allow here."
 compatibility_only_notes:
-  - "The concept keeps its third permission action behind a flag that is off; canon shows Allow in this terminal."
+  - "SPEC ac63b1f467 kept the third action behind a flag that was off; from e741dfbc6c the concept shows Allow in this terminal, as canon does."
 stale_retired_dispositions:
-  - "Amended 2026-10-10 (R36, terminal SPEC e741dfbc6c): Adds the Allow once and Allow in this terminal hover tags, keeps the Driving row between commands while the grant lasts, and names the Agent input row \"Allowed in this terminal: <agent>\" with Revoke."
+  - "Amended 2026-10-10 (R36, terminal SPEC e741dfbc6c): Adds the Allow once and Allow in this terminal hover tags, keeps the Driving row between commands while the grant lasts, and names the Agent input row \"Allowed in this terminal: <agent>\" with Revoke; the compatibility note on the third action is now history (SPEC e741dfbc6c shows Allow in this terminal)."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Section15_MVP_Promoted_Features_Spec.md
