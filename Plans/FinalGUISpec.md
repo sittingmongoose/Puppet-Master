@@ -2013,7 +2013,7 @@ Required detachable surfaces:
 Rules:
 - re-docking restores the same logical surface identity rather than minting a new panel type.
 - a terminal is a tab of the terminal kind in any panel, one session per tab, and there is no bottom terminal workspace (amended 2026-10-09, DL-180, DL-181; F3-635, SMPFS-180).
-- editor-embedded terminal panels are secondary presentations of terminal leaf panes, not separate PTY sessions.
+- (retired 2026-10-09, DL-181: editor-embedded terminal panels were secondary presentations of terminal leaf panes, not separate PTY sessions; there is no editor terminal stack, and each terminal session belongs to one terminal tab, SMPFS-180, F3-640.)
 - normal browsing and preview/browser sessions remain governed by the browser/session model, not by terminal detachment rules.
 - desktop-first terminal `/presentation` is the MVP SSOT: browser or `/remoted` terminal access is a sibling transport/presentation layer over the same terminal tabs, panes, command metadata, and PTY model, not a provider-style or shell-like second ownership model.
 - Terminal integration APIs may expose structured `/query`, `/focus/send-input/interrupt/resize/state` capture, `/create-terminal`, and `/input/session` controls for PM-owned `/workflows` and `/preview/summarization`, but arbitrary third-party plugins or open-ended extension hooks cannot mutate core rendering, input, or session semantics.
@@ -29821,8 +29821,8 @@ split_recommended: false
 depends_on: [F3-140, F3-131, F3-132, F3-152, DL-180]
 unblocks: []
 acceptance_criteria:
-- "Closing a tab updates the open-tab model and activates a neighboring tab; closing the last tab yields the editor empty state or the underlying view."
-- "Closing a pane expands the sibling pane; when no panes remain visible the editor empty state is shown."
+- "Closing a tab updates the open-tab model and activates a neighbouring tab; closing the last tab follows F3-630's lifecycle: the panel closes and its neighbour takes the space, unless it is the only panel in the centre or a locked panel, which stays and shows the empty-panel launcher of F3-632 (amended 2026-10-09, DL-180; the editor empty state and the underlying view are lineage)."
+- "Closing a panel gives its share to its previous sibling, else to the next, and closes its tabs, each kind asking first where it asks (F3-630, F3-635; amended 2026-10-09, DL-180; sibling-pane expansion and the editor empty state are lineage)."
 - "Tabs that do not fit are reached through F3-633's plain-text \"+N\" list with per-item close, and the active tab stays visible (amended 2026-10-09, DL-180)."
 - "Thread context detail tabs and browser preview tabs participate in close and overflow behavior."
 - "Dragging a tab to a new position persists in every panel's strip and survives any re-render or fitter pass; a newly opened tab inserts at its model index rather than appending (amended 2026-10-09, DL-180)."
@@ -29849,7 +29849,7 @@ preserved_exact_tokens:
 - "+N more"
 - "empty state"
 negative_constraints:
-- "Closing the last visible editor pane must not leave a dead surface; it must show the editor empty state or yield to the underlying view."
+- "Closing the last tab of a panel must not leave a dead surface: its neighbour takes the space, or the only or a locked panel shows the empty-panel launcher of F3-632 (amended 2026-10-09, DL-180; the editor empty state and the underlying view are lineage)."
 compatibility_only_notes:
 - "Slint portability: the overflow picker, drag affordances, and pane-close overlays are opaque surfaces; no arbitrary-content backdrop blur or SVG filters, and color math is precomputed."
 stale_retired_dispositions:
@@ -29857,6 +29857,7 @@ stale_retired_dispositions:
 - "Amended 2026-08-13 (tweak wave): the dedicated per-pane close glyph is retired; the kebab Close Panel row is the single pane-close affordance, with pane-close semantics unchanged."
 - "Amended 2026-08-13 (wave 4): HTML5 DnD tab reorder is retired along with the wave-3 attached-ghost/-webkit-user-drag Safari shim. Root causes recorded: Safari's sparse dragover cadence, the native drag snapshot taken when the custom drag image is unrenderable (opacity 0), and the lostpointercapture-on-reparent trap — a re-slot insertBefore releases pointer capture, so a tab-scoped cancel killed the gesture on the first re-slot, the same trap the T20 grip comments document. The pointer-capture gesture uses gesture-scoped window listeners (the T07 document-pointermove pin is untouched)."
 - "Amended 2026-10-09 (DL-180): the editor-only \"+N more\" chip and picker, the four-pane scope and the per-pane wording are retired; F3-631 and F3-633 own the strip and its overflow for every panel."
+- "Amended 2026-10-09 (DL-180): the two close criteria and the negative constraint now follow F3-630's panel lifecycle and F3-632's empty-panel launcher; the editor empty state, the underlying view and sibling-pane expansion are lineage."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -35822,7 +35823,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: This unit owns Onboarding's visible composition, copy density, hierarchy, and cinematic motion.
 split_recommended: false
-depends_on: [F3-519, PWIZ-021, PWIZ-022, PWIZ-024, PWIZ-029, RAS-014, SCS-012, FGI-011]
+depends_on: [F3-519, PWIZ-021, PWIZ-022, PWIZ-024, PWIZ-029, RAS-014, SCS-012, FGI-011, DL-180]
 unblocks: [F3-521, F3-524, F3-598, F3-599]
 acceptance_criteria:
   - "Onboarding is a bounded, centered modal window over the visibly preserved live application at every desktop width; narrow and short windows retain an explicit outer margin and modal chrome rather than becoming a full-page route."
@@ -35851,7 +35852,7 @@ acceptance_criteria:
   - "Server, Storage, Client, source location, local Safe History, online copy, and access choices remain independently editable; selecting an already-owned Server exposes the appropriate discovery and pairing presentation without silently forcing storage or Client placement."
   - "Paid-provider setup offers compact provider tiles and the selected provider's current owner-supported auth path; Free Models follows even after paid-provider Skip, groups underlying-provider setup through existing owners, and offers explicit Skip. Detection is an observation, not authorization or readiness. Close after commit preserves the existing Project, settled phases and exact continuation; resume never recreates it or replays settled setup."
   - "Ready presents one dominant enter action, a phase-safe Back action where reversible, and an optional Guided Tour without trapping the user. Back never undoes/repeats Project commit or returns to a fake uncreated draft; a deferred Project stays deferred. Starting the Tour transfers and clears saved focus ownership and releases inertness before the Tour starts, while an unavailable or throwing Tour start records no successful handoff and restores the saved workspace initiator/fallback."
-  - "The Home dropdown beside the theme selector contains exactly one `Run setup wizard` item directly below `Reset Layout`; it invokes typed local action `ui.onboarding.start` with source surface `home_menu`, reopens the same modal at Welcome, and does not create a second onboarding state machine or domain command."
+  - "The Home dropdown beside the theme selector contains exactly one `Run setup wizard` item directly below `Reset Layout` (amended 2026-10-09, DL-180: that row now reads Restore home layout, formerly Reset Layout, F3-502); it invokes typed local action `ui.onboarding.start` with source surface `home_menu`, reopens the same modal at Welcome, and does not create a second onboarding state machine or domain command."
   - "Every visible sentence and disabled reason is understandable to a person who has never coded or used an IDE; `shell`, internal owner names, command IDs, schema IDs, route IDs, and unexplained implementation vocabulary never appear as product copy."
   - "Help uses one anchored explainer surface at a time: activating a typed SVG `?` opens a plain-language explanation attached to that exact option, replaces or closes any prior explanation, and never expands empty peer sections. The visible shared explainer is the control's actual `aria-controls` target and its active `aria-describedby` target; obsolete hidden per-card copies are absent. Primary and secondary card actions have visibly button-shaped treatment, consistent alignment and spacing, and recommended versus alternate choices differ through hierarchy, shape, iconography, and state rather than copy alone."
   - "All stages use one consistent grid, selection state, action hierarchy, explainer grammar, spacing rhythm, and in-flow footer model; specialized fields may vary by route, but controls do not change alignment or interaction rules from one setup screen to the next."
@@ -43517,6 +43518,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html, SHA-256 52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981 (the agreed anatomy; concept lineage only)"
+  - "Concepts/home-redesign/src/panels/js/38-menus.js on branch concept/home-panels-20261009 at 1565156bce (the disabled Split and Reopen closed tab rows with their reasons; concept lineage only)"
 preserved_exact_tokens:
   - "Open anything: kinds, files, URLs"
   - "Terminal"
@@ -43558,7 +43560,7 @@ canonical_text: >-
   top, focused, and the panel's tabs grouped by kind under each kind's group name (F3-635); each row shows the kind's
   icon, the label, a dim path or address, its marks (F3-631) and a 24 x 24 px close target. Arrows move, Enter activates
   the tab and brings it into the visible window, Delete closes it, and Escape closes the list with focus back on "+N".
-  Its accessible name says how many tabs are hidden ("7 more tabs"). While a tab is carried, "+N" is a drop target that
+  Its accessible name says how many tabs are hidden (the concept's wording, for example "7 more tabs", is illustrative). While a tab is carried, "+N" is a drop target that
   takes the tab into this panel among its hidden tabs. Ctrl+Shift+A opens the same searchable list over every tab in the
   centre. A strip never scrolls sideways, never wraps onto a second row and never hides its active tab. Opening,
   searching and closing the list dispatch nothing; choosing a row is view state (ui.panel_tab.activate), and closing or
@@ -43596,11 +43598,11 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html, SHA-256 52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981 (the agreed anatomy; concept lineage only)"
+  - "Concepts/home-redesign/src/panels/js/32-strip.js on branch concept/home-panels-20261009 at 1565156bce (the \"+N\" accessible name; concept lineage only)"
 preserved_exact_tokens:
   - "+N"
   - "+7"
   - "[+7]"
-  - "7 more tabs"
 negative_constraints:
   - "Do not draw \"+N\" as a badge, pill or chip."
   - "Do not scroll a home strip sideways or hide its active tab."
@@ -43730,11 +43732,11 @@ canonical_text: >-
   Every tab in the home centre is one of fifteen kinds (DL-180, D9), each registered once, with its tab id prefixes:
   editor (`file:<path>`, `buffer:<n>`; a diff mode and preview tabs; F3-639); terminal (`terminal:<session>`, one
   session per tab, the session id minted by the terminal kind; F3-640, SMPFS-180); browser (`browser:<n>`, and `link:`
-  for a page the chat fetched; DevTools docked inside it and the capture toolbar); dashboard (`dashboard:<board>`,
+  for a page the chat fetched; DevTools docked inside it and the capture toolbar); dashboard (`dashboard:<board_id>`,
   `dashboard:home` the pinned Home dashboard; F3-638); plan (`plan:<id>`, the plan query form and
   `deep-discovery:<run>`; the plan viewer with its sticky Build, Revise and More footer); document (`teach:`, `memory:`,
   `revert:`, `debug:`, `lens-source:`, `lens-effective:`, `wonderer:`, `wonder-source:`, `doc:<path>`: rules, memory,
-  revert, debug investigation, lens source, wonderer); artifact (`artifact:<id>`, `artifact:<id>@v<n>` and the chat's
+  revert, debug investigation, lens source, wonderer); artifact (`artifact:<artifact_id>`, `artifact:<artifact_id>@v<n>` and the chat's
   artifact ids; a subtype per artifact kind, versioned; RAP-065); run (`collab-run:`, `crew-work:`, `review:`, `room:`,
   `brainstorm:`, `review-evidence:`, `brainstorm-evidence:`: Crew, Review, Chat Room, BrainStorm and their evidence);
   transcript (`thread-<agentId>`: an agent's read-only live feed); context (`context:<threadId>`: thread-keyed context
@@ -43789,7 +43791,7 @@ depends_on: [DL-180, DL-181, DL-147, F3-568, F3-630]
 unblocks: [F3-640, SP-330, UCC-200, CS-100, RAP-065, WS-030, DR-065, DR-067, G-030, ATS-075]
 acceptance_criteria:
   - "Exactly the fifteen kinds listed here are registered, each with the id prefixes stated, and no Goal tab, Activity Detail, lab-only workspace or setup sheet is a kind."
-  - "Opening an id with a known prefix lands in that kind; an unknown prefix opens nothing and says so; two kinds claiming one prefix fail at start-up."
+  - "Opening an id with a known prefix lands in that kind; an unknown prefix opens no tab; two kinds claiming one prefix fail at start-up."
   - "Moving, collapsing, maximizing, hiding or restoring a tab never changes its domain reference, and no tab, panel or session id appears as text."
   - "Each kind's content minimum is as stated and a panel's minimum is the largest of its tabs' minimums."
   - "A restored background tab is mounted only when first shown; serialized state above 16 KB is refused."
@@ -43888,7 +43890,8 @@ canonical_text: >-
   with C 567; at 900 the chat is its edge strip and C 811. Everything inside a tab responds to its own tab body, never
   to the window (F3-635): a dashboard's columns follow its tab's width (F3-638) and the shared header row its body's
   width. The centre never scrolls sideways as a narrow fallback. This supersedes, for Home and dashboard tabs, the
-  window-width breakpoints of section 12.1 and F3-195 and of section 12.3, F3-197 and Appendix C.1, F3-503's below-1320
+  window-width breakpoints of section 12.1 and F3-195 and of section 12.3 and Appendix C.1 (F3-197, the dashboard's
+  window-width columns, is superseded by F3-638), F3-503's below-1320
   px overflow-x exception, F3-517's rule that Home collapses to a single column, and the chat's own narrow-width rules
   as they apply to Home (APR-038's full-width plan tab is read through the switcher and ACD-500).
 gui_related: true
