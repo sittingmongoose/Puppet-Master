@@ -240,6 +240,7 @@ html[data-o55-nier="on"] #panel-usage .pmu-livepulse { border-radius: 0; transfo
    container (named pmu-host), so the shell's unnamed container queries read the board's width. The shared layer (menus,
    readouts, hidden measures) is a shell too, fixed over the viewport, taking no pointer and painting nothing itself. The
    build's host scope (tools/usage_layer.py) widens #panel-usage to [data-pmu-host], so these never match on the Usage page. */
-#panel-usage .pmu-shell.pmu-hosted { display: flex; flex-direction: column; grid-template-columns: none; height: 100%; min-height: 0; container-name: pmu-host; }
+/* a hosted board sits on its host's surface (Home's tab body), not the Usage ground (Jared, D10 P11) */
+#panel-usage .pmu-shell.pmu-hosted { display: flex; flex-direction: column; grid-template-columns: none; height: 100%; min-height: 0; container-name: pmu-host; background: transparent; }
 #panel-usage .pmu-shell.pmu-hosted > .pmu-scroll { flex: 1 1 auto; min-height: 0; }
 #panel-usage .pmu-shell.pmu-layer { position: fixed; inset: 0; height: auto; pointer-events: none; overflow: visible; container-type: normal; background: none; }
