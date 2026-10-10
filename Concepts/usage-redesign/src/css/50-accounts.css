@@ -344,12 +344,12 @@ html[data-o55-nier="on"] #panel-usage .pmu-accpol { border-top-style: dashed; }
 #panel-usage .pmu-accswcell { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 2px; min-width: 0; }
 #panel-usage .pmu-accsww { padding-left: 5px; font-size: 12px; line-height: 14px; color: var(--pmu-ink-3); white-space: nowrap; }
 #panel-usage .pmu-accswcap { white-space: nowrap; }
-/* under the action word: the cell stacks, right-aligned; a compact row whose action is a button is 50 px with a 24 px
-   button */
+/* under the action word: the cell stacks, right-aligned (the button may lean up to 6 px into the 16 px gap on its left);
+   a compact row whose action is a button is 48 px with a 24 px button */
 #panel-usage .pmu-accactcell.is-stack { flex-direction: column; align-items: flex-end; justify-content: center; gap: 2px; }
 #panel-usage .pmu-accactcell.is-stack > .pmu-accactw { display: flex; justify-content: flex-end; min-width: 0; max-width: 100%; }
 #panel-usage .pmu-accactcell.is-stack > .pmu-accsw { height: 20px; }
-#panel-usage .pmu-accrow.is-compact.is-swbtn { min-height: 50px; }
+#panel-usage .pmu-accrow.is-compact.is-swbtn { min-height: 48px; }
 #panel-usage .pmu-accrow.is-compact.is-swbtn .pmu-accbtn { height: 24px; }
 /* a narrow plate: beside the binding meter, under the action word's column */
 #panel-usage .pmu-acc[data-sw="row2"] .pmu-acccell { grid-column: 1 / 2; }

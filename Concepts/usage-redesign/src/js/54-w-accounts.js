@@ -499,9 +499,10 @@
        own column below, so the action column is at least as wide as the button */
     var swOn = switchable(p), SWB = swOn ? accSwW() : 0, actShort = actW;
     if (fullAct) actW = fullActW;
-    /* the folded button may lean 3 px into the 16 px gap on its left, so an action column that holds only "Active" (49
-       px) keeps its width: 3 px more wrapped Codex's rows a line taller at 1920 */
-    if (swOn) actW = Math.max(actW, SWB - 3);
+    /* the folded button may lean 6 px into the 16 px gap on its left, so an action column that holds only "Active" keeps
+       its width in every look's face: 3 px more wrapped Codex's rows a line taller at 1920 (Basic) and on a 487 px board
+       (Glass) */
+    if (swOn) actW = Math.max(actW, SWB - 6);
     /* a window column keeps "78% used" and "resets in 1h 41m" on one line each from about 104 px */
     var IDENT = Math.max(112, NAMECOL), WIN = 104, IDENT_B = Math.max(100, NAMECOL);
     /* with two or more windows the identity column may go to 100 px, so a plate whose action column reserves its widest
@@ -566,12 +567,13 @@
       /* a comfortable row: the name, the state or plan, the host and age, and a credits line (or a merged "not exposed"
          cell with its spend); a narrow plate puts the binding meter under the identity. Each line's height comes from
          its own wrapped text (a fixed 66 px row let a wrapped meta line run under the plate's foot) */
-      /* D43: a stacked action cell is the action word over the 20 px switch-level button, 2 px apart: a button (28 px; 24 in
-         a compact row, which keeps 2 px above and below) makes it 50 px, "Active" 16 px a line, no word only the button */
-      var stackHOf = function (a) {
+      /* D43: a stacked action cell is the action word over the 20 px switch-level button, 2 px apart: a button makes it 50 px
+         in a comfortable row (28 px) and 48 in a compact one (24 px, 1 px above and below), "Active" 16 px a line, no word
+         only the button */
+      var stackHOf = function (a, compact) {
         if (swForm !== 'stack') return 0;
         var x = actText(a, fullAct);
-        return x.btn ? 50 : (x.t ? 16 * Math.min(2, C.wrapLines(x.t, actW, 12.5, 640)) + 2 : 0) + 20;
+        return x.btn ? (compact ? 48 : 50) : (x.t ? 16 * Math.min(2, C.wrapLines(x.t, actW, 12.5, 640)) + 2 : 0) + 20;
       };
       var comfyHOf = function (a) {
         var mt = metaOf(a);
@@ -584,7 +586,7 @@
           mh = Math.max(mh, 22 + 12 + (rt ? 16 * C.wrapLines(rt, winW, 12) : 0));
         });
         if (!n || allHidden(a)) mh = 22 * Math.min(3, a.amounts.length + 1);
-        var h = mode === 'narrow' ? ih + 6 + mh : Math.max(ih, mh, stackHOf(a));
+        var h = mode === 'narrow' ? ih + 6 + mh : Math.max(ih, mh, stackHOf(a, false));
         /* measured on the GPU in all nine looks (item 2 calibration): a comfortable row lays out 2-6 px taller than its
            lines (line boxes, the meter's caption); counted, so a row the budget admits is never folded behind free room */
         return Math.max(66, Math.ceil(h + 20)) + (polB ? 6 : 0);
@@ -594,7 +596,7 @@
       var compactHOf = function (a) {
         var act = actText(a, false), stateIn = act.t && !act.btn;
         var lines = Math.min(3, C.wrapLines(stateIn ? a.plan || '' : a.stateWord || '', textW, 12, stateIn ? 400 : 600) || 1);
-        return Math.max((mode === 'narrow' ? 92 : 44) + 16 * (lines - 1), stackHOf(a));
+        return Math.max((mode === 'narrow' ? 92 : 44) + 16 * (lines - 1), stackHOf(a, true));
       };
       /* priority: every account in comfortable rows; then fewer foot lines; then the LAST accounts in compact rows while the
          first ones keep their facts (item 2: the policy band takes about 40 px, and an all-compact plate left a free band
@@ -624,7 +626,7 @@
     if (P.form === 'col') { var Q = plan('stack'); if (Q.shownN > P.shownN || (Q.shownN === P.shownN && (Q.comfyN > P.comfyN || (Q.comfyN === P.comfyN && Q.footCap > P.footCap)))) P = Q; }
     var swForm = P.form, tmpl = P.tmpl, band = P.band, winW = P.winW, footCap = P.footCap, shownN = P.shownN, isComfy = P.isComfy;
     actW = P.actW; fullAct = P.fullAct;
-    /* a stacked action cell whose action is a button (Use, Sign in, Set up) needs 46 px: its compact row is 50 */
+    /* a stacked action cell whose action is a button (Use, Sign in, Set up) needs 46 px: its compact row is 48 */
     var swBtnRow = function (a) { return swForm === 'stack' && actText(a, fullAct).btn; };
     var shown = p.accounts.slice(0, shownN);
     var sizeOf = function (a) { return isComfy(a) ? 'c' : 'k'; };
