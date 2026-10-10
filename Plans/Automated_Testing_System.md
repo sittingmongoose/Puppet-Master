@@ -5934,6 +5934,13 @@ owner units they cite and restate none of their rules. They are required future 
 passes: a missing runner or an unrun native client stays `not_run` with its reason, never an inferred pass. They create
 no WorkNodes, NodeSeeds, executable queues, implementation files or production build tasks.
 
+Amended 2026-10-10 (DL-186, DL-187, DL-188): both units also certify Jared's answers of 2026-10-10. ATS-075 adds the
+dashboards on the Usage board engine (WS-030 as rewritten), the chat after a restart and its rail entry, the retired
+Chat Layout setting, the 400 px Usage board floor, one Debug Console tab with session sub-tabs, installed shells and
+SSH hosts in the "+" menu, the tour's Upcoming resets step and `workspace.layout_changed` at family revision 2.0.0.
+ATS-076 adds terminal tabs without chosen colours or icons, secrets scrubbed from saved scrollback, the 512 MiB total
+cap, terminal notifications with their per-tab mute, and the chat command card's finished words and actions.
+
 ### ATS-075 - Home Panels Certification
 
 ```yaml
@@ -6002,10 +6009,42 @@ canonical_text: >-
   Checks run against the panels concept and its harness are concept evidence only: they never certify the native
   desktop or web client, which needs its own run's receipts naming the revision, platform, toolkit and renderer
   (ATS-067). This supersedes ATS-029.
+  Amended 2026-10-10 (DL-186, DL-187, DL-188): the matrix also certifies Jared's answers of 2026-10-10. Dashboards
+  (Plans/Widget_System.md#WS-030, F3-638, Plans/Widget_System.md#WS-019): every board but Agents runs on the Usage
+  board engine with the Usage page's grid, size presets, gestures, gravity, Tidy and live previews and no settlement
+  of its own; each board restores from and writes to its project's `widget_layout:v1:<project_id>:<board_id>` with
+  `host_id` `home.dashboard`, a project switch re-keys every open board, an unscoped board key is adopted once, and
+  nothing is converted from or written to `widget_layout:v1:dashboard`; New dashboard opens an empty board named
+  "Dashboard <n>", Rename dashboard... and a tab rename set its stored name, Delete dashboard... asks first and
+  forgets the board, and Home, Metrics, Monitoring and Agents offer neither; Reset widgets and every Start from row
+  dispatch one cmd.widget.reset_layout with the right `set_id`, listed in Start from's order; presets are saved,
+  renamed and deleted with no command, follow the person across projects, never hold the view and apply through
+  set_id `user:<preset_id>`; range and scope are per board and dispatch nothing (ui.widget_board.set_view); Add widget
+  offers every Usage widget by room and no old Home widget; every widget command inside a dashboard tab names its
+  board in `room` and appends no `workspace.layout_changed`; a board's first show plays the reading-order entrance,
+  instant under Reduced Motion, a hidden board does no work, and live readings and Play the next hour run per board;
+  boards are drawn on Home's tab surface and every look's widget plates are checked on it; Details opens the Usage
+  page at the widget's home room with its inspector open; Agents keeps only its filter; a dashboard a person made
+  that leaves the reopen list while closed loses its key, set-aside copy and name; a named layout restores its
+  boards, and a save over 64 KB keeps the layout without them and says how many bytes it left out. The chat (F3-637,
+  F3-042, Plans/assistant-chat-design.md#ACD-500): a popped-out chat starts back in its column after a restart; the
+  left rail's Chat entry shows or hides the column on every page (cmd.panel.switch); a stored Chat Layout value of
+  Overlay or Detached is ignored and cleared on first read with no pop-out and no notice
+  (Plans/Settings_System.md#SSYS-050); Keep the chat open in narrow windows is on the chat's header menu, not in
+  Settings; and neither the chat's default width nor its drag ever leaves the Usage page's board narrower than 400 px.
+  The Debug Console (F3-635, F3-490): one `debug-console` tab whose session sub-tabs switch the session shown as view
+  state, an old per-session tab id folding into it in layouts, the reopen list, named layouts and opens. The "+" menu
+  (F3-632): the Terminal row lists the installed shells inline and the SSH hosts in one "SSH hosts" submenu row,
+  ungrouped sub-rows are not capped, and the empty-panel launcher shows the same. The tour's widget step
+  (Plans/Planning_Wizard.md#PWIZ-035): Upcoming resets added to the Home board and then moved or resized there, never
+  finished by a timer, with Back, Skip and Finish putting the board back. Event truth (DL-188, CV-361): each
+  structural commit appends one `workspace.layout_changed` at family revision 2.0.0 that validates against the 2.0.0
+  payload, events written at 1.1.0 stay readable and are never rewritten, and cmd.chat.plan.open_version appends the
+  event only when it adds a tab.
 gui_related: true
 gui_classification_reason: The certification exercises and captures every visible behaviour of the home panels across looks, widths, layouts, motion and failures.
 split_recommended: false
-depends_on: [DL-180, DL-184, F3-630, F3-631, F3-632, F3-633, F3-634, F3-635, F3-636, F3-637, F3-638, F3-639, F3-647, F3-648, WS-030, F-090, RAP-065, SP-330, CV-361, UCC-200, UIW-040, UIW-041, WM-090, DR-065, DR-067, DR-069]
+depends_on: [DL-180, DL-184, DL-186, DL-187, DL-188, F3-630, F3-631, F3-632, F3-633, F3-634, F3-635, F3-636, F3-637, F3-638, F3-639, F3-647, F3-648, WS-030, F-090, RAP-065, SP-330, CV-361, UCC-200, UIW-040, UIW-041, WM-090, DR-065, DR-067, DR-069, PWIZ-035]
 unblocks: [GRRC-040]
 acceptance_criteria:
   - "After every structural command the split tree satisfies each invariant listed, and the fit rule, the shares, the gaps, the divider target and keys, collapse, maximize, locking and last-tab closing each have a passing case that asserts rendered geometry."
@@ -6027,6 +6066,10 @@ acceptance_criteria:
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
   - "Editor and terminal list the same code colour-scheme catalog and open the same Appearance popover component."
   - "In every look and in NieR, text and state colours (dim text, accent, ok, warn, bad and inactive tabs) mixed from the page's own colours reach 4.5:1 while the Settings accent flows through, and primary buttons choose black or white ink from fill luminance with at least 4.5:1 contrast."
+  - "Amended 2026-10-10 (DL-186): each dashboard behaviour of WS-030 as rewritten has a passing case: one engine and one settlement, per-project keys and re-keying, no conversion of widget_layout:v1:dashboard, custom dashboards made, renamed and deleted with the built-ins reset only, Reset and Start from with set_id in order, presets with no command across projects, per-board range and scope with no dispatch, the catalogue without old Home widgets, the entrance, idle hidden boards, live readings per board, Home's tab surface in every look, Details on the Usage page, Agents' filter, the reopen-list deletion and the 64 KB named-layout snapshot."
+  - "Amended 2026-10-10 (DL-187): a popped-out chat comes back in its column after a restart; the rail's Chat entry toggles the column on every page; a stored Overlay or Detached Chat Layout value is cleared on first read with no pop-out and no notice; the narrow-window pin is on the chat's header menu; the Usage page's board never drops under 400 px; one Debug Console tab switches sessions by its sub-tabs and absorbs old per-session ids; the Terminal row lists installed shells inline and SSH hosts in one submenu row, uncapped, and the launcher matches."
+  - "Amended 2026-10-10 (DL-186): the tour's widget step finishes only after Upcoming resets is added to the Home board and then moved or resized there, and Back, Skip and Finish restore the board."
+  - "Amended 2026-10-10 (DL-188): each structural commit's workspace.layout_changed validates against family revision 2.0.0, events written at 1.1.0 stay readable, and cmd.chat.plan.open_version appends the event only when it adds a tab."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -6050,6 +6093,11 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (sections 9, 13 and 14; concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (the measured widths and the named layouts; concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8 (section 3.7 and gap C19; audit lineage only)"
+  - "Plans/Decision_Log.md#DL-186"
+  - "Plans/Decision_Log.md#DL-187"
+  - "Plans/Decision_Log.md#DL-188"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D32, D33, D35, D39, D40, D42)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md, SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (D32, D33, D39, D40 as built; concept lineage only)"
 preserved_exact_tokens:
   - "workspace.layout_changed"
   - "ui.*"
@@ -6058,6 +6106,10 @@ preserved_exact_tokens:
   - "not_run"
   - "zero console and page errors"
   - "artifact:<artifact_id>@v<n>"
+  - "widget_layout:v1:<project_id>:<board_id>"
+  - "set_id"
+  - "debug-console"
+  - "SSH hosts"
 negative_constraints:
   - "Do not certify Home with a dispatch count, a global marker or a screenshot alone."
   - "Do not substitute an internal API for a missing visible production control."
@@ -6070,6 +6122,7 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Certifies the per-kind document content minima adopted from NUMBERS."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Certifies both text/state contrast and primary-button ink across looks and NieR."
   - "Amended 2026-10-10 (D30, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
+  - "Amended 2026-10-10 (DL-186, DL-187, DL-188): certifies dashboards on the Usage board engine as WS-030 now says, the chat after a restart and its rail entry, Chat Layout's retirement, the narrow-window pin on the chat's header menu, the 400 px Usage board floor, one Debug Console tab with session sub-tabs, shells and SSH hosts in the \"+\" menu, the tour's Upcoming resets step and workspace.layout_changed 2.0.0."
   - "Superseded 2026-10-09 (DL-180): ATS-029's four-panel live matrix and its exact 72-case visual matrix."
 owner_boundary_notes:
   - "This unit tests the owner units it cites and adds no rule of its own; F3-630 to F3-639, F3-647 and F3-648, WS-030, F-090, RAP-065, SP-330, CV-361, UCC-200, UIW-040, UIW-041, WM-090, DR-065 and DR-067 own the behaviour."
@@ -6178,10 +6231,37 @@ canonical_text: >-
   terminal concept are concept evidence only, as ATS-075 says; native receipts name the revision, platform, toolkit,
   renderer and transport, and a missing runner stays `not_run`. This amends ATS-047, whose image exclusion DL-182
   replaces, and takes over ATS-029's terminal identity fixtures.
+  Amended 2026-10-10 (DL-187, DL-185): the matrix also certifies Jared's answers on the terminal and the chat's
+  finished command card. Tab marks (D34, F3-640, F3-631): no terminal tab shows a colour or icon of the person's
+  choosing on the strip. Secrets in saved scrollback (D36, SP-332, SMPFS-183): before a saved copy is written, each
+  well-known secret format the terminal SPEC lists is replaced in it (vendor API keys such as `sk-...`, `AKIA...`,
+  `ghp_...`, `github_pat_...`, `glpat-...`, `xox?-...`, `AIza...` and Stripe `sk_live_...`; bearer tokens and JWTs;
+  `KEY=value` assignments whose name says key, secret, token or password; the body of a private-key block), in place,
+  so the line keeps its width and every image anchor and mark stays put: `[API key · not saved]` (or token, secret,
+  private key) followed by blank cells, or `•` when the secret is shorter than that label; a private key keeps its
+  BEGIN and END lines; command lines and link targets in the copy are scrubbed the same way; the live screen keeps
+  the original; and the restore notice ends "N secrets were left out of the saved copy.". The total cap (D37,
+  SP-332): 512 MiB for every terminal's saved copy together, fixed and not a setting; past it the saved copies of
+  terminals not running now, least recently saved first, are deleted until a full 64 MiB per-terminal quota fits
+  again, and only then does the terminal being saved keep fewer of its images; each terminal keeps its 64 MiB.
+  Notifications (D38, F3-641, SMPFS-183): OSC 9, OSC 777 notify and OSC 99 raise a system notification while Puppet
+  Master is in the background; in the foreground the notification is announced and an unfocused tab gets its
+  attention mark; at most one every 3 s per terminal; clicking it brings the terminal forward; Mute notifications,
+  in the More menu and the tab's menu, is that tab's own state (ui.terminal.mute_notifications), saved with the tab,
+  and is absent where the platform has no system notifications; the web client asks for the browser's permission
+  only after a notification arrived, once, in an inline notice (Allow, Mute this terminal, Not now). The chat's
+  command card (Plans/assistant-chat-design.md#ACD-500, ACD-502): a stopped command reads "Failed · exited 101",
+  "Done · exited 0" or "Interrupted · exited 130", a failed command with no exit code reads Failed alone and a
+  command whose session ended while it ran reads Ended with the earlier session; the lines above the preview are
+  counted at the top as "N earlier lines"; Interrupted is muted and still; who ran it reads "You ran in <folder>" or
+  the agent mark and "<Agent> ran in <folder>"; Open in Terminal shows only with a live session, View output only
+  without one and Rerun in Terminal only once the command has stopped, as 24 px text buttons; at 360 px the failure
+  line keeps file:line whole; nothing moves on first paint and Reduced Motion leaves only 120 ms fades; text reaches
+  4.5:1 and marks 3:1 in every look and mode.
 gui_related: true
 gui_classification_reason: The certification exercises every visible behaviour of the terminal tab, its images, its appearance, its saved scrollback and its agent rows.
 split_recommended: false
-depends_on: [DL-181, DL-182, DL-183, SMPFS-180, SMPFS-181, SMPFS-182, SMPFS-183, F3-640, F3-641, F3-642, F3-643, F3-644, F3-645, F3-646, SP-331, SP-332, CV-362, UCC-201, UIW-042, WM-091, ATS-047, ATS-075]
+depends_on: [DL-181, DL-182, DL-183, DL-185, DL-187, SMPFS-180, SMPFS-181, SMPFS-182, SMPFS-183, F3-640, F3-641, F3-642, F3-643, F3-644, F3-645, F3-646, SP-331, SP-332, CV-362, UCC-201, UIW-042, WM-091, ATS-047, ATS-075, ACD-500, ACD-502]
 unblocks: [GRRC-040]
 acceptance_criteria:
   - "Moving, reordering, collapsing, maximizing, hiding, splitting beside, layout-applying and revealing a terminal tab keep one terminal_session_id with no restart, replayed input or second PTY; Split, close, Reopen closed tab and restore each behave as SMPFS-180 says, with the restored notice."
@@ -6203,6 +6283,11 @@ acceptance_criteria:
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
   - "Editor and terminal list the same code colour-scheme catalog and open the same Appearance popover component."
   - "An effects frame takes at most 2 ms of CPU at DPR 2 on P1000-class hardware; every effect, including Full CRT ambient noise and flicker, stops within 10 s of the last output or keystroke; without a GPU the effects layer stays off with zero effects frames and plain fallbacks paint."
+  - "Amended 2026-10-10 (DL-187): no terminal tab shows a colour or icon of the person's choosing on the strip."
+  - "Amended 2026-10-10 (DL-187): every secret format listed is replaced in the saved copy before it is written, in place and at the same width, with its label or dot; a private key keeps its BEGIN and END lines; command lines and link targets are scrubbed too; the live screen is unchanged; and the restore notice counts the secrets left out."
+  - "Amended 2026-10-10 (DL-187): the saved copies of all terminals together never pass 512 MiB; past it, copies of terminals not running are deleted least recently saved first until a 64 MiB quota fits, and only then does the terminal being saved keep fewer images."
+  - "Amended 2026-10-10 (DL-187): OSC 9, OSC 777 notify and OSC 99 raise a system notification only while Puppet Master is in the background, at most one every 3 s per terminal; in the foreground they are announced and mark an unfocused tab; Mute notifications is per tab, saved with it and absent without system notifications; the web client asks for permission once, inline, after a notification arrived."
+  - "Amended 2026-10-10 (DL-185): the chat's command card shows its status in words with the exit code after it, the earlier lines counted at the top, Interrupted muted and still, who ran it, only the actions its session supports, the narrow wrap at 360 px, no motion on first paint, only 120 ms fades under Reduced Motion, and 4.5:1 text and 3:1 marks in every look and mode."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -6229,6 +6314,9 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b (sections 1-8; concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-terminal-audit.md, SHA-256 12f95fa6f79b1c0a1f9f34b1eee004cac9edacfd8e0a7f4e6495fe1af23aabe3 (the ATS rows and gap G16; audit lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-e741dfbc6c.md, SHA-256 5fe7d1e04e5e54c47013c503254527265b94420239772ac711f760f43f96674d (R36; concept lineage only)"
+  - "Plans/Decision_Log.md#DL-187"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D34, D36, D37, D38)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/terminal-SPEC-01c5e78c42.md, SHA-256 a0723f6663990723fc8bd879610c8dedcf2ef6b19a467a2d5c1e1c6d183aabfc (section 1 notifications, section 7 secrets and the total cap, section 11 the chat command card; concept lineage only)"
 preserved_exact_tokens:
   - "10 s"
   - "P1000-class"
@@ -6248,11 +6336,23 @@ preserved_exact_tokens:
   - "[<name> <W>×<H> · not kept]"
   - "ended with the earlier session"
   - "cmd.terminal.reveal"
+  - "512 MiB"
+  - "[API key · not saved]"
+  - "N secrets were left out of the saved copy."
+  - "OSC 9"
+  - "OSC 777"
+  - "OSC 99"
+  - "Mute notifications"
+  - "ui.terminal.mute_notifications"
+  - "Failed · exited 101"
+  - "N earlier lines"
 negative_constraints:
   - "Do not certify a terminal case by a dispatch count or a screenshot alone, or report a concept result as native certification."
   - "Do not accept an image error reply that echoes program input or differs from SMPFS-181's fixed strings."
   - "Do not accept a stored Allow in this terminal grant, or a grant that lets a command skip its own approval."
   - "Do not accept a restored terminal that presents the old session as live, or a running command restored as done."
+  - "Do not accept a saved copy that keeps a listed secret format, or a scrub that shifts a line's width or an image anchor."
+  - "Do not accept a system notification while Puppet Master is in the foreground, more than one every 3 s per terminal, or from a muted terminal."
 compatibility_only_notes:
   - "The terminal concept's harness hooks and its demo agents are concept lineage and are not product test names."
 stale_retired_dispositions:
@@ -6262,6 +6362,7 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (R34, DL-183): Adopts the effects CPU budget, idle deadline and no-GPU fallback rule."
   - "Amended 2026-10-10 (D30, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
   - "Amended 2026-10-09 (DL-182): ATS-047's 'images remain outside approval' is replaced; image protocols, their hardening and saved scrollback with images are certified here."
+  - "Amended 2026-10-10 (DL-187, DL-185): certifies no chosen tab colours or icons on terminal tabs (D34), secrets scrubbed from saved scrollback (D36), the fixed 512 MiB total cap (D37), terminal notifications with the per-tab mute (D38), and the chat command card's finished words and actions (terminal SPEC section 11)."
 owner_boundary_notes:
   - "SMPFS-180 to SMPFS-183, F3-640 to F3-646, SP-331, SP-332, CV-362, UCC-201, UIW-042 and WM-091 own the behaviour; this unit only tests it. Effect parameters per look and GPU frame measurements remain concept lineage; R34's adopted CPU budget, idle deadline and no-GPU rule are certified here."
 owner_hints:
