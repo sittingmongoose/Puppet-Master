@@ -540,25 +540,29 @@
      Friendly is hop: the old room steps back and tilts away; the new plates hop up from their feet with one soft bounce
        and a small alternating tilt (a lilting wave); warm light blooms under the hero; flyers hop along an arc and land
        with a squash (marks, numbers) or a puff of three dots (meters, controls never scale).
-     Glass is depth: a dolly through glass. Down the rail the camera pushes in (the old room passes the lens: it grows and
-       blurs), up the rail it pulls out; the focus racks from the old room (defocused as it passes the lens) to the new
-       room, which arrives sharp out of depth with the hero first (an arriving plate never draws through a blur); one
-       refraction band crosses the board; flyers rise toward the lens.
+     Glass is depth: a dolly through glass. Down the rail the camera pushes in (the old room holds its size, drifts and
+       defocuses at the lens while the new room comes toward the viewer out of depth), up the rail it pulls out (the old
+       room shrinks away defocused, the new room settles back from in front); the focus racks from the old room to the new
+       room, which arrives sharp with the hero first (an arriving plate never draws through a blur); one refraction band
+       crosses the board; flyers rise toward the lens. The old room never grows: a board scaled above 1 makes the
+       compositor raster every old plate again at a new scale, and on the first room change that is a run of GPU program
+       compiles (VM trace: 20 compiles, 676 ms; the old room stood frozen about 1 s in Glass Dark 1920).
      Values never overshoot in any voice (numbers, meters, bar and ring fills land exactly on their value): springs, the
      hop and the squash move plates, marks, dots and paths only. Every blur ends at exactly 0 (fill backwards: no filter
      after the end) or dies with its layer; finishMoment ends every one at once. */
   var CAM = { dir: 1, dist: 1 };
   function camera(o) { o = o || {}; CAM = { dir: o.dir < 0 ? -1 : 1, dist: Math.max(1, Math.round(Math.abs(o.dist || 1))) }; return CAM; }
   function camP(dist) { if (soft()) return 24; var d = dist || CAM.dist; return d >= 4 ? 72 : d >= 2 ? 56 : 40; }
-  /* the voices of the room change (MOTION-4 4.2). ghost: y in P units (x dir), sc / push / pull scale, rot deg (x dir);
+  /* the voices of the room change (MOTION-4 4.2). ghost: y in P units (x dir), sc / push / pull scale (never above 1),
+     rot deg (x dir), blur px (Glass: the lens pass, on the old room's one layer only);
      frame: y in P units, travel ms + curve (Friendly: a spring), fade ms; wave: row / col / cap ms */
   var CAMV = {
     basic: { ghost: { y: -1, sc: 0.985, ms: 360, ease: E.slide }, fade: 180,
       frame: { y: 1, ms: 520, ease: E.settle, fade: 200 }, wave: [28, 16, 160], body: { y: 6, fade: 200, ms: 280, ease: E.settle } },
     friendly: { ghost: { y: -0.8, sc: 0.95, rot: -2.2, ms: 400, ease: 'cubic-bezier(.3,0,.5,1)' }, fade: 200,
       frame: { y: 0.9, sc: 0.94, tilt: 14, spring: [260, 21], fade: 220 }, wave: [40, 26, 280], body: { y: 10, fade: 220, ms: 320, ease: E.settle } },
-    glass: { ghost: { y: -0.35, push: 1.06, pull: 0.94, blur: 6, ms: 400, ease: E.slide }, fade: 240,
-      frame: { y: 0.35, push: 0.93, pull: 1.07, ms: 560, ease: E.depth, fade: 260 }, wave: [24, 14, 140], heroFirst: true,
+    glass: { ghost: { y: -0.5, push: 1, pull: 0.94, blur: 6, ms: 400, ease: E.slide }, fade: 240,
+      frame: { y: 0.35, push: 0.9, pull: 1.07, ms: 560, ease: E.depth, fade: 260 }, wave: [24, 14, 140], heroFirst: true,
       body: { sc: 0.985, fade: 240, ms: 320, ease: E.depth } },
     retro: { wave: [60, 15, 240] },
     nier: { wave: [45, 30, 240] }
@@ -947,11 +951,12 @@
     } else {
       /* MOTION-4 RC1 / RC2 and 4.2: the camera's first half. The old room moves from the click (this task) on its voice's
          path, at full opacity: Basic pans P up the rail (-P x dir, scale .985, 360 SLIDE); Friendly steps back and tilts
-         away about the visible centre (-0.8 P, scale .96, -1.4 deg x dir, 380); Glass passes the lens (push: scale 1.06,
-         pull: .94, -0.35 P, 400) and blurs out (6 px) on a separate animation that leaves no filter behind. Its fade
+         away about the visible centre (-0.8 P, scale .95, -2.2 deg x dir, 400); Glass passes the lens (push: holds its
+         size, pull: .94, -0.5 P, 400) and blurs out (6 px) on a separate animation that leaves no filter behind. Its fade
          starts when the new chrome is in (frames(): fadeGhost), so the board is never empty between the rooms. */
       var CV = camVoice(f), gv = CV.ghost, P = camP(), cy = viewCentre().y + (o.sTop || 0);
-      var sc = f === 'glass' ? (dir > 0 ? gv.push : gv.pull) : gv.sc;
+      /* never above 1 (see the Glass voice above): the old board keeps its raster scale, so no plate is rastered again */
+      var sc = Math.min(1, f === 'glass' ? (dir > 0 ? gv.push : gv.pull) : gv.sc);
       var tr = { base: base, y: gv.y * P * dir, rot: gv.rot ? gv.rot * dir : 0, sc: sc, ms: gv.ms, fn: M.curve(gv.ease), out: true,
         origin: f === 'friendly' || f === 'glass' ? '50% ' + cy.toFixed(0) + 'px' : null };
       a = anim(g, camKeys(gv.ms, { tr: tr }, 14), { dur: gv.ms, easing: 'linear', fill: 'forwards' });
