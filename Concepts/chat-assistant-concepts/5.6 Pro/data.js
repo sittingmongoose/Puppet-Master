@@ -2260,6 +2260,45 @@
 
   const questionQueueDepth = questionFlows.filter((f) => f.state === 'queued').length;
 
+  /* Item 5 (2026-10-09): the same deployment questionnaire written long, for Demo Studio's "Long answers
+     questionnaire" and questions-verify's L checks. Options use the canonical object shape (Tools.md
+     `options?: Array<{id, label, description?}>`) beside plain strings; answers run to several lines and carry an
+     unbroken URL, so every place an answer can appear is exercised. Not a flow: it never enters the queue. */
+  const longUrl = 'https://deploy.example.internal/hosts/truenas/apps/puppet-master/health?probe=readiness&expect=200&timeout=30s&retries=5';
+  const longNote = 'Keep provider credentials on the server; clients only ever hold a session token.\n'
+    + 'Allow clients to reconnect without losing draft state, including a half-written questionnaire.\n'
+    + 'Never restart the NAS while a run is executing; wait for the checkpoint, then restart.\n'
+    + 'Use ' + longUrl + ' as the readiness check.\n\n'
+    + 'If the preferred host is offline for more than ten minutes, pause and ask rather than moving the run, because a run that silently changes hosts loses its browser session and its worktree bind.';
+  const longQuestions = [
+    { id:'lq1', type:'choice', required:true,
+      prompt:'Where should the primary Puppet Master server run, given that it must stay reachable from every client on the home network, survive a reboot of the NAS without losing queued runs, and keep provider credentials on a host you control?',
+      description:'This decides which execution hosts are reachable without a relay and where credentials live.',
+      options:[
+        { id:'truenas', label:'TrueNAS Docker', description:'Runs as an app container with its data on the encrypted pool, its port published through the reverse proxy, and nightly snapshots handled by the existing replication task.' },
+        { id:'windows', label:'Windows native on the gaming PC, which has the most memory and the GPU', description:'It sleeps when nobody is using it and restarts for updates on its own schedule, so queued runs would wait.' },
+        { id:'url', label:longUrl, description:'A custom endpoint someone pasted as an option.' },
+        'Linux native'
+      ],
+      answer:'TrueNAS Docker',
+      why:'Host selection decides which execution hosts are reachable without a relay.' },
+    { id:'lq2', type:'multi', required:true, prompt:'Which hosts may execute Windows work?',
+      options:[
+        'Windows native: the physical PC with the RTX 3090, full GPU, real browsers and every installed toolchain',
+        'Windows WSL: Ubuntu under WSL2 on the same PC, sharing the GPU through the WSL driver but not the Windows browsers',
+        'Linux container: a disposable container on the NAS with no GPU, no browsers and only the tools baked into its image',
+        'macOS: the MacBook Air, which is on battery most of the day and only reachable while it is awake'
+      ],
+      answer:['Windows native: the physical PC with the RTX 3090, full GPU, real browsers and every installed toolchain'],
+      other:'The spare Intel NUC in the closet, but only for builds that need no GPU, and only after it is re-imaged from ' + longUrl,
+      why:'Windows-only tooling cannot be routed to a Linux container.' },
+    { id:'lq3', type:'text', required:false, prompt:'Add any constraints the deployment plan should preserve.',
+      answer:longNote, other:longNote,
+      why:'Free-text constraints are copied verbatim into the resulting Plan artifact.' },
+    { id:'lq4', type:'summary', required:false, prompt:'Review the resolved deployment summary.', answer:'',
+      why:'Nothing is submitted until this page is seen.' }
+  ];
+
 
   /* =====================================================================
      operational -- absent before this wave.
@@ -3179,7 +3218,7 @@
     contextSources, contextWindow, contextCompaction, contextByThread, compactionOutcomes,
     /* configuration */
     recipes, themes, models, accounts, accountsNeedingAttention, accountNick,
-    questions, questionFlows, questionQueueDepth,
+    questions, questionFlows, questionQueueDepth, longQuestions,
     /* operations */
     operational, warnings, scriptedReplies, drafts,
     workingTakes, transcriptTakes

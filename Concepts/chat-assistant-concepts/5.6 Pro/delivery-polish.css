@@ -51,8 +51,8 @@
 .todo-detail .todo-chips { display:grid; }
 .todo-detail .todo-chip { white-space:normal; }
 /* Consistent quiet card headers and footers; work components are excluded. */
-.polish-plan-more { display:flex; flex-wrap:wrap; gap:6px; flex-basis:100%; padding-top:5px; }
-.plan-doc .pd-foot { gap:7px; }
+/* More's actions: a second .pmx-actions row under the footer's (C56) */
+.polish-plan-more { flex-basis:100%; }
 .polish-wand-group { border-bottom:1px solid var(--border); }
 .polish-wand-group:last-child { border:0; }
 .polish-group-toggle { min-height:36px; }

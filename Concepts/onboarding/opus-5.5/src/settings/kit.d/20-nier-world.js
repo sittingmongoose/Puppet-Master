@@ -107,6 +107,10 @@
   const BOOT_LINES = [['check', 'System check', 'ok', 'OK'], ['settings', 'Loading your settings', 'ok', 'OK'], ['bunker', 'Connecting to the Bunker', 'ok', 'OK'],
     ['project', 'Opening your Project', 'ok', 'OK'], ['look', 'Look', 'lookValue', 'NieR Mode']];
   let bootChecked = false, bootEl = null;
+  /* the head's boot paint (tools/build.py first_paint_patches) holds the page under a cover of the log's own paper while
+     this log will run (html[data-o55-boot-wait]), so the app never shows between the first frame and the log; it goes
+     as soon as the log is up or is not coming */
+  const unwait = () => { if (root.hasAttribute('data-o55-boot-wait')) root.removeAttribute('data-o55-boot-wait'); };
   function bootTone() {
     let m = ''; try { m = String(PM51.value('general.visual.theme-mode') || ''); } catch (e) { m = ''; }
     if (/^light$/i.test(m)) return 'light';
@@ -125,12 +129,12 @@
   function bootEnd() {
     const el = bootEl; bootEl = null; if (!el) return;
     document.removeEventListener('keydown', bootEnd, true); document.removeEventListener('pointerdown', bootEnd, true);
-    el.remove();
+    unwait(); el.remove();
   }
   function boot() {
     if (bootChecked) return false;
     bootChecked = true;
-    if (!has('boot') || still() || onboarding() || document.hidden || !document.body) return false;
+    if (!has('boot') || still() || onboarding() || document.hidden || !document.body) { unwait(); return false; }
     const el = bootEl = layer('o55nw-boot');
     el.setAttribute('data-o55-nier-preview', bootTone());
     const plate = bootPlate();
@@ -138,6 +142,7 @@
     const order = [2, 1, 0, 0, 1, 2];
     el.innerHTML = '<div class="o55nw-boot-slats">' + [0, 1, 2, 3, 4, 5].map(i => `<div class="o55nw-boot-slat${i % 2 ? ' o55nw-boot-r' : ''}" style="--i:${i};--o:${order[i]}"><div class="o55nw-boot-plate o55nw-boot-done">${plate}</div></div>`).join('')
       + `</div><div class="o55nw-boot-plate o55nw-boot-live">${plate}</div>`;
+    unwait();
     el.addEventListener('animationend', e => { if (e.animationName && /^o55nw-boot-tear/.test(e.animationName) && e.target.style.getPropertyValue('--o') === '2') bootEnd(); });
     document.addEventListener('keydown', bootEnd, true); document.addEventListener('pointerdown', bootEnd, true);
     later(bootLate, 1600); /* in case the page never paints the animation (a hidden tab) */
@@ -298,13 +303,13 @@
     const n = NIER(); if (!n) return false;
     n.onChange(info => {
       sync();
-      if (info && info.reason === 'init' && info.on) boot(); else bootChecked = true;
+      if (info && info.reason === 'init' && info.on) boot(); else { bootChecked = true; unwait(); }
     });
     return true;
   }
   if (!start()) window.setTimeout(start, 0);
   /* NieR Mode may have been read before this file ran: the first look decides whether this opening boots */
-  window.setTimeout(() => { if (!bootChecked) { const n = NIER(); if (n && n.on()) { sync(); boot(); } else bootChecked = true; } }, 0);
+  window.setTimeout(() => { if (!bootChecked) { const n = NIER(); if (n && n.on()) { sync(); boot(); } else { bootChecked = true; unwait(); } } }, 0);
   const ready = () => { wireDemo(); sync(); if (live.has('readouts')) roInstall(); };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', ready);
   window.addEventListener('load', ready);

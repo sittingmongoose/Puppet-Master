@@ -726,6 +726,28 @@ button shadow) and the selection lands in stepped frames. Reduced motion (all
 three routes) ends every Ask Card motion at its end state: no morph, cascade,
 reel, row press, spine travel or selection pop.
 
+**Long answers** (2026-10-09). The Ask Card grows and shrinks with what it holds,
+up to the room above the composer: it stops short of the chat header, leaving a
+48px strip of transcript under it, and the composer never moves off screen.
+Past that the card's body scrolls inside the card (the page and the transcript
+never scroll with it), while the close button, the spine and the footer
+(**Back**, **Skip**, **Next** / **Submit**) stay in place and in reach. A body
+that scrolls fades at the edge its content runs past, and the footer takes a
+hairline above it. Each question opens at its top; picking an answer keeps the
+place you scrolled to. The cap follows the window and the composer's height.
+Long prompts, labels, descriptions and answers wrap, and a long unbroken word or
+URL breaks inside its row: nothing scrolls or clips sideways. An option can carry
+a description (the canonical `{label, description}` option shape), shown muted
+under its label; a question's own description sits under its title. Rows that
+wrap keep their radio or check and number on the first line. **Something else**
+is a field that grows line by line as you type, and the optional note grows with
+its text from its resting height, so neither scrolls inside itself. Review keeps a
+long answer whole, line breaks included. The @-file list opens below its field
+when the body has no room above it. Under NieR a description on the menu cursor
+is paper, like its label. Short questionnaires look exactly as before. Demo
+Studio → Questions and decisions → **Long answers questionnaire** opens the
+deployment questionnaire written long to see all of this.
+
 ## Overlay menus
 
 - Clicking the same trigger **closes** an open menu (persona, model, mode,
@@ -852,6 +874,10 @@ reel, row press, spine travel or selection pop.
   Collapse state is session-only.
 - There is no `PINNED LEFT` strip and no goal summary card in the history
   drawer. The pinned drawer still has a resize handle.
+- A pinned history drawer is in place from the first painted frame (2026-10-09):
+  the chat no longer opens full width under the drawer and then slides its
+  200px gutter in, which for about two seconds of a slow load put the composer
+  over the thread rows.
 
 ## Context Lens glyph
 
@@ -1388,6 +1414,29 @@ The Plan is a transcript card because it is a human-readable deliverable. It is
 - Actions as eligible: **Revise**, **Build With Crew**, **Build At…**,
   **Send To Planning Wizard**, **Export**, **Cancel**, **Details**, and
   **Open To-Dos** while building.
+- **The transcript card's layout.** Kicker (`Plan` · `V5 · Thorough`), the
+  title and a two-line summary, then one hairline that opens the card's status
+  zone: the schedule line when the Plan has a scheduled build, the step count
+  and status ("6 steps · Ready"), and the action row. The action row is
+  **Build**, **Revise** (only while the Plan is Ready) and **Open plan**. It
+  sits on the card's content edge with the card's own padding below it. There
+  is no tinted band and no inset of its own.
+- **One action row everywhere a Plan shows actions.** The transcript card's
+  footer, the editor's sticky footer and its More row, the compact
+  Completed/Canceled card, a Building plan's attention actions (Resume,
+  Details, Cancel build), the schedule line's decision (Use V6, Cancel
+  schedule) and the Build-started receipt's Open plan all use the shared
+  `.pmx-actions` row and `.pmx-act` button. Every button is 32px tall with
+  12px type. Boxed buttons sit 10px apart and text actions 6px apart. Build
+  keeps the primary 14px sides and every other button 10px. `Building…`,
+  `Completed` and `Canceled` keep full contrast; only their cursor shows they
+  are disabled. Retro squares every corner and NieR keeps its own square,
+  flat buttons; neither changes a button's size.
+- While building, the To-Do count ("0 of 6 steps done", or "Updating
+  progress…" while the projection catches up) is plain words at the action
+  row's right end, never a chip. A wait or attention line takes its own row
+  under the buttons: the mark sits in a 16px column 10px from the copy, and
+  the line's admitted actions form an action row under the copy.
 - **Revise**, never Edit. It targets the ordinary composer at the current
   Plan/version and the composer chrome visibly changes; the user submits prose
   and the agent writes a complete new version. `V4 → V5`. Earlier versions stay
@@ -1452,6 +1501,11 @@ child sub-To-Dos; every leaf carries a bounded expected outcome.
   rows its measured height shows. Expand carets point **right** when collapsed
   and **down** when expanded. Two demo To-Dos on Query Performance carry an
   owner (Query Analyzer and Schema Reviewer).
+- The **navigation line** above the list holds the visible count (`N visible of
+  M items`) and **Expand all**, and nothing else. There is no Last item control
+  (removed 2026-10-09, DL-160). The search field finds any title or exact ID,
+  and the list scrolls to its final item; **Expand all** opens every parent
+  first.
 - There is **no verification status** anywhere user-visible; validation, when
   needed, is its own To-Do. There is **no separate Done section and no source
   grouping** — completed items stay inline, in place, struck through.
@@ -1536,19 +1590,27 @@ Each module supplies only its own content.
 - **Yield rules.** The common case never scrolls at 1440×900 or 1280×800. In a
   collaboration sheet the cast plate yields first as the roster grows: it takes
   the richest mode that fits its slot (full, compact, BrainStorm's lean, a
-  strip, then one caption sentence; see *The cast plate*) and grows into spare
-  height when the column is short. With the default teams at 1440×900, Crew and
-  Review draw the full plate, BrainStorm the compact one and Chat Room its
-  one-line strip; at 1280×800 Crew and Review draw compact and BrainStorm and
-  Chat Room their lean modes; at 1024×768 Crew and Review stay compact,
-  BrainStorm falls to the caption and Chat Room keeps its lean line where it
-  fits (Basic, Glass and NieR; Friendly and Retro show the caption there).
-  These are Basic's numbers; another theme's type can move a kind one mode.
-  The roster scrolls inside its own region only at 7-8
-  helpers, with Add a helper kept visible. The side column
-  scrolls only below 1280×800. The hero field scrolls inside itself past three
+  strip, Chat Room's lean line, the wrap; see *The cast plate*) and grows into
+  spare height when the column is short. It never yields past its floor, the
+  leanest drawing that fits the slot's width: the slot keeps that drawing's
+  height and the roster's rows scroll in their own region instead, so the graph
+  stays in view at every team size up to the 8-helper limit, with both
+  specialists, in every theme from 700 px wide up. The caption sentence is only
+  for a slot no drawing fits the width of. With the default teams at 1440×900,
+  Crew and Review draw the full plate, BrainStorm the compact one and Chat Room
+  its one-line strip; at 1280×800 Crew and Review draw compact and BrainStorm
+  and Chat Room their lean modes; at 1024×768 Crew and Review stay compact,
+  BrainStorm draws the wrap and Chat Room keeps its lean line where it fits
+  (Basic, Glass and NieR; Friendly and Retro draw the wrap there). These are
+  Basic's numbers; another theme's type can move a kind one mode. The roster
+  scrolls inside its own region once its rows no longer fit beside the plate's
+  floor (at 1440×900 from 6 helpers, Chat Room from 5; at 1280×800 from 5, and
+  Chat Room's default 4 with its pinned Moderator row), with Add a helper kept
+  visible. The side column scrolls only below 1280×800. The hero field scrolls inside itself past three
   lines and never grows. Below a 900px sheet width the body becomes one column
-  that scrolls inside the sheet while head and foot stay put. A sheet is always
+  that scrolls inside the sheet while head and foot stay put; there the cast
+  plate sticks to the top of the body while its question is on screen, on the
+  sheet's own colour, and the roster's rows pass under it. A sheet is always
   fully inside the viewport, with no horizontal overflow.
 - **Foot grammar.** The read-back is one sentence that is always true for the
   current settings; words that change ink. The estimate line reads "About 5–15
@@ -1814,10 +1876,25 @@ in `module-shell.js`; each kind only describes its cast in
   strip (names under the marks, 60px; Chat Room's is a 40px line with the names
   beside the marks, and with the specialists on it stacks the names under the
   marks), Chat Room's lean line (32px, its puppets at 22px with every name
-  whole beside them) and the caption sentence. A mode whose seats would
+  whole beside them), the wrap and the caption sentence. A mode whose seats would
   sit closer than its minimum pitch is skipped, and a plate is never scaled to
   fit its slot. Long names are cut at a whole word first, and in full and
   compact a seat's pitch grows to keep its name whole.
+- **The wrap** is for a team too wide for one strip row. At 1440×900 Crew
+  draws it from 7 helpers (6 with both specialists), BrainStorm from 7 with
+  both specialists, Chat Room at 8 (6 with both specialists), and Review never
+  (its strip holds 8); the 516px column of a 1024 window needs it sooner (Crew
+  from 6, BrainStorm always, Review at 8). Its seats,
+  names under the marks, wrap onto two rows 52px apart (112px tall), or three
+  (164px) if two would sit closer than the strip's minimum pitch. The hub
+  (Coordinator or Moderator) and You stand at the rows' middle height; a fork
+  carries the hub's string to each row's first seat and a join brings each
+  row's last seat to the accent edge to You, so it still reads left to right.
+  The specialists stand in one column after the dotted rule, one per row. It
+  is drawn 576px wide and 500px wide (the 516px column of a 1024 window), and
+  the slot shows the wider one that fits. A team whose strip fits 500px never
+  gets a wrap. Every kind's 8-helper limit with both specialists draws the
+  two-row wrap in all ten themes.
 - **Run views.** Every run view draws its run's plate, its seats in their live
   states: working, waiting only while a helper really waits, needs you, done
   or failed. A run that has not started shows everyone idle, never "waits its
@@ -1839,7 +1916,11 @@ never from the raw record status. A card turns to `result` only on a clean
 completion, and nothing on a cancelled card changes again.
 - The card shows the kind mark and word, the card title, the cast as a row of
   small puppets (the lead first) and a clock; then one true sentence (status
-  word · reason); a track of the kind's phases; at most three lanes plus "+N
+  word · reason); a track of the kind's phases (a Chat Room's track has one stop
+  per round, up to its 20-round limit; a track of 8 or more stops wraps its dots
+  down onto more rows with shorter joins, 20 rounds taking two rows of a 360px
+  card, and its words, such as "Round 1 of 20 · not started", take the row
+  under them, so nothing runs past the card); at most three lanes plus "+N
   more · Show all"; a meta line; and the actions. A lane gives a verb plus either the helper's current words
   (one line, in quotation marks, streaming live through the same pacing as
   assistant replies; the finished message then lands once, whole) or what it
@@ -2188,13 +2269,28 @@ and deliberately not in the Multi-Agent Workflows group. It is never a card.
   priority "Coming up · Next: 10:00 PM · '…' · +1 more · [Show]".
 - **The Plan card's schedule line** sits beside the Build control and never
   replaces its `Building…`. Each secondary state leads with its canon token:
-  "Builds weeknights 10 PM–2 AM · next: tonight" with a night ribbon; "Building
+  "Builds weeknights 10 PM–2 AM (Chicago time) · next: tonight" with a night ribbon; "Building
   now · wraps up 1:50 AM"; "**Outside execution window** · paused for the
   night, continues Mon 10 PM"; "**Schedule needs update** · You edited this
   plan (now V3). Build V3 instead? [Use V3] [Cancel schedule]"; "**Waiting for
   Usage** · resets 4:00 AM (from Anthropic), continues Mon 10 PM", with no
-  countdown when the reset is unknown; and "**Paused** · …" for a build you
-  paused. The next morning one receipt sums up the night: "Overnight: built 2
+  countdown when the reset is unknown; "**Paused** · …" for a build you
+  paused; and "**Schedule ended** · you started this build now, so the
+  schedule won’t start a second one." after Build runs the version the
+  schedule was bound to. That last state offers no "Use V…": there is no new
+  version to rebind to, so its link reads Details rather than Review.
+- **Its layout.** The canon token is the first row, in the text colour, with
+  **Details** (**Review** when a new version is waiting) beside it. Details
+  is a 32px text action centred on that row, its label on the card's right
+  content edge. The detail ("next: tonight") follows on the row below, then
+  the night ribbon and the steps built, wrapping together as the width
+  allows. A decision's buttons get their own action row under the sentence,
+  so they never squeeze it into a narrow column. A zone in parentheses
+  ("(Chicago time)") never breaks inside them. The " · " between the token
+  and the detail stays in the text for screen readers. On a card narrower
+  than 360px, Details moves under the sentence. In the transcript card the
+  line has no hairline of its own: the card's status-zone hairline sits above
+  it. The next morning one receipt sums up the night: "Overnight: built 2
   of 5 steps (10:00 PM–1:52 AM, paused safely) · sent 1 scheduled message · 1
   message needs you · Open".
 - **The Scheduled manager** (wide): the next 48 hours as a plate, where hovering

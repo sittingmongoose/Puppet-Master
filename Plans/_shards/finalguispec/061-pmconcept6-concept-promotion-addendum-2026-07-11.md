@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L29233-L29474
+Source lines: L29253-L29497
 
-Source SHA256: `7db637b8c5afddc25d2be612466111b6be5dd52c5d07ae65d356ed80f2ddc075`
+Source SHA256: `c1b4f13c5fe476c656f4b69fcf2eadd1c088be679a557c34f8b22dea84570c57`
 
 ---
 
@@ -27,6 +27,8 @@ canonical_text: >-
   where items after the separator position are the hidden tray set; no new storage key is
   introduced. Activity-item hotkeys follow the visual order of the bar, so reordering changes
   hotkey targets and hidden items drop out of the hotkey sequence.
+  Amended 2026-10-09 (DL-162): the More tray opens as the chat picker beside More and an empty tray says how to hide
+  an icon (F3-625); the gestures, persistence and hotkey order above are unchanged.
 gui_related: true
 gui_classification_reason: This unit defines visible activity bar reorder, hide, tray, and hotkey behavior.
 split_recommended: false
@@ -52,6 +54,7 @@ source_lineage:
 - "Plans/FinalGUISpec.md:2290"
 - "Plans/FinalGUISpec.md:2377"
 - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+- "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
 preserved_exact_tokens:
 - "activity_bar_order:v1"
 - "separator position"

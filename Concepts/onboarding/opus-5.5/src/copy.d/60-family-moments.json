@@ -1,0 +1,41 @@
+{
+  "famMoments": {
+    "card": {
+      "next": "Next: {chapter}",
+      "basic": {
+        "kicker": "Chapter done",
+        "sheet": "Sheet {n} of {total}",
+        "stamp": "Done"
+      },
+      "friendly": {
+        "kicker": "That's a wrap!",
+        "next": "Next up: {chapter}"
+      },
+      "glass": {
+        "kicker": "Chapter complete"
+      },
+      "retro": {
+        "clear": "Clear!",
+        "bonus": "Bonus",
+        "ready": "Ready?"
+      }
+    },
+    "wake": {
+      "retro": {
+        "title": "Puppet Master",
+        "start": "Press start",
+        "player": "Player 1",
+        "credit": "1 player · free play"
+      }
+    },
+    "call": {
+      "basic": {
+        "stamp": "Approved"
+      },
+      "retro": {
+        "clear": "All clear",
+        "score": "Setup {n}%"
+      }
+    }
+  }
+}

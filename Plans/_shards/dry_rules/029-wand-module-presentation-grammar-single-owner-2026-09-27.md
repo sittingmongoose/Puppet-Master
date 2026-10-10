@@ -4,7 +4,7 @@ Source: `Plans/DRY_Rules.md`
 
 Source lines: L2657-L2722
 
-Source SHA256: `9f9231c178809d1d7cb1f5e717f212ac301427d06aa111b131ea3b1f250a7767`
+Source SHA256: `ce1c0950746900f4fe598e1550fa055d5e636be6a93eb3a2121269cb14a5e117`
 
 ---
 
@@ -21,8 +21,8 @@ status: accepted
 owner_doc: Plans/DRY_Rules.md
 canonical_text: >-
   The wand modules' presentation grammar has exactly one GUI owner, FinalGUISpec F3-566 with
-  F3-567 through F3-577, F3-592, F3-594 and F3-595: the configuration sheet anatomy, sizes and yield
-  rules, the plate and the cast plate, kind marks and the agent puppets (one puppet primitive draws
+  F3-567 through F3-577, F3-592, F3-594, F3-595, F3-601 and F3-602: the configuration sheet anatomy, sizes and yield
+  rules, the plate and the cast plate (its floor and wrap, with the shared parts DR-045 names), kind marks and the agent puppets (one puppet primitive draws
   every agent everywhere, DL-149), run card budgets and width tiers, the one-line receipt, the dock, the one-line
   reply traces and the run view as an editor document (ACD-480). Every implementation builds these
   from one shared set of primitives; a module owner supplies content only and never forks or

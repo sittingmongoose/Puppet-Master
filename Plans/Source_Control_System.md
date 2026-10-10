@@ -220,6 +220,11 @@ canonical_text: >-
   Forge-owned `repository_automation` occupant labeled Actions & Pipelines and binds through AutomationBinding;
   `github_actions` is compatibility-only. Git-only staging and stash are absent for JJ. Settings routes one source-control manager with Local Tools, Repositories, Accounts and
   Sign-In, Hosting Services, Defaults, Automation, Safety, Advanced, and Diagnostics and Receipts.
+  Amended 2026-10-09 (DL-163): in the left rail each engine's sections show as its own tab strip, one view at a
+  time: Git Changes, Worktrees, History and Branches, and JJ Changes, Workspaces, History, Bookmarks and Operation
+  Log (Plans/FinalGUISpec.md F3-623 and F3-624). Git keeps the label Worktrees and JJ uses Workspaces; neither
+  strip is the other relabelled. Reviews, review versions, threads, checks and publication render together as the
+  always-visible Publish and review card at the foot of both views rather than as a tab.
 gui_related: true
 gui_classification_reason: This unit defines visible panel sections, labels, Settings manager domains, and disabled/degraded presentation.
 depends_on: [SCS-002, SCS-003, SCS-004, FGI-003]
@@ -239,6 +244,14 @@ acceptance_criteria:
     the frozen Jujutsu inventory, and the disclosure is carried by the confirmation record the existing commands
     already require, in its `disclosed_remote_scope` field - `no_remote`, `one_remote` or `all_remotes` - and its
     `disclosed_remote_identity_refs` list.
+  - >-
+    The five bookmark words name one axis, a bookmark's scope across its remotes (DL-163). A conflicted bookmark
+    (JJI-019) and a bookmark deleted here while a remote still has it are separate states shown beside that word,
+    not additions to it, and a bookmark on the current change says so; no bookmark is called current. Rename and
+    delete confirmations are built from the bookmark's own remote set: rename says it renames here only, names every
+    remote where the old name stays until its deletion is pushed there and says the new name is on no remote until
+    pushed; delete names every remote whose copy stays until the deletion is pushed; a bookmark on no remote says
+    that nothing on any remote changes.
   - The source-control manager is the unique operational destination; browser-scm remains a non-owning dependency summary.
 validation_surfaces: [source_control_projection fixtures, future Slint panel fixtures, Settings search and route dedupe fixtures]
 risk_class: gui_backend_or_owner_misrepresentation
@@ -246,7 +259,7 @@ reasoning_tier: high
 context_scope: source_control_gui_and_settings
 implementation_surfaces: [Plans/Settings_System.md, Plans/FinalGUISpec.md, future Source Control Slint components]
 node_compile_hint: {mode: adaptive_source_control_projection, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:egolite-register:UI-01, source_ref:egolite-register:UI-03, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-bookmark-disclosure-dl057]
+source_lineage: [source_ref:egolite-register:UI-01, source_ref:egolite-register:UI-03, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-bookmark-disclosure-dl057, 'Plans/Decision_Log.md#DL-163 (2026-10-09; per-engine tab strips, footer card, bookmark state axes)']
 preserved_exact_tokens: [Changes, Workspaces, History, Git Branches, JJ Bookmarks, Review Versions, Threads, current checks, Source of Truth, Mirror Health, repository_automation, "Actions & Pipelines", github_actions, Diagnostics and Receipts, synced, unsynced, tracked per remote, combined, absent, disclosed_remote_scope, disclosed_remote_identity_refs]
 negative_constraints: [Do not create a panel per forge or backend., Do not show staging or stash for JJ., Do not expose underscore enums or raw IDs in ordinary UI.]
 owner_hints: [Plans/Source_Control_System.md, Plans/Settings_System.md, Plans/FinalGUISpec.md]

@@ -2,9 +2,9 @@
 
 Source: `Plans/FileManager.md`
 
-Source lines: L4569-L4822
+Source lines: L4569-L4828
 
-Source SHA256: `2028f5e06eadbcc9af325d3d66d6ee34046880b8f348d6923d855e6f5131fbfd`
+Source SHA256: `67a2ee82304de9502783981ff00dd2bb54a91fe6bd86dc5c3483b7b452b15033`
 
 ---
 
@@ -31,6 +31,8 @@ canonical_text: >-
   projection of Source Control state: repository state ownership, git semantics, staging, and
   refresh cadence remain with Source Control and worktree contracts per F-057, with file identity,
   repo_id, and worktree_id handed off explicitly.
+  Amended 2026-10-09 (DL-162): the letters draw without a capsule in one fixed column, and the
+  rollup's "N changed" count is a plain number, not a chip (FinalGUISpec F3-619).
 gui_related: true
 gui_classification_reason: This unit governs visible file-tree git badge, rollup tint, and count-chip presentation.
 depends_on: [F-057]
@@ -54,6 +56,7 @@ source_lineage:
   - user decision 2026-07-27 (Cozy Shelves panel review)
   - Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (source-lineage-only)
   - Plans/FileManager.md:165
+  - Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; letters and counts without capsules, FinalGUISpec F3-619)
 source_atom_ids: []
 preserved_exact_tokens: ["optional Git status strip"]
 negative_constraints:
@@ -129,6 +132,8 @@ canonical_text: >-
   actions route through the shared confirm surface with exact target preview. Every bulk mutation
   joins the F-068 FileSafe mutation-session model and the F-069 operation lifecycle
   (operation_type bulk with per-file conflict, evidence, rollback/recovery, and refresh state).
+  Amended 2026-10-09 (DL-162): in the left rail the N selected disclosure is a plain count with its word, not a chip
+  (FinalGUISpec F3-619).
 gui_related: true
 gui_classification_reason: Selection chips, ops-tray progress, cancel/retry controls, and refresh behavior are user-visible panel behavior.
 depends_on: [F-068, F-069]
@@ -152,6 +157,7 @@ source_lineage:
   - user decision 2026-07-27 (Cozy Shelves panel review)
   - Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (source-lineage-only)
   - Plans/FileManager.md:174
+  - "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
 source_atom_ids: []
 preserved_exact_tokens: ["operation_type", "bulk"]
 negative_constraints:

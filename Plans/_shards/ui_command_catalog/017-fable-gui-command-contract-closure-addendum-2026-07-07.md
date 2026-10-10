@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8068-L8223
+Source lines: L8073-L8236
 
-Source SHA256: `0b9226898eb192f2b85b963443aadd6858968975367640b9191697000992ddc8`
+Source SHA256: `74f9cc0f6d0cb3d1a7d659979632d55b4c9d1adc9572a006cae2757130d77ec6`
 
 ---
 
@@ -59,7 +59,7 @@ Every command in this addendum consumes the closed v2 `UICommandResponse` in `Pl
 
 The following former rows are preserved verbatim enough for search, audit, and one-time migration lineage.
 They are not members of the active GUI command table above, are not aliases, and receive no primary handler
-or production-wiring row. Current Product Onboarding uses the thirteen typed local `ui.onboarding.*` actions
+or production-wiring row. Current Product Onboarding uses the fourteen typed local `ui.onboarding.*` actions
 enumerated by UCC-106 and routes owner work to the target owner's existing canonical command.
 
 | Historical token | Retained command-era payload/result/error/effect lineage | Current disposition |
@@ -107,7 +107,14 @@ canonical_text: >-
   contracts with field-level payload, result, error, and receipt/event requirements.
   Existing FileManager CRUD, launch-chain, and runtime allowed-action rows remain
   canonical and are strengthened by the shared UICommandResponse and no fabricated
-  command_applied event rule.
+  command_applied event rule. In the cmd.theme.* family the title bar's Light/Dark/Auto
+  segmented control dispatches cmd.theme.set_mode, while its family rows and NieR Mode
+  checkbox, the Guided Tour bar's Look menu and the NieR Mode editor compose
+  cmd.settings.transaction.preview then cmd.settings.transaction.apply as UCC-120's
+  local affordances do; no theme family or NieR command is added. The application's start
+  and onboarding's look previews (ui.onboarding.start, ui.onboarding.choose_look) dispatch
+  no cmd.theme.* and emit no settings.theme.updated: the pre-paint reads the stored theme
+  of the Project the application opens on (F3-468, DL-153).
 gui_related: true
 gui_classification_reason: Defines user-visible GUI command families, command payloads, responses, disabled states, and receipts.
 depends_on: [UCC-089, UCC-097]
@@ -118,6 +125,7 @@ acceptance_criteria:
   - Runtime allowed_action_ids map only to canonical `cmd.runtime.*` commands.
   - FileManager CRUD commands are not duplicated; existing rows remain canonical and gain the shared response/receipt acceptance bar.
   - No command in this addendum uses or authorizes fabricated `*.command_applied` events.
+  - Only the title bar's Light/Dark/Auto control dispatches a cmd.theme.* command for the look; family, NieR Mode and NieR editor changes use the Settings transaction pair, and the application's start and onboarding's look previews dispatch no cmd.theme.* and emit no settings.theme.updated (F3-468, DL-153).
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
   - python3 scripts/pm-plan-index.py validate

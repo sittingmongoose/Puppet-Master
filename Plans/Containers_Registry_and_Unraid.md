@@ -6310,8 +6310,12 @@ canonical_text: >-
   reasons stay visible outside the collapsible body; destructive actions route through the shared
   confirm surface; blocked payloads carry blocked_reason_code plus ordered allowed_action_ids[].
   This unit is a consumption note and does not re-own the expander contract or the width envelope.
+  Amended 2026-10-09 (DL-162): the six tab labels are never abbreviated; the strip fits by
+  measurement as FinalGUISpec F3-620 says (every full label when all fit, otherwise the active
+  tab's full label with glyphs for the others, otherwise glyphs only), and each tab keeps its full
+  label as its accessible name and hover tag.
 gui_related: true
-gui_classification_reason: Tab structure, glyphs, label abbreviation, and expander row consumption are user-visible Docker Manager panel presentation.
+gui_classification_reason: Tab structure, glyphs, label fitting, and expander row consumption are user-visible Docker Manager panel presentation.
 depends_on: [CRAU-092, CRAU-093]
 unblocks: []
 acceptance_criteria:
@@ -6336,6 +6340,7 @@ source_lineage:
   - Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves concept; source-lineage-only, never copy HTML/CSS/class names)
   - Plans/Containers_Registry_and_Unraid.md:128-136
   - user decision 2026-07-27 (six subview tabs, distinct glyphs, abbreviated mid-width labels; rail width envelope 240/480/280)
+  - Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; tab labels are never abbreviated, FinalGUISpec F3-620)
 preserved_exact_tokens: ["Containers", "Images", "Compose", "Registries", "Build / Bake", "Publish / Unraid", "aria-expanded", "blocked_reason_code", "allowed_action_ids"]
 negative_constraints:
   - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.

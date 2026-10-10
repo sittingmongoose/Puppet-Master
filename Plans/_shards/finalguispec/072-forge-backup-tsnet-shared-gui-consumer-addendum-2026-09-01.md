@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L35903-L35987
+Source lines: L36013-L36101
 
-Source SHA256: `7db637b8c5afddc25d2be612466111b6be5dd52c5d07ae65d356ed80f2ddc075`
+Source SHA256: `c1b4f13c5fe476c656f4b69fcf2eadd1c088be679a557c34f8b22dea84570c57`
 
 ---
 
@@ -29,6 +29,9 @@ canonical_text: >-
   availability, protected handoffs, ObservableWork phases, alerts, focus, and return context without owning provider,
   source-control, backup, scheduler, encryption/key, connector, auth, Doctor, notification-store, or status truth.
   Every packet action remains visibly truthful and unavailable until its owner and central runtime integration exist.
+  Amended 2026-10-09 (DL-162): in the left rail the AutomationBinding selector is a field labelled Automation
+  service that opens the chat picker (F3-621), never a native select; picking runs
+  ui.repository_automation.binding.select and changes nothing else.
 gui_related: true
 gui_classification_reason: This unit defines canonical shell identity, shared visual components, routes, copy, protected states, progress, alerts, themes, accessibility, and responsive behavior.
 split_recommended: false
@@ -78,6 +81,7 @@ source_lineage:
   - packet:04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md#GUI-008
   - packet:12_BACKUP_SETTINGS_ONBOARDING_DOCTOR.md
   - packet:tsnet/04_GUI_ONBOARDING_DOCTOR_DELTAS.md
+  - "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
 preserved_exact_tokens: [repository_automation, Actions & Pipelines, github_actions, DestinationCard, ScopeCoverageSummary, SnapshotBrowser, RestorePreview, RecoveryKitHandoff, VerificationBadge, RetentionPreview, ObservableWorkProgress, Tailscale, Built into Puppet Master, Connection engine, K3 Tome Tabs, PMConcept7, handler_unavailable, "expected_event_types=[]"]
 negative_constraints:
   - Do not add a Backup, Tailscale, forge-specific, Server, Sync, or second Activity Bar item or notification center.

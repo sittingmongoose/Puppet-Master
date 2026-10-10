@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L31598-L32085
+Source lines: L31639-L32129
 
-Source SHA256: `7db637b8c5afddc25d2be612466111b6be5dd52c5d07ae65d356ed80f2ddc075`
+Source SHA256: `c1b4f13c5fe476c656f4b69fcf2eadd1c088be679a557c34f8b22dea84570c57`
 
 ---
 
@@ -29,7 +29,9 @@ canonical_text: >-
   bounded page-overflow picker when physical width cannot keep every named page visible. While
   that in-tree picker is opening, open, or closing, the strip's decorative edge-fade mask is
   disabled so the picker stays painted above and hit-testable instead of exposing page controls
-  beneath it; the mask returns immediately after the picker closes.
+  beneath it; the mask returns immediately after the picker closes. Amended 2026-10-09 (DL-162): the
+  left rail's segmented sub-view strips neither scroll nor truncate a label with an ellipsis; they fit
+  as F3-620 says, full labels, then the active tab's label with icons for the rest, then icons only.
 gui_related: true
 gui_classification_reason: This unit defines visible tabstrip layout, scrolling, and label truncation for non-editor tab systems.
 split_recommended: false
@@ -54,6 +56,7 @@ node_compile_hint:
 source_lineage:
 - "Plans/FinalGUISpec.md:27497"
 - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+- "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; the left rail's segmented strips fit by F3-620)"
 preserved_exact_tokens:
 - "56px"
 - "180px"

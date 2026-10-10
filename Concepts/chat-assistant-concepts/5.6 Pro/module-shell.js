@@ -794,7 +794,7 @@
     glyph: glyphIn
   };
   var LEGEND = { hands: 'pmx-lg pmx-lg-hands', fixed: 'pmx-lg pmx-lg-fixed', toyou: 'pmx-lg pmx-lg-toyou', sees: 'pmx-lg pmx-lg-sees', hatch: 'pmx-lg pmx-lg-hatch', hollow: 'pmx-lg pmx-lg-hollow', filled: 'pmx-lg pmx-lg-filled', dot: 'pmx-lg pmx-lg-dot', bar: 'pmx-lg pmx-lg-bar', screen: 'pmx-lg pmx-lg-screen' };
-  var PLATE_H = { full: 200, compact: 160, lean: 99, strip: 96, caption: 40 };
+  var PLATE_H = { full: 200, compact: 160, lean: 99, strip: 96, wrap: 112, caption: 40 };
   /* pmxPlate({key,kind,mode,w,h,svg,legend,caption,cls,fluid,part,fitH,align,attrs})
      fitH: the drawing's natural height when it sits in a .pmx-plate-fit slot (J-2 plate yield);
      align: the viewBox alignment (xMidYMid by default; xMidYMin keeps a drawing at the top). */
@@ -818,21 +818,25 @@
      mode whose natural height fits (data-fit). The mode chosen last time is carried into the template so a
      re-render never flips it back. A drawing is never scaled down to fit. */
   /* caption (review cycle 1, 6.3 yield order): the words a caption mode shows (40 px); given, a caption plate is
-     appended as the leanest mode, so the plate yields all the way down before a roster's rows scroll.
-     min: the slot's floor; by default the leanest mode's natural height (the reference: min-height = the leanest
-     mode).
+     appended after the drawings. It shows only when no drawing fits the slot's width (2026-10-09: the plate yields
+     down to its leanest drawing, then a roster's rows scroll; PM56_PMX fitPlates).
+     min: the slot's floor; by default the leanest drawing's natural height (the runtime raises it to the leanest
+     drawing that fits the slot's width).
      tail (2026-10-08): modes leaner than the caption's 40 px, appended after it (the Chat Room's 32 px lean line), so the
      slot's modes still run from the tallest to the shortest and "leanest" stays the last one. */
   function pmxPlateFit(o) {
     o = o || {};
     var list = Array.isArray(o.plates) ? o.plates.slice() : [str(o.plates)];
+    /* the floor is the leanest DRAWING (2026-10-09: the caption no longer sets it, so the slot keeps a drawing while a
+       roster's rows scroll; the runtime raises it to the leanest drawing that fits the slot's width) */
+    var leanest = null;
+    list.concat(o.tail || []).join('').replace(/data-fit-h="([\d.]+)"/g, function (m, v) { v = +v; if (isFinite(v) && (leanest == null || v < leanest)) leanest = v; return m; });
     if (o.caption) list.push(pmxPlate({ key: (o.key ? o.key + ':' : '') + 'caption', kind: o.kind, mode: 'caption', fitH: 40, caption: o.caption }));
     if (o.tail) list = list.concat(o.tail);
     var plates = list.join('');
-    var leanest = null;
-    plates.replace(/data-fit-h="([\d.]+)"/g, function (m, v) { v = +v; if (isFinite(v) && (leanest == null || v < leanest)) leanest = v; return m; });
+    if (leanest == null && o.caption) leanest = 40;
     var min = o.min != null ? num(o.min, 72) : (leanest != null ? leanest : 72);
-    if (o.caption && leanest != null) min = Math.min(min, leanest);
+    if (o.caption && leanest != null && o.min != null) min = Math.min(min, leanest);
     var fit = o.fit != null ? o.fit : (o.key && window.PM56_PMX && window.PM56_PMX.plateFit ? window.PM56_PMX.plateFit(o.key) : '');
     return '<div class="' + cls('pmx-plate-fit', o.cls) + '"' + k(o.key) + (fit ? ' data-fit="' + esc(fit) + '"' : '') + ' style="--pmx-fit-min:' + min + 'px"' + at('data-pmx-affects', o.affects) + '>' + plates + '</div>';
   }
@@ -879,7 +883,12 @@
     /* lean: a mode of its own between compact and strip (BrainStorm: 95 tall, so a slot of 95-117, the recorded draft's
        beside its guide strip or a 1280 x 800 window's, keeps the chapters and the strings): seats at .86 hanging right
        off the bus, names 11 under the figures */
-    lean: { W: 576, M: 12, s: .86, sy: .86, bar: 20, paperW: 96, paperH: 32, bus: 46, drop: 0, name: 11, sub: 0, pmin: 64, pmax: 104, wing: 24 }
+    lean: { W: 576, M: 12, s: .86, sy: .86, bar: 20, paperW: 96, paperH: 32, bus: 46, drop: 0, name: 11, sub: 0, pmin: 64, pmax: 104, wing: 24 },
+    /* wrap (2026-10-09, Jared: "When you add multiple helpers in crew, it pushes the graph out of view"): the strip's
+       seats wrapped onto 2 or 3 rows 52 apart (112 or 164 tall), for a team too wide for one row at the strip's
+       minimum pitch. The hub forks to each row's first seat and each row's last seat joins the edge to You; the
+       specialists stand in one column after the rule, one per row. */
+    wrap: { W: 500, M: 12, s: 1, row: 24, rowH: 52, name: 13, pmin: 58, pref: 76, pmax: 128, tiers: 3 }
   };
   /* text widths are measured in the theme's own plate font (a canvas, the body's --font-ui: Inter, Poppins, IBM Plex
      Mono, the NieR face) with 4 % to spare; without a canvas, .62 em a character (Plex Mono is .6 em) */
@@ -1188,6 +1197,59 @@
     }
     return castPlate(sp, 'strip', W, G.H, out);
   }
+  /* wrap: the strip's row of helpers on as few rows as fit (2 or 3), each row at one pitch, names under the marks. The
+     hub (if any) and You stand at the rows' middle height; a fork carries the hub's string to every row's first seat and
+     a join brings every row's last seat to the edge to You, so it still reads left to right. The specialists stand in a
+     column after the rule (one per row). '' when no tier count up to G.tiers fits W. */
+  function castWrap(sp, Wo) {
+    var P = pmxPlateParts, G = CAST.wrap, core = sp.seats || [], wing = sp.wing || [], n = core.length, m = wing.length;
+    var W = num(Wo, G.W), M = G.M, s = G.s, half = Math.round(14 * s), kp = (sp.key || 'pmx-plate-cast') + ':wrap:';
+    if (n < 2) return '';
+    var you = sp.you || { label: 'You' }, hb = sp.hub, ly = half + G.name, out = '', i;
+    var hubCell = hb ? Math.max(2 * half + 8, castW(hb.label, 11) + 12) : 0, youCell = Math.max(2 * half + 8, castW(you.label, 11) + 12);
+    var wcell = m ? Math.max.apply(null, wing.map(function (c) { return Math.max(48, castW(c.label, 11) + 10); })) : 0;
+    /* hub cell, 10 to the fork, 6 to the first cell; 6 from the last cell to the join, 10 to You's cell; the rule's 20 */
+    var fixed = (hb ? hubCell + 16 : 0) + 16 + youCell + (m ? 20 + wcell : 0);
+    var needs = core.map(function (c) { return castW(c.label, 11) + 6; }), want = Math.max(G.pmin, Math.max.apply(null, needs));
+    var T, per, pitch;
+    for (T = 2; T <= G.tiers; T++) {
+      if (m > T) continue;
+      per = Math.ceil(n / T);
+      pitch = Math.min(G.pmax, Math.max(want, G.pref), Math.floor((W - 2 * M - fixed) / per));
+      if (pitch >= G.pmin) break;
+    }
+    if (T > G.tiers) return '';
+    var rows = [];
+    for (i = 0; i < T; i++) rows.push(core.slice(i * per, (i + 1) * per));
+    rows = rows.filter(function (r) { return r.length; }); T = rows.length;
+    var Ys = rows.map(function (r, j) { return G.row + j * G.rowH; }), Y0 = Ys[0], Y1 = Ys[T - 1], Ym = Math.round((Y0 + Y1) / 2);
+    var x = M + Math.max(0, Math.floor((W - 2 * M - (fixed + per * pitch)) / 2)), hx = null, fx = null;
+    if (hb) { hx = Math.round(x + hubCell / 2); x += hubCell + 10; fx = x; x += 6; }
+    else x += 8;
+    var sx0 = x, ex = sx0 + per * pitch, jx = ex + 6, yX = Math.round(jx + 10 + youCell / 2);
+    var bp = sp.busPart || 'assign';
+    if (hb) {
+      out += P.seat({ key: hb.key, x: hx, y: Ym, s: s, role: hb.role || 'lead', seat: hb.seat, state: hb.state, part: hb.part, ly: ly, label: esc(hb.label) });
+      out += P.line({ key: kp + 'in', from: { x: hx + half + 2, y: Ym }, to: { x: fx, y: Ym }, style: 'fixed', part: bp });
+      out += P.line({ key: kp + 'fork', from: { x: fx, y: Y0 }, to: { x: fx, y: Y1 }, style: 'fixed', part: bp, draw: 'down' });
+    }
+    rows.forEach(function (row, j) {
+      var Y = Ys[j], k0 = j * per, cw = castCells(row.map(function (c, q) { return needs[k0 + q]; }), pitch, G.pmin), xs = castXs(cw, sx0);
+      if (hb) out += P.line({ key: kp + 'in:' + j, from: { x: fx, y: Y }, to: { x: xs[0] - half - 2, y: Y }, style: 'fixed', part: bp });
+      if (sp.screens) for (var q = 0; q < row.length - 1; q++) out += P.screen({ key: kp + 'scr:' + (k0 + q), x: Math.round((xs[q] + xs[q + 1]) / 2), y: Y + 1, h: 22, part: 'blind' });
+      row.forEach(function (c, q) { out += P.seat({ key: c.key, x: xs[q], y: Y, s: s, role: c.role, seat: c.seat, state: c.state, standin: c.standin, part: c.part, ly: ly, label: castLabel(c.label, Math.floor(cw[q]) - 6, 11) }); });
+      out += P.line({ key: kp + 'out:' + j, from: { x: xs[row.length - 1] + half + 4, y: Y }, to: { x: jx, y: Y }, style: 'toyou', part: you.part || 'you' });
+    });
+    out += P.line({ key: kp + 'join', from: { x: jx, y: Y0 }, to: { x: jx, y: Y1 }, style: 'toyou', part: you.part || 'you', draw: 'down' });
+    out += P.line({ key: kp + 'toyou', from: { x: jx, y: Ym }, to: { x: yX - half - 2, y: Ym }, style: 'toyou', part: you.part || 'you' });
+    out += P.you({ x: yX, y: Ym, s: s, at: 'below', ly: ly, label: esc(you.label), part: you.part || 'you' });
+    if (m) {
+      var rx = Math.round(yX + youCell / 2 + 10), wx = Math.round(rx + 10 + wcell / 2), w0 = Math.max(0, Math.floor((T - m) / 2));
+      out += P.line({ key: kp + 'wing', from: { x: rx, y: Y0 - half }, to: { x: rx, y: Y1 + half + 4 }, style: 'rule', part: 'specialists' });
+      wing.forEach(function (c, j) { out += P.seat({ key: c.key, x: wx, y: Ys[w0 + j], s: s, role: c.role, seat: c.seat, state: c.state, part: c.part, ly: ly, label: castLabel(c.label, wcell - 8, 11) }); });
+    }
+    return castPlate(sp, 'wrap', W, Y1 + ly + 9, out).replace(' data-cast="wrap"', ' data-cast="wrap" data-tiers="' + T + '"');
+  }
   /* pmxCastPlate(spec, mode) - one mode of a cast plate ('' when it does not fit). spec: {key, kind, cls,
      input:{label,sub,text,mirror,short,part} | chapters:[{label,state,part}], hub:{key,role,label,sub,state,part}, junctionPart,
      out:{label,part}, seats:[{key,role,seat,state,standin,label,sub,part,waits}], screens, busPart,
@@ -1198,6 +1260,8 @@
     /* a one-line kind's lean mode is the lean line (the Chat Room); BrainStorm's lean is a stage */
     var leanLine = mode === 'lean' && sp.strip === 'line';
     var row = mode === 'strip' || mode === 'line' || leanLine, kind = leanLine ? 'leanLine' : mode === 'line' || (mode === 'strip' && sp.strip === 'line') ? 'line' : mode;
+    /* wrap: drawn 500 wide on as few rows as fit (so it fits the 516 px column of a 1024 window), else 576 */
+    if (mode === 'wrap') return castWrap(sp, num(sp.w && sp.w.wrap, CAST.wrap.W)) || (sp.w && sp.w.wrap ? '' : castWrap(sp, 576));
     if (!row && !CAST[mode]) return '';
     /* a mode drawn narrow first (a compact plate and a strip fit the 516 px column of a 1024 window); when a big team
        does not fit that, the same mode at 576 (it then shows from 1280 up, and the caption below that) */
@@ -1212,10 +1276,21 @@
      richest first, and the caption (J-2 yield) */
   function pmxCastFit(sp) {
     sp = sp || {};
-    var modes = sp.modes || ['full', 'compact', 'strip'], plates = [], tail = [];
+    var modes = sp.modes || ['full', 'compact', 'strip', 'wrap'], plates = [], tail = [];
     /* the lean line (32 tall) is leaner than the caption (40): it stands after it, the slot's last resort that still
        draws the cast, where a short slot used to leave the caption alone (a 1280 x 800 window's Chat Room) */
-    modes.forEach(function (md) { var h = pmxCastPlate(sp, md); if (h) (md === 'lean' && sp.strip === 'line' && sp.caption ? tail : plates).push(h); });
+    /* wrap (2026-10-09) is drawn only for a team whose one-row strip does not fit the narrow 500 px draw (a 1024 window's
+       column): a team the strip holds there never needs a second row */
+    var stripW = 0;
+    modes.forEach(function (md) {
+      if (md === 'wrap' && stripW && stripW <= CAST.wrap.W) return;
+      /* the wrap is drawn 576 wide first (wider seats keep their names whole at 1280 and up and in the one-column body)
+         and 500 wide after it, for the 516 px column of a 1024 window; the runtime shows the one it picks (data-pick) */
+      if (md === 'wrap' && !(sp.w && sp.w.wrap)) { [576, CAST.wrap.W].forEach(function (ww) { var hw = castWrap(sp, ww); if (hw) plates.push(hw); }); return; }
+      var h = pmxCastPlate(sp, md); if (!h) return;
+      if (md === 'strip' || (md === 'lean' && sp.strip === 'line')) { var vw = /viewBox="0 0 ([\d.]+)/.exec(h); if (vw && (!stripW || +vw[1] < stripW)) stripW = +vw[1]; }
+      (md === 'lean' && sp.strip === 'line' && sp.caption ? tail : plates).push(h);
+    });
     return pmxPlateFit({ key: sp.fitKey, kind: sp.kind, affects: sp.affects, plates: plates, caption: sp.caption, tail: tail });
   }
 
@@ -1582,9 +1657,13 @@
   var STOP_STATES = { done: 1, now: 1, next: 1, skipped: 1, failed: 1 };
   function pmxTrack(o) {
     o = o || {};
-    /* data-n (closing, STORM-A): the stop count; a long track (6 or more stops) keeps its M form at the L tier, where
-       every label beside its dot would not fit */
-    return '<div class="' + cls('pmx-track', o.cls) + '"' + k(o.key) + ' data-n="' + (o.stops || []).length + '"' + raw(o.attrs) + '><ol class="pmx-track-line">' + (o.stops || []).map(function (s) {
+    /* data-n (closing, STORM-A): the stop count; a long track (data-long, 6 or more stops) keeps its M form at the L
+       tier, where every label beside its dot would not fit. data-wrap (2026-10-09, Jared: "Selecting many rounds in the
+       chatroom pop up pushes the graphic off the screen. It should wrap down"): a track of 8 or more stops (a Chat Room
+       of 8 to 20 rounds) gives its dots their own rows, wrapping down instead of running past the card, and the words
+       ("Round 1 of 20 · not started") take the row under them. */
+    var n = (o.stops || []).length;
+    return '<div class="' + cls('pmx-track', o.cls) + '"' + k(o.key) + ' data-n="' + n + '"' + (n >= 6 ? ' data-long="1"' : '') + (n >= 8 ? ' data-wrap="1"' : '') + raw(o.attrs) + '><ol class="pmx-track-line">' + (o.stops || []).map(function (s) {
       var st = STOP_STATES[s.state] ? s.state : 'next';
       return '<li class="pmx-stop"' + k(s.key) + ' data-state="' + st + '"><i class="pmx-stop-dot"></i><span class="pmx-stop-label">' + str(s.label) + '</span></li>';
     }).join('') + '</ol><p class="pmx-track-now">' + str(o.nowText) + '</p></div>';

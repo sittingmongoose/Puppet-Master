@@ -106,7 +106,7 @@ def copy_json() -> dict:
     return data
 
 
-# Embedded font files (src/settings/nier/fonts) are inlined by settings_layer.py, never read as text.
+# Embedded font files (src/fonts, src/settings/nier/fonts) are inlined by settings_layer.inline_fonts, never read as text.
 BINARY_SUFFIXES = {'.woff2', '.woff', '.ttf', '.otf'}
 
 # Page-wide universal tails. A selector that starts at html (or :root, or body) with an attribute or class, and whose
@@ -307,6 +307,7 @@ def lint_sources() -> list[str]:
     problems.extend(duplicate_keys())
     # NieR Mode's token tables are generated from the theme JSON; stale tables or a stray colour literal fail here.
     problems.extend(nier_palette.check())
+    problems.extend(settings_layer.web_font_checks(SRC))
     # The scene SVGs are drawn by nier_scene_art.py and composed into kit.d/21-nier-scenes.js by nier_scenes.py.
     if nier_scene_art.main(['--check']) != 0:
         problems.append('NieR scene SVGs are stale; run tools/nier_scene_art.py --write')
@@ -485,6 +486,36 @@ PATCHES = [
      "      scroll-behavior: auto !important;\n"
      "    }",
      'reduced motion: no transitions'),
+    # The page-tab ink re-measured every tab (offsetLeft/Width/Top/Height) inside the observer of a theme or motion
+    # change, a microtask after the attribute write: the read forced the whole page's style and layout there (about
+    # 217 ms under a Reduced Motion toggle, whose [data-motion] rules match every element), and whatever the same task
+    # wrote next (Settings' re-render, the look layer) made the frame style the page again. The ink now re-measures at
+    # the next frame, before that frame's paint: the read then shares the frame's own style and layout pass, and the
+    # ink lands in the same frame as the new look. Several changes in one frame re-measure once.
+    ("    window.PM7_PAGE_TAB_INK = { resync: resync };\n"
+     "    try {\n"
+     "      new MutationObserver(resync).observe(document.documentElement, {\n",
+     "    window.PM7_PAGE_TAB_INK = { resync: resync };\n"
+     "    var resyncFrame = 0;\n"
+     "    function resyncNextFrame() {\n"
+     "      if (resyncFrame) return;\n"
+     "      resyncFrame = requestAnimationFrame(function () { resyncFrame = 0; resync(); });\n"
+     "    }\n"
+     "    try {\n"
+     "      new MutationObserver(resyncNextFrame).observe(document.documentElement, {\n",
+     'page-tab ink: re-measure at the next frame'),
+    # With the tab ink waiting for the frame, the next reader in the same observer round forced the same whole-page
+    # style instead (m2's traces, 2026-10-09): the PM8 magnet's readTheme(), a getComputedStyle of its probe for the
+    # --pm8-* tokens. It now reads at the next frame too, ahead of the magnet loop's own frame (requested first), so
+    # nothing in a theme or motion write forces style: the frame's own pass serves every reader once.
+    ("      new MutationObserver(function () {\n"
+     "        readTheme();\n"
+     "        bloomHost = null;   /* radius may change with the theme */\n",
+     "      var themeFrame = 0;\n"
+     "      new MutationObserver(function () {\n"
+     "        if (!themeFrame) themeFrame = requestAnimationFrame(function () { themeFrame = 0; readTheme(); });\n"
+     "        bloomHost = null;   /* radius may change with the theme */\n",
+     'magnet tokens: re-read at the next frame'),
 ]
 
 
@@ -537,6 +568,106 @@ NIER_PATCHES = [
      "var PERSONA_CATALOG = ['Product Manager', 'Architect Reviewer', 'Rust Engineer', 'Teacher', 'Pod 042'];",
      'pod 042 persona'),
 ]
+
+# First paint (2026-10-09). The head boot script painted Basic Dark on every open (T44 had replaced its pm.themeFamily
+# read with literals: project-scoped Settings owns persistence, so there is no global theme key), and the stored look
+# arrived only when Settings ran: a black frame, then Basic Dark for 0.35 s before NieR's boot log, and about 3 s of
+# Basic Dark before a Light family. T44's concern is that a theme is a Project's setting with one owner and one store.
+# So the head stores nothing: it reads the stored projection of the Project the page opens on, under the key the
+# Settings owner writes, and paints that look (data-theme, NieR Mode's attributes, glass, reduced motion and the
+# ground) before the first frame. The Project the page opens on is the one the title bar selects in the markup (the
+# Settings adapter's projectRecord(): PM_ACTIVE_PROJECT_ID when a host has set it, else that menu item); a reload
+# always opens it, whatever was selected before. A new install's onboarding always starts in Basic Dark (Jared,
+# 2026-10-09): with ?o55=fresh, or with no onboarding record yet (the window then opens by itself), the head paints
+# Basic Dark and leaves the store unread; window.PM_O55_BOOT tells Settings (kit.d/18-nier.js) and the onboarding the
+# same decision. While NieR's boot log will run, the page waits under a cover of the log's own paper until the log is
+# up (kit.d/20-nier-world.js removes data-o55-boot-wait), so the app never shows between the first frame and the log.
+SETTINGS_PREFIX = 'pm7:settings:tome-tabs:v1:'
+
+
+def first_paint_patches(base: str) -> list[tuple[str, str, str]]:
+    menu = re.search(r'<div class="pm6-tb-menu" id="projectMenu"[^>]*>([\s\S]*?)</div>', base)
+    need(menu is not None, 'first paint: #projectMenu not found')
+    picked = re.findall(r'<button[^>]*class="pm6-tb-menu-item is-selected"[^>]*data-project="([^"]+)"', menu.group(1))
+    need(len(picked) == 1, f'first paint: the title bar selects {len(picked)} Projects in the markup (need exactly 1)')
+    need(base.count("var PREFIX='" + SETTINGS_PREFIX + "';") == 1, 'first paint: the Settings store key changed')
+    need("if(typeof window.PM_ACTIVE_PROJECT_ID==='string'){" in base, 'first paint: projectRecord() changed')
+    store = (SRC / 'js' / '20-store.js').read_text(encoding='utf-8')
+    onb = re.search(r"onboarding: '([^']+)'", store)
+    need(onb is not None, 'first paint: the onboarding record key (src/js/20-store.js) not found')
+    nier = (SRC / 'settings' / 'kit.d' / '18-nier.js').read_text(encoding='utf-8')
+    parts = re.findall(r"\['(?:Look|Motion|Sound & voice|Pointer|World)', '([^']+)', '([a-z0-9]+)'(?:, '[^']*')?\]", nier)
+    need(len(parts) == 29, f'first paint: found {len(parts)} NieR parts in kit.d/18-nier.js (need 29)')
+    pal = (SRC / 'settings' / 'styles.d' / '13-nier.css').read_text(encoding='utf-8')
+    ground = {}
+    for mode in ('light', 'dark'):
+        m = re.search(r'html\[data-o55-nier\]\[data-theme="basic-' + mode + r'"\] \{\n  --background: (#[0-9a-f]{6});', pal)
+        need(m is not None, f'first paint: NieR {mode} ground not found in styles.d/13-nier.css')
+        ground[mode] = m.group(1)
+    js = lambda v: json.dumps(v, ensure_ascii=False)
+    read = (
+        "        var leg = null;\n"
+        "        /* O55 first paint (tools/build.py): the look stored for the Project the page opens on, read and never\n"
+        "           written (T44: project-scoped Settings owns persistence; nothing here stores a theme). A new install's\n"
+        "           onboarding (?o55=fresh, or no onboarding record yet) always starts in Basic Dark. */\n"
+        "        var o55b = { project: '', install: false, nier: false, parts: '', glassBg: '', glassN: NaN, reduced: false, boot: false };\n"
+        "        try {\n"
+        "          var o55sw = new URLSearchParams(location.search).get('o55') || '', o55rec = null;\n"
+        f"          try {{ o55rec = JSON.parse(window.localStorage.getItem({js(onb.group(1))}) || 'null'); }} catch (e3) {{ o55rec = null; }}\n"
+        "          o55b.install = o55sw === 'fresh' || (!o55rec && o55sw !== 'off' && o55sw !== 'tour' && o55sw.indexOf('screen=') !== 0);\n"
+        f"          var o55pid = typeof window.PM_ACTIVE_PROJECT_ID === 'string' ? window.PM_ACTIVE_PROJECT_ID.trim() : {js(picked[0])};\n"
+        "          o55b.project = o55pid && !/^(none|no-project)$/i.test(o55pid) ? o55pid : '';\n"
+        f"          var o55p = o55b.project && !o55b.install ? JSON.parse(window.localStorage.getItem({js(SETTINGS_PREFIX)} + encodeURIComponent(o55b.project)) || 'null') : null;\n"
+        "          var o55s = o55p && o55p.settings && typeof o55p.settings === 'object' ? o55p.settings : null;\n"
+        "          if (o55s) {\n"
+        "            var o55sel = String(o55s['general.visual.theme'] || 'Basic Dark').trim().toLowerCase().replace(/\\s+/g, '-').split('-');\n"
+        "            fam = fams.indexOf(o55sel[0]) === -1 ? 'basic' : o55sel[0];\n"
+        "            tmode = String(o55s['general.visual.theme-mode'] || o55sel[1] || 'dark').toLowerCase();\n"
+        "            if (tmodes.indexOf(tmode) === -1) { tmode = o55sel[1] === 'light' ? 'light' : 'dark'; }\n"
+        "            var o55on = o55s['general.visual.nier-mode'], o55pl = o55s['general.visual.nier-parts'];\n"
+        "            if (o55on === true || o55on === 'true' || o55on === 'On') {\n"
+        f"              var o55all = {js([[label, key] for label, key in parts])}, o55k = [];\n"
+        "              for (var o55i = 0; o55i < o55all.length; o55i++) { if (!Array.isArray(o55pl) || o55pl.indexOf(o55all[o55i][0]) !== -1) { o55k.push(o55all[o55i][1]); } }\n"
+        "              o55b.nier = true; o55b.parts = o55k.join(' '); fam = 'basic';\n"
+        "            }\n"
+        "            var o55g = String(o55s['general.visual.glass-background-mode'] || 'Mesh').toLowerCase();\n"
+        "            o55b.glassBg = ['mesh', 'depth', 'minimal'].indexOf(o55g) === -1 ? 'mesh' : o55g;\n"
+        "            var o55a = Number(o55s['general.visual.glass-transparency'] == null ? 0.55 : o55s['general.visual.glass-transparency']);\n"
+        "            if (o55a > 1) { o55a /= 100; }\n"
+        "            o55b.glassN = isFinite(o55a) ? o55a : 0.55;\n"
+        "            o55b.reduced = !!o55s['general.visual.reduce-animations'];\n"
+        "          }\n"
+        "        } catch (eo55) { fam = 'basic'; tmode = 'dark'; o55b.nier = false; o55b.parts = ''; o55b.glassBg = ''; o55b.glassN = NaN; o55b.reduced = false; }\n"
+        "        window.PM_O55_BOOT = o55b;\n")
+    stamp_old = ("        /* T44: project-scoped Settings owns persistence; no global theme write. */\n"
+                 "        d.setAttribute('data-theme', t);\n")
+    stamp_new = (stamp_old +
+                 "        if (o55b.nier) { d.setAttribute('data-o55-nier', 'on'); d.setAttribute('data-o55-nier-parts', o55b.parts); }\n"
+                 "        if (o55b.reduced) { d.setAttribute('data-motion', 'reduced'); }\n"
+                 "        var o55still = o55b.reduced; try { o55still = o55still || window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e4) {}\n"
+                 "        o55b.boot = o55b.nier && (' ' + o55b.parts + ' ').indexOf(' boot ') !== -1 && !o55still && document.visibilityState !== 'hidden';\n"
+                 "        if (o55b.boot) {\n"
+                 "          d.setAttribute('data-o55-boot-wait', '');\n"
+                 "          window.addEventListener('load', function () { setTimeout(function () { d.removeAttribute('data-o55-boot-wait'); }, 400); });\n"
+                 "        }\n")
+    ground_js = js(ground)
+    return [
+        ("        var leg = null;\n", read, 'first paint: read the opening Project\'s stored look'),
+        (stamp_old, stamp_new, 'first paint: NieR Mode, reduced motion and the boot cover'),
+        ("        var g = 'mesh';\n", "        var g = o55b.glassBg || 'mesh';\n", 'first paint: glass background'),
+        ("        var a = NaN;\n",
+         "        var a = NaN;\n"
+         "        if (o55b.glassN === o55b.glassN) { d.style.setProperty('--glass-alpha', String(Math.max(/-light$/.test(t) ? 0.45 : 0.35, Math.min(1, o55b.glassN)))); }\n",
+         'first paint: glass transparency'),
+        ("        var bg = BGS[t] || '#211E26';\n",
+         f"        var bg = (o55b.nier && {ground_js}[scheme]) || BGS[t] || '#211E26';\n",
+         'first paint: NieR ground'),
+        ("        s.textContent = 'html,body{background:' + bg + ';color-scheme:' + (isDark ? 'dark' : 'light') + ';}';\n",
+         "        s.textContent = 'html,body{background:' + bg + ';color-scheme:' + (isDark ? 'dark' : 'light') + ';}'\n"
+         "          + 'html[data-o55-boot-wait] body::after{content:\"\";position:fixed;inset:0;z-index:2147483399;pointer-events:none;background:' + bg + ';}';\n",
+         'first paint: the boot log\'s cover'),
+    ]
+
 
 # Owner exposures (Astra precedent): hand the real owners to onboarding/tour without a second implementation.
 SETTINGS_ANCHOR = "closeTransientUi:()=>{settingsSoundPreview.stop('settings-surface-close');"
@@ -608,13 +739,13 @@ def build_text() -> str:
         text = text.replace(tour_comment, '', 1)
 
     # 2. Guarded patches.
-    for old, new, label in PATCHES + NIER_PATCHES:
+    for old, new, label in PATCHES + NIER_PATCHES + first_paint_patches(text):
         text = replace_once(text, old, new, label)
     text = replace_once(text, SETTINGS_ANCHOR, SETTINGS_EXPOSE + SETTINGS_ANCHOR, 'settings transfer exposure')
     text = replace_once(text, LAYOUT_ANCHOR, LAYOUT_EXPOSE + LAYOUT_ANCHOR, 'layout restore exposure')
 
     # 3. Splice the O55 modules.
-    css = read_parts(SRC / 'css', '.css')
+    css = settings_layer.inline_fonts(read_parts(SRC / 'css', '.css'), SRC / 'fonts')
     js = read_parts(SRC / 'js', '.js')
     copy = json.dumps(copy_json(), ensure_ascii=False, separators=(',', ':'))
     head_block = f'<!-- O55:CSS:START -->\n<style id="pm-o55-css">\n{css}\n</style>\n<!-- O55:CSS:END -->\n'
@@ -655,8 +786,11 @@ def syntax_check(built: str) -> list[str]:
     import subprocess
     import tempfile
     out = []
-    for sid in ('pm4-settings-js', 'pm-o55-js'):
-        m = re.search(r'<script\b[^>]*\bid="' + sid + r'"[^>]*>(.*?)</script>', built, re.S)
+    for sid in ('pm4-settings-js', 'pm-o55-js', 'pm6 boot'):
+        if sid == 'pm6 boot':  # the head boot script (no id), which first_paint_patches() extends
+            m = re.search(r'<script>(\s*/\* pm6 boot: .*?)</script>', built, re.S)
+        else:
+            m = re.search(r'<script\b[^>]*\bid="' + sid + r'"[^>]*>(.*?)</script>', built, re.S)
         if not m:
             out.append(f'script {sid} missing')
             continue

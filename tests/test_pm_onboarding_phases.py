@@ -85,9 +85,9 @@ class OnboardingPhaseTests(unittest.TestCase):
                 else:
                     self.assertFalse(valid(row["definition"], value))
 
-    def test_exact_thirteen_actions_and_phase_dependency_order(self):
+    def test_exact_fourteen_actions_and_phase_dependency_order(self):
         actions = SCHEMA["$defs"]["onboarding_action_request"]["properties"]["action_id"]["enum"]
-        self.assertEqual(len(actions), 13)
+        self.assertEqual(len(actions), 14)
         self.assertEqual(actions, PACK["exact_typed_local_actions"])
         self.assertEqual(SCHEMA["$defs"]["main_stage_order"]["const"], PACK["canonical_stage_order"])
         self.assertEqual(PACK["canonical_stage_order"][-4:],
@@ -410,7 +410,7 @@ class OnboardingStorageTests(unittest.TestCase):
         touch = json.loads((ROOT / "Plans/touch_closure.json").read_text())
         rows = [dict(zip(touch["row_columns"], row)) for row in touch["rows"]]
         relevant = [row for row in rows if row["profile_id"] == "TCP-ONBOARD"]
-        self.assertEqual(len(relevant), 13)
+        self.assertEqual(len(relevant), 14)
         for row in relevant:
             self.assertEqual(row["disposition"], "partial")
             for stale in ("exact nine-stage main path", "exact nine-/six-stage path",

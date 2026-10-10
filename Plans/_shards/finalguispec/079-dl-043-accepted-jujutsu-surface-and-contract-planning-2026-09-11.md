@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L37826-L38477
+Source lines: L37947-L38600
 
-Source SHA256: `7db637b8c5afddc25d2be612466111b6be5dd52c5d07ae65d356ed80f2ddc075`
+Source SHA256: `c1b4f13c5fe476c656f4b69fcf2eadd1c088be679a557c34f8b22dea84570c57`
 
 ---
 
@@ -19,10 +19,11 @@ plan_unit_id: F3-552
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: Operation History presents named checkpoint markers, grouped actions, recent actions, simple action/time
+canonical_text: Operation Log presents named checkpoint markers, grouped actions, recent actions, simple action/time
   filters and receipt-derived descriptions as projections of exact native operations. Source history, operation
   history and Backup history remain separate domains. Labels and grouping metadata never replace native identity
-  or establish recovery authority.
+  or establish recovery authority. Amended 2026-10-09 by DL-163, the view is labelled Operation Log, JJI-006's
+  registered string, where this unit said Operation History; operation history stays the name of the domain.
 gui_related: true
 gui_classification_reason: Defines visible actions, state, producer/consumer routes and user feedback.
 depends_on:
@@ -63,6 +64,7 @@ source_lineage:
 - source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d005
 - source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d006
 - Plans/Decision_Log.md:DL-043
+- Plans/Decision_Log.md#DL-163 (2026-10-09; Operation Log label)
 negative_constraints:
 - 'Planning only: no new admitted command ID, native handler, runtime readiness, EventRecord family, schema widening,
   WorkNode, NodeSeed or governance seal follows from this unit.'

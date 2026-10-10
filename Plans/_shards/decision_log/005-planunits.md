@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L3621-L12417
+Source lines: L3871-L13155
 
-Source SHA256: `f5c3f3af5fc0f1fb0718b03482e5d7628171ea19f236c4f3ae58431de0bb00c2`
+Source SHA256: `783b525bdf5b1989fe63c87557077131f5e8d547c3a7568480dd298d17893f17`
 
 ---
 
@@ -8345,7 +8345,11 @@ canonical_text: >-
   coincident cues, and every cue is listed in the Settings sound library (F3-599), 354 entries in the concept. The
   showpiece pass is part of this decision: the hero moments in setup and the tour, and the rules that long words type
   on and that a large area does not flash. No settings key, NieR part,
-  theme variant or onboarding or tour action is added. NieR Mode gets its own Settings unit, SSYS-043, which DL-144
+  theme variant or onboarding or tour action is added. Amended 2026-10-09 by DL-153: no command id, route, settings
+  key or ui.guided_tour.* action is added, but onboarding's look choice and its NieR Mode controls use one new typed
+  local action, ui.onboarding.choose_look, the NieR Mode editor's open, close and replay are
+  ui.settings.nier_editor.open, ui.settings.nier_editor.close and ui.settings.nier_editor.replay, and the live
+  controls compose cmd.settings.transaction.preview then cmd.settings.transaction.apply. NieR Mode gets its own Settings unit, SSYS-043, which DL-144
   and F3-589 now cite. Jared asked for the three tasks in one request on PMConcept7: a more polished NieR Mode in
   setup and the tour with NieR puppets and sounds, NieR Mode as a checkbox with an adjust button wherever a theme is
   chosen, and livelier, more varied setup and tour sounds with NieR ones, all listed in the sound library; the record
@@ -8390,6 +8394,490 @@ negative_constraints:
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Settings_System.md
+```
+
+### DL-153 - The App Opens In Its Own Look Setup's Starting Look And The Four Families' Hero Moments
+
+```yaml
+plan_unit_id: DL-153
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-153 records the owner request of 2026-10-09 and its two rulings. The pre-paint layer shows the look stored for
+  the Project the application opens on, NieR Mode included, read from that Project's Settings, and stores no theme of
+  its own (F3-468). A new install's onboarding always starts in Basic Dark, preselected, whatever look was shown before;
+  Run Onboarding Again starts in the look on screen, NieR Mode included, preselected (F3-520). Onboarding's wake, act
+  card and curtain call take five styles, one per look family: NieR's whenever NieR Mode is painted, whatever family is
+  beneath, and otherwise the painted family's own, in its own materials and in both its variants (F3-600; F3-598 and
+  F3-599 amended). The application's own notices about the tour's restore stay quiet in every look (F3-521). No
+  settings key, theme variant, NieR part, sound setting, command id, route or tour action is added. Lead rulings under
+  existing canon, not owner answers, wire DL-152's look controls: the live ones compose
+  cmd.settings.transaction.preview then cmd.settings.transaction.apply (the title bar's Light/Dark/Auto keeps
+  cmd.theme.set_mode); the NieR Mode editor opens, closes and replays through ui.settings.nier_editor.open,
+  ui.settings.nier_editor.close and ui.settings.nier_editor.replay; the onboarding look choice, its NieR Mode controls
+  and its Look menu use one new typed local action, ui.onboarding.choose_look, a preview written with the Project at
+  commit that never dispatches cmd.theme.* or a Settings transaction; the sound library's Which look switch and Show N
+  more takes are typed local actions and playing an entry is cmd.sound.preview; the Tour's Look menu and sound
+  control are not tour actions; and DR-056 keeps one NieR Mode editor, reboot plate, look store and set of hero
+  moments. Jared asked for the four
+  next steps of the NieR showpiece and ruled on the five styles and on setup's starting look; the record states them in
+  plain words, the rulings kept word for word in the cited source.
+gui_related: true
+gui_classification_reason: Records an owner decision on the first paint, onboarding's starting look, the families' hero moments and the tour's restore notices.
+split_recommended: false
+depends_on: [DL-152]
+unblocks: [F3-600, F3-468, F3-520, F3-521, F3-598, F3-599, F3-082, DR-056, SSYS-010, SSYS-043, UIW-015, UCC-106, UCC-108, UCC-120, WM-041, WM-046, PWIZ-021, PWIZ-022, PWIZ-023, ATS-020]
+acceptance_criteria:
+  - "The first frame of an ordinary open is the stored look of the Project the application opens on, and no theme is stored outside that Project's Settings (F3-468)."
+  - "A new install's onboarding starts in Basic Dark; Run Onboarding Again starts in the look on screen (F3-520)."
+  - "Five styles of the three hero moments exist, NieR's always while NieR Mode is painted (F3-600)."
+  - "Every look control named by DL-152 has one command or typed local action: the Settings transaction pair or cmd.theme.set_mode live, ui.settings.nier_editor.* for the editor, ui.onboarding.choose_look inside the onboarding window, and the sound library's two local actions with cmd.sound.preview (UIW-013)."
+  - "Product Onboarding's census is fourteen typed local actions everywhere it is stated, and SSYS-043, F3-598 and DL-152 no longer say no onboarding action is added."
+  - "The owner request is recorded in plain words, with the verbatim rulings cited by path and SHA-256, and the lead's wiring rulings are cited as agent rulings."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: nier_onboarding_tour_drift
+reasoning_tier: high
+context_scope: nier_onboarding_tour
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Settings_System.md
+  - Plans/Planning_Wizard.md
+  - Plans/UI_Wiring_Rules.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.md
+  - Plans/DRY_Rules.md
+  - Plans/Automated_Testing_System.md
+  - Plans/product_onboarding_contracts.schema.json
+  - Plans/product_onboarding_contract_fixtures.json
+  - Plans/touch_closure.json
+  - Plans/Wiring_Matrix.production.json
+  - Plans/00-plans-index.md
+  - Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/nier-next-20261009/JARED-REQUEST-20261009.md, SHA-256 5d4f5b2aa55364c55fb022e4624657b5185e5ea5b316b6108b880dde51a98e48"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/nier-next-20261009/LEAD-RULINGS-20261009.md, SHA-256 d838d83f930bda2967e9c289cffe1a98a59a2d07dd163374331c8c3803b98b38 (agent rulings, not owner answers)"
+  - "Concepts/onboarding/opus-5.5/README.md (concept lineage only; branch t3/concept/nier-showpiece-next)"
+preserved_exact_tokens:
+  - "DL-153"
+  - "NieR Mode"
+  - "Basic Dark"
+  - "Run Onboarding Again"
+  - "ui.onboarding.choose_look"
+  - "ui.settings.nier_editor.open"
+  - "cmd.settings.transaction.preview"
+negative_constraints:
+  - "Do not add a global or cross-Project theme store."
+  - "Do not make a NieR variant per family."
+  - "Do not add a settings key, a NieR part or an onboarding- or tour-only setting."
+  - "Do not add a command id, a route or a Guided Tour action for a look control."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/Settings_System.md
+  - Plans/Planning_Wizard.md
+```
+
+### DL-161 - PMConcept7 Carries Its Own Fonts
+
+```yaml
+plan_unit_id: DL-161
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-161 records the owner request of 2026-10-09 that PMConcept7 have all its fonts built in. PMConcept7 embeds
+  Inter, Poppins with Nunito behind it, and IBM Plex Mono, at the weights and italics its looks use, as Latin woff2
+  data, and Gelasio stands in under the name Georgia for the info-badge glyph because Georgia cannot be embedded
+  (F3-430). Its Inter, Poppins and IBM Plex Mono files are the 5.6 Pro chat concept's, byte for byte (DR-050).
+  Orbitron, Rajdhani and JetBrains Mono are not embedded because no text draws in them, and platform font names
+  stay the computer's. The page's symbol characters are PM Symbols, drawn for Puppet Master as SVG and embedded
+  beside every text face for those characters only, and form controls take the look's face (F3-430).
+gui_related: true
+gui_classification_reason: Records an owner request on the concepts' fonts.
+split_recommended: false
+depends_on: [F3-430]
+unblocks: [DR-050]
+acceptance_criteria:
+  - "Every theme face PMConcept7 draws in Basic, Glass, Friendly and Retro comes from embedded data."
+  - "Every symbol character the page uses draws from PM Symbols in every look."
+  - "The owner's request is recorded in plain words with its source hashes."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: theme_token_drift
+reasoning_tier: standard
+context_scope: concept_web_fonts
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/README.md, SHA-256 51df0972bff7f0f909d1cf3438aa1389eaa9e76c3b12b5ac8363814fbded11e4"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/proof-after.json, SHA-256 bfda89d92f00e53a7ad8dec195de68ff5ef1774443e4fb70868ce32bc061a82a"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/symbols-proof.json, SHA-256 e0f74c7c89eb6d80a7f48776822310df03989c1cf4e9d421cfe962af30f8ceae"
+preserved_exact_tokens:
+  - "DL-161"
+  - "Gelasio"
+  - "Georgia"
+  - "PM Symbols"
+negative_constraints:
+  - "Do not load a concept font from the network."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+```
+
+### DL-158 - The Ask Card Fits Long Answers
+
+```yaml
+plan_unit_id: DL-158
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-158 records the owner request of 2026-10-09. The questions card (the Ask Card) adjusts to long answers: it grows
+  and shrinks with its content up to the room above the composer, then scrolls its body inside the card with Back,
+  Skip, Next or Submit and close always in reach; long text and long web addresses wrap inside their rows; option and
+  question descriptions are shown; Something else and the note grow as they are typed; review shows answers whole; a
+  questionnaire whose content fits is unchanged (F3-609).
+gui_related: true
+gui_classification_reason: Records an owner decision on how the questions card handles long content.
+split_recommended: false
+depends_on: [DL-150]
+unblocks: [F3-609]
+acceptance_criteria:
+  - "The Ask Card's behaviour and draft lifecycle are unchanged (assistant-chat-design section 7.4)."
+  - "The owner's request is recorded in plain words with its source hash."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: question_card_presentation_drift
+reasoning_tier: standard
+context_scope: chat_fixes_20261009
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-questionnaire-long-answers-20261009/JARED_REQUEST.md, SHA-256 b1b1280a6dac4c2b1afed428e91c817bba1c2e7c360bfdae59b3bdec34cacf52"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-158"
+  - "Ask Card"
+negative_constraints:
+  - "Do not cut long answers short to make them fit."
+  - "Do not change the questionnaire's behaviour through its size."
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
+### DL-154 - A Collaboration Setup Sheet's Graph Stays In View As Helpers And Rounds Are Added
+
+```yaml
+plan_unit_id: DL-154
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-154 records the owner request of 2026-10-09. A collaboration setup sheet's cast plate stays a drawing at every
+  team size its kind allows, up to eight helpers with both specialists: it never yields past the leanest drawing that
+  fits its slot's width, the roster scrolls in its own region instead, and a team too wide for one strip row is drawn
+  as the wrap, its seats on two or three rows with a fork from the lead and a join to You (F3-601). In the one-column
+  narrow sheet the plate stays at the top while its question is on screen, and a run view whose team is too wide for
+  one row draws the same wrap. A Chat Room's run card and preview track shows one stop per round up to the 20-round
+  limit, and a track of eight or more stops wraps its dots down with its words on their own row (F3-602). One
+  plate-slot fit rule, one cast grammar and one track primitive carry this everywhere (DR-045). Helper limits, round
+  limits, commands, settings and wiring are unchanged. Jared reported that adding helpers pushed the graph out of view
+  in every setup sheet and asked that it hold a higher number, and that many Chat Room rounds pushed the graphic off
+  the screen and should wrap down; the record states it in plain words, without quoting him.
+gui_related: true
+gui_classification_reason: Records an owner decision on how collaboration graphs and tracks behave as teams and rounds grow.
+split_recommended: false
+depends_on: [DL-149, F3-566, F3-569, F3-592, F3-595]
+unblocks: [F3-601, F3-602, DR-045]
+acceptance_criteria:
+  - "Each collaboration setup sheet shows a cast plate drawing at its 8-helper limit with both specialists (F3-601)."
+  - "A Chat Room of 20 rounds shows 20 stops inside its card (F3-602)."
+  - "No helper limit, round limit, command, settings key or wiring row changes."
+  - "The owner request is recorded in plain words, with the verbatim source cited by path and SHA-256."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: wand_sheet_presentation_drift
+reasoning_tier: high
+context_scope: wand_modules_gui
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+  - Plans/00-plans-index.md
+  - Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-popup-graphs-20261009/JARED_REQUEST.md, SHA-256 46723a8829ea87fc5e01a261d81e92e32f3f1bc2e8a428af6704b1e3a91229e2"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-popup-graphs-20261009/SURVEY-BEFORE.md, SHA-256 b4036f1bffdf0bfb65f40fa5062540f60960b072bb46c667a7bcb00f26e0ac5f"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only; branch fix/c56-popup-graphs-20261009)"
+preserved_exact_tokens:
+  - "DL-154"
+  - "cast plate"
+  - "the wrap"
+negative_constraints:
+  - "Do not scale a cast plate to fit, and do not let it fall to its caption while a drawing fits its width."
+  - "Do not change a helper limit, a round limit, a command or a wiring row under this decision."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+```
+
+### DL-156 - The Plan Card's Buttons Line Up And Fit The Card In Every Theme
+
+```yaml
+plan_unit_id: DL-156
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-156 records the owner request of 2026-10-09: the Plan card's buttons, which did not line up, are designed for
+  the space in every theme. Every Plan surface's actions use one shared action row: one height and one type size,
+  even gaps, Build as a boxed primary (DR-047). The transcript card has no tinted footer band: one hairline opens a
+  status zone of the schedule line, the step count and the action row on the card's content edge (F3-606). The
+  schedule line reads in rows, its decision controls on a row of their own (F3-607). Disabled Build labels keep full
+  contrast. By the lead's ruling, a schedule that Build or an ended run invalidated, with no newer version, reads
+  Schedule ended and offers no Use V<n> (SQR-015). No command, action id, wiring, setting or label is added or
+  removed. The record states the request in plain words, without quoting him.
+gui_related: true
+gui_classification_reason: Records an owner decision on the Plan card's action row and schedule line layout.
+split_recommended: false
+depends_on: [DL-145, F3-566, SQR-015, APR-071]
+unblocks: [F3-606, F3-607, DR-047]
+acceptance_criteria:
+  - "Every Plan action row has one control height and type size in all ten themes (F3-606, DR-047)."
+  - "The schedule line's decision controls sit on their own row (F3-607), and an invalidated schedule with no newer version reads Schedule ended (SQR-015)."
+  - "The owner request is recorded in plain words, with the source cited by path and SHA-256."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: plan_card_layout_drift
+reasoning_tier: medium
+context_scope: chat_plan_card_actions_20261009
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Scheduling_and_Quota_Resume.md
+  - Plans/DRY_Rules.md
+  - Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-plan-card-actions-20261009/JARED_REQUEST.md, SHA-256 4454066fa6584209b779ebf33441037b484f09f452599fcbef3477383782a93d"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-plan-card-actions-20261009/JARED-SCREENSHOT-retro-light.png, SHA-256 e668fe203ee8aeeb9c9ed1e8aa2f263f525188ce14d4a837958074aace4b839b"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-156"
+  - "Schedule ended"
+  - "action row"
+negative_constraints:
+  - "Do not add a command, action id or setting for this layout."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+```
+
+### DL-160 - The To-Do Navigation Line Loses Its Last Item Button
+
+```yaml
+plan_unit_id: DL-160
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-160 records the owner's decision of 2026-10-09. The Last item button is removed from the To-Do panel's navigation
+  line, which keeps the visible count, "N visible of M items", and Expand all and nothing else (F3-593). The button
+  jumped the list to the final item and selected it, and nothing takes its place. The search field still finds any
+  title or exact ID, and the list reaches its final item by scrolling after Expand all has opened every parent. No
+  command, wiring entry, setting or To-Do state changes: the button never had a command ID, so the UI command catalog,
+  Commands_System and the Wiring Matrix hold no row for it and none is retired.
+gui_related: true
+gui_classification_reason: Records the owner's removal of one control from the To-Do panel's navigation line in Activity Detail.
+split_recommended: false
+depends_on: [DL-147]
+unblocks: [F3-593]
+acceptance_criteria:
+  - "The To-Do navigation line holds the visible count and Expand all only, and no Last item control exists in the panel (F3-593)."
+  - "No command, wiring row, setting or To-Do state is added or retired by this change."
+  - "The removal is recorded with its date, 2026-10-09."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: todo_navigation_control_drift
+reasoning_tier: high
+context_scope: todo_navigation_line_20261009
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Decision_Log.md
+  - Plans/00-plans-index.md
+  - Concepts/chat-assistant-concepts/5.6 Pro/todos.js
+  - Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (To-Dos section; concept lineage only)"
+preserved_exact_tokens:
+  - "DL-160"
+  - "Expand all"
+  - "visible of"
+negative_constraints:
+  - "Do not add a replacement for the Last item button to the To-Do navigation line."
+  - "Do not add a command, wiring row or setting for the removed button."
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
+### DL-162 - The Left Rail Takes The Polish Design
+
+```yaml
+plan_unit_id: DL-162
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-162 records the owner decision of 2026-10-09 that the left rail takes concept D, "Polish", of the left-rail
+  review copy. The nine rail panels keep the Cozy Shelves structure and coloured shelf boxes with tighter geometry
+  (a 3 px gutter, a 2 px inset, an outer radius R and an inner radius R minus the inset, row names 24 px from the
+  rail edge), one type ladder with nothing under 11 px, and the looks' own faces (F3-618). Statuses are a glyph
+  whose shape is the state plus a coloured word, counts are plain tabular numbers, and nothing is a pill or carries a
+  coloured side bar (F3-619). Text fits by layout and is never abbreviated, tab strips included (F3-620; F3-480 (3),
+  F3-445, CRAU-098, UCC-136 and GI-039 amended). Every rail dropdown is the chat picker, and motion is per theme family:
+  Basic crisp, Friendly springy, Glass gliding with blur only on the shelf boxes, Retro stepped and NieR Mode ink,
+  under the Animation speed and reduced-motion settings (F3-621). The worktree owner filter becomes an Owner
+  dropdown and the publish and review card folds (F3-622, W-075 amended), with no new command. DR-057 keeps the
+  grammar in one owner. Open owner questions: whether the rail's glyphs and the chat's 13 status marks (F3-585)
+  should be one set, and whether the rail's frosted scroll-under plates fit F3-431's blur budget. Settled later
+  under this decision: the Jujutsu view's tabs (DL-163), the remaining panels and the bottom Debug tab in their
+  owner units with no new command, action or wiring row, the paused, immutable and errored glyphs (F3-619), and the
+  More tray as the chat picker (F3-625).
+gui_related: true
+gui_classification_reason: Records an owner decision on the left rail's presentation.
+split_recommended: false
+depends_on: [F3-472, F3-474, F3-480, F3-445, F3-471]
+unblocks: [F3-618, F3-619, F3-620, F3-621, F3-622, F3-625, DR-057]
+acceptance_criteria:
+  - "The rail's geometry, type, statuses, fitting, dropdowns and motion are owned by F3-618 to F3-622, and the amended consumer units point at them."
+  - "No command, action or wiring row is added by this decision."
+  - "The owner's decision is recorded in plain words with its source hash."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: rail_presentation_drift
+reasoning_tier: high
+context_scope: left_rail_polish
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+  - Plans/Containers_Registry_and_Unraid.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/GitHub_Integration.md
+  - Plans/WorktreeGitImprovement.md
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/FileManager.md
+  - Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md, SHA-256 4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06"
+  - "Concepts/leftrail-redesign/src/concepts/d/ at commit c93e341606 (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-162"
+  - "Polish"
+  - "never abbreviated"
+negative_constraints:
+  - "Do not add a command, an action or a wiring row through this decision."
+  - "Do not reintroduce pills, coloured side bars or abbreviated labels in the left rail."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+```
+
+### DL-163 - The Jujutsu View Of Source Control Gets Its Own Five Tabs
+
+```yaml
+plan_unit_id: DL-163
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-163 records the answer of 2026-10-09 to the owner's question whether the Jujutsu view of Source Control should
+  have tabs, which he left to the left-rail build (DL-162). It does: Jujutsu gets its own strip of five views, one at
+  a time, Changes, Workspaces, History, Bookmarks and Operation Log, in JJI section 4.1's order and JJI-006's
+  registered words, while Git keeps its own Changes, Worktrees, History and Branches strip, hidden in Jujutsu mode;
+  neither strip relabels the other (JJI-001, JJI-006). The first four views share slot positions with Git's, so the
+  presentation-only engine switch (ui.source_control.profile.preview) opens the same slot and Operation Log opens
+  Git's History. Both Source Control strips fit by their longest label, so a strip never changes mode while one
+  clicks through it. Publish and review stays the footer card in both engines, and Jujutsu mode adds Undo and
+  Refresh to the panel head (F3-623). The five views list the current change, workspaces, stacks of changes,
+  bookmarks per remote and operations with existing commands only (F3-624). SCS-005 records the per-engine tab
+  strips, the footer card and the bookmark state axes; F3-529, F3-552, UCC-163 and JJI-008 call the fifth view
+  Operation Log. Open: disabled-reason codes for the concept's local reasons, an update command for an out-of-date
+  workspace, what Undo reverts after an automatic working-copy save, and, for the owner, whether a change's short
+  ID shows on its row and whether to keep "Operation Log".
+gui_related: true
+gui_classification_reason: Records an owner decision on the Jujutsu view of the Source Control rail panel.
+split_recommended: false
+depends_on: [DL-162, JJI-006, SCS-005, F3-529]
+unblocks: [F3-623, F3-624]
+acceptance_criteria:
+  - "The Jujutsu view's strip, views, rows and actions are owned by F3-623 and F3-624, and SCS-005, F3-529, F3-552, UCC-163 and JJI-008 point at them or use their label."
+  - "No command, action, schema value or wiring row is added by this decision."
+  - "The owner's question and the two choices left to him are recorded in plain words with the request's source hash."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: rail_presentation_drift
+reasoning_tier: high
+context_scope: left_rail_polish
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Source_Control_System.md
+  - Plans/Jujutsu_Integration.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/GitHub_Integration.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md, SHA-256 4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06 (issue 2)"
+  - "The left-rail build's Jujutsu tab decision, revision 2 of 2026-10-09, summarised in the DL-163 entry (not a repository file)"
+  - "Concepts/leftrail-redesign/src/concepts/d/ from lane commits 8693996260 and 2f77b78710 (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-163"
+  - "Operation Log"
+  - "ui.source_control.profile.preview"
+negative_constraints:
+  - "Do not add a command, an action, a disabled-reason code or a wiring row through this decision."
+  - "Do not alias Bookmarks to Branches or Workspaces to Worktrees by relabelling one strip for both engines."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/Jujutsu_Integration.md
+  - Plans/Source_Control_System.md
 ```
 
 ### DL-173 - The Usage Page Is Redesigned And Replaces The Old One

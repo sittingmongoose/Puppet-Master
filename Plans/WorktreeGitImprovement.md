@@ -5259,14 +5259,16 @@ canonical_text: >-
   multi-select within a dimension is OR, across dimensions is AND; active chip selection persists per project with the
   panel state alongside the existing sort mode, hide-stale toggle, and ownership display mode, and rehydrates on
   startup. A zero-result filter state shows an explicit filtered-empty explainer with a clear-filters action, distinct
-  from the true zero-worktrees empty state.
+  from the true zero-worktrees empty state. Amended 2026-10-09 (DL-162): in the left rail each filter dimension presents
+  as one dropdown in the chat picker style, the owner-class one labelled Owner, instead of a row of chips
+  (FinalGUISpec F3-622); the dimensions, the OR and AND rules and the persistence above are unchanged.
 gui_related: true
-gui_classification_reason: This defines the visible filter chip row and persisted filter behavior of the Worktrees topology panel.
+gui_classification_reason: This defines the visible filter controls and persisted filter behavior of the Worktrees topology panel.
 depends_on: [W-032, W-070]
 unblocks: []
 acceptance_criteria:
-  - Filter chips cover exactly the four dimensions with the enumerated values and no invented lifecycle states.
-  - Chip selection persists per project and rehydrates with the worktree panel state.
+  - Filters cover exactly the four dimensions with the enumerated values and no invented lifecycle states.
+  - Filter selection persists per project and rehydrates with the worktree panel state.
   - Filtered-empty and zero-worktrees states render distinct explainers.
   - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
 validation_surfaces:
@@ -5283,6 +5285,7 @@ source_lineage:
   - Plans/WorktreeGitImprovement.md:437-439
   - Plans/WorktreeGitImprovement.md:297
   - user decision 2026-07-27
+  - Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; filters present as dropdowns, FinalGUISpec F3-622)
 source_atom_ids: []
 preserved_exact_tokens: ["persisted worktree panel filters", "hide-stale", "blocked_preserved", "owner class", "filtered-empty"]
 negative_constraints:
