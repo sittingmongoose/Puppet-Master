@@ -134,9 +134,13 @@ def inline_fonts(css: str, font_dir: Path = FONT_DIR) -> str:
     import base64
 
     def data_uri(m: re.Match) -> str:
+        # The page's 'JetBrains Mono' code face (DL-161, D17) reuses NieR Mode's files, so a name missing from font_dir
+        # is looked up in nier/fonts: one copy of the bytes in the repository for both families.
         path = font_dir / m.group(1)
         if not path.is_file():
-            raise ValueError(f'O55: embedded font {m.group(1)!r} is not in {font_dir.relative_to(PKG)}')
+            path = FONT_DIR / m.group(1)
+        if not path.is_file():
+            raise ValueError(f'O55: embedded font {m.group(1)!r} is not in {font_dir.relative_to(PKG)} or {FONT_DIR.relative_to(PKG)}')
         return 'url("data:font/woff2;base64,' + base64.b64encode(path.read_bytes()).decode('ascii').replace('/', '%2F') + '")'
     return FONT_URL.sub(data_uri, css)
 
@@ -153,7 +157,7 @@ def shared_font_drift(font_dir: Path) -> list[str]:
     if not all(p.is_file() for p in PRO56_FONT_CSS):
         print('NOTE: 5.6 Pro is not checked out here; the shared-font check (DR-050) was skipped', file=sys.stderr)
         return []
-    ours = {hashlib.sha256(p.read_bytes()).hexdigest() for p in font_dir.glob('*.woff2')}
+    ours = {hashlib.sha256(p.read_bytes()).hexdigest() for p in [*font_dir.glob('*.woff2'), *FONT_DIR.glob('*.woff2')]}
     problems = []
     for css in PRO56_FONT_CSS:
         for m in re.finditer(r'@font-face\s*\{([^}]*)\}', css.read_text(encoding='utf-8')):
@@ -171,7 +175,7 @@ def shared_font_drift(font_dir: Path) -> list[str]:
 
 # Text faces that carry PM Symbols (src/css/03-symbols.css). Nunito and Georgia are left out on purpose: Nunito only
 # stands behind Poppins, and Georgia sets one "i".
-SYMBOL_MIRRORED = {'Inter', 'Poppins', 'IBM Plex Mono', 'PM NieR Sans', 'PM NieR Mono'}
+SYMBOL_MIRRORED = {'Inter', 'Poppins', 'IBM Plex Mono', 'JetBrains Mono', 'PM NieR Sans', 'PM NieR Mono'}
 
 
 def _font_faces(css: str) -> list[tuple[str, str, str, str, str]]:
@@ -207,6 +211,20 @@ def web_font_checks(src: Path) -> list[str]:
     for f, s, w in sorted(text):
         if f in SYMBOL_MIRRORED and (f, s, w) not in {(a, b, c) for a, b, c, _ in sym}:
             problems.append(f'text face {f} {s} {w} has no PM Symbols face (src/css/03-symbols.css)')
+    # Script slices (DL-161, amended 2026-10-09): a family's Latin face comes after its unicode-range slices, so the
+    # Latin bytes win every code point they share, and every embedded file is listed in src/fonts/SOURCE.md.
+    seen_latin = set()
+    for f, s, w, u, _ in faces:
+        if 'pm-symbols' in u:
+            continue
+        if '-latin-' in u and '-latin-ext-' not in u:
+            seen_latin.add((f, s, w))
+        elif (f, s, w) in seen_latin:
+            problems.append(f'{f} {s} {w}: the slice {u} comes after the Latin face; declare the Latin face last')
+    listed = set(re.findall(r'`([\w.-]+\.woff2)`', (src / 'fonts' / 'SOURCE.md').read_text(encoding='utf-8')))
+    for path in sorted((src / 'fonts').glob('*.woff2')) + sorted(FONT_DIR.glob('*.woff2')):
+        if path.name not in listed:
+            problems.append(f'{path.name} is embedded but not listed in src/fonts/SOURCE.md')
     base = (PKG.parents[1] / 'Onboarding concepts' / 'TestPMConcept.html').read_text(encoding='utf-8')
     sym_css = (src / 'css' / '03-symbols.css').read_text(encoding='utf-8')
     for sel, prop, rest in re.findall(r"^([^@{}\n]+?)\s*\{\s*(font-family|--mono-font)\s*:\s*'PM Symbols Mono',\s*([^;]+);",

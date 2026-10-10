@@ -1639,7 +1639,17 @@ Each module supplies only its own content.
   no uppercase micro-labels, no initials avatars, no emoji.
 - **Fonts.** Every surface uses its theme's own font, as PMConcept7 assigns it:
   Inter in basic and glass, Poppins in friendly, and IBM Plex Mono for
-  everything in retro only. There is no separate display face and no italic
+  everything in retro only. Code text (code blocks, inline code, command lines,
+  logs, hashes and every other `--font-mono` text) is JetBrains Mono in basic,
+  glass and friendly, the code face the home redesign designates; retro's
+  code text stays IBM Plex Mono, like everything else in retro. Every face carries the scripts its
+  family supports, as `unicode-range` slices that are decoded only when a page
+  uses them: Inter and JetBrains Mono add Latin Extended, Vietnamese, Cyrillic
+  and Greek; Poppins adds Latin Extended and Devanagari; IBM Plex Mono adds
+  Latin Extended, Vietnamese and Cyrillic; NieR Mode's faces add theirs the
+  same way. The files are PMConcept7's, byte for byte (DR-050). Scripts no
+  family carries (Arabic, Hebrew, Thai, Chinese, Japanese, Korean) use the
+  computer's fonts. There is no separate display face and no italic
   voice. The "voice" roles (read-backs, result headlines, pull-quotes, run-view
   headings) differ only by size, weight (620; 600 in retro and friendly) and
   colour, and a quote is marked by quotation marks and the muted colour.

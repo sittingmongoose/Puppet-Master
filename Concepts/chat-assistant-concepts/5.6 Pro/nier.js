@@ -119,7 +119,7 @@
     if (!F || !set || typeof window.FontFace !== 'function') return;
     if (!faces) {
       faces = [];
-      F.forEach(function (f) { try { faces.push(new window.FontFace(f.family, f.src, { weight: f.weight, style: 'normal', display: 'swap' })); } catch (e) { /* a face that will not parse falls back to the stack */ } });
+      F.forEach(function (f) { try { faces.push(new window.FontFace(f.family, f.src, f.range ? { weight: f.weight, style: 'normal', display: 'swap', unicodeRange: f.range } : { weight: f.weight, style: 'normal', display: 'swap' })); } catch (e) { /* a face that will not parse falls back to the stack */ } });
     }
     faces.forEach(function (f) {
       var has = set.has(f);

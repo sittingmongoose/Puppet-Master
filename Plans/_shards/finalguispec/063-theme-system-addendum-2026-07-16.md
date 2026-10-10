@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L29680-L30756
+Source lines: L29680-L30775
 
-Source SHA256: `30c23bb4de94c31eb7c49350a5304f6aa83ad1a981a00a804aa54278c73464f6`
+Source SHA256: `55b0fe1a44baa306e136a4d067336534ef90d6c0e1406852d58784d209a73a8f`
 
 ---
 
@@ -168,6 +168,13 @@ user turn, a block in `--accent-lime`, takes the paper `--surface` (`#F5F0E8`) a
 thread is told so PMConcept7 can match. Retro focus follows F3-201: lime on Retro Dark, accent-blue on Retro Light.
 These remain the app's only Retro tables (DR-043); the chat paints them through F3-597. Geometry, motion and type
 size rows already matched PMConcept7 and are unchanged.
+
+Amended 2026-10-09 (DL-161, the owner's code-face follow-up): the root contract's `--mono-font`, which the Basic,
+Glass and Friendly tables inherit, leads with `'JetBrains Mono'`, the code face the home redesign's D17 designates for
+every look, embedded under that name (F3-430). The Retro tables' `--mono-font` rows are unchanged: Retro's code text
+stays IBM Plex Mono, the face of its whole interface (owner, 2026-10-10, "Keep IBM Plex Mono"), and NieR Mode keeps
+its own PM NieR Mono, the same letters as JetBrains Mono. These are the code-text tokens; the home redesign's editor
+and terminal faces are decided separately (its D17, which its Plans thread records).
 
 ### F3-427 - Glass Composition Single-Blur Contract
 
@@ -380,7 +387,15 @@ canonical_text: >-
   Concepts/onboarding/opus-5.5/src/css/01-webfonts.css from its src/fonts files and OFL-*.txt licences, and
   Gelasio, an SIL OFL face drawn to Georgia's metrics, stands in under the family name Georgia for the
   info-badge glyph because Georgia cannot be embedded. Its Inter, Poppins and IBM Plex Mono files are the
-  bytes the 5.6 Pro chat concept embeds (DR-050). The page's symbol characters (arrows, check and cross marks,
+  bytes the 5.6 Pro chat concept embeds (DR-050). Since 2026-10-09 (DL-161 amended) each embedded family also
+  carries the other scripts it supports, as unicode-range slices declared before its unchanged Latin file: Inter
+  Latin Extended, Vietnamese, Cyrillic and Greek with their extended blocks; Poppins Latin Extended and Devanagari;
+  Nunito and IBM Plex Mono Latin Extended, Vietnamese and Cyrillic; PM NieR Sans Latin Extended and Vietnamese; PM
+  NieR Mono those and Cyrillic and Greek. Scripts no family carries use the computer's fonts. Code text follows the
+  look's code face, the --mono-font token: JetBrains Mono, embedded under that name with PM NieR Mono's files and
+  slices and, in PMConcept7, JetBrains Mono's own italic with the same slices, in Basic, Glass and Friendly (the home redesign's D17), IBM Plex Mono in Retro, its whole face (owner,
+  2026-10-10), and PM NieR Mono in NieR Mode; both concepts set their code blocks, inline code, file paths and logs
+  through that token. The home redesign's editor and terminal faces are decided separately (its D17, which its Plans thread records). The page's symbol characters (arrows, check and cross marks,
   triangles, the warning sign, dots, math signs, the command key and box lines) are PM Symbols, drawn as SVG in
   src/fonts/symbols/svg and built into a proportional and a monospace variable font that are attached to every
   embedded text face for those characters only, with each face's own family, style and weight
@@ -396,6 +411,7 @@ acceptance_criteria:
   - "Inter, Poppins, Nunito and IBM Plex Mono are bundled locally and no runtime font CDN request is made."
   - "PMConcept7 draws Basic and Glass in Inter, Friendly in Poppins and Retro in IBM Plex Mono, and the info-badge glyph in the Gelasio stand-in for Georgia, from embedded data on a machine with none of those fonts installed; its Inter, Poppins and IBM Plex Mono files are byte-identical to 5.6 Pro's."
   - "PMConcept7 draws every symbol character it uses from PM Symbols in every look, and its buttons, inputs and menus in the look's face."
+  - "Both concepts draw every script an embedded family carries from embedded data on a machine with no fonts installed, and code text in Basic, Glass and Friendly in the embedded JetBrains Mono."
   - "The Friendly ground renders the paper texture with an 18px dot grid, and frosted 14px chrome blur is limited to the title bar, status bar, and bottom panel."
   - "The five category pastels (mint, sky, coral, lavender, butter) drive category surface tinting."
   - "Cross-family theme switches that change Retro or Friendly font families require restart, while same-family and Glass/Basic Inter switches stay live."
@@ -414,6 +430,7 @@ node_compile_hint:
 source_lineage:
   - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
   - "Plans/Decision_Log.md#DL-161 (owner request, 2026-10-09)"
+  - "Plans/Decision_Log.md#DL-161 (owner follow-ups, 2026-10-09 and 2026-10-10: scripts and the code face)"
   - "Plans/FinalGUISpec.md:964"
   - "Plans/FinalGUISpec.md:7647"
   - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
@@ -432,6 +449,8 @@ preserved_exact_tokens:
   - "DR-050"
   - "DL-161"
   - "JetBrains Mono"
+  - "unicode-range"
+  - "--mono-font"
   - "M PLUS 1"
   - "PM NieR Mono"
   - "PM NieR Sans"
@@ -559,7 +578,7 @@ Variants inherit these values wherever a per-variant table row says "not defined
 | `--sheen-dur` | `.6s` |
 | `--display-font` | `'IBM Plex Mono', monospace` |
 | `--body-font` | `'IBM Plex Mono', monospace` |
-| `--mono-font` | `ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace` |
+| `--mono-font` | `'JetBrains Mono', ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace` (JetBrains Mono embedded; DL-161 amended 2026-10-09) |
 | `--base-font-size` | `14px` |
 | `--line-height` | `1.4` |
 | `--letter-spacing` | `normal` |

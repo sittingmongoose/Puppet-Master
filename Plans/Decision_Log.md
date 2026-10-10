@@ -3422,7 +3422,7 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-600, ContractName:Plans/Final
 **Why it came up:** PMConcept7's looks name Inter, Poppins, Nunito, IBM Plex Mono and Georgia, but the page carried only NieR Mode's two faces. On a computer without those fonts every look fell back to the machine's own sans or mono (DejaVu on the test VM), so Basic, Glass, Friendly and Retro looked different from one computer to the next. Jared asked on 2026-10-09 that PMConcept7 have all its fonts built in.
 
 **What you get:**
-- Basic and Glass in Inter, Friendly in Poppins (with Nunito behind it), Retro in IBM Plex Mono, on every computer and with no font download. Each face is the Latin set, stored inside the page.
+- Basic and Glass in Inter, Friendly in Poppins (with Nunito behind it), Retro in IBM Plex Mono, on every computer and with no font download. Each face is stored inside the page with every script its family carries (see the follow-ups below).
 - The weights and slants the looks use: Inter at every weight and in italic, Poppins 400 to 800 and italic 400 and 600, IBM Plex Mono 400 to 700 and italic 400 and 600.
 - Georgia, which the page names only for the bold italic "i" on its info badges, is a paid font that cannot be built in. Gelasio, a free font drawn to Georgia's measurements, stands in under the name Georgia.
 - PMConcept7 and the 5.6 Pro chat use the same Inter, Poppins and IBM Plex Mono files, byte for byte, so both draw the same letters. PMConcept7's build check fails if the two drift apart.
@@ -3431,23 +3431,26 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-600, ContractName:Plans/Final
 
 **What it costs:**
 - PMConcept7 grows by 463,484 bytes (about 4.5%), to 10.8 MB: 408,446 for the fonts, 54,449 for the symbols and 589 for the control rule.
-- Any non-Latin script still uses the computer's own fonts.
-- Code text in Basic, Glass and Friendly still uses the computer's own monospace, because those looks name it on purpose; only its symbols are ours. Retro's code text is IBM Plex Mono.
+- Scripts no embedded family carries (Arabic, Hebrew, Thai, Chinese, Japanese, Korean and the like) still use the computer's own fonts; see the follow-ups below for what embedding them would cost.
 - A new symbol in the page needs a drawing: until one is added to PM Symbols it falls back to the computer's font.
 
-**Options considered:** Not built in: Orbitron and Rajdhani (the page's starting defaults, which every look replaces, retired as theme faces by DL-138) and JetBrains Mono (behind IBM Plex Mono with the same letters, so it never draws; its file is already in the page as NieR Mode's mono). Roboto, Segoe UI, SF Pro, SF Mono, Menlo, Consolas, Cascadia Mono and system-ui name the computer's own fonts on purpose. For Georgia, leaving the computer's own serif would differ by machine; Gelasio is the free face made to Georgia's measurements.
+**Options considered:** Not built in: Orbitron and Rajdhani (the page's starting defaults, which every look replaces, retired as theme faces by DL-138). JetBrains Mono was left out at first (behind IBM Plex Mono with the same letters); the second follow-up below makes it the code face. Roboto, Segoe UI, SF Pro, SF Mono, Menlo, Consolas, Cascadia Mono and system-ui name the computer's own fonts on purpose. For Georgia, leaving the computer's own serif would differ by machine; Gelasio is the free face made to Georgia's measurements.
 
 **What the owner decided** (in plain words):
 - 2026-10-09, in his request: "Make sure PMConcept7 has all its fonts built in." The choice of faces, weights and slants, the Gelasio stand-in and the shared files are agent choices under that request.
 - 2026-10-09, follow-up: the symbols are custom SVG drawings built into a font, rather than icons placed in the page or the computer's own glyphs, and form controls get a CSS rule so they use the look's font ("svg for 1 and css rule for the second", then "SVG glyphs as a font"). The glyph designs are agent choices under that answer.
+- 2026-10-09, two more follow-ups (Jared's, relayed by the 5.6 Pro chat orchestrator thread). First, wider-than-Latin coverage, approved: each embedded family carries the scripts it supports, split the way Google Fonts splits them, with a size budget of about 1.5 MB, and scripts no family covers are measured, not embedded. Second, about code text: "I want it to follow the themes fonts, so whatever was supposed to be designated by the theme." The designation is the home redesign's D17, which Jared approved: "JetBrains Mono becomes the code face for the editor and the terminal in every look." Basic, Glass and Friendly take it.
+- 2026-10-10, Retro's code face: "Keep IBM Plex Mono. Retro's whole interface is Plex Mono, so code matches everything around it, and nothing else in Retro changes. The home redesign's editor and terminal can still use JetBrains Mono or VT323 there." Retro's tokens are unchanged, and NieR Mode keeps PM NieR Mono. The home redesign's editor and terminal faces are decided separately (its D17, which its Plans thread records). The slicing, the family name 'JetBrains Mono' (agreed with the home redesign, whose `--pm-font-code` names it) and the list of code surfaces are agent choices under those answers.
 
 **What the spec now says:**
 1. **The concepts' fonts** (`Plans/FinalGUISpec.md#F3-430`, amended): PMConcept7 embeds the theme faces, Nunito and the Gelasio stand-in for Georgia as Latin woff2 data, declared in `Concepts/onboarding/opus-5.5/src/css/01-webfonts.css`; its symbols are PM Symbols (`src/css/03-symbols.css`), and its form controls take the look's face (`src/css/02-control-fonts.css`).
 2. **One set of font files for both concepts** (`Plans/DRY_Rules.md#DR-050`).
+3. **Scripts** (`Plans/FinalGUISpec.md#F3-430`, amended 2026-10-09): every embedded family carries the scripts it supports as `unicode-range` slices, so the browser decodes only what a page uses. Inter adds Latin Extended, Vietnamese, Cyrillic and Greek, both with their extended blocks. Poppins adds Latin Extended and Devanagari. Nunito and IBM Plex Mono add Latin Extended, Vietnamese and Cyrillic. NieR Mode's faces add Latin Extended and Vietnamese, and PM NieR Mono also adds Cyrillic and Greek. Gelasio stays Latin, since it sets one "i". The Latin files are unchanged and declared last. Cost: PMConcept7 grows by 1,511,344 bytes and the 5.6 Pro standalone by 776,530. Not embedded, with the cost measured: M PLUS 1's Japanese (2,599,644 bytes of woff2, about 3.5 MB inline) and Noto faces for the scripts no family carries; the figures are in the SourceRef's README.
+4. **The code face** (`Plans/FinalGUISpec.md#F3-430` and `#F3-426`, amended 2026-10-09): code text in Basic, Glass and Friendly is JetBrains Mono, embedded under its own name with the same slices and the same bytes as NieR Mode's PM NieR Mono, plus JetBrains Mono's own italic with the same slices in PMConcept7 (2026-10-10, at the home redesign's request; its Latin file is the terminal thread's, byte for byte), so italic code is drawn, not slanted. This covers code blocks, inline code, the editor, the terminal, file paths, branch names, logs and command text, in PMConcept7 and in the 5.6 Pro chat. Retro's code text stays IBM Plex Mono, its whole face, with its tokens unchanged (Jared, 2026-10-10), and NieR Mode keeps PM NieR Mono. The home redesign's editor and terminal faces are decided separately (its D17, which its Plans thread records). Cost: PMConcept7 +244,805 bytes (132,488 of them the italic), the 5.6 Pro standalone +105,255.
 
-SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/README.md`, SHA-256 `51df0972bff7f0f909d1cf3438aa1389eaa9e76c3b12b5ac8363814fbded11e4` (the request and the evidence index); `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/proof-after.json`, SHA-256 `bfda89d92f00e53a7ad8dec195de68ff5ef1774443e4fb70868ce32bc061a82a` (the fonts Chrome drew in every look on the P1000 VM, which has none of these fonts installed); `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/symbols-proof.json`, SHA-256 `e0f74c7c89eb6d80a7f48776822310df03989c1cf4e9d421cfe962af30f8ceae` (every symbol drawn from PM Symbols in every look and text context).
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/README.md`, SHA-256 `51df0972bff7f0f909d1cf3438aa1389eaa9e76c3b12b5ac8363814fbded11e4` (the request and the evidence index); `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/proof-after.json`, SHA-256 `bfda89d92f00e53a7ad8dec195de68ff5ef1774443e4fb70868ce32bc061a82a` (the fonts Chrome drew in every look on the P1000 VM, which has none of these fonts installed); `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/symbols-proof.json`, SHA-256 `e0f74c7c89eb6d80a7f48776822310df03989c1cf4e9d421cfe962af30f8ceae` (every symbol drawn from PM Symbols in every look and text context); `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-scripts-20261009/README.md`, SHA-256 `352dfdc3063e90c0ad68361057c6be9e089fd3835470baba6347d0590cd268ae` (the two follow-ups, Jared's words, the size and Noto cost tables and the evidence index); `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-scripts-20261009/pm7-final-verdict.json`, SHA-256 `47f3eccae609f6926e4e8240211a79b1032aab93184ed68a5dc0a923b6354006`, and `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-scripts-20261009/pro-final-verdict.json`, SHA-256 `10aadd340894dc9bff422b2252828c48c04c9f7ac9a240f84b215c9a91792188` (per look, role and script, whether every character drew from an embedded face, on the P1000 VM with none of these fonts installed).
 
-ContractRef: ContractName:Plans/FinalGUISpec.md#F3-430, ContractName:Plans/DRY_Rules.md#DR-050
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-430, ContractName:Plans/FinalGUISpec.md#F3-426, ContractName:Plans/DRY_Rules.md#DR-050
 
 ### DL-158: The Ask Card fits long answers
 
@@ -12118,9 +12121,14 @@ canonical_text: >-
   Inter, Poppins with Nunito behind it, and IBM Plex Mono, at the weights and italics its looks use, as Latin woff2
   data, and Gelasio stands in under the name Georgia for the info-badge glyph because Georgia cannot be embedded
   (F3-430). Its Inter, Poppins and IBM Plex Mono files are the 5.6 Pro chat concept's, byte for byte (DR-050).
-  Orbitron, Rajdhani and JetBrains Mono are not embedded because no text draws in them, and platform font names
-  stay the computer's. The page's symbol characters are PM Symbols, drawn for Puppet Master as SVG and embedded
-  beside every text face for those characters only, and form controls take the look's face (F3-430).
+  Orbitron and Rajdhani are not embedded because no text draws in them, and platform font names stay the
+  computer's. The page's symbol characters are PM Symbols, drawn for Puppet Master as SVG and embedded beside every
+  text face for those characters only, and form controls take the look's face (F3-430). Amended 2026-10-09 by the
+  owner's two follow-ups: every embedded family carries the scripts it supports as unicode-range slices, in both
+  concepts, and scripts no family carries are measured, not embedded; and code text follows the look's designated
+  code face, JetBrains Mono in Basic, Glass and Friendly (the home redesign's D17), embedded under that name with
+  PM NieR Mono's bytes, while Retro's stays IBM Plex Mono (owner, 2026-10-10) and NieR Mode's PM NieR Mono; the home
+  redesign's editor and terminal faces are decided separately in its own Plans record (F3-430, F3-426).
 gui_related: true
 gui_classification_reason: Records an owner request on the concepts' fonts.
 split_recommended: false
@@ -12129,6 +12137,7 @@ unblocks: [DR-050]
 acceptance_criteria:
   - "Every theme face PMConcept7 draws in Basic, Glass, Friendly and Retro comes from embedded data."
   - "Every symbol character the page uses draws from PM Symbols in every look."
+  - "Every script an embedded family carries draws from embedded data in both concepts, and code text in Basic, Glass and Friendly draws in the embedded JetBrains Mono."
   - "The owner's request is recorded in plain words with its source hashes."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -12147,13 +12156,19 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/README.md, SHA-256 51df0972bff7f0f909d1cf3438aa1389eaa9e76c3b12b5ac8363814fbded11e4"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/proof-after.json, SHA-256 bfda89d92f00e53a7ad8dec195de68ff5ef1774443e4fb70868ce32bc061a82a"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/symbols-proof.json, SHA-256 e0f74c7c89eb6d80a7f48776822310df03989c1cf4e9d421cfe962af30f8ceae"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-scripts-20261009/README.md, SHA-256 352dfdc3063e90c0ad68361057c6be9e089fd3835470baba6347d0590cd268ae"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-scripts-20261009/pm7-final-verdict.json, SHA-256 47f3eccae609f6926e4e8240211a79b1032aab93184ed68a5dc0a923b6354006"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-scripts-20261009/pro-final-verdict.json, SHA-256 10aadd340894dc9bff422b2252828c48c04c9f7ac9a240f84b215c9a91792188"
 preserved_exact_tokens:
   - "DL-161"
   - "Gelasio"
   - "Georgia"
   - "PM Symbols"
+  - "JetBrains Mono"
+  - "unicode-range"
 negative_constraints:
   - "Do not load a concept font from the network."
+  - "Do not embed a face for a script no theme family carries without the owner's decision."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/DRY_Rules.md

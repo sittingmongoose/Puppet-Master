@@ -77,11 +77,11 @@
 .working-variant-22 .c22-blip{position:absolute;width:5px;height:5px;margin:-2.5px;border-radius:50%;background:color-mix(in srgb,var(--pm-step,var(--accent)) 80%,var(--text))}
 .working-variant-22 .c22-blip.current{animation:c22-blip 1.2s var(--pm-ease-out) infinite}
 .working-variant-22 .c22-readout{min-width:0;flex:1}
-.working-variant-22 .c22-cmd{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:11.5px;color:var(--text);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.working-variant-22 .c22-cmd{font-family:var(--font-mono);font-size:11.5px;color:var(--text);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 @keyframes c22-ring{0%{transform:scale(.2);opacity:.9}100%{transform:scale(1);opacity:0}}
 @keyframes c22-sweep{to{transform:rotate(360deg)}}
 @keyframes c22-blip{0%,100%{opacity:1}50%{opacity:.35}}
-.working-variant-22 .c22-cmd{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:11.5px;color:var(--text);display:block;white-space:normal;overflow-wrap:anywhere;line-height:1.5}
+.working-variant-22 .c22-cmd{font-family:var(--font-mono);font-size:11.5px;color:var(--text);display:block;white-space:normal;overflow-wrap:anywhere;line-height:1.5}
 /* 23 — Circuit --------------------------------------------------------------------------- */
 .working-variant-23 .c23-body{display:flex;flex-direction:column;gap:2px}
 .working-variant-23 .c23-base{stroke:var(--surface-4);stroke-width:2}
