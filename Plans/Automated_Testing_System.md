@@ -3550,9 +3550,14 @@ canonical_text: >-
   concept-runner artifacts remain additional evidence, not replacement owners. Fixture lists and
   `must`/`must_not` assertions are not runtime, visual, motion, or migration proof; those require fresh browser
   execution, raw receipts, and independent review.
+  Amended 2026-10-10 (DL-186): every dashboard board now runs the Usage board engine (Plans/Widget_System.md#WS-030),
+  so Dashboard frozen resize peers retire with the Dashboard's own settlement (WS-019): a dashboard board's resize
+  shows the Usage board's live displacement of obstructed peers, and the Dashboard wrapper/host that owns a widget's
+  mutations is that widget's board in its dashboard tab. Until the Home transaction and motion fixtures are updated
+  to say so, their frozen-peer assertions are lineage, not current canon.
 gui_related: true
 gui_classification_reason: This unit owns cross-page visible and interaction fixtures shared by PMConcept7 surfaces.
-depends_on: [F3-513, F3-515, F3-516, F3-517]
+depends_on: [F3-513, F3-515, F3-516, F3-517, DL-186]
 unblocks: [ATS-038, ATS-039, ATS-040]
 acceptance_criteria:
   - "The shared fixture root contains exactly the seven named fixture families and each names owner PlanUnits, surfaces, must assertions, and must-not assertions."
@@ -3581,6 +3586,8 @@ preserved_exact_tokens: [surface_inventory, assistant_context_continuity, home_w
 negative_constraints:
   - "Do not treat audit evidence under Plans/.audits as the canonical root test suite."
   - "Do not add a second Assistant, layout store, command family, or event family for fixture convenience."
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (DL-186): Dashboard frozen resize peers retire; a dashboard board resizes with the Usage board's live preview, and the frozen-peer fixture assertions await their update."
 owner_hints: [Plans/Automated_Testing_System.md, Plans/FinalGUISpec.md]
 ```
 
