@@ -748,7 +748,7 @@
   {
    "id": "general.visual.chat-layout-mode",
    "label": "Chat Layout",
-   "desc": "Where the assistant chat lives: Docked to the right edge of the window, Overlay sliding above your work, or Detached as its own floating window. Applies instantly.",
+   "desc": "Where the assistant chat lives: Docked to the right edge of the window, Overlay sliding above your work, or Detached as its own floating window. Applies instantly. (Superseded by the chat column of the Home layout record and the chat's Pop out, cmd.panel.undock, DL-180)",
    "type": "select",
    "options": [
     "Docked",
@@ -1562,7 +1562,7 @@
   {
    "id": "general.interaction.dashboard-widgets",
    "label": "Dashboard Widgets",
-   "desc": "Choose and arrange the widgets on your dashboard. Core widgets stay visible; projects can override the app default.",
+   "desc": "Choose widgets for the Home dashboard: opens that dashboard tab's own widget picker where the tab is. Every dashboard tab keeps its own widgets and layout; this row is a route only: its stored list is unused and nothing reads it.",
    "type": "list",
    "default": [
     "Default widget set"
@@ -1577,7 +1577,9 @@
     "rearrange",
     "grid",
     "reset layout",
-    "widget_layout:v1"
+    "widget_layout:v1",
+    "dashboard tab",
+    "choose widgets"
    ]
   },
   {
@@ -1678,7 +1680,7 @@
   {
    "id": "general.interaction.panel-dock",
    "label": "Panel Position",
-   "desc": "Whether side panels like Chat and File Manager sit docked to an edge or float as separate windows, per project.",
+   "desc": "Whether side panels like Chat and File Manager sit docked to an edge or float as separate windows, per project. (Superseded by the chat's Pop out, cmd.panel.undock, and the left rail's side panels, DL-180)",
    "type": "select",
    "options": [
     "Docked",
@@ -1974,7 +1976,7 @@
   {
    "id": "general.interaction.max-editor-tabs",
    "label": "Max Open Editor Tabs",
-   "desc": "Caps how many files stay open at once; the least-recently-used tab closes when you exceed it. Keeps memory in check.",
+   "desc": "Caps how many editor tabs stay open across all your panels; past it, the least recently used editor tab closes, never a pinned one or one with unsaved changes. Terminals, browsers, dashboards and other tabs are not counted and never close on their own.",
    "type": "number",
    "default": 25,
    "scope": [
@@ -1986,6 +1988,90 @@
     "LRU",
     "buffers",
     "editor"
+   ]
+  },
+  {
+   "id": "general.interaction.preview-tabs",
+   "label": "Preview Tabs",
+   "desc": "A single click on a file opens it in the panel's one preview tab, shown in italics, which your next single click replaces; a double click, an edit or dragging the tab keeps it. Off: every file you open gets a tab of its own.",
+   "type": "toggle",
+   "default": true,
+   "scope": [
+    "global"
+   ],
+   "tier": "simple",
+   "recommended": true,
+   "search": [
+    "preview tab",
+    "italic tab",
+    "single click",
+    "open file",
+    "keep tab"
+   ],
+   "related_features": [
+    "editor"
+   ]
+  },
+  {
+   "id": "general.interaction.tab-sizing",
+   "label": "Tab Sizing",
+   "desc": "Shrink to fit: tabs are 96 to 200 px wide and, when they no longer fit, shrink to 72 px and then to icons before the rest move to the +N list. Fixed width: tabs keep their width and the ones that do not fit move to the +N list at once. The tab you are in always stays visible and at least 120 px wide.",
+   "type": "select",
+   "options": [
+    "Shrink to fit",
+    "Fixed width"
+   ],
+   "default": "Shrink to fit",
+   "scope": [
+    "global"
+   ],
+   "tier": "advanced",
+   "search": [
+    "tab width",
+    "tab overflow",
+    "shrink tabs",
+    "+N",
+    "hidden tabs"
+   ]
+  },
+  {
+   "id": "general.interaction.chat-keep-open",
+   "label": "Keep the Chat Open in Narrow Windows",
+   "desc": "When the room left for your panels drops below 480 px, the chat folds to a thin strip at the edge so the panels stay usable. On keeps the chat open instead. The title bar's Home menu has the same switch.",
+   "type": "toggle",
+   "default": false,
+   "scope": [
+    "global"
+   ],
+   "tier": "simple",
+   "search": [
+    "chat",
+    "narrow window",
+    "fold chat",
+    "small window",
+    "keep chat open"
+   ]
+  },
+  {
+   "id": "general.interaction.chat-history-list",
+   "label": "Chat History List",
+   "desc": "How the chat's thread history starts in a workspace with no choice saved yet: a Flyout that opens over the chat, or Pinned beside the messages, which widens the chat by the list's own width instead of squeezing them. Pinning or unpinning it in the chat is kept with that workspace's layout.",
+   "type": "select",
+   "options": [
+    "Flyout",
+    "Pinned"
+   ],
+   "default": "Flyout",
+   "scope": [
+    "global"
+   ],
+   "tier": "simple",
+   "search": [
+    "history",
+    "thread list",
+    "chat history",
+    "pin history",
+    "flyout"
    ]
   },
   {
@@ -2206,10 +2292,10 @@
   },
   {
    "id": "general.startup.reset-home-layout",
-   "label": "Reset Home Layout",
-   "desc": "Returns Home panels, docks, terminal placement, and floating bounds to the safe default without closing editor buffers, terminal sessions, Browser state, Dashboard widgets, or chat history. Dual-surface since 2026-08-13: the top-bar Home menu carries a matching Reset Layout row, and both routes run the same layout reset command.",
+   "label": "Restore Home Layout",
+   "desc": "Puts this workspace's panels back in the Home layout and keeps every open tab: no tab closes, no terminal ends and no unsaved change is lost, and dashboards, Browser state and chat history stay as they are. The title bar's Home menu has the same Restore home layout row; both run the same layout command.",
    "type": "action",
-   "default": "Reset",
+   "default": "Restore",
    "scope": [
     "project"
    ],
@@ -2219,8 +2305,8 @@
     "home layout",
     "workspace layout",
     "reset layout",
+    "restore home layout",
     "reset panels",
-    "recover docks",
     "startup recovery",
     "home menu"
    ],
@@ -2302,7 +2388,7 @@
   {
    "id": "general.startup.window-state",
    "label": "Remember Window Layout",
-   "desc": "Restores window size, position, panel widths, and splits exactly as you left them last time.",
+   "desc": "Restores the window's size and position and each workspace's layout (its panels, their sizes, the open tabs and the chat column) as you left them. Off: the window opens at its default size and each workspace opens in the Starting Layout.",
    "type": "toggle",
    "default": true,
    "scope": [
@@ -2313,7 +2399,9 @@
     "window position",
     "maximized",
     "split ratios",
-    "persistence"
+    "persistence",
+    "restore layout",
+    "restore tabs"
    ]
   },
   {
@@ -2354,7 +2442,7 @@
   {
    "id": "general.startup.max-persisted-tabs",
    "label": "Tabs Remembered Between Sessions",
-   "desc": "How many editor tabs are saved when you quit and reopened next launch; the oldest drop off beyond this.",
+   "desc": "How many tabs of every kind a workspace's saved layout keeps when you quit and reopens next launch; the least recently used drop off beyond this. Editor tabs among them stay within Max Open Editor Tabs.",
    "type": "number",
    "default": 50,
    "scope": [
@@ -2365,6 +2453,33 @@
     "persisted tabs",
     "restore tabs",
     "session"
+   ]
+  },
+  {
+   "id": "general.startup.starting-layout",
+   "label": "Starting Layout",
+   "desc": "The layout a workspace opens in when it has no saved layout of its own: Home (a dashboard and your files over a row for terminals and tools), Build, Terminals 2x2 (four terminals) or Focus (one panel). Changing it never rearranges panels that are already open; Restore Home Layout still returns to Home.",
+   "type": "select",
+   "options": [
+    "Home",
+    "Build",
+    "Terminals 2x2",
+    "Focus"
+   ],
+   "default": "Home",
+   "scope": [
+    "global"
+   ],
+   "tier": "simple",
+   "recommended": "Home",
+   "search": [
+    "named layout",
+    "default layout",
+    "home layout",
+    "build layout",
+    "terminals 2x2",
+    "focus layout",
+    "panels"
    ]
   },
   {
@@ -6568,32 +6683,60 @@
   {
    "id": "code.terminal.theme",
    "label": "Terminal Colors",
-   "desc": "Color scheme for the built-in terminal, separate from the app theme. Includes text, cursor, selection, and status colors.",
+   "desc": "The terminal's color scheme. Follow theme uses each look's own scheme, light and dark: Catppuccin in Friendly, Tokyo Night in Glass, Phosphor and Paper Teletype in Retro, One Half in Basic and YoRHa in NieR Mode. Or pick one of the 34 built-in schemes or one you imported. Applies at once.",
    "type": "select",
    "options": [
-    "Match App Theme",
-    "Light",
-    "Dark",
-    "Solarized",
-    "High Contrast",
-    "Custom"
+    "Follow theme",
+    "PM Phosphor Green",
+    "PM Phosphor Amber",
+    "PM Paper Teletype",
+    "PM YoRHa Parchment",
+    "PM YoRHa Ink",
+    "PM High Contrast Light",
+    "PM High Contrast Dark",
+    "Catppuccin Latte",
+    "Catppuccin Frappé",
+    "Catppuccin Macchiato",
+    "Catppuccin Mocha",
+    "Tokyo Night Day",
+    "Tokyo Night Storm",
+    "Tokyo Night",
+    "One Half Light",
+    "One Half Dark",
+    "Rosé Pine Dawn",
+    "Rosé Pine Moon",
+    "Rosé Pine",
+    "Solarized Light",
+    "Solarized Dark",
+    "Gruvbox Light",
+    "Gruvbox Dark",
+    "Dracula",
+    "Nord",
+    "Kanagawa Wave",
+    "Kanagawa Lotus",
+    "Everforest Light",
+    "Everforest Dark",
+    "Flexoki Light",
+    "Flexoki Dark",
+    "GitHub Light",
+    "GitHub Dark",
+    "Ayu Mirage"
    ],
-   "default": "Match App Theme",
+   "default": "Follow theme",
    "scope": [
     "global",
     "project"
    ],
    "tier": "simple",
-   "recommended": "Match App Theme",
+   "recommended": "Follow theme",
    "curated": true,
    "search": [
     "terminal theme",
     "color scheme",
     "ANSI palette",
-    "contrast"
-   ],
-   "badges": [
-    "restart"
+    "contrast",
+    "follow theme",
+    "Match App Theme"
    ],
    "related_features": [
     "editor",
@@ -6603,16 +6746,19 @@
   {
    "id": "code.terminal.font-family",
    "label": "Terminal Font",
-   "desc": "Typeface used in terminal panes. Custom fonts load from your fonts folder; changing family needs an app restart.",
+   "desc": "The terminal's typeface. Follow theme uses JetBrains Mono in every look except Retro, which uses VT323. Departure Mono, Sixtyfour and Sixtyfour Raster are Retro-style faces, and Atkinson Hyperlegible Mono is made for easy reading. Every face other than System monospace, which uses the computer's own monospace face, is built in; applies at once.",
    "type": "select",
    "options": [
-    "System Monospace",
+    "Follow theme",
     "JetBrains Mono",
-    "Fira Code",
-    "SF Mono",
-    "Custom…"
+    "Atkinson Hyperlegible Mono",
+    "VT323",
+    "Departure Mono",
+    "Sixtyfour",
+    "Sixtyfour Raster",
+    "System monospace"
    ],
-   "default": "System Monospace",
+   "default": "Follow theme",
    "scope": [
     "global",
     "project"
@@ -6621,10 +6767,10 @@
    "search": [
     "monospace",
     "typeface",
-    "terminal font family"
-   ],
-   "badges": [
-    "restart"
+    "terminal font family",
+    "JetBrains Mono",
+    "VT323",
+    "retro font"
    ],
    "related_features": [
     "editor",
@@ -6634,9 +6780,9 @@
   {
    "id": "code.terminal.font-size",
    "label": "Terminal Text Size",
-   "desc": "How big terminal text appears, in pixels. You can also zoom in and out with keyboard shortcuts.",
+   "desc": "How big terminal text is, in pixels. Font default uses the face's own size: 13 for JetBrains Mono, Atkinson Hyperlegible Mono and the system monospace, 19 for VT323, 13.75 for Departure Mono and 10 for Sixtyfour. Text size in a terminal's menu (Ctrl+= and Ctrl+-) changes that terminal alone.",
    "type": "number",
-   "default": 12,
+   "default": "Font default",
    "scope": [
     "global",
     "project"
@@ -6654,8 +6800,8 @@
   },
   {
    "id": "code.terminal.shell",
-   "label": "Shell",
-   "desc": "Which command-line program runs inside new terminal panes. Leave on system default unless you know you want another.",
+   "label": "Default Shell Profile",
+   "desc": "The shell profile a new terminal opens with when you do not pick one, as with Ctrl+T in a terminal panel or the Terminal row of the \"+\" menu. The \"+\" menu's Terminal row and the terminal's New terminal menu list every allowed profile, SSH computers included.",
    "type": "select",
    "options": [
     "System Default",
@@ -6711,7 +6857,7 @@
   {
    "id": "code.terminal.copy-on-select",
    "label": "Copy When I Highlight",
-   "desc": "Automatically copies any text you select in the terminal, so you can paste without pressing copy. Off avoids surprise clipboard changes.",
+   "desc": "Automatically copies any text you select in the terminal, so you can paste without pressing copy. Off avoids surprise clipboard changes. Applies at once; a terminal's Appearance popover can set it for that terminal alone.",
    "type": "toggle",
    "default": false,
    "scope": [
@@ -6736,9 +6882,9 @@
   {
    "id": "code.terminal.right-click-paste",
    "label": "Right-Click to Paste",
-   "desc": "Pastes your clipboard when you right-click in the terminal, like classic terminal apps.",
+   "desc": "Off: a right click opens the terminal's menu. On: a right click pastes your clipboard, like classic terminal apps, and Shift+right click opens the menu.",
    "type": "toggle",
-   "default": true,
+   "default": false,
    "scope": [
     "global"
    ],
@@ -6806,7 +6952,7 @@
   {
    "id": "code.terminal.explanations",
    "label": "Explain What Commands Do",
-   "desc": "Shows plain-English explanations next to commands and terminal states, so you can follow along without knowing the syntax.",
+   "desc": "Shows plain-English explanations next to commands and terminal states, so you can follow along without knowing the syntax. (Superseded by the Teacher persona, which explains commands in the chat, DL-181)",
    "type": "toggle",
    "default": true,
    "scope": [
@@ -6848,7 +6994,7 @@
   {
    "id": "code.terminal.search",
    "label": "Search in Terminal",
-   "desc": "Lets you search old terminal output (Ctrl+F), tuned to stay fast even on very long transcripts.",
+   "desc": "Find is in every terminal: Ctrl+Shift+F (Cmd+F on a Mac), or Find in the terminal's header row or right-click menu, opens its bar, with match case, whole word and regular expressions, every match marked in the text and on the scrollbar (F3-641). Find is always there, so this switch no longer turns it off: it shows on and unavailable with that reason, and nothing reads its stored value.",
    "type": "toggle",
    "default": true,
    "scope": [
@@ -6868,7 +7014,7 @@
   {
    "id": "code.terminal.layout-style",
    "label": "Preferred Layout",
-   "desc": "How terminal tabs and panes arrange themselves by default, including the four-pane quadrant workspace.",
+   "desc": "How terminal tabs and panes arrange themselves by default, including the four-pane quadrant workspace. (Superseded by the panels' named layouts and general.startup.starting-layout, DL-180 and DL-181)",
    "type": "select",
    "options": [
     "Single Pane",
@@ -6894,8 +7040,8 @@
   },
   {
    "id": "code.terminal.layout-restore",
-   "label": "When Reopening a Project",
-   "desc": "Whether terminals come back exactly how you left them, or you start with a clean slate each time.",
+   "label": "Terminals When Reopening a Project",
+   "desc": "Restore Last Layout brings back the terminal tabs of each workspace's saved layout, each as a new session in the same folder and shell profile with its saved scrollback (none when Saved Terminal Output is Session Only). Start Fresh leaves them closed. A session that is still running always comes back in its tab. Panels and other tabs follow Remember Window Layout.",
    "type": "select",
    "options": [
     "Restore Last Layout",
@@ -6917,31 +7063,25 @@
   },
   {
    "id": "code.terminal.transcript-retention",
-   "label": "Keep Terminal History For",
-   "desc": "How long past terminal output is saved. Longer history helps debugging but uses more disk; docs disagreed, so session-only is kept.",
+   "label": "Saved Terminal Output",
+   "desc": "Keep Saved Scrollback keeps each terminal tab's past output, its images included, so a restored or reopened terminal shows it again: on this computer only, never in backups, exports or sync, within 64 MiB per terminal tab, and for a closed tab only while it can be reopened and at most 7 days (SP-332). Session Only saves none, so a restored or reopened terminal starts without its earlier output. Was Keep Terminal History For, whose 24 Hours, 7 Days, 30 Days and Forever choices the saved scrollback rule replaces.",
    "type": "select",
    "options": [
-    "Session Only",
-    "24 Hours",
-    "7 Days",
-    "30 Days",
-    "Forever"
+    "Keep Saved Scrollback",
+    "Session Only"
    ],
-   "default": "Session Only",
+   "default": "Keep Saved Scrollback",
    "scope": [
     "global",
     "project"
    ],
    "tier": "advanced",
-   "recommended": "7 Days",
    "search": [
     "transcript retention",
     "scrollback history",
+    "keep terminal history",
     "logs",
     "10000 rows"
-   ],
-   "badges": [
-    "adjudication"
    ],
    "related_features": [
     "editor",
@@ -7040,14 +7180,15 @@
   {
    "id": "code.terminal.allowed-profiles",
    "label": "Allowed Shell Profiles",
-   "desc": "Which shell and environment setups this project may offer when opening terminals. Session overrides stay narrow.",
+   "desc": "Which shell profiles this project offers when you open a terminal: the shells on this computer, your own named profiles and the SSH computers saved under Remote Machines (SSH). They are listed in the \"+\" menu's Terminal row and the terminal's New terminal menu.",
    "type": "multiselect",
    "options": [
     "System Default",
     "zsh",
     "bash",
     "fish",
-    "Custom Profiles"
+    "Custom Profiles",
+    "SSH Computers"
    ],
    "default": [
     "System Default"
@@ -7058,7 +7199,10 @@
    "tier": "advanced",
    "search": [
     "environment profiles",
-    "shell choices"
+    "shell choices",
+    "shell profiles",
+    "SSH hosts",
+    "new terminal"
    ],
    "related_features": [
     "editor",
@@ -7067,8 +7211,8 @@
   },
   {
    "id": "code.terminal.rendering-mode",
-   "label": "Terminal Look & Feel Preset",
-   "desc": "How rich the terminal surface looks. The effective preset is disclosed when it differs from what you asked for.",
+   "label": "Rendering Mode",
+   "desc": "Which rendering mode the terminal asks for: Interactive Rich draws everything, Plain draws plain text as in a log, and Minimal is the reduced mode for limited displays. The mode in use is shown when it differs from the one asked for. Colors, fonts, backgrounds and effects are the Terminal look rows.",
    "type": "select",
    "options": [
     "Interactive Rich",
@@ -7093,7 +7237,7 @@
   {
    "id": "code.terminal.sticky-header",
    "label": "Keep Command Titles Visible",
-   "desc": "Pins each command's header while you scroll its output, so you always know which command produced what.",
+   "desc": "Pins the prompt line of the command you are scrolled into at the top of the terminal, with its state, so you always know which command produced what. Applies at once; a terminal's Appearance popover can set it for that terminal alone.",
    "type": "toggle",
    "default": true,
    "scope": [
@@ -7137,8 +7281,8 @@
   },
   {
    "id": "code.terminal.shell-integration",
-   "label": "Shell Integration Status",
-   "desc": "Shows whether Puppet Master's smart shell features (command blocks, cwd tracking) are active in your shell.",
+   "label": "Shell Integration",
+   "desc": "Lets Puppet Master mark each prompt and command in your shell, for the command marks, the sticky command header, jumping between commands and folder tracking. Each mark carries a secret only that terminal knows, so program output cannot fake one. Off: the shell runs as it is, with none of these.",
    "type": "toggle",
    "default": true,
    "scope": [
@@ -7180,9 +7324,770 @@
    ]
   },
   {
+   "id": "code.terminal.scheme-pair",
+   "label": "Switch With Light and Dark",
+   "desc": "When the app changes between light and dark, a scheme you picked swaps for its family's other version, such as Catppuccin Latte and Mocha. Follow theme always does.",
+   "type": "toggle",
+   "default": true,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "light and dark",
+    "scheme pair",
+    "auto dark"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.terminal.min-contrast",
+   "label": "Minimum Text Contrast",
+   "desc": "Keeps terminal text readable against its background by making only the text lighter or darker, never changing its hue. Block, powerline and sextant characters are left as they are.",
+   "type": "select",
+   "options": [
+    "Off",
+    "3:1",
+    "4.5:1",
+    "7:1"
+   ],
+   "default": "4.5:1",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "contrast",
+    "readability",
+    "accessibility"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.terminal.import-scheme",
+   "label": "Import a Color Scheme",
+   "desc": "Adds a scheme from a file: iTerm2, Windows Terminal, kitty, Ghostty, Alacritty, base16 or base24, or Xresources. Files up to 256 KB; nothing in a file is run, and an error never repeats the file's contents.",
+   "type": "action",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "import theme",
+    "itermcolors",
+    "color scheme file",
+    "base16"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.terminal.font-weight",
+   "label": "Terminal Text Weight",
+   "desc": "How heavy terminal text is, on faces that come in weights: JetBrains Mono from 400 to 800, Atkinson Hyperlegible Mono from 200 to 800. Faces with one weight ignore it.",
+   "type": "number",
+   "default": 400,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "font weight",
+    "bold",
+    "thin"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.terminal.line-height",
+   "label": "Terminal Line Spacing",
+   "desc": "Space between terminal lines, as a multiple of the text size. Font default uses the face's own: 1.30 for JetBrains Mono and the system monospace, 1.35 for Atkinson Hyperlegible Mono, 1.05 for VT323, 1.20 for Departure Mono and 1.45 for Sixtyfour.",
+   "type": "slider",
+   "default": "Font default",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "line height",
+    "line spacing"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.terminal.letter-spacing",
+   "label": "Letter Spacing",
+   "desc": "Extra space between characters, in pixels. Cells always stay a whole number of pixels wide.",
+   "type": "number",
+   "default": 0,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "letter spacing",
+    "tracking",
+    "character spacing"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.terminal.ligatures",
+   "label": "Ligatures",
+   "desc": "Joins character pairs such as -> and != into one glyph where the face has them.",
+   "type": "toggle",
+   "default": true,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "ligatures",
+    "font features"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.terminal.bold-bright",
+   "label": "Bold As Bright",
+   "desc": "Shows bold text in the bright version of its color, as older terminals did.",
+   "type": "toggle",
+   "default": false,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "bold as bright",
+    "bright colors"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.terminal.cursor-shape",
+   "label": "Cursor Shape",
+   "desc": "The shape of the terminal's cursor. Follow theme uses the look's own shape.",
+   "type": "select",
+   "options": [
+    "Follow theme",
+    "Block",
+    "Bar",
+    "Underline"
+   ],
+   "default": "Follow theme",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "cursor",
+    "caret",
+    "block cursor",
+    "bar cursor"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.terminal.cursor-blink",
+   "label": "Cursor Blink",
+   "desc": "Makes the cursor blink. It stays still under Reduce Animations.",
+   "type": "toggle",
+   "default": true,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "cursor blink",
+    "blinking"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.terminal.cursor-trail",
+   "label": "Cursor Trail",
+   "desc": "A short trail when the cursor jumps. Follow theme uses the look's own trail; there is none under Reduce Animations.",
+   "type": "select",
+   "options": [
+    "Follow theme",
+    "Off",
+    "Soft",
+    "Glow",
+    "Phosphor",
+    "Trace"
+   ],
+   "default": "Follow theme",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "cursor trail",
+    "cursor animation"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.terminal.background",
+   "label": "Terminal Background",
+   "desc": "What is drawn behind the text: Follow theme uses the look's own, Theme surface the panel's surface, or a Solid color, a Gradient or an Image you choose below.",
+   "type": "select",
+   "options": [
+    "Follow theme",
+    "Theme surface",
+    "Solid color",
+    "Gradient",
+    "Image"
+   ],
+   "default": "Follow theme",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "background",
+    "wallpaper",
+    "backdrop"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.terminal.background-color",
+   "label": "Background Color",
+   "desc": "The color behind the text when Terminal Background is Solid color.",
+   "type": "text",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "background color",
+    "solid background"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.terminal.background-gradient",
+   "label": "Background Gradient",
+   "desc": "The gradient behind the text when Terminal Background is Gradient.",
+   "type": "select",
+   "options": [
+    "Dusk",
+    "Dawn",
+    "Deep",
+    "Paper"
+   ],
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "gradient"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.terminal.background-image",
+   "label": "Background Image",
+   "desc": "The picture behind the text when Terminal Background is Image, or Custom for one of your own.",
+   "type": "select",
+   "options": [
+    "Hills",
+    "Grid",
+    "Paper",
+    "Custom"
+   ],
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "background image",
+    "picture"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.terminal.background-image-file",
+   "label": "Custom Background Image",
+   "desc": "The picture used when Background Image is Custom.",
+   "type": "path",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "custom image",
+    "background picture"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.terminal.background-dim",
+   "label": "Background Image Dimming",
+   "desc": "How much a background image is dimmed under the text so the text stays readable.",
+   "type": "slider",
+   "default": 0.45,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "dim",
+    "image dim"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.terminal.background-blur",
+   "label": "Background Image Blur",
+   "desc": "Blurs a background image, in pixels. The blur is made once on the picture, never live behind the text.",
+   "type": "slider",
+   "default": 0,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "blur",
+    "image blur"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.terminal.opacity",
+   "label": "Terminal Opacity (Glass)",
+   "desc": "Glass themes only: how much of the app's glass shows through the terminal. Follow theme draws the terminal at 70 % in light and 74 % in dark; the terminal adds no blur of its own.",
+   "type": "slider",
+   "default": "Follow theme",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "opacity",
+    "transparency",
+    "glass"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.terminal.padding",
+   "label": "Terminal Padding",
+   "desc": "Space around the text, in pixels across; the space above and below is 60 % of it.",
+   "type": "number",
+   "default": 8,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "padding",
+    "margin",
+    "spacing"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.terminal.effects",
+   "label": "Terminal Effects",
+   "desc": "Follow theme uses the look's own effects, such as Retro's scanlines and glow in dark. Off draws none. Custom lets you choose them below. Effects run only in the terminal you are in, stop when it is idle, and nothing moves under Reduce Animations or on battery saver.",
+   "type": "select",
+   "options": [
+    "Follow theme",
+    "Off",
+    "Custom"
+   ],
+   "default": "Follow theme",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "effects",
+    "crt",
+    "retro",
+    "spectacle",
+    "glow",
+    "scanlines"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.terminal.scanlines",
+   "label": "Scanlines",
+   "desc": "Thin horizontal lines over the text, like an old monitor.",
+   "type": "select",
+   "options": [
+    "Follow theme",
+    "On",
+    "Off"
+   ],
+   "default": "Follow theme",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "scanlines",
+    "crt"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.terminal.scan-strength",
+   "label": "Scanline Strength",
+   "desc": "How strong the scanlines are.",
+   "type": "slider",
+   "default": 0.3,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "scanline strength"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.terminal.glow",
+   "label": "Phosphor Glow",
+   "desc": "A soft glow around the text in the scheme's glow color.",
+   "type": "select",
+   "options": [
+    "Follow theme",
+    "On",
+    "Off"
+   ],
+   "default": "Follow theme",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "glow",
+    "phosphor",
+    "bloom"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.terminal.glow-strength",
+   "label": "Glow Strength",
+   "desc": "How strong the glow is.",
+   "type": "slider",
+   "default": 0.45,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "glow strength"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.terminal.crt",
+   "label": "Full CRT",
+   "desc": "The full old-monitor look: curved glass, burn-in and noise. Off unless you turn it on.",
+   "type": "toggle",
+   "default": false,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "crt",
+    "curvature",
+    "old monitor"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.terminal.curvature",
+   "label": "Screen Curvature",
+   "desc": "How curved the glass looks in Full CRT; pointing and selecting follow the curve.",
+   "type": "slider",
+   "default": 0.08,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "curvature",
+    "barrel"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.terminal.burn-in",
+   "label": "Burn-In",
+   "desc": "Fading traces of what was on screen, in Full CRT.",
+   "type": "toggle",
+   "default": true,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "burn-in",
+    "persistence",
+    "ghosting"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.terminal.noise",
+   "label": "Screen Noise",
+   "desc": "A light grain over the screen in Full CRT.",
+   "type": "slider",
+   "default": 0.035,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "noise",
+    "grain"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.terminal.flicker",
+   "label": "Flicker",
+   "desc": "A faint flicker of the whole screen, kept far below anything that counts as a flash. Off unless you turn it on.",
+   "type": "toggle",
+   "default": false,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "flicker"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.terminal.flicker-amount",
+   "label": "Flicker Amount",
+   "desc": "How strong the flicker is; it can never go above 0.03.",
+   "type": "slider",
+   "default": 0.02,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "flicker amount"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.terminal.inactive-dim",
+   "label": "Dim Terminals I'm Not In",
+   "desc": "Dims terminals other than the one you are typing in. Follow theme uses the look's own dimming.",
+   "type": "select",
+   "options": [
+    "Follow theme",
+    "On",
+    "Off"
+   ],
+   "default": "Follow theme",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "inactive dimming",
+    "unfocused",
+    "dim"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.terminal.smooth-scroll",
+   "label": "Smooth Scrolling",
+   "desc": "Glides when you scroll instead of jumping a line at a time. Follow theme uses the look's own; it never glides under Reduce Animations.",
+   "type": "select",
+   "options": [
+    "Follow theme",
+    "On",
+    "Off"
+   ],
+   "default": "Follow theme",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "smooth scrolling",
+    "scroll animation"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.terminal.bell",
+   "label": "Terminal Bell",
+   "desc": "What happens when a program rings the bell: Visual flashes the terminal in the look's own way, Off does nothing, Follow theme uses the look's choice.",
+   "type": "select",
+   "options": [
+    "Follow theme",
+    "Visual",
+    "Off"
+   ],
+   "default": "Follow theme",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "bell",
+    "beep",
+    "visual bell"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.terminal.sixtyfour-scan",
+   "label": "Sixtyfour Scanlines",
+   "desc": "Sixtyfour's own scanline setting, from -53 to 100, drawn by the font without any motion. Shows only with the Sixtyfour font.",
+   "type": "slider",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "sixtyfour",
+    "scan axis"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.terminal.sixtyfour-bleed",
+   "label": "Sixtyfour Bleed",
+   "desc": "Sixtyfour's own bleed setting, from 0 to 100. Shows only with the Sixtyfour font.",
+   "type": "slider",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "sixtyfour",
+    "bleed axis"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
    "id": "code.terminal.tab-role",
    "label": "Tab Purpose Hints",
-   "desc": "Optional label for what a terminal tab is for (build, server, logs). Purely organizational; never changes what runs.",
+   "desc": "Optional label for what a terminal tab is for (build, server, logs). Purely organizational; never changes what runs. (Superseded by the shell profiles of code.terminal.allowed-profiles and the tab's own label, DL-181)",
    "type": "select",
    "options": [
     "General",
@@ -7208,7 +8113,7 @@
   {
    "id": "code.terminal.auto-second-pane",
    "label": "Auto-Open a Second Pane",
-   "desc": "Opens a second terminal section automatically. Off by default — extra panes appear only when you ask or a policy explains why.",
+   "desc": "Opens a second terminal section automatically. Off by default — extra panes appear only when you ask or a policy explains why. (Superseded by Split, which opens a new panel with its own terminal, DL-181)",
    "type": "toggle",
    "default": false,
    "scope": [
@@ -7249,7 +8154,7 @@
   {
    "id": "code.editing.word-wrap",
    "label": "Wrap Long Lines",
-   "desc": "Folds long lines so you never scroll sideways. Off is the norm for code; on is comfier for prose.",
+   "desc": "Folds long lines so you never scroll sideways, in every editor tab at once. Off is the norm for code; on is comfier for prose.",
    "type": "toggle",
    "default": false,
    "scope": [
@@ -7263,6 +8168,136 @@
    "related_features": [
     "editor",
     "terminal"
+   ]
+  },
+  {
+   "id": "code.editing.font-family",
+   "label": "Editor Font",
+   "desc": "The typeface of code in editor tabs. JetBrains Mono is the editor's face in every look, Retro included; Atkinson Hyperlegible Mono is made for easy reading; System monospace uses your computer's own. Applies at once.",
+   "type": "select",
+   "options": [
+    "JetBrains Mono",
+    "Atkinson Hyperlegible Mono",
+    "System monospace"
+   ],
+   "default": "JetBrains Mono",
+   "scope": [
+    "global"
+   ],
+   "tier": "simple",
+   "recommended": "JetBrains Mono",
+   "search": [
+    "editor font",
+    "code font",
+    "monospace",
+    "typeface",
+    "JetBrains Mono"
+   ],
+   "related_features": [
+    "editor"
+   ]
+  },
+  {
+   "id": "code.editing.font-size",
+   "label": "Editor Text Size",
+   "desc": "How big code appears in editor tabs, in pixels, separate from the app's text size. Applies at once.",
+   "type": "number",
+   "default": 13,
+   "scope": [
+    "global"
+   ],
+   "tier": "simple",
+   "search": [
+    "editor font size",
+    "code size",
+    "text size",
+    "zoom"
+   ],
+   "related_features": [
+    "editor"
+   ]
+  },
+  {
+   "id": "code.editing.line-height",
+   "label": "Editor Line Spacing",
+   "desc": "Space between lines of code in editor tabs, as a multiple of the text size, separate from the app's line spacing. Applies at once.",
+   "type": "slider",
+   "scope": [
+    "global"
+   ],
+   "tier": "advanced",
+   "search": [
+    "line height",
+    "line spacing",
+    "editor"
+   ],
+   "related_features": [
+    "editor"
+   ]
+  },
+  {
+   "id": "code.editing.minimap",
+   "label": "Minimap Scrollbar",
+   "desc": "The editor's scrollbar draws a small map of the file with its change marks: click to jump, drag to scrub. Off draws a plain scrollbar in its place.",
+   "type": "toggle",
+   "default": true,
+   "scope": [
+    "global"
+   ],
+   "tier": "simple",
+   "search": [
+    "minimap",
+    "scrollbar",
+    "overview",
+    "change marks"
+   ],
+   "related_features": [
+    "editor"
+   ]
+  },
+  {
+   "id": "code.editing.sticky-scroll",
+   "label": "Sticky Scroll",
+   "desc": "Keeps the lines that open the scopes you are scrolled into, such as a function or a class, pinned at the top of the editor.",
+   "type": "toggle",
+   "default": true,
+   "scope": [
+    "global"
+   ],
+   "tier": "simple",
+   "search": [
+    "sticky scroll",
+    "scope header",
+    "pinned lines"
+   ],
+   "related_features": [
+    "editor"
+   ]
+  },
+  {
+   "id": "code.editing.diff-layout",
+   "label": "Diff Layout",
+   "desc": "How a diff shows its two sides. Automatic puts them side by side when the tab is wide and inline when it is narrow, judged by the tab's own width; or always side by side, or always inline.",
+   "type": "select",
+   "options": [
+    "Automatic",
+    "Side by side",
+    "Inline"
+   ],
+   "default": "Automatic",
+   "scope": [
+    "global"
+   ],
+   "tier": "simple",
+   "recommended": "Automatic",
+   "search": [
+    "diff",
+    "side by side",
+    "inline diff",
+    "compare"
+   ],
+   "related_features": [
+    "editor"
    ]
   },
   {
@@ -7384,7 +8419,7 @@
   {
    "id": "code.editing.editor-strip-collapsed",
    "label": "Start With Editor Strip Collapsed",
-   "desc": "Remembers per project whether the in-app editor strip starts folded away or open.",
+   "desc": "Remembers per project whether the in-app editor strip starts folded away or open. (Superseded by folding any panel to its tab strip, cmd.workspace_layout.set_collapsed, DL-180)",
    "type": "toggle",
    "default": false,
    "scope": [
