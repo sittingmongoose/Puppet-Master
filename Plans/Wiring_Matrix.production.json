@@ -69025,7 +69025,7 @@
       },
       "accessibility_contract": {
         "role_or_semantics": "A separator with aria-orientation vertical and aria-valuenow in px",
-        "keyboard_access": "Tab reaches the edge; arrows move it 8 px and Shift+arrows 48 px, each changed press one commit",
+        "keyboard_access": "Tab reaches the edge; the arrow keys move it, each changed press one commit (the step size is an open number)",
         "focus_management": "home.resizer.chat keeps focus where its owner contract says after an applied, no-change, failed or cancelled result; an agent's open never takes focus.",
         "disabled_announcement": "home.resizer.chat announces state.home_workspace.home_resizer_chat.disabled_reason and dispatches zero commands when unavailable."
       },
@@ -69048,7 +69048,7 @@
         {
           "test_id": "wiring.home.resizer.chat.accessibility",
           "evidence_kind": "accessibility_regression",
-          "requirement": "The rendered home.resizer.chat control has its accessible name and state, is reachable by keyboard (Tab reaches the edge; arrows move it 8 px and Shift+arrows 48 px, each changed press one commit) and returns focus as its owner says."
+          "requirement": "The rendered home.resizer.chat control has its accessible name and state, is reachable by keyboard (Tab reaches the edge; the arrow keys move it, each changed press one commit (the step size is an open number)) and returns focus as its owner says."
         },
         {
           "test_id": "wiring.home.resizer.chat.transaction",
