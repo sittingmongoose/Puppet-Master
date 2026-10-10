@@ -12538,7 +12538,9 @@ canonical_text: >-
   and at most the columns right of the cursor wide. Sixel: 10,000 x 10,000 px, 16,777,216 pixels, 1024 colour
   registers private to each image and 16 MiB of data; with DECSDM (mode 80) set the image does not scroll, sits at
   the top left and leaves the cursor where it was, and mode 8452 puts the cursor right of the image. File and
-  shared-memory names are at most 2048 bytes, relative placements nest at most 8 levels, and the fastest animation
+  shared-memory names are at most 2048 bytes, relative placements nest at most 8 levels, each screen buffer holds at most 4,096 placements (past that, the
+  oldest placements that no other placement hangs from are dropped first), one placement (`c=`, `r=`) covers at most
+  10,000 cells, and the fastest animation
   frame shown is 20 ms. Hardening (all of kitty's 2026-09-14 hardening): file media accept regular files only; the
   resolved path is checked before opening, and `/proc`, `/sys` and `/dev` (except `/dev/shm`) are refused;
   symlinks are followed and loops fail; every read failure of any file medium (missing, unreadable, not regular,
@@ -12589,6 +12591,7 @@ unblocks:
 acceptance_criteria:
 - "The kitty graphics protocol with every listed feature, sixel and iTerm2 inline images all ship in the first terminal release; none is phased or left behind an off flag."
 - "Every limit holds at its stated number; a sequence over its cap is dropped and kitty gets EFBIG; an over-quota image store evicts images without placements, then transient images, then the least recently used."
+- "A screen buffer keeps at most 4,096 placements, and the 4,097th drops the oldest placement that no other placement hangs from; no placement covers more than 10,000 cells."
 - "Every file-medium read failure answers exactly EBADF:Failed to read image file; /proc, /sys and /dev (except /dev/shm) are refused; symlink loops fail; temporary files are deleted only inside /tmp or /dev/shm and only with tty-graphics-protocol in the path; shared memory is unlinked after reading."
 - "A remote (SSH) session and a command an agent typed can send images only by direct transmission; their file, temporary-file and shared-memory media get EBADF."
 - "Every error reply is one of the fixed strings and never echoes program data."
@@ -12616,6 +12619,7 @@ source_lineage:
 - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D14)"
 - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b (section 7; concept lineage only)"
 - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-ARCHITECTURE-542703c07c.md, SHA-256 b6daf31a8953b3d7b633dd0db0a7b8a0ecba41f4533e8d6db6df5fa0f08bf476 (concept lineage only)"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-e741dfbc6c.md, SHA-256 5fe7d1e04e5e54c47013c503254527265b94420239772ac711f760f43f96674d (R36; concept lineage only)"
 preserved_exact_tokens:
 - "SMPFS-181"
 - "kitty graphics protocol"
@@ -12652,6 +12656,7 @@ compatibility_only_notes:
 - "The concept SPEC's section 7 sentence that images never enter saved scrollback does not hold for canon; the planning thread's rule of 2026-10-09 replaces it."
 - "The concept caps one transmission at 64 MiB of decoded payload; the native cap comes with the next SPEC installment."
 stale_retired_dispositions:
+- "Amended 2026-10-10 (R36, terminal SPEC e741dfbc6c): Adds the placement limits, at most 4,096 placements per screen buffer (the oldest placements nothing hangs from drop first) and at most 10,000 cells per placement."
 - "Amended 2026-10-10 (lead ruling L15): Under Reduced Motion an animated image holds its first frame; while the terminal is hidden it pauses."
 - "Replaces 2026-10-09 (DL-182): the image sentence of the DL-035 addendum's P3 row and SMPFS-158's negative constraint that image protocols are not approved."
 owner_hints:
