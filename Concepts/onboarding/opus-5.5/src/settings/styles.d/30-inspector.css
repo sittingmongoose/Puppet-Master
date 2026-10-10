@@ -34,6 +34,9 @@
   transition: border-color 160ms var(--k3-ease-out), background-color 160ms var(--k3-ease-out), transform 160ms var(--k3-ease-out); }
 #panel-settings .o55-insp-choice:hover { border-color: var(--k3-line-strong, var(--k3-line)); background: var(--k3-bg-2); }
 #panel-settings .o55-insp-choice:active { transform: scale(.99); }
+#panel-settings .o55-insp-choice[aria-disabled="true"] { opacity: .5; cursor: not-allowed; }
+#panel-settings .o55-insp-choice[aria-disabled="true"]:hover { border-color: var(--k3-line); background: none; }
+#panel-settings .o55-insp-choice[aria-disabled="true"]:active { transform: none; }
 #panel-settings .o55-insp-choice.is-on { border-color: color-mix(in srgb, var(--k3-accent) 50%, transparent); background: var(--k3-accent-soft); color: var(--k3-text-1); }
 #panel-settings .o55-insp-mark { width: 18px; height: 18px; flex: 0 0 auto; margin-top: 1px; display: grid; place-items: center; border-radius: 50%; border: 1.5px solid var(--k3-line-strong, var(--k3-line)); color: var(--k3-bg-0, #000); }
 #panel-settings .o55-insp-choice[role="checkbox"] .o55-insp-mark { border-radius: 5px; }

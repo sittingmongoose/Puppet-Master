@@ -509,11 +509,11 @@
     const sharedN = pctLeft(shared);
     const opts = [{ value: '', label: `Shared · ${cool ? (COOLDOWNS.some(x => x[0] === shared) ? cooldownText(shared) : 'default') : sharedN === null ? String(shared || '') : `${sharedN}% left`}`,
       meta: !cool && sharedN !== null ? `${100 - sharedN}% used` : '' }];
-    if (!cool && block(shared)) { opts[0].disabled = true; opts[0].reason = block(shared); }
+    if (!cool && block(shared)) { opts[0].disabled = true; opts[0].reason = block(shared); opts[0].why = true; }
     if (cool) COOLDOWNS.forEach(([v]) => opts.push({ value: v, label: cooldownText(v) }));
     else {
       const vals = list.slice(); const n = pctLeft(own); if (n !== null && !vals.includes(n)) { vals.push(n); vals.sort((x, y) => x - y); }
-      vals.forEach(v => { const why = String(v) === String(own) ? '' : block(v); opts.push(Object.assign({ value: String(v), label: leftText(v) }, why ? { disabled: true, reason: why } : {})); });
+      vals.forEach(v => { const why = String(v) === String(own) ? '' : block(v); opts.push(Object.assign({ value: String(v), label: leftText(v) }, why ? { disabled: true, reason: why, why: true } : {})); });
     }
     if (own !== undefined && !opts.some(o => o.value === String(own))) opts.push({ value: String(own), label: String(own) });
     /* the open list is 264 px wide, so the shared choice keeps its % used beside it (the closed field keeps its own width:
@@ -610,6 +610,25 @@
     const args = Array.prototype.slice.call(arguments); args[1] = held[0].value;
     return o55PolicyCommit.apply(this, args);
   };
+  /* The shared rows (Limits & switching › Moving between accounts, their Details choices, All settings) offer no choice
+     that holdOrder would move: a crossing level is shown but cannot be picked, and says why, as each service's own
+     lists and the Usage page's level menu do (Settings_System section 8: "disabled with the reason, the shared choice
+     included"). A shared switch level crosses the shared warn level, or the own warn level of a service that follows
+     the shared switch level; a shared warn level crosses the shared switch level, or the own switch level of a service
+     that follows the shared warn level. The same pairs as holdOrder, so a choice offered here is stored as picked. */
+  function sharedCrossing(id, v) {
+    const n = pctLeft(v); if (n === null) return '';
+    const isSw = id === SW_ID, other = isSw ? WARN_ID : SW_ID;
+    const crosses = lvl => lvl !== null && (isSw ? n >= lvl : n <= lvl);
+    const shared = PM51.value(other), sharedOther = shared === null || shared === undefined || shared === '' ? null : pctLeft(shared);
+    if (crosses(sharedOther)) return isSw ? `At or past the warn level (${100 - sharedOther}% used). Lower the warn level first.` : `At or before the switch level (${100 - sharedOther}% used). Raise the switch level first.`;
+    const q = all().filter(canSwitch).find(x => ownPolicy(x, id) === undefined && crosses(pctLeft(ownPolicy(x, other))));
+    if (!q) return '';
+    const lvl = pctLeft(ownPolicy(q, other));
+    return isSw ? `At or past ${q.name}'s own warn level (${100 - lvl}% used), and it follows this shared level.` : `At or before ${q.name}'s own switch level (${100 - lvl}% used), and it follows this shared level.`;
+  }
+  PM51.choiceBlock(SW_ID, v => sharedCrossing(SW_ID, v));
+  PM51.choiceBlock(WARN_ID, v => sharedCrossing(WARN_ID, v));
   function setPolicy(p, id, value) {
     if (!p || !POLICY_IDS.includes(id)) return false;
     if (!p.props || typeof p.props !== 'object') p.props = {};
