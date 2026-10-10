@@ -1,3 +1,8 @@
+/* The page's code face, standing in for PMConcept7's 'JetBrains Mono' (DL-161 pipeline, the PM NieR Mono bytes).
+   Harness only: in the review copy the page provides it. Files in harness/fonts/. */
+@font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 400 800; font-display: swap; src: url("o55font:pmt-jetbrains-mono-latin-var.woff2") format("woff2"); }
+@font-face { font-family: 'JetBrains Mono'; font-style: italic; font-weight: 100 800; font-display: swap; src: url("o55font:pmt-jetbrains-mono-latin-var-italic.woff2") format("woff2"); }
+
 /* Terminal harness: the mock panels host's styles. Harness-only; the home layer never inlines this file.
 
    Order: (1) the page tokens copied from PMConcept7.html (the PM6 :root token contract and the eight [data-theme]

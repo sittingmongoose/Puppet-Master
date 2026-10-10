@@ -86,6 +86,8 @@ def inline_fonts(css: str, where: str, problems: list[str] | None = None) -> str
     def sub(m: re.Match) -> str:
         name = m.group(2)
         f = FONT_DIR / name
+        if not f.is_file():
+            f = HARNESS / 'fonts' / name           # page stand-in faces (JetBrains Mono): harness only
         if '/' in name or '\\' in name or not f.is_file():
             msg = f'{where}: font o55font:{name} not found in {rel(FONT_DIR)}'
             if problems is None:
@@ -98,7 +100,7 @@ def inline_fonts(css: str, where: str, problems: list[str] | None = None) -> str
 
 
 def assemble_css(problems: list[str] | None = None) -> str:
-    parts = [f'/* ---- harness/mock-host.css ---- */\n{read(HARNESS / "mock-host.css")}']
+    parts = [f'/* ---- harness/mock-host.css ---- */\n{inline_fonts(read(HARNESS / "mock-host.css"), "harness/mock-host.css", problems)}']
     for p in sources(CSS_DIR, '.css'):
         parts.append(f'/* ---- src/terminal/css/{p.name} ---- */\n{inline_fonts(read(p), rel(p), problems)}')
     return '\n'.join(parts).replace('</style', '<\\/style')

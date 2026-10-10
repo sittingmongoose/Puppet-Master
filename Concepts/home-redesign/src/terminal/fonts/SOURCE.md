@@ -1,5 +1,10 @@
 # Terminal fonts
 
+JetBrains Mono moved out of this folder on 2026-10-09: the page provides it as its general code face (the chat
+orchestrator's branch `fix/fonts-scripts-codeface-20261009`, DL-161 pipeline). The two JetBrains Mono files and their
+licence now live in `harness/fonts/`, used only by the standalone harness's page stand-in; their rows below are kept
+for the record.
+
 The faces of the terminal tab. `Concepts/home-redesign/src/terminal/css/00-fonts.css` declares one @font-face per WOFF2
 file below, each as `url("o55font:<file>")`. The home layer inlines each reference as a data: URI (CONTRACT section 1.1),
 so nothing here is loaded over the network at runtime. The files go through the DL-161 embedding pipeline once that

@@ -73,14 +73,17 @@ font is needed. Files and SHA-256 in `fonts/SOURCE.md`.
 
 | Family | Role | Licence | File (woff2) | Bytes | Axes |
 |---|---|---|---|---|---|
-| JetBrains Mono | the code face in every look (editor and terminal) | OFL-1.1 | `pmt-jetbrains-mono-latin-var.woff2` (the PM NieR Mono bytes, duplicated: 31 KB) | 31,432 | wght 400-800 |
-| JetBrains Mono Italic | italic | OFL-1.1 | `pmt-jetbrains-mono-latin-var-italic.woff2` | 42,964 | wght 100-800 |
+| JetBrains Mono | the code face in every look (editor and terminal); provided by the page (chat orchestrator's code-face branch, DL-161 pipeline, the PM NieR Mono bytes), not by the terminal | OFL-1.1 | the page's face | (31,432) | wght 400-800 |
+| JetBrains Mono Italic | italic: synthesised unless the page's code face adds the italic file (43 KB, offered) | OFL-1.1 | harness only | (42,964) | wght 100-800 |
 | VT323 | Retro default | OFL-1.1 | `pmt-vt323-latin-400.woff2` | 17,936 | none |
 | Sixtyfour | Retro raster option (motion-free CRT look from its own axes) | OFL-1.1 | `pmt-sixtyfour-latin-var.woff2` | 4,236 | SCAN -53-100, BLED 0-100 |
 | Atkinson Hyperlegible Mono | accessibility | OFL-1.1 | `pmt-atkinson-hyperlegible-mono-latin-var.woff2` + italic | 17,752 + 19,084 | wght 200-800 |
 | Departure Mono | Retro option | OFL-1.1 (the v1.500 release ships the SIL OFL, not MIT) | `pmt-departure-mono-400.woff2` | 22,496 | none |
 
-Total 155,900 bytes before base64. Default sizes and line heights per face (CSS px): JetBrains Mono 13 / 1.30,
+| Sixtyfour Raster | Retro option: Sixtyfour baked at SCAN 45, BLED 40 | OFL-1.1 | `pmt-sixtyfour-raster-latin.woff2` | 3,068 | none |
+
+The terminal's own faces total 84,572 bytes before base64. Retro's terminal default is VT323 while Jared settles F3-426
+(IBM Plex Mono as Retro's whole face) against D17. Default sizes and line heights per face (CSS px): JetBrains Mono 13 / 1.30,
 Atkinson 13 / 1.35, VT323 19 / 1.05, Departure Mono 13.75 / 1.20, Sixtyfour 10 / 1.45, system monospace 13 / 1.30.
 
 ## 5. Colour schemes (D15)
