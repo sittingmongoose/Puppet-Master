@@ -29,13 +29,13 @@ function firstLayout() {
   return l;
 }
 
-function homeShown() { var p = qs('#panel-dashboard'); return !!p && (p.classList.contains('active') || p.classList.contains('pm8-page-out')); }
-/* Home is the page in front: homeShown also counts the page-out animation, and the page leaves pm8-page-out on
-   #panel-dashboard after it, so a page-level rule (the ladder, the notice anchor) asks this instead */
+/* Home is the page in front. (pm8-page-out is not a sign of it: the page leaves that class on #panel-dashboard after
+   its exit animation.) Tab show and hide, the size observer, the ladder and the notice anchor all ask this. */
 function homeIsPage() { var p = qs('#panel-dashboard'); return !!p && p.classList.contains('active'); }
 var wasShown = null;
 function onPageChange() {
-  var shown = homeShown();
+  // show and hide follow the page in front (counting the lingering page-out class, no tab ever heard onHide)
+  var shown = homeIsPage();
   if (shown === wasShown) return;
   wasShown = shown;
   if (shown) {
@@ -71,7 +71,7 @@ PM_HOME.boot = function () {
   try { persist.watchProject(); } catch (err) { try { console.error('[pm-home] project watch failed', err); } catch (_) {} }
   if (typeof ResizeObserver === 'function') {
     new ResizeObserver(function () {
-      if (!homeShown()) return;
+      if (!homeIsPage()) return;
       narrow.schedule();
       render.schedule({ animate: false });
     }).observe(centre);
