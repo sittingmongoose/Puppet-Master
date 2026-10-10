@@ -1156,6 +1156,20 @@
       return writePolicy(providerId || null, IDS().switchLeft, v, 24);
     },
     setWarnLevel: function (pctLeft, providerId) { return writePolicy(providerId || null, IDS().warnLeft, Number(pctLeft), 24); },
+    /* an account's own switch level (USG-1: ai.accounts.hard-switch-level at scope account, the account step of the one
+       ladder), one Settings transaction at scope account; null = the account follows its provider again. Usage hosts no
+       control for it (SSYS-044 names the provider pair only): Settings edits it, and the plate reads it (notch, levels) */
+    setAccountSwitchLevel: function (key, pctLeft) {
+      var a = PMU.roster.account(key); if (!a) return false;
+      var v = pctLeft === null || pctLeft === undefined || pctLeft === '' ? null : Math.max(5, Math.min(30, Math.round(Number(pctLeft) / 5) * 5));
+      var cap = rippleCapture(), r = PMU.settings.setAccount ? PMU.settings.setAccount(a.providerId, a.id, [{ id: IDS().switchLeft, value: v }], 'usage.accounts') : null;
+      if (!r || !r.ok) { PMU.shell.toast('Not saved: ' + ((r && r.reason) || 'Settings is not available')); return false; }
+      refreshAccounts(a.providerId);
+      var pol = PMU.roster.thresholds(a.providerId, a.id);
+      PMU.shell.toast(t('toast.saved_settings') + ' · ' + a.nickname + ': switches at ' + (100 - pol.switchLeft) + '% used' + (v === null ? ' (' + a.providerName + ')' : ''));
+      ripplePlay(cap, 24);
+      return true;
+    },
     /* a provider follows the shared setting again for one value (or all four: id omitted) */
     useShared: function (providerId, id) {
       if (!providerId) return false;
@@ -1223,7 +1237,7 @@
     },
     openSettings: function (providerId, accountId) {
       var receipt = command('cmd.settings.open', { category: 'ai', setting_id: 'ai.accounts.provider-connections', provider_id: providerId || null, account_id: accountId || null }, { opened: true });
-      PMU.settings.open(providerId);
+      PMU.settings.open(providerId, null, accountId || null);
       return receipt;
     },
     openSetup: function () {

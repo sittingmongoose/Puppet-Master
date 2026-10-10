@@ -42,7 +42,7 @@
   const EMPTY_ROUTING = () => ({ defaultModel: '', accountOrder: [], exhaustion: 'next-service' });
   const ACC = 'providers-account', SVC = 'providers-service';
   /* Settings that belong to one account (drawn in each account) and where the service-specific ones live. */
-  const ACCOUNT_IDS = ['ai.accounts.account-name', 'ai.accounts.account-enabled', 'ai.accounts.account-roles', 'ai.accounts.billing-entity', 'ai.accounts.claude-login-method', 'ai.accounts.codex-auth-family', 'ai.accounts.gcp-project-id', 'ai.accounts.account-priority', 'ai.accounts.account-threshold-override', 'ai.accounts.switch-mode-override', 'ai.accounts.cooldown-policy', 'ai.accounts.retry-budget', 'ai.accounts.quota-profile', 'ai.accounts.auth-family', 'ai.accounts.credential-storage', 'ai.accounts.auth-surface', 'ai.accounts.set-preferred-account'];
+  const ACCOUNT_IDS = ['ai.accounts.account-name', 'ai.accounts.account-enabled', 'ai.accounts.account-roles', 'ai.accounts.billing-entity', 'ai.accounts.claude-login-method', 'ai.accounts.codex-auth-family', 'ai.accounts.gcp-project-id', 'ai.accounts.account-priority', 'ai.accounts.switch-mode-override', 'ai.accounts.cooldown-policy', 'ai.accounts.retry-budget', 'ai.accounts.quota-profile', 'ai.accounts.auth-family', 'ai.accounts.credential-storage', 'ai.accounts.auth-surface', 'ai.accounts.set-preferred-account'];
   const OWNER = {
     'ai.accounts.claude-login-method': 'claude-code', 'system.advanced.cli-path-claude': 'claude-code',
     'ai.accounts.codex-auth-family': 'openai-codex', 'ai.accounts.openai-api-key': 'openai-codex',
@@ -177,6 +177,17 @@
     if (!Array.isArray(acc.models)) acc.models = (p.models || []).map(m => ({ id: m.id, enabled: !!m.enabled }));
     if (typeof acc.defaultModel !== 'string') { const want = (p.routing || {}).defaultModel; acc.defaultModel = accModelOn(acc, want) ? want : ((acc.models.find(m => m.enabled) || {}).id || ''); }
     if (!acc.props || typeof acc.props !== 'object' || Array.isArray(acc.props)) acc.props = {};
+    /* USG-1 (Jared 2026-10-10): an account's own switch level is ai.accounts.hard-switch-level at scope account and
+       ai.accounts.account-threshold-override is retired. A value saved under the old id is read once and carried to the
+       new one (an own value already there wins), held under the warn level that applies to the account; then the old
+       id is gone from the saved state and nothing reads or writes it again. */
+    if (Object.prototype.hasOwnProperty.call(acc.props, OLD_ACCOUNT_SW)) {
+      const old = acc.props[OLD_ACCOUNT_SW]; delete acc.props[OLD_ACCOUNT_SW];
+      const n = old === '' || old === null || old === undefined ? NaN : Number(old);
+      const have = acc.props['ai.accounts.hard-switch-level'];
+      if (Number.isFinite(n) && n > 0 && n < 100 && (have === undefined || have === null || have === '')) { acc.props['ai.accounts.hard-switch-level'] = n; carried.push([p.id, acc.id]); }
+      accountsCarried++;
+    }
     if (p.regions && !p.regions.includes(acc.region)) acc.region = p.regions[0];
   }
   function migrateProvider(p) {
@@ -197,8 +208,12 @@
     (p.accounts || []).forEach(acc => migrateAccount(p, acc));
     derive(p);
   }
+  const OLD_ACCOUNT_SW = 'ai.accounts.account-threshold-override';
+  let accountsCarried = 0;
+  const carried = [];   /* [providerId, accountId] whose carried level still has to be held under the warn level */
   function migrate() {
     if (!Array.isArray(state.providers)) return;
+    accountsCarried = 0;
     const fixture = (D && D.providers) || [];
     const have = new Set(state.providers.map(p => p.id));
     fixture.forEach(fx => { if (!have.has(fx.id)) state.providers.push(clone(fx)); });
@@ -206,6 +221,10 @@
     state.providers.sort((x, y) => (order.includes(x.id) ? order.indexOf(x.id) : 1e3) - (order.includes(y.id) ? order.indexOf(y.id) : 1e3));
     state.providers.forEach(migrateProvider);
     const oc = find('opencode'); if (oc) recompute(oc);
+    /* a carried value is held under the warn level (once the policy helpers below exist) and saved at once, so the old
+       id never comes back from storage */
+    if (carried.length) { try { holdCarried(); } catch (e) { /* at first load: holdCarried() runs after the policy block */ } }
+    if (accountsCarried) { try { saveState(); } catch (e) { /* the next save writes it */ } }
   }
   const pm51ProvidersEnsureStateShape = ensureStateShape;
   ensureStateShape = function () { const r = pm51ProvidersEnsureStateShape.apply(this, arguments); try { migrate(); } catch (e) { /* never block boot on a fixture shape */ } return r; };
@@ -392,7 +411,7 @@
       PM51.scoped.row('ai.accounts.billing-entity', v('ai.accounts.billing-entity'), Object.assign({}, opt, { label: 'Who is billed', help: 'Costs on the Usage page are grouped by this.' }))
     ];
     const low = PM51.scoped.fields([
-      PM51.scoped.field('ai.accounts.account-threshold-override', v('ai.accounts.account-threshold-override'), Object.assign({}, opt, { label: 'Switch when this much is left' })),
+      accountPolicyField(p, acc, 'ai.accounts.hard-switch-level', 'Switch when this much is left', accountLevelControl(p, acc)),
       PM51.scoped.field('ai.accounts.switch-mode-override', v('ai.accounts.switch-mode-override'), Object.assign({}, opt, { label: 'Sharing work with other accounts' })),
       PM51.scoped.field('ai.accounts.cooldown-policy', v('ai.accounts.cooldown-policy'), Object.assign({}, opt, { label: 'Rest after a rate limit' })),
       PM51.scoped.field('ai.accounts.retry-budget', v('ai.accounts.retry-budget'), Object.assign({}, opt, { label: 'Retries before it rests' }))
@@ -472,9 +491,11 @@
      Four inventory rows carry a service scope: switch by themselves (ai.accounts.multi-account-switching), the switch
      level (hard-switch-level) and the warn level (soft-warning-level), both stored as % LEFT, and the rest after a rate
      limit (cooldown-policy). A service's own value lives in p.props[id]; a service without one follows the shared value
-     (the row under Limits & switching > Moving between accounts). One value resolves as: an account's own switch point
-     (ai.accounts.account-threshold-override, inside the account) > the service's own value > the project > the shared
-     value. As in the AI Account Center, the choices show only for a service with two or more accounts; otherwise one quiet
+     (the row under Limits & switching > Moving between accounts). Every threshold resolves through one ladder (USG-1,
+     Jared 2026-10-10): the shared value < the project < the service's own value < an account's own value, the most
+     specific set value winning; an account's own switch level is ai.accounts.hard-switch-level at scope account
+     (acc.props[id], inside the account), and the retired ai.accounts.account-threshold-override is carried there once
+     at load (migrateAccount). As in the AI Account Center, the choices show only for a service with two or more accounts; otherwise one quiet
      line says auto-switch is off until a second account is signed in. The same values are drawn three times and are one
      value: in each service's "This service" section, in the "Auto-switch policies" overview under Limits & switching,
      and on that service's plate on the Usage page (which writes through PM51.providerPolicy below, never a copy). */
@@ -629,6 +650,60 @@
   }
   PM51.choiceBlock(SW_ID, v => sharedCrossing(SW_ID, v));
   PM51.choiceBlock(WARN_ID, v => sharedCrossing(WARN_ID, v));
+  /* ---------- an account's own levels (USG-1, Jared 2026-10-10): the account step of the one ladder ------------------
+     ai.accounts.hard-switch-level and ai.accounts.soft-warning-level at scope account live in acc.props[id]; an account
+     without its own value follows its service's resolved value. The switch level stays under the warn level that
+     applies to the account (its own, else its service's), held as holdOrder holds a service: a crossing switch write
+     stores the highest switch choice below the warn level, a crossing warn write the lowest warn choice above the
+     switch level, and a write that leaves no such choice is refused. */
+  const accOwn = (acc, id) => { const props = acc && acc.props; if (!props || !Object.prototype.hasOwnProperty.call(props, id)) return undefined; const v = props[id]; return v === null || v === '' ? undefined : v; };
+  const accPolicy = (p, acc, id) => { const v = accOwn(acc, id); return v === undefined ? policyOf(p, id) : v; };
+  function holdAccount(p, acc, changes) {
+    const next = {}; (changes || []).forEach(c => { next[c.id] = c.value; });
+    const has = id => Object.prototype.hasOwnProperty.call(next, id), blank = v => v === null || v === undefined || v === '';
+    if (!has(SW_ID) && !has(WARN_ID)) return changes;
+    const eff = id => pctLeft(has(id) ? (blank(next[id]) ? policyOf(p, id) : next[id]) : accPolicy(p, acc, id));
+    const out = changes.map(c => Object.assign({}, c)), at = id => out.find(c => c.id === id);
+    const sw = eff(SW_ID), warn = eff(WARN_ID);
+    if (sw === null || warn === null || sw < warn) return out;
+    if (has(SW_ID) && !blank(next[SW_ID])) { const c = SWITCH_LEFT.filter(v => v < warn); if (!c.length) return null; at(SW_ID).value = c[c.length - 1]; return out; }
+    if (has(WARN_ID) && !blank(next[WARN_ID])) { const c = WARN_LEFT.filter(v => v > sw); if (!c.length) return null; at(WARN_ID).value = c[0]; return out; }
+    return null;
+  }
+  function setAccountLevel(acc, id, value) {
+    if (!acc || (id !== SW_ID && id !== WARN_ID)) return false;
+    if (!acc.props || typeof acc.props !== 'object') acc.props = {};
+    if (value === null || value === undefined || value === '') delete acc.props[id]; else acc.props[id] = Number(value);
+    return true;
+  }
+  /* the levels carried from the retired id at load, held now that the helpers above exist */
+  function holdCarried() {
+    let moved = false;
+    carried.splice(0).forEach(([pid, aid]) => {
+      const p = find(pid), acc = p && (p.accounts || []).find(x => x.id === aid); if (!acc) return;
+      const held = holdAccount(p, acc, [{ id: SW_ID, value: acc.props[SW_ID] }]);
+      if (!held) delete acc.props[SW_ID]; else if (Number(held[0].value) !== Number(acc.props[SW_ID])) acc.props[SW_ID] = Number(held[0].value); else return;
+      moved = true;
+    });
+    return moved;
+  }
+  if (holdCarried()) saveState();
+  /* the account's switch level: the first choice follows the service's resolved value; a level at or past the warn
+     level that applies to the account is shown but cannot be picked, and says why */
+  function accountLevelControl(p, acc) {
+    const own = accOwn(acc, SW_ID), svc = pctLeft(policyOf(p, SW_ID)), warnN = pctLeft(accPolicy(p, acc, WARN_ID));
+    const block = n => n !== null && warnN !== null && n >= warnN ? `At or past the warn level for ${acc.nickname} (${100 - warnN}% used). Lower the warn level first.` : '';
+    const opts = [{ value: '', label: `${p.name} · ${svc === null ? 'shared' : svc + '% left'}`, meta: svc === null ? '' : `${100 - svc}% used` }];
+    if (block(svc)) { opts[0].disabled = true; opts[0].reason = block(svc); opts[0].why = true; }
+    const vals = SWITCH_LEFT.slice(); const n = pctLeft(own); if (n !== null && !vals.includes(n)) { vals.push(n); vals.sort((x, y) => x - y); }
+    vals.forEach(v => { const why = String(v) === String(own) ? '' : block(v); opts.push(Object.assign({ value: String(v), label: leftText(v) }, why ? { disabled: true, reason: why, why: true } : {})); });
+    return PM51.dropdown(own === undefined ? '' : String(own), opts, { action: 'pm51-scoped-select', data: { scope: ACC, setting: SW_ID, provider: p.id, account: acc.id }, label: `Switch level for ${acc.nickname}`, width: 264 });
+  }
+  /* the compact field in the account's "When it runs low"; "changed" means the account has its own value */
+  function accountPolicyField(p, acc, id, label, control) {
+    const own = accOwn(acc, id) !== undefined, svc = usedText(policyOf(p, id));
+    return `<div class="o55-field o55-policy-field${own ? ' is-changed is-own' : ''}" data-setting-id="${a(id)}" data-provider="${a(p.id)}" data-account="${a(acc.id)}"><div class="o55-field-head"><span class="o55-field-label">${h(label)}</span><button type="button" class="icon-btn details-btn o55-about" data-action="setting-details" data-setting="${a(id)}" aria-label="${a('About ' + label)}" data-pm-hover-label="${a('About ' + label)}" data-pm-hover-detail="${a(own ? `${acc.nickname} has its own value. ${p.name} switches at ${svc}.` : `${acc.nickname} follows ${p.name}: ${svc}.`)}">${icon('help')}</button></div>${control}</div>`;
+  }
   function setPolicy(p, id, value) {
     if (!p || !POLICY_IDS.includes(id)) return false;
     if (!p.props || typeof p.props !== 'object') p.props = {};
@@ -676,6 +751,21 @@
       const p = find(pid); if (!p) return false;
       const held = holdOrder(p, changes); if (!held) return false;
       let ok = true; held.forEach(c => { if (!setPolicy(p, c.id, c.value)) ok = false; });
+      savePolicySoon();
+      if (settingsShown()) PM51.refresh(ID, { swap: false }); else redrawWhenShown();
+      return ok;
+    }
+  };
+  /* The account-scope write the Usage page's Settings transaction applies (USG-1): the same acc.props value the
+     account's own field draws. get -> {value, own, inherited}; hold -> the changes as they will be stored, or null;
+     setMany -> false when refused. value null clears the account's own value: it follows its service again. */
+  PM51.providerPolicy.account = {
+    get: (pid, aid, id) => { const p = find(pid), acc = p && (p.accounts || []).find(x => x.id === aid); if (!acc || (id !== SW_ID && id !== WARN_ID)) return null; const own = accOwn(acc, id); return { value: own === undefined ? policyOf(p, id) : own, own: own !== undefined, inherited: policyOf(p, id) }; },
+    hold: (pid, aid, changes) => { const p = find(pid), acc = p && (p.accounts || []).find(x => x.id === aid); return acc ? holdAccount(p, acc, changes) : null; },
+    setMany: (pid, aid, changes) => {
+      const p = find(pid), acc = p && (p.accounts || []).find(x => x.id === aid); if (!acc) return false;
+      const held = holdAccount(p, acc, changes); if (!held) return false;
+      let ok = true; held.forEach(c => { if (!setAccountLevel(acc, c.id, c.value)) ok = false; });
       savePolicySoon();
       if (settingsShown()) PM51.refresh(ID, { swap: false }); else redrawWhenShown();
       return ok;
@@ -838,7 +928,7 @@
     PM51.setTab(ID, (PM51.placement.byId[id] || {}).tab || PM51.tab(ID, 'services'));
     if (OWNER[id]) { state.selectedProvider = OWNER[id]; return; }
     if (id.startsWith('ai.accounts.opencode-')) { state.selectedProvider = 'opencode'; return; }
-    if (ACCOUNT_IDS.includes(id) && !(current().accounts || []).length) state.selectedProvider = (all().find(p => (p.accounts || []).length) || current()).id;
+    if ((ACCOUNT_IDS.includes(id) || id === OLD_ACCOUNT_SW) && !(current().accounts || []).length) state.selectedProvider = (all().find(p => (p.accounts || []).length) || current()).id;
   });
   const everyAccount = fn => () => all().flatMap(p => orderedAccounts(p).map((acc, i) => ({ name: `${p.name} · ${acc.nickname}`, value: fn(p, acc, i) })));
   ACCOUNT_IDS.filter(id => id !== 'ai.accounts.set-preferred-account').forEach(id => PM51.perValues(id, everyAccount((p, acc, i) =>
@@ -860,6 +950,13 @@
       return v;
     }
     if (id === 'ai.accounts.account-enabled') { acc.enabled = !!value; recompute(p); save(); return acc.nickname; }
+    if (id === SW_ID || id === WARN_ID) {   /* the account step of the one ladder, held under the warn level */
+      const held = holdAccount(p, acc, [{ id, value }]);
+      if (!held) { showToast('Setting was not changed', 'The switch level has to stay below the warn level.', 'warning'); PM51.refresh(ID, { swap: false }); return ''; }
+      setAccountLevel(acc, id, held[0].value); saveState();
+      if (String(held[0].value) !== String(value)) PM51.refresh(ID, { swap: false });
+      return acc.nickname;
+    }
     acc.props[id] = value; saveState();
     if (id === 'ai.accounts.claude-login-method') {
       const way = { sso: 'signin-sso', claudeai: 'signin-claude', email: 'signin-claude', console: 'signin-console' }[value];
@@ -1005,7 +1102,16 @@
   /* ---------- actions ---------------------------------------------------- */
   const prov = el => byId(ds(el, 'provider'));
   const acct = el => { const p = prov(el); const acc = (p.accounts || []).find(x => x.id === ds(el, 'account')); return [p, acc]; };
-  PM51.on('providers-open', el => { const id = ds(el, 'provider'); if (!find(id)) return; state.selectedProvider = id; PM51.swapDetail(ID, id); });
+  PM51.on('providers-open', el => {
+    const id = ds(el, 'provider'); if (!find(id)) return; state.selectedProvider = id; PM51.swapDetail(ID, id);
+    /* from the Usage page's account inspector: land on that account's own switch level (USG-1) */
+    const aid = ds(el, 'account');
+    if (aid && (find(id).accounts || []).some(x => x.id === aid)) {
+      const sel = `.pm51-acc-item[data-account="${cssEscape(aid)}"] .o55-field[data-setting-id="${SW_ID}"]`;
+      o55OpenAround(sel);
+      window.setTimeout(() => { const f = root.querySelector(sel); if (f) f.scrollIntoView({ block: 'center', behavior: o55Still() ? 'auto' : 'smooth' }); }, 320);
+    }
+  });
   /* Auto-switch policies: a service's arrow opens it under Services at its auto-switch row */
   PM51.on('providers-policy-open', el => {
     const id = ds(el, 'provider'); if (!find(id)) return;

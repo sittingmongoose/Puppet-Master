@@ -52,9 +52,11 @@
    "why": "The first account in use is tried first; the next takes over when it runs out."
   },
   "ai.accounts.account-threshold-override": {
-   "label": "An account's own switch point",
+   "label": "An account's own switch point (older setting)",
+   "help": "Retired. Each account's own switch level is now Switch when this much is left, under When it runs low inside the account; an old value moved there.",
    "per": "account",
-   "perWhere": "Open an account under AI & Providers › Providers & Accounts › Services.",
+   "perWhere": "Open an account under AI & Providers › Providers & Accounts › Services: When it runs low.",
+   "perEmpty": "Retired: each account keeps its own switch level instead",
    "unit": "%",
    "min": 0,
    "max": 100,

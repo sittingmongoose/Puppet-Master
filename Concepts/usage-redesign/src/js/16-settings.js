@@ -41,8 +41,13 @@
       Object.keys(ids || {}).forEach(function (k) { if (Object.prototype.hasOwnProperty.call(own, ids[k])) out[k] = own[ids[k]]; });
       return out;
     },
-    /* an account's own value (the account scope, e.g. ai.accounts.account-threshold-override); undefined = none */
+    /* an account's own value at the account scope (USG-1: ai.accounts.hard-switch-level, soft-warning-level and
+       cooldown-policy at scope account; the retired account-threshold-override is carried to hard-switch-level by the
+       Settings owner at load and never read here); undefined = none. The live owner value first, then the snapshot */
     accountValue: function (providerId, accountId, id) {
+      var p = pm51(), api = p && p.providerPolicy && p.providerPolicy.account, live = null;
+      try { live = api && typeof api.get === 'function' ? api.get(providerId, accountId, id) : null; } catch (error) { live = null; }
+      if (live) return live.own ? live.value : undefined;
       var prov = snapshot().providers.filter(function (x) { return x.id === providerId; })[0];
       var acc = prov && (prov.accounts || []).filter(function (a) { return a.id === accountId; })[0];
       var v = acc && acc.props ? acc.props[id] : undefined;
@@ -88,6 +93,31 @@
       changes.forEach(function (c) { emit('write:' + c.setting_id + '@' + providerId); });
       return { ok: ok, reason: ok ? '' : 'Settings did not take the change', preview: preview, receipt: receipt };
     },
+    /* one account-scope write (USG-1: the account step of the one ladder), as one Settings transaction at scope account:
+       the preview names the provider and, per change, the account id as scope_id; the owner holds the switch level under
+       the warn level that applies to the account (PM51.providerPolicy.account.hold) and the preview names what is stored.
+       list [{id, value}] (value null = the account follows its provider again). -> {ok, reason, receipt, preview} */
+    setAccount: function (providerId, accountId, list, source) {
+      var p = pm51(), api = p && p.providerPolicy && p.providerPolicy.account;
+      if (!api || typeof api.setMany !== 'function') return { ok: false, reason: 'Settings is not available' };
+      var held = null; try { held = api.hold(providerId, accountId, list || []); } catch (error) { held = null; }
+      if (!held) return { ok: false, reason: 'The switch level has to stay below the warn level' };
+      var changes = held.map(function (x) {
+        var before = null; try { before = api.get(providerId, accountId, x.id); } catch (error) { before = null; }
+        var inherit = x.value === null || x.value === undefined || x.value === '';
+        return { setting_id: x.id, scope: 'account', scope_id: accountId, value: inherit ? null : x.value, inherit: inherit,
+          previous: before ? (before.own ? before.value : null) : null, previous_effective: before ? before.value : null };
+      });
+      if (!changes.length) return { ok: false, reason: 'Nothing to change' };
+      var payload = { scope: 'account', provider_id: providerId, changes: changes, source: source || 'usage.accounts' };
+      var preview = command('cmd.settings.transaction.preview', payload, { valid: true, conflicts: [], effective_after: changes.map(function (c) { return c.value; }) });
+      if (preview.dispatch_accepted === false) return { ok: false, reason: 'The change was cancelled', preview: preview, receipt: preview };
+      var receipt = command('cmd.settings.transaction.apply', Object.assign({ preview_receipt_id: preview.receipt_id }, payload), { applied: true });
+      if (receipt.dispatch_accepted === false) return { ok: false, reason: 'The change was cancelled', preview: preview, receipt: receipt };
+      var ok = false; try { ok = api.setMany(providerId, accountId, changes.map(function (c) { return { id: c.setting_id, value: c.inherit ? null : c.value }; })) !== false; } catch (error) { ok = false; }
+      invalidate(); changes.forEach(function (c) { emit('write:' + c.setting_id + '@' + providerId + '/' + accountId); });
+      return { ok: ok, reason: ok ? '' : 'Settings did not take the change', preview: preview, receipt: receipt };
+    },
     /* whether Settings draws per-provider auto-switch choices for this provider (two or more accounts, a kind that has
        accounts to switch between); null when the Settings owner cannot say */
     providerMulti: function (providerId) {
@@ -102,14 +132,15 @@
     },
     /* a setting id opens that setting's bloom; a provider id lands on that provider in Providers & Accounts (its own
        pane, no bloom over it), through the Settings owner's navigate and its providers-open action */
-    open: function (providerId, settingId) {
+    open: function (providerId, settingId, accountId) {
       try { if (window.PM_PAGES && typeof window.PM_PAGES.go === 'function') window.PM_PAGES.go('settings'); } catch (error) {}
       var k = kimi();
       if (providerId && !settingId && k && typeof k.navigate === 'function') {
         try {
           var tab = document.getElementById('tab-settings'); if (tab && !document.getElementById('panel-settings').classList.contains('active')) tab.click();
           k.navigate('ai', 'providers');
-          if (typeof k.dispatchAction === 'function') k.dispatchAction('pm51-providers-open', { provider: providerId });
+          /* with an account (the account inspector's Open Provider Settings), it lands on that account's own switch level */
+          if (typeof k.dispatchAction === 'function') k.dispatchAction('pm51-providers-open', accountId ? { provider: providerId, account: accountId } : { provider: providerId });
           return true;
         } catch (error) { /* fall back to the bloom below */ }
       }
