@@ -990,7 +990,7 @@ The promoted provider/runtime rewrite and the updated terminal/editor model requ
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Multi-Account.md
 
-Amended 2026-10-09 (DL-181): of the terminal families below, `terminal_workspace_state`, `terminal_section_record`, `terminal_tab_record`, `terminal_pane_record`, `terminal_leaf_pane_record`, `terminal_workgroup_record` and `editor_terminal_panel_state` are read-only migration inputs; terminal placement lives in the v2 Home layout record (SP-330), and `terminal_session_record` (value v2, with an optional `tab_id`), `terminal_command_block` and `dev_session_record` stay current (SP-332).
+Amended 2026-10-09 (DL-181): of the terminal families below, `terminal_workspace_state`, `terminal_section_record`, `terminal_tab_record`, `terminal_pane_record`, `terminal_leaf_pane_record`, `terminal_workgroup_record` and `editor_terminal_panel_state` are read-only migration inputs; terminal placement lives in the v2 Home layout record (SP-330), and `terminal_session_record` (value v2, with an optional `panel_tab_id`), `terminal_command_block` and `dev_session_record` stay current (SP-332).
 
 Required canonical record and projection families include:
 - `attempt_record.v1:{project_id}:{node_id}:{attempt_number}`
@@ -1060,7 +1060,7 @@ Blocked-projection migration/versioning rule:
 
 Canonical record field-level minima:
 - `attempt_record.v1:{project_id}:{node_id}:{attempt_number}` stores `project_id`, `node_id`, `attempt_number`, `run_id`, `attempt_id`, `execution_unit_context_ref?`, `permission_snapshot_id?`, recovery/safe-point lineage refs, and result or blocked-state refs. SCM-capable attempts also carry `repo_id`, `worktree_id`, `worktree_path`, `branch_name`, `head_commit_oid`, `baseline_commit_oid`, `compare_target_ref`, `git_operation_ref`, and `pr_ref`.
-- `terminal_workspace_state.v1`, `terminal_section_record.v1`, `terminal_tab_record.v1`, `terminal_pane_record.v1`, `terminal_leaf_pane_record.v1`, `terminal_workgroup_record.v1`, `editor_terminal_panel_state.v1`, `terminal_session_record.v1`, and `terminal_command_block.v1` preserve workspace tab identity, section/tab/pane split identity, layout slot/order, labels, active/focus state, cwd/cwd snapshot, shell profile, runtime or historical state, transcript/scrollback anchors, command text, exit status, and command-block metadata without collapsing terminal restore into one bottom-panel blob. Amended 2026-10-09 (DL-181): the section, pane, layout slot and order minima describe migration inputs only; a terminal tab's place, order, label and focus are minima of the v2 Home record (SP-330), and a session's record carries an optional `tab_id` (SP-332).
+- `terminal_workspace_state.v1`, `terminal_section_record.v1`, `terminal_tab_record.v1`, `terminal_pane_record.v1`, `terminal_leaf_pane_record.v1`, `terminal_workgroup_record.v1`, `editor_terminal_panel_state.v1`, `terminal_session_record.v1`, and `terminal_command_block.v1` preserve workspace tab identity, section/tab/pane split identity, layout slot/order, labels, active/focus state, cwd/cwd snapshot, shell profile, runtime or historical state, transcript/scrollback anchors, command text, exit status, and command-block metadata without collapsing terminal restore into one bottom-panel blob. Amended 2026-10-09 (DL-181): the section, pane, layout slot and order minima describe migration inputs only; a terminal tab's place, order, label and focus are minima of the v2 Home record (SP-330), and a session's record carries an optional `panel_tab_id` (SP-332).
 - `dev_session_record.v1:{project_id}:{dev_session_id}` stores `project_id`, `dev_session_id`, linked `run_id?`, `thread_id?`, `workspace_tab_id?`, `terminal_session_id?`, DAP/debugger identity refs, target binding summary, lifecycle phase/state, historical/live verification state, last restore or reopen outcome, and relevant `artifact_ids[]` / `artifact_refs[]`. `dev_session_id` owns higher-level dev workflow continuity and must not replace `terminal_session_id` when exact PTY reuse is required.
 
 GitHub Actions panel state:
@@ -8063,7 +8063,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
-  Canonical field-level minima preserve attempt, terminal workspace/section/tab/pane/workgroup/session/command-block, and dev_session records, including SCM refs, terminal layout/focus/transcript anchors, and dev workflow continuity without replacing exact PTY reuse identity. Amended 2026-10-09 (DL-181): the layout and focus minima of the terminal workspace, section, tab, pane and workgroup records describe migration inputs only; a terminal tab's placement and focus are minima of the v2 Home record (SP-330), and terminal_session_record carries an optional tab_id (SP-332).
+  Canonical field-level minima preserve attempt, terminal workspace/section/tab/pane/workgroup/session/command-block, and dev_session records, including SCM refs, terminal layout/focus/transcript anchors, and dev workflow continuity without replacing exact PTY reuse identity. Amended 2026-10-09 (DL-181): the layout and focus minima of the terminal workspace, section, tab, pane and workgroup records describe migration inputs only; a terminal tab's placement and focus are minima of the v2 Home record (SP-330), and terminal_session_record carries an optional panel_tab_id (SP-332).
 gui_related: true
 gui_classification_reason: This unit preserves terminal GUI layout/focus fields and backend attempt/dev-session minima.
 split_recommended: true
@@ -8093,6 +8093,7 @@ node_compile_hint:
   mode: canonical_field_minima_for_attempt_terminal_dev_records
   create_worknodes: false
 source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
 - Plans/ledgers/v2/pldg-20260908-002-terminal-workflow-findings/records/design_atoms.jsonl:atom-0002
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
 preserved_exact_tokens:
@@ -8118,6 +8119,7 @@ negative_constraints:
 preserved_contractrefs: []
 compatibility_only_notes: []
 stale_retired_dispositions:
+- "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Names the terminal-session panel pointer panel_tab_id in the DL-181 amendment."
 - "Amended 2026-10-09 (DL-181): terminal layout and focus minima move to the v2 Home record (SP-330, SP-332)."
 owner_hints:
 - Plans/storage-plan.md
@@ -9535,7 +9537,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
-  Terminal pane, session, and command-block records keep pane/session attachment, shell profile, cwd_snapshot, runtime/restore state, command-block metadata, and the section/tab/pane/session identity split; durable restore reconstructs layout and bindings before runtime liveness validation. Amended 2026-10-09 (DL-181): the identity split is now tab and session: a terminal tab in the v2 Home record (SP-330) shows one session, whose terminal_session_record has an optional tab_id (SP-332); panes and sections are migration inputs; restore still rebuilds placement and bindings before the terminal runtime checks liveness.
+  Terminal pane, session, and command-block records keep pane/session attachment, shell profile, cwd_snapshot, runtime/restore state, command-block metadata, and the section/tab/pane/session identity split; durable restore reconstructs layout and bindings before runtime liveness validation. Amended 2026-10-09 (DL-181): the identity split is now tab and session: a terminal tab in the v2 Home record (SP-330) shows one session, whose terminal_session_record has an optional panel_tab_id (SP-332); panes and sections are migration inputs; restore still rebuilds placement and bindings before the terminal runtime checks liveness.
 gui_related: true
 gui_classification_reason: This unit preserves visible terminal panes, session bindings, labels, layout style, and restore flow.
 split_recommended: false
@@ -9565,6 +9567,7 @@ node_compile_hint:
   mode: terminal_pane_session_and_restore_identity_split
   create_worknodes: false
 source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
 - Plans/ledgers/v2/pldg-20260908-002-terminal-workflow-findings/records/design_atoms.jsonl:atom-0002
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0080
 preserved_exact_tokens:
@@ -9586,6 +9589,7 @@ preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md'
 compatibility_only_notes: []
 stale_retired_dispositions:
+- "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Names the terminal-session panel pointer panel_tab_id in the DL-181 amendment."
 - "Amended 2026-10-09 (DL-181): the section/tab/pane/session split becomes tab/session."
 owner_hints:
 - Plans/storage-plan.md
@@ -16865,7 +16869,7 @@ Repairs row `sfk-047b362fce3b487a9bce5d6b`.
 
 ### Terminal Storage Family Reconciliation
 
-Amended 2026-10-09 (DL-181): seven of these nine families (workspace, section, tab, pane, leaf pane, workgroup and editor terminal panel) are now read-only migration inputs; `terminal_session_record` moves to value v2 with an optional `tab_id`, and `terminal_command_block` is unchanged (SP-332).
+Amended 2026-10-09 (DL-181): seven of these nine families (workspace, section, tab, pane, leaf pane, workgroup and editor terminal panel) are now read-only migration inputs; `terminal_session_record` moves to value v2 with an optional `panel_tab_id`, and `terminal_command_block` is unchanged (SP-332).
 
 Repairs row `sfk-6e2bf4e4dd077d9ae2743668`.
 
